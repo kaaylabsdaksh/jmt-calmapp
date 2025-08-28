@@ -96,9 +96,8 @@ const ModernWorkOrderFilters = () => {
                 <PopoverTrigger asChild>
                   <Button
                     variant="outline"
-                    size="sm"
                     className={cn(
-                      "h-8 px-3 flex items-center gap-2",
+                      "flex items-center gap-2",
                       hasAnyDates && "bg-primary/10 border-primary/30"
                     )}
                   >
