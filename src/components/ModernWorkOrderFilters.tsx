@@ -196,10 +196,6 @@ const ModernWorkOrderFilters = () => {
 
               {/* Action Buttons */}
               <div className="flex gap-2">
-                <Button className="flex items-center gap-2 hover:scale-105 transition-transform">
-                  <Search className="h-4 w-4" />
-                  Search
-                </Button>
                 <Button variant="outline" className="flex items-center gap-2">
                   <RotateCcw className="h-4 w-4" />
                   Clear
@@ -546,6 +542,22 @@ const ModernWorkOrderFilters = () => {
           </Card>
         </TabsContent>
       </Tabs>
+
+      {/* Submit Button Section - Below All Fields */}
+      <Card className="animate-fade-in">
+        <CardContent className="pt-6">
+          <div className="flex justify-center">
+            <Button 
+              type="submit" 
+              size="lg"
+              className="flex items-center gap-2 px-8 py-3 text-base font-medium hover:scale-105 transition-transform"
+            >
+              <Search className="h-5 w-5" />
+              Search Work Orders
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };
