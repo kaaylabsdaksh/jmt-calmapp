@@ -7,11 +7,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Search, RotateCcw, Plus, ChevronDown, ChevronUp, Filter, Calendar, Settings, Package } from "lucide-react";
+import { Search, RotateCcw, Plus, ChevronDown, ChevronUp, Filter, Settings, Package } from "lucide-react";
 
 const ModernWorkOrderFilters = () => {
   const [basicFiltersOpen, setBasicFiltersOpen] = useState(true);
-  const [dateFiltersOpen, setDateFiltersOpen] = useState(false);
   const [advancedFiltersOpen, setAdvancedFiltersOpen] = useState(false);
 
   return (
@@ -253,80 +252,6 @@ const ModernWorkOrderFilters = () => {
                             <SelectItem value="on-hold">On Hold</SelectItem>
                           </SelectContent>
                         </Select>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </CollapsibleContent>
-            </Card>
-          </Collapsible>
-
-          {/* Date Filters Section */}
-          <Collapsible open={dateFiltersOpen} onOpenChange={setDateFiltersOpen}>
-            <Card className="overflow-hidden">
-              <CollapsibleTrigger asChild>
-                <CardHeader className="cursor-pointer hover:bg-muted/50 transition-colors">
-                  <CardTitle className="text-lg font-medium flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <Calendar className="h-5 w-5 text-primary" />
-                      Date Filters
-                    </div>
-                    {dateFiltersOpen ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
-                  </CardTitle>
-                </CardHeader>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <CardContent className="pt-0">
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div className="space-y-4">
-                      <h4 className="font-medium text-foreground">Creation & Arrival</h4>
-                      <div className="space-y-2">
-                        <Label className="text-sm">Created From/To</Label>
-                        <div className="flex gap-2">
-                          <Input type="date" placeholder="From" />
-                          <Input type="date" placeholder="To" />
-                        </div>
-                      </div>
-                      <div className="space-y-2">
-                        <Label className="text-sm">Arrival From/To</Label>
-                        <div className="flex gap-2">
-                          <Input type="date" placeholder="From" />
-                          <Input type="date" placeholder="To" />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="space-y-4">
-                      <h4 className="font-medium text-foreground">Status & Comments</h4>
-                      <div className="space-y-2">
-                        <Label className="text-sm">Status Date From/To</Label>
-                        <div className="flex gap-2">
-                          <Input type="date" placeholder="From" />
-                          <Input type="date" placeholder="To" />
-                        </div>
-                      </div>
-                      <div className="space-y-2">
-                        <Label className="text-sm">Last Comment From/To</Label>
-                        <div className="flex gap-2">
-                          <Input type="date" placeholder="From" />
-                          <Input type="date" placeholder="To" />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="space-y-4">
-                      <h4 className="font-medium text-foreground">Departure & Delivery</h4>
-                      <div className="space-y-2">
-                        <Label className="text-sm">Departure From/To</Label>
-                        <div className="flex gap-2">
-                          <Input type="date" placeholder="From" />
-                          <Input type="date" placeholder="To" />
-                        </div>
-                      </div>
-                      <div className="space-y-2">
-                        <Label className="text-sm">Need By From/To</Label>
-                        <div className="flex gap-2">
-                          <Input type="date" placeholder="From" />
-                          <Input type="date" placeholder="To" />
-                        </div>
                       </div>
                     </div>
                   </div>
