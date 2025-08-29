@@ -5,12 +5,11 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { format } from "date-fns";
-import { Search, RotateCcw, Plus, ChevronDown, ChevronUp, Filter, Settings, Package, Calendar as CalendarIcon, X } from "lucide-react";
+import { Search, RotateCcw, Plus, ChevronDown, ChevronUp, Filter, Package, Calendar as CalendarIcon, X, Settings } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type DateRangeType = 
@@ -210,19 +209,8 @@ const ModernWorkOrderFilters = () => {
         </CardHeader>
       </Card>
 
-      <Tabs defaultValue="filters" className="animate-fade-in">
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="filters" className="flex items-center gap-2">
-            <Filter className="h-4 w-4" />
-            Search Filters
-          </TabsTrigger>
-          <TabsTrigger value="actions" className="flex items-center gap-2">
-            <Settings className="h-4 w-4" />
-            Quick Actions
-          </TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="filters" className="space-y-4">
+      {/* Search Filters Section */}
+      <div className="space-y-4 animate-fade-in">
           {/* Search Filters Card */}
           <Card className="overflow-hidden">
             {/* Basic Information Section */}
@@ -518,29 +506,7 @@ const ModernWorkOrderFilters = () => {
               </CollapsibleContent>
             </Collapsible>
           </Card>
-        </TabsContent>
-
-        <TabsContent value="actions">
-          <Card className="animate-fade-in">
-            <CardHeader>
-              <CardTitle className="text-lg font-medium">Quick Actions</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
-                {[
-                  "Hot List", "Transit Log", "Update RFQs", "Rental Status Cards", "PO/Exchange Orders",
-                  "Assign Techs", "Assign Departure Info", "Export Excel", "Missing Cost", "Print Labels",
-                  "Generate Reports", "Bulk Update", "Archive Records", "Quality Check", "Calibration Reminders"
-                ].map((action) => (
-                  <Button key={action} variant="outline" size="sm" className="hover:scale-105 transition-transform">
-                    {action}
-                  </Button>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
+        </div>
 
       {/* Submit Button Section - Below All Fields */}
       <Card className="animate-fade-in">
