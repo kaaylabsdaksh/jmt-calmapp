@@ -10,9 +10,6 @@ const App = () => (
       <div className="flex min-h-screen w-full overflow-x-hidden">
         <AppSidebar />
         <div className="flex-1 flex flex-col min-w-0">
-          <header className="h-12 flex items-center border-b bg-background px-4 shrink-0">
-            <SidebarTrigger />
-          </header>
           <main className="flex-1 overflow-x-hidden">
             <Routes>
               <Route path="/" element={<Index />} />
