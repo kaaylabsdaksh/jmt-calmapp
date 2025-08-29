@@ -7,13 +7,13 @@ import NotFound from "./pages/NotFound";
 const App = () => (
   <BrowserRouter>
     <SidebarProvider>
-      <div className="flex min-h-screen w-full">
+      <div className="flex min-h-screen w-full overflow-x-hidden">
         <AppSidebar />
-        <div className="flex-1 flex flex-col">
-          <header className="h-12 flex items-center border-b bg-background px-4">
+        <div className="flex-1 flex flex-col min-w-0">
+          <header className="h-12 flex items-center border-b bg-background px-4 shrink-0">
             <SidebarTrigger />
           </header>
-          <main className="flex-1">
+          <main className="flex-1 overflow-x-hidden">
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="*" element={<NotFound />} />

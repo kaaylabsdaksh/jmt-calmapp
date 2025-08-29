@@ -181,7 +181,7 @@ const EnhancedWorkOrdersTable = () => {
       </CardHeader>
 
       <CardContent className="p-0">
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto max-w-full">
           <Table>
             <TableHeader>
               <TableRow className="bg-muted/50">

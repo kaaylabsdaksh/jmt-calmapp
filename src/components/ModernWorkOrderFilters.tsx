@@ -107,7 +107,7 @@ const ModernWorkOrderFilters = () => {
                     )}
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-[600px] p-4" align="end">
+                <PopoverContent className="w-[90vw] max-w-[600px] p-4" align="end">
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
                       <h4 className="font-medium text-sm">Date Filters</h4>
