@@ -14,7 +14,8 @@ import {
   Edit,
   Archive,
   CheckCircle,
-  Clock
+  Clock,
+  Zap
 } from "lucide-react";
 
 import {
@@ -26,9 +27,11 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarHeader,
   useSidebar,
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 
 const quickActions = [
   { title: "Hot List", icon: FileText },
@@ -53,30 +56,60 @@ export function AppSidebar() {
 
   return (
     <Sidebar
-      className={open ? "w-64" : "w-14"}
+      className={`${open ? "w-64" : "w-14"} border-r-0 bg-gradient-to-b from-sidebar to-sidebar/95 backdrop-blur-sm animate-fade-in`}
+      collapsible="icon"
     >
-      <SidebarContent>
+      {/* Header with Logo */}
+      <SidebarHeader className="border-b border-sidebar-border/50 p-4">
+        <div className="flex items-center gap-3">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-lg">
+            <Zap className="h-5 w-5" />
+          </div>
+          {open && (
+            <div className="flex flex-col animate-fade-in">
+              <h1 className="text-lg font-bold text-foreground tracking-tight">CalMApp</h1>
+              <p className="text-xs text-muted-foreground">Work Order Management</p>
+            </div>
+          )}
+        </div>
+      </SidebarHeader>
+
+      <SidebarContent className="px-2 py-4">
         <SidebarGroup>
-          <SidebarGroupLabel className="flex items-center gap-2">
-            <Settings className="h-4 w-4" />
-            {open && "Quick Actions"}
+          <SidebarGroupLabel className={`px-3 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider ${!open && "sr-only"}`}>
+            Quick Actions
           </SidebarGroupLabel>
 
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {quickActions.map((action) => (
+          <SidebarGroupContent className="mt-2">
+            <SidebarMenu className="space-y-1">
+              {quickActions.map((action, index) => (
                 <SidebarMenuItem key={action.title}>
                   <SidebarMenuButton 
                     asChild
                     tooltip={!open ? action.title : undefined}
+                    className="group"
                   >
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="w-full justify-start hover:bg-accent transition-colors"
+                      className={`
+                        w-full justify-start h-10 px-3 
+                        text-sidebar-foreground hover:text-foreground
+                        hover:bg-sidebar-accent hover:shadow-sm
+                        transition-all duration-200 ease-in-out
+                        group-hover:translate-x-1
+                        ${!open && "justify-center px-0"}
+                      `}
+                      style={{
+                        animationDelay: `${index * 50}ms`
+                      }}
                     >
-                      <action.icon className="h-4 w-4 shrink-0" />
-                      {open && <span className="ml-2">{action.title}</span>}
+                      <action.icon className="h-4 w-4 shrink-0 text-primary group-hover:scale-110 transition-transform duration-200" />
+                      {open && (
+                        <span className="ml-3 font-medium text-sm animate-fade-in">
+                          {action.title}
+                        </span>
+                      )}
                     </Button>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -84,6 +117,17 @@ export function AppSidebar() {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+        
+        {/* Footer section when expanded */}
+        {open && (
+          <div className="mt-auto px-3 py-4 animate-fade-in">
+            <Separator className="mb-3 bg-sidebar-border/30" />
+            <div className="text-xs text-muted-foreground">
+              <p className="font-medium">System Status</p>
+              <p className="text-xs mt-1 text-green-500">● All systems operational</p>
+            </div>
+          </div>
+        )}
       </SidebarContent>
     </Sidebar>
   );
