@@ -81,8 +81,9 @@ const ModernWorkOrderFilters = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header with Action Buttons */}
-      <Card className="animate-fade-in">
+      {/* Combined Search Filters and Management Card */}
+      <Card className="overflow-hidden animate-fade-in">
+        {/* Header with Title and Action Buttons */}
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle className="text-xl font-semibold flex items-center gap-2">
@@ -90,7 +91,7 @@ const ModernWorkOrderFilters = () => {
               Work Order Search & Management
             </CardTitle>
             <div className="flex items-center gap-3">
-              {/* Simplified Date Filter - Just the Icon */}
+              {/* Date Filter Popover */}
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
@@ -207,27 +208,22 @@ const ModernWorkOrderFilters = () => {
             </div>
           </div>
         </CardHeader>
-      </Card>
-
-      {/* Search Filters Section */}
-      <div className="space-y-4 animate-fade-in">
-          {/* Search Filters Card */}
-          <Card className="overflow-hidden">
-            {/* Basic Information Section */}
-            <Collapsible open={basicFiltersOpen} onOpenChange={setBasicFiltersOpen}>
-              <CollapsibleTrigger asChild>
-                <CardHeader className="cursor-pointer hover:bg-muted/50 transition-colors">
-                  <CardTitle className="text-lg font-medium flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <Package className="h-5 w-5 text-primary" />
-                      Basic Information
-                    </div>
-                    {basicFiltersOpen ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
-                  </CardTitle>
-                </CardHeader>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <CardContent className="pt-0">
+        
+        {/* Basic Information Section */}
+        <Collapsible open={basicFiltersOpen} onOpenChange={setBasicFiltersOpen}>
+          <CollapsibleTrigger asChild>
+            <div className="px-6 py-3 cursor-pointer hover:bg-muted/50 transition-colors border-t">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Package className="h-5 w-5 text-primary" />
+                  <h3 className="text-lg font-medium">Basic Information</h3>
+                </div>
+                {basicFiltersOpen ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
+              </div>
+            </div>
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <CardContent className="pt-0">
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {/* Column 1 - Work Order Details */}
                     <div className="space-y-4">
@@ -414,99 +410,98 @@ const ModernWorkOrderFilters = () => {
                     </div>
                   </div>
                 </CardContent>
-              </CollapsibleContent>
-            </Collapsible>
+          </CollapsibleContent>
+        </Collapsible>
 
-            {/* Advanced Options Section - Inside the same card */}
-            <Collapsible open={advancedFiltersOpen} onOpenChange={setAdvancedFiltersOpen}>
-              <CollapsibleTrigger asChild>
-                <CardHeader className="cursor-pointer hover:bg-muted/50 transition-colors border-t">
-                  <CardTitle className="text-lg font-medium flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <Settings className="h-5 w-5 text-primary" />
-                      Advanced Options
-                    </div>
-                    {advancedFiltersOpen ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
-                  </CardTitle>
-                </CardHeader>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <CardContent className="pt-0">
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div className="space-y-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="priority" className="text-sm font-medium">Priority</Label>
-                        <Select>
-                          <SelectTrigger className="bg-background">
-                            <SelectValue placeholder="Select priority" />
-                          </SelectTrigger>
-                          <SelectContent className="bg-popover border shadow-lg z-50">
-                            <SelectItem value="normal">Normal</SelectItem>
-                            <SelectItem value="rush">Rush</SelectItem>
-                            <SelectItem value="emergency">Emergency</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="tt-po" className="text-sm font-medium">T/T PO #</Label>
-                        <Input id="tt-po" placeholder="TT PO number" />
-                      </div>
-                    </div>
-                    <div className="space-y-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="vendor-rma" className="text-sm font-medium">Vendor RMA #</Label>
-                        <Input id="vendor-rma" placeholder="RMA number" />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="sales-person" className="text-sm font-medium">Sales Person</Label>
-                        <Input id="sales-person" placeholder="Sales representative" />
-                      </div>
-                    </div>
-                    <div className="space-y-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="quote-num" className="text-sm font-medium">Quote #</Label>
-                        <Input id="quote-num" placeholder="Quote number" />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="rfid" className="text-sm font-medium">RFID</Label>
-                        <Input id="rfid" placeholder="RFID identifier" />
-                      </div>
-                    </div>
-                    <div className="space-y-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="invoice-status" className="text-sm font-medium">Invoice Status</Label>
-                        <Select>
-                          <SelectTrigger className="bg-background">
-                            <SelectValue placeholder="Select status" />
-                          </SelectTrigger>
-                          <SelectContent className="bg-popover border shadow-lg z-50">
-                            <SelectItem value="pending">Pending</SelectItem>
-                            <SelectItem value="sent">Sent</SelectItem>
-                            <SelectItem value="paid">Paid</SelectItem>
-                            <SelectItem value="overdue">Overdue</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="departure-type" className="text-sm font-medium">Departure Type</Label>
-                        <Select>
-                          <SelectTrigger className="bg-background">
-                            <SelectValue placeholder="Select type" />
-                          </SelectTrigger>
-                          <SelectContent className="bg-popover border shadow-lg z-50">
-                            <SelectItem value="ship">Ship</SelectItem>
-                            <SelectItem value="pickup">Pickup</SelectItem>
-                            <SelectItem value="delivery">Delivery</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    </div>
+        {/* Advanced Options Section - Inside the same card */}
+        <Collapsible open={advancedFiltersOpen} onOpenChange={setAdvancedFiltersOpen}>
+          <CollapsibleTrigger asChild>
+            <div className="px-6 py-3 cursor-pointer hover:bg-muted/50 transition-colors border-t">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Settings className="h-5 w-5 text-primary" />
+                  <h3 className="text-lg font-medium">Advanced Options</h3>
+                </div>
+                {advancedFiltersOpen ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
+              </div>
+            </div>
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <CardContent className="pt-0">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="priority" className="text-sm font-medium">Priority</Label>
+                    <Select>
+                      <SelectTrigger className="bg-background">
+                        <SelectValue placeholder="Select priority" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-popover border shadow-lg z-50">
+                        <SelectItem value="normal">Normal</SelectItem>
+                        <SelectItem value="rush">Rush</SelectItem>
+                        <SelectItem value="emergency">Emergency</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
-                </CardContent>
-              </CollapsibleContent>
-            </Collapsible>
-          </Card>
-        </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="tt-po" className="text-sm font-medium">T/T PO #</Label>
+                    <Input id="tt-po" placeholder="TT PO number" />
+                  </div>
+                </div>
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="vendor-rma" className="text-sm font-medium">Vendor RMA #</Label>
+                    <Input id="vendor-rma" placeholder="RMA number" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="sales-person" className="text-sm font-medium">Sales Person</Label>
+                    <Input id="sales-person" placeholder="Sales representative" />
+                  </div>
+                </div>
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="quote-num" className="text-sm font-medium">Quote #</Label>
+                    <Input id="quote-num" placeholder="Quote number" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="rfid" className="text-sm font-medium">RFID</Label>
+                    <Input id="rfid" placeholder="RFID identifier" />
+                  </div>
+                </div>
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="invoice-status" className="text-sm font-medium">Invoice Status</Label>
+                    <Select>
+                      <SelectTrigger className="bg-background">
+                        <SelectValue placeholder="Select status" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-popover border shadow-lg z-50">
+                        <SelectItem value="pending">Pending</SelectItem>
+                        <SelectItem value="sent">Sent</SelectItem>
+                        <SelectItem value="paid">Paid</SelectItem>
+                        <SelectItem value="overdue">Overdue</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="departure-type" className="text-sm font-medium">Departure Type</Label>
+                    <Select>
+                      <SelectTrigger className="bg-background">
+                        <SelectValue placeholder="Select type" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-popover border shadow-lg z-50">
+                        <SelectItem value="ship">Ship</SelectItem>
+                        <SelectItem value="pickup">Pickup</SelectItem>
+                        <SelectItem value="delivery">Delivery</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </CollapsibleContent>
+        </Collapsible>
+      </Card>
 
       {/* Submit Button Section - Below All Fields */}
       <Card className="animate-fade-in">
