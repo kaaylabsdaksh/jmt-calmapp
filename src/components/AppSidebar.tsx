@@ -14,7 +14,8 @@ import {
   Edit,
   Archive,
   CheckCircle,
-  Clock
+  Clock,
+  Zap
 } from "lucide-react";
 
 import {
@@ -26,6 +27,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarHeader,
   useSidebar,
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
@@ -76,6 +78,21 @@ export function AppSidebar() {
       className={`${open ? "w-64" : "w-14"} border-r-0 bg-gradient-to-b from-sidebar to-sidebar/95 backdrop-blur-sm animate-fade-in`}
       collapsible="icon"
     >
+      {/* Header with Logo */}
+      <SidebarHeader className="border-b border-sidebar-border/50 p-4">
+        <div className="flex items-center gap-3">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-lg">
+            <Zap className="h-5 w-5" />
+          </div>
+          {open && (
+            <div className="flex flex-col animate-fade-in">
+              <h1 className="text-lg font-bold text-foreground tracking-tight">CalMApp</h1>
+              <p className="text-xs text-muted-foreground">Work Order Management</p>
+            </div>
+          )}
+        </div>
+      </SidebarHeader>
+
       <SidebarContent className="px-2 py-4">
         {Object.entries(quickActionCategories).map(([categoryName, actions], categoryIndex) => (
           <SidebarGroup key={categoryName} className="mb-4">
