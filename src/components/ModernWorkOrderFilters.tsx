@@ -223,9 +223,10 @@ const ModernWorkOrderFilters = () => {
         </TabsList>
 
         <TabsContent value="filters" className="space-y-4">
-          {/* Basic Information Section */}
-          <Collapsible open={basicFiltersOpen} onOpenChange={setBasicFiltersOpen}>
-            <Card className="overflow-hidden">
+          {/* Search Filters Card */}
+          <Card className="overflow-hidden">
+            {/* Basic Information Section */}
+            <Collapsible open={basicFiltersOpen} onOpenChange={setBasicFiltersOpen}>
               <CollapsibleTrigger asChild>
                 <CardHeader className="cursor-pointer hover:bg-muted/50 transition-colors">
                   <CardTitle className="text-lg font-medium flex items-center justify-between">
@@ -426,14 +427,12 @@ const ModernWorkOrderFilters = () => {
                   </div>
                 </CardContent>
               </CollapsibleContent>
-            </Card>
-          </Collapsible>
+            </Collapsible>
 
-          {/* Advanced Filters Section */}
-          <Collapsible open={advancedFiltersOpen} onOpenChange={setAdvancedFiltersOpen}>
-            <Card className="overflow-hidden">
+            {/* Advanced Options Section - Inside the same card */}
+            <Collapsible open={advancedFiltersOpen} onOpenChange={setAdvancedFiltersOpen}>
               <CollapsibleTrigger asChild>
-                <CardHeader className="cursor-pointer hover:bg-muted/50 transition-colors">
+                <CardHeader className="cursor-pointer hover:bg-muted/50 transition-colors border-t">
                   <CardTitle className="text-lg font-medium flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <Settings className="h-5 w-5 text-primary" />
@@ -517,8 +516,8 @@ const ModernWorkOrderFilters = () => {
                   </div>
                 </CardContent>
               </CollapsibleContent>
-            </Card>
-          </Collapsible>
+            </Collapsible>
+          </Card>
         </TabsContent>
 
         <TabsContent value="actions">
