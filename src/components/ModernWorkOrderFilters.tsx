@@ -91,108 +91,17 @@ const ModernWorkOrderFilters = () => {
               Work Order Search & Management
             </CardTitle>
             <div className="flex items-center gap-3">
-              {/* Simplified Date Filter - Just the Icon */}
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className={cn(
-                      "flex items-center gap-2",
-                      hasAnyDates && "bg-primary/10 border-primary/30"
-                    )}
-                  >
-                    <CalendarIcon className="h-4 w-4" />
-                    Date Filters
-                    {hasAnyDates && (
-                      <div className="w-2 h-2 rounded-full bg-primary"></div>
-                    )}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-[600px] p-4" align="end">
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <h4 className="font-medium text-sm">Date Filters</h4>
-                      {hasAnyDates && (
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={clearAllDates}
-                          className="h-6 px-2 text-xs hover:bg-destructive/10 hover:text-destructive"
-                        >
-                          <X className="h-3 w-3 mr-1" />
-                          Clear All
-                        </Button>
-                      )}
-                    </div>
-                    <div className="grid grid-cols-1 gap-4">
-                      {Object.entries(dateTypeCategories).map(([category, types]) => (
-                        <div key={category} className="space-y-3">
-                          <h5 className="text-xs font-medium text-muted-foreground">{category}</h5>
-                          <div className="grid grid-cols-1 gap-3">
-                            {types.map((type) => {
-                              const range = dateRanges[type];
-                              return (
-                                <div key={type} className="flex items-center gap-3">
-                                  <Label className="text-xs w-32 shrink-0">{dateTypeLabels[type]}</Label>
-                                  <div className="flex items-center gap-2">
-                                    <Popover>
-                                      <PopoverTrigger asChild>
-                                        <Button
-                                          variant="outline"
-                                          size="sm"
-                                          className={cn(
-                                            "w-28 h-7 text-xs justify-start",
-                                            !range.from && "text-muted-foreground"
-                                          )}
-                                        >
-                                          {range.from ? format(range.from, "dd/MM/yyyy") : "From date"}
-                                        </Button>
-                                      </PopoverTrigger>
-                                      <PopoverContent className="w-auto p-0" align="start">
-                                        <Calendar
-                                          mode="single"
-                                          selected={range.from}
-                                          onSelect={(date) => updateDateRange(type, 'from', date)}
-                                          initialFocus
-                                          className="p-3 pointer-events-auto"
-                                        />
-                                      </PopoverContent>
-                                    </Popover>
-                                    <span className="text-xs text-muted-foreground">to</span>
-                                    <Popover>
-                                      <PopoverTrigger asChild>
-                                        <Button
-                                          variant="outline"
-                                          size="sm"
-                                          className={cn(
-                                            "w-28 h-7 text-xs justify-start",
-                                            !range.to && "text-muted-foreground"
-                                          )}
-                                        >
-                                          {range.to ? format(range.to, "dd/MM/yyyy") : "To date"}
-                                        </Button>
-                                      </PopoverTrigger>
-                                      <PopoverContent className="w-auto p-0" align="start">
-                                        <Calendar
-                                          mode="single"
-                                          selected={range.to}
-                                          onSelect={(date) => updateDateRange(type, 'to', date)}
-                                          initialFocus
-                                          className="p-3 pointer-events-auto"
-                                        />
-                                      </PopoverContent>
-                                    </Popover>
-                                  </div>
-                                </div>
-                              );
-                            })}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </PopoverContent>
-              </Popover>
+              {hasAnyDates && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={clearAllDates}
+                  className="h-6 px-2 text-xs hover:bg-destructive/10 hover:text-destructive"
+                >
+                  <X className="h-3 w-3 mr-1" />
+                  Clear All Date Filters
+                </Button>
+              )}
 
               {/* Action Buttons */}
               <div className="flex gap-2">
@@ -519,6 +428,94 @@ const ModernWorkOrderFilters = () => {
               </CollapsibleContent>
             </Card>
           </Collapsible>
+
+          {/* Date Filter Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {Object.entries(dateTypeCategories).map(([category, types]) => {
+              const hasActiveDates = types.some(type => {
+                const range = dateRanges[type];
+                return range.from || range.to;
+              });
+
+              return (
+                <Card key={category} className={cn(
+                  "overflow-hidden transition-all duration-200",
+                  hasActiveDates && "ring-2 ring-primary/20 bg-primary/5"
+                )}>
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-sm font-medium flex items-center gap-2">
+                      <CalendarIcon className="h-4 w-4 text-primary" />
+                      {category}
+                      {hasActiveDates && (
+                        <div className="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+                      )}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="pt-0 space-y-4">
+                    {types.map((type) => {
+                      const range = dateRanges[type];
+                      return (
+                        <div key={type} className="space-y-2">
+                          <Label className="text-xs font-medium text-muted-foreground">
+                            {dateTypeLabels[type]}
+                          </Label>
+                          <div className="flex items-center gap-2">
+                            <Popover>
+                              <PopoverTrigger asChild>
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  className={cn(
+                                    "flex-1 h-8 text-xs justify-start",
+                                    !range.from && "text-muted-foreground"
+                                  )}
+                                >
+                                  {range.from ? format(range.from, "dd/MM/yy") : "From"}
+                                </Button>
+                              </PopoverTrigger>
+                              <PopoverContent className="w-auto p-0" align="start">
+                                <Calendar
+                                  mode="single"
+                                  selected={range.from}
+                                  onSelect={(date) => updateDateRange(type, 'from', date)}
+                                  initialFocus
+                                  className="p-3 pointer-events-auto"
+                                />
+                              </PopoverContent>
+                            </Popover>
+                            <span className="text-xs text-muted-foreground">-</span>
+                            <Popover>
+                              <PopoverTrigger asChild>
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  className={cn(
+                                    "flex-1 h-8 text-xs justify-start",
+                                    !range.to && "text-muted-foreground"
+                                  )}
+                                >
+                                  {range.to ? format(range.to, "dd/MM/yy") : "To"}
+                                </Button>
+                              </PopoverTrigger>
+                              <PopoverContent className="w-auto p-0" align="start">
+                                <Calendar
+                                  mode="single"
+                                  selected={range.to}
+                                  onSelect={(date) => updateDateRange(type, 'to', date)}
+                                  initialFocus
+                                  className="p-3 pointer-events-auto"
+                                />
+                              </PopoverContent>
+                            </Popover>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
         </TabsContent>
 
         <TabsContent value="actions">
