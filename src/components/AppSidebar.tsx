@@ -32,27 +32,46 @@ import {
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { ChevronDown, ChevronRight } from "lucide-react";
 
-const quickActions = [
-  { title: "Hot List", icon: FileText },
-  { title: "Transit Log", icon: Truck },
-  { title: "Update RFQs", icon: RefreshCw },
-  { title: "Rental Status Cards", icon: CreditCard },
-  { title: "PO/Exchange Orders", icon: FileText },
-  { title: "Assign Techs", icon: Users },
-  { title: "Assign Departure Info", icon: MapPin },
-  { title: "Export Excel", icon: FileSpreadsheet },
-  { title: "Missing Cost", icon: DollarSign },
-  { title: "Print Labels", icon: Tags },
-  { title: "Generate Reports", icon: BarChart3 },
-  { title: "Bulk Update", icon: Edit },
-  { title: "Archive Records", icon: Archive },
-  { title: "Quality Check", icon: CheckCircle },
-  { title: "Calibration Reminders", icon: Clock },
-];
+const quickActionCategories = {
+  "Work Management": [
+    { title: "Hot List", icon: FileText },
+    { title: "Transit Log", icon: Truck },
+    { title: "Update RFQs", icon: RefreshCw },
+    { title: "Assign Techs", icon: Users },
+    { title: "Assign Departure Info", icon: MapPin },
+    { title: "Quality Check", icon: CheckCircle },
+    { title: "Calibration Reminders", icon: Clock },
+  ],
+  "Orders & Finance": [
+    { title: "Rental Status Cards", icon: CreditCard },
+    { title: "PO/Exchange Orders", icon: FileText },
+    { title: "Missing Cost", icon: DollarSign },
+  ],
+  "Data & Reports": [
+    { title: "Export Excel", icon: FileSpreadsheet },
+    { title: "Generate Reports", icon: BarChart3 },
+    { title: "Print Labels", icon: Tags },
+  ],
+  "System Actions": [
+    { title: "Bulk Update", icon: Edit },
+    { title: "Archive Records", icon: Archive },
+  ]
+};
 
 export function AppSidebar() {
   const { open } = useSidebar();
+  const [expandedGroups, setExpandedGroups] = useState<string[]>(["Work Management"]);
+
+  const toggleGroup = (groupName: string) => {
+    setExpandedGroups(prev => 
+      prev.includes(groupName) 
+        ? prev.filter(name => name !== groupName)
+        : [...prev, groupName]
+    );
+  };
 
   return (
     <Sidebar
@@ -75,48 +94,75 @@ export function AppSidebar() {
       </SidebarHeader>
 
       <SidebarContent className="px-2 py-4">
-        <SidebarGroup>
-          <SidebarGroupLabel className={`px-3 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider ${!open && "sr-only"}`}>
-            Quick Actions
-          </SidebarGroupLabel>
-
-          <SidebarGroupContent className="mt-2">
-            <SidebarMenu className="space-y-1">
-              {quickActions.map((action, index) => (
-                <SidebarMenuItem key={action.title}>
-                  <SidebarMenuButton 
-                    asChild
-                    tooltip={!open ? action.title : undefined}
-                    className="group"
-                  >
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className={`
-                        w-full justify-start h-10 px-3 
-                        text-sidebar-foreground hover:text-foreground
-                        hover:bg-sidebar-accent hover:shadow-sm
-                        transition-all duration-200 ease-in-out
-                        group-hover:translate-x-1
-                        ${!open && "justify-center px-0"}
-                      `}
-                      style={{
-                        animationDelay: `${index * 50}ms`
-                      }}
-                    >
-                      <action.icon className="h-4 w-4 shrink-0 text-primary group-hover:scale-110 transition-transform duration-200" />
-                      {open && (
-                        <span className="ml-3 font-medium text-sm animate-fade-in">
-                          {action.title}
-                        </span>
+        {Object.entries(quickActionCategories).map(([categoryName, actions], categoryIndex) => (
+          <SidebarGroup key={categoryName} className="mb-4">
+            <Collapsible 
+              open={expandedGroups.includes(categoryName)} 
+              onOpenChange={() => toggleGroup(categoryName)}
+            >
+              <CollapsibleTrigger asChild>
+                <SidebarGroupLabel 
+                  className={`
+                    px-3 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider
+                    cursor-pointer hover:text-foreground transition-colors
+                    flex items-center justify-between group
+                    ${!open && "sr-only"}
+                  `}
+                >
+                  <span>{categoryName}</span>
+                  {open && (
+                    <div className="group-hover:scale-110 transition-transform">
+                      {expandedGroups.includes(categoryName) ? (
+                        <ChevronDown className="h-3 w-3" />
+                      ) : (
+                        <ChevronRight className="h-3 w-3" />
                       )}
-                    </Button>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+                    </div>
+                  )}
+                </SidebarGroupLabel>
+              </CollapsibleTrigger>
+
+              <CollapsibleContent>
+                <SidebarGroupContent className="mt-2">
+                  <SidebarMenu className="space-y-1">
+                    {actions.map((action, index) => (
+                      <SidebarMenuItem key={action.title}>
+                        <SidebarMenuButton 
+                          asChild
+                          tooltip={!open ? action.title : undefined}
+                          className="group"
+                        >
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className={`
+                              w-full justify-start h-10 px-3 
+                              text-sidebar-foreground hover:text-foreground
+                              hover:bg-sidebar-accent hover:shadow-sm
+                              transition-all duration-200 ease-in-out
+                              group-hover:translate-x-1
+                              ${!open && "justify-center px-0"}
+                            `}
+                            style={{
+                              animationDelay: `${(categoryIndex * 100) + (index * 50)}ms`
+                            }}
+                          >
+                            <action.icon className="h-4 w-4 shrink-0 text-primary group-hover:scale-110 transition-transform duration-200" />
+                            {open && (
+                              <span className="ml-3 font-medium text-sm animate-fade-in">
+                                {action.title}
+                              </span>
+                            )}
+                          </Button>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                    ))}
+                  </SidebarMenu>
+                </SidebarGroupContent>
+              </CollapsibleContent>
+            </Collapsible>
+          </SidebarGroup>
+        ))}
         
         {/* Footer section when expanded */}
         {open && (
