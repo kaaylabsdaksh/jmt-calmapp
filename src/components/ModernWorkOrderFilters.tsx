@@ -491,11 +491,9 @@ const ModernWorkOrderFilters = () => {
             </CardContent>
           </CollapsibleContent>
         </Collapsible>
-      </Card>
-
-      {/* Submit Button Section - Below All Fields */}
-      <Card className="animate-fade-in">
-        <CardContent className="pt-6">
+        
+        {/* Search Button at bottom of main card */}
+        <div className="px-6 py-6 border-t bg-muted/30">
           <div className="flex justify-center">
             <Button 
               type="submit" 
@@ -506,7 +504,7 @@ const ModernWorkOrderFilters = () => {
               Search Work Orders
             </Button>
           </div>
-        </CardContent>
+        </div>
       </Card>
     </div>
   );
