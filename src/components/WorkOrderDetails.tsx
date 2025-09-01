@@ -422,7 +422,7 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
                 </div>
 
                 {/* Items Cards */}
-                <div className="space-y-4">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                   {[
                     { id: '002', manufacturer: 'VAETRIX', model: 'ETG-5K-1-05-BT', serial: '1557252190', type: 'SINGLE', deliverDate: '04/03/2025' },
                     { id: '004', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/29/2025' },
@@ -450,7 +450,7 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
                           </Badge>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div className="space-y-3">
                             <div>
                               <Label className="text-xs text-muted-foreground">Manufacturer</Label>
@@ -460,45 +460,32 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
                               <Label className="text-xs text-muted-foreground">Model</Label>
                               <p className="text-sm font-medium">{item.model}</p>
                             </div>
-                          </div>
-
-                          <div className="space-y-3">
                             <div>
                               <Label className="text-xs text-muted-foreground">Serial #</Label>
                               <p className="text-sm font-medium">{item.serial}</p>
                             </div>
+                          </div>
+
+                          <div className="space-y-3">
                             <div>
                               <Label className="text-xs text-muted-foreground">Item Type</Label>
                               <p className="text-sm font-medium">{item.type}</p>
                             </div>
-                          </div>
-
-                          <div className="space-y-3">
                             <div>
                               <Label className="text-xs text-muted-foreground">Created</Label>
                               <p className="text-sm font-medium">10/15/2021</p>
                             </div>
                             <div>
-                              <Label className="text-xs text-muted-foreground">Departure</Label>
-                              <p className="text-sm font-medium">-</p>
-                            </div>
-                          </div>
-
-                          <div className="space-y-3">
-                            <div>
                               <Label className="text-xs text-muted-foreground">Deliver By Date</Label>
                               <p className="text-sm font-medium">{item.deliverDate}</p>
-                            </div>
-                            <div>
-                              <Label className="text-xs text-muted-foreground">PO #</Label>
-                              <p className="text-sm font-medium">CUST/PO#</p>
                             </div>
                           </div>
                         </div>
 
                         <div className="mt-4 pt-3 border-t">
                           <div className="flex items-center justify-between text-xs text-muted-foreground">
-                            <span>Open PO/CO: CUST/PO#</span>
+                            <span>Departure: -</span>
+                            <span>PO #: CUST/PO#</span>
                           </div>
                         </div>
                       </CardContent>
