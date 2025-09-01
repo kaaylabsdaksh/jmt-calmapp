@@ -124,6 +124,22 @@ const ModernWorkOrderFilters = () => {
     "need-by": {}
   });
 
+  // Popover state for date pickers
+  const [datePopoverStates, setDatePopoverStates] = useState<Record<string, { from: boolean; to: boolean }>>({});
+
+  const getPopoverKey = (type: DateRangeType) => `date-${type}`;
+
+  const setPopoverOpen = (type: DateRangeType, field: 'from' | 'to', open: boolean) => {
+    const key = getPopoverKey(type);
+    setDatePopoverStates(prev => ({
+      ...prev,
+      [key]: {
+        ...prev[key],
+        [field]: open
+      }
+    }));
+  };
+
   const dateTypeLabels: Record<DateRangeType, string> = {
     "created": "Created From/To",
     "arrival": "Arrival From/To", 
@@ -147,6 +163,17 @@ const ModernWorkOrderFilters = () => {
         [field]: date
       }
     }));
+
+    // Auto-switch to "to" date picker when "from" date is selected
+    if (field === 'from' && date) {
+      setPopoverOpen(type, 'from', false);
+      // Small delay to allow the from popover to close before opening the to popover
+      setTimeout(() => {
+        setPopoverOpen(type, 'to', true);
+      }, 100);
+    } else if (field === 'to' && date) {
+      setPopoverOpen(type, 'to', false);
+    }
   };
 
   const clearAllDates = () => {
@@ -276,55 +303,61 @@ const ModernWorkOrderFilters = () => {
                               return (
                                 <div key={type} className="flex items-center gap-3">
                                   <Label className="text-xs w-32 shrink-0">{dateTypeLabels[type]}</Label>
-                                  <div className="flex items-center gap-2">
-                                    <Popover>
-                                      <PopoverTrigger asChild>
-                                        <Button
-                                          variant="outline"
-                                          size="sm"
-                                          className={cn(
-                                            "w-28 h-7 text-xs justify-start",
-                                            !range.from && "text-muted-foreground"
-                                          )}
-                                        >
-                                          {range.from ? format(range.from, "dd/MM/yyyy") : "From date"}
-                                        </Button>
-                                      </PopoverTrigger>
-                                      <PopoverContent className="w-auto p-0" align="start">
-                                        <Calendar
-                                          mode="single"
-                                          selected={range.from}
-                                          onSelect={(date) => updateDateRange(type, 'from', date)}
-                                          initialFocus
-                                          className="p-3 pointer-events-auto"
-                                        />
-                                      </PopoverContent>
-                                    </Popover>
-                                    <span className="text-xs text-muted-foreground">to</span>
-                                    <Popover>
-                                      <PopoverTrigger asChild>
-                                        <Button
-                                          variant="outline"
-                                          size="sm"
-                                          className={cn(
-                                            "w-28 h-7 text-xs justify-start",
-                                            !range.to && "text-muted-foreground"
-                                          )}
-                                        >
-                                          {range.to ? format(range.to, "dd/MM/yyyy") : "To date"}
-                                        </Button>
-                                      </PopoverTrigger>
-                                      <PopoverContent className="w-auto p-0" align="start">
-                                        <Calendar
-                                          mode="single"
-                                          selected={range.to}
-                                          onSelect={(date) => updateDateRange(type, 'to', date)}
-                                          initialFocus
-                                          className="p-3 pointer-events-auto"
-                                        />
-                                      </PopoverContent>
-                                    </Popover>
-                                  </div>
+                                   <div className="flex items-center gap-2">
+                                     <Popover 
+                                       open={datePopoverStates[getPopoverKey(type)]?.from || false}
+                                       onOpenChange={(open) => setPopoverOpen(type, 'from', open)}
+                                     >
+                                       <PopoverTrigger asChild>
+                                         <Button
+                                           variant="outline"
+                                           size="sm"
+                                           className={cn(
+                                             "w-28 h-7 text-xs justify-start",
+                                             !range.from && "text-muted-foreground"
+                                           )}
+                                         >
+                                           {range.from ? format(range.from, "dd/MM/yyyy") : "From date"}
+                                         </Button>
+                                       </PopoverTrigger>
+                                       <PopoverContent className="w-auto p-0" align="start">
+                                         <Calendar
+                                           mode="single"
+                                           selected={range.from}
+                                           onSelect={(date) => updateDateRange(type, 'from', date)}
+                                           initialFocus
+                                           className="p-3 pointer-events-auto"
+                                         />
+                                       </PopoverContent>
+                                     </Popover>
+                                     <span className="text-xs text-muted-foreground">to</span>
+                                     <Popover 
+                                       open={datePopoverStates[getPopoverKey(type)]?.to || false}
+                                       onOpenChange={(open) => setPopoverOpen(type, 'to', open)}
+                                     >
+                                       <PopoverTrigger asChild>
+                                         <Button
+                                           variant="outline"
+                                           size="sm"
+                                           className={cn(
+                                             "w-28 h-7 text-xs justify-start",
+                                             !range.to && "text-muted-foreground"
+                                           )}
+                                         >
+                                           {range.to ? format(range.to, "dd/MM/yyyy") : "To date"}
+                                         </Button>
+                                       </PopoverTrigger>
+                                       <PopoverContent className="w-auto p-0" align="start">
+                                         <Calendar
+                                           mode="single"
+                                           selected={range.to}
+                                           onSelect={(date) => updateDateRange(type, 'to', date)}
+                                           initialFocus
+                                           className="p-3 pointer-events-auto"
+                                         />
+                                       </PopoverContent>
+                                     </Popover>
+                                   </div>
                                 </div>
                               );
                             })}
