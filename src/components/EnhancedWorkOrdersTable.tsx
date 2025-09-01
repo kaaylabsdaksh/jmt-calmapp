@@ -180,222 +180,252 @@ const EnhancedWorkOrdersTable = () => {
         )}
       </CardHeader>
 
-      <CardContent className="p-0">
-        <div className="overflow-x-auto max-w-full">
-          <Table>
-            <TableHeader>
-              <TableRow className="bg-muted/50">
-                <TableHead className="w-12">
-                  <input 
-                    type="checkbox" 
-                    checked={selectedRows.length === workOrders.length}
-                    onChange={handleSelectAll}
-                    className="rounded"
-                  />
-                </TableHead>
-                <TableHead className="font-semibold min-w-24">WO #</TableHead>
-                <TableHead className="font-semibold min-w-24">Date</TableHead>
-                <TableHead className="font-semibold min-w-24">Update</TableHead>
-                <TableHead className="font-semibold min-w-24">Location</TableHead>
-                <TableHead className="font-semibold min-w-20">Action</TableHead>
-                <TableHead className="font-semibold min-w-28">Status Date</TableHead>
-                <TableHead className="font-semibold min-w-28">Received</TableHead>
-                <TableHead className="font-semibold min-w-24">Status By</TableHead>
-                <TableHead className="font-semibold min-w-32">Manufacturer</TableHead>
-                <TableHead className="font-semibold min-w-32">Model Number</TableHead>
-                <TableHead className="font-semibold w-16">Lab</TableHead>
-                <TableHead className="font-semibold min-w-20">Priority</TableHead>
-                <TableHead className="font-semibold min-w-32">Serial/ID</TableHead>
-                <TableHead className="font-semibold min-w-24">Cust PO</TableHead>
-                <TableHead className="font-semibold min-w-20">Cost ID</TableHead>
-                <TableHead className="font-semibold min-w-24">PO #</TableHead>
-                <TableHead className="font-semibold min-w-24">Unit Type</TableHead>
-                <TableHead className="font-semibold min-w-48">Item Type</TableHead>
-                <TableHead className="font-semibold min-w-32">Departure</TableHead>
-                <TableHead className="font-semibold min-w-20">Due</TableHead>
-                <TableHead className="font-semibold min-w-32">Special Instructions</TableHead>
-                <TableHead className="font-semibold min-w-32">Proof of Delivery</TableHead>
-                <TableHead className="font-semibold w-12">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {workOrders.map((order, index) => (
-                <TableRow 
-                  key={order.id} 
-                  className={`
-                    ${index % 2 === 0 ? "bg-background" : "bg-muted/20"}
-                    ${selectedRows.includes(order.id) ? "bg-primary/10" : ""}
-                    hover:bg-muted/30 transition-colors
-                  `}
-                >
-                  <TableCell>
+      <CardContent className="p-6">
+        {/* Select All Control */}
+        <div className="flex items-center gap-2 mb-6 p-4 bg-muted/20 rounded-lg">
+          <input 
+            type="checkbox" 
+            checked={selectedRows.length === workOrders.length}
+            onChange={handleSelectAll}
+            className="rounded"
+          />
+          <span className="text-sm font-medium">Select All Work Orders</span>
+        </div>
+
+        {/* Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {workOrders.map((order) => (
+            <Card 
+              key={order.id} 
+              className={`
+                ${selectedRows.includes(order.id) ? "ring-2 ring-primary bg-primary/5" : ""}
+                hover:shadow-md transition-all duration-200 cursor-pointer
+              `}
+              onClick={() => handleSelectRow(order.id)}
+            >
+              <CardHeader className="pb-4">
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center gap-3">
                     <input 
                       type="checkbox" 
                       checked={selectedRows.includes(order.id)}
-                      onChange={() => handleSelectRow(order.id)}
+                      onChange={(e) => {
+                        e.stopPropagation();
+                        handleSelectRow(order.id);
+                      }}
                       className="rounded"
                     />
-                  </TableCell>
-                  <TableCell>
-                    <Button variant="link" className="p-0 h-auto font-medium text-primary hover:underline">
-                      {order.id}
-                    </Button>
-                  </TableCell>
-                  <TableCell className="text-sm">{order.date}</TableCell>
-                  <TableCell className="text-sm">{order.updateDate}</TableCell>
-                  <TableCell>
-                    <Badge variant={getStatusBadgeVariant(order.status)} className="text-xs">
-                      {order.location}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-sm font-mono">{order.action}</TableCell>
-                  <TableCell className="text-sm">{order.statusDate}</TableCell>
-                  <TableCell className="text-sm">{order.receivedDate}</TableCell>
-                  <TableCell className="text-sm">{order.statusBy}</TableCell>
-                  <TableCell className="text-sm font-medium">{order.manufacturer}</TableCell>
-                  <TableCell className="text-sm">{order.modelNumber}</TableCell>
-                  <TableCell className="text-center font-mono">{order.labOrder}</TableCell>
-                  <TableCell>
-                    <Badge variant={getPriorityBadgeVariant(order.priority)} className="text-xs">
-                      {order.priority}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-sm font-mono">{order.statusDate2}</TableCell>
-                  <TableCell className="text-sm">{order.custPo}</TableCell>
-                  <TableCell className="text-sm">{order.costId}</TableCell>
-                  <TableCell className="text-sm">{order.poNumber}</TableCell>
-                  <TableCell className="text-sm">{order.unitType}</TableCell>
-                  <TableCell className="text-sm">{order.itemType}</TableCell>
-                  <TableCell className="text-sm">{order.departure}</TableCell>
-                  <TableCell className="text-sm">{order.due}</TableCell>
-                  <TableCell className="text-sm">{order.specialInstructions}</TableCell>
-                  <TableCell className="text-sm">{order.proofOfDelivery}</TableCell>
-                  <TableCell>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-                          <MoreHorizontal className="h-4 w-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="bg-popover border shadow-lg z-50">
-                        <DropdownMenuItem className="flex items-center gap-2">
-                          <Eye className="h-4 w-4" />
-                          View Details
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="flex items-center gap-2">
-                          <Edit className="h-4 w-4" />
-                          Edit Order
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="flex items-center gap-2">
-                          <Printer className="h-4 w-4" />
-                          Print Label
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="flex items-center gap-2">
-                          <ExternalLink className="h-4 w-4" />
-                          Open in New Tab
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+                    <div>
+                      <CardTitle className="text-lg font-semibold text-primary">
+                        WO #{order.id}
+                      </CardTitle>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        {order.date} • Updated: {order.updateDate}
+                      </p>
+                    </div>
+                  </div>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
+                      <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                        <MoreHorizontal className="h-4 w-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="bg-popover border shadow-lg z-50">
+                      <DropdownMenuItem className="flex items-center gap-2">
+                        <Eye className="h-4 w-4" />
+                        View Details
+                      </DropdownMenuItem>
+                      <DropdownMenuItem className="flex items-center gap-2">
+                        <Edit className="h-4 w-4" />
+                        Edit Order
+                      </DropdownMenuItem>
+                      <DropdownMenuItem className="flex items-center gap-2">
+                        <Printer className="h-4 w-4" />
+                        Print Label
+                      </DropdownMenuItem>
+                      <DropdownMenuItem className="flex items-center gap-2">
+                        <ExternalLink className="h-4 w-4" />
+                        Open in New Tab
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
+              </CardHeader>
+
+              <CardContent className="space-y-4">
+                {/* Status and Priority */}
+                <div className="flex items-center gap-2">
+                  <Badge variant={getStatusBadgeVariant(order.status)} className="text-xs">
+                    {order.location}
+                  </Badge>
+                  <Badge variant={getPriorityBadgeVariant(order.priority)} className="text-xs">
+                    {order.priority}
+                  </Badge>
+                  <span className="text-xs font-mono bg-muted px-2 py-1 rounded">
+                    {order.action}
+                  </span>
+                </div>
+
+                {/* Equipment Info */}
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Manufacturer:</span>
+                    <span className="font-medium">{order.manufacturer}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Model:</span>
+                    <span className="font-mono">{order.modelNumber}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Serial/ID:</span>
+                    <span className="font-mono">{order.statusDate2}</span>
+                  </div>
+                </div>
+
+                {/* Dates */}
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Status Date:</span>
+                    <span>{order.statusDate}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Received:</span>
+                    <span>{order.receivedDate}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Status By:</span>
+                    <span>{order.statusBy}</span>
+                  </div>
+                </div>
+
+                {/* Additional Info */}
+                <div className="pt-2 border-t space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Cust PO:</span>
+                    <span>{order.custPo}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">PO Number:</span>
+                    <span>{order.poNumber}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Unit Type:</span>
+                    <span>{order.unitType}</span>
+                  </div>
+                  {order.departure !== "SINGLE" && (
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">Departure:</span>
+                      <span>{order.departure}</span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Lab Order */}
+                <div className="flex items-center justify-center pt-2">
+                  <span className="text-xs font-mono bg-primary/10 text-primary px-3 py-1 rounded-full">
+                    Lab: {order.labOrder}
+                  </span>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
-        
+
         {/* Enhanced Pagination */}
-        <div className="flex flex-col lg:flex-row items-center justify-between px-6 py-4 border-t bg-muted/20 gap-4">
-          <div className="flex items-center gap-4 text-sm text-muted-foreground">
-            <span>
-              Showing {((currentPage - 1) * pageSize) + 1} to {Math.min(currentPage * pageSize, totalRecords)} of {totalRecords} records
-            </span>
-            <span>•</span>
-            <span>Page {currentPage} of {totalPages}</span>
-          </div>
-          
-          <div className="flex items-center gap-2">
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-              disabled={currentPage === 1}
-              className="flex items-center gap-1"
-            >
-              <ChevronLeft className="h-4 w-4" />
-              Previous
-            </Button>
-            
-            <div className="flex gap-1">
-              {/* First few pages */}
-              {[1, 2, 3].map(page => (
-                page <= totalPages && (
-                  <Button 
-                    key={page}
-                    variant={currentPage === page ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => setCurrentPage(page)}
-                    className="w-10 h-8"
-                  >
-                    {page}
-                  </Button>
-                )
-              ))}
-              
-              {/* Current page area */}
-              {currentPage > 5 && <span className="px-2 text-muted-foreground">...</span>}
-              {currentPage > 3 && currentPage <= totalPages - 3 && (
-                <Button 
-                  variant="default"
-                  size="sm"
-                  className="w-10 h-8"
-                >
-                  {currentPage}
-                </Button>
-              )}
-              {currentPage < totalPages - 4 && <span className="px-2 text-muted-foreground">...</span>}
-              
-              {/* Last few pages */}
-              {[totalPages - 2, totalPages - 1, totalPages].map(page => (
-                page > 3 && page > 0 && (
-                  <Button 
-                    key={page}
-                    variant={currentPage === page ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => setCurrentPage(page)}
-                    className="w-10 h-8"
-                  >
-                    {page}
-                  </Button>
-                )
-              ))}
+        <div className="mt-6 pt-6 border-t">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-4 text-sm text-muted-foreground">
+              <span>
+                Showing {((currentPage - 1) * pageSize) + 1} to {Math.min(currentPage * pageSize, totalRecords)} of {totalRecords} records
+              </span>
+              <span>•</span>
+              <span>Page {currentPage} of {totalPages}</span>
             </div>
             
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
-              disabled={currentPage === totalPages}
-              className="flex items-center gap-1"
-            >
-              Next
-              <ChevronRight className="h-4 w-4" />
-            </Button>
-          </div>
-          
-          {/* Jump to page */}
-          <div className="flex items-center gap-2 text-sm">
-            <span>Go to page:</span>
-            <Input 
-              type="number" 
-              min={1} 
-              max={totalPages}
-              value={currentPage}
-              onChange={(e) => {
-                const page = Math.max(1, Math.min(totalPages, parseInt(e.target.value) || 1));
-                setCurrentPage(page);
-              }}
-              className="w-16 h-8"
-            />
+            <div className="flex items-center gap-2">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+                disabled={currentPage === 1}
+                className="flex items-center gap-1"
+              >
+                <ChevronLeft className="h-4 w-4" />
+                Previous
+              </Button>
+              
+              <div className="flex gap-1">
+                {/* First few pages */}
+                {[1, 2, 3].map(page => (
+                  page <= totalPages && (
+                    <Button 
+                      key={page}
+                      variant={currentPage === page ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setCurrentPage(page)}
+                      className="w-10 h-8"
+                    >
+                      {page}
+                    </Button>
+                  )
+                ))}
+                
+                {/* Current page area */}
+                {currentPage > 5 && <span className="px-2 text-muted-foreground">...</span>}
+                {currentPage > 3 && currentPage <= totalPages - 3 && (
+                  <Button 
+                    variant="default"
+                    size="sm"
+                    className="w-10 h-8"
+                  >
+                    {currentPage}
+                  </Button>
+                )}
+                {currentPage < totalPages - 4 && <span className="px-2 text-muted-foreground">...</span>}
+                
+                {/* Last few pages */}
+                {[totalPages - 2, totalPages - 1, totalPages].map(page => (
+                  page > 3 && page > 0 && (
+                    <Button 
+                      key={page}
+                      variant={currentPage === page ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setCurrentPage(page)}
+                      className="w-10 h-8"
+                    >
+                      {page}
+                    </Button>
+                  )
+                ))}
+              </div>
+              
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+                disabled={currentPage === totalPages}
+                className="flex items-center gap-1"
+              >
+                Next
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </div>
+            
+            {/* Jump to page */}
+            <div className="flex items-center gap-2 text-sm">
+              <span>Go to page:</span>
+              <Input 
+                type="number" 
+                min={1} 
+                max={totalPages}
+                value={currentPage}
+                onChange={(e) => {
+                  const page = Math.max(1, Math.min(totalPages, parseInt(e.target.value) || 1));
+                  setCurrentPage(page);
+                }}
+                className="w-16 h-8"
+              />
+            </div>
           </div>
         </div>
       </CardContent>
