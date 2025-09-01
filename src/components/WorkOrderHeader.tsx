@@ -18,9 +18,6 @@ const WorkOrderHeader = () => {
               <Button variant="outline" size="sm">
                 User Guide
               </Button>
-              <Button variant="secondary" size="sm">
-                Menu
-              </Button>
             </div>
           </div>
         </div>
