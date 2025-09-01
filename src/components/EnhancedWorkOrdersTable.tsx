@@ -8,6 +8,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { ExternalLink, Download, Printer, Eye, Edit, MoreHorizontal, ChevronLeft, ChevronRight } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
+interface EnhancedWorkOrdersTableProps {
+  onViewDetails?: (workOrderId: string) => void;
+}
+
 // Enhanced mock data with all fields from original
 const workOrders = [
   {
@@ -107,7 +111,7 @@ const getPriorityBadgeVariant = (priority: string) => {
   }
 };
 
-const EnhancedWorkOrdersTable = () => {
+const EnhancedWorkOrdersTable = ({ onViewDetails }: EnhancedWorkOrdersTableProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(30);
   const [selectedRows, setSelectedRows] = useState<string[]>([]);
@@ -231,7 +235,13 @@ const EnhancedWorkOrdersTable = () => {
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end" className="bg-popover border shadow-lg z-50">
-                      <DropdownMenuItem className="flex items-center gap-2">
+                      <DropdownMenuItem 
+                        className="flex items-center gap-2 cursor-pointer"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onViewDetails?.(order.id);
+                        }}
+                      >
                         <Eye className="h-4 w-4" />
                         View Details
                       </DropdownMenuItem>
