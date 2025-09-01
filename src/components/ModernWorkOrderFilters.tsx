@@ -358,7 +358,7 @@ const ModernWorkOrderFilters = () => {
         
         <Separator />
         
-        <CardContent className="pt-0">
+        <CardContent className="pt-6">
                   <div className="space-y-6">
                     {/* Work Order Information Section */}
                     <Collapsible open={sectionsOpen.workOrder} onOpenChange={() => toggleSection('workOrder')}>
