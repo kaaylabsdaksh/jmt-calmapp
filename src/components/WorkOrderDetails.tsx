@@ -613,13 +613,13 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
                 </div>
               </div>
 
-              {/* Action Buttons - Normal size, centered on mobile */}
-              <div className="flex items-center gap-3 sm:shrink-0 mx-auto sm:mx-0">
-                <Button variant="outline" size="sm">
+              {/* Action Buttons - Full width on mobile */}
+              <div className="flex items-center gap-3 w-full sm:shrink-0 sm:mx-0 sm:w-auto">
+                <Button variant="outline" size="sm" className="flex-1 sm:flex-initial h-12 sm:h-9">
                   <X className="h-4 w-4 mr-2" />
                   Cancel
                 </Button>
-                <Button size="sm">
+                <Button size="sm" className="flex-1 sm:flex-initial h-12 sm:h-9">
                   <Save className="h-4 w-4 mr-2" />
                   Save
                 </Button>
