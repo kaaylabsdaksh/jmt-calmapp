@@ -592,11 +592,11 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
         </Tabs>
 
         {/* Footer Actions - Now Sticky */}
-        <div className={`fixed bottom-0 ${open ? 'left-64' : 'left-14'} right-0 z-40 bg-card/95 backdrop-blur border-t shadow-lg transition-all duration-300`}>
-          <div className="px-4 sm:px-6 py-4">
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+        <div className={`fixed bottom-0 left-0 sm:${open ? 'left-64' : 'left-14'} right-0 z-40 bg-card/95 backdrop-blur border-t shadow-lg transition-all duration-300`}>
+          <div className="px-4 sm:px-6 py-3 sm:py-4">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 lg:gap-4">
               {/* Created/Modified Info */}
-              <div className="text-sm text-muted-foreground space-y-1">
+              <div className="text-xs sm:text-sm text-muted-foreground space-y-1 order-2 lg:order-1">
                 <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
                   <div className="flex items-center gap-2">
                     <span>Created By:</span>
@@ -614,12 +614,12 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
               </div>
 
               {/* Action Buttons */}
-              <div className="flex items-center gap-3 shrink-0">
-                <Button variant="outline" size="sm" className="w-full sm:w-auto">
+              <div className="flex items-center gap-2 sm:gap-3 shrink-0 order-1 lg:order-2">
+                <Button variant="outline" size="sm" className="flex-1 sm:w-auto sm:flex-initial">
                   <X className="h-4 w-4 mr-2" />
                   Cancel
                 </Button>
-                <Button size="sm" className="w-full sm:w-auto">
+                <Button size="sm" className="flex-1 sm:w-auto sm:flex-initial">
                   <Save className="h-4 w-4 mr-2" />
                   Save
                 </Button>
