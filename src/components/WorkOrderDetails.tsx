@@ -121,36 +121,46 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           {/* Tab Navigation */}
-          <TabsList className="grid w-full grid-cols-10 h-auto p-1">
-            <TabsTrigger value="general" className="flex items-center gap-2 py-2.5">
-              <span className="hidden sm:inline">General</span>
+          <TabsList className="grid w-full grid-cols-5 md:grid-cols-10 h-auto p-1 gap-1">
+            <TabsTrigger value="general" className="flex items-center justify-center gap-1 py-2.5 px-1 text-xs md:text-sm">
+              <span className="hidden md:inline">General</span>
+              <span className="md:hidden">Gen</span>
             </TabsTrigger>
-            <TabsTrigger value="account" className="flex items-center gap-2 py-2.5">
-              <span className="hidden sm:inline">Account Info</span>
+            <TabsTrigger value="account" className="flex items-center justify-center gap-1 py-2.5 px-1 text-xs md:text-sm">
+              <span className="hidden md:inline">Account Info</span>
+              <span className="md:hidden">Account</span>
             </TabsTrigger>
-            <TabsTrigger value="contacts" className="flex items-center gap-2 py-2.5">
-              <span className="hidden sm:inline">WO Contacts</span>
+            <TabsTrigger value="contacts" className="flex items-center justify-center gap-1 py-2.5 px-1 text-xs md:text-sm">
+              <span className="hidden md:inline">WO Contacts</span>
+              <span className="md:hidden">Contacts</span>
             </TabsTrigger>
-            <TabsTrigger value="items" className="flex items-center gap-2 py-2.5">
-              <span className="hidden sm:inline">WO Items</span>
+            <TabsTrigger value="items" className="flex items-center justify-center gap-1 py-2.5 px-1 text-xs md:text-sm">
+              <span className="hidden md:inline">WO Items</span>
+              <span className="md:hidden">Items</span>
             </TabsTrigger>
-            <TabsTrigger value="onsite" className="flex items-center gap-2 py-2.5">
-              <span className="hidden sm:inline">Onsite Defaults</span>
+            <TabsTrigger value="onsite" className="flex items-center justify-center gap-1 py-2.5 px-1 text-xs md:text-sm">
+              <span className="hidden md:inline">Onsite Defaults</span>
+              <span className="md:hidden">Onsite</span>
             </TabsTrigger>
-            <TabsTrigger value="estimate" className="flex items-center gap-2 py-2.5">
-              <span className="hidden sm:inline">Estimate</span>
+            <TabsTrigger value="estimate" className="flex items-center justify-center gap-1 py-2.5 px-1 text-xs md:text-sm md:grid-cols-start-6">
+              <span className="hidden md:inline">Estimate</span>
+              <span className="md:hidden">Est</span>
             </TabsTrigger>
-            <TabsTrigger value="files" className="flex items-center gap-2 py-2.5">
-              <span className="hidden sm:inline">External Files</span>
+            <TabsTrigger value="files" className="flex items-center justify-center gap-1 py-2.5 px-1 text-xs md:text-sm">
+              <span className="hidden md:inline">External Files</span>
+              <span className="md:hidden">Ext Files</span>
             </TabsTrigger>
-            <TabsTrigger value="cert-files" className="flex items-center gap-2 py-2.5">
-              <span className="hidden sm:inline">Cert Files</span>
+            <TabsTrigger value="cert-files" className="flex items-center justify-center gap-1 py-2.5 px-1 text-xs md:text-sm">
+              <span className="hidden md:inline">Cert Files</span>
+              <span className="md:hidden">Cert</span>
             </TabsTrigger>
-            <TabsTrigger value="warranty" className="flex items-center gap-2 py-2.5">
-              <span className="hidden sm:inline">Warranty</span>
+            <TabsTrigger value="warranty" className="flex items-center justify-center gap-1 py-2.5 px-1 text-xs md:text-sm">
+              <span className="hidden md:inline">Warranty</span>
+              <span className="md:hidden">Warranty</span>
             </TabsTrigger>
-            <TabsTrigger value="qf3-data" className="flex items-center gap-2 py-2.5">
-              <span className="hidden sm:inline">QF3 Data</span>
+            <TabsTrigger value="qf3-data" className="flex items-center justify-center gap-1 py-2.5 px-1 text-xs md:text-sm">
+              <span className="hidden md:inline">QF3 Data</span>
+              <span className="md:hidden">QF3</span>
             </TabsTrigger>
           </TabsList>
 
@@ -397,28 +407,32 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
         {/* Footer Actions */}
         <Card className="mt-6">
           <CardContent className="py-4">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
               {/* Created/Modified Info */}
               <div className="text-sm text-muted-foreground space-y-1">
-                <div className="flex items-center gap-2">
-                  <span>Created By:</span>
-                  <span className="font-medium">{workOrderData.createdBy}</span>
-                  <span>{workOrderData.createdDate}</span>
+                <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+                  <div className="flex items-center gap-2">
+                    <span>Created By:</span>
+                    <span className="font-medium text-foreground">{workOrderData.createdBy}</span>
+                  </div>
+                  <span className="text-muted-foreground">{workOrderData.createdDate}</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span>Modified By:</span>
-                  <span className="font-medium">{workOrderData.modifiedBy}</span>
-                  <span>{workOrderData.modifiedDate}</span>
+                <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+                  <div className="flex items-center gap-2">
+                    <span>Modified By:</span>
+                    <span className="font-medium text-foreground">{workOrderData.modifiedBy}</span>
+                  </div>
+                  <span className="text-muted-foreground">{workOrderData.modifiedDate}</span>
                 </div>
               </div>
 
               {/* Action Buttons */}
-              <div className="flex items-center gap-3">
-                <Button variant="outline">
+              <div className="flex items-center gap-3 shrink-0">
+                <Button variant="outline" size="sm" className="w-full sm:w-auto">
                   <X className="h-4 w-4 mr-2" />
                   Cancel
                 </Button>
-                <Button>
+                <Button size="sm" className="w-full sm:w-auto">
                   <Save className="h-4 w-4 mr-2" />
                   Save
                 </Button>
