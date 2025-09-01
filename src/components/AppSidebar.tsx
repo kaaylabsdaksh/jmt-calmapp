@@ -106,7 +106,7 @@ export function AppSidebar() {
           >
             <div className="flex items-center">
               <Search className="h-3 w-3 mr-2" />
-              <span>Work Order Search & Management</span>
+              <span>WO Search & Management</span>
             </div>
           </SidebarGroupLabel>
         </SidebarGroup>
