@@ -308,13 +308,220 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
           <TabsContent value="items" className="space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Package className="h-5 w-5 text-primary" />
-                  Work Order Items
-                </CardTitle>
+                <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                  <CardTitle className="flex items-center gap-2">
+                    <Package className="h-5 w-5 text-primary" />
+                    Work Order Items
+                  </CardTitle>
+                  
+                  {/* Action Buttons */}
+                  <div className="flex flex-wrap items-center gap-2">
+                    <Button size="sm" className="flex items-center gap-2">
+                      <Package className="h-4 w-4" />
+                      Add New Item
+                    </Button>
+                    <Button variant="outline" size="sm" className="flex items-center gap-2">
+                      <Package className="h-4 w-4" />
+                      Add New Item w/RFID
+                    </Button>
+                    <Button variant="outline" size="sm" className="flex items-center gap-2">
+                      <FileText className="h-4 w-4" />
+                      Print QR Sheet
+                    </Button>
+                  </div>
+                </div>
               </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">Items content will be implemented here.</p>
+              
+              <CardContent className="space-y-6">
+                {/* Secondary Action Buttons */}
+                <div className="flex flex-wrap items-center gap-2">
+                  <Button variant="secondary" size="sm" className="flex items-center gap-2">
+                    <Package className="h-4 w-4" />
+                    Copy From Other WO
+                  </Button>
+                  <Button variant="secondary" size="sm" className="flex items-center gap-2">
+                    <Package className="h-4 w-4" />
+                    Create Unused Items
+                  </Button>
+                </div>
+
+                {/* Filters */}
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 p-4 bg-muted/50 rounded-lg">
+                  <div className="space-y-2">
+                    <Label htmlFor="workOrderFilter">Work Order #:</Label>
+                    <Input 
+                      id="workOrderFilter" 
+                      placeholder="Enter work order #"
+                      className="bg-background"
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="itemNumberFilter">Item #:</Label>
+                    <div className="flex items-center gap-2">
+                      <Input 
+                        id="itemNumberFilter" 
+                        placeholder="From"
+                        className="bg-background"
+                      />
+                      <span className="text-muted-foreground">-</span>
+                      <Input 
+                        placeholder="To"
+                        className="bg-background"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="groupableFilter">Groupable:</Label>
+                    <Select>
+                      <SelectTrigger className="bg-background">
+                        <SelectValue placeholder="Select groupable" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All</SelectItem>
+                        <SelectItem value="groupable">Groupable</SelectItem>
+                        <SelectItem value="non-groupable">Non-Groupable</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="specialAction">Special Action:</Label>
+                    <Select>
+                      <SelectTrigger className="bg-background">
+                        <SelectValue placeholder="Select action" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="none">None</SelectItem>
+                        <SelectItem value="calibrate">Calibrate</SelectItem>
+                        <SelectItem value="repair">Repair</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                {/* Items Summary */}
+                <div className="flex items-center justify-between">
+                  <div className="text-sm text-muted-foreground">
+                    # of Items: <span className="font-medium text-foreground">48</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Label htmlFor="viewType" className="text-sm">View:</Label>
+                    <Select defaultValue="default">
+                      <SelectTrigger className="w-auto">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="default">Default View</SelectItem>
+                        <SelectItem value="compact">Compact View</SelectItem>
+                        <SelectItem value="detailed">Detailed View</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                {/* Items Table */}
+                <div className="border rounded-lg overflow-hidden">
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead className="bg-muted/50">
+                        <tr className="border-b">
+                          <th className="text-left p-3 text-sm font-medium">
+                            <input type="checkbox" className="rounded" />
+                          </th>
+                          <th className="text-left p-3 text-sm font-medium">Report #</th>
+                          <th className="text-left p-3 text-sm font-medium">Manufacturer</th>
+                          <th className="text-left p-3 text-sm font-medium">Model</th>
+                          <th className="text-left p-3 text-sm font-medium">Serial #</th>
+                          <th className="text-left p-3 text-sm font-medium">Created</th>
+                          <th className="text-left p-3 text-sm font-medium">Departure</th>
+                          <th className="text-left p-3 text-sm font-medium">Item Status</th>
+                          <th className="text-left p-3 text-sm font-medium">Item Type</th>
+                          <th className="text-left p-3 text-sm font-medium">Deliver By Date</th>
+                          <th className="text-left p-3 text-sm font-medium">PO #</th>
+                          <th className="text-left p-3 text-sm font-medium">Open PO/CO</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {/* Sample data rows */}
+                        {[
+                          { id: '002', manufacturer: 'VAETRIX', model: 'ETG-5K-1-05-BT', serial: '1557252190', type: 'SINGLE' },
+                          { id: '004', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE' },
+                          { id: '005', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE' },
+                          { id: '006', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE' },
+                          { id: '007', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE' },
+                          { id: '008', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE' },
+                          { id: '009', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE' },
+                          { id: '010', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE' },
+                        ].map((item, index) => (
+                          <tr key={item.id} className="border-b hover:bg-muted/25">
+                            <td className="p-3">
+                              <input type="checkbox" className="rounded" />
+                            </td>
+                            <td className="p-3">
+                              <Button variant="link" className="h-auto p-0 text-primary">
+                                Edit
+                              </Button>
+                            </td>
+                            <td className="p-3 text-sm">0152.01-385737-{item.id}</td>
+                            <td className="p-3 text-sm">{item.manufacturer}</td>
+                            <td className="p-3 text-sm">{item.model}</td>
+                            <td className="p-3 text-sm">{item.serial}</td>
+                            <td className="p-3 text-sm">10/15/2021</td>
+                            <td className="p-3 text-sm">-</td>
+                            <td className="p-3">
+                              <Badge variant="secondary" className="bg-green-50 text-green-700 border-green-200">
+                                Ready for Departure
+                              </Badge>
+                            </td>
+                            <td className="p-3 text-sm">{item.type}</td>
+                            <td className="p-3 text-sm">04/{index + 3}/2025</td>
+                            <td className="p-3 text-sm">CUST/PO#</td>
+                            <td className="p-3 text-sm">CUST/PO#</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                {/* Pagination */}
+                <div className="flex items-center justify-between">
+                  <div className="text-sm text-muted-foreground">
+                    Page 1 of 4 (48 items)
+                  </div>
+                  
+                  <div className="flex items-center gap-2">
+                    <Button variant="outline" size="sm" disabled>
+                      Previous
+                    </Button>
+                    <div className="flex items-center gap-1">
+                      <Button variant="default" size="sm">1</Button>
+                      <Button variant="outline" size="sm">2</Button>
+                      <Button variant="outline" size="sm">3</Button>
+                      <Button variant="outline" size="sm">4</Button>
+                    </div>
+                    <Button variant="outline" size="sm">
+                      Next
+                    </Button>
+                  </div>
+                  
+                  <div className="flex items-center gap-2">
+                    <Label htmlFor="pageSize" className="text-sm">Page size:</Label>
+                    <Select defaultValue="15">
+                      <SelectTrigger className="w-20">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="10">10</SelectItem>
+                        <SelectItem value="15">15</SelectItem>
+                        <SelectItem value="25">25</SelectItem>
+                        <SelectItem value="50">50</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
               </CardContent>
             </Card>
           </TabsContent>
