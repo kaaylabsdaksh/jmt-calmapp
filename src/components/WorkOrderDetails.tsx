@@ -589,33 +589,36 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
           </TabsContent>
         </Tabs>
 
-        {/* Footer Actions - Modern redesigned floating footer */}
+        {/* Footer Actions - Sleek horizontal bar design */}
         <div className="fixed bottom-6 right-6 z-30">
-          <div className="bg-gradient-to-r from-card to-card/90 backdrop-blur-md shadow-2xl border rounded-2xl overflow-hidden">
-            {/* Action Buttons Section */}
-            <div className="flex items-center gap-2 p-3 bg-gradient-to-r from-primary/5 to-primary/10">
-              <Button variant="outline" size="sm" className="rounded-xl border-border/50 hover:bg-background/80">
-                <X className="h-4 w-4 mr-2" />
-                Cancel
-              </Button>
-              <Button size="sm" className="rounded-xl bg-primary hover:bg-primary/90 shadow-sm">
-                <Save className="h-4 w-4 mr-2" />
-                Save Changes
-              </Button>
+          <div className="bg-background/90 backdrop-blur-sm border shadow-lg rounded-full px-6 py-3 flex items-center gap-6 min-w-fit">
+            {/* Status Indicator */}
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+              <span className="text-xs text-muted-foreground">Auto-saved</span>
             </div>
             
-            {/* Info Section */}
-            <div className="px-4 py-3 border-t border-border/20 bg-muted/20">
-              <div className="text-xs text-muted-foreground space-y-1">
-                <div className="flex items-center justify-between">
-                  <span>Created by <span className="font-medium text-foreground">{workOrderData.createdBy}</span></span>
-                  <span className="text-muted-foreground/70">{workOrderData.createdDate}</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span>Modified by <span className="font-medium text-foreground">{workOrderData.modifiedBy}</span></span>
-                  <span className="text-muted-foreground/70">{workOrderData.modifiedDate}</span>
-                </div>
-              </div>
+            {/* Divider */}
+            <div className="w-px h-4 bg-border"></div>
+            
+            {/* Quick Info */}
+            <div className="text-xs text-muted-foreground">
+              Last modified by <span className="font-medium text-foreground">{workOrderData.modifiedBy}</span>
+            </div>
+            
+            {/* Divider */}
+            <div className="w-px h-4 bg-border"></div>
+            
+            {/* Action Buttons */}
+            <div className="flex items-center gap-2">
+              <Button variant="ghost" size="sm" className="h-8 px-3 rounded-full">
+                <X className="h-3 w-3 mr-1" />
+                Cancel
+              </Button>
+              <Button size="sm" className="h-8 px-4 rounded-full bg-primary text-primary-foreground hover:bg-primary/90">
+                <Save className="h-3 w-3 mr-1" />
+                Save
+              </Button>
             </div>
           </div>
         </div>
