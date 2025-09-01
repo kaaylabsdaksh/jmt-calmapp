@@ -90,6 +90,15 @@ const ModernWorkOrderFilters = () => {
               Work Order Search & Management
             </CardTitle>
             <div className="flex items-center gap-3">
+              {/* Search Button */}
+              <Button 
+                type="submit" 
+                className="flex items-center gap-2 px-6 py-2 font-medium hover:scale-105 transition-transform"
+              >
+                <Search className="h-4 w-4" />
+                Search
+              </Button>
+              
               {/* Date Filter Popover */}
               <Popover>
                 <PopoverTrigger asChild>
@@ -491,20 +500,6 @@ const ModernWorkOrderFilters = () => {
             </CardContent>
           </CollapsibleContent>
         </Collapsible>
-        
-        {/* Search Button at bottom of main card */}
-        <div className="px-6 py-6 border-t bg-muted/30">
-          <div className="flex justify-center">
-            <Button 
-              type="submit" 
-              size="lg"
-              className="flex items-center gap-2 px-8 py-3 text-base font-medium hover:scale-105 transition-transform"
-            >
-              <Search className="h-5 w-5" />
-              Search Work Orders
-            </Button>
-          </div>
-        </div>
       </Card>
     </div>
   );
