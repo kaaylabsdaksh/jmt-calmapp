@@ -421,71 +421,89 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
                   </div>
                 </div>
 
-                {/* Items Table */}
-                <div className="border rounded-lg overflow-hidden">
-                  <div className="overflow-x-auto">
-                    <table className="w-full">
-                      <thead className="bg-muted/50">
-                        <tr className="border-b">
-                          <th className="text-left p-3 text-sm font-medium">
-                            <input type="checkbox" className="rounded" />
-                          </th>
-                          <th className="text-left p-3 text-sm font-medium">Report #</th>
-                          <th className="text-left p-3 text-sm font-medium">Manufacturer</th>
-                          <th className="text-left p-3 text-sm font-medium">Model</th>
-                          <th className="text-left p-3 text-sm font-medium">Serial #</th>
-                          <th className="text-left p-3 text-sm font-medium">Created</th>
-                          <th className="text-left p-3 text-sm font-medium">Departure</th>
-                          <th className="text-left p-3 text-sm font-medium">Item Status</th>
-                          <th className="text-left p-3 text-sm font-medium">Item Type</th>
-                          <th className="text-left p-3 text-sm font-medium">Deliver By Date</th>
-                          <th className="text-left p-3 text-sm font-medium">PO #</th>
-                          <th className="text-left p-3 text-sm font-medium">Open PO/CO</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {/* Sample data rows */}
-                        {[
-                          { id: '002', manufacturer: 'VAETRIX', model: 'ETG-5K-1-05-BT', serial: '1557252190', type: 'SINGLE', deliverDate: '04/03/2025' },
-                          { id: '004', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/29/2025' },
-                          { id: '005', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/15/2025' },
-                          { id: '006', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/12/2025' },
-                          { id: '007', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/18/2025' },
-                          { id: '008', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/22/2025' },
-                          { id: '009', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/25/2025' },
-                          { id: '010', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/28/2025' },
-                        ].map((item, index) => (
-                          <tr key={item.id} className="border-b hover:bg-muted/25">
-                            <td className="p-3">
-                              <input type="checkbox" className="rounded" />
-                            </td>
-                            <td className="p-3">
-                              <div className="flex flex-col gap-1">
-                                <Button variant="link" className="h-auto p-0 text-primary text-left justify-start">
-                                  Edit
-                                </Button>
-                                <span className="text-sm text-muted-foreground">0152.01-385737-{item.id}</span>
-                              </div>
-                            </td>
-                            <td className="p-3 text-sm">{item.manufacturer}</td>
-                            <td className="p-3 text-sm">{item.model}</td>
-                            <td className="p-3 text-sm">{item.serial}</td>
-                            <td className="p-3 text-sm">10/15/2021</td>
-                            <td className="p-3 text-sm">-</td>
-                            <td className="p-3">
-                              <Badge variant="secondary" className="bg-green-50 text-green-700 border-green-200">
-                                Ready for Departure
-                              </Badge>
-                            </td>
-                            <td className="p-3 text-sm">{item.type}</td>
-                            <td className="p-3 text-sm">{item.deliverDate}</td>
-                            <td className="p-3 text-sm">CUST/PO#</td>
-                            <td className="p-3 text-sm">CUST/PO#</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
+                {/* Items Cards */}
+                <div className="space-y-4">
+                  {[
+                    { id: '002', manufacturer: 'VAETRIX', model: 'ETG-5K-1-05-BT', serial: '1557252190', type: 'SINGLE', deliverDate: '04/03/2025' },
+                    { id: '004', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/29/2025' },
+                    { id: '005', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/15/2025' },
+                    { id: '006', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/12/2025' },
+                    { id: '007', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/18/2025' },
+                    { id: '008', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/22/2025' },
+                    { id: '009', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/25/2025' },
+                    { id: '010', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/28/2025' },
+                  ].map((item, index) => (
+                    <Card key={item.id} className="hover:shadow-md transition-shadow">
+                      <CardContent className="p-4">
+                        <div className="flex items-start justify-between mb-4">
+                          <div className="flex items-center gap-3">
+                            <input type="checkbox" className="rounded mt-1" />
+                            <div className="space-y-1">
+                              <Button variant="link" className="h-auto p-0 text-primary text-left justify-start">
+                                Edit
+                              </Button>
+                              <p className="text-sm font-medium text-foreground">0152.01-385737-{item.id}</p>
+                            </div>
+                          </div>
+                          <Badge variant="secondary" className="bg-green-50 text-green-700 border-green-200">
+                            Ready for Departure
+                          </Badge>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                          <div className="space-y-3">
+                            <div>
+                              <Label className="text-xs text-muted-foreground">Manufacturer</Label>
+                              <p className="text-sm font-medium">{item.manufacturer}</p>
+                            </div>
+                            <div>
+                              <Label className="text-xs text-muted-foreground">Model</Label>
+                              <p className="text-sm font-medium">{item.model}</p>
+                            </div>
+                          </div>
+
+                          <div className="space-y-3">
+                            <div>
+                              <Label className="text-xs text-muted-foreground">Serial #</Label>
+                              <p className="text-sm font-medium">{item.serial}</p>
+                            </div>
+                            <div>
+                              <Label className="text-xs text-muted-foreground">Item Type</Label>
+                              <p className="text-sm font-medium">{item.type}</p>
+                            </div>
+                          </div>
+
+                          <div className="space-y-3">
+                            <div>
+                              <Label className="text-xs text-muted-foreground">Created</Label>
+                              <p className="text-sm font-medium">10/15/2021</p>
+                            </div>
+                            <div>
+                              <Label className="text-xs text-muted-foreground">Departure</Label>
+                              <p className="text-sm font-medium">-</p>
+                            </div>
+                          </div>
+
+                          <div className="space-y-3">
+                            <div>
+                              <Label className="text-xs text-muted-foreground">Deliver By Date</Label>
+                              <p className="text-sm font-medium">{item.deliverDate}</p>
+                            </div>
+                            <div>
+                              <Label className="text-xs text-muted-foreground">PO #</Label>
+                              <p className="text-sm font-medium">CUST/PO#</p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="mt-4 pt-3 border-t">
+                          <div className="flex items-center justify-between text-xs text-muted-foreground">
+                            <span>Open PO/CO: CUST/PO#</span>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
                 </div>
 
                 {/* Pagination */}
