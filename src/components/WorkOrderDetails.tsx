@@ -589,9 +589,9 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
           </TabsContent>
         </Tabs>
 
-        {/* Footer Actions - Sticky within content area */}
-        <div className="fixed bottom-0 left-auto right-4 z-40 bg-card/95 backdrop-blur border-t border-l border-r rounded-t-lg shadow-lg" style={{ width: 'calc(100vw - 280px)' }}>
-          <div className="px-6 py-4">
+        {/* Footer Actions - Sticky full width excluding sidebar */}
+        <div className="fixed bottom-0 left-0 right-0 z-30 bg-card/95 backdrop-blur border-t shadow-lg">
+          <div className="ml-64 px-4 sm:px-6 py-4">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
               {/* Created/Modified Info */}
               <div className="text-sm text-muted-foreground space-y-1">
