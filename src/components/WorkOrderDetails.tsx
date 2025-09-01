@@ -446,25 +446,27 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
                       <tbody>
                         {/* Sample data rows */}
                         {[
-                          { id: '002', manufacturer: 'VAETRIX', model: 'ETG-5K-1-05-BT', serial: '1557252190', type: 'SINGLE' },
-                          { id: '004', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE' },
-                          { id: '005', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE' },
-                          { id: '006', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE' },
-                          { id: '007', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE' },
-                          { id: '008', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE' },
-                          { id: '009', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE' },
-                          { id: '010', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE' },
+                          { id: '002', manufacturer: 'VAETRIX', model: 'ETG-5K-1-05-BT', serial: '1557252190', type: 'SINGLE', deliverDate: '04/03/2025' },
+                          { id: '004', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/29/2025' },
+                          { id: '005', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/15/2025' },
+                          { id: '006', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/12/2025' },
+                          { id: '007', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/18/2025' },
+                          { id: '008', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/22/2025' },
+                          { id: '009', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/25/2025' },
+                          { id: '010', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/28/2025' },
                         ].map((item, index) => (
                           <tr key={item.id} className="border-b hover:bg-muted/25">
                             <td className="p-3">
                               <input type="checkbox" className="rounded" />
                             </td>
                             <td className="p-3">
-                              <Button variant="link" className="h-auto p-0 text-primary">
-                                Edit
-                              </Button>
+                              <div className="flex flex-col gap-1">
+                                <Button variant="link" className="h-auto p-0 text-primary text-left justify-start">
+                                  Edit
+                                </Button>
+                                <span className="text-sm text-muted-foreground">0152.01-385737-{item.id}</span>
+                              </div>
                             </td>
-                            <td className="p-3 text-sm">0152.01-385737-{item.id}</td>
                             <td className="p-3 text-sm">{item.manufacturer}</td>
                             <td className="p-3 text-sm">{item.model}</td>
                             <td className="p-3 text-sm">{item.serial}</td>
@@ -476,7 +478,7 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
                               </Badge>
                             </td>
                             <td className="p-3 text-sm">{item.type}</td>
-                            <td className="p-3 text-sm">04/{index + 3}/2025</td>
+                            <td className="p-3 text-sm">{item.deliverDate}</td>
                             <td className="p-3 text-sm">CUST/PO#</td>
                             <td className="p-3 text-sm">CUST/PO#</td>
                           </tr>
