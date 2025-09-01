@@ -58,9 +58,9 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <div className="sticky top-0 z-50 bg-card/95 backdrop-blur border-b shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 py-4 sm:py-6">
           {/* Back Button Row */}
-          <div className="mb-4">
+          <div className="mb-3 sm:mb-4">
             <Button 
               variant="ghost" 
               size="sm" 
@@ -73,29 +73,35 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
           </div>
           
           {/* Main Header Row */}
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <h1 className="text-2xl font-bold text-foreground">Edit Work Order</h1>
-              <p className="text-sm text-muted-foreground mt-1">
-                Work Order #: <span className="font-medium">{workOrderData.id}</span> 
-                {" • "}
-                <span className="font-medium">{workOrderData.number}</span>
-                {" • "}
-                Salesperson: <span className="text-primary font-medium">{workOrderData.salesperson}</span>
-                {" • "}
-                Contact: <span className="text-primary font-medium">{workOrderData.customer.contact}</span>
-                <span className="ml-2 text-muted-foreground">({workOrderData.customer.phone})</span>
-              </p>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-4">
+            <div className="min-w-0 flex-1">
+              <h1 className="text-xl sm:text-2xl font-bold text-foreground">Edit Work Order</h1>
+              <div className="text-xs sm:text-sm text-muted-foreground mt-1 break-words">
+                <div className="flex flex-wrap items-center gap-1 sm:gap-2">
+                  <span>Work Order #: <span className="font-medium">{workOrderData.id}</span></span>
+                  <span className="hidden sm:inline">•</span>
+                  <span><span className="font-medium">{workOrderData.number}</span></span>
+                </div>
+                <div className="flex flex-wrap items-center gap-1 sm:gap-2 mt-1 sm:mt-0">
+                  <span className="hidden sm:inline">•</span>
+                  <span>Salesperson: <span className="text-primary font-medium">{workOrderData.salesperson}</span></span>
+                </div>
+                <div className="flex flex-wrap items-center gap-1 sm:gap-2 mt-1 sm:mt-0">
+                  <span className="hidden sm:inline">•</span>
+                  <span>Contact: <span className="text-primary font-medium">{workOrderData.customer.contact}</span></span>
+                  <span className="text-muted-foreground">({workOrderData.customer.phone})</span>
+                </div>
+              </div>
             </div>
             
-            <div className="flex items-center gap-2">
-              <Button variant="outline" size="sm">
-                <Download className="h-4 w-4 mr-2" />
-                Export
+            <div className="flex items-center gap-2 flex-shrink-0">
+              <Button variant="outline" size="sm" className="text-xs sm:text-sm">
+                <Download className="h-4 w-4 mr-1 sm:mr-2" />
+                <span className="hidden sm:inline">Export</span>
               </Button>
-              <Button variant="outline" size="sm">
-                <Menu className="h-4 w-4 mr-2" />
-                Menu
+              <Button variant="outline" size="sm" className="text-xs sm:text-sm">
+                <Menu className="h-4 w-4 mr-1 sm:mr-2" />
+                <span className="hidden sm:inline">Menu</span>
               </Button>
             </div>
           </div>
@@ -113,56 +119,56 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 py-4 sm:py-6">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4 sm:space-y-6">
           {/* Tab Navigation */}
-          <TabsList className="grid w-full grid-cols-10 h-auto p-1">
-            <TabsTrigger value="general" className="flex items-center gap-2 py-2.5">
-              <span className="hidden sm:inline">General</span>
+          <TabsList className="grid w-full grid-cols-5 sm:grid-cols-10 h-auto p-1 gap-1 overflow-x-auto">
+            <TabsTrigger value="general" className="flex items-center justify-center py-2.5 px-2 text-xs sm:text-sm whitespace-nowrap">
+              General
             </TabsTrigger>
-            <TabsTrigger value="account" className="flex items-center gap-2 py-2.5">
-              <span className="hidden sm:inline">Account Info</span>
+            <TabsTrigger value="account" className="flex items-center justify-center py-2.5 px-2 text-xs sm:text-sm whitespace-nowrap">
+              Account Info
             </TabsTrigger>
-            <TabsTrigger value="contacts" className="flex items-center gap-2 py-2.5">
-              <span className="hidden sm:inline">WO Contacts</span>
+            <TabsTrigger value="contacts" className="flex items-center justify-center py-2.5 px-2 text-xs sm:text-sm whitespace-nowrap">
+              WO Contacts
             </TabsTrigger>
-            <TabsTrigger value="items" className="flex items-center gap-2 py-2.5">
-              <span className="hidden sm:inline">WO Items</span>
+            <TabsTrigger value="items" className="flex items-center justify-center py-2.5 px-2 text-xs sm:text-sm whitespace-nowrap">
+              WO Items
             </TabsTrigger>
-            <TabsTrigger value="onsite" className="flex items-center gap-2 py-2.5">
-              <span className="hidden sm:inline">Onsite Defaults</span>
+            <TabsTrigger value="onsite" className="flex items-center justify-center py-2.5 px-2 text-xs sm:text-sm whitespace-nowrap">
+              Onsite Defaults
             </TabsTrigger>
-            <TabsTrigger value="estimate" className="flex items-center gap-2 py-2.5">
-              <span className="hidden sm:inline">Estimate</span>
+            <TabsTrigger value="estimate" className="flex items-center justify-center py-2.5 px-2 text-xs sm:text-sm whitespace-nowrap">
+              Estimate
             </TabsTrigger>
-            <TabsTrigger value="files" className="flex items-center gap-2 py-2.5">
-              <span className="hidden sm:inline">External Files</span>
+            <TabsTrigger value="files" className="flex items-center justify-center py-2.5 px-2 text-xs sm:text-sm whitespace-nowrap">
+              External Files
             </TabsTrigger>
-            <TabsTrigger value="cert-files" className="flex items-center gap-2 py-2.5">
-              <span className="hidden sm:inline">Cert Files</span>
+            <TabsTrigger value="cert-files" className="flex items-center justify-center py-2.5 px-2 text-xs sm:text-sm whitespace-nowrap">
+              Cert Files
             </TabsTrigger>
-            <TabsTrigger value="warranty" className="flex items-center gap-2 py-2.5">
-              <span className="hidden sm:inline">Warranty</span>
+            <TabsTrigger value="warranty" className="flex items-center justify-center py-2.5 px-2 text-xs sm:text-sm whitespace-nowrap">
+              Warranty
             </TabsTrigger>
-            <TabsTrigger value="qf3-data" className="flex items-center gap-2 py-2.5">
-              <span className="hidden sm:inline">QF3 Data</span>
+            <TabsTrigger value="qf3-data" className="flex items-center justify-center py-2.5 px-2 text-xs sm:text-sm whitespace-nowrap">
+              QF3 Data
             </TabsTrigger>
           </TabsList>
 
           {/* General Tab */}
-          <TabsContent value="general" className="space-y-6">
+          <TabsContent value="general" className="space-y-4 sm:space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+                <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
                   <Edit className="h-5 w-5 text-primary" />
                   Work Order Details
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-6">
+              <CardContent className="space-y-4 sm:space-y-6">
                 {/* Basic Information */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="workOrderNumber">Work Order #</Label>
+                    <Label htmlFor="workOrderNumber" className="text-sm font-medium">Work Order #</Label>
                     <Input 
                       id="workOrderNumber" 
                       value={workOrderData.id}
@@ -172,7 +178,7 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
                   </div>
                   
                   <div className="space-y-2">
-                    <Label htmlFor="workOrderStatus">Work Order Status</Label>
+                    <Label htmlFor="workOrderStatus" className="text-sm font-medium">Work Order Status</Label>
                     <Select defaultValue="in-process">
                       <SelectTrigger>
                         <SelectValue />
@@ -187,7 +193,7 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="workOrderType">Work Order Type</Label>
+                    <Label htmlFor="workOrderType" className="text-sm font-medium">Work Order Type</Label>
                     <Select defaultValue="regular">
                       <SelectTrigger>
                         <SelectValue />
@@ -200,8 +206,8 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
                     </Select>
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="actNumber">Act #</Label>
+                  <div className="space-y-2 sm:col-span-2 lg:col-span-1">
+                    <Label htmlFor="actNumber" className="text-sm font-medium">Act #</Label>
                     <div className="relative">
                       <Input 
                         id="actNumber" 
@@ -219,26 +225,26 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
 
                 {/* Customer Information */}
                 <div className="space-y-4">
-                  <h3 className="text-lg font-medium flex items-center gap-2">
+                  <h3 className="text-base sm:text-lg font-medium flex items-center gap-2">
                     <User className="h-5 w-5 text-primary" />
                     Customer Information
                   </h3>
                   
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="customer">Customer</Label>
+                      <Label htmlFor="customer" className="text-sm font-medium">Customer</Label>
                       <Textarea 
                         id="customer" 
                         value={`${workOrderData.customer.name}\n${workOrderData.customer.address}`}
                         rows={3}
-                        className="resize-none"
+                        className="resize-none text-sm"
                         readOnly
                       />
                     </div>
                     
                     <div className="space-y-4">
                       <div className="space-y-2">
-                        <Label htmlFor="contact">Contact</Label>
+                        <Label htmlFor="contact" className="text-sm font-medium">Contact</Label>
                         <Input 
                           id="contact" 
                           value={workOrderData.customer.contact}
@@ -247,7 +253,7 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
                       </div>
                       
                       <div className="space-y-2">
-                        <Label htmlFor="phone">Phone</Label>
+                        <Label htmlFor="phone" className="text-sm font-medium">Phone</Label>
                         <Input 
                           id="phone" 
                           value={workOrderData.customer.phone}
