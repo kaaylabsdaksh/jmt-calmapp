@@ -60,7 +60,7 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <div className="sticky top-0 z-50 bg-card/95 backdrop-blur border-b shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+        <div className="px-4 sm:px-6 py-6">
           {/* Back Button Row */}
           <div className="mb-4">
             <Button 
@@ -120,7 +120,7 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+      <div className="px-4 sm:px-6 py-6">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           {/* Tab Navigation */}
           <TabsList className="grid w-full grid-cols-5 lg:grid-cols-10 h-auto p-1 gap-1">
@@ -593,7 +593,7 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
 
         {/* Footer Actions - Now Sticky */}
         <div className={`fixed bottom-0 ${open ? 'left-64' : 'left-14'} right-0 z-40 bg-card/95 backdrop-blur border-t shadow-lg transition-all duration-300`}>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
+          <div className="px-4 sm:px-6 py-4">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
               {/* Created/Modified Info */}
               <div className="text-sm text-muted-foreground space-y-1">
