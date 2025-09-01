@@ -589,36 +589,39 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
           </TabsContent>
         </Tabs>
 
-        {/* Footer Actions - Sleek horizontal bar design */}
-        <div className="fixed bottom-6 right-6 z-30">
-          <div className="bg-background/90 backdrop-blur-sm border shadow-lg rounded-full px-6 py-3 flex items-center gap-6 min-w-fit">
-            {/* Status Indicator */}
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-              <span className="text-xs text-muted-foreground">Auto-saved</span>
-            </div>
-            
-            {/* Divider */}
-            <div className="w-px h-4 bg-border"></div>
-            
-            {/* Quick Info */}
-            <div className="text-xs text-muted-foreground">
-              Last modified by <span className="font-medium text-foreground">{workOrderData.modifiedBy}</span>
-            </div>
-            
-            {/* Divider */}
-            <div className="w-px h-4 bg-border"></div>
-            
-            {/* Action Buttons */}
-            <div className="flex items-center gap-2">
-              <Button variant="ghost" size="sm" className="h-8 px-3 rounded-full">
-                <X className="h-3 w-3 mr-1" />
-                Cancel
-              </Button>
-              <Button size="sm" className="h-8 px-4 rounded-full bg-primary text-primary-foreground hover:bg-primary/90">
-                <Save className="h-3 w-3 mr-1" />
-                Save
-              </Button>
+        {/* Footer Actions - Now Sticky */}
+        <div className="fixed bottom-0 left-0 right-0 z-40 bg-card/95 backdrop-blur border-t shadow-lg">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+              {/* Created/Modified Info */}
+              <div className="text-sm text-muted-foreground space-y-1">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+                  <div className="flex items-center gap-2">
+                    <span>Created By:</span>
+                    <span className="font-medium text-foreground">{workOrderData.createdBy}</span>
+                  </div>
+                  <span className="text-muted-foreground">{workOrderData.createdDate}</span>
+                </div>
+                <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+                  <div className="flex items-center gap-2">
+                    <span>Modified By:</span>
+                    <span className="font-medium text-foreground">{workOrderData.modifiedBy}</span>
+                  </div>
+                  <span className="text-muted-foreground">{workOrderData.modifiedDate}</span>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex items-center gap-3 shrink-0">
+                <Button variant="outline" size="sm" className="w-full sm:w-auto">
+                  <X className="h-4 w-4 mr-2" />
+                  Cancel
+                </Button>
+                <Button size="sm" className="w-full sm:w-auto">
+                  <Save className="h-4 w-4 mr-2" />
+                  Save
+                </Button>
+              </div>
             </div>
           </div>
         </div>
