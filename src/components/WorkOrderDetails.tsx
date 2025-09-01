@@ -73,29 +73,34 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
           </div>
           
           {/* Main Header Row */}
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <h1 className="text-2xl font-bold text-foreground">Edit Work Order</h1>
-              <p className="text-sm text-muted-foreground mt-1">
-                Work Order #: <span className="font-medium">{workOrderData.id}</span> 
-                {" • "}
-                <span className="font-medium">{workOrderData.number}</span>
-                {" • "}
-                Salesperson: <span className="text-primary font-medium">{workOrderData.salesperson}</span>
-                {" • "}
-                Contact: <span className="text-primary font-medium">{workOrderData.customer.contact}</span>
-                <span className="ml-2 text-muted-foreground">({workOrderData.customer.phone})</span>
-              </p>
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-4">
+            <div className="min-w-0 flex-1">
+              <h1 className="text-xl md:text-2xl font-bold text-foreground mb-2">Edit Work Order</h1>
+              
+              {/* Work Order Info - Split into multiple lines for better tablet display */}
+              <div className="space-y-1 text-sm text-muted-foreground">
+                <div className="flex flex-wrap items-center gap-2 md:gap-4">
+                  <span>Work Order #: <span className="font-medium text-foreground">{workOrderData.id}</span></span>
+                  <span className="hidden md:inline text-muted-foreground">•</span>
+                  <span>Act #: <span className="font-medium text-foreground">{workOrderData.number}</span></span>
+                </div>
+                <div className="flex flex-wrap items-center gap-2 md:gap-4">
+                  <span>Salesperson: <span className="text-primary font-medium">{workOrderData.salesperson}</span></span>
+                  <span className="hidden md:inline text-muted-foreground">•</span>
+                  <span>Contact: <span className="text-primary font-medium">{workOrderData.customer.contact}</span></span>
+                  <span className="text-muted-foreground">({workOrderData.customer.phone})</span>
+                </div>
+              </div>
             </div>
             
-            <div className="flex items-center gap-2">
-              <Button variant="outline" size="sm">
+            <div className="flex items-center gap-2 shrink-0">
+              <Button variant="outline" size="sm" className="hidden sm:flex">
                 <Download className="h-4 w-4 mr-2" />
                 Export
               </Button>
               <Button variant="outline" size="sm">
                 <Menu className="h-4 w-4 mr-2" />
-                Menu
+                <span className="hidden sm:inline">Menu</span>
               </Button>
             </div>
           </div>
