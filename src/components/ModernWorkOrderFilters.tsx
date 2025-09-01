@@ -341,7 +341,7 @@ const ModernWorkOrderFilters = () => {
         <CardContent className="pt-0">
                   <div className="space-y-8">
                     {/* Work Order Information Section */}
-                    <div className="space-y-4">
+                     <div className="space-y-2">
                       <h4 className="text-sm font-semibold text-primary">Work Order Information</h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                         <div className="space-y-2">
@@ -396,7 +396,7 @@ const ModernWorkOrderFilters = () => {
                     </div>
 
                     {/* Product Details Section */}
-                    <div className="space-y-4">
+                     <div className="space-y-2">
                       <h4 className="text-sm font-semibold text-primary">Product Details</h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                         <div className="space-y-2">
@@ -439,7 +439,7 @@ const ModernWorkOrderFilters = () => {
                     </div>
 
                     {/* Customer & Sales Section */}
-                    <div className="space-y-4">
+                     <div className="space-y-2">
                       <h4 className="text-sm font-semibold text-primary">Customer & Sales</h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         <div className="space-y-2">
@@ -473,7 +473,7 @@ const ModernWorkOrderFilters = () => {
                     </div>
 
                     {/* Technical & Equipment Section */}
-                    <div className="space-y-4">
+                     <div className="space-y-2">
                       <h4 className="text-sm font-semibold text-primary">Technical & Equipment</h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                         <div className="space-y-2">
@@ -537,7 +537,7 @@ const ModernWorkOrderFilters = () => {
                     </div>
 
                     {/* Location & Assignment Section */}
-                    <div className="space-y-4">
+                     <div className="space-y-2">
                       <h4 className="text-sm font-semibold text-primary">Location & Assignment</h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         <div className="space-y-2">
@@ -580,7 +580,7 @@ const ModernWorkOrderFilters = () => {
                     </div>
 
                     {/* Identification & Tracking Section */}
-                    <div className="space-y-4">
+                     <div className="space-y-2">
                       <h4 className="text-sm font-semibold text-primary">Identification & Tracking</h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                         <div className="space-y-2">
@@ -641,7 +641,7 @@ const ModernWorkOrderFilters = () => {
             <CardContent className="pt-0">
               <div className="space-y-8">
                 {/* Orders & Billing Section */}
-                <div className="space-y-4">
+                 <div className="space-y-2">
                   <h4 className="text-sm font-semibold text-primary">Orders & Billing</h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <div className="space-y-2">
@@ -693,7 +693,7 @@ const ModernWorkOrderFilters = () => {
                 </div>
 
                 {/* Delivery & Operations Section */}
-                <div className="space-y-4">
+                 <div className="space-y-2">
                   <h4 className="text-sm font-semibold text-primary">Delivery & Operations</h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <div className="space-y-2">
