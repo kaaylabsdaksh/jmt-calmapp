@@ -105,7 +105,6 @@ export function AppSidebar() {
             `}
           >
             <div className="flex items-center">
-              <ClipboardList className="h-3 w-3 mr-2" />
               <span>WO Management</span>
             </div>
           </SidebarGroupLabel>
