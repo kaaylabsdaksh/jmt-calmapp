@@ -206,6 +206,7 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
                       <Input 
                         id="actNumber" 
                         value={workOrderData.number}
+                        readOnly
                       />
                       <div className="absolute right-2 top-2">
                         <div className="w-2 h-2 bg-red-500 rounded-full"></div>
@@ -231,6 +232,7 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
                         value={`${workOrderData.customer.name}\n${workOrderData.customer.address}`}
                         rows={3}
                         className="resize-none"
+                        readOnly
                       />
                     </div>
                     
@@ -240,6 +242,7 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
                         <Input 
                           id="contact" 
                           value={workOrderData.customer.contact}
+                          readOnly
                         />
                       </div>
                       
@@ -248,6 +251,7 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
                         <Input 
                           id="phone" 
                           value={workOrderData.customer.phone}
+                          readOnly
                         />
                       </div>
                     </div>
