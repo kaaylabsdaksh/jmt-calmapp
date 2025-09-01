@@ -589,43 +589,35 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
           </TabsContent>
         </Tabs>
 
-        {/* Footer Actions - Floating with reduced width */}
-        <div className="fixed bottom-4 right-4 z-30 w-96">
-          <Card className="bg-card/95 backdrop-blur shadow-lg border">
-            <CardContent className="p-4">
-              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-                {/* Created/Modified Info */}
-                <div className="text-sm text-muted-foreground space-y-1">
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                    <div className="flex items-center gap-2">
-                      <span>Created By:</span>
-                      <span className="font-medium text-foreground">{workOrderData.createdBy}</span>
-                    </div>
-                    <span className="text-muted-foreground">{workOrderData.createdDate}</span>
-                  </div>
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                    <div className="flex items-center gap-2">
-                      <span>Modified By:</span>
-                      <span className="font-medium text-foreground">{workOrderData.modifiedBy}</span>
-                    </div>
-                    <span className="text-muted-foreground">{workOrderData.modifiedDate}</span>
-                  </div>
+        {/* Footer Actions - Modern redesigned floating footer */}
+        <div className="fixed bottom-6 right-6 z-30">
+          <div className="bg-gradient-to-r from-card to-card/90 backdrop-blur-md shadow-2xl border rounded-2xl overflow-hidden">
+            {/* Action Buttons Section */}
+            <div className="flex items-center gap-2 p-3 bg-gradient-to-r from-primary/5 to-primary/10">
+              <Button variant="outline" size="sm" className="rounded-xl border-border/50 hover:bg-background/80">
+                <X className="h-4 w-4 mr-2" />
+                Cancel
+              </Button>
+              <Button size="sm" className="rounded-xl bg-primary hover:bg-primary/90 shadow-sm">
+                <Save className="h-4 w-4 mr-2" />
+                Save Changes
+              </Button>
+            </div>
+            
+            {/* Info Section */}
+            <div className="px-4 py-3 border-t border-border/20 bg-muted/20">
+              <div className="text-xs text-muted-foreground space-y-1">
+                <div className="flex items-center justify-between">
+                  <span>Created by <span className="font-medium text-foreground">{workOrderData.createdBy}</span></span>
+                  <span className="text-muted-foreground/70">{workOrderData.createdDate}</span>
                 </div>
-
-                {/* Action Buttons */}
-                <div className="flex items-center gap-3 shrink-0">
-                  <Button variant="outline" size="sm" className="w-full sm:w-auto">
-                    <X className="h-4 w-4 mr-2" />
-                    Cancel
-                  </Button>
-                  <Button size="sm" className="w-full sm:w-auto">
-                    <Save className="h-4 w-4 mr-2" />
-                    Save
-                  </Button>
+                <div className="flex items-center justify-between">
+                  <span>Modified by <span className="font-medium text-foreground">{workOrderData.modifiedBy}</span></span>
+                  <span className="text-muted-foreground/70">{workOrderData.modifiedDate}</span>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
       </div>
     </div>
