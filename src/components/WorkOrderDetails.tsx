@@ -404,7 +404,7 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
                 {/* Items Summary */}
                 <div className="flex items-center justify-between">
                   <div className="text-sm text-muted-foreground">
-                    # of Items: <span className="font-medium text-foreground">48</span>
+                    Showing <span className="font-medium text-foreground">8</span> of <span className="font-medium text-foreground">48</span> items
                   </div>
                   <div className="flex items-center gap-2">
                     <Label htmlFor="viewType" className="text-sm">View:</Label>
@@ -422,7 +422,7 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
                 </div>
 
                 {/* Items Cards */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pb-24">
                   {[
                     { id: '002', manufacturer: 'VAETRIX', model: 'ETG-5K-1-05-BT', serial: '1557252190', type: 'SINGLE', deliverDate: '04/03/2025' },
                     { id: '004', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/29/2025' },
@@ -493,41 +493,12 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
                   ))}
                 </div>
 
-                {/* Pagination */}
-                <div className="flex items-center justify-between">
-                  <div className="text-sm text-muted-foreground">
-                    Page 1 of 4 (48 items)
-                  </div>
-                  
-                  <div className="flex items-center gap-2">
-                    <Button variant="outline" size="sm" disabled>
-                      Previous
-                    </Button>
-                    <div className="flex items-center gap-1">
-                      <Button variant="default" size="sm">1</Button>
-                      <Button variant="outline" size="sm">2</Button>
-                      <Button variant="outline" size="sm">3</Button>
-                      <Button variant="outline" size="sm">4</Button>
-                    </div>
-                    <Button variant="outline" size="sm">
-                      Next
-                    </Button>
-                  </div>
-                  
-                  <div className="flex items-center gap-2">
-                    <Label htmlFor="pageSize" className="text-sm">Page size:</Label>
-                    <Select defaultValue="15">
-                      <SelectTrigger className="w-20">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="10">10</SelectItem>
-                        <SelectItem value="15">15</SelectItem>
-                        <SelectItem value="25">25</SelectItem>
-                        <SelectItem value="50">50</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+                {/* Load More Indicator */}
+                <div className="flex justify-center py-6">
+                  <Button variant="outline" className="flex items-center gap-2">
+                    <span>Load More Items</span>
+                    <span className="text-muted-foreground">(40 remaining)</span>
+                  </Button>
                 </div>
               </CardContent>
             </Card>
@@ -618,9 +589,9 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
           </TabsContent>
         </Tabs>
 
-        {/* Footer Actions */}
-        <Card className="mt-6">
-          <CardContent className="py-4">
+        {/* Footer Actions - Now Sticky */}
+        <div className="fixed bottom-0 left-0 right-0 z-40 bg-card/95 backdrop-blur border-t shadow-lg">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
               {/* Created/Modified Info */}
               <div className="text-sm text-muted-foreground space-y-1">
@@ -652,8 +623,8 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
                 </Button>
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
     </div>
   );
