@@ -75,6 +75,33 @@ const ModernWorkOrderFilters = () => {
     });
   };
 
+  const clearAllFilters = () => {
+    // Clear all date ranges
+    clearAllDates();
+    
+    // Clear all form inputs by resetting their values
+    const form = document.querySelector('form') as HTMLFormElement;
+    if (form) {
+      form.reset();
+    }
+    
+    // Clear all input fields
+    const inputs = document.querySelectorAll('input[type="text"], input[type="search"]');
+    inputs.forEach(input => {
+      (input as HTMLInputElement).value = '';
+    });
+    
+    // Reset all select elements to their placeholder state
+    const selects = document.querySelectorAll('[role="combobox"]');
+    selects.forEach(select => {
+      const trigger = select as HTMLElement;
+      const placeholder = trigger.querySelector('[data-placeholder]');
+      if (placeholder) {
+        trigger.textContent = placeholder.textContent;
+      }
+    });
+  };
+
   const hasAnyDates = Object.values(dateRanges).some(range => range.from || range.to);
   const currentRange = dateRanges[selectedDateType];
 
@@ -218,7 +245,7 @@ const ModernWorkOrderFilters = () => {
               )}
             </div>
             
-            <Button variant="outline" className="flex items-center gap-2">
+            <Button variant="outline" className="flex items-center gap-2" onClick={clearAllFilters}>
               <RotateCcw className="h-4 w-4" />
               Clear
             </Button>
