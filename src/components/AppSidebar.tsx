@@ -99,8 +99,9 @@ export function AppSidebar() {
         <SidebarGroup className="mb-4">
           <SidebarGroupLabel 
             className={`
-              px-3 py-2 text-xs font-semibold text-primary uppercase tracking-wider
-              flex items-center justify-between group border-l-2 border-primary
+              mx-2 px-3 py-3 text-xs font-semibold text-primary-foreground uppercase tracking-wider
+              flex items-center justify-between group rounded-lg
+              bg-primary shadow-lg border border-primary/20
               ${!open && "sr-only"}
             `}
           >
