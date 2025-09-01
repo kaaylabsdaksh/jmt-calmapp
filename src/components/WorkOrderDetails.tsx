@@ -118,43 +118,33 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
           {/* Tab Navigation */}
           <TabsList className="grid w-full grid-cols-10 h-auto p-1">
             <TabsTrigger value="general" className="flex items-center gap-2 py-2.5">
-              <Edit className="h-4 w-4" />
               <span className="hidden sm:inline">General</span>
             </TabsTrigger>
             <TabsTrigger value="account" className="flex items-center gap-2 py-2.5">
-              <User className="h-4 w-4" />
               <span className="hidden sm:inline">Account Info</span>
             </TabsTrigger>
             <TabsTrigger value="contacts" className="flex items-center gap-2 py-2.5">
-              <Phone className="h-4 w-4" />
               <span className="hidden sm:inline">WO Contacts</span>
             </TabsTrigger>
             <TabsTrigger value="items" className="flex items-center gap-2 py-2.5">
-              <Package className="h-4 w-4" />
               <span className="hidden sm:inline">WO Items</span>
             </TabsTrigger>
             <TabsTrigger value="onsite" className="flex items-center gap-2 py-2.5">
-              <MapPin className="h-4 w-4" />
               <span className="hidden sm:inline">Onsite Defaults</span>
             </TabsTrigger>
             <TabsTrigger value="estimate" className="flex items-center gap-2 py-2.5">
-              <FileText className="h-4 w-4" />
               <span className="hidden sm:inline">Estimate</span>
             </TabsTrigger>
             <TabsTrigger value="files" className="flex items-center gap-2 py-2.5">
-              <FileText className="h-4 w-4" />
               <span className="hidden sm:inline">External Files</span>
             </TabsTrigger>
             <TabsTrigger value="cert-files" className="flex items-center gap-2 py-2.5">
-              <FileCheck className="h-4 w-4" />
               <span className="hidden sm:inline">Cert Files</span>
             </TabsTrigger>
             <TabsTrigger value="warranty" className="flex items-center gap-2 py-2.5">
-              <Settings className="h-4 w-4" />
               <span className="hidden sm:inline">Warranty</span>
             </TabsTrigger>
             <TabsTrigger value="qf3-data" className="flex items-center gap-2 py-2.5">
-              <Database className="h-4 w-4" />
               <span className="hidden sm:inline">QF3 Data</span>
             </TabsTrigger>
           </TabsList>
