@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 import { 
   Settings, 
   FileText, 
@@ -15,7 +16,9 @@ import {
   Archive,
   CheckCircle,
   Clock,
-  Zap
+  Zap,
+  Home,
+  List
 } from "lucide-react";
 
 import {
@@ -34,6 +37,10 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ChevronDown, ChevronRight } from "lucide-react";
+
+const navigationItems = [
+  { title: "Work Orders", url: "/", icon: List },
+];
 
 const quickActionCategories = {
   "Work Management": [
@@ -63,7 +70,10 @@ const quickActionCategories = {
 
 export function AppSidebar() {
   const { open } = useSidebar();
+  const location = useLocation();
   const [expandedGroups, setExpandedGroups] = useState<string[]>(["Work Management"]);
+
+  const isActive = (path: string) => location.pathname === path;
 
   const toggleGroup = (groupName: string) => {
     setExpandedGroups(prev => 
@@ -94,6 +104,38 @@ export function AppSidebar() {
       </SidebarHeader>
 
       <SidebarContent className="px-2 py-4">
+        {/* Navigation Section */}
+        <SidebarGroup className="mb-4">
+          <SidebarGroupLabel className="px-3 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+            Navigation
+          </SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu className="space-y-1">
+              {navigationItems.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild tooltip={!open ? item.title : undefined}>
+                    <NavLink 
+                      to={item.url} 
+                      className={({ isActive }) => `
+                        flex items-center w-full h-10 px-3 rounded-md transition-all duration-200
+                        ${isActive 
+                          ? 'bg-primary text-primary-foreground shadow-sm' 
+                          : 'text-sidebar-foreground hover:text-foreground hover:bg-sidebar-accent hover:shadow-sm'
+                        }
+                        ${!open && "justify-center px-0"}
+                      `}
+                    >
+                      <item.icon className="h-4 w-4 shrink-0" />
+                      {open && <span className="ml-3 font-medium text-sm">{item.title}</span>}
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        {/* Quick Actions Section */}
         {Object.entries(quickActionCategories).map(([categoryName, actions], categoryIndex) => (
           <SidebarGroup key={categoryName} className="mb-4">
             <Collapsible 

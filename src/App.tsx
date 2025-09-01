@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 import Index from "./pages/Index";
+import WorkOrderDetail from "./pages/WorkOrderDetail";
 import NotFound from "./pages/NotFound";
 
 const App = () => (
@@ -18,6 +19,7 @@ const App = () => (
           <main className="flex-1 overflow-x-hidden">
             <Routes>
               <Route path="/" element={<Index />} />
+              <Route path="/work-order/:id" element={<WorkOrderDetail />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>

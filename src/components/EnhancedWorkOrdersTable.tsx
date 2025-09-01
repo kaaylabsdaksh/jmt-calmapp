@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,9 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { ExternalLink, Download, Printer, Eye, Edit, MoreHorizontal, ChevronLeft, ChevronRight } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
-interface EnhancedWorkOrdersTableProps {
-  onViewDetails?: (workOrderId: string) => void;
-}
+// Remove the interface since we no longer need onViewDetails prop
 
 // Enhanced mock data with all fields from original
 const workOrders = [
@@ -111,7 +110,8 @@ const getPriorityBadgeVariant = (priority: string) => {
   }
 };
 
-const EnhancedWorkOrdersTable = ({ onViewDetails }: EnhancedWorkOrdersTableProps) => {
+const EnhancedWorkOrdersTable = () => {
+  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(30);
   const [selectedRows, setSelectedRows] = useState<string[]>([]);
@@ -239,7 +239,7 @@ const EnhancedWorkOrdersTable = ({ onViewDetails }: EnhancedWorkOrdersTableProps
                         className="flex items-center gap-2 cursor-pointer"
                         onClick={(e) => {
                           e.stopPropagation();
-                          onViewDetails?.(order.id);
+                          navigate(`/work-order/${order.id}`);
                         }}
                       >
                         <Eye className="h-4 w-4" />
