@@ -589,41 +589,43 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
           </TabsContent>
         </Tabs>
 
-        {/* Footer Actions - Sticky full width excluding sidebar */}
-        <div className="fixed bottom-0 left-0 right-0 z-30 bg-card/95 backdrop-blur border-t shadow-lg">
-          <div className="ml-64 px-4 sm:px-6 py-4">
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-              {/* Created/Modified Info */}
-              <div className="text-sm text-muted-foreground space-y-1">
-                <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                  <div className="flex items-center gap-2">
-                    <span>Created By:</span>
-                    <span className="font-medium text-foreground">{workOrderData.createdBy}</span>
+        {/* Footer Actions - Floating in main area */}
+        <div className="fixed bottom-4 right-4 left-64 z-30">
+          <Card className="bg-card/95 backdrop-blur shadow-lg border">
+            <CardContent className="p-4">
+              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                {/* Created/Modified Info */}
+                <div className="text-sm text-muted-foreground space-y-1">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+                    <div className="flex items-center gap-2">
+                      <span>Created By:</span>
+                      <span className="font-medium text-foreground">{workOrderData.createdBy}</span>
+                    </div>
+                    <span className="text-muted-foreground">{workOrderData.createdDate}</span>
                   </div>
-                  <span className="text-muted-foreground">{workOrderData.createdDate}</span>
-                </div>
-                <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                  <div className="flex items-center gap-2">
-                    <span>Modified By:</span>
-                    <span className="font-medium text-foreground">{workOrderData.modifiedBy}</span>
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+                    <div className="flex items-center gap-2">
+                      <span>Modified By:</span>
+                      <span className="font-medium text-foreground">{workOrderData.modifiedBy}</span>
+                    </div>
+                    <span className="text-muted-foreground">{workOrderData.modifiedDate}</span>
                   </div>
-                  <span className="text-muted-foreground">{workOrderData.modifiedDate}</span>
                 </div>
-              </div>
 
-              {/* Action Buttons */}
-              <div className="flex items-center gap-3 shrink-0">
-                <Button variant="outline" size="sm" className="w-full sm:w-auto">
-                  <X className="h-4 w-4 mr-2" />
-                  Cancel
-                </Button>
-                <Button size="sm" className="w-full sm:w-auto">
-                  <Save className="h-4 w-4 mr-2" />
-                  Save
-                </Button>
+                {/* Action Buttons */}
+                <div className="flex items-center gap-3 shrink-0">
+                  <Button variant="outline" size="sm" className="w-full sm:w-auto">
+                    <X className="h-4 w-4 mr-2" />
+                    Cancel
+                  </Button>
+                  <Button size="sm" className="w-full sm:w-auto">
+                    <Save className="h-4 w-4 mr-2" />
+                    Save
+                  </Button>
+                </div>
               </div>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>
