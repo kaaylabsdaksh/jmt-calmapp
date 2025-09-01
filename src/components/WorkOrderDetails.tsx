@@ -127,11 +127,11 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
             </TabsTrigger>
             <TabsTrigger value="contacts" className="flex items-center gap-2 py-2.5">
               <Phone className="h-4 w-4" />
-              <span className="hidden sm:inline">Work Order Contacts</span>
+              <span className="hidden sm:inline">WO Contacts</span>
             </TabsTrigger>
             <TabsTrigger value="items" className="flex items-center gap-2 py-2.5">
               <Package className="h-4 w-4" />
-              <span className="hidden sm:inline">Work Order Items</span>
+              <span className="hidden sm:inline">WO Items</span>
             </TabsTrigger>
             <TabsTrigger value="onsite" className="flex items-center gap-2 py-2.5">
               <MapPin className="h-4 w-4" />
