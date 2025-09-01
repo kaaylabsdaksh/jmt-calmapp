@@ -101,10 +101,6 @@ const ModernWorkOrderFilters = () => {
 
               {/* Action Buttons */}
               <div className="flex gap-2">
-                <Button variant="outline" className="flex items-center gap-2">
-                  <RotateCcw className="h-4 w-4" />
-                  Clear
-                </Button>
                 <Button variant="secondary" className="flex items-center gap-2">
                   <Plus className="h-4 w-4" />
                   Add New
@@ -208,6 +204,11 @@ const ModernWorkOrderFilters = () => {
               </PopoverContent>
             </Popover>
             
+            <Button variant="outline" className="flex items-center gap-2">
+              <RotateCcw className="h-4 w-4" />
+              Clear
+            </Button>
+            
             {hasAnyDates && (
               <Button
                 variant="ghost"
@@ -216,7 +217,7 @@ const ModernWorkOrderFilters = () => {
                 className="flex items-center gap-2 hover:bg-destructive/10 hover:text-destructive"
               >
                 <X className="h-4 w-4" />
-                Clear
+                Clear Dates
               </Button>
             )}
           </div>
