@@ -25,8 +25,75 @@ interface DateRange {
   to?: Date;
 }
 
+interface FormData {
+  woNumber: string;
+  accountNumber: string;
+  manufacturer: string;
+  modelNumber: string;
+  productDescription: string;
+  woStatus: string;
+  customerName: string;
+  actionCode: string;
+  division: string;
+  location: string;
+  woType: string;
+  osRequest: string;
+  mfgSerial: string;
+  assetId: string;
+  eslId: string;
+  equipmentOptions: string;
+  itemType: string;
+  assignedTo: string;
+  itemStatus: string;
+  priority: string;
+  ttPo: string;
+  vendorRma: string;
+  salesPerson: string;
+  quoteNumber: string;
+  rfid: string;
+  invoiceStatus: string;
+  poNumber: string;
+  custSerial: string;
+  crrNumber: string;
+  deliveryType: string;
+}
+
 const ModernWorkOrderFilters = () => {
   const [advancedFiltersOpen, setAdvancedFiltersOpen] = useState(false);
+  
+  // Form state
+  const [formData, setFormData] = useState<FormData>({
+    woNumber: '',
+    accountNumber: '',
+    manufacturer: '',
+    modelNumber: '',
+    productDescription: '',
+    woStatus: '',
+    customerName: '',
+    actionCode: '',
+    division: '',
+    location: '',
+    woType: '',
+    osRequest: '',
+    mfgSerial: '',
+    assetId: '',
+    eslId: '',
+    equipmentOptions: '',
+    itemType: '',
+    assignedTo: '',
+    itemStatus: '',
+    priority: '',
+    ttPo: '',
+    vendorRma: '',
+    salesPerson: '',
+    quoteNumber: '',
+    rfid: '',
+    invoiceStatus: '',
+    poNumber: '',
+    custSerial: '',
+    crrNumber: '',
+    deliveryType: '',
+  });
   
   // Date filter state
   const [selectedDateType, setSelectedDateType] = useState<DateRangeType>("created");
@@ -79,27 +146,46 @@ const ModernWorkOrderFilters = () => {
     // Clear all date ranges
     clearAllDates();
     
-    // Clear all form inputs by resetting their values
-    const form = document.querySelector('form') as HTMLFormElement;
-    if (form) {
-      form.reset();
-    }
-    
-    // Clear all input fields
-    const inputs = document.querySelectorAll('input[type="text"], input[type="search"]');
-    inputs.forEach(input => {
-      (input as HTMLInputElement).value = '';
+    // Clear all form data
+    setFormData({
+      woNumber: '',
+      accountNumber: '',
+      manufacturer: '',
+      modelNumber: '',
+      productDescription: '',
+      woStatus: '',
+      customerName: '',
+      actionCode: '',
+      division: '',
+      location: '',
+      woType: '',
+      osRequest: '',
+      mfgSerial: '',
+      assetId: '',
+      eslId: '',
+      equipmentOptions: '',
+      itemType: '',
+      assignedTo: '',
+      itemStatus: '',
+      priority: '',
+      ttPo: '',
+      vendorRma: '',
+      salesPerson: '',
+      quoteNumber: '',
+      rfid: '',
+      invoiceStatus: '',
+      poNumber: '',
+      custSerial: '',
+      crrNumber: '',
+      deliveryType: '',
     });
-    
-    // Reset all select elements to their placeholder state
-    const selects = document.querySelectorAll('[role="combobox"]');
-    selects.forEach(select => {
-      const trigger = select as HTMLElement;
-      const placeholder = trigger.querySelector('[data-placeholder]');
-      if (placeholder) {
-        trigger.textContent = placeholder.textContent;
-      }
-    });
+  };
+
+  const updateFormData = (field: keyof FormData, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }));
   };
 
   const hasAnyDates = Object.values(dateRanges).some(range => range.from || range.to);
@@ -263,131 +349,182 @@ const ModernWorkOrderFilters = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {/* Column 1 - Work Order Details */}
                     <div className="space-y-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="wo-number" className="text-sm font-medium text-foreground">Work Order #</Label>
-                        <Input id="wo-number" placeholder="Enter WO number" className="transition-all focus:ring-2 focus:ring-primary/20" />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="acct-num" className="text-sm font-medium">Account Number</Label>
-                        <Input id="acct-num" placeholder="Account number" />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="manufacturer" className="text-sm font-medium">Manufacturer</Label>
-                        <Input id="manufacturer" placeholder="Manufacturer name" />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="model-number" className="text-sm font-medium">Model Number</Label>
-                        <Input id="model-number" placeholder="Model number" />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="product-desc" className="text-sm font-medium">Product Description</Label>
-                        <Input id="product-desc" placeholder="Description" />
-                      </div>
+                       <div className="space-y-2">
+                         <Label htmlFor="wo-number" className="text-sm font-medium text-foreground">Work Order #</Label>
+                         <Input 
+                           id="wo-number" 
+                           placeholder="Enter WO number" 
+                           className="transition-all focus:ring-2 focus:ring-primary/20"
+                           value={formData.woNumber}
+                           onChange={(e) => updateFormData('woNumber', e.target.value)}
+                         />
+                       </div>
+                       <div className="space-y-2">
+                         <Label htmlFor="acct-num" className="text-sm font-medium">Account Number</Label>
+                         <Input 
+                           id="acct-num" 
+                           placeholder="Account number"
+                           value={formData.accountNumber}
+                           onChange={(e) => updateFormData('accountNumber', e.target.value)}
+                         />
+                       </div>
+                       <div className="space-y-2">
+                         <Label htmlFor="manufacturer" className="text-sm font-medium">Manufacturer</Label>
+                         <Input 
+                           id="manufacturer" 
+                           placeholder="Manufacturer name"
+                           value={formData.manufacturer}
+                           onChange={(e) => updateFormData('manufacturer', e.target.value)}
+                         />
+                       </div>
+                       <div className="space-y-2">
+                         <Label htmlFor="model-number" className="text-sm font-medium">Model Number</Label>
+                         <Input 
+                           id="model-number" 
+                           placeholder="Model number"
+                           value={formData.modelNumber}
+                           onChange={(e) => updateFormData('modelNumber', e.target.value)}
+                         />
+                       </div>
+                       <div className="space-y-2">
+                         <Label htmlFor="product-desc" className="text-sm font-medium">Product Description</Label>
+                         <Input 
+                           id="product-desc" 
+                           placeholder="Description"
+                           value={formData.productDescription}
+                           onChange={(e) => updateFormData('productDescription', e.target.value)}
+                         />
+                       </div>
                     </div>
 
                     {/* Column 2 - Status & Customer */}
                     <div className="space-y-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="wo-status" className="text-sm font-medium">WO Status</Label>
-                        <Select>
-                          <SelectTrigger className="bg-background">
-                            <SelectValue placeholder="Select status" />
-                          </SelectTrigger>
-                          <SelectContent className="bg-popover border shadow-lg z-50">
-                            <SelectItem value="in-lab">In Lab</SelectItem>
-                            <SelectItem value="complete">Complete</SelectItem>
-                            <SelectItem value="pending">Pending</SelectItem>
-                            <SelectItem value="cancelled">Cancelled</SelectItem>
-                            <SelectItem value="shipped">Shipped</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="customer-name" className="text-sm font-medium">Customer Name</Label>
-                        <Input id="customer-name" placeholder="Customer name" />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="action-code" className="text-sm font-medium">Action Code</Label>
-                        <Select>
-                          <SelectTrigger className="bg-background">
-                            <SelectValue placeholder="Select action" />
-                          </SelectTrigger>
-                          <SelectContent className="bg-popover border shadow-lg z-50">
-                            <SelectItem value="calibrate">Calibrate</SelectItem>
-                            <SelectItem value="repair">Repair</SelectItem>
-                            <SelectItem value="test">Test</SelectItem>
-                            <SelectItem value="certification">Certification</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="division" className="text-sm font-medium">Division</Label>
-                        <Select>
-                          <SelectTrigger className="bg-background">
-                            <SelectValue placeholder="Select division" />
-                          </SelectTrigger>
-                          <SelectContent className="bg-popover border shadow-lg z-50">
-                            <SelectItem value="electronic">Electronic</SelectItem>
-                            <SelectItem value="mechanical">Mechanical</SelectItem>
-                            <SelectItem value="dimensional">Dimensional</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="location" className="text-sm font-medium">Location</Label>
-                        <Select>
-                          <SelectTrigger className="bg-background">
-                            <SelectValue placeholder="Select location" />
-                          </SelectTrigger>
-                          <SelectContent className="bg-popover border shadow-lg z-50">
-                            <SelectItem value="lab-a">Lab A</SelectItem>
-                            <SelectItem value="lab-b">Lab B</SelectItem>
-                            <SelectItem value="receiving">Receiving</SelectItem>
-                            <SelectItem value="shipping">Shipping</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
+                       <div className="space-y-2">
+                         <Label htmlFor="wo-status" className="text-sm font-medium">WO Status</Label>
+                         <Select value={formData.woStatus} onValueChange={(value) => updateFormData('woStatus', value)}>
+                           <SelectTrigger className="bg-background">
+                             <SelectValue placeholder="Select status" />
+                           </SelectTrigger>
+                           <SelectContent className="bg-popover border shadow-lg z-50">
+                             <SelectItem value="in-lab">In Lab</SelectItem>
+                             <SelectItem value="complete">Complete</SelectItem>
+                             <SelectItem value="pending">Pending</SelectItem>
+                             <SelectItem value="cancelled">Cancelled</SelectItem>
+                             <SelectItem value="shipped">Shipped</SelectItem>
+                           </SelectContent>
+                         </Select>
+                       </div>
+                       <div className="space-y-2">
+                         <Label htmlFor="customer-name" className="text-sm font-medium">Customer Name</Label>
+                         <Input 
+                           id="customer-name" 
+                           placeholder="Customer name"
+                           value={formData.customerName}
+                           onChange={(e) => updateFormData('customerName', e.target.value)}
+                         />
+                       </div>
+                       <div className="space-y-2">
+                         <Label htmlFor="action-code" className="text-sm font-medium">Action Code</Label>
+                         <Select value={formData.actionCode} onValueChange={(value) => updateFormData('actionCode', value)}>
+                           <SelectTrigger className="bg-background">
+                             <SelectValue placeholder="Select action" />
+                           </SelectTrigger>
+                           <SelectContent className="bg-popover border shadow-lg z-50">
+                             <SelectItem value="calibrate">Calibrate</SelectItem>
+                             <SelectItem value="repair">Repair</SelectItem>
+                             <SelectItem value="test">Test</SelectItem>
+                             <SelectItem value="certification">Certification</SelectItem>
+                           </SelectContent>
+                         </Select>
+                       </div>
+                       <div className="space-y-2">
+                         <Label htmlFor="division" className="text-sm font-medium">Division</Label>
+                         <Select value={formData.division} onValueChange={(value) => updateFormData('division', value)}>
+                           <SelectTrigger className="bg-background">
+                             <SelectValue placeholder="Select division" />
+                           </SelectTrigger>
+                           <SelectContent className="bg-popover border shadow-lg z-50">
+                             <SelectItem value="electronic">Electronic</SelectItem>
+                             <SelectItem value="mechanical">Mechanical</SelectItem>
+                             <SelectItem value="dimensional">Dimensional</SelectItem>
+                           </SelectContent>
+                         </Select>
+                       </div>
+                       <div className="space-y-2">
+                         <Label htmlFor="location" className="text-sm font-medium">Location</Label>
+                         <Select value={formData.location} onValueChange={(value) => updateFormData('location', value)}>
+                           <SelectTrigger className="bg-background">
+                             <SelectValue placeholder="Select location" />
+                           </SelectTrigger>
+                           <SelectContent className="bg-popover border shadow-lg z-50">
+                             <SelectItem value="lab-a">Lab A</SelectItem>
+                             <SelectItem value="lab-b">Lab B</SelectItem>
+                             <SelectItem value="receiving">Receiving</SelectItem>
+                             <SelectItem value="shipping">Shipping</SelectItem>
+                           </SelectContent>
+                         </Select>
+                       </div>
                     </div>
 
                     {/* Column 3 - Technical Details */}
                     <div className="space-y-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="wo-type" className="text-sm font-medium">WO Type</Label>
-                        <Select>
-                          <SelectTrigger className="bg-background">
-                            <SelectValue placeholder="Select type" />
-                          </SelectTrigger>
-                          <SelectContent className="bg-popover border shadow-lg z-50">
-                            <SelectItem value="calibration">Calibration</SelectItem>
-                            <SelectItem value="repair">Repair</SelectItem>
-                            <SelectItem value="certification">Certification</SelectItem>
-                            <SelectItem value="rental">Rental</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="os-request" className="text-sm font-medium">OS Request #</Label>
-                        <Input id="os-request" placeholder="OS request number" />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="mfg-serial" className="text-sm font-medium">Manufacturing Serial</Label>
-                        <Input id="mfg-serial" placeholder="Mfg serial number" />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="asset-id" className="text-sm font-medium">Asset ID</Label>
-                        <Input id="asset-id" placeholder="Asset identifier" />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="esl-id" className="text-sm font-medium">ESL ID</Label>
-                        <Input id="esl-id" placeholder="ESL identifier" />
-                      </div>
+                       <div className="space-y-2">
+                         <Label htmlFor="wo-type" className="text-sm font-medium">WO Type</Label>
+                         <Select value={formData.woType} onValueChange={(value) => updateFormData('woType', value)}>
+                           <SelectTrigger className="bg-background">
+                             <SelectValue placeholder="Select type" />
+                           </SelectTrigger>
+                           <SelectContent className="bg-popover border shadow-lg z-50">
+                             <SelectItem value="calibration">Calibration</SelectItem>
+                             <SelectItem value="repair">Repair</SelectItem>
+                             <SelectItem value="certification">Certification</SelectItem>
+                             <SelectItem value="rental">Rental</SelectItem>
+                           </SelectContent>
+                         </Select>
+                       </div>
+                       <div className="space-y-2">
+                         <Label htmlFor="os-request" className="text-sm font-medium">OS Request #</Label>
+                         <Input 
+                           id="os-request" 
+                           placeholder="OS request number"
+                           value={formData.osRequest}
+                           onChange={(e) => updateFormData('osRequest', e.target.value)}
+                         />
+                       </div>
+                       <div className="space-y-2">
+                         <Label htmlFor="mfg-serial" className="text-sm font-medium">Manufacturing Serial</Label>
+                         <Input 
+                           id="mfg-serial" 
+                           placeholder="Mfg serial number"
+                           value={formData.mfgSerial}
+                           onChange={(e) => updateFormData('mfgSerial', e.target.value)}
+                         />
+                       </div>
+                       <div className="space-y-2">
+                         <Label htmlFor="asset-id" className="text-sm font-medium">Asset ID</Label>
+                         <Input 
+                           id="asset-id" 
+                           placeholder="Asset identifier"
+                           value={formData.assetId}
+                           onChange={(e) => updateFormData('assetId', e.target.value)}
+                         />
+                       </div>
+                       <div className="space-y-2">
+                         <Label htmlFor="esl-id" className="text-sm font-medium">ESL ID</Label>
+                         <Input 
+                           id="esl-id" 
+                           placeholder="ESL identifier"
+                           value={formData.eslId}
+                           onChange={(e) => updateFormData('eslId', e.target.value)}
+                         />
+                       </div>
                     </div>
 
                     {/* Column 4 - Options & Status */}
                     <div className="space-y-4">
                       <div className="space-y-2">
                         <Label htmlFor="equipment-options" className="text-sm font-medium">Equipment Options</Label>
-                        <Select>
+                        <Select value={formData.equipmentOptions} onValueChange={(value) => updateFormData('equipmentOptions', value)}>
                           <SelectTrigger className="bg-background">
                             <SelectValue placeholder="Select option" />
                           </SelectTrigger>
@@ -403,7 +540,7 @@ const ModernWorkOrderFilters = () => {
 
                       <div className="space-y-2">
                         <Label htmlFor="item-type" className="text-sm font-medium">Item Type</Label>
-                        <Select>
+                        <Select value={formData.itemType} onValueChange={(value) => updateFormData('itemType', value)}>
                           <SelectTrigger className="bg-background">
                             <SelectValue placeholder="Select type" />
                           </SelectTrigger>
@@ -417,11 +554,16 @@ const ModernWorkOrderFilters = () => {
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="assigned-to" className="text-sm font-medium">Assigned To</Label>
-                        <Input id="assigned-to" placeholder="Technician name" />
+                        <Input 
+                          id="assigned-to" 
+                          placeholder="Technician name"
+                          value={formData.assignedTo}
+                          onChange={(e) => updateFormData('assignedTo', e.target.value)}
+                        />
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="item-status" className="text-sm font-medium">Item Status</Label>
-                        <Select>
+                        <Select value={formData.itemStatus} onValueChange={(value) => updateFormData('itemStatus', value)}>
                           <SelectTrigger className="bg-background">
                             <SelectValue placeholder="Select status" />
                           </SelectTrigger>
@@ -453,74 +595,99 @@ const ModernWorkOrderFilters = () => {
           <CollapsibleContent>
             <CardContent className="pt-0">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="priority" className="text-sm font-medium">Priority</Label>
-                    <Select>
-                      <SelectTrigger className="bg-background">
-                        <SelectValue placeholder="Select priority" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-popover border shadow-lg z-50">
-                        <SelectItem value="normal">Normal</SelectItem>
-                        <SelectItem value="rush">Rush</SelectItem>
-                        <SelectItem value="emergency">Emergency</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="tt-po" className="text-sm font-medium">T/T PO #</Label>
-                    <Input id="tt-po" placeholder="TT PO number" />
-                  </div>
-                </div>
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="vendor-rma" className="text-sm font-medium">Vendor RMA #</Label>
-                    <Input id="vendor-rma" placeholder="RMA number" />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="sales-person" className="text-sm font-medium">Sales Person</Label>
-                    <Input id="sales-person" placeholder="Sales representative" />
-                  </div>
-                </div>
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="quote-num" className="text-sm font-medium">Quote #</Label>
-                    <Input id="quote-num" placeholder="Quote number" />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="rfid" className="text-sm font-medium">RFID</Label>
-                    <Input id="rfid" placeholder="RFID identifier" />
-                  </div>
-                </div>
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="invoice-status" className="text-sm font-medium">Invoice Status</Label>
-                    <Select>
-                      <SelectTrigger className="bg-background">
-                        <SelectValue placeholder="Select status" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-popover border shadow-lg z-50">
-                        <SelectItem value="pending">Pending</SelectItem>
-                        <SelectItem value="sent">Sent</SelectItem>
-                        <SelectItem value="paid">Paid</SelectItem>
-                        <SelectItem value="overdue">Overdue</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="departure-type" className="text-sm font-medium">Departure Type</Label>
-                    <Select>
-                      <SelectTrigger className="bg-background">
-                        <SelectValue placeholder="Select type" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-popover border shadow-lg z-50">
-                        <SelectItem value="ship">Ship</SelectItem>
-                        <SelectItem value="pickup">Pickup</SelectItem>
-                        <SelectItem value="delivery">Delivery</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
+                 <div className="space-y-4">
+                   <div className="space-y-2">
+                     <Label htmlFor="priority" className="text-sm font-medium">Priority</Label>
+                     <Select value={formData.priority} onValueChange={(value) => updateFormData('priority', value)}>
+                       <SelectTrigger className="bg-background">
+                         <SelectValue placeholder="Select priority" />
+                       </SelectTrigger>
+                       <SelectContent className="bg-popover border shadow-lg z-50">
+                         <SelectItem value="normal">Normal</SelectItem>
+                         <SelectItem value="rush">Rush</SelectItem>
+                         <SelectItem value="emergency">Emergency</SelectItem>
+                       </SelectContent>
+                     </Select>
+                   </div>
+                   <div className="space-y-2">
+                     <Label htmlFor="tt-po" className="text-sm font-medium">T/T PO #</Label>
+                     <Input 
+                       id="tt-po" 
+                       placeholder="TT PO number"
+                       value={formData.ttPo}
+                       onChange={(e) => updateFormData('ttPo', e.target.value)}
+                     />
+                   </div>
+                 </div>
+                 <div className="space-y-4">
+                   <div className="space-y-2">
+                     <Label htmlFor="vendor-rma" className="text-sm font-medium">Vendor RMA #</Label>
+                     <Input 
+                       id="vendor-rma" 
+                       placeholder="RMA number"
+                       value={formData.vendorRma}
+                       onChange={(e) => updateFormData('vendorRma', e.target.value)}
+                     />
+                   </div>
+                   <div className="space-y-2">
+                     <Label htmlFor="sales-person" className="text-sm font-medium">Sales Person</Label>
+                     <Input 
+                       id="sales-person" 
+                       placeholder="Sales representative"
+                       value={formData.salesPerson}
+                       onChange={(e) => updateFormData('salesPerson', e.target.value)}
+                     />
+                   </div>
+                 </div>
+                 <div className="space-y-4">
+                   <div className="space-y-2">
+                     <Label htmlFor="quote-num" className="text-sm font-medium">Quote #</Label>
+                     <Input 
+                       id="quote-num" 
+                       placeholder="Quote number"
+                       value={formData.quoteNumber}
+                       onChange={(e) => updateFormData('quoteNumber', e.target.value)}
+                     />
+                   </div>
+                   <div className="space-y-2">
+                     <Label htmlFor="rfid" className="text-sm font-medium">RFID</Label>
+                     <Input 
+                       id="rfid" 
+                       placeholder="RFID identifier"
+                       value={formData.rfid}
+                       onChange={(e) => updateFormData('rfid', e.target.value)}
+                     />
+                   </div>
+                 </div>
+                 <div className="space-y-4">
+                   <div className="space-y-2">
+                     <Label htmlFor="invoice-status" className="text-sm font-medium">Invoice Status</Label>
+                     <Select value={formData.invoiceStatus} onValueChange={(value) => updateFormData('invoiceStatus', value)}>
+                       <SelectTrigger className="bg-background">
+                         <SelectValue placeholder="Select status" />
+                       </SelectTrigger>
+                       <SelectContent className="bg-popover border shadow-lg z-50">
+                         <SelectItem value="pending">Pending</SelectItem>
+                         <SelectItem value="sent">Sent</SelectItem>
+                         <SelectItem value="paid">Paid</SelectItem>
+                         <SelectItem value="overdue">Overdue</SelectItem>
+                       </SelectContent>
+                     </Select>
+                   </div>
+                   <div className="space-y-2">
+                     <Label htmlFor="departure-type" className="text-sm font-medium">Departure Type</Label>
+                     <Select value={formData.deliveryType} onValueChange={(value) => updateFormData('deliveryType', value)}>
+                       <SelectTrigger className="bg-background">
+                         <SelectValue placeholder="Select type" />
+                       </SelectTrigger>
+                       <SelectContent className="bg-popover border shadow-lg z-50">
+                         <SelectItem value="ship">Ship</SelectItem>
+                         <SelectItem value="pickup">Pickup</SelectItem>
+                         <SelectItem value="delivery">Delivery</SelectItem>
+                       </SelectContent>
+                     </Select>
+                   </div>
+                 </div>
               </div>
             </CardContent>
           </CollapsibleContent>
