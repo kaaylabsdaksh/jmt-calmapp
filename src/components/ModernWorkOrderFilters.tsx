@@ -115,7 +115,7 @@ const ModernWorkOrderFilters = () => {
         </CardHeader>
         
         {/* Date Filter Section - Above Basic Information */}
-        <div className="px-6 py-4 border-t bg-muted/20">
+        <div className="px-6 py-4 border-t bg-white">
           <div className="flex items-center justify-between">
             <Popover>
               <PopoverTrigger asChild>
