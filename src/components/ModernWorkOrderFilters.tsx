@@ -342,7 +342,7 @@ const ModernWorkOrderFilters = () => {
                   <div className="space-y-8">
                     {/* Work Order Information Section */}
                     <div className="space-y-4">
-                      <h4 className="text-sm font-semibold text-primary border-b border-border pb-2">Work Order Information</h4>
+                      <h4 className="text-sm font-semibold text-primary">Work Order Information</h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                         <div className="space-y-2">
                           <Label htmlFor="wo-number" className="text-sm font-medium text-foreground">Work Order #</Label>
@@ -397,7 +397,7 @@ const ModernWorkOrderFilters = () => {
 
                     {/* Product Details Section */}
                     <div className="space-y-4">
-                      <h4 className="text-sm font-semibold text-primary border-b border-border pb-2">Product Details</h4>
+                      <h4 className="text-sm font-semibold text-primary">Product Details</h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                         <div className="space-y-2">
                           <Label htmlFor="manufacturer" className="text-sm font-medium">Manufacturer</Label>
@@ -440,7 +440,7 @@ const ModernWorkOrderFilters = () => {
 
                     {/* Customer & Sales Section */}
                     <div className="space-y-4">
-                      <h4 className="text-sm font-semibold text-primary border-b border-border pb-2">Customer & Sales</h4>
+                      <h4 className="text-sm font-semibold text-primary">Customer & Sales</h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         <div className="space-y-2">
                           <Label htmlFor="customer-name" className="text-sm font-medium">Customer Name</Label>
@@ -474,7 +474,7 @@ const ModernWorkOrderFilters = () => {
 
                     {/* Technical & Equipment Section */}
                     <div className="space-y-4">
-                      <h4 className="text-sm font-semibold text-primary border-b border-border pb-2">Technical & Equipment</h4>
+                      <h4 className="text-sm font-semibold text-primary">Technical & Equipment</h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                         <div className="space-y-2">
                           <Label htmlFor="action-code" className="text-sm font-medium">Action Code</Label>
@@ -538,7 +538,7 @@ const ModernWorkOrderFilters = () => {
 
                     {/* Location & Assignment Section */}
                     <div className="space-y-4">
-                      <h4 className="text-sm font-semibold text-primary border-b border-border pb-2">Location & Assignment</h4>
+                      <h4 className="text-sm font-semibold text-primary">Location & Assignment</h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         <div className="space-y-2">
                           <Label htmlFor="division" className="text-sm font-medium">Division</Label>
@@ -581,7 +581,7 @@ const ModernWorkOrderFilters = () => {
 
                     {/* Identification & Tracking Section */}
                     <div className="space-y-4">
-                      <h4 className="text-sm font-semibold text-primary border-b border-border pb-2">Identification & Tracking</h4>
+                      <h4 className="text-sm font-semibold text-primary">Identification & Tracking</h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                         <div className="space-y-2">
                           <Label htmlFor="asset-id" className="text-sm font-medium">Asset ID</Label>
@@ -642,7 +642,7 @@ const ModernWorkOrderFilters = () => {
               <div className="space-y-8">
                 {/* Orders & Billing Section */}
                 <div className="space-y-4">
-                  <h4 className="text-sm font-semibold text-primary border-b border-border pb-2">Orders & Billing</h4>
+                  <h4 className="text-sm font-semibold text-primary">Orders & Billing</h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="priority" className="text-sm font-medium">Priority</Label>
@@ -694,7 +694,7 @@ const ModernWorkOrderFilters = () => {
 
                 {/* Delivery & Operations Section */}
                 <div className="space-y-4">
-                  <h4 className="text-sm font-semibold text-primary border-b border-border pb-2">Delivery & Operations</h4>
+                  <h4 className="text-sm font-semibold text-primary">Delivery & Operations</h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="departure-type" className="text-sm font-medium">Departure Type</Label>
