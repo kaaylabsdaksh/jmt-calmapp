@@ -121,49 +121,86 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           {/* Tab Navigation */}
-          <div className="w-full overflow-x-auto">
-            <TabsList className="inline-flex h-auto p-1 w-max min-w-full">
-              <TabsTrigger value="general" className="whitespace-nowrap px-3 py-2.5 text-sm">
-                <span className="hidden lg:inline">General</span>
-                <span className="lg:hidden">Gen</span>
+          <div className="w-full">
+            {/* Desktop: Grid layout spanning full width */}
+            <TabsList className="hidden lg:grid lg:grid-cols-10 w-full h-auto p-1">
+              <TabsTrigger value="general" className="px-3 py-2.5 text-sm">
+                General
               </TabsTrigger>
-              <TabsTrigger value="account" className="whitespace-nowrap px-3 py-2.5 text-sm">
-                <span className="hidden lg:inline">Account Info</span>
-                <span className="lg:hidden">Account</span>
+              <TabsTrigger value="account" className="px-3 py-2.5 text-sm">
+                Account Info
               </TabsTrigger>
-              <TabsTrigger value="contacts" className="whitespace-nowrap px-3 py-2.5 text-sm">
-                <span className="hidden lg:inline">WO Contacts</span>
-                <span className="lg:hidden">Contacts</span>
+              <TabsTrigger value="contacts" className="px-3 py-2.5 text-sm">
+                WO Contacts
               </TabsTrigger>
-              <TabsTrigger value="items" className="whitespace-nowrap px-3 py-2.5 text-sm">
-                <span className="hidden lg:inline">WO Items</span>
-                <span className="lg:hidden">Items</span>
+              <TabsTrigger value="items" className="px-3 py-2.5 text-sm">
+                WO Items
               </TabsTrigger>
-              <TabsTrigger value="onsite" className="whitespace-nowrap px-3 py-2.5 text-sm">
-                <span className="hidden lg:inline">Onsite Defaults</span>
-                <span className="lg:hidden">Onsite</span>
+              <TabsTrigger value="onsite" className="px-3 py-2.5 text-sm">
+                Onsite Defaults
               </TabsTrigger>
-              <TabsTrigger value="estimate" className="whitespace-nowrap px-3 py-2.5 text-sm">
-                <span className="hidden lg:inline">Estimate</span>
-                <span className="lg:hidden">Est</span>
+              <TabsTrigger value="estimate" className="px-3 py-2.5 text-sm">
+                Estimate
               </TabsTrigger>
-              <TabsTrigger value="files" className="whitespace-nowrap px-3 py-2.5 text-sm">
-                <span className="hidden lg:inline">External Files</span>
-                <span className="lg:hidden">Ext Files</span>
+              <TabsTrigger value="files" className="px-3 py-2.5 text-sm">
+                External Files
               </TabsTrigger>
-              <TabsTrigger value="cert-files" className="whitespace-nowrap px-3 py-2.5 text-sm">
-                <span className="hidden lg:inline">Cert Files</span>
-                <span className="lg:hidden">Cert</span>
+              <TabsTrigger value="cert-files" className="px-3 py-2.5 text-sm">
+                Cert Files
               </TabsTrigger>
-              <TabsTrigger value="warranty" className="whitespace-nowrap px-3 py-2.5 text-sm">
-                <span className="hidden lg:inline">Warranty</span>
-                <span className="lg:hidden">Warranty</span>
+              <TabsTrigger value="warranty" className="px-3 py-2.5 text-sm">
+                Warranty
               </TabsTrigger>
-              <TabsTrigger value="qf3-data" className="whitespace-nowrap px-3 py-2.5 text-sm">
-                <span className="hidden lg:inline">QF3 Data</span>
-                <span className="lg:hidden">QF3</span>
+              <TabsTrigger value="qf3-data" className="px-3 py-2.5 text-sm">
+                QF3 Data
               </TabsTrigger>
             </TabsList>
+            
+            {/* Mobile/Tablet: Horizontal scroll */}
+            <div className="lg:hidden overflow-x-auto">
+              <TabsList className="inline-flex h-auto p-1 w-max min-w-full">
+                <TabsTrigger value="general" className="whitespace-nowrap px-3 py-2.5 text-sm">
+                  <span className="hidden md:inline">General</span>
+                  <span className="md:hidden">Gen</span>
+                </TabsTrigger>
+                <TabsTrigger value="account" className="whitespace-nowrap px-3 py-2.5 text-sm">
+                  <span className="hidden md:inline">Account Info</span>
+                  <span className="md:hidden">Account</span>
+                </TabsTrigger>
+                <TabsTrigger value="contacts" className="whitespace-nowrap px-3 py-2.5 text-sm">
+                  <span className="hidden md:inline">WO Contacts</span>
+                  <span className="md:hidden">Contacts</span>
+                </TabsTrigger>
+                <TabsTrigger value="items" className="whitespace-nowrap px-3 py-2.5 text-sm">
+                  <span className="hidden md:inline">WO Items</span>
+                  <span className="md:hidden">Items</span>
+                </TabsTrigger>
+                <TabsTrigger value="onsite" className="whitespace-nowrap px-3 py-2.5 text-sm">
+                  <span className="hidden md:inline">Onsite Defaults</span>
+                  <span className="md:hidden">Onsite</span>
+                </TabsTrigger>
+                <TabsTrigger value="estimate" className="whitespace-nowrap px-3 py-2.5 text-sm">
+                  <span className="hidden md:inline">Estimate</span>
+                  <span className="md:hidden">Est</span>
+                </TabsTrigger>
+                <TabsTrigger value="files" className="whitespace-nowrap px-3 py-2.5 text-sm">
+                  <span className="hidden md:inline">External Files</span>
+                  <span className="md:hidden">Ext Files</span>
+                </TabsTrigger>
+                <TabsTrigger value="cert-files" className="whitespace-nowrap px-3 py-2.5 text-sm">
+                  <span className="hidden md:inline">Cert Files</span>
+                  <span className="md:hidden">Cert</span>
+                </TabsTrigger>
+                <TabsTrigger value="warranty" className="whitespace-nowrap px-3 py-2.5 text-sm">
+                  <span className="hidden md:inline">Warranty</span>
+                  <span className="md:hidden">Warranty</span>
+                </TabsTrigger>
+                <TabsTrigger value="qf3-data" className="whitespace-nowrap px-3 py-2.5 text-sm">
+                  <span className="hidden md:inline">QF3 Data</span>
+                  <span className="md:hidden">QF3</span>
+                </TabsTrigger>
+              </TabsList>
+            </div>
           </div>
 
           {/* General Tab */}
