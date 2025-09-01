@@ -96,33 +96,19 @@ export function AppSidebar() {
 
       <SidebarContent className="px-2 py-4">
         {/* Main Navigation */}
-        <SidebarGroup className="mb-6">
-          <SidebarGroupContent>
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton 
-                  asChild
-                  tooltip={!open ? "Work Order Search & Management" : undefined}
-                  className="group"
-                >
-                  <div
-                    className={`
-                      flex items-center w-full h-12 px-3 rounded-lg transition-all duration-200
-                      bg-primary text-primary-foreground shadow-lg border border-primary/20
-                      ${!open && "justify-center px-0"}
-                    `}
-                  >
-                    <Search className="h-5 w-5 shrink-0" />
-                    {open && (
-                      <span className="ml-3 font-semibold text-sm animate-fade-in">
-                        Work Order Search & Management
-                      </span>
-                    )}
-                  </div>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarGroupContent>
+        <SidebarGroup className="mb-4">
+          <SidebarGroupLabel 
+            className={`
+              px-3 py-2 text-xs font-semibold text-primary uppercase tracking-wider
+              flex items-center justify-between group border-l-2 border-primary
+              ${!open && "sr-only"}
+            `}
+          >
+            <div className="flex items-center">
+              <Search className="h-3 w-3 mr-2" />
+              <span>Work Order Search & Management</span>
+            </div>
+          </SidebarGroupLabel>
         </SidebarGroup>
 
         {/* Quick Actions Section */}
