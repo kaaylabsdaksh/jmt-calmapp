@@ -8,6 +8,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { Checkbox } from "@/components/ui/checkbox";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Separator } from "@/components/ui/separator";
 import { format } from "date-fns";
 import { Search, RotateCcw, Plus, ChevronDown, ChevronUp, Filter, Package, Calendar as CalendarIcon, X, Settings } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -337,6 +338,8 @@ const ModernWorkOrderFilters = () => {
             </Button>
           </div>
         </div>
+        
+        <Separator />
         
         <CardContent className="pt-0">
                   <div className="space-y-8">
