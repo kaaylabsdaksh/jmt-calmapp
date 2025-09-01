@@ -226,6 +226,68 @@ const ModernWorkOrderFilters = () => {
         </div>
             <CardContent className="pt-0">
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {/* Date Filter Row - Spans full width */}
+                    <div className="lg:col-span-4 grid grid-cols-1 md:grid-cols-3 gap-4 pb-4 border-b border-border">
+                      <div className="space-y-2">
+                        <Label className="text-sm font-medium">From Date</Label>
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <Button
+                              variant="outline"
+                              className={cn(
+                                "w-full justify-start text-left font-normal",
+                                "text-muted-foreground"
+                              )}
+                            >
+                              <CalendarIcon className="mr-2 h-4 w-4" />
+                              Pick a date
+                            </Button>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-auto p-0" align="start">
+                            <Calendar
+                              mode="single"
+                              initialFocus
+                              className="p-3 pointer-events-auto"
+                            />
+                          </PopoverContent>
+                        </Popover>
+                      </div>
+                      <div className="space-y-2">
+                        <Label className="text-sm font-medium">To Date</Label>
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <Button
+                              variant="outline"
+                              className={cn(
+                                "w-full justify-start text-left font-normal",
+                                "text-muted-foreground"
+                              )}
+                            >
+                              <CalendarIcon className="mr-2 h-4 w-4" />
+                              Pick a date
+                            </Button>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-auto p-0" align="start">
+                            <Calendar
+                              mode="single"
+                              initialFocus
+                              className="p-3 pointer-events-auto"
+                            />
+                          </PopoverContent>
+                        </Popover>
+                      </div>
+                      <div className="space-y-2">
+                        <Label className="text-sm font-medium">Actions</Label>
+                        <Button
+                          variant="outline"
+                          className="w-full flex items-center gap-2"
+                        >
+                          <X className="h-4 w-4" />
+                          Clear Dates
+                        </Button>
+                      </div>
+                    </div>
+
                     {/* Column 1 - Work Order Details */}
                     <div className="space-y-4">
                       <div className="space-y-2">
