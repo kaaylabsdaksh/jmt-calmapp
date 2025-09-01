@@ -22,7 +22,9 @@ import {
   Calendar,
   MapPin,
   Phone,
-  Mail
+  Mail,
+  FileCheck,
+  Database
 } from "lucide-react";
 
 interface WorkOrderDetailsProps {
@@ -114,7 +116,7 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           {/* Tab Navigation */}
-          <TabsList className="grid w-full grid-cols-8 h-auto p-1">
+          <TabsList className="grid w-full grid-cols-10 h-auto p-1">
             <TabsTrigger value="general" className="flex items-center gap-2 py-2.5">
               <Edit className="h-4 w-4" />
               <span className="hidden sm:inline">General</span>
@@ -125,11 +127,11 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
             </TabsTrigger>
             <TabsTrigger value="contacts" className="flex items-center gap-2 py-2.5">
               <Phone className="h-4 w-4" />
-              <span className="hidden sm:inline">Contacts</span>
+              <span className="hidden sm:inline">Work Order Contacts</span>
             </TabsTrigger>
             <TabsTrigger value="items" className="flex items-center gap-2 py-2.5">
               <Package className="h-4 w-4" />
-              <span className="hidden sm:inline">Items</span>
+              <span className="hidden sm:inline">Work Order Items</span>
             </TabsTrigger>
             <TabsTrigger value="onsite" className="flex items-center gap-2 py-2.5">
               <MapPin className="h-4 w-4" />
@@ -143,9 +145,17 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
               <FileText className="h-4 w-4" />
               <span className="hidden sm:inline">External Files</span>
             </TabsTrigger>
+            <TabsTrigger value="cert-files" className="flex items-center gap-2 py-2.5">
+              <FileCheck className="h-4 w-4" />
+              <span className="hidden sm:inline">Cert Files</span>
+            </TabsTrigger>
             <TabsTrigger value="warranty" className="flex items-center gap-2 py-2.5">
               <Settings className="h-4 w-4" />
               <span className="hidden sm:inline">Warranty</span>
+            </TabsTrigger>
+            <TabsTrigger value="qf3-data" className="flex items-center gap-2 py-2.5">
+              <Database className="h-4 w-4" />
+              <span className="hidden sm:inline">QF3 Data</span>
             </TabsTrigger>
           </TabsList>
 
@@ -342,6 +352,20 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
             </Card>
           </TabsContent>
 
+          <TabsContent value="cert-files" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <FileCheck className="h-5 w-5 text-primary" />
+                  Cert Files
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">Certificate files content will be implemented here.</p>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
           <TabsContent value="warranty" className="space-y-6">
             <Card>
               <CardHeader>
@@ -352,6 +376,20 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">Warranty content will be implemented here.</p>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="qf3-data" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Database className="h-5 w-5 text-primary" />
+                  QF3 Data
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">QF3 data content will be implemented here.</p>
               </CardContent>
             </Card>
           </TabsContent>
