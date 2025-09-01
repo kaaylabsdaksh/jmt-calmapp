@@ -16,7 +16,7 @@ import {
   CheckCircle,
   Clock,
   Zap,
-  Search
+  ClipboardList
 } from "lucide-react";
 
 import {
@@ -105,7 +105,7 @@ export function AppSidebar() {
             `}
           >
             <div className="flex items-center">
-              <Search className="h-3 w-3 mr-2" />
+              <ClipboardList className="h-3 w-3 mr-2" />
               <span>WO Management</span>
             </div>
           </SidebarGroupLabel>
