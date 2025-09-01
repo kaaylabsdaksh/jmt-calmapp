@@ -593,10 +593,10 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
 
         {/* Footer Actions - Now Sticky */}
         <div className={`fixed bottom-0 left-0 sm:${open ? 'left-64' : 'left-14'} right-0 z-40 bg-card/95 backdrop-blur border-t shadow-lg transition-all duration-300`}>
-          <div className="px-3 sm:px-6 py-2 sm:py-4">
+          <div className="px-3 sm:px-6 py-3 sm:py-4">
             <div className="flex items-center justify-between gap-2 sm:gap-4">
-              {/* Created/Modified Info - Compact on mobile */}
-              <div className="text-xs text-muted-foreground hidden sm:block space-y-1 flex-1">
+              {/* Created/Modified Info - Hidden on mobile, full on desktop */}
+              <div className="text-sm text-muted-foreground hidden sm:block space-y-1 flex-1">
                 <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
                   <div className="flex items-center gap-2">
                     <span>Created By:</span>
@@ -613,19 +613,14 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
                 </div>
               </div>
 
-              {/* Mobile: Just show modified date */}
-              <div className="text-xs text-muted-foreground sm:hidden flex-1">
-                Modified: {workOrderData.modifiedDate}
-              </div>
-
-              {/* Action Buttons - Compact on mobile */}
-              <div className="flex items-center gap-2 shrink-0">
-                <Button variant="outline" size="sm" className="h-8 px-3 text-xs sm:h-9 sm:px-4 sm:text-sm">
-                  <X className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+              {/* Action Buttons - Normal size, centered on mobile */}
+              <div className="flex items-center gap-3 sm:shrink-0 mx-auto sm:mx-0">
+                <Button variant="outline" size="sm">
+                  <X className="h-4 w-4 mr-2" />
                   Cancel
                 </Button>
-                <Button size="sm" className="h-8 px-3 text-xs sm:h-9 sm:px-4 sm:text-sm">
-                  <Save className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                <Button size="sm">
+                  <Save className="h-4 w-4 mr-2" />
                   Save
                 </Button>
               </div>
