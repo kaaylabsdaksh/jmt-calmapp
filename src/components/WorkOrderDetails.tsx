@@ -57,30 +57,33 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
       {/* Header */}
       <div className="sticky top-0 z-50 bg-card/95 backdrop-blur border-b shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+          {/* Back Button Row */}
+          <div className="mb-4">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={onBack}
+              className="flex items-center gap-2"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Back
+            </Button>
+          </div>
+          
+          {/* Main Header Row */}
           <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-4">
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                onClick={onBack}
-                className="flex items-center gap-2"
-              >
-                <ArrowLeft className="h-4 w-4" />
-                Back
-              </Button>
-              <div>
-                <h1 className="text-2xl font-bold text-foreground">Edit Work Order</h1>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Work Order #: <span className="font-medium">{workOrderData.id}</span> 
-                  {" • "}
-                  <span className="font-medium">{workOrderData.number}</span>
-                  {" • "}
-                  Salesperson: <span className="text-primary font-medium">{workOrderData.salesperson}</span>
-                  {" • "}
-                  Contact: <span className="text-primary font-medium">{workOrderData.customer.contact}</span>
-                  <span className="ml-2 text-muted-foreground">({workOrderData.customer.phone})</span>
-                </p>
-              </div>
+            <div>
+              <h1 className="text-2xl font-bold text-foreground">Edit Work Order</h1>
+              <p className="text-sm text-muted-foreground mt-1">
+                Work Order #: <span className="font-medium">{workOrderData.id}</span> 
+                {" • "}
+                <span className="font-medium">{workOrderData.number}</span>
+                {" • "}
+                Salesperson: <span className="text-primary font-medium">{workOrderData.salesperson}</span>
+                {" • "}
+                Contact: <span className="text-primary font-medium">{workOrderData.customer.contact}</span>
+                <span className="ml-2 text-muted-foreground">({workOrderData.customer.phone})</span>
+              </p>
             </div>
             
             <div className="flex items-center gap-2">
