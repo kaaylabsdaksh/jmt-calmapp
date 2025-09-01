@@ -26,7 +26,6 @@ interface DateRange {
 }
 
 const ModernWorkOrderFilters = () => {
-  const [basicFiltersOpen, setBasicFiltersOpen] = useState(true);
   const [advancedFiltersOpen, setAdvancedFiltersOpen] = useState(false);
   
   // Date filter state
@@ -210,19 +209,12 @@ const ModernWorkOrderFilters = () => {
         </CardHeader>
         
         {/* Basic Information Section */}
-        <Collapsible open={basicFiltersOpen} onOpenChange={setBasicFiltersOpen}>
-          <CollapsibleTrigger asChild>
-            <div className="px-6 py-3 cursor-pointer hover:bg-muted/50 transition-colors border-t">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <Package className="h-5 w-5 text-primary" />
-                  <h3 className="text-lg font-medium">Basic Information</h3>
-                </div>
-                {basicFiltersOpen ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
-              </div>
-            </div>
-          </CollapsibleTrigger>
-          <CollapsibleContent>
+        <div className="px-6 py-3 border-t">
+          <div className="flex items-center gap-2">
+            <Package className="h-5 w-5 text-primary" />
+            <h3 className="text-lg font-medium">Basic Information</h3>
+          </div>
+        </div>
             <CardContent className="pt-0">
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {/* Column 1 - Work Order Details */}
@@ -409,10 +401,8 @@ const ModernWorkOrderFilters = () => {
                       </div>
                     </div>
                   </div>
-                </CardContent>
-          </CollapsibleContent>
-        </Collapsible>
-
+                 </CardContent>
+        
         {/* Advanced Options Section - Inside the same card */}
         <Collapsible open={advancedFiltersOpen} onOpenChange={setAdvancedFiltersOpen}>
           <CollapsibleTrigger asChild>
