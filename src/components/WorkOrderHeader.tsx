@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { SidebarTrigger, useSidebar } from "@/components/ui/sidebar";
+import { useSidebar } from "@/components/ui/sidebar";
 
 const WorkOrderHeader = () => {
   const { state, open } = useSidebar();
@@ -12,7 +12,6 @@ const WorkOrderHeader = () => {
       }`}>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 sm:gap-4">
-            <SidebarTrigger />
             <span className={`text-sm text-muted-foreground transition-all duration-200 ${
               isCollapsed ? 'hidden sm:block' : 'block'
             }`}>
