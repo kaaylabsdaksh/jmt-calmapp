@@ -12,7 +12,6 @@ import { Separator } from "@/components/ui/separator";
 import { format } from "date-fns";
 import { Search, RotateCcw, Plus, ChevronDown, ChevronUp, Filter, Package, Calendar as CalendarIcon, X, Settings } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { type DateRange as DayPickerDateRange } from "react-day-picker";
 
 type DateRangeType = 
   | "created" 
@@ -321,52 +320,42 @@ const ModernWorkOrderFilters = () => {
                                            {range.from ? format(range.from, "dd/MM/yyyy") : "From date"}
                                          </Button>
                                        </PopoverTrigger>
-                                        <PopoverContent className="w-auto p-0" align="start">
-                                           <Calendar
-                                             mode="range"
-                                             selected={range.from && range.to ? { from: range.from, to: range.to } : undefined}
-                                             onSelect={(dateRange) => {
-                                               if (dateRange) {
-                                                 updateDateRange(type, 'from', dateRange.from);
-                                                 updateDateRange(type, 'to', dateRange.to);
-                                               }
-                                             }}
-                                             initialFocus
-                                             className="p-3 pointer-events-auto"
-                                           />
-                                         </PopoverContent>
-                                       </Popover>
-                                       <span className="text-xs text-muted-foreground">to</span>
-                                       <Popover 
-                                         open={datePopoverStates[getPopoverKey(type)]?.to || false}
-                                         onOpenChange={(open) => setPopoverOpen(type, 'to', open)}
-                                       >
-                                         <PopoverTrigger asChild>
-                                           <Button
-                                             variant="outline"
-                                             size="sm"
-                                             className={cn(
-                                               "w-28 h-7 text-xs justify-start",
-                                               !range.to && "text-muted-foreground"
-                                             )}
-                                           >
-                                             {range.to ? format(range.to, "dd/MM/yyyy") : "To date"}
-                                           </Button>
-                                         </PopoverTrigger>
-                                         <PopoverContent className="w-auto p-0" align="start">
-                                           <Calendar
-                                             mode="range"
-                                             selected={range.from && range.to ? { from: range.from, to: range.to } : undefined}
-                                             onSelect={(dateRange) => {
-                                               if (dateRange) {
-                                                 updateDateRange(type, 'from', dateRange.from);
-                                                 updateDateRange(type, 'to', dateRange.to);
-                                               }
-                                             }}
-                                             initialFocus
-                                             className="p-3 pointer-events-auto"
-                                           />
-                                         </PopoverContent>
+                                       <PopoverContent className="w-auto p-0" align="start">
+                                         <Calendar
+                                           mode="single"
+                                           selected={range.from}
+                                           onSelect={(date) => updateDateRange(type, 'from', date)}
+                                           initialFocus
+                                           className="p-3 pointer-events-auto"
+                                         />
+                                       </PopoverContent>
+                                     </Popover>
+                                     <span className="text-xs text-muted-foreground">to</span>
+                                     <Popover 
+                                       open={datePopoverStates[getPopoverKey(type)]?.to || false}
+                                       onOpenChange={(open) => setPopoverOpen(type, 'to', open)}
+                                     >
+                                       <PopoverTrigger asChild>
+                                         <Button
+                                           variant="outline"
+                                           size="sm"
+                                           className={cn(
+                                             "w-28 h-7 text-xs justify-start",
+                                             !range.to && "text-muted-foreground"
+                                           )}
+                                         >
+                                           {range.to ? format(range.to, "dd/MM/yyyy") : "To date"}
+                                         </Button>
+                                       </PopoverTrigger>
+                                       <PopoverContent className="w-auto p-0" align="start">
+                                         <Calendar
+                                           mode="single"
+                                           selected={range.to}
+                                           onSelect={(date) => updateDateRange(type, 'to', date)}
+                                           initialFocus
+                                           className="p-3 pointer-events-auto"
+                                         />
+                                       </PopoverContent>
                                      </Popover>
                                    </div>
                                 </div>
