@@ -337,15 +337,8 @@ const ModernWorkOrderFilters = () => {
             </Button>
           </div>
         </div>
-
-        {/* Basic Information Section */}
-        <div className="px-6 py-3 border-t">
-          <div className="flex items-center gap-2">
-            <Package className="h-5 w-5 text-primary" />
-            <h3 className="text-lg font-medium">Basic Information</h3>
-          </div>
-        </div>
-            <CardContent className="pt-0">
+        
+        <CardContent className="pt-0">
                   <div className="space-y-8">
                     {/* Work Order Information Section */}
                     <div className="space-y-4">
