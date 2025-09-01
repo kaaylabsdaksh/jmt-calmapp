@@ -358,30 +358,20 @@ const ModernWorkOrderFilters = () => {
 
                     {/* Column 4 - Options & Status */}
                     <div className="space-y-4">
-                      <div className="space-y-3">
-                        <Label className="text-sm font-medium">Equipment Options</Label>
-                        <div className="space-y-2">
-                          <div className="flex items-center space-x-2">
-                            <Checkbox id="new-equip" />
-                            <Label htmlFor="new-equip" className="text-sm">New Equipment</Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <Checkbox id="used-surplus" />
-                            <Label htmlFor="used-surplus" className="text-sm">Used Surplus</Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <Checkbox id="warranty" />
-                            <Label htmlFor="warranty" className="text-sm">Warranty</Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <Checkbox id="to-factory" />
-                            <Label htmlFor="to-factory" className="text-sm">To Factory</Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <Checkbox id="proof-delivery" />
-                            <Label htmlFor="proof-delivery" className="text-sm">Proof of Delivery</Label>
-                          </div>
-                        </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="equipment-options" className="text-sm font-medium">Equipment Options</Label>
+                        <Select>
+                          <SelectTrigger className="bg-background">
+                            <SelectValue placeholder="Select option" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-popover border shadow-lg z-50">
+                            <SelectItem value="new-equipment">New Equipment</SelectItem>
+                            <SelectItem value="used-surplus">Used Surplus</SelectItem>
+                            <SelectItem value="warranty">Warranty</SelectItem>
+                            <SelectItem value="to-factory">To Factory</SelectItem>
+                            <SelectItem value="proof-delivery">Proof of Delivery</SelectItem>
+                          </SelectContent>
+                        </Select>
                       </div>
 
                       <div className="space-y-2">
