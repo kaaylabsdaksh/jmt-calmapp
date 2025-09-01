@@ -590,7 +590,7 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
         </Tabs>
 
         {/* Footer Actions - Now Sticky */}
-        <div className="fixed bottom-0 left-0 right-0 z-40 bg-card/95 backdrop-blur border-t shadow-lg">
+        <div className="fixed bottom-0 left-64 right-0 z-40 bg-card/95 backdrop-blur border-t shadow-lg">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
               {/* Created/Modified Info */}
