@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { useSidebar } from "@/components/ui/sidebar";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -34,6 +35,7 @@ interface WorkOrderDetailsProps {
 
 const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
   const [activeTab, setActiveTab] = useState("general");
+  const { open } = useSidebar();
   
   // Sample data - in real app this would come from API
   const workOrderData = {
@@ -590,7 +592,7 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
         </Tabs>
 
         {/* Footer Actions - Now Sticky */}
-        <div className="fixed bottom-0 left-64 right-0 z-40 bg-card/95 backdrop-blur border-t shadow-lg">
+        <div className={`fixed bottom-0 ${open ? 'left-64' : 'left-14'} right-0 z-40 bg-card/95 backdrop-blur border-t shadow-lg transition-all duration-300`}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
               {/* Created/Modified Info */}
