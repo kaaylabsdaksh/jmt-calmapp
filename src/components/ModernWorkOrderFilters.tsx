@@ -62,6 +62,23 @@ interface FormData {
 const ModernWorkOrderFilters = () => {
   const [advancedFiltersOpen, setAdvancedFiltersOpen] = useState(false);
   
+  // Collapsible section state
+  const [sectionsOpen, setSectionsOpen] = useState({
+    workOrder: true,
+    product: false,
+    customer: false,
+    additional: false,
+    item: false,
+    staff: false
+  });
+
+  const toggleSection = (section: keyof typeof sectionsOpen) => {
+    setSectionsOpen(prev => ({
+      ...prev,
+      [section]: !prev[section]
+    }));
+  };
+  
   // Form state
   const [formData, setFormData] = useState<FormData>({
     woNumber: '',
@@ -342,288 +359,330 @@ const ModernWorkOrderFilters = () => {
         <Separator />
         
         <CardContent className="pt-0">
-                  <div className="space-y-8">
+                  <div className="space-y-6">
                     {/* Work Order Information Section */}
-                     <div className="space-y-2">
-                      <h4 className="text-sm font-semibold text-primary">Work Order Information</h4>
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="wo-number" className="text-sm font-medium text-foreground">Work Order #</Label>
-                          <Input 
-                            id="wo-number" 
-                            placeholder="Enter WO number" 
-                            className="transition-all focus:ring-2 focus:ring-primary/20"
-                            value={formData.woNumber}
-                            onChange={(e) => updateFormData('woNumber', e.target.value)}
-                          />
+                    <Collapsible open={sectionsOpen.workOrder} onOpenChange={() => toggleSection('workOrder')}>
+                      <CollapsibleTrigger asChild>
+                        <div className="flex items-center justify-between cursor-pointer hover:bg-muted/30 rounded-md p-2 -m-2">
+                          <h4 className="text-sm font-semibold text-primary">Work Order Information</h4>
+                          {sectionsOpen.workOrder ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
                         </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="acct-num" className="text-sm font-medium">Account Number</Label>
-                          <Input 
-                            id="acct-num" 
-                            placeholder="Account number"
-                            value={formData.accountNumber}
-                            onChange={(e) => updateFormData('accountNumber', e.target.value)}
-                          />
+                      </CollapsibleTrigger>
+                      <CollapsibleContent className="pt-3">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                          <div className="space-y-2">
+                            <Label htmlFor="wo-number" className="text-sm font-medium text-foreground">Work Order #</Label>
+                            <Input 
+                              id="wo-number" 
+                              placeholder="Enter WO number" 
+                              className="transition-all focus:ring-2 focus:ring-primary/20"
+                              value={formData.woNumber}
+                              onChange={(e) => updateFormData('woNumber', e.target.value)}
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="acct-num" className="text-sm font-medium">Account Number</Label>
+                            <Input 
+                              id="acct-num" 
+                              placeholder="Account number"
+                              value={formData.accountNumber}
+                              onChange={(e) => updateFormData('accountNumber', e.target.value)}
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="wo-status" className="text-sm font-medium">WO Status</Label>
+                            <Select value={formData.woStatus} onValueChange={(value) => updateFormData('woStatus', value)}>
+                              <SelectTrigger className="bg-background">
+                                <SelectValue placeholder="Select status" />
+                              </SelectTrigger>
+                              <SelectContent className="bg-popover border shadow-lg z-50">
+                                <SelectItem value="in-lab">In Lab</SelectItem>
+                                <SelectItem value="complete">Complete</SelectItem>
+                                <SelectItem value="pending">Pending</SelectItem>
+                                <SelectItem value="cancelled">Cancelled</SelectItem>
+                                <SelectItem value="shipped">Shipped</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="wo-type" className="text-sm font-medium">WO Type</Label>
+                            <Select value={formData.woType} onValueChange={(value) => updateFormData('woType', value)}>
+                              <SelectTrigger className="bg-background">
+                                <SelectValue placeholder="Select type" />
+                              </SelectTrigger>
+                              <SelectContent className="bg-popover border shadow-lg z-50">
+                                <SelectItem value="calibration">Calibration</SelectItem>
+                                <SelectItem value="repair">Repair</SelectItem>
+                                <SelectItem value="certification">Certification</SelectItem>
+                                <SelectItem value="rental">Rental</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
                         </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="wo-status" className="text-sm font-medium">WO Status</Label>
-                          <Select value={formData.woStatus} onValueChange={(value) => updateFormData('woStatus', value)}>
-                            <SelectTrigger className="bg-background">
-                              <SelectValue placeholder="Select status" />
-                            </SelectTrigger>
-                            <SelectContent className="bg-popover border shadow-lg z-50">
-                              <SelectItem value="in-lab">In Lab</SelectItem>
-                              <SelectItem value="complete">Complete</SelectItem>
-                              <SelectItem value="pending">Pending</SelectItem>
-                              <SelectItem value="cancelled">Cancelled</SelectItem>
-                              <SelectItem value="shipped">Shipped</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="wo-type" className="text-sm font-medium">WO Type</Label>
-                          <Select value={formData.woType} onValueChange={(value) => updateFormData('woType', value)}>
-                            <SelectTrigger className="bg-background">
-                              <SelectValue placeholder="Select type" />
-                            </SelectTrigger>
-                            <SelectContent className="bg-popover border shadow-lg z-50">
-                              <SelectItem value="calibration">Calibration</SelectItem>
-                              <SelectItem value="repair">Repair</SelectItem>
-                              <SelectItem value="certification">Certification</SelectItem>
-                              <SelectItem value="rental">Rental</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </div>
-                      </div>
-                    </div>
+                      </CollapsibleContent>
+                    </Collapsible>
 
                     {/* Product Details Section */}
-                     <div className="space-y-2">
-                      <h4 className="text-sm font-semibold text-primary">Product Details</h4>
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="manufacturer" className="text-sm font-medium">Manufacturer</Label>
-                          <Input 
-                            id="manufacturer" 
-                            placeholder="Manufacturer name"
-                            value={formData.manufacturer}
-                            onChange={(e) => updateFormData('manufacturer', e.target.value)}
-                          />
+                    <Collapsible open={sectionsOpen.product} onOpenChange={() => toggleSection('product')}>
+                      <CollapsibleTrigger asChild>
+                        <div className="flex items-center justify-between cursor-pointer hover:bg-muted/30 rounded-md p-2 -m-2">
+                          <h4 className="text-sm font-semibold text-primary">Product Details</h4>
+                          {sectionsOpen.product ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
                         </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="model-number" className="text-sm font-medium">Model Number</Label>
-                          <Input 
-                            id="model-number" 
-                            placeholder="Model number"
-                            value={formData.modelNumber}
-                            onChange={(e) => updateFormData('modelNumber', e.target.value)}
-                          />
+                      </CollapsibleTrigger>
+                      <CollapsibleContent className="pt-3">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                          <div className="space-y-2">
+                            <Label htmlFor="manufacturer" className="text-sm font-medium">Manufacturer</Label>
+                            <Input 
+                              id="manufacturer" 
+                              placeholder="Manufacturer name"
+                              value={formData.manufacturer}
+                              onChange={(e) => updateFormData('manufacturer', e.target.value)}
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="model-number" className="text-sm font-medium">Model Number</Label>
+                            <Input 
+                              id="model-number" 
+                              placeholder="Model number"
+                              value={formData.modelNumber}
+                              onChange={(e) => updateFormData('modelNumber', e.target.value)}
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="product-desc" className="text-sm font-medium">Product Description</Label>
+                            <Input 
+                              id="product-desc" 
+                              placeholder="Description"
+                              value={formData.productDescription}
+                              onChange={(e) => updateFormData('productDescription', e.target.value)}
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="mfg-serial" className="text-sm font-medium">Manufacturing Serial</Label>
+                            <Input 
+                              id="mfg-serial" 
+                              placeholder="Mfg serial number"
+                              value={formData.mfgSerial}
+                              onChange={(e) => updateFormData('mfgSerial', e.target.value)}
+                            />
+                          </div>
                         </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="product-desc" className="text-sm font-medium">Product Description</Label>
-                          <Input 
-                            id="product-desc" 
-                            placeholder="Description"
-                            value={formData.productDescription}
-                            onChange={(e) => updateFormData('productDescription', e.target.value)}
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="mfg-serial" className="text-sm font-medium">Manufacturing Serial</Label>
-                          <Input 
-                            id="mfg-serial" 
-                            placeholder="Mfg serial number"
-                            value={formData.mfgSerial}
-                            onChange={(e) => updateFormData('mfgSerial', e.target.value)}
-                          />
-                        </div>
-                      </div>
-                    </div>
+                      </CollapsibleContent>
+                    </Collapsible>
 
                     {/* Customer & Sales Section */}
-                     <div className="space-y-2">
-                      <h4 className="text-sm font-semibold text-primary">Customer & Sales</h4>
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="customer-name" className="text-sm font-medium">Customer Name</Label>
-                          <Input 
-                            id="customer-name" 
-                            placeholder="Customer name"
-                            value={formData.customerName}
-                            onChange={(e) => updateFormData('customerName', e.target.value)}
-                          />
+                    <Collapsible open={sectionsOpen.customer} onOpenChange={() => toggleSection('customer')}>
+                      <CollapsibleTrigger asChild>
+                        <div className="flex items-center justify-between cursor-pointer hover:bg-muted/30 rounded-md p-2 -m-2">
+                          <h4 className="text-sm font-semibold text-primary">Customer & Sales</h4>
+                          {sectionsOpen.customer ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
                         </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="sales-person" className="text-sm font-medium">Sales Person</Label>
-                          <Input 
-                            id="sales-person" 
-                            placeholder="Sales representative"
-                            value={formData.salesPerson}
-                            onChange={(e) => updateFormData('salesPerson', e.target.value)}
-                          />
+                      </CollapsibleTrigger>
+                      <CollapsibleContent className="pt-3">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                          <div className="space-y-2">
+                            <Label htmlFor="customer-name" className="text-sm font-medium">Customer Name</Label>
+                            <Input 
+                              id="customer-name" 
+                              placeholder="Customer name"
+                              value={formData.customerName}
+                              onChange={(e) => updateFormData('customerName', e.target.value)}
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="sales-person" className="text-sm font-medium">Sales Person</Label>
+                            <Input 
+                              id="sales-person" 
+                              placeholder="Sales representative"
+                              value={formData.salesPerson}
+                              onChange={(e) => updateFormData('salesPerson', e.target.value)}
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="quote-num" className="text-sm font-medium">Quote #</Label>
+                            <Input 
+                              id="quote-num" 
+                              placeholder="Quote number"
+                              value={formData.quoteNumber}
+                              onChange={(e) => updateFormData('quoteNumber', e.target.value)}
+                            />
+                          </div>
                         </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="quote-num" className="text-sm font-medium">Quote #</Label>
-                          <Input 
-                            id="quote-num" 
-                            placeholder="Quote number"
-                            value={formData.quoteNumber}
-                            onChange={(e) => updateFormData('quoteNumber', e.target.value)}
-                          />
-                        </div>
-                      </div>
-                    </div>
+                      </CollapsibleContent>
+                    </Collapsible>
 
                     {/* Technical & Equipment Section */}
-                     <div className="space-y-2">
-                      <h4 className="text-sm font-semibold text-primary">Technical & Equipment</h4>
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="action-code" className="text-sm font-medium">Action Code</Label>
-                          <Select value={formData.actionCode} onValueChange={(value) => updateFormData('actionCode', value)}>
-                            <SelectTrigger className="bg-background">
-                              <SelectValue placeholder="Select action" />
-                            </SelectTrigger>
-                            <SelectContent className="bg-popover border shadow-lg z-50">
-                              <SelectItem value="calibrate">Calibrate</SelectItem>
-                              <SelectItem value="repair">Repair</SelectItem>
-                              <SelectItem value="test">Test</SelectItem>
-                              <SelectItem value="certification">Certification</SelectItem>
-                            </SelectContent>
-                          </Select>
+                    <Collapsible open={sectionsOpen.additional} onOpenChange={() => toggleSection('additional')}>
+                      <CollapsibleTrigger asChild>
+                        <div className="flex items-center justify-between cursor-pointer hover:bg-muted/30 rounded-md p-2 -m-2">
+                          <h4 className="text-sm font-semibold text-primary">Technical & Equipment</h4>
+                          {sectionsOpen.additional ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
                         </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="equipment-options" className="text-sm font-medium">Equipment Options</Label>
-                          <Select value={formData.equipmentOptions} onValueChange={(value) => updateFormData('equipmentOptions', value)}>
-                            <SelectTrigger className="bg-background">
-                              <SelectValue placeholder="Select option" />
-                            </SelectTrigger>
-                            <SelectContent className="bg-popover border shadow-lg z-50">
-                              <SelectItem value="new-equipment">New Equipment</SelectItem>
-                              <SelectItem value="used-surplus">Used Surplus</SelectItem>
-                              <SelectItem value="warranty">Warranty</SelectItem>
-                              <SelectItem value="to-factory">To Factory</SelectItem>
-                              <SelectItem value="proof-delivery">Proof of Delivery</SelectItem>
-                            </SelectContent>
-                          </Select>
+                      </CollapsibleTrigger>
+                      <CollapsibleContent className="pt-3">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                          <div className="space-y-2">
+                            <Label htmlFor="action-code" className="text-sm font-medium">Action Code</Label>
+                            <Select value={formData.actionCode} onValueChange={(value) => updateFormData('actionCode', value)}>
+                              <SelectTrigger className="bg-background">
+                                <SelectValue placeholder="Select action" />
+                              </SelectTrigger>
+                              <SelectContent className="bg-popover border shadow-lg z-50">
+                                <SelectItem value="calibrate">Calibrate</SelectItem>
+                                <SelectItem value="repair">Repair</SelectItem>
+                                <SelectItem value="test">Test</SelectItem>
+                                <SelectItem value="certification">Certification</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="equipment-options" className="text-sm font-medium">Equipment Options</Label>
+                            <Select value={formData.equipmentOptions} onValueChange={(value) => updateFormData('equipmentOptions', value)}>
+                              <SelectTrigger className="bg-background">
+                                <SelectValue placeholder="Select option" />
+                              </SelectTrigger>
+                              <SelectContent className="bg-popover border shadow-lg z-50">
+                                <SelectItem value="new-equipment">New Equipment</SelectItem>
+                                <SelectItem value="used-surplus">Used Surplus</SelectItem>
+                                <SelectItem value="warranty">Warranty</SelectItem>
+                                <SelectItem value="to-factory">To Factory</SelectItem>
+                                <SelectItem value="proof-delivery">Proof of Delivery</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="item-type" className="text-sm font-medium">Item Type</Label>
+                            <Select value={formData.itemType} onValueChange={(value) => updateFormData('itemType', value)}>
+                              <SelectTrigger className="bg-background">
+                                <SelectValue placeholder="Select type" />
+                              </SelectTrigger>
+                              <SelectContent className="bg-popover border shadow-lg z-50">
+                                <SelectItem value="instrument">Instrument</SelectItem>
+                                <SelectItem value="equipment">Equipment</SelectItem>
+                                <SelectItem value="standard">Standard</SelectItem>
+                                <SelectItem value="rental">Rental Equipment</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="item-status" className="text-sm font-medium">Item Status</Label>
+                            <Select value={formData.itemStatus} onValueChange={(value) => updateFormData('itemStatus', value)}>
+                              <SelectTrigger className="bg-background">
+                                <SelectValue placeholder="Select status" />
+                              </SelectTrigger>
+                              <SelectContent className="bg-popover border shadow-lg z-50">
+                                <SelectItem value="in-lab">In Lab</SelectItem>
+                                <SelectItem value="complete">Complete</SelectItem>
+                                <SelectItem value="shipped">Shipped</SelectItem>
+                                <SelectItem value="on-hold">On Hold</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
                         </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="item-type" className="text-sm font-medium">Item Type</Label>
-                          <Select value={formData.itemType} onValueChange={(value) => updateFormData('itemType', value)}>
-                            <SelectTrigger className="bg-background">
-                              <SelectValue placeholder="Select type" />
-                            </SelectTrigger>
-                            <SelectContent className="bg-popover border shadow-lg z-50">
-                              <SelectItem value="instrument">Instrument</SelectItem>
-                              <SelectItem value="equipment">Equipment</SelectItem>
-                              <SelectItem value="standard">Standard</SelectItem>
-                              <SelectItem value="rental">Rental Equipment</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="item-status" className="text-sm font-medium">Item Status</Label>
-                          <Select value={formData.itemStatus} onValueChange={(value) => updateFormData('itemStatus', value)}>
-                            <SelectTrigger className="bg-background">
-                              <SelectValue placeholder="Select status" />
-                            </SelectTrigger>
-                            <SelectContent className="bg-popover border shadow-lg z-50">
-                              <SelectItem value="in-lab">In Lab</SelectItem>
-                              <SelectItem value="complete">Complete</SelectItem>
-                              <SelectItem value="shipped">Shipped</SelectItem>
-                              <SelectItem value="on-hold">On Hold</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </div>
-                      </div>
-                    </div>
+                      </CollapsibleContent>
+                    </Collapsible>
 
                     {/* Location & Assignment Section */}
-                     <div className="space-y-2">
-                      <h4 className="text-sm font-semibold text-primary">Location & Assignment</h4>
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="division" className="text-sm font-medium">Division</Label>
-                          <Select value={formData.division} onValueChange={(value) => updateFormData('division', value)}>
-                            <SelectTrigger className="bg-background">
-                              <SelectValue placeholder="Select division" />
-                            </SelectTrigger>
-                            <SelectContent className="bg-popover border shadow-lg z-50">
-                              <SelectItem value="electronic">Electronic</SelectItem>
-                              <SelectItem value="mechanical">Mechanical</SelectItem>
-                              <SelectItem value="dimensional">Dimensional</SelectItem>
-                            </SelectContent>
-                          </Select>
+                    <Collapsible open={sectionsOpen.item} onOpenChange={() => toggleSection('item')}>
+                      <CollapsibleTrigger asChild>
+                        <div className="flex items-center justify-between cursor-pointer hover:bg-muted/30 rounded-md p-2 -m-2">
+                          <h4 className="text-sm font-semibold text-primary">Location & Assignment</h4>
+                          {sectionsOpen.item ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
                         </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="location" className="text-sm font-medium">Location</Label>
-                          <Select value={formData.location} onValueChange={(value) => updateFormData('location', value)}>
-                            <SelectTrigger className="bg-background">
-                              <SelectValue placeholder="Select location" />
-                            </SelectTrigger>
-                            <SelectContent className="bg-popover border shadow-lg z-50">
-                              <SelectItem value="lab-a">Lab A</SelectItem>
-                              <SelectItem value="lab-b">Lab B</SelectItem>
-                              <SelectItem value="receiving">Receiving</SelectItem>
-                              <SelectItem value="shipping">Shipping</SelectItem>
-                            </SelectContent>
-                          </Select>
+                      </CollapsibleTrigger>
+                      <CollapsibleContent className="pt-3">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                          <div className="space-y-2">
+                            <Label htmlFor="division" className="text-sm font-medium">Division</Label>
+                            <Select value={formData.division} onValueChange={(value) => updateFormData('division', value)}>
+                              <SelectTrigger className="bg-background">
+                                <SelectValue placeholder="Select division" />
+                              </SelectTrigger>
+                              <SelectContent className="bg-popover border shadow-lg z-50">
+                                <SelectItem value="electronic">Electronic</SelectItem>
+                                <SelectItem value="mechanical">Mechanical</SelectItem>
+                                <SelectItem value="dimensional">Dimensional</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="location" className="text-sm font-medium">Location</Label>
+                            <Select value={formData.location} onValueChange={(value) => updateFormData('location', value)}>
+                              <SelectTrigger className="bg-background">
+                                <SelectValue placeholder="Select location" />
+                              </SelectTrigger>
+                              <SelectContent className="bg-popover border shadow-lg z-50">
+                                <SelectItem value="lab-a">Lab A</SelectItem>
+                                <SelectItem value="lab-b">Lab B</SelectItem>
+                                <SelectItem value="receiving">Receiving</SelectItem>
+                                <SelectItem value="shipping">Shipping</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="assigned-to" className="text-sm font-medium">Assigned To</Label>
+                            <Input 
+                              id="assigned-to" 
+                              placeholder="Technician name"
+                              value={formData.assignedTo}
+                              onChange={(e) => updateFormData('assignedTo', e.target.value)}
+                            />
+                          </div>
                         </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="assigned-to" className="text-sm font-medium">Assigned To</Label>
-                          <Input 
-                            id="assigned-to" 
-                            placeholder="Technician name"
-                            value={formData.assignedTo}
-                            onChange={(e) => updateFormData('assignedTo', e.target.value)}
-                          />
-                        </div>
-                      </div>
-                    </div>
+                      </CollapsibleContent>
+                    </Collapsible>
 
                     {/* Identification & Tracking Section */}
-                     <div className="space-y-2">
-                      <h4 className="text-sm font-semibold text-primary">Identification & Tracking</h4>
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="asset-id" className="text-sm font-medium">Asset ID</Label>
-                          <Input 
-                            id="asset-id" 
-                            placeholder="Asset identifier"
-                            value={formData.assetId}
-                            onChange={(e) => updateFormData('assetId', e.target.value)}
-                          />
+                    <Collapsible open={sectionsOpen.staff} onOpenChange={() => toggleSection('staff')}>
+                      <CollapsibleTrigger asChild>
+                        <div className="flex items-center justify-between cursor-pointer hover:bg-muted/30 rounded-md p-2 -m-2">
+                          <h4 className="text-sm font-semibold text-primary">Identification & Tracking</h4>
+                          {sectionsOpen.staff ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
                         </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="esl-id" className="text-sm font-medium">ESL ID</Label>
-                          <Input 
-                            id="esl-id" 
-                            placeholder="ESL identifier"
-                            value={formData.eslId}
-                            onChange={(e) => updateFormData('eslId', e.target.value)}
-                          />
+                      </CollapsibleTrigger>
+                      <CollapsibleContent className="pt-3">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                          <div className="space-y-2">
+                            <Label htmlFor="asset-id" className="text-sm font-medium">Asset ID</Label>
+                            <Input 
+                              id="asset-id" 
+                              placeholder="Asset identifier"
+                              value={formData.assetId}
+                              onChange={(e) => updateFormData('assetId', e.target.value)}
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="esl-id" className="text-sm font-medium">ESL ID</Label>
+                            <Input 
+                              id="esl-id" 
+                              placeholder="ESL identifier"
+                              value={formData.eslId}
+                              onChange={(e) => updateFormData('eslId', e.target.value)}
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="rfid" className="text-sm font-medium">RFID</Label>
+                            <Input 
+                              id="rfid" 
+                              placeholder="RFID identifier"
+                              value={formData.rfid}
+                              onChange={(e) => updateFormData('rfid', e.target.value)}
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="os-request" className="text-sm font-medium">OS Request #</Label>
+                            <Input 
+                              id="os-request" 
+                              placeholder="OS request number"
+                              value={formData.osRequest}
+                              onChange={(e) => updateFormData('osRequest', e.target.value)}
+                            />
+                          </div>
                         </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="rfid" className="text-sm font-medium">RFID</Label>
-                          <Input 
-                            id="rfid" 
-                            placeholder="RFID identifier"
-                            value={formData.rfid}
-                            onChange={(e) => updateFormData('rfid', e.target.value)}
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="os-request" className="text-sm font-medium">OS Request #</Label>
-                          <Input 
-                            id="os-request" 
-                            placeholder="OS request number"
-                            value={formData.osRequest}
-                            onChange={(e) => updateFormData('osRequest', e.target.value)}
-                          />
-                        </div>
-                      </div>
-                    </div>
+                      </CollapsibleContent>
+                    </Collapsible>
                   </div>
                 </CardContent>
         
