@@ -85,11 +85,11 @@ const ModernTopSearchFilters = () => {
               placeholder="Search work orders, customers, serial numbers, manufacturers..."
               value={globalSearch}
               onChange={(e) => setGlobalSearch(e.target.value)}
-              className="pl-12 bg-white border border-gray-300 rounded-xl h-10 text-sm placeholder:text-gray-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
+              className="pl-12 bg-white border border-gray-300 rounded-xl h-11 text-sm placeholder:text-gray-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
             />
           </div>
           <Select value={searchValues.status || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, status: value === 'all' ? '' : value }))}>
-            <SelectTrigger className="w-40 bg-white border border-gray-300 rounded-xl h-10 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
+            <SelectTrigger className="w-40 bg-white border border-gray-300 rounded-xl h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
               <SelectValue placeholder="All Status" />
             </SelectTrigger>
             <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-xl z-50">
@@ -101,7 +101,7 @@ const ModernTopSearchFilters = () => {
             </SelectContent>
           </Select>
           <Select value={searchValues.assignee || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, assignee: value === 'all' ? '' : value }))}>
-            <SelectTrigger className="w-40 bg-white border border-gray-300 rounded-xl h-10 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
+            <SelectTrigger className="w-40 bg-white border border-gray-300 rounded-xl h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
               <SelectValue placeholder="Assignee" />
             </SelectTrigger>
             <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-xl z-50">
@@ -226,7 +226,7 @@ const ModernTopSearchFilters = () => {
 
       {/* Search Button at Bottom */}
       <div className="px-4 pb-4 flex justify-end">
-        <Button className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl h-9 px-6 font-medium shadow-sm hover:shadow-md transition-all">
+        <Button className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl h-11 px-6 font-medium shadow-sm hover:shadow-md transition-all">
           <Search className="h-4 w-4 mr-2" />
           Search
         </Button>
