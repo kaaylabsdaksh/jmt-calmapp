@@ -7,10 +7,15 @@ const ModernTopNav = () => {
       <div className="flex items-center justify-between">
         {/* Logo Placeholder */}
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-sm">CA</span>
+          <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
+            <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
           </div>
-          <span className="text-xl font-bold text-gray-900">calmapp</span>
+          <div className="flex flex-col">
+            <span className="text-xl font-bold text-gray-900">CalMApp</span>
+            <span className="text-sm text-gray-500">Work Order Management</span>
+          </div>
         </div>
 
         {/* Primary Action Buttons */}
