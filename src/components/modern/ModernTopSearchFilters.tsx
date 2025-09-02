@@ -38,120 +38,116 @@ const ModernTopSearchFilters = () => {
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 mb-6">
-      {/* Main Search Row */}
-      <div className="p-6">
-        <div className="flex items-center gap-4">
-          {/* Primary Search Fields */}
-          <div className="flex-1 grid grid-cols-1 md:grid-cols-4 gap-4">
-            <Input
-              placeholder="Work Order #"
-              value={searchValues.woNumber}
-              onChange={(e) => setSearchValues(prev => ({ ...prev, woNumber: e.target.value }))}
-              className="bg-white border border-gray-300 rounded-xl h-11 text-sm placeholder:text-gray-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
-            />
-            
-            <Input
-              placeholder="Customer name"
-              value={searchValues.customer}
-              onChange={(e) => setSearchValues(prev => ({ ...prev, customer: e.target.value }))}
-              className="bg-white border border-gray-300 rounded-xl h-11 text-sm placeholder:text-gray-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
-            />
-            
-            <Select value={searchValues.status} onValueChange={(value) => setSearchValues(prev => ({ ...prev, status: value }))}>
-              <SelectTrigger className="bg-white border border-gray-300 rounded-xl h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
-                <SelectValue placeholder="Status" />
-              </SelectTrigger>
-              <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-xl z-50">
-                <SelectItem value="in-lab">In Lab</SelectItem>
-                <SelectItem value="completed">Completed</SelectItem>
-                <SelectItem value="overdue">Overdue</SelectItem>
-                <SelectItem value="pending">Pending</SelectItem>
-              </SelectContent>
-            </Select>
+      {/* Header Row */}
+      <div className="flex items-center justify-between p-6 pb-4 border-b border-gray-100">
+        <h2 className="text-xl font-semibold text-gray-900">Work Order Search</h2>
+        
+        <div className="flex items-center gap-3">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setShowAdvanced(!showAdvanced)}
+            className={cn(
+              "rounded-xl transition-all",
+              showAdvanced ? "bg-blue-50 text-blue-600" : "text-gray-500 hover:text-gray-700"
+            )}
+          >
+            <Filter className="h-4 w-4 mr-2" />
+            More Filters
+          </Button>
 
-            {/* Date Range */}
-            <div className="flex gap-2">
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className={cn(
-                      "flex-1 justify-start text-left font-normal bg-white border border-gray-300 rounded-xl h-11 text-sm hover:bg-gray-50 transition-all shadow-sm",
-                      !dateFrom && "text-gray-500"
-                    )}
-                  >
-                    <CalendarIcon className="mr-2 h-4 w-4 text-gray-500" />
-                    {dateFrom ? format(dateFrom, "MMM dd") : "From"}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0 border border-gray-200 shadow-xl rounded-xl" align="start">
-                  <Calendar
-                    mode="single"
-                    selected={dateFrom}
-                    onSelect={setDateFrom}
-                    initialFocus
-                    className="pointer-events-auto rounded-xl"
-                  />
-                </PopoverContent>
-              </Popover>
-
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className={cn(
-                      "flex-1 justify-start text-left font-normal bg-white border border-gray-300 rounded-xl h-11 text-sm hover:bg-gray-50 transition-all shadow-sm",
-                      !dateTo && "text-gray-500"
-                    )}
-                  >
-                    <CalendarIcon className="mr-2 h-4 w-4 text-gray-500" />
-                    {dateTo ? format(dateTo, "MMM dd") : "To"}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0 border border-gray-200 shadow-xl rounded-xl" align="start">
-                  <Calendar
-                    mode="single"
-                    selected={dateTo}
-                    onSelect={setDateTo}
-                    initialFocus
-                    className="pointer-events-auto rounded-xl"
-                  />
-                </PopoverContent>
-              </Popover>
-            </div>
-          </div>
-
-          {/* Action Buttons */}
-          <div className="flex items-center gap-3">
+          {hasActiveFilters && (
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => setShowAdvanced(!showAdvanced)}
-              className={cn(
-                "rounded-xl transition-all",
-                showAdvanced ? "bg-blue-50 text-blue-600" : "text-gray-500 hover:text-gray-700"
-              )}
+              onClick={clearAllFilters}
+              className="text-gray-500 hover:text-gray-700 rounded-xl"
             >
-              <Filter className="h-4 w-4 mr-2" />
-              More Filters
+              <X className="h-4 w-4 mr-2" />
+              Clear
             </Button>
+          )}
+        </div>
+      </div>
 
-            {hasActiveFilters && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={clearAllFilters}
-                className="text-gray-500 hover:text-gray-700 rounded-xl"
-              >
-                <X className="h-4 w-4 mr-2" />
-                Clear
-              </Button>
-            )}
+      {/* Main Search Fields */}
+      <div className="p-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <Input
+            placeholder="Work Order #"
+            value={searchValues.woNumber}
+            onChange={(e) => setSearchValues(prev => ({ ...prev, woNumber: e.target.value }))}
+            className="bg-white border border-gray-300 rounded-xl h-11 text-sm placeholder:text-gray-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
+          />
+          
+          <Input
+            placeholder="Customer name"
+            value={searchValues.customer}
+            onChange={(e) => setSearchValues(prev => ({ ...prev, customer: e.target.value }))}
+            className="bg-white border border-gray-300 rounded-xl h-11 text-sm placeholder:text-gray-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
+          />
+          
+          <Select value={searchValues.status} onValueChange={(value) => setSearchValues(prev => ({ ...prev, status: value }))}>
+            <SelectTrigger className="bg-white border border-gray-300 rounded-xl h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
+              <SelectValue placeholder="Status" />
+            </SelectTrigger>
+            <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-xl z-50">
+              <SelectItem value="in-lab">In Lab</SelectItem>
+              <SelectItem value="completed">Completed</SelectItem>
+              <SelectItem value="overdue">Overdue</SelectItem>
+              <SelectItem value="pending">Pending</SelectItem>
+            </SelectContent>
+          </Select>
 
-            <Button className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl px-6 font-medium shadow-sm hover:shadow-md transition-all">
-              <Search className="h-4 w-4 mr-2" />
-              Search
-            </Button>
+          {/* Date Range */}
+          <div className="flex gap-2">
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  className={cn(
+                    "flex-1 justify-start text-left font-normal bg-white border border-gray-300 rounded-xl h-11 text-sm hover:bg-gray-50 transition-all shadow-sm",
+                    !dateFrom && "text-gray-500"
+                  )}
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4 text-gray-500" />
+                  {dateFrom ? format(dateFrom, "MMM dd") : "From"}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0 border border-gray-200 shadow-xl rounded-xl" align="start">
+                <Calendar
+                  mode="single"
+                  selected={dateFrom}
+                  onSelect={setDateFrom}
+                  initialFocus
+                  className="pointer-events-auto rounded-xl"
+                />
+              </PopoverContent>
+            </Popover>
+
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  className={cn(
+                    "flex-1 justify-start text-left font-normal bg-white border border-gray-300 rounded-xl h-11 text-sm hover:bg-gray-50 transition-all shadow-sm",
+                    !dateTo && "text-gray-500"
+                  )}
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4 text-gray-500" />
+                  {dateTo ? format(dateTo, "MMM dd") : "To"}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0 border border-gray-200 shadow-xl rounded-xl" align="start">
+                <Calendar
+                  mode="single"
+                  selected={dateTo}
+                  onSelect={setDateTo}
+                  initialFocus
+                  className="pointer-events-auto rounded-xl"
+                />
+              </PopoverContent>
+            </Popover>
           </div>
         </div>
 
@@ -187,6 +183,14 @@ const ModernTopSearchFilters = () => {
             </div>
           </div>
         )}
+      </div>
+
+      {/* Search Button at Bottom */}
+      <div className="px-6 pb-6">
+        <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-xl h-12 font-medium shadow-sm hover:shadow-md transition-all">
+          <Search className="h-4 w-4 mr-2" />
+          Search
+        </Button>
       </div>
     </div>
   );
