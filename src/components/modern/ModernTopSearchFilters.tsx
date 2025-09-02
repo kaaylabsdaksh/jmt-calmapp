@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 const ModernTopSearchFilters = () => {
   const [dateFrom, setDateFrom] = useState<Date>();
   const [dateTo, setDateTo] = useState<Date>();
-  const [dateType, setDateType] = useState('creation-arrival');
+  const [dateType, setDateType] = useState('');
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [globalSearch, setGlobalSearch] = useState('');
   const [searchValues, setSearchValues] = useState({
@@ -35,7 +35,7 @@ const ModernTopSearchFilters = () => {
     });
     setDateFrom(undefined);
     setDateTo(undefined);
-    setDateType('creation-arrival');
+    setDateType('');
   };
 
   const hasActiveFilters = globalSearch || Object.values(searchValues).some(value => value) || dateFrom || dateTo;
