@@ -10,7 +10,7 @@ const ModernWorkOrderManagement = () => {
     <div className="min-h-screen bg-gray-100">
       <ModernTopNav />
       
-      <main className="max-w-7xl mx-auto p-6">
+      <main className="max-w-7xl mx-auto px-3 py-6">
         <ModernTopSearchFilters />
         <ModernWorkOrdersTable viewMode={viewMode} onViewModeChange={setViewMode} />
       </main>
