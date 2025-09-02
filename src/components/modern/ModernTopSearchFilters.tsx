@@ -62,17 +62,20 @@ const ModernTopSearchFilters = () => {
             {showAdvanced ? "Hide Filters" : "More Filters"}
           </Button>
 
-          {hasActiveFilters && (
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={clearAllFilters}
-              className="text-gray-500 hover:text-gray-700 rounded-lg"
-            >
-              <X className="h-4 w-4 mr-2" />
-              Clear
-            </Button>
-          )}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={clearAllFilters}
+            className={cn(
+              "rounded-lg transition-all",
+              hasActiveFilters 
+                ? "text-red-600 hover:text-red-700 hover:bg-red-50" 
+                : "text-gray-400 hover:text-gray-600 hover:bg-gray-50"
+            )}
+          >
+            <X className="h-4 w-4 mr-2" />
+            Clear All
+          </Button>
         </div>
       </div>
 
