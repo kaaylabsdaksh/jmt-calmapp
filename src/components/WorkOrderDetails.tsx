@@ -616,7 +616,7 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
         </Tabs>
 
         {/* Footer Actions - Now Sticky */}
-        <div className={`fixed bottom-0 left-0 sm:${open ? 'left-64' : 'left-14'} right-0 z-40 bg-card/95 backdrop-blur border-t shadow-lg transition-all duration-300`}>
+        <div className="fixed bottom-0 left-0 right-0 z-40 bg-card/95 backdrop-blur border-t shadow-lg transition-all duration-300">
           <div className="px-3 sm:px-6 py-3 sm:py-4">
             <div className="flex items-center justify-between gap-2 sm:gap-4">
               {/* Created/Modified Info - Hidden on mobile, full on desktop */}
