@@ -186,8 +186,8 @@ const ModernTopSearchFilters = () => {
       </div>
 
       {/* Search Button at Bottom */}
-      <div className="px-6 pb-6">
-        <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-xl h-12 font-medium shadow-sm hover:shadow-md transition-all">
+      <div className="px-6 pb-6 flex justify-end">
+        <Button className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl h-9 px-6 font-medium shadow-sm hover:shadow-md transition-all">
           <Search className="h-4 w-4 mr-2" />
           Search
         </Button>
