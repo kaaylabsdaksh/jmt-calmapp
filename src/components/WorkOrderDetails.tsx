@@ -495,12 +495,11 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
                   ))}
                 </div>
 
-                {/* Load More Indicator */}
+                {/* Loading indicator for lazy loading */}
                 <div className="flex justify-center py-6">
-                  <Button variant="outline" className="flex items-center gap-2">
-                    <span>Load More Items</span>
-                    <span className="text-muted-foreground">(40 remaining)</span>
-                  </Button>
+                  <div className="text-sm text-muted-foreground">
+                    Scroll down to load more items...
+                  </div>
                 </div>
               </CardContent>
             </Card>
