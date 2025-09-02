@@ -53,7 +53,7 @@ const ModernTopSearchFilters = () => {
             )}
           >
             <Filter className="h-4 w-4 mr-2" />
-            More Filters
+            {showAdvanced ? "Hide Filters" : "More Filters"}
           </Button>
 
           {hasActiveFilters && (
