@@ -43,8 +43,8 @@ const ModernTopSearchFilters = () => {
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 mb-6">
       {/* Header Row */}
-      <div className="flex items-center justify-between p-6 pb-4 border-b border-gray-100">
-        <h2 className="text-xl font-semibold text-gray-900">Work Order Search</h2>
+      <div className="flex items-center justify-between p-4 pb-3 border-b border-gray-100">
+        <h2 className="text-lg font-semibold text-gray-900">Work Order Search</h2>
         
         <div className="flex items-center gap-3">
           <Button
@@ -75,21 +75,21 @@ const ModernTopSearchFilters = () => {
       </div>
 
       {/* Global Search */}
-      <div className="p-6 pb-4">
+      <div className="p-4 pb-3">
         <div className="relative">
           <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
           <Input
             placeholder="Search work orders, customers, serial numbers, manufacturers..."
             value={globalSearch}
             onChange={(e) => setGlobalSearch(e.target.value)}
-            className="pl-12 bg-white border border-gray-300 rounded-xl h-12 text-base placeholder:text-gray-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
+            className="pl-12 bg-white border border-gray-300 rounded-xl h-10 text-sm placeholder:text-gray-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
           />
         </div>
       </div>
 
       {/* Specific Search Fields */}
-      <div className="px-6 pb-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="px-4 pb-3">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           <Select value={searchValues.status || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, status: value === 'all' ? '' : value }))}>
             <SelectTrigger className="bg-white border border-gray-300 rounded-xl h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
               <SelectValue placeholder="All Status" />
@@ -109,12 +109,12 @@ const ModernTopSearchFilters = () => {
               <SelectValue placeholder="Date Type" />
             </SelectTrigger>
             <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-xl z-50">
-              <SelectItem value="created">Created From/To</SelectItem>
-              <SelectItem value="arrival">Arrival From/To</SelectItem>
-              <SelectItem value="status-date">Status Date From/To</SelectItem>
-              <SelectItem value="last-comment">Last Comment From/To</SelectItem>
-              <SelectItem value="departure">Departure From/To</SelectItem>
-              <SelectItem value="need-by">Need By From/To</SelectItem>
+              <SelectItem value="created">Created</SelectItem>
+              <SelectItem value="arrival">Arrival</SelectItem>
+              <SelectItem value="status-date">Status Date</SelectItem>
+              <SelectItem value="last-comment">Last Comment</SelectItem>
+              <SelectItem value="departure">Departure</SelectItem>
+              <SelectItem value="need-by">Need By</SelectItem>
             </SelectContent>
           </Select>
 
@@ -205,7 +205,7 @@ const ModernTopSearchFilters = () => {
       </div>
 
       {/* Search Button at Bottom */}
-      <div className="px-6 pb-6 flex justify-end">
+      <div className="px-4 pb-4 flex justify-end">
         <Button className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl h-9 px-6 font-medium shadow-sm hover:shadow-md transition-all">
           <Search className="h-4 w-4 mr-2" />
           Search
