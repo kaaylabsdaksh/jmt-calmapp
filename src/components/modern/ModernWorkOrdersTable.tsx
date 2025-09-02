@@ -4,7 +4,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { ChevronDown, ChevronRight, MoreHorizontal, Edit, User, RefreshCw, ChevronLeft, List, Grid3X3 } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { ChevronRight, MoreHorizontal, Edit, User, RefreshCw, ChevronLeft, List, Grid3X3 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface WorkOrder {
@@ -197,7 +198,7 @@ interface ModernWorkOrdersTableProps {
 }
 
 const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersTableProps) => {
-  const [expandedRows, setExpandedRows] = useState<Set<string>>(new Set());
+  const [selectedWorkOrder, setSelectedWorkOrder] = useState<WorkOrder | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [activeStatusFilter, setActiveStatusFilter] = useState<string>('all');
   const itemsPerPage = 10;
@@ -209,15 +210,208 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
   
   const totalPages = Math.ceil(filteredWorkOrders.length / itemsPerPage);
 
-  const toggleRow = (id: string) => {
-    const newExpanded = new Set(expandedRows);
-    if (newExpanded.has(id)) {
-      newExpanded.delete(id);
-    } else {
-      newExpanded.add(id);
-    }
-    setExpandedRows(newExpanded);
+  const openDetails = (order: WorkOrder) => {
+    setSelectedWorkOrder(order);
   };
+
+  // Work Order Details Dialog Component
+  const WorkOrderDetailsDialog = ({ order }: { order: WorkOrder }) => (
+    <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+      <DialogHeader>
+        <DialogTitle className="flex items-center gap-3 text-xl">
+          <span className="font-bold text-blue-600">{order.id}</span>
+          {getStatusBadge(order.status)}
+          <span className={cn("px-3 py-1 rounded-md text-sm font-medium",
+            order.details.priority === "Critical" ? "bg-red-100 text-red-800" :
+            order.details.priority === "High" ? "bg-orange-100 text-orange-800" :
+            order.details.priority === "Medium" ? "bg-yellow-100 text-yellow-800" :
+            "bg-gray-100 text-gray-800"
+          )}>{order.details.priority} Priority</span>
+        </DialogTitle>
+      </DialogHeader>
+
+      <div className="space-y-6">
+        {/* Customer & Basic Info */}
+        <div className="bg-gray-50 p-4 rounded-lg">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+            <div>
+              <span className="text-gray-600 font-medium">Customer:</span>
+              <div className="font-semibold text-gray-900">{order.customer}</div>
+            </div>
+            <div>
+              <span className="text-gray-600 font-medium">Assigned To:</span>
+              <div className="font-semibold text-gray-900">{order.assignedTo}</div>
+            </div>
+            <div>
+              <span className="text-gray-600 font-medium">Due Date:</span>
+              <div className="font-semibold text-gray-900">{order.dueDate}</div>
+            </div>
+            <div>
+              <span className="text-gray-600 font-medium">Items:</span>
+              <div className="font-semibold text-gray-900">{order.details.items}</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Status Information */}
+        <div className="bg-blue-50 p-4 rounded-lg">
+          <h4 className="font-semibold text-blue-900 mb-3">Status Information</h4>
+          <div className="grid grid-cols-3 gap-4 text-sm">
+            <div>
+              <span className="text-blue-700 font-medium">Submitted:</span>
+              <div className={cn("mt-1 inline-block px-2 py-1 rounded-md text-xs font-medium",
+                order.details.submitted === "Yes" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
+              )}>{order.details.submitted}</div>
+            </div>
+            <div>
+              <span className="text-blue-700 font-medium">Delivery Status:</span>
+              <div className={cn("mt-1 inline-block px-2 py-1 rounded-md text-xs font-medium",
+                order.details.proofOfDelivery === "Complete" ? "bg-green-100 text-green-800" :
+                order.details.proofOfDelivery === "Pending" ? "bg-yellow-100 text-yellow-800" :
+                "bg-gray-100 text-gray-800"
+              )}>{order.details.proofOfDelivery}</div>
+            </div>
+            <div>
+              <span className="text-blue-700 font-medium">Lab Code:</span>
+              <div className="font-mono text-blue-900">{order.details.labCode}</div>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Customer & Order Details */}
+          <div className="space-y-4">
+            <div className="bg-green-50 p-4 rounded-lg">
+              <h4 className="font-semibold text-green-900 mb-3">Customer & Order Details</h4>
+              <div className="space-y-2 text-sm">
+                <div>
+                  <span className="text-green-700 font-medium">Customer ID:</span>
+                  <span className="ml-2 font-mono text-green-900">{order.details.custId}</span>
+                </div>
+                <div>
+                  <span className="text-green-700 font-medium">Customer S/N:</span>
+                  <span className="ml-2 font-mono text-green-900">{order.details.custSn}</span>
+                </div>
+                <div>
+                  <span className="text-green-700 font-medium">PO Number:</span>
+                  <span className="ml-2 font-mono text-green-900">{order.details.poNumber}</span>
+                </div>
+                <div>
+                  <span className="text-green-700 font-medium">Batch:</span>
+                  <span className="ml-2 font-mono text-green-900">{order.details.batch}</span>
+                </div>
+                <div>
+                  <span className="text-green-700 font-medium">Purchase:</span>
+                  <span className="ml-2 font-mono text-green-900">{order.details.purchase}</span>
+                </div>
+                <div>
+                  <span className="text-green-700 font-medium">LOC/Lots:</span>
+                  <span className="ml-2 font-mono text-green-900">{order.details.lots}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-purple-50 p-4 rounded-lg">
+              <h4 className="font-semibold text-purple-900 mb-3">Cart Information</h4>
+              <div className="space-y-2 text-sm">
+                <div>
+                  <span className="text-purple-700 font-medium">Cart ID:</span>
+                  <span className="ml-2 font-mono text-purple-900">{order.details.cartId}</span>
+                </div>
+                <div>
+                  <span className="text-purple-700 font-medium">Cart S/N:</span>
+                  <span className="ml-2 font-mono text-purple-900">{order.details.cartSn}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Equipment & Timeline */}
+          <div className="space-y-4">
+            <div className="bg-orange-50 p-4 rounded-lg">
+              <h4 className="font-semibold text-orange-900 mb-3">Equipment Information</h4>
+              <div className="space-y-2 text-sm">
+                <div>
+                  <span className="text-orange-700 font-medium">Manufacturer:</span>
+                  <span className="ml-2 font-semibold text-orange-900">{order.details.manufacturer}</span>
+                </div>
+                <div>
+                  <span className="text-orange-700 font-medium">Model:</span>
+                  <span className="ml-2 font-mono text-orange-900">{order.details.modelNumber}</span>
+                </div>
+                <div>
+                  <span className="text-orange-700 font-medium">Serial #:</span>
+                  <span className="ml-2 font-mono text-orange-900">{order.details.serialNumber}</span>
+                </div>
+                <div>
+                  <span className="text-orange-700 font-medium">Item Type:</span>
+                  <span className="ml-2 text-orange-900">{order.details.itemType}</span>
+                </div>
+                <div>
+                  <span className="text-orange-700 font-medium">Operation:</span>
+                  <span className="ml-2 text-orange-900">{order.details.operationType}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-yellow-50 p-4 rounded-lg">
+              <h4 className="font-semibold text-yellow-900 mb-3">Project Timeline</h4>
+              <div className="space-y-2 text-sm">
+                <div>
+                  <span className="text-yellow-700 font-medium">Created:</span>
+                  <span className="ml-2 text-yellow-900">{order.details.createdDate}</span>
+                </div>
+                <div>
+                  <span className="text-yellow-700 font-medium">Status Date:</span>
+                  <span className="ml-2 text-yellow-900">{order.details.statusDate}</span>
+                </div>
+                <div>
+                  <span className="text-yellow-700 font-medium">Last Modified:</span>
+                  <span className="ml-2 text-yellow-900">{order.details.lastModified}</span>
+                </div>
+                <div>
+                  <span className="text-yellow-700 font-medium">Next By:</span>
+                  <span className={cn("ml-2 font-semibold",
+                    order.details.nextBy === "TBD" ? "text-red-600" : "text-yellow-900"
+                  )}>{order.details.nextBy}</span>
+                </div>
+                <div>
+                  <span className="text-yellow-700 font-medium">Departure:</span>
+                  <span className={cn("ml-2 font-semibold",
+                    order.details.departureDate === "TBD" ? "text-red-600" : "text-yellow-900"
+                  )}>{order.details.departureDate}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Comments Section */}
+        <div className="bg-gray-50 p-4 rounded-lg">
+          <h4 className="font-semibold text-gray-900 mb-3">Comments & Notes</h4>
+          <div className="text-sm text-gray-700 bg-white p-4 rounded-md border border-gray-200 leading-relaxed">
+            {order.details.comments}
+          </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex justify-end gap-3 pt-4 border-t border-gray-200">
+          <Button variant="outline">
+            <Edit className="h-4 w-4 mr-2" />
+            Edit Order
+          </Button>
+          <Button variant="outline">
+            <User className="h-4 w-4 mr-2" />
+            Assign Tech
+          </Button>
+          <Button>
+            <RefreshCw className="h-4 w-4 mr-2" />
+            Update Status
+          </Button>
+        </div>
+      </div>
+    </DialogContent>
+  );
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200">
@@ -342,7 +536,6 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
           <Table>
             <TableHeader className="bg-gray-50 sticky top-0">
               <TableRow className="hover:bg-gray-50">
-                <TableHead className="w-12"></TableHead>
                 <TableHead className="font-semibold text-gray-900">Work Order #</TableHead>
                 <TableHead className="font-semibold text-gray-900">Status</TableHead>
                 <TableHead className="font-semibold text-gray-900">Priority</TableHead>
@@ -354,221 +547,52 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
             </TableHeader>
             <TableBody>
               {filteredWorkOrders.map((order) => (
-                <React.Fragment key={order.id}>
-                  <TableRow
-                    className="hover:bg-gray-50 cursor-pointer border-b border-gray-100"
-                    onClick={() => toggleRow(order.id)}
-                  >
-                    <TableCell>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="w-6 h-6 p-0"
-                      >
-                        {expandedRows.has(order.id) ? (
-                          <ChevronDown className="h-4 w-4" />
-                        ) : (
-                          <ChevronRight className="h-4 w-4" />
-                        )}
-                      </Button>
-                    </TableCell>
-                    <TableCell className="font-medium text-blue-600">
-                      {order.id}
-                    </TableCell>
-                    <TableCell>
-                      {getStatusBadge(order.status)}
-                    </TableCell>
-                    <TableCell>
-                      <span className={cn("px-2 py-1 rounded-md text-xs font-medium",
-                        order.details.priority === "Critical" ? "bg-red-100 text-red-800" :
-                        order.details.priority === "High" ? "bg-orange-100 text-orange-800" :
-                        order.details.priority === "Medium" ? "bg-yellow-100 text-yellow-800" :
-                        "bg-gray-100 text-gray-800"
-                      )}>{order.details.priority}</span>
-                    </TableCell>
-                    <TableCell className="font-medium">{order.customer}</TableCell>
-                    <TableCell>{order.dueDate}</TableCell>
-                    <TableCell>{order.assignedTo}</TableCell>
-                    <TableCell>
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
-                          <Button variant="ghost" size="sm" className="h-8 w-8 p-0 data-[state=open]:bg-blue-100 data-[state=open]:text-blue-700">
-                            <MoreHorizontal className="h-4 w-4" />
-                          </Button>
-                        </DropdownMenuTrigger>
-                         <DropdownMenuContent align="end" className="bg-white border shadow-lg z-50 rounded-lg">
-                           <DropdownMenuItem className="flex items-center gap-2">
-                             <Edit className="h-4 w-4" />
-                             Edit
-                           </DropdownMenuItem>
-                           <DropdownMenuItem className="flex items-center gap-2">
-                             <User className="h-4 w-4" />
-                             Assign Tech
-                           </DropdownMenuItem>
-                           <DropdownMenuItem className="flex items-center gap-2">
-                             <RefreshCw className="h-4 w-4" />
-                             Update Status
-                           </DropdownMenuItem>
-                         </DropdownMenuContent>
-                      </DropdownMenu>
-                    </TableCell>
-                  </TableRow>
-                  
-                   {expandedRows.has(order.id) && (
-                     <TableRow className="bg-gray-50 border-b border-gray-100">
-                       <TableCell colSpan={8} className="p-6">
-                         <div className="space-y-6">
-                           {/* Priority and Key Info */}
-                           <div className="flex items-center gap-6 pb-4 border-b border-gray-200">
-                             <div className="flex items-center gap-2">
-                               <span className="text-gray-600 font-medium">Priority:</span>
-                               <span className={cn("px-2 py-1 rounded-md text-xs font-medium",
-                                 order.details.priority === "Critical" ? "bg-red-100 text-red-800" :
-                                 order.details.priority === "High" ? "bg-orange-100 text-orange-800" :
-                                 order.details.priority === "Medium" ? "bg-yellow-100 text-yellow-800" :
-                                 "bg-gray-100 text-gray-800"
-                               )}>{order.details.priority}</span>
-                             </div>
-                             <div className="flex items-center gap-2">
-                               <span className="text-gray-600 font-medium">Items:</span>
-                               <span className="font-medium">{order.details.items}</span>
-                             </div>
-                             <div className="flex items-center gap-2">
-                               <span className="text-gray-600 font-medium">Submitted:</span>
-                               <span className={cn("px-2 py-1 rounded-md text-xs font-medium",
-                                 order.details.submitted === "Yes" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
-                               )}>{order.details.submitted}</span>
-                             </div>
-                             <div className="flex items-center gap-2">
-                               <span className="text-gray-600 font-medium">Proof of Delivery:</span>
-                               <span className={cn("px-2 py-1 rounded-md text-xs font-medium",
-                                 order.details.proofOfDelivery === "Complete" ? "bg-green-100 text-green-800" :
-                                 order.details.proofOfDelivery === "Pending" ? "bg-yellow-100 text-yellow-800" :
-                                 "bg-gray-100 text-gray-800"
-                               )}>{order.details.proofOfDelivery}</span>
-                             </div>
-                           </div>
- 
-                           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                             {/* Customer Information */}
-                             <div>
-                               <h4 className="font-medium text-gray-900 mb-3">Customer Information</h4>
-                               <div className="space-y-2 text-sm">
-                                 <div>
-                                   <span className="text-gray-600">Cust ID:</span>
-                                   <span className="ml-2 font-mono">{order.details.custId}</span>
-                                 </div>
-                                 <div>
-                                   <span className="text-gray-600">Cust S/N:</span>
-                                   <span className="ml-2 font-mono">{order.details.custSn}</span>
-                                 </div>
-                               </div>
-                             </div>
- 
-                             {/* Order Details */}
-                             <div>
-                               <h4 className="font-medium text-gray-900 mb-3">Order Details</h4>
-                               <div className="space-y-2 text-sm">
-                                 <div>
-                                   <span className="text-gray-600">Batch:</span>
-                                   <span className="ml-2 font-mono">{order.details.batch}</span>
-                                 </div>
-                                 <div>
-                                   <span className="text-gray-600">Purchase:</span>
-                                   <span className="ml-2 font-mono">{order.details.purchase}</span>
-                                 </div>
-                                 <div>
-                                   <span className="text-gray-600">LOC/Lots:</span>
-                                   <span className="ml-2 font-mono">{order.details.lots}</span>
-                                 </div>
-                                 <div>
-                                   <span className="text-gray-600">PO Number:</span>
-                                   <span className="ml-2 font-mono">{order.details.poNumber}</span>
-                                 </div>
-                                 <div>
-                                   <span className="text-gray-600">Cart ID:</span>
-                                   <span className="ml-2 font-mono">{order.details.cartId}</span>
-                                 </div>
-                                 <div>
-                                   <span className="text-gray-600">Cart S/N:</span>
-                                   <span className="ml-2 font-mono">{order.details.cartSn}</span>
-                                 </div>
-                               </div>
-                             </div>
- 
-                             {/* Equipment Information */}
-                             <div>
-                               <h4 className="font-medium text-gray-900 mb-3">Equipment Information</h4>
-                               <div className="space-y-2 text-sm">
-                                 <div>
-                                   <span className="text-gray-600">Manufacturer:</span>
-                                   <span className="ml-2 font-medium">{order.details.manufacturer}</span>
-                                 </div>
-                                 <div>
-                                   <span className="text-gray-600">Model #:</span>
-                                   <span className="ml-2 font-mono">{order.details.modelNumber}</span>
-                                 </div>
-                                 <div>
-                                   <span className="text-gray-600">Serial #:</span>
-                                   <span className="ml-2 font-mono">{order.details.serialNumber}</span>
-                                 </div>
-                                 <div>
-                                   <span className="text-gray-600">Lab Code:</span>
-                                   <span className="ml-2 font-mono">{order.details.labCode}</span>
-                                 </div>
-                                 <div>
-                                   <span className="text-gray-600">Item Type:</span>
-                                   <span className="ml-2">{order.details.itemType}</span>
-                                 </div>
-                                 <div>
-                                   <span className="text-gray-600">Operation:</span>
-                                   <span className="ml-2">{order.details.operationType}</span>
-                                 </div>
-                               </div>
-                             </div>
- 
-                             {/* Timeline Information */}
-                             <div>
-                               <h4 className="font-medium text-gray-900 mb-3">Timeline</h4>
-                               <div className="space-y-2 text-sm">
-                                 <div>
-                                   <span className="text-gray-600">Created:</span>
-                                   <span className="ml-2">{order.details.createdDate}</span>
-                                 </div>
-                                 <div>
-                                   <span className="text-gray-600">Status Date:</span>
-                                   <span className="ml-2">{order.details.statusDate}</span>
-                                 </div>
-                                 <div>
-                                   <span className="text-gray-600">Last Modified:</span>
-                                   <span className="ml-2">{order.details.lastModified}</span>
-                                 </div>
-                                 <div>
-                                   <span className="text-gray-600">Next By:</span>
-                                   <span className={cn("ml-2 font-medium",
-                                     order.details.nextBy === "TBD" ? "text-orange-600" : "text-gray-900"
-                                   )}>{order.details.nextBy}</span>
-                                 </div>
-                                 <div>
-                                   <span className="text-gray-600">Departure:</span>
-                                   <span className={cn("ml-2 font-medium",
-                                     order.details.departureDate === "TBD" ? "text-orange-600" : "text-gray-900"
-                                   )}>{order.details.departureDate}</span>
-                                 </div>
-                               </div>
-                             </div>
-                           </div>
- 
-                           {/* Comments Section */}
-                           <div className="border-t border-gray-200 pt-4">
-                             <h4 className="font-medium text-gray-900 mb-2">Comments</h4>
-                             <p className="text-sm text-gray-700 bg-white p-3 rounded-lg border">{order.details.comments}</p>
-                           </div>
-                         </div>
-                       </TableCell>
-                     </TableRow>
-                   )}
-                </React.Fragment>
+                <TableRow
+                  key={order.id}
+                  className="hover:bg-gray-50 cursor-pointer border-b border-gray-100"
+                  onClick={() => openDetails(order)}
+                >
+                  <TableCell className="font-medium text-blue-600">
+                    {order.id}
+                  </TableCell>
+                  <TableCell>
+                    {getStatusBadge(order.status)}
+                  </TableCell>
+                  <TableCell>
+                    <span className={cn("px-2 py-1 rounded-md text-xs font-medium",
+                      order.details.priority === "Critical" ? "bg-red-100 text-red-800" :
+                      order.details.priority === "High" ? "bg-orange-100 text-orange-800" :
+                      order.details.priority === "Medium" ? "bg-yellow-100 text-yellow-800" :
+                      "bg-gray-100 text-gray-800"
+                    )}>{order.details.priority}</span>
+                  </TableCell>
+                  <TableCell className="font-medium">{order.customer}</TableCell>
+                  <TableCell>{order.dueDate}</TableCell>
+                  <TableCell>{order.assignedTo}</TableCell>
+                  <TableCell>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
+                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0 data-[state=open]:bg-blue-100 data-[state=open]:text-blue-700">
+                          <MoreHorizontal className="h-4 w-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                       <DropdownMenuContent align="end" className="bg-white border shadow-lg z-50 rounded-lg">
+                         <DropdownMenuItem className="flex items-center gap-2">
+                           <Edit className="h-4 w-4" />
+                           Edit
+                         </DropdownMenuItem>
+                         <DropdownMenuItem className="flex items-center gap-2">
+                           <User className="h-4 w-4" />
+                           Assign Tech
+                         </DropdownMenuItem>
+                         <DropdownMenuItem className="flex items-center gap-2">
+                           <RefreshCw className="h-4 w-4" />
+                           Update Status
+                         </DropdownMenuItem>
+                       </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
+                </TableRow>
               ))}
             </TableBody>
           </Table>
@@ -579,7 +603,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
               <div
                 key={order.id}
                 className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer"
-                onClick={() => toggleRow(order.id)}
+                onClick={() => openDetails(order)}
               >
                 {/* Card Header */}
                 <div className="p-4 border-b border-gray-100">
@@ -650,169 +674,22 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="h-6 w-6 p-0"
+                      className="h-6 w-6 p-0 text-gray-400"
                     >
-                      {expandedRows.has(order.id) ? (
-                        <ChevronDown className="h-4 w-4" />
-                      ) : (
-                        <ChevronRight className="h-4 w-4" />
-                      )}
+                      <ChevronRight className="h-4 w-4" />
                     </Button>
                   </div>
-
-                  {/* Expanded Details for Grid View */}
-                  {expandedRows.has(order.id) && (
-                    <div className="mt-4 pt-4 border-t border-gray-100 space-y-4">
-                      {/* Work Order Summary */}
-                      <div className="bg-gray-50 p-3 rounded-lg">
-                        <h4 className="font-semibold text-gray-900 mb-3 text-sm">Work Order Summary</h4>
-                        <div className="grid grid-cols-2 gap-3 text-xs">
-                          <div className="flex items-center gap-2">
-                            <span className="text-gray-600 font-medium">Items:</span>
-                            <span className="font-semibold">{order.details.items}</span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <span className="text-gray-600 font-medium">Lab Code:</span>
-                            <span className="font-mono">{order.details.labCode}</span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <span className="text-gray-600 font-medium">Submitted:</span>
-                            <span className={cn("px-2 py-1 rounded-md text-xs font-medium",
-                              order.details.submitted === "Yes" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
-                            )}>{order.details.submitted}</span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <span className="text-gray-600 font-medium">Delivery Status:</span>
-                            <span className={cn("px-2 py-1 rounded-md text-xs font-medium",
-                              order.details.proofOfDelivery === "Complete" ? "bg-green-100 text-green-800" :
-                              order.details.proofOfDelivery === "Pending" ? "bg-yellow-100 text-yellow-800" :
-                              "bg-gray-100 text-gray-800"
-                            )}>{order.details.proofOfDelivery}</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-2 gap-4">
-                        {/* Customer & Order Details */}
-                        <div className="space-y-3">
-                          <div className="bg-blue-50 p-3 rounded-lg">
-                            <h4 className="font-semibold text-blue-900 mb-2 text-sm">Customer & Order</h4>
-                            <div className="space-y-2 text-xs">
-                              <div>
-                                <span className="text-blue-700 font-medium">Customer ID:</span>
-                                <span className="ml-2 font-mono text-blue-900">{order.details.custId}</span>
-                              </div>
-                              <div>
-                                <span className="text-blue-700 font-medium">Customer S/N:</span>
-                                <span className="ml-2 font-mono text-blue-900">{order.details.custSn}</span>
-                              </div>
-                              <div>
-                                <span className="text-blue-700 font-medium">PO Number:</span>
-                                <span className="ml-2 font-mono text-blue-900">{order.details.poNumber}</span>
-                              </div>
-                              <div>
-                                <span className="text-blue-700 font-medium">Batch:</span>
-                                <span className="ml-2 font-mono text-blue-900">{order.details.batch}</span>
-                              </div>
-                              <div>
-                                <span className="text-blue-700 font-medium">Purchase:</span>
-                                <span className="ml-2 font-mono text-blue-900">{order.details.purchase}</span>
-                              </div>
-                              <div>
-                                <span className="text-blue-700 font-medium">LOC/Lots:</span>
-                                <span className="ml-2 font-mono text-blue-900">{order.details.lots}</span>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="bg-purple-50 p-3 rounded-lg">
-                            <h4 className="font-semibold text-purple-900 mb-2 text-sm">Cart Information</h4>
-                            <div className="space-y-2 text-xs">
-                              <div>
-                                <span className="text-purple-700 font-medium">Cart ID:</span>
-                                <span className="ml-2 font-mono text-purple-900">{order.details.cartId}</span>
-                              </div>
-                              <div>
-                                <span className="text-purple-700 font-medium">Cart S/N:</span>
-                                <span className="ml-2 font-mono text-purple-900">{order.details.cartSn}</span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Equipment & Timeline */}
-                        <div className="space-y-3">
-                          <div className="bg-green-50 p-3 rounded-lg">
-                            <h4 className="font-semibold text-green-900 mb-2 text-sm">Equipment Details</h4>
-                            <div className="space-y-2 text-xs">
-                              <div>
-                                <span className="text-green-700 font-medium">Manufacturer:</span>
-                                <span className="ml-2 font-semibold text-green-900">{order.details.manufacturer}</span>
-                              </div>
-                              <div>
-                                <span className="text-green-700 font-medium">Model:</span>
-                                <span className="ml-2 font-mono text-green-900">{order.details.modelNumber}</span>
-                              </div>
-                              <div>
-                                <span className="text-green-700 font-medium">Serial #:</span>
-                                <span className="ml-2 font-mono text-green-900">{order.details.serialNumber}</span>
-                              </div>
-                              <div>
-                                <span className="text-green-700 font-medium">Item Type:</span>
-                                <span className="ml-2 text-green-900">{order.details.itemType}</span>
-                              </div>
-                              <div>
-                                <span className="text-green-700 font-medium">Operation:</span>
-                                <span className="ml-2 text-green-900">{order.details.operationType}</span>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="bg-orange-50 p-3 rounded-lg">
-                            <h4 className="font-semibold text-orange-900 mb-2 text-sm">Project Timeline</h4>
-                            <div className="space-y-2 text-xs">
-                              <div>
-                                <span className="text-orange-700 font-medium">Created:</span>
-                                <span className="ml-2 text-orange-900">{order.details.createdDate}</span>
-                              </div>
-                              <div>
-                                <span className="text-orange-700 font-medium">Status Date:</span>
-                                <span className="ml-2 text-orange-900">{order.details.statusDate}</span>
-                              </div>
-                              <div>
-                                <span className="text-orange-700 font-medium">Last Modified:</span>
-                                <span className="ml-2 text-orange-900">{order.details.lastModified}</span>
-                              </div>
-                              <div>
-                                <span className="text-orange-700 font-medium">Next By:</span>
-                                <span className={cn("ml-2 font-semibold",
-                                  order.details.nextBy === "TBD" ? "text-red-600" : "text-orange-900"
-                                )}>{order.details.nextBy}</span>
-                              </div>
-                              <div>
-                                <span className="text-orange-700 font-medium">Departure:</span>
-                                <span className={cn("ml-2 font-semibold",
-                                  order.details.departureDate === "TBD" ? "text-red-600" : "text-orange-900"
-                                )}>{order.details.departureDate}</span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Comments Section */}
-                      <div className="bg-gray-50 p-3 rounded-lg">
-                        <h4 className="font-semibold text-gray-900 mb-2 text-sm">Comments & Notes</h4>
-                        <p className="text-xs text-gray-700 bg-white p-3 rounded-md border border-gray-200 leading-relaxed">{order.details.comments}</p>
-                      </div>
-                    </div>
-                  )}
                 </div>
               </div>
             ))}
           </div>
         )}
       </div>
+
+      {/* Work Order Details Dialog */}
+      <Dialog open={selectedWorkOrder !== null} onOpenChange={() => setSelectedWorkOrder(null)}>
+        {selectedWorkOrder && <WorkOrderDetailsDialog order={selectedWorkOrder} />}
+      </Dialog>
 
       {/* Pagination */}
       <div className="p-6 border-t border-gray-200">
