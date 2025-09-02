@@ -76,22 +76,18 @@ const ModernTopSearchFilters = () => {
 
       {/* Global Search */}
       <div className="p-4 pb-3">
-        <div className="relative">
-          <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-          <Input
-            placeholder="Search work orders, customers, serial numbers, manufacturers..."
-            value={globalSearch}
-            onChange={(e) => setGlobalSearch(e.target.value)}
-            className="pl-12 bg-white border border-gray-300 rounded-xl h-10 text-sm placeholder:text-gray-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
-          />
-        </div>
-      </div>
-
-      {/* Specific Search Fields */}
-      <div className="px-4 pb-3">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div className="flex gap-3">
+          <div className="relative flex-1">
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <Input
+              placeholder="Search work orders, customers, serial numbers, manufacturers..."
+              value={globalSearch}
+              onChange={(e) => setGlobalSearch(e.target.value)}
+              className="pl-12 bg-white border border-gray-300 rounded-xl h-10 text-sm placeholder:text-gray-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
+            />
+          </div>
           <Select value={searchValues.status || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, status: value === 'all' ? '' : value }))}>
-            <SelectTrigger className="bg-white border border-gray-300 rounded-xl h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
+            <SelectTrigger className="w-40 bg-white border border-gray-300 rounded-xl h-10 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
               <SelectValue placeholder="All Status" />
             </SelectTrigger>
             <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-xl z-50">
@@ -102,7 +98,12 @@ const ModernTopSearchFilters = () => {
               <SelectItem value="pending">Pending</SelectItem>
             </SelectContent>
           </Select>
+        </div>
+      </div>
 
+      {/* Specific Search Fields */}
+      <div className="px-4 pb-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {/* Date Type Selection */}
           <Select value={dateType} onValueChange={setDateType}>
             <SelectTrigger className="bg-white border border-gray-300 rounded-xl h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
