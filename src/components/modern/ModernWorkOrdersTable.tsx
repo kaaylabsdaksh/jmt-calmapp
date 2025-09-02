@@ -267,199 +267,178 @@ const ModernWorkOrdersTable = () => {
                           <MoreHorizontal className="h-4 w-4" />
                         </Button>
                       </DropdownMenuTrigger>
-                       <DropdownMenuContent align="end" className="bg-white border shadow-lg z-50 rounded-lg w-96 p-4 max-h-96 overflow-y-auto">
-                         <div className="space-y-4">
-                           {/* Priority and Key Info */}
-                           <div className="border-b border-gray-100 pb-3">
-                             <div className="grid grid-cols-2 gap-3 text-sm">
-                               <div>
-                                 <span className="text-gray-600 font-medium">Priority:</span>
-                                 <span className={cn("ml-2 px-2 py-1 rounded-md text-xs font-medium",
-                                   order.details.priority === "Critical" ? "bg-red-100 text-red-800" :
-                                   order.details.priority === "High" ? "bg-orange-100 text-orange-800" :
-                                   order.details.priority === "Medium" ? "bg-yellow-100 text-yellow-800" :
-                                   "bg-gray-100 text-gray-800"
-                                 )}>{order.details.priority}</span>
-                               </div>
-                               <div>
-                                 <span className="text-gray-600 font-medium">Items:</span>
-                                 <span className="ml-2">{order.details.items}</span>
-                               </div>
-                             </div>
-                           </div>
-
-                           {/* Customer Information */}
-                           <div className="space-y-2">
-                             <h4 className="font-medium text-gray-900 text-sm">Customer Information</h4>
-                             <div className="grid grid-cols-1 gap-2 text-sm">
-                               <div className="flex justify-between">
-                                 <span className="text-gray-600">Cust ID:</span>
-                                 <span className="font-mono">{order.details.custId}</span>
-                               </div>
-                               <div className="flex justify-between">
-                                 <span className="text-gray-600">Cust S/N:</span>
-                                 <span className="font-mono">{order.details.custSn}</span>
-                               </div>
-                             </div>
-                           </div>
-
-                           {/* Order Details */}
-                           <div className="space-y-2">
-                             <h4 className="font-medium text-gray-900 text-sm">Order Details</h4>
-                             <div className="grid grid-cols-1 gap-2 text-sm">
-                               <div className="flex justify-between">
-                                 <span className="text-gray-600">Batch:</span>
-                                 <span className="font-mono">{order.details.batch}</span>
-                               </div>
-                               <div className="flex justify-between">
-                                 <span className="text-gray-600">Purchase:</span>
-                                 <span className="font-mono">{order.details.purchase}</span>
-                               </div>
-                               <div className="flex justify-between">
-                                 <span className="text-gray-600">LOC/Lots:</span>
-                                 <span className="font-mono">{order.details.lots}</span>
-                               </div>
-                               <div className="flex justify-between">
-                                 <span className="text-gray-600">PO Number:</span>
-                                 <span className="font-mono">{order.details.poNumber}</span>
-                               </div>
-                               <div className="flex justify-between">
-                                 <span className="text-gray-600">Cart ID:</span>
-                                 <span className="font-mono">{order.details.cartId}</span>
-                               </div>
-                               <div className="flex justify-between">
-                                 <span className="text-gray-600">Cart S/N:</span>
-                                 <span className="font-mono">{order.details.cartSn}</span>
-                               </div>
-                             </div>
-                           </div>
-
-                           {/* Equipment Information */}
-                           <div className="space-y-2">
-                             <h4 className="font-medium text-gray-900 text-sm">Equipment Information</h4>
-                             <div className="grid grid-cols-1 gap-2 text-sm">
-                               <div className="flex justify-between">
-                                 <span className="text-gray-600">Manufacturer:</span>
-                                 <span>{order.details.manufacturer}</span>
-                               </div>
-                               <div className="flex justify-between">
-                                 <span className="text-gray-600">Model Number:</span>
-                                 <span className="font-mono">{order.details.modelNumber}</span>
-                               </div>
-                               <div className="flex justify-between">
-                                 <span className="text-gray-600">Serial Number:</span>
-                                 <span className="font-mono">{order.details.serialNumber}</span>
-                               </div>
-                               <div className="flex justify-between">
-                                 <span className="text-gray-600">Lab Code:</span>
-                                 <span className="font-mono">{order.details.labCode}</span>
-                               </div>
-                               <div className="flex justify-between">
-                                 <span className="text-gray-600">Item Type:</span>
-                                 <span>{order.details.itemType}</span>
-                               </div>
-                               <div className="flex justify-between">
-                                 <span className="text-gray-600">Operation Type:</span>
-                                 <span>{order.details.operationType}</span>
-                               </div>
-                             </div>
-                           </div>
-
-                           {/* Timeline Information */}
-                           <div className="space-y-2">
-                             <h4 className="font-medium text-gray-900 text-sm">Timeline</h4>
-                             <div className="grid grid-cols-1 gap-2 text-sm">
-                               <div className="flex justify-between">
-                                 <span className="text-gray-600">Created Date:</span>
-                                 <span>{order.details.createdDate}</span>
-                               </div>
-                               <div className="flex justify-between">
-                                 <span className="text-gray-600">Status Date:</span>
-                                 <span>{order.details.statusDate}</span>
-                               </div>
-                               <div className="flex justify-between">
-                                 <span className="text-gray-600">Last Modified:</span>
-                                 <span>{order.details.lastModified}</span>
-                               </div>
-                               <div className="flex justify-between">
-                                 <span className="text-gray-600">Next By:</span>
-                                 <span className={cn("font-medium",
-                                   order.details.nextBy === "TBD" ? "text-orange-600" : "text-gray-900"
-                                 )}>{order.details.nextBy}</span>
-                               </div>
-                               <div className="flex justify-between">
-                                 <span className="text-gray-600">Departure Date:</span>
-                                 <span className={cn("font-medium",
-                                   order.details.departureDate === "TBD" ? "text-orange-600" : "text-gray-900"
-                                 )}>{order.details.departureDate}</span>
-                               </div>
-                             </div>
-                           </div>
-
-                           {/* Status Information */}
-                           <div className="border-t border-gray-100 pt-3">
-                             <h4 className="font-medium text-gray-900 text-sm mb-2">Status Information</h4>
-                             <div className="grid grid-cols-2 gap-3 text-sm">
-                               <div>
-                                 <span className="text-gray-600 font-medium">Submitted:</span>
-                                 <span className={cn("ml-2 px-2 py-1 rounded-md text-xs font-medium",
-                                   order.details.submitted === "Yes" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
-                                 )}>{order.details.submitted}</span>
-                               </div>
-                               <div>
-                                 <span className="text-gray-600 font-medium">Proof of Delivery:</span>
-                                 <span className={cn("ml-2 px-2 py-1 rounded-md text-xs font-medium",
-                                   order.details.proofOfDelivery === "Complete" ? "bg-green-100 text-green-800" :
-                                   order.details.proofOfDelivery === "Pending" ? "bg-yellow-100 text-yellow-800" :
-                                   "bg-gray-100 text-gray-800"
-                                 )}>{order.details.proofOfDelivery}</span>
-                               </div>
-                             </div>
-                           </div>
-                         </div>
+                       <DropdownMenuContent align="end" className="bg-white border shadow-lg z-50 rounded-lg">
+                         <DropdownMenuItem className="flex items-center gap-2">
+                           <Edit className="h-4 w-4" />
+                           Edit
+                         </DropdownMenuItem>
+                         <DropdownMenuItem className="flex items-center gap-2">
+                           <User className="h-4 w-4" />
+                           Assign Tech
+                         </DropdownMenuItem>
+                         <DropdownMenuItem className="flex items-center gap-2">
+                           <RefreshCw className="h-4 w-4" />
+                           Update Status
+                         </DropdownMenuItem>
                        </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>
                 </TableRow>
                 
-                {expandedRows.has(order.id) && (
-                  <TableRow className="bg-gray-50 border-b border-gray-100">
-                    <TableCell colSpan={7} className="p-6">
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <div>
-                          <h4 className="font-medium text-gray-900 mb-2">Equipment Details</h4>
-                          <div className="space-y-2 text-sm">
-                            <div>
-                              <span className="text-gray-600">Manufacturer:</span>
-                              <span className="ml-2 font-medium">{order.details.manufacturer}</span>
-                            </div>
-                            <div>
-                              <span className="text-gray-600">Model #:</span>
-                              <span className="ml-2 font-medium">{order.details.modelNumber}</span>
-                            </div>
-                            <div>
-                              <span className="text-gray-600">Serial #:</span>
-                              <span className="ml-2 font-mono">{order.details.serialNumber}</span>
-                            </div>
-                          </div>
-                        </div>
-                        <div>
-                          <h4 className="font-medium text-gray-900 mb-2">Lab Information</h4>
-                          <div className="space-y-2 text-sm">
-                            <div>
-                              <span className="text-gray-600">Lab Code:</span>
-                              <span className="ml-2 font-mono">{order.details.labCode}</span>
-                            </div>
-                          </div>
-                        </div>
-                        <div>
-                          <h4 className="font-medium text-gray-900 mb-2">Comments</h4>
-                          <p className="text-sm text-gray-700">{order.details.comments}</p>
-                        </div>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                )}
+                 {expandedRows.has(order.id) && (
+                   <TableRow className="bg-gray-50 border-b border-gray-100">
+                     <TableCell colSpan={7} className="p-6">
+                       <div className="space-y-6">
+                         {/* Priority and Key Info */}
+                         <div className="flex items-center gap-6 pb-4 border-b border-gray-200">
+                           <div className="flex items-center gap-2">
+                             <span className="text-gray-600 font-medium">Priority:</span>
+                             <span className={cn("px-2 py-1 rounded-md text-xs font-medium",
+                               order.details.priority === "Critical" ? "bg-red-100 text-red-800" :
+                               order.details.priority === "High" ? "bg-orange-100 text-orange-800" :
+                               order.details.priority === "Medium" ? "bg-yellow-100 text-yellow-800" :
+                               "bg-gray-100 text-gray-800"
+                             )}>{order.details.priority}</span>
+                           </div>
+                           <div className="flex items-center gap-2">
+                             <span className="text-gray-600 font-medium">Items:</span>
+                             <span className="font-medium">{order.details.items}</span>
+                           </div>
+                           <div className="flex items-center gap-2">
+                             <span className="text-gray-600 font-medium">Submitted:</span>
+                             <span className={cn("px-2 py-1 rounded-md text-xs font-medium",
+                               order.details.submitted === "Yes" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
+                             )}>{order.details.submitted}</span>
+                           </div>
+                           <div className="flex items-center gap-2">
+                             <span className="text-gray-600 font-medium">Proof of Delivery:</span>
+                             <span className={cn("px-2 py-1 rounded-md text-xs font-medium",
+                               order.details.proofOfDelivery === "Complete" ? "bg-green-100 text-green-800" :
+                               order.details.proofOfDelivery === "Pending" ? "bg-yellow-100 text-yellow-800" :
+                               "bg-gray-100 text-gray-800"
+                             )}>{order.details.proofOfDelivery}</span>
+                           </div>
+                         </div>
+
+                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                           {/* Customer Information */}
+                           <div>
+                             <h4 className="font-medium text-gray-900 mb-3">Customer Information</h4>
+                             <div className="space-y-2 text-sm">
+                               <div>
+                                 <span className="text-gray-600">Cust ID:</span>
+                                 <span className="ml-2 font-mono">{order.details.custId}</span>
+                               </div>
+                               <div>
+                                 <span className="text-gray-600">Cust S/N:</span>
+                                 <span className="ml-2 font-mono">{order.details.custSn}</span>
+                               </div>
+                             </div>
+                           </div>
+
+                           {/* Order Details */}
+                           <div>
+                             <h4 className="font-medium text-gray-900 mb-3">Order Details</h4>
+                             <div className="space-y-2 text-sm">
+                               <div>
+                                 <span className="text-gray-600">Batch:</span>
+                                 <span className="ml-2 font-mono">{order.details.batch}</span>
+                               </div>
+                               <div>
+                                 <span className="text-gray-600">Purchase:</span>
+                                 <span className="ml-2 font-mono">{order.details.purchase}</span>
+                               </div>
+                               <div>
+                                 <span className="text-gray-600">LOC/Lots:</span>
+                                 <span className="ml-2 font-mono">{order.details.lots}</span>
+                               </div>
+                               <div>
+                                 <span className="text-gray-600">PO Number:</span>
+                                 <span className="ml-2 font-mono">{order.details.poNumber}</span>
+                               </div>
+                               <div>
+                                 <span className="text-gray-600">Cart ID:</span>
+                                 <span className="ml-2 font-mono">{order.details.cartId}</span>
+                               </div>
+                               <div>
+                                 <span className="text-gray-600">Cart S/N:</span>
+                                 <span className="ml-2 font-mono">{order.details.cartSn}</span>
+                               </div>
+                             </div>
+                           </div>
+
+                           {/* Equipment Information */}
+                           <div>
+                             <h4 className="font-medium text-gray-900 mb-3">Equipment Information</h4>
+                             <div className="space-y-2 text-sm">
+                               <div>
+                                 <span className="text-gray-600">Manufacturer:</span>
+                                 <span className="ml-2 font-medium">{order.details.manufacturer}</span>
+                               </div>
+                               <div>
+                                 <span className="text-gray-600">Model #:</span>
+                                 <span className="ml-2 font-mono">{order.details.modelNumber}</span>
+                               </div>
+                               <div>
+                                 <span className="text-gray-600">Serial #:</span>
+                                 <span className="ml-2 font-mono">{order.details.serialNumber}</span>
+                               </div>
+                               <div>
+                                 <span className="text-gray-600">Lab Code:</span>
+                                 <span className="ml-2 font-mono">{order.details.labCode}</span>
+                               </div>
+                               <div>
+                                 <span className="text-gray-600">Item Type:</span>
+                                 <span className="ml-2">{order.details.itemType}</span>
+                               </div>
+                               <div>
+                                 <span className="text-gray-600">Operation:</span>
+                                 <span className="ml-2">{order.details.operationType}</span>
+                               </div>
+                             </div>
+                           </div>
+
+                           {/* Timeline Information */}
+                           <div>
+                             <h4 className="font-medium text-gray-900 mb-3">Timeline</h4>
+                             <div className="space-y-2 text-sm">
+                               <div>
+                                 <span className="text-gray-600">Created:</span>
+                                 <span className="ml-2">{order.details.createdDate}</span>
+                               </div>
+                               <div>
+                                 <span className="text-gray-600">Status Date:</span>
+                                 <span className="ml-2">{order.details.statusDate}</span>
+                               </div>
+                               <div>
+                                 <span className="text-gray-600">Last Modified:</span>
+                                 <span className="ml-2">{order.details.lastModified}</span>
+                               </div>
+                               <div>
+                                 <span className="text-gray-600">Next By:</span>
+                                 <span className={cn("ml-2 font-medium",
+                                   order.details.nextBy === "TBD" ? "text-orange-600" : "text-gray-900"
+                                 )}>{order.details.nextBy}</span>
+                               </div>
+                               <div>
+                                 <span className="text-gray-600">Departure:</span>
+                                 <span className={cn("ml-2 font-medium",
+                                   order.details.departureDate === "TBD" ? "text-orange-600" : "text-gray-900"
+                                 )}>{order.details.departureDate}</span>
+                               </div>
+                             </div>
+                           </div>
+                         </div>
+
+                         {/* Comments Section */}
+                         <div className="border-t border-gray-200 pt-4">
+                           <h4 className="font-medium text-gray-900 mb-2">Comments</h4>
+                           <p className="text-sm text-gray-700 bg-white p-3 rounded-lg border">{order.details.comments}</p>
+                         </div>
+                       </div>
+                     </TableCell>
+                   </TableRow>
+                 )}
               </>
             ))}
           </TableBody>
