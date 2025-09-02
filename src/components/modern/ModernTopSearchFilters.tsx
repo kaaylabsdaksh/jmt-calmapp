@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 const ModernTopSearchFilters = () => {
   const [dateFrom, setDateFrom] = useState<Date>();
   const [dateTo, setDateTo] = useState<Date>();
-  const [dateType, setDateType] = useState('created');
+  const [dateType, setDateType] = useState('creation-arrival');
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [globalSearch, setGlobalSearch] = useState('');
   const [searchValues, setSearchValues] = useState({
@@ -35,7 +35,7 @@ const ModernTopSearchFilters = () => {
     });
     setDateFrom(undefined);
     setDateTo(undefined);
-    setDateType('created');
+    setDateType('creation-arrival');
   };
 
   const hasActiveFilters = globalSearch || Object.values(searchValues).some(value => value) || dateFrom || dateTo;
@@ -109,12 +109,9 @@ const ModernTopSearchFilters = () => {
               <SelectValue placeholder="Date Type" />
             </SelectTrigger>
             <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-xl z-50">
-              <SelectItem value="created">Creation & Arrival - Created</SelectItem>
-              <SelectItem value="arrival">Creation & Arrival - Arrival</SelectItem>
-              <SelectItem value="status-date">Status & Comments - Status Date</SelectItem>
-              <SelectItem value="last-comment">Status & Comments - Last Comment</SelectItem>
-              <SelectItem value="departure">Departure & Delivery - Departure</SelectItem>
-              <SelectItem value="need-by">Departure & Delivery - Need By</SelectItem>
+              <SelectItem value="creation-arrival">Creation & Arrival</SelectItem>
+              <SelectItem value="status-comments">Status & Comments</SelectItem>
+              <SelectItem value="departure-delivery">Departure & Delivery</SelectItem>
             </SelectContent>
           </Select>
 
