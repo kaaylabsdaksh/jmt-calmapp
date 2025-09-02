@@ -20,6 +20,7 @@ const ModernTopSearchFilters = () => {
     status: '',
     manufacturer: '',
     priority: '',
+    assignee: '',
     division: ''
   });
 
@@ -31,6 +32,7 @@ const ModernTopSearchFilters = () => {
       status: '',
       manufacturer: '',
       priority: '',
+      assignee: '',
       division: ''
     });
     setDateFrom(undefined);
@@ -108,6 +110,19 @@ const ModernTopSearchFilters = () => {
               <SelectItem value="high">High</SelectItem>
               <SelectItem value="medium">Medium</SelectItem>
               <SelectItem value="low">Low</SelectItem>
+            </SelectContent>
+          </Select>
+          <Select value={searchValues.assignee || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, assignee: value === 'all' ? '' : value }))}>
+            <SelectTrigger className="w-40 bg-white border border-gray-300 rounded-xl h-10 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
+              <SelectValue placeholder="Assignee" />
+            </SelectTrigger>
+            <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-xl z-50">
+              <SelectItem value="all">All Assignees</SelectItem>
+              <SelectItem value="john-doe">John Doe</SelectItem>
+              <SelectItem value="jane-smith">Jane Smith</SelectItem>
+              <SelectItem value="mike-johnson">Mike Johnson</SelectItem>
+              <SelectItem value="sarah-wilson">Sarah Wilson</SelectItem>
+              <SelectItem value="unassigned">Unassigned</SelectItem>
             </SelectContent>
           </Select>
         </div>
