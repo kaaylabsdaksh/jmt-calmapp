@@ -3,10 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { ChevronDown, ChevronRight, Calendar as CalendarIcon, PanelLeftClose, PanelLeft } from "lucide-react";
+import { Calendar as CalendarIcon, PanelLeftClose, PanelLeft, Search, X } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 
@@ -16,10 +15,31 @@ interface ModernSidebarProps {
 }
 
 const ModernSidebar = ({ isCollapsed, onToggleCollapse }: ModernSidebarProps) => {
-  const [basicOpen, setBasicOpen] = useState(true);
-  const [advancedOpen, setAdvancedOpen] = useState(false);
   const [dateFrom, setDateFrom] = useState<Date>();
   const [dateTo, setDateTo] = useState<Date>();
+  const [searchValues, setSearchValues] = useState({
+    woNumber: '',
+    customer: '',
+    status: '',
+    manufacturer: '',
+    serial: '',
+    division: ''
+  });
+
+  const clearAllFilters = () => {
+    setSearchValues({
+      woNumber: '',
+      customer: '',
+      status: '',
+      manufacturer: '',
+      serial: '',
+      division: ''
+    });
+    setDateFrom(undefined);
+    setDateTo(undefined);
+  };
+
+  const hasActiveFilters = Object.values(searchValues).some(value => value) || dateFrom || dateTo;
 
   if (isCollapsed) {
     return (
@@ -37,194 +57,156 @@ const ModernSidebar = ({ isCollapsed, onToggleCollapse }: ModernSidebarProps) =>
   }
 
   return (
-    <div className="w-80 bg-gray-50 border-r border-gray-200 p-6 space-y-6">
+    <div className="w-80 bg-white/80 backdrop-blur-sm border-r border-gray-100 overflow-y-auto">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-gray-900">Search & Filters</h2>
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={onToggleCollapse}
-        >
-          <PanelLeftClose className="h-4 w-4" />
-        </Button>
-      </div>
-
-      {/* Basic Search */}
-      <Collapsible open={basicOpen} onOpenChange={setBasicOpen}>
-        <CollapsibleTrigger asChild>
-          <Button
-            variant="ghost"
-            className="w-full justify-between p-0 h-auto font-medium text-gray-700 hover:text-gray-900"
-          >
-            Basic Search
-            {basicOpen ? (
-              <ChevronDown className="h-4 w-4" />
-            ) : (
-              <ChevronRight className="h-4 w-4" />
-            )}
-          </Button>
-        </CollapsibleTrigger>
-        <CollapsibleContent className="space-y-4 mt-4">
-          <div className="space-y-2">
-            <Label htmlFor="wo-number" className="text-sm font-medium text-gray-700">
-              Work Order #
-            </Label>
-            <Input
-              id="wo-number"
-              placeholder="Enter WO number"
-              className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="customer" className="text-sm font-medium text-gray-700">
-              Customer
-            </Label>
-            <Input
-              id="customer"
-              placeholder="Enter customer name"
-              className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="status" className="text-sm font-medium text-gray-700">
-              Status
-            </Label>
-            <Select>
-              <SelectTrigger className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500">
-                <SelectValue placeholder="Select status" />
-              </SelectTrigger>
-              <SelectContent className="bg-white border shadow-lg z-50 rounded-lg">
-                <SelectItem value="in-lab">In Lab</SelectItem>
-                <SelectItem value="completed">Completed</SelectItem>
-                <SelectItem value="overdue">Overdue</SelectItem>
-                <SelectItem value="pending">Pending</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="item-status" className="text-sm font-medium text-gray-700">
-              Item Status
-            </Label>
-            <Select>
-              <SelectTrigger className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500">
-                <SelectValue placeholder="Select item status" />
-              </SelectTrigger>
-              <SelectContent className="bg-white border shadow-lg z-50 rounded-lg">
-                <SelectItem value="received">Received</SelectItem>
-                <SelectItem value="in-progress">In Progress</SelectItem>
-                <SelectItem value="completed">Completed</SelectItem>
-                <SelectItem value="shipped">Shipped</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </CollapsibleContent>
-      </Collapsible>
-
-      {/* Advanced Filters */}
-      <Collapsible open={advancedOpen} onOpenChange={setAdvancedOpen}>
-        <CollapsibleTrigger asChild>
-          <Button
-            variant="ghost"
-            className="w-full justify-between p-0 h-auto font-medium text-gray-700 hover:text-gray-900"
-          >
-            Advanced Filters
-            {advancedOpen ? (
-              <ChevronDown className="h-4 w-4" />
-            ) : (
-              <ChevronRight className="h-4 w-4" />
-            )}
-          </Button>
-        </CollapsibleTrigger>
-        <CollapsibleContent className="space-y-4 mt-4">
-          {/* Date Range */}
-          <div className="space-y-3">
-            <Label className="text-sm font-medium text-gray-700">Date Range</Label>
-            <div className="grid grid-cols-2 gap-2">
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className={cn(
-                      "justify-start text-left font-normal rounded-lg border-gray-300",
-                      !dateFrom && "text-muted-foreground"
-                    )}
-                  >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {dateFrom ? format(dateFrom, "MMM dd") : "From"}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    mode="single"
-                    selected={dateFrom}
-                    onSelect={setDateFrom}
-                    initialFocus
-                    className="pointer-events-auto"
-                  />
-                </PopoverContent>
-              </Popover>
-
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className={cn(
-                      "justify-start text-left font-normal rounded-lg border-gray-300",
-                      !dateTo && "text-muted-foreground"
-                    )}
-                  >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {dateTo ? format(dateTo, "MMM dd") : "To"}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    mode="single"
-                    selected={dateTo}
-                    onSelect={setDateTo}
-                    initialFocus
-                    className="pointer-events-auto"
-                  />
-                </PopoverContent>
-              </Popover>
+      <div className="p-6 border-b border-gray-100 bg-white">
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center">
+              <Search className="h-4 w-4 text-blue-600" />
+            </div>
+            <div>
+              <h2 className="text-lg font-semibold text-gray-900">Search</h2>
+              <p className="text-xs text-gray-500">Find work orders</p>
             </div>
           </div>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={onToggleCollapse}
+            className="text-gray-400 hover:text-gray-600"
+          >
+            <PanelLeftClose className="h-4 w-4" />
+          </Button>
+        </div>
 
+        {/* Clear Filters Button */}
+        {hasActiveFilters && (
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={clearAllFilters}
+            className="w-full justify-center text-gray-500 hover:text-gray-700 hover:bg-gray-50 mb-4"
+          >
+            <X className="h-4 w-4 mr-2" />
+            Clear all filters
+          </Button>
+        )}
+      </div>
+
+      {/* Search Form */}
+      <div className="p-6 space-y-6">
+        {/* Primary Search */}
+        <div className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="manufacturer" className="text-sm font-medium text-gray-700">
-              Manufacturer
-            </Label>
             <Input
-              id="manufacturer"
-              placeholder="Enter manufacturer"
-              className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+              placeholder="Work Order #"
+              value={searchValues.woNumber}
+              onChange={(e) => setSearchValues(prev => ({ ...prev, woNumber: e.target.value }))}
+              className="bg-gray-50 border-0 rounded-xl h-12 text-sm placeholder:text-gray-400 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="serial" className="text-sm font-medium text-gray-700">
-              Serial Number
-            </Label>
             <Input
-              id="serial"
-              placeholder="Enter serial number"
-              className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+              placeholder="Customer name"
+              value={searchValues.customer}
+              onChange={(e) => setSearchValues(prev => ({ ...prev, customer: e.target.value }))}
+              className="bg-gray-50 border-0 rounded-xl h-12 text-sm placeholder:text-gray-400 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
             />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="division" className="text-sm font-medium text-gray-700">
-              Division
-            </Label>
-            <Select>
-              <SelectTrigger className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500">
-                <SelectValue placeholder="Select division" />
+          <Select value={searchValues.status} onValueChange={(value) => setSearchValues(prev => ({ ...prev, status: value }))}>
+            <SelectTrigger className="bg-gray-50 border-0 rounded-xl h-12 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all">
+              <SelectValue placeholder="Status" />
+            </SelectTrigger>
+            <SelectContent className="bg-white border-0 shadow-xl rounded-xl z-50">
+              <SelectItem value="in-lab">In Lab</SelectItem>
+              <SelectItem value="completed">Completed</SelectItem>
+              <SelectItem value="overdue">Overdue</SelectItem>
+              <SelectItem value="pending">Pending</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Date Range */}
+        <div className="space-y-3">
+          <Label className="text-sm font-medium text-gray-700">Date Range</Label>
+          <div className="grid grid-cols-2 gap-3">
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  className={cn(
+                    "justify-start text-left font-normal bg-gray-50 border-0 rounded-xl h-12 text-sm hover:bg-gray-100 transition-all",
+                    !dateFrom && "text-gray-400"
+                  )}
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {dateFrom ? format(dateFrom, "MMM dd") : "From"}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0 border-0 shadow-xl rounded-xl" align="start">
+                <Calendar
+                  mode="single"
+                  selected={dateFrom}
+                  onSelect={setDateFrom}
+                  initialFocus
+                  className="pointer-events-auto rounded-xl"
+                />
+              </PopoverContent>
+            </Popover>
+
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  className={cn(
+                    "justify-start text-left font-normal bg-gray-50 border-0 rounded-xl h-12 text-sm hover:bg-gray-100 transition-all",
+                    !dateTo && "text-gray-400"
+                  )}
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {dateTo ? format(dateTo, "MMM dd") : "To"}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0 border-0 shadow-xl rounded-xl" align="start">
+                <Calendar
+                  mode="single"
+                  selected={dateTo}
+                  onSelect={setDateTo}
+                  initialFocus
+                  className="pointer-events-auto rounded-xl"
+                />
+              </PopoverContent>
+            </Popover>
+          </div>
+        </div>
+
+        {/* Secondary Filters */}
+        <div className="pt-4 border-t border-gray-100 space-y-4">
+          <Label className="text-sm font-medium text-gray-700">Additional Filters</Label>
+          
+          <div className="space-y-3">
+            <Input
+              placeholder="Manufacturer"
+              value={searchValues.manufacturer}
+              onChange={(e) => setSearchValues(prev => ({ ...prev, manufacturer: e.target.value }))}
+              className="bg-gray-50 border-0 rounded-xl h-11 text-sm placeholder:text-gray-400 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+            />
+
+            <Input
+              placeholder="Serial number"
+              value={searchValues.serial}
+              onChange={(e) => setSearchValues(prev => ({ ...prev, serial: e.target.value }))}
+              className="bg-gray-50 border-0 rounded-xl h-11 text-sm placeholder:text-gray-400 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+            />
+
+            <Select value={searchValues.division} onValueChange={(value) => setSearchValues(prev => ({ ...prev, division: value }))}>
+              <SelectTrigger className="bg-gray-50 border-0 rounded-xl h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all">
+                <SelectValue placeholder="Division" />
               </SelectTrigger>
-              <SelectContent className="bg-white border shadow-lg z-50 rounded-lg">
+              <SelectContent className="bg-white border-0 shadow-xl rounded-xl z-50">
                 <SelectItem value="electronics">Electronics</SelectItem>
                 <SelectItem value="mechanical">Mechanical</SelectItem>
                 <SelectItem value="calibration">Calibration</SelectItem>
@@ -232,8 +214,14 @@ const ModernSidebar = ({ isCollapsed, onToggleCollapse }: ModernSidebarProps) =>
               </SelectContent>
             </Select>
           </div>
-        </CollapsibleContent>
-      </Collapsible>
+        </div>
+
+        {/* Search Button */}
+        <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-xl h-12 font-medium shadow-sm hover:shadow-md transition-all">
+          <Search className="h-4 w-4 mr-2" />
+          Search Work Orders
+        </Button>
+      </div>
     </div>
   );
 };
