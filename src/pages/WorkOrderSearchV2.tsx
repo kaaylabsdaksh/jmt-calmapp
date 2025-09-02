@@ -16,16 +16,6 @@ const WorkOrderSearchV2 = () => {
         }`}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 sm:gap-4">
-              <div className="flex items-center gap-4">
-                <h1 className={`font-bold text-foreground transition-all duration-200 ${
-                  isCollapsed ? 'text-lg' : 'text-2xl'
-                }`}>
-                  Work Orders v2
-                </h1>
-                <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full">
-                  Simplified
-                </span>
-              </div>
               <span className={`text-sm text-muted-foreground transition-all duration-200 ${
                 isCollapsed ? 'hidden sm:block' : 'block'
               }`}>
