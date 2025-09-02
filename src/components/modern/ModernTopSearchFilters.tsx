@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils";
 const ModernTopSearchFilters = () => {
   const [dateFrom, setDateFrom] = useState<Date>();
   const [dateTo, setDateTo] = useState<Date>();
+  const [dateType, setDateType] = useState('created');
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [globalSearch, setGlobalSearch] = useState('');
   const [searchValues, setSearchValues] = useState({
@@ -34,6 +35,7 @@ const ModernTopSearchFilters = () => {
     });
     setDateFrom(undefined);
     setDateTo(undefined);
+    setDateType('created');
   };
 
   const hasActiveFilters = globalSearch || Object.values(searchValues).some(value => value) || dateFrom || dateTo;
@@ -87,7 +89,7 @@ const ModernTopSearchFilters = () => {
 
       {/* Specific Search Fields */}
       <div className="px-6 pb-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <Select value={searchValues.status} onValueChange={(value) => setSearchValues(prev => ({ ...prev, status: value }))}>
             <SelectTrigger className="bg-white border border-gray-300 rounded-xl h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
               <SelectValue placeholder="Status" />
@@ -97,6 +99,21 @@ const ModernTopSearchFilters = () => {
               <SelectItem value="completed">Completed</SelectItem>
               <SelectItem value="overdue">Overdue</SelectItem>
               <SelectItem value="pending">Pending</SelectItem>
+            </SelectContent>
+          </Select>
+
+          {/* Date Type Selection */}
+          <Select value={dateType} onValueChange={setDateType}>
+            <SelectTrigger className="bg-white border border-gray-300 rounded-xl h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
+              <SelectValue placeholder="Date Type" />
+            </SelectTrigger>
+            <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-xl z-50">
+              <SelectItem value="created">Created From/To</SelectItem>
+              <SelectItem value="arrival">Arrival From/To</SelectItem>
+              <SelectItem value="status-date">Status Date From/To</SelectItem>
+              <SelectItem value="last-comment">Last Comment From/To</SelectItem>
+              <SelectItem value="departure">Departure From/To</SelectItem>
+              <SelectItem value="need-by">Need By From/To</SelectItem>
             </SelectContent>
           </Select>
 
