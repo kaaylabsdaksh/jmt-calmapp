@@ -406,7 +406,7 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
                 {/* Items Summary */}
                 <div className="flex items-center justify-between">
                   <div className="text-sm text-muted-foreground">
-                    Showing <span className="font-medium text-foreground">8</span> of <span className="font-medium text-foreground">48</span> items
+                    Showing <span className="font-medium text-foreground">24</span> of <span className="font-medium text-foreground">24</span> items
                   </div>
                   <div className="flex items-center gap-2">
                     <Label htmlFor="viewType" className="text-sm">View:</Label>
@@ -426,14 +426,29 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
                 {/* Items Cards */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pb-24">
                   {[
-                    { id: '002', manufacturer: 'VAETRIX', model: 'ETG-5K-1-05-BT', serial: '1557252190', type: 'SINGLE', deliverDate: '04/03/2025' },
-                    { id: '004', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/29/2025' },
-                    { id: '005', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/15/2025' },
-                    { id: '006', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/12/2025' },
-                    { id: '007', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/18/2025' },
-                    { id: '008', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/22/2025' },
-                    { id: '009', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/25/2025' },
-                    { id: '010', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/28/2025' },
+                    { id: '002', manufacturer: 'VAETRIX', model: 'ETG-5K-1-05-BT', serial: '1557252190', type: 'SINGLE', deliverDate: '04/03/2025', status: 'Ready for Departure', statusColor: 'green' },
+                    { id: '004', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/29/2025', status: 'Ready for Departure', statusColor: 'green' },
+                    { id: '005', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/15/2025', status: 'Ready for Departure', statusColor: 'green' },
+                    { id: '006', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/12/2025', status: 'Ready for Departure', statusColor: 'green' },
+                    { id: '007', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/18/2025', status: 'Ready for Departure', statusColor: 'green' },
+                    { id: '008', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/22/2025', status: 'Ready for Departure', statusColor: 'green' },
+                    { id: '009', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/25/2025', status: 'Ready for Departure', statusColor: 'green' },
+                    { id: '010', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/28/2025', status: 'Ready for Departure', statusColor: 'green' },
+                    { id: '011', manufacturer: 'FLUKE', model: '8845A', serial: 'FL8845A001', type: 'SINGLE', deliverDate: '05/02/2025', status: 'In Calibration', statusColor: 'blue' },
+                    { id: '012', manufacturer: 'KEYSIGHT', model: '34465A', serial: 'MY54001234', type: 'SINGLE', deliverDate: '05/05/2025', status: 'Pending Parts', statusColor: 'yellow' },
+                    { id: '013', manufacturer: 'TEKTRONIX', model: 'MSO64', serial: 'B010203', type: 'SINGLE', deliverDate: '05/08/2025', status: 'Ready for Departure', statusColor: 'green' },
+                    { id: '014', manufacturer: 'ROHDE & SCHWARZ', model: 'FSW26', serial: '100001', type: 'SINGLE', deliverDate: '05/10/2025', status: 'Under Repair', statusColor: 'red' },
+                    { id: '015', manufacturer: 'ANRITSU', model: 'MS2038C', serial: '6201234567', type: 'SINGLE', deliverDate: '05/12/2025', status: 'Ready for Departure', statusColor: 'green' },
+                    { id: '016', manufacturer: 'AGILENT', model: 'E4438C', serial: 'US44012345', type: 'SINGLE', deliverDate: '05/15/2025', status: 'In Testing', statusColor: 'blue' },
+                    { id: '017', manufacturer: 'NATIONAL INSTRUMENTS', model: 'PXIe-5164', serial: '1A2B3C4D', type: 'MODULE', deliverDate: '05/18/2025', status: 'Ready for Departure', statusColor: 'green' },
+                    { id: '018', manufacturer: 'KEITHLEY', model: '2450', serial: '4151234', type: 'SINGLE', deliverDate: '05/20/2025', status: 'Calibration Complete', statusColor: 'green' },
+                    { id: '019', manufacturer: 'RIGOL', model: 'DG4162', serial: 'DG41620001', type: 'SINGLE', deliverDate: '05/22/2025', status: 'Ready for Departure', statusColor: 'green' },
+                    { id: '020', manufacturer: 'LECROY', model: 'WaveRunner 8254M', serial: 'LCRY001234', type: 'SINGLE', deliverDate: '05/25/2025', status: 'Awaiting Customer', statusColor: 'yellow' },
+                    { id: '021', manufacturer: 'BIRD', model: '4421-50', serial: 'B4421001', type: 'SINGLE', deliverDate: '05/28/2025', status: 'Ready for Departure', statusColor: 'green' },
+                    { id: '022', manufacturer: 'OPHIR', model: 'Nova II', serial: 'NOVA2001', type: 'SINGLE', deliverDate: '05/30/2025', status: 'In Calibration', statusColor: 'blue' },
+                    { id: '023', manufacturer: 'TRANSCAT', model: 'TC-7040', serial: 'TC7040001', type: 'SINGLE', deliverDate: '06/02/2025', status: 'Ready for Departure', statusColor: 'green' },
+                    { id: '024', manufacturer: 'IKALOGIC', model: 'ScanaStudio', serial: 'IK001234', type: 'SINGLE', deliverDate: '06/05/2025', status: 'Quality Check', statusColor: 'blue' },
+                    { id: '025', manufacturer: 'HIOKI', model: '3561', serial: 'H3561001', type: 'SINGLE', deliverDate: '06/08/2025', status: 'Ready for Departure', statusColor: 'green' },
                   ].map((item, index) => (
                     <Card key={item.id} className="hover:shadow-md transition-shadow">
                       <CardContent className="p-4">
@@ -447,8 +462,16 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
                               <p className="text-sm font-medium text-foreground">0152.01-385737-{item.id}</p>
                             </div>
                           </div>
-                          <Badge variant="secondary" className="bg-green-50 text-green-700 border-green-200">
-                            Ready for Departure
+                          <Badge 
+                            variant="secondary" 
+                            className={
+                              item.statusColor === 'green' ? 'bg-green-50 text-green-700 border-green-200' :
+                              item.statusColor === 'blue' ? 'bg-blue-50 text-blue-700 border-blue-200' :
+                              item.statusColor === 'yellow' ? 'bg-yellow-50 text-yellow-700 border-yellow-200' :
+                              'bg-red-50 text-red-700 border-red-200'
+                            }
+                          >
+                            {item.status}
                           </Badge>
                         </div>
 
