@@ -34,6 +34,7 @@ interface WorkOrderDetailsProps {
 }
 
 const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
+  console.log("WorkOrderDetails component rendering with ID:", workOrderId);
   const [activeTab, setActiveTab] = useState("general");
   const { open } = useSidebar();
   

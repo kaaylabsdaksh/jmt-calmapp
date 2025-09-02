@@ -5,7 +5,10 @@ import Index from "./pages/Index";
 import WorkOrderDetail from "./pages/WorkOrderDetail";
 import NotFound from "./pages/NotFound";
 
-const App = () => (
+const App = () => {
+  console.log("App component rendering");
+  
+  return (
   <BrowserRouter>
     <SidebarProvider>
       <div className="flex min-h-screen w-full overflow-x-hidden">
@@ -27,6 +30,7 @@ const App = () => (
       </div>
     </SidebarProvider>
   </BrowserRouter>
-);
+  );
+};
 
 export default App;
