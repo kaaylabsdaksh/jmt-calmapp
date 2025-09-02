@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Search, RotateCcw, Plus, Download } from "lucide-react";
+import { Plus, Download } from "lucide-react";
 
 const ModernTopNav = () => {
   return (
@@ -15,19 +15,6 @@ const ModernTopNav = () => {
 
         {/* Primary Action Buttons */}
         <div className="flex items-center gap-3">
-          <Button 
-            className="rounded-xl shadow-sm hover:shadow-md transition-all duration-200 bg-blue-600 hover:bg-blue-700"
-          >
-            <Search className="h-4 w-4 mr-2" />
-            Search
-          </Button>
-          <Button 
-            variant="outline" 
-            className="rounded-xl shadow-sm hover:shadow-md transition-all duration-200"
-          >
-            <RotateCcw className="h-4 w-4 mr-2" />
-            Clear
-          </Button>
           <Button 
             variant="outline" 
             className="rounded-xl shadow-sm hover:shadow-md transition-all duration-200"
