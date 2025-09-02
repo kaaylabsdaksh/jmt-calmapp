@@ -120,7 +120,7 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
       </div>
 
       {/* Main Content */}
-      <div className="px-4 sm:px-6 py-6">
+      <div className="px-4 sm:px-6 py-6 pb-32">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           {/* Tab Navigation */}
           <TabsList className="grid w-full grid-cols-5 lg:grid-cols-10 h-auto p-1 gap-1">
