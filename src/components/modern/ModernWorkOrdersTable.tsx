@@ -18,6 +18,22 @@ interface WorkOrder {
     comments: string;
     manufacturer: string;
     serialNumber: string;
+    batch: string;
+    items: string;
+    purchase: string;
+    lots: string;
+    createdDate: string;
+    statusDate: string;
+    lastModified: string;
+    priority: string;
+    cartId: string;
+    cartSn: string;
+    poNumber: string;
+    itemType: string;
+    operationType: string;
+    departureDate: string;
+    submitted: string;
+    proofOfDelivery: string;
   };
 }
 
@@ -33,7 +49,23 @@ const mockWorkOrders: WorkOrder[] = [
       labCode: "LAB-001",
       comments: "Calibration required for pressure sensor",
       manufacturer: "ADEULIS",
-      serialNumber: "SN123456"
+      serialNumber: "SN123456",
+      batch: "B2024-001",
+      items: "5",
+      purchase: "PO-2024-001",
+      lots: "LOT-A123",
+      createdDate: "10/15/2024",
+      statusDate: "11/20/2024",
+      lastModified: "11/22/2024",
+      priority: "High",
+      cartId: "CART-001",
+      cartSn: "CSN-001",
+      poNumber: "PO-2024-001",
+      itemType: "Sensor",
+      operationType: "Calibration",
+      departureDate: "11/25/2024",
+      submitted: "Yes",
+      proofOfDelivery: "Pending"
     }
   },
   {
@@ -47,7 +79,23 @@ const mockWorkOrders: WorkOrder[] = [
       labCode: "LAB-002",
       comments: "Micrometer repair completed successfully",
       manufacturer: "STARRETT",
-      serialNumber: "SN789012"
+      serialNumber: "SN789012",
+      batch: "B2024-002",
+      items: "3",
+      purchase: "PO-2024-002",
+      lots: "LOT-B456",
+      createdDate: "10/12/2024",
+      statusDate: "11/18/2024",
+      lastModified: "11/20/2024",
+      priority: "Medium",
+      cartId: "CART-002",
+      cartSn: "CSN-002",
+      poNumber: "PO-2024-002",
+      itemType: "Micrometer",
+      operationType: "Repair",
+      departureDate: "11/21/2024",
+      submitted: "Yes",
+      proofOfDelivery: "Complete"
     }
   },
   {
@@ -61,7 +109,23 @@ const mockWorkOrders: WorkOrder[] = [
       labCode: "LAB-003",
       comments: "Awaiting replacement parts",
       manufacturer: "CHARLS LTD",
-      serialNumber: "SN345678"
+      serialNumber: "SN345678",
+      batch: "B2024-003",
+      items: "1",
+      purchase: "PO-2024-003",
+      lots: "LOT-C789",
+      createdDate: "10/08/2024",
+      statusDate: "11/15/2024",
+      lastModified: "11/18/2024",
+      priority: "Critical",
+      cartId: "CART-003",
+      cartSn: "CSN-003",
+      poNumber: "PO-2024-003",
+      itemType: "Pressure System",
+      operationType: "Service",
+      departureDate: "TBD",
+      submitted: "No",
+      proofOfDelivery: "N/A"
     }
   },
   {
@@ -75,7 +139,23 @@ const mockWorkOrders: WorkOrder[] = [
       labCode: "LAB-004",
       comments: "Initial inspection scheduled",
       manufacturer: "PRECISION TOOLS",
-      serialNumber: "SN901234"
+      serialNumber: "SN901234",
+      batch: "B2024-004",
+      items: "2",
+      purchase: "PO-2024-004",
+      lots: "LOT-D012",
+      createdDate: "11/01/2024",
+      statusDate: "11/22/2024",
+      lastModified: "11/22/2024",
+      priority: "Low",
+      cartId: "CART-004",
+      cartSn: "CSN-004",
+      poNumber: "PO-2024-004",
+      itemType: "Calibrator",
+      operationType: "Inspection",
+      departureDate: "12/02/2024",
+      submitted: "Yes",
+      proofOfDelivery: "Pending"
     }
   }
 ];
@@ -172,20 +252,109 @@ const ModernWorkOrdersTable = () => {
                           <MoreHorizontal className="h-4 w-4" />
                         </Button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="bg-white border shadow-lg z-50 rounded-lg">
-                        <DropdownMenuItem className="flex items-center gap-2">
-                          <Edit className="h-4 w-4" />
-                          Edit
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="flex items-center gap-2">
-                          <User className="h-4 w-4" />
-                          Assign Tech
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="flex items-center gap-2">
-                          <RefreshCw className="h-4 w-4" />
-                          Update Status
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
+                       <DropdownMenuContent align="end" className="bg-white border shadow-lg z-50 rounded-lg w-80 p-4">
+                         <div className="space-y-4">
+                           {/* Priority and Status Info */}
+                           <div className="border-b border-gray-100 pb-3">
+                             <div className="grid grid-cols-2 gap-3 text-sm">
+                               <div>
+                                 <span className="text-gray-600 font-medium">Priority:</span>
+                                 <span className={cn("ml-2 px-2 py-1 rounded-md text-xs font-medium",
+                                   order.details.priority === "Critical" ? "bg-red-100 text-red-800" :
+                                   order.details.priority === "High" ? "bg-orange-100 text-orange-800" :
+                                   order.details.priority === "Medium" ? "bg-yellow-100 text-yellow-800" :
+                                   "bg-gray-100 text-gray-800"
+                                 )}>{order.details.priority}</span>
+                               </div>
+                               <div>
+                                 <span className="text-gray-600 font-medium">Items:</span>
+                                 <span className="ml-2">{order.details.items}</span>
+                               </div>
+                             </div>
+                           </div>
+
+                           {/* Order Details */}
+                           <div className="space-y-2">
+                             <h4 className="font-medium text-gray-900 text-sm">Order Details</h4>
+                             <div className="grid grid-cols-1 gap-2 text-sm">
+                               <div className="flex justify-between">
+                                 <span className="text-gray-600">Batch:</span>
+                                 <span className="font-mono">{order.details.batch}</span>
+                               </div>
+                               <div className="flex justify-between">
+                                 <span className="text-gray-600">PO Number:</span>
+                                 <span className="font-mono">{order.details.poNumber}</span>
+                               </div>
+                               <div className="flex justify-between">
+                                 <span className="text-gray-600">Cart ID:</span>
+                                 <span className="font-mono">{order.details.cartId}</span>
+                               </div>
+                               <div className="flex justify-between">
+                                 <span className="text-gray-600">Cart SN:</span>
+                                 <span className="font-mono">{order.details.cartSn}</span>
+                               </div>
+                             </div>
+                           </div>
+
+                           {/* Equipment Info */}
+                           <div className="space-y-2">
+                             <h4 className="font-medium text-gray-900 text-sm">Equipment Info</h4>
+                             <div className="grid grid-cols-1 gap-2 text-sm">
+                               <div className="flex justify-between">
+                                 <span className="text-gray-600">Type:</span>
+                                 <span>{order.details.itemType}</span>
+                               </div>
+                               <div className="flex justify-between">
+                                 <span className="text-gray-600">Operation:</span>
+                                 <span>{order.details.operationType}</span>
+                               </div>
+                             </div>
+                           </div>
+
+                           {/* Dates */}
+                           <div className="space-y-2">
+                             <h4 className="font-medium text-gray-900 text-sm">Timeline</h4>
+                             <div className="grid grid-cols-1 gap-2 text-sm">
+                               <div className="flex justify-between">
+                                 <span className="text-gray-600">Created:</span>
+                                 <span>{order.details.createdDate}</span>
+                               </div>
+                               <div className="flex justify-between">
+                                 <span className="text-gray-600">Status Date:</span>
+                                 <span>{order.details.statusDate}</span>
+                               </div>
+                               <div className="flex justify-between">
+                                 <span className="text-gray-600">Last Modified:</span>
+                                 <span>{order.details.lastModified}</span>
+                               </div>
+                               <div className="flex justify-between">
+                                 <span className="text-gray-600">Departure:</span>
+                                 <span>{order.details.departureDate}</span>
+                               </div>
+                             </div>
+                           </div>
+
+                           {/* Status Info */}
+                           <div className="border-t border-gray-100 pt-3">
+                             <div className="grid grid-cols-2 gap-3 text-sm">
+                               <div>
+                                 <span className="text-gray-600 font-medium">Submitted:</span>
+                                 <span className={cn("ml-2 px-2 py-1 rounded-md text-xs font-medium",
+                                   order.details.submitted === "Yes" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
+                                 )}>{order.details.submitted}</span>
+                               </div>
+                               <div>
+                                 <span className="text-gray-600 font-medium">Proof of Delivery:</span>
+                                 <span className={cn("ml-2 px-2 py-1 rounded-md text-xs font-medium",
+                                   order.details.proofOfDelivery === "Complete" ? "bg-green-100 text-green-800" :
+                                   order.details.proofOfDelivery === "Pending" ? "bg-yellow-100 text-yellow-800" :
+                                   "bg-gray-100 text-gray-800"
+                                 )}>{order.details.proofOfDelivery}</span>
+                               </div>
+                             </div>
+                           </div>
+                         </div>
+                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>
                 </TableRow>
