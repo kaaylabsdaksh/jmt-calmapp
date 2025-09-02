@@ -344,6 +344,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                 <TableHead className="w-12"></TableHead>
                 <TableHead className="font-semibold text-gray-900">Work Order #</TableHead>
                 <TableHead className="font-semibold text-gray-900">Status</TableHead>
+                <TableHead className="font-semibold text-gray-900">Priority</TableHead>
                 <TableHead className="font-semibold text-gray-900">Customer</TableHead>
                 <TableHead className="font-semibold text-gray-900">Due Date</TableHead>
                 <TableHead className="font-semibold text-gray-900">Assigned To</TableHead>
@@ -377,6 +378,14 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                     <TableCell>
                       {getStatusBadge(order.status)}
                     </TableCell>
+                    <TableCell>
+                      <span className={cn("px-2 py-1 rounded-md text-xs font-medium",
+                        order.details.priority === "Critical" ? "bg-red-100 text-red-800" :
+                        order.details.priority === "High" ? "bg-orange-100 text-orange-800" :
+                        order.details.priority === "Medium" ? "bg-yellow-100 text-yellow-800" :
+                        "bg-gray-100 text-gray-800"
+                      )}>{order.details.priority}</span>
+                    </TableCell>
                     <TableCell className="font-medium">{order.customer}</TableCell>
                     <TableCell>{order.dueDate}</TableCell>
                     <TableCell>{order.assignedTo}</TableCell>
@@ -407,7 +416,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                   
                    {expandedRows.has(order.id) && (
                      <TableRow className="bg-gray-50 border-b border-gray-100">
-                       <TableCell colSpan={7} className="p-6">
+                       <TableCell colSpan={8} className="p-6">
                          <div className="space-y-6">
                            {/* Priority and Key Info */}
                            <div className="flex items-center gap-6 pb-4 border-b border-gray-200">
