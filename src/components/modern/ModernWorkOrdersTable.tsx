@@ -25,7 +25,10 @@ interface WorkOrder {
     createdDate: string;
     statusDate: string;
     lastModified: string;
+    nextBy: string;
     priority: string;
+    custId: string;
+    custSn: string;
     cartId: string;
     cartSn: string;
     poNumber: string;
@@ -57,7 +60,10 @@ const mockWorkOrders: WorkOrder[] = [
       createdDate: "10/15/2024",
       statusDate: "11/20/2024",
       lastModified: "11/22/2024",
+      nextBy: "11/25/2024",
       priority: "High",
+      custId: "CUST-001",
+      custSn: "ACME-SN-001",
       cartId: "CART-001",
       cartSn: "CSN-001",
       poNumber: "PO-2024-001",
@@ -87,7 +93,10 @@ const mockWorkOrders: WorkOrder[] = [
       createdDate: "10/12/2024",
       statusDate: "11/18/2024",
       lastModified: "11/20/2024",
+      nextBy: "11/21/2024",
       priority: "Medium",
+      custId: "CUST-002",
+      custSn: "TECH-SN-002",
       cartId: "CART-002",
       cartSn: "CSN-002",
       poNumber: "PO-2024-002",
@@ -117,7 +126,10 @@ const mockWorkOrders: WorkOrder[] = [
       createdDate: "10/08/2024",
       statusDate: "11/15/2024",
       lastModified: "11/18/2024",
+      nextBy: "TBD",
       priority: "Critical",
+      custId: "CUST-003",
+      custSn: "MFG-SN-003",
       cartId: "CART-003",
       cartSn: "CSN-003",
       poNumber: "PO-2024-003",
@@ -147,7 +159,10 @@ const mockWorkOrders: WorkOrder[] = [
       createdDate: "11/01/2024",
       statusDate: "11/22/2024",
       lastModified: "11/22/2024",
+      nextBy: "12/02/2024",
       priority: "Low",
+      custId: "CUST-004",
+      custSn: "QS-SN-004",
       cartId: "CART-004",
       cartSn: "CSN-004",
       poNumber: "PO-2024-004",
@@ -252,9 +267,9 @@ const ModernWorkOrdersTable = () => {
                           <MoreHorizontal className="h-4 w-4" />
                         </Button>
                       </DropdownMenuTrigger>
-                       <DropdownMenuContent align="end" className="bg-white border shadow-lg z-50 rounded-lg w-80 p-4">
+                       <DropdownMenuContent align="end" className="bg-white border shadow-lg z-50 rounded-lg w-96 p-4 max-h-96 overflow-y-auto">
                          <div className="space-y-4">
-                           {/* Priority and Status Info */}
+                           {/* Priority and Key Info */}
                            <div className="border-b border-gray-100 pb-3">
                              <div className="grid grid-cols-2 gap-3 text-sm">
                                <div>
@@ -273,6 +288,21 @@ const ModernWorkOrdersTable = () => {
                              </div>
                            </div>
 
+                           {/* Customer Information */}
+                           <div className="space-y-2">
+                             <h4 className="font-medium text-gray-900 text-sm">Customer Information</h4>
+                             <div className="grid grid-cols-1 gap-2 text-sm">
+                               <div className="flex justify-between">
+                                 <span className="text-gray-600">Cust ID:</span>
+                                 <span className="font-mono">{order.details.custId}</span>
+                               </div>
+                               <div className="flex justify-between">
+                                 <span className="text-gray-600">Cust S/N:</span>
+                                 <span className="font-mono">{order.details.custSn}</span>
+                               </div>
+                             </div>
+                           </div>
+
                            {/* Order Details */}
                            <div className="space-y-2">
                              <h4 className="font-medium text-gray-900 text-sm">Order Details</h4>
@@ -280,6 +310,14 @@ const ModernWorkOrdersTable = () => {
                                <div className="flex justify-between">
                                  <span className="text-gray-600">Batch:</span>
                                  <span className="font-mono">{order.details.batch}</span>
+                               </div>
+                               <div className="flex justify-between">
+                                 <span className="text-gray-600">Purchase:</span>
+                                 <span className="font-mono">{order.details.purchase}</span>
+                               </div>
+                               <div className="flex justify-between">
+                                 <span className="text-gray-600">LOC/Lots:</span>
+                                 <span className="font-mono">{order.details.lots}</span>
                                </div>
                                <div className="flex justify-between">
                                  <span className="text-gray-600">PO Number:</span>
@@ -290,33 +328,49 @@ const ModernWorkOrdersTable = () => {
                                  <span className="font-mono">{order.details.cartId}</span>
                                </div>
                                <div className="flex justify-between">
-                                 <span className="text-gray-600">Cart SN:</span>
+                                 <span className="text-gray-600">Cart S/N:</span>
                                  <span className="font-mono">{order.details.cartSn}</span>
                                </div>
                              </div>
                            </div>
 
-                           {/* Equipment Info */}
+                           {/* Equipment Information */}
                            <div className="space-y-2">
-                             <h4 className="font-medium text-gray-900 text-sm">Equipment Info</h4>
+                             <h4 className="font-medium text-gray-900 text-sm">Equipment Information</h4>
                              <div className="grid grid-cols-1 gap-2 text-sm">
                                <div className="flex justify-between">
-                                 <span className="text-gray-600">Type:</span>
+                                 <span className="text-gray-600">Manufacturer:</span>
+                                 <span>{order.details.manufacturer}</span>
+                               </div>
+                               <div className="flex justify-between">
+                                 <span className="text-gray-600">Model Number:</span>
+                                 <span className="font-mono">{order.details.modelNumber}</span>
+                               </div>
+                               <div className="flex justify-between">
+                                 <span className="text-gray-600">Serial Number:</span>
+                                 <span className="font-mono">{order.details.serialNumber}</span>
+                               </div>
+                               <div className="flex justify-between">
+                                 <span className="text-gray-600">Lab Code:</span>
+                                 <span className="font-mono">{order.details.labCode}</span>
+                               </div>
+                               <div className="flex justify-between">
+                                 <span className="text-gray-600">Item Type:</span>
                                  <span>{order.details.itemType}</span>
                                </div>
                                <div className="flex justify-between">
-                                 <span className="text-gray-600">Operation:</span>
+                                 <span className="text-gray-600">Operation Type:</span>
                                  <span>{order.details.operationType}</span>
                                </div>
                              </div>
                            </div>
 
-                           {/* Dates */}
+                           {/* Timeline Information */}
                            <div className="space-y-2">
                              <h4 className="font-medium text-gray-900 text-sm">Timeline</h4>
                              <div className="grid grid-cols-1 gap-2 text-sm">
                                <div className="flex justify-between">
-                                 <span className="text-gray-600">Created:</span>
+                                 <span className="text-gray-600">Created Date:</span>
                                  <span>{order.details.createdDate}</span>
                                </div>
                                <div className="flex justify-between">
@@ -328,14 +382,23 @@ const ModernWorkOrdersTable = () => {
                                  <span>{order.details.lastModified}</span>
                                </div>
                                <div className="flex justify-between">
-                                 <span className="text-gray-600">Departure:</span>
-                                 <span>{order.details.departureDate}</span>
+                                 <span className="text-gray-600">Next By:</span>
+                                 <span className={cn("font-medium",
+                                   order.details.nextBy === "TBD" ? "text-orange-600" : "text-gray-900"
+                                 )}>{order.details.nextBy}</span>
+                               </div>
+                               <div className="flex justify-between">
+                                 <span className="text-gray-600">Departure Date:</span>
+                                 <span className={cn("font-medium",
+                                   order.details.departureDate === "TBD" ? "text-orange-600" : "text-gray-900"
+                                 )}>{order.details.departureDate}</span>
                                </div>
                              </div>
                            </div>
 
-                           {/* Status Info */}
+                           {/* Status Information */}
                            <div className="border-t border-gray-100 pt-3">
+                             <h4 className="font-medium text-gray-900 text-sm mb-2">Status Information</h4>
                              <div className="grid grid-cols-2 gap-3 text-sm">
                                <div>
                                  <span className="text-gray-600 font-medium">Submitted:</span>
