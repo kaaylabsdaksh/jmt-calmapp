@@ -178,12 +178,17 @@ const ModernTopSearchFilters = () => {
                 className="bg-white border border-gray-300 rounded-xl h-11 text-sm placeholder:text-gray-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
               />
 
-              <Input
-                placeholder="Serial number"
-                value={searchValues.serial}
-                onChange={(e) => setSearchValues(prev => ({ ...prev, serial: e.target.value }))}
-                className="bg-white border border-gray-300 rounded-xl h-11 text-sm placeholder:text-gray-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
-              />
+              <Select value={searchValues.serial} onValueChange={(value) => setSearchValues(prev => ({ ...prev, serial: value }))}>
+                <SelectTrigger className="bg-white border border-gray-300 rounded-xl h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
+                  <SelectValue placeholder="Priority" />
+                </SelectTrigger>
+                <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-xl z-50">
+                  <SelectItem value="critical">Critical</SelectItem>
+                  <SelectItem value="high">High</SelectItem>
+                  <SelectItem value="medium">Medium</SelectItem>
+                  <SelectItem value="low">Low</SelectItem>
+                </SelectContent>
+              </Select>
 
               <Select value={searchValues.division} onValueChange={(value) => setSearchValues(prev => ({ ...prev, division: value }))}>
                 <SelectTrigger className="bg-white border border-gray-300 rounded-xl h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
