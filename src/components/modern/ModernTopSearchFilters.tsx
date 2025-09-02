@@ -90,11 +90,12 @@ const ModernTopSearchFilters = () => {
       {/* Specific Search Fields */}
       <div className="px-6 pb-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Select value={searchValues.status} onValueChange={(value) => setSearchValues(prev => ({ ...prev, status: value }))}>
+          <Select value={searchValues.status || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, status: value === 'all' ? '' : value }))}>
             <SelectTrigger className="bg-white border border-gray-300 rounded-xl h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
-              <SelectValue placeholder="Status" />
+              <SelectValue placeholder="All Status" />
             </SelectTrigger>
             <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-xl z-50">
+              <SelectItem value="all">All Status</SelectItem>
               <SelectItem value="in-lab">In Lab</SelectItem>
               <SelectItem value="completed">Completed</SelectItem>
               <SelectItem value="overdue">Overdue</SelectItem>
