@@ -8,9 +8,9 @@ const ModernTopNav = () => {
         {/* Logo Placeholder */}
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-sm">WO</span>
+            <span className="text-white font-bold text-sm">CA</span>
           </div>
-          <span className="text-xl font-bold text-gray-900">WorkOrder</span>
+          <span className="text-xl font-bold text-gray-900">calmapp</span>
         </div>
 
         {/* Primary Action Buttons */}
