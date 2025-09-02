@@ -263,7 +263,75 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
           </div>
         </div>
 
-        {/* Quick Status Filters - Removed from here */}
+        {/* Quick Status Filters */}
+        <div className="flex items-center gap-2 flex-wrap">
+          <span className="text-sm font-medium text-gray-700 mr-2">Quick Filters:</span>
+          <Button
+            variant={activeStatusFilter === 'all' ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => setActiveStatusFilter('all')}
+            className={cn(
+              "h-8 px-3 rounded-full transition-all",
+              activeStatusFilter === 'all' 
+                ? "bg-gray-900 hover:bg-gray-800 text-white" 
+                : "border-gray-300 hover:bg-gray-50"
+            )}
+          >
+            All ({mockWorkOrders.length})
+          </Button>
+          <Button
+            variant={activeStatusFilter === 'in-lab' ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => setActiveStatusFilter('in-lab')}
+            className={cn(
+              "h-8 px-3 rounded-full transition-all",
+              activeStatusFilter === 'in-lab' 
+                ? "bg-blue-600 hover:bg-blue-700 text-white" 
+                : "border-blue-300 text-blue-700 hover:bg-blue-50"
+            )}
+          >
+            In Lab ({mockWorkOrders.filter(o => o.status === 'In Lab').length})
+          </Button>
+          <Button
+            variant={activeStatusFilter === 'completed' ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => setActiveStatusFilter('completed')}
+            className={cn(
+              "h-8 px-3 rounded-full transition-all",
+              activeStatusFilter === 'completed' 
+                ? "bg-green-600 hover:bg-green-700 text-white" 
+                : "border-green-300 text-green-700 hover:bg-green-50"
+            )}
+          >
+            Completed ({mockWorkOrders.filter(o => o.status === 'Completed').length})
+          </Button>
+          <Button
+            variant={activeStatusFilter === 'overdue' ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => setActiveStatusFilter('overdue')}
+            className={cn(
+              "h-8 px-3 rounded-full transition-all",
+              activeStatusFilter === 'overdue' 
+                ? "bg-red-600 hover:bg-red-700 text-white" 
+                : "border-red-300 text-red-700 hover:bg-red-50"
+            )}
+          >
+            Overdue ({mockWorkOrders.filter(o => o.status === 'Overdue').length})
+          </Button>
+          <Button
+            variant={activeStatusFilter === 'pending' ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => setActiveStatusFilter('pending')}
+            className={cn(
+              "h-8 px-3 rounded-full transition-all",
+              activeStatusFilter === 'pending' 
+                ? "bg-yellow-600 hover:bg-yellow-700 text-white" 
+                : "border-yellow-300 text-yellow-700 hover:bg-yellow-50"
+            )}
+          >
+            Pending ({mockWorkOrders.filter(o => o.status === 'Pending').length})
+          </Button>
+        </div>
       </div>
 
       {/* Content - List or Grid View */}
