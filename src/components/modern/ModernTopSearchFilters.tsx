@@ -12,6 +12,7 @@ const ModernTopSearchFilters = () => {
   const [dateFrom, setDateFrom] = useState<Date>();
   const [dateTo, setDateTo] = useState<Date>();
   const [showAdvanced, setShowAdvanced] = useState(false);
+  const [globalSearch, setGlobalSearch] = useState('');
   const [searchValues, setSearchValues] = useState({
     woNumber: '',
     customer: '',
@@ -22,6 +23,7 @@ const ModernTopSearchFilters = () => {
   });
 
   const clearAllFilters = () => {
+    setGlobalSearch('');
     setSearchValues({
       woNumber: '',
       customer: '',
@@ -34,7 +36,7 @@ const ModernTopSearchFilters = () => {
     setDateTo(undefined);
   };
 
-  const hasActiveFilters = Object.values(searchValues).some(value => value) || dateFrom || dateTo;
+  const hasActiveFilters = globalSearch || Object.values(searchValues).some(value => value) || dateFrom || dateTo;
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 mb-6">
@@ -70,8 +72,21 @@ const ModernTopSearchFilters = () => {
         </div>
       </div>
 
-      {/* Main Search Fields */}
-      <div className="p-6">
+      {/* Global Search */}
+      <div className="p-6 pb-4">
+        <div className="relative">
+          <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+          <Input
+            placeholder="Search work orders, customers, serial numbers, manufacturers..."
+            value={globalSearch}
+            onChange={(e) => setGlobalSearch(e.target.value)}
+            className="pl-12 bg-white border border-gray-300 rounded-xl h-12 text-base placeholder:text-gray-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
+          />
+        </div>
+      </div>
+
+      {/* Specific Search Fields */}
+      <div className="px-6 pb-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <Input
             placeholder="Work Order #"
