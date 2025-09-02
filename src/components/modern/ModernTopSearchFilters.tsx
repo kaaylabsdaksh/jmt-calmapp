@@ -74,16 +74,73 @@ const ModernTopSearchFilters = () => {
         </div>
       </div>
 
-      {/* Global Search */}
+      {/* Global Search and Status Filters */}
       <div className="p-4 pb-3">
-        <div className="relative">
-          <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-          <Input
-            placeholder="Search work orders, customers, serial numbers, manufacturers..."
-            value={globalSearch}
-            onChange={(e) => setGlobalSearch(e.target.value)}
-            className="pl-12 bg-white border border-gray-300 rounded-xl h-10 text-sm placeholder:text-gray-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
-          />
+        <div className="flex items-center gap-4">
+          {/* Search Box */}
+          <div className="relative flex-1">
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <Input
+              placeholder="Search work orders, customers, serial numbers, manufacturers..."
+              value={globalSearch}
+              onChange={(e) => setGlobalSearch(e.target.value)}
+              className="pl-12 bg-white border border-gray-300 rounded-xl h-10 text-sm placeholder:text-gray-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
+            />
+          </div>
+          
+          {/* Status Filter Buttons */}
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              className={cn(
+                "h-10 px-3 rounded-full transition-all border-gray-300",
+                "bg-gray-900 hover:bg-gray-800 text-white border-gray-900"
+              )}
+            >
+              All
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              className={cn(
+                "h-10 px-3 rounded-full transition-all",
+                "border-blue-300 text-blue-700 hover:bg-blue-50"
+              )}
+            >
+              In Lab
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              className={cn(
+                "h-10 px-3 rounded-full transition-all",
+                "border-green-300 text-green-700 hover:bg-green-50"
+              )}
+            >
+              Completed
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              className={cn(
+                "h-10 px-3 rounded-full transition-all",
+                "border-red-300 text-red-700 hover:bg-red-50"
+              )}
+            >
+              Overdue
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              className={cn(
+                "h-10 px-3 rounded-full transition-all",
+                "border-yellow-300 text-yellow-700 hover:bg-yellow-50"
+              )}
+            >
+              Pending
+            </Button>
+          </div>
         </div>
       </div>
 
