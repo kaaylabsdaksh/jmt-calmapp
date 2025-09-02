@@ -518,10 +518,12 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
                   ))}
                 </div>
 
-                {/* Loading indicator for lazy loading */}
+                {/* End of list indicator */}
                 <div className="flex justify-center py-6">
-                  <div className="text-sm text-muted-foreground">
-                    Scroll down to load more items...
+                  <div className="text-sm text-muted-foreground flex items-center gap-2">
+                    <div className="h-px bg-border flex-1 max-w-12"></div>
+                    <span>End of list</span>
+                    <div className="h-px bg-border flex-1 max-w-12"></div>
                   </div>
                 </div>
               </CardContent>
