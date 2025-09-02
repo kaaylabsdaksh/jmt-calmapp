@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { NavLink, useLocation } from "react-router-dom";
+import React from "react";
 import { 
   Settings, 
   FileText, 
@@ -16,7 +18,8 @@ import {
   CheckCircle,
   Clock,
   Zap,
-  ClipboardList
+  ClipboardList,
+  Clipboard
 } from "lucide-react";
 
 import {
@@ -35,6 +38,11 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ChevronDown, ChevronRight } from "lucide-react";
+
+const mainNavigationItems = [
+  { title: "Work Orders v1", url: "/", icon: ClipboardList },
+  { title: "Work Orders v2", url: "/work-orders-v2", icon: Clipboard, badge: "New" }
+];
 
 const quickActionCategories = {
   "Work Management": [
@@ -64,6 +72,7 @@ const quickActionCategories = {
 
 export function AppSidebar() {
   const { open } = useSidebar();
+  const location = useLocation();
   const [expandedGroups, setExpandedGroups] = useState<string[]>(["Work Management"]);
 
   const toggleGroup = (groupName: string) => {
@@ -106,7 +115,53 @@ export function AppSidebar() {
             `}
           >
             <div className="flex items-center">
-              <span>WO Management</span>
+              <span>Navigation</span>
+            </div>
+          </SidebarGroupLabel>
+          
+          <SidebarGroupContent className="mt-3">
+            <SidebarMenu>
+              {mainNavigationItems.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton 
+                    asChild
+                    className={`
+                      group mx-2 rounded-lg transition-all hover:bg-accent/50 hover:text-accent-foreground
+                      ${location.pathname === item.url ? "bg-accent text-accent-foreground shadow-sm border border-accent/20" : ""}
+                    `}
+                  >
+                    <NavLink to={item.url} className="flex items-center gap-3 px-3 py-2">
+                      {React.createElement(item.icon, { className: "h-4 w-4 text-muted-foreground group-hover:text-accent-foreground" })}
+                      {open && (
+                        <div className="flex items-center justify-between flex-1">
+                          <span className="text-sm font-medium">{item.title}</span>
+                          {item.badge && (
+                            <span className="bg-primary text-primary-foreground text-xs px-2 py-0.5 rounded-full">
+                              {item.badge}
+                            </span>
+                          )}
+                        </div>
+                      )}
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        {/* Quick Actions Section */}
+        <SidebarGroup className="mb-4">
+          <SidebarGroupLabel 
+            className={`
+              mx-2 px-3 py-2 text-xs font-semibold text-primary-foreground uppercase tracking-wider
+              flex items-center justify-between group rounded-lg
+              bg-primary shadow-lg border border-primary/20
+              ${!open && "sr-only"}
+            `}
+          >
+            <div className="flex items-center">
+              <span>Quick Actions</span>
             </div>
           </SidebarGroupLabel>
         </SidebarGroup>
@@ -165,7 +220,7 @@ export function AppSidebar() {
                               animationDelay: `${(categoryIndex * 100) + (index * 50)}ms`
                             }}
                           >
-                            <action.icon className="h-4 w-4 shrink-0 text-primary group-hover:scale-110 transition-transform duration-200" />
+                            {React.createElement(action.icon, { className: "h-4 w-4 shrink-0 text-primary group-hover:scale-110 transition-transform duration-200" })}
                             {open && (
                               <span className="ml-3 font-medium text-sm animate-fade-in">
                                 {action.title}
