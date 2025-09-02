@@ -47,21 +47,21 @@ const ModernTopSearchFilters = () => {
               placeholder="Work Order #"
               value={searchValues.woNumber}
               onChange={(e) => setSearchValues(prev => ({ ...prev, woNumber: e.target.value }))}
-              className="bg-gray-50 border-0 rounded-xl h-11 text-sm placeholder:text-gray-400 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+              className="bg-white border border-gray-300 rounded-xl h-11 text-sm placeholder:text-gray-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
             />
             
             <Input
               placeholder="Customer name"
               value={searchValues.customer}
               onChange={(e) => setSearchValues(prev => ({ ...prev, customer: e.target.value }))}
-              className="bg-gray-50 border-0 rounded-xl h-11 text-sm placeholder:text-gray-400 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+              className="bg-white border border-gray-300 rounded-xl h-11 text-sm placeholder:text-gray-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
             />
             
             <Select value={searchValues.status} onValueChange={(value) => setSearchValues(prev => ({ ...prev, status: value }))}>
-              <SelectTrigger className="bg-gray-50 border-0 rounded-xl h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all">
+              <SelectTrigger className="bg-white border border-gray-300 rounded-xl h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
                 <SelectValue placeholder="Status" />
               </SelectTrigger>
-              <SelectContent className="bg-white border-0 shadow-xl rounded-xl z-50">
+              <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-xl z-50">
                 <SelectItem value="in-lab">In Lab</SelectItem>
                 <SelectItem value="completed">Completed</SelectItem>
                 <SelectItem value="overdue">Overdue</SelectItem>
@@ -76,15 +76,15 @@ const ModernTopSearchFilters = () => {
                   <Button
                     variant="outline"
                     className={cn(
-                      "flex-1 justify-start text-left font-normal bg-gray-50 border-0 rounded-xl h-11 text-sm hover:bg-gray-100 transition-all",
-                      !dateFrom && "text-gray-400"
+                      "flex-1 justify-start text-left font-normal bg-white border border-gray-300 rounded-xl h-11 text-sm hover:bg-gray-50 transition-all shadow-sm",
+                      !dateFrom && "text-gray-500"
                     )}
                   >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    <CalendarIcon className="mr-2 h-4 w-4 text-gray-500" />
                     {dateFrom ? format(dateFrom, "MMM dd") : "From"}
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto p-0 border-0 shadow-xl rounded-xl" align="start">
+                <PopoverContent className="w-auto p-0 border border-gray-200 shadow-xl rounded-xl" align="start">
                   <Calendar
                     mode="single"
                     selected={dateFrom}
@@ -100,15 +100,15 @@ const ModernTopSearchFilters = () => {
                   <Button
                     variant="outline"
                     className={cn(
-                      "flex-1 justify-start text-left font-normal bg-gray-50 border-0 rounded-xl h-11 text-sm hover:bg-gray-100 transition-all",
-                      !dateTo && "text-gray-400"
+                      "flex-1 justify-start text-left font-normal bg-white border border-gray-300 rounded-xl h-11 text-sm hover:bg-gray-50 transition-all shadow-sm",
+                      !dateTo && "text-gray-500"
                     )}
                   >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    <CalendarIcon className="mr-2 h-4 w-4 text-gray-500" />
                     {dateTo ? format(dateTo, "MMM dd") : "To"}
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto p-0 border-0 shadow-xl rounded-xl" align="start">
+                <PopoverContent className="w-auto p-0 border border-gray-200 shadow-xl rounded-xl" align="start">
                   <Calendar
                     mode="single"
                     selected={dateTo}
@@ -163,21 +163,21 @@ const ModernTopSearchFilters = () => {
                 placeholder="Manufacturer"
                 value={searchValues.manufacturer}
                 onChange={(e) => setSearchValues(prev => ({ ...prev, manufacturer: e.target.value }))}
-                className="bg-gray-50 border-0 rounded-xl h-11 text-sm placeholder:text-gray-400 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                className="bg-white border border-gray-300 rounded-xl h-11 text-sm placeholder:text-gray-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
               />
 
               <Input
                 placeholder="Serial number"
                 value={searchValues.serial}
                 onChange={(e) => setSearchValues(prev => ({ ...prev, serial: e.target.value }))}
-                className="bg-gray-50 border-0 rounded-xl h-11 text-sm placeholder:text-gray-400 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                className="bg-white border border-gray-300 rounded-xl h-11 text-sm placeholder:text-gray-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
               />
 
               <Select value={searchValues.division} onValueChange={(value) => setSearchValues(prev => ({ ...prev, division: value }))}>
-                <SelectTrigger className="bg-gray-50 border-0 rounded-xl h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all">
+                <SelectTrigger className="bg-white border border-gray-300 rounded-xl h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
                   <SelectValue placeholder="Division" />
                 </SelectTrigger>
-                <SelectContent className="bg-white border-0 shadow-xl rounded-xl z-50">
+                <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-xl z-50">
                   <SelectItem value="electronics">Electronics</SelectItem>
                   <SelectItem value="mechanical">Mechanical</SelectItem>
                   <SelectItem value="calibration">Calibration</SelectItem>
