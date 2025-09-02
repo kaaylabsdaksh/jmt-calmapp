@@ -4,6 +4,7 @@ import { AppSidebar } from "@/components/AppSidebar";
 import Index from "./pages/Index";
 import WorkOrderDetail from "./pages/WorkOrderDetail";
 import WorkOrderSearchV2 from "./pages/WorkOrderSearchV2";
+import ModernWorkOrderManagement from "./pages/ModernWorkOrderManagement";
 import NotFound from "./pages/NotFound";
 
 const App = () => {
@@ -24,6 +25,7 @@ const App = () => {
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/work-orders-v2" element={<WorkOrderSearchV2 />} />
+              <Route path="/modern" element={<ModernWorkOrderManagement />} />
               <Route path="/work-order/:id" element={<WorkOrderDetail />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
