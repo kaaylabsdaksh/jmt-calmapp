@@ -154,26 +154,26 @@ const ModernTopSearchFilters = () => {
         {/* Advanced Filters Row */}
         {showAdvanced && (
           <div className="mt-4 pt-4 border-t border-gray-100">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <Input
                 placeholder="Manufacturer"
                 value={searchValues.manufacturer}
                 onChange={(e) => setSearchValues(prev => ({ ...prev, manufacturer: e.target.value }))}
-                className="bg-gray-50 border-0 rounded-lg h-9 text-sm placeholder:text-gray-500 focus:bg-white focus:ring-1 focus:ring-blue-500/30 transition-all"
+                className="bg-white border border-gray-300 rounded-xl h-11 text-sm placeholder:text-gray-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
               />
 
               <Input
                 placeholder="Serial number"
                 value={searchValues.serial}
                 onChange={(e) => setSearchValues(prev => ({ ...prev, serial: e.target.value }))}
-                className="bg-gray-50 border-0 rounded-lg h-9 text-sm placeholder:text-gray-500 focus:bg-white focus:ring-1 focus:ring-blue-500/30 transition-all"
+                className="bg-white border border-gray-300 rounded-xl h-11 text-sm placeholder:text-gray-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
               />
 
               <Select value={searchValues.division} onValueChange={(value) => setSearchValues(prev => ({ ...prev, division: value }))}>
-                <SelectTrigger className="bg-gray-50 border-0 rounded-lg h-9 text-sm focus:bg-white focus:ring-1 focus:ring-blue-500/30 transition-all">
+                <SelectTrigger className="bg-white border border-gray-300 rounded-xl h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
                   <SelectValue placeholder="Division" />
                 </SelectTrigger>
-                <SelectContent className="bg-white border border-gray-200 shadow-lg rounded-lg z-50">
+                <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-xl z-50">
                   <SelectItem value="electronics">Electronics</SelectItem>
                   <SelectItem value="mechanical">Mechanical</SelectItem>
                   <SelectItem value="calibration">Calibration</SelectItem>
