@@ -232,7 +232,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
 
       <div className="space-y-6">
         {/* Customer & Basic Info */}
-        <div className="bg-gray-50 p-4 rounded-lg">
+        <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
             <div>
               <span className="text-gray-600 font-medium">Customer:</span>
@@ -254,17 +254,17 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
         </div>
 
         {/* Status Information */}
-        <div className="bg-blue-50 p-4 rounded-lg">
-          <h4 className="font-semibold text-blue-900 mb-3">Status Information</h4>
+        <div className="bg-white p-4 rounded-lg border border-gray-200">
+          <h4 className="font-semibold text-gray-900 mb-3 border-b border-gray-200 pb-2">Status Information</h4>
           <div className="grid grid-cols-3 gap-4 text-sm">
             <div>
-              <span className="text-blue-700 font-medium">Submitted:</span>
+              <span className="text-gray-600 font-medium">Submitted:</span>
               <div className={cn("mt-1 inline-block px-2 py-1 rounded-md text-xs font-medium",
                 order.details.submitted === "Yes" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
               )}>{order.details.submitted}</div>
             </div>
             <div>
-              <span className="text-blue-700 font-medium">Delivery Status:</span>
+              <span className="text-gray-600 font-medium">Delivery Status:</span>
               <div className={cn("mt-1 inline-block px-2 py-1 rounded-md text-xs font-medium",
                 order.details.proofOfDelivery === "Complete" ? "bg-green-100 text-green-800" :
                 order.details.proofOfDelivery === "Pending" ? "bg-yellow-100 text-yellow-800" :
@@ -272,8 +272,8 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
               )}>{order.details.proofOfDelivery}</div>
             </div>
             <div>
-              <span className="text-blue-700 font-medium">Lab Code:</span>
-              <div className="font-mono text-blue-900">{order.details.labCode}</div>
+              <span className="text-gray-600 font-medium">Lab Code:</span>
+              <div className="font-mono text-gray-900">{order.details.labCode}</div>
             </div>
           </div>
         </div>
@@ -281,46 +281,46 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Customer & Order Details */}
           <div className="space-y-4">
-            <div className="bg-green-50 p-4 rounded-lg">
-              <h4 className="font-semibold text-green-900 mb-3">Customer & Order Details</h4>
+            <div className="bg-white p-4 rounded-lg border border-gray-200">
+              <h4 className="font-semibold text-gray-900 mb-3 border-b border-gray-200 pb-2">Customer & Order Details</h4>
               <div className="space-y-2 text-sm">
                 <div>
-                  <span className="text-green-700 font-medium">Customer ID:</span>
-                  <span className="ml-2 font-mono text-green-900">{order.details.custId}</span>
+                  <span className="text-gray-600 font-medium">Customer ID:</span>
+                  <span className="ml-2 font-mono text-gray-900">{order.details.custId}</span>
                 </div>
                 <div>
-                  <span className="text-green-700 font-medium">Customer S/N:</span>
-                  <span className="ml-2 font-mono text-green-900">{order.details.custSn}</span>
+                  <span className="text-gray-600 font-medium">Customer S/N:</span>
+                  <span className="ml-2 font-mono text-gray-900">{order.details.custSn}</span>
                 </div>
                 <div>
-                  <span className="text-green-700 font-medium">PO Number:</span>
-                  <span className="ml-2 font-mono text-green-900">{order.details.poNumber}</span>
+                  <span className="text-gray-600 font-medium">PO Number:</span>
+                  <span className="ml-2 font-mono text-gray-900">{order.details.poNumber}</span>
                 </div>
                 <div>
-                  <span className="text-green-700 font-medium">Batch:</span>
-                  <span className="ml-2 font-mono text-green-900">{order.details.batch}</span>
+                  <span className="text-gray-600 font-medium">Batch:</span>
+                  <span className="ml-2 font-mono text-gray-900">{order.details.batch}</span>
                 </div>
                 <div>
-                  <span className="text-green-700 font-medium">Purchase:</span>
-                  <span className="ml-2 font-mono text-green-900">{order.details.purchase}</span>
+                  <span className="text-gray-600 font-medium">Purchase:</span>
+                  <span className="ml-2 font-mono text-gray-900">{order.details.purchase}</span>
                 </div>
                 <div>
-                  <span className="text-green-700 font-medium">LOC/Lots:</span>
-                  <span className="ml-2 font-mono text-green-900">{order.details.lots}</span>
+                  <span className="text-gray-600 font-medium">LOC/Lots:</span>
+                  <span className="ml-2 font-mono text-gray-900">{order.details.lots}</span>
                 </div>
               </div>
             </div>
 
-            <div className="bg-purple-50 p-4 rounded-lg">
-              <h4 className="font-semibold text-purple-900 mb-3">Cart Information</h4>
+            <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+              <h4 className="font-semibold text-gray-900 mb-3 border-b border-gray-300 pb-2">Cart Information</h4>
               <div className="space-y-2 text-sm">
                 <div>
-                  <span className="text-purple-700 font-medium">Cart ID:</span>
-                  <span className="ml-2 font-mono text-purple-900">{order.details.cartId}</span>
+                  <span className="text-gray-600 font-medium">Cart ID:</span>
+                  <span className="ml-2 font-mono text-gray-900">{order.details.cartId}</span>
                 </div>
                 <div>
-                  <span className="text-purple-700 font-medium">Cart S/N:</span>
-                  <span className="ml-2 font-mono text-purple-900">{order.details.cartSn}</span>
+                  <span className="text-gray-600 font-medium">Cart S/N:</span>
+                  <span className="ml-2 font-mono text-gray-900">{order.details.cartSn}</span>
                 </div>
               </div>
             </div>
@@ -328,57 +328,57 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
 
           {/* Equipment & Timeline */}
           <div className="space-y-4">
-            <div className="bg-orange-50 p-4 rounded-lg">
-              <h4 className="font-semibold text-orange-900 mb-3">Equipment Information</h4>
+            <div className="bg-white p-4 rounded-lg border border-gray-200">
+              <h4 className="font-semibold text-gray-900 mb-3 border-b border-gray-200 pb-2">Equipment Information</h4>
               <div className="space-y-2 text-sm">
                 <div>
-                  <span className="text-orange-700 font-medium">Manufacturer:</span>
-                  <span className="ml-2 font-semibold text-orange-900">{order.details.manufacturer}</span>
+                  <span className="text-gray-600 font-medium">Manufacturer:</span>
+                  <span className="ml-2 font-semibold text-gray-900">{order.details.manufacturer}</span>
                 </div>
                 <div>
-                  <span className="text-orange-700 font-medium">Model:</span>
-                  <span className="ml-2 font-mono text-orange-900">{order.details.modelNumber}</span>
+                  <span className="text-gray-600 font-medium">Model:</span>
+                  <span className="ml-2 font-mono text-gray-900">{order.details.modelNumber}</span>
                 </div>
                 <div>
-                  <span className="text-orange-700 font-medium">Serial #:</span>
-                  <span className="ml-2 font-mono text-orange-900">{order.details.serialNumber}</span>
+                  <span className="text-gray-600 font-medium">Serial #:</span>
+                  <span className="ml-2 font-mono text-gray-900">{order.details.serialNumber}</span>
                 </div>
                 <div>
-                  <span className="text-orange-700 font-medium">Item Type:</span>
-                  <span className="ml-2 text-orange-900">{order.details.itemType}</span>
+                  <span className="text-gray-600 font-medium">Item Type:</span>
+                  <span className="ml-2 text-gray-900">{order.details.itemType}</span>
                 </div>
                 <div>
-                  <span className="text-orange-700 font-medium">Operation:</span>
-                  <span className="ml-2 text-orange-900">{order.details.operationType}</span>
+                  <span className="text-gray-600 font-medium">Operation:</span>
+                  <span className="ml-2 text-gray-900">{order.details.operationType}</span>
                 </div>
               </div>
             </div>
 
-            <div className="bg-yellow-50 p-4 rounded-lg">
-              <h4 className="font-semibold text-yellow-900 mb-3">Project Timeline</h4>
+            <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+              <h4 className="font-semibold text-gray-900 mb-3 border-b border-gray-300 pb-2">Project Timeline</h4>
               <div className="space-y-2 text-sm">
                 <div>
-                  <span className="text-yellow-700 font-medium">Created:</span>
-                  <span className="ml-2 text-yellow-900">{order.details.createdDate}</span>
+                  <span className="text-gray-600 font-medium">Created:</span>
+                  <span className="ml-2 text-gray-900">{order.details.createdDate}</span>
                 </div>
                 <div>
-                  <span className="text-yellow-700 font-medium">Status Date:</span>
-                  <span className="ml-2 text-yellow-900">{order.details.statusDate}</span>
+                  <span className="text-gray-600 font-medium">Status Date:</span>
+                  <span className="ml-2 text-gray-900">{order.details.statusDate}</span>
                 </div>
                 <div>
-                  <span className="text-yellow-700 font-medium">Last Modified:</span>
-                  <span className="ml-2 text-yellow-900">{order.details.lastModified}</span>
+                  <span className="text-gray-600 font-medium">Last Modified:</span>
+                  <span className="ml-2 text-gray-900">{order.details.lastModified}</span>
                 </div>
                 <div>
-                  <span className="text-yellow-700 font-medium">Next By:</span>
+                  <span className="text-gray-600 font-medium">Next By:</span>
                   <span className={cn("ml-2 font-semibold",
-                    order.details.nextBy === "TBD" ? "text-red-600" : "text-yellow-900"
+                    order.details.nextBy === "TBD" ? "text-red-600" : "text-gray-900"
                   )}>{order.details.nextBy}</span>
                 </div>
                 <div>
-                  <span className="text-yellow-700 font-medium">Departure:</span>
+                  <span className="text-gray-600 font-medium">Departure:</span>
                   <span className={cn("ml-2 font-semibold",
-                    order.details.departureDate === "TBD" ? "text-red-600" : "text-yellow-900"
+                    order.details.departureDate === "TBD" ? "text-red-600" : "text-gray-900"
                   )}>{order.details.departureDate}</span>
                 </div>
               </div>
@@ -387,8 +387,8 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
         </div>
 
         {/* Comments Section */}
-        <div className="bg-gray-50 p-4 rounded-lg">
-          <h4 className="font-semibold text-gray-900 mb-3">Comments & Notes</h4>
+        <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+          <h4 className="font-semibold text-gray-900 mb-3 border-b border-gray-300 pb-2">Comments & Notes</h4>
           <div className="text-sm text-gray-700 bg-white p-4 rounded-md border border-gray-200 leading-relaxed">
             {order.details.comments}
           </div>
