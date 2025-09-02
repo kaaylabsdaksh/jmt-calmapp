@@ -10,7 +10,7 @@ const ModernTopNav = () => {
           <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center">
             <span className="text-white font-bold text-sm">WO</span>
           </div>
-          <span className="text-xl font-bold text-gray-900">WorkFlow</span>
+          <span className="text-xl font-bold text-gray-900">WorkOrder</span>
         </div>
 
         {/* Primary Action Buttons */}
