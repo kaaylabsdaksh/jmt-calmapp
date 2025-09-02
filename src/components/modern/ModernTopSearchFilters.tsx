@@ -109,12 +109,12 @@ const ModernTopSearchFilters = () => {
               <SelectValue placeholder="Date Type" />
             </SelectTrigger>
             <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-xl z-50">
-              <SelectItem value="created">Created</SelectItem>
-              <SelectItem value="arrival">Arrival</SelectItem>
-              <SelectItem value="status-date">Status Date</SelectItem>
-              <SelectItem value="last-comment">Last Comment</SelectItem>
-              <SelectItem value="departure">Departure</SelectItem>
-              <SelectItem value="need-by">Need By</SelectItem>
+              <SelectItem value="created">Creation & Arrival - Created</SelectItem>
+              <SelectItem value="arrival">Creation & Arrival - Arrival</SelectItem>
+              <SelectItem value="status-date">Status & Comments - Status Date</SelectItem>
+              <SelectItem value="last-comment">Status & Comments - Last Comment</SelectItem>
+              <SelectItem value="departure">Departure & Delivery - Departure</SelectItem>
+              <SelectItem value="need-by">Departure & Delivery - Need By</SelectItem>
             </SelectContent>
           </Select>
 
