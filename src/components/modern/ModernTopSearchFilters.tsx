@@ -19,7 +19,7 @@ const ModernTopSearchFilters = () => {
     customer: '',
     status: '',
     manufacturer: '',
-    serial: '',
+    priority: '',
     division: ''
   });
 
@@ -30,7 +30,7 @@ const ModernTopSearchFilters = () => {
       customer: '',
       status: '',
       manufacturer: '',
-      serial: '',
+      priority: '',
       division: ''
     });
     setDateFrom(undefined);
@@ -96,6 +96,18 @@ const ModernTopSearchFilters = () => {
               <SelectItem value="completed">Completed</SelectItem>
               <SelectItem value="overdue">Overdue</SelectItem>
               <SelectItem value="pending">Pending</SelectItem>
+            </SelectContent>
+          </Select>
+          <Select value={searchValues.priority || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, priority: value === 'all' ? '' : value }))}>
+            <SelectTrigger className="w-40 bg-white border border-gray-300 rounded-xl h-10 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
+              <SelectValue placeholder="Priority" />
+            </SelectTrigger>
+            <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-xl z-50">
+              <SelectItem value="all">All Priority</SelectItem>
+              <SelectItem value="critical">Critical</SelectItem>
+              <SelectItem value="high">High</SelectItem>
+              <SelectItem value="medium">Medium</SelectItem>
+              <SelectItem value="low">Low</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -171,25 +183,13 @@ const ModernTopSearchFilters = () => {
         {/* Advanced Filters Row */}
         {showAdvanced && (
           <div className="mt-4 pt-4 border-t border-gray-100">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Input
                 placeholder="Manufacturer"
                 value={searchValues.manufacturer}
                 onChange={(e) => setSearchValues(prev => ({ ...prev, manufacturer: e.target.value }))}
                 className="bg-white border border-gray-300 rounded-xl h-11 text-sm placeholder:text-gray-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
               />
-
-              <Select value={searchValues.serial} onValueChange={(value) => setSearchValues(prev => ({ ...prev, serial: value }))}>
-                <SelectTrigger className="bg-white border border-gray-300 rounded-xl h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
-                  <SelectValue placeholder="Priority" />
-                </SelectTrigger>
-                <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-xl z-50">
-                  <SelectItem value="critical">Critical</SelectItem>
-                  <SelectItem value="high">High</SelectItem>
-                  <SelectItem value="medium">Medium</SelectItem>
-                  <SelectItem value="low">Low</SelectItem>
-                </SelectContent>
-              </Select>
 
               <Select value={searchValues.division} onValueChange={(value) => setSearchValues(prev => ({ ...prev, division: value }))}>
                 <SelectTrigger className="bg-white border border-gray-300 rounded-xl h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
