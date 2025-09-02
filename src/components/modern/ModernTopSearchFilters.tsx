@@ -143,7 +143,7 @@ const ModernTopSearchFilters = () => {
                   )}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4 text-gray-500" />
-                  {dateFrom ? format(dateFrom, "MMM dd") : "From"}
+                  {dateFrom ? format(dateFrom, "MMM dd, yyyy") : "From"}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0 border border-gray-200 shadow-xl rounded-xl" align="start">
@@ -167,7 +167,7 @@ const ModernTopSearchFilters = () => {
                   )}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4 text-gray-500" />
-                  {dateTo ? format(dateTo, "MMM dd") : "To"}
+                  {dateTo ? format(dateTo, "MMM dd, yyyy") : "To"}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0 border border-gray-200 shadow-xl rounded-xl" align="start">
