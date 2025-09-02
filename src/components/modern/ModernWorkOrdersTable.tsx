@@ -198,8 +198,15 @@ interface ModernWorkOrdersTableProps {
 const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersTableProps) => {
   const [expandedRows, setExpandedRows] = useState<Set<string>>(new Set());
   const [currentPage, setCurrentPage] = useState(1);
+  const [activeStatusFilter, setActiveStatusFilter] = useState<string>('all');
   const itemsPerPage = 10;
-  const totalPages = Math.ceil(mockWorkOrders.length / itemsPerPage);
+  
+  // Filter work orders based on selected status
+  const filteredWorkOrders = activeStatusFilter === 'all' 
+    ? mockWorkOrders 
+    : mockWorkOrders.filter(order => order.status.toLowerCase().replace(' ', '-') === activeStatusFilter);
+  
+  const totalPages = Math.ceil(filteredWorkOrders.length / itemsPerPage);
 
   const toggleRow = (id: string) => {
     const newExpanded = new Set(expandedRows);
@@ -214,43 +221,115 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200">
       {/* Header */}
-      <div className="p-6 border-b border-gray-200 flex items-center justify-between">
-        <div>
-          <h2 className="text-xl font-bold text-gray-900">Work Orders</h2>
-          <p className="text-sm text-gray-600 mt-1">
-            Showing {mockWorkOrders.length} work orders
-          </p>
+      <div className="p-6 border-b border-gray-200">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h2 className="text-xl font-bold text-gray-900">Work Orders</h2>
+            <p className="text-sm text-gray-600 mt-1">
+              Showing {filteredWorkOrders.length} of {mockWorkOrders.length} work orders
+            </p>
+          </div>
+          
+          {/* View Toggle Buttons */}
+          <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-lg">
+            <Button
+              variant={viewMode === 'list' ? 'default' : 'ghost'}
+              size="sm"
+              onClick={() => onViewModeChange('list')}
+              className={cn(
+                "h-8 px-3 rounded-md transition-all",
+                viewMode === 'list' 
+                  ? "bg-white shadow-sm text-gray-900" 
+                  : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
+              )}
+            >
+              <List className="h-4 w-4 mr-2" />
+              List
+            </Button>
+            <Button
+              variant={viewMode === 'grid' ? 'default' : 'ghost'}
+              size="sm"
+              onClick={() => onViewModeChange('grid')}
+              className={cn(
+                "h-8 px-3 rounded-md transition-all",
+                viewMode === 'grid' 
+                  ? "bg-white shadow-sm text-gray-900" 
+                  : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
+              )}
+            >
+              <Grid3X3 className="h-4 w-4 mr-2" />
+              Grid
+            </Button>
+          </div>
         </div>
-        
-        {/* View Toggle Buttons */}
-        <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-lg">
+
+        {/* Quick Status Filters */}
+        <div className="flex items-center gap-2 flex-wrap">
+          <span className="text-sm font-medium text-gray-700 mr-2">Quick Filters:</span>
           <Button
-            variant={viewMode === 'list' ? 'default' : 'ghost'}
+            variant={activeStatusFilter === 'all' ? 'default' : 'outline'}
             size="sm"
-            onClick={() => onViewModeChange('list')}
+            onClick={() => setActiveStatusFilter('all')}
             className={cn(
-              "h-8 px-3 rounded-md transition-all",
-              viewMode === 'list' 
-                ? "bg-white shadow-sm text-gray-900" 
-                : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
+              "h-8 px-3 rounded-full transition-all",
+              activeStatusFilter === 'all' 
+                ? "bg-gray-900 hover:bg-gray-800 text-white" 
+                : "border-gray-300 hover:bg-gray-50"
             )}
           >
-            <List className="h-4 w-4 mr-2" />
-            List
+            All ({mockWorkOrders.length})
           </Button>
           <Button
-            variant={viewMode === 'grid' ? 'default' : 'ghost'}
+            variant={activeStatusFilter === 'in-lab' ? 'default' : 'outline'}
             size="sm"
-            onClick={() => onViewModeChange('grid')}
+            onClick={() => setActiveStatusFilter('in-lab')}
             className={cn(
-              "h-8 px-3 rounded-md transition-all",
-              viewMode === 'grid' 
-                ? "bg-white shadow-sm text-gray-900" 
-                : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
+              "h-8 px-3 rounded-full transition-all",
+              activeStatusFilter === 'in-lab' 
+                ? "bg-blue-600 hover:bg-blue-700 text-white" 
+                : "border-blue-300 text-blue-700 hover:bg-blue-50"
             )}
           >
-            <Grid3X3 className="h-4 w-4 mr-2" />
-            Grid
+            In Lab ({mockWorkOrders.filter(o => o.status === 'In Lab').length})
+          </Button>
+          <Button
+            variant={activeStatusFilter === 'completed' ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => setActiveStatusFilter('completed')}
+            className={cn(
+              "h-8 px-3 rounded-full transition-all",
+              activeStatusFilter === 'completed' 
+                ? "bg-green-600 hover:bg-green-700 text-white" 
+                : "border-green-300 text-green-700 hover:bg-green-50"
+            )}
+          >
+            Completed ({mockWorkOrders.filter(o => o.status === 'Completed').length})
+          </Button>
+          <Button
+            variant={activeStatusFilter === 'overdue' ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => setActiveStatusFilter('overdue')}
+            className={cn(
+              "h-8 px-3 rounded-full transition-all",
+              activeStatusFilter === 'overdue' 
+                ? "bg-red-600 hover:bg-red-700 text-white" 
+                : "border-red-300 text-red-700 hover:bg-red-50"
+            )}
+          >
+            Overdue ({mockWorkOrders.filter(o => o.status === 'Overdue').length})
+          </Button>
+          <Button
+            variant={activeStatusFilter === 'pending' ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => setActiveStatusFilter('pending')}
+            className={cn(
+              "h-8 px-3 rounded-full transition-all",
+              activeStatusFilter === 'pending' 
+                ? "bg-yellow-600 hover:bg-yellow-700 text-white" 
+                : "border-yellow-300 text-yellow-700 hover:bg-yellow-50"
+            )}
+          >
+            Pending ({mockWorkOrders.filter(o => o.status === 'Pending').length})
           </Button>
         </div>
       </div>
@@ -272,7 +351,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
               </TableRow>
             </TableHeader>
             <TableBody>
-              {mockWorkOrders.map((order) => (
+              {filteredWorkOrders.map((order) => (
                 <>
                   <TableRow
                     key={order.id}
@@ -487,7 +566,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
         ) : (
           // Grid View - Cards
           <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {mockWorkOrders.map((order) => (
+            {filteredWorkOrders.map((order) => (
               <div
                 key={order.id}
                 className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer"
