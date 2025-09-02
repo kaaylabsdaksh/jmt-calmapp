@@ -81,7 +81,8 @@ const ModernTopSearchFilters = () => {
 
       {/* Global Search */}
       <div className="p-4 pb-3">
-        <div className="flex gap-3">
+        {/* Mobile: Search in first row */}
+        <div className="flex flex-col md:flex-row gap-3">
           <div className="relative flex-1">
             <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
             <Input
@@ -91,31 +92,64 @@ const ModernTopSearchFilters = () => {
               className="pl-12 bg-white border border-gray-300 rounded-lg h-11 text-sm placeholder:text-gray-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
             />
           </div>
-          <Select value={searchValues.status || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, status: value === 'all' ? '' : value }))}>
-            <SelectTrigger className="w-40 bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
-              <SelectValue placeholder="All Status" />
-            </SelectTrigger>
-            <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
-              <SelectItem value="all">All Status</SelectItem>
-              <SelectItem value="in-lab">In Lab</SelectItem>
-              <SelectItem value="completed">Completed</SelectItem>
-              <SelectItem value="overdue">Overdue</SelectItem>
-              <SelectItem value="pending">Pending</SelectItem>
-            </SelectContent>
-          </Select>
-          <Select value={searchValues.assignee || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, assignee: value === 'all' ? '' : value }))}>
-            <SelectTrigger className="w-40 bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
-              <SelectValue placeholder="Assignee" />
-            </SelectTrigger>
-            <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
-              <SelectItem value="all">All Assignees</SelectItem>
-              <SelectItem value="john-doe">John Doe</SelectItem>
-              <SelectItem value="jane-smith">Jane Smith</SelectItem>
-              <SelectItem value="mike-johnson">Mike Johnson</SelectItem>
-              <SelectItem value="sarah-wilson">Sarah Wilson</SelectItem>
-              <SelectItem value="unassigned">Unassigned</SelectItem>
-            </SelectContent>
-          </Select>
+          
+          {/* Desktop: Status and Assignee in same row as search */}
+          <div className="hidden md:flex gap-3">
+            <Select value={searchValues.status || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, status: value === 'all' ? '' : value }))}>
+              <SelectTrigger className="w-40 bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
+                <SelectValue placeholder="All Status" />
+              </SelectTrigger>
+              <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
+                <SelectItem value="all">All Status</SelectItem>
+                <SelectItem value="in-lab">In Lab</SelectItem>
+                <SelectItem value="completed">Completed</SelectItem>
+                <SelectItem value="overdue">Overdue</SelectItem>
+                <SelectItem value="pending">Pending</SelectItem>
+              </SelectContent>
+            </Select>
+            <Select value={searchValues.assignee || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, assignee: value === 'all' ? '' : value }))}>
+              <SelectTrigger className="w-40 bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
+                <SelectValue placeholder="Assignee" />
+              </SelectTrigger>
+              <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
+                <SelectItem value="all">All Assignees</SelectItem>
+                <SelectItem value="john-doe">John Doe</SelectItem>
+                <SelectItem value="jane-smith">Jane Smith</SelectItem>
+                <SelectItem value="mike-johnson">Mike Johnson</SelectItem>
+                <SelectItem value="sarah-wilson">Sarah Wilson</SelectItem>
+                <SelectItem value="unassigned">Unassigned</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          
+          {/* Mobile: Status and Assignee in second row */}
+          <div className="flex md:hidden gap-3">
+            <Select value={searchValues.status || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, status: value === 'all' ? '' : value }))}>
+              <SelectTrigger className="flex-1 bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
+                <SelectValue placeholder="All Status" />
+              </SelectTrigger>
+              <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
+                <SelectItem value="all">All Status</SelectItem>
+                <SelectItem value="in-lab">In Lab</SelectItem>
+                <SelectItem value="completed">Completed</SelectItem>
+                <SelectItem value="overdue">Overdue</SelectItem>
+                <SelectItem value="pending">Pending</SelectItem>
+              </SelectContent>
+            </Select>
+            <Select value={searchValues.assignee || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, assignee: value === 'all' ? '' : value }))}>
+              <SelectTrigger className="flex-1 bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
+                <SelectValue placeholder="Assignee" />
+              </SelectTrigger>
+              <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
+                <SelectItem value="all">All Assignees</SelectItem>
+                <SelectItem value="john-doe">John Doe</SelectItem>
+                <SelectItem value="jane-smith">Jane Smith</SelectItem>
+                <SelectItem value="mike-johnson">Mike Johnson</SelectItem>
+                <SelectItem value="sarah-wilson">Sarah Wilson</SelectItem>
+                <SelectItem value="unassigned">Unassigned</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
       </div>
 
