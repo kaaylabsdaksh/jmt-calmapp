@@ -1,5 +1,6 @@
 import { useState } from "react";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -414,6 +415,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
   const [selectedWorkOrder, setSelectedWorkOrder] = useState<WorkOrder | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [activeStatusFilter, setActiveStatusFilter] = useState<string>('all');
+  const navigate = useNavigate();
   const itemsPerPage = 10;
   
   // Filter work orders based on selected status
@@ -425,6 +427,10 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
 
   const openDetails = (order: WorkOrder) => {
     setSelectedWorkOrder(order);
+  };
+
+  const handleEditWorkOrder = (workOrderId: string) => {
+    navigate(`/work-order/${workOrderId}`);
   };
 
   // Work Order Details Dialog Component
@@ -609,7 +615,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
 
         {/* Action Buttons */}
         <div className="flex justify-end gap-3 pt-4 border-t border-gray-200">
-          <Button variant="outline">
+          <Button variant="outline" onClick={() => handleEditWorkOrder(order.id)}>
             <Edit className="h-4 w-4 mr-2" />
             Edit Order
           </Button>
@@ -789,11 +795,11 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                           <MoreHorizontal className="h-4 w-4" />
                         </Button>
                       </DropdownMenuTrigger>
-                       <DropdownMenuContent align="end" className="bg-white border shadow-lg z-50 rounded-lg">
-                         <DropdownMenuItem className="flex items-center gap-2">
-                           <Edit className="h-4 w-4" />
-                           Edit
-                         </DropdownMenuItem>
+                        <DropdownMenuContent align="end" className="bg-white border shadow-lg z-50 rounded-lg">
+                          <DropdownMenuItem className="flex items-center gap-2" onClick={() => handleEditWorkOrder(order.id)}>
+                            <Edit className="h-4 w-4" />
+                            Edit
+                          </DropdownMenuItem>
                          <DropdownMenuItem className="flex items-center gap-2">
                            <User className="h-4 w-4" />
                            Assign Tech
@@ -832,7 +838,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end" className="bg-white border shadow-lg z-50 rounded-lg">
-                        <DropdownMenuItem className="flex items-center gap-2">
+                        <DropdownMenuItem className="flex items-center gap-2" onClick={() => handleEditWorkOrder(order.id)}>
                           <Edit className="h-4 w-4" />
                           Edit
                         </DropdownMenuItem>
