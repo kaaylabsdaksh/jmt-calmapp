@@ -426,7 +426,7 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
                 </div>
 
                 {/* Items Cards */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pb-24">
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 pb-24">
                   {[
                     { id: '002', manufacturer: 'VAETRIX', model: 'ETG-5K-1-05-BT', serial: '1557252190', type: 'SINGLE', deliverDate: '04/03/2025', status: 'Ready for Departure', statusColor: 'green' },
                     { id: '004', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/29/2025', status: 'Ready for Departure', statusColor: 'green' },
