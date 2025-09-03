@@ -59,9 +59,9 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <div className="sticky top-0 z-50 bg-card/95 backdrop-blur border-b shadow-sm">
-        <div className="px-4 sm:px-6 py-6">
+        <div className="px-4 sm:px-6 py-3">
           {/* Back Button Row */}
-          <div className="mb-4">
+          <div className="mb-3">
             <Button 
               variant="ghost" 
               size="sm" 
@@ -74,12 +74,12 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
           </div>
           
           {/* Main Header Row */}
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-4">
+          <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-3">
             <div className="min-w-0 flex-1">
-              <h1 className="text-xl md:text-2xl font-bold text-foreground mb-2">Edit Work Order</h1>
+              <h1 className="text-lg md:text-xl font-bold text-foreground mb-1">Edit Work Order</h1>
               
               {/* Work Order Info - Split into multiple lines for better tablet display */}
-              <div className="space-y-1 text-sm text-muted-foreground">
+              <div className="space-y-0.5 text-sm text-muted-foreground">
                 <div className="flex flex-wrap items-center gap-2 md:gap-4">
                   <span>Work Order #: <span className="font-medium text-foreground">{workOrderData.id}</span></span>
                   <span className="hidden md:inline text-muted-foreground">•</span>
@@ -94,26 +94,29 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
               </div>
             </div>
             
-            <div className="flex items-center gap-2 shrink-0">
-              <Button variant="outline" size="sm" className="hidden sm:flex">
-                <Download className="h-4 w-4 mr-2" />
-                Export
-              </Button>
-              <Button variant="outline" size="sm">
-                <Menu className="h-4 w-4 mr-2" />
-                <span className="hidden sm:inline">Menu</span>
-              </Button>
+            <div className="flex flex-col items-end gap-2 shrink-0">
+              {/* Status and Type Badges */}
+              <div className="flex items-center gap-2">
+                <Badge variant="secondary" className="bg-blue-50 text-blue-700 border-blue-200">
+                  {workOrderData.status}
+                </Badge>
+                <Badge variant="outline">
+                  {workOrderData.type}
+                </Badge>
+              </div>
+              
+              {/* Action Buttons */}
+              <div className="flex items-center gap-2">
+                <Button variant="outline" size="sm" className="hidden sm:flex">
+                  <Download className="h-4 w-4 mr-2" />
+                  Export
+                </Button>
+                <Button variant="outline" size="sm">
+                  <Menu className="h-4 w-4 mr-2" />
+                  <span className="hidden sm:inline">Menu</span>
+                </Button>
+              </div>
             </div>
-          </div>
-
-          {/* Status and Type Badges */}
-          <div className="flex items-center gap-3 mb-4">
-            <Badge variant="secondary" className="bg-blue-50 text-blue-700 border-blue-200">
-              {workOrderData.status}
-            </Badge>
-            <Badge variant="outline">
-              {workOrderData.type}
-            </Badge>
           </div>
         </div>
       </div>
