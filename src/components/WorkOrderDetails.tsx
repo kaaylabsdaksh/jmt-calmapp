@@ -243,7 +243,7 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
                     Customer Information
                   </h3>
                   
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="customer">Customer</Label>
                       <Textarea 
@@ -255,24 +255,22 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
                       />
                     </div>
                     
-                    <div className="space-y-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="contact">Contact</Label>
-                        <Input 
-                          id="contact" 
-                          value={workOrderData.customer.contact}
-                          readOnly
-                        />
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <Label htmlFor="phone">Phone</Label>
-                        <Input 
-                          id="phone" 
-                          value={workOrderData.customer.phone}
-                          readOnly
-                        />
-                      </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="contact">Contact</Label>
+                      <Input 
+                        id="contact" 
+                        value={workOrderData.customer.contact}
+                        readOnly
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="phone">Phone</Label>
+                      <Input 
+                        id="phone" 
+                        value={workOrderData.customer.phone}
+                        readOnly
+                      />
                     </div>
                   </div>
                 </div>
