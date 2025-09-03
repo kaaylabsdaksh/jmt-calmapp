@@ -24,11 +24,8 @@ import {
   Phone,
   Mail,
   FileCheck,
-  Database,
-  LayoutGrid,
-  Table
+  Database
 } from "lucide-react";
-import { Table as TableComponent, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 interface WorkOrderDetailsProps {
   workOrderId: string;
@@ -38,7 +35,6 @@ interface WorkOrderDetailsProps {
 const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
   console.log("WorkOrderDetails component rendering with ID:", workOrderId);
   const [activeTab, setActiveTab] = useState("general");
-  const [viewMode, setViewMode] = useState<"form" | "table">("form");
   
   // Sample data - in real app this would come from API
   const workOrderData = {
@@ -176,204 +172,108 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
           <TabsContent value="general" className="space-y-6">
             <Card>
               <CardHeader>
-                <div className="flex items-center justify-between">
-                  <CardTitle className="flex items-center gap-2">
-                    <Edit className="h-5 w-5 text-primary" />
-                    Work Order Details
-                  </CardTitle>
-                  <div className="flex items-center gap-2">
-                    <Button
-                      variant={viewMode === "form" ? "default" : "outline"}
-                      size="sm"
-                      onClick={() => setViewMode("form")}
-                      className="flex items-center gap-2"
-                    >
-                      <LayoutGrid className="h-4 w-4" />
-                      Form View
-                    </Button>
-                    <Button
-                      variant={viewMode === "table" ? "default" : "outline"}
-                      size="sm"
-                      onClick={() => setViewMode("table")}
-                      className="flex items-center gap-2"
-                    >
-                      <Table className="h-4 w-4" />
-                      Table View
-                    </Button>
-                  </div>
-                </div>
+                <CardTitle className="flex items-center gap-2">
+                  <Edit className="h-5 w-5 text-primary" />
+                  Work Order Details
+                </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
-                {viewMode === "form" ? (
-                  <>
-                    {/* Basic Information */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="workOrderNumber">Work Order #</Label>
-                        <Input 
-                          id="workOrderNumber" 
-                          value={workOrderData.id}
-                          className="bg-muted" 
-                          readOnly
-                        />
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <Label htmlFor="workOrderStatus">Work Order Status</Label>
-                        <Select defaultValue="in-process">
-                          <SelectTrigger>
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="in-process">In Process</SelectItem>
-                            <SelectItem value="complete">Complete</SelectItem>
-                            <SelectItem value="pending">Pending</SelectItem>
-                            <SelectItem value="cancelled">Cancelled</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      <div className="space-y-2">
-                        <Label htmlFor="workOrderType">Work Order Type</Label>
-                        <Select defaultValue="regular">
-                          <SelectTrigger>
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="regular">Regular Work Order</SelectItem>
-                            <SelectItem value="rush">Rush Order</SelectItem>
-                            <SelectItem value="warranty">Warranty</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      <div className="space-y-2">
-                        <Label htmlFor="actNumber">Act #</Label>
-                        <div className="relative">
-                          <Input 
-                            id="actNumber" 
-                            value={workOrderData.number}
-                            readOnly
-                          />
-                          <div className="absolute right-2 top-2">
-                            <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <Separator />
-
-                    {/* Customer Information */}
-                    <div className="space-y-4">
-                      <h3 className="text-lg font-medium flex items-center gap-2">
-                        <User className="h-5 w-5 text-primary" />
-                        Customer Information
-                      </h3>
-                      
-                      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="customer">Customer</Label>
-                          <Textarea 
-                            id="customer" 
-                            value={`${workOrderData.customer.name}\n${workOrderData.customer.address}`}
-                            rows={3}
-                            className="resize-none"
-                            readOnly
-                          />
-                        </div>
-                        
-                        <div className="space-y-2">
-                          <Label htmlFor="contact">Contact</Label>
-                          <Input 
-                            id="contact" 
-                            value={workOrderData.customer.contact}
-                            readOnly
-                          />
-                        </div>
-                        
-                        <div className="space-y-2">
-                          <Label htmlFor="phone">Phone</Label>
-                          <Input 
-                            id="phone" 
-                            value={workOrderData.customer.phone}
-                            readOnly
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  /* Table View */
-                  <div className="space-y-4">
-                    <TableComponent>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead className="w-1/4">Field</TableHead>
-                          <TableHead className="w-3/4">Value</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        <TableRow>
-                          <TableCell className="font-medium">Work Order #</TableCell>
-                          <TableCell>{workOrderData.id}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell className="font-medium">Work Order Status</TableCell>
-                          <TableCell>
-                            <Badge variant="secondary" className="bg-blue-50 text-blue-700 border-blue-200">
-                              {workOrderData.status}
-                            </Badge>
-                          </TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell className="font-medium">Work Order Type</TableCell>
-                          <TableCell>
-                            <Badge variant="outline">
-                              {workOrderData.type}
-                            </Badge>
-                          </TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell className="font-medium">Act #</TableCell>
-                          <TableCell className="flex items-center gap-2">
-                            {workOrderData.number}
-                            <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                          </TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell className="font-medium">Customer</TableCell>
-                          <TableCell>
-                            <div className="space-y-1">
-                              <div className="font-medium">{workOrderData.customer.name}</div>
-                              <div className="text-sm text-muted-foreground">{workOrderData.customer.address}</div>
-                            </div>
-                          </TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell className="font-medium">Contact</TableCell>
-                          <TableCell>{workOrderData.customer.contact}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell className="font-medium">Phone</TableCell>
-                          <TableCell>{workOrderData.customer.phone}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell className="font-medium">Salesperson</TableCell>
-                          <TableCell className="text-primary font-medium">{workOrderData.salesperson}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell className="font-medium">Created By</TableCell>
-                          <TableCell>{workOrderData.createdBy} on {workOrderData.createdDate}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell className="font-medium">Modified By</TableCell>
-                          <TableCell>{workOrderData.modifiedBy} on {workOrderData.modifiedDate}</TableCell>
-                        </TableRow>
-                      </TableBody>
-                    </TableComponent>
+                {/* Basic Information */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="workOrderNumber">Work Order #</Label>
+                    <Input 
+                      id="workOrderNumber" 
+                      value={workOrderData.id}
+                      className="bg-muted" 
+                      readOnly
+                    />
                   </div>
-                )}
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="workOrderStatus">Work Order Status</Label>
+                    <Select defaultValue="in-process">
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="in-process">In Process</SelectItem>
+                        <SelectItem value="complete">Complete</SelectItem>
+                        <SelectItem value="pending">Pending</SelectItem>
+                        <SelectItem value="cancelled">Cancelled</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="workOrderType">Work Order Type</Label>
+                    <Select defaultValue="regular">
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="regular">Regular Work Order</SelectItem>
+                        <SelectItem value="rush">Rush Order</SelectItem>
+                        <SelectItem value="warranty">Warranty</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="actNumber">Act #</Label>
+                    <div className="relative">
+                      <Input 
+                        id="actNumber" 
+                        value={workOrderData.number}
+                        readOnly
+                      />
+                      <div className="absolute right-2 top-2">
+                        <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <Separator />
+
+                {/* Customer Information */}
+                <div className="space-y-4">
+                  <h3 className="text-lg font-medium flex items-center gap-2">
+                    <User className="h-5 w-5 text-primary" />
+                    Customer Information
+                  </h3>
+                  
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="customer">Customer</Label>
+                      <Textarea 
+                        id="customer" 
+                        value={`${workOrderData.customer.name}\n${workOrderData.customer.address}`}
+                        rows={3}
+                        className="resize-none"
+                        readOnly
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="contact">Contact</Label>
+                      <Input 
+                        id="contact" 
+                        value={workOrderData.customer.contact}
+                        readOnly
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="phone">Phone</Label>
+                      <Input 
+                        id="phone" 
+                        value={workOrderData.customer.phone}
+                        readOnly
+                      />
+                    </div>
+                  </div>
+                </div>
               </CardContent>
             </Card>
           </TabsContent>
