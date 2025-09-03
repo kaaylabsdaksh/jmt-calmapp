@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { useSidebar } from "@/components/ui/sidebar";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -36,7 +35,6 @@ interface WorkOrderDetailsProps {
 const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
   console.log("WorkOrderDetails component rendering with ID:", workOrderId);
   const [activeTab, setActiveTab] = useState("general");
-  const { open } = useSidebar();
   
   // Sample data - in real app this would come from API
   const workOrderData = {
