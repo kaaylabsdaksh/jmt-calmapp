@@ -24,8 +24,11 @@ import {
   Phone,
   Mail,
   FileCheck,
-  Database
+  Database,
+  LayoutGrid,
+  Table
 } from "lucide-react";
+import { Table as TableComponent, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 interface WorkOrderDetailsProps {
   workOrderId: string;
@@ -35,6 +38,7 @@ interface WorkOrderDetailsProps {
 const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
   console.log("WorkOrderDetails component rendering with ID:", workOrderId);
   const [activeTab, setActiveTab] = useState("general");
+  const [itemsViewMode, setItemsViewMode] = useState("cards");
   
   // Sample data - in real app this would come from API
   const workOrderData = {
@@ -410,113 +414,210 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
                   </div>
                   <div className="flex items-center gap-2">
                     <Label htmlFor="viewType" className="text-sm">View:</Label>
-                    <Select defaultValue="default">
-                      <SelectTrigger className="w-auto">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="default">Default View</SelectItem>
-                        <SelectItem value="compact">Compact View</SelectItem>
-                        <SelectItem value="detailed">Detailed View</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <div className="flex items-center border border-input rounded-md p-1">
+                      <Button
+                        variant={itemsViewMode === "cards" ? "secondary" : "ghost"}
+                        size="sm"
+                        onClick={() => setItemsViewMode("cards")}
+                        className="h-8 px-3"
+                      >
+                        <LayoutGrid className="h-4 w-4 mr-1" />
+                        Cards
+                      </Button>
+                      <Button
+                        variant={itemsViewMode === "table" ? "secondary" : "ghost"}
+                        size="sm"
+                        onClick={() => setItemsViewMode("table")}
+                        className="h-8 px-3"
+                      >
+                        <Table className="h-4 w-4 mr-1" />
+                        Table
+                      </Button>
+                    </div>
                   </div>
                 </div>
 
-                {/* Items Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 pb-24">
-                  {[
-                    { id: '002', manufacturer: 'VAETRIX', model: 'ETG-5K-1-05-BT', serial: '1557252190', type: 'SINGLE', deliverDate: '04/03/2025', status: 'Ready for Departure', statusColor: 'green' },
-                    { id: '004', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/29/2025', status: 'Ready for Departure', statusColor: 'green' },
-                    { id: '005', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/15/2025', status: 'Ready for Departure', statusColor: 'green' },
-                    { id: '006', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/12/2025', status: 'Ready for Departure', statusColor: 'green' },
-                    { id: '007', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/18/2025', status: 'Ready for Departure', statusColor: 'green' },
-                    { id: '008', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/22/2025', status: 'Ready for Departure', statusColor: 'green' },
-                    { id: '009', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/25/2025', status: 'Ready for Departure', statusColor: 'green' },
-                    { id: '010', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/28/2025', status: 'Ready for Departure', statusColor: 'green' },
-                    { id: '011', manufacturer: 'FLUKE', model: '8845A', serial: 'FL8845A001', type: 'SINGLE', deliverDate: '05/02/2025', status: 'In Calibration', statusColor: 'blue' },
-                    { id: '012', manufacturer: 'KEYSIGHT', model: '34465A', serial: 'MY54001234', type: 'SINGLE', deliverDate: '05/05/2025', status: 'Pending Parts', statusColor: 'yellow' },
-                    { id: '013', manufacturer: 'TEKTRONIX', model: 'MSO64', serial: 'B010203', type: 'SINGLE', deliverDate: '05/08/2025', status: 'Ready for Departure', statusColor: 'green' },
-                    { id: '014', manufacturer: 'ROHDE & SCHWARZ', model: 'FSW26', serial: '100001', type: 'SINGLE', deliverDate: '05/10/2025', status: 'Under Repair', statusColor: 'red' },
-                    { id: '015', manufacturer: 'ANRITSU', model: 'MS2038C', serial: '6201234567', type: 'SINGLE', deliverDate: '05/12/2025', status: 'Ready for Departure', statusColor: 'green' },
-                    { id: '016', manufacturer: 'AGILENT', model: 'E4438C', serial: 'US44012345', type: 'SINGLE', deliverDate: '05/15/2025', status: 'In Testing', statusColor: 'blue' },
-                    { id: '017', manufacturer: 'NATIONAL INSTRUMENTS', model: 'PXIe-5164', serial: '1A2B3C4D', type: 'MODULE', deliverDate: '05/18/2025', status: 'Ready for Departure', statusColor: 'green' },
-                    { id: '018', manufacturer: 'KEITHLEY', model: '2450', serial: '4151234', type: 'SINGLE', deliverDate: '05/20/2025', status: 'Calibration Complete', statusColor: 'green' },
-                    { id: '019', manufacturer: 'RIGOL', model: 'DG4162', serial: 'DG41620001', type: 'SINGLE', deliverDate: '05/22/2025', status: 'Ready for Departure', statusColor: 'green' },
-                    { id: '020', manufacturer: 'LECROY', model: 'WaveRunner 8254M', serial: 'LCRY001234', type: 'SINGLE', deliverDate: '05/25/2025', status: 'Awaiting Customer', statusColor: 'yellow' },
-                    { id: '021', manufacturer: 'BIRD', model: '4421-50', serial: 'B4421001', type: 'SINGLE', deliverDate: '05/28/2025', status: 'Ready for Departure', statusColor: 'green' },
-                    { id: '022', manufacturer: 'OPHIR', model: 'Nova II', serial: 'NOVA2001', type: 'SINGLE', deliverDate: '05/30/2025', status: 'In Calibration', statusColor: 'blue' },
-                    { id: '023', manufacturer: 'TRANSCAT', model: 'TC-7040', serial: 'TC7040001', type: 'SINGLE', deliverDate: '06/02/2025', status: 'Ready for Departure', statusColor: 'green' },
-                    { id: '024', manufacturer: 'IKALOGIC', model: 'ScanaStudio', serial: 'IK001234', type: 'SINGLE', deliverDate: '06/05/2025', status: 'Quality Check', statusColor: 'blue' },
-                    { id: '025', manufacturer: 'HIOKI', model: '3561', serial: 'H3561001', type: 'SINGLE', deliverDate: '06/08/2025', status: 'Ready for Departure', statusColor: 'green' },
-                  ].map((item, index) => (
-                    <Card key={item.id} className="hover:shadow-md transition-shadow">
-                      <CardContent className="p-4">
-                        <div className="flex items-start justify-between mb-4">
-                          <div className="flex items-center gap-3">
-                            <input type="checkbox" className="rounded mt-1" />
-                            <div className="space-y-1">
-                              <Button variant="link" className="h-auto p-0 text-primary text-left justify-start">
+                {/* Items Display */}
+                {itemsViewMode === "cards" ? (
+                  /* Cards View */
+                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 pb-24">
+                    {[
+                      { id: '002', manufacturer: 'VAETRIX', model: 'ETG-5K-1-05-BT', serial: '1557252190', type: 'SINGLE', deliverDate: '04/03/2025', status: 'Ready for Departure', statusColor: 'green' },
+                      { id: '004', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/29/2025', status: 'Ready for Departure', statusColor: 'green' },
+                      { id: '005', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/15/2025', status: 'Ready for Departure', statusColor: 'green' },
+                      { id: '006', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/12/2025', status: 'Ready for Departure', statusColor: 'green' },
+                      { id: '007', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/18/2025', status: 'Ready for Departure', statusColor: 'green' },
+                      { id: '008', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/22/2025', status: 'Ready for Departure', statusColor: 'green' },
+                      { id: '009', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/25/2025', status: 'Ready for Departure', statusColor: 'green' },
+                      { id: '010', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/28/2025', status: 'Ready for Departure', statusColor: 'green' },
+                      { id: '011', manufacturer: 'FLUKE', model: '8845A', serial: 'FL8845A001', type: 'SINGLE', deliverDate: '05/02/2025', status: 'In Calibration', statusColor: 'blue' },
+                      { id: '012', manufacturer: 'KEYSIGHT', model: '34465A', serial: 'MY54001234', type: 'SINGLE', deliverDate: '05/05/2025', status: 'Pending Parts', statusColor: 'yellow' },
+                      { id: '013', manufacturer: 'TEKTRONIX', model: 'MSO64', serial: 'B010203', type: 'SINGLE', deliverDate: '05/08/2025', status: 'Ready for Departure', statusColor: 'green' },
+                      { id: '014', manufacturer: 'ROHDE & SCHWARZ', model: 'FSW26', serial: '100001', type: 'SINGLE', deliverDate: '05/10/2025', status: 'Under Repair', statusColor: 'red' },
+                      { id: '015', manufacturer: 'ANRITSU', model: 'MS2038C', serial: '6201234567', type: 'SINGLE', deliverDate: '05/12/2025', status: 'Ready for Departure', statusColor: 'green' },
+                      { id: '016', manufacturer: 'AGILENT', model: 'E4438C', serial: 'US44012345', type: 'SINGLE', deliverDate: '05/15/2025', status: 'In Testing', statusColor: 'blue' },
+                      { id: '017', manufacturer: 'NATIONAL INSTRUMENTS', model: 'PXIe-5164', serial: '1A2B3C4D', type: 'MODULE', deliverDate: '05/18/2025', status: 'Ready for Departure', statusColor: 'green' },
+                      { id: '018', manufacturer: 'KEITHLEY', model: '2450', serial: '4151234', type: 'SINGLE', deliverDate: '05/20/2025', status: 'Calibration Complete', statusColor: 'green' },
+                      { id: '019', manufacturer: 'RIGOL', model: 'DG4162', serial: 'DG41620001', type: 'SINGLE', deliverDate: '05/22/2025', status: 'Ready for Departure', statusColor: 'green' },
+                      { id: '020', manufacturer: 'LECROY', model: 'WaveRunner 8254M', serial: 'LCRY001234', type: 'SINGLE', deliverDate: '05/25/2025', status: 'Awaiting Customer', statusColor: 'yellow' },
+                      { id: '021', manufacturer: 'BIRD', model: '4421-50', serial: 'B4421001', type: 'SINGLE', deliverDate: '05/28/2025', status: 'Ready for Departure', statusColor: 'green' },
+                      { id: '022', manufacturer: 'OPHIR', model: 'Nova II', serial: 'NOVA2001', type: 'SINGLE', deliverDate: '05/30/2025', status: 'In Calibration', statusColor: 'blue' },
+                      { id: '023', manufacturer: 'TRANSCAT', model: 'TC-7040', serial: 'TC7040001', type: 'SINGLE', deliverDate: '06/02/2025', status: 'Ready for Departure', statusColor: 'green' },
+                      { id: '024', manufacturer: 'IKALOGIC', model: 'ScanaStudio', serial: 'IK001234', type: 'SINGLE', deliverDate: '06/05/2025', status: 'Quality Check', statusColor: 'blue' },
+                      { id: '025', manufacturer: 'HIOKI', model: '3561', serial: 'H3561001', type: 'SINGLE', deliverDate: '06/08/2025', status: 'Ready for Departure', statusColor: 'green' },
+                    ].map((item, index) => (
+                      <Card key={item.id} className="hover:shadow-md transition-shadow">
+                        <CardContent className="p-4">
+                          <div className="flex items-start justify-between mb-4">
+                            <div className="flex items-center gap-3">
+                              <input type="checkbox" className="rounded mt-1" />
+                              <div className="space-y-1">
+                                <Button variant="link" className="h-auto p-0 text-primary text-left justify-start">
+                                  Edit
+                                </Button>
+                                <p className="text-sm font-medium text-foreground">0152.01-385737-{item.id}</p>
+                              </div>
+                            </div>
+                            <Badge 
+                              variant="secondary" 
+                              className={
+                                item.statusColor === 'green' ? 'bg-green-50 text-green-700 border-green-200' :
+                                item.statusColor === 'blue' ? 'bg-blue-50 text-blue-700 border-blue-200' :
+                                item.statusColor === 'yellow' ? 'bg-yellow-50 text-yellow-700 border-yellow-200' :
+                                'bg-red-50 text-red-700 border-red-200'
+                              }
+                            >
+                              {item.status}
+                            </Badge>
+                          </div>
+
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="space-y-3">
+                              <div>
+                                <Label className="text-xs text-muted-foreground">Manufacturer</Label>
+                                <p className="text-sm font-medium">{item.manufacturer}</p>
+                              </div>
+                              <div>
+                                <Label className="text-xs text-muted-foreground">Model</Label>
+                                <p className="text-sm font-medium">{item.model}</p>
+                              </div>
+                              <div>
+                                <Label className="text-xs text-muted-foreground">Serial #</Label>
+                                <p className="text-sm font-medium">{item.serial}</p>
+                              </div>
+                            </div>
+
+                            <div className="space-y-3">
+                              <div>
+                                <Label className="text-xs text-muted-foreground">Item Type</Label>
+                                <p className="text-sm font-medium">{item.type}</p>
+                              </div>
+                              <div>
+                                <Label className="text-xs text-muted-foreground">Created</Label>
+                                <p className="text-sm font-medium">10/15/2021</p>
+                              </div>
+                              <div>
+                                <Label className="text-xs text-muted-foreground">Deliver By Date</Label>
+                                <p className="text-sm font-medium">{item.deliverDate}</p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="mt-4 pt-3 border-t">
+                            <div className="flex items-center justify-between text-xs text-muted-foreground">
+                              <span>Departure: -</span>
+                              <span>PO #: CUST/PO#</span>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                ) : (
+                  /* Table View */
+                  <div className="pb-24">
+                    <TableComponent>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead className="w-[50px]">
+                            <input type="checkbox" className="rounded" />
+                          </TableHead>
+                          <TableHead>Edit</TableHead>
+                          <TableHead>Item #</TableHead>
+                          <TableHead>Manufacturer</TableHead>
+                          <TableHead>Model</TableHead>
+                          <TableHead>Serial #</TableHead>
+                          <TableHead>Item Type</TableHead>
+                          <TableHead>Created</TableHead>
+                          <TableHead>Deliver By Date</TableHead>
+                          <TableHead>Status</TableHead>
+                          <TableHead>Departure</TableHead>
+                          <TableHead>PO #</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {[
+                          { id: '002', manufacturer: 'VAETRIX', model: 'ETG-5K-1-05-BT', serial: '1557252190', type: 'SINGLE', deliverDate: '04/03/2025', status: 'Ready for Departure', statusColor: 'green' },
+                          { id: '004', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/29/2025', status: 'Ready for Departure', statusColor: 'green' },
+                          { id: '005', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/15/2025', status: 'Ready for Departure', statusColor: 'green' },
+                          { id: '006', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/12/2025', status: 'Ready for Departure', statusColor: 'green' },
+                          { id: '007', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/18/2025', status: 'Ready for Departure', statusColor: 'green' },
+                          { id: '008', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/22/2025', status: 'Ready for Departure', statusColor: 'green' },
+                          { id: '009', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/25/2025', status: 'Ready for Departure', statusColor: 'green' },
+                          { id: '010', manufacturer: 'HASTINGS', model: '5006', serial: 'N/A', type: 'SINGLE', deliverDate: '04/28/2025', status: 'Ready for Departure', statusColor: 'green' },
+                          { id: '011', manufacturer: 'FLUKE', model: '8845A', serial: 'FL8845A001', type: 'SINGLE', deliverDate: '05/02/2025', status: 'In Calibration', statusColor: 'blue' },
+                          { id: '012', manufacturer: 'KEYSIGHT', model: '34465A', serial: 'MY54001234', type: 'SINGLE', deliverDate: '05/05/2025', status: 'Pending Parts', statusColor: 'yellow' },
+                          { id: '013', manufacturer: 'TEKTRONIX', model: 'MSO64', serial: 'B010203', type: 'SINGLE', deliverDate: '05/08/2025', status: 'Ready for Departure', statusColor: 'green' },
+                          { id: '014', manufacturer: 'ROHDE & SCHWARZ', model: 'FSW26', serial: '100001', type: 'SINGLE', deliverDate: '05/10/2025', status: 'Under Repair', statusColor: 'red' },
+                          { id: '015', manufacturer: 'ANRITSU', model: 'MS2038C', serial: '6201234567', type: 'SINGLE', deliverDate: '05/12/2025', status: 'Ready for Departure', statusColor: 'green' },
+                          { id: '016', manufacturer: 'AGILENT', model: 'E4438C', serial: 'US44012345', type: 'SINGLE', deliverDate: '05/15/2025', status: 'In Testing', statusColor: 'blue' },
+                          { id: '017', manufacturer: 'NATIONAL INSTRUMENTS', model: 'PXIe-5164', serial: '1A2B3C4D', type: 'MODULE', deliverDate: '05/18/2025', status: 'Ready for Departure', statusColor: 'green' },
+                          { id: '018', manufacturer: 'KEITHLEY', model: '2450', serial: '4151234', type: 'SINGLE', deliverDate: '05/20/2025', status: 'Calibration Complete', statusColor: 'green' },
+                          { id: '019', manufacturer: 'RIGOL', model: 'DG4162', serial: 'DG41620001', type: 'SINGLE', deliverDate: '05/22/2025', status: 'Ready for Departure', statusColor: 'green' },
+                          { id: '020', manufacturer: 'LECROY', model: 'WaveRunner 8254M', serial: 'LCRY001234', type: 'SINGLE', deliverDate: '05/25/2025', status: 'Awaiting Customer', statusColor: 'yellow' },
+                          { id: '021', manufacturer: 'BIRD', model: '4421-50', serial: 'B4421001', type: 'SINGLE', deliverDate: '05/28/2025', status: 'Ready for Departure', statusColor: 'green' },
+                          { id: '022', manufacturer: 'OPHIR', model: 'Nova II', serial: 'NOVA2001', type: 'SINGLE', deliverDate: '05/30/2025', status: 'In Calibration', statusColor: 'blue' },
+                          { id: '023', manufacturer: 'TRANSCAT', model: 'TC-7040', serial: 'TC7040001', type: 'SINGLE', deliverDate: '06/02/2025', status: 'Ready for Departure', statusColor: 'green' },
+                          { id: '024', manufacturer: 'IKALOGIC', model: 'ScanaStudio', serial: 'IK001234', type: 'SINGLE', deliverDate: '06/05/2025', status: 'Quality Check', statusColor: 'blue' },
+                          { id: '025', manufacturer: 'HIOKI', model: '3561', serial: 'H3561001', type: 'SINGLE', deliverDate: '06/08/2025', status: 'Ready for Departure', statusColor: 'green' },
+                        ].map((item) => (
+                          <TableRow key={item.id}>
+                            <TableCell>
+                              <input type="checkbox" className="rounded" />
+                            </TableCell>
+                            <TableCell>
+                              <Button variant="link" className="h-auto p-0 text-primary">
                                 Edit
                               </Button>
-                              <p className="text-sm font-medium text-foreground">0152.01-385737-{item.id}</p>
-                            </div>
-                          </div>
-                          <Badge 
-                            variant="secondary" 
-                            className={
-                              item.statusColor === 'green' ? 'bg-green-50 text-green-700 border-green-200' :
-                              item.statusColor === 'blue' ? 'bg-blue-50 text-blue-700 border-blue-200' :
-                              item.statusColor === 'yellow' ? 'bg-yellow-50 text-yellow-700 border-yellow-200' :
-                              'bg-red-50 text-red-700 border-red-200'
-                            }
-                          >
-                            {item.status}
-                          </Badge>
-                        </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <div className="space-y-3">
-                            <div>
-                              <Label className="text-xs text-muted-foreground">Manufacturer</Label>
-                              <p className="text-sm font-medium">{item.manufacturer}</p>
-                            </div>
-                            <div>
-                              <Label className="text-xs text-muted-foreground">Model</Label>
-                              <p className="text-sm font-medium">{item.model}</p>
-                            </div>
-                            <div>
-                              <Label className="text-xs text-muted-foreground">Serial #</Label>
-                              <p className="text-sm font-medium">{item.serial}</p>
-                            </div>
-                          </div>
-
-                          <div className="space-y-3">
-                            <div>
-                              <Label className="text-xs text-muted-foreground">Item Type</Label>
-                              <p className="text-sm font-medium">{item.type}</p>
-                            </div>
-                            <div>
-                              <Label className="text-xs text-muted-foreground">Created</Label>
-                              <p className="text-sm font-medium">10/15/2021</p>
-                            </div>
-                            <div>
-                              <Label className="text-xs text-muted-foreground">Deliver By Date</Label>
-                              <p className="text-sm font-medium">{item.deliverDate}</p>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="mt-4 pt-3 border-t">
-                          <div className="flex items-center justify-between text-xs text-muted-foreground">
-                            <span>Departure: -</span>
-                            <span>PO #: CUST/PO#</span>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
+                            </TableCell>
+                            <TableCell className="font-medium">0152.01-385737-{item.id}</TableCell>
+                            <TableCell>{item.manufacturer}</TableCell>
+                            <TableCell>{item.model}</TableCell>
+                            <TableCell>{item.serial}</TableCell>
+                            <TableCell>{item.type}</TableCell>
+                            <TableCell>10/15/2021</TableCell>
+                            <TableCell>{item.deliverDate}</TableCell>
+                            <TableCell>
+                              <Badge 
+                                variant="secondary" 
+                                className={
+                                  item.statusColor === 'green' ? 'bg-green-50 text-green-700 border-green-200' :
+                                  item.statusColor === 'blue' ? 'bg-blue-50 text-blue-700 border-blue-200' :
+                                  item.statusColor === 'yellow' ? 'bg-yellow-50 text-yellow-700 border-yellow-200' :
+                                  'bg-red-50 text-red-700 border-red-200'
+                                }
+                              >
+                                {item.status}
+                              </Badge>
+                            </TableCell>
+                            <TableCell className="text-muted-foreground">-</TableCell>
+                            <TableCell className="text-muted-foreground">CUST/PO#</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </TableComponent>
+                  </div>
+                )}
 
                 {/* End of list indicator */}
                 <div className="flex justify-center py-6">
