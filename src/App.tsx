@@ -12,9 +12,6 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Modern route without sidebar */}
-        <Route path="/modern" element={<ModernWorkOrderManagement />} />
-        
         {/* Routes with sidebar */}
         <Route path="/" element={<ModernWorkOrderManagement />} />
         <Route path="/work-orders-v2" element={
