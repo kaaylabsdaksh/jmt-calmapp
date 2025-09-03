@@ -78,9 +78,15 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
           </div>
           
           {/* Main Header Row */}
-          <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-3">
+          <div className="flex items-start justify-between gap-3">
             <div className="min-w-0 flex-1">
-              <h1 className="text-lg md:text-xl font-bold text-foreground mb-1">Edit Work Order</h1>
+              <div className="flex items-center gap-3 mb-1">
+                <h1 className="text-lg md:text-xl font-bold text-foreground">Edit Work Order</h1>
+                {/* Hamburger Menu - Better positioned next to title */}
+                <Button variant="ghost" size="sm" className="shrink-0">
+                  <Menu className="h-5 w-5" />
+                </Button>
+              </div>
               
               {/* Work Order Info - Split into multiple lines for better tablet display */}
               <div className="space-y-0.5 text-sm text-muted-foreground">
@@ -114,10 +120,6 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
                 <Button variant="outline" size="sm" className="hidden sm:flex">
                   <Download className="h-4 w-4 mr-2" />
                   Export
-                </Button>
-                <Button variant="outline" size="sm">
-                  <Menu className="h-4 w-4 mr-2" />
-                  <span className="hidden sm:inline">Menu</span>
                 </Button>
               </div>
             </div>
