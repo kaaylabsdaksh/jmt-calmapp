@@ -77,8 +77,51 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
             </Button>
           </div>
           
-          {/* Main Header Row */}
-          <div className="flex items-start justify-between gap-3">
+          {/* Mobile-Optimized Header */}
+          <div className="block sm:hidden">
+            {/* Mobile: Title and Menu Row */}
+            <div className="flex items-center justify-between mb-3">
+              <h1 className="text-lg font-bold text-foreground">Edit Work Order</h1>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="h-8 w-8 p-0 border-2 hover:bg-muted/80"
+              >
+                <Menu className="h-4 w-4" />
+              </Button>
+            </div>
+            
+            {/* Mobile: Work Order Info Stacked */}
+            <div className="space-y-2 text-sm">
+              <div className="flex flex-col space-y-1">
+                <span className="text-muted-foreground">
+                  WO #: <span className="font-medium text-foreground">{workOrderData.id}</span>
+                  {" • "}
+                  Act #: <span className="font-medium text-foreground">{workOrderData.number}</span>
+                </span>
+                <span className="text-muted-foreground">
+                  Salesperson: <span className="text-primary font-medium">{workOrderData.salesperson}</span>
+                </span>
+                <span className="text-muted-foreground">
+                  Contact: <span className="text-primary font-medium">{workOrderData.customer.contact}</span>
+                  <span className="ml-1">({workOrderData.customer.phone})</span>
+                </span>
+              </div>
+              
+              {/* Mobile: Status Badges */}
+              <div className="flex items-center gap-2 pt-2">
+                <Badge variant="secondary" className="bg-blue-50 text-blue-700 border-blue-200 text-xs">
+                  {workOrderData.status}
+                </Badge>
+                <Badge variant="outline" className="text-xs">
+                  {workOrderData.type}
+                </Badge>
+              </div>
+            </div>
+          </div>
+
+          {/* Desktop Header (unchanged) */}
+          <div className="hidden sm:flex items-start justify-between gap-3">
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-3 mb-1">
                 <h1 className="text-lg md:text-xl font-bold text-foreground">Edit Work Order</h1>
