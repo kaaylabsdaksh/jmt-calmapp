@@ -82,9 +82,13 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-3 mb-1">
                 <h1 className="text-lg md:text-xl font-bold text-foreground">Edit Work Order</h1>
-                {/* Hamburger Menu - Better positioned next to title */}
-                <Button variant="ghost" size="sm" className="shrink-0">
-                  <Menu className="h-5 w-5" />
+                {/* Improved Hamburger Menu with better styling */}
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="shrink-0 h-8 w-8 p-0 border-2 hover:bg-muted/80 hover:border-primary/30"
+                >
+                  <Menu className="h-4 w-4" />
                 </Button>
               </div>
               
