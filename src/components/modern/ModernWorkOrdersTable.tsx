@@ -14,6 +14,15 @@ interface WorkOrder {
   customer: string;
   dueDate: string;
   assignedTo: string;
+  location: string;
+  equipmentType: string;
+  estimatedCost: string;
+  actualCost: string;
+  contactPerson: string;
+  phone: string;
+  email: string;
+  urgencyLevel: "Low" | "Medium" | "High" | "Critical";
+  completionPercentage: number;
   details: {
     modelNumber: string;
     labCode: string;
@@ -39,6 +48,18 @@ interface WorkOrder {
     departureDate: string;
     submitted: string;
     proofOfDelivery: string;
+    workDescription: string;
+    partsNeeded: string[];
+    laborHours: string;
+    invoiceNumber: string;
+    paymentStatus: string;
+    warrantyInfo: string;
+    certificationRequired: string;
+    healthSafetyNotes: string;
+    customerAddress: string;
+    serviceType: string;
+    technicalNotes: string;
+    qualityAssurance: string;
   };
 }
 
@@ -49,6 +70,15 @@ const mockWorkOrders: WorkOrder[] = [
     customer: "ACME Industries",
     dueDate: "Nov 24, 2024",
     assignedTo: "John Smith",
+    location: "Lab Building A - Room 203",
+    equipmentType: "Pressure Sensor",
+    estimatedCost: "$1,250.00",
+    actualCost: "$1,180.00",
+    contactPerson: "Robert Chen",
+    phone: "(555) 123-4567",
+    email: "r.chen@acmeindustries.com",
+    urgencyLevel: "High",
+    completionPercentage: 75,
     details: {
       modelNumber: "PPS-1734",
       labCode: "LAB-001",
@@ -73,7 +103,19 @@ const mockWorkOrders: WorkOrder[] = [
       operationType: "Calibration",
       departureDate: "11/25/2024",
       submitted: "Yes",
-      proofOfDelivery: "Pending"
+      proofOfDelivery: "Pending",
+      workDescription: "Full calibration and accuracy verification of pressure sensor including temperature compensation and linearity testing",
+      partsNeeded: ["Calibration Kit", "O-Rings", "Connector Cable"],
+      laborHours: "12.5",
+      invoiceNumber: "INV-2024-0125",
+      paymentStatus: "Pending",
+      warrantyInfo: "90-day calibration warranty",
+      certificationRequired: "ISO 17025 Certificate",
+      healthSafetyNotes: "Handle with care - pressurized equipment",
+      customerAddress: "1234 Industrial Blvd, Manufacturing City, MC 12345",
+      serviceType: "Calibration & Certification",
+      technicalNotes: "Updated firmware to v2.4.1, replaced faulty pressure membrane",
+      qualityAssurance: "Passed all QC checks - awaiting final certification"
     }
   },
   {
@@ -82,6 +124,15 @@ const mockWorkOrders: WorkOrder[] = [
     customer: "Tech Solutions Ltd",
     dueDate: "Nov 20, 2024",
     assignedTo: "Sarah Johnson",
+    location: "Lab Building B - Room 105",
+    equipmentType: "Precision Micrometer",
+    estimatedCost: "$850.00",
+    actualCost: "$825.00",
+    contactPerson: "Lisa Martinez",
+    phone: "(555) 987-6543",
+    email: "l.martinez@techsolutions.com",
+    urgencyLevel: "Medium",
+    completionPercentage: 100,
     details: {
       modelNumber: "844-441",
       labCode: "LAB-002",
@@ -106,7 +157,19 @@ const mockWorkOrders: WorkOrder[] = [
       operationType: "Repair",
       departureDate: "11/21/2024",
       submitted: "Yes",
-      proofOfDelivery: "Complete"
+      proofOfDelivery: "Complete",
+      workDescription: "Complete rebuild of micrometer mechanism including spindle replacement and accuracy verification",
+      partsNeeded: ["Spindle Assembly", "Graduation Ring", "Locking Mechanism"],
+      laborHours: "8.0",
+      invoiceNumber: "INV-2024-0089",
+      paymentStatus: "Paid",
+      warrantyInfo: "1-year repair warranty",
+      certificationRequired: "NIST Traceable Certificate",
+      healthSafetyNotes: "Standard safety precautions",
+      customerAddress: "5678 Technology Ave, Tech Park, TP 54321",
+      serviceType: "Repair & Calibration",
+      technicalNotes: "Replaced worn spindle threads, adjusted contact pressure",
+      qualityAssurance: "All measurements within ±0.0001\" tolerance"
     }
   },
   {
@@ -115,6 +178,15 @@ const mockWorkOrders: WorkOrder[] = [
     customer: "Manufacturing Corp",
     dueDate: "Nov 18, 2024",
     assignedTo: "Mike Davis",
+    location: "Lab Building C - Room 301",
+    equipmentType: "Hydraulic Press System",
+    estimatedCost: "$3,200.00",
+    actualCost: "TBD",
+    contactPerson: "David Wilson",
+    phone: "(555) 456-7890",
+    email: "d.wilson@manufacturingcorp.com",
+    urgencyLevel: "Critical",
+    completionPercentage: 35,
     details: {
       modelNumber: "1000PS",
       labCode: "LAB-003",
@@ -139,7 +211,19 @@ const mockWorkOrders: WorkOrder[] = [
       operationType: "Service",
       departureDate: "TBD",
       submitted: "No",
-      proofOfDelivery: "N/A"
+      proofOfDelivery: "N/A",
+      workDescription: "Major overhaul of hydraulic press system including pump replacement and safety system upgrade",
+      partsNeeded: ["Hydraulic Pump", "Pressure Relief Valve", "Safety Interlock System", "Hydraulic Seals Kit"],
+      laborHours: "35.0",
+      invoiceNumber: "TBD",
+      paymentStatus: "On Hold",
+      warrantyInfo: "2-year parts & labor warranty",
+      certificationRequired: "ASME Pressure Vessel Certification",
+      healthSafetyNotes: "CRITICAL: High pressure system - follow lockout/tagout procedures",
+      customerAddress: "9012 Manufacturing Dr, Industrial Zone, IZ 67890",
+      serviceType: "Major Repair & Recertification",
+      technicalNotes: "Waiting for custom pump assembly from manufacturer - ETA 2 weeks",
+      qualityAssurance: "Pending parts arrival and installation"
     }
   },
   {
@@ -148,6 +232,15 @@ const mockWorkOrders: WorkOrder[] = [
     customer: "Quality Systems Inc",
     dueDate: "Dec 01, 2024",
     assignedTo: "Emily Wilson",
+    location: "Lab Building A - Room 150",
+    equipmentType: "Digital Calibrator",
+    estimatedCost: "$650.00",
+    actualCost: "TBD",
+    contactPerson: "Jennifer Taylor",
+    phone: "(555) 234-5678",
+    email: "j.taylor@qualitysystems.com",
+    urgencyLevel: "Low",
+    completionPercentage: 15,
     details: {
       modelNumber: "CAL-500",
       labCode: "LAB-004",
@@ -172,7 +265,127 @@ const mockWorkOrders: WorkOrder[] = [
       operationType: "Inspection",
       departureDate: "12/02/2024",
       submitted: "Yes",
-      proofOfDelivery: "Pending"
+      proofOfDelivery: "Pending",
+      workDescription: "Annual calibration verification and software update for digital multifunction calibrator",
+      partsNeeded: ["Test Leads", "Software License"],
+      laborHours: "6.0",
+      invoiceNumber: "TBD",
+      paymentStatus: "Quote Approved",
+      warrantyInfo: "1-year calibration certificate",
+      certificationRequired: "ISO 17025 Multi-point Calibration",
+      healthSafetyNotes: "Standard electrical safety precautions",
+      customerAddress: "3456 Quality Blvd, Precision City, PC 98765",
+      serviceType: "Annual Calibration",
+      technicalNotes: "Initial diagnostics show all functions within spec",
+      qualityAssurance: "Scheduled for full calibration next week"
+    }
+  },
+  {
+    id: "WO-005",
+    status: "In Lab",
+    customer: "Aerospace Dynamics",
+    dueDate: "Dec 05, 2024",
+    assignedTo: "Tom Rodriguez",
+    location: "Lab Building D - Room 402",
+    equipmentType: "Torque Wrench Set",
+    estimatedCost: "$1,450.00",
+    actualCost: "TBD",
+    contactPerson: "Michael Chang",
+    phone: "(555) 345-6789",
+    email: "m.chang@aerospacedynamics.com",
+    urgencyLevel: "High",
+    completionPercentage: 60,
+    details: {
+      modelNumber: "TW-PRO-500",
+      labCode: "LAB-005",
+      comments: "Precision torque calibration for aerospace applications",
+      manufacturer: "SNAP-ON",
+      serialNumber: "SN567890",
+      batch: "B2024-005",
+      items: "8",
+      purchase: "PO-2024-005",
+      lots: "LOT-E345",
+      createdDate: "11/10/2024",
+      statusDate: "11/23/2024",
+      lastModified: "11/25/2024",
+      nextBy: "12/06/2024",
+      priority: "High",
+      custId: "CUST-005",
+      custSn: "AERO-SN-005",
+      cartId: "CART-005",
+      cartSn: "CSN-005",
+      poNumber: "PO-2024-005",
+      itemType: "Torque Tools",
+      operationType: "Precision Calibration",
+      departureDate: "12/06/2024",
+      submitted: "Yes",
+      proofOfDelivery: "Pending",
+      workDescription: "High-precision calibration of torque wrenches for critical aerospace fastener applications",
+      partsNeeded: ["Calibration Weights", "Adapter Kit", "Certification Labels"],
+      laborHours: "14.0",
+      invoiceNumber: "INV-2024-0156",
+      paymentStatus: "Pending",
+      warrantyInfo: "6-month precision calibration warranty",
+      certificationRequired: "AS9100 Compliant Certificate",
+      healthSafetyNotes: "Handle calibration weights with care - heavy lifting required",
+      customerAddress: "7890 Aerospace Way, Flight Center, FC 13579",
+      serviceType: "Precision Calibration & Certification",
+      technicalNotes: "All 8 wrenches require full range calibration per AS9100 standards",
+      qualityAssurance: "5 of 8 units completed - within ±2% tolerance requirement"
+    }
+  },
+  {
+    id: "WO-006",
+    status: "Completed",
+    customer: "Pharmaceutical Labs Inc",
+    dueDate: "Nov 15, 2024",
+    assignedTo: "Dr. Amanda Foster",
+    location: "Clean Room Lab - Room 501",
+    equipmentType: "Analytical Balance",
+    estimatedCost: "$950.00",
+    actualCost: "$920.00",
+    contactPerson: "Sarah Kim",
+    phone: "(555) 678-9012",
+    email: "s.kim@pharmabs.com",
+    urgencyLevel: "Medium",
+    completionPercentage: 100,
+    details: {
+      modelNumber: "AB-220",
+      labCode: "LAB-006",
+      comments: "FDA compliant calibration completed",
+      manufacturer: "METTLER TOLEDO",
+      serialNumber: "SN234567",
+      batch: "B2024-006",
+      items: "1",
+      purchase: "PO-2024-006",
+      lots: "LOT-F678",
+      createdDate: "10/28/2024",
+      statusDate: "11/13/2024",
+      lastModified: "11/15/2024",
+      nextBy: "11/16/2024",
+      priority: "Medium",
+      custId: "CUST-006",
+      custSn: "PHARM-SN-006",
+      cartId: "CART-006",
+      cartSn: "CSN-006",
+      poNumber: "PO-2024-006",
+      itemType: "Analytical Balance",
+      operationType: "FDA Calibration",
+      departureDate: "11/16/2024",
+      submitted: "Yes",
+      proofOfDelivery: "Complete",
+      workDescription: "FDA 21 CFR Part 11 compliant calibration and software validation for pharmaceutical weighing applications",
+      partsNeeded: ["Certified Weight Set", "Anti-static Kit", "Software Update"],
+      laborHours: "10.5",
+      invoiceNumber: "INV-2024-0134",
+      paymentStatus: "Paid",
+      warrantyInfo: "1-year FDA compliance warranty",
+      certificationRequired: "FDA 21 CFR Part 11 Certificate",
+      healthSafetyNotes: "Clean room protocols required - sterile handling procedures",
+      customerAddress: "2468 Pharma Drive, Medical District, MD 24681",
+      serviceType: "FDA Compliant Calibration",
+      technicalNotes: "Updated software to v3.2.1 for enhanced data integrity",
+      qualityAssurance: "Passed all FDA validation protocols - full documentation provided"
     }
   }
 ];
