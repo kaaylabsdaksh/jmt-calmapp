@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SidebarLayout from "./components/SidebarLayout";
-import Index from "./pages/Index";
+
 import WorkOrderDetail from "./pages/WorkOrderDetail";
 import WorkOrderSearchV2 from "./pages/WorkOrderSearchV2";
 import ModernWorkOrderManagement from "./pages/ModernWorkOrderManagement";
@@ -16,11 +16,7 @@ const App = () => {
         <Route path="/modern" element={<ModernWorkOrderManagement />} />
         
         {/* Routes with sidebar */}
-        <Route path="/" element={
-          <SidebarLayout>
-            <Index />
-          </SidebarLayout>
-        } />
+        <Route path="/" element={<ModernWorkOrderManagement />} />
         <Route path="/work-orders-v2" element={
           <SidebarLayout>
             <WorkOrderSearchV2 />
