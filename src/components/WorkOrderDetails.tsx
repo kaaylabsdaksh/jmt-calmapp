@@ -58,48 +58,48 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <div className="sticky top-0 z-50 bg-card/95 backdrop-blur border-b-2 shadow-lg">
-        <div className="px-6 sm:px-8 py-8">
+      <div className="sticky top-0 z-50 bg-card/95 backdrop-blur border-b shadow-sm">
+        <div className="px-4 sm:px-6 py-6">
           {/* Back Button Row */}
-          <div className="mb-6">
+          <div className="mb-4">
             <Button 
               variant="ghost" 
-              size="default" 
+              size="sm" 
               onClick={onBack}
-              className="flex items-center gap-2 text-base"
+              className="flex items-center gap-2"
             >
-              <ArrowLeft className="h-5 w-5" />
+              <ArrowLeft className="h-4 w-4" />
               Back
             </Button>
           </div>
           
           {/* Main Header Row */}
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-6">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-4">
             <div className="min-w-0 flex-1">
-              <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Edit Work Order</h1>
+              <h1 className="text-xl md:text-2xl font-bold text-foreground mb-2">Edit Work Order</h1>
               
               {/* Work Order Info - Split into multiple lines for better tablet display */}
-              <div className="space-y-2 text-base text-muted-foreground">
-                <div className="flex flex-wrap items-center gap-3 md:gap-6">
-                  <span>Work Order #: <span className="font-semibold text-foreground text-lg">{workOrderData.id}</span></span>
+              <div className="space-y-1 text-sm text-muted-foreground">
+                <div className="flex flex-wrap items-center gap-2 md:gap-4">
+                  <span>Work Order #: <span className="font-medium text-foreground">{workOrderData.id}</span></span>
                   <span className="hidden md:inline text-muted-foreground">•</span>
-                  <span>Act #: <span className="font-semibold text-foreground text-lg">{workOrderData.number}</span></span>
+                  <span>Act #: <span className="font-medium text-foreground">{workOrderData.number}</span></span>
                 </div>
-                <div className="flex flex-wrap items-center gap-3 md:gap-6">
-                  <span>Salesperson: <span className="text-primary font-semibold text-lg">{workOrderData.salesperson}</span></span>
+                <div className="flex flex-wrap items-center gap-2 md:gap-4">
+                  <span>Salesperson: <span className="text-primary font-medium">{workOrderData.salesperson}</span></span>
                   <span className="hidden md:inline text-muted-foreground">•</span>
-                  <span>Contact: <span className="text-primary font-semibold text-lg">{workOrderData.customer.contact}</span></span>
-                  <span className="text-muted-foreground text-base">({workOrderData.customer.phone})</span>
+                  <span>Contact: <span className="text-primary font-medium">{workOrderData.customer.contact}</span></span>
+                  <span className="text-muted-foreground">({workOrderData.customer.phone})</span>
                 </div>
               </div>
             </div>
             
-            <div className="flex items-center gap-3 shrink-0">
-              <Button variant="outline" size="default" className="hidden sm:flex">
+            <div className="flex items-center gap-2 shrink-0">
+              <Button variant="outline" size="sm" className="hidden sm:flex">
                 <Download className="h-4 w-4 mr-2" />
                 Export
               </Button>
-              <Button variant="outline" size="default">
+              <Button variant="outline" size="sm">
                 <Menu className="h-4 w-4 mr-2" />
                 <span className="hidden sm:inline">Menu</span>
               </Button>
@@ -107,11 +107,11 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
           </div>
 
           {/* Status and Type Badges */}
-          <div className="flex items-center gap-4 mb-6">
-            <Badge variant="secondary" className="bg-blue-50 text-blue-700 border-blue-200 px-4 py-2 text-base font-medium">
+          <div className="flex items-center gap-3 mb-4">
+            <Badge variant="secondary" className="bg-blue-50 text-blue-700 border-blue-200">
               {workOrderData.status}
             </Badge>
-            <Badge variant="outline" className="px-4 py-2 text-base font-medium">
+            <Badge variant="outline">
               {workOrderData.type}
             </Badge>
           </div>
@@ -119,7 +119,7 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
       </div>
 
       {/* Main Content */}
-      <div className="px-6 sm:px-8 py-8 pb-32 max-w-7xl mx-auto">
+      <div className="px-4 sm:px-6 py-6 pb-32">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           {/* Tab Navigation */}
           <TabsList className="grid w-full grid-cols-5 lg:grid-cols-10 h-auto p-1 gap-1">
