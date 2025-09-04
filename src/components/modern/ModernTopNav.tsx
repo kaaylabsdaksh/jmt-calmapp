@@ -1,7 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Plus, Download } from "lucide-react";
 
 const ModernTopNav = () => {
+  const navigate = useNavigate();
+
   return (
     <header className="bg-white border-b border-gray-200 px-6 py-4">
       <div className="flex items-center justify-between">
@@ -23,6 +26,7 @@ const ModernTopNav = () => {
           <Button 
             variant="outline" 
             className="rounded-xl shadow-sm hover:shadow-md transition-all duration-200"
+            onClick={() => navigate("/add-new-work-order")}
           >
             <Plus className="h-4 w-4 mr-2" />
             Add New
