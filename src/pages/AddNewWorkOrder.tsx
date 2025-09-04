@@ -5,14 +5,18 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowLeft, X, Download, Settings, User, CreditCard, Users, Package, FileText, Calculator, AlertCircle, ExternalLink, Award, Shield, BarChart, Save, LayoutGrid, Table } from "lucide-react";
+import { ArrowLeft, X, Download, Settings, User, CreditCard, Users, Package, FileText, Calculator, AlertCircle, ExternalLink, Award, Shield, BarChart, Save, LayoutGrid, Table, ChevronDown } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { WorkOrderItemsTable } from "@/components/WorkOrderItemsTable";
 import { WorkOrderItemsCards } from "@/components/WorkOrderItemsCards";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const AddNewWorkOrder = () => {
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
+  const [activeTab, setActiveTab] = useState("general");
   const [workOrderData, setWorkOrderData] = useState({
     workOrderNumber: "WO-QOAV2I",
     srDocument: "",
@@ -25,6 +29,22 @@ const AddNewWorkOrder = () => {
   });
 
   const [viewMode, setViewMode] = useState<'table' | 'cards'>('table');
+
+  const tabs = [
+    { value: "general", label: "General", icon: User, shortLabel: "Gen" },
+    { value: "account-info", label: "Account Info", icon: CreditCard, shortLabel: "Account" },
+    { value: "contacts", label: "Work Order Contacts", icon: Users, shortLabel: "Contacts" },
+    { value: "items", label: "Work Order Items", icon: Package, shortLabel: "Items" },
+    { value: "quote", label: "Quote Details", icon: FileText, shortLabel: "Quote" },
+    { value: "estimate", label: "Estimate", icon: Calculator, shortLabel: "Est" },
+    { value: "fail-log", label: "Fail Log", icon: AlertCircle, shortLabel: "Fail" },
+    { value: "external", label: "External Files", icon: ExternalLink, shortLabel: "Ext" },
+    { value: "cert", label: "Cert Files", icon: Award, shortLabel: "Cert" },
+    { value: "warranty", label: "Warranty", icon: Shield, shortLabel: "War" },
+    { value: "qfd", label: "QFD Data", icon: BarChart, shortLabel: "QFD" }
+  ];
+
+  const currentTab = tabs.find(tab => tab.value === activeTab);
 
   const handleSave = () => {
     // TODO: Implement save functionality
@@ -106,97 +126,57 @@ const AddNewWorkOrder = () => {
           </Card>
 
           {/* Tabs */}
-          <Tabs defaultValue="general" className="space-y-6">
-            <TabsList className="h-auto p-0 bg-transparent gap-2 sm:gap-3 flex flex-wrap justify-start">
-              <TabsTrigger 
-                value="general" 
-                className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 sm:py-3 bg-card border rounded-lg text-xs sm:text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
-              >
-                <User className="w-3 h-3 sm:w-4 sm:h-4" />
-                <span className="hidden sm:inline">General</span>
-                <span className="sm:hidden">Gen</span>
-              </TabsTrigger>
-              <TabsTrigger 
-                value="account-info" 
-                className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 sm:py-3 bg-card border rounded-lg text-xs sm:text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
-              >
-                <CreditCard className="w-3 h-3 sm:w-4 sm:h-4" />
-                <span className="hidden sm:inline">Account Info</span>
-                <span className="sm:hidden">Account</span>
-              </TabsTrigger>
-              <TabsTrigger 
-                value="contacts" 
-                className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 sm:py-3 bg-card border rounded-lg text-xs sm:text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
-              >
-                <Users className="w-3 h-3 sm:w-4 sm:h-4" />
-                <span className="hidden sm:inline">Work Order Contacts</span>
-                <span className="sm:hidden">Contacts</span>
-              </TabsTrigger>
-              <TabsTrigger 
-                value="items" 
-                className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 sm:py-3 bg-card border rounded-lg text-xs sm:text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
-              >
-                <Package className="w-3 h-3 sm:w-4 sm:h-4" />
-                <span className="hidden sm:inline">Work Order Items</span>
-                <span className="sm:hidden">Items</span>
-              </TabsTrigger>
-              <TabsTrigger 
-                value="quote" 
-                className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 sm:py-3 bg-card border rounded-lg text-xs sm:text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
-              >
-                <FileText className="w-3 h-3 sm:w-4 sm:h-4" />
-                <span className="hidden sm:inline">Quote Details</span>
-                <span className="sm:hidden">Quote</span>
-              </TabsTrigger>
-              <TabsTrigger 
-                value="estimate" 
-                className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 sm:py-3 bg-card border rounded-lg text-xs sm:text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
-              >
-                <Calculator className="w-3 h-3 sm:w-4 sm:h-4" />
-                <span className="hidden sm:inline">Estimate</span>
-                <span className="sm:hidden">Est</span>
-              </TabsTrigger>
-              <TabsTrigger 
-                value="fail-log" 
-                className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 sm:py-3 bg-card border rounded-lg text-xs sm:text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
-              >
-                <AlertCircle className="w-3 h-3 sm:w-4 sm:h-4" />
-                <span className="hidden sm:inline">Fail Log</span>
-                <span className="sm:hidden">Fail</span>
-              </TabsTrigger>
-              <TabsTrigger 
-                value="external" 
-                className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 sm:py-3 bg-card border rounded-lg text-xs sm:text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
-              >
-                <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4" />
-                <span className="hidden sm:inline">External Files</span>
-                <span className="sm:hidden">Ext</span>
-              </TabsTrigger>
-              <TabsTrigger 
-                value="cert" 
-                className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 sm:py-3 bg-card border rounded-lg text-xs sm:text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
-              >
-                <Award className="w-3 h-3 sm:w-4 sm:h-4" />
-                <span className="hidden sm:inline">Cert Files</span>
-                <span className="sm:hidden">Cert</span>
-              </TabsTrigger>
-              <TabsTrigger 
-                value="warranty" 
-                className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 sm:py-3 bg-card border rounded-lg text-xs sm:text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
-              >
-                <Shield className="w-3 h-3 sm:w-4 sm:h-4" />
-                <span className="hidden sm:inline">Warranty</span>
-                <span className="sm:hidden">War</span>
-              </TabsTrigger>
-              <TabsTrigger 
-                value="qfd" 
-                className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 sm:py-3 bg-card border rounded-lg text-xs sm:text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
-              >
-                <BarChart className="w-3 h-3 sm:w-4 sm:h-4" />
-                <span className="hidden sm:inline">QFD Data</span>
-                <span className="sm:hidden">QFD</span>
-              </TabsTrigger>
-            </TabsList>
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+            {isMobile ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button 
+                    variant="outline" 
+                    className="w-full justify-between bg-card border shadow-sm"
+                  >
+                    <div className="flex items-center gap-2">
+                      {currentTab && (
+                        <currentTab.icon className="w-4 h-4" />
+                      )}
+                      <span>{currentTab?.shortLabel}</span>
+                    </div>
+                    <ChevronDown className="w-4 h-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56 bg-popover border shadow-lg z-50" align="start">
+                  {tabs.map((tab) => {
+                    const IconComponent = tab.icon;
+                    return (
+                      <DropdownMenuItem 
+                        key={tab.value}
+                        onSelect={() => setActiveTab(tab.value)}
+                        className="flex items-center gap-2 cursor-pointer hover:bg-muted"
+                      >
+                        <IconComponent className="w-4 h-4" />
+                        <span>{tab.shortLabel}</span>
+                      </DropdownMenuItem>
+                    );
+                  })}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <TabsList className="h-auto p-0 bg-transparent gap-2 sm:gap-3 flex flex-wrap justify-start">
+                {tabs.map((tab) => {
+                  const IconComponent = tab.icon;
+                  return (
+                    <TabsTrigger 
+                      key={tab.value}
+                      value={tab.value} 
+                      className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 sm:py-3 bg-card border rounded-lg text-xs sm:text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
+                    >
+                      <IconComponent className="w-3 h-3 sm:w-4 sm:h-4" />
+                      <span className="hidden sm:inline">{tab.label}</span>
+                      <span className="sm:hidden">{tab.shortLabel}</span>
+                    </TabsTrigger>
+                  );
+                })}
+              </TabsList>
+            )}
 
             <TabsContent value="general" className="space-y-6">
               <Card>
