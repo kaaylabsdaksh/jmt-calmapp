@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowLeft, X, Download, Settings } from "lucide-react";
+import { ArrowLeft, X, Download, Settings, User, CreditCard, Users, Package, FileText, Calculator, AlertCircle, ExternalLink, Award, Shield, BarChart } from "lucide-react";
 
 const AddNewWorkOrder = () => {
   const navigate = useNavigate();
@@ -105,77 +105,77 @@ const AddNewWorkOrder = () => {
                 value="general" 
                 className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
               >
-                <div className="w-4 h-4 rounded bg-current opacity-70"></div>
+                <User className="w-4 h-4" />
                 General
               </TabsTrigger>
               <TabsTrigger 
                 value="account-info" 
                 className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
               >
-                <div className="w-4 h-4 rounded bg-current opacity-70"></div>
+                <CreditCard className="w-4 h-4" />
                 Account Info
               </TabsTrigger>
               <TabsTrigger 
                 value="contacts" 
                 className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
               >
-                <div className="w-4 h-4 rounded bg-current opacity-70"></div>
+                <Users className="w-4 h-4" />
                 Work Order Contacts
               </TabsTrigger>
               <TabsTrigger 
                 value="items" 
                 className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
               >
-                <div className="w-4 h-4 rounded bg-current opacity-70"></div>
+                <Package className="w-4 h-4" />
                 Work Order Items
               </TabsTrigger>
               <TabsTrigger 
                 value="quote" 
                 className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
               >
-                <div className="w-4 h-4 rounded bg-current opacity-70"></div>
+                <FileText className="w-4 h-4" />
                 Quote Details
               </TabsTrigger>
               <TabsTrigger 
                 value="estimate" 
                 className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
               >
-                <div className="w-4 h-4 rounded bg-current opacity-70"></div>
+                <Calculator className="w-4 h-4" />
                 Estimate
               </TabsTrigger>
               <TabsTrigger 
                 value="fail-log" 
                 className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
               >
-                <div className="w-4 h-4 rounded bg-current opacity-70"></div>
+                <AlertCircle className="w-4 h-4" />
                 Fail Log
               </TabsTrigger>
               <TabsTrigger 
                 value="external" 
                 className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
               >
-                <div className="w-4 h-4 rounded bg-current opacity-70"></div>
+                <ExternalLink className="w-4 h-4" />
                 External Files
               </TabsTrigger>
               <TabsTrigger 
                 value="cert" 
                 className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
               >
-                <div className="w-4 h-4 rounded bg-current opacity-70"></div>
+                <Award className="w-4 h-4" />
                 Cert Files
               </TabsTrigger>
               <TabsTrigger 
                 value="warranty" 
                 className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
               >
-                <div className="w-4 h-4 rounded bg-current opacity-70"></div>
+                <Shield className="w-4 h-4" />
                 Warranty
               </TabsTrigger>
               <TabsTrigger 
                 value="qfd" 
                 className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
               >
-                <div className="w-4 h-4 rounded bg-current opacity-70"></div>
+                <BarChart className="w-4 h-4" />
                 QFD Data
               </TabsTrigger>
             </TabsList>
