@@ -435,26 +435,24 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
 
   // Work Order Details Dialog Component
   const WorkOrderDetailsDialog = ({ order }: { order: WorkOrder }) => (
-    <DialogContent className="max-w-4xl w-[95vw] max-h-[90vh] overflow-y-auto">
+    <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
       <DialogHeader>
-        <DialogTitle className="flex flex-col sm:flex-row sm:items-center gap-3 text-lg sm:text-xl">
+        <DialogTitle className="flex items-center gap-3 text-xl">
           <span className="font-bold text-blue-600">{order.id}</span>
-          <div className="flex items-center gap-2">
-            {getStatusBadge(order.status)}
-            <span className={cn("px-3 py-1 rounded-md text-sm font-medium",
-              order.details.priority === "Critical" ? "bg-red-100 text-red-800" :
-              order.details.priority === "High" ? "bg-orange-100 text-orange-800" :
-              order.details.priority === "Medium" ? "bg-yellow-100 text-yellow-800" :
-              "bg-gray-100 text-gray-800"
-            )}>{order.details.priority} Priority</span>
-          </div>
+          {getStatusBadge(order.status)}
+          <span className={cn("px-3 py-1 rounded-md text-sm font-medium",
+            order.details.priority === "Critical" ? "bg-red-100 text-red-800" :
+            order.details.priority === "High" ? "bg-orange-100 text-orange-800" :
+            order.details.priority === "Medium" ? "bg-yellow-100 text-yellow-800" :
+            "bg-gray-100 text-gray-800"
+          )}>{order.details.priority} Priority</span>
         </DialogTitle>
       </DialogHeader>
 
       <div className="space-y-6">
         {/* Customer & Basic Info */}
         <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
             <div>
               <span className="text-gray-600 font-medium">Customer:</span>
               <div className="font-semibold text-gray-900">{order.customer}</div>
@@ -616,16 +614,16 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
         </div>
 
         {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row justify-end gap-3 pt-4 border-t border-gray-200">
-          <Button variant="outline" onClick={() => handleEditWorkOrder(order.id)} className="w-full sm:w-auto">
+        <div className="flex justify-end gap-3 pt-4 border-t border-gray-200">
+          <Button variant="outline" onClick={() => handleEditWorkOrder(order.id)}>
             <Edit className="h-4 w-4 mr-2" />
             Edit Order
           </Button>
-          <Button variant="outline" className="w-full sm:w-auto">
+          <Button variant="outline">
             <User className="h-4 w-4 mr-2" />
             Assign Tech
           </Button>
-          <Button className="w-full sm:w-auto">
+          <Button>
             <RefreshCw className="h-4 w-4 mr-2" />
             Update Status
           </Button>
@@ -646,37 +644,37 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
             </p>
           </div>
           
-        {/* View Toggle Buttons */}
-        <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-lg">
-          <Button
-            variant={viewMode === 'list' ? 'default' : 'ghost'}
-            size="sm"
-            onClick={() => onViewModeChange('list')}
-            className={cn(
-              "h-8 px-2 sm:px-3 rounded-md transition-all text-xs sm:text-sm",
-              viewMode === 'list' 
-                ? "bg-white shadow-sm text-gray-900" 
-                : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
-            )}
-          >
-            <List className="h-4 w-4 sm:mr-2" />
-            <span className="hidden sm:inline">List</span>
-          </Button>
-          <Button
-            variant={viewMode === 'grid' ? 'default' : 'ghost'}
-            size="sm"
-            onClick={() => onViewModeChange('grid')}
-            className={cn(
-              "h-8 px-2 sm:px-3 rounded-md transition-all text-xs sm:text-sm",
-              viewMode === 'grid' 
-                ? "bg-white shadow-sm text-gray-900" 
-                : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
-            )}
-          >
-            <Grid3X3 className="h-4 w-4 sm:mr-2" />
-            <span className="hidden sm:inline">Grid</span>
-          </Button>
-        </div>
+          {/* View Toggle Buttons */}
+          <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-lg">
+            <Button
+              variant={viewMode === 'list' ? 'default' : 'ghost'}
+              size="sm"
+              onClick={() => onViewModeChange('list')}
+              className={cn(
+                "h-8 px-3 rounded-md transition-all",
+                viewMode === 'list' 
+                  ? "bg-white shadow-sm text-gray-900" 
+                  : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
+              )}
+            >
+              <List className="h-4 w-4 mr-2" />
+              List
+            </Button>
+            <Button
+              variant={viewMode === 'grid' ? 'default' : 'ghost'}
+              size="sm"
+              onClick={() => onViewModeChange('grid')}
+              className={cn(
+                "h-8 px-3 rounded-md transition-all",
+                viewMode === 'grid' 
+                  ? "bg-white shadow-sm text-gray-900" 
+                  : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
+              )}
+            >
+              <Grid3X3 className="h-4 w-4 mr-2" />
+              Grid
+            </Button>
+          </div>
         </div>
 
         {/* Quick Status Filters */}
@@ -753,133 +751,73 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
       {/* Content - List or Grid View */}
       <div className="overflow-hidden">
         {viewMode === 'list' ? (
-          <>
-            {/* Desktop List View - Table */}
-            <div className="hidden md:block">
-              <Table>
-                <TableHeader className="bg-gray-50 sticky top-0">
-                  <TableRow className="hover:bg-gray-50">
-                    <TableHead className="font-semibold text-gray-900">Work Order #</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Status</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Priority</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Customer</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Due Date</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Assigned To</TableHead>
-                    <TableHead className="w-12"></TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {filteredWorkOrders.map((order) => (
-                    <TableRow
-                      key={order.id}
-                      className="hover:bg-gray-50 cursor-pointer border-b border-gray-100"
-                      onClick={() => openDetails(order)}
-                    >
-                      <TableCell className="font-medium text-blue-600">
-                        {order.id}
-                      </TableCell>
-                      <TableCell>
-                        {getStatusBadge(order.status)}
-                      </TableCell>
-                      <TableCell>
-                        <span className={cn("px-2 py-1 rounded-md text-xs font-medium",
-                          order.details.priority === "Critical" ? "bg-red-100 text-red-800" :
-                          order.details.priority === "High" ? "bg-orange-100 text-orange-800" :
-                          order.details.priority === "Medium" ? "bg-yellow-100 text-yellow-800" :
-                          "bg-gray-100 text-gray-800"
-                        )}>{order.details.priority}</span>
-                      </TableCell>
-                      <TableCell className="font-medium">{order.customer}</TableCell>
-                      <TableCell>{order.dueDate}</TableCell>
-                      <TableCell>{order.assignedTo}</TableCell>
-                      <TableCell>
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
-                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0 data-[state=open]:bg-blue-100 data-[state=open]:text-blue-700">
-                              <MoreHorizontal className="h-4 w-4" />
-                            </Button>
-                          </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end" className="bg-white border shadow-lg z-50 rounded-lg">
-                              <DropdownMenuItem className="flex items-center gap-2" onClick={() => handleEditWorkOrder(order.id)}>
-                                <Edit className="h-4 w-4" />
-                                Edit
-                              </DropdownMenuItem>
-                             <DropdownMenuItem className="flex items-center gap-2">
-                               <User className="h-4 w-4" />
-                               Assign Tech
-                             </DropdownMenuItem>
-                             <DropdownMenuItem className="flex items-center gap-2">
-                               <RefreshCw className="h-4 w-4" />
-                               Update Status
-                             </DropdownMenuItem>
-                           </DropdownMenuContent>
-                        </DropdownMenu>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
-
-            {/* Mobile/Tablet List View - Cards */}
-            <div className="md:hidden p-4 space-y-4">
+          // List View - Table
+          <Table>
+            <TableHeader className="bg-gray-50 sticky top-0">
+              <TableRow className="hover:bg-gray-50">
+                <TableHead className="font-semibold text-gray-900">Work Order #</TableHead>
+                <TableHead className="font-semibold text-gray-900">Status</TableHead>
+                <TableHead className="font-semibold text-gray-900">Priority</TableHead>
+                <TableHead className="font-semibold text-gray-900">Customer</TableHead>
+                <TableHead className="font-semibold text-gray-900">Due Date</TableHead>
+                <TableHead className="font-semibold text-gray-900">Assigned To</TableHead>
+                <TableHead className="w-12"></TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
               {filteredWorkOrders.map((order) => (
-                <div
+                <TableRow
                   key={order.id}
-                  className="bg-white border border-gray-200 rounded-lg shadow-sm p-4 cursor-pointer hover:shadow-md transition-shadow"
+                  className="hover:bg-gray-50 cursor-pointer border-b border-gray-100"
                   onClick={() => openDetails(order)}
                 >
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="flex items-center gap-3">
-                      <span className="font-bold text-blue-600 text-lg">{order.id}</span>
-                      {getStatusBadge(order.status)}
-                    </div>
+                  <TableCell className="font-medium text-blue-600">
+                    {order.id}
+                  </TableCell>
+                  <TableCell>
+                    {getStatusBadge(order.status)}
+                  </TableCell>
+                  <TableCell>
+                    <span className={cn("px-2 py-1 rounded-md text-xs font-medium",
+                      order.details.priority === "Critical" ? "bg-red-100 text-red-800" :
+                      order.details.priority === "High" ? "bg-orange-100 text-orange-800" :
+                      order.details.priority === "Medium" ? "bg-yellow-100 text-yellow-800" :
+                      "bg-gray-100 text-gray-800"
+                    )}>{order.details.priority}</span>
+                  </TableCell>
+                  <TableCell className="font-medium">{order.customer}</TableCell>
+                  <TableCell>{order.dueDate}</TableCell>
+                  <TableCell>{order.assignedTo}</TableCell>
+                  <TableCell>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
-                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0 data-[state=open]:bg-blue-100 data-[state=open]:text-blue-700">
                           <MoreHorizontal className="h-4 w-4" />
                         </Button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="bg-white border shadow-lg z-50 rounded-lg">
-                        <DropdownMenuItem className="flex items-center gap-2" onClick={() => handleEditWorkOrder(order.id)}>
-                          <Edit className="h-4 w-4" />
-                          Edit
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="flex items-center gap-2">
-                          <User className="h-4 w-4" />
-                          Assign Tech
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="flex items-center gap-2">
-                          <RefreshCw className="h-4 w-4" />
-                          Update Status
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
+                        <DropdownMenuContent align="end" className="bg-white border shadow-lg z-50 rounded-lg">
+                          <DropdownMenuItem className="flex items-center gap-2" onClick={() => handleEditWorkOrder(order.id)}>
+                            <Edit className="h-4 w-4" />
+                            Edit
+                          </DropdownMenuItem>
+                         <DropdownMenuItem className="flex items-center gap-2">
+                           <User className="h-4 w-4" />
+                           Assign Tech
+                         </DropdownMenuItem>
+                         <DropdownMenuItem className="flex items-center gap-2">
+                           <RefreshCw className="h-4 w-4" />
+                           Update Status
+                         </DropdownMenuItem>
+                       </DropdownMenuContent>
                     </DropdownMenu>
-                  </div>
-                  
-                  <div className="space-y-2 text-sm">
-                    <div>
-                      <h3 className="font-semibold text-gray-900">{order.customer}</h3>
-                      <p className="text-gray-600">Assigned to: {order.assignedTo}</p>
-                    </div>
-                    
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-500">Due: <span className="font-medium text-gray-900">{order.dueDate}</span></span>
-                      <span className={cn("px-2 py-1 rounded-md text-xs font-medium",
-                        order.details.priority === "Critical" ? "bg-red-100 text-red-800" :
-                        order.details.priority === "High" ? "bg-orange-100 text-orange-800" :
-                        order.details.priority === "Medium" ? "bg-yellow-100 text-yellow-800" :
-                        "bg-gray-100 text-gray-800"
-                      )}>{order.details.priority}</span>
-                    </div>
-                  </div>
-                </div>
+                  </TableCell>
+                </TableRow>
               ))}
-            </div>
-          </>
+            </TableBody>
+          </Table>
         ) : (
           // Grid View - Cards
-          <div className="p-4 sm:p-6 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
+          <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
             {filteredWorkOrders.map((order) => (
               <div
                 key={order.id}
@@ -934,11 +872,11 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                   <div className="grid grid-cols-2 gap-3 text-sm">
                     <div>
                       <span className="text-gray-500">Model:</span>
-                      <div className="font-mono text-xs truncate">{order.details.modelNumber}</div>
+                      <div className="font-mono text-xs">{order.details.modelNumber}</div>
                     </div>
                     <div>
                       <span className="text-gray-500">Manufacturer:</span>
-                      <div className="font-medium text-xs truncate">{order.details.manufacturer}</div>
+                      <div className="font-medium text-xs">{order.details.manufacturer}</div>
                     </div>
                   </div>
 
@@ -973,13 +911,13 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
       </Dialog>
 
       {/* Pagination */}
-      <div className="p-4 sm:p-6 border-t border-gray-200">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="text-sm text-gray-600 order-2 sm:order-1">
+      <div className="p-6 border-t border-gray-200">
+        <div className="flex items-center justify-between">
+          <div className="text-sm text-gray-600">
             Showing {((currentPage - 1) * itemsPerPage) + 1} to {Math.min(currentPage * itemsPerPage, mockWorkOrders.length)} of {mockWorkOrders.length} results
           </div>
           
-          <div className="flex items-center gap-2 order-1 sm:order-2">
+          <div className="flex items-center gap-2">
             <Button
               variant="outline"
               size="sm"
@@ -987,8 +925,8 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
               disabled={currentPage === 1}
               className="rounded-lg"
             >
-              <ChevronLeft className="h-4 w-4 sm:mr-1" />
-              <span className="hidden sm:inline">Previous</span>
+              <ChevronLeft className="h-4 w-4 mr-1" />
+              Previous
             </Button>
             
             <div className="flex gap-1">
@@ -1015,8 +953,8 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
               disabled={currentPage === totalPages}
               className="rounded-lg"
             >
-              <span className="hidden sm:inline">Next</span>
-              <ChevronRight className="h-4 w-4 sm:ml-1" />
+              Next
+              <ChevronRight className="h-4 w-4 ml-1" />
             </Button>
           </div>
         </div>

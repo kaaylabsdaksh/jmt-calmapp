@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowLeft, X, Download, Settings, User, CreditCard, Users, Package, FileText, Calculator, AlertCircle, ExternalLink, Award, Shield, BarChart, Save, LayoutGrid, Table, ChevronDown } from "lucide-react";
+import { ArrowLeft, X, Download, Settings, User, CreditCard, Users, Package, FileText, Calculator, AlertCircle, ExternalLink, Award, Shield, BarChart, Save, LayoutGrid, Table } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { WorkOrderItemsTable } from "@/components/WorkOrderItemsTable";
 import { WorkOrderItemsCards } from "@/components/WorkOrderItemsCards";
@@ -25,7 +25,6 @@ const AddNewWorkOrder = () => {
   });
 
   const [viewMode, setViewMode] = useState<'table' | 'cards'>('table');
-  const [activeTab, setActiveTab] = useState("general");
 
   const handleSave = () => {
     // TODO: Implement save functionality
@@ -57,33 +56,28 @@ const AddNewWorkOrder = () => {
       </header>
 
       {/* Navigation Bar */}
-      <div className="bg-card border-b px-4 sm:px-6 py-4">
+      <div className="bg-card border-b px-6 py-4">
         <div className="flex items-center justify-between">
           <Button 
             variant="ghost" 
-            size="sm"
             onClick={() => navigate("/")}
-            className="flex items-center gap-2 text-muted-foreground hover:text-foreground text-xs sm:text-sm"
+            className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
           >
             <ArrowLeft className="h-4 w-4" />
-            <span className="hidden sm:inline">Back to Work Orders</span>
-            <span className="sm:hidden">Back</span>
+            Back to Work Orders
           </Button>
-          <h1 className="text-lg sm:text-xl font-semibold text-foreground absolute left-1/2 transform -translate-x-1/2">
-            <span className="hidden sm:inline">Add New Work Order</span>
-            <span className="sm:hidden">New Work Order</span>
-          </h1>
+          <h1 className="text-xl font-semibold text-foreground absolute left-1/2 transform -translate-x-1/2">Add New Work Order</h1>
           <div></div>
         </div>
       </div>
 
       {/* Content Area */}
-      <div className="px-4 sm:px-6 py-4 sm:py-6 pb-48">
-        <div className="w-full space-y-4 sm:space-y-6">
+      <div className="px-6 py-6 pb-24">
+        <div className="w-full space-y-6">
           {/* Header Info Card */}
           <Card>
-            <CardContent className="p-4 sm:p-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            <CardContent className="p-6">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                 <div>
                   <Label className="text-sm font-medium text-black">Work Order #</Label>
                   <div className="text-lg font-bold text-black mt-1">{workOrderData.workOrderNumber}</div>
@@ -111,86 +105,8 @@ const AddNewWorkOrder = () => {
           </Card>
 
           {/* Tabs */}
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-            {/* Mobile Dropdown */}
-            <div className="md:hidden">
-              <Select value={activeTab} onValueChange={setActiveTab}>
-                <SelectTrigger className="w-full">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="general">
-                    <div className="flex items-center gap-2">
-                      <User className="w-4 h-4" />
-                      General
-                    </div>
-                  </SelectItem>
-                  <SelectItem value="account-info">
-                    <div className="flex items-center gap-2">
-                      <CreditCard className="w-4 h-4" />
-                      Account Info
-                    </div>
-                  </SelectItem>
-                  <SelectItem value="contacts">
-                    <div className="flex items-center gap-2">
-                      <Users className="w-4 h-4" />
-                      Work Order Contacts
-                    </div>
-                  </SelectItem>
-                  <SelectItem value="items">
-                    <div className="flex items-center gap-2">
-                      <Package className="w-4 h-4" />
-                      Work Order Items
-                    </div>
-                  </SelectItem>
-                  <SelectItem value="quote">
-                    <div className="flex items-center gap-2">
-                      <FileText className="w-4 h-4" />
-                      Quote Details
-                    </div>
-                  </SelectItem>
-                  <SelectItem value="estimate">
-                    <div className="flex items-center gap-2">
-                      <Calculator className="w-4 h-4" />
-                      Estimate
-                    </div>
-                  </SelectItem>
-                  <SelectItem value="fail-log">
-                    <div className="flex items-center gap-2">
-                      <AlertCircle className="w-4 h-4" />
-                      Fail Log
-                    </div>
-                  </SelectItem>
-                  <SelectItem value="external">
-                    <div className="flex items-center gap-2">
-                      <ExternalLink className="w-4 h-4" />
-                      External Files
-                    </div>
-                  </SelectItem>
-                  <SelectItem value="cert">
-                    <div className="flex items-center gap-2">
-                      <Award className="w-4 h-4" />
-                      Cert Files
-                    </div>
-                  </SelectItem>
-                  <SelectItem value="warranty">
-                    <div className="flex items-center gap-2">
-                      <Shield className="w-4 h-4" />
-                      Warranty
-                    </div>
-                  </SelectItem>
-                  <SelectItem value="qfd">
-                    <div className="flex items-center gap-2">
-                      <BarChart className="w-4 h-4" />
-                      QFD Data
-                    </div>
-                  </SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            
-            {/* Desktop Tabs */}
-            <TabsList className="h-auto p-0 bg-transparent gap-3 flex-wrap justify-start hidden md:flex">
+          <Tabs defaultValue="general" className="space-y-6">
+            <TabsList className="h-auto p-0 bg-transparent gap-3 flex flex-wrap justify-start">
               <TabsTrigger 
                 value="general" 
                 className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"

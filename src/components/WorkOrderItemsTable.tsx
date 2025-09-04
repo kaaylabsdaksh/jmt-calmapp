@@ -92,103 +92,54 @@ export const WorkOrderItemsTable = () => {
         </Button>
       </div>
       
-      {/* Desktop Table */}
-      <div className="hidden lg:block overflow-x-auto">
-        <table className="w-full text-sm">
-          <thead className="bg-muted">
-            <tr>
-              <th className="text-left p-3 w-12">
+      <table className="w-full text-sm">
+        <thead className="bg-muted">
+          <tr>
+            <th className="text-left p-3 w-12">
+              <Checkbox />
+            </th>
+            <th className="text-left p-3 font-medium">Report #</th>
+            <th className="text-left p-3 font-medium">Manufacturer</th>
+            <th className="text-left p-3 font-medium">Model</th>
+            <th className="text-left p-3 font-medium">Serial #</th>
+            <th className="text-left p-3 font-medium">Created</th>
+            <th className="text-left p-3 font-medium">Departure</th>
+            <th className="text-left p-3 font-medium">Item Status</th>
+            <th className="text-left p-3 font-medium">Item Type</th>
+            <th className="text-left p-3 font-medium">Deliver By Date</th>
+            <th className="text-left p-3 font-medium">PO #</th>
+            <th className="text-left p-3 font-medium">Open PO/CO</th>
+          </tr>
+        </thead>
+        <tbody>
+          {mockData.map((item, index) => (
+            <tr key={item.id} className={`border-t ${index > 0 ? 'hover:bg-muted/50' : ''}`}>
+              <td className="p-3">
                 <Checkbox />
-              </th>
-              <th className="text-left p-3 font-medium">Report #</th>
-              <th className="text-left p-3 font-medium">Manufacturer</th>
-              <th className="text-left p-3 font-medium">Model</th>
-              <th className="text-left p-3 font-medium">Serial #</th>
-              <th className="text-left p-3 font-medium">Created</th>
-              <th className="text-left p-3 font-medium">Departure</th>
-              <th className="text-left p-3 font-medium">Item Status</th>
-              <th className="text-left p-3 font-medium">Item Type</th>
-              <th className="text-left p-3 font-medium">Deliver By Date</th>
-              <th className="text-left p-3 font-medium">PO #</th>
-              <th className="text-left p-3 font-medium">Open PO/CO</th>
+              </td>
+              <td className="p-3">{item.reportNumber}</td>
+              <td className="p-3">{item.manufacturer}</td>
+              <td className="p-3">{item.model}</td>
+              <td className="p-3">{item.serialNumber}</td>
+              <td className="p-3">{item.created}</td>
+              <td className="p-3">{item.departure}</td>
+              <td className="p-3">{item.itemStatus}</td>
+              <td className="p-3">{item.itemType}</td>
+              <td className="p-3">{item.deliverByDate}</td>
+              <td className="p-3">{item.poNumber}</td>
+              <td className="p-3">
+                <Button variant="link" className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto">
+                  {index === 0 ? 'Clear' : 'View'}
+                </Button>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {mockData.map((item, index) => (
-              <tr key={item.id} className={`border-t ${index > 0 ? 'hover:bg-muted/50' : ''}`}>
-                <td className="p-3">
-                  <Checkbox />
-                </td>
-                <td className="p-3">{item.reportNumber}</td>
-                <td className="p-3">{item.manufacturer}</td>
-                <td className="p-3">{item.model}</td>
-                <td className="p-3">{item.serialNumber}</td>
-                <td className="p-3">{item.created}</td>
-                <td className="p-3">{item.departure}</td>
-                <td className="p-3">{item.itemStatus}</td>
-                <td className="p-3">{item.itemType}</td>
-                <td className="p-3">{item.deliverByDate}</td>
-                <td className="p-3">{item.poNumber}</td>
-                <td className="p-3">
-                  <Button variant="link" className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto">
-                    {index === 0 ? 'Clear' : 'View'}
-                  </Button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      {/* Mobile/Tablet Card View */}
-      <div className="lg:hidden space-y-3 p-4">
-        {mockData.map((item, index) => (
-          <div key={item.id} className="bg-card border rounded-lg p-4 space-y-3">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Checkbox />
-                <span className="font-medium text-sm">Report #{item.reportNumber}</span>
-              </div>
-              <Button variant="link" className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto">
-                {index === 0 ? 'Clear' : 'View'}
-              </Button>
-            </div>
-            
-            <div className="grid grid-cols-2 gap-3 text-sm">
-              <div>
-                <span className="text-muted-foreground">Manufacturer:</span>
-                <div className="font-medium truncate">{item.manufacturer}</div>
-              </div>
-              <div>
-                <span className="text-muted-foreground">Model:</span>
-                <div className="font-medium truncate">{item.model}</div>
-              </div>
-              <div>
-                <span className="text-muted-foreground">Serial #:</span>
-                <div className="font-medium truncate">{item.serialNumber}</div>
-              </div>
-              <div>
-                <span className="text-muted-foreground">Status:</span>
-                <div className="font-medium truncate">{item.itemStatus}</div>
-              </div>
-            </div>
-            
-            {(item.created || item.departure || item.deliverByDate) && (
-              <div className="pt-2 border-t text-xs text-muted-foreground space-y-1">
-                {item.created && <div>Created: {item.created}</div>}
-                {item.departure && <div>Departure: {item.departure}</div>}
-                {item.deliverByDate && <div>Deliver By: {item.deliverByDate}</div>}
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
+          ))}
+        </tbody>
+      </table>
       
-      {mockData.length === 0 && (
-        <div className="p-8 text-center text-muted-foreground">
-          No data to display
-        </div>
-      )}
+      <div className="p-8 text-center text-muted-foreground">
+        No data to display
+      </div>
     </div>
   );
 };
