@@ -508,6 +508,86 @@ const AddNewWorkOrder = () => {
                               </Button>
                             </td>
                           </tr>
+                          <tr className="border-t hover:bg-muted/50">
+                            <td className="p-3">
+                              <Checkbox />
+                            </td>
+                            <td className="p-3">3456</td>
+                            <td className="p-3">General Electric</td>
+                            <td className="p-3">GE-4500</td>
+                            <td className="p-3">GE445789</td>
+                            <td className="p-3">2024-01-15</td>
+                            <td className="p-3">2024-02-01</td>
+                            <td className="p-3">In Progress</td>
+                            <td className="p-3">Transformer</td>
+                            <td className="p-3">2024-03-15</td>
+                            <td className="p-3">PO-2024-001</td>
+                            <td className="p-3">
+                              <Button variant="link" className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto">
+                                View
+                              </Button>
+                            </td>
+                          </tr>
+                          <tr className="border-t hover:bg-muted/50">
+                            <td className="p-3">
+                              <Checkbox />
+                            </td>
+                            <td className="p-3">3457</td>
+                            <td className="p-3">Siemens</td>
+                            <td className="p-3">S7-1200</td>
+                            <td className="p-3">SIE123456</td>
+                            <td className="p-3">2024-01-20</td>
+                            <td className="p-3">2024-02-05</td>
+                            <td className="p-3">Completed</td>
+                            <td className="p-3">Control Panel</td>
+                            <td className="p-3">2024-02-28</td>
+                            <td className="p-3">PO-2024-002</td>
+                            <td className="p-3">
+                              <Button variant="link" className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto">
+                                View
+                              </Button>
+                            </td>
+                          </tr>
+                          <tr className="border-t hover:bg-muted/50">
+                            <td className="p-3">
+                              <Checkbox />
+                            </td>
+                            <td className="p-3">3458</td>
+                            <td className="p-3">ABB</td>
+                            <td className="p-3">REF615</td>
+                            <td className="p-3">ABB789123</td>
+                            <td className="p-3">2024-01-25</td>
+                            <td className="p-3">2024-02-10</td>
+                            <td className="p-3">Testing</td>
+                            <td className="p-3">Protection Relay</td>
+                            <td className="p-3">2024-03-01</td>
+                            <td className="p-3">PO-2024-003</td>
+                            <td className="p-3">
+                              <Button variant="link" className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto">
+                                View
+                              </Button>
+                            </td>
+                          </tr>
+                          <tr className="border-t hover:bg-muted/50">
+                            <td className="p-3">
+                              <Checkbox />
+                            </td>
+                            <td className="p-3">3459</td>
+                            <td className="p-3">Schneider Electric</td>
+                            <td className="p-3">SEPAM-80</td>
+                            <td className="p-3">SCH456789</td>
+                            <td className="p-3">2024-02-01</td>
+                            <td className="p-3">2024-02-15</td>
+                            <td className="p-3">Pending</td>
+                            <td className="p-3">Switchgear</td>
+                            <td className="p-3">2024-03-20</td>
+                            <td className="p-3">PO-2024-004</td>
+                            <td className="p-3">
+                              <Button variant="link" className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto">
+                                View
+                              </Button>
+                            </td>
+                          </tr>
                         </tbody>
                       </table>
                       
