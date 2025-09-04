@@ -67,7 +67,7 @@ const AddNewWorkOrder = () => {
 
       {/* Content Area */}
       <div className="px-6 py-6 pb-24">
-        <div className="max-w-7xl mx-auto space-y-6">
+        <div className="w-full space-y-6">
           {/* Header Info Card */}
           <Card>
             <CardContent className="p-6">
@@ -347,7 +347,7 @@ const AddNewWorkOrder = () => {
 
       {/* Fixed Bottom Action Bar */}
       <div className="fixed bottom-0 left-0 right-0 bg-card border-t px-6 py-4 shadow-lg">
-        <div className="max-w-7xl mx-auto flex items-center justify-end gap-3">
+        <div className="w-full flex items-center justify-end gap-3">
           <Button variant="ghost" onClick={handleCancel} className="text-muted-foreground hover:text-foreground">
             <X className="h-4 w-4 mr-1" />
             Cancel
