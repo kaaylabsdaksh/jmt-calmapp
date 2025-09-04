@@ -103,77 +103,77 @@ const AddNewWorkOrder = () => {
             <div className="flex flex-wrap gap-3">
               <TabsTrigger 
                 value="general" 
-                className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:border-primary shadow-sm"
+                className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
               >
                 <div className="w-4 h-4 rounded bg-current opacity-70"></div>
                 General
               </TabsTrigger>
               <TabsTrigger 
                 value="account-info" 
-                className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:border-primary shadow-sm"
+                className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
               >
                 <div className="w-4 h-4 rounded bg-current opacity-70"></div>
                 Account Info
               </TabsTrigger>
               <TabsTrigger 
                 value="contacts" 
-                className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:border-primary shadow-sm"
+                className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
               >
                 <div className="w-4 h-4 rounded bg-current opacity-70"></div>
                 Work Order Contacts
               </TabsTrigger>
               <TabsTrigger 
                 value="items" 
-                className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:border-primary shadow-sm"
+                className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
               >
                 <div className="w-4 h-4 rounded bg-current opacity-70"></div>
                 Work Order Items
               </TabsTrigger>
               <TabsTrigger 
                 value="quote" 
-                className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:border-primary shadow-sm"
+                className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
               >
                 <div className="w-4 h-4 rounded bg-current opacity-70"></div>
                 Quote Details
               </TabsTrigger>
               <TabsTrigger 
                 value="estimate" 
-                className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:border-primary shadow-sm"
+                className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
               >
                 <div className="w-4 h-4 rounded bg-current opacity-70"></div>
                 Estimate
               </TabsTrigger>
               <TabsTrigger 
                 value="fail-log" 
-                className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:border-primary shadow-sm"
+                className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
               >
                 <div className="w-4 h-4 rounded bg-current opacity-70"></div>
                 Fail Log
               </TabsTrigger>
               <TabsTrigger 
                 value="external" 
-                className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:border-primary shadow-sm"
+                className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
               >
                 <div className="w-4 h-4 rounded bg-current opacity-70"></div>
                 External Files
               </TabsTrigger>
               <TabsTrigger 
                 value="cert" 
-                className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:border-primary shadow-sm"
+                className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
               >
                 <div className="w-4 h-4 rounded bg-current opacity-70"></div>
                 Cert Files
               </TabsTrigger>
               <TabsTrigger 
                 value="warranty" 
-                className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:border-primary shadow-sm"
+                className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
               >
                 <div className="w-4 h-4 rounded bg-current opacity-70"></div>
                 Warranty
               </TabsTrigger>
               <TabsTrigger 
                 value="qfd" 
-                className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:border-primary shadow-sm"
+                className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
               >
                 <div className="w-4 h-4 rounded bg-current opacity-70"></div>
                 QFD Data
