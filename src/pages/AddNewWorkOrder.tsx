@@ -78,7 +78,7 @@ const AddNewWorkOrder = () => {
       </div>
 
       {/* Content Area */}
-      <div className="px-4 sm:px-6 py-4 sm:py-6 pb-32">
+      <div className="px-4 sm:px-6 py-4 sm:py-6 pb-40">
         <div className="w-full space-y-4 sm:space-y-6">
           {/* Header Info Card */}
           <Card>
