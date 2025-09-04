@@ -416,21 +416,21 @@ const AddNewWorkOrder = () => {
                       <div className="flex flex-wrap items-center gap-6">
                         <div className="flex items-center gap-2">
                           <Label className="text-sm font-medium whitespace-nowrap min-w-fit">Work Order:</Label>
-                          <Input className="w-24" />
+                          <Input className="w-24 border-gray-400" />
                         </div>
                         
                         <div className="flex items-center gap-2">
                           <Label className="text-sm font-medium whitespace-nowrap min-w-fit">Item #:</Label>
-                          <Input className="w-16" />
+                          <Input className="w-16 border-gray-400" />
                           <span className="text-sm text-muted-foreground">-</span>
-                          <Input className="w-16" />
+                          <Input className="w-16 border-gray-400" />
                           <span className="text-sm text-muted-foreground">or</span>
                         </div>
 
                         <div className="flex items-center gap-2">
                           <Label className="text-sm font-medium whitespace-nowrap min-w-fit">Groupable:</Label>
                           <Select>
-                            <SelectTrigger className="w-28">
+                            <SelectTrigger className="w-28 border-gray-400">
                               <SelectValue placeholder="Select..." />
                             </SelectTrigger>
                             <SelectContent className="bg-background border shadow-lg z-50">
@@ -448,7 +448,7 @@ const AddNewWorkOrder = () => {
                         <div className="flex items-center gap-2">
                           <Label className="text-sm font-medium whitespace-nowrap min-w-fit">Special Action:</Label>
                           <Select>
-                            <SelectTrigger className="w-36">
+                            <SelectTrigger className="w-36 border-gray-400">
                               <SelectValue placeholder="Select action..." />
                             </SelectTrigger>
                             <SelectContent className="bg-background border shadow-lg z-50">
