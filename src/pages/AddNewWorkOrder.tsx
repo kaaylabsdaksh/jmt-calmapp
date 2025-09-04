@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, X, Download, Settings, User, CreditCard, Users, Package, FileText, Calculator, AlertCircle, ExternalLink, Award, Shield, BarChart, Save } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const AddNewWorkOrder = () => {
   const navigate = useNavigate();
@@ -390,7 +391,131 @@ const AddNewWorkOrder = () => {
             <TabsContent value="items">
               <Card>
                 <CardContent className="p-6">
-                  <p className="text-muted-foreground">Work Order Items content coming soon...</p>
+                  <div className="space-y-6">
+                    {/* Action Buttons */}
+                    <div className="flex flex-wrap gap-3">
+                      <Button className="bg-warning text-black hover:bg-warning/90 font-medium">
+                        Add New Item
+                      </Button>
+                      <Button className="bg-warning text-black hover:bg-warning/90 font-medium">
+                        Add New Item w/PO
+                      </Button>
+                      <Button className="bg-warning text-black hover:bg-warning/90 font-medium">
+                        Print QR Sheet
+                      </Button>
+                      <Button className="bg-warning text-black hover:bg-warning/90 font-medium">
+                        Copy From Other WO
+                      </Button>
+                      <Button className="bg-warning text-black hover:bg-warning/90 font-medium">
+                        Create Unused Items
+                      </Button>
+                    </div>
+
+                    {/* Filter Controls */}
+                    <div className="bg-muted/30 p-4 rounded-lg">
+                      <div className="grid grid-cols-1 md:grid-cols-6 gap-4 items-center">
+                        <div className="flex items-center gap-2">
+                          <Label className="text-sm font-medium whitespace-nowrap">Work Order:</Label>
+                          <Input className="w-24" />
+                        </div>
+                        
+                        <div className="flex items-center gap-2">
+                          <Label className="text-sm font-medium whitespace-nowrap">Item #:</Label>
+                          <Input className="w-16" />
+                          <span className="text-sm">-</span>
+                          <Input className="w-16" />
+                          <span className="text-sm">or</span>
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                          <Label className="text-sm font-medium whitespace-nowrap">Groupable:</Label>
+                          <Select>
+                            <SelectTrigger className="w-24">
+                              <SelectValue placeholder="Select..." />
+                            </SelectTrigger>
+                            <SelectContent className="bg-background border shadow-lg z-50">
+                              <SelectItem value="yes">Yes</SelectItem>
+                              <SelectItem value="no">No</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                          <Label className="text-sm font-medium whitespace-nowrap"># of Items:</Label>
+                          <span className="text-sm font-medium">0</span>
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                          <Label className="text-sm font-medium whitespace-nowrap">Special Action:</Label>
+                          <Select>
+                            <SelectTrigger className="w-32">
+                              <SelectValue placeholder="Select action..." />
+                            </SelectTrigger>
+                            <SelectContent className="bg-background border shadow-lg z-50">
+                              <SelectItem value="action1">Action 1</SelectItem>
+                              <SelectItem value="action2">Action 2</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Data Table */}
+                    <div className="border rounded-lg overflow-hidden">
+                      <div className="flex justify-end p-2 bg-muted/20 border-b">
+                        <Button variant="link" className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto">
+                          Clear
+                        </Button>
+                      </div>
+                      
+                      <table className="w-full text-sm">
+                        <thead className="bg-muted">
+                          <tr>
+                            <th className="text-left p-3 w-12">
+                              <Checkbox />
+                            </th>
+                            <th className="text-left p-3 font-medium">Report #</th>
+                            <th className="text-left p-3 font-medium">Manufacturer</th>
+                            <th className="text-left p-3 font-medium">Model</th>
+                            <th className="text-left p-3 font-medium">Serial #</th>
+                            <th className="text-left p-3 font-medium">Created</th>
+                            <th className="text-left p-3 font-medium">Departure</th>
+                            <th className="text-left p-3 font-medium">Item Status</th>
+                            <th className="text-left p-3 font-medium">Item Type</th>
+                            <th className="text-left p-3 font-medium">Deliver By Date</th>
+                            <th className="text-left p-3 font-medium">PO #</th>
+                            <th className="text-left p-3 font-medium">Open PO/CO</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr className="border-t">
+                            <td className="p-3">
+                              <Checkbox />
+                            </td>
+                            <td className="p-3">3455</td>
+                            <td className="p-3">3243</td>
+                            <td className="p-3"></td>
+                            <td className="p-3">2343</td>
+                            <td className="p-3"></td>
+                            <td className="p-3"></td>
+                            <td className="p-3"></td>
+                            <td className="p-3"></td>
+                            <td className="p-3"></td>
+                            <td className="p-3"></td>
+                            <td className="p-3">
+                              <Button variant="link" className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto">
+                                Clear
+                              </Button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      
+                      <div className="p-8 text-center text-muted-foreground">
+                        No data to display
+                      </div>
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
             </TabsContent>
