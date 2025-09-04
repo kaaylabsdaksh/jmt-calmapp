@@ -466,24 +466,22 @@ const AddNewWorkOrder = () => {
 
                     {/* View Toggle */}
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2 bg-muted/50 rounded-lg p-1">
+                      <div className="flex items-center gap-1">
                         <Button
                           variant={viewMode === 'table' ? 'default' : 'ghost'}
                           size="sm"
                           onClick={() => setViewMode('table')}
-                          className="flex items-center gap-2"
+                          className="h-8 px-3"
                         >
                           <Table className="w-4 h-4" />
-                          Table View
                         </Button>
                         <Button
                           variant={viewMode === 'cards' ? 'default' : 'ghost'}
                           size="sm"
                           onClick={() => setViewMode('cards')}
-                          className="flex items-center gap-2"
+                          className="h-8 px-3"
                         >
                           <LayoutGrid className="w-4 h-4" />
-                          Card View
                         </Button>
                       </div>
                     </div>
