@@ -36,14 +36,14 @@ const AddNewWorkOrder = () => {
       <header className="bg-warning px-6 py-3 border-b">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <span className="text-xl font-bold text-warning-foreground">CalMApp</span>
-            <span className="text-sm text-warning-foreground/80">Work Order Management</span>
+            <span className="text-xl font-bold text-black">CalMApp</span>
+            <span className="text-sm text-black">Work Order Management</span>
           </div>
           <div className="flex items-center gap-2">
-            <Button variant="ghost" size="sm" className="text-warning-foreground hover:bg-warning-foreground/10">
+            <Button variant="ghost" size="sm" className="text-black hover:bg-black/10">
               <Download className="h-4 w-4" />
             </Button>
-            <Button variant="ghost" size="sm" className="text-warning-foreground hover:bg-warning-foreground/10">
+            <Button variant="ghost" size="sm" className="text-black hover:bg-black/10">
               <Settings className="h-4 w-4" />
             </Button>
           </div>
