@@ -21,7 +21,7 @@ const AddNewWorkOrder = () => {
     workOrderNumber: "WO-QOAV2I",
     srDocument: "",
     workOrderStatus: "Created",
-    workOrderType: "Regular Work Order",
+    workOrderType: "Regular work order",
     accountNumber: "",
     customer: "",
     salesperson: "Not assigned",
@@ -218,9 +218,8 @@ const AddNewWorkOrder = () => {
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="Regular Work Order">Regular Work Order</SelectItem>
-                          <SelectItem value="Emergency Work Order">Emergency Work Order</SelectItem>
-                          <SelectItem value="Maintenance Work Order">Maintenance Work Order</SelectItem>
+                          <SelectItem value="Regular work order">Regular work order</SelectItem>
+                          <SelectItem value="Onsite work order">Onsite work order</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
