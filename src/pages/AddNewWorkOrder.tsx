@@ -57,7 +57,7 @@ const AddNewWorkOrder = () => {
 
       {/* Navigation Bar */}
       <div className="bg-card border-b px-6 py-4">
-        <div className="flex items-center gap-4">
+        <div className="flex items-center justify-between">
           <Button 
             variant="ghost" 
             onClick={() => navigate("/")}
@@ -66,7 +66,8 @@ const AddNewWorkOrder = () => {
             <ArrowLeft className="h-4 w-4" />
             Back to Work Orders
           </Button>
-          <h1 className="text-xl font-semibold text-foreground">Add New Work Order</h1>
+          <h1 className="text-xl font-semibold text-foreground absolute left-1/2 transform -translate-x-1/2">Add New Work Order</h1>
+          <div></div>
         </div>
       </div>
 
