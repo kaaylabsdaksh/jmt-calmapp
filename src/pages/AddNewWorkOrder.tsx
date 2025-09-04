@@ -413,24 +413,24 @@ const AddNewWorkOrder = () => {
 
                     {/* Filter Controls */}
                     <div className="bg-muted/30 p-4 rounded-lg">
-                      <div className="grid grid-cols-1 md:grid-cols-6 gap-4 items-center">
+                      <div className="flex flex-wrap items-center gap-6">
                         <div className="flex items-center gap-2">
-                          <Label className="text-sm font-medium whitespace-nowrap">Work Order:</Label>
+                          <Label className="text-sm font-medium whitespace-nowrap min-w-fit">Work Order:</Label>
                           <Input className="w-24" />
                         </div>
                         
                         <div className="flex items-center gap-2">
-                          <Label className="text-sm font-medium whitespace-nowrap">Item #:</Label>
+                          <Label className="text-sm font-medium whitespace-nowrap min-w-fit">Item #:</Label>
                           <Input className="w-16" />
-                          <span className="text-sm">-</span>
+                          <span className="text-sm text-muted-foreground">-</span>
                           <Input className="w-16" />
-                          <span className="text-sm">or</span>
+                          <span className="text-sm text-muted-foreground">or</span>
                         </div>
 
                         <div className="flex items-center gap-2">
-                          <Label className="text-sm font-medium whitespace-nowrap">Groupable:</Label>
+                          <Label className="text-sm font-medium whitespace-nowrap min-w-fit">Groupable:</Label>
                           <Select>
-                            <SelectTrigger className="w-24">
+                            <SelectTrigger className="w-28">
                               <SelectValue placeholder="Select..." />
                             </SelectTrigger>
                             <SelectContent className="bg-background border shadow-lg z-50">
@@ -441,14 +441,14 @@ const AddNewWorkOrder = () => {
                         </div>
 
                         <div className="flex items-center gap-2">
-                          <Label className="text-sm font-medium whitespace-nowrap"># of Items:</Label>
-                          <span className="text-sm font-medium">0</span>
+                          <Label className="text-sm font-medium whitespace-nowrap min-w-fit"># of Items:</Label>
+                          <span className="text-sm font-medium min-w-fit">0</span>
                         </div>
 
                         <div className="flex items-center gap-2">
-                          <Label className="text-sm font-medium whitespace-nowrap">Special Action:</Label>
+                          <Label className="text-sm font-medium whitespace-nowrap min-w-fit">Special Action:</Label>
                           <Select>
-                            <SelectTrigger className="w-32">
+                            <SelectTrigger className="w-36">
                               <SelectValue placeholder="Select action..." />
                             </SelectTrigger>
                             <SelectContent className="bg-background border shadow-lg z-50">
