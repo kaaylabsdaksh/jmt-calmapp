@@ -79,11 +79,11 @@ const AddNewWorkOrder = () => {
             <CardContent className="p-6">
               <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                 <div>
-                  <Label className="text-sm font-medium text-black">Work Order #</Label>
-                  <div className="text-lg font-bold text-black mt-1">{workOrderData.workOrderNumber}</div>
+                  <Label className="text-sm font-medium text-foreground">Work Order #</Label>
+                  <div className="text-lg font-bold text-foreground mt-1">{workOrderData.workOrderNumber}</div>
                 </div>
                 <div>
-                  <Label htmlFor="srDocument" className="text-sm font-medium text-black">SR Doc</Label>
+                  <Label htmlFor="srDocument" className="text-sm font-medium text-foreground">SR Doc</Label>
                   <Input
                     id="srDocument"
                     placeholder="SR Document"
@@ -93,12 +93,12 @@ const AddNewWorkOrder = () => {
                   />
                 </div>
                 <div>
-                  <Label className="text-sm font-medium text-black">Salesperson</Label>
-                  <div className="text-sm text-black mt-1">{workOrderData.salesperson}</div>
+                  <Label className="text-sm font-medium text-foreground">Salesperson</Label>
+                  <div className="text-sm text-foreground mt-1">{workOrderData.salesperson}</div>
                 </div>
                 <div>
-                  <Label className="text-sm font-medium text-black">Contact</Label>
-                  <div className="text-sm text-black mt-1">{workOrderData.contact}</div>
+                  <Label className="text-sm font-medium text-foreground">Contact</Label>
+                  <div className="text-sm text-foreground mt-1">{workOrderData.contact}</div>
                 </div>
               </div>
             </CardContent>
@@ -299,7 +299,7 @@ const AddNewWorkOrder = () => {
 
                   {/* Customer Contacts Table */}
                   <div className="mt-8">
-                    <h3 className="text-lg font-semibold text-black mb-4">Customer Contacts</h3>
+                    <h3 className="text-lg font-semibold text-foreground mb-4">Customer Contacts</h3>
                     <div className="border rounded-lg overflow-hidden">
                       <table className="w-full text-sm">
                         <thead className="bg-muted">
