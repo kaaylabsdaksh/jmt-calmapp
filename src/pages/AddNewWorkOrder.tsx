@@ -100,7 +100,7 @@ const AddNewWorkOrder = () => {
 
           {/* Tabs */}
           <Tabs defaultValue="general" className="space-y-6">
-            <div className="flex flex-wrap gap-3">
+            <TabsList className="h-auto p-0 bg-transparent gap-3 flex flex-wrap justify-start">
               <TabsTrigger 
                 value="general" 
                 className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
@@ -178,7 +178,7 @@ const AddNewWorkOrder = () => {
                 <div className="w-4 h-4 rounded bg-current opacity-70"></div>
                 QFD Data
               </TabsTrigger>
-            </div>
+            </TabsList>
 
             <TabsContent value="general" className="space-y-6">
               <Card>
