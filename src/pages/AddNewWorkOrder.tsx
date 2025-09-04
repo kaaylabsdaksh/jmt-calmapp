@@ -290,6 +290,40 @@ const AddNewWorkOrder = () => {
                       <div><span className="font-medium">Contract Pricing:</span> Yes</div>
                     </div>
                   </div>
+
+                  {/* Customer Contacts Table */}
+                  <div className="mt-8">
+                    <h3 className="text-lg font-semibold text-black mb-4">Customer Contacts</h3>
+                    <div className="border rounded-lg overflow-hidden">
+                      <table className="w-full text-sm">
+                        <thead className="bg-muted">
+                          <tr>
+                            <th className="text-left p-3 font-medium">Name</th>
+                            <th className="text-left p-3 font-medium">Email</th>
+                            <th className="text-left p-3 font-medium">Phone</th>
+                            <th className="text-left p-3 font-medium">Title</th>
+                            <th className="text-left p-3 font-medium">Type</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr className="border-t">
+                            <td className="p-3">Netasha Gray</td>
+                            <td className="p-3">netasha.gray@entergy.com</td>
+                            <td className="p-3">(225) 382-4878</td>
+                            <td className="p-3">Senior Buyer</td>
+                            <td className="p-3">Primary</td>
+                          </tr>
+                          <tr className="border-t">
+                            <td className="p-3">Barry White</td>
+                            <td className="p-3">barry.white@entergy.com</td>
+                            <td className="p-3">(225) 382-4879</td>
+                            <td className="p-3">Procurement Manager</td>
+                            <td className="p-3">Secondary</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
             </TabsContent>
