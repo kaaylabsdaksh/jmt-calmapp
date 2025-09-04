@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowLeft, X, Download, Settings, User, CreditCard, Users, Package, FileText, Calculator, AlertCircle, ExternalLink, Award, Shield, BarChart } from "lucide-react";
+import { ArrowLeft, X, Download, Settings, User, CreditCard, Users, Package, FileText, Calculator, AlertCircle, ExternalLink, Award, Shield, BarChart, Save } from "lucide-react";
 
 const AddNewWorkOrder = () => {
   const navigate = useNavigate();
@@ -353,6 +353,7 @@ const AddNewWorkOrder = () => {
             Cancel
           </Button>
           <Button onClick={handleSave} className="bg-success text-success-foreground hover:bg-success/90">
+            <Save className="h-4 w-4 mr-2" />
             Save Work Order
           </Button>
         </div>
