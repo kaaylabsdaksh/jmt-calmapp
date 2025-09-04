@@ -138,7 +138,7 @@ const AddNewWorkOrder = () => {
                       {currentTab && (
                         <currentTab.icon className="w-4 h-4" />
                       )}
-                      <span>{currentTab?.shortLabel}</span>
+                      <span>{currentTab?.label}</span>
                     </div>
                     <ChevronDown className="w-4 h-4" />
                   </Button>
@@ -153,7 +153,7 @@ const AddNewWorkOrder = () => {
                         className="flex items-center gap-2 cursor-pointer hover:bg-muted"
                       >
                         <IconComponent className="w-4 h-4" />
-                        <span>{tab.shortLabel}</span>
+                        <span>{tab.label}</span>
                       </DropdownMenuItem>
                     );
                   })}
