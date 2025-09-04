@@ -6,8 +6,10 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowLeft, X, Download, Settings, User, CreditCard, Users, Package, FileText, Calculator, AlertCircle, ExternalLink, Award, Shield, BarChart, Save } from "lucide-react";
+import { ArrowLeft, X, Download, Settings, User, CreditCard, Users, Package, FileText, Calculator, AlertCircle, ExternalLink, Award, Shield, BarChart, Save, LayoutGrid, Table } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
+import { WorkOrderItemsTable } from "@/components/WorkOrderItemsTable";
+import { WorkOrderItemsCards } from "@/components/WorkOrderItemsCards";
 
 const AddNewWorkOrder = () => {
   const navigate = useNavigate();
@@ -21,6 +23,8 @@ const AddNewWorkOrder = () => {
     salesperson: "Not assigned",
     contact: "Not specified"
   });
+
+  const [viewMode, setViewMode] = useState<'table' | 'cards'>('table');
 
   const handleSave = () => {
     // TODO: Implement save functionality
@@ -460,141 +464,36 @@ const AddNewWorkOrder = () => {
                       </div>
                     </div>
 
-                    {/* Data Table */}
-                    <div className="border rounded-lg overflow-hidden">
-                      <div className="flex justify-end p-2 bg-muted/20 border-b">
-                        <Button variant="link" className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto">
-                          Clear
+                    {/* View Toggle */}
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2 bg-muted/50 rounded-lg p-1">
+                        <Button
+                          variant={viewMode === 'table' ? 'default' : 'ghost'}
+                          size="sm"
+                          onClick={() => setViewMode('table')}
+                          className="flex items-center gap-2"
+                        >
+                          <Table className="w-4 h-4" />
+                          Table View
+                        </Button>
+                        <Button
+                          variant={viewMode === 'cards' ? 'default' : 'ghost'}
+                          size="sm"
+                          onClick={() => setViewMode('cards')}
+                          className="flex items-center gap-2"
+                        >
+                          <LayoutGrid className="w-4 h-4" />
+                          Card View
                         </Button>
                       </div>
-                      
-                      <table className="w-full text-sm">
-                        <thead className="bg-muted">
-                          <tr>
-                            <th className="text-left p-3 w-12">
-                              <Checkbox />
-                            </th>
-                            <th className="text-left p-3 font-medium">Report #</th>
-                            <th className="text-left p-3 font-medium">Manufacturer</th>
-                            <th className="text-left p-3 font-medium">Model</th>
-                            <th className="text-left p-3 font-medium">Serial #</th>
-                            <th className="text-left p-3 font-medium">Created</th>
-                            <th className="text-left p-3 font-medium">Departure</th>
-                            <th className="text-left p-3 font-medium">Item Status</th>
-                            <th className="text-left p-3 font-medium">Item Type</th>
-                            <th className="text-left p-3 font-medium">Deliver By Date</th>
-                            <th className="text-left p-3 font-medium">PO #</th>
-                            <th className="text-left p-3 font-medium">Open PO/CO</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr className="border-t">
-                            <td className="p-3">
-                              <Checkbox />
-                            </td>
-                            <td className="p-3">3455</td>
-                            <td className="p-3">3243</td>
-                            <td className="p-3"></td>
-                            <td className="p-3">2343</td>
-                            <td className="p-3"></td>
-                            <td className="p-3"></td>
-                            <td className="p-3"></td>
-                            <td className="p-3"></td>
-                            <td className="p-3"></td>
-                            <td className="p-3"></td>
-                            <td className="p-3">
-                              <Button variant="link" className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto">
-                                Clear
-                              </Button>
-                            </td>
-                          </tr>
-                          <tr className="border-t hover:bg-muted/50">
-                            <td className="p-3">
-                              <Checkbox />
-                            </td>
-                            <td className="p-3">3456</td>
-                            <td className="p-3">General Electric</td>
-                            <td className="p-3">GE-4500</td>
-                            <td className="p-3">GE445789</td>
-                            <td className="p-3">2024-01-15</td>
-                            <td className="p-3">2024-02-01</td>
-                            <td className="p-3">In Progress</td>
-                            <td className="p-3">Transformer</td>
-                            <td className="p-3">2024-03-15</td>
-                            <td className="p-3">PO-2024-001</td>
-                            <td className="p-3">
-                              <Button variant="link" className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto">
-                                View
-                              </Button>
-                            </td>
-                          </tr>
-                          <tr className="border-t hover:bg-muted/50">
-                            <td className="p-3">
-                              <Checkbox />
-                            </td>
-                            <td className="p-3">3457</td>
-                            <td className="p-3">Siemens</td>
-                            <td className="p-3">S7-1200</td>
-                            <td className="p-3">SIE123456</td>
-                            <td className="p-3">2024-01-20</td>
-                            <td className="p-3">2024-02-05</td>
-                            <td className="p-3">Completed</td>
-                            <td className="p-3">Control Panel</td>
-                            <td className="p-3">2024-02-28</td>
-                            <td className="p-3">PO-2024-002</td>
-                            <td className="p-3">
-                              <Button variant="link" className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto">
-                                View
-                              </Button>
-                            </td>
-                          </tr>
-                          <tr className="border-t hover:bg-muted/50">
-                            <td className="p-3">
-                              <Checkbox />
-                            </td>
-                            <td className="p-3">3458</td>
-                            <td className="p-3">ABB</td>
-                            <td className="p-3">REF615</td>
-                            <td className="p-3">ABB789123</td>
-                            <td className="p-3">2024-01-25</td>
-                            <td className="p-3">2024-02-10</td>
-                            <td className="p-3">Testing</td>
-                            <td className="p-3">Protection Relay</td>
-                            <td className="p-3">2024-03-01</td>
-                            <td className="p-3">PO-2024-003</td>
-                            <td className="p-3">
-                              <Button variant="link" className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto">
-                                View
-                              </Button>
-                            </td>
-                          </tr>
-                          <tr className="border-t hover:bg-muted/50">
-                            <td className="p-3">
-                              <Checkbox />
-                            </td>
-                            <td className="p-3">3459</td>
-                            <td className="p-3">Schneider Electric</td>
-                            <td className="p-3">SEPAM-80</td>
-                            <td className="p-3">SCH456789</td>
-                            <td className="p-3">2024-02-01</td>
-                            <td className="p-3">2024-02-15</td>
-                            <td className="p-3">Pending</td>
-                            <td className="p-3">Switchgear</td>
-                            <td className="p-3">2024-03-20</td>
-                            <td className="p-3">PO-2024-004</td>
-                            <td className="p-3">
-                              <Button variant="link" className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto">
-                                View
-                              </Button>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                      
-                      <div className="p-8 text-center text-muted-foreground">
-                        No data to display
-                      </div>
                     </div>
+
+                    {/* Conditional View Rendering */}
+                    {viewMode === 'table' ? (
+                      <WorkOrderItemsTable />
+                    ) : (
+                      <WorkOrderItemsCards />
+                    )}
                   </div>
                 </CardContent>
               </Card>
