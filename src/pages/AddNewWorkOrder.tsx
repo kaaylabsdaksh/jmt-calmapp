@@ -265,131 +265,65 @@ const AddNewWorkOrder = () => {
             <TabsContent value="account-info">
               <Card>
                 <CardContent className="p-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {/* Left Column */}
-                    <div className="space-y-4">
-                      <div>
-                        <Label className="text-sm font-medium text-black">Status:</Label>
-                        <div className="text-sm text-green-600 font-medium mt-1">ACTIVE</div>
-                      </div>
-                      
-                      <div>
-                        <Label className="text-sm font-medium text-black">Customer Name:</Label>
-                        <div className="text-sm text-black mt-1">Entergy Inventory</div>
-                      </div>
-                      
-                      <div>
-                        <Label className="text-sm font-medium text-black">Ship To:</Label>
-                        <div className="text-sm text-black mt-1">
-                          7223 Tom Drive<br />
-                          Bldg 527
-                        </div>
-                      </div>
-                      
-                      <div>
-                        <Label className="text-sm font-medium text-black">City/State/Zip:</Label>
-                        <div className="text-sm text-black mt-1">Baton Rouge, LA 70806</div>
-                      </div>
-                      
-                      <div>
-                        <Label className="text-sm font-medium text-black">Main Contact:</Label>
-                        <div className="text-sm text-black mt-1">USE TAG/PAPERWORK</div>
-                      </div>
-                      
-                      <div>
-                        <Label className="text-sm font-medium text-black">Remarks:</Label>
-                        <div className="text-sm text-black mt-1">ESL (Y) CONTRACT site id must match account</div>
-                      </div>
-                      
-                      <div>
-                        <Label className="text-sm font-medium text-black">Comments:</Label>
-                        <div className="text-sm text-black mt-1">-</div>
-                      </div>
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-medium text-black">Status :</span>
+                      <span className="text-sm text-green-600 font-medium">ACTIVE</span>
                     </div>
-
-                    {/* Right Column */}
-                    <div className="space-y-4">
-                      <div>
-                        <Label className="text-sm font-medium text-black">Acct #:</Label>
-                        <div className="text-sm text-black mt-1">15000.00</div>
-                      </div>
-                      
-                      <div>
-                        <Label className="text-sm font-medium text-black">SR Number:</Label>
-                        <div className="text-sm text-black mt-1">SR2244</div>
-                      </div>
-                      
-                      <div>
-                        <Label className="text-sm font-medium text-black">Phone Number:</Label>
-                        <div className="text-sm text-black mt-1">(225) 382-4878</div>
-                      </div>
-                      
-                      <div>
-                        <Label className="text-sm font-medium text-black">Salesperson Code:</Label>
-                        <div className="text-sm text-black mt-1">ZZEN - House - Entergy</div>
-                      </div>
-                      
-                      <div>
-                        <Label className="text-sm font-medium text-black">Terms:</Label>
-                        <div className="text-sm text-black mt-1">Net 30</div>
-                      </div>
-                      
-                      <div>
-                        <Label className="text-sm font-medium text-black">P.O. Number:</Label>
-                        <div className="text-sm text-black mt-1">CONTRACT# 10629042</div>
-                      </div>
-                      
-                      <div>
-                        <Label className="text-sm font-medium text-black">Biller Code:</Label>
-                        <div className="text-sm text-black mt-1">18</div>
-                      </div>
-                      
-                      <div>
-                        <Label className="text-sm font-medium text-black">Industry Code:</Label>
-                        <div className="text-sm text-black mt-1">DM02 - Power Co's -Utility Distribution</div>
-                      </div>
-                      
-                      <div>
-                        <Label className="text-sm font-medium text-black">Contract Pricing:</Label>
-                        <div className="text-sm text-black mt-1">Yes</div>
-                      </div>
+                    
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-medium text-black">Customer Name :</span>
+                      <span className="text-sm text-black">Entergy Inventory</span>
                     </div>
-                  </div>
-
-                  {/* Customer Contacts Table */}
-                  <div className="mt-8">
-                    <h3 className="text-lg font-semibold text-black mb-4">Customer Contacts</h3>
-                    <div className="border rounded-lg overflow-hidden">
-                      <table className="w-full text-sm">
-                        <thead className="bg-muted">
-                          <tr>
-                            <th className="text-left p-3 font-medium text-black">Contact</th>
-                            <th className="text-left p-3 font-medium text-black">Title</th>
-                            <th className="text-left p-3 font-medium text-black">Phone</th>
-                            <th className="text-left p-3 font-medium text-black">Fax</th>
-                            <th className="text-left p-3 font-medium text-black">Cell</th>
-                            <th className="text-left p-3 font-medium text-black">Email</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr className="border-t">
-                            <td className="p-3 text-black">Netasha Gray</td>
-                            <td className="p-3 text-black">Rubber Contact</td>
-                            <td className="p-3 text-primary">(225) 382-4915</td>
-                            <td className="p-3 text-black">-</td>
-                            <td className="p-3 text-primary">(225) 371-4281</td>
-                            <td className="p-3 text-primary">ngray1@entergy.com</td>
-                          </tr>
-                          <tr className="border-t">
-                            <td className="p-3 text-black">Barry White</td>
-                            <td className="p-3 text-black">Backup Rubber Contact</td>
-                            <td className="p-3 text-primary">(225) 382-4878</td>
-                            <td className="p-3 text-black">-</td>
-                            <td className="p-3 text-primary">(225) 287-4908</td>
-                            <td className="p-3 text-primary">bwhite3@entergy.com</td>
-                          </tr>
-                        </tbody>
-                      </table>
+                    
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-medium text-black">Acct # :</span>
+                      <span className="text-sm text-black">15000.00</span>
+                    </div>
+                    
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-medium text-black">SR Number :</span>
+                      <span className="text-sm text-black">SR2244</span>
+                    </div>
+                    
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-medium text-black">Phone Number :</span>
+                      <span className="text-sm text-black">(225) 382-4878</span>
+                    </div>
+                    
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-medium text-black">Ship To :</span>
+                      <span className="text-sm text-black">7223 Tom Drive, Bldg 527</span>
+                    </div>
+                    
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-medium text-black">City/State/Zip :</span>
+                      <span className="text-sm text-black">Baton Rouge, LA 70806</span>
+                    </div>
+                    
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-medium text-black">Main Contact :</span>
+                      <span className="text-sm text-black">USE TAG/PAPERWORK</span>
+                    </div>
+                    
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-medium text-black">Salesperson Code :</span>
+                      <span className="text-sm text-black">ZZEN - House - Entergy</span>
+                    </div>
+                    
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-medium text-black">Terms :</span>
+                      <span className="text-sm text-black">Net 30</span>
+                    </div>
+                    
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-medium text-black">P.O. Number :</span>
+                      <span className="text-sm text-black">CONTRACT# 10629042</span>
+                    </div>
+                    
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-medium text-black">Contract Pricing :</span>
+                      <span className="text-sm text-black">Yes</span>
                     </div>
                   </div>
                 </CardContent>
