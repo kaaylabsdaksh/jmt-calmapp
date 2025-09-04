@@ -52,32 +52,21 @@ const AddNewWorkOrder = () => {
 
       {/* Navigation Bar */}
       <div className="bg-card border-b px-6 py-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Button 
-              variant="ghost" 
-              onClick={() => navigate("/")}
-              className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Back to Work Orders
-            </Button>
-            <h1 className="text-xl font-semibold text-foreground">Add New Work Order</h1>
-          </div>
-          <div className="flex items-center gap-3">
-            <Button onClick={handleSave} className="bg-success text-success-foreground hover:bg-success/90">
-              Save Work Order
-            </Button>
-            <Button variant="ghost" onClick={handleCancel} className="text-muted-foreground hover:text-foreground">
-              <X className="h-4 w-4 mr-1" />
-              Cancel
-            </Button>
-          </div>
+        <div className="flex items-center gap-4">
+          <Button 
+            variant="ghost" 
+            onClick={() => navigate("/")}
+            className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back to Work Orders
+          </Button>
+          <h1 className="text-xl font-semibold text-foreground">Add New Work Order</h1>
         </div>
       </div>
 
       {/* Content Area */}
-      <div className="px-6 py-6">
+      <div className="px-6 py-6 pb-24">
         <div className="max-w-7xl mx-auto space-y-6">
           {/* Header Info Card */}
           <Card>
@@ -287,6 +276,19 @@ const AddNewWorkOrder = () => {
               </Card>
             </TabsContent>
           </Tabs>
+        </div>
+      </div>
+
+      {/* Fixed Bottom Action Bar */}
+      <div className="fixed bottom-0 left-0 right-0 bg-card border-t px-6 py-4 shadow-lg">
+        <div className="max-w-7xl mx-auto flex items-center justify-end gap-3">
+          <Button variant="ghost" onClick={handleCancel} className="text-muted-foreground hover:text-foreground">
+            <X className="h-4 w-4 mr-1" />
+            Cancel
+          </Button>
+          <Button onClick={handleSave} className="bg-success text-success-foreground hover:bg-success/90">
+            Save Work Order
+          </Button>
         </div>
       </div>
     </div>
