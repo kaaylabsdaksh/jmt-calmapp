@@ -38,41 +38,42 @@ const AddNewWorkOrder = () => {
   return (
     <div className="bg-background min-h-screen">
       {/* Yellow Header */}
-      <header className="bg-warning px-6 py-3 border-b">
+      <header className="bg-warning px-4 sm:px-6 py-3 border-b">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <span className="text-xl font-bold text-black">CalMApp</span>
-            <span className="text-sm text-black">Work Order Management</span>
+          <div className="flex items-center gap-2 sm:gap-3">
+            <span className="text-lg sm:text-xl font-bold text-black">CalMApp</span>
+            <span className="text-xs sm:text-sm text-black hidden sm:block">Work Order Management</span>
           </div>
-          <div className="flex items-center gap-2">
-            <Button variant="ghost" size="sm" className="text-black hover:bg-black/10">
-              <Download className="h-4 w-4" />
+          <div className="flex items-center gap-1 sm:gap-2">
+            <Button variant="ghost" size="sm" className="text-black hover:bg-black/10 p-2">
+              <Download className="h-3 w-3 sm:h-4 sm:w-4" />
             </Button>
-            <Button variant="ghost" size="sm" className="text-black hover:bg-black/10">
-              <Settings className="h-4 w-4" />
+            <Button variant="ghost" size="sm" className="text-black hover:bg-black/10 p-2">
+              <Settings className="h-3 w-3 sm:h-4 sm:w-4" />
             </Button>
           </div>
         </div>
       </header>
 
       {/* Navigation Bar */}
-      <div className="bg-card border-b px-6 py-4">
+      <div className="bg-card border-b px-4 sm:px-6 py-4">
         <div className="flex items-center justify-between">
           <Button 
             variant="ghost" 
             onClick={() => navigate("/")}
-            className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
+            className="flex items-center gap-2 text-muted-foreground hover:text-foreground shrink-0"
           >
             <ArrowLeft className="h-4 w-4" />
-            Back to Work Orders
+            <span className="hidden sm:inline">Back to Work Orders</span>
+            <span className="sm:hidden">Back</span>
           </Button>
-          <h1 className="text-xl font-semibold text-foreground absolute left-1/2 transform -translate-x-1/2">Add New Work Order</h1>
-          <div></div>
+          <h1 className="text-lg sm:text-xl font-semibold text-foreground text-center flex-1 mx-4">Add New Work Order</h1>
+          <div className="w-6"></div>
         </div>
       </div>
 
       {/* Content Area */}
-      <div className="px-6 py-6 pb-24">
+      <div className="px-4 sm:px-6 py-6 pb-24">
         <div className="w-full space-y-6">
           {/* Header Info Card */}
           <Card>
@@ -106,83 +107,94 @@ const AddNewWorkOrder = () => {
 
           {/* Tabs */}
           <Tabs defaultValue="general" className="space-y-6">
-            <TabsList className="h-auto p-0 bg-transparent gap-3 flex flex-wrap justify-start">
+            <TabsList className="h-auto p-0 bg-transparent gap-2 sm:gap-3 flex flex-wrap justify-start">
               <TabsTrigger 
                 value="general" 
-                className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
+                className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 sm:py-3 bg-card border rounded-lg text-xs sm:text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
               >
-                <User className="w-4 h-4" />
-                General
+                <User className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="hidden sm:inline">General</span>
+                <span className="sm:hidden">Gen</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="account-info" 
-                className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
+                className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 sm:py-3 bg-card border rounded-lg text-xs sm:text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
               >
-                <CreditCard className="w-4 h-4" />
-                Account Info
+                <CreditCard className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="hidden sm:inline">Account Info</span>
+                <span className="sm:hidden">Account</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="contacts" 
-                className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
+                className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 sm:py-3 bg-card border rounded-lg text-xs sm:text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
               >
-                <Users className="w-4 h-4" />
-                Work Order Contacts
+                <Users className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="hidden sm:inline">Work Order Contacts</span>
+                <span className="sm:hidden">Contacts</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="items" 
-                className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
+                className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 sm:py-3 bg-card border rounded-lg text-xs sm:text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
               >
-                <Package className="w-4 h-4" />
-                Work Order Items
+                <Package className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="hidden sm:inline">Work Order Items</span>
+                <span className="sm:hidden">Items</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="quote" 
-                className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
+                className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 sm:py-3 bg-card border rounded-lg text-xs sm:text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
               >
-                <FileText className="w-4 h-4" />
-                Quote Details
+                <FileText className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="hidden sm:inline">Quote Details</span>
+                <span className="sm:hidden">Quote</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="estimate" 
-                className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
+                className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 sm:py-3 bg-card border rounded-lg text-xs sm:text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
               >
-                <Calculator className="w-4 h-4" />
-                Estimate
+                <Calculator className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="hidden sm:inline">Estimate</span>
+                <span className="sm:hidden">Est</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="fail-log" 
-                className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
+                className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 sm:py-3 bg-card border rounded-lg text-xs sm:text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
               >
-                <AlertCircle className="w-4 h-4" />
-                Fail Log
+                <AlertCircle className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="hidden sm:inline">Fail Log</span>
+                <span className="sm:hidden">Fail</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="external" 
-                className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
+                className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 sm:py-3 bg-card border rounded-lg text-xs sm:text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
               >
-                <ExternalLink className="w-4 h-4" />
-                External Files
+                <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="hidden sm:inline">External Files</span>
+                <span className="sm:hidden">Ext</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="cert" 
-                className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
+                className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 sm:py-3 bg-card border rounded-lg text-xs sm:text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
               >
-                <Award className="w-4 h-4" />
-                Cert Files
+                <Award className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="hidden sm:inline">Cert Files</span>
+                <span className="sm:hidden">Cert</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="warranty" 
-                className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
+                className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 sm:py-3 bg-card border rounded-lg text-xs sm:text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
               >
-                <Shield className="w-4 h-4" />
-                Warranty
+                <Shield className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="hidden sm:inline">Warranty</span>
+                <span className="sm:hidden">War</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="qfd" 
-                className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
+                className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 sm:py-3 bg-card border rounded-lg text-xs sm:text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
               >
-                <BarChart className="w-4 h-4" />
-                QFD Data
+                <BarChart className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="hidden sm:inline">QFD Data</span>
+                <span className="sm:hidden">QFD</span>
               </TabsTrigger>
             </TabsList>
 
@@ -558,15 +570,16 @@ const AddNewWorkOrder = () => {
       </div>
 
       {/* Fixed Bottom Action Bar */}
-      <div className="fixed bottom-0 left-0 right-0 bg-card border-t px-6 py-4 shadow-lg">
-        <div className="w-full flex items-center justify-end gap-3">
-          <Button variant="ghost" onClick={handleCancel} className="text-muted-foreground hover:text-foreground">
-            <X className="h-4 w-4 mr-1" />
+      <div className="fixed bottom-0 left-0 right-0 bg-card border-t px-4 sm:px-6 py-3 sm:py-4 shadow-lg">
+        <div className="w-full flex items-center justify-end gap-2 sm:gap-3">
+          <Button variant="ghost" onClick={handleCancel} className="text-muted-foreground hover:text-foreground text-sm px-3 py-2">
+            <X className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
             Cancel
           </Button>
-          <Button onClick={handleSave} className="bg-success text-success-foreground hover:bg-success/90">
-            <Save className="h-4 w-4 mr-2" />
-            Save Work Order
+          <Button onClick={handleSave} className="bg-success text-success-foreground hover:bg-success/90 text-sm px-3 py-2">
+            <Save className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+            <span className="hidden sm:inline">Save Work Order</span>
+            <span className="sm:hidden">Save</span>
           </Button>
         </div>
       </div>
