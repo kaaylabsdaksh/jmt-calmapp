@@ -338,7 +338,7 @@ const AddNewWorkOrder = () => {
                       {/* Required Contact */}
                       <div className="space-y-2">
                         <Select defaultValue="barry-white">
-                          <SelectTrigger>
+                          <SelectTrigger className="w-64">
                             <SelectValue placeholder="Select contact..." />
                           </SelectTrigger>
                           <SelectContent className="bg-background border shadow-lg z-50">
@@ -352,7 +352,7 @@ const AddNewWorkOrder = () => {
                       {/* Additional Contact 1 */}
                       <div>
                         <Select>
-                          <SelectTrigger>
+                          <SelectTrigger className="w-64">
                             <SelectValue placeholder="Select additional contact..." />
                           </SelectTrigger>
                           <SelectContent className="bg-background border shadow-lg z-50">
@@ -365,7 +365,7 @@ const AddNewWorkOrder = () => {
                       {/* Additional Contact 2 */}
                       <div>
                         <Select>
-                          <SelectTrigger>
+                          <SelectTrigger className="w-64">
                             <SelectValue placeholder="Select additional contact..." />
                           </SelectTrigger>
                           <SelectContent className="bg-background border shadow-lg z-50">
