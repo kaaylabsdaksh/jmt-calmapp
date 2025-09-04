@@ -56,28 +56,33 @@ const AddNewWorkOrder = () => {
       </header>
 
       {/* Navigation Bar */}
-      <div className="bg-card border-b px-6 py-4">
+      <div className="bg-card border-b px-4 sm:px-6 py-4">
         <div className="flex items-center justify-between">
           <Button 
             variant="ghost" 
+            size="sm"
             onClick={() => navigate("/")}
-            className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
+            className="flex items-center gap-2 text-muted-foreground hover:text-foreground text-xs sm:text-sm"
           >
             <ArrowLeft className="h-4 w-4" />
-            Back to Work Orders
+            <span className="hidden sm:inline">Back to Work Orders</span>
+            <span className="sm:hidden">Back</span>
           </Button>
-          <h1 className="text-xl font-semibold text-foreground absolute left-1/2 transform -translate-x-1/2">Add New Work Order</h1>
+          <h1 className="text-lg sm:text-xl font-semibold text-foreground absolute left-1/2 transform -translate-x-1/2">
+            <span className="hidden sm:inline">Add New Work Order</span>
+            <span className="sm:hidden">New Work Order</span>
+          </h1>
           <div></div>
         </div>
       </div>
 
       {/* Content Area */}
-      <div className="px-6 py-6 pb-24">
-        <div className="w-full space-y-6">
+      <div className="px-4 sm:px-6 py-4 sm:py-6 pb-24">
+        <div className="w-full space-y-4 sm:space-y-6">
           {/* Header Info Card */}
           <Card>
-            <CardContent className="p-6">
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <CardContent className="p-4 sm:p-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                 <div>
                   <Label className="text-sm font-medium text-black">Work Order #</Label>
                   <div className="text-lg font-bold text-black mt-1">{workOrderData.workOrderNumber}</div>
