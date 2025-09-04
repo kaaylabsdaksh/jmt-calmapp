@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowLeft, X, Download, Settings, User, CreditCard, Users, Package, FileText, Calculator, AlertCircle, ExternalLink, Award, Shield, BarChart, Save, LayoutGrid, Table, ChevronDown } from "lucide-react";
+import { ArrowLeft, X, Download, Settings, User, CreditCard, Users, Package, FileText, Calculator, AlertCircle, ExternalLink, Award, Shield, BarChart, Save, LayoutGrid, Table, ChevronDown, Plus, PlusCircle, QrCode, Copy, PackagePlus } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { WorkOrderItemsTable } from "@/components/WorkOrderItemsTable";
 import { WorkOrderItemsCards } from "@/components/WorkOrderItemsCards";
@@ -391,19 +391,24 @@ const AddNewWorkOrder = () => {
                   <div className="space-y-6">
                     {/* Action Buttons */}
                     <div className="flex flex-wrap gap-3">
-                      <Button className="bg-warning text-black hover:bg-warning/90 font-medium">
+                      <Button className="bg-warning text-black hover:bg-warning/90 font-medium flex items-center gap-2">
+                        <Plus className="w-4 h-4" />
                         Add New Item
                       </Button>
-                      <Button className="bg-warning text-black hover:bg-warning/90 font-medium">
+                      <Button className="bg-warning text-black hover:bg-warning/90 font-medium flex items-center gap-2">
+                        <PlusCircle className="w-4 h-4" />
                         Add New Item w/PO
                       </Button>
-                      <Button className="bg-warning text-black hover:bg-warning/90 font-medium">
+                      <Button className="bg-warning text-black hover:bg-warning/90 font-medium flex items-center gap-2">
+                        <QrCode className="w-4 h-4" />
                         Print QR Sheet
                       </Button>
-                      <Button className="bg-warning text-black hover:bg-warning/90 font-medium">
+                      <Button className="bg-warning text-black hover:bg-warning/90 font-medium flex items-center gap-2">
+                        <Copy className="w-4 h-4" />
                         Copy From Other WO
                       </Button>
-                      <Button className="bg-warning text-black hover:bg-warning/90 font-medium">
+                      <Button className="bg-warning text-black hover:bg-warning/90 font-medium flex items-center gap-2">
+                        <PackagePlus className="w-4 h-4" />
                         Create Unused Items
                       </Button>
                     </div>
