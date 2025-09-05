@@ -64,6 +64,7 @@ interface WorkOrder {
     serviceType: string;
     technicalNotes: string;
     qualityAssurance: string;
+    template: string;
   };
 }
 
@@ -122,7 +123,8 @@ const mockWorkOrders: WorkOrder[] = [
       customerAddress: "1234 Industrial Blvd, Manufacturing City, MC 12345",
       serviceType: "Calibration & Certification",
       technicalNotes: "Updated firmware to v2.4.1, replaced faulty pressure membrane",
-      qualityAssurance: "Passed all QC checks - awaiting final certification"
+      qualityAssurance: "Passed all QC checks - awaiting final certification",
+      template: "External Datasheet (pdf)"
     }
   },
   {
@@ -179,7 +181,8 @@ const mockWorkOrders: WorkOrder[] = [
       customerAddress: "5678 Technology Ave, Tech Park, TP 54321",
       serviceType: "Repair & Calibration",
       technicalNotes: "Replaced worn spindle threads, adjusted contact pressure",
-      qualityAssurance: "All measurements within ±0.0001\" tolerance"
+      qualityAssurance: "All measurements within ±0.0001\" tolerance",
+      template: "TIC 300HV HV Detector.xlsx"
     }
   },
   {
@@ -236,7 +239,8 @@ const mockWorkOrders: WorkOrder[] = [
       customerAddress: "9012 Manufacturing Dr, Industrial Zone, IZ 67890",
       serviceType: "Major Repair & Recertification",
       technicalNotes: "Waiting for custom pump assembly from manufacturer - ETA 2 weeks",
-      qualityAssurance: "Pending parts arrival and installation"
+      qualityAssurance: "Pending parts arrival and installation",
+      template: "Kaelus iPA 0707A PIM Analyzer.xlsx"
     }
   },
   {
@@ -293,7 +297,8 @@ const mockWorkOrders: WorkOrder[] = [
       customerAddress: "3456 Quality Blvd, Precision City, PC 98765",
       serviceType: "Annual Calibration",
       technicalNotes: "Initial diagnostics show all functions within spec",
-      qualityAssurance: "Scheduled for full calibration next week"
+      qualityAssurance: "Scheduled for full calibration next week",
+      template: "Chart Recorders 150°F - XX PSI ALL Auto Fill Specs .xlsx"
     }
   },
   {
@@ -350,7 +355,8 @@ const mockWorkOrders: WorkOrder[] = [
       customerAddress: "7890 Aerospace Way, Flight Center, FC 13579",
       serviceType: "Precision Calibration & Certification",
       technicalNotes: "All 8 wrenches require full range calibration per AS9100 standards",
-      qualityAssurance: "5 of 8 units completed - within ±2% tolerance requirement"
+      qualityAssurance: "5 of 8 units completed - within ±2% tolerance requirement",
+      template: "TW DTW ETW All Flex Autofill.xlsx"
     }
   },
   {
@@ -407,7 +413,8 @@ const mockWorkOrders: WorkOrder[] = [
       customerAddress: "2468 Pharma Drive, Medical District, MD 24681",
       serviceType: "FDA Compliant Calibration",
       technicalNotes: "Updated software to v3.2.1 for enhanced data integrity",
-      qualityAssurance: "Passed all FDA validation protocols - full documentation provided"
+      qualityAssurance: "Passed all FDA validation protocols - full documentation provided",
+      template: "External Datasheet (.xlsx)"
     }
   }
 ];
@@ -869,6 +876,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                     <TableHead className="font-semibold text-gray-900">Manufacturer</TableHead>
                     <TableHead className="font-semibold text-gray-900">Customer</TableHead>
                     <TableHead className="font-semibold text-gray-900">Model</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Template</TableHead>
                     <TableHead className="w-12"></TableHead>
                   </>
                 ) : (
@@ -903,9 +911,10 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                       <TableCell className="text-sm">{order.details.createdDate}</TableCell>
                       <TableCell>{getStatusBadge(order.status)}</TableCell>
                       <TableCell>{order.dueDate}</TableCell>
-                      <TableCell className="font-medium">{order.details.manufacturer}</TableCell>
+                      <TableCell className="text-blue-600 underline cursor-pointer hover:text-blue-800">{order.details.manufacturer}</TableCell>
                       <TableCell className="font-medium">{order.customer}</TableCell>
                       <TableCell className="font-mono text-sm">{order.details.modelNumber}</TableCell>
+                      <TableCell className="text-blue-600 underline cursor-pointer hover:text-blue-800">{order.details.template}</TableCell>
                       <TableCell>
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
@@ -1060,7 +1069,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                         </div>
                         <div>
                           <span className="text-gray-500">Manufacturer:</span>
-                          <div className="font-medium text-xs">{order.details.manufacturer}</div>
+                          <div className="text-blue-600 underline cursor-pointer hover:text-blue-800 text-xs">{order.details.manufacturer}</div>
                         </div>
                       </div>
 
@@ -1072,6 +1081,13 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                         <div>
                           <span className="text-gray-500">Model:</span>
                           <div className="font-mono text-xs">{order.details.modelNumber}</div>
+                        </div>
+                      </div>
+
+                      <div className="text-sm">
+                        <div>
+                          <span className="text-gray-500">Template:</span>
+                          <div className="text-blue-600 underline cursor-pointer hover:text-blue-800 text-xs">{order.details.template}</div>
                         </div>
                       </div>
 
