@@ -473,7 +473,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
       <div className="space-y-6">
         {/* Header Info */}
         <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
-          <div className="grid grid-cols-2 md:grid-cols-6 gap-4 text-sm">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-sm">
             <div>
               <span className="text-blue-700 font-medium">Work Order:</span>
               <div className="font-bold text-blue-900">{order.id}</div>
@@ -489,15 +489,6 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
             <div>
               <span className="text-blue-700 font-medium">Action:</span>
               <div className="font-semibold text-blue-900">{order.details.action}</div>
-            </div>
-            <div>
-              <span className="text-blue-700 font-medium">Item Status:</span>
-              <div className={cn("px-2 py-1 rounded text-xs font-medium",
-                order.status === "Completed" ? "bg-green-100 text-green-800" :
-                order.status === "In Lab" ? "bg-blue-100 text-blue-800" :
-                order.status === "Overdue" ? "bg-red-100 text-red-800" :
-                "bg-yellow-100 text-yellow-800"
-              )}>{order.status}</div>
             </div>
             <div>
               <span className="text-blue-700 font-medium">Priority:</span>
