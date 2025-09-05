@@ -1,5 +1,6 @@
 import { useState } from "react";
 import React from "react";
+import { useLocation } from "react-router-dom";
 import { 
   Settings, 
   FileText, 
@@ -71,6 +72,7 @@ const quickActionCategories = {
 
 export function AppSidebar() {
   const { open } = useSidebar();
+  const location = useLocation();
   const [expandedGroups, setExpandedGroups] = useState<string[]>(["Core Operations"]);
 
   const toggleGroup = (groupName: string) => {
@@ -79,6 +81,14 @@ export function AppSidebar() {
         ? prev.filter(name => name !== groupName)
         : [...prev, groupName]
     );
+  };
+
+  // Check if current item is active (for Work Orders screen)
+  const isActiveItem = (itemTitle: string) => {
+    if (itemTitle === "Work Orders") {
+      return location.pathname === "/" || location.pathname.includes("work-order");
+    }
+    return false;
   };
 
   return (
@@ -145,7 +155,10 @@ export function AppSidebar() {
                             size="sm"
                             className={`
                               w-full justify-start h-10 px-3 
-                              text-sidebar-foreground hover:text-sidebar-accent-foreground
+                              ${isActiveItem(action.title) 
+                                ? "bg-sidebar-accent text-sidebar-accent-foreground shadow-sm font-semibold" 
+                                : "text-sidebar-foreground hover:text-sidebar-accent-foreground"
+                              }
                               hover:bg-sidebar-accent hover:shadow-sm
                               transition-all duration-200 ease-in-out
                               group-hover:translate-x-1
