@@ -13,14 +13,14 @@ const WorkOrderHeader = () => {
             <Button 
               variant="ghost" 
               size="sm"
-              className="text-xs h-7 px-2"
+              className="text-xs h-7 px-2 hover:bg-black hover:text-white transition-all duration-300 transform hover:scale-105"
             >
               Pricing History
             </Button>
             <Button 
               variant="ghost" 
               size="sm"
-              className="text-xs h-7 px-2"
+              className="text-xs h-7 px-2 hover:bg-black hover:text-white transition-all duration-300 transform hover:scale-105"
             >
               User Guide
             </Button>

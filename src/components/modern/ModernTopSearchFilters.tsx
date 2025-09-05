@@ -309,8 +309,8 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
             size="sm"
             onClick={() => setShowAdvanced(!showAdvanced)}
             className={cn(
-              "rounded-lg transition-all",
-              showAdvanced ? "bg-blue-50 text-blue-600" : "text-gray-500 hover:text-gray-700"
+              "rounded-lg transition-all duration-300 transform hover:scale-105",
+              showAdvanced ? "bg-blue-50 text-blue-600 hover:bg-black hover:text-white" : "text-gray-500 hover:bg-black hover:text-white"
             )}
           >
             <Filter className="h-4 w-4 mr-2" />
@@ -322,10 +322,10 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
             size="sm"
             onClick={clearAllFilters}
             className={cn(
-              "rounded-lg transition-all",
+              "rounded-lg transition-all duration-300 transform hover:scale-105",
               hasActiveFilters 
-                ? "text-red-600 hover:text-red-700 hover:bg-red-50" 
-                : "text-gray-400 hover:text-gray-600 hover:bg-gray-50"
+                ? "text-red-600 hover:bg-black hover:text-white" 
+                : "text-gray-400 hover:bg-black hover:text-white"
             )}
           >
             <X className="h-4 w-4 mr-2" />

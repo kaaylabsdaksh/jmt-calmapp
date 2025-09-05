@@ -48,7 +48,7 @@ const ModernSidebar = ({ isCollapsed, onToggleCollapse }: ModernSidebarProps) =>
           variant="ghost"
           size="sm"
           onClick={onToggleCollapse}
-          className="w-full"
+          className="w-full hover:bg-black hover:text-white transition-all duration-300 transform hover:scale-105"
         >
           <PanelLeft className="h-4 w-4" />
         </Button>
@@ -74,7 +74,7 @@ const ModernSidebar = ({ isCollapsed, onToggleCollapse }: ModernSidebarProps) =>
             variant="ghost"
             size="sm"
             onClick={onToggleCollapse}
-            className="text-gray-400 hover:text-gray-600"
+            className="text-gray-400 hover:bg-black hover:text-white transition-all duration-300 transform hover:scale-105"
           >
             <PanelLeftClose className="h-4 w-4" />
           </Button>
@@ -86,7 +86,7 @@ const ModernSidebar = ({ isCollapsed, onToggleCollapse }: ModernSidebarProps) =>
             variant="ghost"
             size="sm"
             onClick={clearAllFilters}
-            className="w-full justify-center text-gray-500 hover:text-gray-700 hover:bg-gray-50 mb-4"
+            className="w-full justify-center text-gray-500 hover:bg-black hover:text-white transition-all duration-300 transform hover:scale-105 mb-4"
           >
             <X className="h-4 w-4 mr-2" />
             Clear all filters
