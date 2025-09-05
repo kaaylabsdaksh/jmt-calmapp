@@ -1036,8 +1036,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                     : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
                 )}
               >
-                <List className="h-4 w-4 mr-2" />
-                List
+                <List className="h-4 w-4" />
               </Button>
               <Button
                 variant={viewMode === 'grid' ? 'default' : 'ghost'}
@@ -1050,8 +1049,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                     : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
                 )}
               >
-                <Grid3X3 className="h-4 w-4 mr-2" />
-                Grid
+                <Grid3X3 className="h-4 w-4" />
               </Button>
             </div>
           </div>
