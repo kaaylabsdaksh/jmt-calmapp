@@ -181,14 +181,14 @@ export const ContactForm = ({ open, onOpenChange, onSave }: ContactFormProps) =>
             <Button 
               onClick={handleClear}
               variant="outline"
-              className="bg-warning text-black hover:bg-warning/90"
+              className="bg-warning text-black hover:bg-warning/90 hover:text-black"
             >
               Clear
             </Button>
             <Button 
               onClick={handleCancel}
               variant="outline"
-              className="bg-warning text-black hover:bg-warning/90"
+              className="bg-warning text-black hover:bg-warning/90 hover:text-black"
             >
               Cancel
             </Button>
