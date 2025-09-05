@@ -557,6 +557,10 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                   <div className="font-semibold text-sm">{order.details.items}</div>
                 </div>
                 <div>
+                  <span className="text-gray-500 text-sm font-medium">Lab Code:</span>
+                  <div className="font-mono text-sm">{order.details.labCode}</div>
+                </div>
+                <div>
                   <span className="text-gray-500 text-sm font-medium">Item Type:</span>
                   <div className="text-sm">{order.details.itemType}</div>
                 </div>
