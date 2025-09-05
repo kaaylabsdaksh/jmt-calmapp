@@ -67,7 +67,7 @@ interface WorkOrder {
 
 const mockWorkOrders: WorkOrder[] = [
   {
-    id: "WO-001",
+    id: "385737",
     status: "In Lab",
     customer: "ACME Industries",
     dueDate: "Nov 24, 2024",
@@ -122,7 +122,7 @@ const mockWorkOrders: WorkOrder[] = [
     }
   },
   {
-    id: "WO-002",
+    id: "390589",
     status: "Completed",
     customer: "Tech Solutions Ltd",
     dueDate: "Nov 20, 2024",
@@ -177,7 +177,7 @@ const mockWorkOrders: WorkOrder[] = [
     }
   },
   {
-    id: "WO-003",
+    id: "400217",
     status: "Overdue",
     customer: "Manufacturing Corp",
     dueDate: "Nov 18, 2024",
@@ -232,7 +232,7 @@ const mockWorkOrders: WorkOrder[] = [
     }
   },
   {
-    id: "WO-004",
+    id: "403946",
     status: "Pending",
     customer: "Quality Systems Inc",
     dueDate: "Dec 01, 2024",
@@ -287,7 +287,7 @@ const mockWorkOrders: WorkOrder[] = [
     }
   },
   {
-    id: "WO-005",
+    id: "405078",
     status: "In Lab",
     customer: "Aerospace Dynamics",
     dueDate: "Dec 05, 2024",
@@ -342,7 +342,7 @@ const mockWorkOrders: WorkOrder[] = [
     }
   },
   {
-    id: "WO-006",
+    id: "408881",
     status: "Completed",
     customer: "Pharmaceutical Labs Inc",
     dueDate: "Nov 15, 2024",
