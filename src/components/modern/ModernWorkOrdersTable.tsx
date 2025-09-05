@@ -508,10 +508,6 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
               {/* Column 1 */}
               <div className="space-y-3">
                 <div>
-                  <span className="text-gray-500 text-sm font-medium">Batch:</span>
-                  <div className="font-mono text-sm">{order.details.batch}</div>
-                </div>
-                <div>
                   <span className="text-gray-500 text-sm font-medium">Items:</span>
                   <div className="font-semibold text-sm">{order.details.items}</div>
                 </div>
@@ -524,8 +520,8 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                   <div className="text-sm">{order.details.itemType}</div>
                 </div>
                 <div>
-                  <span className="text-gray-500 text-sm font-medium">Purchase:</span>
-                  <div className="font-mono text-sm">{order.details.purchase}</div>
+                  <span className="text-gray-500 text-sm font-medium">Operation Type:</span>
+                  <div className="text-sm">{order.details.operationType}</div>
                 </div>
               </div>
 
@@ -542,10 +538,6 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                 <div>
                   <span className="text-gray-500 text-sm font-medium">Serial No.:</span>
                   <div className="font-mono text-sm">{order.details.serialNumber}</div>
-                </div>
-                <div>
-                  <span className="text-gray-500 text-sm font-medium">Operation Type:</span>
-                  <div className="text-sm">{order.details.operationType}</div>
                 </div>
                 <div>
                   <span className="text-gray-500 text-sm font-medium">Assigned To:</span>
@@ -566,14 +558,6 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                 <div>
                   <span className="text-gray-500 text-sm font-medium">PO #:</span>
                   <div className="font-mono text-sm">{order.details.poNumber}</div>
-                </div>
-                <div>
-                  <span className="text-gray-500 text-sm font-medium">Cart ID:</span>
-                  <div className="font-mono text-sm">{order.details.cartId}</div>
-                </div>
-                <div>
-                  <span className="text-gray-500 text-sm font-medium">Cart S/N:</span>
-                  <div className="font-mono text-sm">{order.details.cartSn}</div>
                 </div>
               </div>
             </div>
