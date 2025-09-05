@@ -24,6 +24,7 @@ interface WorkOrder {
   email: string;
   urgencyLevel: "Low" | "Medium" | "High" | "Critical";
   completionPercentage: number;
+  division: string;
   details: {
     modelNumber: string;
     labCode: string;
@@ -80,6 +81,7 @@ const mockWorkOrders: WorkOrder[] = [
     email: "r.chen@acmeindustries.com",
     urgencyLevel: "High",
     completionPercentage: 75,
+    division: "Instrumentation",
     details: {
       modelNumber: "PPS-1734",
       labCode: "LAB-001",
@@ -134,6 +136,7 @@ const mockWorkOrders: WorkOrder[] = [
     email: "l.martinez@techsolutions.com",
     urgencyLevel: "Medium",
     completionPercentage: 100,
+    division: "Mechanical",
     details: {
       modelNumber: "844-441",
       labCode: "LAB-002",
@@ -188,6 +191,7 @@ const mockWorkOrders: WorkOrder[] = [
     email: "d.wilson@manufacturingcorp.com",
     urgencyLevel: "Critical",
     completionPercentage: 35,
+    division: "Hydraulics",
     details: {
       modelNumber: "1000PS",
       labCode: "LAB-003",
@@ -242,6 +246,7 @@ const mockWorkOrders: WorkOrder[] = [
     email: "j.taylor@qualitysystems.com",
     urgencyLevel: "Low",
     completionPercentage: 15,
+    division: "Electronics",
     details: {
       modelNumber: "CAL-500",
       labCode: "LAB-004",
@@ -296,6 +301,7 @@ const mockWorkOrders: WorkOrder[] = [
     email: "m.chang@aerospacedynamics.com",
     urgencyLevel: "High",
     completionPercentage: 60,
+    division: "Aerospace",
     details: {
       modelNumber: "TW-PRO-500",
       labCode: "LAB-005",
@@ -350,6 +356,7 @@ const mockWorkOrders: WorkOrder[] = [
     email: "s.kim@pharmabs.com",
     urgencyLevel: "Medium",
     completionPercentage: 100,
+    division: "Chemical",
     details: {
       modelNumber: "AB-220",
       labCode: "LAB-006",
@@ -759,6 +766,9 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                 <TableHead className="font-semibold text-gray-900">Status</TableHead>
                 <TableHead className="font-semibold text-gray-900">Priority</TableHead>
                 <TableHead className="font-semibold text-gray-900">Customer</TableHead>
+                <TableHead className="font-semibold text-gray-900">Items</TableHead>
+                <TableHead className="font-semibold text-gray-900">Division</TableHead>
+                <TableHead className="font-semibold text-gray-900">Created Date</TableHead>
                 <TableHead className="font-semibold text-gray-900">Due Date</TableHead>
                 <TableHead className="font-semibold text-gray-900">Assigned To</TableHead>
                 <TableHead className="w-12"></TableHead>
@@ -786,6 +796,9 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                     )}>{order.details.priority}</span>
                   </TableCell>
                   <TableCell className="font-medium">{order.customer}</TableCell>
+                  <TableCell className="font-mono text-sm">{order.details.items}</TableCell>
+                  <TableCell className="font-medium">{order.division}</TableCell>
+                  <TableCell className="text-sm">{order.details.createdDate}</TableCell>
                   <TableCell>{order.dueDate}</TableCell>
                   <TableCell>{order.assignedTo}</TableCell>
                   <TableCell>
@@ -871,12 +884,23 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
 
                   <div className="grid grid-cols-2 gap-3 text-sm">
                     <div>
-                      <span className="text-gray-500">Model:</span>
-                      <div className="font-mono text-xs">{order.details.modelNumber}</div>
+                      <span className="text-gray-500">Items:</span>
+                      <div className="font-mono text-xs">{order.details.items}</div>
                     </div>
                     <div>
-                      <span className="text-gray-500">Manufacturer:</span>
-                      <div className="font-medium text-xs">{order.details.manufacturer}</div>
+                      <span className="text-gray-500">Division:</span>
+                      <div className="font-medium text-xs">{order.division}</div>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3 text-sm">
+                    <div>
+                      <span className="text-gray-500">Created:</span>
+                      <div className="font-medium text-xs">{order.details.createdDate}</div>
+                    </div>
+                    <div>
+                      <span className="text-gray-500">Model:</span>
+                      <div className="font-mono text-xs">{order.details.modelNumber}</div>
                     </div>
                   </div>
 
