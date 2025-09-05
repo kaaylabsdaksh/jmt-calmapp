@@ -216,10 +216,18 @@ const AddNewWorkOrder = () => {
           </Button>
           <h1 className="text-lg sm:text-xl font-semibold text-foreground text-center flex-1 mx-4">Add New Work Order</h1>
           <div className="flex items-center gap-1 sm:gap-2">
-            <Button variant="ghost" size="sm" className="p-2">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="p-2 rounded-lg hover:bg-muted hover:shadow-md transition-all duration-300 transform hover:scale-105"
+            >
               <Download className="h-4 w-4" />
             </Button>
-            <Button variant="ghost" size="sm" className="p-2">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="p-2 rounded-lg hover:bg-muted hover:shadow-md transition-all duration-300 transform hover:scale-105"
+            >
               <Settings className="h-4 w-4" />
             </Button>
           </div>
