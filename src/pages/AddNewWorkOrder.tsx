@@ -637,12 +637,23 @@ const AddNewWorkOrder = () => {
                         <div className="flex items-center gap-2">
                           <Label className="text-sm font-medium whitespace-nowrap min-w-fit">Special Action:</Label>
                           <Select>
-                            <SelectTrigger className="w-36 border-gray-400">
+                            <SelectTrigger className="w-48 border-gray-400">
                               <SelectValue placeholder="Select action..." />
                             </SelectTrigger>
-                            <SelectContent className="bg-background border shadow-lg z-50">
-                              <SelectItem value="action1">Action 1</SelectItem>
-                              <SelectItem value="action2">Action 2</SelectItem>
+                            <SelectContent className="bg-background border shadow-lg z-50 max-h-60 overflow-y-auto">
+                              <SelectItem value="add-comments">Add Comments</SelectItem>
+                              <SelectItem value="cancel-items">Cancel Item(s)</SelectItem>
+                              <SelectItem value="change-esl-type">Change ESL Type</SelectItem>
+                              <SelectItem value="cust-reply-received">Cust Reply Received</SelectItem>
+                              <SelectItem value="del-ticket-followup">Del Ticket Followup</SelectItem>
+                              <SelectItem value="ready-to-bill">Ready to Bill</SelectItem>
+                              <SelectItem value="to-ar">To A/R</SelectItem>
+                              <SelectItem value="update-cal-freqs">Update Cal Freqs</SelectItem>
+                              <SelectItem value="update-po-numbers">Update PO #'s</SelectItem>
+                              <SelectItem value="update-tf-status">Update T/F Status</SelectItem>
+                              <SelectItem value="waiting-on-customer">Waiting on Customer</SelectItem>
+                              <SelectItem value="wait-cust-followup">Wait Cust Followup</SelectItem>
+                              <SelectItem value="update-deliver-by-date">Update Deliver By Date</SelectItem>
                             </SelectContent>
                           </Select>
                         </div>
