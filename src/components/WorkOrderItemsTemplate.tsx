@@ -96,7 +96,7 @@ export const WorkOrderItemsTemplate = () => {
               <DialogHeader>
                 <DialogTitle>Add New Work Order Item</DialogTitle>
               </DialogHeader>
-              <div className="grid grid-cols-2 gap-4 py-4">
+              <div className="grid grid-cols-3 gap-4 py-4">
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Item #</label>
                   <Input 
