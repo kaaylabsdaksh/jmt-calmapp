@@ -483,16 +483,21 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
               <div className="font-semibold text-blue-900">{order.customer}</div>
             </div>
             <div>
-              <span className="text-blue-700 font-medium">Division:</span>
-              <div className="font-semibold text-blue-900">{order.division}</div>
-            </div>
-            <div>
-              <span className="text-blue-700 font-medium">Job:</span>
-              <div className="font-semibold text-blue-900">{order.details.job}</div>
+              <span className="text-blue-700 font-medium">LOC:</span>
+              <div className="font-semibold text-blue-900">{order.details.lots}</div>
             </div>
             <div>
               <span className="text-blue-700 font-medium">Action:</span>
               <div className="font-semibold text-blue-900">{order.details.action}</div>
+            </div>
+            <div>
+              <span className="text-blue-700 font-medium">Item Status:</span>
+              <div className={cn("px-2 py-1 rounded text-xs font-medium",
+                order.status === "Completed" ? "bg-green-100 text-green-800" :
+                order.status === "In Lab" ? "bg-blue-100 text-blue-800" :
+                order.status === "Overdue" ? "bg-red-100 text-red-800" :
+                "bg-yellow-100 text-yellow-800"
+              )}>{order.status}</div>
             </div>
             <div>
               <span className="text-blue-700 font-medium">Priority:</span>
