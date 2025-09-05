@@ -16,25 +16,6 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { ContactForm, ContactFormData } from "@/components/ContactForm";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 
-interface WorkOrderItemTemplate {
-  id: string;
-  itemNumber: string;
-  calFreq: string;
-  actionCode: string;
-  priority: string;
-  manufacturer: string;
-  model: string;
-  mfgSerial: string;
-  custId: string;
-  custSN: string;
-  barcodeNum: string;
-  warranty: string;
-  iso17025: string;
-  estimate: string;
-  newEquip: string;
-  needByDate: string;
-}
-
 const AddNewWorkOrder = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
@@ -55,62 +36,24 @@ const AddNewWorkOrder = () => {
   const [accountSuggestions, setAccountSuggestions] = useState<Array<{accountNumber: string, customerName: string, srDocument: string, salesperson: string, contact: string}>>([]);
   const [highlightedSuggestion, setHighlightedSuggestion] = useState(-1);
   const [showContactForm, setShowContactForm] = useState(false);
-  const [templateItems, setTemplateItems] = useState<WorkOrderItemTemplate[]>([
-    {
-      id: "1",
-      itemNumber: "ITM001",
-      calFreq: "annual",
-      actionCode: "repair",
-      priority: "normal",
-      manufacturer: "3d-instruments",
-      model: "DI-3000",
-      mfgSerial: "DI3000123",
-      custId: "CUST001",
-      custSN: "CS789",
-      barcodeNum: "BC123456",
-      warranty: "yes",
-      iso17025: "yes",
-      estimate: "1500.00",
-      newEquip: "no",
-      needByDate: "2024-03-15",
-    },
-    {
-      id: "2",
-      itemNumber: "ITM002",
-      calFreq: "quarterly",
-      actionCode: "rc",
-      priority: "rush",
-      manufacturer: "3m",
-      model: "3M-5500",
-      mfgSerial: "3M5500456",
-      custId: "CUST002",
-      custSN: "CS890",
-      barcodeNum: "BC234567",
-      warranty: "no",
-      iso17025: "yes",
-      estimate: "2250.00",
-      newEquip: "yes",
-      needByDate: "2024-02-28",
-    },
-    {
-      id: "3",
-      itemNumber: "ITM003",
-      calFreq: "monthly",
-      actionCode: "test",
-      priority: "expedite",
-      manufacturer: "4b-components",
-      model: "4B-Monitor",
-      mfgSerial: "4BM789",
-      custId: "CUST003",
-      custSN: "CS901",
-      barcodeNum: "BC345678",
-      warranty: "yes",
-      iso17025: "no",
-      estimate: "850.00",
-      newEquip: "no",
-      needByDate: "2024-04-01",
-    }
-  ]);
+  const [templateItems, setTemplateItems] = useState<Array<{
+    id: string;
+    itemNumber: string;
+    calFreq: string;
+    actionCode: string;
+    priority: string;
+    manufacturer: string;
+    model: string;
+    mfgSerial: string;
+    custId: string;
+    custSN: string;
+    barcodeNum: string;
+    warranty: string;
+    iso17025: string;
+    estimate: string;
+    newEquip: string;
+    needByDate: string;
+  }>>([]);
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Mock account data
@@ -791,7 +734,7 @@ const AddNewWorkOrder = () => {
                     ) : viewMode === 'table' ? (
                       <WorkOrderItemsTable />
                     ) : (
-                      <WorkOrderItemsCards items={templateItems} />
+                      <WorkOrderItemsCards templateItems={templateItems} />
                     )}
                   </div>
                 </CardContent>

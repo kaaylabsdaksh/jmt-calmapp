@@ -26,6 +26,11 @@ interface WorkOrderItemTemplate {
   needByDate: string;
 }
 
+interface WorkOrderItemsTemplateProps {
+  items: WorkOrderItemTemplate[];
+  setItems: React.Dispatch<React.SetStateAction<WorkOrderItemTemplate[]>>;
+}
+
 const createEmptyItem = (): WorkOrderItemTemplate => ({
   id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
   itemNumber: "",
@@ -45,12 +50,7 @@ const createEmptyItem = (): WorkOrderItemTemplate => ({
   needByDate: "",
 });
 
-interface Props {
-  items: WorkOrderItemTemplate[];
-  setItems: React.Dispatch<React.SetStateAction<WorkOrderItemTemplate[]>>;
-}
-
-export const WorkOrderItemsTemplate = ({ items, setItems }: Props) => {
+export const WorkOrderItemsTemplate = ({ items, setItems }: WorkOrderItemsTemplateProps) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [newItem, setNewItem] = useState<WorkOrderItemTemplate>(createEmptyItem());
 
@@ -65,9 +65,8 @@ export const WorkOrderItemsTemplate = ({ items, setItems }: Props) => {
     setIsDialogOpen(false);
   };
 
-
-  const updateNewItem = (field: keyof WorkOrderItemTemplate, value: string) => {
-    setNewItem(prev => ({ ...prev, [field]: value }));
+  const removeItem = (id: string) => {
+    setItems(items.filter(item => item.id !== id));
   };
 
   const updateItem = (id: string, field: keyof WorkOrderItemTemplate, value: string) => {
@@ -76,8 +75,8 @@ export const WorkOrderItemsTemplate = ({ items, setItems }: Props) => {
     ));
   };
 
-  const removeItem = (id: string) => {
-    setItems(items.filter(item => item.id !== id));
+  const updateNewItem = (field: keyof WorkOrderItemTemplate, value: string) => {
+    setNewItem(prev => ({ ...prev, [field]: value }));
   };
 
   const clearAllItems = () => {
@@ -270,7 +269,6 @@ export const WorkOrderItemsTemplate = ({ items, setItems }: Props) => {
           Clear
         </Button>
       </div>
-      
       
       <div className="overflow-x-auto">
         <table className="w-full text-xs">
@@ -475,7 +473,7 @@ export const WorkOrderItemsTemplate = ({ items, setItems }: Props) => {
       
       {items.length === 0 ? (
         <div className="p-8 text-center text-muted-foreground">
-          Use the Add button to create work order items
+          No data to display
         </div>
       ) : null}
     </div>

@@ -3,6 +3,20 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 
+interface WorkOrderItem {
+  id: string;
+  reportNumber: string;
+  manufacturer: string;
+  model: string;
+  serialNumber: string;
+  created: string;
+  departure: string;
+  itemStatus: string;
+  itemType: string;
+  deliverByDate: string;
+  poNumber: string;
+}
+
 interface WorkOrderItemTemplate {
   id: string;
   itemNumber: string;
@@ -22,11 +36,112 @@ interface WorkOrderItemTemplate {
   needByDate: string;
 }
 
-interface Props {
-  items: WorkOrderItemTemplate[];
+interface WorkOrderItemsCardsProps {
+  templateItems?: WorkOrderItemTemplate[];
 }
 
-export const WorkOrderItemsCards = ({ items }: Props) => {
+const mockData: WorkOrderItem[] = [
+  {
+    id: "1",
+    reportNumber: "3455",
+    manufacturer: "3243",
+    model: "",
+    serialNumber: "2343",
+    created: "",
+    departure: "",
+    itemStatus: "",
+    itemType: "",
+    deliverByDate: "",
+    poNumber: "",
+  },
+  {
+    id: "2",
+    reportNumber: "3456",
+    manufacturer: "General Electric",
+    model: "GE-4500",
+    serialNumber: "GE445789",
+    created: "2024-01-15",
+    departure: "2024-02-01",
+    itemStatus: "In Progress",
+    itemType: "Transformer",
+    deliverByDate: "2024-03-15",
+    poNumber: "PO-2024-001",
+  },
+  {
+    id: "3",
+    reportNumber: "3457",
+    manufacturer: "Siemens",
+    model: "S7-1200",
+    serialNumber: "SIE123456",
+    created: "2024-01-20",
+    departure: "2024-02-05",
+    itemStatus: "Completed",
+    itemType: "Control Panel",
+    deliverByDate: "2024-02-28",
+    poNumber: "PO-2024-002",
+  },
+  {
+    id: "4",
+    reportNumber: "3458",
+    manufacturer: "ABB",
+    model: "REF615",
+    serialNumber: "ABB789123",
+    created: "2024-01-25",
+    departure: "2024-02-10",
+    itemStatus: "Testing",
+    itemType: "Protection Relay",
+    deliverByDate: "2024-03-01",
+    poNumber: "PO-2024-003",
+  },
+  {
+    id: "5",
+    reportNumber: "3459",
+    manufacturer: "Schneider Electric",
+    model: "SEPAM-80",
+    serialNumber: "SCH456789",
+    created: "2024-02-01",
+    departure: "2024-02-15",
+    itemStatus: "Pending",
+    itemType: "Switchgear",
+    deliverByDate: "2024-03-20",
+    poNumber: "PO-2024-004",
+  },
+];
+
+const getStatusColor = (status: string) => {
+  switch (status.toLowerCase()) {
+    case 'completed':
+      return 'bg-green-100 text-green-800';
+    case 'in progress':
+      return 'bg-blue-100 text-blue-800';
+    case 'testing':
+      return 'bg-yellow-100 text-yellow-800';
+    case 'pending':
+      return 'bg-orange-100 text-orange-800';
+    default:
+      return 'bg-gray-100 text-gray-800';
+  }
+};
+
+export const WorkOrderItemsCards = ({ templateItems = [] }: WorkOrderItemsCardsProps) => {
+  // Combine template items and mock data
+  const allItems = [
+    ...templateItems.map(item => ({
+      id: item.id,
+      reportNumber: item.itemNumber,
+      manufacturer: item.manufacturer,
+      model: item.model,
+      serialNumber: item.mfgSerial,
+      created: "",
+      departure: "",
+      itemStatus: item.priority,
+      itemType: item.actionCode,
+      deliverByDate: item.needByDate,
+      poNumber: "",
+    })),
+    ...mockData
+  ];
+
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
@@ -40,17 +155,19 @@ export const WorkOrderItemsCards = ({ items }: Props) => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {items.map((item, index) => (
+        {allItems.map((item, index) => (
           <Card key={item.id} className="hover:shadow-md transition-shadow">
             <CardContent className="p-4">
               <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center gap-2">
                   <Checkbox />
-                  <span className="font-semibold text-foreground">Item #{item.itemNumber || `${index + 1}`}</span>
+                  <span className="font-semibold text-foreground">
+                    {item.reportNumber ? `Report #${item.reportNumber}` : `Item #${item.reportNumber}`}
+                  </span>
                 </div>
-                {item.priority && (
-                  <Badge variant="secondary">
-                    {item.priority}
+                {item.itemStatus && (
+                  <Badge className={getStatusColor(item.itemStatus)}>
+                    {item.itemStatus}
                   </Badge>
                 )}
               </div>
@@ -70,45 +187,45 @@ export const WorkOrderItemsCards = ({ items }: Props) => {
                   </div>
                 )}
                 
-                {item.mfgSerial && (
+                {item.serialNumber && (
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Mfg Serial:</span>
-                    <span className="font-medium">{item.mfgSerial}</span>
+                    <span className="text-muted-foreground">Serial #:</span>
+                    <span className="font-medium">{item.serialNumber}</span>
                   </div>
                 )}
                 
-                {item.actionCode && (
+                {item.itemType && (
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Action:</span>
-                    <span className="font-medium">{item.actionCode}</span>
+                    <span className="text-muted-foreground">Type:</span>
+                    <span className="font-medium">{item.itemType}</span>
                   </div>
                 )}
                 
-                {item.calFreq && (
+                {item.created && (
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Cal Freq:</span>
-                    <span className="font-medium">{item.calFreq}</span>
+                    <span className="text-muted-foreground">Created:</span>
+                    <span className="font-medium">{item.created}</span>
                   </div>
                 )}
                 
-                {item.needByDate && (
+                {item.deliverByDate && (
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Need By:</span>
-                    <span className="font-medium">{item.needByDate}</span>
+                    <span className="text-muted-foreground">Deliver By:</span>
+                    <span className="font-medium">{item.deliverByDate}</span>
                   </div>
                 )}
                 
-                {item.warranty && (
+                {item.poNumber && (
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Warranty:</span>
-                    <span className="font-medium">{item.warranty}</span>
+                    <span className="text-muted-foreground">PO #:</span>
+                    <span className="font-medium">{item.poNumber}</span>
                   </div>
                 )}
               </div>
 
               <div className="mt-4 pt-3 border-t flex justify-end">
                 <Button variant="link" className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto">
-                  View Details
+                  {index === 0 ? 'Clear' : 'View Details'}
                 </Button>
               </div>
             </CardContent>
@@ -116,9 +233,9 @@ export const WorkOrderItemsCards = ({ items }: Props) => {
         ))}
       </div>
 
-      {items.length === 0 && (
+      {allItems.length === 0 && (
         <div className="text-center py-12 text-muted-foreground">
-          No items added yet. Use the template view to add items.
+          No data to display
         </div>
       )}
     </div>
