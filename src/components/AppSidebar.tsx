@@ -86,7 +86,7 @@ export function AppSidebar() {
   // Check if current item is active (for Work Orders screen)
   const isActiveItem = (itemTitle: string) => {
     if (itemTitle === "Work Orders") {
-      return location.pathname === "/" || location.pathname.includes("work-order");
+      return location.pathname === "/" || location.pathname.includes("work-order") || location.pathname === "/add-new-work-order";
     }
     return false;
   };
