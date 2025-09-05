@@ -11,6 +11,7 @@ import { ArrowLeft, X, Download, Settings, User, CreditCard, Users, Package, Fil
 import { Checkbox } from "@/components/ui/checkbox";
 import { WorkOrderItemsTable } from "@/components/WorkOrderItemsTable";
 import { WorkOrderItemsCards } from "@/components/WorkOrderItemsCards";
+import { WorkOrderItemsTemplate } from "@/components/WorkOrderItemsTemplate";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { ContactForm, ContactFormData } from "@/components/ContactForm";
 import { SidebarTrigger } from "@/components/ui/sidebar";
@@ -30,7 +31,7 @@ const AddNewWorkOrder = () => {
     contact: "Not specified"
   });
 
-  const [viewMode, setViewMode] = useState<'table' | 'cards'>('table');
+  const [viewMode, setViewMode] = useState<'table' | 'cards' | 'template'>('table');
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [accountSuggestions, setAccountSuggestions] = useState<Array<{accountNumber: string, customerName: string, srDocument: string, salesperson: string, contact: string}>>([]);
   const [highlightedSuggestion, setHighlightedSuggestion] = useState(-1);
@@ -666,28 +667,53 @@ const AddNewWorkOrder = () => {
 
                     {/* View Toggle */}
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-1">
-                        <Button
-                          variant={viewMode === 'table' ? 'default' : 'ghost'}
-                          size="sm"
-                          onClick={() => setViewMode('table')}
-                          className="h-8 px-3"
-                        >
-                          <Table className="w-4 h-4" />
-                        </Button>
-                        <Button
-                          variant={viewMode === 'cards' ? 'default' : 'ghost'}
-                          size="sm"
-                          onClick={() => setViewMode('cards')}
-                          className="h-8 px-3"
-                        >
-                          <LayoutGrid className="w-4 h-4" />
-                        </Button>
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-medium text-muted-foreground">View:</span>
+                        <div className="flex items-center gap-1">
+                          <Button
+                            variant={viewMode === 'table' || viewMode === 'cards' ? 'default' : 'ghost'}
+                            size="sm"
+                            onClick={() => setViewMode('table')}
+                            className="h-8 px-3"
+                          >
+                            Default View
+                          </Button>
+                          <Button
+                            variant={viewMode === 'template' ? 'default' : 'ghost'}
+                            size="sm"
+                            onClick={() => setViewMode('template')}
+                            className="h-8 px-3"
+                          >
+                            Template View
+                          </Button>
+                        </div>
+                        {(viewMode === 'table' || viewMode === 'cards') && (
+                          <div className="flex items-center gap-1 ml-4">
+                            <Button
+                              variant={viewMode === 'table' ? 'default' : 'ghost'}
+                              size="sm"
+                              onClick={() => setViewMode('table')}
+                              className="h-8 px-3"
+                            >
+                              <Table className="w-4 h-4" />
+                            </Button>
+                            <Button
+                              variant={viewMode === 'cards' ? 'default' : 'ghost'}
+                              size="sm"
+                              onClick={() => setViewMode('cards')}
+                              className="h-8 px-3"
+                            >
+                              <LayoutGrid className="w-4 h-4" />
+                            </Button>
+                          </div>
+                        )}
                       </div>
                     </div>
 
                     {/* Conditional View Rendering */}
-                    {viewMode === 'table' ? (
+                    {viewMode === 'template' ? (
+                      <WorkOrderItemsTemplate />
+                    ) : viewMode === 'table' ? (
                       <WorkOrderItemsTable />
                     ) : (
                       <WorkOrderItemsCards />
