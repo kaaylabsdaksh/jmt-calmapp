@@ -643,20 +643,12 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                     textColor: "text-yellow-700"
                   },
                   {
-                    title: "Next Milestone",
+                    title: "Need By Date",
                     date: order.details.nextBy,
-                    description: "Next Action",
+                    description: "Target Date",
                     color: order.details.nextBy === "TBD" ? "bg-red-500" : "bg-purple-500",
                     bgColor: order.details.nextBy === "TBD" ? "bg-red-50" : "bg-purple-50",
                     textColor: order.details.nextBy === "TBD" ? "text-red-700" : "text-purple-700"
-                  },
-                  {
-                    title: "Departure",
-                    date: order.details.departureDate,
-                    description: "Completion",
-                    color: order.details.departureDate === "TBD" ? "bg-red-500" : "bg-green-600",
-                    bgColor: order.details.departureDate === "TBD" ? "bg-red-50" : "bg-green-50",
-                    textColor: order.details.departureDate === "TBD" ? "text-red-700" : "text-green-700"
                   }
                 ].map((item, index, array) => (
                   <div key={index} className="flex flex-col items-center relative flex-1">
