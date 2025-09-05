@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { ChevronRight, MoreHorizontal, Edit, User, RefreshCw, ChevronLeft, List, Grid3X3 } from "lucide-react";
+import { List, Grid3X3 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface WorkOrder {
@@ -728,15 +728,12 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
         {/* Action Buttons */}
         <div className="flex justify-end gap-3 pt-4 border-t border-gray-200">
           <Button variant="outline" onClick={() => handleEditWorkOrder(order.id)}>
-            <Edit className="h-4 w-4 mr-2" />
             Edit Order
           </Button>
           <Button variant="outline">
-            <User className="h-4 w-4 mr-2" />
             Assign Tech
           </Button>
           <Button>
-            <RefreshCw className="h-4 w-4 mr-2" />
             Update Status
           </Button>
         </div>
@@ -969,15 +966,12 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
         {/* Action Buttons */}
         <div className="flex justify-end gap-3 pt-4 border-t border-gray-200">
           <Button variant="outline" onClick={() => handleEditWorkOrder(order.id)}>
-            <Edit className="h-4 w-4 mr-2" />
             Edit Order
           </Button>
           <Button variant="outline">
-            <User className="h-4 w-4 mr-2" />
             Assign Tech
           </Button>
           <Button>
-            <RefreshCw className="h-4 w-4 mr-2" />
             Update Status
           </Button>
         </div>
@@ -1193,29 +1187,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                       <TableCell className="font-medium">{order.customer}</TableCell>
                       <TableCell className="font-mono text-sm">{order.details.modelNumber}</TableCell>
                       <TableCell className="text-blue-600 underline cursor-pointer hover:text-blue-800">{order.details.template}</TableCell>
-                      <TableCell>
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
-                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0 data-[state=open]:bg-blue-100 data-[state=open]:text-blue-700">
-                              <MoreHorizontal className="h-4 w-4" />
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end" className="bg-white border shadow-lg z-50 rounded-lg">
-                            <DropdownMenuItem className="flex items-center gap-2" onClick={() => handleEditWorkOrder(order.id)}>
-                              <Edit className="h-4 w-4" />
-                              Edit
-                            </DropdownMenuItem>
-                            <DropdownMenuItem className="flex items-center gap-2">
-                              <User className="h-4 w-4" />
-                              Assign Tech
-                            </DropdownMenuItem>
-                            <DropdownMenuItem className="flex items-center gap-2">
-                              <RefreshCw className="h-4 w-4" />
-                              Update Status
-                            </DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </TableCell>
+                       <TableCell></TableCell>
                     </>
                   ) : (
                     // Default View Cells
@@ -1240,29 +1212,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                       <TableCell className="text-sm">{order.details.createdDate}</TableCell>
                       <TableCell>{order.dueDate}</TableCell>
                       <TableCell>{order.assignedTo}</TableCell>
-                      <TableCell>
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
-                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0 data-[state=open]:bg-blue-100 data-[state=open]:text-blue-700">
-                              <MoreHorizontal className="h-4 w-4" />
-                            </Button>
-                          </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end" className="bg-white border shadow-lg z-50 rounded-lg">
-                              <DropdownMenuItem className="flex items-center gap-2" onClick={() => handleEditWorkOrder(order.id)}>
-                                <Edit className="h-4 w-4" />
-                                Edit
-                              </DropdownMenuItem>
-                             <DropdownMenuItem className="flex items-center gap-2">
-                               <User className="h-4 w-4" />
-                               Assign Tech
-                             </DropdownMenuItem>
-                             <DropdownMenuItem className="flex items-center gap-2">
-                               <RefreshCw className="h-4 w-4" />
-                               Update Status
-                             </DropdownMenuItem>
-                           </DropdownMenuContent>
-                        </DropdownMenu>
-                      </TableCell>
+                       <TableCell></TableCell>
                     </>
                   )}
                 </TableRow>
@@ -1293,27 +1243,14 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                         )}>{order.details.priority}</span>
                       </div>
                     </div>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
-                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0 hover:bg-gray-100">
-                          <MoreHorizontal className="h-4 w-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="bg-white border shadow-lg z-50 rounded-lg">
-                        <DropdownMenuItem className="flex items-center gap-2" onClick={() => handleEditWorkOrder(order.id)}>
-                          <Edit className="h-4 w-4" />
-                          Edit
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="flex items-center gap-2">
-                          <User className="h-4 w-4" />
-                          Assign Tech
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="flex items-center gap-2">
-                          <RefreshCw className="h-4 w-4" />
-                          Update Status
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+                     <DropdownMenu>
+                       <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
+                         <Button variant="ghost" size="sm" className="h-8 w-8 p-0 hover:bg-gray-100">
+                         </Button>
+                       </DropdownMenuTrigger>
+                       <DropdownMenuContent align="end" className="bg-white border shadow-lg z-50 rounded-lg">
+                       </DropdownMenuContent>
+                     </DropdownMenu>
                   </div>
                 </div>
 
@@ -1366,15 +1303,14 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                         </div>
                       </div>
 
-                      <div className="flex items-center justify-end">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-6 w-6 p-0 text-gray-400"
-                        >
-                          <ChevronRight className="h-4 w-4" />
-                        </Button>
-                      </div>
+                       <div className="flex items-center justify-end">
+                         <Button
+                           variant="ghost"
+                           size="sm"
+                           className="h-6 w-6 p-0 text-gray-400"
+                         >
+                         </Button>
+                       </div>
                     </>
                   ) : (
                     // Default View Content
@@ -1413,15 +1349,14 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                         </div>
                       </div>
 
-                      <div className="flex items-center justify-end">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-6 w-6 p-0 text-gray-400"
-                        >
-                          <ChevronRight className="h-4 w-4" />
-                        </Button>
-                      </div>
+                         <div className="flex items-center justify-end">
+                           <Button
+                             variant="ghost"
+                             size="sm"
+                             className="h-6 w-6 p-0 text-gray-400"
+                           >
+                           </Button>
+                         </div>
                     </>
                   )}
                 </div>
@@ -1452,7 +1387,6 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
               disabled={currentPage === 1}
               className="rounded-lg"
             >
-              <ChevronLeft className="h-4 w-4 mr-1" />
               Previous
             </Button>
             
@@ -1481,7 +1415,6 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
               className="rounded-lg"
             >
               Next
-              <ChevronRight className="h-4 w-4 ml-1" />
             </Button>
           </div>
         </div>
