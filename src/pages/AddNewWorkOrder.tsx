@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -29,6 +29,49 @@ const AddNewWorkOrder = () => {
   });
 
   const [viewMode, setViewMode] = useState<'table' | 'cards'>('table');
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [accountSuggestions, setAccountSuggestions] = useState<Array<{accountNumber: string, customerName: string, srDocument: string, salesperson: string, contact: string}>>([]);
+  const [highlightedSuggestion, setHighlightedSuggestion] = useState(-1);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  // Mock account data
+  const mockAccounts = [
+    {
+      accountNumber: "15000",
+      customerName: "Entergy Inventory",
+      srDocument: "SR2244",
+      salesperson: "ZZEN - House - Entergy", 
+      contact: "USE TAG/PAPERWORK"
+    },
+    {
+      accountNumber: "15001",
+      customerName: "Gulf Power Company",
+      srDocument: "SR3345",
+      salesperson: "John Smith - Gulf Power Rep",
+      contact: "Mike Johnson"
+    },
+    {
+      accountNumber: "15002", 
+      customerName: "Florida Power & Light",
+      srDocument: "SR4456",
+      salesperson: "Sarah Wilson - FPL Account Manager",
+      contact: "Lisa Anderson"
+    },
+    {
+      accountNumber: "15003",
+      customerName: "Duke Energy Corporation",
+      srDocument: "SR5567",
+      salesperson: "Robert Davis - Duke Energy Sales",
+      contact: "Jennifer Martinez"
+    },
+    {
+      accountNumber: "15004",
+      customerName: "Southern Company Services",
+      srDocument: "SR6678",
+      salesperson: "Amanda Brown - Southern Rep",
+      contact: "David Thompson"
+    }
+  ];
 
   const tabs = [
     { value: "general", label: "General", icon: User, shortLabel: "Gen" },
@@ -57,8 +100,84 @@ const AddNewWorkOrder = () => {
 
   // Function to check if a tab should be disabled
   const isTabDisabled = (tabValue: string) => {
-    return tabValue !== "general";
+    // Only general tab is enabled if account number is not 5 digits
+    return tabValue !== "general" && workOrderData.accountNumber.length !== 5;
   };
+
+  // Handle account number input change
+  const handleAccountNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/\D/g, '').slice(0, 5); // Only allow 5 digits
+    setWorkOrderData(prev => ({ ...prev, accountNumber: value }));
+    
+    if (value.length > 0) {
+      const filtered = mockAccounts.filter(account => 
+        account.accountNumber.startsWith(value) ||
+        account.customerName.toLowerCase().includes(value.toLowerCase())
+      );
+      setAccountSuggestions(filtered);
+      setShowSuggestions(true);
+      setHighlightedSuggestion(-1);
+    } else {
+      setShowSuggestions(false);
+      setAccountSuggestions([]);
+    }
+  };
+
+  // Handle suggestion selection
+  const handleSuggestionSelect = (account: typeof mockAccounts[0]) => {
+    setWorkOrderData(prev => ({
+      ...prev,
+      accountNumber: account.accountNumber,
+      customer: account.customerName,
+      srDocument: account.srDocument,
+      salesperson: account.salesperson,
+      contact: account.contact
+    }));
+    setShowSuggestions(false);
+    setAccountSuggestions([]);
+  };
+
+  // Handle keyboard navigation in suggestions
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (!showSuggestions || accountSuggestions.length === 0) return;
+
+    switch (e.key) {
+      case 'ArrowDown':
+        e.preventDefault();
+        setHighlightedSuggestion(prev => 
+          prev < accountSuggestions.length - 1 ? prev + 1 : 0
+        );
+        break;
+      case 'ArrowUp':
+        e.preventDefault();
+        setHighlightedSuggestion(prev => 
+          prev > 0 ? prev - 1 : accountSuggestions.length - 1
+        );
+        break;
+      case 'Enter':
+        e.preventDefault();
+        if (highlightedSuggestion >= 0) {
+          handleSuggestionSelect(accountSuggestions[highlightedSuggestion]);
+        }
+        break;
+      case 'Escape':
+        setShowSuggestions(false);
+        setHighlightedSuggestion(-1);
+        break;
+    }
+  };
+
+  // Handle clicks outside to close suggestions
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (inputRef.current && !inputRef.current.contains(event.target as Node)) {
+        setShowSuggestions(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   return (
     <div className="bg-background min-h-screen">
@@ -240,20 +359,49 @@ const AddNewWorkOrder = () => {
                     </div>
 
                     {/* Account Number */}
-                    <div className="space-y-2">
+                    <div className="space-y-2 relative" ref={inputRef}>
                       <Label htmlFor="accountNumber" className="text-sm font-medium">
                         Account # <span className="text-destructive">*</span>
                       </Label>
                       <div className="relative">
                         <Input
                           id="accountNumber"
-                          placeholder="Enter account number"
+                          placeholder="Enter 5-digit account number"
                           value={workOrderData.accountNumber}
-                          onChange={(e) => setWorkOrderData(prev => ({ ...prev, accountNumber: e.target.value }))}
+                          onChange={handleAccountNumberChange}
+                          onKeyDown={handleKeyDown}
+                          maxLength={5}
                           className={!workOrderData.accountNumber ? "border-destructive" : ""}
                         />
                         {!workOrderData.accountNumber && (
                           <div className="absolute right-3 top-1/2 -translate-y-1/2 w-2 h-2 bg-destructive rounded-full"></div>
+                        )}
+                        
+                        {/* Suggestions Dropdown */}
+                        {showSuggestions && accountSuggestions.length > 0 && (
+                          <div className="absolute top-full left-0 right-0 z-50 mt-1 bg-popover border rounded-md shadow-lg max-h-60 overflow-y-auto">
+                            {accountSuggestions.map((account, index) => (
+                              <div
+                                key={account.accountNumber}
+                                className={`px-3 py-2 cursor-pointer transition-colors border-b last:border-b-0 ${
+                                  index === highlightedSuggestion 
+                                    ? 'bg-accent text-accent-foreground' 
+                                    : 'hover:bg-muted'
+                                }`}
+                                onClick={() => handleSuggestionSelect(account)}
+                              >
+                                <div className="flex justify-between items-center">
+                                  <div>
+                                    <div className="font-medium text-sm">{account.accountNumber}</div>
+                                    <div className="text-xs text-muted-foreground">{account.customerName}</div>
+                                  </div>
+                                  <div className="text-xs text-muted-foreground">
+                                    {account.srDocument}
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
                         )}
                       </div>
                     </div>
