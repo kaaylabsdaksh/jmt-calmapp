@@ -12,6 +12,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { WorkOrderItemsTable } from "@/components/WorkOrderItemsTable";
 import { WorkOrderItemsCards } from "@/components/WorkOrderItemsCards";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { ContactForm, ContactFormData } from "@/components/ContactForm";
 
 const AddNewWorkOrder = () => {
   const navigate = useNavigate();
@@ -32,6 +33,7 @@ const AddNewWorkOrder = () => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [accountSuggestions, setAccountSuggestions] = useState<Array<{accountNumber: string, customerName: string, srDocument: string, salesperson: string, contact: string}>>([]);
   const [highlightedSuggestion, setHighlightedSuggestion] = useState(-1);
+  const [showContactForm, setShowContactForm] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Mock account data
@@ -192,6 +194,11 @@ const AddNewWorkOrder = () => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  const handleContactSave = (contactData: ContactFormData) => {
+    console.log("Contact saved:", contactData);
+    // TODO: Implement contact save functionality
+  };
 
   return (
     <div className="bg-background min-h-screen">
@@ -551,7 +558,11 @@ const AddNewWorkOrder = () => {
 
                       {/* Add Contact Button */}
                       <div className="pt-4">
-                        <Button variant="default" className="bg-warning text-black hover:bg-warning/90">
+                        <Button 
+                          variant="default" 
+                          className="bg-warning text-black hover:bg-warning/90"
+                          onClick={() => setShowContactForm(true)}
+                        >
                           Add Contact
                         </Button>
                       </div>
@@ -753,6 +764,13 @@ const AddNewWorkOrder = () => {
           </Button>
         </div>
       </div>
+
+      {/* Contact Form Dialog */}
+      <ContactForm 
+        open={showContactForm}
+        onOpenChange={setShowContactForm}
+        onSave={handleContactSave}
+      />
     </div>
   );
 };
