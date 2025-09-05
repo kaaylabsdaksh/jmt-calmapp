@@ -48,29 +48,24 @@ const quickActionCategories = {
   ],
   "User Management": [
     { title: "Manage Users", icon: Users },
-    { title: "Manage Portal Users", icon: Users },
+    { title: "Manage Cust Portal Users", icon: Users },
   ],
-  "Product & Inventory": [
+  "Product & Customer": [
     { title: "Manage Manufacturers", icon: Settings },
     { title: "Manage Products", icon: Tags },
     { title: "Manage Customers", icon: Users },
     { title: "Search Multiple ID's", icon: FileText },
+  ],
+  "Inventory & Templates": [
     { title: "Manage Batch Inventories", icon: Archive },
     { title: "Manage MPG Accuracies", icon: CheckCircle },
     { title: "Manage Procedures", icon: Clipboard },
     { title: "Manage Templates", icon: FileSpreadsheet },
   ],
   "Project Management": [
-    { title: "Consite Projects", icon: MapPin },
+    { title: "Onsite Projects", icon: MapPin },
     { title: "Outsource Vendors", icon: Truck },
     { title: "Onsite Work Orders", icon: ClipboardList },
-  ],
-  "Quick Actions": [
-    { title: "Hot List", icon: Zap },
-    { title: "Transit Log", icon: Truck },
-    { title: "Update RFQs", icon: RefreshCw },
-    { title: "Quality Check", icon: CheckCircle },
-    { title: "Calibration Reminders", icon: Clock },
   ]
 };
 
