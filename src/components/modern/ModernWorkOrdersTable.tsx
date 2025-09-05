@@ -967,19 +967,10 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-3 text-sm">
+                  <div className="text-sm">
                     <div>
                       <span className="text-gray-500">Model:</span>
                       <div className="font-mono text-xs">{order.details.modelNumber}</div>
-                    </div>
-                    <div>
-                      <span className="text-gray-500">Priority:</span>
-                      <div className={cn("font-medium text-xs",
-                        order.details.priority === "Critical" ? "text-red-600" :
-                        order.details.priority === "High" ? "text-orange-600" :
-                        order.details.priority === "Medium" ? "text-yellow-600" :
-                        "text-gray-600"
-                      )}>{order.details.priority}</div>
                     </div>
                   </div>
 
