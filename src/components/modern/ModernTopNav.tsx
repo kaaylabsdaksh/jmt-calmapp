@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Plus, Download, Settings } from "lucide-react";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 
 const ModernTopNav = () => {
   const navigate = useNavigate();
@@ -10,6 +11,7 @@ const ModernTopNav = () => {
       <div className="flex items-center justify-between">
         {/* Logo and Branding */}
         <div className="flex items-center gap-3">
+          <SidebarTrigger className="text-black hover:bg-black hover:text-white transition-all duration-300 transform hover:scale-105" />
           <div className="flex flex-col">
             <span className="text-xl font-bold text-black">CalMApp</span>
             <span className="text-sm text-black">Work Order Management</span>
