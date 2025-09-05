@@ -139,11 +139,20 @@ export const WorkOrderItemsTemplate = () => {
                   </Select>
                 </td>
                 <td className="p-2">
-                  <Input 
-                    placeholder="Manufacturer"
-                    value={item.manufacturer}
-                    className="w-full h-7 text-xs"
-                  />
+                  <Select>
+                    <SelectTrigger className="w-full h-7 text-xs">
+                      <SelectValue placeholder="Select..." />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="1m-working-stand">1M WORKING STAND.</SelectItem>
+                      <SelectItem value="3d-instruments">3D INSTRUMENTS</SelectItem>
+                      <SelectItem value="3e">3E</SelectItem>
+                      <SelectItem value="3m">3M</SelectItem>
+                      <SelectItem value="3z-telecom">3Z TELECOM</SelectItem>
+                      <SelectItem value="4b-components">4B COMPONENTS LIMITED</SelectItem>
+                      <SelectItem value="5ft-wking">5FT WKING STANDARD</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </td>
                 <td className="p-2">
                   <Input 
