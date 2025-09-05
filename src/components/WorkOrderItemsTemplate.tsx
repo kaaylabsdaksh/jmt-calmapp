@@ -115,9 +115,12 @@ export const WorkOrderItemsTemplate = () => {
                       <SelectValue placeholder="Select..." />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="calibrate">Calibrate</SelectItem>
-                      <SelectItem value="repair">Repair</SelectItem>
-                      <SelectItem value="inspect">Inspect</SelectItem>
+                      <SelectItem value="repair">REPAIR</SelectItem>
+                      <SelectItem value="rc">R/C</SelectItem>
+                      <SelectItem value="rcc">R/C/C</SelectItem>
+                      <SelectItem value="cc">C/C</SelectItem>
+                      <SelectItem value="test">TEST</SelectItem>
+                      <SelectItem value="build-new">BUILD NEW</SelectItem>
                     </SelectContent>
                   </Select>
                 </td>
