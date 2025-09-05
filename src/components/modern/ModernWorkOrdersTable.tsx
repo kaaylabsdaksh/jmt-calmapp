@@ -436,6 +436,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
   const [selectedWorkOrder, setSelectedWorkOrder] = useState<WorkOrder | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [activeStatusFilter, setActiveStatusFilter] = useState<string>('all');
+  const [templateView, setTemplateView] = useState<boolean>(false);
   const navigate = useNavigate();
   const itemsPerPage = 10;
   
@@ -714,35 +715,68 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
           </div>
           
           {/* View Toggle Buttons */}
-          <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-lg">
-            <Button
-              variant={viewMode === 'list' ? 'default' : 'ghost'}
-              size="sm"
-              onClick={() => onViewModeChange('list')}
-              className={cn(
-                "h-8 px-3 rounded-md transition-all",
-                viewMode === 'list' 
-                  ? "bg-white shadow-sm text-gray-900" 
-                  : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
-              )}
-            >
-              <List className="h-4 w-4 mr-2" />
-              List
-            </Button>
-            <Button
-              variant={viewMode === 'grid' ? 'default' : 'ghost'}
-              size="sm"
-              onClick={() => onViewModeChange('grid')}
-              className={cn(
-                "h-8 px-3 rounded-md transition-all",
-                viewMode === 'grid' 
-                  ? "bg-white shadow-sm text-gray-900" 
-                  : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
-              )}
-            >
-              <Grid3X3 className="h-4 w-4 mr-2" />
-              Grid
-            </Button>
+          <div className="flex items-center gap-3">
+            {/* Template/Default Toggle */}
+            <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-lg">
+              <Button
+                variant={!templateView ? 'default' : 'ghost'}
+                size="sm"
+                onClick={() => setTemplateView(false)}
+                className={cn(
+                  "h-8 px-3 rounded-md transition-all",
+                  !templateView 
+                    ? "bg-white shadow-sm text-gray-900" 
+                    : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
+                )}
+              >
+                Default
+              </Button>
+              <Button
+                variant={templateView ? 'default' : 'ghost'}
+                size="sm"
+                onClick={() => setTemplateView(true)}
+                className={cn(
+                  "h-8 px-3 rounded-md transition-all",
+                  templateView 
+                    ? "bg-white shadow-sm text-gray-900" 
+                    : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
+                )}
+              >
+                Template
+              </Button>
+            </div>
+
+            {/* List/Grid Toggle */}
+            <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-lg">
+              <Button
+                variant={viewMode === 'list' ? 'default' : 'ghost'}
+                size="sm"
+                onClick={() => onViewModeChange('list')}
+                className={cn(
+                  "h-8 px-3 rounded-md transition-all",
+                  viewMode === 'list' 
+                    ? "bg-white shadow-sm text-gray-900" 
+                    : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
+                )}
+              >
+                <List className="h-4 w-4 mr-2" />
+                List
+              </Button>
+              <Button
+                variant={viewMode === 'grid' ? 'default' : 'ghost'}
+                size="sm"
+                onClick={() => onViewModeChange('grid')}
+                className={cn(
+                  "h-8 px-3 rounded-md transition-all",
+                  viewMode === 'grid' 
+                    ? "bg-white shadow-sm text-gray-900" 
+                    : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
+                )}
+              >
+                <Grid3X3 className="h-4 w-4 mr-2" />
+                Grid
+              </Button>
+            </div>
           </div>
         </div>
 
@@ -824,16 +858,35 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
           <Table>
             <TableHeader className="bg-gray-50 sticky top-0">
               <TableRow className="hover:bg-gray-50">
-                <TableHead className="font-semibold text-gray-900">Work Order #</TableHead>
-                <TableHead className="font-semibold text-gray-900">Status</TableHead>
-                <TableHead className="font-semibold text-gray-900">Priority</TableHead>
-                <TableHead className="font-semibold text-gray-900">Customer</TableHead>
-                <TableHead className="font-semibold text-gray-900">Items</TableHead>
-                <TableHead className="font-semibold text-gray-900">Division</TableHead>
-                <TableHead className="font-semibold text-gray-900">Created Date</TableHead>
-                <TableHead className="font-semibold text-gray-900">Due Date</TableHead>
-                <TableHead className="font-semibold text-gray-900">Assigned To</TableHead>
-                <TableHead className="w-12"></TableHead>
+                {templateView ? (
+                  // Template View Headers
+                  <>
+                    <TableHead className="font-semibold text-gray-900">Batch</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Item</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Division</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Created Date</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Item Status</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Due Date</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Manufacturer</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Customer</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Model</TableHead>
+                    <TableHead className="w-12"></TableHead>
+                  </>
+                ) : (
+                  // Default View Headers
+                  <>
+                    <TableHead className="font-semibold text-gray-900">Work Order #</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Status</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Priority</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Customer</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Items</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Division</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Created Date</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Due Date</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Assigned To</TableHead>
+                    <TableHead className="w-12"></TableHead>
+                  </>
+                )}
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -843,49 +896,90 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                   className="hover:bg-gray-50 cursor-pointer border-b border-gray-100"
                   onClick={() => openDetails(order)}
                 >
-                  <TableCell className="font-medium text-blue-600">
-                    {order.id}
-                  </TableCell>
-                  <TableCell>
-                    {getStatusBadge(order.status)}
-                  </TableCell>
-                  <TableCell>
-                    <span className={cn("px-2 py-1 rounded-md text-xs font-medium",
-                      order.details.priority === "Critical" ? "bg-red-100 text-red-800" :
-                      order.details.priority === "High" ? "bg-orange-100 text-orange-800" :
-                      order.details.priority === "Medium" ? "bg-yellow-100 text-yellow-800" :
-                      "bg-gray-100 text-gray-800"
-                    )}>{order.details.priority}</span>
-                  </TableCell>
-                  <TableCell className="font-medium">{order.customer}</TableCell>
-                  <TableCell className="font-mono text-sm">{order.details.items}</TableCell>
-                  <TableCell className="font-medium">{order.division}</TableCell>
-                  <TableCell className="text-sm">{order.details.createdDate}</TableCell>
-                  <TableCell>{order.dueDate}</TableCell>
-                  <TableCell>{order.assignedTo}</TableCell>
-                  <TableCell>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
-                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0 data-[state=open]:bg-blue-100 data-[state=open]:text-blue-700">
-                          <MoreHorizontal className="h-4 w-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" className="bg-white border shadow-lg z-50 rounded-lg">
-                          <DropdownMenuItem className="flex items-center gap-2" onClick={() => handleEditWorkOrder(order.id)}>
-                            <Edit className="h-4 w-4" />
-                            Edit
-                          </DropdownMenuItem>
-                         <DropdownMenuItem className="flex items-center gap-2">
-                           <User className="h-4 w-4" />
-                           Assign Tech
-                         </DropdownMenuItem>
-                         <DropdownMenuItem className="flex items-center gap-2">
-                           <RefreshCw className="h-4 w-4" />
-                           Update Status
-                         </DropdownMenuItem>
-                       </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
+                  {templateView ? (
+                    // Template View Cells
+                    <>
+                      <TableCell className="font-mono text-sm">{order.details.batch}</TableCell>
+                      <TableCell className="font-mono text-sm">{order.details.items}</TableCell>
+                      <TableCell className="font-medium">{order.division}</TableCell>
+                      <TableCell className="text-sm">{order.details.createdDate}</TableCell>
+                      <TableCell>{getStatusBadge(order.status)}</TableCell>
+                      <TableCell>{order.dueDate}</TableCell>
+                      <TableCell className="font-medium">{order.details.manufacturer}</TableCell>
+                      <TableCell className="font-medium">{order.customer}</TableCell>
+                      <TableCell className="font-mono text-sm">{order.details.modelNumber}</TableCell>
+                      <TableCell>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
+                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0 data-[state=open]:bg-blue-100 data-[state=open]:text-blue-700">
+                              <MoreHorizontal className="h-4 w-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end" className="bg-white border shadow-lg z-50 rounded-lg">
+                            <DropdownMenuItem className="flex items-center gap-2" onClick={() => handleEditWorkOrder(order.id)}>
+                              <Edit className="h-4 w-4" />
+                              Edit
+                            </DropdownMenuItem>
+                            <DropdownMenuItem className="flex items-center gap-2">
+                              <User className="h-4 w-4" />
+                              Assign Tech
+                            </DropdownMenuItem>
+                            <DropdownMenuItem className="flex items-center gap-2">
+                              <RefreshCw className="h-4 w-4" />
+                              Update Status
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </TableCell>
+                    </>
+                  ) : (
+                    // Default View Cells
+                    <>
+                      <TableCell className="font-medium text-blue-600">
+                        {order.id}
+                      </TableCell>
+                      <TableCell>
+                        {getStatusBadge(order.status)}
+                      </TableCell>
+                      <TableCell>
+                        <span className={cn("px-2 py-1 rounded-md text-xs font-medium",
+                          order.details.priority === "Critical" ? "bg-red-100 text-red-800" :
+                          order.details.priority === "High" ? "bg-orange-100 text-orange-800" :
+                          order.details.priority === "Medium" ? "bg-yellow-100 text-yellow-800" :
+                          "bg-gray-100 text-gray-800"
+                        )}>{order.details.priority}</span>
+                      </TableCell>
+                      <TableCell className="font-medium">{order.customer}</TableCell>
+                      <TableCell className="font-mono text-sm">{order.details.items}</TableCell>
+                      <TableCell className="font-medium">{order.division}</TableCell>
+                      <TableCell className="text-sm">{order.details.createdDate}</TableCell>
+                      <TableCell>{order.dueDate}</TableCell>
+                      <TableCell>{order.assignedTo}</TableCell>
+                      <TableCell>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
+                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0 data-[state=open]:bg-blue-100 data-[state=open]:text-blue-700">
+                              <MoreHorizontal className="h-4 w-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end" className="bg-white border shadow-lg z-50 rounded-lg">
+                              <DropdownMenuItem className="flex items-center gap-2" onClick={() => handleEditWorkOrder(order.id)}>
+                                <Edit className="h-4 w-4" />
+                                Edit
+                              </DropdownMenuItem>
+                             <DropdownMenuItem className="flex items-center gap-2">
+                               <User className="h-4 w-4" />
+                               Assign Tech
+                             </DropdownMenuItem>
+                             <DropdownMenuItem className="flex items-center gap-2">
+                               <RefreshCw className="h-4 w-4" />
+                               Update Status
+                             </DropdownMenuItem>
+                           </DropdownMenuContent>
+                        </DropdownMenu>
+                      </TableCell>
+                    </>
+                  )}
                 </TableRow>
               ))}
             </TableBody>
@@ -940,49 +1034,111 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
 
                 {/* Card Content */}
                 <div className="p-4 space-y-3">
-                  <div>
-                    <h3 className="font-semibold text-gray-900 text-base mb-1">{order.customer}</h3>
-                    <p className="text-sm text-gray-600">Assigned to: {order.assignedTo}</p>
-                  </div>
+                  {templateView ? (
+                    // Template View Content
+                    <>
+                      <div className="grid grid-cols-2 gap-3 text-sm">
+                        <div>
+                          <span className="text-gray-500">Batch:</span>
+                          <div className="font-mono text-xs">{order.details.batch}</div>
+                        </div>
+                        <div>
+                          <span className="text-gray-500">Item:</span>
+                          <div className="font-mono text-xs">{order.details.items}</div>
+                        </div>
+                      </div>
 
-                  <div className="grid grid-cols-2 gap-3 text-sm">
-                    <div>
-                      <span className="text-gray-500">Items:</span>
-                      <div className="font-mono text-xs">{order.details.items}</div>
-                    </div>
-                    <div>
-                      <span className="text-gray-500">Division:</span>
-                      <div className="font-medium text-xs">{order.division}</div>
-                    </div>
-                  </div>
+                      <div className="grid grid-cols-2 gap-3 text-sm">
+                        <div>
+                          <span className="text-gray-500">Division:</span>
+                          <div className="font-medium text-xs">{order.division}</div>
+                        </div>
+                        <div>
+                          <span className="text-gray-500">Created:</span>
+                          <div className="font-medium text-xs">{order.details.createdDate}</div>
+                        </div>
+                      </div>
 
-                  <div className="grid grid-cols-2 gap-3 text-sm">
-                    <div>
-                      <span className="text-gray-500">Created:</span>
-                      <div className="font-medium text-xs">{order.details.createdDate}</div>
-                    </div>
-                    <div>
-                      <span className="text-gray-500">Due Date:</span>
-                      <div className="font-medium text-xs">{order.dueDate}</div>
-                    </div>
-                  </div>
+                      <div className="grid grid-cols-2 gap-3 text-sm">
+                        <div>
+                          <span className="text-gray-500">Due Date:</span>
+                          <div className="font-medium text-xs">{order.dueDate}</div>
+                        </div>
+                        <div>
+                          <span className="text-gray-500">Manufacturer:</span>
+                          <div className="font-medium text-xs">{order.details.manufacturer}</div>
+                        </div>
+                      </div>
 
-                  <div className="text-sm">
-                    <div>
-                      <span className="text-gray-500">Model:</span>
-                      <div className="font-mono text-xs">{order.details.modelNumber}</div>
-                    </div>
-                  </div>
+                      <div className="grid grid-cols-2 gap-3 text-sm">
+                        <div>
+                          <span className="text-gray-500">Customer:</span>
+                          <div className="font-medium text-xs">{order.customer}</div>
+                        </div>
+                        <div>
+                          <span className="text-gray-500">Model:</span>
+                          <div className="font-mono text-xs">{order.details.modelNumber}</div>
+                        </div>
+                      </div>
 
-                  <div className="flex items-center justify-end">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-6 w-6 p-0 text-gray-400"
-                    >
-                      <ChevronRight className="h-4 w-4" />
-                    </Button>
-                  </div>
+                      <div className="flex items-center justify-end">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-6 w-6 p-0 text-gray-400"
+                        >
+                          <ChevronRight className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </>
+                  ) : (
+                    // Default View Content
+                    <>
+                      <div>
+                        <h3 className="font-semibold text-gray-900 text-base mb-1">{order.customer}</h3>
+                        <p className="text-sm text-gray-600">Assigned to: {order.assignedTo}</p>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-3 text-sm">
+                        <div>
+                          <span className="text-gray-500">Items:</span>
+                          <div className="font-mono text-xs">{order.details.items}</div>
+                        </div>
+                        <div>
+                          <span className="text-gray-500">Division:</span>
+                          <div className="font-medium text-xs">{order.division}</div>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-3 text-sm">
+                        <div>
+                          <span className="text-gray-500">Created:</span>
+                          <div className="font-medium text-xs">{order.details.createdDate}</div>
+                        </div>
+                        <div>
+                          <span className="text-gray-500">Due Date:</span>
+                          <div className="font-medium text-xs">{order.dueDate}</div>
+                        </div>
+                      </div>
+
+                      <div className="text-sm">
+                        <div>
+                          <span className="text-gray-500">Model:</span>
+                          <div className="font-mono text-xs">{order.details.modelNumber}</div>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-end">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-6 w-6 p-0 text-gray-400"
+                        >
+                          <ChevronRight className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             ))}
