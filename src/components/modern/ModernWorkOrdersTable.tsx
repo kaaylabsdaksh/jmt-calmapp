@@ -1059,19 +1059,19 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
 
                       <div className="grid grid-cols-2 gap-3 text-sm">
                         <div>
-                          <span className="text-gray-500">Division:</span>
-                          <div className="font-medium text-xs">{order.division}</div>
-                        </div>
-                        <div>
                           <span className="text-gray-500">Created:</span>
                           <div className="font-medium text-xs">{order.details.createdDate}</div>
+                        </div>
+                        <div>
+                          <span className="text-gray-500">Due Date:</span>
+                          <div className="font-medium text-xs">{order.dueDate}</div>
                         </div>
                       </div>
 
                       <div className="grid grid-cols-2 gap-3 text-sm">
                         <div>
-                          <span className="text-gray-500">Due Date:</span>
-                          <div className="font-medium text-xs">{order.dueDate}</div>
+                          <span className="text-gray-500">Division:</span>
+                          <div className="font-medium text-xs">{order.division}</div>
                         </div>
                         <div>
                           <span className="text-gray-500">Customer:</span>
