@@ -83,7 +83,8 @@ export function AppSidebar() {
 
   return (
     <Sidebar
-      className={`${open ? "w-64" : "w-14"} border-r-0 bg-warning backdrop-blur-sm animate-fade-in shadow-lg`}
+      className={`${open ? "w-64" : "w-14"} border-r-0 backdrop-blur-sm animate-fade-in shadow-lg`}
+      style={{ backgroundColor: 'hsl(var(--warning))' }}
       collapsible="icon"
     >
       {/* Header with Logo */}
