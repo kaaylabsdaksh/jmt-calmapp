@@ -65,6 +65,11 @@ interface WorkOrder {
     technicalNotes: string;
     qualityAssurance: string;
     template: string;
+    originalLoc: string;
+    destLoc: string;
+    ts: string;
+    hotlist: string;
+    jmPoNumber: string;
   };
 }
 
@@ -124,7 +129,12 @@ const mockWorkOrders: WorkOrder[] = [
       serviceType: "Calibration & Certification",
       technicalNotes: "Updated firmware to v2.4.1, replaced faulty pressure membrane",
       qualityAssurance: "Passed all QC checks - awaiting final certification",
-      template: "External Datasheet (pdf)"
+      template: "External Datasheet (pdf)",
+      originalLoc: "AL",
+      destLoc: "AL",
+      ts: "J",
+      hotlist: "",
+      jmPoNumber: "5980"
     }
   },
   {
@@ -182,7 +192,12 @@ const mockWorkOrders: WorkOrder[] = [
       serviceType: "Repair & Calibration",
       technicalNotes: "Replaced worn spindle threads, adjusted contact pressure",
       qualityAssurance: "All measurements within ±0.0001\" tolerance",
-      template: "TIC 300HV HV Detector.xlsx"
+      template: "TIC 300HV HV Detector.xlsx",
+      originalLoc: "BI",
+      destLoc: "BI", 
+      ts: "N",
+      hotlist: "",
+      jmPoNumber: "34169"
     }
   },
   {
@@ -240,7 +255,12 @@ const mockWorkOrders: WorkOrder[] = [
       serviceType: "Major Repair & Recertification",
       technicalNotes: "Waiting for custom pump assembly from manufacturer - ETA 2 weeks",
       qualityAssurance: "Pending parts arrival and installation",
-      template: "Kaelus iPA 0707A PIM Analyzer.xlsx"
+      template: "Kaelus iPA 0707A PIM Analyzer.xlsx",
+      originalLoc: "BR",
+      destLoc: "BR",
+      ts: "",
+      hotlist: "Hotsticks",
+      jmPoNumber: ""
     }
   },
   {
@@ -298,7 +318,12 @@ const mockWorkOrders: WorkOrder[] = [
       serviceType: "Annual Calibration",
       technicalNotes: "Initial diagnostics show all functions within spec",
       qualityAssurance: "Scheduled for full calibration next week",
-      template: "Chart Recorders 150°F - XX PSI ALL Auto Fill Specs .xlsx"
+      template: "Chart Recorders 150°F - XX PSI ALL Auto Fill Specs .xlsx",
+      originalLoc: "BI",
+      destLoc: "BI",
+      ts: "ES",
+      hotlist: "",
+      jmPoNumber: "50353"
     }
   },
   {
@@ -356,7 +381,12 @@ const mockWorkOrders: WorkOrder[] = [
       serviceType: "Precision Calibration & Certification",
       technicalNotes: "All 8 wrenches require full range calibration per AS9100 standards",
       qualityAssurance: "5 of 8 units completed - within ±2% tolerance requirement",
-      template: "TW DTW ETW All Flex Autofill.xlsx"
+      template: "TW DTW ETW All Flex Autofill.xlsx",
+      originalLoc: "OD",
+      destLoc: "OD",
+      ts: "K",
+      hotlist: "",
+      jmPoNumber: "43949"
     }
   },
   {
@@ -414,7 +444,12 @@ const mockWorkOrders: WorkOrder[] = [
       serviceType: "FDA Compliant Calibration",
       technicalNotes: "Updated software to v3.2.1 for enhanced data integrity",
       qualityAssurance: "Passed all FDA validation protocols - full documentation provided",
-      template: "External Datasheet (.xlsx)"
+      template: "External Datasheet (.xlsx)",
+      originalLoc: "AL",
+      destLoc: "AL",
+      ts: "ES",
+      hotlist: "",
+      jmPoNumber: "50354"
     }
   }
 ];
@@ -871,13 +906,19 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                     <TableHead className="font-semibold text-gray-900">Work Order #</TableHead>
                     <TableHead className="font-semibold text-gray-900">Item</TableHead>
                     <TableHead className="font-semibold text-gray-900">Division</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Original LOC</TableHead>
                     <TableHead className="font-semibold text-gray-900">Created Date</TableHead>
                     <TableHead className="font-semibold text-gray-900">Item Status</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Dest LOC</TableHead>
                     <TableHead className="font-semibold text-gray-900">Due Date</TableHead>
                     <TableHead className="font-semibold text-gray-900">Manufacturer</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Customer</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Model</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Model Number</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Lab Code</TableHead>
+                    <TableHead className="font-semibold text-gray-900">JM PO#</TableHead>
                     <TableHead className="font-semibold text-gray-900">Template</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Customer</TableHead>
+                    <TableHead className="font-semibold text-gray-900">TS</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Hotlist</TableHead>
                     <TableHead className="w-12"></TableHead>
                   </>
                 ) : (
@@ -910,13 +951,19 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                       <TableCell className="font-medium text-blue-600">{order.id}</TableCell>
                       <TableCell className="font-mono text-sm">{order.details.items}</TableCell>
                       <TableCell className="font-medium">{order.division}</TableCell>
+                      <TableCell className="font-medium">{order.details.originalLoc}</TableCell>
                       <TableCell className="text-sm">{order.details.createdDate}</TableCell>
                       <TableCell>{getStatusBadge(order.status)}</TableCell>
+                      <TableCell className="font-medium">{order.details.destLoc}</TableCell>
                       <TableCell>{order.dueDate}</TableCell>
                       <TableCell className="font-medium">{order.details.manufacturer}</TableCell>
-                      <TableCell className="font-medium">{order.customer}</TableCell>
                       <TableCell className="font-mono text-sm">{order.details.modelNumber}</TableCell>
+                      <TableCell className="font-mono text-sm">{order.details.labCode}</TableCell>
+                      <TableCell className="font-mono text-sm">{order.details.jmPoNumber}</TableCell>
                       <TableCell className="text-blue-600 underline cursor-pointer hover:text-blue-800">{order.details.template}</TableCell>
+                      <TableCell className="font-medium">{order.customer}</TableCell>
+                      <TableCell className="font-mono text-sm">{order.details.ts}</TableCell>
+                      <TableCell className="font-mono text-sm">{order.details.hotlist}</TableCell>
                       <TableCell>
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
