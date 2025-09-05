@@ -615,88 +615,76 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
           
           <div className="p-6">
             <div className="relative">
-              {/* Horizontal Timeline Line */}
-              <div className="absolute top-6 left-6 right-6 h-0.5 bg-gradient-to-r from-blue-200 via-blue-300 to-blue-400"></div>
-              
-              <div className="flex justify-between items-start gap-4 overflow-x-auto pb-4">
-                {/* Created Date */}
-                <div className="flex flex-col items-center min-w-[120px] flex-shrink-0">
-                  <div className="relative z-10 mb-3">
-                    <div className="w-3 h-3 bg-green-500 rounded-full border-2 border-white shadow-lg"></div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-xs font-medium text-gray-900 mb-1">Created</div>
-                    <div className="text-xs text-gray-600 bg-green-50 px-2 py-1 rounded-full whitespace-nowrap">
-                      {order.details.createdDate}
+              <div className="flex justify-between items-center">
+                {/* Timeline Items */}
+                {[
+                  {
+                    title: "Created",
+                    date: order.details.createdDate,
+                    description: "Initial Setup",
+                    color: "bg-green-500",
+                    bgColor: "bg-green-50",
+                    textColor: "text-green-700"
+                  },
+                  {
+                    title: "Status Updated", 
+                    date: order.details.statusDate,
+                    description: order.status,
+                    color: "bg-blue-500",
+                    bgColor: "bg-blue-50",
+                    textColor: "text-blue-700"
+                  },
+                  {
+                    title: "Last Modified",
+                    date: order.details.lastModified,
+                    description: "Recent Updates",
+                    color: "bg-yellow-500",
+                    bgColor: "bg-yellow-50", 
+                    textColor: "text-yellow-700"
+                  },
+                  {
+                    title: "Next Milestone",
+                    date: order.details.nextBy,
+                    description: "Next Action",
+                    color: order.details.nextBy === "TBD" ? "bg-red-500" : "bg-purple-500",
+                    bgColor: order.details.nextBy === "TBD" ? "bg-red-50" : "bg-purple-50",
+                    textColor: order.details.nextBy === "TBD" ? "text-red-700" : "text-purple-700"
+                  },
+                  {
+                    title: "Departure",
+                    date: order.details.departureDate,
+                    description: "Completion",
+                    color: order.details.departureDate === "TBD" ? "bg-red-500" : "bg-green-600",
+                    bgColor: order.details.departureDate === "TBD" ? "bg-red-50" : "bg-green-50",
+                    textColor: order.details.departureDate === "TBD" ? "text-red-700" : "text-green-700"
+                  }
+                ].map((item, index, array) => (
+                  <div key={index} className="flex flex-col items-center relative flex-1">
+                    {/* Connecting Line - only show between items */}
+                    {index < array.length - 1 && (
+                      <div className="absolute top-6 left-1/2 w-full h-0.5 bg-gradient-to-r from-gray-300 to-gray-300 z-0" 
+                           style={{ transform: 'translateX(50%)' }}></div>
+                    )}
+                    
+                    {/* Timeline Dot */}
+                    <div className="relative z-10 mb-4">
+                      <div className={cn("w-4 h-4 rounded-full border-3 border-white shadow-lg", item.color)}></div>
                     </div>
-                    <div className="text-xs text-gray-500 mt-1">Initial Setup</div>
-                  </div>
-                </div>
-
-                {/* Status Date */}
-                <div className="flex flex-col items-center min-w-[120px] flex-shrink-0">
-                  <div className="relative z-10 mb-3">
-                    <div className="w-3 h-3 bg-blue-500 rounded-full border-2 border-white shadow-lg"></div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-xs font-medium text-gray-900 mb-1">Status Updated</div>
-                    <div className="text-xs text-gray-600 bg-blue-50 px-2 py-1 rounded-full whitespace-nowrap">
-                      {order.details.statusDate}
+                    
+                    {/* Content */}
+                    <div className="text-center max-w-[120px]">
+                      <div className="text-sm font-semibold text-gray-900 mb-2">{item.title}</div>
+                      <div className={cn("text-xs px-3 py-1.5 rounded-full mb-2 font-medium", item.bgColor, item.textColor)}>
+                        {item.date}
+                      </div>
+                      <div className="text-xs text-gray-500">{item.description}</div>
                     </div>
-                    <div className="text-xs text-gray-500 mt-1">{order.status}</div>
                   </div>
-                </div>
-
-                {/* Last Modified */}
-                <div className="flex flex-col items-center min-w-[120px] flex-shrink-0">
-                  <div className="relative z-10 mb-3">
-                    <div className="w-3 h-3 bg-yellow-500 rounded-full border-2 border-white shadow-lg"></div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-xs font-medium text-gray-900 mb-1">Last Modified</div>
-                    <div className="text-xs text-gray-600 bg-yellow-50 px-2 py-1 rounded-full whitespace-nowrap">
-                      {order.details.lastModified}
-                    </div>
-                    <div className="text-xs text-gray-500 mt-1">Recent Updates</div>
-                  </div>
-                </div>
-
-                {/* Next By */}
-                <div className="flex flex-col items-center min-w-[120px] flex-shrink-0">
-                  <div className="relative z-10 mb-3">
-                    <div className={cn("w-3 h-3 rounded-full border-2 border-white shadow-lg",
-                      order.details.nextBy === "TBD" ? "bg-red-500" : "bg-purple-500"
-                    )}></div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-xs font-medium text-gray-900 mb-1">Next Milestone</div>
-                    <div className={cn("text-xs px-2 py-1 rounded-full whitespace-nowrap",
-                      order.details.nextBy === "TBD" ? "text-red-700 bg-red-50" : "text-purple-700 bg-purple-50"
-                    )}>
-                      {order.details.nextBy}
-                    </div>
-                    <div className="text-xs text-gray-500 mt-1">Next Action</div>
-                  </div>
-                </div>
-
-                {/* Departure Date */}
-                <div className="flex flex-col items-center min-w-[120px] flex-shrink-0">
-                  <div className="relative z-10 mb-3">
-                    <div className={cn("w-3 h-3 rounded-full border-2 border-white shadow-lg",
-                      order.details.departureDate === "TBD" ? "bg-red-500" : "bg-green-600"
-                    )}></div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-xs font-medium text-gray-900 mb-1">Departure</div>
-                    <div className={cn("text-xs px-2 py-1 rounded-full whitespace-nowrap",
-                      order.details.departureDate === "TBD" ? "text-red-700 bg-red-50" : "text-green-700 bg-green-50"
-                    )}>
-                      {order.details.departureDate}
-                    </div>
-                    <div className="text-xs text-gray-500 mt-1">Completion</div>
-                  </div>
-                </div>
+                ))}
               </div>
+              
+              {/* Continuous Background Line */}
+              <div className="absolute top-6 left-0 right-0 h-0.5 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 -z-10"></div>
             </div>
           </div>
         </div>
