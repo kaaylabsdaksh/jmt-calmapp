@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { List, Grid3X3 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -474,6 +473,7 @@ interface ModernWorkOrdersTableProps {
   onViewModeChange: (mode: 'list' | 'grid') => void;
 }
 
+// ModernWorkOrdersTable Component - Clean version with only List/Grid toggle icons
 const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersTableProps) => {
   const [selectedWorkOrder, setSelectedWorkOrder] = useState<WorkOrder | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -1242,17 +1242,9 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                           "bg-gray-100 text-gray-800"
                         )}>{order.details.priority}</span>
                       </div>
-                    </div>
-                     <DropdownMenu>
-                       <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
-                         <Button variant="ghost" size="sm" className="h-8 w-8 p-0 hover:bg-gray-100">
-                         </Button>
-                       </DropdownMenuTrigger>
-                       <DropdownMenuContent align="end" className="bg-white border shadow-lg z-50 rounded-lg">
-                       </DropdownMenuContent>
-                     </DropdownMenu>
-                  </div>
-                </div>
+                     </div>
+                   </div>
+                 </div>
 
                 {/* Card Content */}
                 <div className="p-4 space-y-3">
