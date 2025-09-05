@@ -3,7 +3,6 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { List, Grid3X3 } from "lucide-react";
@@ -472,35 +471,59 @@ const getStatusBadge = (status: WorkOrder["status"]) => {
 interface ModernWorkOrdersTableProps {
   viewMode: 'list' | 'grid';
   onViewModeChange: (mode: 'list' | 'grid') => void;
+  searchFilters: {
+    globalSearch: string;
+    status: string;
+    assignee: string;
+    priority: string;
+    manufacturer: string;
+    division: string;
+    dateFrom?: Date;
+    dateTo?: Date;
+    dateType: string;
+  };
 }
 
 // ModernWorkOrdersTable Component - Clean version with only List/Grid toggle icons
-const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersTableProps) => {
+const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: ModernWorkOrdersTableProps) => {
   const [selectedWorkOrder, setSelectedWorkOrder] = useState<WorkOrder | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [activeStatusFilter, setActiveStatusFilter] = useState<string>('all');
   const [templateView, setTemplateView] = useState<boolean>(false);
-  const [searchTerm, setSearchTerm] = useState<string>('');
   const navigate = useNavigate();
   const itemsPerPage = 10;
   
-  // Filter work orders based on selected status and search term
+  // Filter work orders based on search filters from parent and status
   const filteredWorkOrders = mockWorkOrders.filter(order => {
-    // Status filter
-    const statusMatch = activeStatusFilter === 'all' || 
-      order.status.toLowerCase().replace(' ', '-') === activeStatusFilter;
+    // Status filter (using both activeStatusFilter and searchFilters.status)
+    const statusFromParent = searchFilters.status.toLowerCase().replace(' ', '-');
+    const statusMatch = (activeStatusFilter === 'all' && !statusFromParent) || 
+      order.status.toLowerCase().replace(' ', '-') === activeStatusFilter ||
+      (statusFromParent && order.status.toLowerCase().replace(' ', '-') === statusFromParent);
     
-    // Text search filter
-    const searchMatch = searchTerm === '' || 
-      order.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      order.customer.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      order.assignedTo.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      order.division.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      order.details.manufacturer.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      order.details.modelNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      order.details.labCode.toLowerCase().includes(searchTerm.toLowerCase());
+    // Global text search filter from parent
+    const searchMatch = !searchFilters.globalSearch || 
+      order.id.toLowerCase().includes(searchFilters.globalSearch.toLowerCase()) ||
+      order.customer.toLowerCase().includes(searchFilters.globalSearch.toLowerCase()) ||
+      order.assignedTo.toLowerCase().includes(searchFilters.globalSearch.toLowerCase()) ||
+      order.division.toLowerCase().includes(searchFilters.globalSearch.toLowerCase()) ||
+      order.details.manufacturer.toLowerCase().includes(searchFilters.globalSearch.toLowerCase()) ||
+      order.details.modelNumber.toLowerCase().includes(searchFilters.globalSearch.toLowerCase()) ||
+      order.details.labCode.toLowerCase().includes(searchFilters.globalSearch.toLowerCase());
     
-    return statusMatch && searchMatch;
+    // Priority filter
+    const priorityMatch = !searchFilters.priority || 
+      order.details.priority.toLowerCase() === searchFilters.priority.toLowerCase();
+    
+    // Manufacturer filter
+    const manufacturerMatch = !searchFilters.manufacturer || 
+      order.details.manufacturer.toLowerCase().includes(searchFilters.manufacturer.toLowerCase());
+    
+    // Division filter
+    const divisionMatch = !searchFilters.division || 
+      order.division.toLowerCase().includes(searchFilters.division.toLowerCase());
+    
+    return statusMatch && searchMatch && priorityMatch && manufacturerMatch && divisionMatch;
   });
   
   const totalPages = Math.ceil(filteredWorkOrders.length / itemsPerPage);
@@ -1007,19 +1030,8 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
             </p>
           </div>
           
-          {/* Search and View Toggle Buttons */}
+          {/* View Toggle Buttons */}
           <div className="flex items-center gap-3">
-            {/* Search Input */}
-            <div className="flex items-center gap-2">
-              <Input
-                type="text"
-                placeholder="Search work orders..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-64 h-8 text-sm"
-              />
-            </div>
-            
             {/* Template/Default Toggle */}
             <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-lg">
               <Button

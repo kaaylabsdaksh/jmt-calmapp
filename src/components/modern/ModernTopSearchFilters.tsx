@@ -8,7 +8,23 @@ import { Calendar as CalendarIcon, Search, X, Filter } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 
-const ModernTopSearchFilters = () => {
+interface SearchFilters {
+  globalSearch: string;
+  status: string;
+  assignee: string;
+  priority: string;
+  manufacturer: string;
+  division: string;
+  dateFrom?: Date;
+  dateTo?: Date;
+  dateType: string;
+}
+
+interface ModernTopSearchFiltersProps {
+  onSearch: (filters: SearchFilters) => void;
+}
+
+const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
   const [dateFrom, setDateFrom] = useState<Date>();
   const [dateTo, setDateTo] = useState<Date>();
   const [dateType, setDateType] = useState('');
@@ -23,6 +39,22 @@ const ModernTopSearchFilters = () => {
     assignee: '',
     division: ''
   });
+
+  const handleSearch = () => {
+    const filters = {
+      globalSearch,
+      status: searchValues.status,
+      assignee: searchValues.assignee,
+      priority: searchValues.priority,
+      manufacturer: searchValues.manufacturer,
+      division: searchValues.division,
+      dateFrom,
+      dateTo,
+      dateType
+    };
+    console.log('Searching with filters:', filters);
+    onSearch(filters);
+  };
 
   const clearAllFilters = () => {
     setGlobalSearch('');
@@ -263,7 +295,10 @@ const ModernTopSearchFilters = () => {
 
       {/* Search Button at Bottom */}
       <div className="px-4 pb-4 flex justify-end">
-        <Button className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg h-11 px-6 font-medium shadow-sm hover:shadow-md transition-all">
+        <Button 
+          onClick={handleSearch}
+          className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg h-11 px-6 font-medium shadow-sm hover:shadow-md transition-all"
+        >
           <Search className="h-4 w-4 mr-2" />
           Search
         </Button>
