@@ -50,6 +50,8 @@ interface WorkOrder {
     departureDate: string;
     submitted: string;
     proofOfDelivery: string;
+    job: string;
+    action: string;
     workDescription: string;
     partsNeeded: string[];
     laborHours: string;
@@ -107,6 +109,8 @@ const mockWorkOrders: WorkOrder[] = [
       departureDate: "11/25/2024",
       submitted: "Yes",
       proofOfDelivery: "Pending",
+      job: "CC",
+      action: "In Lab",
       workDescription: "Full calibration and accuracy verification of pressure sensor including temperature compensation and linearity testing",
       partsNeeded: ["Calibration Kit", "O-Rings", "Connector Cable"],
       laborHours: "12.5",
@@ -162,6 +166,8 @@ const mockWorkOrders: WorkOrder[] = [
       departureDate: "11/21/2024",
       submitted: "Yes",
       proofOfDelivery: "Complete",
+      job: "BR",
+      action: "Completed",
       workDescription: "Complete rebuild of micrometer mechanism including spindle replacement and accuracy verification",
       partsNeeded: ["Spindle Assembly", "Graduation Ring", "Locking Mechanism"],
       laborHours: "8.0",
@@ -217,6 +223,8 @@ const mockWorkOrders: WorkOrder[] = [
       departureDate: "TBD",
       submitted: "No",
       proofOfDelivery: "N/A",
+      job: "BR",
+      action: "Overdue",
       workDescription: "Major overhaul of hydraulic press system including pump replacement and safety system upgrade",
       partsNeeded: ["Hydraulic Pump", "Pressure Relief Valve", "Safety Interlock System", "Hydraulic Seals Kit"],
       laborHours: "35.0",
@@ -272,6 +280,8 @@ const mockWorkOrders: WorkOrder[] = [
       departureDate: "12/02/2024",
       submitted: "Yes",
       proofOfDelivery: "Pending",
+      job: "RCCC",
+      action: "Pending",
       workDescription: "Annual calibration verification and software update for digital multifunction calibrator",
       partsNeeded: ["Test Leads", "Software License"],
       laborHours: "6.0",
@@ -327,6 +337,8 @@ const mockWorkOrders: WorkOrder[] = [
       departureDate: "12/06/2024",
       submitted: "Yes",
       proofOfDelivery: "Pending",
+      job: "BR",
+      action: "In Lab",
       workDescription: "High-precision calibration of torque wrenches for critical aerospace fastener applications",
       partsNeeded: ["Calibration Weights", "Adapter Kit", "Certification Labels"],
       laborHours: "14.0",
@@ -382,6 +394,8 @@ const mockWorkOrders: WorkOrder[] = [
       departureDate: "11/16/2024",
       submitted: "Yes",
       proofOfDelivery: "Complete",
+      job: "BR",
+      action: "Completed",
       workDescription: "FDA 21 CFR Part 11 compliant calibration and software validation for pharmaceutical weighing applications",
       partsNeeded: ["Certified Weight Set", "Anti-static Kit", "Software Update"],
       laborHours: "10.5",
@@ -465,148 +479,159 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
               <div className="font-semibold text-gray-900">{order.customer}</div>
             </div>
             <div>
-              <span className="text-gray-600 font-medium">Assigned To:</span>
-              <div className="font-semibold text-gray-900">{order.assignedTo}</div>
+              <span className="text-gray-600 font-medium">Division:</span>
+              <div className="font-semibold text-gray-900">{order.division}</div>
             </div>
             <div>
-              <span className="text-gray-600 font-medium">Due Date:</span>
-              <div className="font-semibold text-gray-900">{order.dueDate}</div>
+              <span className="text-gray-600 font-medium">Job:</span>
+              <div className="font-semibold text-gray-900">{order.details.job}</div>
             </div>
             <div>
-              <span className="text-gray-600 font-medium">Items:</span>
-              <div className="font-semibold text-gray-900">{order.details.items}</div>
+              <span className="text-gray-600 font-medium">Action:</span>
+              <div className="font-semibold text-gray-900">{order.details.action}</div>
             </div>
           </div>
         </div>
 
-        {/* Status Information */}
-        <div className="bg-white p-4 rounded-lg border border-gray-200">
-          <h4 className="font-semibold text-gray-900 mb-3 border-b border-gray-200 pb-2">Status Information</h4>
-          <div className="grid grid-cols-3 gap-4 text-sm">
-            <div>
-              <span className="text-gray-600 font-medium">Submitted:</span>
-              <div className={cn("mt-1 inline-block px-2 py-1 rounded-md text-xs font-medium",
-                order.details.submitted === "Yes" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
-              )}>{order.details.submitted}</div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Basic Information */}
+          <div className="bg-white p-4 rounded-lg border border-gray-200">
+            <h4 className="font-semibold text-gray-900 mb-3 border-b border-gray-200 pb-2">Basic Information</h4>
+            <div className="space-y-2 text-sm">
+              <div>
+                <span className="text-gray-600 font-medium">Assigned To:</span>
+                <div className="font-semibold text-gray-900">{order.assignedTo}</div>
+              </div>
+              <div>
+                <span className="text-gray-600 font-medium">Due Date:</span>
+                <div className="font-semibold text-gray-900">{order.dueDate}</div>
+              </div>
+              <div>
+                <span className="text-gray-600 font-medium">Items:</span>
+                <div className="font-semibold text-gray-900">{order.details.items}</div>
+              </div>
+              <div>
+                <span className="text-gray-600 font-medium">Batch:</span>
+                <div className="font-mono text-gray-900">{order.details.batch}</div>
+              </div>
+              <div>
+                <span className="text-gray-600 font-medium">Lab Code:</span>
+                <div className="font-mono text-gray-900">{order.details.labCode}</div>
+              </div>
             </div>
-            <div>
-              <span className="text-gray-600 font-medium">Delivery Status:</span>
-              <div className={cn("mt-1 inline-block px-2 py-1 rounded-md text-xs font-medium",
-                order.details.proofOfDelivery === "Complete" ? "bg-green-100 text-green-800" :
-                order.details.proofOfDelivery === "Pending" ? "bg-yellow-100 text-yellow-800" :
-                "bg-gray-100 text-gray-800"
-              )}>{order.details.proofOfDelivery}</div>
+          </div>
+
+          {/* Equipment Details */}
+          <div className="bg-white p-4 rounded-lg border border-gray-200">
+            <h4 className="font-semibold text-gray-900 mb-3 border-b border-gray-200 pb-2">Equipment Details</h4>
+            <div className="space-y-2 text-sm">
+              <div>
+                <span className="text-gray-600 font-medium">Manufacturer:</span>
+                <div className="font-semibold text-gray-900">{order.details.manufacturer}</div>
+              </div>
+              <div>
+                <span className="text-gray-600 font-medium">Model Number:</span>
+                <div className="font-mono text-gray-900">{order.details.modelNumber}</div>
+              </div>
+              <div>
+                <span className="text-gray-600 font-medium">Serial Number:</span>
+                <div className="font-mono text-gray-900">{order.details.serialNumber}</div>
+              </div>
+              <div>
+                <span className="text-gray-600 font-medium">Item Type:</span>
+                <div className="text-gray-900">{order.details.itemType}</div>
+              </div>
+              <div>
+                <span className="text-gray-600 font-medium">Operation Type:</span>
+                <div className="text-gray-900">{order.details.operationType}</div>
+              </div>
             </div>
-            <div>
-              <span className="text-gray-600 font-medium">Lab Code:</span>
-              <div className="font-mono text-gray-900">{order.details.labCode}</div>
+          </div>
+
+          {/* Customer & Order Information */}
+          <div className="bg-white p-4 rounded-lg border border-gray-200">
+            <h4 className="font-semibold text-gray-900 mb-3 border-b border-gray-200 pb-2">Customer & Order</h4>
+            <div className="space-y-2 text-sm">
+              <div>
+                <span className="text-gray-600 font-medium">Customer ID:</span>
+                <div className="font-mono text-gray-900">{order.details.custId}</div>  
+              </div>
+              <div>
+                <span className="text-gray-600 font-medium">Customer S/N:</span>
+                <div className="font-mono text-gray-900">{order.details.custSn}</div>
+              </div>
+              <div>
+                <span className="text-gray-600 font-medium">PO Number:</span>
+                <div className="font-mono text-gray-900">{order.details.poNumber}</div>
+              </div>
+              <div>
+                <span className="text-gray-600 font-medium">Cart ID:</span>
+                <div className="font-mono text-gray-900">{order.details.cartId}</div>
+              </div>
+              <div>
+                <span className="text-gray-600 font-medium">Cart S/N:</span>
+                <div className="font-mono text-gray-900">{order.details.cartSn}</div>
+              </div>
             </div>
           </div>
         </div>
 
+        {/* Timeline & Status */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Customer & Order Details */}
-          <div className="space-y-4">
-            <div className="bg-white p-4 rounded-lg border border-gray-200">
-              <h4 className="font-semibold text-gray-900 mb-3 border-b border-gray-200 pb-2">Customer & Order Details</h4>
-              <div className="space-y-2 text-sm">
-                <div>
-                  <span className="text-gray-600 font-medium">Customer ID:</span>
-                  <span className="ml-2 font-mono text-gray-900">{order.details.custId}</span>
-                </div>
-                <div>
-                  <span className="text-gray-600 font-medium">Customer S/N:</span>
-                  <span className="ml-2 font-mono text-gray-900">{order.details.custSn}</span>
-                </div>
-                <div>
-                  <span className="text-gray-600 font-medium">PO Number:</span>
-                  <span className="ml-2 font-mono text-gray-900">{order.details.poNumber}</span>
-                </div>
-                <div>
-                  <span className="text-gray-600 font-medium">Batch:</span>
-                  <span className="ml-2 font-mono text-gray-900">{order.details.batch}</span>
-                </div>
-                <div>
-                  <span className="text-gray-600 font-medium">Purchase:</span>
-                  <span className="ml-2 font-mono text-gray-900">{order.details.purchase}</span>
-                </div>
-                <div>
-                  <span className="text-gray-600 font-medium">LOC/Lots:</span>
-                  <span className="ml-2 font-mono text-gray-900">{order.details.lots}</span>
+          <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+            <h4 className="font-semibold text-gray-900 mb-3 border-b border-gray-300 pb-2">Timeline</h4>
+            <div className="space-y-2 text-sm">
+              <div>
+                <span className="text-gray-600 font-medium">Created Date:</span>
+                <div className="text-gray-900">{order.details.createdDate}</div>
+              </div>
+              <div>
+                <span className="text-gray-600 font-medium">Status Date:</span>
+                <div className="text-gray-900">{order.details.statusDate}</div>
+              </div>
+              <div>
+                <span className="text-gray-600 font-medium">Last Modified:</span>
+                <div className="text-gray-900">{order.details.lastModified}</div>
+              </div>
+              <div>  
+                <span className="text-gray-600 font-medium">Next By:</span>
+                <div className={cn("font-semibold", order.details.nextBy === "TBD" ? "text-red-600" : "text-gray-900")}>
+                  {order.details.nextBy}
                 </div>
               </div>
-            </div>
-
-            <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-              <h4 className="font-semibold text-gray-900 mb-3 border-b border-gray-300 pb-2">Cart Information</h4>
-              <div className="space-y-2 text-sm">
-                <div>
-                  <span className="text-gray-600 font-medium">Cart ID:</span>
-                  <span className="ml-2 font-mono text-gray-900">{order.details.cartId}</span>
-                </div>
-                <div>
-                  <span className="text-gray-600 font-medium">Cart S/N:</span>
-                  <span className="ml-2 font-mono text-gray-900">{order.details.cartSn}</span>
+              <div>
+                <span className="text-gray-600 font-medium">Departure Date:</span>
+                <div className={cn("font-semibold", order.details.departureDate === "TBD" ? "text-red-600" : "text-gray-900")}>
+                  {order.details.departureDate}
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Equipment & Timeline */}
-          <div className="space-y-4">
-            <div className="bg-white p-4 rounded-lg border border-gray-200">
-              <h4 className="font-semibold text-gray-900 mb-3 border-b border-gray-200 pb-2">Equipment Information</h4>
-              <div className="space-y-2 text-sm">
-                <div>
-                  <span className="text-gray-600 font-medium">Manufacturer:</span>
-                  <span className="ml-2 font-semibold text-gray-900">{order.details.manufacturer}</span>
-                </div>
-                <div>
-                  <span className="text-gray-600 font-medium">Model:</span>
-                  <span className="ml-2 font-mono text-gray-900">{order.details.modelNumber}</span>
-                </div>
-                <div>
-                  <span className="text-gray-600 font-medium">Serial #:</span>
-                  <span className="ml-2 font-mono text-gray-900">{order.details.serialNumber}</span>
-                </div>
-                <div>
-                  <span className="text-gray-600 font-medium">Item Type:</span>
-                  <span className="ml-2 text-gray-900">{order.details.itemType}</span>
-                </div>
-                <div>
-                  <span className="text-gray-600 font-medium">Operation:</span>
-                  <span className="ml-2 text-gray-900">{order.details.operationType}</span>
-                </div>
+          <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+            <h4 className="font-semibold text-gray-900 mb-3 border-b border-gray-300 pb-2">Status & Delivery</h4>
+            <div className="space-y-2 text-sm">
+              <div>
+                <span className="text-gray-600 font-medium">Delivery Submitted:</span>
+                <div className={cn("mt-1 inline-block px-2 py-1 rounded-md text-xs font-medium",
+                  order.details.submitted === "Yes" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
+                )}>{order.details.submitted}</div>
               </div>
-            </div>
-
-            <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-              <h4 className="font-semibold text-gray-900 mb-3 border-b border-gray-300 pb-2">Project Timeline</h4>
-              <div className="space-y-2 text-sm">
-                <div>
-                  <span className="text-gray-600 font-medium">Created:</span>
-                  <span className="ml-2 text-gray-900">{order.details.createdDate}</span>
-                </div>
-                <div>
-                  <span className="text-gray-600 font-medium">Status Date:</span>
-                  <span className="ml-2 text-gray-900">{order.details.statusDate}</span>
-                </div>
-                <div>
-                  <span className="text-gray-600 font-medium">Last Modified:</span>
-                  <span className="ml-2 text-gray-900">{order.details.lastModified}</span>
-                </div>
-                <div>
-                  <span className="text-gray-600 font-medium">Next By:</span>
-                  <span className={cn("ml-2 font-semibold",
-                    order.details.nextBy === "TBD" ? "text-red-600" : "text-gray-900"
-                  )}>{order.details.nextBy}</span>
-                </div>
-                <div>
-                  <span className="text-gray-600 font-medium">Departure:</span>
-                  <span className={cn("ml-2 font-semibold",
-                    order.details.departureDate === "TBD" ? "text-red-600" : "text-gray-900"
-                  )}>{order.details.departureDate}</span>
-                </div>
+              <div>
+                <span className="text-gray-600 font-medium">Proof of Delivery:</span>
+                <div className={cn("mt-1 inline-block px-2 py-1 rounded-md text-xs font-medium",
+                  order.details.proofOfDelivery === "Complete" ? "bg-green-100 text-green-800" :
+                  order.details.proofOfDelivery === "Pending" ? "bg-yellow-100 text-yellow-800" :
+                  "bg-gray-100 text-gray-800"
+                )}>{order.details.proofOfDelivery}</div>
+              </div>
+              <div>
+                <span className="text-gray-600 font-medium">Purchase:</span>
+                <div className="font-mono text-gray-900">{order.details.purchase}</div>
+              </div>
+              <div>
+                <span className="text-gray-600 font-medium">LOC/Lots:</span>
+                <div className="font-mono text-gray-900">{order.details.lots}</div>
               </div>
             </div>
           </div>
