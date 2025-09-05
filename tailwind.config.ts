@@ -112,5 +112,24 @@ export default {
 			}
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [
+		require("tailwindcss-animate"),
+		function({ addUtilities }) {
+			const newUtilities = {
+				'.hover-lift': {
+					'@apply transition-all duration-200 hover:scale-105 hover:shadow-lg': {},
+				},
+				'.hover-glow': {
+					'@apply transition-all duration-200 hover:shadow-md hover:shadow-primary/20': {},
+				},
+				'.hover-scale': {
+					'@apply transition-transform duration-200 hover:scale-105': {},
+				},
+				'.hover-fade': {
+					'@apply transition-opacity duration-200 hover:opacity-80': {},
+				},
+			}
+			addUtilities(newUtilities)
+		}
+	],
 } satisfies Config;

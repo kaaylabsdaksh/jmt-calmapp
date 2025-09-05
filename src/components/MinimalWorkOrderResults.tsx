@@ -84,7 +84,7 @@ const MinimalWorkOrderResults = () => {
       <CardContent>
         <div className="space-y-4">
           {workOrders.map((order) => (
-            <Card key={order.id} className="hover:shadow-md transition-all duration-200">
+            <Card key={order.id} className="hover-glow">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
