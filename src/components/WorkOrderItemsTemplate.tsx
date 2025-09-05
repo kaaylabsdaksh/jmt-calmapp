@@ -45,8 +45,12 @@ const createEmptyItem = (): WorkOrderItemTemplate => ({
   needByDate: "",
 });
 
-export const WorkOrderItemsTemplate = () => {
-  const [items, setItems] = useState<WorkOrderItemTemplate[]>([]);
+interface Props {
+  items: WorkOrderItemTemplate[];
+  setItems: React.Dispatch<React.SetStateAction<WorkOrderItemTemplate[]>>;
+}
+
+export const WorkOrderItemsTemplate = ({ items, setItems }: Props) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [newItem, setNewItem] = useState<WorkOrderItemTemplate>(createEmptyItem());
 
