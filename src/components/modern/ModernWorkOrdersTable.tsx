@@ -911,7 +911,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                       <TableCell className="text-sm">{order.details.createdDate}</TableCell>
                       <TableCell>{getStatusBadge(order.status)}</TableCell>
                       <TableCell>{order.dueDate}</TableCell>
-                      <TableCell className="text-blue-600 underline cursor-pointer hover:text-blue-800">{order.details.manufacturer}</TableCell>
+                      <TableCell className="font-medium">{order.details.manufacturer}</TableCell>
                       <TableCell className="font-medium">{order.customer}</TableCell>
                       <TableCell className="font-mono text-sm">{order.details.modelNumber}</TableCell>
                       <TableCell className="text-blue-600 underline cursor-pointer hover:text-blue-800">{order.details.template}</TableCell>
@@ -1069,7 +1069,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                         </div>
                         <div>
                           <span className="text-gray-500">Manufacturer:</span>
-                          <div className="text-blue-600 underline cursor-pointer hover:text-blue-800 text-xs">{order.details.manufacturer}</div>
+                          <div className="font-medium text-xs">{order.details.manufacturer}</div>
                         </div>
                       </div>
 
