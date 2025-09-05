@@ -107,9 +107,22 @@ const AddNewWorkOrder = () => {
   // Handle account number input change
   const handleAccountNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/\D/g, '').slice(0, 5); // Only allow 5 digits
-    setWorkOrderData(prev => ({ ...prev, accountNumber: value }));
     
-    if (value.length > 0) {
+    if (value.length === 0) {
+      // Reset to default values when account number is cleared
+      setWorkOrderData(prev => ({ 
+        ...prev, 
+        accountNumber: value,
+        customer: "",
+        srDocument: "",
+        salesperson: "Not assigned",
+        contact: "Not specified"
+      }));
+      setShowSuggestions(false);
+      setAccountSuggestions([]);
+    } else {
+      setWorkOrderData(prev => ({ ...prev, accountNumber: value }));
+      
       const filtered = mockAccounts.filter(account => 
         account.accountNumber.startsWith(value) ||
         account.customerName.toLowerCase().includes(value.toLowerCase())
@@ -117,9 +130,6 @@ const AddNewWorkOrder = () => {
       setAccountSuggestions(filtered);
       setShowSuggestions(true);
       setHighlightedSuggestion(-1);
-    } else {
-      setShowSuggestions(false);
-      setAccountSuggestions([]);
     }
   };
 
