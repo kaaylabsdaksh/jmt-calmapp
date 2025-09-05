@@ -868,6 +868,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                 {templateView ? (
                   // Template View Headers
                   <>
+                    <TableHead className="font-semibold text-gray-900">Work Order #</TableHead>
                     <TableHead className="font-semibold text-gray-900">Item</TableHead>
                     <TableHead className="font-semibold text-gray-900">Division</TableHead>
                     <TableHead className="font-semibold text-gray-900">Created Date</TableHead>
@@ -906,6 +907,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                   {templateView ? (
                     // Template View Cells
                     <>
+                      <TableCell className="font-medium text-blue-600">{order.id}</TableCell>
                       <TableCell className="font-mono text-sm">{order.details.items}</TableCell>
                       <TableCell className="font-medium">{order.division}</TableCell>
                       <TableCell className="text-sm">{order.details.createdDate}</TableCell>
