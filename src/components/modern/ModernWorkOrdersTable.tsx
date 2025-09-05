@@ -81,7 +81,7 @@ const mockWorkOrders: WorkOrder[] = [
     email: "r.chen@acmeindustries.com",
     urgencyLevel: "High",
     completionPercentage: 75,
-    division: "Instrumentation",
+    division: "Lab",
     details: {
       modelNumber: "PPS-1734",
       labCode: "LAB-001",
@@ -136,7 +136,7 @@ const mockWorkOrders: WorkOrder[] = [
     email: "l.martinez@techsolutions.com",
     urgencyLevel: "Medium",
     completionPercentage: 100,
-    division: "Mechanical",
+    division: "Rental",
     details: {
       modelNumber: "844-441",
       labCode: "LAB-002",
@@ -191,7 +191,7 @@ const mockWorkOrders: WorkOrder[] = [
     email: "d.wilson@manufacturingcorp.com",
     urgencyLevel: "Critical",
     completionPercentage: 35,
-    division: "Hydraulics",
+    division: "ESL Onsite",
     details: {
       modelNumber: "1000PS",
       labCode: "LAB-003",
@@ -246,7 +246,7 @@ const mockWorkOrders: WorkOrder[] = [
     email: "j.taylor@qualitysystems.com",
     urgencyLevel: "Low",
     completionPercentage: 15,
-    division: "Electronics",
+    division: "ESL",
     details: {
       modelNumber: "CAL-500",
       labCode: "LAB-004",
@@ -301,7 +301,7 @@ const mockWorkOrders: WorkOrder[] = [
     email: "m.chang@aerospacedynamics.com",
     urgencyLevel: "High",
     completionPercentage: 60,
-    division: "Aerospace",
+    division: "Lab",
     details: {
       modelNumber: "TW-PRO-500",
       labCode: "LAB-005",
@@ -356,7 +356,7 @@ const mockWorkOrders: WorkOrder[] = [
     email: "s.kim@pharmabs.com",
     urgencyLevel: "Medium",
     completionPercentage: 100,
-    division: "Chemical",
+    division: "Rental",
     details: {
       modelNumber: "AB-220",
       labCode: "LAB-006",
