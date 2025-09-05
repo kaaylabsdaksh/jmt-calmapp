@@ -55,6 +55,11 @@ const AddNewWorkOrder = () => {
     navigate("/");
   };
 
+  // Function to check if a tab should be disabled
+  const isTabDisabled = (tabValue: string) => {
+    return tabValue !== "general";
+  };
+
   return (
     <div className="bg-background min-h-screen">
       {/* Yellow Header */}
@@ -126,7 +131,7 @@ const AddNewWorkOrder = () => {
           </Card>
 
           {/* Tabs */}
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+          <Tabs value={activeTab} onValueChange={(value) => !isTabDisabled(value) && setActiveTab(value)} className="space-y-6">
             {isMobile ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -146,11 +151,15 @@ const AddNewWorkOrder = () => {
                 <DropdownMenuContent className="w-56 bg-popover border shadow-lg z-50" align="start">
                   {tabs.map((tab) => {
                     const IconComponent = tab.icon;
+                    const disabled = isTabDisabled(tab.value);
                     return (
                       <DropdownMenuItem 
                         key={tab.value}
-                        onSelect={() => setActiveTab(tab.value)}
-                        className="flex items-center gap-2 cursor-pointer hover:bg-muted"
+                        onSelect={() => !disabled && setActiveTab(tab.value)}
+                        disabled={disabled}
+                        className={`flex items-center gap-2 cursor-pointer hover:bg-muted ${
+                          disabled ? 'opacity-50 cursor-not-allowed' : ''
+                        }`}
                       >
                         <IconComponent className="w-4 h-4" />
                         <span>{tab.label}</span>
@@ -163,11 +172,17 @@ const AddNewWorkOrder = () => {
               <TabsList className="h-auto p-0 bg-transparent gap-2 sm:gap-3 flex flex-wrap justify-start">
                 {tabs.map((tab) => {
                   const IconComponent = tab.icon;
+                  const disabled = isTabDisabled(tab.value);
                   return (
                     <TabsTrigger 
                       key={tab.value}
-                      value={tab.value} 
-                      className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 sm:py-3 bg-card border rounded-lg text-xs sm:text-sm font-medium transition-all hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground shadow-sm"
+                      value={tab.value}
+                      disabled={disabled}
+                      className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 sm:py-3 bg-card border rounded-lg text-xs sm:text-sm font-medium transition-all shadow-sm ${
+                        disabled 
+                          ? 'opacity-50 cursor-not-allowed hover:bg-card data-[state=active]:bg-card data-[state=active]:text-foreground'
+                          : 'hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground'
+                      }`}
                     >
                       <IconComponent className="w-3 h-3 sm:w-4 sm:h-4" />
                       <span className="hidden sm:inline">{tab.label}</span>
