@@ -2,7 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus } from "lucide-react";
+import { Plus, Trash2 } from "lucide-react";
+import { useState } from "react";
 
 interface WorkOrderItemTemplate {
   id: string;
@@ -23,38 +24,65 @@ interface WorkOrderItemTemplate {
   needByDate: string;
 }
 
-const mockTemplateData: WorkOrderItemTemplate[] = [
-  {
-    id: "1",
-    itemNumber: "",
-    calFreq: "",
-    actionCode: "",
-    priority: "",
-    manufacturer: "",
-    model: "",
-    mfgSerial: "",
-    custId: "",
-    custSN: "",
-    barcodeNum: "",
-    warranty: "",
-    iso17025: "",
-    estimate: "",
-    newEquip: "",
-    needByDate: "",
-  },
-];
+const createEmptyItem = (): WorkOrderItemTemplate => ({
+  id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
+  itemNumber: "",
+  calFreq: "",
+  actionCode: "",
+  priority: "",
+  manufacturer: "",
+  model: "",
+  mfgSerial: "",
+  custId: "",
+  custSN: "",
+  barcodeNum: "",
+  warranty: "",
+  iso17025: "",
+  estimate: "",
+  newEquip: "",
+  needByDate: "",
+});
 
 export const WorkOrderItemsTemplate = () => {
+  const [items, setItems] = useState<WorkOrderItemTemplate[]>([createEmptyItem()]);
+
+  const addNewItem = () => {
+    setItems([...items, createEmptyItem()]);
+  };
+
+  const removeItem = (id: string) => {
+    if (items.length > 1) {
+      setItems(items.filter(item => item.id !== id));
+    }
+  };
+
+  const updateItem = (id: string, field: keyof WorkOrderItemTemplate, value: string) => {
+    setItems(items.map(item => 
+      item.id === id ? { ...item, [field]: value } : item
+    ));
+  };
+
+  const clearAllItems = () => {
+    setItems([createEmptyItem()]);
+  };
   return (
     <div className="border rounded-lg overflow-hidden">
       <div className="flex justify-between items-center p-2 bg-muted/20 border-b">
         <div className="flex items-center gap-2">
-          <Button variant="link" className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto flex items-center gap-1">
+          <Button 
+            variant="link" 
+            className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto flex items-center gap-1"
+            onClick={addNewItem}
+          >
             <Plus className="w-4 h-4" />
             Add
           </Button>
         </div>
-        <Button variant="link" className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto">
+        <Button 
+          variant="link" 
+          className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto"
+          onClick={clearAllItems}
+        >
           Clear
         </Button>
       </div>
@@ -85,7 +113,7 @@ export const WorkOrderItemsTemplate = () => {
             </tr>
           </thead>
           <tbody>
-            {mockTemplateData.map((item, index) => (
+            {items.map((item, index) => (
                <tr key={item.id} className="border-t hover:bg-muted/50">
                 <td className="p-2">
                   <Checkbox />
@@ -94,11 +122,12 @@ export const WorkOrderItemsTemplate = () => {
                   <Input 
                     placeholder="Item #"
                     value={item.itemNumber}
+                    onChange={(e) => updateItem(item.id, 'itemNumber', e.target.value)}
                     className="w-full h-7 text-xs"
                   />
                 </td>
                 <td className="p-2">
-                  <Select>
+                  <Select value={item.calFreq} onValueChange={(value) => updateItem(item.id, 'calFreq', value)}>
                     <SelectTrigger className="w-full h-7 text-xs">
                       <SelectValue placeholder="Select..." />
                     </SelectTrigger>
@@ -110,7 +139,7 @@ export const WorkOrderItemsTemplate = () => {
                   </Select>
                 </td>
                 <td className="p-2">
-                  <Select>
+                  <Select value={item.actionCode} onValueChange={(value) => updateItem(item.id, 'actionCode', value)}>
                     <SelectTrigger className="w-full h-7 text-xs">
                       <SelectValue placeholder="Select..." />
                     </SelectTrigger>
@@ -125,7 +154,7 @@ export const WorkOrderItemsTemplate = () => {
                   </Select>
                 </td>
                 <td className="p-2">
-                  <Select>
+                  <Select value={item.priority} onValueChange={(value) => updateItem(item.id, 'priority', value)}>
                     <SelectTrigger className="w-full h-7 text-xs">
                       <SelectValue placeholder="Select..." />
                     </SelectTrigger>
@@ -139,7 +168,7 @@ export const WorkOrderItemsTemplate = () => {
                   </Select>
                 </td>
                 <td className="p-2">
-                  <Select>
+                  <Select value={item.manufacturer} onValueChange={(value) => updateItem(item.id, 'manufacturer', value)}>
                     <SelectTrigger className="w-full h-7 text-xs">
                       <SelectValue placeholder="Select..." />
                     </SelectTrigger>
@@ -158,6 +187,7 @@ export const WorkOrderItemsTemplate = () => {
                   <Input 
                     placeholder="Model"
                     value={item.model}
+                    onChange={(e) => updateItem(item.id, 'model', e.target.value)}
                     className="w-full h-7 text-xs"
                   />
                 </td>
@@ -165,6 +195,7 @@ export const WorkOrderItemsTemplate = () => {
                   <Input 
                     placeholder="Mfg Serial"
                     value={item.mfgSerial}
+                    onChange={(e) => updateItem(item.id, 'mfgSerial', e.target.value)}
                     className="w-full h-7 text-xs"
                   />
                 </td>
@@ -172,6 +203,7 @@ export const WorkOrderItemsTemplate = () => {
                   <Input 
                     placeholder="CustID"
                     value={item.custId}
+                    onChange={(e) => updateItem(item.id, 'custId', e.target.value)}
                     className="w-full h-7 text-xs"
                   />
                 </td>
@@ -179,6 +211,7 @@ export const WorkOrderItemsTemplate = () => {
                   <Input 
                     placeholder="CustSN"
                     value={item.custSN}
+                    onChange={(e) => updateItem(item.id, 'custSN', e.target.value)}
                     className="w-full h-7 text-xs"
                   />
                 </td>
@@ -186,11 +219,12 @@ export const WorkOrderItemsTemplate = () => {
                   <Input 
                     placeholder="Barcode"
                     value={item.barcodeNum}
+                    onChange={(e) => updateItem(item.id, 'barcodeNum', e.target.value)}
                     className="w-full h-7 text-xs"
                   />
                 </td>
                 <td className="p-2">
-                  <Select>
+                  <Select value={item.warranty} onValueChange={(value) => updateItem(item.id, 'warranty', value)}>
                     <SelectTrigger className="w-full h-7 text-xs">
                       <SelectValue placeholder="Select..." />
                     </SelectTrigger>
@@ -201,7 +235,7 @@ export const WorkOrderItemsTemplate = () => {
                   </Select>
                 </td>
                 <td className="p-2">
-                  <Select>
+                  <Select value={item.iso17025} onValueChange={(value) => updateItem(item.id, 'iso17025', value)}>
                     <SelectTrigger className="w-full h-7 text-xs">
                       <SelectValue placeholder="Select..." />
                     </SelectTrigger>
@@ -215,11 +249,12 @@ export const WorkOrderItemsTemplate = () => {
                   <Input 
                     placeholder="Estimate"
                     value={item.estimate}
+                    onChange={(e) => updateItem(item.id, 'estimate', e.target.value)}
                     className="w-full h-7 text-xs"
                   />
                 </td>
                 <td className="p-2">
-                  <Select>
+                  <Select value={item.newEquip} onValueChange={(value) => updateItem(item.id, 'newEquip', value)}>
                     <SelectTrigger className="w-full h-7 text-xs">
                       <SelectValue placeholder="Select..." />
                     </SelectTrigger>
@@ -233,12 +268,18 @@ export const WorkOrderItemsTemplate = () => {
                   <Input 
                     type="date"
                     value={item.needByDate}
+                    onChange={(e) => updateItem(item.id, 'needByDate', e.target.value)}
                     className="w-full h-7 text-xs"
                   />
                 </td>
                 <td className="p-2">
-                  <Button variant="outline" size="sm" className="h-7 px-2 text-xs">
-                    Edit
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="h-7 px-2 text-xs"
+                    onClick={() => removeItem(item.id)}
+                  >
+                    <Trash2 className="w-3 h-3" />
                   </Button>
                 </td>
               </tr>
