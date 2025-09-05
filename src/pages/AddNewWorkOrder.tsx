@@ -518,55 +518,9 @@ const AddNewWorkOrder = () => {
             <TabsContent value="contacts">
               <Card>
                 <CardContent className="p-6">
-                  <div className="flex items-start justify-between gap-6">
-                    <div className="flex-1 space-y-6">
+                  <div className="space-y-6">
+                    <div className="flex items-center justify-between">
                       <h3 className="text-lg font-medium text-foreground">Account's Contact(s) for this Work Order:</h3>
-                      
-                      <div className="space-y-4">
-                        {/* Required Contact */}
-                        <div className="space-y-2">
-                          <Select defaultValue="barry-white">
-                            <SelectTrigger className="w-64">
-                              <SelectValue placeholder="Select contact..." />
-                            </SelectTrigger>
-                            <SelectContent className="bg-background border shadow-lg z-50">
-                              <SelectItem value="barry-white">Barry White</SelectItem>
-                              <SelectItem value="netasha-gray">Netasha Gray</SelectItem>
-                            </SelectContent>
-                          </Select>
-                          <p className="text-sm text-muted-foreground">(required)</p>
-                        </div>
-
-                        {/* Additional Contact 1 */}
-                        <div>
-                          <Select>
-                            <SelectTrigger className="w-64">
-                              <SelectValue placeholder="Select additional contact..." />
-                            </SelectTrigger>
-                            <SelectContent className="bg-background border shadow-lg z-50">
-                              <SelectItem value="barry-white">Barry White</SelectItem>
-                              <SelectItem value="netasha-gray">Netasha Gray</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </div>
-
-                        {/* Additional Contact 2 */}
-                        <div>
-                          <Select>
-                            <SelectTrigger className="w-64">
-                              <SelectValue placeholder="Select additional contact..." />
-                            </SelectTrigger>
-                            <SelectContent className="bg-background border shadow-lg z-50">
-                              <SelectItem value="barry-white">Barry White</SelectItem>
-                              <SelectItem value="netasha-gray">Netasha Gray</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Add Contact Button - Right Side */}
-                    <div className="pt-8">
                       <Button 
                         variant="default" 
                         className="bg-warning text-black hover:bg-warning/90"
@@ -574,6 +528,48 @@ const AddNewWorkOrder = () => {
                       >
                         Add Contact
                       </Button>
+                    </div>
+                    
+                    <div className="space-y-4">
+                      {/* Required Contact */}
+                      <div className="space-y-2">
+                        <Select defaultValue="barry-white">
+                          <SelectTrigger className="w-64">
+                            <SelectValue placeholder="Select contact..." />
+                          </SelectTrigger>
+                          <SelectContent className="bg-background border shadow-lg z-50">
+                            <SelectItem value="barry-white">Barry White</SelectItem>
+                            <SelectItem value="netasha-gray">Netasha Gray</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <p className="text-sm text-muted-foreground">(required)</p>
+                      </div>
+
+                      {/* Additional Contact 1 */}
+                      <div>
+                        <Select>
+                          <SelectTrigger className="w-64">
+                            <SelectValue placeholder="Select additional contact..." />
+                          </SelectTrigger>
+                          <SelectContent className="bg-background border shadow-lg z-50">
+                            <SelectItem value="barry-white">Barry White</SelectItem>
+                            <SelectItem value="netasha-gray">Netasha Gray</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      {/* Additional Contact 2 */}
+                      <div>
+                        <Select>
+                          <SelectTrigger className="w-64">
+                            <SelectValue placeholder="Select additional contact..." />
+                          </SelectTrigger>
+                          <SelectContent className="bg-background border shadow-lg z-50">
+                            <SelectItem value="barry-white">Barry White</SelectItem>
+                            <SelectItem value="netasha-gray">Netasha Gray</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
                     </div>
                   </div>
                 </CardContent>
