@@ -904,7 +904,15 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <span className="font-bold text-blue-600 text-lg">{order.id}</span>
-                      {getStatusBadge(order.status)}
+                      <div className="flex items-center gap-2">
+                        {getStatusBadge(order.status)}
+                        <span className={cn("px-2 py-1 rounded-md text-xs font-medium",
+                          order.details.priority === "Critical" ? "bg-red-100 text-red-800" :
+                          order.details.priority === "High" ? "bg-orange-100 text-orange-800" :
+                          order.details.priority === "Medium" ? "bg-yellow-100 text-yellow-800" :
+                          "bg-gray-100 text-gray-800"
+                        )}>{order.details.priority}</span>
+                      </div>
                     </div>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
