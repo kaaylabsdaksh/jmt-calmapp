@@ -937,13 +937,6 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                     <p className="text-sm text-gray-600">Assigned to: {order.assignedTo}</p>
                   </div>
 
-                  <div className="flex items-center justify-between text-sm">
-                    <div>
-                      <span className="text-gray-500">Due Date:</span>
-                      <span className="ml-2 font-medium text-gray-900">{order.dueDate}</span>
-                    </div>
-                  </div>
-
                   <div className="grid grid-cols-2 gap-3 text-sm">
                     <div>
                       <span className="text-gray-500">Items:</span>
@@ -961,21 +954,28 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                       <div className="font-medium text-xs">{order.details.createdDate}</div>
                     </div>
                     <div>
-                      <span className="text-gray-500">Model:</span>
-                      <div className="font-mono text-xs">{order.details.modelNumber}</div>
+                      <span className="text-gray-500">Due Date:</span>
+                      <div className="font-medium text-xs">{order.dueDate}</div>
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <span className="text-gray-500 text-sm">Priority:</span>
-                      <span className={cn("px-2 py-1 rounded-md text-xs font-medium",
-                        order.details.priority === "Critical" ? "bg-red-100 text-red-800" :
-                        order.details.priority === "High" ? "bg-orange-100 text-orange-800" :
-                        order.details.priority === "Medium" ? "bg-yellow-100 text-yellow-800" :
-                        "bg-gray-100 text-gray-800"
-                      )}>{order.details.priority}</span>
+                  <div className="grid grid-cols-2 gap-3 text-sm">
+                    <div>
+                      <span className="text-gray-500">Model:</span>
+                      <div className="font-mono text-xs">{order.details.modelNumber}</div>
                     </div>
+                    <div>
+                      <span className="text-gray-500">Priority:</span>
+                      <div className={cn("font-medium text-xs",
+                        order.details.priority === "Critical" ? "text-red-600" :
+                        order.details.priority === "High" ? "text-orange-600" :
+                        order.details.priority === "Medium" ? "text-yellow-600" :
+                        "text-gray-600"
+                      )}>{order.details.priority}</div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-end">
                     <Button
                       variant="ghost"
                       size="sm"
