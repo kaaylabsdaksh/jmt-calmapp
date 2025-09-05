@@ -460,13 +460,15 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
       <DialogHeader>
         <DialogTitle className="flex items-center gap-3 text-xl">
           <span className="font-bold text-blue-600">{order.id}</span>
-          {getStatusBadge(order.status)}
-          <span className={cn("px-3 py-1 rounded-md text-sm font-medium",
-            order.details.priority === "Critical" ? "bg-red-100 text-red-800" :
-            order.details.priority === "High" ? "bg-orange-100 text-orange-800" :
-            order.details.priority === "Medium" ? "bg-yellow-100 text-yellow-800" :
-            "bg-gray-100 text-gray-800"
-          )}>{order.details.priority} Priority</span>
+          <div className="flex items-center gap-2">
+            {getStatusBadge(order.status)}
+            <span className={cn("px-3 py-1 rounded-md text-sm font-medium",
+              order.details.priority === "Critical" ? "bg-red-100 text-red-800" :
+              order.details.priority === "High" ? "bg-orange-100 text-orange-800" :
+              order.details.priority === "Medium" ? "bg-yellow-100 text-yellow-800" :
+              "bg-gray-100 text-gray-800"
+            )}>{order.details.priority} Priority</span>
+          </div>
         </DialogTitle>
       </DialogHeader>
 
