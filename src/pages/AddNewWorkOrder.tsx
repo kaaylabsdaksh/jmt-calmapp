@@ -197,7 +197,12 @@ const AddNewWorkOrder = () => {
 
   const handleContactSave = (contactData: ContactFormData) => {
     console.log("Contact saved:", contactData);
-    // TODO: Implement contact save functionality
+    // Update the work order data with the new contact
+    const fullName = `${contactData.firstName} ${contactData.lastName}`.trim();
+    setWorkOrderData(prev => ({
+      ...prev,
+      contact: fullName || contactData.emailAddress || "Contact Added"
+    }));
   };
 
   return (
