@@ -130,9 +130,11 @@ export const WorkOrderItemsTemplate = () => {
                       <SelectValue placeholder="Select..." />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="high">High</SelectItem>
-                      <SelectItem value="medium">Medium</SelectItem>
-                      <SelectItem value="low">Low</SelectItem>
+                      <SelectItem value="rush">Rush</SelectItem>
+                      <SelectItem value="normal">Normal</SelectItem>
+                      <SelectItem value="expedite">Expedite</SelectItem>
+                      <SelectItem value="emergency">Emergency</SelectItem>
+                      <SelectItem value="damaged">Damaged</SelectItem>
                     </SelectContent>
                   </Select>
                 </td>
