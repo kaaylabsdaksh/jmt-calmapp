@@ -682,9 +682,6 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                   </div>
                 ))}
               </div>
-              
-              {/* Continuous Background Line */}
-              <div className="absolute top-6 left-0 right-0 h-0.5 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 -z-10"></div>
             </div>
           </div>
         </div>
