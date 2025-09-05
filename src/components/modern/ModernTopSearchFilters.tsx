@@ -295,7 +295,7 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
     }
   }, [globalSearch]);
 
-  const hasActiveFilters = globalSearch || Object.values(searchValues).some(value => value) || dateFrom || dateTo;
+  const hasActiveFilters = globalSearch || Object.values(searchValues).some(value => value && value !== 'all') || dateFrom || dateTo || dateType;
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 mb-6">
@@ -586,7 +586,13 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
       <div className="px-4 pb-4 flex justify-end">
         <Button 
           onClick={handleSearch}
-          className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg h-11 px-6 font-medium shadow-sm hover:shadow-md transition-all"
+          disabled={!hasActiveFilters}
+          className={cn(
+            "rounded-lg h-11 px-6 font-medium shadow-sm hover:shadow-md transition-all",
+            hasActiveFilters 
+              ? "bg-blue-600 hover:bg-blue-700 text-white" 
+              : "bg-gray-300 text-gray-500 cursor-not-allowed"
+          )}
         >
           <Search className="h-4 w-4 mr-2" />
           Search
