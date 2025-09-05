@@ -561,6 +561,14 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                   <div className="font-mono text-sm">{order.details.labCode}</div>
                 </div>
                 <div>
+                  <span className="text-gray-500 text-sm font-medium">Original LOC:</span>
+                  <div className="font-mono text-sm">{order.details.originalLoc}</div>
+                </div>
+                <div>
+                  <span className="text-gray-500 text-sm font-medium">Dest LOC:</span>
+                  <div className="font-mono text-sm">{order.details.destLoc}</div>
+                </div>
+                <div>
                   <span className="text-gray-500 text-sm font-medium">Item Type:</span>
                   <div className="text-sm">{order.details.itemType}</div>
                 </div>
@@ -603,6 +611,18 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                 <div>
                   <span className="text-gray-500 text-sm font-medium">PO #:</span>
                   <div className="font-mono text-sm">{order.details.poNumber}</div>
+                </div>
+                <div>
+                  <span className="text-gray-500 text-sm font-medium">JM PO#:</span>
+                  <div className="font-mono text-sm">{order.details.jmPoNumber}</div>
+                </div>
+                <div>
+                  <span className="text-gray-500 text-sm font-medium">TS:</span>
+                  <div className="font-mono text-sm">{order.details.ts}</div>
+                </div>
+                <div>
+                  <span className="text-gray-500 text-sm font-medium">Hotlist:</span>
+                  <div className="font-mono text-sm">{order.details.hotlist || "N/A"}</div>
                 </div>
               </div>
             </div>
@@ -906,19 +926,13 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                     <TableHead className="font-semibold text-gray-900">Work Order #</TableHead>
                     <TableHead className="font-semibold text-gray-900">Item</TableHead>
                     <TableHead className="font-semibold text-gray-900">Division</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Original LOC</TableHead>
                     <TableHead className="font-semibold text-gray-900">Created Date</TableHead>
                     <TableHead className="font-semibold text-gray-900">Item Status</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Dest LOC</TableHead>
                     <TableHead className="font-semibold text-gray-900">Due Date</TableHead>
                     <TableHead className="font-semibold text-gray-900">Manufacturer</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Model Number</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Lab Code</TableHead>
-                    <TableHead className="font-semibold text-gray-900">JM PO#</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Template</TableHead>
                     <TableHead className="font-semibold text-gray-900">Customer</TableHead>
-                    <TableHead className="font-semibold text-gray-900">TS</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Hotlist</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Model</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Template</TableHead>
                     <TableHead className="w-12"></TableHead>
                   </>
                 ) : (
@@ -951,19 +965,13 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                       <TableCell className="font-medium text-blue-600">{order.id}</TableCell>
                       <TableCell className="font-mono text-sm">{order.details.items}</TableCell>
                       <TableCell className="font-medium">{order.division}</TableCell>
-                      <TableCell className="font-medium">{order.details.originalLoc}</TableCell>
                       <TableCell className="text-sm">{order.details.createdDate}</TableCell>
                       <TableCell>{getStatusBadge(order.status)}</TableCell>
-                      <TableCell className="font-medium">{order.details.destLoc}</TableCell>
                       <TableCell>{order.dueDate}</TableCell>
                       <TableCell className="font-medium">{order.details.manufacturer}</TableCell>
-                      <TableCell className="font-mono text-sm">{order.details.modelNumber}</TableCell>
-                      <TableCell className="font-mono text-sm">{order.details.labCode}</TableCell>
-                      <TableCell className="font-mono text-sm">{order.details.jmPoNumber}</TableCell>
-                      <TableCell className="text-blue-600 underline cursor-pointer hover:text-blue-800">{order.details.template}</TableCell>
                       <TableCell className="font-medium">{order.customer}</TableCell>
-                      <TableCell className="font-mono text-sm">{order.details.ts}</TableCell>
-                      <TableCell className="font-mono text-sm">{order.details.hotlist}</TableCell>
+                      <TableCell className="font-mono text-sm">{order.details.modelNumber}</TableCell>
+                      <TableCell className="text-blue-600 underline cursor-pointer hover:text-blue-800">{order.details.template}</TableCell>
                       <TableCell>
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
