@@ -83,19 +83,19 @@ export function AppSidebar() {
 
   return (
     <Sidebar
-      className={`${open ? "w-64" : "w-14"} border-r-0 bg-gradient-to-b from-sidebar to-sidebar/95 backdrop-blur-sm animate-fade-in`}
+      className={`${open ? "w-64" : "w-14"} border-r-0 bg-sidebar backdrop-blur-sm animate-fade-in shadow-lg`}
       collapsible="icon"
     >
       {/* Header with Logo */}
-      <SidebarHeader className="border-b border-sidebar-border/50 p-4">
+      <SidebarHeader className="border-b border-sidebar-border p-4">
         <div className="flex items-center gap-3">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-lg">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground shadow-lg">
             <Zap className="h-5 w-5" />
           </div>
           {open && (
             <div className="flex flex-col animate-fade-in">
-              <h1 className="text-lg font-bold text-foreground tracking-tight">CalMApp</h1>
-              <p className="text-xs text-muted-foreground">Work Order Management</p>
+              <h1 className="text-lg font-bold text-sidebar-foreground tracking-tight">CalMApp</h1>
+              <p className="text-xs text-sidebar-foreground/70">Work Order Management</p>
             </div>
           )}
         </div>
@@ -111,8 +111,8 @@ export function AppSidebar() {
               <CollapsibleTrigger asChild>
                 <SidebarGroupLabel 
                   className={`
-                    px-3 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider
-                    cursor-pointer hover:text-foreground transition-colors
+                    px-3 py-2 text-xs font-semibold text-sidebar-foreground/70 uppercase tracking-wider
+                    cursor-pointer hover:text-sidebar-foreground transition-colors
                     flex items-center justify-between group
                     ${!open && "sr-only"}
                   `}
@@ -145,7 +145,7 @@ export function AppSidebar() {
                             size="sm"
                             className={`
                               w-full justify-start h-10 px-3 
-                              text-sidebar-foreground hover:text-foreground
+                              text-sidebar-foreground hover:text-sidebar-accent-foreground
                               hover:bg-sidebar-accent hover:shadow-sm
                               transition-all duration-200 ease-in-out
                               group-hover:translate-x-1
@@ -155,7 +155,7 @@ export function AppSidebar() {
                               animationDelay: `${(categoryIndex * 100) + (index * 50)}ms`
                             }}
                           >
-                            {React.createElement(action.icon, { className: "h-4 w-4 shrink-0 text-primary group-hover:scale-110 transition-transform duration-200" })}
+                            {React.createElement(action.icon, { className: "h-4 w-4 shrink-0 text-sidebar-primary group-hover:scale-110 transition-transform duration-200" })}
                             {open && (
                               <span className="ml-3 font-medium text-sm animate-fade-in">
                                 {action.title}
@@ -175,10 +175,10 @@ export function AppSidebar() {
         {/* Footer section when expanded */}
         {open && (
           <div className="mt-auto px-3 py-4 animate-fade-in">
-            <Separator className="mb-3 bg-sidebar-border/30" />
-            <div className="text-xs text-muted-foreground">
+            <Separator className="mb-3 bg-sidebar-border" />
+            <div className="text-xs text-sidebar-foreground/70">
               <p className="font-medium">System Status</p>
-              <p className="text-xs mt-1 text-green-500">● All systems operational</p>
+              <p className="text-xs mt-1 text-green-600">● All systems operational</p>
             </div>
           </div>
         )}
