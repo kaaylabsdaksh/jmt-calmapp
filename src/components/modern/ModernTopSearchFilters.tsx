@@ -79,6 +79,97 @@ const mockWorkOrders = [
     manufacturer: "METTLER TOLEDO",
     modelNumber: "AB-220",
     labCode: "LAB-006"
+  },
+  // Additional entries
+  {
+    id: "412340",
+    customer: "Energy Solutions Corp",
+    assignedTo: "Alex Thompson",
+    division: "Lab",
+    manufacturer: "FLUKE",
+    modelNumber: "PM-850",
+    labCode: "LAB-007"
+  },
+  {
+    id: "415629",
+    customer: "Medical Devices Inc",
+    assignedTo: "Dr. Rachel Martinez",
+    division: "ESL",
+    manufacturer: "BRANSON",
+    modelNumber: "UC-750",
+    labCode: "LAB-008"
+  },
+  {
+    id: "418974",
+    customer: "Precision Manufacturing Ltd",
+    assignedTo: "Kevin Park",
+    division: "ESL Onsite",
+    manufacturer: "ZEISS",
+    modelNumber: "CMM-3000",
+    labCode: "LAB-009"
+  },
+  {
+    id: "421587",
+    customer: "Automotive Testing Labs",
+    assignedTo: "Lisa Chen",
+    division: "Rental",
+    manufacturer: "BRUEL & KJAER",
+    modelNumber: "VA-2500",
+    labCode: "LAB-010"
+  },
+  {
+    id: "424833",
+    customer: "Chemical Analysis Corp",
+    assignedTo: "Dr. Patricia Lee",
+    division: "Lab",
+    manufacturer: "HACH",
+    modelNumber: "pH-850",
+    labCode: "LAB-011"
+  },
+  {
+    id: "427965",
+    customer: "Environmental Testing Solutions",
+    assignedTo: "Michael Johnson",
+    division: "ESL",
+    manufacturer: "AGILENT",
+    modelNumber: "GC-7890",
+    labCode: "LAB-012"
+  },
+  {
+    id: "430771",
+    customer: "Telecommunications Inc",
+    assignedTo: "Jennifer Walsh",
+    division: "Lab",
+    manufacturer: "KEYSIGHT",
+    modelNumber: "E5071C",
+    labCode: "LAB-013"
+  },
+  {
+    id: "433498",
+    customer: "Food Safety Labs",
+    assignedTo: "Dr. Mark Roberts",
+    division: "ESL",
+    manufacturer: "THERMO FISHER",
+    modelNumber: "TSQ-9000",
+    labCode: "LAB-014"
+  },
+  {
+    id: "436125",
+    customer: "Aerospace Systems Ltd",
+    assignedTo: "Amanda Clark",
+    division: "Rental",
+    manufacturer: "ROHDE & SCHWARZ",
+    modelNumber: "FSW-26",
+    labCode: "LAB-015"
+  },
+  {
+    id: "438752",
+    customer: "Nuclear Research Institute",
+    assignedTo: "Dr. David Kumar",
+    division: "ESL Onsite",
+    manufacturer: "CANBERRA",
+    modelNumber: "DSA-1000",
+    labCode: "LAB-016"
   }
 ];
 
