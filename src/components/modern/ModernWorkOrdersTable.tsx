@@ -615,85 +615,85 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
           
           <div className="p-6">
             <div className="relative">
-              {/* Timeline Line */}
-              <div className="absolute left-4 top-6 bottom-6 w-0.5 bg-gradient-to-b from-blue-200 via-blue-300 to-blue-400"></div>
+              {/* Horizontal Timeline Line */}
+              <div className="absolute top-6 left-6 right-6 h-0.5 bg-gradient-to-r from-blue-200 via-blue-300 to-blue-400"></div>
               
-              <div className="space-y-6">
+              <div className="flex justify-between items-start gap-4 overflow-x-auto pb-4">
                 {/* Created Date */}
-                <div className="relative flex items-start gap-4">
-                  <div className="relative z-10 flex-shrink-0">
+                <div className="flex flex-col items-center min-w-[120px] flex-shrink-0">
+                  <div className="relative z-10 mb-3">
                     <div className="w-3 h-3 bg-green-500 rounded-full border-2 border-white shadow-lg"></div>
                   </div>
-                  <div className="flex-grow min-w-0">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-gray-900">Work Order Created</span>
-                      <span className="text-xs text-gray-500 bg-green-50 px-2 py-1 rounded-full">{order.details.createdDate}</span>
+                  <div className="text-center">
+                    <div className="text-xs font-medium text-gray-900 mb-1">Created</div>
+                    <div className="text-xs text-gray-600 bg-green-50 px-2 py-1 rounded-full whitespace-nowrap">
+                      {order.details.createdDate}
                     </div>
-                    <p className="text-xs text-gray-600 mt-1">Initial work order setup and assignment</p>
+                    <div className="text-xs text-gray-500 mt-1">Initial Setup</div>
                   </div>
                 </div>
 
                 {/* Status Date */}
-                <div className="relative flex items-start gap-4">
-                  <div className="relative z-10 flex-shrink-0">
+                <div className="flex flex-col items-center min-w-[120px] flex-shrink-0">
+                  <div className="relative z-10 mb-3">
                     <div className="w-3 h-3 bg-blue-500 rounded-full border-2 border-white shadow-lg"></div>
                   </div>
-                  <div className="flex-grow min-w-0">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-gray-900">Status Updated</span>
-                      <span className="text-xs text-gray-500 bg-blue-50 px-2 py-1 rounded-full">{order.details.statusDate}</span>
+                  <div className="text-center">
+                    <div className="text-xs font-medium text-gray-900 mb-1">Status Updated</div>
+                    <div className="text-xs text-gray-600 bg-blue-50 px-2 py-1 rounded-full whitespace-nowrap">
+                      {order.details.statusDate}
                     </div>
-                    <p className="text-xs text-gray-600 mt-1">Current status: {order.status}</p>
+                    <div className="text-xs text-gray-500 mt-1">{order.status}</div>
                   </div>
                 </div>
 
                 {/* Last Modified */}
-                <div className="relative flex items-start gap-4">
-                  <div className="relative z-10 flex-shrink-0">
+                <div className="flex flex-col items-center min-w-[120px] flex-shrink-0">
+                  <div className="relative z-10 mb-3">
                     <div className="w-3 h-3 bg-yellow-500 rounded-full border-2 border-white shadow-lg"></div>
                   </div>
-                  <div className="flex-grow min-w-0">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-gray-900">Last Modified</span>
-                      <span className="text-xs text-gray-500 bg-yellow-50 px-2 py-1 rounded-full">{order.details.lastModified}</span>
+                  <div className="text-center">
+                    <div className="text-xs font-medium text-gray-900 mb-1">Last Modified</div>
+                    <div className="text-xs text-gray-600 bg-yellow-50 px-2 py-1 rounded-full whitespace-nowrap">
+                      {order.details.lastModified}
                     </div>
-                    <p className="text-xs text-gray-600 mt-1">Recent updates or changes made</p>
+                    <div className="text-xs text-gray-500 mt-1">Recent Updates</div>
                   </div>
                 </div>
 
                 {/* Next By */}
-                <div className="relative flex items-start gap-4">
-                  <div className="relative z-10 flex-shrink-0">
+                <div className="flex flex-col items-center min-w-[120px] flex-shrink-0">
+                  <div className="relative z-10 mb-3">
                     <div className={cn("w-3 h-3 rounded-full border-2 border-white shadow-lg",
                       order.details.nextBy === "TBD" ? "bg-red-500" : "bg-purple-500"
                     )}></div>
                   </div>
-                  <div className="flex-grow min-w-0">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-gray-900">Next Milestone</span>
-                      <span className={cn("text-xs px-2 py-1 rounded-full",
-                        order.details.nextBy === "TBD" ? "text-red-700 bg-red-50" : "text-purple-700 bg-purple-50"
-                      )}>{order.details.nextBy}</span>
+                  <div className="text-center">
+                    <div className="text-xs font-medium text-gray-900 mb-1">Next Milestone</div>
+                    <div className={cn("text-xs px-2 py-1 rounded-full whitespace-nowrap",
+                      order.details.nextBy === "TBD" ? "text-red-700 bg-red-50" : "text-purple-700 bg-purple-50"
+                    )}>
+                      {order.details.nextBy}
                     </div>
-                    <p className="text-xs text-gray-600 mt-1">Next scheduled action or deadline</p>
+                    <div className="text-xs text-gray-500 mt-1">Next Action</div>
                   </div>
                 </div>
 
                 {/* Departure Date */}
-                <div className="relative flex items-start gap-4">
-                  <div className="relative z-10 flex-shrink-0">
+                <div className="flex flex-col items-center min-w-[120px] flex-shrink-0">
+                  <div className="relative z-10 mb-3">
                     <div className={cn("w-3 h-3 rounded-full border-2 border-white shadow-lg",
                       order.details.departureDate === "TBD" ? "bg-red-500" : "bg-green-600"
                     )}></div>
                   </div>
-                  <div className="flex-grow min-w-0">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-gray-900">Expected Departure</span>
-                      <span className={cn("text-xs px-2 py-1 rounded-full",
-                        order.details.departureDate === "TBD" ? "text-red-700 bg-red-50" : "text-green-700 bg-green-50"
-                      )}>{order.details.departureDate}</span>
+                  <div className="text-center">
+                    <div className="text-xs font-medium text-gray-900 mb-1">Departure</div>
+                    <div className={cn("text-xs px-2 py-1 rounded-full whitespace-nowrap",
+                      order.details.departureDate === "TBD" ? "text-red-700 bg-red-50" : "text-green-700 bg-green-50"
+                    )}>
+                      {order.details.departureDate}
                     </div>
-                    <p className="text-xs text-gray-600 mt-1">Scheduled completion and delivery</p>
+                    <div className="text-xs text-gray-500 mt-1">Completion</div>
                   </div>
                 </div>
               </div>
