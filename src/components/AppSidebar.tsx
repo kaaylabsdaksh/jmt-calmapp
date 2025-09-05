@@ -83,20 +83,19 @@ export function AppSidebar() {
 
   return (
     <Sidebar
-      className={`${open ? "w-64" : "w-14"} border-r-0 backdrop-blur-sm animate-fade-in shadow-lg`}
-      style={{ backgroundColor: 'hsl(var(--warning))' }}
+      className={`${open ? "w-64" : "w-14"} border-r-0 bg-sidebar backdrop-blur-sm animate-fade-in shadow-lg`}
       collapsible="icon"
     >
       {/* Header with Logo */}
-      <SidebarHeader className="border-b border-warning-foreground/20 p-4">
+      <SidebarHeader className="border-b border-sidebar-border p-4">
         <div className="flex items-center gap-3">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-warning-foreground text-warning shadow-lg">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground shadow-lg">
             <Zap className="h-5 w-5" />
           </div>
           {open && (
             <div className="flex flex-col animate-fade-in">
-              <h1 className="text-lg font-bold text-warning-foreground tracking-tight">CalMApp</h1>
-              <p className="text-xs text-warning-foreground/70">Work Order Management</p>
+              <h1 className="text-lg font-bold text-sidebar-foreground tracking-tight">CalMApp</h1>
+              <p className="text-xs text-sidebar-foreground/70">Work Order Management</p>
             </div>
           )}
         </div>
@@ -112,8 +111,8 @@ export function AppSidebar() {
               <CollapsibleTrigger asChild>
                 <SidebarGroupLabel 
                   className={`
-                    px-3 py-2 text-xs font-semibold text-warning-foreground/70 uppercase tracking-wider
-                    cursor-pointer hover:text-warning-foreground transition-colors
+                    px-3 py-2 text-xs font-semibold text-sidebar-foreground/70 uppercase tracking-wider
+                    cursor-pointer hover:text-sidebar-foreground transition-colors
                     flex items-center justify-between group
                     ${!open && "sr-only"}
                   `}
@@ -146,8 +145,8 @@ export function AppSidebar() {
                             size="sm"
                             className={`
                               w-full justify-start h-10 px-3 
-                              text-warning-foreground hover:text-warning
-                              hover:bg-warning-foreground/10 hover:shadow-sm
+                              text-sidebar-foreground hover:text-sidebar-accent-foreground
+                              hover:bg-sidebar-accent hover:shadow-sm
                               transition-all duration-200 ease-in-out
                               group-hover:translate-x-1
                               ${!open && "justify-center px-0"}
@@ -156,7 +155,7 @@ export function AppSidebar() {
                               animationDelay: `${(categoryIndex * 100) + (index * 50)}ms`
                             }}
                           >
-                            {React.createElement(action.icon, { className: "h-4 w-4 shrink-0 text-warning-foreground group-hover:scale-110 transition-transform duration-200" })}
+                            {React.createElement(action.icon, { className: "h-4 w-4 shrink-0 text-sidebar-foreground group-hover:scale-110 transition-transform duration-200" })}
                             {open && (
                               <span className="ml-3 font-medium text-sm animate-fade-in">
                                 {action.title}
@@ -176,8 +175,8 @@ export function AppSidebar() {
         {/* Footer section when expanded */}
         {open && (
           <div className="mt-auto px-3 py-4 animate-fade-in">
-            <Separator className="mb-3 bg-warning-foreground/20" />
-            <div className="text-xs text-warning-foreground/70">
+            <Separator className="mb-3 bg-sidebar-border" />
+            <div className="text-xs text-sidebar-foreground/70">
               <p className="font-medium">System Status</p>
               <p className="text-xs mt-1 text-green-600">● All systems operational</p>
             </div>
