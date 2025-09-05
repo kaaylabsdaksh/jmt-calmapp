@@ -26,10 +26,10 @@ const ModernTopNav = () => {
             <Plus className="h-4 w-4 mr-2" />
             Add New
           </Button>
-          <Button variant="ghost" size="sm" className="text-black hover:bg-black/10">
+          <Button variant="ghost" size="sm" className="text-black hover:bg-black hover:text-white transition-all duration-300 transform hover:scale-105">
             <Download className="h-4 w-4" />
           </Button>
-          <Button variant="ghost" size="sm" className="text-black hover:bg-black/10">
+          <Button variant="ghost" size="sm" className="text-black hover:bg-black hover:text-white transition-all duration-300 transform hover:scale-105">
             <Settings className="h-4 w-4" />
           </Button>
         </div>
