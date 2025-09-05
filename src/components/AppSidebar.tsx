@@ -83,7 +83,7 @@ export function AppSidebar() {
 
   return (
     <Sidebar
-      className={`${open ? "w-80" : "w-20"} border-r-0 bg-sidebar backdrop-blur-sm animate-fade-in shadow-lg`}
+      className={`${open ? "w-64" : "w-14"} border-r-0 bg-sidebar backdrop-blur-sm animate-fade-in shadow-lg`}
       collapsible="icon"
     >
       {/* Header with Logo */}
@@ -101,7 +101,7 @@ export function AppSidebar() {
         </div>
       </SidebarHeader>
 
-      <SidebarContent className="px-6 py-4">
+      <SidebarContent className="px-2 py-4">
         {Object.entries(quickActionCategories).map(([categoryName, actions], categoryIndex) => (
           <SidebarGroup key={categoryName} className="mb-4">
             <Collapsible 
@@ -111,7 +111,7 @@ export function AppSidebar() {
               <CollapsibleTrigger asChild>
                 <SidebarGroupLabel 
                   className={`
-                    px-6 py-3 text-xs font-semibold text-sidebar-foreground/70 uppercase tracking-wider
+                    px-3 py-2 text-xs font-semibold text-sidebar-foreground/70 uppercase tracking-wider
                     cursor-pointer hover:text-sidebar-foreground transition-colors
                     flex items-center justify-between group
                     ${!open && "sr-only"}
@@ -144,7 +144,7 @@ export function AppSidebar() {
                             variant="ghost"
                             size="sm"
                             className={`
-                              w-full justify-start h-12 px-6 
+                              w-full justify-start h-10 px-3 
                               text-sidebar-foreground hover:text-sidebar-accent-foreground
                               hover:bg-sidebar-accent hover:shadow-sm
                               transition-all duration-200 ease-in-out
@@ -155,9 +155,9 @@ export function AppSidebar() {
                               animationDelay: `${(categoryIndex * 100) + (index * 50)}ms`
                             }}
                           >
-                            {React.createElement(action.icon, { className: "h-5 w-5 shrink-0 text-sidebar-foreground group-hover:scale-110 transition-transform duration-200" })}
+                            {React.createElement(action.icon, { className: "h-4 w-4 shrink-0 text-sidebar-foreground group-hover:scale-110 transition-transform duration-200" })}
                             {open && (
-                              <span className="ml-4 font-medium text-sm animate-fade-in">
+                              <span className="ml-3 font-medium text-sm animate-fade-in">
                                 {action.title}
                               </span>
                             )}
@@ -174,7 +174,7 @@ export function AppSidebar() {
         
         {/* Footer section when expanded */}
         {open && (
-          <div className="mt-auto px-6 py-4 animate-fade-in">
+          <div className="mt-auto px-3 py-4 animate-fade-in">
             <Separator className="mb-3 bg-sidebar-border" />
             <div className="text-xs text-sidebar-foreground/70">
               <p className="font-medium">System Status</p>
