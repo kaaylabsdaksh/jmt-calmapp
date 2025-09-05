@@ -557,18 +557,6 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                   <div className="font-semibold text-sm">{order.details.items}</div>
                 </div>
                 <div>
-                  <span className="text-gray-500 text-sm font-medium">Lab Code:</span>
-                  <div className="font-mono text-sm">{order.details.labCode}</div>
-                </div>
-                <div>
-                  <span className="text-gray-500 text-sm font-medium">Original LOC:</span>
-                  <div className="font-mono text-sm">{order.details.originalLoc}</div>
-                </div>
-                <div>
-                  <span className="text-gray-500 text-sm font-medium">Dest LOC:</span>
-                  <div className="font-mono text-sm">{order.details.destLoc}</div>
-                </div>
-                <div>
                   <span className="text-gray-500 text-sm font-medium">Item Type:</span>
                   <div className="text-sm">{order.details.itemType}</div>
                 </div>
@@ -611,18 +599,6 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                 <div>
                   <span className="text-gray-500 text-sm font-medium">PO #:</span>
                   <div className="font-mono text-sm">{order.details.poNumber}</div>
-                </div>
-                <div>
-                  <span className="text-gray-500 text-sm font-medium">JM PO#:</span>
-                  <div className="font-mono text-sm">{order.details.jmPoNumber}</div>
-                </div>
-                <div>
-                  <span className="text-gray-500 text-sm font-medium">TS:</span>
-                  <div className="font-mono text-sm">{order.details.ts}</div>
-                </div>
-                <div>
-                  <span className="text-gray-500 text-sm font-medium">Hotlist:</span>
-                  <div className="font-mono text-sm">{order.details.hotlist || "N/A"}</div>
                 </div>
               </div>
             </div>
