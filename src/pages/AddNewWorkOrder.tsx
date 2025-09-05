@@ -598,8 +598,8 @@ const AddNewWorkOrder = () => {
                     </div>
 
                     {/* Filter Controls */}
-                    <div className="bg-muted/30 p-4 rounded-lg">
-                      <div className="flex flex-wrap items-center gap-6">
+                    <div className="bg-muted/30 p-4 rounded-lg overflow-x-auto">
+                      <div className="flex items-center gap-4 min-w-fit">
                         <div className="flex items-center gap-2">
                           <Label className="text-sm font-medium whitespace-nowrap min-w-fit">Work Order:</Label>
                           <Input className="w-24 border-gray-400" />
