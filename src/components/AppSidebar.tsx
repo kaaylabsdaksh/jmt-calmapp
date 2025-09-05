@@ -88,6 +88,9 @@ export function AppSidebar() {
     if (itemTitle === "Work Orders") {
       return location.pathname === "/" || location.pathname.includes("work-order");
     }
+    if (itemTitle === "Add New Work Order" || itemTitle === "Add New") {
+      return location.pathname === "/add-new-work-order";
+    }
     return false;
   };
 
