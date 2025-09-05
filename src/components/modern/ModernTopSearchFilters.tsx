@@ -24,12 +24,73 @@ interface ModernTopSearchFiltersProps {
   onSearch: (filters: SearchFilters) => void;
 }
 
+// Mock work orders for suggestions (in a real app, this would come from props or API)
+const mockWorkOrders = [
+  {
+    id: "385737",
+    customer: "ACME Industries", 
+    assignedTo: "John Smith",
+    division: "Lab",
+    manufacturer: "ADEULIS",
+    modelNumber: "PPS-1734",
+    labCode: "LAB-001"
+  },
+  {
+    id: "390589", 
+    customer: "Tech Solutions Ltd",
+    assignedTo: "Sarah Johnson", 
+    division: "Rental",
+    manufacturer: "STARRETT",
+    modelNumber: "844-441",
+    labCode: "LAB-002"
+  },
+  {
+    id: "400217",
+    customer: "Manufacturing Corp",
+    assignedTo: "Mike Davis",
+    division: "ESL Onsite", 
+    manufacturer: "CHARLS LTD",
+    modelNumber: "1000PS",
+    labCode: "LAB-003"
+  },
+  {
+    id: "403946",
+    customer: "Quality Systems Inc",
+    assignedTo: "Emily Wilson",
+    division: "ESL",
+    manufacturer: "PRECISION TOOLS", 
+    modelNumber: "CAL-500",
+    labCode: "LAB-004"
+  },
+  {
+    id: "405078",
+    customer: "Aerospace Dynamics",
+    assignedTo: "Tom Rodriguez",
+    division: "Lab",
+    manufacturer: "SNAP-ON",
+    modelNumber: "TW-PRO-500", 
+    labCode: "LAB-005"
+  },
+  {
+    id: "408881",
+    customer: "Pharmaceutical Labs Inc", 
+    assignedTo: "Dr. Amanda Foster",
+    division: "Rental",
+    manufacturer: "METTLER TOLEDO",
+    modelNumber: "AB-220",
+    labCode: "LAB-006"
+  }
+];
+
 const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
   const [dateFrom, setDateFrom] = useState<Date>();
   const [dateTo, setDateTo] = useState<Date>();
   const [dateType, setDateType] = useState('');
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [globalSearch, setGlobalSearch] = useState('');
+  const [suggestions, setSuggestions] = useState<any[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState(-1);
   const [searchValues, setSearchValues] = useState({
     woNumber: '',
     customer: '',
@@ -39,6 +100,133 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
     assignee: '',
     division: ''
   });
+
+  // Generate suggestions based on search input
+  const generateSuggestions = (query: string) => {
+    if (!query || query.length < 2) {
+      setSuggestions([]);
+      setShowSuggestions(false);
+      return;
+    }
+
+    const searchTerm = query.toLowerCase();
+    const matchingSuggestions = [];
+
+    mockWorkOrders.forEach(order => {
+      // Check different fields and create suggestion objects
+      if (order.id.toLowerCase().includes(searchTerm)) {
+        matchingSuggestions.push({
+          type: 'work-order',
+          value: order.id,
+          label: `Work Order: ${order.id}`,
+          subtitle: order.customer
+        });
+      }
+      if (order.customer.toLowerCase().includes(searchTerm)) {
+        matchingSuggestions.push({
+          type: 'customer',
+          value: order.customer,
+          label: `Customer: ${order.customer}`,
+          subtitle: `Work Order: ${order.id}`
+        });
+      }
+      if (order.assignedTo.toLowerCase().includes(searchTerm)) {
+        matchingSuggestions.push({
+          type: 'assignee', 
+          value: order.assignedTo,
+          label: `Assignee: ${order.assignedTo}`,
+          subtitle: `${order.division} Division`
+        });
+      }
+      if (order.manufacturer.toLowerCase().includes(searchTerm)) {
+        matchingSuggestions.push({
+          type: 'manufacturer',
+          value: order.manufacturer,
+          label: `Manufacturer: ${order.manufacturer}`,
+          subtitle: `Model: ${order.modelNumber}`
+        });
+      }
+      if (order.modelNumber.toLowerCase().includes(searchTerm)) {
+        matchingSuggestions.push({
+          type: 'model',
+          value: order.modelNumber,
+          label: `Model: ${order.modelNumber}`,
+          subtitle: order.manufacturer
+        });
+      }
+      if (order.labCode.toLowerCase().includes(searchTerm)) {
+        matchingSuggestions.push({
+          type: 'lab-code',
+          value: order.labCode,
+          label: `Lab Code: ${order.labCode}`,
+          subtitle: `Work Order: ${order.id}`
+        });
+      }
+    });
+
+    // Remove duplicates and limit to 8 suggestions
+    const uniqueSuggestions = matchingSuggestions
+      .filter((suggestion, index, self) => 
+        index === self.findIndex(s => s.value === suggestion.value && s.type === suggestion.type)
+      )
+      .slice(0, 8);
+
+    setSuggestions(uniqueSuggestions);
+    setShowSuggestions(uniqueSuggestions.length > 0);
+  };
+
+  // Handle search input changes
+  const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setGlobalSearch(value);
+    setSelectedSuggestionIndex(-1);
+    generateSuggestions(value);
+  };
+
+  // Handle keyboard navigation
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (!showSuggestions || suggestions.length === 0) return;
+
+    switch (e.key) {
+      case 'ArrowDown':
+        e.preventDefault();
+        setSelectedSuggestionIndex(prev => 
+          prev < suggestions.length - 1 ? prev + 1 : 0
+        );
+        break;
+      case 'ArrowUp':
+        e.preventDefault();
+        setSelectedSuggestionIndex(prev => 
+          prev > 0 ? prev - 1 : suggestions.length - 1
+        );
+        break;
+      case 'Enter':
+        e.preventDefault();
+        if (selectedSuggestionIndex >= 0) {
+          handleSuggestionClick(suggestions[selectedSuggestionIndex]);
+        } else {
+          handleSearch();
+        }
+        break;
+      case 'Escape':
+        setShowSuggestions(false);
+        setSelectedSuggestionIndex(-1);
+        break;
+    }
+  };
+
+  // Handle suggestion selection
+  const handleSuggestionClick = (suggestion: any) => {
+    setGlobalSearch(suggestion.value);
+    setSuggestions([]);
+    setShowSuggestions(false);
+    setSelectedSuggestionIndex(-1);
+    
+    // Auto-trigger search when suggestion is selected
+    setTimeout(() => {
+      handleSearch();
+    }, 100);
+  };
 
   const handleSearch = () => {
     const filters = {
@@ -155,9 +343,75 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
             <Input
               placeholder="Search work orders, customers, serial numbers, manufacturers..."
               value={globalSearch}
-              onChange={(e) => setGlobalSearch(e.target.value)}
+              onChange={handleSearchInputChange}
+              onKeyDown={handleKeyDown}
+              onFocus={() => globalSearch.length >= 2 && suggestions.length > 0 && setShowSuggestions(true)}
+              onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
               className="pl-12 bg-white border border-gray-300 rounded-lg h-11 text-sm placeholder:text-gray-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
             />
+            
+            {/* Search Suggestions Dropdown */}
+            {showSuggestions && suggestions.length > 0 && (
+              <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-xl z-[9999] max-h-80 overflow-y-auto">
+                <div className="py-2">
+                  {suggestions.map((suggestion, index) => (
+                    <div
+                      key={`${suggestion.type}-${suggestion.value}-${index}`}
+                      onClick={() => handleSuggestionClick(suggestion)}
+                      className={cn(
+                        "px-4 py-3 cursor-pointer transition-colors border-b border-gray-100 last:border-b-0",
+                        selectedSuggestionIndex === index 
+                          ? "bg-blue-50 border-blue-100" 
+                          : "hover:bg-gray-50"
+                      )}
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="flex-shrink-0">
+                          {suggestion.type === 'work-order' && (
+                            <div className="w-8 h-8 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center text-xs font-semibold">
+                              WO
+                            </div>
+                          )}
+                          {suggestion.type === 'customer' && (
+                            <div className="w-8 h-8 bg-green-100 text-green-600 rounded-lg flex items-center justify-center text-xs font-semibold">
+                              C
+                            </div>
+                          )}
+                          {suggestion.type === 'assignee' && (
+                            <div className="w-8 h-8 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center text-xs font-semibold">
+                              A
+                            </div>
+                          )}
+                          {suggestion.type === 'manufacturer' && (
+                            <div className="w-8 h-8 bg-orange-100 text-orange-600 rounded-lg flex items-center justify-center text-xs font-semibold">
+                              M
+                            </div>
+                          )}
+                          {suggestion.type === 'model' && (
+                            <div className="w-8 h-8 bg-pink-100 text-pink-600 rounded-lg flex items-center justify-center text-xs font-semibold">
+                              #
+                            </div>
+                          )}
+                          {suggestion.type === 'lab-code' && (
+                            <div className="w-8 h-8 bg-indigo-100 text-indigo-600 rounded-lg flex items-center justify-center text-xs font-semibold">
+                              L
+                            </div>
+                          )}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="font-medium text-gray-900 text-sm truncate">
+                            {suggestion.label}
+                          </div>
+                          <div className="text-gray-500 text-xs truncate">
+                            {suggestion.subtitle}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
           
           {/* Desktop: Status and Assignee in same row as search */}
