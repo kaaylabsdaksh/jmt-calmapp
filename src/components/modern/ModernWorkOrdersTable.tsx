@@ -497,8 +497,8 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
     navigate(`/work-order/${workOrderId}`);
   };
 
-  // Work Order Details Dialog Component
-  const WorkOrderDetailsDialog = ({ order, templateView }: { order: WorkOrder; templateView: boolean }) => (
+  // Default Work Order Details Dialog Component  
+  const DefaultWorkOrderDetailsDialog = ({ order }: { order: WorkOrder }) => (
     <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
       <DialogHeader>
         <DialogTitle className="flex items-center gap-3 text-xl">
@@ -623,38 +623,276 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                 <div>
                   <span className="text-gray-500 text-sm font-medium">Hotlist:</span>
                   <div className="font-mono text-sm">{order.details.hotlist || "N/A"}</div>
-            </div>
-
-            {/* Status Row - Only show in default view */}
-            {!templateView && (
-              <div className="border-t border-gray-200 pt-4">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div>
-                    <span className="text-gray-500 text-sm font-medium">Delivery Submitted:</span>
-                    <div className={cn("mt-1 inline-block px-2 py-1 rounded text-xs font-medium",
-                      order.details.submitted === "Yes" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
-                    )}>{order.details.submitted}</div>
-                  </div>
-                  <div>
-                    <span className="text-gray-500 text-sm font-medium">Departure Type:</span>
-                    <div className="mt-1 inline-block px-2 py-1 rounded text-xs font-medium bg-blue-50 text-blue-700">
-                      Customer Pickup
-                    </div>
-                  </div>
-                  <div>
-                    <span className="text-gray-500 text-sm font-medium">Proof of Delivery:</span>
-                    <div className={cn("mt-1 inline-block px-2 py-1 rounded text-xs font-medium",
-                      order.details.proofOfDelivery === "Complete" ? "bg-green-100 text-green-800" :
-                      order.details.proofOfDelivery === "Pending" ? "bg-yellow-100 text-yellow-800" :
-                      "bg-gray-100 text-gray-800"
-                    )}>{order.details.proofOfDelivery}</div>
-                  </div>
                 </div>
               </div>
-            )}
+            </div>
+
+            {/* Status Row - Show in default view */}
+            <div className="border-t border-gray-200 pt-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                  <span className="text-gray-500 text-sm font-medium">Delivery Submitted:</span>
+                  <div className={cn("mt-1 inline-block px-2 py-1 rounded text-xs font-medium",
+                    order.details.submitted === "Yes" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
+                  )}>{order.details.submitted}</div>
+                </div>
+                <div>
+                  <span className="text-gray-500 text-sm font-medium">Departure Type:</span>
+                  <div className="mt-1 inline-block px-2 py-1 rounded text-xs font-medium bg-blue-50 text-blue-700">
+                    Customer Pickup
+                  </div>
+                </div>
+                <div>
+                  <span className="text-gray-500 text-sm font-medium">Proof of Delivery:</span>
+                  <div className={cn("mt-1 inline-block px-2 py-1 rounded text-xs font-medium",
+                    order.details.proofOfDelivery === "Complete" ? "bg-green-100 text-green-800" :
+                    order.details.proofOfDelivery === "Pending" ? "bg-yellow-100 text-yellow-800" :
+                    "bg-gray-100 text-gray-800"
+                  )}>{order.details.proofOfDelivery}</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
+        {/* Timeline Card */}
+        <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 px-4 py-2 border-b border-gray-200">
+            <h4 className="font-semibold text-gray-900 flex items-center gap-2">
+              <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+              Project Timeline
+            </h4>
+          </div>
+          
+          <div className="p-6">
+            <div className="relative">
+              <div className="flex justify-between items-center">
+                {/* Timeline Items */}
+                {[
+                  {
+                    title: "Created",
+                    date: order.details.createdDate,
+                    description: "Initial Setup",
+                    color: "bg-green-500",
+                    bgColor: "bg-green-50",
+                    textColor: "text-green-700"
+                  },
+                  {
+                    title: "Status Updated", 
+                    date: order.details.statusDate,
+                    description: order.status,
+                    color: "bg-blue-500",
+                    bgColor: "bg-blue-50",
+                    textColor: "text-blue-700"
+                  },
+                  {
+                    title: "Last Modified",
+                    date: order.details.lastModified,
+                    description: "Recent Updates",
+                    color: "bg-yellow-500",
+                    bgColor: "bg-yellow-50", 
+                    textColor: "text-yellow-700"
+                  },
+                  {
+                    title: "Need By Date",
+                    date: order.details.nextBy,
+                    description: "Target Date",
+                    color: order.details.nextBy === "TBD" ? "bg-red-500" : "bg-purple-500",
+                    bgColor: order.details.nextBy === "TBD" ? "bg-red-50" : "bg-purple-50",
+                    textColor: order.details.nextBy === "TBD" ? "text-red-700" : "text-purple-700"
+                  },
+                  {
+                    title: "Departure",
+                    date: "-",
+                    description: "Completion",
+                    color: "bg-gray-400",
+                    bgColor: "bg-gray-50",
+                    textColor: "text-gray-600"
+                  }
+                ].map((item, index, array) => (
+                  <div key={index} className="flex flex-col items-center relative flex-1">
+                    {/* Connecting Line - only show between items */}
+                    {index < array.length - 1 && (
+                      <div className="absolute top-6 left-1/2 w-full h-0.5 bg-gradient-to-r from-gray-300 to-gray-300 z-0" 
+                           style={{ transform: 'translateX(50%)' }}></div>
+                    )}
+                    
+                    {/* Timeline Dot */}
+                    <div className="relative z-10 mb-4">
+                      <div className={cn("w-4 h-4 rounded-full border-3 border-white shadow-lg", item.color)}></div>
+                    </div>
+                    
+                    {/* Content */}
+                    <div className="text-center max-w-[120px]">
+                      <div className="text-sm font-semibold text-gray-900 mb-2">{item.title}</div>
+                      <div className={cn("text-xs px-3 py-1.5 rounded-full mb-2 font-medium", item.bgColor, item.textColor)}>
+                        {item.date}
+                      </div>
+                      <div className="text-xs text-gray-500">{item.description}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Comments Section */}
+        <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+          <h4 className="font-semibold text-gray-900 mb-2">Comments:</h4>
+          <div className="text-sm text-gray-700 bg-white p-3 rounded border border-gray-200">
+            {order.details.comments}
+          </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex justify-end gap-3 pt-4 border-t border-gray-200">
+          <Button variant="outline" onClick={() => handleEditWorkOrder(order.id)}>
+            <Edit className="h-4 w-4 mr-2" />
+            Edit Order
+          </Button>
+          <Button variant="outline">
+            <User className="h-4 w-4 mr-2" />
+            Assign Tech
+          </Button>
+          <Button>
+            <RefreshCw className="h-4 w-4 mr-2" />
+            Update Status
+          </Button>
+        </div>
+      </div>
+    </DialogContent>
+  );
+
+  // Template Work Order Details Dialog Component
+  const TemplateWorkOrderDetailsDialog = ({ order }: { order: WorkOrder }) => (
+    <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+      <DialogHeader>
+        <DialogTitle className="flex items-center gap-3 text-xl">
+          <span className="font-bold text-blue-600">{order.id}</span>
+          <div className="flex items-center gap-2">
+            {getStatusBadge(order.status)}
+            <span className={cn("px-3 py-1 rounded-md text-sm font-medium",
+              order.details.priority === "Critical" ? "bg-red-100 text-red-800" :
+              order.details.priority === "High" ? "bg-orange-100 text-orange-800" :
+              order.details.priority === "Medium" ? "bg-yellow-100 text-yellow-800" :
+              "bg-gray-100 text-gray-800"
+            )}>{order.details.priority} Priority</span>
+          </div>
+        </DialogTitle>
+      </DialogHeader>
+
+      <div className="space-y-6">
+        {/* Header Info */}
+        <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-sm">
+            <div>
+              <span className="text-blue-700 font-medium">Work Order:</span>
+              <div className="font-bold text-blue-900">{order.id}</div>
+            </div>
+            <div>
+              <span className="text-blue-700 font-medium">Customer:</span>
+              <div className="font-semibold text-blue-900">{order.customer}</div>
+            </div>
+            <div>
+              <span className="text-blue-700 font-medium">Division:</span>
+              <div className="font-semibold text-blue-900">{order.division}</div>
+            </div>
+            <div>
+              <span className="text-blue-700 font-medium">LOC:</span>
+              <div className="font-semibold text-blue-900">{order.details.lots}</div>
+            </div>
+            <div>
+              <span className="text-blue-700 font-medium">Action:</span>
+              <div className="font-semibold text-blue-900">{order.details.action}</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Main Details Grid */}
+        <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+          <div className="bg-gray-50 px-4 py-2 border-b border-gray-200">
+            <h4 className="font-semibold text-gray-900">Work Order Details</h4>
+          </div>
+          
+          <div className="p-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+              {/* Column 1 */}
+              <div className="space-y-3">
+                <div>
+                  <span className="text-gray-500 text-sm font-medium">Items:</span>
+                  <div className="font-semibold text-sm">{order.details.items}</div>
+                </div>
+                <div>
+                  <span className="text-gray-500 text-sm font-medium">Lab Code:</span>
+                  <div className="font-mono text-sm">{order.details.labCode}</div>
+                </div>
+                <div>
+                  <span className="text-gray-500 text-sm font-medium">Original LOC:</span>
+                  <div className="font-mono text-sm">{order.details.originalLoc}</div>
+                </div>
+                <div>
+                  <span className="text-gray-500 text-sm font-medium">Dest LOC:</span>
+                  <div className="font-mono text-sm">{order.details.destLoc}</div>
+                </div>
+                <div>
+                  <span className="text-gray-500 text-sm font-medium">Item Type:</span>
+                  <div className="text-sm">{order.details.itemType}</div>
+                </div>
+                <div>
+                  <span className="text-gray-500 text-sm font-medium">Operation Type:</span>
+                  <div className="text-sm">{order.details.operationType}</div>
+                </div>
+              </div>
+
+              {/* Column 2 */}
+              <div className="space-y-3">
+                <div>
+                  <span className="text-gray-500 text-sm font-medium">Manufacturer:</span>
+                  <div className="font-semibold text-sm">{order.details.manufacturer}</div>
+                </div>
+                <div>
+                  <span className="text-gray-500 text-sm font-medium">Model Number:</span>
+                  <div className="font-mono text-sm">{order.details.modelNumber}</div>
+                </div>
+                <div>
+                  <span className="text-gray-500 text-sm font-medium">Serial No.:</span>
+                  <div className="font-mono text-sm">{order.details.serialNumber}</div>
+                </div>
+                <div>
+                  <span className="text-gray-500 text-sm font-medium">Assigned To:</span>
+                  <div className="font-semibold text-sm">{order.assignedTo}</div>
+                </div>
+              </div>
+
+              {/* Column 3 */}
+              <div className="space-y-3">
+                <div>
+                  <span className="text-gray-500 text-sm font-medium">Cust ID:</span>
+                  <div className="font-mono text-sm">{order.details.custId}</div>
+                </div>
+                <div>
+                  <span className="text-gray-500 text-sm font-medium">Cust S/N:</span>
+                  <div className="font-mono text-sm">{order.details.custSn}</div>
+                </div>
+                <div>
+                  <span className="text-gray-500 text-sm font-medium">PO #:</span>
+                  <div className="font-mono text-sm">{order.details.poNumber}</div>
+                </div>
+                <div>
+                  <span className="text-gray-500 text-sm font-medium">JM PO#:</span>
+                  <div className="font-mono text-sm">{order.details.jmPoNumber}</div>
+                </div>
+                <div>
+                  <span className="text-gray-500 text-sm font-medium">TS:</span>
+                  <div className="font-mono text-sm">{order.details.ts}</div>
+                </div>
+                <div>
+                  <span className="text-gray-500 text-sm font-medium">Hotlist:</span>
+                  <div className="font-mono text-sm">{order.details.hotlist || "N/A"}</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -1215,7 +1453,8 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
 
       {/* Work Order Details Dialog */}
       <Dialog open={selectedWorkOrder !== null} onOpenChange={() => setSelectedWorkOrder(null)}>
-        {selectedWorkOrder && <WorkOrderDetailsDialog order={selectedWorkOrder} templateView={templateView} />}
+        {selectedWorkOrder && templateView && <TemplateWorkOrderDetailsDialog order={selectedWorkOrder} />}
+        {selectedWorkOrder && !templateView && <DefaultWorkOrderDetailsDialog order={selectedWorkOrder} />}
       </Dialog>
 
       {/* Pagination */}
