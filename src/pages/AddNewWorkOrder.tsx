@@ -100,6 +100,10 @@ const AddNewWorkOrder = () => {
 
   // Function to check if a tab should be disabled
   const isTabDisabled = (tabValue: string) => {
+    // Always disable warranty and estimate tabs
+    if (tabValue === "warranty" || tabValue === "estimate") {
+      return true;
+    }
     // Only general tab is enabled if account number is not 5 digits
     return tabValue !== "general" && workOrderData.accountNumber.length !== 5;
   };
