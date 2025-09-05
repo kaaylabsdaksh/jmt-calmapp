@@ -1046,6 +1046,10 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                   {templateView ? (
                     // Template View Content
                     <>
+                      <div>
+                        <h3 className="font-bold text-gray-900 text-lg mb-1">{order.details.manufacturer}</h3>
+                      </div>
+
                       <div className="text-sm">
                         <div>
                           <span className="text-gray-500">Item:</span>
@@ -1070,23 +1074,16 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                           <div className="font-medium text-xs">{order.dueDate}</div>
                         </div>
                         <div>
-                          <span className="text-gray-500">Manufacturer:</span>
-                          <div className="font-medium text-xs">{order.details.manufacturer}</div>
+                          <span className="text-gray-500">Customer:</span>
+                          <div className="font-medium text-xs">{order.customer}</div>
                         </div>
                       </div>
 
                       <div className="grid grid-cols-2 gap-3 text-sm">
                         <div>
-                          <span className="text-gray-500">Customer:</span>
-                          <div className="font-medium text-xs">{order.customer}</div>
-                        </div>
-                        <div>
                           <span className="text-gray-500">Model:</span>
                           <div className="font-mono text-xs">{order.details.modelNumber}</div>
                         </div>
-                      </div>
-
-                      <div className="text-sm">
                         <div>
                           <span className="text-gray-500">Template:</span>
                           <div className="text-blue-600 underline cursor-pointer hover:text-blue-800 text-xs">{order.details.template}</div>
