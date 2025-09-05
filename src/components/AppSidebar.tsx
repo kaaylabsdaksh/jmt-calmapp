@@ -83,27 +83,37 @@ export function AppSidebar() {
 
   return (
     <Sidebar
-      className={`${open ? "w-64" : "w-14"} border-r-0 bg-sidebar backdrop-blur-sm animate-fade-in shadow-lg`}
+      className={`${open ? "w-64" : "w-14"} border-r-0 bg-warning backdrop-blur-sm animate-fade-in shadow-lg`}
       collapsible="icon"
     >
-      {/* Header with Logo */}
-      <SidebarHeader className="border-b border-sidebar-border p-4">
+      {/* Header with Company Info */}
+      <SidebarHeader className="border-b border-black/10 p-4">
         <div className="flex items-center gap-3">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground shadow-lg">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-black/20 text-black shadow-lg">
             <Zap className="h-5 w-5" />
           </div>
           {open && (
             <div className="flex flex-col animate-fade-in">
-              <h1 className="text-lg font-bold text-sidebar-foreground tracking-tight">CalMApp</h1>
-              <p className="text-xs text-sidebar-foreground/70">Work Order Management</p>
+              <div className="flex items-center gap-2">
+                <h1 className="text-lg font-bold text-black tracking-tight">CalMApp</h1>
+                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+              </div>
+              <p className="text-sm text-black/70">Work Order Management</p>
             </div>
           )}
         </div>
       </SidebarHeader>
 
-      <SidebarContent className="px-2 py-4">
+      <SidebarContent className="px-4 py-6">
+        {/* Navigation Label */}
+        {open && (
+          <div className="mb-4">
+            <h2 className="text-sm font-medium text-black/70 uppercase tracking-wider">Navigation</h2>
+          </div>
+        )}
+
         {Object.entries(quickActionCategories).map(([categoryName, actions], categoryIndex) => (
-          <SidebarGroup key={categoryName} className="mb-4">
+          <SidebarGroup key={categoryName} className="mb-6">
             <Collapsible 
               open={expandedGroups.includes(categoryName)} 
               onOpenChange={() => toggleGroup(categoryName)}
@@ -111,8 +121,8 @@ export function AppSidebar() {
               <CollapsibleTrigger asChild>
                 <SidebarGroupLabel 
                   className={`
-                    px-3 py-2 text-xs font-semibold text-sidebar-foreground/70 uppercase tracking-wider
-                    cursor-pointer hover:text-sidebar-foreground transition-colors
+                    px-0 py-2 text-sm font-semibold text-black/80 
+                    cursor-pointer hover:text-black transition-colors
                     flex items-center justify-between group
                     ${!open && "sr-only"}
                   `}
@@ -121,9 +131,9 @@ export function AppSidebar() {
                   {open && (
                     <div className="group-hover:scale-110 transition-transform">
                       {expandedGroups.includes(categoryName) ? (
-                        <ChevronDown className="h-3 w-3" />
+                        <ChevronDown className="h-4 w-4" />
                       ) : (
-                        <ChevronRight className="h-3 w-3" />
+                        <ChevronRight className="h-4 w-4" />
                       )}
                     </div>
                   )}
@@ -132,7 +142,7 @@ export function AppSidebar() {
 
               <CollapsibleContent>
                 <SidebarGroupContent className="mt-2">
-                  <SidebarMenu className="space-y-1">
+                  <SidebarMenu className="space-y-2">
                     {actions.map((action, index) => (
                       <SidebarMenuItem key={action.title}>
                         <SidebarMenuButton 
@@ -144,18 +154,18 @@ export function AppSidebar() {
                             variant="ghost"
                             size="sm"
                             className={`
-                              w-full justify-start h-10 px-3 
-                              text-sidebar-foreground hover:text-sidebar-accent-foreground
-                              hover:bg-sidebar-accent hover:shadow-sm
+                              w-full justify-start h-12 px-4 rounded-xl
+                              text-black hover:text-black
+                              hover:bg-black/10 hover:shadow-sm
                               transition-all duration-200 ease-in-out
-                              group-hover:translate-x-1
-                              ${!open && "justify-center px-0"}
+                              ${index === 0 ? "bg-black/15 shadow-sm" : ""}
+                              ${!open && "justify-center px-0 rounded-lg"}
                             `}
                             style={{
                               animationDelay: `${(categoryIndex * 100) + (index * 50)}ms`
                             }}
                           >
-                            {React.createElement(action.icon, { className: "h-4 w-4 shrink-0 text-sidebar-primary group-hover:scale-110 transition-transform duration-200" })}
+                            {React.createElement(action.icon, { className: "h-5 w-5 shrink-0 transition-transform duration-200" })}
                             {open && (
                               <span className="ml-3 font-medium text-sm animate-fade-in">
                                 {action.title}
@@ -174,11 +184,14 @@ export function AppSidebar() {
         
         {/* Footer section when expanded */}
         {open && (
-          <div className="mt-auto px-3 py-4 animate-fade-in">
-            <Separator className="mb-3 bg-sidebar-border" />
-            <div className="text-xs text-sidebar-foreground/70">
-              <p className="font-medium">System Status</p>
-              <p className="text-xs mt-1 text-green-600">● All systems operational</p>
+          <div className="mt-auto px-0 py-4 animate-fade-in">
+            <Separator className="mb-4 bg-black/10" />
+            <div className="text-xs text-black/60">
+              <p className="font-medium mb-1">System Status</p>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                <p className="text-xs">All systems operational</p>
+              </div>
             </div>
           </div>
         )}
