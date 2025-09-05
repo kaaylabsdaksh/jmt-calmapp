@@ -3,6 +3,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { List, Grid3X3 } from "lucide-react";
@@ -479,13 +480,28 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
   const [currentPage, setCurrentPage] = useState(1);
   const [activeStatusFilter, setActiveStatusFilter] = useState<string>('all');
   const [templateView, setTemplateView] = useState<boolean>(false);
+  const [searchTerm, setSearchTerm] = useState<string>('');
   const navigate = useNavigate();
   const itemsPerPage = 10;
   
-  // Filter work orders based on selected status
-  const filteredWorkOrders = activeStatusFilter === 'all' 
-    ? mockWorkOrders 
-    : mockWorkOrders.filter(order => order.status.toLowerCase().replace(' ', '-') === activeStatusFilter);
+  // Filter work orders based on selected status and search term
+  const filteredWorkOrders = mockWorkOrders.filter(order => {
+    // Status filter
+    const statusMatch = activeStatusFilter === 'all' || 
+      order.status.toLowerCase().replace(' ', '-') === activeStatusFilter;
+    
+    // Text search filter
+    const searchMatch = searchTerm === '' || 
+      order.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      order.customer.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      order.assignedTo.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      order.division.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      order.details.manufacturer.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      order.details.modelNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      order.details.labCode.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    return statusMatch && searchMatch;
+  });
   
   const totalPages = Math.ceil(filteredWorkOrders.length / itemsPerPage);
 
@@ -991,8 +1007,19 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
             </p>
           </div>
           
-          {/* View Toggle Buttons */}
+          {/* Search and View Toggle Buttons */}
           <div className="flex items-center gap-3">
+            {/* Search Input */}
+            <div className="flex items-center gap-2">
+              <Input
+                type="text"
+                placeholder="Search work orders..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-64 h-8 text-sm"
+              />
+            </div>
+            
             {/* Template/Default Toggle */}
             <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-lg">
               <Button
