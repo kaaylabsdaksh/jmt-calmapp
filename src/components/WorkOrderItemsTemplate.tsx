@@ -3,6 +3,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
 
@@ -207,27 +208,21 @@ export const WorkOrderItemsTemplate = () => {
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Warranty</label>
-                  <Select value={newItem.warranty} onValueChange={(value) => updateNewItem('warranty', value)}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select..." />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="yes">Yes</SelectItem>
-                      <SelectItem value="no">No</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <Tabs value={newItem.warranty} onValueChange={(value) => updateNewItem('warranty', value)}>
+                    <TabsList className="grid w-full grid-cols-2">
+                      <TabsTrigger value="yes">Yes</TabsTrigger>
+                      <TabsTrigger value="no">No</TabsTrigger>
+                    </TabsList>
+                  </Tabs>
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium">17025</label>
-                  <Select value={newItem.iso17025} onValueChange={(value) => updateNewItem('iso17025', value)}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select..." />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="yes">Yes</SelectItem>
-                      <SelectItem value="no">No</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <Tabs value={newItem.iso17025} onValueChange={(value) => updateNewItem('iso17025', value)}>
+                    <TabsList className="grid w-full grid-cols-2">
+                      <TabsTrigger value="yes">Yes</TabsTrigger>
+                      <TabsTrigger value="no">No</TabsTrigger>
+                    </TabsList>
+                  </Tabs>
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Estimate</label>
@@ -239,15 +234,12 @@ export const WorkOrderItemsTemplate = () => {
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium">New Equip</label>
-                  <Select value={newItem.newEquip} onValueChange={(value) => updateNewItem('newEquip', value)}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select..." />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="yes">Yes</SelectItem>
-                      <SelectItem value="no">No</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <Tabs value={newItem.newEquip} onValueChange={(value) => updateNewItem('newEquip', value)}>
+                    <TabsList className="grid w-full grid-cols-2">
+                      <TabsTrigger value="yes">Yes</TabsTrigger>
+                      <TabsTrigger value="no">No</TabsTrigger>
+                    </TabsList>
+                  </Tabs>
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Need By Date</label>
