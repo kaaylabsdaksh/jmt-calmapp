@@ -316,48 +316,6 @@ const AddNewWorkOrder = () => {
               <Card>
                 <CardContent className="p-6">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {/* Work Order Number */}
-                    <div className="space-y-2">
-                      <Label htmlFor="workOrderNumber" className="text-sm font-medium">
-                        Work Order # <span className="text-destructive">*</span>
-                      </Label>
-                      <Input
-                        id="workOrderNumber"
-                        value={workOrderData.workOrderNumber}
-                        onChange={(e) => setWorkOrderData(prev => ({ ...prev, workOrderNumber: e.target.value }))}
-                      />
-                    </div>
-
-                    {/* Work Order Status */}
-                    <div className="space-y-2">
-                      <Label className="text-sm font-medium">Work Order Status</Label>
-                      <Select value={workOrderData.workOrderStatus} onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, workOrderStatus: value }))}>
-                        <SelectTrigger>
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="Created">Created</SelectItem>
-                          <SelectItem value="In Progress">In Progress</SelectItem>
-                          <SelectItem value="Completed">Completed</SelectItem>
-                          <SelectItem value="Cancelled">Cancelled</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    {/* Work Order Type */}
-                    <div className="space-y-2">
-                      <Label className="text-sm font-medium">Work Order Type</Label>
-                      <Select value={workOrderData.workOrderType} onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, workOrderType: value }))}>
-                        <SelectTrigger>
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="Regular work order">Regular work order</SelectItem>
-                          <SelectItem value="Onsite work order">Onsite work order</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
                     {/* Account Number */}
                     <div className="space-y-2 relative" ref={inputRef}>
                       <Label htmlFor="accountNumber" className="text-sm font-medium">
@@ -404,6 +362,48 @@ const AddNewWorkOrder = () => {
                           </div>
                         )}
                       </div>
+                    </div>
+
+                    {/* Work Order Number */}
+                    <div className="space-y-2">
+                      <Label htmlFor="workOrderNumber" className="text-sm font-medium">
+                        Work Order # <span className="text-destructive">*</span>
+                      </Label>
+                      <Input
+                        id="workOrderNumber"
+                        value={workOrderData.workOrderNumber}
+                        onChange={(e) => setWorkOrderData(prev => ({ ...prev, workOrderNumber: e.target.value }))}
+                      />
+                    </div>
+
+                    {/* Work Order Status */}
+                    <div className="space-y-2">
+                      <Label className="text-sm font-medium">Work Order Status</Label>
+                      <Select value={workOrderData.workOrderStatus} onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, workOrderStatus: value }))}>
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Created">Created</SelectItem>
+                          <SelectItem value="In Progress">In Progress</SelectItem>
+                          <SelectItem value="Completed">Completed</SelectItem>
+                          <SelectItem value="Cancelled">Cancelled</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    {/* Work Order Type */}
+                    <div className="space-y-2">
+                      <Label className="text-sm font-medium">Work Order Type</Label>
+                      <Select value={workOrderData.workOrderType} onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, workOrderType: value }))}>
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Regular work order">Regular work order</SelectItem>
+                          <SelectItem value="Onsite work order">Onsite work order</SelectItem>
+                        </SelectContent>
+                      </Select>
                     </div>
 
                     {/* Customer */}
