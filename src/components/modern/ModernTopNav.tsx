@@ -9,13 +9,9 @@ const ModernTopNav = () => {
   return (
     <header className="bg-warning px-6 py-3 border-b">
       <div className="flex items-center justify-between">
-        {/* Logo and Branding */}
+        {/* Sidebar Toggle */}
         <div className="flex items-center gap-3">
           <SidebarTrigger className="text-black hover:bg-black hover:text-white transition-all duration-300 transform hover:scale-105" />
-          <div className="flex flex-col">
-            <span className="text-xl font-bold text-black">CalMApp</span>
-            <span className="text-sm text-black">Work Order Management</span>
-          </div>
         </div>
 
         {/* Action Buttons */}
