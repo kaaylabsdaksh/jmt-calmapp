@@ -7,7 +7,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
 
-interface WorkOrderItemTemplate {
+interface WorkOrderReceivingItem {
   id: string;
   itemNumber: string;
   calFreq: string;
@@ -26,12 +26,12 @@ interface WorkOrderItemTemplate {
   needByDate: string;
 }
 
-interface WorkOrderItemsTemplateProps {
-  items: WorkOrderItemTemplate[];
-  setItems: React.Dispatch<React.SetStateAction<WorkOrderItemTemplate[]>>;
+interface WorkOrderItemsReceivingProps {
+  items: WorkOrderReceivingItem[];
+  setItems: React.Dispatch<React.SetStateAction<WorkOrderReceivingItem[]>>;
 }
 
-const createEmptyItem = (): WorkOrderItemTemplate => ({
+const createEmptyItem = (): WorkOrderReceivingItem => ({
   id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
   itemNumber: "",
   calFreq: "",
@@ -50,9 +50,9 @@ const createEmptyItem = (): WorkOrderItemTemplate => ({
   needByDate: "",
 });
 
-export const WorkOrderItemsTemplate = ({ items, setItems }: WorkOrderItemsTemplateProps) => {
+export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsReceivingProps) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [newItem, setNewItem] = useState<WorkOrderItemTemplate>(createEmptyItem());
+  const [newItem, setNewItem] = useState<WorkOrderReceivingItem>(createEmptyItem());
 
   const handleDialogSubmit = () => {
     setItems([...items, newItem]);
@@ -69,19 +69,20 @@ export const WorkOrderItemsTemplate = ({ items, setItems }: WorkOrderItemsTempla
     setItems(items.filter(item => item.id !== id));
   };
 
-  const updateItem = (id: string, field: keyof WorkOrderItemTemplate, value: string) => {
+  const updateItem = (id: string, field: keyof WorkOrderReceivingItem, value: string) => {
     setItems(items.map(item => 
       item.id === id ? { ...item, [field]: value } : item
     ));
   };
 
-  const updateNewItem = (field: keyof WorkOrderItemTemplate, value: string) => {
+  const updateNewItem = (field: keyof WorkOrderReceivingItem, value: string) => {
     setNewItem(prev => ({ ...prev, [field]: value }));
   };
 
   const clearAllItems = () => {
     setItems([]);
   };
+
   return (
     <div className="border rounded-lg overflow-hidden">
       <div className="flex justify-between items-center p-2 bg-muted/20 border-b">
@@ -93,12 +94,12 @@ export const WorkOrderItemsTemplate = ({ items, setItems }: WorkOrderItemsTempla
                 className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto flex items-center gap-1"
               >
                 <Plus className="w-4 h-4" />
-                Add
+                Receive Item
               </Button>
             </DialogTrigger>
             <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
               <DialogHeader>
-                <DialogTitle>Add New Work Order Item</DialogTitle>
+                <DialogTitle>Receive New Work Order Item</DialogTitle>
               </DialogHeader>
               <div className="grid grid-cols-3 gap-4 py-4">
                 <div className="space-y-2">
@@ -256,7 +257,7 @@ export const WorkOrderItemsTemplate = ({ items, setItems }: WorkOrderItemsTempla
               </div>
               <div className="flex justify-end gap-2 pt-4">
                 <Button variant="outline" onClick={handleDialogCancel}>Cancel</Button>
-                <Button onClick={handleDialogSubmit}>Add Item</Button>
+                <Button onClick={handleDialogSubmit}>Receive Item</Button>
               </div>
             </DialogContent>
           </Dialog>
@@ -266,13 +267,13 @@ export const WorkOrderItemsTemplate = ({ items, setItems }: WorkOrderItemsTempla
           className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto"
           onClick={clearAllItems}
         >
-          Clear
+          Clear All
         </Button>
       </div>
       
       {items.length === 0 ? (
         <div className="p-8 text-center text-muted-foreground">
-          No items added yet. Click "Add" to create your first work order item.
+          No items received yet. Click "Receive Item" to add your first received work order item.
         </div>
       ) : (
         <div className="p-4">
@@ -286,7 +287,7 @@ export const WorkOrderItemsTemplate = ({ items, setItems }: WorkOrderItemsTempla
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-2">
                     <Checkbox />
-                    <span className="font-medium text-sm">Item #{index + 1}</span>
+                    <span className="font-medium text-sm">Received Item #{index + 1}</span>
                   </div>
                   <Button 
                     variant="ghost" 
@@ -465,12 +466,6 @@ export const WorkOrderItemsTemplate = ({ items, setItems }: WorkOrderItemsTempla
           </div>
         </div>
       )}
-      
-      {items.length === 0 ? (
-        <div className="p-8 text-center text-muted-foreground">
-          No data to display
-        </div>
-      ) : null}
     </div>
   );
 };

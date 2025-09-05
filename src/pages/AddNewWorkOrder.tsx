@@ -11,7 +11,7 @@ import { ArrowLeft, X, Download, Settings, User, CreditCard, Users, Package, Fil
 import { Checkbox } from "@/components/ui/checkbox";
 import { WorkOrderItemsTable } from "@/components/WorkOrderItemsTable";
 import { WorkOrderItemsCards } from "@/components/WorkOrderItemsCards";
-import { WorkOrderItemsTemplate } from "@/components/WorkOrderItemsTemplate";
+import { WorkOrderItemsReceiving } from "@/components/WorkOrderItemsReceiving";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { ContactForm, ContactFormData } from "@/components/ContactForm";
 import { SidebarTrigger } from "@/components/ui/sidebar";
@@ -31,12 +31,12 @@ const AddNewWorkOrder = () => {
     contact: "Not specified"
   });
 
-  const [viewMode, setViewMode] = useState<'table' | 'cards' | 'template'>('table');
+  const [viewMode, setViewMode] = useState<'table' | 'cards' | 'receiving'>('table');
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [accountSuggestions, setAccountSuggestions] = useState<Array<{accountNumber: string, customerName: string, srDocument: string, salesperson: string, contact: string}>>([]);
   const [highlightedSuggestion, setHighlightedSuggestion] = useState(-1);
   const [showContactForm, setShowContactForm] = useState(false);
-  const [templateItems, setTemplateItems] = useState<Array<{
+  const [receivingItems, setReceivingItems] = useState<Array<{
     id: string;
     itemNumber: string;
     calFreq: string;
@@ -697,12 +697,12 @@ const AddNewWorkOrder = () => {
                             Default View
                           </Button>
                           <Button
-                            variant={viewMode === 'template' ? 'default' : 'ghost'}
+                            variant={viewMode === 'receiving' ? 'default' : 'ghost'}
                             size="sm"
-                            onClick={() => setViewMode('template')}
+                            onClick={() => setViewMode('receiving')}
                             className="h-8 px-3"
                           >
-                            Template View
+                            Receiving View
                           </Button>
                         </div>
                         {(viewMode === 'table' || viewMode === 'cards') && (
@@ -729,12 +729,12 @@ const AddNewWorkOrder = () => {
                     </div>
 
                     {/* Conditional View Rendering */}
-                    {viewMode === 'template' ? (
-                      <WorkOrderItemsTemplate items={templateItems} setItems={setTemplateItems} />
+                    {viewMode === 'receiving' ? (
+                      <WorkOrderItemsReceiving items={receivingItems} setItems={setReceivingItems} />
                     ) : viewMode === 'table' ? (
                       <WorkOrderItemsTable />
                     ) : (
-                      <WorkOrderItemsCards templateItems={templateItems} />
+                      <WorkOrderItemsCards templateItems={receivingItems} />
                     )}
                   </div>
                 </CardContent>
