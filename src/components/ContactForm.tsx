@@ -174,21 +174,21 @@ export const ContactForm = ({ open, onOpenChange, onSave }: ContactFormProps) =>
           <div className="flex justify-start gap-3 pt-4">
             <Button 
               onClick={handleSave}
-              className="bg-warning text-black hover:bg-warning/90"
+              className="bg-warning text-black hover:bg-warning/90 transition-all duration-200 hover:scale-105 hover:shadow-lg"
             >
               Save
             </Button>
             <Button 
               onClick={handleClear}
               variant="outline"
-              className="bg-warning text-black hover:bg-warning/90"
+              className="bg-warning text-black hover:bg-warning/90 transition-all duration-200 hover:scale-105 hover:shadow-lg"
             >
               Clear
             </Button>
             <Button 
               onClick={handleCancel}
               variant="outline"
-              className="bg-warning text-black hover:bg-warning/90"
+              className="bg-warning text-black hover:bg-warning/90 transition-all duration-200 hover:scale-105 hover:shadow-lg"
             >
               Cancel
             </Button>
