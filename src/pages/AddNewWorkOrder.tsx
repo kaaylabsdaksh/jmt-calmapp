@@ -215,7 +215,14 @@ const AddNewWorkOrder = () => {
             <span className="sm:hidden">Back</span>
           </Button>
           <h1 className="text-lg sm:text-xl font-semibold text-foreground text-center flex-1 mx-4">Add New Work Order</h1>
-          <div className="w-6"></div>
+          <div className="flex items-center gap-1 sm:gap-2">
+            <Button variant="ghost" size="sm" className="p-2">
+              <Download className="h-4 w-4" />
+            </Button>
+            <Button variant="ghost" size="sm" className="p-2">
+              <Settings className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
       </div>
 
