@@ -18,7 +18,7 @@ const ModernTopNav = () => {
         <div className="flex items-center gap-1 sm:gap-2">
           <Button 
             variant="outline"
-            className="rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border-border text-foreground hover:bg-accent hover:text-accent-foreground hover:border-accent bg-transparent transform hover:scale-105"
+            className="rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border-border text-foreground hover:bg-blue-500 hover:text-white hover:border-blue-500 bg-transparent transform hover:scale-105"
             onClick={() => navigate("/add-new-work-order")}
           >
             <Plus className="h-4 w-4 mr-2" />
@@ -27,14 +27,14 @@ const ModernTopNav = () => {
           <Button 
             variant="ghost" 
             size="sm" 
-            className="p-2 rounded-lg hover:bg-accent hover:text-accent-foreground hover:shadow-md transition-all duration-300 transform hover:scale-105"
+            className="p-2 rounded-lg hover:bg-blue-500 hover:text-white hover:shadow-md transition-all duration-300 transform hover:scale-105"
           >
             <Download className="h-4 w-4" />
           </Button>
           <Button 
             variant="ghost" 
             size="sm" 
-            className="p-2 rounded-lg hover:bg-accent hover:text-accent-foreground hover:shadow-md transition-all duration-300 transform hover:scale-105"
+            className="p-2 rounded-lg hover:bg-blue-500 hover:text-white hover:shadow-md transition-all duration-300 transform hover:scale-105"
           >
             <Settings className="h-4 w-4" />
           </Button>

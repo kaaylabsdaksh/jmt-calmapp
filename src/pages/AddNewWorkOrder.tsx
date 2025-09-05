@@ -219,14 +219,14 @@ const AddNewWorkOrder = () => {
             <Button 
               variant="ghost" 
               size="sm" 
-              className="p-2 rounded-lg hover:bg-muted hover:shadow-md transition-all duration-300 transform hover:scale-105"
+              className="p-2 rounded-lg hover:bg-blue-500 hover:text-white hover:shadow-md transition-all duration-300 transform hover:scale-105"
             >
               <Download className="h-4 w-4" />
             </Button>
             <Button 
               variant="ghost" 
               size="sm" 
-              className="p-2 rounded-lg hover:bg-muted hover:shadow-md transition-all duration-300 transform hover:scale-105"
+              className="p-2 rounded-lg hover:bg-blue-500 hover:text-white hover:shadow-md transition-all duration-300 transform hover:scale-105"
             >
               <Settings className="h-4 w-4" />
             </Button>
