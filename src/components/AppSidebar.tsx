@@ -38,29 +38,48 @@ import { Separator } from "@/components/ui/separator";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ChevronDown, ChevronRight } from "lucide-react";
 
-const menuItems = [
-  { title: "Work Orders", icon: ClipboardList },
-  { title: "Standards", icon: CheckCircle },
-  { title: "Invoicing", icon: CreditCard },
-  { title: "Quotes", icon: FileText },
-  { title: "Reports", icon: BarChart3 },
-  { title: "Manage Users", icon: Users },
-  { title: "Manage Cust Portal Users", icon: Users },
-  { title: "Manage Manufacturers", icon: Settings },
-  { title: "Manage Products", icon: Tags },
-  { title: "Manage Customers", icon: Users },
-  { title: "Search Multiple ID's", icon: FileText },
-  { title: "Manage Batch Inventories", icon: Archive },
-  { title: "Manage MPG Accuracies", icon: CheckCircle },
-  { title: "Manage Procedures", icon: Clipboard },
-  { title: "Manage Templates", icon: FileSpreadsheet },
-  { title: "Onsite Projects", icon: MapPin },
-  { title: "Outsource Vendors", icon: Truck },
-  { title: "Onsite Work Orders", icon: ClipboardList },
-];
+const quickActionCategories = {
+  "Core Operations": [
+    { title: "Work Orders", icon: ClipboardList },
+    { title: "Standards", icon: CheckCircle },
+    { title: "Invoicing", icon: CreditCard },
+    { title: "Quotes", icon: FileText },
+    { title: "Reports", icon: BarChart3 },
+  ],
+  "User Management": [
+    { title: "Manage Users", icon: Users },
+    { title: "Manage Cust Portal Users", icon: Users },
+  ],
+  "Product & Customer": [
+    { title: "Manage Manufacturers", icon: Settings },
+    { title: "Manage Products", icon: Tags },
+    { title: "Manage Customers", icon: Users },
+    { title: "Search Multiple ID's", icon: FileText },
+  ],
+  "Inventory & Templates": [
+    { title: "Manage Batch Inventories", icon: Archive },
+    { title: "Manage MPG Accuracies", icon: CheckCircle },
+    { title: "Manage Procedures", icon: Clipboard },
+    { title: "Manage Templates", icon: FileSpreadsheet },
+  ],
+  "Project Management": [
+    { title: "Onsite Projects", icon: MapPin },
+    { title: "Outsource Vendors", icon: Truck },
+    { title: "Onsite Work Orders", icon: ClipboardList },
+  ]
+};
 
 export function AppSidebar() {
   const { open } = useSidebar();
+  const [expandedGroups, setExpandedGroups] = useState<string[]>(["Core Operations"]);
+
+  const toggleGroup = (groupName: string) => {
+    setExpandedGroups(prev => 
+      prev.includes(groupName) 
+        ? prev.filter(name => name !== groupName)
+        : [...prev, groupName]
+    );
+  };
 
   return (
     <Sidebar
@@ -83,44 +102,75 @@ export function AppSidebar() {
       </SidebarHeader>
 
       <SidebarContent className="px-2 py-4">
-        <SidebarGroup>
-          <SidebarGroupContent>
-            <SidebarMenu className="space-y-1">
-              {menuItems.map((item, index) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton 
-                    asChild
-                    tooltip={!open ? item.title : undefined}
-                    className="group"
-                  >
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className={`
-                        w-full justify-start h-10 px-3 
-                        text-sidebar-foreground hover:text-foreground
-                        hover:bg-sidebar-accent hover:shadow-sm
-                        transition-all duration-200 ease-in-out
-                        group-hover:translate-x-1
-                        ${!open && "justify-center px-0"}
-                      `}
-                      style={{
-                        animationDelay: `${index * 50}ms`
-                      }}
-                    >
-                      {React.createElement(item.icon, { className: "h-4 w-4 shrink-0 text-primary group-hover:scale-110 transition-transform duration-200" })}
-                      {open && (
-                        <span className="ml-3 font-medium text-sm animate-fade-in">
-                          {item.title}
-                        </span>
+        {Object.entries(quickActionCategories).map(([categoryName, actions], categoryIndex) => (
+          <SidebarGroup key={categoryName} className="mb-4">
+            <Collapsible 
+              open={expandedGroups.includes(categoryName)} 
+              onOpenChange={() => toggleGroup(categoryName)}
+            >
+              <CollapsibleTrigger asChild>
+                <SidebarGroupLabel 
+                  className={`
+                    px-3 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider
+                    cursor-pointer hover:text-foreground transition-colors
+                    flex items-center justify-between group
+                    ${!open && "sr-only"}
+                  `}
+                >
+                  <span>{categoryName}</span>
+                  {open && (
+                    <div className="group-hover:scale-110 transition-transform">
+                      {expandedGroups.includes(categoryName) ? (
+                        <ChevronDown className="h-3 w-3" />
+                      ) : (
+                        <ChevronRight className="h-3 w-3" />
                       )}
-                    </Button>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+                    </div>
+                  )}
+                </SidebarGroupLabel>
+              </CollapsibleTrigger>
+
+              <CollapsibleContent>
+                <SidebarGroupContent className="mt-2">
+                  <SidebarMenu className="space-y-1">
+                    {actions.map((action, index) => (
+                      <SidebarMenuItem key={action.title}>
+                        <SidebarMenuButton 
+                          asChild
+                          tooltip={!open ? action.title : undefined}
+                          className="group"
+                        >
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className={`
+                              w-full justify-start h-10 px-3 
+                              text-sidebar-foreground hover:text-foreground
+                              hover:bg-sidebar-accent hover:shadow-sm
+                              transition-all duration-200 ease-in-out
+                              group-hover:translate-x-1
+                              ${!open && "justify-center px-0"}
+                            `}
+                            style={{
+                              animationDelay: `${(categoryIndex * 100) + (index * 50)}ms`
+                            }}
+                          >
+                            {React.createElement(action.icon, { className: "h-4 w-4 shrink-0 text-primary group-hover:scale-110 transition-transform duration-200" })}
+                            {open && (
+                              <span className="ml-3 font-medium text-sm animate-fade-in">
+                                {action.title}
+                              </span>
+                            )}
+                          </Button>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                    ))}
+                  </SidebarMenu>
+                </SidebarGroupContent>
+              </CollapsibleContent>
+            </Collapsible>
+          </SidebarGroup>
+        ))}
         
         {/* Footer section when expanded */}
         {open && (
