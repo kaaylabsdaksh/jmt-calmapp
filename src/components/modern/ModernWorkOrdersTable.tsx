@@ -564,12 +564,18 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
 
             {/* Status Row */}
             <div className="border-t border-gray-200 pt-4">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div>
                   <span className="text-gray-500 text-sm font-medium">Delivery Submitted:</span>
                   <div className={cn("mt-1 inline-block px-2 py-1 rounded text-xs font-medium",
                     order.details.submitted === "Yes" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
                   )}>{order.details.submitted}</div>
+                </div>
+                <div>
+                  <span className="text-gray-500 text-sm font-medium">Departure Type:</span>
+                  <div className="mt-1 inline-block px-2 py-1 rounded text-xs font-medium bg-blue-50 text-blue-700">
+                    Customer Pickup
+                  </div>
                 </div>
                 <div>
                   <span className="text-gray-500 text-sm font-medium">Proof of Delivery:</span>
