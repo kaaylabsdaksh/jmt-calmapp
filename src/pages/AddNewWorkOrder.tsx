@@ -36,24 +36,6 @@ const AddNewWorkOrder = () => {
   const [accountSuggestions, setAccountSuggestions] = useState<Array<{accountNumber: string, customerName: string, srDocument: string, salesperson: string, contact: string}>>([]);
   const [highlightedSuggestion, setHighlightedSuggestion] = useState(-1);
   const [showContactForm, setShowContactForm] = useState(false);
-  const [templateItems, setTemplateItems] = useState<Array<{
-    id: string;
-    itemNumber: string;
-    calFreq: string;
-    actionCode: string;
-    priority: string;
-    manufacturer: string;
-    model: string;
-    mfgSerial: string;
-    custId: string;
-    custSN: string;
-    barcodeNum: string;
-    warranty: string;
-    iso17025: string;
-    estimate: string;
-    newEquip: string;
-    needByDate: string;
-  }>>([]);
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Mock account data
@@ -730,11 +712,11 @@ const AddNewWorkOrder = () => {
 
                     {/* Conditional View Rendering */}
                     {viewMode === 'template' ? (
-                      <WorkOrderItemsTemplate items={templateItems} setItems={setTemplateItems} />
+                      <WorkOrderItemsTemplate />
                     ) : viewMode === 'table' ? (
                       <WorkOrderItemsTable />
                     ) : (
-                      <WorkOrderItemsCards templateItems={templateItems} />
+                      <WorkOrderItemsCards />
                     )}
                   </div>
                 </CardContent>

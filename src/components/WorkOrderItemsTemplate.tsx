@@ -26,11 +26,6 @@ interface WorkOrderItemTemplate {
   needByDate: string;
 }
 
-interface WorkOrderItemsTemplateProps {
-  items: WorkOrderItemTemplate[];
-  setItems: React.Dispatch<React.SetStateAction<WorkOrderItemTemplate[]>>;
-}
-
 const createEmptyItem = (): WorkOrderItemTemplate => ({
   id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
   itemNumber: "",
@@ -50,7 +45,8 @@ const createEmptyItem = (): WorkOrderItemTemplate => ({
   needByDate: "",
 });
 
-export const WorkOrderItemsTemplate = ({ items, setItems }: WorkOrderItemsTemplateProps) => {
+export const WorkOrderItemsTemplate = () => {
+  const [items, setItems] = useState<WorkOrderItemTemplate[]>([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [newItem, setNewItem] = useState<WorkOrderItemTemplate>(createEmptyItem());
 
