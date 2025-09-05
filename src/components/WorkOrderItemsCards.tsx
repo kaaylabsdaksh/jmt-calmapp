@@ -17,6 +17,29 @@ interface WorkOrderItem {
   poNumber: string;
 }
 
+interface WorkOrderItemTemplate {
+  id: string;
+  itemNumber: string;
+  calFreq: string;
+  actionCode: string;
+  priority: string;
+  manufacturer: string;
+  model: string;
+  mfgSerial: string;
+  custId: string;
+  custSN: string;
+  barcodeNum: string;
+  warranty: string;
+  iso17025: string;
+  estimate: string;
+  newEquip: string;
+  needByDate: string;
+}
+
+interface WorkOrderItemsCardsProps {
+  templateItems?: WorkOrderItemTemplate[];
+}
+
 const mockData: WorkOrderItem[] = [
   {
     id: "1",
@@ -100,7 +123,25 @@ const getStatusColor = (status: string) => {
   }
 };
 
-export const WorkOrderItemsCards = () => {
+export const WorkOrderItemsCards = ({ templateItems = [] }: WorkOrderItemsCardsProps) => {
+  // Combine template items and mock data
+  const allItems = [
+    ...templateItems.map(item => ({
+      id: item.id,
+      reportNumber: item.itemNumber,
+      manufacturer: item.manufacturer,
+      model: item.model,
+      serialNumber: item.mfgSerial,
+      created: "",
+      departure: "",
+      itemStatus: item.priority,
+      itemType: item.actionCode,
+      deliverByDate: item.needByDate,
+      poNumber: "",
+    })),
+    ...mockData
+  ];
+
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
@@ -114,13 +155,15 @@ export const WorkOrderItemsCards = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {mockData.map((item, index) => (
+        {allItems.map((item, index) => (
           <Card key={item.id} className="hover:shadow-md transition-shadow">
             <CardContent className="p-4">
               <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center gap-2">
                   <Checkbox />
-                  <span className="font-semibold text-foreground">Report #{item.reportNumber}</span>
+                  <span className="font-semibold text-foreground">
+                    {item.reportNumber ? `Report #${item.reportNumber}` : `Item #${item.reportNumber}`}
+                  </span>
                 </div>
                 {item.itemStatus && (
                   <Badge className={getStatusColor(item.itemStatus)}>
@@ -190,7 +233,7 @@ export const WorkOrderItemsCards = () => {
         ))}
       </div>
 
-      {mockData.length === 0 && (
+      {allItems.length === 0 && (
         <div className="text-center py-12 text-muted-foreground">
           No data to display
         </div>
