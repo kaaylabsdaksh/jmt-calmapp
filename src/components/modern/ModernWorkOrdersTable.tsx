@@ -495,6 +495,9 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
   
   // Filter work orders based on search filters from parent and status
   const filteredWorkOrders = mockWorkOrders.filter(order => {
+    // Debug logging
+    console.log('Filtering with searchFilters:', searchFilters);
+    
     // Status filter (using both activeStatusFilter and searchFilters.status)
     const statusFromParent = searchFilters.status.toLowerCase().replace(' ', '-');
     const statusMatch = (activeStatusFilter === 'all' && !statusFromParent) || 

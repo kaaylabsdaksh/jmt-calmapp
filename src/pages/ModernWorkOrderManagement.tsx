@@ -17,6 +17,12 @@ interface SearchFilters {
 
 const ModernWorkOrderManagement = () => {
   const [viewMode, setViewMode] = useState<'list' | 'grid'>('list');
+  const handleSearch = (filters: SearchFilters) => {
+    console.log('Parent received search filters:', filters);
+    setSearchFilters(filters);
+  };
+
+  // Initialize with empty filters to show all work orders
   const [searchFilters, setSearchFilters] = useState<SearchFilters>({
     globalSearch: '',
     status: '',
@@ -26,10 +32,6 @@ const ModernWorkOrderManagement = () => {
     division: '',
     dateType: ''
   });
-
-  const handleSearch = (filters: SearchFilters) => {
-    setSearchFilters(filters);
-  };
 
   return (
     <div className="bg-background min-h-screen">

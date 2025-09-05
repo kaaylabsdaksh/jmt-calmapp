@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -70,7 +70,42 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
     setDateFrom(undefined);
     setDateTo(undefined);
     setDateType('');
+    
+    // Trigger search with empty filters to show all results
+    onSearch({
+      globalSearch: '',
+      status: '',
+      assignee: '',
+      priority: '',
+      manufacturer: '',
+      division: '',
+      dateFrom: undefined,
+      dateTo: undefined,
+      dateType: ''
+    });
   };
+
+  // Automatically search when globalSearch is cleared manually
+  useEffect(() => {
+    if (globalSearch === '' && globalSearch !== undefined) {
+      // Small delay to avoid rapid fire during typing
+      const timeoutId = setTimeout(() => {
+        onSearch({
+          globalSearch: '',
+          status: searchValues.status,
+          assignee: searchValues.assignee,
+          priority: searchValues.priority,
+          manufacturer: searchValues.manufacturer,
+          division: searchValues.division,
+          dateFrom,
+          dateTo,
+          dateType
+        });
+      }, 300);
+      
+      return () => clearTimeout(timeoutId);
+    }
+  }, [globalSearch]);
 
   const hasActiveFilters = globalSearch || Object.values(searchValues).some(value => value) || dateFrom || dateTo;
 
