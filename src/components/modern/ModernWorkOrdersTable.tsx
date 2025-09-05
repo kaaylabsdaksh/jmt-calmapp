@@ -516,22 +516,16 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                   <div className="font-semibold text-sm">{order.details.items}</div>
                 </div>
                 <div>
-                  <span className="text-gray-500 text-sm font-medium">Created Date:</span>
-                  <div className="text-sm">{order.details.createdDate}</div>
+                  <span className="text-gray-500 text-sm font-medium">Lab Code:</span>
+                  <div className="font-mono text-sm">{order.details.labCode}</div>
                 </div>
                 <div>
-                  <span className="text-gray-500 text-sm font-medium">Status Date:</span>
-                  <div className="text-sm">{order.details.statusDate}</div>
+                  <span className="text-gray-500 text-sm font-medium">Item Type:</span>
+                  <div className="text-sm">{order.details.itemType}</div>
                 </div>
                 <div>
-                  <span className="text-gray-500 text-sm font-medium">Last Modified:</span>
-                  <div className="text-sm">{order.details.lastModified}</div>
-                </div>
-                <div>
-                  <span className="text-gray-500 text-sm font-medium">Next By:</span>
-                  <div className={cn("text-sm font-medium", order.details.nextBy === "TBD" ? "text-red-600" : "text-gray-900")}>
-                    {order.details.nextBy}
-                  </div>
+                  <span className="text-gray-500 text-sm font-medium">Purchase:</span>
+                  <div className="font-mono text-sm">{order.details.purchase}</div>
                 </div>
               </div>
 
@@ -546,22 +540,16 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                   <div className="font-mono text-sm">{order.details.modelNumber}</div>
                 </div>
                 <div>
-                  <span className="text-gray-500 text-sm font-medium">Lab Code:</span>
-                  <div className="font-mono text-sm">{order.details.labCode}</div>
-                </div>
-                <div>
                   <span className="text-gray-500 text-sm font-medium">Serial No.:</span>
                   <div className="font-mono text-sm">{order.details.serialNumber}</div>
                 </div>
                 <div>
-                  <span className="text-gray-500 text-sm font-medium">Item Type:</span>
-                  <div className="text-sm">{order.details.itemType}</div>
+                  <span className="text-gray-500 text-sm font-medium">Operation Type:</span>
+                  <div className="text-sm">{order.details.operationType}</div>
                 </div>
                 <div>
-                  <span className="text-gray-500 text-sm font-medium">Departure Date:</span>
-                  <div className={cn("text-sm font-medium", order.details.departureDate === "TBD" ? "text-red-600" : "text-gray-900")}>
-                    {order.details.departureDate}
-                  </div>
+                  <span className="text-gray-500 text-sm font-medium">Assigned To:</span>
+                  <div className="font-semibold text-sm">{order.assignedTo}</div>
                 </div>
               </div>
 
@@ -587,16 +575,12 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                   <span className="text-gray-500 text-sm font-medium">Cart S/N:</span>
                   <div className="font-mono text-sm">{order.details.cartSn}</div>
                 </div>
-                <div>
-                  <span className="text-gray-500 text-sm font-medium">Purchase:</span>
-                  <div className="font-mono text-sm">{order.details.purchase}</div>
-                </div>
               </div>
             </div>
 
             {/* Status Row */}
             <div className="border-t border-gray-200 pt-4">
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                   <span className="text-gray-500 text-sm font-medium">Delivery Submitted:</span>
                   <div className={cn("mt-1 inline-block px-2 py-1 rounded text-xs font-medium",
@@ -615,9 +599,102 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                   <span className="text-gray-500 text-sm font-medium">LOC/Lots:</span>
                   <div className="font-mono text-sm">{order.details.lots}</div>
                 </div>
-                <div>
-                  <span className="text-gray-500 text-sm font-medium">Assigned To:</span>
-                  <div className="font-semibold text-sm">{order.assignedTo}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Timeline Card */}
+        <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 px-4 py-2 border-b border-gray-200">
+            <h4 className="font-semibold text-gray-900 flex items-center gap-2">
+              <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+              Project Timeline
+            </h4>
+          </div>
+          
+          <div className="p-6">
+            <div className="relative">
+              {/* Timeline Line */}
+              <div className="absolute left-4 top-6 bottom-6 w-0.5 bg-gradient-to-b from-blue-200 via-blue-300 to-blue-400"></div>
+              
+              <div className="space-y-6">
+                {/* Created Date */}
+                <div className="relative flex items-start gap-4">
+                  <div className="relative z-10 flex-shrink-0">
+                    <div className="w-3 h-3 bg-green-500 rounded-full border-2 border-white shadow-lg"></div>
+                  </div>
+                  <div className="flex-grow min-w-0">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium text-gray-900">Work Order Created</span>
+                      <span className="text-xs text-gray-500 bg-green-50 px-2 py-1 rounded-full">{order.details.createdDate}</span>
+                    </div>
+                    <p className="text-xs text-gray-600 mt-1">Initial work order setup and assignment</p>
+                  </div>
+                </div>
+
+                {/* Status Date */}
+                <div className="relative flex items-start gap-4">
+                  <div className="relative z-10 flex-shrink-0">
+                    <div className="w-3 h-3 bg-blue-500 rounded-full border-2 border-white shadow-lg"></div>
+                  </div>
+                  <div className="flex-grow min-w-0">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium text-gray-900">Status Updated</span>
+                      <span className="text-xs text-gray-500 bg-blue-50 px-2 py-1 rounded-full">{order.details.statusDate}</span>
+                    </div>
+                    <p className="text-xs text-gray-600 mt-1">Current status: {order.status}</p>
+                  </div>
+                </div>
+
+                {/* Last Modified */}
+                <div className="relative flex items-start gap-4">
+                  <div className="relative z-10 flex-shrink-0">
+                    <div className="w-3 h-3 bg-yellow-500 rounded-full border-2 border-white shadow-lg"></div>
+                  </div>
+                  <div className="flex-grow min-w-0">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium text-gray-900">Last Modified</span>
+                      <span className="text-xs text-gray-500 bg-yellow-50 px-2 py-1 rounded-full">{order.details.lastModified}</span>
+                    </div>
+                    <p className="text-xs text-gray-600 mt-1">Recent updates or changes made</p>
+                  </div>
+                </div>
+
+                {/* Next By */}
+                <div className="relative flex items-start gap-4">
+                  <div className="relative z-10 flex-shrink-0">
+                    <div className={cn("w-3 h-3 rounded-full border-2 border-white shadow-lg",
+                      order.details.nextBy === "TBD" ? "bg-red-500" : "bg-purple-500"
+                    )}></div>
+                  </div>
+                  <div className="flex-grow min-w-0">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium text-gray-900">Next Milestone</span>
+                      <span className={cn("text-xs px-2 py-1 rounded-full",
+                        order.details.nextBy === "TBD" ? "text-red-700 bg-red-50" : "text-purple-700 bg-purple-50"
+                      )}>{order.details.nextBy}</span>
+                    </div>
+                    <p className="text-xs text-gray-600 mt-1">Next scheduled action or deadline</p>
+                  </div>
+                </div>
+
+                {/* Departure Date */}
+                <div className="relative flex items-start gap-4">
+                  <div className="relative z-10 flex-shrink-0">
+                    <div className={cn("w-3 h-3 rounded-full border-2 border-white shadow-lg",
+                      order.details.departureDate === "TBD" ? "bg-red-500" : "bg-green-600"
+                    )}></div>
+                  </div>
+                  <div className="flex-grow min-w-0">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium text-gray-900">Expected Departure</span>
+                      <span className={cn("text-xs px-2 py-1 rounded-full",
+                        order.details.departureDate === "TBD" ? "text-red-700 bg-red-50" : "text-green-700 bg-green-50"
+                      )}>{order.details.departureDate}</span>
+                    </div>
+                    <p className="text-xs text-gray-600 mt-1">Scheduled completion and delivery</p>
+                  </div>
                 </div>
               </div>
             </div>
