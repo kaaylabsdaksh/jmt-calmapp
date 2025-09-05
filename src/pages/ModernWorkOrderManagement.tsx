@@ -2,6 +2,7 @@ import { useState } from "react";
 import ModernTopNav from "@/components/modern/ModernTopNav";
 import ModernTopSearchFilters from "@/components/modern/ModernTopSearchFilters";
 import ModernWorkOrdersTable from "@/components/modern/ModernWorkOrdersTable";
+import SidebarLayout from "@/components/SidebarLayout";
 
 interface SearchFilters {
   globalSearch: string;
@@ -34,19 +35,21 @@ const ModernWorkOrderManagement = () => {
   });
 
   return (
-    <div className="bg-background min-h-screen">
-      <ModernTopNav />
-      <main className="w-full max-w-none px-4 sm:px-6 py-6">
-        <div className="w-full space-y-6">
-          <ModernTopSearchFilters onSearch={handleSearch} />
-          <ModernWorkOrdersTable 
-            viewMode={viewMode} 
-            onViewModeChange={setViewMode}
-            searchFilters={searchFilters}
-          />
-        </div>
-      </main>
-    </div>
+    <SidebarLayout>
+      <div className="bg-background min-h-full">
+        <ModernTopNav />
+        <main className="w-full max-w-none px-4 sm:px-6 py-6">
+          <div className="w-full space-y-6">
+            <ModernTopSearchFilters onSearch={handleSearch} />
+            <ModernWorkOrdersTable 
+              viewMode={viewMode} 
+              onViewModeChange={setViewMode}
+              searchFilters={searchFilters}
+            />
+          </div>
+        </main>
+      </div>
+    </SidebarLayout>
   );
 };
 

@@ -39,34 +39,44 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { ChevronDown, ChevronRight } from "lucide-react";
 
 const quickActionCategories = {
-  "Work Management": [
-    { title: "Hot List", icon: FileText },
+  "Core Operations": [
+    { title: "Work Orders", icon: ClipboardList },
+    { title: "Standards", icon: CheckCircle },
+    { title: "Invoicing", icon: CreditCard },
+    { title: "Quotes", icon: FileText },
+    { title: "Reports", icon: BarChart3 },
+  ],
+  "User Management": [
+    { title: "Manage Users", icon: Users },
+    { title: "Manage Portal Users", icon: Users },
+  ],
+  "Product & Inventory": [
+    { title: "Manage Manufacturers", icon: Settings },
+    { title: "Manage Products", icon: Tags },
+    { title: "Manage Customers", icon: Users },
+    { title: "Search Multiple ID's", icon: FileText },
+    { title: "Manage Batch Inventories", icon: Archive },
+    { title: "Manage MPG Accuracies", icon: CheckCircle },
+    { title: "Manage Procedures", icon: Clipboard },
+    { title: "Manage Templates", icon: FileSpreadsheet },
+  ],
+  "Project Management": [
+    { title: "Consite Projects", icon: MapPin },
+    { title: "Outsource Vendors", icon: Truck },
+    { title: "Onsite Work Orders", icon: ClipboardList },
+  ],
+  "Quick Actions": [
+    { title: "Hot List", icon: Zap },
     { title: "Transit Log", icon: Truck },
     { title: "Update RFQs", icon: RefreshCw },
-    { title: "Assign Techs", icon: Users },
-    { title: "Assign Departure Info", icon: MapPin },
     { title: "Quality Check", icon: CheckCircle },
     { title: "Calibration Reminders", icon: Clock },
-  ],
-  "Orders & Finance": [
-    { title: "Rental Status Cards", icon: CreditCard },
-    { title: "PO/Exchange Orders", icon: FileText },
-    { title: "Missing Cost", icon: DollarSign },
-  ],
-  "Data & Reports": [
-    { title: "Export Excel", icon: FileSpreadsheet },
-    { title: "Generate Reports", icon: BarChart3 },
-    { title: "Print Labels", icon: Tags },
-  ],
-  "System Actions": [
-    { title: "Bulk Update", icon: Edit },
-    { title: "Archive Records", icon: Archive },
   ]
 };
 
 export function AppSidebar() {
   const { open } = useSidebar();
-  const [expandedGroups, setExpandedGroups] = useState<string[]>(["Work Management"]);
+  const [expandedGroups, setExpandedGroups] = useState<string[]>(["Core Operations"]);
 
   const toggleGroup = (groupName: string) => {
     setExpandedGroups(prev => 
