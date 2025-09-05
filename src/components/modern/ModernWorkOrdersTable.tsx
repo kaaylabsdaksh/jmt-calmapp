@@ -861,7 +861,6 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                 {templateView ? (
                   // Template View Headers
                   <>
-                    <TableHead className="font-semibold text-gray-900">Batch</TableHead>
                     <TableHead className="font-semibold text-gray-900">Item</TableHead>
                     <TableHead className="font-semibold text-gray-900">Division</TableHead>
                     <TableHead className="font-semibold text-gray-900">Created Date</TableHead>
@@ -899,7 +898,6 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                   {templateView ? (
                     // Template View Cells
                     <>
-                      <TableCell className="font-mono text-sm">{order.details.batch}</TableCell>
                       <TableCell className="font-mono text-sm">{order.details.items}</TableCell>
                       <TableCell className="font-medium">{order.division}</TableCell>
                       <TableCell className="text-sm">{order.details.createdDate}</TableCell>
@@ -1037,11 +1035,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange }: ModernWorkOrdersT
                   {templateView ? (
                     // Template View Content
                     <>
-                      <div className="grid grid-cols-2 gap-3 text-sm">
-                        <div>
-                          <span className="text-gray-500">Batch:</span>
-                          <div className="font-mono text-xs">{order.details.batch}</div>
-                        </div>
+                      <div className="text-sm">
                         <div>
                           <span className="text-gray-500">Item:</span>
                           <div className="font-mono text-xs">{order.details.items}</div>
