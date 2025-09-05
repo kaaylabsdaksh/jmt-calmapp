@@ -60,46 +60,46 @@ export const WorkOrderItemsTemplate = () => {
       </div>
       
       <div className="overflow-x-auto">
-        <table className="w-full text-sm min-w-[1400px]">
+        <table className="w-full text-xs">
           <thead className="bg-muted">
             <tr>
-              <th className="text-left p-3 w-12">
+              <th className="text-left p-2 w-8">
                 <Checkbox />
               </th>
-              <th className="text-left p-3 font-medium min-w-[80px]">Item#</th>
-              <th className="text-left p-3 font-medium min-w-[100px]">Cal Freq</th>
-              <th className="text-left p-3 font-medium min-w-[120px]">Action Code</th>
-              <th className="text-left p-3 font-medium min-w-[80px]">Priority</th>
-              <th className="text-left p-3 font-medium min-w-[120px]">Manufacturer</th>
-              <th className="text-left p-3 font-medium min-w-[100px]">Model</th>
-              <th className="text-left p-3 font-medium min-w-[120px]">Mfg Serial</th>
-              <th className="text-left p-3 font-medium min-w-[80px]">CustID</th>
-              <th className="text-left p-3 font-medium min-w-[100px]">CustSN</th>
-              <th className="text-left p-3 font-medium min-w-[120px]">Barcode Num</th>
-              <th className="text-left p-3 font-medium min-w-[80px]">Warranty</th>
-              <th className="text-left p-3 font-medium min-w-[80px]">17025</th>
-              <th className="text-left p-3 font-medium min-w-[100px]">Estimate</th>
-              <th className="text-left p-3 font-medium min-w-[100px]">New Equip</th>
-              <th className="text-left p-3 font-medium min-w-[120px]">Need By Date</th>
-              <th className="text-left p-3 font-medium min-w-[100px]">Actions</th>
+              <th className="text-left p-2 font-medium w-16">Item#</th>
+              <th className="text-left p-2 font-medium w-20">Cal Freq</th>
+              <th className="text-left p-2 font-medium w-24">Action Code</th>
+              <th className="text-left p-2 font-medium w-16">Priority</th>
+              <th className="text-left p-2 font-medium w-24">Manufacturer</th>
+              <th className="text-left p-2 font-medium w-20">Model</th>
+              <th className="text-left p-2 font-medium w-24">Mfg Serial</th>
+              <th className="text-left p-2 font-medium w-16">CustID</th>
+              <th className="text-left p-2 font-medium w-20">CustSN</th>
+              <th className="text-left p-2 font-medium w-24">Barcode Num</th>
+              <th className="text-left p-2 font-medium w-16">Warranty</th>
+              <th className="text-left p-2 font-medium w-16">17025</th>
+              <th className="text-left p-2 font-medium w-20">Estimate</th>
+              <th className="text-left p-2 font-medium w-20">New Equip</th>
+              <th className="text-left p-2 font-medium w-24">Need By Date</th>
+              <th className="text-left p-2 font-medium w-20">Actions</th>
             </tr>
           </thead>
           <tbody>
             {mockTemplateData.map((item, index) => (
-              <tr key={item.id} className="border-t hover:bg-muted/50">
-                <td className="p-3">
+               <tr key={item.id} className="border-t hover:bg-muted/50">
+                <td className="p-2">
                   <Checkbox />
                 </td>
-                <td className="p-3">
+                <td className="p-2">
                   <Input 
                     placeholder="Item #"
                     value={item.itemNumber}
-                    className="w-full min-w-[70px] h-8"
+                    className="w-full h-7 text-xs"
                   />
                 </td>
-                <td className="p-3">
+                <td className="p-2">
                   <Select>
-                    <SelectTrigger className="w-full min-w-[90px] h-8">
+                    <SelectTrigger className="w-full h-7 text-xs">
                       <SelectValue placeholder="Select..." />
                     </SelectTrigger>
                     <SelectContent>
@@ -109,9 +109,9 @@ export const WorkOrderItemsTemplate = () => {
                     </SelectContent>
                   </Select>
                 </td>
-                <td className="p-3">
+                <td className="p-2">
                   <Select>
-                    <SelectTrigger className="w-full min-w-[110px] h-8">
+                    <SelectTrigger className="w-full h-7 text-xs">
                       <SelectValue placeholder="Select..." />
                     </SelectTrigger>
                     <SelectContent>
@@ -121,9 +121,9 @@ export const WorkOrderItemsTemplate = () => {
                     </SelectContent>
                   </Select>
                 </td>
-                <td className="p-3">
+                <td className="p-2">
                   <Select>
-                    <SelectTrigger className="w-full min-w-[70px] h-8">
+                    <SelectTrigger className="w-full h-7 text-xs">
                       <SelectValue placeholder="Select..." />
                     </SelectTrigger>
                     <SelectContent>
@@ -133,51 +133,51 @@ export const WorkOrderItemsTemplate = () => {
                     </SelectContent>
                   </Select>
                 </td>
-                <td className="p-3">
+                <td className="p-2">
                   <Input 
                     placeholder="Manufacturer"
                     value={item.manufacturer}
-                    className="w-full min-w-[110px] h-8"
+                    className="w-full h-7 text-xs"
                   />
                 </td>
-                <td className="p-3">
+                <td className="p-2">
                   <Input 
                     placeholder="Model"
                     value={item.model}
-                    className="w-full min-w-[90px] h-8"
+                    className="w-full h-7 text-xs"
                   />
                 </td>
-                <td className="p-3">
+                <td className="p-2">
                   <Input 
                     placeholder="Mfg Serial"
                     value={item.mfgSerial}
-                    className="w-full min-w-[110px] h-8"
+                    className="w-full h-7 text-xs"
                   />
                 </td>
-                <td className="p-3">
+                <td className="p-2">
                   <Input 
                     placeholder="CustID"
                     value={item.custId}
-                    className="w-full min-w-[70px] h-8"
+                    className="w-full h-7 text-xs"
                   />
                 </td>
-                <td className="p-3">
+                <td className="p-2">
                   <Input 
                     placeholder="CustSN"
                     value={item.custSN}
-                    className="w-full min-w-[90px] h-8"
+                    className="w-full h-7 text-xs"
                   />
                 </td>
-                <td className="p-3">
+                <td className="p-2">
                   <Input 
                     placeholder="Barcode"
                     value={item.barcodeNum}
-                    className="w-full min-w-[110px] h-8"
+                    className="w-full h-7 text-xs"
                   />
                 </td>
-                <td className="p-3">
+                <td className="p-2">
                   <Select>
-                    <SelectTrigger className="w-full min-w-[70px] h-8">
+                    <SelectTrigger className="w-full h-7 text-xs">
                       <SelectValue placeholder="Select..." />
                     </SelectTrigger>
                     <SelectContent>
@@ -186,9 +186,9 @@ export const WorkOrderItemsTemplate = () => {
                     </SelectContent>
                   </Select>
                 </td>
-                <td className="p-3">
+                <td className="p-2">
                   <Select>
-                    <SelectTrigger className="w-full min-w-[70px] h-8">
+                    <SelectTrigger className="w-full h-7 text-xs">
                       <SelectValue placeholder="Select..." />
                     </SelectTrigger>
                     <SelectContent>
@@ -197,16 +197,16 @@ export const WorkOrderItemsTemplate = () => {
                     </SelectContent>
                   </Select>
                 </td>
-                <td className="p-3">
+                <td className="p-2">
                   <Input 
                     placeholder="Estimate"
                     value={item.estimate}
-                    className="w-full min-w-[90px] h-8"
+                    className="w-full h-7 text-xs"
                   />
                 </td>
-                <td className="p-3">
+                <td className="p-2">
                   <Select>
-                    <SelectTrigger className="w-full min-w-[90px] h-8">
+                    <SelectTrigger className="w-full h-7 text-xs">
                       <SelectValue placeholder="Select..." />
                     </SelectTrigger>
                     <SelectContent>
@@ -215,15 +215,15 @@ export const WorkOrderItemsTemplate = () => {
                     </SelectContent>
                   </Select>
                 </td>
-                <td className="p-3">
+                <td className="p-2">
                   <Input 
                     type="date"
                     value={item.needByDate}
-                    className="w-full min-w-[110px] h-8"
+                    className="w-full h-7 text-xs"
                   />
                 </td>
-                <td className="p-3">
-                  <Button variant="outline" size="sm" className="h-8 px-2">
+                <td className="p-2">
+                  <Button variant="outline" size="sm" className="h-7 px-2 text-xs">
                     Edit
                   </Button>
                 </td>
