@@ -712,6 +712,31 @@ const AddNewWorkOrder = () => {
               <Card>
                 <CardContent className="p-6">
                   <div className="space-y-6">
+                    {/* View Toggle */}
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-medium text-muted-foreground">View:</span>
+                        <div className="flex items-center gap-1">
+                          <Button
+                            variant={viewMode === 'table' || viewMode === 'cards' ? 'default' : 'ghost'}
+                            size="sm"
+                            onClick={() => setViewMode('cards')}
+                            className="h-8 px-3"
+                          >
+                            Default View
+                          </Button>
+                          <Button
+                            variant={viewMode === 'receiving' ? 'default' : 'ghost'}
+                            size="sm"
+                            onClick={() => setViewMode('receiving')}
+                            className="h-8 px-3"
+                          >
+                            Receiving View
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+
                     {/* Action Buttons */}
                     <div className="flex flex-wrap gap-3">
                       <Button className="bg-warning text-black hover:bg-warning/90 font-medium flex items-center gap-2">
@@ -792,31 +817,6 @@ const AddNewWorkOrder = () => {
                               <SelectItem value="update-deliver-by-date">Update Deliver By Date</SelectItem>
                             </SelectContent>
                           </Select>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* View Toggle */}
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm font-medium text-muted-foreground">View:</span>
-                        <div className="flex items-center gap-1">
-                          <Button
-                            variant={viewMode === 'table' || viewMode === 'cards' ? 'default' : 'ghost'}
-                            size="sm"
-                            onClick={() => setViewMode('cards')}
-                            className="h-8 px-3"
-                          >
-                            Default View
-                          </Button>
-                          <Button
-                            variant={viewMode === 'receiving' ? 'default' : 'ghost'}
-                            size="sm"
-                            onClick={() => setViewMode('receiving')}
-                            className="h-8 px-3"
-                          >
-                            Receiving View
-                          </Button>
                         </div>
                       </div>
                     </div>
