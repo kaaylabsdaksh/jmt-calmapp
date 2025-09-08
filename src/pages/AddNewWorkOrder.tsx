@@ -738,24 +738,24 @@ const AddNewWorkOrder = () => {
                     </div>
 
                     {/* Action Buttons */}
-                    <div className="flex flex-wrap gap-3">
-                      <Button className="bg-warning text-black hover:bg-warning/90 font-medium flex items-center gap-2">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+                      <Button className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold flex items-center justify-center gap-2 h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md">
                         <Plus className="w-4 h-4" />
                         Add New Item
                       </Button>
-                      <Button className="bg-warning text-black hover:bg-warning/90 font-medium flex items-center gap-2">
+                      <Button className="bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white font-semibold flex items-center justify-center gap-2 h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md">
                         <PlusCircle className="w-4 h-4" />
                         Add New Item w/PO
                       </Button>
-                      <Button className="bg-warning text-black hover:bg-warning/90 font-medium flex items-center gap-2">
+                      <Button className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold flex items-center justify-center gap-2 h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md">
                         <QrCode className="w-4 h-4" />
                         Print QR Sheet
                       </Button>
-                      <Button className="bg-warning text-black hover:bg-warning/90 font-medium flex items-center gap-2">
+                      <Button className="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white font-semibold flex items-center justify-center gap-2 h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md">
                         <Copy className="w-4 h-4" />
                         Copy From Other WO
                       </Button>
-                      <Button className="bg-warning text-black hover:bg-warning/90 font-medium flex items-center gap-2">
+                      <Button className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold flex items-center justify-center gap-2 h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md">
                         <PackagePlus className="w-4 h-4" />
                         Create Unused Items
                       </Button>
