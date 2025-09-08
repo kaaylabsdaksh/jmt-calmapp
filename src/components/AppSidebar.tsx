@@ -93,8 +93,8 @@ export function AppSidebar() {
 
   return (
     <Sidebar
-      className={`${open ? "w-64" : "w-[180px]"} border-r-0 bg-sidebar backdrop-blur-sm animate-fade-in shadow-lg`}
-      collapsible="icon"
+      className={`${open ? "w-64" : "w-16"} border-r-0 bg-sidebar backdrop-blur-sm animate-fade-in shadow-lg`}
+      collapsible="offcanvas"
     >
       {/* Header with Logo */}
       <SidebarHeader className="border-b border-sidebar-border p-4">
