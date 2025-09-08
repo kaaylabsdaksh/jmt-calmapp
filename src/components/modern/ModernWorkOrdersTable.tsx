@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 
 interface WorkOrder {
   id: string;
-  status: "In Lab" | "Completed" | "Overdue" | "Pending";
+  status: "In Lab" | "Completed" | "Overdue" | "Pending" | "[Open Items]" | "[Awaiting CDR]" | "[Assign/Tech - Repair - InLab]" | "[Assigned To Tech - Repair Dept]" | "[Q/A Hold - Q/A Disapproved]" | "[Q/A Insp - Q/A Hold - Q/A Fail]" | "[In Lab - Assigned to Tech]" | "[In Lab - Q/A Disapprove]" | "[Estimate - A/R Invoicing]" | "[To Factory - Awaiting Parts]" | "[AR Need By Status]" | "Assigned to Tech" | "In Transit" | "Lab Management" | "Repair Department" | "Rotation" | "Estimate" | "Awaiting Parts" | "Awaiting PR Approval" | "In Metrology" | "To Factory" | "To Factory - Repair by Replacement" | "To Factory - Warranty" | "Lab Hold" | "Q/A Inspection" | "Q/A Inspection - Fail Correction" | "Q/A Hold" | "Q/A Disapproved" | "Q/A Fail Log" | "A/R Invoicing" | "A/R Invoicing/Hold" | "Admin Processing" | "Back to Customer" | "Calibrated on Shelf" | "Cancelled" | "Item Not Found on Site" | "ME Review" | "Not Used" | "Onsite" | "Ready for Departure" | "Return to Lab for Processing" | "Scheduled" | "Surplus Stock" | "Waiting on Customer";
   customer: string;
   dueDate: string;
   assignedTo: string;
@@ -837,11 +837,55 @@ const getStatusBadge = (status: WorkOrder["status"]) => {
     "In Lab": "bg-blue-100 text-blue-800 border-blue-200",
     "Completed": "bg-green-100 text-green-800 border-green-200",
     "Overdue": "bg-red-100 text-red-800 border-red-200",
-    "Pending": "bg-yellow-100 text-yellow-800 border-yellow-200"
+    "Pending": "bg-yellow-100 text-yellow-800 border-yellow-200",
+    "[Open Items]": "bg-slate-100 text-slate-800 border-slate-200",
+    "[Awaiting CDR]": "bg-orange-100 text-orange-800 border-orange-200",
+    "[Assign/Tech - Repair - InLab]": "bg-blue-100 text-blue-800 border-blue-200",
+    "[Assigned To Tech - Repair Dept]": "bg-blue-100 text-blue-800 border-blue-200",
+    "[Q/A Hold - Q/A Disapproved]": "bg-red-100 text-red-800 border-red-200",
+    "[Q/A Insp - Q/A Hold - Q/A Fail]": "bg-red-100 text-red-800 border-red-200",
+    "[In Lab - Assigned to Tech]": "bg-blue-100 text-blue-800 border-blue-200",
+    "[In Lab - Q/A Disapprove]": "bg-red-100 text-red-800 border-red-200",
+    "[Estimate - A/R Invoicing]": "bg-purple-100 text-purple-800 border-purple-200",
+    "[To Factory - Awaiting Parts]": "bg-orange-100 text-orange-800 border-orange-200",
+    "[AR Need By Status]": "bg-yellow-100 text-yellow-800 border-yellow-200",
+    "Assigned to Tech": "bg-blue-100 text-blue-800 border-blue-200",
+    "In Transit": "bg-cyan-100 text-cyan-800 border-cyan-200",
+    "Lab Management": "bg-indigo-100 text-indigo-800 border-indigo-200",
+    "Repair Department": "bg-blue-100 text-blue-800 border-blue-200",
+    "Rotation": "bg-teal-100 text-teal-800 border-teal-200",
+    "Estimate": "bg-purple-100 text-purple-800 border-purple-200",
+    "Awaiting Parts": "bg-orange-100 text-orange-800 border-orange-200",
+    "Awaiting PR Approval": "bg-yellow-100 text-yellow-800 border-yellow-200",
+    "In Metrology": "bg-violet-100 text-violet-800 border-violet-200",
+    "To Factory": "bg-amber-100 text-amber-800 border-amber-200",
+    "To Factory - Repair by Replacement": "bg-amber-100 text-amber-800 border-amber-200",
+    "To Factory - Warranty": "bg-amber-100 text-amber-800 border-amber-200",
+    "Lab Hold": "bg-yellow-100 text-yellow-800 border-yellow-200",
+    "Q/A Inspection": "bg-blue-100 text-blue-800 border-blue-200",
+    "Q/A Inspection - Fail Correction": "bg-red-100 text-red-800 border-red-200",
+    "Q/A Hold": "bg-yellow-100 text-yellow-800 border-yellow-200",
+    "Q/A Disapproved": "bg-red-100 text-red-800 border-red-200",
+    "Q/A Fail Log": "bg-red-100 text-red-800 border-red-200",
+    "A/R Invoicing": "bg-green-100 text-green-800 border-green-200",
+    "A/R Invoicing/Hold": "bg-yellow-100 text-yellow-800 border-yellow-200",
+    "Admin Processing": "bg-slate-100 text-slate-800 border-slate-200",
+    "Back to Customer": "bg-green-100 text-green-800 border-green-200",
+    "Calibrated on Shelf": "bg-emerald-100 text-emerald-800 border-emerald-200",
+    "Cancelled": "bg-gray-100 text-gray-800 border-gray-200",
+    "Item Not Found on Site": "bg-red-100 text-red-800 border-red-200",
+    "ME Review": "bg-indigo-100 text-indigo-800 border-indigo-200",
+    "Not Used": "bg-gray-100 text-gray-800 border-gray-200",
+    "Onsite": "bg-blue-100 text-blue-800 border-blue-200",
+    "Ready for Departure": "bg-green-100 text-green-800 border-green-200",
+    "Return to Lab for Processing": "bg-orange-100 text-orange-800 border-orange-200",
+    "Scheduled": "bg-blue-100 text-blue-800 border-blue-200",
+    "Surplus Stock": "bg-teal-100 text-teal-800 border-teal-200",
+    "Waiting on Customer": "bg-yellow-100 text-yellow-800 border-yellow-200"
   };
   
   return (
-    <Badge className={cn("text-xs font-medium border", variants[status])}>
+    <Badge className={cn("text-xs font-medium border", variants[status] || "bg-gray-100 text-gray-800 border-gray-200")}>
       {status}
     </Badge>
   );

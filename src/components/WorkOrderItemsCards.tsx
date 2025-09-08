@@ -110,16 +110,57 @@ const mockData: WorkOrderItem[] = [
 
 const getStatusColor = (status: string) => {
   switch (status.toLowerCase()) {
-    case 'completed':
-      return 'bg-green-100 text-green-800';
-    case 'in progress':
-      return 'bg-blue-100 text-blue-800';
-    case 'testing':
-      return 'bg-yellow-100 text-yellow-800';
-    case 'pending':
-      return 'bg-orange-100 text-orange-800';
-    default:
-      return 'bg-gray-100 text-gray-800';
+    case 'completed': return 'bg-green-100 text-green-800';
+    case 'in progress': return 'bg-blue-100 text-blue-800';
+    case 'in lab': return 'bg-blue-100 text-blue-800';
+    case 'testing': return 'bg-yellow-100 text-yellow-800';
+    case 'pending': return 'bg-orange-100 text-orange-800';
+    case 'overdue': return 'bg-red-100 text-red-800';
+    case '[open items]': return 'bg-slate-100 text-slate-800';
+    case '[awaiting cdr]': return 'bg-orange-100 text-orange-800';
+    case '[assign/tech - repair - inlab]': return 'bg-blue-100 text-blue-800';
+    case '[assigned to tech - repair dept]': return 'bg-blue-100 text-blue-800';
+    case '[q/a hold - q/a disapproved]': return 'bg-red-100 text-red-800';
+    case '[q/a insp - q/a hold - q/a fail]': return 'bg-red-100 text-red-800';
+    case '[in lab - assigned to tech]': return 'bg-blue-100 text-blue-800';
+    case '[in lab - q/a disapprove]': return 'bg-red-100 text-red-800';
+    case '[estimate - a/r invoicing]': return 'bg-purple-100 text-purple-800';
+    case '[to factory - awaiting parts]': return 'bg-orange-100 text-orange-800';
+    case '[ar need by status]': return 'bg-yellow-100 text-yellow-800';
+    case 'assigned to tech': return 'bg-blue-100 text-blue-800';
+    case 'in transit': return 'bg-cyan-100 text-cyan-800';
+    case 'lab management': return 'bg-indigo-100 text-indigo-800';
+    case 'repair department': return 'bg-blue-100 text-blue-800';
+    case 'rotation': return 'bg-teal-100 text-teal-800';
+    case 'estimate': return 'bg-purple-100 text-purple-800';
+    case 'awaiting parts': return 'bg-orange-100 text-orange-800';
+    case 'awaiting pr approval': return 'bg-yellow-100 text-yellow-800';
+    case 'in metrology': return 'bg-violet-100 text-violet-800';
+    case 'to factory': return 'bg-amber-100 text-amber-800';
+    case 'to factory - repair by replacement': return 'bg-amber-100 text-amber-800';
+    case 'to factory - warranty': return 'bg-amber-100 text-amber-800';
+    case 'lab hold': return 'bg-yellow-100 text-yellow-800';
+    case 'q/a inspection': return 'bg-blue-100 text-blue-800';
+    case 'q/a inspection - fail correction': return 'bg-red-100 text-red-800';
+    case 'q/a hold': return 'bg-yellow-100 text-yellow-800';
+    case 'q/a disapproved': return 'bg-red-100 text-red-800';
+    case 'q/a fail log': return 'bg-red-100 text-red-800';
+    case 'a/r invoicing': return 'bg-green-100 text-green-800';
+    case 'a/r invoicing/hold': return 'bg-yellow-100 text-yellow-800';
+    case 'admin processing': return 'bg-slate-100 text-slate-800';
+    case 'back to customer': return 'bg-green-100 text-green-800';
+    case 'calibrated on shelf': return 'bg-emerald-100 text-emerald-800';
+    case 'cancelled': return 'bg-gray-100 text-gray-800';
+    case 'item not found on site': return 'bg-red-100 text-red-800';
+    case 'me review': return 'bg-indigo-100 text-indigo-800';
+    case 'not used': return 'bg-gray-100 text-gray-800';
+    case 'onsite': return 'bg-blue-100 text-blue-800';
+    case 'ready for departure': return 'bg-green-100 text-green-800';
+    case 'return to lab for processing': return 'bg-orange-100 text-orange-800';
+    case 'scheduled': return 'bg-blue-100 text-blue-800';
+    case 'surplus stock': return 'bg-teal-100 text-teal-800';
+    case 'waiting on customer': return 'bg-yellow-100 text-yellow-800';
+    default: return 'bg-gray-100 text-gray-800';
   }
 };
 
