@@ -130,6 +130,11 @@ const AddNewWorkOrder = () => {
     return tabValue !== "general" && workOrderData.accountNumber.length !== 5;
   };
 
+  // Function to check if form fields should be disabled
+  const areFieldsDisabled = () => {
+    return !workOrderData.accountNumber || workOrderData.accountNumber.length !== 5;
+  };
+
   // Handle account number input change
   const handleAccountNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/\D/g, '').slice(0, 5); // Only allow 5 digits
@@ -280,6 +285,7 @@ const AddNewWorkOrder = () => {
                     placeholder="SR Document"
                     value={workOrderData.srDocument}
                     onChange={(e) => setWorkOrderData(prev => ({ ...prev, srDocument: e.target.value }))}
+                    disabled={areFieldsDisabled()}
                     className="mt-1"
                   />
                 </div>
@@ -418,7 +424,7 @@ const AddNewWorkOrder = () => {
                       <Select 
                         value={workOrderData.contact} 
                         onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, contact: value }))}
-                        disabled={!workOrderData.accountNumber || workOrderData.accountNumber.length !== 5}
+                        disabled={areFieldsDisabled()}
                       >
                         <SelectTrigger>
                           <SelectValue placeholder="Select contact" />
@@ -464,13 +470,14 @@ const AddNewWorkOrder = () => {
                         id="workOrderNumber"
                         value={workOrderData.workOrderNumber}
                         onChange={(e) => setWorkOrderData(prev => ({ ...prev, workOrderNumber: e.target.value }))}
+                        disabled={areFieldsDisabled()}
                       />
                     </div>
 
                     {/* Work Order Status */}
                     <div className="space-y-2">
                       <Label className="text-sm font-medium">Work Order Status</Label>
-                      <Select value={workOrderData.workOrderStatus} onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, workOrderStatus: value }))}>
+                      <Select value={workOrderData.workOrderStatus} onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, workOrderStatus: value }))} disabled={areFieldsDisabled()}>
                         <SelectTrigger>
                           <SelectValue />
                         </SelectTrigger>
@@ -486,7 +493,7 @@ const AddNewWorkOrder = () => {
                     {/* Work Order Type */}
                     <div className="space-y-2">
                       <Label className="text-sm font-medium">Work Order Type</Label>
-                      <Select value={workOrderData.workOrderType} onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, workOrderType: value }))}>
+                      <Select value={workOrderData.workOrderType} onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, workOrderType: value }))} disabled={areFieldsDisabled()}>
                         <SelectTrigger>
                           <SelectValue />
                         </SelectTrigger>
@@ -505,6 +512,7 @@ const AddNewWorkOrder = () => {
                         placeholder="Customer name"
                         value={workOrderData.customer}
                         onChange={(e) => setWorkOrderData(prev => ({ ...prev, customer: e.target.value }))}
+                        disabled={areFieldsDisabled()}
                       />
                     </div>
                   </div>
