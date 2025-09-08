@@ -567,107 +567,91 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
 
       {/* Specific Search Fields */}
       <div className="px-4 pb-3">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Date Filter Section */}
-          <div className="space-y-3">
-            <div className="flex items-center gap-2">
-              <CalendarIcon className="h-4 w-4 text-gray-500" />
-              <span className="text-sm font-medium text-gray-700">Date Filters</span>
-            </div>
-            
-            {/* Date Type Selection */}
-            <Select value={dateType} onValueChange={setDateType}>
-              <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
-                <SelectValue placeholder="Select Date Type" />
-              </SelectTrigger>
-              <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
-                <SelectItem value="created">Created</SelectItem>
-                <SelectItem value="arrival">Arrival</SelectItem>
-                <SelectItem value="need-by">Need By</SelectItem>
-                <SelectItem value="status-date">Status Date</SelectItem>
-                <SelectItem value="last-comment">Last Comment</SelectItem>
-                <SelectItem value="departure-date">Departure Date</SelectItem>
-                <SelectItem value="samsara-doc-submit">Samsara Doc Submit Date</SelectItem>
-              </SelectContent>
-            </Select>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          {/* Date Type Selection */}
+          <Select value={dateType} onValueChange={setDateType}>
+            <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
+              <SelectValue placeholder="Select Date Type First" />
+            </SelectTrigger>
+            <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
+              <SelectItem value="created">Created</SelectItem>
+              <SelectItem value="arrival">Arrival</SelectItem>
+              <SelectItem value="need-by">Need By</SelectItem>
+              <SelectItem value="status-date">Status Date</SelectItem>
+              <SelectItem value="last-comment">Last Comment</SelectItem>
+              <SelectItem value="departure-date">Departure Date</SelectItem>
+              <SelectItem value="samsara-doc-submit">Samsara Doc Submit Date</SelectItem>
+            </SelectContent>
+          </Select>
 
-            {/* Date Range - Only show when date type is selected */}
-            {dateType && (
-              <div className="space-y-2 pl-4 border-l-2 border-blue-200 bg-blue-50/30 p-3 rounded-r-lg animate-in slide-in-from-top-2 duration-300">
-                <div className="text-xs text-gray-600 font-medium uppercase tracking-wide">
-                  Select {dateType.replace('-', ' ')} date range:
-                </div>
-                <div className="flex gap-2">
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant="outline"
-                        className={cn(
-                          "flex-1 justify-start text-left font-normal bg-white border border-gray-300 rounded-lg h-10 text-sm hover:bg-gray-50 transition-all shadow-sm",
-                          !dateFrom && "text-gray-500"
-                        )}
-                      >
-                        <CalendarIcon className="mr-2 h-3 w-3 text-gray-500" />
-                        {dateFrom ? format(dateFrom, "MMM dd, yyyy") : "From"}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0 border border-gray-200 shadow-xl rounded-lg" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={dateFrom}
-                        onSelect={setDateFrom}
-                        initialFocus
-                        className="pointer-events-auto rounded-lg"
-                      />
-                    </PopoverContent>
-                  </Popover>
+          {/* Date Range */}
+          <div className="flex gap-2">
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  disabled={!dateType}
+                  className={cn(
+                    "flex-1 justify-start text-left font-normal bg-white border border-gray-300 rounded-lg h-11 text-sm hover:bg-gray-50 transition-all shadow-sm",
+                    !dateFrom && "text-gray-500",
+                    !dateType && "opacity-50 cursor-not-allowed bg-gray-50"
+                  )}
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4 text-gray-500" />
+                  {dateFrom ? format(dateFrom, "MMM dd, yyyy") : "From Date"}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0 border border-gray-200 shadow-xl rounded-lg" align="start">
+                <Calendar
+                  mode="single"
+                  selected={dateFrom}
+                  onSelect={setDateFrom}
+                  initialFocus
+                  className="pointer-events-auto rounded-lg"
+                />
+              </PopoverContent>
+            </Popover>
 
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant="outline"
-                        className={cn(
-                          "flex-1 justify-start text-left font-normal bg-white border border-gray-300 rounded-lg h-10 text-sm hover:bg-gray-50 transition-all shadow-sm",
-                          !dateTo && "text-gray-500"
-                        )}
-                      >
-                        <CalendarIcon className="mr-2 h-3 w-3 text-gray-500" />
-                        {dateTo ? format(dateTo, "MMM dd, yyyy") : "To"}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0 border border-gray-200 shadow-xl rounded-lg" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={dateTo}
-                        onSelect={setDateTo}
-                        initialFocus
-                        className="pointer-events-auto rounded-lg"
-                      />
-                    </PopoverContent>
-                  </Popover>
-                </div>
-              </div>
-            )}
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  disabled={!dateType}
+                  className={cn(
+                    "flex-1 justify-start text-left font-normal bg-white border border-gray-300 rounded-lg h-11 text-sm hover:bg-gray-50 transition-all shadow-sm",
+                    !dateTo && "text-gray-500",
+                    !dateType && "opacity-50 cursor-not-allowed bg-gray-50"
+                  )}
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4 text-gray-500" />
+                  {dateTo ? format(dateTo, "MMM dd, yyyy") : "To Date"}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0 border border-gray-200 shadow-xl rounded-lg" align="start">
+                <Calendar
+                  mode="single"
+                  selected={dateTo}
+                  onSelect={setDateTo}
+                  initialFocus
+                  className="pointer-events-auto rounded-lg"
+                />
+              </PopoverContent>
+            </Popover>
           </div>
 
           {/* Priority Selection */}
-          <div className="space-y-3">
-            <div className="flex items-center gap-2">
-              <span className="text-sm font-medium text-gray-700">Priority</span>
-            </div>
-            <Select value={searchValues.priority || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, priority: value === 'all' ? '' : value }))}>
-              <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
-                <SelectValue placeholder="Priority" />
-              </SelectTrigger>
-              <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
-                <SelectItem value="all">All Priority</SelectItem>
-                <SelectItem value="critical">Critical</SelectItem>
-                <SelectItem value="high">High</SelectItem>
-                <SelectItem value="medium">Medium</SelectItem>
-                <SelectItem value="low">Low</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+          <Select value={searchValues.priority || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, priority: value === 'all' ? '' : value }))}>
+            <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
+              <SelectValue placeholder="Priority" />
+            </SelectTrigger>
+            <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
+              <SelectItem value="all">All Priority</SelectItem>
+              <SelectItem value="critical">Critical</SelectItem>
+              <SelectItem value="high">High</SelectItem>
+              <SelectItem value="medium">Medium</SelectItem>
+              <SelectItem value="low">Low</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
 
         {/* Advanced Filters Row */}
