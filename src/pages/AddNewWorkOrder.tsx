@@ -288,8 +288,12 @@ const AddNewWorkOrder = () => {
                   <div className="text-sm text-foreground mt-1">{workOrderData.salesperson}</div>
                 </div>
                 <div>
-                  <Label className="text-sm font-medium text-foreground">Contact</Label>
-                  <div className="text-sm text-foreground mt-1">{workOrderData.contact}</div>
+                  <Label className="text-sm font-medium text-foreground">
+                    Contact <span className="text-destructive">*</span>
+                  </Label>
+                  <div className="mt-1 px-3 py-2 bg-muted/50 border rounded-lg">
+                    <div className="text-sm text-foreground">{workOrderData.contact}</div>
+                  </div>
                 </div>
               </div>
             </CardContent>
