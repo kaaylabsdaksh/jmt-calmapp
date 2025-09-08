@@ -917,15 +917,69 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
   const itemsPerPage = 10;
   
   // Filter work orders based on search filters from parent and status
-  const filteredWorkOrders = mockWorkOrders.filter(order => {
-    // Debug logging
-    console.log('Filtering with searchFilters:', searchFilters);
+  // Helper function to convert status names to filter values
+  const getStatusFilterValue = (status: string) => {
+    const statusMap: { [key: string]: string } = {
+      "[Open Items]": "open-items",
+      "[Awaiting CDR]": "awaiting-cdr", 
+      "[Assign/Tech - Repair - InLab]": "assign-tech-repair-inlab",
+      "[Assigned To Tech - Repair Dept]": "assigned-tech-repair-dept",
+      "[Q/A Hold - Q/A Disapproved]": "qa-hold-disapproved",
+      "[Q/A Insp - Q/A Hold - Q/A Fail]": "qa-insp-hold-fail",
+      "[In Lab - Assigned to Tech]": "in-lab-assigned-tech",
+      "[In Lab - Q/A Disapprove]": "in-lab-qa-disapprove",
+      "[Estimate - A/R Invoicing]": "estimate-ar-invoicing",
+      "[To Factory - Awaiting Parts]": "to-factory-awaiting-parts",
+      "[AR Need By Status]": "ar-need-by-status",
+      "In Lab": "in-lab",
+      "Assigned to Tech": "assigned-to-tech",
+      "In Transit": "in-transit",
+      "Lab Management": "lab-management",
+      "Repair Department": "repair-department",
+      "Rotation": "rotation",
+      "Estimate": "estimate",
+      "Awaiting Parts": "awaiting-parts",
+      "Awaiting PR Approval": "awaiting-pr-approval",
+      "In Metrology": "in-metrology",
+      "To Factory": "to-factory",
+      "To Factory - Repair by Replacement": "to-factory-repair-replacement",
+      "To Factory - Warranty": "to-factory-warranty",
+      "Lab Hold": "lab-hold",
+      "Q/A Inspection": "qa-inspection",
+      "Q/A Inspection - Fail Correction": "qa-inspection-fail-correction",
+      "Q/A Hold": "qa-hold",
+      "Q/A Disapproved": "qa-disapproved",
+      "Q/A Fail Log": "qa-fail-log",
+      "A/R Invoicing": "ar-invoicing",
+      "A/R Invoicing/Hold": "ar-invoicing-hold",
+      "Admin Processing": "admin-processing",
+      "Back to Customer": "back-to-customer",
+      "Calibrated on Shelf": "calibrated-on-shelf",
+      "Cancelled": "cancelled",
+      "Item Not Found on Site": "item-not-found-on-site",
+      "ME Review": "me-review",
+      "Not Used": "not-used",
+      "Onsite": "onsite",
+      "Ready for Departure": "ready-for-departure",
+      "Return to Lab for Processing": "return-to-lab-processing",
+      "Scheduled": "scheduled",
+      "Surplus Stock": "surplus-stock",
+      "Waiting on Customer": "waiting-on-customer",
+      "Completed": "completed",
+      "Overdue": "overdue",
+      "Pending": "pending"
+    };
     
+    return statusMap[status] || status.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+  };
+
+  const filteredWorkOrders = mockWorkOrders.filter(order => {
     // Status filter (using both activeStatusFilter and searchFilters.status)
-    const statusFromParent = searchFilters.status.toLowerCase().replace(' ', '-');
+    const statusFromParent = searchFilters.status;
+    const orderStatusFilterValue = getStatusFilterValue(order.status);
     const statusMatch = (activeStatusFilter === 'all' && !statusFromParent) || 
-      order.status.toLowerCase().replace(' ', '-') === activeStatusFilter ||
-      (statusFromParent && order.status.toLowerCase().replace(' ', '-') === statusFromParent);
+      orderStatusFilterValue === activeStatusFilter ||
+      (statusFromParent && orderStatusFilterValue === statusFromParent);
     
     // Global text search filter from parent
     const searchMatch = !searchFilters.globalSearch || 
