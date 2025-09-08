@@ -1501,17 +1501,17 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200">
       {/* Header */}
-      <div className="p-6 border-b border-gray-200">
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <h2 className="text-xl font-bold text-gray-900">Work Orders</h2>
-            <p className="text-sm text-gray-600 mt-1">
+      <div className="p-3 sm:p-4 lg:p-6 border-b border-gray-200">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 mb-4">
+          <div className="flex-1 min-w-0">
+            <h2 className="text-lg sm:text-xl font-bold text-gray-900">Work Orders</h2>
+            <p className="text-xs sm:text-sm text-gray-600 mt-1">
               Showing {filteredWorkOrders.length} of {mockWorkOrders.length} work orders
             </p>
           </div>
           
           {/* View Toggle Buttons */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
             {/* Template/Default Toggle */}
             <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-lg">
               <Button
@@ -1519,7 +1519,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                 size="sm"
                 onClick={() => setTemplateView(false)}
                 className={cn(
-                  "h-8 px-3 rounded-md transition-all",
+                  "h-7 sm:h-8 px-2 sm:px-3 rounded-md transition-all text-xs sm:text-sm",
                   !templateView 
                     ? "bg-white shadow-sm text-gray-900" 
                     : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
@@ -1532,7 +1532,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                 size="sm"
                 onClick={() => setTemplateView(true)}
                 className={cn(
-                  "h-8 px-3 rounded-md transition-all",
+                  "h-7 sm:h-8 px-2 sm:px-3 rounded-md transition-all text-xs sm:text-sm",
                   templateView 
                     ? "bg-white shadow-sm text-gray-900" 
                     : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
@@ -1549,31 +1549,30 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                 size="sm"
                 onClick={() => onViewModeChange('list')}
                 className={cn(
-                  "h-8 px-3 rounded-md transition-all",
+                  "h-7 sm:h-8 px-2 sm:px-3 rounded-md transition-all",
                   viewMode === 'list' 
                     ? "bg-white shadow-sm text-gray-900" 
                     : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
                 )}
               >
-                <List className="h-4 w-4" />
+                <List className="h-3 w-3 sm:h-4 sm:w-4" />
               </Button>
               <Button
                 variant={viewMode === 'grid' ? 'default' : 'ghost'}
                 size="sm"
                 onClick={() => onViewModeChange('grid')}
                 className={cn(
-                  "h-8 px-3 rounded-md transition-all",
+                  "h-7 sm:h-8 px-2 sm:px-3 rounded-md transition-all",
                   viewMode === 'grid' 
                     ? "bg-white shadow-sm text-gray-900" 
                     : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
                 )}
               >
-                <Grid3X3 className="h-4 w-4" />
+                <Grid3X3 className="h-3 w-3 sm:h-4 sm:w-4" />
               </Button>
             </div>
           </div>
         </div>
-
       </div>
 
       {/* Content - List or Grid View */}
@@ -1669,7 +1668,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
           </Table>
         ) : (
           // Grid View - Cards
-          <div className="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="p-3 sm:p-4 lg:p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
             {filteredWorkOrders.map((order) => (
               <div
                 key={order.id}
@@ -1677,10 +1676,10 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                 onClick={() => openDetails(order)}
               >
                 {/* Card Header */}
-                <div className="p-4 border-b border-gray-100">
+                <div className="p-3 sm:p-4 border-b border-gray-100">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <span className="font-bold text-blue-600 text-lg">{order.id}</span>
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 flex-1 min-w-0">
+                      <span className="font-bold text-blue-600 text-base sm:text-lg">{order.id}</span>
                       <div className="flex items-center gap-2">
                         {getStatusBadge(order.status)}
                         <span className={cn("px-2 py-1 rounded-md text-xs font-medium",
@@ -1695,12 +1694,12 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                  </div>
 
                 {/* Card Content */}
-                <div className="p-4 space-y-3">
+                <div className="p-3 sm:p-4 space-y-3">
                   {templateView ? (
                     // Template View Content
                     <>
                       <div>
-                        <h3 className="font-bold text-gray-900 text-lg mb-1">{order.details.manufacturer}</h3>
+                        <h3 className="font-bold text-gray-900 text-base sm:text-lg mb-1 truncate">{order.details.manufacturer}</h3>
                       </div>
 
                       <div className="text-sm">
@@ -1710,7 +1709,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-2 gap-3 text-sm">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                         <div>
                           <span className="text-gray-500">Created:</span>
                           <div className="font-medium text-xs">{order.details.createdDate}</div>
@@ -1721,25 +1720,25 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-2 gap-3 text-sm">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                         <div>
                           <span className="text-gray-500">Division:</span>
                           <div className="font-medium text-xs">{order.division}</div>
                         </div>
                         <div>
                           <span className="text-gray-500">Customer:</span>
-                          <div className="font-medium text-xs">{order.customer}</div>
+                          <div className="font-medium text-xs truncate">{order.customer}</div>
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-2 gap-3 text-sm">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                         <div>
                           <span className="text-gray-500">Model:</span>
-                          <div className="font-mono text-xs">{order.details.modelNumber}</div>
+                          <div className="font-mono text-xs truncate">{order.details.modelNumber}</div>
                         </div>
                         <div>
                           <span className="text-gray-500">Template:</span>
-                          <div className="text-blue-600 underline cursor-pointer hover:text-blue-800 text-xs">{order.details.template}</div>
+                          <div className="text-blue-600 underline cursor-pointer hover:text-blue-800 text-xs truncate">{order.details.template}</div>
                         </div>
                       </div>
 
@@ -1813,38 +1812,53 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
       </Dialog>
 
       {/* Pagination */}
-      <div className="p-6 border-t border-gray-200">
-        <div className="flex items-center justify-between">
-          <div className="text-sm text-gray-600">
+      <div className="p-3 sm:p-4 lg:p-6 border-t border-gray-200">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-0">
+          <div className="text-xs sm:text-sm text-gray-600 order-2 sm:order-1">
             Showing {((currentPage - 1) * itemsPerPage) + 1} to {Math.min(currentPage * itemsPerPage, mockWorkOrders.length)} of {mockWorkOrders.length} results
           </div>
           
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 order-1 sm:order-2">
             <Button
               variant="outline"
               size="sm"
               onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
               disabled={currentPage === 1}
-              className="rounded-lg"
+              className="rounded-lg text-xs sm:text-sm px-2 sm:px-3"
             >
-              Previous
+              <span className="hidden sm:inline">Previous</span>
+              <span className="sm:hidden">Prev</span>
             </Button>
             
             <div className="flex gap-1">
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                <Button
-                  key={page}
-                  variant={currentPage === page ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setCurrentPage(page)}
-                  className={cn(
-                    "w-8 h-8 rounded-lg",
-                    currentPage === page && "bg-blue-600 hover:bg-blue-700"
-                  )}
-                >
-                  {page}
-                </Button>
-              ))}
+              {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                // Show smart pagination: first, current-1, current, current+1, last
+                let page;
+                if (totalPages <= 5) {
+                  page = i + 1;
+                } else if (currentPage <= 3) {
+                  page = i + 1;
+                } else if (currentPage >= totalPages - 2) {
+                  page = totalPages - 4 + i;
+                } else {
+                  page = currentPage - 2 + i;
+                }
+                
+                return (
+                  <Button
+                    key={page}
+                    variant={currentPage === page ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setCurrentPage(page)}
+                    className={cn(
+                      "w-6 h-6 sm:w-8 sm:h-8 rounded-lg text-xs sm:text-sm",
+                      currentPage === page && "bg-blue-600 hover:bg-blue-700"
+                    )}
+                  >
+                    {page}
+                  </Button>
+                );
+              })}
             </div>
             
             <Button
@@ -1852,9 +1866,10 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
               size="sm"
               onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
               disabled={currentPage === totalPages}
-              className="rounded-lg"
+              className="rounded-lg text-xs sm:text-sm px-2 sm:px-3"
             >
-              Next
+              <span className="hidden sm:inline">Next</span>
+              <span className="sm:hidden">Next</span>
             </Button>
           </div>
         </div>

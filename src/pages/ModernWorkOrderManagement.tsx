@@ -34,10 +34,10 @@ const ModernWorkOrderManagement = () => {
   });
 
   return (
-    <div className="bg-background min-h-full">
+    <div className="bg-background min-h-screen">
       <ModernTopNav />
-      <main className="w-full max-w-none px-4 sm:px-6 py-6">
-        <div className="w-full space-y-6">
+      <main className="w-full max-w-none px-3 sm:px-4 lg:px-6 py-3 sm:py-4 lg:py-6">
+        <div className="w-full space-y-4 sm:space-y-6">
           <ModernTopSearchFilters onSearch={handleSearch} />
           <ModernWorkOrdersTable 
             viewMode={viewMode} 
