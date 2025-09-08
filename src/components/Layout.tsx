@@ -6,6 +6,8 @@ interface LayoutProps {
 }
 
 export const Layout = ({ children }: LayoutProps) => {
+  console.log("Layout component is rendering");
+  
   return (
     <SidebarProvider defaultOpen={true}>
       <div className="min-h-screen flex w-full">
