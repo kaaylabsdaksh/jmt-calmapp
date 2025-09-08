@@ -16,8 +16,6 @@ interface SearchFilters {
 }
 
 const ModernWorkOrderManagement = () => {
-  console.log("ModernWorkOrderManagement component is rendering");
-  
   const [viewMode, setViewMode] = useState<'list' | 'grid'>('list');
   const handleSearch = (filters: SearchFilters) => {
     console.log('Parent received search filters:', filters);
@@ -36,10 +34,7 @@ const ModernWorkOrderManagement = () => {
   });
 
   return (
-    <div className="bg-red-100 min-h-screen p-4">
-      <div style={{ backgroundColor: 'red', color: 'white', padding: '20px', margin: '10px' }}>
-        DEBUG: Page is rendering - if you see this, the components are working
-      </div>
+    <div className="bg-background min-h-full">
       <ModernTopNav />
       <main className="w-full max-w-none px-4 sm:px-6 py-6">
         <div className="w-full space-y-6">
