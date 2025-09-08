@@ -28,7 +28,7 @@ const AddNewWorkOrder = () => {
     accountNumber: "",
     customer: "",
     salesperson: "Not assigned",
-    contact: "Not specified"
+    contact: ""
   });
 
   const [viewMode, setViewMode] = useState<'table' | 'cards' | 'receiving'>('table');
@@ -147,7 +147,7 @@ const AddNewWorkOrder = () => {
         customer: "",
         srDocument: "",
         salesperson: "Not assigned",
-        contact: "Not specified"
+        contact: ""
       }));
       setShowSuggestions(false);
       setAccountSuggestions([]);
@@ -456,7 +456,7 @@ const AddNewWorkOrder = () => {
                           <SelectItem value="Hayley Smith" className="px-3 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white data-[highlighted]:bg-blue-500 data-[highlighted]:text-white">Hayley Smith</SelectItem>
                         </SelectContent>
                       </Select>
-                      {(!workOrderData.contact || workOrderData.contact === "Not specified") && (
+                      {!workOrderData.contact && (
                         <div className="absolute right-3 top-9 w-2 h-2 bg-destructive rounded-full"></div>
                       )}
                     </div>
