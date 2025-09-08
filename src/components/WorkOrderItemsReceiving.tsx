@@ -331,7 +331,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
 
                 <div className="grid grid-cols-2 gap-3">
                   <div className="space-y-1">
-                    <label className="text-xs font-medium text-muted-foreground">Item #</label>
+                    <label className="text-sm font-medium text-muted-foreground">Item #</label>
                     {editingItemId === item.id ? (
                       <Input 
                         placeholder="Item #"
@@ -340,13 +340,13 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                         className="h-8 text-sm"
                       />
                     ) : (
-                      <div className="h-8 px-3 py-2 border border-border rounded-md bg-muted/20 text-sm">
+                      <div className="text-sm font-medium">
                         {item.itemNumber || "—"}
                       </div>
                     )}
                   </div>
                   <div className="space-y-1">
-                    <label className="text-xs font-medium text-muted-foreground">Cal Freq</label>
+                    <label className="text-sm font-medium text-muted-foreground">Cal Freq</label>
                     {editingItemId === item.id ? (
                       <Select value={item.calFreq} onValueChange={(value) => updateItem(item.id, 'calFreq', value)}>
                         <SelectTrigger className="h-8 text-sm">
@@ -359,13 +359,13 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                         </SelectContent>
                       </Select>
                     ) : (
-                      <div className="h-8 px-3 py-2 border border-border rounded-md bg-muted/20 text-sm">
+                      <div className="text-sm font-medium capitalize">
                         {item.calFreq || "—"}
                       </div>
                     )}
                   </div>
                   <div className="space-y-1">
-                    <label className="text-xs font-medium text-muted-foreground">Action Code</label>
+                    <label className="text-sm font-medium text-muted-foreground">Action Code</label>
                     {editingItemId === item.id ? (
                       <Select value={item.actionCode} onValueChange={(value) => updateItem(item.id, 'actionCode', value)}>
                         <SelectTrigger className="h-8 text-sm">
@@ -381,13 +381,13 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                         </SelectContent>
                       </Select>
                     ) : (
-                      <div className="h-8 px-3 py-2 border border-border rounded-md bg-muted/20 text-sm">
-                        {item.actionCode || "—"}
+                      <div className="text-sm font-medium">
+                        {item.actionCode?.toUpperCase() || "—"}
                       </div>
                     )}
                   </div>
                   <div className="space-y-1">
-                    <label className="text-xs font-medium text-muted-foreground">Priority</label>
+                    <label className="text-sm font-medium text-muted-foreground">Priority</label>
                     {editingItemId === item.id ? (
                       <Select value={item.priority} onValueChange={(value) => updateItem(item.id, 'priority', value)}>
                         <SelectTrigger className="h-8 text-sm">
@@ -402,13 +402,13 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                         </SelectContent>
                       </Select>
                     ) : (
-                      <div className="h-8 px-3 py-2 border border-border rounded-md bg-muted/20 text-sm">
+                      <div className="text-sm font-medium capitalize">
                         {item.priority || "—"}
                       </div>
                     )}
                   </div>
                   <div className="space-y-1">
-                    <label className="text-xs font-medium text-muted-foreground">Manufacturer</label>
+                    <label className="text-sm font-medium text-muted-foreground">Manufacturer</label>
                     {editingItemId === item.id ? (
                       <Select value={item.manufacturer} onValueChange={(value) => updateItem(item.id, 'manufacturer', value)}>
                         <SelectTrigger className="h-8 text-sm">
@@ -425,13 +425,13 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                         </SelectContent>
                       </Select>
                     ) : (
-                      <div className="h-8 px-3 py-2 border border-border rounded-md bg-muted/20 text-sm">
-                        {item.manufacturer || "—"}
+                      <div className="text-sm font-medium">
+                        {item.manufacturer?.toUpperCase() || "—"}
                       </div>
                     )}
                   </div>
                   <div className="space-y-1">
-                    <label className="text-xs font-medium text-muted-foreground">Model</label>
+                    <label className="text-sm font-medium text-muted-foreground">Model</label>
                     {editingItemId === item.id ? (
                       <Input 
                         placeholder="Model"
@@ -440,13 +440,13 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                         className="h-8 text-sm"
                       />
                     ) : (
-                      <div className="h-8 px-3 py-2 border border-border rounded-md bg-muted/20 text-sm">
+                      <div className="text-sm font-medium">
                         {item.model || "—"}
                       </div>
                     )}
                   </div>
                   <div className="space-y-1">
-                    <label className="text-xs font-medium text-muted-foreground">Mfg Serial</label>
+                    <label className="text-sm font-medium text-muted-foreground">Mfg Serial</label>
                     {editingItemId === item.id ? (
                       <Input 
                         placeholder="Mfg Serial"
@@ -455,13 +455,13 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                         className="h-8 text-sm"
                       />
                     ) : (
-                      <div className="h-8 px-3 py-2 border border-border rounded-md bg-muted/20 text-sm">
+                      <div className="text-sm font-medium">
                         {item.mfgSerial || "—"}
                       </div>
                     )}
                   </div>
                   <div className="space-y-1">
-                    <label className="text-xs font-medium text-muted-foreground">CustID</label>
+                    <label className="text-sm font-medium text-muted-foreground">CustID</label>
                     {editingItemId === item.id ? (
                       <Input 
                         placeholder="CustID"
@@ -470,13 +470,13 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                         className="h-8 text-sm"
                       />
                     ) : (
-                      <div className="h-8 px-3 py-2 border border-border rounded-md bg-muted/20 text-sm">
+                      <div className="text-sm font-medium">
                         {item.custId || "—"}
                       </div>
                     )}
                   </div>
                   <div className="space-y-1">
-                    <label className="text-xs font-medium text-muted-foreground">CustSN</label>
+                    <label className="text-sm font-medium text-muted-foreground">CustSN</label>
                     {editingItemId === item.id ? (
                       <Input 
                         placeholder="CustSN"
@@ -485,13 +485,13 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                         className="h-8 text-sm"
                       />
                     ) : (
-                      <div className="h-8 px-3 py-2 border border-border rounded-md bg-muted/20 text-sm">
+                      <div className="text-sm font-medium">
                         {item.custSN || "—"}
                       </div>
                     )}
                   </div>
                   <div className="space-y-1">
-                    <label className="text-xs font-medium text-muted-foreground">Barcode Num</label>
+                    <label className="text-sm font-medium text-muted-foreground">Barcode Num</label>
                     {editingItemId === item.id ? (
                       <Input 
                         placeholder="Barcode"
@@ -500,13 +500,13 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                         className="h-8 text-sm"
                       />
                     ) : (
-                      <div className="h-8 px-3 py-2 border border-border rounded-md bg-muted/20 text-sm">
+                      <div className="text-sm font-medium">
                         {item.barcodeNum || "—"}
                       </div>
                     )}
                   </div>
                   <div className="space-y-1">
-                    <label className="text-xs font-medium text-muted-foreground">Warranty</label>
+                    <label className="text-sm font-medium text-muted-foreground">Warranty</label>
                     {editingItemId === item.id ? (
                       <Tabs value={item.warranty} onValueChange={(value) => updateItem(item.id, 'warranty', value)}>
                         <TabsList className="grid w-full grid-cols-2 h-8">
@@ -515,13 +515,13 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                         </TabsList>
                       </Tabs>
                     ) : (
-                      <div className="h-8 px-3 py-2 border border-border rounded-md bg-muted/20 text-sm capitalize">
+                      <div className="text-sm font-medium capitalize">
                         {item.warranty || "—"}
                       </div>
                     )}
                   </div>
                   <div className="space-y-1">
-                    <label className="text-xs font-medium text-muted-foreground">17025</label>
+                    <label className="text-sm font-medium text-muted-foreground">17025</label>
                     {editingItemId === item.id ? (
                       <Tabs value={item.iso17025} onValueChange={(value) => updateItem(item.id, 'iso17025', value)}>
                         <TabsList className="grid w-full grid-cols-2 h-8">
@@ -530,13 +530,13 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                         </TabsList>
                       </Tabs>
                     ) : (
-                      <div className="h-8 px-3 py-2 border border-border rounded-md bg-muted/20 text-sm capitalize">
+                      <div className="text-sm font-medium capitalize">
                         {item.iso17025 || "—"}
                       </div>
                     )}
                   </div>
                   <div className="space-y-1">
-                    <label className="text-xs font-medium text-muted-foreground">Estimate</label>
+                    <label className="text-sm font-medium text-muted-foreground">Estimate</label>
                     {editingItemId === item.id ? (
                       <Input 
                         placeholder="Estimate"
@@ -545,13 +545,13 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                         className="h-8 text-sm"
                       />
                     ) : (
-                      <div className="h-8 px-3 py-2 border border-border rounded-md bg-muted/20 text-sm">
+                      <div className="text-sm font-medium">
                         {item.estimate || "—"}
                       </div>
                     )}
                   </div>
                   <div className="space-y-1">
-                    <label className="text-xs font-medium text-muted-foreground">New Equip</label>
+                    <label className="text-sm font-medium text-muted-foreground">New Equip</label>
                     {editingItemId === item.id ? (
                       <Tabs value={item.newEquip} onValueChange={(value) => updateItem(item.id, 'newEquip', value)}>
                         <TabsList className="grid w-full grid-cols-2 h-8">
@@ -560,13 +560,13 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                         </TabsList>
                       </Tabs>
                     ) : (
-                      <div className="h-8 px-3 py-2 border border-border rounded-md bg-muted/20 text-sm capitalize">
+                      <div className="text-sm font-medium capitalize">
                         {item.newEquip || "—"}
                       </div>
                     )}
                   </div>
                   <div className="space-y-1 col-span-2">
-                    <label className="text-xs font-medium text-muted-foreground">Need By Date</label>
+                    <label className="text-sm font-medium text-muted-foreground">Need By Date</label>
                     {editingItemId === item.id ? (
                       <Input 
                         type="date"
@@ -575,7 +575,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                         className="h-8 text-sm"
                       />
                     ) : (
-                      <div className="h-8 px-3 py-2 border border-border rounded-md bg-muted/20 text-sm">
+                      <div className="text-sm font-medium">
                         {item.needByDate || "—"}
                       </div>
                     )}
