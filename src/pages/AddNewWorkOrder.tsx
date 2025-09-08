@@ -361,7 +361,7 @@ const AddNewWorkOrder = () => {
             <TabsContent value="general" className="space-y-6">
               <Card>
                 <CardContent className="p-6">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                     {/* Account Number */}
                     <div className="space-y-2 relative" ref={inputRef}>
                       <Label htmlFor="accountNumber" className="text-sm font-medium">
@@ -408,6 +408,35 @@ const AddNewWorkOrder = () => {
                           </div>
                         )}
                       </div>
+                    </div>
+
+                    {/* Contact Selection */}
+                    <div className="space-y-2">
+                      <Label htmlFor="contact" className="text-sm font-medium">
+                        Contact <span className="text-destructive">*</span>
+                      </Label>
+                      <Select 
+                        value={workOrderData.contact} 
+                        onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, contact: value }))}
+                        disabled={!workOrderData.accountNumber || workOrderData.accountNumber.length !== 5}
+                      >
+                        <SelectTrigger className={`${!workOrderData.contact || workOrderData.contact === "Not specified" ? "border-destructive" : ""}`}>
+                          <SelectValue placeholder="Select contact" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-popover border shadow-lg z-[60]">
+                          {workOrderData.accountNumber && workOrderData.customer && (
+                            <SelectItem value={mockAccounts.find(acc => acc.accountNumber === workOrderData.accountNumber)?.contact || "Not specified"}>
+                              {mockAccounts.find(acc => acc.accountNumber === workOrderData.accountNumber)?.contact || "Not specified"}
+                            </SelectItem>
+                          )}
+                          <SelectItem value="Primary Contact">Primary Contact</SelectItem>
+                          <SelectItem value="Billing Contact">Billing Contact</SelectItem>
+                          <SelectItem value="Technical Contact">Technical Contact</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      {(!workOrderData.contact || workOrderData.contact === "Not specified") && (
+                        <div className="absolute right-3 top-9 w-2 h-2 bg-destructive rounded-full"></div>
+                      )}
                     </div>
 
                     {/* Work Order Number */}
