@@ -63,7 +63,7 @@ const AddNewWorkOrder = () => {
       customerName: "Entergy Inventory",
       srDocument: "SR2244",
       salesperson: "ZZEN - House - Entergy", 
-      contact: "USE TAG/PAPERWORK"
+      contact: "Brad Morrison"
     },
     {
       accountNumber: "15001",
