@@ -655,13 +655,13 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
 
       {/* Specific Search Fields */}
       <div className="px-4 pb-3">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
           {/* Date Type Selection */}
           <Select value={dateType} onValueChange={setDateType}>
             <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
               <SelectValue placeholder="Select Date Type First" />
             </SelectTrigger>
-            <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
+            <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-[60]">
               <SelectItem value="created">Created</SelectItem>
               <SelectItem value="arrival">Arrival</SelectItem>
               <SelectItem value="need-by">Need By</SelectItem>
@@ -672,86 +672,93 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
             </SelectContent>
           </Select>
 
-          {/* Date Range */}
-          <div className="flex gap-2">
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  disabled={!dateType}
-                  className={cn(
-                    "flex-1 justify-start text-left font-normal bg-white border border-gray-300 rounded-lg h-11 text-sm hover:bg-gray-50 transition-all shadow-sm",
-                    !dateFrom && "text-gray-500",
-                    !dateType && "opacity-50 cursor-not-allowed bg-gray-50"
-                  )}
-                >
-                  <CalendarIcon className="mr-2 h-4 w-4 text-gray-500" />
-                  {dateFrom ? format(dateFrom, "MMM dd, yyyy") : "From Date"}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0 border border-gray-200 shadow-xl rounded-lg" align="start">
-                <Calendar
-                  mode="single"
-                  selected={dateFrom}
-                  onSelect={setDateFrom}
-                  initialFocus
-                  className="pointer-events-auto rounded-lg"
-                />
-              </PopoverContent>
-            </Popover>
+          {/* From Date */}
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                disabled={!dateType}
+                className={cn(
+                  "w-full justify-start text-left font-normal bg-white border border-gray-300 rounded-lg h-11 text-sm hover:bg-gray-50 transition-all shadow-sm",
+                  !dateFrom && "text-gray-500",
+                  !dateType && "opacity-50 cursor-not-allowed bg-gray-50"
+                )}
+              >
+                <CalendarIcon className="mr-2 h-4 w-4 text-gray-500" />
+                {dateFrom ? format(dateFrom, "MMM dd, yyyy") : "From Date"}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0 border border-gray-200 shadow-xl rounded-lg z-[70]" align="start">
+              <Calendar
+                mode="single"
+                selected={dateFrom}
+                onSelect={setDateFrom}
+                initialFocus
+                className="pointer-events-auto rounded-lg"
+              />
+            </PopoverContent>
+          </Popover>
 
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  disabled={!dateType}
-                  className={cn(
-                    "flex-1 justify-start text-left font-normal bg-white border border-gray-300 rounded-lg h-11 text-sm hover:bg-gray-50 transition-all shadow-sm",
-                    !dateTo && "text-gray-500",
-                    !dateType && "opacity-50 cursor-not-allowed bg-gray-50"
-                  )}
-                >
-                  <CalendarIcon className="mr-2 h-4 w-4 text-gray-500" />
-                  {dateTo ? format(dateTo, "MMM dd, yyyy") : "To Date"}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0 border border-gray-200 shadow-xl rounded-lg" align="start">
-                <Calendar
-                  mode="single"
-                  selected={dateTo}
-                  onSelect={setDateTo}
-                  initialFocus
-                  className="pointer-events-auto rounded-lg"
-                />
-              </PopoverContent>
-            </Popover>
-          </div>
+          {/* To Date */}
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                disabled={!dateType}
+                className={cn(
+                  "w-full justify-start text-left font-normal bg-white border border-gray-300 rounded-lg h-11 text-sm hover:bg-gray-50 transition-all shadow-sm",
+                  !dateTo && "text-gray-500",
+                  !dateType && "opacity-50 cursor-not-allowed bg-gray-50"
+                )}
+              >
+                <CalendarIcon className="mr-2 h-4 w-4 text-gray-500" />
+                {dateTo ? format(dateTo, "MMM dd, yyyy") : "To Date"}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0 border border-gray-200 shadow-xl rounded-lg z-[70]" align="start">
+              <Calendar
+                mode="single"
+                selected={dateTo}
+                onSelect={setDateTo}
+                initialFocus
+                className="pointer-events-auto rounded-lg"
+              />
+            </PopoverContent>
+          </Popover>
 
           {/* WO Type Selection */}
           <Select value={searchValues.woType || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, woType: value === 'all' ? '' : value }))}>
             <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
-              <SelectValue placeholder="WO Type" />
+              <SelectValue placeholder="All Workorder Types" />
             </SelectTrigger>
-            <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
+            <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-[60]">
               <SelectItem value="all">All Workorder Types</SelectItem>
               <SelectItem value="regular">Regular Work Order</SelectItem>
               <SelectItem value="onsite">Onsite Work Order</SelectItem>
             </SelectContent>
           </Select>
+        </div>
 
-          {/* Priority Selection */}
-          <Select value={searchValues.priority || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, priority: value === 'all' ? '' : value }))}>
-            <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
-              <SelectValue placeholder="Priority" />
-            </SelectTrigger>
-            <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
-              <SelectItem value="all">All Priority</SelectItem>
-              <SelectItem value="critical">Critical</SelectItem>
-              <SelectItem value="high">High</SelectItem>
-              <SelectItem value="medium">Medium</SelectItem>
-              <SelectItem value="low">Low</SelectItem>
-            </SelectContent>
-          </Select>
+        {/* Priority Selection - Second Row on Mobile */}
+        <div className="mt-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <Select value={searchValues.priority || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, priority: value === 'all' ? '' : value }))}>
+              <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
+                <SelectValue placeholder="All Priority" />
+              </SelectTrigger>
+              <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-[60]">
+                <SelectItem value="all">All Priority</SelectItem>
+                <SelectItem value="critical">Critical</SelectItem>
+                <SelectItem value="high">High</SelectItem>
+                <SelectItem value="medium">Medium</SelectItem>
+                <SelectItem value="low">Low</SelectItem>
+              </SelectContent>
+            </Select>
+            {/* Empty divs to maintain grid alignment */}
+            <div className="hidden sm:block lg:hidden"></div>
+            <div className="hidden lg:block"></div>
+            <div className="hidden lg:block"></div>
+          </div>
         </div>
 
         {/* Advanced Filters Row */}
