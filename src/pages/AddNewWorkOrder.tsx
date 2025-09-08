@@ -152,7 +152,12 @@ const AddNewWorkOrder = () => {
       setShowSuggestions(false);
       setAccountSuggestions([]);
     } else {
-      setWorkOrderData(prev => ({ ...prev, accountNumber: value }));
+      // Clear contact when account changes (before selection is made)
+      setWorkOrderData(prev => ({ 
+        ...prev, 
+        accountNumber: value,
+        contact: ""
+      }));
       
       const filtered = mockAccounts.filter(account => 
         account.accountNumber.startsWith(value) ||
