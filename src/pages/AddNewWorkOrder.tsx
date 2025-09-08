@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ArrowLeft, X, Download, Settings, User, CreditCard, Users, Package, FileText, Calculator, AlertCircle, ExternalLink, Award, Shield, BarChart, Save, LayoutGrid, Table, ChevronDown, Plus, PlusCircle, QrCode, Copy, PackagePlus, Menu } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { WorkOrderItemsTable } from "@/components/WorkOrderItemsTable";
@@ -710,33 +710,35 @@ const AddNewWorkOrder = () => {
 
             <TabsContent value="items">
               <Card>
-                <CardContent className="p-6">
+                <CardHeader className="pb-4">
+                  <div className="flex items-center justify-between">
+                    <h2 className="text-xl font-semibold text-foreground">Work Order Items</h2>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="outline" className="flex items-center gap-2 bg-background">
+                          {viewMode === 'receiving' ? 'Receiving View' : 'Default View'}
+                          <ChevronDown className="w-4 h-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent className="bg-background border shadow-lg z-50" align="end">
+                        <DropdownMenuItem 
+                          onClick={() => setViewMode('cards')}
+                          className={`cursor-pointer ${viewMode === 'cards' || viewMode === 'table' ? 'bg-muted' : ''}`}
+                        >
+                          Default View
+                        </DropdownMenuItem>
+                        <DropdownMenuItem 
+                          onClick={() => setViewMode('receiving')}
+                          className={`cursor-pointer ${viewMode === 'receiving' ? 'bg-muted' : ''}`}
+                        >
+                          Receiving View
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
+                </CardHeader>
+                <CardContent className="p-6 pt-0">
                   <div className="space-y-6">
-                    {/* View Toggle */}
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm font-medium text-muted-foreground">View:</span>
-                        <div className="flex items-center gap-1">
-                          <Button
-                            variant={viewMode === 'table' || viewMode === 'cards' ? 'default' : 'ghost'}
-                            size="sm"
-                            onClick={() => setViewMode('cards')}
-                            className="h-8 px-3"
-                          >
-                            Default View
-                          </Button>
-                          <Button
-                            variant={viewMode === 'receiving' ? 'default' : 'ghost'}
-                            size="sm"
-                            onClick={() => setViewMode('receiving')}
-                            className="h-8 px-3"
-                          >
-                            Receiving View
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-
                     {/* Action Buttons */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
                       <Button className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold flex items-center justify-center gap-2 h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md">
