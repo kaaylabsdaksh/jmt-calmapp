@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Plus, Trash2 } from "lucide-react";
+import { Plus, Trash2, Edit } from "lucide-react";
 import { useState } from "react";
 
 interface WorkOrderReceivingItem {
@@ -53,6 +53,7 @@ const createEmptyItem = (): WorkOrderReceivingItem => ({
 export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsReceivingProps) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [newItem, setNewItem] = useState<WorkOrderReceivingItem>(createEmptyItem());
+  const [editingItemId, setEditingItemId] = useState<string | null>(null);
 
   const handleDialogSubmit = () => {
     setItems([...items, newItem]);
@@ -81,6 +82,14 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
 
   const clearAllItems = () => {
     setItems([]);
+  };
+
+  const startEditing = (id: string) => {
+    setEditingItemId(id);
+  };
+
+  const stopEditing = () => {
+    setEditingItemId(null);
   };
 
   return (
@@ -289,176 +298,287 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                     <Checkbox />
                     <span className="font-medium text-sm">Received Item #{index + 1}</span>
                   </div>
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
-                    onClick={() => removeItem(item.id)}
-                    className="text-destructive hover:text-destructive hover:bg-destructive/10"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </Button>
+                  <div className="flex items-center gap-1">
+                    {editingItemId === item.id ? (
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        onClick={stopEditing}
+                        className="text-green-600 hover:text-green-700 hover:bg-green-50"
+                      >
+                        Save
+                      </Button>
+                    ) : (
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        onClick={() => startEditing(item.id)}
+                        className="text-blue-600 hover:text-blue-700 hover:bg-blue-50"
+                      >
+                        <Edit className="w-4 h-4" />
+                      </Button>
+                    )}
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      onClick={() => removeItem(item.id)}
+                      className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
                   <div className="space-y-1">
                     <label className="text-xs font-medium text-muted-foreground">Item #</label>
-                    <Input 
-                      placeholder="Item #"
-                      value={item.itemNumber}
-                      onChange={(e) => updateItem(item.id, 'itemNumber', e.target.value)}
-                      className="h-8 text-sm"
-                    />
+                    {editingItemId === item.id ? (
+                      <Input 
+                        placeholder="Item #"
+                        value={item.itemNumber}
+                        onChange={(e) => updateItem(item.id, 'itemNumber', e.target.value)}
+                        className="h-8 text-sm"
+                      />
+                    ) : (
+                      <div className="h-8 px-3 py-2 border border-border rounded-md bg-muted/20 text-sm">
+                        {item.itemNumber || "—"}
+                      </div>
+                    )}
                   </div>
                   <div className="space-y-1">
                     <label className="text-xs font-medium text-muted-foreground">Cal Freq</label>
-                    <Select value={item.calFreq} onValueChange={(value) => updateItem(item.id, 'calFreq', value)}>
-                      <SelectTrigger className="h-8 text-sm">
-                        <SelectValue placeholder="Select..." />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="annual">Annual</SelectItem>
-                        <SelectItem value="monthly">Monthly</SelectItem>
-                        <SelectItem value="quarterly">Quarterly</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    {editingItemId === item.id ? (
+                      <Select value={item.calFreq} onValueChange={(value) => updateItem(item.id, 'calFreq', value)}>
+                        <SelectTrigger className="h-8 text-sm">
+                          <SelectValue placeholder="Select..." />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="annual">Annual</SelectItem>
+                          <SelectItem value="monthly">Monthly</SelectItem>
+                          <SelectItem value="quarterly">Quarterly</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    ) : (
+                      <div className="h-8 px-3 py-2 border border-border rounded-md bg-muted/20 text-sm">
+                        {item.calFreq || "—"}
+                      </div>
+                    )}
                   </div>
                   <div className="space-y-1">
                     <label className="text-xs font-medium text-muted-foreground">Action Code</label>
-                    <Select value={item.actionCode} onValueChange={(value) => updateItem(item.id, 'actionCode', value)}>
-                      <SelectTrigger className="h-8 text-sm">
-                        <SelectValue placeholder="Select..." />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="repair">REPAIR</SelectItem>
-                        <SelectItem value="rc">R/C</SelectItem>
-                        <SelectItem value="rcc">R/C/C</SelectItem>
-                        <SelectItem value="cc">C/C</SelectItem>
-                        <SelectItem value="test">TEST</SelectItem>
-                        <SelectItem value="build-new">BUILD NEW</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    {editingItemId === item.id ? (
+                      <Select value={item.actionCode} onValueChange={(value) => updateItem(item.id, 'actionCode', value)}>
+                        <SelectTrigger className="h-8 text-sm">
+                          <SelectValue placeholder="Select..." />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="repair">REPAIR</SelectItem>
+                          <SelectItem value="rc">R/C</SelectItem>
+                          <SelectItem value="rcc">R/C/C</SelectItem>
+                          <SelectItem value="cc">C/C</SelectItem>
+                          <SelectItem value="test">TEST</SelectItem>
+                          <SelectItem value="build-new">BUILD NEW</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    ) : (
+                      <div className="h-8 px-3 py-2 border border-border rounded-md bg-muted/20 text-sm">
+                        {item.actionCode || "—"}
+                      </div>
+                    )}
                   </div>
                   <div className="space-y-1">
                     <label className="text-xs font-medium text-muted-foreground">Priority</label>
-                    <Select value={item.priority} onValueChange={(value) => updateItem(item.id, 'priority', value)}>
-                      <SelectTrigger className="h-8 text-sm">
-                        <SelectValue placeholder="Select..." />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="rush">Rush</SelectItem>
-                        <SelectItem value="normal">Normal</SelectItem>
-                        <SelectItem value="expedite">Expedite</SelectItem>
-                        <SelectItem value="emergency">Emergency</SelectItem>
-                        <SelectItem value="damaged">Damaged</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    {editingItemId === item.id ? (
+                      <Select value={item.priority} onValueChange={(value) => updateItem(item.id, 'priority', value)}>
+                        <SelectTrigger className="h-8 text-sm">
+                          <SelectValue placeholder="Select..." />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="rush">Rush</SelectItem>
+                          <SelectItem value="normal">Normal</SelectItem>
+                          <SelectItem value="expedite">Expedite</SelectItem>
+                          <SelectItem value="emergency">Emergency</SelectItem>
+                          <SelectItem value="damaged">Damaged</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    ) : (
+                      <div className="h-8 px-3 py-2 border border-border rounded-md bg-muted/20 text-sm">
+                        {item.priority || "—"}
+                      </div>
+                    )}
                   </div>
                   <div className="space-y-1">
                     <label className="text-xs font-medium text-muted-foreground">Manufacturer</label>
-                    <Select value={item.manufacturer} onValueChange={(value) => updateItem(item.id, 'manufacturer', value)}>
-                      <SelectTrigger className="h-8 text-sm">
-                        <SelectValue placeholder="Select..." />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="1m-working-stand">1M WORKING STAND.</SelectItem>
-                        <SelectItem value="3d-instruments">3D INSTRUMENTS</SelectItem>
-                        <SelectItem value="3e">3E</SelectItem>
-                        <SelectItem value="3m">3M</SelectItem>
-                        <SelectItem value="3z-telecom">3Z TELECOM</SelectItem>
-                        <SelectItem value="4b-components">4B COMPONENTS LIMITED</SelectItem>
-                        <SelectItem value="5ft-wking">5FT WKING STANDARD</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    {editingItemId === item.id ? (
+                      <Select value={item.manufacturer} onValueChange={(value) => updateItem(item.id, 'manufacturer', value)}>
+                        <SelectTrigger className="h-8 text-sm">
+                          <SelectValue placeholder="Select..." />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="1m-working-stand">1M WORKING STAND.</SelectItem>
+                          <SelectItem value="3d-instruments">3D INSTRUMENTS</SelectItem>
+                          <SelectItem value="3e">3E</SelectItem>
+                          <SelectItem value="3m">3M</SelectItem>
+                          <SelectItem value="3z-telecom">3Z TELECOM</SelectItem>
+                          <SelectItem value="4b-components">4B COMPONENTS LIMITED</SelectItem>
+                          <SelectItem value="5ft-wking">5FT WKING STANDARD</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    ) : (
+                      <div className="h-8 px-3 py-2 border border-border rounded-md bg-muted/20 text-sm">
+                        {item.manufacturer || "—"}
+                      </div>
+                    )}
                   </div>
                   <div className="space-y-1">
                     <label className="text-xs font-medium text-muted-foreground">Model</label>
-                    <Input 
-                      placeholder="Model"
-                      value={item.model}
-                      onChange={(e) => updateItem(item.id, 'model', e.target.value)}
-                      className="h-8 text-sm"
-                    />
+                    {editingItemId === item.id ? (
+                      <Input 
+                        placeholder="Model"
+                        value={item.model}
+                        onChange={(e) => updateItem(item.id, 'model', e.target.value)}
+                        className="h-8 text-sm"
+                      />
+                    ) : (
+                      <div className="h-8 px-3 py-2 border border-border rounded-md bg-muted/20 text-sm">
+                        {item.model || "—"}
+                      </div>
+                    )}
                   </div>
                   <div className="space-y-1">
                     <label className="text-xs font-medium text-muted-foreground">Mfg Serial</label>
-                    <Input 
-                      placeholder="Mfg Serial"
-                      value={item.mfgSerial}
-                      onChange={(e) => updateItem(item.id, 'mfgSerial', e.target.value)}
-                      className="h-8 text-sm"
-                    />
+                    {editingItemId === item.id ? (
+                      <Input 
+                        placeholder="Mfg Serial"
+                        value={item.mfgSerial}
+                        onChange={(e) => updateItem(item.id, 'mfgSerial', e.target.value)}
+                        className="h-8 text-sm"
+                      />
+                    ) : (
+                      <div className="h-8 px-3 py-2 border border-border rounded-md bg-muted/20 text-sm">
+                        {item.mfgSerial || "—"}
+                      </div>
+                    )}
                   </div>
                   <div className="space-y-1">
                     <label className="text-xs font-medium text-muted-foreground">CustID</label>
-                    <Input 
-                      placeholder="CustID"
-                      value={item.custId}
-                      onChange={(e) => updateItem(item.id, 'custId', e.target.value)}
-                      className="h-8 text-sm"
-                    />
+                    {editingItemId === item.id ? (
+                      <Input 
+                        placeholder="CustID"
+                        value={item.custId}
+                        onChange={(e) => updateItem(item.id, 'custId', e.target.value)}
+                        className="h-8 text-sm"
+                      />
+                    ) : (
+                      <div className="h-8 px-3 py-2 border border-border rounded-md bg-muted/20 text-sm">
+                        {item.custId || "—"}
+                      </div>
+                    )}
                   </div>
                   <div className="space-y-1">
                     <label className="text-xs font-medium text-muted-foreground">CustSN</label>
-                    <Input 
-                      placeholder="CustSN"
-                      value={item.custSN}
-                      onChange={(e) => updateItem(item.id, 'custSN', e.target.value)}
-                      className="h-8 text-sm"
-                    />
+                    {editingItemId === item.id ? (
+                      <Input 
+                        placeholder="CustSN"
+                        value={item.custSN}
+                        onChange={(e) => updateItem(item.id, 'custSN', e.target.value)}
+                        className="h-8 text-sm"
+                      />
+                    ) : (
+                      <div className="h-8 px-3 py-2 border border-border rounded-md bg-muted/20 text-sm">
+                        {item.custSN || "—"}
+                      </div>
+                    )}
                   </div>
                   <div className="space-y-1">
                     <label className="text-xs font-medium text-muted-foreground">Barcode Num</label>
-                    <Input 
-                      placeholder="Barcode"
-                      value={item.barcodeNum}
-                      onChange={(e) => updateItem(item.id, 'barcodeNum', e.target.value)}
-                      className="h-8 text-sm"
-                    />
+                    {editingItemId === item.id ? (
+                      <Input 
+                        placeholder="Barcode"
+                        value={item.barcodeNum}
+                        onChange={(e) => updateItem(item.id, 'barcodeNum', e.target.value)}
+                        className="h-8 text-sm"
+                      />
+                    ) : (
+                      <div className="h-8 px-3 py-2 border border-border rounded-md bg-muted/20 text-sm">
+                        {item.barcodeNum || "—"}
+                      </div>
+                    )}
                   </div>
                   <div className="space-y-1">
                     <label className="text-xs font-medium text-muted-foreground">Warranty</label>
-                    <Tabs value={item.warranty} onValueChange={(value) => updateItem(item.id, 'warranty', value)}>
-                      <TabsList className="grid w-full grid-cols-2 h-8">
-                        <TabsTrigger value="yes" className="text-xs">Yes</TabsTrigger>
-                        <TabsTrigger value="no" className="text-xs">No</TabsTrigger>
-                      </TabsList>
-                    </Tabs>
+                    {editingItemId === item.id ? (
+                      <Tabs value={item.warranty} onValueChange={(value) => updateItem(item.id, 'warranty', value)}>
+                        <TabsList className="grid w-full grid-cols-2 h-8">
+                          <TabsTrigger value="yes" className="text-xs">Yes</TabsTrigger>
+                          <TabsTrigger value="no" className="text-xs">No</TabsTrigger>
+                        </TabsList>
+                      </Tabs>
+                    ) : (
+                      <div className="h-8 px-3 py-2 border border-border rounded-md bg-muted/20 text-sm capitalize">
+                        {item.warranty || "—"}
+                      </div>
+                    )}
                   </div>
                   <div className="space-y-1">
                     <label className="text-xs font-medium text-muted-foreground">17025</label>
-                    <Tabs value={item.iso17025} onValueChange={(value) => updateItem(item.id, 'iso17025', value)}>
-                      <TabsList className="grid w-full grid-cols-2 h-8">
-                        <TabsTrigger value="yes" className="text-xs">Yes</TabsTrigger>
-                        <TabsTrigger value="no" className="text-xs">No</TabsTrigger>
-                      </TabsList>
-                    </Tabs>
+                    {editingItemId === item.id ? (
+                      <Tabs value={item.iso17025} onValueChange={(value) => updateItem(item.id, 'iso17025', value)}>
+                        <TabsList className="grid w-full grid-cols-2 h-8">
+                          <TabsTrigger value="yes" className="text-xs">Yes</TabsTrigger>
+                          <TabsTrigger value="no" className="text-xs">No</TabsTrigger>
+                        </TabsList>
+                      </Tabs>
+                    ) : (
+                      <div className="h-8 px-3 py-2 border border-border rounded-md bg-muted/20 text-sm capitalize">
+                        {item.iso17025 || "—"}
+                      </div>
+                    )}
                   </div>
                   <div className="space-y-1">
                     <label className="text-xs font-medium text-muted-foreground">Estimate</label>
-                    <Input 
-                      placeholder="Estimate"
-                      value={item.estimate}
-                      onChange={(e) => updateItem(item.id, 'estimate', e.target.value)}
-                      className="h-8 text-sm"
-                    />
+                    {editingItemId === item.id ? (
+                      <Input 
+                        placeholder="Estimate"
+                        value={item.estimate}
+                        onChange={(e) => updateItem(item.id, 'estimate', e.target.value)}
+                        className="h-8 text-sm"
+                      />
+                    ) : (
+                      <div className="h-8 px-3 py-2 border border-border rounded-md bg-muted/20 text-sm">
+                        {item.estimate || "—"}
+                      </div>
+                    )}
                   </div>
                   <div className="space-y-1">
                     <label className="text-xs font-medium text-muted-foreground">New Equip</label>
-                    <Tabs value={item.newEquip} onValueChange={(value) => updateItem(item.id, 'newEquip', value)}>
-                      <TabsList className="grid w-full grid-cols-2 h-8">
-                        <TabsTrigger value="yes" className="text-xs">Yes</TabsTrigger>
-                        <TabsTrigger value="no" className="text-xs">No</TabsTrigger>
-                      </TabsList>
-                    </Tabs>
+                    {editingItemId === item.id ? (
+                      <Tabs value={item.newEquip} onValueChange={(value) => updateItem(item.id, 'newEquip', value)}>
+                        <TabsList className="grid w-full grid-cols-2 h-8">
+                          <TabsTrigger value="yes" className="text-xs">Yes</TabsTrigger>
+                          <TabsTrigger value="no" className="text-xs">No</TabsTrigger>
+                        </TabsList>
+                      </Tabs>
+                    ) : (
+                      <div className="h-8 px-3 py-2 border border-border rounded-md bg-muted/20 text-sm capitalize">
+                        {item.newEquip || "—"}
+                      </div>
+                    )}
                   </div>
                   <div className="space-y-1 col-span-2">
                     <label className="text-xs font-medium text-muted-foreground">Need By Date</label>
-                    <Input 
-                      type="date"
-                      value={item.needByDate}
-                      onChange={(e) => updateItem(item.id, 'needByDate', e.target.value)}
-                      className="h-8 text-sm"
-                    />
+                    {editingItemId === item.id ? (
+                      <Input 
+                        type="date"
+                        value={item.needByDate}
+                        onChange={(e) => updateItem(item.id, 'needByDate', e.target.value)}
+                        className="h-8 text-sm"
+                      />
+                    ) : (
+                      <div className="h-8 px-3 py-2 border border-border rounded-md bg-muted/20 text-sm">
+                        {item.needByDate || "—"}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
