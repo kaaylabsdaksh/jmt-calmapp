@@ -423,15 +423,31 @@ const AddNewWorkOrder = () => {
                         <SelectTrigger className={`${!workOrderData.contact || workOrderData.contact === "Not specified" ? "border-destructive" : ""}`}>
                           <SelectValue placeholder="Select contact" />
                         </SelectTrigger>
-                        <SelectContent className="bg-popover border shadow-lg z-[60]">
+                        <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-[60] max-h-60 overflow-y-auto">
                           {workOrderData.accountNumber && workOrderData.customer && (
-                            <SelectItem value={mockAccounts.find(acc => acc.accountNumber === workOrderData.accountNumber)?.contact || "Not specified"}>
+                            <SelectItem 
+                              value={mockAccounts.find(acc => acc.accountNumber === workOrderData.accountNumber)?.contact || "Not specified"}
+                              className="px-3 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white data-[highlighted]:bg-blue-500 data-[highlighted]:text-white"
+                            >
                               {mockAccounts.find(acc => acc.accountNumber === workOrderData.accountNumber)?.contact || "Not specified"}
                             </SelectItem>
                           )}
-                          <SelectItem value="Primary Contact">Primary Contact</SelectItem>
-                          <SelectItem value="Billing Contact">Billing Contact</SelectItem>
-                          <SelectItem value="Technical Contact">Technical Contact</SelectItem>
+                          <SelectItem value="Brad Morrison" className="px-3 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white data-[highlighted]:bg-blue-500 data-[highlighted]:text-white">Brad Morrison</SelectItem>
+                          <SelectItem value="Sherry Davis" className="px-3 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white data-[highlighted]:bg-blue-500 data-[highlighted]:text-white">Sherry Davis</SelectItem>
+                          <SelectItem value="Morgan Mathias" className="px-3 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white data-[highlighted]:bg-blue-500 data-[highlighted]:text-white">Morgan Mathias</SelectItem>
+                          <SelectItem value="Jimmy Salinas" className="px-3 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white data-[highlighted]:bg-blue-500 data-[highlighted]:text-white">Jimmy Salinas</SelectItem>
+                          <SelectItem value="Naomi Gomez" className="px-3 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white data-[highlighted]:bg-blue-500 data-[highlighted]:text-white">Naomi Gomez</SelectItem>
+                          <SelectItem value="Morgan Wedelich" className="px-3 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white data-[highlighted]:bg-blue-500 data-[highlighted]:text-white">Morgan Wedelich</SelectItem>
+                          <SelectItem value="Amanda Phillips" className="px-3 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white data-[highlighted]:bg-blue-500 data-[highlighted]:text-white">Amanda Phillips</SelectItem>
+                          <SelectItem value="Jim Daigle" className="px-3 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white data-[highlighted]:bg-blue-500 data-[highlighted]:text-white">Jim Daigle</SelectItem>
+                          <SelectItem value="Zack Broome" className="px-3 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white data-[highlighted]:bg-blue-500 data-[highlighted]:text-white">Zack Broome</SelectItem>
+                          <SelectItem value="Debbie McAbee" className="px-3 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white data-[highlighted]:bg-blue-500 data-[highlighted]:text-white">Debbie McAbee</SelectItem>
+                          <SelectItem value="Chris Melancon" className="px-3 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white data-[highlighted]:bg-blue-500 data-[highlighted]:text-white">Chris Melancon</SelectItem>
+                          <SelectItem value="Lindsey Thurmon" className="px-3 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white data-[highlighted]:bg-blue-500 data-[highlighted]:text-white">Lindsey Thurmon</SelectItem>
+                          <SelectItem value="Rusty Rogers" className="px-3 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white data-[highlighted]:bg-blue-500 data-[highlighted]:text-white">Rusty Rogers</SelectItem>
+                          <SelectItem value="Zane Moore" className="px-3 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white data-[highlighted]:bg-blue-500 data-[highlighted]:text-white">Zane Moore</SelectItem>
+                          <SelectItem value="Jessica Creamer" className="px-3 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white data-[highlighted]:bg-blue-500 data-[highlighted]:text-white">Jessica Creamer</SelectItem>
+                          <SelectItem value="Hayley Smith" className="px-3 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white data-[highlighted]:bg-blue-500 data-[highlighted]:text-white">Hayley Smith</SelectItem>
                         </SelectContent>
                       </Select>
                       {(!workOrderData.contact || workOrderData.contact === "Not specified") && (
