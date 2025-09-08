@@ -655,7 +655,7 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
 
       {/* Specific Search Fields */}
       <div className="px-4 pb-3">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3">
           {/* Date Type Selection */}
           <Select value={dateType} onValueChange={setDateType}>
             <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
@@ -684,8 +684,10 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
                   !dateType && "opacity-50 cursor-not-allowed bg-gray-50"
                 )}
               >
-                <CalendarIcon className="mr-2 h-4 w-4 text-gray-500" />
-                {dateFrom ? format(dateFrom, "MMM dd, yyyy") : "From Date"}
+                <CalendarIcon className="mr-2 h-4 w-4 text-gray-500 flex-shrink-0" />
+                <span className="truncate">
+                  {dateFrom ? format(dateFrom, "MMM dd") : "From"}
+                </span>
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0 border border-gray-200 shadow-xl rounded-lg z-[70]" align="start">
@@ -694,7 +696,7 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
                 selected={dateFrom}
                 onSelect={setDateFrom}
                 initialFocus
-                className="pointer-events-auto rounded-lg"
+                className="pointer-events-auto rounded-lg p-3"
               />
             </PopoverContent>
           </Popover>
@@ -711,8 +713,10 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
                   !dateType && "opacity-50 cursor-not-allowed bg-gray-50"
                 )}
               >
-                <CalendarIcon className="mr-2 h-4 w-4 text-gray-500" />
-                {dateTo ? format(dateTo, "MMM dd, yyyy") : "To Date"}
+                <CalendarIcon className="mr-2 h-4 w-4 text-gray-500 flex-shrink-0" />
+                <span className="truncate">
+                  {dateTo ? format(dateTo, "MMM dd") : "To"}
+                </span>
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0 border border-gray-200 shadow-xl rounded-lg z-[70]" align="start">
@@ -721,7 +725,7 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
                 selected={dateTo}
                 onSelect={setDateTo}
                 initialFocus
-                className="pointer-events-auto rounded-lg"
+                className="pointer-events-auto rounded-lg p-3"
               />
             </PopoverContent>
           </Popover>
@@ -729,7 +733,7 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
           {/* WO Type Selection */}
           <Select value={searchValues.woType || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, woType: value === 'all' ? '' : value }))}>
             <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
-              <SelectValue placeholder="All Workorder Types" />
+              <SelectValue placeholder="All WO Types" />
             </SelectTrigger>
             <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-[60]">
               <SelectItem value="all">All Workorder Types</SelectItem>
@@ -737,28 +741,29 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
               <SelectItem value="onsite">Onsite Work Order</SelectItem>
             </SelectContent>
           </Select>
-        </div>
 
-        {/* Priority Selection - Second Row on Mobile */}
-        <div className="mt-3">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-            <Select value={searchValues.priority || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, priority: value === 'all' ? '' : value }))}>
-              <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
-                <SelectValue placeholder="All Priority" />
-              </SelectTrigger>
-              <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-[60]">
-                <SelectItem value="all">All Priority</SelectItem>
-                <SelectItem value="critical">Critical</SelectItem>
-                <SelectItem value="high">High</SelectItem>
-                <SelectItem value="medium">Medium</SelectItem>
-                <SelectItem value="low">Low</SelectItem>
-              </SelectContent>
-            </Select>
-            {/* Empty divs to maintain grid alignment */}
-            <div className="hidden sm:block lg:hidden"></div>
-            <div className="hidden lg:block"></div>
-            <div className="hidden lg:block"></div>
-          </div>
+          {/* Priority Selection */}
+          <Select value={searchValues.priority || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, priority: value === 'all' ? '' : value }))}>
+            <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
+              <SelectValue placeholder="All Priority" />
+            </SelectTrigger>
+            <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-[60]">
+              <SelectItem value="all">All Priority</SelectItem>
+              <SelectItem value="critical">Critical</SelectItem>
+              <SelectItem value="high">High</SelectItem>
+              <SelectItem value="medium">Medium</SelectItem>
+              <SelectItem value="low">Low</SelectItem>
+            </SelectContent>
+          </Select>
+
+          {/* Search Button */}
+          <Button 
+            onClick={handleSearch}
+            className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg h-11 px-6 font-medium transition-all duration-300 transform hover:scale-105 shadow-sm hover:shadow-md"
+          >
+            <Search className="h-4 w-4 mr-2" />
+            Search
+          </Button>
         </div>
 
         {/* Advanced Filters Row */}
