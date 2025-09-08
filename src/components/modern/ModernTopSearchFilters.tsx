@@ -651,7 +651,7 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
               <SelectValue placeholder="WO Type" />
             </SelectTrigger>
             <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
-              <SelectItem value="all">All Types</SelectItem>
+              <SelectItem value="all">All Workorder Types</SelectItem>
               <SelectItem value="regular">Regular Work Order</SelectItem>
               <SelectItem value="onsite">Onsite Work Order</SelectItem>
             </SelectContent>
