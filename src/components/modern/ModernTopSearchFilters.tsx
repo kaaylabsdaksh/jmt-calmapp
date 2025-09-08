@@ -574,9 +574,13 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
               <SelectValue placeholder="Date Type" />
             </SelectTrigger>
             <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
-              <SelectItem value="creation-arrival">Creation & Arrival</SelectItem>
-              <SelectItem value="status-comments">Status & Comments</SelectItem>
-              <SelectItem value="departure-delivery">Departure & Delivery</SelectItem>
+              <SelectItem value="created">Created</SelectItem>
+              <SelectItem value="arrival">Arrival</SelectItem>
+              <SelectItem value="need-by">Need By</SelectItem>
+              <SelectItem value="status-date">Status Date</SelectItem>
+              <SelectItem value="last-comment">Last Comment</SelectItem>
+              <SelectItem value="departure-date">Departure Date</SelectItem>
+              <SelectItem value="samsara-doc-submit">Samsara Doc Submit Date</SelectItem>
             </SelectContent>
           </Select>
 
