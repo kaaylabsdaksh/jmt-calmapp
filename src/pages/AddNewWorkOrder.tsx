@@ -420,7 +420,7 @@ const AddNewWorkOrder = () => {
                         onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, contact: value }))}
                         disabled={!workOrderData.accountNumber || workOrderData.accountNumber.length !== 5}
                       >
-                        <SelectTrigger className={`${!workOrderData.contact || workOrderData.contact === "Not specified" ? "border-destructive" : ""}`}>
+                        <SelectTrigger>
                           <SelectValue placeholder="Select contact" />
                         </SelectTrigger>
                         <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-[60] max-h-60 overflow-y-auto">
