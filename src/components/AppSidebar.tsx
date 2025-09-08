@@ -94,7 +94,7 @@ export function AppSidebar() {
   return (
     <Sidebar
       className={`${open ? "w-64" : "w-16"} border-r-0 bg-sidebar backdrop-blur-sm animate-fade-in shadow-lg`}
-      collapsible="offcanvas"
+      collapsible="icon"
     >
       {/* Header with Logo */}
       <SidebarHeader className="border-b border-sidebar-border p-4">
@@ -114,21 +114,16 @@ export function AppSidebar() {
       <SidebarContent className="px-2 py-4">
         {Object.entries(quickActionCategories).map(([categoryName, actions], categoryIndex) => (
           <SidebarGroup key={categoryName} className="mb-4">
-            <Collapsible 
-              open={expandedGroups.includes(categoryName)} 
-              onOpenChange={() => toggleGroup(categoryName)}
-            >
-              <CollapsibleTrigger asChild>
-                <SidebarGroupLabel 
-                  className={`
-                    px-3 py-2 text-xs font-semibold text-sidebar-foreground/70 uppercase tracking-wider
-                    cursor-pointer hover:text-sidebar-foreground transition-colors
-                    flex items-center justify-between group
-                    ${!open && "sr-only"}
-                  `}
-                >
-                  <span>{categoryName}</span>
-                  {open && (
+            {open ? (
+              <Collapsible 
+                open={expandedGroups.includes(categoryName)} 
+                onOpenChange={() => toggleGroup(categoryName)}
+              >
+                <CollapsibleTrigger asChild>
+                  <SidebarGroupLabel 
+                    className="px-3 py-2 text-xs font-semibold text-sidebar-foreground/70 uppercase tracking-wider cursor-pointer hover:text-sidebar-foreground transition-colors flex items-center justify-between group"
+                  >
+                    <span>{categoryName}</span>
                     <div className="group-hover:scale-110 transition-transform">
                       {expandedGroups.includes(categoryName) ? (
                         <ChevronDown className="h-3 w-3" />
@@ -136,52 +131,83 @@ export function AppSidebar() {
                         <ChevronRight className="h-3 w-3" />
                       )}
                     </div>
-                  )}
-                </SidebarGroupLabel>
-              </CollapsibleTrigger>
+                  </SidebarGroupLabel>
+                </CollapsibleTrigger>
 
-              <CollapsibleContent>
-                <SidebarGroupContent className="mt-2">
-                  <SidebarMenu className="space-y-1">
-                    {actions.map((action, index) => (
-                      <SidebarMenuItem key={action.title}>
-                        <SidebarMenuButton 
-                          asChild
-                          tooltip={!open ? action.title : undefined}
-                          className="group"
-                        >
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className={`
-                              w-full justify-start h-10 px-3 
-                              ${isActiveItem(action.title) 
-                                ? "bg-sidebar-accent text-sidebar-accent-foreground shadow-sm font-semibold" 
-                                : "text-sidebar-foreground hover:text-sidebar-accent-foreground"
-                              }
-                              hover:bg-sidebar-accent hover:shadow-sm
-                              transition-all duration-200 ease-in-out
-                              group-hover:translate-x-1
-                              ${!open && "justify-center px-0"}
-                            `}
-                            style={{
-                              animationDelay: `${(categoryIndex * 100) + (index * 50)}ms`
-                            }}
+                <CollapsibleContent>
+                  <SidebarGroupContent className="mt-2">
+                    <SidebarMenu className="space-y-1">
+                      {actions.map((action, index) => (
+                        <SidebarMenuItem key={action.title}>
+                          <SidebarMenuButton 
+                            asChild
+                            tooltip={action.title}
+                            className="group"
                           >
-                            {React.createElement(action.icon, { className: "h-4 w-4 shrink-0 text-sidebar-foreground group-hover:scale-110 transition-transform duration-200" })}
-                            {open && (
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className={`
+                                w-full justify-start h-10 px-3 
+                                ${isActiveItem(action.title) 
+                                  ? "bg-sidebar-accent text-sidebar-accent-foreground shadow-sm font-semibold" 
+                                  : "text-sidebar-foreground hover:text-sidebar-accent-foreground"
+                                }
+                                hover:bg-sidebar-accent hover:shadow-sm
+                                transition-all duration-200 ease-in-out
+                                group-hover:translate-x-1
+                              `}
+                              style={{
+                                animationDelay: `${(categoryIndex * 100) + (index * 50)}ms`
+                              }}
+                            >
+                              {React.createElement(action.icon, { className: "h-4 w-4 shrink-0 text-sidebar-foreground group-hover:scale-110 transition-transform duration-200" })}
                               <span className="ml-3 font-medium text-sm animate-fade-in">
                                 {action.title}
                               </span>
-                            )}
-                          </Button>
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                    ))}
-                  </SidebarMenu>
-                </SidebarGroupContent>
-              </CollapsibleContent>
-            </Collapsible>
+                            </Button>
+                          </SidebarMenuButton>
+                        </SidebarMenuItem>
+                      ))}
+                    </SidebarMenu>
+                  </SidebarGroupContent>
+                </CollapsibleContent>
+              </Collapsible>
+            ) : (
+              // Mini sidebar - show only icons
+              <SidebarGroupContent>
+                <SidebarMenu className="space-y-1">
+                  {actions.map((action, index) => (
+                    <SidebarMenuItem key={action.title}>
+                      <SidebarMenuButton 
+                        asChild
+                        tooltip={action.title}
+                        className="group"
+                      >
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className={`
+                            w-full justify-center h-10 px-0
+                            ${isActiveItem(action.title) 
+                              ? "bg-sidebar-accent text-sidebar-accent-foreground shadow-sm font-semibold" 
+                              : "text-sidebar-foreground hover:text-sidebar-accent-foreground"
+                            }
+                            hover:bg-sidebar-accent hover:shadow-sm
+                            transition-all duration-200 ease-in-out
+                          `}
+                          style={{
+                            animationDelay: `${(categoryIndex * 100) + (index * 50)}ms`
+                          }}
+                        >
+                          {React.createElement(action.icon, { className: "h-4 w-4 shrink-0 text-sidebar-foreground group-hover:scale-110 transition-transform duration-200" })}
+                        </Button>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  ))}
+                </SidebarMenu>
+              </SidebarGroupContent>
+            )}
           </SidebarGroup>
         ))}
         
