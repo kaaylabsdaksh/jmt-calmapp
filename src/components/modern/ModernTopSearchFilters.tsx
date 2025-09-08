@@ -15,6 +15,7 @@ interface SearchFilters {
   priority: string;
   manufacturer: string;
   division: string;
+  woType: string;
   dateFrom?: Date;
   dateTo?: Date;
   dateType: string;
@@ -189,7 +190,8 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
     manufacturer: '',
     priority: '',
     assignee: '',
-    division: ''
+    division: '',
+    woType: ''
   });
 
   // Generate suggestions based on search input
@@ -327,6 +329,7 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
       priority: searchValues.priority,
       manufacturer: searchValues.manufacturer,
       division: searchValues.division,
+      woType: searchValues.woType,
       dateFrom,
       dateTo,
       dateType
@@ -344,7 +347,8 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
       manufacturer: '',
       priority: '',
       assignee: '',
-      division: ''
+      division: '',
+      woType: ''
     });
     setDateFrom(undefined);
     setDateTo(undefined);
@@ -358,6 +362,7 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
       priority: '',
       manufacturer: '',
       division: '',
+      woType: '',
       dateFrom: undefined,
       dateTo: undefined,
       dateType: ''
@@ -376,6 +381,7 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
           priority: searchValues.priority,
           manufacturer: searchValues.manufacturer,
           division: searchValues.division,
+          woType: searchValues.woType,
           dateFrom,
           dateTo,
           dateType
@@ -567,7 +573,7 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
 
       {/* Specific Search Fields */}
       <div className="px-4 pb-3">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
           {/* Date Type Selection */}
           <Select value={dateType} onValueChange={setDateType}>
             <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
@@ -638,6 +644,18 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
               </PopoverContent>
             </Popover>
           </div>
+
+          {/* WO Type Selection */}
+          <Select value={searchValues.woType || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, woType: value === 'all' ? '' : value }))}>
+            <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
+              <SelectValue placeholder="WO Type" />
+            </SelectTrigger>
+            <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
+              <SelectItem value="all">All Types</SelectItem>
+              <SelectItem value="regular">Regular Work Order</SelectItem>
+              <SelectItem value="onsite">Onsite Work Order</SelectItem>
+            </SelectContent>
+          </Select>
 
           {/* Priority Selection */}
           <Select value={searchValues.priority || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, priority: value === 'all' ? '' : value }))}>
