@@ -53,7 +53,62 @@ const AddNewWorkOrder = () => {
     estimate: string;
     newEquip: string;
     needByDate: string;
-  }>>([]);
+  }>>([
+    {
+      id: "rec-001",
+      itemNumber: "DMM-001",
+      calFreq: "annual",
+      actionCode: "rc",
+      priority: "normal",
+      manufacturer: "3d-instruments",
+      model: "DM-5000",
+      mfgSerial: "SN123456",
+      custId: "CUST-001",
+      custSN: "C001",
+      barcodeNum: "BC001234567",
+      warranty: "yes",
+      iso17025: "yes",
+      estimate: "$125.00",
+      newEquip: "no",
+      needByDate: "2024-12-15"
+    },
+    {
+      id: "rec-002", 
+      itemNumber: "OSC-002",
+      calFreq: "quarterly",
+      actionCode: "repair",
+      priority: "expedite",
+      manufacturer: "3m",
+      model: "OSC-3000",
+      mfgSerial: "SN789012",
+      custId: "CUST-002",
+      custSN: "C002",
+      barcodeNum: "BC002345678",
+      warranty: "no",
+      iso17025: "yes",
+      estimate: "$350.00",
+      newEquip: "no",
+      needByDate: "2024-11-30"
+    },
+    {
+      id: "rec-003",
+      itemNumber: "PSU-003",
+      calFreq: "monthly",
+      actionCode: "cc",
+      priority: "rush",
+      manufacturer: "4b-components",
+      model: "PWR-500",
+      mfgSerial: "SN345678",
+      custId: "CUST-003",
+      custSN: "C003",
+      barcodeNum: "BC003456789",
+      warranty: "yes",
+      iso17025: "no",
+      estimate: "$85.00",
+      newEquip: "yes",
+      needByDate: "2024-12-01"
+    }
+  ]);
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Mock account data
