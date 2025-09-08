@@ -75,7 +75,7 @@ interface WorkOrder {
 const mockWorkOrders: WorkOrder[] = [
   {
     id: "385737",
-    status: "In Lab",
+    status: "[Awaiting CDR]",
     customer: "ACME Industries",
     dueDate: "Nov 24, 2024",
     assignedTo: "John Smith",
@@ -201,7 +201,7 @@ const mockWorkOrders: WorkOrder[] = [
   },
   {
     id: "400217",
-    status: "Overdue",
+    status: "Awaiting Parts",
     customer: "Manufacturing Corp",
     dueDate: "Nov 18, 2024",
     assignedTo: "Mike Davis",
@@ -264,7 +264,7 @@ const mockWorkOrders: WorkOrder[] = [
   },
   {
     id: "403946",
-    status: "Pending",
+    status: "Q/A Inspection",
     customer: "Quality Systems Inc",
     dueDate: "Dec 01, 2024",
     assignedTo: "Emily Wilson",
@@ -327,7 +327,7 @@ const mockWorkOrders: WorkOrder[] = [
   },
   {
     id: "405078",
-    status: "In Lab",
+    status: "Assigned to Tech",
     customer: "Aerospace Dynamics",
     dueDate: "Dec 05, 2024",
     assignedTo: "Tom Rodriguez",
@@ -454,7 +454,7 @@ const mockWorkOrders: WorkOrder[] = [
   // New entries added below
   {
     id: "412340",
-    status: "In Lab",
+    status: "In Metrology",
     customer: "Energy Solutions Corp",
     dueDate: "Dec 08, 2024",
     assignedTo: "Alex Thompson",
@@ -580,7 +580,7 @@ const mockWorkOrders: WorkOrder[] = [
   },
   {
     id: "418974",
-    status: "Overdue",
+    status: "To Factory",
     customer: "Precision Manufacturing Ltd",
     dueDate: "Nov 28, 2024",
     assignedTo: "Kevin Park",
@@ -643,7 +643,7 @@ const mockWorkOrders: WorkOrder[] = [
   },
   {
     id: "421587",
-    status: "Completed",
+    status: "Ready for Departure",
     customer: "Automotive Testing Labs",
     dueDate: "Nov 22, 2024",
     assignedTo: "Lisa Chen",
@@ -769,7 +769,7 @@ const mockWorkOrders: WorkOrder[] = [
   },
   {
     id: "427965",
-    status: "Pending",
+    status: "Waiting on Customer",
     customer: "Environmental Testing Solutions",
     dueDate: "Dec 20, 2024",
     assignedTo: "Michael Johnson",
