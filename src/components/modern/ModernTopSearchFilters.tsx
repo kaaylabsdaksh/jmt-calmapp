@@ -659,7 +659,7 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
           {/* Date Type Selection */}
           <Select value={dateType} onValueChange={setDateType}>
             <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
-              <SelectValue placeholder="Select Date Type First" />
+              <SelectValue placeholder="Select Date Type" />
             </SelectTrigger>
             <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-[60]">
               <SelectItem value="created">Created</SelectItem>
