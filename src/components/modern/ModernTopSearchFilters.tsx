@@ -655,7 +655,7 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
 
       {/* Specific Search Fields */}
       <div className="px-4 pb-3">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
           {/* Date Type Selection */}
           <Select value={dateType} onValueChange={setDateType}>
             <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
@@ -755,15 +755,6 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
               <SelectItem value="low">Low</SelectItem>
             </SelectContent>
           </Select>
-
-          {/* Search Button */}
-          <Button 
-            onClick={handleSearch}
-            className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg h-11 px-6 font-medium transition-all duration-300 transform hover:scale-105 shadow-sm hover:shadow-md"
-          >
-            <Search className="h-4 w-4 mr-2" />
-            Search
-          </Button>
         </div>
 
         {/* Advanced Filters Row */}
