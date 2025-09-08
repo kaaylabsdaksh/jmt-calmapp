@@ -31,7 +31,7 @@ const AddNewWorkOrder = () => {
     contact: ""
   });
 
-  const [viewMode, setViewMode] = useState<'table' | 'cards' | 'receiving'>('table');
+  const [viewMode, setViewMode] = useState<'table' | 'cards' | 'receiving'>('cards');
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [accountSuggestions, setAccountSuggestions] = useState<Array<{accountNumber: string, customerName: string, srDocument: string, salesperson: string, contact: string}>>([]);
   const [highlightedSuggestion, setHighlightedSuggestion] = useState(-1);
@@ -804,7 +804,7 @@ const AddNewWorkOrder = () => {
                           <Button
                             variant={viewMode === 'table' || viewMode === 'cards' ? 'default' : 'ghost'}
                             size="sm"
-                            onClick={() => setViewMode('table')}
+                            onClick={() => setViewMode('cards')}
                             className="h-8 px-3"
                           >
                             Default View
@@ -818,26 +818,6 @@ const AddNewWorkOrder = () => {
                             Receiving View
                           </Button>
                         </div>
-                        {(viewMode === 'table' || viewMode === 'cards') && (
-                          <div className="flex items-center gap-1 ml-4">
-                            <Button
-                              variant={viewMode === 'table' ? 'default' : 'ghost'}
-                              size="sm"
-                              onClick={() => setViewMode('table')}
-                              className="h-8 px-3"
-                            >
-                              <Table className="w-4 h-4" />
-                            </Button>
-                            <Button
-                              variant={viewMode === 'cards' ? 'default' : 'ghost'}
-                              size="sm"
-                              onClick={() => setViewMode('cards')}
-                              className="h-8 px-3"
-                            >
-                              <LayoutGrid className="w-4 h-4" />
-                            </Button>
-                          </div>
-                        )}
                       </div>
                     </div>
 
