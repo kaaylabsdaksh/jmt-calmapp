@@ -287,6 +287,7 @@ const FormVariationsDemo = () => {
             onChange={(e) => handleInputChange("reportNumber", e.target.value)}
             placeholder="0152.01-802930-001"
             className="h-11"
+            readOnly
           />
         </div>
 
