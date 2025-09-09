@@ -9,9 +9,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ArrowLeft, Save, X, Package, Truck, Settings, Info } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 
 const AddWorkOrderItemTabs = () => {
   const navigate = useNavigate();
+  
+  const [showManufacturerDialog, setShowManufacturerDialog] = useState(false);
+  const [newManufacturerName, setNewManufacturerName] = useState("");
   
   const [formData, setFormData] = useState({
     // General Information
@@ -75,6 +79,19 @@ const AddWorkOrderItemTabs = () => {
 
   const handleCancel = () => {
     navigate("/add-new-work-order");
+  };
+
+  const handleAddNewManufacturer = () => {
+    if (newManufacturerName.trim()) {
+      handleInputChange("manufacturer", newManufacturerName.trim());
+      setNewManufacturerName("");
+      setShowManufacturerDialog(false);
+    }
+  };
+
+  const handleCancelManufacturer = () => {
+    setNewManufacturerName("");
+    setShowManufacturerDialog(false);
   };
 
   return (
@@ -301,12 +318,7 @@ const AddWorkOrderItemTabs = () => {
                           type="button"
                           variant="outline" 
                           className="h-11 px-3"
-                          onClick={() => {
-                            const newManufacturer = prompt("Enter new manufacturer name:");
-                            if (newManufacturer && newManufacturer.trim()) {
-                              handleInputChange("manufacturer", newManufacturer.trim());
-                            }
-                          }}
+                          onClick={() => setShowManufacturerDialog(true)}
                         >
                           Add New
                         </Button>
@@ -599,6 +611,46 @@ const AddWorkOrderItemTabs = () => {
             </div>
           </TabsContent>
         </Tabs>
+
+        {/* Add New Manufacturer Dialog */}
+        <Dialog open={showManufacturerDialog} onOpenChange={setShowManufacturerDialog}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>Add New Manufacturer</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4 py-4">
+              <div className="space-y-2">
+                <Label htmlFor="newManufacturer" className="text-sm font-medium">
+                  Manufacturer Name
+                </Label>
+                <Input
+                  id="newManufacturer"
+                  value={newManufacturerName}
+                  onChange={(e) => setNewManufacturerName(e.target.value)}
+                  placeholder="Enter manufacturer name"
+                  className="h-11"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      handleAddNewManufacturer();
+                    }
+                  }}
+                />
+              </div>
+            </div>
+            <DialogFooter className="flex gap-2">
+              <Button variant="outline" onClick={handleCancelManufacturer}>
+                Cancel
+              </Button>
+              <Button 
+                onClick={handleAddNewManufacturer}
+                disabled={!newManufacturerName.trim()}
+                className="bg-primary text-primary-foreground hover:bg-primary/90"
+              >
+                Submit
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );
