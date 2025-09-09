@@ -1025,339 +1025,384 @@ const FormVariationsDemo = () => {
   // Render factory section
   const renderFactorySection = () => (
     <div className="space-y-6">
-      {/* Factory Settings */}
-      <Card>
-        <CardContent className="p-6 space-y-4">
-          <h3 className="text-lg font-semibold">Factory Configuration</h3>
-          
-          <div className="flex items-center space-x-2 mb-4">
-            <Checkbox
-              id="toFactory"
-              checked={formData.toFactory}
-              onCheckedChange={(checked) => handleInputChange("toFactory", checked)}
-            />
-            <Label htmlFor="toFactory">Send to Factory (T/F)</Label>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="tfPoNumber">Factory PO Number</Label>
-              <Input
-                id="tfPoNumber"
-                value={formData.tfPoNumber}
-                onChange={(e) => handleInputChange("tfPoNumber", e.target.value)}
-                placeholder="PO number"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="vendorRmaNumber">Vendor RMA Number</Label>
-              <Input
-                id="vendorRmaNumber"
-                value={formData.vendorRmaNumber}
-                onChange={(e) => handleInputChange("vendorRmaNumber", e.target.value)}
-                placeholder="RMA number"
-              />
-            </div>
-
-            <div className="flex items-end">
-              <Button variant="outline" size="sm">Generate QF3</Button>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t">
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="noTfCert"
-                checked={formData.noTfCert}
-                onCheckedChange={(checked) => handleInputChange("noTfCert", checked)}
-              />
-              <Label htmlFor="noTfCert">No Certificate Required</Label>
-            </div>
-
-            <div className="space-y-2">
-              <Label>Certificate File</Label>
-              <div className="flex gap-2">
-                <Input
-                  value={formData.certFile || "No file selected"}
-                  readOnly
-                  className="text-muted-foreground"
-                />
-                <Button variant="outline" size="sm">Browse</Button>
+      <Accordion type="multiple" defaultValue={["factory-config", "product-images", "accessories"]} className="space-y-4">
+        {/* Factory Settings */}
+        <AccordionItem value="factory-config" className="border rounded-lg">
+          <AccordionTrigger className="hover:no-underline px-6 py-4">
+            <div className="flex items-center gap-3">
+              <Settings className="h-5 w-5 text-primary" />
+              <div className="text-left">
+                <h3 className="text-lg font-semibold">Factory Configuration</h3>
+                <p className="text-sm text-muted-foreground">Set up factory processing parameters</p>
               </div>
             </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Product Images */}
-      <Card>
-        <CardContent className="p-6">
-          <h3 className="text-lg font-semibold mb-4">Product Images</h3>
-          
-          <Tabs defaultValue="images">
-            <TabsList>
-              <TabsTrigger value="images">Images</TabsTrigger>
-              <TabsTrigger value="dateEntered">Date Entered</TabsTrigger>
-              <TabsTrigger value="actions">Actions</TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="images" className="mt-4">
-              <div className="border-2 border-dashed rounded-lg p-6 text-center">
-                <p className="text-muted-foreground">No images uploaded</p>
-              </div>
-            </TabsContent>
-            
-            <TabsContent value="dateEntered" className="mt-4">
-              <div className="border rounded-lg p-6 text-center">
-                <p className="text-muted-foreground">No history available</p>
-              </div>
-            </TabsContent>
-            
-            <TabsContent value="actions" className="mt-4">
-              <div className="border rounded-lg p-6 text-center">
-                <p className="text-muted-foreground">No actions recorded</p>
-              </div>
-            </TabsContent>
-          </Tabs>
-        </CardContent>
-      </Card>
-
-      {/* Accessories */}
-      <Card>
-        <CardContent className="p-6">
-          <h3 className="text-lg font-semibold mb-4">Accessories</h3>
-          
-          <div className="grid grid-cols-2 md:grid-cols-6 gap-3 mb-4">
-            <div className="space-y-1">
-              <Label htmlFor="accessoryType" className="text-xs">Type</Label>
-              <Select value={formData.accessoryType} onValueChange={(value) => handleInputChange("accessoryType", value)}>
-                <SelectTrigger className="h-9">
-                  <SelectValue placeholder="Type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="containers">Containers</SelectItem>
-                  <SelectItem value="cables">Cables</SelectItem>
-                  <SelectItem value="adapters">Adapters</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-1">
-              <Label htmlFor="accessory" className="text-xs">Item</Label>
-              <Select value={formData.accessory} onValueChange={(value) => handleInputChange("accessory", value)}>
-                <SelectTrigger className="h-9">
-                  <SelectValue placeholder="Item" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="case">Case</SelectItem>
-                  <SelectItem value="manual">Manual</SelectItem>
-                  <SelectItem value="cable">Cable</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-1">
-              <Label htmlFor="accessoryMaterial" className="text-xs">Material</Label>
-              <Input
-                id="accessoryMaterial"
-                value={formData.accessoryMaterial}
-                onChange={(e) => handleInputChange("accessoryMaterial", e.target.value)}
-                placeholder="Material"
-                className="h-9"
-              />
-            </div>
-
-            <div className="space-y-1">
-              <Label htmlFor="accessoryColor" className="text-xs">Color</Label>
-              <Select value={formData.accessoryColor} onValueChange={(value) => handleInputChange("accessoryColor", value)}>
-                <SelectTrigger className="h-9">
-                  <SelectValue placeholder="Color" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="black">Black</SelectItem>
-                  <SelectItem value="white">White</SelectItem>
-                  <SelectItem value="gray">Gray</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-1">
-              <Label htmlFor="accessoryQty" className="text-xs">Qty</Label>
-              <Input
-                id="accessoryQty"
-                type="number"
-                value={formData.accessoryQty}
-                onChange={(e) => handleInputChange("accessoryQty", e.target.value)}
-                placeholder="1"
-                className="h-9"
-              />
-            </div>
-
-            <div className="flex items-end">
-              <Button size="sm" className="h-9 w-full">Add</Button>
-            </div>
-          </div>
-
-          <div className="border rounded-lg">
-            <div className="bg-muted grid grid-cols-5 gap-4 p-2 text-xs font-medium">
-              <div>Type</div>
-              <div>Accessory</div>
-              <div>Material</div>
-              <div>Color</div>
-              <div>Qty</div>
-            </div>
-            <div className="p-6 text-center text-muted-foreground text-sm">
-              No accessories added
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Parts */}
-      <Card>
-        <CardContent className="p-6">
-          <h3 className="text-lg font-semibold mb-4">Parts</h3>
-          
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-3 mb-4">
-            <div className="space-y-1">
-              <Label htmlFor="partsCategory" className="text-xs">Category</Label>
-              <Select value={formData.partsCategory} onValueChange={(value) => handleInputChange("partsCategory", value)}>
-                <SelectTrigger className="h-9">
-                  <SelectValue placeholder="Category" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="electronic">Electronic</SelectItem>
-                  <SelectItem value="mechanical">Mechanical</SelectItem>
-                  <SelectItem value="software">Software</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-1">
-              <Label htmlFor="partsNumber" className="text-xs">Part Number</Label>
-              <Input
-                id="partsNumber"
-                value={formData.partsNumber}
-                onChange={(e) => handleInputChange("partsNumber", e.target.value)}
-                placeholder="Part number"
-                className="h-9"
-              />
-            </div>
-
-            <div className="space-y-1">
-              <Label htmlFor="partsDescription" className="text-xs">Description</Label>
-              <Input
-                id="partsDescription"
-                value={formData.partsDescription}
-                onChange={(e) => handleInputChange("partsDescription", e.target.value)}
-                placeholder="Description"
-                className="h-9"
-              />
-            </div>
-
-            <div className="space-y-1">
-              <Label htmlFor="partsCost" className="text-xs">Cost</Label>
-              <Input
-                id="partsCost"
-                type="number"
-                value={formData.partsCost}
-                onChange={(e) => handleInputChange("partsCost", e.target.value)}
-                placeholder="0.00"
-                className="h-9"
-              />
-            </div>
-
-            <div className="space-y-1">
-              <Label htmlFor="partsQty" className="text-xs">Qty</Label>
-              <Input
-                id="partsQty"
-                type="number"
-                value={formData.partsQty}
-                onChange={(e) => handleInputChange("partsQty", e.target.value)}
-                placeholder="1"
-                className="h-9"
-              />
-            </div>
-          </div>
-
-          <div className="flex justify-end mb-4">
-            <Button size="sm">Add Part</Button>
-          </div>
-
-          <div className="border rounded-lg">
-            <div className="bg-muted grid grid-cols-6 gap-4 p-2 text-xs font-medium">
-              <div>Category</div>
-              <div>Part Number</div>
-              <div>Description</div>
-              <div>Cost</div>
-              <div>Qty</div>
-              <div>Total</div>
-            </div>
-            <div className="p-6 text-center text-muted-foreground text-sm">
-              No parts added
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Comments */}
-      <Card>
-        <CardContent className="p-6">
-          <h3 className="text-lg font-semibold mb-4">Comments</h3>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-4">
-            <div className="space-y-1">
-              <Label htmlFor="commentType" className="text-xs">Type</Label>
-              <Select value={formData.commentType} onValueChange={(value) => handleInputChange("commentType", value)}>
-                <SelectTrigger className="h-9">
-                  <SelectValue placeholder="Type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="general">General</SelectItem>
-                  <SelectItem value="technical">Technical</SelectItem>
-                  <SelectItem value="quality">Quality</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="lg:col-span-2 space-y-1">
-              <Label htmlFor="comment" className="text-xs">Comment</Label>
-              <Textarea
-                id="comment"
-                value={formData.comment}
-                onChange={(e) => handleInputChange("comment", e.target.value)}
-                placeholder="Enter comment..."
-                className="h-16"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <div className="flex items-center space-x-2">
+          </AccordionTrigger>
+          <AccordionContent className="px-6 pb-6">
+            <div className="space-y-4">
+              <div className="flex items-center space-x-2 mb-4">
                 <Checkbox
-                  id="includeInCopyAsNew"
-                  checked={formData.includeInCopyAsNew}
-                  onCheckedChange={(checked) => handleInputChange("includeInCopyAsNew", checked)}
+                  id="toFactory"
+                  checked={formData.toFactory}
+                  onCheckedChange={(checked) => handleInputChange("toFactory", checked)}
                 />
-                <Label htmlFor="includeInCopyAsNew" className="text-xs">Copy Forward</Label>
+                <Label htmlFor="toFactory">Send to Factory (T/F)</Label>
               </div>
-              <Button size="sm" className="w-full h-9">Add</Button>
-            </div>
-          </div>
 
-          <div className="border rounded-lg">
-            <div className="bg-muted grid grid-cols-4 gap-4 p-2 text-xs font-medium">
-              <div>Type</div>
-              <div>User</div>
-              <div>Date</div>
-              <div>Comment</div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="tfPoNumber">Factory PO Number</Label>
+                  <Input
+                    id="tfPoNumber"
+                    value={formData.tfPoNumber}
+                    onChange={(e) => handleInputChange("tfPoNumber", e.target.value)}
+                    placeholder="PO number"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="vendorRmaNumber">Vendor RMA Number</Label>
+                  <Input
+                    id="vendorRmaNumber"
+                    value={formData.vendorRmaNumber}
+                    onChange={(e) => handleInputChange("vendorRmaNumber", e.target.value)}
+                    placeholder="RMA number"
+                  />
+                </div>
+
+                <div className="flex items-end">
+                  <Button variant="outline" size="sm">Generate QF3</Button>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t">
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="noTfCert"
+                    checked={formData.noTfCert}
+                    onCheckedChange={(checked) => handleInputChange("noTfCert", checked)}
+                  />
+                  <Label htmlFor="noTfCert">No Certificate Required</Label>
+                </div>
+
+                <div className="space-y-2">
+                  <Label>Certificate File</Label>
+                  <div className="flex gap-2">
+                    <Input
+                      value={formData.certFile || "No file selected"}
+                      readOnly
+                      className="text-muted-foreground"
+                    />
+                    <Button variant="outline" size="sm">Browse</Button>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="p-6 text-center text-muted-foreground text-sm">
-              No comments added
+          </AccordionContent>
+        </AccordionItem>
+
+        {/* Product Images */}
+        <AccordionItem value="product-images" className="border rounded-lg">
+          <AccordionTrigger className="hover:no-underline px-6 py-4">
+            <div className="flex items-center gap-3">
+              <Package className="h-5 w-5 text-primary" />
+              <div className="text-left">
+                <h3 className="text-lg font-semibold">Product Images</h3>
+                <p className="text-sm text-muted-foreground">Manage product media assets</p>
+              </div>
             </div>
-          </div>
-        </CardContent>
-      </Card>
+          </AccordionTrigger>
+          <AccordionContent className="px-6 pb-6">
+            <Tabs defaultValue="images">
+              <TabsList>
+                <TabsTrigger value="images">Images</TabsTrigger>
+                <TabsTrigger value="dateEntered">Date Entered</TabsTrigger>
+                <TabsTrigger value="actions">Actions</TabsTrigger>
+              </TabsList>
+              
+              <TabsContent value="images" className="mt-4">
+                <div className="border-2 border-dashed rounded-lg p-6 text-center">
+                  <p className="text-muted-foreground">No images uploaded</p>
+                </div>
+              </TabsContent>
+              
+              <TabsContent value="dateEntered" className="mt-4">
+                <div className="border rounded-lg p-6 text-center">
+                  <p className="text-muted-foreground">No history available</p>
+                </div>
+              </TabsContent>
+              
+              <TabsContent value="actions" className="mt-4">
+                <div className="border rounded-lg p-6 text-center">
+                  <p className="text-muted-foreground">No actions recorded</p>
+                </div>
+              </TabsContent>
+            </Tabs>
+          </AccordionContent>
+        </AccordionItem>
+
+        {/* Accessories */}
+        <AccordionItem value="accessories" className="border rounded-lg">
+          <AccordionTrigger className="hover:no-underline px-6 py-4">
+            <div className="flex items-center gap-3">
+              <Layers className="h-5 w-5 text-primary" />
+              <div className="text-left">
+                <h3 className="text-lg font-semibold">Accessories</h3>
+                <p className="text-sm text-muted-foreground">Manage product accessories and components</p>
+              </div>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="px-6 pb-6">
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 md:grid-cols-6 gap-3 mb-4">
+                <div className="space-y-1">
+                  <Label htmlFor="accessoryType" className="text-xs">Type</Label>
+                  <Select value={formData.accessoryType} onValueChange={(value) => handleInputChange("accessoryType", value)}>
+                    <SelectTrigger className="h-9">
+                      <SelectValue placeholder="Type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="containers">Containers</SelectItem>
+                      <SelectItem value="cables">Cables</SelectItem>
+                      <SelectItem value="adapters">Adapters</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-1">
+                  <Label htmlFor="accessory" className="text-xs">Item</Label>
+                  <Select value={formData.accessory} onValueChange={(value) => handleInputChange("accessory", value)}>
+                    <SelectTrigger className="h-9">
+                      <SelectValue placeholder="Item" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="case">Case</SelectItem>
+                      <SelectItem value="manual">Manual</SelectItem>
+                      <SelectItem value="cable">Cable</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-1">
+                  <Label htmlFor="accessoryMaterial" className="text-xs">Material</Label>
+                  <Input
+                    id="accessoryMaterial"
+                    value={formData.accessoryMaterial}
+                    onChange={(e) => handleInputChange("accessoryMaterial", e.target.value)}
+                    placeholder="Material"
+                    className="h-9"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <Label htmlFor="accessoryColor" className="text-xs">Color</Label>
+                  <Select value={formData.accessoryColor} onValueChange={(value) => handleInputChange("accessoryColor", value)}>
+                    <SelectTrigger className="h-9">
+                      <SelectValue placeholder="Color" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="black">Black</SelectItem>
+                      <SelectItem value="white">White</SelectItem>
+                      <SelectItem value="gray">Gray</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-1">
+                  <Label htmlFor="accessoryQty" className="text-xs">Qty</Label>
+                  <Input
+                    id="accessoryQty"
+                    type="number"
+                    value={formData.accessoryQty}
+                    onChange={(e) => handleInputChange("accessoryQty", e.target.value)}
+                    placeholder="1"
+                    className="h-9"
+                  />
+                </div>
+
+                <div className="flex items-end">
+                  <Button size="sm" className="h-9 w-full">Add</Button>
+                </div>
+              </div>
+
+              <div className="border rounded-lg">
+                <div className="bg-muted grid grid-cols-5 gap-4 p-2 text-xs font-medium">
+                  <div>Type</div>
+                  <div>Accessory</div>
+                  <div>Material</div>
+                  <div>Color</div>
+                  <div>Qty</div>
+                </div>
+                <div className="p-6 text-center text-muted-foreground text-sm">
+                  No accessories added
+                </div>
+              </div>
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+
+        {/* Parts */}
+        <AccordionItem value="parts" className="border rounded-lg">
+          <AccordionTrigger className="hover:no-underline px-6 py-4">
+            <div className="flex items-center gap-3">
+              <Settings className="h-5 w-5 text-primary" />
+              <div className="text-left">
+                <h3 className="text-lg font-semibold">Parts</h3>
+                <p className="text-sm text-muted-foreground">Manage replacement parts and components</p>
+              </div>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="px-6 pb-6">
+            <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-5 gap-3 mb-4">
+                <div className="space-y-1">
+                  <Label htmlFor="partsCategory" className="text-xs">Category</Label>
+                  <Select value={formData.partsCategory} onValueChange={(value) => handleInputChange("partsCategory", value)}>
+                    <SelectTrigger className="h-9">
+                      <SelectValue placeholder="Category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="electronic">Electronic</SelectItem>
+                      <SelectItem value="mechanical">Mechanical</SelectItem>
+                      <SelectItem value="software">Software</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-1">
+                  <Label htmlFor="partsNumber" className="text-xs">Part Number</Label>
+                  <Input
+                    id="partsNumber"
+                    value={formData.partsNumber}
+                    onChange={(e) => handleInputChange("partsNumber", e.target.value)}
+                    placeholder="Part number"
+                    className="h-9"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <Label htmlFor="partsDescription" className="text-xs">Description</Label>
+                  <Input
+                    id="partsDescription"
+                    value={formData.partsDescription}
+                    onChange={(e) => handleInputChange("partsDescription", e.target.value)}
+                    placeholder="Description"
+                    className="h-9"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <Label htmlFor="partsCost" className="text-xs">Cost</Label>
+                  <Input
+                    id="partsCost"
+                    type="number"
+                    value={formData.partsCost}
+                    onChange={(e) => handleInputChange("partsCost", e.target.value)}
+                    placeholder="0.00"
+                    className="h-9"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <Label htmlFor="partsQty" className="text-xs">Qty</Label>
+                  <Input
+                    id="partsQty"
+                    type="number"
+                    value={formData.partsQty}
+                    onChange={(e) => handleInputChange("partsQty", e.target.value)}
+                    placeholder="1"
+                    className="h-9"
+                  />
+                </div>
+              </div>
+
+              <div className="flex justify-end mb-4">
+                <Button size="sm">Add Part</Button>
+              </div>
+
+              <div className="border rounded-lg">
+                <div className="bg-muted grid grid-cols-6 gap-4 p-2 text-xs font-medium">
+                  <div>Category</div>
+                  <div>Part Number</div>
+                  <div>Description</div>
+                  <div>Cost</div>
+                  <div>Qty</div>
+                  <div>Total</div>
+                </div>
+                <div className="p-6 text-center text-muted-foreground text-sm">
+                  No parts added
+                </div>
+              </div>
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+
+        {/* Comments */}
+        <AccordionItem value="comments" className="border rounded-lg">
+          <AccordionTrigger className="hover:no-underline px-6 py-4">
+            <div className="flex items-center gap-3">
+              <List className="h-5 w-5 text-primary" />
+              <div className="text-left">
+                <h3 className="text-lg font-semibold">Comments</h3>
+                <p className="text-sm text-muted-foreground">Factory communication and documentation</p>
+              </div>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="px-6 pb-6">
+            <div className="space-y-4">
+              <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-4">
+                <div className="space-y-1">
+                  <Label htmlFor="commentType" className="text-xs">Type</Label>
+                  <Select value={formData.commentType} onValueChange={(value) => handleInputChange("commentType", value)}>
+                    <SelectTrigger className="h-9">
+                      <SelectValue placeholder="Type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="general">General</SelectItem>
+                      <SelectItem value="technical">Technical</SelectItem>
+                      <SelectItem value="quality">Quality</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="lg:col-span-2 space-y-1">
+                  <Label htmlFor="comment" className="text-xs">Comment</Label>
+                  <Textarea
+                    id="comment"
+                    value={formData.comment}
+                    onChange={(e) => handleInputChange("comment", e.target.value)}
+                    placeholder="Enter comment..."
+                    className="h-16"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="includeInCopyAsNew"
+                      checked={formData.includeInCopyAsNew}
+                      onCheckedChange={(checked) => handleInputChange("includeInCopyAsNew", checked)}
+                    />
+                    <Label htmlFor="includeInCopyAsNew" className="text-xs">Copy Forward</Label>
+                  </div>
+                  <Button size="sm" className="w-full h-9">Add</Button>
+                </div>
+              </div>
+
+              <div className="border rounded-lg">
+                <div className="bg-muted grid grid-cols-4 gap-4 p-2 text-xs font-medium">
+                  <div>Type</div>
+                  <div>User</div>
+                  <div>Date</div>
+                  <div>Comment</div>
+                </div>
+                <div className="p-6 text-center text-muted-foreground text-sm">
+                  No comments added
+                </div>
+              </div>
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
     </div>
   );
 
