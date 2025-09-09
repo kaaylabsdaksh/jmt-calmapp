@@ -615,32 +615,53 @@ const AddNewWorkOrder = () => {
                   {/* Customer Contacts Table */}
                   <div className="mt-6 sm:mt-8">
                     <h3 className="text-base sm:text-lg font-semibold text-foreground mb-3 sm:mb-4">Customer Contacts</h3>
-                    <div className="border rounded-lg overflow-hidden">
-                      <div className="overflow-x-auto">
-                        <table className="w-full text-xs sm:text-sm min-w-[600px]">
+                    <div className="space-y-3 sm:space-y-0">
+                      {/* Mobile Card View */}
+                      <div className="sm:hidden space-y-3">
+                        <div className="border rounded-lg p-3 bg-card">
+                          <div className="font-medium text-sm mb-2">Netasha Gray</div>
+                          <div className="space-y-1 text-xs text-muted-foreground">
+                            <div>netasha.gray@entergy.com</div>
+                            <div>(225) 382-4878</div>
+                            <div>Senior Buyer • Primary</div>
+                          </div>
+                        </div>
+                        <div className="border rounded-lg p-3 bg-card">
+                          <div className="font-medium text-sm mb-2">Barry White</div>
+                          <div className="space-y-1 text-xs text-muted-foreground">
+                            <div>barry.white@entergy.com</div>
+                            <div>(225) 382-4879</div>
+                            <div>Procurement Manager • Secondary</div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Desktop Table View */}
+                      <div className="hidden sm:block border rounded-lg overflow-hidden">
+                        <table className="w-full text-sm">
                           <thead className="bg-muted">
                             <tr>
-                              <th className="text-left p-2 sm:p-3 font-medium">Name</th>
-                              <th className="text-left p-2 sm:p-3 font-medium">Email</th>
-                              <th className="text-left p-2 sm:p-3 font-medium">Phone</th>
-                              <th className="text-left p-2 sm:p-3 font-medium">Title</th>
-                              <th className="text-left p-2 sm:p-3 font-medium">Type</th>
+                              <th className="text-left p-3 font-medium">Name</th>
+                              <th className="text-left p-3 font-medium">Email</th>
+                              <th className="text-left p-3 font-medium">Phone</th>
+                              <th className="text-left p-3 font-medium">Title</th>
+                              <th className="text-left p-3 font-medium">Type</th>
                             </tr>
                           </thead>
                           <tbody>
                             <tr className="border-t">
-                              <td className="p-2 sm:p-3">Netasha Gray</td>
-                              <td className="p-2 sm:p-3">netasha.gray@entergy.com</td>
-                              <td className="p-2 sm:p-3">(225) 382-4878</td>
-                              <td className="p-2 sm:p-3">Senior Buyer</td>
-                              <td className="p-2 sm:p-3">Primary</td>
+                              <td className="p-3">Netasha Gray</td>
+                              <td className="p-3">netasha.gray@entergy.com</td>
+                              <td className="p-3">(225) 382-4878</td>
+                              <td className="p-3">Senior Buyer</td>
+                              <td className="p-3">Primary</td>
                             </tr>
                             <tr className="border-t">
-                              <td className="p-2 sm:p-3">Barry White</td>
-                              <td className="p-2 sm:p-3">barry.white@entergy.com</td>
-                              <td className="p-2 sm:p-3">(225) 382-4879</td>
-                              <td className="p-2 sm:p-3">Procurement Manager</td>
-                              <td className="p-2 sm:p-3">Secondary</td>
+                              <td className="p-3">Barry White</td>
+                              <td className="p-3">barry.white@entergy.com</td>
+                              <td className="p-3">(225) 382-4879</td>
+                              <td className="p-3">Procurement Manager</td>
+                              <td className="p-3">Secondary</td>
                             </tr>
                           </tbody>
                         </table>
