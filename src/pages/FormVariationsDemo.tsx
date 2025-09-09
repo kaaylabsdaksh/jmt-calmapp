@@ -308,10 +308,12 @@ const FormVariationsDemo = () => {
             <SelectTrigger className="h-11">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-popover border z-50">
               <SelectItem value="normal">Normal</SelectItem>
-              <SelectItem value="high">High</SelectItem>
-              <SelectItem value="urgent">Urgent</SelectItem>
+              <SelectItem value="rush">Rush</SelectItem>
+              <SelectItem value="expedite">Expedite</SelectItem>
+              <SelectItem value="emergency">Emergency</SelectItem>
+              <SelectItem value="damaged">Damaged</SelectItem>
             </SelectContent>
           </Select>
         </div>
