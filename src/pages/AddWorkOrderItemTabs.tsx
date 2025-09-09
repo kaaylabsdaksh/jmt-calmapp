@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -106,7 +106,7 @@ const AddWorkOrderItemTabs = () => {
   const filteredAssignees = assignees.filter(assignee =>
     assignee.label.toLowerCase().includes(assigneeSearchValue.toLowerCase())
   );
-  
+
   const [formData, setFormData] = useState({
     // General Information
     type: "",
@@ -154,6 +154,40 @@ const AddWorkOrderItemTabs = () => {
     lostEquipment: false,
     redTag: false,
   });
+
+  const getTabsForType = (type: string) => {
+    if (type.startsWith('esl-')) {
+      return [
+        { value: 'general', label: 'General', icon: Info },
+        { value: 'esl-details', label: 'ESL Details', icon: Package },
+        { value: 'testing', label: 'Testing', icon: Settings },
+        { value: 'logistics', label: 'Logistics', icon: Truck }
+      ];
+    } else if (type.startsWith('itl-')) {
+      return [
+        { value: 'general', label: 'General', icon: Info },
+        { value: 'itl-details', label: 'ITL Details', icon: Package },
+        { value: 'calibration', label: 'Calibration', icon: Settings },
+        { value: 'logistics', label: 'Logistics', icon: Truck }
+      ];
+    } else {
+      // Default for 'single' type
+      return [
+        { value: 'general', label: 'General', icon: Info },
+        { value: 'product', label: 'Product', icon: Package },
+        { value: 'logistics', label: 'Logistics', icon: Truck },
+        { value: 'options', label: 'Options', icon: Settings }
+      ];
+    }
+  };
+
+  const currentTabs = getTabsForType(formData.type);
+  const [activeTab, setActiveTab] = useState('general');
+
+  // Reset active tab when type changes
+  useEffect(() => {
+    setActiveTab('general');
+  }, [formData.type]);
 
   const handleInputChange = (field: string, value: string | boolean) => {
     setFormData(prev => ({
@@ -232,36 +266,21 @@ const AddWorkOrderItemTabs = () => {
 
       {/* Tabbed Form Content */}
       <div className="p-6 max-w-6xl mx-auto">
-        <Tabs defaultValue="general" className="space-y-6">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList className="inline-flex h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground">
-            <TabsTrigger 
-              value="general" 
-              className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
-            >
-              <Info className="h-4 w-4 mr-2" />
-              General
-            </TabsTrigger>
-            <TabsTrigger 
-              value="product" 
-              className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
-            >
-              <Package className="h-4 w-4 mr-2" />
-              Product
-            </TabsTrigger>
-            <TabsTrigger 
-              value="logistics" 
-              className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
-            >
-              <Truck className="h-4 w-4 mr-2" />
-              Logistics
-            </TabsTrigger>
-            <TabsTrigger 
-              value="options" 
-              className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
-            >
-              <Settings className="h-4 w-4 mr-2" />
-              Options
-            </TabsTrigger>
+            {currentTabs.map((tab) => {
+              const Icon = tab.icon;
+              return (
+                <TabsTrigger 
+                  key={tab.value}
+                  value={tab.value}
+                  className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+                >
+                  <Icon className="h-4 w-4 mr-2" />
+                  {tab.label}
+                </TabsTrigger>
+              );
+            })}
           </TabsList>
 
           {/* General Information Tab */}
@@ -455,7 +474,7 @@ const AddWorkOrderItemTabs = () => {
             </Card>
           </TabsContent>
 
-          {/* Product Information Tab */}
+          {/* Product Tab (for Single type) */}
           <TabsContent value="product" className="space-y-6">
             <Card className="border-0 shadow-md">
               <CardContent className="p-6 space-y-6">
@@ -471,89 +490,89 @@ const AddWorkOrderItemTabs = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-4">
-                     <div className="space-y-2">
-                       <Label htmlFor="manufacturer" className="text-sm font-medium">Manufacturer</Label>
-                       <div className="flex gap-2">
-                         <div className="relative flex-1">
-                           <Input
-                             id="manufacturer"
-                             value={manufacturerSearchValue || formData.manufacturer}
-                             onChange={(e) => {
-                               setManufacturerSearchValue(e.target.value);
-                               handleInputChange("manufacturer", e.target.value);
-                             }}
-                             placeholder="Type to search manufacturers..."
-                             className="h-11 pr-10"
-                           />
-                           
-                           <Popover open={manufacturerDropdownOpen} onOpenChange={setManufacturerDropdownOpen}>
-                             <PopoverTrigger asChild>
-                               <Button
-                                 type="button"
-                                 variant="ghost"
-                                 className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 p-0 hover:bg-accent"
-                                 aria-label="Show all manufacturers"
-                               >
-                                 <ChevronsUpDown className="h-4 w-4" />
-                               </Button>
-                             </PopoverTrigger>
-                             <PopoverContent className="w-80 p-0" align="end">
-                               <Command>
-                                 <CommandList>
-                                   <CommandGroup heading="All Manufacturers">
-                                     {manufacturers.map((manufacturer) => (
-                                       <CommandItem
-                                         key={manufacturer.value}
-                                         value={manufacturer.value}
-                                         onSelect={() => {
-                                           handleInputChange("manufacturer", manufacturer.value);
-                                           setManufacturerSearchValue("");
-                                           setManufacturerDropdownOpen(false);
-                                         }}
-                                       >
-                                         <Check
-                                           className={`mr-2 h-4 w-4 ${
-                                             formData.manufacturer === manufacturer.value ? "opacity-100" : "opacity-0"
-                                           }`}
-                                         />
-                                         {manufacturer.label}
-                                       </CommandItem>
-                                     ))}
-                                   </CommandGroup>
-                                 </CommandList>
-                               </Command>
-                             </PopoverContent>
-                           </Popover>
+                    <div className="space-y-2">
+                      <Label htmlFor="manufacturer" className="text-sm font-medium">Manufacturer</Label>
+                      <div className="flex gap-2">
+                        <div className="relative flex-1">
+                          <Input
+                            id="manufacturer"
+                            value={manufacturerSearchValue || formData.manufacturer}
+                            onChange={(e) => {
+                              setManufacturerSearchValue(e.target.value);
+                              handleInputChange("manufacturer", e.target.value);
+                            }}
+                            placeholder="Type to search manufacturers..."
+                            className="h-11 pr-10"
+                          />
+                          
+                          <Popover open={manufacturerDropdownOpen} onOpenChange={setManufacturerDropdownOpen}>
+                            <PopoverTrigger asChild>
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 p-0 hover:bg-accent"
+                                aria-label="Show all manufacturers"
+                              >
+                                <ChevronsUpDown className="h-4 w-4" />
+                              </Button>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-80 p-0" align="end">
+                              <Command>
+                                <CommandList>
+                                  <CommandGroup heading="All Manufacturers">
+                                    {manufacturers.map((manufacturer) => (
+                                      <CommandItem
+                                        key={manufacturer.value}
+                                        value={manufacturer.value}
+                                        onSelect={() => {
+                                          handleInputChange("manufacturer", manufacturer.value);
+                                          setManufacturerSearchValue("");
+                                          setManufacturerDropdownOpen(false);
+                                        }}
+                                      >
+                                        <Check
+                                          className={`mr-2 h-4 w-4 ${
+                                            formData.manufacturer === manufacturer.value ? "opacity-100" : "opacity-0"
+                                          }`}
+                                        />
+                                        {manufacturer.label}
+                                      </CommandItem>
+                                    ))}
+                                  </CommandGroup>
+                                </CommandList>
+                              </Command>
+                            </PopoverContent>
+                          </Popover>
 
-                           {/* Auto-suggestion dropdown */}
-                           {manufacturerSearchValue && filteredManufacturers.length > 0 && (
-                             <div className="absolute top-full left-0 right-0 z-50 mt-1 bg-popover border rounded-md shadow-lg max-h-48 overflow-y-auto">
-                               {filteredManufacturers.map((manufacturer) => (
-                                 <button
-                                   key={manufacturer.value}
-                                   type="button"
-                                   className="w-full text-left px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground flex items-center"
-                                   onClick={() => {
-                                     handleInputChange("manufacturer", manufacturer.value);
-                                     setManufacturerSearchValue("");
-                                   }}
-                                 >
-                                   {manufacturer.label}
-                                 </button>
-                               ))}
-                             </div>
-                           )}
-                         </div>
+                          {/* Auto-suggestion dropdown */}
+                          {manufacturerSearchValue && filteredManufacturers.length > 0 && (
+                            <div className="absolute top-full left-0 right-0 z-50 mt-1 bg-popover border rounded-md shadow-lg max-h-48 overflow-y-auto">
+                              {filteredManufacturers.map((manufacturer) => (
+                                <button
+                                  key={manufacturer.value}
+                                  type="button"
+                                  className="w-full text-left px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground flex items-center"
+                                  onClick={() => {
+                                    handleInputChange("manufacturer", manufacturer.value);
+                                    setManufacturerSearchValue("");
+                                  }}
+                                >
+                                  {manufacturer.label}
+                                </button>
+                              ))}
+                            </div>
+                          )}
+                        </div>
 
-                         <Button 
-                           type="button"
-                           className="h-11 px-4 bg-primary text-primary-foreground hover:bg-primary/90"
-                           onClick={() => setShowManufacturerDialog(true)}
-                         >
-                           Add New
-                         </Button>
-                       </div>
-                     </div>
+                        <Button 
+                          type="button"
+                          className="h-11 px-4 bg-primary text-primary-foreground hover:bg-primary/90"
+                          onClick={() => setShowManufacturerDialog(true)}
+                        >
+                          Add New
+                        </Button>
+                      </div>
+                    </div>
 
                     <div className="space-y-2">
                       <Label htmlFor="model" className="text-sm font-medium">Model</Label>
@@ -642,6 +661,229 @@ const AddWorkOrderItemTabs = () => {
             </Card>
           </TabsContent>
 
+          {/* ESL Details Tab */}
+          <TabsContent value="esl-details" className="space-y-6">
+            <Card className="border-0 shadow-md">
+              <CardContent className="p-6 space-y-6">
+                <div className="flex items-center gap-3 pb-4 border-b border-border">
+                  <div className="p-2 bg-primary/10 rounded-lg">
+                    <Package className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <h2 className="text-lg font-semibold text-foreground">ESL Equipment Details</h2>
+                    <p className="text-sm text-muted-foreground">Electrical safety laboratory equipment information</p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="voltage-rating" className="text-sm font-medium">Voltage Rating</Label>
+                      <Input
+                        id="voltage-rating"
+                        placeholder="Enter voltage rating (e.g., 500V, 1kV)"
+                        className="h-11"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="test-standard" className="text-sm font-medium">Test Standard</Label>
+                      <Input
+                        id="test-standard"
+                        placeholder="Enter applicable test standard"
+                        className="h-11"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="last-test-date" className="text-sm font-medium">Last Test Date</Label>
+                      <Input
+                        id="last-test-date"
+                        type="date"
+                        className="h-11"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="next-test-date" className="text-sm font-medium">Next Test Date</Label>
+                      <Input
+                        id="next-test-date"
+                        type="date"
+                        className="h-11"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* ITL Details Tab */}
+          <TabsContent value="itl-details" className="space-y-6">
+            <Card className="border-0 shadow-md">
+              <CardContent className="p-6 space-y-6">
+                <div className="flex items-center gap-3 pb-4 border-b border-border">
+                  <div className="p-2 bg-primary/10 rounded-lg">
+                    <Package className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <h2 className="text-lg font-semibold text-foreground">ITL Instrument Details</h2>
+                    <p className="text-sm text-muted-foreground">Instrumentation test laboratory equipment information</p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="accuracy" className="text-sm font-medium">Accuracy</Label>
+                      <Input
+                        id="accuracy"
+                        placeholder="Enter accuracy specification"
+                        className="h-11"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="range" className="text-sm font-medium">Range</Label>
+                      <Input
+                        id="range"
+                        placeholder="Enter measurement range"
+                        className="h-11"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="resolution" className="text-sm font-medium">Resolution</Label>
+                      <Input
+                        id="resolution"
+                        placeholder="Enter resolution"
+                        className="h-11"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="calibration-interval" className="text-sm font-medium">Calibration Interval</Label>
+                      <Select>
+                        <SelectTrigger className="h-11">
+                          <SelectValue placeholder="Select interval" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="annual">Annual</SelectItem>
+                          <SelectItem value="semi-annual">Semi-Annual</SelectItem>
+                          <SelectItem value="quarterly">Quarterly</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Testing Tab (for ESL) */}
+          <TabsContent value="testing" className="space-y-6">
+            <Card className="border-0 shadow-md">
+              <CardContent className="p-6 space-y-6">
+                <div className="flex items-center gap-3 pb-4 border-b border-border">
+                  <div className="p-2 bg-primary/10 rounded-lg">
+                    <Settings className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <h2 className="text-lg font-semibold text-foreground">Testing Requirements</h2>
+                    <p className="text-sm text-muted-foreground">ESL testing procedures and requirements</p>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium">Required Tests</Label>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="flex items-center space-x-2">
+                        <Checkbox id="voltage-test" />
+                        <Label htmlFor="voltage-test" className="text-sm">Voltage Test</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Checkbox id="insulation-test" />
+                        <Label htmlFor="insulation-test" className="text-sm">Insulation Test</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Checkbox id="continuity-test" />
+                        <Label htmlFor="continuity-test" className="text-sm">Continuity Test</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Checkbox id="visual-inspection" />
+                        <Label htmlFor="visual-inspection" className="text-sm">Visual Inspection</Label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Calibration Tab (for ITL) */}
+          <TabsContent value="calibration" className="space-y-6">
+            <Card className="border-0 shadow-md">
+              <CardContent className="p-6 space-y-6">
+                <div className="flex items-center gap-3 pb-4 border-b border-border">
+                  <div className="p-2 bg-primary/10 rounded-lg">
+                    <Settings className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <h2 className="text-lg font-semibold text-foreground">Calibration Details</h2>
+                    <p className="text-sm text-muted-foreground">ITL calibration procedures and standards</p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="calibration-standard" className="text-sm font-medium">Calibration Standard</Label>
+                      <Input
+                        id="calibration-standard"
+                        placeholder="Enter standard used for calibration"
+                        className="h-11"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="uncertainty" className="text-sm font-medium">Measurement Uncertainty</Label>
+                      <Input
+                        id="uncertainty"
+                        placeholder="Enter measurement uncertainty"
+                        className="h-11"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="last-cal-date" className="text-sm font-medium">Last Calibration Date</Label>
+                      <Input
+                        id="last-cal-date"
+                        type="date"
+                        className="h-11"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="next-cal-date" className="text-sm font-medium">Next Calibration Due</Label>
+                      <Input
+                        id="next-cal-date"
+                        type="date"
+                        className="h-11"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
           {/* Logistics Tab */}
           <TabsContent value="logistics" className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -672,14 +914,25 @@ const AddWorkOrderItemTabs = () => {
                       <Label htmlFor="arrivalType" className="text-sm font-medium">Arrival Type</Label>
                       <Select value={formData.arrivalType} onValueChange={(value) => handleInputChange("arrivalType", value)}>
                         <SelectTrigger className="h-11">
-                          <SelectValue placeholder="Select type" />
+                          <SelectValue placeholder="Select arrival type" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="delivery">Delivery</SelectItem>
+                          <SelectItem value="drop-off">Drop Off</SelectItem>
                           <SelectItem value="pickup">Pickup</SelectItem>
-                          <SelectItem value="walk-in">Walk-in</SelectItem>
+                          <SelectItem value="shipping">Shipping</SelectItem>
                         </SelectContent>
                       </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="arrivalLocation" className="text-sm font-medium">Arrival Location</Label>
+                      <Input
+                        id="arrivalLocation"
+                        value={formData.arrivalLocation}
+                        onChange={(e) => handleInputChange("arrivalLocation", e.target.value)}
+                        placeholder="Enter arrival location"
+                        className="h-11"
+                      />
                     </div>
 
                     <div className="space-y-2">
@@ -703,32 +956,46 @@ const AddWorkOrderItemTabs = () => {
                       <Package className="h-5 w-5 text-primary" />
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-foreground">Order & Delivery</h3>
+                      <h3 className="text-lg font-semibold text-foreground">Shipping Information</h3>
                     </div>
                   </div>
 
                   <div className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="poNumber" className="text-sm font-medium">PO Number</Label>
-                        <Input
-                          id="poNumber"
-                          value={formData.poNumber}
-                          onChange={(e) => handleInputChange("poNumber", e.target.value)}
-                          placeholder="CUST/PO #"
-                          className="h-11"
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="poLineNumber" className="text-sm font-medium">PO Line #</Label>
-                        <Input
-                          id="poLineNumber"
-                          value={formData.poLineNumber}
-                          onChange={(e) => handleInputChange("poLineNumber", e.target.value)}
-                          placeholder="Line #"
-                          className="h-11"
-                        />
-                      </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="puDate" className="text-sm font-medium">Pickup Date</Label>
+                      <Input
+                        id="puDate"
+                        type="date"
+                        value={formData.puDate}
+                        onChange={(e) => handleInputChange("puDate", e.target.value)}
+                        className="h-11"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="shipType" className="text-sm font-medium">Ship Type</Label>
+                      <Select value={formData.shipType} onValueChange={(value) => handleInputChange("shipType", value)}>
+                        <SelectTrigger className="h-11">
+                          <SelectValue placeholder="Select ship type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="fedex">FedEx</SelectItem>
+                          <SelectItem value="ups">UPS</SelectItem>
+                          <SelectItem value="usps">USPS</SelectItem>
+                          <SelectItem value="hand-delivery">Hand Delivery</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="poNumber" className="text-sm font-medium">PO Number</Label>
+                      <Input
+                        id="poNumber"
+                        value={formData.poNumber}
+                        onChange={(e) => handleInputChange("poNumber", e.target.value)}
+                        placeholder="Enter PO number"
+                        className="h-11"
+                      />
                     </div>
 
                     <div className="space-y-2">
@@ -741,104 +1008,59 @@ const AddWorkOrderItemTabs = () => {
                         className="h-11"
                       />
                     </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="deliverByDate" className="text-sm font-medium">Deliver By Date</Label>
-                      <Input
-                        id="deliverByDate"
-                        type="date"
-                        value={formData.deliverByDate}
-                        onChange={(e) => handleInputChange("deliverByDate", e.target.value)}
-                        className="h-11"
-                      />
-                    </div>
                   </div>
                 </CardContent>
               </Card>
             </div>
           </TabsContent>
 
-          {/* Options Tab */}
+          {/* Options Tab (for Single type) */}
           <TabsContent value="options" className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <Card className="border-0 shadow-md">
-                <CardContent className="p-6 space-y-4">
-                  <div className="flex items-center gap-3 pb-4 border-b border-border">
-                    <div className="p-2 bg-primary/10 rounded-lg">
-                      <Settings className="h-5 w-5 text-primary" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-foreground">Equipment Status</h3>
-                    </div>
+            <Card className="border-0 shadow-md">
+              <CardContent className="p-6 space-y-6">
+                <div className="flex items-center gap-3 pb-4 border-b border-border">
+                  <div className="p-2 bg-primary/10 rounded-lg">
+                    <Settings className="h-5 w-5 text-primary" />
                   </div>
+                  <div>
+                    <h2 className="text-lg font-semibold text-foreground">Additional Options</h2>
+                    <p className="text-sm text-muted-foreground">Configure additional settings and options</p>
+                  </div>
+                </div>
 
-                  <div className="space-y-3">
-                    {[
-                      { key: "warranty", label: "Warranty", desc: "Item is under warranty" },
-                      { key: "estimate", label: "Estimate", desc: "Estimate required" },
-                      { key: "newEquip", label: "New Equipment", desc: "Brand new equipment" },
-                      { key: "usedSurplus", label: "Used/Surplus", desc: "Pre-owned equipment" },
-                      { key: "iso17025", label: "ISO 17025", desc: "ISO certification required" },
-                      { key: "hotList", label: "Hot List", desc: "High priority item" },
-                    ].map(({ key, label, desc }) => (
-                      <div key={key} className="flex items-start space-x-3 p-3 rounded-lg border border-border hover:bg-muted/30 transition-colors">
-                        <Checkbox
-                          id={key}
-                          checked={formData[key as keyof typeof formData] as boolean}
-                          onCheckedChange={(checked) => handleInputChange(key, checked)}
-                          className="mt-1"
-                        />
-                        <div className="flex-1">
-                          <Label htmlFor={key} className="text-sm font-medium cursor-pointer">
-                            {label}
-                          </Label>
-                          <p className="text-xs text-muted-foreground mt-1">{desc}</p>
-                        </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {[
+                    { key: 'warranty', label: 'Warranty', desc: 'Item is under warranty' },
+                    { key: 'estimate', label: 'Estimate', desc: 'Estimate required' },
+                    { key: 'newEquip', label: 'New Equipment', desc: 'Brand new equipment' },
+                    { key: 'usedSurplus', label: 'Used Surplus', desc: 'Previously used equipment' },
+                    { key: 'iso17025', label: 'ISO 17025', desc: 'ISO 17025 compliance required' },
+                    { key: 'hotList', label: 'Hot List', desc: 'High priority item' },
+                    { key: 'readyToBill', label: 'Ready to Bill', desc: 'Ready for billing' },
+                    { key: 'inQa', label: 'In QA', desc: 'Currently in quality assurance' },
+                    { key: 'toShipping', label: 'To Shipping', desc: 'Ready for shipping' },
+                    { key: 'multiParts', label: 'Multi Parts', desc: 'Multiple part item' },
+                    { key: 'lostEquipment', label: 'Lost Equipment', desc: 'Equipment is lost' },
+                    { key: 'redTag', label: 'Red Tag', desc: 'Red tag status' },
+                  ].map(({ key, label, desc }) => (
+                    <div key={key} className="flex items-start space-x-3 p-4 rounded-lg border border-border hover:bg-accent/50 transition-colors">
+                      <Checkbox
+                        id={key}
+                        checked={formData[key as keyof typeof formData] as boolean}
+                        onCheckedChange={(checked) => handleInputChange(key, checked)}
+                        className="mt-1"
+                      />
+                      <div className="flex-1">
+                        <Label htmlFor={key} className="text-sm font-medium cursor-pointer">
+                          {label}
+                        </Label>
+                        <p className="text-xs text-muted-foreground mt-1">{desc}</p>
                       </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="border-0 shadow-md">
-                <CardContent className="p-6 space-y-4">
-                  <div className="flex items-center gap-3 pb-4 border-b border-border">
-                    <div className="p-2 bg-primary/10 rounded-lg">
-                      <Package className="h-5 w-5 text-primary" />
                     </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-foreground">Processing Status</h3>
-                    </div>
-                  </div>
-
-                  <div className="space-y-3">
-                    {[
-                      { key: "readyToBill", label: "Ready To Bill", desc: "Ready for billing process" },
-                      { key: "inQa", label: "In QA", desc: "Quality assurance in progress" },
-                      { key: "toShipping", label: "To Shipping", desc: "Ready for shipment" },
-                      { key: "multiParts", label: "Multi Parts", desc: "Multiple components" },
-                      { key: "lostEquipment", label: "Lost Equipment", desc: "Equipment missing" },
-                      { key: "redTag", label: "Red Tag", desc: "Requires special attention" },
-                    ].map(({ key, label, desc }) => (
-                      <div key={key} className="flex items-start space-x-3 p-3 rounded-lg border border-border hover:bg-muted/30 transition-colors">
-                        <Checkbox
-                          id={key}
-                          checked={formData[key as keyof typeof formData] as boolean}
-                          onCheckedChange={(checked) => handleInputChange(key, checked)}
-                          className="mt-1"
-                        />
-                        <div className="flex-1">
-                          <Label htmlFor={key} className="text-sm font-medium cursor-pointer">
-                            {label}
-                          </Label>
-                          <p className="text-xs text-muted-foreground mt-1">{desc}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
           </TabsContent>
         </Tabs>
 
