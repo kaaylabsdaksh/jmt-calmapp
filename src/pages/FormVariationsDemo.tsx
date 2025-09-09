@@ -34,6 +34,11 @@ const FormVariationsDemo = () => {
   const [assigneeDropdownOpen, setAssigneeDropdownOpen] = useState(false);
   const [assigneeSearchValue, setAssigneeSearchValue] = useState("");
 
+  // Status change dialog state
+  const [showStatusChangeDialog, setShowStatusChangeDialog] = useState(false);
+  const [pendingStatusChange, setPendingStatusChange] = useState("");
+  const [statusChangeComment, setStatusChangeComment] = useState("");
+
   const manufacturers = [
     { value: "1m-working-stand", label: "1M WORKING STAND." },
     { value: "3d-instruments", label: "3D INSTRUMENTS" },
@@ -210,6 +215,30 @@ const FormVariationsDemo = () => {
     setShowManufacturerDialog(false);
   };
 
+  // Status change handlers
+  const handleStatusChangeAttempt = (newStatus: string) => {
+    if (newStatus !== formData.itemStatus) {
+      setPendingStatusChange(newStatus);
+      setShowStatusChangeDialog(true);
+    }
+  };
+
+  const handleConfirmStatusChange = () => {
+    if (statusChangeComment.trim()) {
+      handleInputChange("itemStatus", pendingStatusChange);
+      setShowStatusChangeDialog(false);
+      setPendingStatusChange("");
+      setStatusChangeComment("");
+      console.log("Status changed to:", pendingStatusChange, "Comment:", statusChangeComment);
+    }
+  };
+
+  const handleCancelStatusChange = () => {
+    setShowStatusChangeDialog(false);
+    setPendingStatusChange("");
+    setStatusChangeComment("");
+  };
+
   // Function to check if accordion section is complete
   const isSectionComplete = (section: string) => {
     switch (section) {
@@ -289,11 +318,11 @@ const FormVariationsDemo = () => {
 
         <div className="space-y-2">
           <Label htmlFor="itemStatus" className="text-sm font-medium">Item Status</Label>
-          <Select value={formData.itemStatus} onValueChange={(value) => handleInputChange("itemStatus", value)}>
+          <Select value={formData.itemStatus} onValueChange={handleStatusChangeAttempt}>
             <SelectTrigger className="h-11">
               <SelectValue placeholder="Select status" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-popover border z-50">
               <SelectItem value="in-lab">In Lab</SelectItem>
               <SelectItem value="pending">Pending</SelectItem>
               <SelectItem value="complete">Complete</SelectItem>
@@ -1222,6 +1251,44 @@ const FormVariationsDemo = () => {
                 className="bg-primary text-primary-foreground hover:bg-primary/90"
               >
                 Submit
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
+        {/* Status Change Confirmation Dialog */}
+        <Dialog open={showStatusChangeDialog} onOpenChange={setShowStatusChangeDialog}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>Confirm Status Change</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4 py-4">
+              <div className="space-y-2">
+                <p className="text-sm text-muted-foreground">
+                  You are about to change the status to: <span className="font-semibold text-foreground">{pendingStatusChange}</span>
+                </p>
+                <Label htmlFor="statusComment" className="text-sm font-medium">
+                  Comment (Required)
+                </Label>
+                <Textarea
+                  id="statusComment"
+                  value={statusChangeComment}
+                  onChange={(e) => setStatusChangeComment(e.target.value)}
+                  placeholder="Please provide a reason for this status change..."
+                  className="min-h-[80px]"
+                />
+              </div>
+            </div>
+            <DialogFooter className="flex gap-2">
+              <Button variant="outline" onClick={handleCancelStatusChange}>
+                Cancel
+              </Button>
+              <Button 
+                onClick={handleConfirmStatusChange}
+                disabled={!statusChangeComment.trim()}
+                className="bg-primary text-primary-foreground hover:bg-primary/90"
+              >
+                Confirm Change
               </Button>
             </DialogFooter>
           </DialogContent>
