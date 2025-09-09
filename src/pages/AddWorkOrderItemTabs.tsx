@@ -196,10 +196,12 @@ const AddWorkOrderItemTabs = () => {
 
   const handleSave = () => {
     console.log("Saving work order item:", formData);
+    // Navigate back to main work order page
     navigate("/add-new-work-order");
   };
 
   const handleCancel = () => {
+    // Navigate back to main work order page
     navigate("/add-new-work-order");
   };
 
