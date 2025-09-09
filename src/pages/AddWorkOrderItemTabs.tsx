@@ -166,8 +166,22 @@ const AddWorkOrderItemTabs = () => {
                         <SelectValue placeholder="Select type" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="single">Single</SelectItem>
-                        <SelectItem value="batch">Batch</SelectItem>
+                        <SelectItem value="single" disabled className="font-semibold text-primary bg-muted/50">
+                          SINGLE
+                        </SelectItem>
+                        <SelectItem value="esl-blankets">ESL - Blankets</SelectItem>
+                        <SelectItem value="esl-coverups">ESL - CoverUps</SelectItem>
+                        <SelectItem value="esl-footwear">ESL - Footwear</SelectItem>
+                        <SelectItem value="esl-gloves">ESL - Gloves</SelectItem>
+                        <SelectItem value="esl-grounds">ESL - Grounds</SelectItem>
+                        <SelectItem value="esl-hotsticks">ESL - Hotsticks</SelectItem>
+                        <SelectItem value="esl-insulated-tools">ESL - Insulated Tools</SelectItem>
+                        <SelectItem value="esl-jumpers">ESL - Jumpers</SelectItem>
+                        <SelectItem value="esl-line-hoses">ESL - Line Hoses</SelectItem>
+                        <SelectItem value="esl-matting">ESL - Matting</SelectItem>
+                        <SelectItem value="esl-roll-blankets">ESL - Roll Blankets</SelectItem>
+                        <SelectItem value="esl-sleeves">ESL - Sleeves</SelectItem>
+                        <SelectItem value="itl-gauges">ITL - Gauges</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
