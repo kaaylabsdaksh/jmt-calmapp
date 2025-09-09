@@ -739,9 +739,12 @@ const AddNewWorkOrder = () => {
                 </CardHeader>
                 <CardContent className="p-6 pt-0">
                   <div className="space-y-6">
-                    {/* Action Buttons */}
+                     {/* Action Buttons */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
-                      <Button className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold flex items-center justify-center gap-2 h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md">
+                      <Button 
+                        onClick={() => navigate("/add-work-order-item")}
+                        className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold flex items-center justify-center gap-2 h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md"
+                      >
                         <Plus className="w-4 h-4" />
                         Add New Item
                       </Button>
