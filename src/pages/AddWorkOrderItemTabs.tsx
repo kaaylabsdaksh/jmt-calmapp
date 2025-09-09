@@ -166,9 +166,7 @@ const AddWorkOrderItemTabs = () => {
                         <SelectValue placeholder="Select type" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="single" disabled className="font-semibold text-primary bg-muted/50">
-                          SINGLE
-                        </SelectItem>
+                        <SelectItem value="single">Single</SelectItem>
                         <SelectItem value="esl-blankets">ESL - Blankets</SelectItem>
                         <SelectItem value="esl-coverups">ESL - CoverUps</SelectItem>
                         <SelectItem value="esl-footwear">ESL - Footwear</SelectItem>
