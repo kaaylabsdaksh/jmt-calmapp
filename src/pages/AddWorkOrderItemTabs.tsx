@@ -318,7 +318,7 @@ const AddWorkOrderItemTabs = () => {
                   <div className="space-y-4">
                      <div className="space-y-2">
                        <Label htmlFor="manufacturer" className="text-sm font-medium">Manufacturer</Label>
-                       <div className="flex gap-1">
+                       <div className="flex gap-2">
                          <div className="relative flex-1">
                            <Input
                              id="manufacturer"
@@ -328,8 +328,48 @@ const AddWorkOrderItemTabs = () => {
                                handleInputChange("manufacturer", e.target.value);
                              }}
                              placeholder="Type to search manufacturers..."
-                             className="h-11"
+                             className="h-11 pr-10"
                            />
+                           
+                           <Popover open={manufacturerDropdownOpen} onOpenChange={setManufacturerDropdownOpen}>
+                             <PopoverTrigger asChild>
+                               <Button
+                                 type="button"
+                                 variant="ghost"
+                                 className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 p-0 hover:bg-accent"
+                                 aria-label="Show all manufacturers"
+                               >
+                                 <ChevronsUpDown className="h-4 w-4" />
+                               </Button>
+                             </PopoverTrigger>
+                             <PopoverContent className="w-80 p-0" align="end">
+                               <Command>
+                                 <CommandList>
+                                   <CommandGroup heading="All Manufacturers">
+                                     {manufacturers.map((manufacturer) => (
+                                       <CommandItem
+                                         key={manufacturer.value}
+                                         value={manufacturer.value}
+                                         onSelect={() => {
+                                           handleInputChange("manufacturer", manufacturer.value);
+                                           setManufacturerSearchValue("");
+                                           setManufacturerDropdownOpen(false);
+                                         }}
+                                       >
+                                         <Check
+                                           className={`mr-2 h-4 w-4 ${
+                                             formData.manufacturer === manufacturer.value ? "opacity-100" : "opacity-0"
+                                           }`}
+                                         />
+                                         {manufacturer.label}
+                                       </CommandItem>
+                                     ))}
+                                   </CommandGroup>
+                                 </CommandList>
+                               </Command>
+                             </PopoverContent>
+                           </Popover>
+
                            {/* Auto-suggestion dropdown */}
                            {manufacturerSearchValue && filteredManufacturers.length > 0 && (
                              <div className="absolute top-full left-0 right-0 z-50 mt-1 bg-popover border rounded-md shadow-lg max-h-48 overflow-y-auto">
@@ -349,50 +389,10 @@ const AddWorkOrderItemTabs = () => {
                              </div>
                            )}
                          </div>
-                         
-                         <Popover open={manufacturerDropdownOpen} onOpenChange={setManufacturerDropdownOpen}>
-                           <PopoverTrigger asChild>
-                             <Button
-                               type="button"
-                               variant="outline"
-                               className="h-11 px-3"
-                               aria-label="Show all manufacturers"
-                             >
-                               <ChevronsUpDown className="h-4 w-4" />
-                             </Button>
-                           </PopoverTrigger>
-                           <PopoverContent className="w-80 p-0" align="end">
-                             <Command>
-                               <CommandList>
-                                 <CommandGroup heading="All Manufacturers">
-                                   {manufacturers.map((manufacturer) => (
-                                     <CommandItem
-                                       key={manufacturer.value}
-                                       value={manufacturer.value}
-                                       onSelect={() => {
-                                         handleInputChange("manufacturer", manufacturer.value);
-                                         setManufacturerSearchValue("");
-                                         setManufacturerDropdownOpen(false);
-                                       }}
-                                     >
-                                       <Check
-                                         className={`mr-2 h-4 w-4 ${
-                                           formData.manufacturer === manufacturer.value ? "opacity-100" : "opacity-0"
-                                         }`}
-                                       />
-                                       {manufacturer.label}
-                                     </CommandItem>
-                                   ))}
-                                 </CommandGroup>
-                               </CommandList>
-                             </Command>
-                           </PopoverContent>
-                         </Popover>
 
                          <Button 
                            type="button"
-                           variant="outline" 
-                           className="h-11 px-3"
+                           className="h-11 px-4 bg-primary text-primary-foreground hover:bg-primary/90"
                            onClick={() => setShowManufacturerDialog(true)}
                          >
                            Add New
