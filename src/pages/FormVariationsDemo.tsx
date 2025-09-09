@@ -1024,544 +1024,336 @@ const FormVariationsDemo = () => {
 
   // Render factory section
   const renderFactorySection = () => (
-    <div className="space-y-8">
-      {/* Factory Settings Card */}
-      <Card className="border-0 shadow-lg bg-gradient-to-br from-background to-muted/20">
-        <CardContent className="p-6 space-y-6">
-          <div className="flex items-center justify-between pb-4 border-b border-border">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-blue-100 rounded-lg dark:bg-blue-900/20">
-                <Package className="h-5 w-5 text-blue-600 dark:text-blue-400" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold text-foreground">Factory Configuration</h3>
-                <p className="text-sm text-muted-foreground">Set up factory processing parameters</p>
-              </div>
-            </div>
-            <Badge variant={formData.toFactory ? "default" : "secondary"} className="px-3 py-1">
-              {formData.toFactory ? "Factory Enabled" : "Local Processing"}
-            </Badge>
+    <div className="space-y-6">
+      {/* Factory Settings */}
+      <Card>
+        <CardContent className="p-6 space-y-4">
+          <h3 className="text-lg font-semibold">Factory Configuration</h3>
+          
+          <div className="flex items-center space-x-2 mb-4">
+            <Checkbox
+              id="toFactory"
+              checked={formData.toFactory}
+              onCheckedChange={(checked) => handleInputChange("toFactory", checked)}
+            />
+            <Label htmlFor="toFactory">Send to Factory (T/F)</Label>
           </div>
 
-          {/* Factory Toggle Section */}
-          <div className="bg-muted/30 rounded-lg p-4 space-y-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <Checkbox
-                  id="toFactory"
-                  checked={formData.toFactory}
-                  onCheckedChange={(checked) => handleInputChange("toFactory", checked)}
-                  className="h-5 w-5"
-                />
-                <div>
-                  <Label htmlFor="toFactory" className="text-base font-medium cursor-pointer">
-                    Send to Factory (T/F)
-                  </Label>
-                  <p className="text-sm text-muted-foreground">Enable factory processing for this item</p>
-                </div>
-              </div>
-              <div className="text-right">
-                <div className="text-sm text-muted-foreground">Processing Mode</div>
-                <div className="font-medium">{formData.toFactory ? "External Factory" : "Internal Lab"}</div>
-              </div>
-            </div>
-          </div>
-
-          {/* Factory Details Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="tfPoNumber" className="text-sm font-medium flex items-center gap-2">
-                <Package className="h-4 w-4" />
-                Factory PO Number
-              </Label>
+              <Label htmlFor="tfPoNumber">Factory PO Number</Label>
               <Input
                 id="tfPoNumber"
                 value={formData.tfPoNumber}
                 onChange={(e) => handleInputChange("tfPoNumber", e.target.value)}
-                placeholder="e.g., PO-2024-001"
-                className="h-11 bg-background/50 border-2 focus:border-primary/50 transition-colors"
+                placeholder="PO number"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="vendorRmaNumber" className="text-sm font-medium flex items-center gap-2">
-                <Settings className="h-4 w-4" />
-                Vendor RMA Number
-              </Label>
+              <Label htmlFor="vendorRmaNumber">Vendor RMA Number</Label>
               <Input
                 id="vendorRmaNumber"
                 value={formData.vendorRmaNumber}
                 onChange={(e) => handleInputChange("vendorRmaNumber", e.target.value)}
-                placeholder="e.g., RMA-2024-XXX"
-                className="h-11 bg-background/50 border-2 focus:border-primary/50 transition-colors"
+                placeholder="RMA number"
               />
             </div>
 
-            <div className="flex items-center justify-center">
-              <Button 
-                variant="outline" 
-                className="bg-amber-50 hover:bg-amber-100 text-amber-800 border-amber-300 hover:border-amber-400 transition-all duration-200 px-8 py-3 font-medium"
-              >
-                <Settings className="h-4 w-4 mr-2" />
-                Generate QF3
-              </Button>
+            <div className="flex items-end">
+              <Button variant="outline" size="sm">Generate QF3</Button>
             </div>
           </div>
 
-          {/* Certification Section */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="h-px bg-border flex-1"></div>
-              <span className="text-sm font-medium text-muted-foreground bg-background px-3">Certification & Documentation</span>
-              <div className="h-px bg-border flex-1"></div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t">
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="noTfCert"
+                checked={formData.noTfCert}
+                onCheckedChange={(checked) => handleInputChange("noTfCert", checked)}
+              />
+              <Label htmlFor="noTfCert">No Certificate Required</Label>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="space-y-4">
-                <div className="flex items-center space-x-3 p-3 bg-muted/20 rounded-lg border">
-                  <Checkbox
-                    id="noTfCert"
-                    checked={formData.noTfCert}
-                    onCheckedChange={(checked) => handleInputChange("noTfCert", checked)}
-                    className="h-5 w-5"
-                  />
-                  <div>
-                    <Label htmlFor="noTfCert" className="font-medium cursor-pointer">No Factory Certificate Required</Label>
-                    <p className="text-xs text-muted-foreground">Skip certification for this item</p>
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium">Factory Certificate File</Label>
-                  <div className="flex gap-2">
-                    <div className="flex-1 relative">
-                      <Input
-                        value={formData.certFile || "No file selected"}
-                        placeholder="Certificate file..."
-                        className="h-11 pr-12 bg-background/50 text-muted-foreground"
-                        readOnly
-                      />
-                      {formData.certFile && (
-                        <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                          <div className="h-2 w-2 bg-green-500 rounded-full"></div>
-                        </div>
-                      )}
-                    </div>
-                    <Button variant="outline" size="default" className="px-6 bg-background hover:bg-muted">
-                      Browse Files
-                    </Button>
-                  </div>
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium">Upload Certificate</Label>
-                  <div className="flex gap-2">
-                    <div className="flex-1 relative">
-                      <Input
-                        value={formData.uploadCert || "No file selected"}
-                        placeholder="Upload certificate..."
-                        className="h-11 pr-12 bg-background/50 text-muted-foreground"
-                        readOnly
-                      />
-                      {formData.uploadCert && (
-                        <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                          <div className="h-2 w-2 bg-green-500 rounded-full"></div>
-                        </div>
-                      )}
-                    </div>
-                    <Button variant="outline" size="default" className="px-6 bg-background hover:bg-muted">
-                      Upload
-                    </Button>
-                  </div>
-                </div>
-
-                <Button variant="outline" size="sm" className="w-full bg-primary/5 hover:bg-primary/10 border-primary/20">
-                  <Package className="h-4 w-4 mr-2" />
-                  Add Product Accessories
-                </Button>
+            <div className="space-y-2">
+              <Label>Certificate File</Label>
+              <div className="flex gap-2">
+                <Input
+                  value={formData.certFile || "No file selected"}
+                  readOnly
+                  className="text-muted-foreground"
+                />
+                <Button variant="outline" size="sm">Browse</Button>
               </div>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* Product Management Section */}
-      <Card className="border-0 shadow-lg">
-        <CardContent className="p-6 space-y-6">
-          <div className="flex items-center justify-between pb-4 border-b border-border">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-emerald-100 rounded-lg dark:bg-emerald-900/20">
-                <Package className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold text-foreground">Product Management</h3>
-                <p className="text-sm text-muted-foreground">Manage images, accessories, and components</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Product Images Section */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <h4 className="font-semibold text-base">Product Images</h4>
-              <Badge variant="outline" className="text-xs">Media Assets</Badge>
-            </div>
+      {/* Product Images */}
+      <Card>
+        <CardContent className="p-6">
+          <h3 className="text-lg font-semibold mb-4">Product Images</h3>
+          
+          <Tabs defaultValue="images">
+            <TabsList>
+              <TabsTrigger value="images">Images</TabsTrigger>
+              <TabsTrigger value="dateEntered">Date Entered</TabsTrigger>
+              <TabsTrigger value="actions">Actions</TabsTrigger>
+            </TabsList>
             
-            <Tabs defaultValue="images" className="w-full">
-              <TabsList className="grid w-full grid-cols-3 bg-muted/50">
-                <TabsTrigger value="images" className="data-[state=active]:bg-background">
-                  Images ({0})
-                </TabsTrigger>
-                <TabsTrigger value="dateEntered" className="data-[state=active]:bg-background">
-                  Upload History
-                </TabsTrigger>
-                <TabsTrigger value="actions" className="data-[state=active]:bg-background">
-                  Actions
-                </TabsTrigger>
-              </TabsList>
-              
-              <TabsContent value="images" className="mt-6">
-                <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-8 text-center bg-muted/10 hover:bg-muted/20 transition-colors">
-                  <Package className="h-12 w-12 mx-auto mb-4 text-muted-foreground/50" />
-                  <p className="text-muted-foreground mb-2">No product images uploaded</p>
-                  <Button variant="outline" size="sm">Upload Images</Button>
-                </div>
-              </TabsContent>
-              
-              <TabsContent value="dateEntered" className="mt-6">
-                <div className="border rounded-lg bg-muted/20 p-8 text-center">
-                  <p className="text-muted-foreground">No upload history available</p>
-                </div>
-              </TabsContent>
-              
-              <TabsContent value="actions" className="mt-6">
-                <div className="border rounded-lg bg-muted/20 p-8 text-center">
-                  <p className="text-muted-foreground">No actions recorded</p>
-                </div>
-              </TabsContent>
-            </Tabs>
+            <TabsContent value="images" className="mt-4">
+              <div className="border-2 border-dashed rounded-lg p-6 text-center">
+                <p className="text-muted-foreground">No images uploaded</p>
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="dateEntered" className="mt-4">
+              <div className="border rounded-lg p-6 text-center">
+                <p className="text-muted-foreground">No history available</p>
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="actions" className="mt-4">
+              <div className="border rounded-lg p-6 text-center">
+                <p className="text-muted-foreground">No actions recorded</p>
+              </div>
+            </TabsContent>
+          </Tabs>
+        </CardContent>
+      </Card>
+
+      {/* Accessories */}
+      <Card>
+        <CardContent className="p-6">
+          <h3 className="text-lg font-semibold mb-4">Accessories</h3>
+          
+          <div className="grid grid-cols-2 md:grid-cols-6 gap-3 mb-4">
+            <div className="space-y-1">
+              <Label htmlFor="accessoryType" className="text-xs">Type</Label>
+              <Select value={formData.accessoryType} onValueChange={(value) => handleInputChange("accessoryType", value)}>
+                <SelectTrigger className="h-9">
+                  <SelectValue placeholder="Type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="containers">Containers</SelectItem>
+                  <SelectItem value="cables">Cables</SelectItem>
+                  <SelectItem value="adapters">Adapters</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-1">
+              <Label htmlFor="accessory" className="text-xs">Item</Label>
+              <Select value={formData.accessory} onValueChange={(value) => handleInputChange("accessory", value)}>
+                <SelectTrigger className="h-9">
+                  <SelectValue placeholder="Item" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="case">Case</SelectItem>
+                  <SelectItem value="manual">Manual</SelectItem>
+                  <SelectItem value="cable">Cable</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-1">
+              <Label htmlFor="accessoryMaterial" className="text-xs">Material</Label>
+              <Input
+                id="accessoryMaterial"
+                value={formData.accessoryMaterial}
+                onChange={(e) => handleInputChange("accessoryMaterial", e.target.value)}
+                placeholder="Material"
+                className="h-9"
+              />
+            </div>
+
+            <div className="space-y-1">
+              <Label htmlFor="accessoryColor" className="text-xs">Color</Label>
+              <Select value={formData.accessoryColor} onValueChange={(value) => handleInputChange("accessoryColor", value)}>
+                <SelectTrigger className="h-9">
+                  <SelectValue placeholder="Color" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="black">Black</SelectItem>
+                  <SelectItem value="white">White</SelectItem>
+                  <SelectItem value="gray">Gray</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-1">
+              <Label htmlFor="accessoryQty" className="text-xs">Qty</Label>
+              <Input
+                id="accessoryQty"
+                type="number"
+                value={formData.accessoryQty}
+                onChange={(e) => handleInputChange("accessoryQty", e.target.value)}
+                placeholder="1"
+                className="h-9"
+              />
+            </div>
+
+            <div className="flex items-end">
+              <Button size="sm" className="h-9 w-full">Add</Button>
+            </div>
           </div>
 
-          {/* Accessories Management */}
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <h4 className="font-semibold text-base">Accessories</h4>
-                <Badge variant="outline" className="text-xs">Components</Badge>
-              </div>
-              <Button variant="outline" size="sm" className="bg-primary/5 hover:bg-primary/10 border-primary/30">
-                Quick Add Accessory
-              </Button>
+          <div className="border rounded-lg">
+            <div className="bg-muted grid grid-cols-5 gap-4 p-2 text-xs font-medium">
+              <div>Type</div>
+              <div>Accessory</div>
+              <div>Material</div>
+              <div>Color</div>
+              <div>Qty</div>
             </div>
-
-            <div className="bg-muted/30 rounded-lg p-4 space-y-4">
-              <div className="grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="accessoryType" className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Type</Label>
-                  <Select value={formData.accessoryType} onValueChange={(value) => handleInputChange("accessoryType", value)}>
-                    <SelectTrigger className="h-10 bg-background border-border/50">
-                      <SelectValue placeholder="Select type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="containers">Containers</SelectItem>
-                      <SelectItem value="cables">Cables & Connectors</SelectItem>
-                      <SelectItem value="adapters">Adapters</SelectItem>
-                      <SelectItem value="manuals">Documentation</SelectItem>
-                      <SelectItem value="tools">Tools & Equipment</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="accessory" className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Item</Label>
-                  <Select value={formData.accessory} onValueChange={(value) => handleInputChange("accessory", value)}>
-                    <SelectTrigger className="h-10 bg-background border-border/50">
-                      <SelectValue placeholder="Select item" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="case">Carrying Case</SelectItem>
-                      <SelectItem value="manual">User Manual</SelectItem>
-                      <SelectItem value="cable">Power Cable</SelectItem>
-                      <SelectItem value="adapter">USB Adapter</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="accessoryMaterial" className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Material</Label>
-                  <Input
-                    id="accessoryMaterial"
-                    value={formData.accessoryMaterial}
-                    onChange={(e) => handleInputChange("accessoryMaterial", e.target.value)}
-                    placeholder="Material type"
-                    className="h-10 bg-background border-border/50"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="accessoryColor" className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Color</Label>
-                  <Select value={formData.accessoryColor} onValueChange={(value) => handleInputChange("accessoryColor", value)}>
-                    <SelectTrigger className="h-10 bg-background border-border/50">
-                      <SelectValue placeholder="Select" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="black">Black</SelectItem>
-                      <SelectItem value="white">White</SelectItem>
-                      <SelectItem value="gray">Gray</SelectItem>
-                      <SelectItem value="red">Red</SelectItem>
-                      <SelectItem value="blue">Blue</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="accessoryQty" className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Quantity</Label>
-                  <Input
-                    id="accessoryQty"
-                    type="number"
-                    value={formData.accessoryQty}
-                    onChange={(e) => handleInputChange("accessoryQty", e.target.value)}
-                    placeholder="1"
-                    min="0"
-                    className="h-10 bg-background border-border/50"
-                  />
-                </div>
-
-                <div className="flex items-end">
-                  <Button size="sm" className="w-full h-10">
-                    <Package className="h-4 w-4 mr-1" />
-                    Add
-                  </Button>
-                </div>
-              </div>
-            </div>
-
-            {/* Accessories Table */}
-            <div className="border rounded-lg overflow-hidden bg-background">
-              <div className="bg-muted/50 grid grid-cols-5 gap-4 p-3 text-xs font-semibold text-muted-foreground uppercase tracking-wide border-b">
-                <div>Type</div>
-                <div>Accessory</div>
-                <div>Material</div>
-                <div>Color</div>
-                <div>Qty</div>
-              </div>
-              <div className="min-h-[120px] flex items-center justify-center text-muted-foreground">
-                <div className="text-center">
-                  <Package className="h-8 w-8 mx-auto mb-2 opacity-30" />
-                  <p className="text-sm">No accessories added yet</p>
-                  <p className="text-xs">Use the form above to add accessories</p>
-                </div>
-              </div>
+            <div className="p-6 text-center text-muted-foreground text-sm">
+              No accessories added
             </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* Parts & Components Section */}
-      <Card className="border-0 shadow-lg">
-        <CardContent className="p-6 space-y-6">
-          <div className="flex items-center justify-between pb-4 border-b border-border">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-violet-100 rounded-lg dark:bg-violet-900/20">
-                <Settings className="h-5 w-5 text-violet-600 dark:text-violet-400" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold text-foreground">Parts & Components</h3>
-                <p className="text-sm text-muted-foreground">Manage replacement parts and pricing</p>
-              </div>
-            </div>
-            <div className="text-right">
-              <div className="text-sm text-muted-foreground">Total Value</div>
-              <div className="text-lg font-bold">$0.00</div>
-            </div>
-          </div>
-
-          <div className="bg-muted/30 rounded-lg p-4 space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="partsCategory" className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Category</Label>
-                <Select value={formData.partsCategory} onValueChange={(value) => handleInputChange("partsCategory", value)}>
-                  <SelectTrigger className="h-10 bg-background border-border/50">
-                    <SelectValue placeholder="Select category" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="electronic">Electronic Components</SelectItem>
-                    <SelectItem value="mechanical">Mechanical Parts</SelectItem>
-                    <SelectItem value="consumables">Consumables</SelectItem>
-                    <SelectItem value="software">Software Licenses</SelectItem>
-                    <SelectItem value="calibration">Calibration Standards</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="partsNumber" className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Part Number</Label>
-                <Input
-                  id="partsNumber"
-                  value={formData.partsNumber}
-                  onChange={(e) => handleInputChange("partsNumber", e.target.value)}
-                  placeholder="e.g., PN-12345"
-                  className="h-10 bg-background border-border/50 font-mono"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="partsDescription" className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Description</Label>
-                <Input
-                  id="partsDescription"
-                  value={formData.partsDescription}
-                  onChange={(e) => handleInputChange("partsDescription", e.target.value)}
-                  placeholder="Part description"
-                  className="h-10 bg-background border-border/50"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="partsCost" className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Unit Cost</Label>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground text-sm">$</span>
-                  <Input
-                    id="partsCost"
-                    type="number"
-                    value={formData.partsCost}
-                    onChange={(e) => handleInputChange("partsCost", e.target.value)}
-                    placeholder="0.00"
-                    step="0.01"
-                    min="0"
-                    className="h-10 bg-background border-border/50 pl-8"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="partsQty" className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Quantity</Label>
-                <Input
-                  id="partsQty"
-                  type="number"
-                  value={formData.partsQty}
-                  onChange={(e) => handleInputChange("partsQty", e.target.value)}
-                  placeholder="1"
-                  min="0"
-                  className="h-10 bg-background border-border/50"
-                />
-              </div>
+      {/* Parts */}
+      <Card>
+        <CardContent className="p-6">
+          <h3 className="text-lg font-semibold mb-4">Parts</h3>
+          
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-3 mb-4">
+            <div className="space-y-1">
+              <Label htmlFor="partsCategory" className="text-xs">Category</Label>
+              <Select value={formData.partsCategory} onValueChange={(value) => handleInputChange("partsCategory", value)}>
+                <SelectTrigger className="h-9">
+                  <SelectValue placeholder="Category" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="electronic">Electronic</SelectItem>
+                  <SelectItem value="mechanical">Mechanical</SelectItem>
+                  <SelectItem value="software">Software</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
-            <div className="flex justify-end pt-2">
-              <Button size="sm" className="px-6">
-                <Package className="h-4 w-4 mr-2" />
-                Add Part
-              </Button>
+            <div className="space-y-1">
+              <Label htmlFor="partsNumber" className="text-xs">Part Number</Label>
+              <Input
+                id="partsNumber"
+                value={formData.partsNumber}
+                onChange={(e) => handleInputChange("partsNumber", e.target.value)}
+                placeholder="Part number"
+                className="h-9"
+              />
+            </div>
+
+            <div className="space-y-1">
+              <Label htmlFor="partsDescription" className="text-xs">Description</Label>
+              <Input
+                id="partsDescription"
+                value={formData.partsDescription}
+                onChange={(e) => handleInputChange("partsDescription", e.target.value)}
+                placeholder="Description"
+                className="h-9"
+              />
+            </div>
+
+            <div className="space-y-1">
+              <Label htmlFor="partsCost" className="text-xs">Cost</Label>
+              <Input
+                id="partsCost"
+                type="number"
+                value={formData.partsCost}
+                onChange={(e) => handleInputChange("partsCost", e.target.value)}
+                placeholder="0.00"
+                className="h-9"
+              />
+            </div>
+
+            <div className="space-y-1">
+              <Label htmlFor="partsQty" className="text-xs">Qty</Label>
+              <Input
+                id="partsQty"
+                type="number"
+                value={formData.partsQty}
+                onChange={(e) => handleInputChange("partsQty", e.target.value)}
+                placeholder="1"
+                className="h-9"
+              />
             </div>
           </div>
 
-          {/* Parts Table */}
-          <div className="border rounded-lg overflow-hidden bg-background">
-            <div className="bg-muted/50 grid grid-cols-6 gap-4 p-3 text-xs font-semibold text-muted-foreground uppercase tracking-wide border-b">
+          <div className="flex justify-end mb-4">
+            <Button size="sm">Add Part</Button>
+          </div>
+
+          <div className="border rounded-lg">
+            <div className="bg-muted grid grid-cols-6 gap-4 p-2 text-xs font-medium">
               <div>Category</div>
               <div>Part Number</div>
               <div>Description</div>
-              <div>Unit Cost</div>
-              <div>Quantity</div>
+              <div>Cost</div>
+              <div>Qty</div>
               <div>Total</div>
             </div>
-            <div className="min-h-[120px] flex items-center justify-center text-muted-foreground">
-              <div className="text-center">
-                <Settings className="h-8 w-8 mx-auto mb-2 opacity-30" />
-                <p className="text-sm">No parts registered</p>
-                <p className="text-xs">Add parts using the form above</p>
-              </div>
+            <div className="p-6 text-center text-muted-foreground text-sm">
+              No parts added
             </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* Comments & Communication Section */}
-      <Card className="border-0 shadow-lg">
-        <CardContent className="p-6 space-y-6">
-          <div className="flex items-center justify-between pb-4 border-b border-border">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-orange-100 rounded-lg dark:bg-orange-900/20">
-                <List className="h-5 w-5 text-orange-600 dark:text-orange-400" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold text-foreground">Comments & Notes</h3>
-                <p className="text-sm text-muted-foreground">Factory communication and documentation</p>
-              </div>
+      {/* Comments */}
+      <Card>
+        <CardContent className="p-6">
+          <h3 className="text-lg font-semibold mb-4">Comments</h3>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-4">
+            <div className="space-y-1">
+              <Label htmlFor="commentType" className="text-xs">Type</Label>
+              <Select value={formData.commentType} onValueChange={(value) => handleInputChange("commentType", value)}>
+                <SelectTrigger className="h-9">
+                  <SelectValue placeholder="Type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="general">General</SelectItem>
+                  <SelectItem value="technical">Technical</SelectItem>
+                  <SelectItem value="quality">Quality</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
-            <Badge variant="outline" className="text-xs">
-              {0} Comments
-            </Badge>
-          </div>
 
-          <div className="bg-muted/30 rounded-lg p-4 space-y-4">
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="commentType" className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Comment Type</Label>
-                <Select value={formData.commentType} onValueChange={(value) => handleInputChange("commentType", value)}>
-                  <SelectTrigger className="h-10 bg-background border-border/50">
-                    <SelectValue placeholder="Select type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="general">General Note</SelectItem>
-                    <SelectItem value="technical">Technical Issue</SelectItem>
-                    <SelectItem value="quality">Quality Concern</SelectItem>
-                    <SelectItem value="factory">Factory Communication</SelectItem>
-                    <SelectItem value="customer">Customer Request</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+            <div className="lg:col-span-2 space-y-1">
+              <Label htmlFor="comment" className="text-xs">Comment</Label>
+              <Textarea
+                id="comment"
+                value={formData.comment}
+                onChange={(e) => handleInputChange("comment", e.target.value)}
+                placeholder="Enter comment..."
+                className="h-16"
+              />
+            </div>
 
-              <div className="lg:col-span-2 space-y-2">
-                <Label htmlFor="comment" className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Comment Text</Label>
-                <Textarea
-                  id="comment"
-                  value={formData.comment}
-                  onChange={(e) => handleInputChange("comment", e.target.value)}
-                  placeholder="Enter detailed comment or instructions..."
-                  className="h-20 bg-background border-border/50 resize-none"
+            <div className="space-y-2">
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="includeInCopyAsNew"
+                  checked={formData.includeInCopyAsNew}
+                  onCheckedChange={(checked) => handleInputChange("includeInCopyAsNew", checked)}
                 />
+                <Label htmlFor="includeInCopyAsNew" className="text-xs">Copy Forward</Label>
               </div>
-
-              <div className="space-y-4">
-                <div className="flex items-center space-x-3 p-3 bg-background/50 rounded-lg border border-border/50">
-                  <Checkbox
-                    id="includeInCopyAsNew"
-                    checked={formData.includeInCopyAsNew}
-                    onCheckedChange={(checked) => handleInputChange("includeInCopyAsNew", checked)}
-                    className="h-4 w-4"
-                  />
-                  <div>
-                    <Label htmlFor="includeInCopyAsNew" className="text-sm font-medium cursor-pointer">
-                      Copy Forward
-                    </Label>
-                    <p className="text-xs text-muted-foreground">Include in future copies</p>
-                  </div>
-                </div>
-                <Button size="sm" className="w-full h-10">
-                  <List className="h-4 w-4 mr-2" />
-                  Add Comment
-                </Button>
-              </div>
+              <Button size="sm" className="w-full h-9">Add</Button>
             </div>
           </div>
 
-          {/* Comments History */}
-          <div className="border rounded-lg overflow-hidden bg-background">
-            <div className="bg-muted/50 grid grid-cols-4 gap-4 p-3 text-xs font-semibold text-muted-foreground uppercase tracking-wide border-b">
+          <div className="border rounded-lg">
+            <div className="bg-muted grid grid-cols-4 gap-4 p-2 text-xs font-medium">
               <div>Type</div>
               <div>User</div>
               <div>Date</div>
               <div>Comment</div>
             </div>
-            <div className="min-h-[120px] flex items-center justify-center text-muted-foreground">
-              <div className="text-center">
-                <List className="h-8 w-8 mx-auto mb-2 opacity-30" />
-                <p className="text-sm">No comments yet</p>
-                <p className="text-xs">Start a conversation using the form above</p>
-              </div>
+            <div className="p-6 text-center text-muted-foreground text-sm">
+              No comments added
             </div>
           </div>
         </CardContent>
