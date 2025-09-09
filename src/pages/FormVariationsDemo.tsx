@@ -829,16 +829,6 @@ const FormVariationsDemo = () => {
 
   const renderOptionsSection = () => (
     <div className="space-y-6">
-      <div className="flex items-center gap-3 pb-4 border-b border-border">
-        <div className="p-2 bg-primary/10 rounded-lg">
-          <Settings className="h-5 w-5 text-primary" />
-        </div>
-        <div>
-          <h2 className="text-lg font-semibold text-foreground">Additional Options</h2>
-          <p className="text-sm text-muted-foreground">Configure additional settings and options</p>
-        </div>
-      </div>
-
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {[
           { key: 'warranty', label: 'Warranty', desc: 'Item is under warranty', icon: '🛡️' },
