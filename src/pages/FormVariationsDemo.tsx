@@ -123,14 +123,12 @@ const FormVariationsDemo = () => {
     
     // General Information
     type: "",
-    reportNumber: "0152.01-802936-001",
-    itemStatus: "in-lab",
+    reportNumber: "",
+    itemStatus: "",
     assignedTo: "",
     priority: "Normal",
-    location: "baton-rouge",
-    division: "lab",
-    calFreq: "",
-    actionCode: "",
+    location: "",
+    division: "",
     
     // Product Information
     manufacturer: "",
@@ -228,197 +226,178 @@ const FormVariationsDemo = () => {
 
   // Common form sections content
   const renderGeneralSection = () => (
-    <div className="space-y-4">
-      {/* Report Number with Prev/Next */}
-      <div className="flex items-center justify-between pb-3 border-b border-border">
-        <div className="flex items-center gap-2">
-          <span className="font-semibold">Report #:</span>
-          <span>{formData.reportNumber}</span>
+    <div className="space-y-6">
+      <div className="flex items-center gap-3 pb-4 border-b border-border">
+        <div className="p-2 bg-primary/10 rounded-lg">
+          <Info className="h-5 w-5 text-primary" />
         </div>
-        <div className="flex gap-1">
-          <Button variant="outline" size="sm" className="h-7 px-3 bg-yellow-200 hover:bg-yellow-300 text-black border-yellow-400 text-xs">
-            Prev
-          </Button>
-          <Button variant="outline" size="sm" className="h-7 px-3 bg-yellow-200 hover:bg-yellow-300 text-black border-yellow-400 text-xs">
-            Next
-          </Button>
+        <div>
+          <h2 className="text-lg font-semibold text-foreground">General Information</h2>
+          <p className="text-sm text-muted-foreground">Basic work order item details</p>
         </div>
       </div>
 
-      {/* Created and Modified dates */}
-      <div className="grid grid-cols-2 gap-4 text-sm pb-3 border-b border-border">
-        <div className="flex gap-2">
-          <span className="font-medium">Created Date:</span>
-          <span>09/09/2025</span>
-          <span className="text-muted-foreground">Admin User</span>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="space-y-2">
+          <Label htmlFor="type" className="text-sm font-medium">Type *</Label>
+          <Select value={formData.type} onValueChange={(value) => handleInputChange("type", value)}>
+            <SelectTrigger className="h-11">
+              <SelectValue placeholder="Select type" />
+            </SelectTrigger>
+            <SelectContent className="max-h-48 overflow-y-auto">
+              <SelectItem value="single">Single</SelectItem>
+              <SelectItem value="esl-blankets">ESL - Blankets</SelectItem>
+              <SelectItem value="esl-coverups">ESL - CoverUps</SelectItem>
+              <SelectItem value="esl-footwear">ESL - Footwear</SelectItem>
+              <SelectItem value="esl-gloves">ESL - Gloves</SelectItem>
+              <SelectItem value="esl-grounds">ESL - Grounds</SelectItem>
+              <SelectItem value="esl-hotsticks">ESL - Hotsticks</SelectItem>
+              <SelectItem value="esl-insulated-tools">ESL - Insulated Tools</SelectItem>
+              <SelectItem value="esl-jumpers">ESL - Jumpers</SelectItem>
+              <SelectItem value="esl-line-hoses">ESL - Line Hoses</SelectItem>
+              <SelectItem value="esl-matting">ESL - Matting</SelectItem>
+              <SelectItem value="esl-roll-blankets">ESL - Roll Blankets</SelectItem>
+              <SelectItem value="esl-sleeves">ESL - Sleeves</SelectItem>
+              <SelectItem value="itl-gauges">ITL - Gauges</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
-        <div className="flex gap-2">
-          <span className="font-medium">Modified Date:</span>
-          <span>09/09/2025</span>
-          <span className="text-muted-foreground">Admin User</span>
+
+        <div className="space-y-2">
+          <Label htmlFor="reportNumber" className="text-sm font-medium">Report Number *</Label>
+          <Input
+            id="reportNumber"
+            value={formData.reportNumber}
+            onChange={(e) => handleInputChange("reportNumber", e.target.value)}
+            placeholder="0152.01-802930-001"
+            className="h-11"
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="itemStatus" className="text-sm font-medium">Item Status</Label>
+          <Select value={formData.itemStatus} onValueChange={(value) => handleInputChange("itemStatus", value)}>
+            <SelectTrigger className="h-11">
+              <SelectValue placeholder="Select status" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="in-lab">In Lab</SelectItem>
+              <SelectItem value="pending">Pending</SelectItem>
+              <SelectItem value="complete">Complete</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="priority" className="text-sm font-medium">Priority</Label>
+          <Select value={formData.priority} onValueChange={(value) => handleInputChange("priority", value)}>
+            <SelectTrigger className="h-11">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="normal">Normal</SelectItem>
+              <SelectItem value="high">High</SelectItem>
+              <SelectItem value="urgent">Urgent</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="location" className="text-sm font-medium">Location</Label>
+          <Input
+            id="location"
+            value={formData.location}
+            onChange={(e) => handleInputChange("location", e.target.value)}
+            placeholder="Baton Rouge"
+            className="h-11"
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="division" className="text-sm font-medium">Division</Label>
+          <Select value={formData.division} onValueChange={(value) => handleInputChange("division", value)}>
+            <SelectTrigger className="h-11">
+              <SelectValue placeholder="Select division" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="lab">Lab</SelectItem>
+              <SelectItem value="field">Field</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
       </div>
 
-      {/* Item Status */}
-      <div className="flex items-center gap-3 pb-3 border-b border-border">
-        <span className="font-medium w-24">Item Status:</span>
-        <Select value={formData.itemStatus} onValueChange={(value) => handleInputChange("itemStatus", value)}>
-          <SelectTrigger className="w-48 h-8">
-            <SelectValue placeholder="Select status" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="in-lab">In Lab</SelectItem>
-            <SelectItem value="pending">Pending</SelectItem>
-            <SelectItem value="complete">Complete</SelectItem>
-          </SelectContent>
-        </Select>
-        <Button variant="outline" size="sm" className="h-7 px-3 bg-yellow-200 hover:bg-yellow-300 text-black border-yellow-400 text-xs">
-          change
-        </Button>
-      </div>
+      <div className="space-y-2">
+        <Label htmlFor="assignedTo" className="text-sm font-medium">Assigned To</Label>
+        <div className="relative max-w-md">
+          <Input
+            id="assignedTo"
+            value={assigneeSearchValue || formData.assignedTo}
+            onChange={(e) => {
+              setAssigneeSearchValue(e.target.value);
+              handleInputChange("assignedTo", e.target.value);
+            }}
+            placeholder="Type to search assignees..."
+            className="h-11 pr-10"
+          />
+          
+          <Popover open={assigneeDropdownOpen} onOpenChange={setAssigneeDropdownOpen}>
+            <PopoverTrigger asChild>
+              <Button
+                type="button"
+                variant="ghost"
+                className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 p-0 hover:bg-accent"
+                aria-label="Show all assignees"
+              >
+                <ChevronsUpDown className="h-4 w-4" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-80 p-0" align="end">
+              <Command>
+                <CommandList>
+                  <CommandGroup heading="All Assignees">
+                    {assignees.map((assignee) => (
+                      <CommandItem
+                        key={assignee.value}
+                        value={assignee.value}
+                        onSelect={() => {
+                          handleInputChange("assignedTo", assignee.value);
+                          setAssigneeSearchValue("");
+                          setAssigneeDropdownOpen(false);
+                        }}
+                      >
+                        <Check
+                          className={`mr-2 h-4 w-4 ${
+                            formData.assignedTo === assignee.value ? "opacity-100" : "opacity-0"
+                          }`}
+                        />
+                        {assignee.label}
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                </CommandList>
+              </Command>
+            </PopoverContent>
+          </Popover>
 
-      {/* Other Section */}
-      <div className="space-y-3">
-        <h3 className="font-semibold">Other:</h3>
-        
-        <div className="space-y-3">
-          <div className="flex items-center gap-3">
-            <span className="font-medium w-24">Assigned To:</span>
-            <div className="relative w-80">
-              <Input
-                value={assigneeSearchValue || formData.assignedTo}
-                onChange={(e) => {
-                  setAssigneeSearchValue(e.target.value);
-                  handleInputChange("assignedTo", e.target.value);
-                }}
-                placeholder=""
-                className="h-8 pr-8"
-              />
-              
-              <Popover open={assigneeDropdownOpen} onOpenChange={setAssigneeDropdownOpen}>
-                <PopoverTrigger asChild>
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    className="absolute right-1 top-1/2 -translate-y-1/2 h-6 w-6 p-0 hover:bg-accent"
-                    aria-label="Show all assignees"
-                  >
-                    <ChevronsUpDown className="h-3 w-3" />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-80 p-0" align="end">
-                  <Command>
-                    <CommandList>
-                      <CommandGroup heading="All Assignees">
-                        {assignees.map((assignee) => (
-                          <CommandItem
-                            key={assignee.value}
-                            value={assignee.value}
-                            onSelect={() => {
-                              handleInputChange("assignedTo", assignee.value);
-                              setAssigneeSearchValue("");
-                              setAssigneeDropdownOpen(false);
-                            }}
-                          >
-                            <Check
-                              className={`mr-2 h-4 w-4 ${
-                                formData.assignedTo === assignee.value ? "opacity-100" : "opacity-0"
-                              }`}
-                            />
-                            {assignee.label}
-                          </CommandItem>
-                        ))}
-                      </CommandGroup>
-                    </CommandList>
-                  </Command>
-                </PopoverContent>
-              </Popover>
-
-              {/* Auto-suggestion dropdown */}
-              {assigneeSearchValue && filteredAssignees.length > 0 && (
-                <div className="absolute top-full left-0 right-0 z-50 mt-1 bg-popover border rounded-md shadow-lg max-h-48 overflow-y-auto">
-                  {filteredAssignees.map((assignee) => (
-                    <button
-                      key={assignee.value}
-                      type="button"
-                      className="w-full text-left px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground flex items-center"
-                      onClick={() => {
-                        handleInputChange("assignedTo", assignee.value);
-                        setAssigneeSearchValue("");
-                      }}
-                    >
-                      {assignee.label}
-                    </button>
-                  ))}
-                </div>
-              )}
+          {/* Auto-suggestion dropdown */}
+          {assigneeSearchValue && filteredAssignees.length > 0 && (
+            <div className="absolute top-full left-0 right-0 z-50 mt-1 bg-popover border rounded-md shadow-lg max-h-48 overflow-y-auto">
+              {filteredAssignees.map((assignee) => (
+                <button
+                  key={assignee.value}
+                  type="button"
+                  className="w-full text-left px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground flex items-center"
+                  onClick={() => {
+                    handleInputChange("assignedTo", assignee.value);
+                    setAssigneeSearchValue("");
+                  }}
+                >
+                  {assignee.label}
+                </button>
+              ))}
             </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <span className="font-medium w-24">Cal Freq:</span>
-            <Input
-              value={formData.calFreq || ''}
-              onChange={(e) => handleInputChange("calFreq", e.target.value)}
-              placeholder=""
-              className="w-80 h-8"
-            />
-          </div>
-
-          <div className="flex items-center gap-3">
-            <span className="font-medium w-24">Priority:</span>
-            <Select value={formData.priority} onValueChange={(value) => handleInputChange("priority", value)}>
-              <SelectTrigger className="w-80 h-8">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="normal">Normal</SelectItem>
-                <SelectItem value="high">High</SelectItem>
-                <SelectItem value="urgent">Urgent</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <span className="font-medium w-24">Location:</span>
-            <Select value={formData.location} onValueChange={(value) => handleInputChange("location", value)}>
-              <SelectTrigger className="w-80 h-8">
-                <SelectValue placeholder="Select location" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="baton-rouge">Baton Rouge</SelectItem>
-                <SelectItem value="new-orleans">New Orleans</SelectItem>
-                <SelectItem value="lafayette">Lafayette</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <span className="font-medium w-24">Division:</span>
-            <Select value={formData.division} onValueChange={(value) => handleInputChange("division", value)}>
-              <SelectTrigger className="w-80 h-8">
-                <SelectValue placeholder="Select division" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="lab">Lab</SelectItem>
-                <SelectItem value="field">Field</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <span className="font-medium w-24">Action Code:</span>
-            <Select value={formData.actionCode || ''} onValueChange={(value) => handleInputChange("actionCode", value)}>
-              <SelectTrigger className="w-80 h-8">
-                <SelectValue placeholder="Select action code" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="calibrate">Calibrate</SelectItem>
-                <SelectItem value="repair">Repair</SelectItem>
-                <SelectItem value="inspect">Inspect</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+          )}
         </div>
       </div>
     </div>
