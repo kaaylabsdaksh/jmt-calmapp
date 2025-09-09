@@ -161,6 +161,11 @@ const FormVariationsDemo = () => {
     needBy: "",
     deliverByDate: "",
     
+    // Departure Information
+    invNumber: "",
+    dtNumber: "",
+    deliveryStatus: "",
+    
     // Options
     warranty: false,
     estimate: false,
@@ -889,6 +894,60 @@ const FormVariationsDemo = () => {
                 onChange={(e) => handleInputChange("needBy", e.target.value)}
                 className="h-11"
               />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="border-0 shadow-md">
+        <CardContent className="p-6 space-y-4">
+          <div className="flex items-center gap-3 pb-4 border-b border-border">
+            <div className="p-2 bg-primary/10 rounded-lg">
+              <Truck className="h-5 w-5 text-primary" />
+            </div>
+            <div>
+              <h3 className="font-semibold">Departure Information</h3>
+              <p className="text-sm text-muted-foreground">Delivery and departure details</p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="invNumber" className="text-sm font-medium">Inv #</Label>
+              <Input
+                id="invNumber"
+                value={formData.invNumber}
+                onChange={(e) => handleInputChange("invNumber", e.target.value)}
+                placeholder="Enter invoice number"
+                className="h-11"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="dtNumber" className="text-sm font-medium">DT #</Label>
+              <Input
+                id="dtNumber"
+                value={formData.dtNumber}
+                onChange={(e) => handleInputChange("dtNumber", e.target.value)}
+                placeholder="Enter DT number"
+                className="h-11"
+              />
+            </div>
+
+            <div className="space-y-2 md:col-span-2">
+              <Label htmlFor="deliveryStatus" className="text-sm font-medium">Delivery Status</Label>
+              <Select value={formData.deliveryStatus} onValueChange={(value) => handleInputChange("deliveryStatus", value)}>
+                <SelectTrigger className="h-11">
+                  <SelectValue placeholder="Select delivery status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="pending">Pending</SelectItem>
+                  <SelectItem value="in-transit">In Transit</SelectItem>
+                  <SelectItem value="delivered">Delivered</SelectItem>
+                  <SelectItem value="returned">Returned</SelectItem>
+                  <SelectItem value="cancelled">Cancelled</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
         </CardContent>
