@@ -394,79 +394,79 @@ const FormVariationsDemo = () => {
             </SelectContent>
           </Select>
         </div>
-      </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="assignedTo" className="text-sm font-medium">Assigned To</Label>
-        <div className="relative max-w-md">
-          <Input
-            id="assignedTo"
-            value={assigneeSearchValue || formData.assignedTo}
-            onChange={(e) => {
-              setAssigneeSearchValue(e.target.value);
-              handleInputChange("assignedTo", e.target.value);
-            }}
-            placeholder="Type to search assignees..."
-            className="h-11 pr-10"
-          />
-          
-          <Popover open={assigneeDropdownOpen} onOpenChange={setAssigneeDropdownOpen}>
-            <PopoverTrigger asChild>
-              <Button
-                type="button"
-                variant="ghost"
-                className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 p-0 hover:bg-accent"
-                aria-label="Show all assignees"
-              >
-                <ChevronsUpDown className="h-4 w-4" />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-80 p-0" align="end">
-              <Command>
-                <CommandList>
-                  <CommandGroup heading="All Assignees">
-                    {assignees.map((assignee) => (
-                      <CommandItem
-                        key={assignee.value}
-                        value={assignee.value}
-                        onSelect={() => {
-                          handleInputChange("assignedTo", assignee.value);
-                          setAssigneeSearchValue("");
-                          setAssigneeDropdownOpen(false);
-                        }}
-                      >
-                        <Check
-                          className={`mr-2 h-4 w-4 ${
-                            formData.assignedTo === assignee.value ? "opacity-100" : "opacity-0"
-                          }`}
-                        />
-                        {assignee.label}
-                      </CommandItem>
-                    ))}
-                  </CommandGroup>
-                </CommandList>
-              </Command>
-            </PopoverContent>
-          </Popover>
-
-          {/* Auto-suggestion dropdown */}
-          {assigneeSearchValue && filteredAssignees.length > 0 && (
-            <div className="absolute top-full left-0 right-0 z-50 mt-1 bg-popover border rounded-md shadow-lg max-h-48 overflow-y-auto">
-              {filteredAssignees.map((assignee) => (
-                <button
-                  key={assignee.value}
+        <div className="space-y-2">
+          <Label htmlFor="assignedTo" className="text-sm font-medium">Assigned To</Label>
+          <div className="relative">
+            <Input
+              id="assignedTo"
+              value={assigneeSearchValue || formData.assignedTo}
+              onChange={(e) => {
+                setAssigneeSearchValue(e.target.value);
+                handleInputChange("assignedTo", e.target.value);
+              }}
+              placeholder="Type to search assignees..."
+              className="h-11 pr-10"
+            />
+            
+            <Popover open={assigneeDropdownOpen} onOpenChange={setAssigneeDropdownOpen}>
+              <PopoverTrigger asChild>
+                <Button
                   type="button"
-                  className="w-full text-left px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground flex items-center"
-                  onClick={() => {
-                    handleInputChange("assignedTo", assignee.value);
-                    setAssigneeSearchValue("");
-                  }}
+                  variant="ghost"
+                  className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 p-0 hover:bg-accent"
+                  aria-label="Show all assignees"
                 >
-                  {assignee.label}
-                </button>
-              ))}
-            </div>
-          )}
+                  <ChevronsUpDown className="h-4 w-4" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-80 p-0" align="end">
+                <Command>
+                  <CommandList>
+                    <CommandGroup heading="All Assignees">
+                      {assignees.map((assignee) => (
+                        <CommandItem
+                          key={assignee.value}
+                          value={assignee.value}
+                          onSelect={() => {
+                            handleInputChange("assignedTo", assignee.value);
+                            setAssigneeSearchValue("");
+                            setAssigneeDropdownOpen(false);
+                          }}
+                        >
+                          <Check
+                            className={`mr-2 h-4 w-4 ${
+                              formData.assignedTo === assignee.value ? "opacity-100" : "opacity-0"
+                            }`}
+                          />
+                          {assignee.label}
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  </CommandList>
+                </Command>
+              </PopoverContent>
+            </Popover>
+
+            {/* Auto-suggestion dropdown */}
+            {assigneeSearchValue && filteredAssignees.length > 0 && (
+              <div className="absolute top-full left-0 right-0 z-50 mt-1 bg-popover border rounded-md shadow-lg max-h-48 overflow-y-auto">
+                {filteredAssignees.map((assignee) => (
+                  <button
+                    key={assignee.value}
+                    type="button"
+                    className="w-full text-left px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground flex items-center"
+                    onClick={() => {
+                      handleInputChange("assignedTo", assignee.value);
+                      setAssigneeSearchValue("");
+                    }}
+                  >
+                    {assignee.label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
