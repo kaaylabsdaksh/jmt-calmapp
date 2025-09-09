@@ -328,17 +328,17 @@ const AddNewWorkOrder = () => {
       </div>
 
       {/* Content Area */}
-      <div className="px-4 sm:px-6 py-6 pb-24">
-        <div className="w-full space-y-6">
+      <div className="px-3 sm:px-4 lg:px-6 py-4 sm:py-6 pb-20 sm:pb-24">
+        <div className="w-full space-y-4 sm:space-y-6">
           {/* Header Info Card */}
           <Card>
-            <CardContent className="p-6">
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                <div>
+            <CardContent className="p-4 sm:p-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                <div className="space-y-2">
                   <Label className="text-sm font-medium text-foreground">Work Order #</Label>
-                  <div className="text-lg font-bold text-foreground mt-1">{workOrderData.workOrderNumber}</div>
+                  <div className="text-base sm:text-lg font-bold text-foreground">{workOrderData.workOrderNumber}</div>
                 </div>
-                <div>
+                <div className="space-y-2">
                   <Label htmlFor="srDocument" className="text-sm font-medium text-foreground">SR Doc</Label>
                   <Input
                     id="srDocument"
@@ -346,16 +346,16 @@ const AddNewWorkOrder = () => {
                     value={workOrderData.srDocument}
                     onChange={(e) => setWorkOrderData(prev => ({ ...prev, srDocument: e.target.value }))}
                     disabled={areFieldsDisabled()}
-                    className="mt-1"
+                    className="h-9 sm:h-10"
                   />
                 </div>
-                <div>
+                <div className="space-y-2">
                   <Label className="text-sm font-medium text-foreground">Salesperson</Label>
-                  <div className="text-sm text-foreground mt-1">{workOrderData.salesperson}</div>
+                  <div className="text-sm text-foreground p-2 bg-muted rounded border">{workOrderData.salesperson}</div>
                 </div>
-                <div>
+                <div className="space-y-2">
                   <Label className="text-sm font-medium text-foreground">Contact</Label>
-                  <div className="text-sm text-foreground mt-1">{workOrderData.contact}</div>
+                  <div className="text-sm text-foreground p-2 bg-muted rounded border">{workOrderData.contact}</div>
                 </div>
               </div>
             </CardContent>
@@ -424,10 +424,10 @@ const AddNewWorkOrder = () => {
               </TabsList>
             )}
 
-            <TabsContent value="general" className="space-y-6">
+            <TabsContent value="general" className="space-y-4 sm:space-y-6">
               <Card>
-                <CardContent className="p-6">
-                  <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <CardContent className="p-4 sm:p-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                     {/* Account Number */}
                     <div className="space-y-2 relative" ref={inputRef}>
                       <Label htmlFor="accountNumber" className="text-sm font-medium">
@@ -441,7 +441,7 @@ const AddNewWorkOrder = () => {
                           onChange={handleAccountNumberChange}
                           onKeyDown={handleKeyDown}
                           maxLength={5}
-                          className={!workOrderData.accountNumber ? "border-destructive" : ""}
+                          className={`h-9 sm:h-10 ${!workOrderData.accountNumber ? "border-destructive" : ""}`}
                         />
                         {!workOrderData.accountNumber && (
                           <div className="absolute right-3 top-1/2 -translate-y-1/2 w-2 h-2 bg-destructive rounded-full"></div>
@@ -710,12 +710,12 @@ const AddNewWorkOrder = () => {
 
             <TabsContent value="items">
               <Card>
-                <CardHeader className="pb-4">
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-xl font-semibold text-foreground">Work Order Items</h2>
+                <CardHeader className="pb-3 sm:pb-4">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
+                    <h2 className="text-lg sm:text-xl font-semibold text-foreground">Work Order Items</h2>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="outline" className="flex items-center gap-2 bg-background">
+                        <Button variant="outline" className="flex items-center gap-2 bg-background text-sm w-full sm:w-auto">
                           {viewMode === 'receiving' ? 'Receiving View' : 'Default View'}
                           <ChevronDown className="w-4 h-4" />
                         </Button>
@@ -737,32 +737,37 @@ const AddNewWorkOrder = () => {
                     </DropdownMenu>
                   </div>
                 </CardHeader>
-                <CardContent className="p-6 pt-0">
-                  <div className="space-y-6">
+                <CardContent className="p-4 sm:p-6 pt-0">
+                  <div className="space-y-4 sm:space-y-6">
                      {/* Action Buttons */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2 sm:gap-3">
                       <Button 
                         onClick={() => navigate("/form-variations")}
-                        className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold flex items-center justify-center gap-2 h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md"
+                        className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
                       >
-                        <Plus className="w-4 h-4" />
-                        Add New Item
+                        <Plus className="w-3 h-3 sm:w-4 sm:h-4" />
+                        <span className="hidden sm:inline">Add New Item</span>
+                        <span className="sm:hidden">Add Item</span>
                       </Button>
-                      <Button className="bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white font-semibold flex items-center justify-center gap-2 h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md">
-                        <PlusCircle className="w-4 h-4" />
-                        Add New Item w/PO
+                      <Button className="bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm">
+                        <PlusCircle className="w-3 h-3 sm:w-4 sm:h-4" />
+                        <span className="hidden sm:inline">Add New Item w/PO</span>
+                        <span className="sm:hidden">Add w/PO</span>
                       </Button>
-                      <Button className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold flex items-center justify-center gap-2 h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md">
-                        <QrCode className="w-4 h-4" />
-                        Print QR Sheet
+                      <Button className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm">
+                        <QrCode className="w-3 h-3 sm:w-4 sm:h-4" />
+                        <span className="hidden sm:inline">Print QR Sheet</span>
+                        <span className="sm:hidden">QR Sheet</span>
                       </Button>
-                      <Button className="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white font-semibold flex items-center justify-center gap-2 h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md">
-                        <Copy className="w-4 h-4" />
-                        Copy From Other WO
+                      <Button className="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm">
+                        <Copy className="w-3 h-3 sm:w-4 sm:h-4" />
+                        <span className="hidden sm:inline">Copy From Other WO</span>
+                        <span className="sm:hidden">Copy WO</span>
                       </Button>
-                      <Button className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold flex items-center justify-center gap-2 h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md">
-                        <PackagePlus className="w-4 h-4" />
-                        Create Unused Items
+                      <Button className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm">
+                        <PackagePlus className="w-3 h-3 sm:w-4 sm:h-4" />
+                        <span className="hidden sm:inline">Create Unused Items</span>
+                        <span className="sm:hidden">Unused Items</span>
                       </Button>
                     </div>
 
@@ -899,13 +904,13 @@ const AddNewWorkOrder = () => {
       </div>
 
       {/* Fixed Bottom Action Bar */}
-      <div className="fixed bottom-0 left-0 right-0 bg-card border-t px-4 sm:px-6 py-3 sm:py-4 shadow-lg">
+      <div className="fixed bottom-0 left-0 right-0 bg-card border-t px-3 sm:px-4 lg:px-6 py-2 sm:py-3 lg:py-4 shadow-lg">
         <div className="w-full flex items-center justify-end gap-2 sm:gap-3">
           <Button 
             variant="ghost" 
             onClick={handleCancel} 
             disabled={workOrderData.accountNumber.length !== 5}
-            className="text-muted-foreground hover:text-foreground text-sm px-3 py-2 disabled:opacity-50"
+            className="text-muted-foreground hover:text-foreground text-xs sm:text-sm px-2 sm:px-3 py-1.5 sm:py-2 disabled:opacity-50 h-8 sm:h-9"
           >
             <X className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
             Cancel
@@ -913,7 +918,7 @@ const AddNewWorkOrder = () => {
           <Button 
             onClick={handleSave} 
             disabled={workOrderData.accountNumber.length !== 5}
-            className="bg-success text-success-foreground hover:bg-success/90 text-sm px-3 py-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="bg-success text-success-foreground hover:bg-success/90 text-xs sm:text-sm px-2 sm:px-3 py-1.5 sm:py-2 disabled:opacity-50 disabled:cursor-not-allowed h-8 sm:h-9"
           >
             <Save className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
             <span className="hidden sm:inline">Save Work Order</span>
