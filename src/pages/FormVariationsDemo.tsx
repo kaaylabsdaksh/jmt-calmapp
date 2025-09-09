@@ -1264,9 +1264,21 @@ const FormVariationsDemo = () => {
             </DialogHeader>
             <div className="space-y-4 py-4">
               <div className="space-y-2">
-                <p className="text-sm text-muted-foreground">
-                  You are about to change the status to: <span className="font-semibold text-foreground">{pendingStatusChange}</span>
-                </p>
+                <Label htmlFor="newStatus" className="text-sm font-medium">
+                  New Status
+                </Label>
+                <Select value={pendingStatusChange} onValueChange={setPendingStatusChange}>
+                  <SelectTrigger className="h-11">
+                    <SelectValue placeholder="Select new status" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-popover border z-50">
+                    <SelectItem value="in-lab">In Lab</SelectItem>
+                    <SelectItem value="pending">Pending</SelectItem>
+                    <SelectItem value="complete">Complete</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
                 <Label htmlFor="statusComment" className="text-sm font-medium">
                   Comment (Required)
                 </Label>
@@ -1285,7 +1297,7 @@ const FormVariationsDemo = () => {
               </Button>
               <Button 
                 onClick={handleConfirmStatusChange}
-                disabled={!statusChangeComment.trim()}
+                disabled={!statusChangeComment.trim() || !pendingStatusChange}
                 className="bg-primary text-primary-foreground hover:bg-primary/90"
               >
                 Confirm Change
