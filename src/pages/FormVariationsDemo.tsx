@@ -1216,10 +1216,10 @@ const FormVariationsDemo = () => {
   );
 
   return (
-    <div className="min-h-screen bg-background px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-background px-3 sm:px-4 lg:px-6">
       {/* Header */}
-      <header className="bg-background px-4 sm:px-6 py-4 border-b border-border sticky top-0 z-10 backdrop-blur-sm bg-background/80">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between max-w-6xl mx-auto gap-4">
+      <header className="bg-background px-3 sm:px-4 lg:px-6 py-4 border-b border-border sticky top-0 z-10 backdrop-blur-sm bg-background/80">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between w-full gap-4">
           <div className="flex items-center gap-3">
             <Button
               variant="ghost"
@@ -1275,7 +1275,7 @@ const FormVariationsDemo = () => {
       </header>
 
       {/* Form Content */}
-      <div className="p-4 sm:p-6 max-w-6xl mx-auto">
+      <div className="p-4 sm:p-6">
         {/* Work Order Header */}
         {renderWorkOrderHeader()}
         
