@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { ArrowLeft, X, Download, Settings, User, CreditCard, Users, Package, FileText, Calculator, AlertCircle, ExternalLink, Award, Shield, BarChart, Save, LayoutGrid, Table, ChevronDown, Plus, PlusCircle, QrCode, Copy, PackagePlus, Menu } from "lucide-react";
+import { ArrowLeft, X, Download, Settings, User, CreditCard, Users, Package, FileText, Calculator, AlertCircle, ExternalLink, Award, Shield, BarChart, Save, LayoutGrid, Table, ChevronDown, Plus, PlusCircle, QrCode, Copy, PackagePlus, Menu, Check, ChevronsUpDown, Layers, List, ChevronRight, Info, Truck } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { WorkOrderItemsTable } from "@/components/WorkOrderItemsTable";
 import { WorkOrderItemsCards } from "@/components/WorkOrderItemsCards";
@@ -15,6 +15,12 @@ import { WorkOrderItemsReceiving } from "@/components/WorkOrderItemsReceiving";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { ContactForm, ContactFormData } from "@/components/ContactForm";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import { Textarea } from "@/components/ui/textarea";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Badge } from "@/components/ui/badge";
 
 const AddNewWorkOrder = () => {
   const navigate = useNavigate();
@@ -36,6 +42,14 @@ const AddNewWorkOrder = () => {
   const [accountSuggestions, setAccountSuggestions] = useState<Array<{accountNumber: string, customerName: string, srDocument: string, salesperson: string, contact: string}>>([]);
   const [highlightedSuggestion, setHighlightedSuggestion] = useState(-1);
   const [showContactForm, setShowContactForm] = useState(false);
+  const [showAddNewItemForm, setShowAddNewItemForm] = useState(false);
+  const [interfaceType, setInterfaceType] = useState<'tabs' | 'accordion'>('tabs');
+  const [showManufacturerDialog, setShowManufacturerDialog] = useState(false);
+  const [newManufacturerName, setNewManufacturerName] = useState("");
+  const [manufacturerDropdownOpen, setManufacturerDropdownOpen] = useState(false);
+  const [manufacturerSearchValue, setManufacturerSearchValue] = useState("");
+  const [assigneeDropdownOpen, setAssigneeDropdownOpen] = useState(false);
+  const [assigneeSearchValue, setAssigneeSearchValue] = useState("");
   const [receivingItems, setReceivingItems] = useState<Array<{
     id: string;
     itemNumber: string;
@@ -110,6 +124,76 @@ const AddNewWorkOrder = () => {
     }
   ]);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Add new item form data
+  const manufacturers = [
+    { value: "1m-working-stand", label: "1M WORKING STAND." },
+    { value: "3d-instruments", label: "3D INSTRUMENTS" },
+    { value: "3e", label: "3E" },
+    { value: "3m", label: "3M" },
+    { value: "3z-telecom", label: "3Z TELECOM" },
+    { value: "4b-components-limited", label: "4B COMPONENTS LIMITED" },
+    { value: "abbott", label: "ABBOTT" },
+    { value: "abb", label: "ABB" },
+    { value: "agilent", label: "AGILENT TECHNOLOGIES" },
+    { value: "ametek", label: "AMETEK" },
+    { value: "anritsu", label: "ANRITSU" },
+    { value: "ansys", label: "ANSYS" },
+    { value: "arcom", label: "ARCOM" },
+    { value: "astro-med", label: "ASTRO-MED" },
+    { value: "beckman-coulter", label: "BECKMAN COULTER" },
+    { value: "bio-rad", label: "BIO-RAD" },
+    { value: "bk-precision", label: "BK PRECISION" },
+    { value: "broadcom", label: "BROADCOM" },
+    { value: "california-instruments", label: "CALIFORNIA INSTRUMENTS" },
+    { value: "chroma", label: "CHROMA" },
+    { value: "danaher", label: "DANAHER" },
+    { value: "emerson", label: "EMERSON" },
+    { value: "fluke", label: "FLUKE CORPORATION" },
+    { value: "ge", label: "GENERAL ELECTRIC" },
+    { value: "honeywell", label: "HONEYWELL" },
+    { value: "hp", label: "HEWLETT PACKARD" },
+    { value: "ixia", label: "IXIA" },
+    { value: "keithley", label: "KEITHLEY INSTRUMENTS" },
+    { value: "keysight", label: "KEYSIGHT TECHNOLOGIES" },
+    { value: "megger", label: "MEGGER" },
+    { value: "national-instruments", label: "NATIONAL INSTRUMENTS" },
+    { value: "omicron", label: "OMICRON ELECTRONICS" },
+    { value: "rohde-schwarz", label: "ROHDE & SCHWARZ" },
+    { value: "siemens", label: "SIEMENS" },
+    { value: "tektronix", label: "TEKTRONIX" },
+    { value: "thermo-fisher", label: "THERMO FISHER SCIENTIFIC" },
+    { value: "yokogawa", label: "YOKOGAWA" },
+  ];
+
+  const assignees = [
+    { value: "aaron-l-briles", label: "Aaron L Briles" },
+    { value: "aaron-w-sibley", label: "Aaron W Sibley" },
+    { value: "adam-d-eller", label: "Adam D. Eller" },
+    { value: "alexander-j-shepard", label: "Alexander J Shepard" },
+    { value: "alexander-l-harris", label: "Alexander L Harris" },
+    { value: "alvin-j-milan", label: "Alvin J Milan" },
+    { value: "alvin-j-johnson", label: "Alvin J. Johnson" },
+    { value: "alzane-reyes", label: "Alzane Reyes" },
+    { value: "amber-l-escontrias", label: "Amber L Escontrias" },
+    { value: "andrea-d-jeansonne", label: "Andrea D. Jeansonne" },
+    { value: "andy-m-futier", label: "Andy M Futier" },
+    { value: "angel-anthony-g-moreno", label: "Angel-anthony G Moreno" },
+    { value: "angie-l-paige", label: "Angie L. Paige" },
+    { value: "ashleigh-l-jenkins", label: "Ashleigh L. Jenkins" },
+    { value: "austin-a-behnken", label: "Austin A Behnken" },
+    { value: "austin-h-bergman", label: "Austin H Bergman" },
+    { value: "barry-h-weaver", label: "Barry H Weaver" },
+    { value: "blain-g-scott-jr", label: "Blain G Scott Jr." },
+    { value: "blair-brewer", label: "Blair Brewer" },
+    { value: "blake-j-major", label: "Blake J Major" },
+    { value: "brad-l-moulder", label: "Brad L. Moulder" },
+    { value: "brandon-a-underwood", label: "Brandon A Underwood" },
+    { value: "brandon-b-deramus", label: "Brandon B. DeRamus" },
+    { value: "brandon-g-lowery", label: "Brandon G Lowery" },
+    { value: "brandon-m-milum", label: "Brandon M Milum" },
+    { value: "brandy-c-shorty", label: "Brandy C Shorty" },
+  ];
 
   // Mock account data
   const mockAccounts = [
@@ -742,7 +826,7 @@ const AddNewWorkOrder = () => {
                      {/* Action Buttons */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
                       <Button 
-                        onClick={() => navigate("/form-variations")}
+                        onClick={() => setShowAddNewItemForm(true)}
                         className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold flex items-center justify-center gap-2 h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md"
                       >
                         <Plus className="w-4 h-4" />
@@ -921,6 +1005,558 @@ const AddNewWorkOrder = () => {
           </Button>
         </div>
       </div>
+
+      {/* Add New Item Form */}
+      {showAddNewItemForm && (
+        <div className="px-4 sm:px-6 py-6 border-t bg-muted/20">
+          <div className="w-full space-y-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-2xl font-bold text-foreground">Add New Work Order Item</h2>
+                <p className="text-sm text-muted-foreground mt-1">Create a new item for this work order</p>
+              </div>
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2 bg-background rounded-lg p-1 border">
+                  <Button
+                    variant={interfaceType === 'tabs' ? 'default' : 'ghost'}
+                    size="sm"
+                    onClick={() => setInterfaceType('tabs')}
+                    className="text-xs"
+                  >
+                    <List className="w-3 h-3 mr-1" />
+                    Tabs
+                  </Button>
+                  <Button
+                    variant={interfaceType === 'accordion' ? 'default' : 'ghost'}
+                    size="sm"
+                    onClick={() => setInterfaceType('accordion')}
+                    className="text-xs"
+                  >
+                    <Layers className="w-3 h-3 mr-1" />
+                    Accordion
+                  </Button>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowAddNewItemForm(false)}
+                  className="text-muted-foreground hover:text-foreground"
+                >
+                  <X className="w-4 h-4" />
+                </Button>
+              </div>
+            </div>
+
+            {interfaceType === 'tabs' ? (
+              <Tabs defaultValue="single" className="space-y-6">
+                <TabsList className="h-auto p-0 bg-transparent gap-2 flex justify-start">
+                  <TabsTrigger 
+                    value="single"
+                    className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all shadow-sm hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+                  >
+                    <Package className="w-4 h-4" />
+                    Single Item
+                  </TabsTrigger>
+                  <TabsTrigger 
+                    value="esl"
+                    className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all shadow-sm hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+                  >
+                    <Layers className="w-4 h-4" />
+                    ESL Item
+                  </TabsTrigger>
+                  <TabsTrigger 
+                    value="itl"
+                    className="flex items-center gap-2 px-4 py-3 bg-card border rounded-lg text-sm font-medium transition-all shadow-sm hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+                  >
+                    <List className="w-4 h-4" />
+                    ITL Item
+                  </TabsTrigger>
+                </TabsList>
+
+                <TabsContent value="single" className="space-y-6">
+                  <Card>
+                    <CardContent className="p-6">
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div className="space-y-2">
+                          <Label>Item Number</Label>
+                          <Input placeholder="Enter item number" />
+                        </div>
+                        <div className="space-y-2">
+                          <Label>Cal Freq</Label>
+                          <Select>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select frequency" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="annual">Annual</SelectItem>
+                              <SelectItem value="quarterly">Quarterly</SelectItem>
+                              <SelectItem value="monthly">Monthly</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <div className="space-y-2">
+                          <Label>Action Code</Label>
+                          <Select>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select action code" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="rc">RC - Recalibrate</SelectItem>
+                              <SelectItem value="repair">Repair</SelectItem>
+                              <SelectItem value="cc">CC - Calibration Check</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <div className="space-y-2">
+                          <Label>Priority</Label>
+                          <Select>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select priority" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="normal">Normal</SelectItem>
+                              <SelectItem value="expedite">Expedite</SelectItem>
+                              <SelectItem value="rush">Rush</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <div className="space-y-2">
+                          <Label>Manufacturer</Label>
+                          <Popover open={manufacturerDropdownOpen} onOpenChange={setManufacturerDropdownOpen}>
+                            <PopoverTrigger asChild>
+                              <Button
+                                variant="outline"
+                                role="combobox"
+                                className="w-full justify-between"
+                              >
+                                {manufacturerSearchValue || "Select manufacturer..."}
+                                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                              </Button>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-full p-0" align="start">
+                              <Command>
+                                <CommandInput placeholder="Search manufacturers..." />
+                                <CommandList>
+                                  <CommandEmpty>
+                                    <div className="flex flex-col items-center gap-2 p-4">
+                                      <span className="text-sm text-muted-foreground">No manufacturer found.</span>
+                                      <Button
+                                        size="sm"
+                                        onClick={() => setShowManufacturerDialog(true)}
+                                        className="w-full"
+                                      >
+                                        <Plus className="w-4 h-4 mr-2" />
+                                        Add New Manufacturer
+                                      </Button>
+                                    </div>
+                                  </CommandEmpty>
+                                  <CommandGroup>
+                                    {manufacturers.map((manufacturer) => (
+                                      <CommandItem
+                                        key={manufacturer.value}
+                                        value={manufacturer.value}
+                                        onSelect={(currentValue) => {
+                                          setManufacturerSearchValue(currentValue === manufacturerSearchValue ? "" : manufacturer.label);
+                                          setManufacturerDropdownOpen(false);
+                                        }}
+                                      >
+                                        <Check
+                                          className={`mr-2 h-4 w-4 ${
+                                            manufacturerSearchValue === manufacturer.label ? "opacity-100" : "opacity-0"
+                                          }`}
+                                        />
+                                        {manufacturer.label}
+                                      </CommandItem>
+                                    ))}
+                                  </CommandGroup>
+                                </CommandList>
+                              </Command>
+                            </PopoverContent>
+                          </Popover>
+                        </div>
+                        <div className="space-y-2">
+                          <Label>Model</Label>
+                          <Input placeholder="Enter model" />
+                        </div>
+                        <div className="space-y-2">
+                          <Label>Mfg Serial</Label>
+                          <Input placeholder="Enter serial number" />
+                        </div>
+                        <div className="space-y-2">
+                          <Label>Cust ID</Label>
+                          <Input placeholder="Enter customer ID" />
+                        </div>
+                        <div className="space-y-2">
+                          <Label>Cust S/N</Label>
+                          <Input placeholder="Enter customer serial" />
+                        </div>
+                        <div className="space-y-2">
+                          <Label>Barcode Num</Label>
+                          <Input placeholder="Enter barcode number" />
+                        </div>
+                        <div className="space-y-2">
+                          <Label>Warranty</Label>
+                          <Select>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select warranty" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="yes">Yes</SelectItem>
+                              <SelectItem value="no">No</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <div className="space-y-2">
+                          <Label>ISO17025</Label>
+                          <Select>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select ISO17025" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="yes">Yes</SelectItem>
+                              <SelectItem value="no">No</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <div className="space-y-2">
+                          <Label>Estimate</Label>
+                          <Input placeholder="Enter estimate" />
+                        </div>
+                        <div className="space-y-2">
+                          <Label>New Equip</Label>
+                          <Select>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select new equipment" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="yes">Yes</SelectItem>
+                              <SelectItem value="no">No</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <div className="space-y-2">
+                          <Label>Need By Date</Label>
+                          <Input type="date" />
+                        </div>
+                        <div className="space-y-2">
+                          <Label>Assigned To</Label>
+                          <Popover open={assigneeDropdownOpen} onOpenChange={setAssigneeDropdownOpen}>
+                            <PopoverTrigger asChild>
+                              <Button
+                                variant="outline"
+                                role="combobox"
+                                className="w-full justify-between"
+                              >
+                                {assigneeSearchValue || "Select assignee..."}
+                                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                              </Button>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-full p-0" align="start">
+                              <Command>
+                                <CommandInput placeholder="Search assignees..." />
+                                <CommandList>
+                                  <CommandEmpty>No assignee found.</CommandEmpty>
+                                  <CommandGroup>
+                                    {assignees.map((assignee) => (
+                                      <CommandItem
+                                        key={assignee.value}
+                                        value={assignee.value}
+                                        onSelect={(currentValue) => {
+                                          setAssigneeSearchValue(currentValue === assigneeSearchValue ? "" : assignee.label);
+                                          setAssigneeDropdownOpen(false);
+                                        }}
+                                      >
+                                        <Check
+                                          className={`mr-2 h-4 w-4 ${
+                                            assigneeSearchValue === assignee.label ? "opacity-100" : "opacity-0"
+                                          }`}
+                                        />
+                                        {assignee.label}
+                                      </CommandItem>
+                                    ))}
+                                  </CommandGroup>
+                                </CommandList>
+                              </Command>
+                            </PopoverContent>
+                          </Popover>
+                        </div>
+                        <div className="space-y-2 md:col-span-2 lg:col-span-3">
+                          <Label>Comments</Label>
+                          <Textarea placeholder="Enter any additional comments..." rows={3} />
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+
+                <TabsContent value="esl" className="space-y-6">
+                  <Card>
+                    <CardContent className="p-6">
+                      <p className="text-muted-foreground text-center py-8">ESL Item form coming soon...</p>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+
+                <TabsContent value="itl" className="space-y-6">
+                  <Card>
+                    <CardContent className="p-6">
+                      <p className="text-muted-foreground text-center py-8">ITL Item form coming soon...</p>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+              </Tabs>
+            ) : (
+              <Accordion type="multiple" className="space-y-4">
+                <AccordionItem value="item-info" className="border rounded-lg px-4">
+                  <AccordionTrigger className="hover:no-underline py-4">
+                    <div className="flex items-center gap-3">
+                      <Info className="w-5 h-5 text-primary" />
+                      <span className="font-semibold">Basic Item Information</span>
+                      <Badge variant="outline" className="ml-2">4/7 Complete</Badge>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="pb-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-4">
+                      <div className="space-y-2">
+                        <Label>Item Number</Label>
+                        <Input placeholder="Enter item number" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label>Cal Freq</Label>
+                        <Select>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select frequency" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="annual">Annual</SelectItem>
+                            <SelectItem value="quarterly">Quarterly</SelectItem>
+                            <SelectItem value="monthly">Monthly</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="space-y-2">
+                        <Label>Action Code</Label>
+                        <Select>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select action code" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="rc">RC - Recalibrate</SelectItem>
+                            <SelectItem value="repair">Repair</SelectItem>
+                            <SelectItem value="cc">CC - Calibration Check</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="space-y-2">
+                        <Label>Priority</Label>
+                        <Select>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select priority" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="normal">Normal</SelectItem>
+                            <SelectItem value="expedite">Expedite</SelectItem>
+                            <SelectItem value="rush">Rush</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="manufacturer-info" className="border rounded-lg px-4">
+                  <AccordionTrigger className="hover:no-underline py-4">
+                    <div className="flex items-center gap-3">
+                      <Package className="w-5 h-5 text-primary" />
+                      <span className="font-semibold">Manufacturer Information</span>
+                      <Badge variant="outline" className="ml-2">2/3 Complete</Badge>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="pb-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-4">
+                      <div className="space-y-2">
+                        <Label>Manufacturer</Label>
+                        <Popover open={manufacturerDropdownOpen} onOpenChange={setManufacturerDropdownOpen}>
+                          <PopoverTrigger asChild>
+                            <Button
+                              variant="outline"
+                              role="combobox"
+                              className="w-full justify-between"
+                            >
+                              {manufacturerSearchValue || "Select manufacturer..."}
+                              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                            </Button>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-full p-0" align="start">
+                            <Command>
+                              <CommandInput placeholder="Search manufacturers..." />
+                              <CommandList>
+                                <CommandEmpty>
+                                  <div className="flex flex-col items-center gap-2 p-4">
+                                    <span className="text-sm text-muted-foreground">No manufacturer found.</span>
+                                    <Button
+                                      size="sm"
+                                      onClick={() => setShowManufacturerDialog(true)}
+                                      className="w-full"
+                                    >
+                                      <Plus className="w-4 h-4 mr-2" />
+                                      Add New Manufacturer
+                                    </Button>
+                                  </div>
+                                </CommandEmpty>
+                                <CommandGroup>
+                                  {manufacturers.map((manufacturer) => (
+                                    <CommandItem
+                                      key={manufacturer.value}
+                                      value={manufacturer.value}
+                                      onSelect={(currentValue) => {
+                                        setManufacturerSearchValue(currentValue === manufacturerSearchValue ? "" : manufacturer.label);
+                                        setManufacturerDropdownOpen(false);
+                                      }}
+                                    >
+                                      <Check
+                                        className={`mr-2 h-4 w-4 ${
+                                          manufacturerSearchValue === manufacturer.label ? "opacity-100" : "opacity-0"
+                                        }`}
+                                      />
+                                      {manufacturer.label}
+                                    </CommandItem>
+                                  ))}
+                                </CommandGroup>
+                              </CommandList>
+                            </Command>
+                          </PopoverContent>
+                        </Popover>
+                      </div>
+                      <div className="space-y-2">
+                        <Label>Model</Label>
+                        <Input placeholder="Enter model" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label>Mfg Serial</Label>
+                        <Input placeholder="Enter serial number" />
+                      </div>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="assignment-info" className="border rounded-lg px-4">
+                  <AccordionTrigger className="hover:no-underline py-4">
+                    <div className="flex items-center gap-3">
+                      <Truck className="w-5 h-5 text-primary" />
+                      <span className="font-semibold">Assignment & Delivery</span>
+                      <Badge variant="outline" className="ml-2">1/3 Complete</Badge>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="pb-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-4">
+                      <div className="space-y-2">
+                        <Label>Assigned To</Label>
+                        <Popover open={assigneeDropdownOpen} onOpenChange={setAssigneeDropdownOpen}>
+                          <PopoverTrigger asChild>
+                            <Button
+                              variant="outline"
+                              role="combobox"
+                              className="w-full justify-between"
+                            >
+                              {assigneeSearchValue || "Select assignee..."}
+                              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                            </Button>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-full p-0" align="start">
+                            <Command>
+                              <CommandInput placeholder="Search assignees..." />
+                              <CommandList>
+                                <CommandEmpty>No assignee found.</CommandEmpty>
+                                <CommandGroup>
+                                  {assignees.map((assignee) => (
+                                    <CommandItem
+                                      key={assignee.value}
+                                      value={assignee.value}
+                                      onSelect={(currentValue) => {
+                                        setAssigneeSearchValue(currentValue === assigneeSearchValue ? "" : assignee.label);
+                                        setAssigneeDropdownOpen(false);
+                                      }}
+                                    >
+                                      <Check
+                                        className={`mr-2 h-4 w-4 ${
+                                          assigneeSearchValue === assignee.label ? "opacity-100" : "opacity-0"
+                                        }`}
+                                      />
+                                      {assignee.label}
+                                    </CommandItem>
+                                  ))}
+                                </CommandGroup>
+                              </CommandList>
+                            </Command>
+                          </PopoverContent>
+                        </Popover>
+                      </div>
+                      <div className="space-y-2">
+                        <Label>Need By Date</Label>
+                        <Input type="date" />
+                      </div>
+                      <div className="space-y-2 md:col-span-2 lg:col-span-3">
+                        <Label>Comments</Label>
+                        <Textarea placeholder="Enter any additional comments..." rows={3} />
+                      </div>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            )}
+
+            {/* Form Actions */}
+            <div className="flex items-center justify-end gap-3 pt-4 border-t">
+              <Button 
+                variant="ghost" 
+                onClick={() => setShowAddNewItemForm(false)}
+                className="text-muted-foreground hover:text-foreground"
+              >
+                Cancel
+              </Button>
+              <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
+                <Plus className="w-4 h-4 mr-2" />
+                Add Item
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Manufacturer Dialog */}
+      <Dialog open={showManufacturerDialog} onOpenChange={setShowManufacturerDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Add New Manufacturer</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="manufacturer-name">Manufacturer Name</Label>
+              <Input
+                id="manufacturer-name"
+                placeholder="Enter manufacturer name"
+                value={newManufacturerName}
+                onChange={(e) => setNewManufacturerName(e.target.value)}
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="ghost" onClick={() => setShowManufacturerDialog(false)}>
+              Cancel
+            </Button>
+            <Button 
+              onClick={() => {
+                // Handle adding new manufacturer
+                setNewManufacturerName("");
+                setShowManufacturerDialog(false);
+              }}
+            >
+              Add Manufacturer
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       {/* Contact Form Dialog */}
       <ContactForm 
