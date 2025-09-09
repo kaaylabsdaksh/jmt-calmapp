@@ -1025,7 +1025,7 @@ const FormVariationsDemo = () => {
   // Render factory section
   const renderFactorySection = () => (
     <div className="space-y-6">
-      <Accordion type="multiple" defaultValue={["factory-config", "product-images", "accessories"]} className="space-y-4">
+      <Accordion type="multiple" defaultValue={[]} className="space-y-4">
         {/* Factory Settings */}
         <AccordionItem value="factory-config" className="border rounded-lg">
           <AccordionTrigger className="hover:no-underline px-6 py-4">
