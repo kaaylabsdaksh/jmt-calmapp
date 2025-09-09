@@ -486,7 +486,7 @@ const AddNewWorkOrder = () => {
                         onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, contact: value }))}
                         disabled={areFieldsDisabled()}
                       >
-                        <SelectTrigger>
+                        <SelectTrigger className="h-9 sm:h-10">
                           <SelectValue placeholder="Select contact" />
                         </SelectTrigger>
                         <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-[60] max-h-60 overflow-y-auto">
@@ -531,6 +531,7 @@ const AddNewWorkOrder = () => {
                         value={workOrderData.workOrderNumber}
                         onChange={(e) => setWorkOrderData(prev => ({ ...prev, workOrderNumber: e.target.value }))}
                         disabled={areFieldsDisabled()}
+                        className="h-9 sm:h-10"
                       />
                     </div>
 
@@ -538,7 +539,7 @@ const AddNewWorkOrder = () => {
                     <div className="space-y-2">
                       <Label className="text-sm font-medium">Work Order Status</Label>
                       <Select value={workOrderData.workOrderStatus} onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, workOrderStatus: value }))} disabled={areFieldsDisabled()}>
-                        <SelectTrigger>
+                        <SelectTrigger className="h-9 sm:h-10">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -554,7 +555,7 @@ const AddNewWorkOrder = () => {
                     <div className="space-y-2">
                       <Label className="text-sm font-medium">Work Order Type</Label>
                       <Select value={workOrderData.workOrderType} onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, workOrderType: value }))} disabled={areFieldsDisabled()}>
-                        <SelectTrigger>
+                        <SelectTrigger className="h-9 sm:h-10">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -573,6 +574,7 @@ const AddNewWorkOrder = () => {
                         value={workOrderData.customer}
                         onChange={(e) => setWorkOrderData(prev => ({ ...prev, customer: e.target.value }))}
                         disabled={areFieldsDisabled()}
+                        className="h-9 sm:h-10"
                       />
                     </div>
                   </div>
@@ -583,8 +585,8 @@ const AddNewWorkOrder = () => {
             {/* Placeholder content for other tabs */}
             <TabsContent value="account-info">
               <Card>
-                <CardContent className="p-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <CardContent className="p-4 sm:p-6">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                     {/* Left Column */}
                     <div className="space-y-2 text-sm">
                       <div><span className="font-medium">Status:</span> <span className="text-green-600 font-medium">ACTIVE</span></div>
@@ -611,36 +613,38 @@ const AddNewWorkOrder = () => {
                   </div>
 
                   {/* Customer Contacts Table */}
-                  <div className="mt-8">
-                    <h3 className="text-lg font-semibold text-foreground mb-4">Customer Contacts</h3>
+                  <div className="mt-6 sm:mt-8">
+                    <h3 className="text-base sm:text-lg font-semibold text-foreground mb-3 sm:mb-4">Customer Contacts</h3>
                     <div className="border rounded-lg overflow-hidden">
-                      <table className="w-full text-sm">
-                        <thead className="bg-muted">
-                          <tr>
-                            <th className="text-left p-3 font-medium">Name</th>
-                            <th className="text-left p-3 font-medium">Email</th>
-                            <th className="text-left p-3 font-medium">Phone</th>
-                            <th className="text-left p-3 font-medium">Title</th>
-                            <th className="text-left p-3 font-medium">Type</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr className="border-t">
-                            <td className="p-3">Netasha Gray</td>
-                            <td className="p-3">netasha.gray@entergy.com</td>
-                            <td className="p-3">(225) 382-4878</td>
-                            <td className="p-3">Senior Buyer</td>
-                            <td className="p-3">Primary</td>
-                          </tr>
-                          <tr className="border-t">
-                            <td className="p-3">Barry White</td>
-                            <td className="p-3">barry.white@entergy.com</td>
-                            <td className="p-3">(225) 382-4879</td>
-                            <td className="p-3">Procurement Manager</td>
-                            <td className="p-3">Secondary</td>
-                          </tr>
-                        </tbody>
-                      </table>
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-xs sm:text-sm min-w-[600px]">
+                          <thead className="bg-muted">
+                            <tr>
+                              <th className="text-left p-2 sm:p-3 font-medium">Name</th>
+                              <th className="text-left p-2 sm:p-3 font-medium">Email</th>
+                              <th className="text-left p-2 sm:p-3 font-medium">Phone</th>
+                              <th className="text-left p-2 sm:p-3 font-medium">Title</th>
+                              <th className="text-left p-2 sm:p-3 font-medium">Type</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr className="border-t">
+                              <td className="p-2 sm:p-3">Netasha Gray</td>
+                              <td className="p-2 sm:p-3">netasha.gray@entergy.com</td>
+                              <td className="p-2 sm:p-3">(225) 382-4878</td>
+                              <td className="p-2 sm:p-3">Senior Buyer</td>
+                              <td className="p-2 sm:p-3">Primary</td>
+                            </tr>
+                            <tr className="border-t">
+                              <td className="p-2 sm:p-3">Barry White</td>
+                              <td className="p-2 sm:p-3">barry.white@entergy.com</td>
+                              <td className="p-2 sm:p-3">(225) 382-4879</td>
+                              <td className="p-2 sm:p-3">Procurement Manager</td>
+                              <td className="p-2 sm:p-3">Secondary</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
                   </div>
                 </CardContent>
