@@ -22,6 +22,9 @@ const FormVariationsDemo = () => {
   // Interface switcher state
   const [interfaceType, setInterfaceType] = useState<'tabs' | 'accordion'>('tabs');
   
+  // Main section state
+  const [activeSection, setActiveSection] = useState<'work-order-items' | 'estimate' | 'qf3'>('work-order-items');
+  
   // Common state for both interfaces
   const [showManufacturerDialog, setShowManufacturerDialog] = useState(false);
   const [newManufacturerName, setNewManufacturerName] = useState("");
@@ -1048,8 +1051,60 @@ const FormVariationsDemo = () => {
         {/* Work Order Header */}
         {renderWorkOrderHeader()}
         
-        {/* Tabs/Accordion Interface */}
-        {interfaceType === 'tabs' ? renderTabbedInterface() : renderAccordionInterface()}
+        {/* Main Section Toggles */}
+        <div className="flex items-center gap-2 mb-6">
+          <Button
+            variant={activeSection === 'work-order-items' ? 'default' : 'outline'}
+            onClick={() => setActiveSection('work-order-items')}
+            className="text-sm"
+          >
+            Work Order Items
+          </Button>
+          <Button
+            variant={activeSection === 'estimate' ? 'default' : 'outline'}
+            onClick={() => setActiveSection('estimate')}
+            className="text-sm"
+          >
+            Estimate
+          </Button>
+          <Button
+            variant={activeSection === 'qf3' ? 'default' : 'outline'}
+            onClick={() => setActiveSection('qf3')}
+            className="text-sm"
+          >
+            QF3
+          </Button>
+        </div>
+        
+        {/* Content based on active section */}
+        {activeSection === 'work-order-items' && (
+          <>
+            {/* Tabs/Accordion Interface */}
+            {interfaceType === 'tabs' ? renderTabbedInterface() : renderAccordionInterface()}
+          </>
+        )}
+        
+        {activeSection === 'estimate' && (
+          <Card className="border-0 shadow-md">
+            <CardContent className="p-6">
+              <div className="text-center py-12">
+                <h3 className="text-lg font-semibold text-foreground mb-2">Estimate Section</h3>
+                <p className="text-muted-foreground">Estimate content will be displayed here.</p>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+        
+        {activeSection === 'qf3' && (
+          <Card className="border-0 shadow-md">
+            <CardContent className="p-6">
+              <div className="text-center py-12">
+                <h3 className="text-lg font-semibold text-foreground mb-2">QF3 Data Section</h3>
+                <p className="text-muted-foreground">QF3 data content will be displayed here.</p>
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
         {/* Add New Manufacturer Dialog */}
         <Dialog open={showManufacturerDialog} onOpenChange={setShowManufacturerDialog}>
