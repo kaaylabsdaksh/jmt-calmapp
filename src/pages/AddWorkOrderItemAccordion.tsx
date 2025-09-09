@@ -171,7 +171,7 @@ const AddWorkOrderItemAccordion = () => {
                           <SelectTrigger className="h-11">
                             <SelectValue placeholder="Select type" />
                           </SelectTrigger>
-                          <SelectContent>
+                          <SelectContent className="max-h-48 overflow-y-auto">
                             <SelectItem value="single">Single</SelectItem>
                             <SelectItem value="esl-blankets">ESL - Blankets</SelectItem>
                             <SelectItem value="esl-coverups">ESL - CoverUps</SelectItem>
