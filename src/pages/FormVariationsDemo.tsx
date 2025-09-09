@@ -754,13 +754,42 @@ const FormVariationsDemo = () => {
 
             <div className="space-y-2">
               <Label htmlFor="driver" className="text-sm font-medium">Driver</Label>
-              <Input
-                id="driver"
-                value={formData.driver}
-                onChange={(e) => handleInputChange("driver", e.target.value)}
-                placeholder="Enter driver name"
-                className="h-11"
-              />
+              <Select value={formData.driver} onValueChange={(value) => handleInputChange("driver", value)}>
+                <SelectTrigger className="h-11">
+                  <SelectValue placeholder="Select driver" />
+                </SelectTrigger>
+                <SelectContent className="max-h-48 overflow-y-auto">
+                  <SelectItem value="aaron-l-briles">Aaron L Briles</SelectItem>
+                  <SelectItem value="adam-d-eller">Adam D. Eller</SelectItem>
+                  <SelectItem value="admin-user">Admin User</SelectItem>
+                  <SelectItem value="alanna-d-thompson">Alanna D Thompson</SelectItem>
+                  <SelectItem value="alton-t-szlber">Alton T Szlber</SelectItem>
+                  <SelectItem value="alzane-reyes">Alzane Reyes</SelectItem>
+                  <SelectItem value="amanda-r-phillips">Amanda R. Phillips</SelectItem>
+                  <SelectItem value="andrew-d-gina">Andrew D Gina</SelectItem>
+                  <SelectItem value="angel-anthony-g-moreno">Angel-anthony G Moreno</SelectItem>
+                  <SelectItem value="austin-a-behnken">Austin A Behnken</SelectItem>
+                  <SelectItem value="barry-j-chaisson">Barry J Chaisson</SelectItem>
+                  <SelectItem value="blaine-r-glover">Blaine R Glover</SelectItem>
+                  <SelectItem value="blair-brewer">Blair Brewer</SelectItem>
+                  <SelectItem value="brad-l-moulder">Brad L. Moulder</SelectItem>
+                  <SelectItem value="brad-p-morrison">Brad P. Morrison</SelectItem>
+                  <SelectItem value="brad-r-harris">Brad R Harris</SelectItem>
+                  <SelectItem value="brandon-a-underwood">Brandon A Underwood</SelectItem>
+                  <SelectItem value="brandon-g-lowery">Brandon G Lowery</SelectItem>
+                  <SelectItem value="brandon-m-milum">Brandon M Milum</SelectItem>
+                  <SelectItem value="brandy-l-mulkey">Brandy L Mulkey</SelectItem>
+                  <SelectItem value="brent-m-durham">Brent M Durham</SelectItem>
+                  <SelectItem value="brent-m-simoneaux">Brent M Simoneaux</SelectItem>
+                  <SelectItem value="bronson-w-sydow">Bronson W Sydow</SelectItem>
+                  <SelectItem value="bryan-j-morrison">Bryan J Morrison</SelectItem>
+                  <SelectItem value="bryson-t-brown">Bryson T Brown</SelectItem>
+                  <SelectItem value="cade-c-keen">Cade C Keen</SelectItem>
+                  <SelectItem value="cassie-c-pilet">Cassie C. Pilet</SelectItem>
+                  <SelectItem value="chad-p-kitchens">Chad P Kitchens</SelectItem>
+                  <SelectItem value="charles-d-price">Charles D Price</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
         </CardContent>
