@@ -1109,27 +1109,6 @@ const FormVariationsDemo = () => {
           
           {/* Interface Switcher */}
           <div className="flex items-center gap-4">
-            {/* Tab Set Switcher */}
-            <div className="flex items-center gap-2 p-1 bg-muted rounded-lg">
-              <Button
-                variant={tabSet === 'work-order' ? 'default' : 'ghost'}
-                size="sm"
-                onClick={() => setTabSet('work-order')}
-                className="flex items-center gap-2 h-8"
-              >
-                Work Order
-              </Button>
-              <Button
-                variant={tabSet === 'item-details' ? 'default' : 'ghost'}
-                size="sm"
-                onClick={() => setTabSet('item-details')}
-                className="flex items-center gap-2 h-8"
-              >
-                Item Details
-              </Button>
-            </div>
-            
-            {/* Layout Switcher */}
             <div className="flex items-center gap-2 p-1 bg-muted rounded-lg">
               <Button
                 variant={interfaceType === 'tabs' ? 'default' : 'ghost'}
