@@ -274,7 +274,7 @@ const FormVariationsDemo = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <div className="space-y-2">
           <Label htmlFor="type" className="text-sm font-medium">Type *</Label>
           <Select value={formData.type} onValueChange={(value) => handleInputChange("type", value)}>
@@ -531,7 +531,7 @@ const FormVariationsDemo = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="manufacturer" className="text-sm font-medium">Manufacturer</Label>
@@ -704,9 +704,9 @@ const FormVariationsDemo = () => {
   );
 
   const renderLogisticsSection = () => (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       <Card className="border-0 shadow-md">
-        <CardContent className="p-6 space-y-4">
+        <CardContent className="p-4 sm:p-6 space-y-4">
           <div className="flex items-center gap-3 pb-4 border-b border-border">
             <div className="p-2 bg-primary/10 rounded-lg">
               <Truck className="h-5 w-5 text-primary" />
@@ -812,7 +812,7 @@ const FormVariationsDemo = () => {
       </Card>
 
       <Card className="border-0 shadow-md">
-        <CardContent className="p-6 space-y-4">
+        <CardContent className="p-4 sm:p-6 space-y-4">
           <div className="flex items-center gap-3 pb-4 border-b border-border">
             <div className="p-2 bg-primary/10 rounded-lg">
               <Package className="h-5 w-5 text-primary" />
@@ -900,7 +900,7 @@ const FormVariationsDemo = () => {
       </Card>
 
       <Card className="border-0 shadow-md">
-        <CardContent className="p-6 space-y-4">
+        <CardContent className="p-4 sm:p-6 space-y-4">
           <div className="flex items-center gap-3 pb-4 border-b border-border">
             <div className="p-2 bg-primary/10 rounded-lg">
               <Truck className="h-5 w-5 text-primary" />
@@ -957,7 +957,7 @@ const FormVariationsDemo = () => {
 
   const renderOptionsSection = () => (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
         {[
           { key: 'warranty', label: 'Warranty', desc: 'Item is under warranty', icon: '🛡️' },
           { key: 'estimate', label: 'Estimate', desc: 'Estimate required', icon: '💰' },
@@ -1052,8 +1052,8 @@ const FormVariationsDemo = () => {
 
   // Render work order header
   const renderWorkOrderHeader = () => (
-    <div className="bg-card border border-border rounded-lg p-6 mb-6">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+    <div className="bg-card border border-border rounded-lg p-4 sm:p-6 mb-4 sm:mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <div>
           <Label className="text-sm font-medium text-muted-foreground">Work Order #</Label>
           <Input
@@ -1216,9 +1216,9 @@ const FormVariationsDemo = () => {
   );
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background px-4 sm:px-6 lg:px-8">
       {/* Header */}
-      <header className="bg-background px-6 py-4 border-b border-border sticky top-0 z-10 backdrop-blur-sm bg-background/80">
+      <header className="bg-background px-4 sm:px-6 py-4 border-b border-border sticky top-0 z-10 backdrop-blur-sm bg-background/80">
         <div className="flex items-center justify-between max-w-6xl mx-auto">
           <div className="flex items-center gap-3">
             <Button
@@ -1275,12 +1275,12 @@ const FormVariationsDemo = () => {
       </header>
 
       {/* Form Content */}
-      <div className="p-6 max-w-6xl mx-auto">
+      <div className="p-4 sm:p-6 max-w-6xl mx-auto">
         {/* Work Order Header */}
         {renderWorkOrderHeader()}
         
         {/* Main Section Toggles */}
-        <div className="flex items-center gap-3 mb-6">
+        <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-3 mb-4 sm:mb-6 overflow-x-auto pb-2">
           <Button
             variant="ghost"
             onClick={() => setActiveSection('work-order-items')}
