@@ -730,9 +730,13 @@ const FormVariationsDemo = () => {
                   <SelectValue placeholder="Select arrival type" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="drop-off">Drop Off</SelectItem>
-                  <SelectItem value="pickup">Pickup</SelectItem>
-                  <SelectItem value="shipping">Shipping</SelectItem>
+                  <SelectItem value="jm-driver-pickup">JM Driver Pickup</SelectItem>
+                  <SelectItem value="customer-dropoff">Customer Dropoff</SelectItem>
+                  <SelectItem value="shipped">Shipped</SelectItem>
+                  <SelectItem value="onsite">Onsite</SelectItem>
+                  <SelectItem value="purchasing-dept">Purchasing Dept.</SelectItem>
+                  <SelectItem value="lab-standard">Lab Standard</SelectItem>
+                  <SelectItem value="surplus">Surplus</SelectItem>
                 </SelectContent>
               </Select>
             </div>
