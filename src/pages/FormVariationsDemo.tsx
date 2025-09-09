@@ -1052,26 +1052,41 @@ const FormVariationsDemo = () => {
         {renderWorkOrderHeader()}
         
         {/* Main Section Toggles */}
-        <div className="flex items-center gap-2 mb-6">
+        <div className="flex items-center gap-1 mb-6 bg-muted/30 p-1 rounded-lg w-fit">
           <Button
-            variant={activeSection === 'work-order-items' ? 'default' : 'outline'}
+            variant={activeSection === 'work-order-items' ? 'default' : 'ghost'}
             onClick={() => setActiveSection('work-order-items')}
-            className="text-sm"
+            className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all ${
+              activeSection === 'work-order-items'
+                ? 'bg-primary text-primary-foreground shadow-sm'
+                : 'text-muted-foreground hover:text-foreground hover:bg-background/50'
+            }`}
           >
+            <Package className="h-4 w-4" />
             Work Order Items
           </Button>
           <Button
-            variant={activeSection === 'estimate' ? 'default' : 'outline'}
+            variant={activeSection === 'estimate' ? 'default' : 'ghost'}
             onClick={() => setActiveSection('estimate')}
-            className="text-sm"
+            className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all ${
+              activeSection === 'estimate'
+                ? 'bg-primary text-primary-foreground shadow-sm'
+                : 'text-muted-foreground hover:text-foreground hover:bg-background/50'
+            }`}
           >
+            <Info className="h-4 w-4" />
             Estimate
           </Button>
           <Button
-            variant={activeSection === 'qf3' ? 'default' : 'outline'}
+            variant={activeSection === 'qf3' ? 'default' : 'ghost'}
             onClick={() => setActiveSection('qf3')}
-            className="text-sm"
+            className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all ${
+              activeSection === 'qf3'
+                ? 'bg-primary text-primary-foreground shadow-sm'
+                : 'text-muted-foreground hover:text-foreground hover:bg-background/50'
+            }`}
           >
+            <Settings className="h-4 w-4" />
             QF3
           </Button>
         </div>
