@@ -10,12 +10,25 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ArrowLeft, Save, X, Package, Truck, Settings, Info } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Check, ChevronsUpDown } from "lucide-react";
 
 const AddWorkOrderItemTabs = () => {
   const navigate = useNavigate();
   
   const [showManufacturerDialog, setShowManufacturerDialog] = useState(false);
   const [newManufacturerName, setNewManufacturerName] = useState("");
+  const [manufacturerOpen, setManufacturerOpen] = useState(false);
+
+  const manufacturers = [
+    { value: "1m-working-stand", label: "1M WORKING STAND." },
+    { value: "3d-instruments", label: "3D INSTRUMENTS" },
+    { value: "3e", label: "3E" },
+    { value: "3m", label: "3M" },
+    { value: "3z-telecom", label: "3Z TELECOM" },
+    { value: "4b-components-limited", label: "4B COMPONENTS LIMITED" },
+  ];
   
   const [formData, setFormData] = useState({
     // General Information
@@ -301,19 +314,49 @@ const AddWorkOrderItemTabs = () => {
                     <div className="space-y-2">
                       <Label htmlFor="manufacturer" className="text-sm font-medium">Manufacturer</Label>
                       <div className="flex gap-2">
-                        <Select value={formData.manufacturer} onValueChange={(value) => handleInputChange("manufacturer", value)}>
-                          <SelectTrigger className="h-11 flex-1">
-                            <SelectValue placeholder="Select manufacturer" />
-                          </SelectTrigger>
-                          <SelectContent className="max-h-48 overflow-y-auto">
-                            <SelectItem value="1m-working-stand">1M WORKING STAND.</SelectItem>
-                            <SelectItem value="3d-instruments">3D INSTRUMENTS</SelectItem>
-                            <SelectItem value="3e">3E</SelectItem>
-                            <SelectItem value="3m">3M</SelectItem>
-                            <SelectItem value="3z-telecom">3Z TELECOM</SelectItem>
-                            <SelectItem value="4b-components-limited">4B COMPONENTS LIMITED</SelectItem>
-                          </SelectContent>
-                        </Select>
+                        <Popover open={manufacturerOpen} onOpenChange={setManufacturerOpen}>
+                          <PopoverTrigger asChild>
+                            <Button
+                              variant="outline"
+                              role="combobox"
+                              aria-expanded={manufacturerOpen}
+                              className="h-11 flex-1 justify-between"
+                            >
+                              {formData.manufacturer
+                                ? manufacturers.find((manufacturer) => manufacturer.value === formData.manufacturer)?.label ||
+                                  formData.manufacturer
+                                : "Select manufacturer..."}
+                              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                            </Button>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-full p-0" align="start">
+                            <Command>
+                              <CommandInput placeholder="Search manufacturer..." />
+                              <CommandList>
+                                <CommandEmpty>No manufacturer found.</CommandEmpty>
+                                <CommandGroup>
+                                  {manufacturers.map((manufacturer) => (
+                                    <CommandItem
+                                      key={manufacturer.value}
+                                      value={manufacturer.value}
+                                      onSelect={(currentValue) => {
+                                        handleInputChange("manufacturer", currentValue === formData.manufacturer ? "" : currentValue);
+                                        setManufacturerOpen(false);
+                                      }}
+                                    >
+                                      <Check
+                                        className={`mr-2 h-4 w-4 ${
+                                          formData.manufacturer === manufacturer.value ? "opacity-100" : "opacity-0"
+                                        }`}
+                                      />
+                                      {manufacturer.label}
+                                    </CommandItem>
+                                  ))}
+                                </CommandGroup>
+                              </CommandList>
+                            </Command>
+                          </PopoverContent>
+                        </Popover>
                         <Button 
                           type="button"
                           variant="outline" 
