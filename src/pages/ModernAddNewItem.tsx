@@ -130,10 +130,6 @@ const ModernAddNewItem = () => {
       <div className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <Button variant="ghost" size="sm" onClick={() => navigate(-1)}>
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back
-            </Button>
             <div>
               <h1 className="text-xl font-semibold">Add New Item</h1>
               <Breadcrumb className="mt-1">

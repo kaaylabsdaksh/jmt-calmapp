@@ -6,10 +6,6 @@ const WorkOrderDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
-  const handleBack = () => {
-    navigate("/");
-  };
-
   if (!id) {
     navigate("/");
     return null;
@@ -18,7 +14,6 @@ const WorkOrderDetail = () => {
   return (
     <WorkOrderDetails 
       workOrderId={id}
-      onBack={handleBack}
     />
   );
 };

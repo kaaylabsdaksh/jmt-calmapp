@@ -32,10 +32,9 @@ import { Table as TableComponent, TableBody, TableCell, TableHead, TableHeader, 
 
 interface WorkOrderDetailsProps {
   workOrderId: string;
-  onBack?: () => void;
 }
 
-const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
+const WorkOrderDetails = ({ workOrderId }: WorkOrderDetailsProps) => {
   console.log("WorkOrderDetails component rendering with ID:", workOrderId);
   const [activeTab, setActiveTab] = useState("general");
   const [itemsViewMode, setItemsViewMode] = useState("cards");
@@ -64,18 +63,6 @@ const WorkOrderDetails = ({ workOrderId, onBack }: WorkOrderDetailsProps) => {
       {/* Header */}
       <div className="sticky top-0 z-50 bg-card/95 backdrop-blur border-b shadow-sm">
         <div className="px-4 sm:px-6 py-3">
-          {/* Back Button Row */}
-          <div className="mb-3">
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              onClick={onBack}
-              className="flex items-center gap-2"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Back
-            </Button>
-          </div>
           
           {/* Mobile-Optimized Header */}
           <div className="block sm:hidden">

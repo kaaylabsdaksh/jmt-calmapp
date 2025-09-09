@@ -9,7 +9,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { ArrowLeft, Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, Menu } from "lucide-react";
+import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, Menu } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
 import { SidebarTrigger } from "@/components/ui/sidebar";
@@ -1224,15 +1224,6 @@ const FormVariationsDemo = () => {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between w-full gap-4">
           <div className="flex items-center gap-3">
             <SidebarTrigger className="p-2 rounded-lg hover:bg-blue-500 hover:text-white hover:shadow-md transition-all duration-300 transform hover:scale-105" />
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={handleCancel}
-              className="flex items-center gap-2 hover-scale p-2 sm:px-3"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              <span className="hidden sm:inline">Back</span>
-            </Button>
             <div>
               <h1 className="text-lg sm:text-xl font-semibold text-foreground">Add New Work Order Item</h1>
               <Breadcrumb className="mt-1">
