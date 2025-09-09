@@ -241,15 +241,35 @@ const FormVariationsDemo = () => {
 
       {/* Created and Modified Dates */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-4 border-b border-border">
-        <div className="flex items-center gap-2">
-          <span className="text-sm font-medium text-muted-foreground">Created Date:</span>
-          <span className="text-sm text-foreground">09/09/2025</span>
-          <span className="text-sm text-muted-foreground">Admin User</span>
+        <div className="space-y-2">
+          <Label className="text-sm font-medium">Created Date</Label>
+          <div className="flex gap-2">
+            <Input
+              value="09/09/2025"
+              readOnly
+              className="h-11 bg-muted/50 cursor-default"
+            />
+            <Input
+              value="Admin User"
+              readOnly
+              className="h-11 bg-muted/50 cursor-default flex-shrink-0 w-32"
+            />
+          </div>
         </div>
-        <div className="flex items-center gap-2">
-          <span className="text-sm font-medium text-muted-foreground">Modified Date:</span>
-          <span className="text-sm text-foreground">09/09/2025</span>
-          <span className="text-sm text-muted-foreground">Admin User</span>
+        <div className="space-y-2">
+          <Label className="text-sm font-medium">Modified Date</Label>
+          <div className="flex gap-2">
+            <Input
+              value="09/09/2025"
+              readOnly
+              className="h-11 bg-muted/50 cursor-default"
+            />
+            <Input
+              value="Admin User"
+              readOnly
+              className="h-11 bg-muted/50 cursor-default flex-shrink-0 w-32"
+            />
+          </div>
         </div>
       </div>
 
