@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -304,10 +304,10 @@ const AddNewWorkOrder = () => {
                 <BreadcrumbList>
                   <BreadcrumbItem>
                     <BreadcrumbLink 
-                      href="/" 
+                      asChild 
                       className="text-xs sm:text-sm text-muted-foreground hover:text-foreground"
                     >
-                      Home
+                      <Link to="/">Home</Link>
                     </BreadcrumbLink>
                   </BreadcrumbItem>
                   <BreadcrumbSeparator />

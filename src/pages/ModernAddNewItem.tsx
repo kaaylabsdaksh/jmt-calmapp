@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -136,19 +136,19 @@ const ModernAddNewItem = () => {
                 <BreadcrumbList>
                   <BreadcrumbItem>
                     <BreadcrumbLink 
-                      href="/" 
+                      asChild 
                       className="text-xs text-muted-foreground hover:text-foreground"
                     >
-                      Home
+                      <Link to="/">Home</Link>
                     </BreadcrumbLink>
                   </BreadcrumbItem>
                   <BreadcrumbSeparator />
                   <BreadcrumbItem>
                     <BreadcrumbLink 
-                      href="/add-new-work-order" 
+                      asChild 
                       className="text-xs text-muted-foreground hover:text-foreground"
                     >
-                      Work Orders
+                      <Link to="/add-new-work-order">Work Orders</Link>
                     </BreadcrumbLink>
                   </BreadcrumbItem>
                   <BreadcrumbSeparator />

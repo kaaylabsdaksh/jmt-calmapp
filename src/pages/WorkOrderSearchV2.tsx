@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { Link } from "react-router-dom";
 import MinimalWorkOrderSearch from "@/components/MinimalWorkOrderSearch";
 import MinimalWorkOrderResults from "@/components/MinimalWorkOrderResults";
 
@@ -19,10 +20,10 @@ const WorkOrderSearchV2 = () => {
                   <BreadcrumbList>
                     <BreadcrumbItem>
                       <BreadcrumbLink 
-                        href="/" 
+                        asChild 
                         className="text-xs text-muted-foreground hover:text-foreground"
                       >
-                        Home
+                        <Link to="/">Home</Link>
                       </BreadcrumbLink>
                     </BreadcrumbItem>
                     <BreadcrumbSeparator />

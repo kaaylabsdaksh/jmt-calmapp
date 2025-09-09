@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Plus, Download, Settings } from "lucide-react";
@@ -19,10 +19,10 @@ const ModernTopNav = () => {
               <BreadcrumbList>
                 <BreadcrumbItem>
                   <BreadcrumbLink 
-                    href="/" 
+                    asChild 
                     className="text-xs text-muted-foreground hover:text-foreground"
                   >
-                    Home
+                    <Link to="/">Home</Link>
                   </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
