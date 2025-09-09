@@ -2,26 +2,12 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, Workflow, Layers, List, LayoutGrid } from "lucide-react";
+import { ArrowLeft, Layers, List } from "lucide-react";
 
 const FormVariationsDemo = () => {
   const navigate = useNavigate();
 
   const variations = [
-    {
-      title: "Original Form",
-      description: "Classic single-page layout with all sections visible",
-      path: "/add-work-order-item",
-      icon: LayoutGrid,
-      features: ["All sections visible", "Scrollable layout", "Quick overview"],
-    },
-    {
-      title: "Step-by-Step Wizard",
-      description: "Guided multi-step process with progress tracking",
-      path: "/add-work-order-item-wizard",
-      icon: Workflow,
-      features: ["Progress indicator", "Step validation", "Guided experience"],
-    },
     {
       title: "Tabbed Interface", 
       description: "Organized sections in tabs with enhanced visual design",
@@ -109,9 +95,9 @@ const FormVariationsDemo = () => {
 
                 <Button 
                   className="w-full mt-4 hover-scale" 
-                  variant={index === 0 ? "default" : "outline"}
+                  variant="outline"
                 >
-                  {index === 0 ? "View Original" : "Try This Variation"}
+                  Try This Form
                 </Button>
               </CardContent>
             </Card>
@@ -125,9 +111,9 @@ const FormVariationsDemo = () => {
                 Which UX approach works best?
               </h3>
               <p className="text-muted-foreground text-sm max-w-3xl mx-auto">
-                Each pattern has its strengths: <strong>Wizard</strong> for complex forms with many required fields, 
-                <strong>Tabs</strong> for organized content with clear sections, <strong>Accordion</strong> for 
-                progressive disclosure, and <strong>Single Page</strong> for quick data entry when users are familiar with the form.
+                Both patterns offer great user experiences: <strong>Tabbed Interface</strong> provides clear organization 
+                with easy navigation between sections, while <strong>Expandable Sections</strong> offers progressive 
+                disclosure and completion tracking for a more guided workflow.
               </p>
             </CardContent>
           </Card>

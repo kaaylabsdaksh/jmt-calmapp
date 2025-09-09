@@ -3,8 +3,6 @@ import WorkOrderDetail from "./pages/WorkOrderDetail";
 import WorkOrderSearchV2 from "./pages/WorkOrderSearchV2";
 import ModernWorkOrderManagement from "./pages/ModernWorkOrderManagement";
 import AddNewWorkOrder from "./pages/AddNewWorkOrder";
-import AddWorkOrderItem from "./pages/AddWorkOrderItem";
-import AddWorkOrderItemWizard from "./pages/AddWorkOrderItemWizard";
 import AddWorkOrderItemTabs from "./pages/AddWorkOrderItemTabs";
 import AddWorkOrderItemAccordion from "./pages/AddWorkOrderItemAccordion";
 import FormVariationsDemo from "./pages/FormVariationsDemo";
@@ -20,8 +18,6 @@ const App = () => {
         <Routes>
           <Route path="/" element={<ModernWorkOrderManagement />} />
           <Route path="/add-new-work-order" element={<AddNewWorkOrder />} />
-          <Route path="/add-work-order-item" element={<AddWorkOrderItem />} />
-          <Route path="/add-work-order-item-wizard" element={<AddWorkOrderItemWizard />} />
           <Route path="/add-work-order-item-tabs" element={<AddWorkOrderItemTabs />} />
           <Route path="/add-work-order-item-accordion" element={<AddWorkOrderItemAccordion />} />
           <Route path="/form-variations" element={<FormVariationsDemo />} />
