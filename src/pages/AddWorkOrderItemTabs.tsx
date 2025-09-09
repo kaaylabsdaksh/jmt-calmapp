@@ -283,13 +283,19 @@ const AddWorkOrderItemTabs = () => {
                   <div className="space-y-4">
                     <div className="space-y-2">
                       <Label htmlFor="manufacturer" className="text-sm font-medium">Manufacturer</Label>
-                      <Input
-                        id="manufacturer"
-                        value={formData.manufacturer}
-                        onChange={(e) => handleInputChange("manufacturer", e.target.value)}
-                        placeholder="Enter manufacturer"
-                        className="h-11"
-                      />
+                      <Select value={formData.manufacturer} onValueChange={(value) => handleInputChange("manufacturer", value)}>
+                        <SelectTrigger className="h-11">
+                          <SelectValue placeholder="Select manufacturer" />
+                        </SelectTrigger>
+                        <SelectContent className="max-h-48 overflow-y-auto">
+                          <SelectItem value="1m-working-stand">1M WORKING STAND.</SelectItem>
+                          <SelectItem value="3d-instruments">3D INSTRUMENTS</SelectItem>
+                          <SelectItem value="3e">3E</SelectItem>
+                          <SelectItem value="3m">3M</SelectItem>
+                          <SelectItem value="3z-telecom">3Z TELECOM</SelectItem>
+                          <SelectItem value="4b-components-limited">4B COMPONENTS LIMITED</SelectItem>
+                        </SelectContent>
+                      </Select>
                     </div>
 
                     <div className="space-y-2">
