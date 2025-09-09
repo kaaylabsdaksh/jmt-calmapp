@@ -864,77 +864,43 @@ const FormVariationsDemo = () => {
 
   // Render tabbed interface
   const renderTabbedInterface = () => (
-    <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-      <TabsList className="inline-flex h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground">
-        {currentTabs.map((tab) => {
-          const Icon = tab.icon;
-          return (
-            <TabsTrigger 
-              key={tab.value}
-              value={tab.value}
-              className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
-            >
-              <Icon className="h-4 w-4 mr-2" />
-              {tab.label}
-            </TabsTrigger>
-          );
-        })}
-      </TabsList>
+    <Card className="border-0 shadow-md">
+      <CardContent className="p-6">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+          <TabsList className="inline-flex h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground">
+            {currentTabs.map((tab) => {
+              const Icon = tab.icon;
+              return (
+                <TabsTrigger 
+                  key={tab.value}
+                  value={tab.value}
+                  className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+                >
+                  <Icon className="h-4 w-4 mr-2" />
+                  {tab.label}
+                </TabsTrigger>
+              );
+            })}
+          </TabsList>
 
-      {/* Work Order Tabs */}
-      <TabsContent value="work-order-items" className="space-y-6">
-        <Card className="border-0 shadow-md">
-          <CardContent className="p-6">
-            {renderWorkOrderItemsSection()}
-          </CardContent>
-        </Card>
-      </TabsContent>
-
-      <TabsContent value="estimate" className="space-y-6">
-        <Card className="border-0 shadow-md">
-          <CardContent className="p-6">
-            {renderEstimateSection()}
-          </CardContent>
-        </Card>
-      </TabsContent>
-
-      <TabsContent value="qf3-data" className="space-y-6">
-        <Card className="border-0 shadow-md">
-          <CardContent className="p-6">
-            {renderQF3DataSection()}
-          </CardContent>
-        </Card>
-      </TabsContent>
-
-      {/* Item Detail Tabs */}
-      <TabsContent value="general" className="space-y-6">
-        <Card className="border-0 shadow-md">
-          <CardContent className="p-6">
+          <TabsContent value="general" className="space-y-6">
             {renderGeneralSection()}
-          </CardContent>
-        </Card>
-      </TabsContent>
+          </TabsContent>
 
-      <TabsContent value="product" className="space-y-6">
-        <Card className="border-0 shadow-md">
-          <CardContent className="p-6">
+          <TabsContent value="product" className="space-y-6">
             {renderProductSection()}
-          </CardContent>
-        </Card>
-      </TabsContent>
+          </TabsContent>
 
-      <TabsContent value="logistics" className="space-y-6">
-        {renderLogisticsSection()}
-      </TabsContent>
+          <TabsContent value="logistics" className="space-y-6">
+            {renderLogisticsSection()}
+          </TabsContent>
 
-      <TabsContent value="options" className="space-y-6">
-        <Card className="border-0 shadow-md">
-          <CardContent className="p-6">
+          <TabsContent value="options" className="space-y-6">
             {renderOptionsSection()}
-          </CardContent>
-        </Card>
-      </TabsContent>
-    </Tabs>
+          </TabsContent>
+        </Tabs>
+      </CardContent>
+    </Card>
   );
 
   // Render accordion interface
