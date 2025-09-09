@@ -22,8 +22,6 @@ const AddWorkOrderItemTabs = () => {
   const [manufacturerDropdownOpen, setManufacturerDropdownOpen] = useState(false);
   const [manufacturerSearchValue, setManufacturerSearchValue] = useState("");
 
-  const [showAssigneeDialog, setShowAssigneeDialog] = useState(false);
-  const [newAssigneeName, setNewAssigneeName] = useState("");
   const [assigneeDropdownOpen, setAssigneeDropdownOpen] = useState(false);
   const [assigneeSearchValue, setAssigneeSearchValue] = useState("");
 
@@ -218,19 +216,6 @@ const AddWorkOrderItemTabs = () => {
     setShowManufacturerDialog(false);
   };
 
-  const handleAddNewAssignee = () => {
-    if (newAssigneeName.trim()) {
-      handleInputChange("assignedTo", newAssigneeName.trim());
-      setNewAssigneeName("");
-      setShowAssigneeDialog(false);
-    }
-  };
-
-  const handleCancelAssignee = () => {
-    setNewAssigneeName("");
-    setShowAssigneeDialog(false);
-  };
-
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -389,85 +374,75 @@ const AddWorkOrderItemTabs = () => {
 
                 <div className="space-y-2">
                   <Label htmlFor="assignedTo" className="text-sm font-medium">Assigned To</Label>
-                  <div className="flex gap-2 max-w-2xl">
-                    <div className="relative flex-1">
-                      <Input
-                        id="assignedTo"
-                        value={assigneeSearchValue || formData.assignedTo}
-                        onChange={(e) => {
-                          setAssigneeSearchValue(e.target.value);
-                          handleInputChange("assignedTo", e.target.value);
-                        }}
-                        placeholder="Type to search assignees..."
-                        className="h-11 pr-10"
-                      />
-                      
-                      <Popover open={assigneeDropdownOpen} onOpenChange={setAssigneeDropdownOpen}>
-                        <PopoverTrigger asChild>
-                          <Button
+                  <div className="relative max-w-md">
+                    <Input
+                      id="assignedTo"
+                      value={assigneeSearchValue || formData.assignedTo}
+                      onChange={(e) => {
+                        setAssigneeSearchValue(e.target.value);
+                        handleInputChange("assignedTo", e.target.value);
+                      }}
+                      placeholder="Type to search assignees..."
+                      className="h-11 pr-10"
+                    />
+                    
+                    <Popover open={assigneeDropdownOpen} onOpenChange={setAssigneeDropdownOpen}>
+                      <PopoverTrigger asChild>
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 p-0 hover:bg-accent"
+                          aria-label="Show all assignees"
+                        >
+                          <ChevronsUpDown className="h-4 w-4" />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-80 p-0" align="end">
+                        <Command>
+                          <CommandList>
+                            <CommandGroup heading="All Assignees">
+                              {assignees.map((assignee) => (
+                                <CommandItem
+                                  key={assignee.value}
+                                  value={assignee.value}
+                                  onSelect={() => {
+                                    handleInputChange("assignedTo", assignee.value);
+                                    setAssigneeSearchValue("");
+                                    setAssigneeDropdownOpen(false);
+                                  }}
+                                >
+                                  <Check
+                                    className={`mr-2 h-4 w-4 ${
+                                      formData.assignedTo === assignee.value ? "opacity-100" : "opacity-0"
+                                    }`}
+                                  />
+                                  {assignee.label}
+                                </CommandItem>
+                              ))}
+                            </CommandGroup>
+                          </CommandList>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+
+                    {/* Auto-suggestion dropdown */}
+                    {assigneeSearchValue && filteredAssignees.length > 0 && (
+                      <div className="absolute top-full left-0 right-0 z-50 mt-1 bg-popover border rounded-md shadow-lg max-h-48 overflow-y-auto">
+                        {filteredAssignees.map((assignee) => (
+                          <button
+                            key={assignee.value}
                             type="button"
-                            variant="ghost"
-                            className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 p-0 hover:bg-accent"
-                            aria-label="Show all assignees"
+                            className="w-full text-left px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground flex items-center"
+                            onClick={() => {
+                              handleInputChange("assignedTo", assignee.value);
+                              setAssigneeSearchValue("");
+                            }}
                           >
-                            <ChevronsUpDown className="h-4 w-4" />
-                          </Button>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-80 p-0" align="end">
-                          <Command>
-                            <CommandList>
-                              <CommandGroup heading="All Assignees">
-                                {assignees.map((assignee) => (
-                                  <CommandItem
-                                    key={assignee.value}
-                                    value={assignee.value}
-                                    onSelect={() => {
-                                      handleInputChange("assignedTo", assignee.value);
-                                      setAssigneeSearchValue("");
-                                      setAssigneeDropdownOpen(false);
-                                    }}
-                                  >
-                                    <Check
-                                      className={`mr-2 h-4 w-4 ${
-                                        formData.assignedTo === assignee.value ? "opacity-100" : "opacity-0"
-                                      }`}
-                                    />
-                                    {assignee.label}
-                                  </CommandItem>
-                                ))}
-                              </CommandGroup>
-                            </CommandList>
-                          </Command>
-                        </PopoverContent>
-                      </Popover>
-
-                      {/* Auto-suggestion dropdown */}
-                      {assigneeSearchValue && filteredAssignees.length > 0 && (
-                        <div className="absolute top-full left-0 right-0 z-50 mt-1 bg-popover border rounded-md shadow-lg max-h-48 overflow-y-auto">
-                          {filteredAssignees.map((assignee) => (
-                            <button
-                              key={assignee.value}
-                              type="button"
-                              className="w-full text-left px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground flex items-center"
-                              onClick={() => {
-                                handleInputChange("assignedTo", assignee.value);
-                                setAssigneeSearchValue("");
-                              }}
-                            >
-                              {assignee.label}
-                            </button>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-
-                    <Button 
-                      type="button"
-                      className="h-11 px-4 bg-primary text-primary-foreground hover:bg-primary/90"
-                      onClick={() => setShowAssigneeDialog(true)}
-                    >
-                      Add New
-                    </Button>
+                            {assignee.label}
+                          </button>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
               </CardContent>
@@ -1096,46 +1071,6 @@ const AddWorkOrderItemTabs = () => {
               <Button 
                 onClick={handleAddNewManufacturer}
                 disabled={!newManufacturerName.trim()}
-                className="bg-primary text-primary-foreground hover:bg-primary/90"
-              >
-                Submit
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-
-        {/* Add New Assignee Dialog */}
-        <Dialog open={showAssigneeDialog} onOpenChange={setShowAssigneeDialog}>
-          <DialogContent className="sm:max-w-md">
-            <DialogHeader>
-              <DialogTitle>Add New Assignee</DialogTitle>
-            </DialogHeader>
-            <div className="space-y-4 py-4">
-              <div className="space-y-2">
-                <Label htmlFor="newAssignee" className="text-sm font-medium">
-                  Assignee Name
-                </Label>
-                <Input
-                  id="newAssignee"
-                  value={newAssigneeName}
-                  onChange={(e) => setNewAssigneeName(e.target.value)}
-                  placeholder="Enter assignee name"
-                  className="h-11"
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                      handleAddNewAssignee();
-                    }
-                  }}
-                />
-              </div>
-            </div>
-            <DialogFooter className="flex gap-2">
-              <Button variant="outline" onClick={handleCancelAssignee}>
-                Cancel
-              </Button>
-              <Button 
-                onClick={handleAddNewAssignee}
-                disabled={!newAssigneeName.trim()}
                 className="bg-primary text-primary-foreground hover:bg-primary/90"
               >
                 Submit
