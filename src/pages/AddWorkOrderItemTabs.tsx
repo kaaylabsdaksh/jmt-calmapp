@@ -116,31 +116,31 @@ const AddWorkOrderItemTabs = () => {
           <TabsList className="grid w-full grid-cols-4 h-auto p-1 bg-muted/50">
             <TabsTrigger 
               value="general" 
-              className="flex flex-col gap-2 p-4 data-[state=active]:bg-background data-[state=active]:shadow-sm"
+              className="flex flex-col gap-1 p-2 data-[state=active]:bg-background data-[state=active]:shadow-sm"
             >
-              <Info className="h-5 w-5" />
-              <span className="text-sm font-medium">General</span>
+              <Info className="h-4 w-4" />
+              <span className="text-xs font-medium">General</span>
             </TabsTrigger>
             <TabsTrigger 
               value="product" 
-              className="flex flex-col gap-2 p-4 data-[state=active]:bg-background data-[state=active]:shadow-sm"
+              className="flex flex-col gap-1 p-2 data-[state=active]:bg-background data-[state=active]:shadow-sm"
             >
-              <Package className="h-5 w-5" />
-              <span className="text-sm font-medium">Product</span>
+              <Package className="h-4 w-4" />
+              <span className="text-xs font-medium">Product</span>
             </TabsTrigger>
             <TabsTrigger 
               value="logistics" 
-              className="flex flex-col gap-2 p-4 data-[state=active]:bg-background data-[state=active]:shadow-sm"
+              className="flex flex-col gap-1 p-2 data-[state=active]:bg-background data-[state=active]:shadow-sm"
             >
-              <Truck className="h-5 w-5" />
-              <span className="text-sm font-medium">Logistics</span>
+              <Truck className="h-4 w-4" />
+              <span className="text-xs font-medium">Logistics</span>
             </TabsTrigger>
             <TabsTrigger 
               value="options" 
-              className="flex flex-col gap-2 p-4 data-[state=active]:bg-background data-[state=active]:shadow-sm"
+              className="flex flex-col gap-1 p-2 data-[state=active]:bg-background data-[state=active]:shadow-sm"
             >
-              <Settings className="h-5 w-5" />
-              <span className="text-sm font-medium">Options</span>
+              <Settings className="h-4 w-4" />
+              <span className="text-xs font-medium">Options</span>
             </TabsTrigger>
           </TabsList>
 
