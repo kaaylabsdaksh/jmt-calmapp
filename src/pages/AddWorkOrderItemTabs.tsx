@@ -22,6 +22,11 @@ const AddWorkOrderItemTabs = () => {
   const [manufacturerDropdownOpen, setManufacturerDropdownOpen] = useState(false);
   const [manufacturerSearchValue, setManufacturerSearchValue] = useState("");
 
+  const [showAssigneeDialog, setShowAssigneeDialog] = useState(false);
+  const [newAssigneeName, setNewAssigneeName] = useState("");
+  const [assigneeDropdownOpen, setAssigneeDropdownOpen] = useState(false);
+  const [assigneeSearchValue, setAssigneeSearchValue] = useState("");
+
   const manufacturers = [
     { value: "1m-working-stand", label: "1M WORKING STAND." },
     { value: "3d-instruments", label: "3D INSTRUMENTS" },
@@ -62,8 +67,44 @@ const AddWorkOrderItemTabs = () => {
     { value: "yokogawa", label: "YOKOGAWA" },
   ];
 
+  const assignees = [
+    { value: "aaron-l-briles", label: "Aaron L Briles" },
+    { value: "aaron-w-sibley", label: "Aaron W Sibley" },
+    { value: "adam-d-eller", label: "Adam D. Eller" },
+    { value: "alexander-j-shepard", label: "Alexander J Shepard" },
+    { value: "alexander-l-harris", label: "Alexander L Harris" },
+    { value: "alvin-j-milan", label: "Alvin J Milan" },
+    { value: "alvin-j-johnson", label: "Alvin J. Johnson" },
+    { value: "alzane-reyes", label: "Alzane Reyes" },
+    { value: "amber-l-escontrias", label: "Amber L Escontrias" },
+    { value: "andrea-d-jeansonne", label: "Andrea D. Jeansonne" },
+    { value: "andy-m-futier", label: "Andy M Futier" },
+    { value: "angel-anthony-g-moreno", label: "Angel-anthony G Moreno" },
+    { value: "angie-l-paige", label: "Angie L. Paige" },
+    { value: "ashleigh-l-jenkins", label: "Ashleigh L. Jenkins" },
+    { value: "austin-a-behnken", label: "Austin A Behnken" },
+    { value: "austin-h-bergman", label: "Austin H Bergman" },
+    { value: "barry-h-weaver", label: "Barry H Weaver" },
+    { value: "blain-g-scott-jr", label: "Blain G Scott Jr." },
+    { value: "blair-brewer", label: "Blair Brewer" },
+    { value: "blake-j-major", label: "Blake J Major" },
+    { value: "brad-l-moulder", label: "Brad L. Moulder" },
+    { value: "brandon-a-underwood", label: "Brandon A Underwood" },
+    { value: "brandon-b-deramus", label: "Brandon B. DeRamus" },
+    { value: "brandon-g-lowery", label: "Brandon G Lowery" },
+    { value: "brandon-m-milum", label: "Brandon M Milum" },
+    { value: "brandy-c-shorty", label: "Brandy C Shorty" },
+    { value: "brandy-m-reynolds", label: "Brandy M Reynolds" },
+    { value: "brian-e-broome", label: "Brian E. Broome" },
+    { value: "bronson-w-sydow", label: "Bronson W Sydow" },
+  ];
+
   const filteredManufacturers = manufacturers.filter(manufacturer =>
     manufacturer.label.toLowerCase().includes(manufacturerSearchValue.toLowerCase())
+  );
+
+  const filteredAssignees = assignees.filter(assignee =>
+    assignee.label.toLowerCase().includes(assigneeSearchValue.toLowerCase())
   );
   
   const [formData, setFormData] = useState({
@@ -141,6 +182,19 @@ const AddWorkOrderItemTabs = () => {
   const handleCancelManufacturer = () => {
     setNewManufacturerName("");
     setShowManufacturerDialog(false);
+  };
+
+  const handleAddNewAssignee = () => {
+    if (newAssigneeName.trim()) {
+      handleInputChange("assignedTo", newAssigneeName.trim());
+      setNewAssigneeName("");
+      setShowAssigneeDialog(false);
+    }
+  };
+
+  const handleCancelAssignee = () => {
+    setNewAssigneeName("");
+    setShowAssigneeDialog(false);
   };
 
   return (
@@ -316,16 +370,86 @@ const AddWorkOrderItemTabs = () => {
 
                 <div className="space-y-2">
                   <Label htmlFor="assignedTo" className="text-sm font-medium">Assigned To</Label>
-                  <Select value={formData.assignedTo} onValueChange={(value) => handleInputChange("assignedTo", value)}>
-                    <SelectTrigger className="h-11 max-w-md">
-                      <SelectValue placeholder="Select assignee" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="admin">Admin User</SelectItem>
-                      <SelectItem value="tech1">Tech 1</SelectItem>
-                      <SelectItem value="tech2">Tech 2</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <div className="flex gap-2 max-w-2xl">
+                    <div className="relative flex-1">
+                      <Input
+                        id="assignedTo"
+                        value={assigneeSearchValue || formData.assignedTo}
+                        onChange={(e) => {
+                          setAssigneeSearchValue(e.target.value);
+                          handleInputChange("assignedTo", e.target.value);
+                        }}
+                        placeholder="Type to search assignees..."
+                        className="h-11 pr-10"
+                      />
+                      
+                      <Popover open={assigneeDropdownOpen} onOpenChange={setAssigneeDropdownOpen}>
+                        <PopoverTrigger asChild>
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 p-0 hover:bg-accent"
+                            aria-label="Show all assignees"
+                          >
+                            <ChevronsUpDown className="h-4 w-4" />
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-80 p-0" align="end">
+                          <Command>
+                            <CommandList>
+                              <CommandGroup heading="All Assignees">
+                                {assignees.map((assignee) => (
+                                  <CommandItem
+                                    key={assignee.value}
+                                    value={assignee.value}
+                                    onSelect={() => {
+                                      handleInputChange("assignedTo", assignee.value);
+                                      setAssigneeSearchValue("");
+                                      setAssigneeDropdownOpen(false);
+                                    }}
+                                  >
+                                    <Check
+                                      className={`mr-2 h-4 w-4 ${
+                                        formData.assignedTo === assignee.value ? "opacity-100" : "opacity-0"
+                                      }`}
+                                    />
+                                    {assignee.label}
+                                  </CommandItem>
+                                ))}
+                              </CommandGroup>
+                            </CommandList>
+                          </Command>
+                        </PopoverContent>
+                      </Popover>
+
+                      {/* Auto-suggestion dropdown */}
+                      {assigneeSearchValue && filteredAssignees.length > 0 && (
+                        <div className="absolute top-full left-0 right-0 z-50 mt-1 bg-popover border rounded-md shadow-lg max-h-48 overflow-y-auto">
+                          {filteredAssignees.map((assignee) => (
+                            <button
+                              key={assignee.value}
+                              type="button"
+                              className="w-full text-left px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground flex items-center"
+                              onClick={() => {
+                                handleInputChange("assignedTo", assignee.value);
+                                setAssigneeSearchValue("");
+                              }}
+                            >
+                              {assignee.label}
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+
+                    <Button 
+                      type="button"
+                      className="h-11 px-4 bg-primary text-primary-foreground hover:bg-primary/90"
+                      onClick={() => setShowAssigneeDialog(true)}
+                    >
+                      Add New
+                    </Button>
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -750,6 +874,46 @@ const AddWorkOrderItemTabs = () => {
               <Button 
                 onClick={handleAddNewManufacturer}
                 disabled={!newManufacturerName.trim()}
+                className="bg-primary text-primary-foreground hover:bg-primary/90"
+              >
+                Submit
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
+        {/* Add New Assignee Dialog */}
+        <Dialog open={showAssigneeDialog} onOpenChange={setShowAssigneeDialog}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>Add New Assignee</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4 py-4">
+              <div className="space-y-2">
+                <Label htmlFor="newAssignee" className="text-sm font-medium">
+                  Assignee Name
+                </Label>
+                <Input
+                  id="newAssignee"
+                  value={newAssigneeName}
+                  onChange={(e) => setNewAssigneeName(e.target.value)}
+                  placeholder="Enter assignee name"
+                  className="h-11"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      handleAddNewAssignee();
+                    }
+                  }}
+                />
+              </div>
+            </div>
+            <DialogFooter className="flex gap-2">
+              <Button variant="outline" onClick={handleCancelAssignee}>
+                Cancel
+              </Button>
+              <Button 
+                onClick={handleAddNewAssignee}
+                disabled={!newAssigneeName.trim()}
                 className="bg-primary text-primary-foreground hover:bg-primary/90"
               >
                 Submit
