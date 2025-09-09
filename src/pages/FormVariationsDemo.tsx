@@ -10,6 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ArrowLeft, Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Toggle } from "@/components/ui/toggle";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -838,35 +839,35 @@ const FormVariationsDemo = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {[
-          { key: 'warranty', label: 'Warranty', desc: 'Item is under warranty' },
-          { key: 'estimate', label: 'Estimate', desc: 'Estimate required' },
-          { key: 'newEquip', label: 'New Equipment', desc: 'Brand new equipment' },
-          { key: 'usedSurplus', label: 'Used Surplus', desc: 'Previously used equipment' },
-          { key: 'iso17025', label: 'ISO 17025', desc: 'ISO 17025 compliance required' },
-          { key: 'hotList', label: 'Hot List', desc: 'High priority item' },
-          { key: 'readyToBill', label: 'Ready to Bill', desc: 'Ready for billing' },
-          { key: 'inQa', label: 'In QA', desc: 'Currently in quality assurance' },
-          { key: 'toShipping', label: 'To Shipping', desc: 'Ready for shipping' },
-          { key: 'multiParts', label: 'Multi Parts', desc: 'Multiple part item' },
-          { key: 'lostEquipment', label: 'Lost Equipment', desc: 'Equipment is lost' },
-          { key: 'redTag', label: 'Red Tag', desc: 'Red tag status' },
-        ].map(({ key, label, desc }) => (
-          <div key={key} className="flex items-start space-x-3 p-4 rounded-lg border border-border hover:bg-accent/50 transition-colors">
-            <Checkbox
-              id={key}
-              checked={formData[key as keyof typeof formData] as boolean}
-              onCheckedChange={(checked) => handleInputChange(key, checked)}
-              className="mt-1"
-            />
-            <div className="flex-1">
-              <Label htmlFor={key} className="text-sm font-medium cursor-pointer">
-                {label}
-              </Label>
-              <p className="text-xs text-muted-foreground mt-1">{desc}</p>
+          { key: 'warranty', label: 'Warranty', desc: 'Item is under warranty', icon: '🛡️' },
+          { key: 'estimate', label: 'Estimate', desc: 'Estimate required', icon: '💰' },
+          { key: 'newEquip', label: 'New Equipment', desc: 'Brand new equipment', icon: '✨' },
+          { key: 'usedSurplus', label: 'Used Surplus', desc: 'Previously used equipment', icon: '♻️' },
+          { key: 'iso17025', label: 'ISO 17025', desc: 'ISO 17025 compliance required', icon: '📋' },
+          { key: 'hotList', label: 'Hot List', desc: 'High priority item', icon: '🔥' },
+          { key: 'readyToBill', label: 'Ready to Bill', desc: 'Ready for billing', icon: '💵' },
+          { key: 'inQa', label: 'In QA', desc: 'Currently in quality assurance', icon: '🔍' },
+          { key: 'toShipping', label: 'To Shipping', desc: 'Ready for shipping', icon: '📦' },
+          { key: 'multiParts', label: 'Multi Parts', desc: 'Multiple part item', icon: '🔧' },
+          { key: 'lostEquipment', label: 'Lost Equipment', desc: 'Equipment is lost', icon: '❗' },
+          { key: 'redTag', label: 'Red Tag', desc: 'Red tag status', icon: '🏷️' },
+        ].map(({ key, label, desc, icon }) => (
+          <Toggle
+            key={key}
+            pressed={formData[key as keyof typeof formData] as boolean}
+            onPressedChange={(pressed) => handleInputChange(key, pressed)}
+            className="h-auto p-0 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
+          >
+            <div className="w-full p-4 text-left">
+              <div className="flex items-center gap-3 mb-2">
+                <span className="text-lg">{icon}</span>
+                <span className="font-medium">{label}</span>
+              </div>
+              <p className="text-xs opacity-75 leading-relaxed">{desc}</p>
             </div>
-          </div>
+          </Toggle>
         ))}
       </div>
     </div>
