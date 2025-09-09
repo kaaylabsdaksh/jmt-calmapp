@@ -724,7 +724,7 @@ const FormVariationsDemo = () => {
                 type="date"
                 value={formData.arrivalDate}
                 onChange={(e) => handleInputChange("arrivalDate", e.target.value)}
-                className="h-11"
+                className="h-9 sm:h-11"
               />
             </div>
 
@@ -830,7 +830,7 @@ const FormVariationsDemo = () => {
                 type="date"
                 value={formData.puDate}
                 onChange={(e) => handleInputChange("puDate", e.target.value)}
-                className="h-11"
+                className="h-9 sm:h-11"
               />
             </div>
 
@@ -892,7 +892,7 @@ const FormVariationsDemo = () => {
                 type="date"
                 value={formData.needBy}
                 onChange={(e) => handleInputChange("needBy", e.target.value)}
-                className="h-11"
+                className="h-9 sm:h-11"
               />
             </div>
           </div>
@@ -1098,17 +1098,17 @@ const FormVariationsDemo = () => {
     <Card className="border-0 shadow-md">
       <CardContent className="p-6">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="inline-flex h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground">
+          <TabsList className="inline-flex h-8 sm:h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground w-full sm:w-auto overflow-x-auto">
             {currentTabs.map((tab) => {
               const Icon = tab.icon;
               return (
                 <TabsTrigger 
                   key={tab.value}
                   value={tab.value}
-                  className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+                  className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
                 >
-                  <Icon className="h-4 w-4 mr-2" />
-                  {tab.label}
+                  <Icon className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
+                  <span className="hidden sm:inline">{tab.label}</span>
                 </TabsTrigger>
               );
             })}
@@ -1219,57 +1219,57 @@ const FormVariationsDemo = () => {
     <div className="min-h-screen bg-background px-4 sm:px-6 lg:px-8">
       {/* Header */}
       <header className="bg-background px-4 sm:px-6 py-4 border-b border-border sticky top-0 z-10 backdrop-blur-sm bg-background/80">
-        <div className="flex items-center justify-between max-w-6xl mx-auto">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between max-w-6xl mx-auto gap-4">
           <div className="flex items-center gap-3">
             <Button
               variant="ghost"
               size="sm"
               onClick={handleCancel}
-              className="flex items-center gap-2 hover-scale"
+              className="flex items-center gap-2 hover-scale p-2 sm:px-3"
             >
               <ArrowLeft className="h-4 w-4" />
-              Back
+              <span className="hidden sm:inline">Back</span>
             </Button>
             <div>
-              <h1 className="text-xl font-semibold text-foreground">Add New Work Order Item</h1>
-              <p className="text-sm text-muted-foreground">Complete all sections to create the item</p>
+              <h1 className="text-lg sm:text-xl font-semibold text-foreground">Add New Work Order Item</h1>
+              <p className="text-xs sm:text-sm text-muted-foreground hidden sm:block">Complete all sections to create the item</p>
             </div>
           </div>
           
           {/* Interface Switcher */}
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
             {/* Layout Switcher */}
-            <div className="flex items-center gap-2 p-1 bg-muted rounded-lg">
+            <div className="flex items-center gap-1 p-1 bg-muted rounded-lg">
               <Button
                 variant={interfaceType === 'tabs' ? 'default' : 'ghost'}
                 size="sm"
                 onClick={() => setInterfaceType('tabs')}
-                className="flex items-center gap-2 h-8"
+                className="flex items-center gap-1 h-7 text-xs px-2 sm:px-3 sm:h-8"
               >
-                <Layers className="h-4 w-4" />
-                Tabs
+                <Layers className="h-3 w-3 sm:h-4 sm:w-4" />
+                <span className="hidden sm:inline">Tabs</span>
               </Button>
               <Button
                 variant={interfaceType === 'accordion' ? 'default' : 'ghost'}
                 size="sm"
                 onClick={() => setInterfaceType('accordion')}
-                className="flex items-center gap-2 h-8"
+                className="flex items-center gap-1 h-7 text-xs px-2 sm:px-3 sm:h-8"
               >
-                <List className="h-4 w-4" />
-                Accordion
+                <List className="h-3 w-3 sm:h-4 sm:w-4" />
+                <span className="hidden sm:inline">Accord</span>
               </Button>
             </div>
-          </div>
-          
-          <div className="flex items-center gap-2">
-            <Button variant="outline" onClick={handleCancel} className="hover-scale">
-              <X className="h-4 w-4 mr-2" />
-              Cancel
-            </Button>
-            <Button onClick={handleSave} className="bg-primary text-primary-foreground hover:bg-primary/90 hover-scale">
-              <Save className="h-4 w-4 mr-2" />
-              Save Item
-            </Button>
+            
+            <div className="flex items-center gap-2">
+              <Button variant="outline" onClick={handleCancel} className="hover-scale h-8 px-3 text-xs sm:text-sm">
+                <X className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
+                <span className="hidden sm:inline">Cancel</span>
+              </Button>
+              <Button onClick={handleSave} className="bg-primary text-primary-foreground hover:bg-primary/90 hover-scale h-8 px-3 text-xs sm:text-sm">
+                <Save className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
+                <span className="hidden sm:inline">Save Item</span>
+              </Button>
+            </div>
           </div>
         </div>
       </header>
