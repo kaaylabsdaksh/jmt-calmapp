@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { ArrowLeft, Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, Menu } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
@@ -1234,7 +1235,33 @@ const FormVariationsDemo = () => {
             </Button>
             <div>
               <h1 className="text-lg sm:text-xl font-semibold text-foreground">Add New Work Order Item</h1>
-              <p className="text-xs sm:text-sm text-muted-foreground hidden sm:block">Complete all sections to create the item</p>
+              <Breadcrumb className="mt-1">
+                <BreadcrumbList>
+                  <BreadcrumbItem>
+                    <BreadcrumbLink 
+                      href="/" 
+                      className="text-xs sm:text-sm text-muted-foreground hover:text-foreground"
+                    >
+                      Home
+                    </BreadcrumbLink>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator />
+                  <BreadcrumbItem>
+                    <BreadcrumbLink 
+                      href="/add-new-work-order" 
+                      className="text-xs sm:text-sm text-muted-foreground hover:text-foreground"
+                    >
+                      Work Orders
+                    </BreadcrumbLink>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator />
+                  <BreadcrumbItem>
+                    <BreadcrumbPage className="text-xs sm:text-sm text-foreground font-medium">
+                      Add New Item
+                    </BreadcrumbPage>
+                  </BreadcrumbItem>
+                </BreadcrumbList>
+              </Breadcrumb>
             </div>
           </div>
           
