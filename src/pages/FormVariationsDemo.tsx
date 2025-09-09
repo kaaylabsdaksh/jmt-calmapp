@@ -824,11 +824,36 @@ const FormVariationsDemo = () => {
                 <SelectTrigger className="h-11">
                   <SelectValue placeholder="Select ship type" />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="fedex">FedEx</SelectItem>
-                  <SelectItem value="ups">UPS</SelectItem>
-                  <SelectItem value="usps">USPS</SelectItem>
-                  <SelectItem value="hand-delivery">Hand Delivery</SelectItem>
+                <SelectContent className="max-h-48 overflow-y-auto">
+                  <SelectItem value="airborne-do-not-use">AIRBORNE - DO NOT USE</SelectItem>
+                  <SelectItem value="averitt-do-not-use">AVERITT - DO NOT USE</SelectItem>
+                  <SelectItem value="dhl">DHL</SelectItem>
+                  <SelectItem value="fedex-2nd-day">FEDEX 2ND DAY</SelectItem>
+                  <SelectItem value="fedex-grd">FEDEX GRD</SelectItem>
+                  <SelectItem value="fedex-p1-do-not-use">FEDEX P1 - DO NOT USE</SelectItem>
+                  <SelectItem value="fedex-do-not-use">FEDEX - DO NOT USE</SelectItem>
+                  <SelectItem value="motor-freight">MOTOR FREIGHT</SelectItem>
+                  <SelectItem value="hot-shot">HOT SHOT</SelectItem>
+                  <SelectItem value="ups-blue">UPS BLUE</SelectItem>
+                  <SelectItem value="ups-org-do-not-use">UPS ORG - DO NOT USE</SelectItem>
+                  <SelectItem value="ups-red">UPS RED</SelectItem>
+                  <SelectItem value="ups-ground">UPS GROUND</SelectItem>
+                  <SelectItem value="us-post-office">US POST OFFICE</SelectItem>
+                  <SelectItem value="fedex-3day-do-not-use">FEDEX 3DAY - DO NOT USE</SelectItem>
+                  <SelectItem value="drop-ship">DROP SHIP</SelectItem>
+                  <SelectItem value="fedex-1st-on">FEDEX 1ST ON</SelectItem>
+                  <SelectItem value="fedex-2nd-am">FEDEX 2ND AM</SelectItem>
+                  <SelectItem value="fedex-3rd-col">FEDEX 3RD COL</SelectItem>
+                  <SelectItem value="fedex-air-frt">FEDEX AIR FRT</SelectItem>
+                  <SelectItem value="fedex-col-ovrnt">FEDEX COL OVRNT</SelectItem>
+                  <SelectItem value="fedex-col-p1">FEDEX COL P1</SelectItem>
+                  <SelectItem value="fedex-collect">FEDEX COLLECT</SelectItem>
+                  <SelectItem value="fedex-exp-svr">FEDEX EXP SVR</SelectItem>
+                  <SelectItem value="fedex-intl">FEDEX INTL</SelectItem>
+                  <SelectItem value="fedex-intl-exwk">FEDEX INTL EXWK</SelectItem>
+                  <SelectItem value="fedex-mtrft">FEDEX MTRFT</SelectItem>
+                  <SelectItem value="fedex-priority">FEDEX PRIORITY</SelectItem>
+                  <SelectItem value="fedex-sat-p1">FEDEX SAT P1</SelectItem>
                 </SelectContent>
               </Select>
             </div>
