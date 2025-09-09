@@ -320,13 +320,29 @@ const FormVariationsDemo = () => {
 
         <div className="space-y-2">
           <Label htmlFor="location" className="text-sm font-medium">Location</Label>
-          <Input
-            id="location"
-            value={formData.location}
-            onChange={(e) => handleInputChange("location", e.target.value)}
-            placeholder="Baton Rouge"
-            className="h-11"
-          />
+          <Select value={formData.location} onValueChange={(value) => handleInputChange("location", value)}>
+            <SelectTrigger className="h-11">
+              <SelectValue placeholder="Select location" />
+            </SelectTrigger>
+            <SelectContent className="bg-popover border z-50 max-h-48 overflow-y-auto">
+              <SelectItem value="baton-rouge">Baton Rouge</SelectItem>
+              <SelectItem value="alexandria">Alexandria</SelectItem>
+              <SelectItem value="odessa">Odessa</SelectItem>
+              <SelectItem value="clute">Clute</SelectItem>
+              <SelectItem value="mattoon">Mattoon</SelectItem>
+              <SelectItem value="groves">Groves</SelectItem>
+              <SelectItem value="candia">Candia</SelectItem>
+              <SelectItem value="san-angelo">San Angelo</SelectItem>
+              <SelectItem value="berthold">Berthold</SelectItem>
+              <SelectItem value="mount-braddock">Mount Braddock</SelectItem>
+              <SelectItem value="port-arthur">Port Arthur</SelectItem>
+              <SelectItem value="mathiston">Mathiston</SelectItem>
+              <SelectItem value="billings">Billings</SelectItem>
+              <SelectItem value="mobile">Mobile</SelectItem>
+              <SelectItem value="onsite">Onsite</SelectItem>
+              <SelectItem value="leechburg">Leechburg</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
 
         <div className="space-y-2">
