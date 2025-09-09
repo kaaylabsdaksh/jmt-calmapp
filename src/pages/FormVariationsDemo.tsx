@@ -10,7 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ArrowLeft, Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Toggle } from "@/components/ui/toggle";
+import { Switch } from "@/components/ui/switch";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -854,20 +854,19 @@ const FormVariationsDemo = () => {
           { key: 'lostEquipment', label: 'Lost Equipment', desc: 'Equipment is lost', icon: '❗' },
           { key: 'redTag', label: 'Red Tag', desc: 'Red tag status', icon: '🏷️' },
         ].map(({ key, label, desc, icon }) => (
-          <Toggle
-            key={key}
-            pressed={formData[key as keyof typeof formData] as boolean}
-            onPressedChange={(pressed) => handleInputChange(key, pressed)}
-            className="h-auto p-0 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
-          >
-            <div className="w-full p-4 text-left">
-              <div className="flex items-center gap-3 mb-2">
-                <span className="text-lg">{icon}</span>
-                <span className="font-medium">{label}</span>
+          <div key={key} className="flex items-center justify-between p-4 rounded-lg border border-border hover:bg-accent/50 transition-colors">
+            <div className="flex items-center gap-3">
+              <span className="text-lg">{icon}</span>
+              <div>
+                <div className="font-medium text-sm">{label}</div>
+                <p className="text-xs text-muted-foreground">{desc}</p>
               </div>
-              <p className="text-xs opacity-75 leading-relaxed">{desc}</p>
             </div>
-          </Toggle>
+            <Switch
+              checked={formData[key as keyof typeof formData] as boolean}
+              onCheckedChange={(checked) => handleInputChange(key, checked)}
+            />
+          </div>
         ))}
       </div>
     </div>
