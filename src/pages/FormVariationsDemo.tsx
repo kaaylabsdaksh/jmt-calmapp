@@ -743,13 +743,24 @@ const FormVariationsDemo = () => {
 
             <div className="space-y-2">
               <Label htmlFor="arrivalLocation" className="text-sm font-medium">Arrival Location</Label>
-              <Input
-                id="arrivalLocation"
-                value={formData.arrivalLocation}
-                onChange={(e) => handleInputChange("arrivalLocation", e.target.value)}
-                placeholder="Enter arrival location"
-                className="h-11"
-              />
+              <Select value={formData.arrivalLocation} onValueChange={(value) => handleInputChange("arrivalLocation", value)}>
+                <SelectTrigger className="h-11">
+                  <SelectValue placeholder="Select arrival location" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="BX">BX</SelectItem>
+                  <SelectItem value="AX">AX</SelectItem>
+                  <SelectItem value="CX">CX</SelectItem>
+                  <SelectItem value="MX">MX</SelectItem>
+                  <SelectItem value="OX">OX</SelectItem>
+                  <SelectItem value="PAX">PAX</SelectItem>
+                  <SelectItem value="BTX">BTX</SelectItem>
+                  <SelectItem value="CAX">CAX</SelectItem>
+                  <SelectItem value="SAX">SAX</SelectItem>
+                  <SelectItem value="MBX">MBX</SelectItem>
+                  <SelectItem value="MOX">MOX</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
             <div className="space-y-2">
