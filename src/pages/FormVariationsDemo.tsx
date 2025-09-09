@@ -129,6 +129,8 @@ const FormVariationsDemo = () => {
     priority: "Normal",
     location: "",
     division: "",
+    calFreq: "",
+    actionCode: "",
     
     // Product Information
     manufacturer: "",
@@ -363,6 +365,28 @@ const FormVariationsDemo = () => {
               <SelectItem value="gmfg">GMFG</SelectItem>
             </SelectContent>
           </Select>
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="calFreq" className="text-sm font-medium">Cal Freq</Label>
+          <Input
+            id="calFreq"
+            value={formData.calFreq}
+            onChange={(e) => handleInputChange("calFreq", e.target.value)}
+            placeholder="Enter calibration frequency"
+            className="h-11"
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="actionCode" className="text-sm font-medium">Action Code</Label>
+          <Input
+            id="actionCode"
+            value={formData.actionCode}
+            onChange={(e) => handleInputChange("actionCode", e.target.value)}
+            placeholder="Enter action code"
+            className="h-11"
+          />
         </div>
       </div>
 
