@@ -1025,19 +1025,6 @@ const FormVariationsDemo = () => {
   // Render factory section
   const renderFactorySection = () => (
     <div className="space-y-8">
-      {/* Factory Processing Header */}
-      <div className="rounded-lg bg-gradient-to-r from-primary/5 to-primary/10 p-6 border border-primary/20">
-        <div className="flex items-center gap-3 mb-2">
-          <div className="p-2 bg-primary/20 rounded-lg">
-            <Layers className="h-6 w-6 text-primary" />
-          </div>
-          <div>
-            <h2 className="text-xl font-bold text-foreground">Factory Processing</h2>
-            <p className="text-sm text-muted-foreground">Manage factory workflows, documentation, and accessories</p>
-          </div>
-        </div>
-      </div>
-
       {/* Factory Settings Card */}
       <Card className="border-0 shadow-lg bg-gradient-to-br from-background to-muted/20">
         <CardContent className="p-6 space-y-6">
