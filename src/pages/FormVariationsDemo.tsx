@@ -112,6 +112,12 @@ const FormVariationsDemo = () => {
   );
 
   const [formData, setFormData] = useState({
+    // Work Order Header
+    workOrderNumber: "WO-QOAV2I",
+    srDoc: "SR Document",
+    salesperson: "Not assigned",
+    contact: "",
+    
     // General Information
     type: "",
     reportNumber: "",
@@ -159,39 +165,16 @@ const FormVariationsDemo = () => {
     redTag: false,
   });
 
-  const getTabsForType = (type: string) => {
-    if (type.startsWith('esl-')) {
-      return [
-        { value: 'general', label: 'General', icon: Info },
-        { value: 'esl-details', label: 'ESL Details', icon: Package },
-        { value: 'testing', label: 'Testing', icon: Settings },
-        { value: 'logistics', label: 'Logistics', icon: Truck }
-      ];
-    } else if (type.startsWith('itl-')) {
-      return [
-        { value: 'general', label: 'General', icon: Info },
-        { value: 'itl-details', label: 'ITL Details', icon: Package },
-        { value: 'calibration', label: 'Calibration', icon: Settings },
-        { value: 'logistics', label: 'Logistics', icon: Truck }
-      ];
-    } else {
-      // Default for 'single' type
-      return [
-        { value: 'general', label: 'General', icon: Info },
-        { value: 'product', label: 'Product', icon: Package },
-        { value: 'logistics', label: 'Logistics', icon: Truck },
-        { value: 'options', label: 'Options', icon: Settings }
-      ];
-    }
+  const getTabsForType = () => {
+    return [
+      { value: 'work-order-items', label: 'Work Order Items', icon: Package },
+      { value: 'estimate', label: 'Estimate', icon: Info },
+      { value: 'qf3-data', label: 'QF3 Data', icon: Settings }
+    ];
   };
 
-  const currentTabs = getTabsForType(formData.type);
-  const [activeTab, setActiveTab] = useState('general');
-
-  // Reset active tab when type changes
-  useEffect(() => {
-    setActiveTab('general');
-  }, [formData.type]);
+  const currentTabs = getTabsForType();
+  const [activeTab, setActiveTab] = useState('work-order-items');
 
   const handleInputChange = (field: string, value: string | boolean) => {
     setFormData(prev => ({
@@ -778,6 +761,109 @@ const FormVariationsDemo = () => {
     </div>
   );
 
+  // Render Work Order Items section
+  const renderWorkOrderItemsSection = () => (
+    <div className="space-y-6">
+      <div className="flex items-center gap-3 pb-4 border-b border-border">
+        <div className="p-2 bg-primary/10 rounded-lg">
+          <Package className="h-5 w-5 text-primary" />
+        </div>
+        <div>
+          <h2 className="text-lg font-semibold text-foreground">Work Order Items</h2>
+          <p className="text-sm text-muted-foreground">Manage items in this work order</p>
+        </div>
+      </div>
+      
+      <div className="text-center py-8 text-muted-foreground">
+        <Package className="h-12 w-12 mx-auto mb-4 opacity-50" />
+        <p>No items added yet. Click "Add New Item" to get started.</p>
+      </div>
+    </div>
+  );
+
+  // Render Estimate section
+  const renderEstimateSection = () => (
+    <div className="space-y-6">
+      <div className="flex items-center gap-3 pb-4 border-b border-border">
+        <div className="p-2 bg-primary/10 rounded-lg">
+          <Info className="h-5 w-5 text-primary" />
+        </div>
+        <div>
+          <h2 className="text-lg font-semibold text-foreground">Estimate</h2>
+          <p className="text-sm text-muted-foreground">Cost estimation and pricing details</p>
+        </div>
+      </div>
+      
+      <div className="text-center py-8 text-muted-foreground">
+        <Info className="h-12 w-12 mx-auto mb-4 opacity-50" />
+        <p>Estimate information will be displayed here.</p>
+      </div>
+    </div>
+  );
+
+  // Render QF3 Data section
+  const renderQF3DataSection = () => (
+    <div className="space-y-6">
+      <div className="flex items-center gap-3 pb-4 border-b border-border">
+        <div className="p-2 bg-primary/10 rounded-lg">
+          <Settings className="h-5 w-5 text-primary" />
+        </div>
+        <div>
+          <h2 className="text-lg font-semibold text-foreground">QF3 Data</h2>
+          <p className="text-sm text-muted-foreground">Quality and test data information</p>
+        </div>
+      </div>
+      
+      <div className="text-center py-8 text-muted-foreground">
+        <Settings className="h-12 w-12 mx-auto mb-4 opacity-50" />
+        <p>QF3 data will be displayed here.</p>
+      </div>
+    </div>
+  );
+
+  // Render work order header
+  const renderWorkOrderHeader = () => (
+    <div className="bg-card border border-border rounded-lg p-6 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div>
+          <Label className="text-sm font-medium text-muted-foreground">Work Order #</Label>
+          <Input
+            value={formData.workOrderNumber}
+            onChange={(e) => handleInputChange("workOrderNumber", e.target.value)}
+            className="mt-1 font-semibold text-lg"
+          />
+        </div>
+        <div>
+          <Label className="text-sm font-medium text-muted-foreground">SR Doc</Label>
+          <Input
+            value={formData.srDoc}
+            onChange={(e) => handleInputChange("srDoc", e.target.value)}
+            placeholder="SR Document"
+            className="mt-1"
+          />
+        </div>
+        <div>
+          <Label className="text-sm font-medium text-muted-foreground">Salesperson</Label>
+          <Input
+            value={formData.salesperson}
+            onChange={(e) => handleInputChange("salesperson", e.target.value)}
+            placeholder="Not assigned"
+            className="mt-1"
+          />
+        </div>
+        <div>
+          <Label className="text-sm font-medium text-muted-foreground">Contact</Label>
+          <Input
+            value={formData.contact}
+            onChange={(e) => handleInputChange("contact", e.target.value)}
+            placeholder="Contact information"
+            className="mt-1"
+          />
+        </div>
+      </div>
+    </div>
+  );
+
   // Render tabbed interface
   const renderTabbedInterface = () => (
     <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
@@ -797,30 +883,26 @@ const FormVariationsDemo = () => {
         })}
       </TabsList>
 
-      <TabsContent value="general" className="space-y-6">
+      <TabsContent value="work-order-items" className="space-y-6">
         <Card className="border-0 shadow-md">
           <CardContent className="p-6">
-            {renderGeneralSection()}
+            {renderWorkOrderItemsSection()}
           </CardContent>
         </Card>
       </TabsContent>
 
-      <TabsContent value="product" className="space-y-6">
+      <TabsContent value="estimate" className="space-y-6">
         <Card className="border-0 shadow-md">
           <CardContent className="p-6">
-            {renderProductSection()}
+            {renderEstimateSection()}
           </CardContent>
         </Card>
       </TabsContent>
 
-      <TabsContent value="logistics" className="space-y-6">
-        {renderLogisticsSection()}
-      </TabsContent>
-
-      <TabsContent value="options" className="space-y-6">
+      <TabsContent value="qf3-data" className="space-y-6">
         <Card className="border-0 shadow-md">
           <CardContent className="p-6">
-            {renderOptionsSection()}
+            {renderQF3DataSection()}
           </CardContent>
         </Card>
       </TabsContent>
@@ -831,76 +913,49 @@ const FormVariationsDemo = () => {
   const renderAccordionInterface = () => (
     <Card className="border-0 shadow-md">
       <CardContent className="p-6">
-        <Accordion type="multiple" defaultValue={["general"]} className="space-y-4">
-          <AccordionItem value="general" className="border border-border rounded-lg px-4">
-            <AccordionTrigger className="hover:no-underline py-4">
-              <div className="flex items-center gap-3">
-                <Info className="h-5 w-5 text-primary" />
-                <div className="text-left">
-                  <h3 className="font-semibold">General Information</h3>
-                  <p className="text-sm text-muted-foreground">Basic work order item details</p>
-                </div>
-                {isSectionComplete('general') && (
-                  <Badge variant="default" className="ml-auto mr-4">Complete</Badge>
-                )}
-              </div>
-            </AccordionTrigger>
-            <AccordionContent className="pb-4">
-              {renderGeneralSection()}
-            </AccordionContent>
-          </AccordionItem>
-
-          <AccordionItem value="product" className="border border-border rounded-lg px-4">
+        <Accordion type="multiple" defaultValue={["work-order-items"]} className="space-y-4">
+          <AccordionItem value="work-order-items" className="border border-border rounded-lg px-4">
             <AccordionTrigger className="hover:no-underline py-4">
               <div className="flex items-center gap-3">
                 <Package className="h-5 w-5 text-primary" />
                 <div className="text-left">
-                  <h3 className="font-semibold">Product Information</h3>
-                  <p className="text-sm text-muted-foreground">Technical specifications and details</p>
+                  <h3 className="font-semibold">Work Order Items</h3>
+                  <p className="text-sm text-muted-foreground">Manage items in this work order</p>
                 </div>
-                {isSectionComplete('product') && (
-                  <Badge variant="default" className="ml-auto mr-4">Complete</Badge>
-                )}
               </div>
             </AccordionTrigger>
             <AccordionContent className="pb-4">
-              {renderProductSection()}
+              {renderWorkOrderItemsSection()}
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem value="logistics" className="border border-border rounded-lg px-4">
+          <AccordionItem value="estimate" className="border border-border rounded-lg px-4">
             <AccordionTrigger className="hover:no-underline py-4">
               <div className="flex items-center gap-3">
-                <Truck className="h-5 w-5 text-primary" />
+                <Info className="h-5 w-5 text-primary" />
                 <div className="text-left">
-                  <h3 className="font-semibold">Logistics Information</h3>
-                  <p className="text-sm text-muted-foreground">Shipping and arrival details</p>
+                  <h3 className="font-semibold">Estimate</h3>
+                  <p className="text-sm text-muted-foreground">Cost estimation and pricing details</p>
                 </div>
-                {isSectionComplete('logistics') && (
-                  <Badge variant="default" className="ml-auto mr-4">Complete</Badge>
-                )}
               </div>
             </AccordionTrigger>
             <AccordionContent className="pb-4">
-              {renderLogisticsSection()}
+              {renderEstimateSection()}
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem value="options" className="border border-border rounded-lg px-4">
+          <AccordionItem value="qf3-data" className="border border-border rounded-lg px-4">
             <AccordionTrigger className="hover:no-underline py-4">
               <div className="flex items-center gap-3">
                 <Settings className="h-5 w-5 text-primary" />
                 <div className="text-left">
-                  <h3 className="font-semibold">Additional Options</h3>
-                  <p className="text-sm text-muted-foreground">Configure additional settings and options</p>
+                  <h3 className="font-semibold">QF3 Data</h3>
+                  <p className="text-sm text-muted-foreground">Quality and test data information</p>
                 </div>
-                {isSectionComplete('options') && (
-                  <Badge variant="default" className="ml-auto mr-4">Complete</Badge>
-                )}
               </div>
             </AccordionTrigger>
             <AccordionContent className="pb-4">
-              {renderOptionsSection()}
+              {renderQF3DataSection()}
             </AccordionContent>
           </AccordionItem>
         </Accordion>
@@ -968,6 +1023,10 @@ const FormVariationsDemo = () => {
 
       {/* Form Content */}
       <div className="p-6 max-w-6xl mx-auto">
+        {/* Work Order Header */}
+        {renderWorkOrderHeader()}
+        
+        {/* Tabs/Accordion Interface */}
         {interfaceType === 'tabs' ? renderTabbedInterface() : renderAccordionInterface()}
 
         {/* Add New Manufacturer Dialog */}
