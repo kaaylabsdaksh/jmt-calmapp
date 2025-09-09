@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { ArrowLeft, X, Download, Settings, User, CreditCard, Users, Package, FileText, Calculator, AlertCircle, ExternalLink, Award, Shield, BarChart, Save, LayoutGrid, Table, ChevronDown, Plus, PlusCircle, QrCode, Copy, PackagePlus, Menu } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { WorkOrderItemsTable } from "@/components/WorkOrderItemsTable";
@@ -307,7 +308,27 @@ const AddNewWorkOrder = () => {
               <span className="sm:hidden">Back</span>
             </Button>
           </div>
-          <h1 className="text-lg sm:text-xl font-semibold text-foreground text-center flex-1 mx-4">Add New Work Order</h1>
+          <div className="text-center flex-1 mx-4">
+            <h1 className="text-lg sm:text-xl font-semibold text-foreground">Add New Work Order</h1>
+            <Breadcrumb className="mt-1 flex justify-center">
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink 
+                    href="/" 
+                    className="text-xs sm:text-sm text-muted-foreground hover:text-foreground"
+                  >
+                    Home
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage className="text-xs sm:text-sm text-foreground font-medium">
+                    Add New Work Order
+                  </BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          </div>
           <div className="flex items-center gap-1 sm:gap-2">
             <Button 
               variant="ghost" 

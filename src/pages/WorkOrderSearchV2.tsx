@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import MinimalWorkOrderSearch from "@/components/MinimalWorkOrderSearch";
 import MinimalWorkOrderResults from "@/components/MinimalWorkOrderResults";
 
@@ -10,9 +11,29 @@ const WorkOrderSearchV2 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 sm:gap-4">
-              <span className="text-sm text-muted-foreground block">
-                JM Test Systems
-              </span>
+              <div>
+                <span className="text-sm text-muted-foreground block">
+                  JM Test Systems
+                </span>
+                <Breadcrumb className="mt-1">
+                  <BreadcrumbList>
+                    <BreadcrumbItem>
+                      <BreadcrumbLink 
+                        href="/" 
+                        className="text-xs text-muted-foreground hover:text-foreground"
+                      >
+                        Home
+                      </BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                      <BreadcrumbPage className="text-xs text-foreground font-medium">
+                        Work Order Search
+                      </BreadcrumbPage>
+                    </BreadcrumbItem>
+                  </BreadcrumbList>
+                </Breadcrumb>
+              </div>
             </div>
             <div className="flex items-center">
               <div className="flex gap-2">

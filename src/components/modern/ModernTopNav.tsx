@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Plus, Download, Settings } from "lucide-react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 
@@ -9,9 +10,30 @@ const ModernTopNav = () => {
   return (
     <header className="bg-white px-6 py-3 border-b border-border">
       <div className="flex items-center justify-between">
-        {/* Sidebar Toggle */}
+        {/* Sidebar Toggle and Title */}
         <div className="flex items-center gap-3">
           <SidebarTrigger className="text-foreground hover:bg-muted hover:text-foreground transition-all duration-300 transform hover:scale-105" />
+          <div>
+            <h1 className="text-lg font-semibold text-foreground">Work Order Management</h1>
+            <Breadcrumb className="mt-1">
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink 
+                    href="/" 
+                    className="text-xs text-muted-foreground hover:text-foreground"
+                  >
+                    Home
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage className="text-xs text-foreground font-medium">
+                    Work Orders
+                  </BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          </div>
         </div>
 
         {/* Action Buttons */}
