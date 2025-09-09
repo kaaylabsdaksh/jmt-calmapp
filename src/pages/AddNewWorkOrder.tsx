@@ -19,7 +19,7 @@ import { SidebarTrigger } from "@/components/ui/sidebar";
 const AddNewWorkOrder = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
-  const [activeTab, setActiveTab] = useState("items");
+  const [activeTab, setActiveTab] = useState("general");
   const [workOrderData, setWorkOrderData] = useState({
     workOrderNumber: "WO-QOAV2I",
     srDocument: "",
@@ -151,9 +151,17 @@ const AddNewWorkOrder = () => {
   ];
 
   const tabs = [
+    { value: "general", label: "General", icon: User, shortLabel: "Gen" },
+    { value: "account-info", label: "Account Info", icon: CreditCard, shortLabel: "Account" },
+    { value: "contacts", label: "Work Order Contacts", icon: Users, shortLabel: "Contacts" },
     { value: "items", label: "Work Order Items", icon: Package, shortLabel: "Items" },
+    { value: "quote", label: "Quote Details", icon: FileText, shortLabel: "Quote" },
     { value: "estimate", label: "Estimate", icon: Calculator, shortLabel: "Est" },
-    { value: "qfd", label: "QF3 Data", icon: BarChart, shortLabel: "QF3" }
+    { value: "fail-log", label: "Fail Log", icon: AlertCircle, shortLabel: "Fail" },
+    { value: "external", label: "External Files", icon: ExternalLink, shortLabel: "Ext" },
+    { value: "cert", label: "Cert Files", icon: Award, shortLabel: "Cert" },
+    { value: "warranty", label: "Warranty", icon: Shield, shortLabel: "War" },
+    { value: "qfd", label: "QFD Data", icon: BarChart, shortLabel: "QFD" }
   ];
 
   const currentTab = tabs.find(tab => tab.value === activeTab);
@@ -169,8 +177,12 @@ const AddNewWorkOrder = () => {
 
   // Function to check if a tab should be disabled
   const isTabDisabled = (tabValue: string) => {
-    // No tabs are disabled in this simplified version
-    return false;
+    // Always disable warranty and estimate tabs
+    if (tabValue === "warranty" || tabValue === "estimate") {
+      return true;
+    }
+    // Only general tab is enabled if account number is not 5 digits
+    return tabValue !== "general" && workOrderData.accountNumber.length !== 5;
   };
 
   // Function to check if form fields should be disabled
@@ -318,32 +330,36 @@ const AddNewWorkOrder = () => {
       {/* Content Area */}
       <div className="px-4 sm:px-6 py-6 pb-24">
         <div className="w-full space-y-6">
-          {/* Header Info Section */}
-          <div className="bg-card border rounded-lg p-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div>
-                <Label className="text-sm font-medium text-muted-foreground">Work Order #</Label>
-                <div className="text-lg font-semibold text-foreground mt-1">{workOrderData.workOrderNumber}</div>
+          {/* Header Info Card */}
+          <Card>
+            <CardContent className="p-6">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div>
+                  <Label className="text-sm font-medium text-foreground">Work Order #</Label>
+                  <div className="text-lg font-bold text-foreground mt-1">{workOrderData.workOrderNumber}</div>
+                </div>
+                <div>
+                  <Label htmlFor="srDocument" className="text-sm font-medium text-foreground">SR Doc</Label>
+                  <Input
+                    id="srDocument"
+                    placeholder="SR Document"
+                    value={workOrderData.srDocument}
+                    onChange={(e) => setWorkOrderData(prev => ({ ...prev, srDocument: e.target.value }))}
+                    disabled={areFieldsDisabled()}
+                    className="mt-1"
+                  />
+                </div>
+                <div>
+                  <Label className="text-sm font-medium text-foreground">Salesperson</Label>
+                  <div className="text-sm text-foreground mt-1">{workOrderData.salesperson}</div>
+                </div>
+                <div>
+                  <Label className="text-sm font-medium text-foreground">Contact</Label>
+                  <div className="text-sm text-foreground mt-1">{workOrderData.contact}</div>
+                </div>
               </div>
-              <div>
-                <Label className="text-sm font-medium text-muted-foreground">SR Doc</Label>
-                <Input
-                  placeholder="SR Document"
-                  value={workOrderData.srDocument}
-                  onChange={(e) => setWorkOrderData(prev => ({ ...prev, srDocument: e.target.value }))}
-                  className="mt-1 bg-background"
-                />
-              </div>
-              <div>
-                <Label className="text-sm font-medium text-muted-foreground">Salesperson</Label>
-                <div className="text-sm text-foreground mt-1 py-2">{workOrderData.salesperson}</div>
-              </div>
-              <div>
-                <Label className="text-sm font-medium text-muted-foreground">Contact</Label>
-                <div className="text-sm text-foreground mt-1 py-2">{workOrderData.contact || "Not assigned"}</div>
-              </div>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
 
           {/* Tabs */}
           <Tabs value={activeTab} onValueChange={(value) => !isTabDisabled(value) && setActiveTab(value)} className="space-y-6">
@@ -407,6 +423,290 @@ const AddNewWorkOrder = () => {
                 })}
               </TabsList>
             )}
+
+            <TabsContent value="general" className="space-y-6">
+              <Card>
+                <CardContent className="p-6">
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    {/* Account Number */}
+                    <div className="space-y-2 relative" ref={inputRef}>
+                      <Label htmlFor="accountNumber" className="text-sm font-medium">
+                        Account # <span className="text-destructive">*</span>
+                      </Label>
+                      <div className="relative">
+                        <Input
+                          id="accountNumber"
+                          placeholder="Enter 5-digit account number"
+                          value={workOrderData.accountNumber}
+                          onChange={handleAccountNumberChange}
+                          onKeyDown={handleKeyDown}
+                          maxLength={5}
+                          className={!workOrderData.accountNumber ? "border-destructive" : ""}
+                        />
+                        {!workOrderData.accountNumber && (
+                          <div className="absolute right-3 top-1/2 -translate-y-1/2 w-2 h-2 bg-destructive rounded-full"></div>
+                        )}
+                        
+                        {/* Suggestions Dropdown */}
+                        {showSuggestions && accountSuggestions.length > 0 && (
+                          <div className="absolute top-full left-0 right-0 z-50 mt-1 bg-popover border rounded-md shadow-lg max-h-60 overflow-y-auto">
+                            {accountSuggestions.map((account, index) => (
+                              <div
+                                key={account.accountNumber}
+                                className={`px-3 py-2 cursor-pointer transition-colors border-b last:border-b-0 ${
+                                  index === highlightedSuggestion 
+                                    ? 'bg-accent text-accent-foreground' 
+                                    : 'hover:bg-muted'
+                                }`}
+                                onClick={() => handleSuggestionSelect(account)}
+                              >
+                                <div className="flex justify-between items-center">
+                                  <div>
+                                    <div className="font-medium text-sm">{account.accountNumber}</div>
+                                    <div className="text-xs text-muted-foreground">{account.customerName}</div>
+                                  </div>
+                                  <div className="text-xs text-muted-foreground">
+                                    {account.srDocument}
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Contact Selection */}
+                    <div className="space-y-2">
+                      <Label htmlFor="contact" className="text-sm font-medium">
+                        Contact <span className="text-destructive">*</span>
+                      </Label>
+                      <Select 
+                        value={workOrderData.contact} 
+                        onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, contact: value }))}
+                        disabled={areFieldsDisabled()}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select contact" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-[60] max-h-60 overflow-y-auto">
+                          {workOrderData.accountNumber && workOrderData.customer && (
+                            <SelectItem 
+                              value={mockAccounts.find(acc => acc.accountNumber === workOrderData.accountNumber)?.contact || "Not specified"}
+                              className="px-3 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white data-[highlighted]:bg-blue-500 data-[highlighted]:text-white"
+                            >
+                              {mockAccounts.find(acc => acc.accountNumber === workOrderData.accountNumber)?.contact || "Not specified"}
+                            </SelectItem>
+                          )}
+                          <SelectItem value="Brad Morrison" className="px-3 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white data-[highlighted]:bg-blue-500 data-[highlighted]:text-white">Brad Morrison</SelectItem>
+                          <SelectItem value="Sherry Davis" className="px-3 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white data-[highlighted]:bg-blue-500 data-[highlighted]:text-white">Sherry Davis</SelectItem>
+                          <SelectItem value="Morgan Mathias" className="px-3 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white data-[highlighted]:bg-blue-500 data-[highlighted]:text-white">Morgan Mathias</SelectItem>
+                          <SelectItem value="Jimmy Salinas" className="px-3 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white data-[highlighted]:bg-blue-500 data-[highlighted]:text-white">Jimmy Salinas</SelectItem>
+                          <SelectItem value="Naomi Gomez" className="px-3 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white data-[highlighted]:bg-blue-500 data-[highlighted]:text-white">Naomi Gomez</SelectItem>
+                          <SelectItem value="Morgan Wedelich" className="px-3 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white data-[highlighted]:bg-blue-500 data-[highlighted]:text-white">Morgan Wedelich</SelectItem>
+                          <SelectItem value="Amanda Phillips" className="px-3 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white data-[highlighted]:bg-blue-500 data-[highlighted]:text-white">Amanda Phillips</SelectItem>
+                          <SelectItem value="Jim Daigle" className="px-3 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white data-[highlighted]:bg-blue-500 data-[highlighted]:text-white">Jim Daigle</SelectItem>
+                          <SelectItem value="Zack Broome" className="px-3 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white data-[highlighted]:bg-blue-500 data-[highlighted]:text-white">Zack Broome</SelectItem>
+                          <SelectItem value="Debbie McAbee" className="px-3 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white data-[highlighted]:bg-blue-500 data-[highlighted]:text-white">Debbie McAbee</SelectItem>
+                          <SelectItem value="Chris Melancon" className="px-3 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white data-[highlighted]:bg-blue-500 data-[highlighted]:text-white">Chris Melancon</SelectItem>
+                          <SelectItem value="Lindsey Thurmon" className="px-3 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white data-[highlighted]:bg-blue-500 data-[highlighted]:text-white">Lindsey Thurmon</SelectItem>
+                          <SelectItem value="Rusty Rogers" className="px-3 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white data-[highlighted]:bg-blue-500 data-[highlighted]:text-white">Rusty Rogers</SelectItem>
+                          <SelectItem value="Zane Moore" className="px-3 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white data-[highlighted]:bg-blue-500 data-[highlighted]:text-white">Zane Moore</SelectItem>
+                          <SelectItem value="Jessica Creamer" className="px-3 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white data-[highlighted]:bg-blue-500 data-[highlighted]:text-white">Jessica Creamer</SelectItem>
+                          <SelectItem value="Hayley Smith" className="px-3 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white data-[highlighted]:bg-blue-500 data-[highlighted]:text-white">Hayley Smith</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      {!workOrderData.contact && (
+                        <div className="absolute right-3 top-9 w-2 h-2 bg-destructive rounded-full"></div>
+                      )}
+                    </div>
+
+                    {/* Work Order Number */}
+                    <div className="space-y-2">
+                      <Label htmlFor="workOrderNumber" className="text-sm font-medium">
+                        Work Order # <span className="text-destructive">*</span>
+                      </Label>
+                      <Input
+                        id="workOrderNumber"
+                        value={workOrderData.workOrderNumber}
+                        onChange={(e) => setWorkOrderData(prev => ({ ...prev, workOrderNumber: e.target.value }))}
+                        disabled={areFieldsDisabled()}
+                      />
+                    </div>
+
+                    {/* Work Order Status */}
+                    <div className="space-y-2">
+                      <Label className="text-sm font-medium">Work Order Status</Label>
+                      <Select value={workOrderData.workOrderStatus} onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, workOrderStatus: value }))} disabled={areFieldsDisabled()}>
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Created">Created</SelectItem>
+                          <SelectItem value="In Progress">In Progress</SelectItem>
+                          <SelectItem value="Completed">Completed</SelectItem>
+                          <SelectItem value="Cancelled">Cancelled</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    {/* Work Order Type */}
+                    <div className="space-y-2">
+                      <Label className="text-sm font-medium">Work Order Type</Label>
+                      <Select value={workOrderData.workOrderType} onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, workOrderType: value }))} disabled={areFieldsDisabled()}>
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Regular work order">Regular work order</SelectItem>
+                          <SelectItem value="Onsite work order">Onsite work order</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    {/* Customer */}
+                    <div className="space-y-2">
+                      <Label htmlFor="customer" className="text-sm font-medium">Customer</Label>
+                      <Input
+                        id="customer"
+                        placeholder="Customer name"
+                        value={workOrderData.customer}
+                        onChange={(e) => setWorkOrderData(prev => ({ ...prev, customer: e.target.value }))}
+                        disabled={areFieldsDisabled()}
+                      />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            {/* Placeholder content for other tabs */}
+            <TabsContent value="account-info">
+              <Card>
+                <CardContent className="p-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Left Column */}
+                    <div className="space-y-2 text-sm">
+                      <div><span className="font-medium">Status:</span> <span className="text-green-600 font-medium">ACTIVE</span></div>
+                      <div><span className="font-medium">Customer Name:</span> Entergy Inventory</div>
+                      <div><span className="font-medium">Ship To:</span> 7223 Tom Drive, Bldg 527</div>
+                      <div><span className="font-medium">City/State/Zip:</span> Baton Rouge, LA 70806</div>
+                      <div><span className="font-medium">Main Contact:</span> USE TAG/PAPERWORK</div>
+                      <div><span className="font-medium">Remarks:</span> ESL (Y) CONTRACT site id must match account</div>
+                      <div><span className="font-medium">Comments:</span> -</div>
+                    </div>
+
+                    {/* Right Column */}
+                    <div className="space-y-2 text-sm">
+                      <div><span className="font-medium">Acct #:</span> 15000.00</div>
+                      <div><span className="font-medium">SR Number:</span> SR2244</div>
+                      <div><span className="font-medium">Phone Number:</span> (225) 382-4878</div>
+                      <div><span className="font-medium">Salesperson Code:</span> ZZEN - House - Entergy</div>
+                      <div><span className="font-medium">Terms:</span> Net 30</div>
+                      <div><span className="font-medium">P.O. Number:</span> CONTRACT# 10629042</div>
+                      <div><span className="font-medium">Biller Code:</span> 18</div>
+                      <div><span className="font-medium">Industry Code:</span> DM02 - Power Co's - Utility Distribution</div>
+                      <div><span className="font-medium">Contract Pricing:</span> Yes</div>
+                    </div>
+                  </div>
+
+                  {/* Customer Contacts Table */}
+                  <div className="mt-8">
+                    <h3 className="text-lg font-semibold text-foreground mb-4">Customer Contacts</h3>
+                    <div className="border rounded-lg overflow-hidden">
+                      <table className="w-full text-sm">
+                        <thead className="bg-muted">
+                          <tr>
+                            <th className="text-left p-3 font-medium">Name</th>
+                            <th className="text-left p-3 font-medium">Email</th>
+                            <th className="text-left p-3 font-medium">Phone</th>
+                            <th className="text-left p-3 font-medium">Title</th>
+                            <th className="text-left p-3 font-medium">Type</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr className="border-t">
+                            <td className="p-3">Netasha Gray</td>
+                            <td className="p-3">netasha.gray@entergy.com</td>
+                            <td className="p-3">(225) 382-4878</td>
+                            <td className="p-3">Senior Buyer</td>
+                            <td className="p-3">Primary</td>
+                          </tr>
+                          <tr className="border-t">
+                            <td className="p-3">Barry White</td>
+                            <td className="p-3">barry.white@entergy.com</td>
+                            <td className="p-3">(225) 382-4879</td>
+                            <td className="p-3">Procurement Manager</td>
+                            <td className="p-3">Secondary</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="contacts">
+              <Card>
+                <CardContent className="p-6">
+                  <div className="space-y-6">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-lg font-medium text-foreground">Account's Contact(s) for this Work Order:</h3>
+                      <Button 
+                        variant="default" 
+                        className="bg-warning text-black hover:bg-warning/90"
+                        onClick={() => setShowContactForm(true)}
+                      >
+                        Add Contact
+                      </Button>
+                    </div>
+                    
+                    <div className="space-y-4">
+                      {/* Required Contact */}
+                      <div className="space-y-2">
+                        <Select defaultValue="barry-white">
+                          <SelectTrigger className="w-64">
+                            <SelectValue placeholder="Select contact..." />
+                          </SelectTrigger>
+                          <SelectContent className="bg-background border shadow-lg z-50">
+                            <SelectItem value="barry-white">Barry White</SelectItem>
+                            <SelectItem value="netasha-gray">Netasha Gray</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <p className="text-sm text-muted-foreground">(required)</p>
+                      </div>
+
+                      {/* Additional Contact 1 */}
+                      <div>
+                        <Select>
+                          <SelectTrigger className="w-64">
+                            <SelectValue placeholder="Select additional contact..." />
+                          </SelectTrigger>
+                          <SelectContent className="bg-background border shadow-lg z-50">
+                            <SelectItem value="barry-white">Barry White</SelectItem>
+                            <SelectItem value="netasha-gray">Netasha Gray</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      {/* Additional Contact 2 */}
+                      <div>
+                        <Select>
+                          <SelectTrigger className="w-64">
+                            <SelectValue placeholder="Select additional contact..." />
+                          </SelectTrigger>
+                          <SelectContent className="bg-background border shadow-lg z-50">
+                            <SelectItem value="barry-white">Barry White</SelectItem>
+                            <SelectItem value="netasha-gray">Netasha Gray</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
 
             <TabsContent value="items">
               <Card>
