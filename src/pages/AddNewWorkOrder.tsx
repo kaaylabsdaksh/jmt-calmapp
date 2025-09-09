@@ -742,7 +742,7 @@ const AddNewWorkOrder = () => {
                      {/* Action Buttons */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
                       <Button 
-                        onClick={() => navigate("/add-work-order-item")}
+                        onClick={() => navigate("/form-variations")}
                         className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold flex items-center justify-center gap-2 h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md"
                       >
                         <Plus className="w-4 h-4" />
