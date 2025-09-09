@@ -380,13 +380,19 @@ const FormVariationsDemo = () => {
 
         <div className="space-y-2">
           <Label htmlFor="actionCode" className="text-sm font-medium">Action Code</Label>
-          <Input
-            id="actionCode"
-            value={formData.actionCode}
-            onChange={(e) => handleInputChange("actionCode", e.target.value)}
-            placeholder="Enter action code"
-            className="h-11"
-          />
+          <Select value={formData.actionCode} onValueChange={(value) => handleInputChange("actionCode", value)}>
+            <SelectTrigger className="h-11">
+              <SelectValue placeholder="Select action code" />
+            </SelectTrigger>
+            <SelectContent className="bg-popover border z-50">
+              <SelectItem value="build-new">BUILD NEW</SelectItem>
+              <SelectItem value="cc">C/C</SelectItem>
+              <SelectItem value="rc">R/C</SelectItem>
+              <SelectItem value="rcc">R/C/C</SelectItem>
+              <SelectItem value="repair">REPAIR</SelectItem>
+              <SelectItem value="test">TEST</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
       </div>
 
