@@ -231,26 +231,29 @@ const ModernAddNewItem = () => {
 
                 <div className="space-y-2">
                   <Label>Status</Label>
-                  <Select value={formData.status} onValueChange={(value) => handleInputChange("status", value)}>
-                    <SelectTrigger>
-                      <div className="flex items-center gap-2">
-                        {statusOptions.find(s => s.value === formData.status) && (
-                          <div className={cn("w-3 h-3 rounded-full", statusOptions.find(s => s.value === formData.status)?.color)} />
+                  <div className="space-y-2">
+                    {statusOptions.map(option => (
+                      <div
+                        key={option.value}
+                        onClick={() => handleInputChange("status", option.value)}
+                        className={cn(
+                          "flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-colors border",
+                          formData.status === option.value 
+                            ? "bg-primary text-primary-foreground border-primary shadow-sm" 
+                            : "bg-background hover:bg-muted/50 border-border"
                         )}
-                        <SelectValue />
+                      >
+                        <div className={cn(
+                          "w-3 h-3 rounded-full", 
+                          formData.status === option.value ? "bg-primary-foreground" : option.color
+                        )} />
+                        <span className="font-medium">{option.label}</span>
+                        {formData.status === option.value && (
+                          <CheckCircle className="h-4 w-4 ml-auto" />
+                        )}
                       </div>
-                    </SelectTrigger>
-                    <SelectContent>
-                      {statusOptions.map(option => (
-                        <SelectItem key={option.value} value={option.value}>
-                          <div className="flex items-center gap-2">
-                            <div className={cn("w-3 h-3 rounded-full", option.color)} />
-                            {option.label}
-                          </div>
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                    ))}
+                  </div>
                 </div>
 
                 <div className="space-y-2">
