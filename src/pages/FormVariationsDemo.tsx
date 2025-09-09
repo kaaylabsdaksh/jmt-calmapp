@@ -351,9 +351,16 @@ const FormVariationsDemo = () => {
             <SelectTrigger className="h-11">
               <SelectValue placeholder="Select division" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-popover border z-50">
+              <SelectItem value="esl">ESL</SelectItem>
+              <SelectItem value="onsite">OnSite</SelectItem>
+              <SelectItem value="mfg">MFG</SelectItem>
+              <SelectItem value="rental">Rental</SelectItem>
               <SelectItem value="lab">Lab</SelectItem>
-              <SelectItem value="field">Field</SelectItem>
+              <SelectItem value="surplus">Surplus</SelectItem>
+              <SelectItem value="esl-onsite">ESL OnSite</SelectItem>
+              <SelectItem value="itl-onsite">ITL OnSite</SelectItem>
+              <SelectItem value="gmfg">GMFG</SelectItem>
             </SelectContent>
           </Select>
         </div>
