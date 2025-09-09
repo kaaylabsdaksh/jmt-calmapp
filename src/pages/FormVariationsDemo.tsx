@@ -156,7 +156,7 @@ const FormVariationsDemo = () => {
     driver: "",
     puDate: "",
     shipType: "",
-    poNumber: "",
+    name: "",
     poLineNumber: "",
     needBy: "",
     deliverByDate: "",
@@ -870,12 +870,12 @@ const FormVariationsDemo = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="poNumber" className="text-sm font-medium">PO Number</Label>
+              <Label htmlFor="name" className="text-sm font-medium">Name</Label>
               <Input
-                id="poNumber"
-                value={formData.poNumber}
-                onChange={(e) => handleInputChange("poNumber", e.target.value)}
-                placeholder="Enter PO number"
+                id="name"
+                value={formData.name}
+                onChange={(e) => handleInputChange("name", e.target.value)}
+                placeholder="Enter name"
                 className="h-11"
               />
             </div>
