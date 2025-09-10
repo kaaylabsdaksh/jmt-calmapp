@@ -2039,9 +2039,35 @@ const FormVariationsDemo = () => {
                       <SelectValue placeholder="Select accuracy" />
                     </SelectTrigger>
                     <SelectContent>
+                      <SelectItem value="± (0.05% of Reading ±0.01 mA)">± (0.05% of Reading ±0.01 mA)</SelectItem>
+                      <SelectItem value="±.0015&quot;">±.0015&quot;</SelectItem>
+                      <SelectItem value="±.002&quot;">±.002&quot;</SelectItem>
+                      <SelectItem value="±.003&quot;">±.003&quot;</SelectItem>
+                      <SelectItem value="±0.00005">±0.00005</SelectItem>
+                      <SelectItem value="±0.006° C at 0.01° C">±0.006° C at 0.01° C</SelectItem>
+                      <SelectItem value="±0.015° C at 0.01° C">±0.015° C at 0.01° C</SelectItem>
+                      <SelectItem value="±0.017 mil">±0.017 mil</SelectItem>
+                      <SelectItem value="±0.02%">±0.02%</SelectItem>
+                      <SelectItem value="±0.04 mm">±0.04 mm</SelectItem>
+                      <SelectItem value="±0.05%">±0.05%</SelectItem>
+                      <SelectItem value="±0.05% full scale">±0.05% full scale</SelectItem>
+                      <SelectItem value="±0.07 mm">±0.07 mm</SelectItem>
+                      <SelectItem value="±0.08 mm">±0.08 mm</SelectItem>
                       <SelectItem value="±0.1%">±0.1%</SelectItem>
+                      <SelectItem value="±0.1% full scale">±0.1% full scale</SelectItem>
+                      <SelectItem value="±0.25% of reading">±0.25% of reading</SelectItem>
+                      <SelectItem value="±0.25°C">±0.25°C</SelectItem>
                       <SelectItem value="±0.5%">±0.5%</SelectItem>
-                      <SelectItem value="±1.0%">±1.0%</SelectItem>
+                      <SelectItem value="±0.5% of reading">±0.5% of reading</SelectItem>
+                      <SelectItem value="±0.5% of reading from 10% to full scale">±0.5% of reading from 10% to full scale</SelectItem>
+                      <SelectItem value="±1% full scale">±1% full scale</SelectItem>
+                      <SelectItem value="±1% of reading">±1% of reading</SelectItem>
+                      <SelectItem value="±200μ">±200μ</SelectItem>
+                      <SelectItem value="±3% CW/±6% CCW">±3% CW/±6% CCW</SelectItem>
+                      <SelectItem value="±4/2/4°F">±4/2/4°F</SelectItem>
+                      <SelectItem value="0.025%">0.025%</SelectItem>
+                      <SelectItem value="0.025% full scale">0.025% full scale</SelectItem>
+                      <SelectItem value="0.05% full scale">0.05% full scale</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
