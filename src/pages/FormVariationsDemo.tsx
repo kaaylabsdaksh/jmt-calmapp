@@ -367,7 +367,7 @@ const FormVariationsDemo = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 auto-rows-min">
         <div className="space-y-2">
           <Label htmlFor="type" className="text-sm font-medium">Type *</Label>
           <Select value={formData.type} onValueChange={(value) => handleInputChange("type", value)}>
@@ -614,7 +614,7 @@ const FormVariationsDemo = () => {
 
   const renderProductSection = () => (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 auto-rows-min">
         <div className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="manufacturer" className="text-sm font-medium">Manufacturer</Label>
@@ -797,7 +797,7 @@ const FormVariationsDemo = () => {
   );
 
   const renderLogisticsSection = () => (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 auto-rows-min">
       <Card className="border-0 shadow-md">
         <CardContent className="p-4 sm:p-6 space-y-4">
           <div className="flex items-center gap-3 pb-4 border-b border-border">
@@ -1050,7 +1050,7 @@ const FormVariationsDemo = () => {
 
   const renderOptionsSection = () => (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 auto-rows-min">
         {[
           { key: 'warranty', label: 'Warranty', desc: 'Item is under warranty', icon: '🛡️' },
           { key: 'estimate', label: 'Estimate', desc: 'Estimate required', icon: '💰' },
@@ -1628,7 +1628,7 @@ const FormVariationsDemo = () => {
   // Render work order header
   const renderWorkOrderHeader = () => (
     <div className="bg-card border border-border rounded-lg p-4 sm:p-6 mb-4 sm:mb-6">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-min">
         <div>
           <Label className="text-sm font-medium text-muted-foreground">Work Order #</Label>
           <Input
