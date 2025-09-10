@@ -1009,40 +1009,109 @@ const FormVariationsDemo = () => {
   const renderOptionsSection = () => (
     <div className="space-y-6">
       <Card className="border-0 shadow-md w-full">
-        <CardContent className="p-4 sm:p-6 space-y-4">
-          <div className="flex items-center gap-3 pb-4 border-b border-border">
-            <div className="p-2 bg-primary/10 rounded-lg">
-              <Settings className="h-5 w-5 text-primary" />
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold">Options & Flags</h3>
-              <p className="text-sm text-muted-foreground">Configure item options and special flags</p>
+        <CardContent className="p-4 sm:p-6 space-y-6">
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-foreground">Additional Information</h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="needBy" className="text-sm font-medium">Need By</Label>
+                <Input
+                  id="needBy"
+                  type="date"
+                  value={formData.needBy}
+                  onChange={(e) => handleInputChange("needBy", e.target.value)}
+                  className="h-11"
+                  placeholder="Enter need by date"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="deliverByDate" className="text-sm font-medium">Deliver By Date</Label>
+                <Input
+                  id="deliverByDate"
+                  type="date"
+                  value={formData.deliverByDate}
+                  onChange={(e) => handleInputChange("deliverByDate", e.target.value)}
+                  className="h-11"
+                />
+              </div>
             </div>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
-            {[
-              { key: 'warranty', label: 'Warranty', desc: 'Item is under warranty', icon: '🛡️' },
-              { key: 'estimate', label: 'Estimate', desc: 'Estimate required', icon: '💰' },
-              { key: 'newEquip', label: 'New Equipment', desc: 'Brand new equipment', icon: '✨' },
-              { key: 'usedSurplus', label: 'Used Surplus', desc: 'Previously used equipment', icon: '♻️' },
-              { key: 'iso17025', label: 'ISO 17025', desc: 'ISO 17025 compliance required', icon: '📋' },
-              { key: 'hotList', label: 'Hot List', desc: 'High priority item', icon: '🔥' },
-              { key: 'readyToBill', label: 'Ready to Bill', desc: 'Ready for billing', icon: '💳' },
-              { key: 'inQa', label: 'In QA', desc: 'Currently in quality assurance', icon: '🔍' },
-              { key: 'toShipping', label: 'To Shipping', desc: 'Ready for shipping', icon: '📦' },
-              { key: 'multiParts', label: 'Multi Parts', desc: 'Contains multiple parts', icon: '🔧' },
-              { key: 'lostEquipment', label: 'Lost Equipment', desc: 'Equipment reported as lost', icon: '❓' },
-              { key: 'redTag', label: 'Red Tag', desc: 'Flagged for attention', icon: '🏷️' },
-            ].map(option => (
-              <div key={option.key} className="flex items-start space-x-3 p-3 border rounded-lg hover:bg-muted/50 transition-colors">
-                <Checkbox
-                  id={option.key}
-                  checked={formData[option.key as keyof typeof formData] as boolean}
-                  onCheckedChange={(checked) => handleInputChange(option.key, checked)}
-                  className="mt-1"
+
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-foreground">Purchase Order Information</h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="poNumber" className="text-sm font-medium">PO Number</Label>
+                <Input
+                  id="poNumber"
+                  value={formData.poNumber}
+                  onChange={(e) => handleInputChange("poNumber", e.target.value)}
+                  placeholder="CUST/PO #"
+                  className="h-11"
                 />
-                <div className="space-y-1 flex-1">
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="poLineNumber" className="text-sm font-medium">PO Line #</Label>
+                <Input
+                  id="poLineNumber"
+                  value={formData.poLineNumber}
+                  onChange={(e) => handleInputChange("poLineNumber", e.target.value)}
+                  placeholder="PO Line #"
+                  className="h-11"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="soNumber" className="text-sm font-medium">SO Number</Label>
+                <Input
+                  id="soNumber"
+                  value={formData.soNumber}
+                  onChange={(e) => handleInputChange("soNumber", e.target.value)}
+                  placeholder="SO Number"
+                  className="h-11"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="jmPartsPoNumber" className="text-sm font-medium">JM Parts PO #</Label>
+                <Input
+                  id="jmPartsPoNumber"
+                  value={formData.jmPartsPoNumber}
+                  onChange={(e) => handleInputChange("jmPartsPoNumber", e.target.value)}
+                  placeholder="JM Parts PO #"
+                  className="h-11"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-foreground">Status Options</h3>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {[
+                { key: 'warranty', label: 'Warranty', icon: '🛡️' },
+                { key: 'estimate', label: 'Estimate', icon: '💰' },
+                { key: 'newEquip', label: 'New Equipment', icon: '✨' },
+                { key: 'usedSurplus', label: 'Used Surplus', icon: '♻️' },
+                { key: 'iso17025', label: 'ISO 17025', icon: '📋' },
+                { key: 'hotList', label: 'Hot List', icon: '🔥' },
+                { key: 'readyToBill', label: 'Ready to Bill', icon: '💳' },
+                { key: 'inQa', label: 'In QA', icon: '🔍' },
+                { key: 'toShipping', label: 'To Shipping', icon: '📦' },
+                { key: 'multiParts', label: 'Multi Parts', icon: '🔧' },
+                { key: 'lostEquipment', label: 'Lost Equipment', icon: '❓' },
+                { key: 'redTag', label: 'Red Tag', icon: '🏷️' },
+                { key: 'returned', label: 'Returned', icon: '↩️' },
+                { key: 'coOverride', label: 'C/O Override', icon: '⚡' },
+                { key: 'dateValidOverride', label: 'Date Valid. Override', icon: '📅' },
+                { key: 'coStdCheckOverride', label: 'C/O Std Check Override', icon: '✅' },
+              ].map(option => (
+                <div key={option.key} className="flex items-center justify-between p-3 border rounded-lg hover:bg-muted/50 transition-colors">
                   <div className="flex items-center gap-2">
                     <span className="text-lg">{option.icon}</span>
                     <Label 
@@ -1052,98 +1121,14 @@ const FormVariationsDemo = () => {
                       {option.label}
                     </Label>
                   </div>
-                  <p className="text-xs text-muted-foreground">{option.desc}</p>
+                  <Switch
+                    id={option.key}
+                    checked={formData[option.key as keyof typeof formData] as boolean}
+                    onCheckedChange={(checked) => handleInputChange(option.key, checked)}
+                  />
                 </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-0 shadow-md w-full">
-        <CardContent className="p-4 sm:p-6 space-y-4">
-          <div className="flex items-center gap-3 pb-4 border-b border-border">
-            <div className="p-2 bg-primary/10 rounded-lg">
-              <Info className="h-5 w-5 text-primary" />
+              ))}
             </div>
-            <div>
-              <h3 className="text-lg font-semibold">Additional Information</h3>
-              <p className="text-sm text-muted-foreground">Purchase order and additional details</p>
-            </div>
-          </div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="poNumber" className="text-sm font-medium">PO Number</Label>
-              <Input
-                id="poNumber"
-                value={formData.poNumber}
-                onChange={(e) => handleInputChange("poNumber", e.target.value)}
-                placeholder="Purchase order number"
-                className="h-11"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="soNumber" className="text-sm font-medium">SO Number</Label>
-              <Input
-                id="soNumber"
-                value={formData.soNumber}
-                onChange={(e) => handleInputChange("soNumber", e.target.value)}
-                placeholder="Sales order number"
-                className="h-11"
-              />
-            </div>
-            <div className="space-y-2 sm:col-span-2">
-              <Label htmlFor="jmPartsPoNumber" className="text-sm font-medium">JM Parts PO Number</Label>
-              <Input
-                id="jmPartsPoNumber"
-                value={formData.jmPartsPoNumber}
-                onChange={(e) => handleInputChange("jmPartsPoNumber", e.target.value)}
-                placeholder="JM parts PO number"
-                className="h-11"
-              />
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-0 shadow-md w-full">
-        <CardContent className="p-4 sm:p-6 space-y-4">
-          <div className="flex items-center gap-3 pb-4 border-b border-border">
-            <div className="p-2 bg-primary/10 rounded-lg">
-              <Settings className="h-5 w-5 text-primary" />
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold">Additional Options</h3>
-              <p className="text-sm text-muted-foreground">Special handling and override options</p>
-            </div>
-          </div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {[
-              { key: 'returned', label: 'Returned', desc: 'Item has been returned' },
-              { key: 'coOverride', label: 'CO Override', desc: 'Certificate override applied' },
-              { key: 'dateValidOverride', label: 'Date Valid Override', desc: 'Date validation overridden' },
-              { key: 'coStdCheckOverride', label: 'CO Std Check Override', desc: 'Standard check override' },
-            ].map(option => (
-              <div key={option.key} className="flex items-start space-x-3 p-3 border rounded-lg hover:bg-muted/50 transition-colors">
-                <Checkbox
-                  id={option.key}
-                  checked={formData[option.key as keyof typeof formData] as boolean}
-                  onCheckedChange={(checked) => handleInputChange(option.key, checked)}
-                  className="mt-1"
-                />
-                <div className="space-y-1 flex-1">
-                  <Label 
-                    htmlFor={option.key} 
-                    className="text-sm font-medium cursor-pointer"
-                  >
-                    {option.label}
-                  </Label>
-                  <p className="text-xs text-muted-foreground">{option.desc}</p>
-                </div>
-              </div>
-            ))}
           </div>
         </CardContent>
       </Card>
