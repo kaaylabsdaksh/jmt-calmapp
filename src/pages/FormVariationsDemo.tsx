@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
@@ -1215,20 +1215,40 @@ const FormVariationsDemo = () => {
   // Render factory section
   const renderFactorySection = () => (
     <div className="space-y-6">
-      <Accordion type="multiple" defaultValue={[]} className="space-y-4">
-        {/* Factory Settings */}
-        <AccordionItem value="factory-config" className="border rounded-lg">
-          <AccordionTrigger className="hover:no-underline px-6 py-4">
-            <div className="flex items-center gap-3">
-              <Settings className="h-5 w-5 text-primary" />
-              <div className="text-left">
-                <h3 className="text-lg font-semibold">Factory Configuration</h3>
-                <p className="text-sm text-muted-foreground">Set up factory processing parameters</p>
-              </div>
-            </div>
-          </AccordionTrigger>
-          <AccordionContent className="px-6 pb-6">
-            <div className="space-y-4">
+      <Tabs defaultValue="factory-config" className="w-full">
+        <TabsList className="grid w-full grid-cols-5">
+          <TabsTrigger value="factory-config" className="flex items-center gap-2">
+            <Settings className="h-4 w-4" />
+            <span className="hidden sm:inline">Config</span>
+          </TabsTrigger>
+          <TabsTrigger value="product-images" className="flex items-center gap-2">
+            <Package className="h-4 w-4" />
+            <span className="hidden sm:inline">Images</span>
+          </TabsTrigger>
+          <TabsTrigger value="accessories" className="flex items-center gap-2">
+            <Layers className="h-4 w-4" />
+            <span className="hidden sm:inline">Access.</span>
+          </TabsTrigger>
+          <TabsTrigger value="parts" className="flex items-center gap-2">
+            <Settings className="h-4 w-4" />
+            <span className="hidden sm:inline">Parts</span>
+          </TabsTrigger>
+          <TabsTrigger value="comments" className="flex items-center gap-2">
+            <List className="h-4 w-4" />
+            <span className="hidden sm:inline">Comments</span>
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="factory-config" className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-3">
+                <Settings className="h-5 w-5 text-primary" />
+                Factory Configuration
+              </CardTitle>
+              <CardDescription>Set up factory processing parameters</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
               <div className="flex items-center space-x-2 mb-4">
                 <Checkbox
                   id="toFactory"
@@ -1353,63 +1373,59 @@ const FormVariationsDemo = () => {
                   )}
                 </div>
               </div>
-            </div>
-          </AccordionContent>
-        </AccordionItem>
+            </CardContent>
+          </Card>
+        </TabsContent>
 
-        {/* Product Images */}
-        <AccordionItem value="product-images" className="border rounded-lg">
-          <AccordionTrigger className="hover:no-underline px-6 py-4">
-            <div className="flex items-center gap-3">
-              <Package className="h-5 w-5 text-primary" />
-              <div className="text-left">
-                <h3 className="text-lg font-semibold">Product Images</h3>
-                <p className="text-sm text-muted-foreground">Manage product media assets</p>
-              </div>
-            </div>
-          </AccordionTrigger>
-          <AccordionContent className="px-6 pb-6">
-            <Tabs defaultValue="images">
-              <TabsList>
-                <TabsTrigger value="images">Images</TabsTrigger>
-                <TabsTrigger value="dateEntered">Date Entered</TabsTrigger>
-                <TabsTrigger value="actions">Actions</TabsTrigger>
-              </TabsList>
-              
-              <TabsContent value="images" className="mt-4">
-                <div className="border-2 border-dashed rounded-lg p-6 text-center">
-                  <p className="text-muted-foreground">No images uploaded</p>
-                </div>
-              </TabsContent>
-              
-              <TabsContent value="dateEntered" className="mt-4">
-                <div className="border rounded-lg p-6 text-center">
-                  <p className="text-muted-foreground">No history available</p>
-                </div>
-              </TabsContent>
-              
-              <TabsContent value="actions" className="mt-4">
-                <div className="border rounded-lg p-6 text-center">
-                  <p className="text-muted-foreground">No actions recorded</p>
-                </div>
-              </TabsContent>
-            </Tabs>
-          </AccordionContent>
-        </AccordionItem>
+        <TabsContent value="product-images" className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-3">
+                <Package className="h-5 w-5 text-primary" />
+                Product Images
+              </CardTitle>
+              <CardDescription>Manage product media assets</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Tabs defaultValue="images">
+                <TabsList>
+                  <TabsTrigger value="images">Images</TabsTrigger>
+                  <TabsTrigger value="dateEntered">Date Entered</TabsTrigger>
+                  <TabsTrigger value="actions">Actions</TabsTrigger>
+                </TabsList>
+                
+                <TabsContent value="images" className="mt-4">
+                  <div className="border-2 border-dashed rounded-lg p-6 text-center">
+                    <p className="text-muted-foreground">No images uploaded</p>
+                  </div>
+                </TabsContent>
+                
+                <TabsContent value="dateEntered" className="mt-4">
+                  <div className="border rounded-lg p-6 text-center">
+                    <p className="text-muted-foreground">No history available</p>
+                  </div>
+                </TabsContent>
+                
+                <TabsContent value="actions" className="mt-4">
+                  <div className="border rounded-lg p-6 text-center">
+                    <p className="text-muted-foreground">No actions recorded</p>
+                  </div>
+                </TabsContent>
+              </Tabs>
+            </CardContent>
+          </Card>
+        </TabsContent>
 
-        {/* Accessories */}
-        <AccordionItem value="accessories" className="border rounded-lg">
-          <AccordionTrigger className="hover:no-underline px-6 py-4">
-            <div className="flex items-center gap-3">
-              <Layers className="h-5 w-5 text-primary" />
-              <div className="text-left">
-                <h3 className="text-lg font-semibold">Accessories</h3>
-                <p className="text-sm text-muted-foreground">Manage product accessories and components</p>
-              </div>
-            </div>
-          </AccordionTrigger>
-          <AccordionContent className="px-6 pb-6">
-            <div className="space-y-4">
+        <TabsContent value="accessories" className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-3">
+                <Layers className="h-5 w-5 text-primary" />
+                Accessories
+              </CardTitle>
+              <CardDescription>Manage product accessories and components</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
               <div className="grid grid-cols-2 md:grid-cols-6 gap-3 mb-4">
                 <div className="space-y-1">
                   <Label htmlFor="accessoryType" className="text-xs">Type</Label>
@@ -1493,23 +1509,20 @@ const FormVariationsDemo = () => {
                   No accessories added
                 </div>
               </div>
-            </div>
-          </AccordionContent>
-        </AccordionItem>
+            </CardContent>
+          </Card>
+        </TabsContent>
 
-        {/* Parts */}
-        <AccordionItem value="parts" className="border rounded-lg">
-          <AccordionTrigger className="hover:no-underline px-6 py-4">
-            <div className="flex items-center gap-3">
-              <Settings className="h-5 w-5 text-primary" />
-              <div className="text-left">
-                <h3 className="text-lg font-semibold">Parts</h3>
-                <p className="text-sm text-muted-foreground">Manage replacement parts and components</p>
-              </div>
-            </div>
-          </AccordionTrigger>
-          <AccordionContent className="px-6 pb-6">
-            <div className="space-y-4">
+        <TabsContent value="parts" className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-3">
+                <Settings className="h-5 w-5 text-primary" />
+                Parts
+              </CardTitle>
+              <CardDescription>Manage replacement parts and components</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-5 gap-3 mb-4">
                 <div className="space-y-1">
                   <Label htmlFor="partsCategory" className="text-xs">Category</Label>
@@ -1589,23 +1602,20 @@ const FormVariationsDemo = () => {
                   No parts added
                 </div>
               </div>
-            </div>
-          </AccordionContent>
-        </AccordionItem>
+            </CardContent>
+          </Card>
+        </TabsContent>
 
-        {/* Comments */}
-        <AccordionItem value="comments" className="border rounded-lg">
-          <AccordionTrigger className="hover:no-underline px-6 py-4">
-            <div className="flex items-center gap-3">
-              <List className="h-5 w-5 text-primary" />
-              <div className="text-left">
-                <h3 className="text-lg font-semibold">Comments</h3>
-                <p className="text-sm text-muted-foreground">Factory communication and documentation</p>
-              </div>
-            </div>
-          </AccordionTrigger>
-          <AccordionContent className="px-6 pb-6">
-            <div className="space-y-4">
+        <TabsContent value="comments" className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-3">
+                <List className="h-5 w-5 text-primary" />
+                Comments
+              </CardTitle>
+              <CardDescription>Factory communication and documentation</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
               <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-4">
                 <div className="space-y-1">
                   <Label htmlFor="commentType" className="text-xs">Type</Label>
@@ -1656,10 +1666,10 @@ const FormVariationsDemo = () => {
                   No comments added
                 </div>
               </div>
-            </div>
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 
