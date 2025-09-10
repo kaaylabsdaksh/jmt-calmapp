@@ -1976,7 +1976,7 @@ const FormVariationsDemo = () => {
       </header>
 
       {/* Form Content */}
-      <div className="p-4 sm:p-6 pb-6">{/* Reduced bottom padding since footer is now floating */}
+      <div className="p-4 sm:p-6 pb-24">{/* Added bottom padding for fixed footer */}
         {/* Work Order Header */}
         {renderWorkOrderHeader()}
         
@@ -2430,16 +2430,18 @@ const FormVariationsDemo = () => {
         </Dialog>
         
         {/* Fixed Bottom Action Bar */}
-        <div className="fixed bottom-6 right-6 z-50">
-          <div className="flex items-center gap-3 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/90 border rounded-lg p-3 shadow-lg">
-            <Button variant="outline" onClick={handleCancel} className="hover-scale px-4">
-              <X className="h-4 w-4 mr-2" />
-              Cancel
-            </Button>
-            <Button onClick={handleSave} className="bg-success text-success-foreground hover:bg-success/90 hover-scale px-4">
-              <Save className="h-4 w-4 mr-2" />
-              Save Work Order
-            </Button>
+        <div className="fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/90 border-t z-50">
+          <div className="container max-w-7xl mx-auto px-6 py-4">
+            <div className="flex justify-end items-center gap-3">
+              <Button variant="outline" onClick={handleCancel} className="hover-scale px-6 py-2">
+                <X className="h-4 w-4 mr-2" />
+                Cancel
+              </Button>
+              <Button onClick={handleSave} className="bg-success text-success-foreground hover:bg-success/90 hover-scale px-6 py-2">
+                <Save className="h-4 w-4 mr-2" />
+                Save Work Order
+              </Button>
+            </div>
           </div>
         </div>
       </div>
