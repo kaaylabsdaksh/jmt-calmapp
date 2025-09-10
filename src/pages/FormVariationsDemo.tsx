@@ -1976,7 +1976,7 @@ const FormVariationsDemo = () => {
       </header>
 
       {/* Form Content */}
-      <div className="p-4 sm:p-6 pb-24">{/* Added bottom padding for fixed action bar */}
+      <div className="p-4 sm:p-6 pb-32">{/* Added bottom padding for fixed action bar */}
         {/* Work Order Header */}
         {renderWorkOrderHeader()}
         
