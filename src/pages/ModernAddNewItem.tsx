@@ -30,6 +30,7 @@ import {
   User,
   Building2
 } from "lucide-react";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 
@@ -130,6 +131,7 @@ const ModernAddNewItem = () => {
       <div className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-4">
+            <SidebarTrigger className="p-2 rounded-lg hover:bg-muted hover:text-foreground transition-all duration-300" />
             <div>
               <h1 className="text-xl font-semibold">Add New Item</h1>
               <Breadcrumb className="mt-1">

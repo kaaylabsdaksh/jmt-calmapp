@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Link } from "react-router-dom";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 import MinimalWorkOrderSearch from "@/components/MinimalWorkOrderSearch";
 import MinimalWorkOrderResults from "@/components/MinimalWorkOrderResults";
 
@@ -12,6 +13,7 @@ const WorkOrderSearchV2 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 sm:gap-4">
+              <SidebarTrigger className="p-2 rounded-lg hover:bg-muted hover:text-foreground transition-all duration-300" />
               <div>
                 <span className="text-sm text-muted-foreground block">
                   JM Test Systems

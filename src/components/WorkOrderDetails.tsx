@@ -28,6 +28,7 @@ import {
   LayoutGrid,
   Table
 } from "lucide-react";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Table as TableComponent, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 interface WorkOrderDetailsProps {
@@ -68,7 +69,10 @@ const WorkOrderDetails = ({ workOrderId }: WorkOrderDetailsProps) => {
           <div className="block sm:hidden">
             {/* Mobile: Title and Menu Row */}
             <div className="flex items-center justify-between mb-3">
-              <h1 className="text-lg font-bold text-foreground">Edit Work Order</h1>
+              <div className="flex items-center gap-3">
+                <SidebarTrigger className="p-2 rounded-lg hover:bg-muted hover:text-foreground transition-all duration-300" />
+                <h1 className="text-lg font-bold text-foreground">Edit Work Order</h1>
+              </div>
               <Button 
                 variant="outline" 
                 size="sm" 
@@ -111,6 +115,7 @@ const WorkOrderDetails = ({ workOrderId }: WorkOrderDetailsProps) => {
           <div className="hidden sm:flex items-start justify-between gap-3">
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-3 mb-1">
+                <SidebarTrigger className="p-2 rounded-lg hover:bg-muted hover:text-foreground transition-all duration-300" />
                 <h1 className="text-lg md:text-xl font-bold text-foreground">Edit Work Order</h1>
                 {/* Improved Hamburger Menu with better styling */}
                 <Button 
