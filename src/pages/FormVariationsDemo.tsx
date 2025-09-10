@@ -660,69 +660,79 @@ const FormVariationsDemo = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
             <div className="space-y-2">
               <Label htmlFor="manufacturer" className="text-sm font-medium">Manufacturer *</Label>
-              <Popover open={manufacturerDropdownOpen} onOpenChange={setManufacturerDropdownOpen}>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    role="combobox"
-                    aria-expanded={manufacturerDropdownOpen}
-                    className="h-11 justify-between w-full"
-                  >
-                    {formData.manufacturer
-                      ? manufacturers.find((manufacturer) => manufacturer.value === formData.manufacturer)?.label
-                      : "Select manufacturer..."}
-                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-full p-0" align="start">
-                  <Command>
-                    <CommandInput 
-                      placeholder="Search manufacturer..." 
-                      value={manufacturerSearchValue}
-                      onValueChange={setManufacturerSearchValue}
-                    />
-                    <CommandList>
-                      <CommandEmpty>
-                        <div className="p-2 text-center">
-                          <p className="text-sm text-muted-foreground mb-2">No manufacturer found.</p>
-                          <Button 
-                            variant="outline" 
-                            size="sm" 
-                            onClick={() => {
-                              setNewManufacturerName(manufacturerSearchValue);
-                              setShowManufacturerDialog(true);
-                              setManufacturerDropdownOpen(false);
-                            }}
-                          >
-                            Add "{manufacturerSearchValue}"
-                          </Button>
-                        </div>
-                      </CommandEmpty>
-                      <CommandGroup>
-                        {filteredManufacturers.map((manufacturer) => (
-                          <CommandItem
-                            key={manufacturer.value}
-                            value={manufacturer.value}
-                            onSelect={(currentValue) => {
-                              handleInputChange("manufacturer", currentValue === formData.manufacturer ? "" : currentValue);
-                              setManufacturerDropdownOpen(false);
-                              setManufacturerSearchValue("");
-                            }}
-                          >
-                            <Check
-                              className={cn(
-                                "mr-2 h-4 w-4",
-                                formData.manufacturer === manufacturer.value ? "opacity-100" : "opacity-0"
-                              )}
-                            />
-                            {manufacturer.label}
-                          </CommandItem>
-                        ))}
-                      </CommandGroup>
-                    </CommandList>
-                  </Command>
-                </PopoverContent>
-              </Popover>
+              <div className="flex gap-2">
+                <Popover open={manufacturerDropdownOpen} onOpenChange={setManufacturerDropdownOpen}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      role="combobox"
+                      aria-expanded={manufacturerDropdownOpen}
+                      className="h-11 justify-between flex-1"
+                    >
+                      {formData.manufacturer
+                        ? manufacturers.find((manufacturer) => manufacturer.value === formData.manufacturer)?.label
+                        : "Select manufacturer..."}
+                      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-full p-0" align="start">
+                    <Command>
+                      <CommandInput 
+                        placeholder="Search manufacturer..." 
+                        value={manufacturerSearchValue}
+                        onValueChange={setManufacturerSearchValue}
+                      />
+                      <CommandList>
+                        <CommandEmpty>
+                          <div className="p-2 text-center">
+                            <p className="text-sm text-muted-foreground mb-2">No manufacturer found.</p>
+                            <Button 
+                              variant="outline" 
+                              size="sm" 
+                              onClick={() => {
+                                setNewManufacturerName(manufacturerSearchValue);
+                                setShowManufacturerDialog(true);
+                                setManufacturerDropdownOpen(false);
+                              }}
+                            >
+                              Add "{manufacturerSearchValue}"
+                            </Button>
+                          </div>
+                        </CommandEmpty>
+                        <CommandGroup>
+                          {filteredManufacturers.map((manufacturer) => (
+                            <CommandItem
+                              key={manufacturer.value}
+                              value={manufacturer.value}
+                              onSelect={(currentValue) => {
+                                handleInputChange("manufacturer", currentValue === formData.manufacturer ? "" : currentValue);
+                                setManufacturerDropdownOpen(false);
+                                setManufacturerSearchValue("");
+                              }}
+                            >
+                              <Check
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  formData.manufacturer === manufacturer.value ? "opacity-100" : "opacity-0"
+                                )}
+                              />
+                              {manufacturer.label}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </CommandList>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => setShowManufacturerDialog(true)}
+                  className="px-3"
+                >
+                  +
+                </Button>
+              </div>
             </div>
 
             <div className="space-y-2">
