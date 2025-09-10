@@ -1673,7 +1673,7 @@ const FormVariationsDemo = () => {
     <Card className="border-0 shadow-md">
       <CardContent className="p-6">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="inline-flex h-8 sm:h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground w-full sm:w-auto overflow-x-auto">
+          <TabsList className="flex h-8 sm:h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground w-full overflow-x-auto">
             {currentTabs.map((tab) => {
               const Icon = tab.icon;
               return (
