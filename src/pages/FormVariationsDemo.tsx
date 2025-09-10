@@ -2094,9 +2094,30 @@ const FormVariationsDemo = () => {
                     <SelectValue placeholder="Select lab code" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="LAB001">LAB001</SelectItem>
-                    <SelectItem value="LAB002">LAB002</SelectItem>
-                    <SelectItem value="LAB003">LAB003</SelectItem>
+                    <SelectItem value="B - Mech Pressure">B - Mech Pressure</SelectItem>
+                    <SelectItem value="C - Dimensional">C - Dimensional</SelectItem>
+                    <SelectItem value="D - Hydraulic Dweights">D - Hydraulic Dweights</SelectItem>
+                    <SelectItem value="E - Pneumatic Dweights">E - Pneumatic Dweights</SelectItem>
+                    <SelectItem value="ES - Electrical Safety">ES - Electrical Safety</SelectItem>
+                    <SelectItem value="F - Digital Pressure">F - Digital Pressure</SelectItem>
+                    <SelectItem value="G - Electronics">G - Electronics</SelectItem>
+                    <SelectItem value="H - Analytical/Other">H - Analytical/Other</SelectItem>
+                    <SelectItem value="I - Gravit/Moist Analyz">I - Gravit/Moist Analyz</SelectItem>
+                    <SelectItem value="J - Torque/Force">J - Torque/Force</SelectItem>
+                    <SelectItem value="K - W&T/Chart Recorders">K - W&T/Chart Recorders</SelectItem>
+                    <SelectItem value="L - Gas Detection">L - Gas Detection</SelectItem>
+                    <SelectItem value="LMO - Lab Management Off.">LMO - Lab Management Off.</SelectItem>
+                    <SelectItem value="M - Multimeters/Meters">M - Multimeters/Meters</SelectItem>
+                    <SelectItem value="ML - Main Lab">ML - Main Lab</SelectItem>
+                    <SelectItem value="N - Electrical Test Gear">N - Electrical Test Gear</SelectItem>
+                    <SelectItem value="P - Temperature">P - Temperature</SelectItem>
+                    <SelectItem value="Q - Low Frequency A/C">Q - Low Frequency A/C</SelectItem>
+                    <SelectItem value="R - Oxygen Svce Gages">R - Oxygen Svce Gages</SelectItem>
+                    <SelectItem value="S - Microwave/Power">S - Microwave/Power</SelectItem>
+                    <SelectItem value="T - Aircraft Support">T - Aircraft Support</SelectItem>
+                    <SelectItem value="U - Optics">U - Optics</SelectItem>
+                    <SelectItem value="V - Communications">V - Communications</SelectItem>
+                    <SelectItem value="Z - Fiber Optics">Z - Fiber Optics</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
