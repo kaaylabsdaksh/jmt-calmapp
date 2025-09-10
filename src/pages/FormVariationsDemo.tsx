@@ -1689,7 +1689,7 @@ const FormVariationsDemo = () => {
                       "disabled:pointer-events-none disabled:opacity-50",
                       "hover:text-foreground hover:bg-background/60 hover:shadow-sm",
                       isActive 
-                        ? "bg-gradient-to-r from-background to-background/95 text-foreground shadow-lg border border-border/50" 
+                        ? "bg-primary text-primary-foreground shadow-md border-2 border-primary/20 scale-[1.02]" 
                         : "text-muted-foreground hover:text-foreground"
                     )}
                   >
