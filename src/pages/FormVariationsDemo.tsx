@@ -2430,20 +2430,20 @@ const FormVariationsDemo = () => {
         </Dialog>
         
         {/* Fixed Bottom Action Bar */}
-        <div className="fixed bottom-0 left-0 right-0 bg-background border-t border-border shadow-lg z-[100]">
-          <div className="max-w-7xl mx-auto px-6 py-3">
-            <div className="flex justify-end items-center gap-3">
+        <div className="fixed bottom-4 right-6 bg-background border border-border rounded-lg shadow-lg z-[100]">
+          <div className="px-4 py-3">
+            <div className="flex items-center gap-3">
               <Button 
                 variant="outline" 
                 onClick={handleCancel} 
-                className="px-6 py-2.5 text-sm font-medium border-border hover:bg-muted transition-colors"
+                className="px-4 py-2 text-sm font-medium border-border hover:bg-muted transition-colors"
               >
                 <X className="h-4 w-4 mr-2" />
                 Cancel
               </Button>
               <Button 
                 onClick={handleSave} 
-                className="bg-success text-success-foreground hover:bg-success/90 px-6 py-2.5 text-sm font-medium shadow-sm transition-colors"
+                className="bg-success text-success-foreground hover:bg-success/90 px-4 py-2 text-sm font-medium shadow-sm transition-colors"
               >
                 <Save className="h-4 w-4 mr-2" />
                 Save Work Order
