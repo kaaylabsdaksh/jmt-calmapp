@@ -1274,11 +1274,35 @@ const FormVariationsDemo = () => {
 
                   {/* Certificate File Upload - Only show when certificate is required */}
                   {!formData.noTfCert && (
-                    <div className="space-y-2">
-                      <Label className="text-sm font-medium text-foreground">Certificate File</Label>
-                      {formData.certFile ? (
-                        // Show file with actions when file exists
-                        <div className="relative rounded-lg border bg-background p-4">
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <Label className="text-sm font-medium text-foreground">Certificate File</Label>
+                        {/* Always show upload area */}
+                        <div className="relative rounded-lg border-2 border-dashed border-muted-foreground/25 hover:border-muted-foreground/50 bg-background transition-colors">
+                          <div className="flex items-center justify-between p-4">
+                            <div className="flex items-center gap-3">
+                              <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center">
+                                <Package className="w-5 h-5 text-muted-foreground" />
+                              </div>
+                              <div>
+                                <p className="text-sm font-medium">
+                                  Upload certificate file
+                                </p>
+                                <p className="text-xs text-muted-foreground">
+                                  PDF, DOC, or image files supported
+                                </p>
+                              </div>
+                            </div>
+                            <Button variant="outline" size="sm" className="px-6">
+                              Browse
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Show uploaded certificate file if exists */}
+                      {formData.certFile && (
+                        <div className="rounded-lg border bg-card p-4">
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-3">
                               <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
@@ -1311,28 +1335,6 @@ const FormVariationsDemo = () => {
                                 <Trash2 className="w-4 h-4" />
                               </Button>
                             </div>
-                          </div>
-                        </div>
-                      ) : (
-                        // Show upload area when no file
-                        <div className="relative rounded-lg border-2 border-dashed border-muted-foreground/25 hover:border-muted-foreground/50 bg-background transition-colors">
-                          <div className="flex items-center justify-between p-4">
-                            <div className="flex items-center gap-3">
-                              <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center">
-                                <Package className="w-5 h-5 text-muted-foreground" />
-                              </div>
-                              <div>
-                                <p className="text-sm font-medium">
-                                  No file selected
-                                </p>
-                                <p className="text-xs text-muted-foreground">
-                                  PDF, DOC, or image files supported
-                                </p>
-                              </div>
-                            </div>
-                            <Button variant="outline" size="sm" className="px-6">
-                              Browse
-                            </Button>
                           </div>
                         </div>
                       )}
