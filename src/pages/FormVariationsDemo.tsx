@@ -1222,25 +1222,26 @@ const FormVariationsDemo = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t">
-                <div className="flex items-center space-x-2">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t">
+                <div className="flex items-center space-x-3">
                   <Checkbox
                     id="noTfCert"
                     checked={formData.noTfCert}
                     onCheckedChange={(checked) => handleInputChange("noTfCert", checked)}
                   />
-                  <Label htmlFor="noTfCert">No Certificate Required</Label>
+                  <Label htmlFor="noTfCert" className="text-sm font-medium">No Certificate Required</Label>
                 </div>
 
                 <div className="space-y-2">
-                  <Label>Certificate File</Label>
+                  <Label className="text-sm font-medium text-foreground">Certificate File</Label>
                   <div className="flex gap-2">
                     <Input
                       value={formData.certFile || "No file selected"}
                       readOnly
-                      className="text-muted-foreground"
+                      className="text-muted-foreground bg-muted/50 border-border"
+                      placeholder="No file selected"
                     />
-                    <Button variant="outline" size="sm">Browse</Button>
+                    <Button variant="outline" size="sm" className="px-4">Browse</Button>
                   </div>
                 </div>
               </div>
