@@ -1672,9 +1672,9 @@ const FormVariationsDemo = () => {
   const renderTabbedInterface = () => (
     <Card className="border-0 shadow-md">
       <CardContent className="p-6">
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-8">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <div className="relative">
-            <TabsList className="inline-flex h-12 items-center justify-start rounded-xl bg-gradient-to-r from-muted/50 to-muted/80 p-1.5 text-muted-foreground w-full overflow-x-auto shadow-inner backdrop-blur-sm border border-border/50">
+            <TabsList className="inline-flex h-12 items-center justify-start rounded-xl bg-gradient-to-r from-muted/50 to-muted/80 p-1.5 text-muted-foreground w-full shadow-inner backdrop-blur-sm border border-border/50">
               {currentTabs.map((tab) => {
                 const Icon = tab.icon;
                 const isActive = activeTab === tab.value;
@@ -1686,9 +1686,9 @@ const FormVariationsDemo = () => {
                       "relative inline-flex items-center justify-center whitespace-nowrap rounded-lg px-4 py-2.5 text-sm font-medium transition-all duration-300 ease-out",
                       "ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2", 
                       "disabled:pointer-events-none disabled:opacity-50",
-                      "hover:text-foreground hover:bg-background/60 hover:shadow-sm hover:scale-[1.02]",
+                      "hover:text-foreground hover:bg-background/60 hover:shadow-sm",
                       isActive 
-                        ? "bg-gradient-to-r from-background to-background/95 text-foreground shadow-lg border border-border/50 scale-[1.02]" 
+                        ? "bg-gradient-to-r from-background to-background/95 text-foreground shadow-lg border border-border/50" 
                         : "text-muted-foreground hover:text-foreground"
                     )}
                   >
