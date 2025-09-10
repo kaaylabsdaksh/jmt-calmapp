@@ -1241,40 +1241,32 @@ const FormVariationsDemo = () => {
                     />
                   </div>
 
-                  {/* Certificate File Upload */}
-                  <div className="space-y-2">
-                    <Label className="text-sm font-medium text-foreground">Certificate File</Label>
-                    <div className={cn(
-                      "relative rounded-lg border-2 border-dashed transition-colors",
-                      formData.noTfCert 
-                        ? "border-muted bg-muted/20 opacity-50 pointer-events-none" 
-                        : "border-muted-foreground/25 hover:border-muted-foreground/50 bg-background"
-                    )}>
-                      <div className="flex items-center justify-between p-4">
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center">
-                            <Package className="w-5 h-5 text-muted-foreground" />
+                  {/* Certificate File Upload - Only show when certificate is required */}
+                  {!formData.noTfCert && (
+                    <div className="space-y-2">
+                      <Label className="text-sm font-medium text-foreground">Certificate File</Label>
+                      <div className="relative rounded-lg border-2 border-dashed border-muted-foreground/25 hover:border-muted-foreground/50 bg-background transition-colors">
+                        <div className="flex items-center justify-between p-4">
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center">
+                              <Package className="w-5 h-5 text-muted-foreground" />
+                            </div>
+                            <div>
+                              <p className="text-sm font-medium">
+                                {formData.certFile || "No file selected"}
+                              </p>
+                              <p className="text-xs text-muted-foreground">
+                                PDF, DOC, or image files supported
+                              </p>
+                            </div>
                           </div>
-                          <div>
-                            <p className="text-sm font-medium">
-                              {formData.certFile || "No file selected"}
-                            </p>
-                            <p className="text-xs text-muted-foreground">
-                              PDF, DOC, or image files supported
-                            </p>
-                          </div>
+                          <Button variant="outline" size="sm" className="px-6">
+                            Browse
+                          </Button>
                         </div>
-                        <Button 
-                          variant="outline" 
-                          size="sm" 
-                          className="px-6"
-                          disabled={formData.noTfCert}
-                        >
-                          Browse
-                        </Button>
                       </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
             </div>
