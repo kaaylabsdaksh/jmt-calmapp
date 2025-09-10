@@ -220,6 +220,11 @@ const FormVariationsDemo = () => {
     commentType: "",
     comment: "",
     includeInCopyAsNew: false,
+    
+    // Purchase Order Information  
+    poNumber: "",
+    soNumber: "",
+    jmPartsPoNumber: "",
   });
 
   const currentTabs = [
@@ -1067,6 +1072,56 @@ const FormVariationsDemo = () => {
             />
           </div>
         ))}
+      </div>
+      
+      {/* Purchase Order Information */}
+      <div className="space-y-4 pt-6 border-t border-border">
+        <h3 className="text-lg font-semibold">Purchase Order Information</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <Label htmlFor="poNumber" className="text-sm font-medium">PO Number</Label>
+            <Input
+              id="poNumber"
+              value={formData.poNumber}
+              onChange={(e) => handleInputChange("poNumber", e.target.value)}
+              placeholder="CUST/PO #"
+              className="h-11"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="poLineNumber" className="text-sm font-medium">PO Line #</Label>
+            <Input
+              id="poLineNumber"
+              value={formData.poLineNumber}
+              onChange={(e) => handleInputChange("poLineNumber", e.target.value)}
+              placeholder="PO Line #"
+              className="h-11"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="soNumber" className="text-sm font-medium">SO Number</Label>
+            <Input
+              id="soNumber"
+              value={formData.soNumber}
+              onChange={(e) => handleInputChange("soNumber", e.target.value)}
+              placeholder="SO Number"
+              className="h-11"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="jmPartsPoNumber" className="text-sm font-medium">JM Parts PO #</Label>
+            <Input
+              id="jmPartsPoNumber"
+              value={formData.jmPartsPoNumber}
+              onChange={(e) => handleInputChange("jmPartsPoNumber", e.target.value)}
+              placeholder="JM Parts PO #"
+              className="h-11"
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
