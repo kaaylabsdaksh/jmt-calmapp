@@ -9,7 +9,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, Menu, CalendarIcon, Check, ChevronsUpDown } from "lucide-react";
+import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
 import { SidebarTrigger } from "@/components/ui/sidebar";
@@ -54,6 +54,9 @@ const FormVariationsDemo = () => {
   const [showStatusChangeDialog, setShowStatusChangeDialog] = useState(false);
   const [pendingStatusChange, setPendingStatusChange] = useState("");
   const [statusChangeComment, setStatusChangeComment] = useState("");
+
+  // Certificate file dialog state
+  const [showDeleteCertDialog, setShowDeleteCertDialog] = useState(false);
 
   const manufacturers = [
     { value: "1m-working-stand", label: "1M WORKING STAND." },
@@ -335,6 +338,34 @@ const FormVariationsDemo = () => {
     setPendingStatusChange("");
     setStatusChangeComment("");
   };
+
+  // Certificate file handlers
+  const handleViewCertificate = () => {
+    console.log("Viewing certificate file:", formData.certFile);
+    // In a real app, this would open the file
+  };
+
+  const handleDeleteCertificate = () => {
+    setShowDeleteCertDialog(true);
+  };
+
+  const handleConfirmDeleteCertificate = () => {
+    handleInputChange("certFile", "");
+    setShowDeleteCertDialog(false);
+  };
+
+  const handleCancelDeleteCertificate = () => {
+    setShowDeleteCertDialog(false);
+  };
+
+  // Set dummy file when certificate is required
+  useEffect(() => {
+    if (!formData.noTfCert && !formData.certFile) {
+      handleInputChange("certFile", "certificate_sample_document.pdf");
+    } else if (formData.noTfCert && formData.certFile) {
+      handleInputChange("certFile", "");
+    }
+  }, [formData.noTfCert]);
 
   // Function to check if accordion section is complete
   const isSectionComplete = (section: string) => {
@@ -1245,26 +1276,66 @@ const FormVariationsDemo = () => {
                   {!formData.noTfCert && (
                     <div className="space-y-2">
                       <Label className="text-sm font-medium text-foreground">Certificate File</Label>
-                      <div className="relative rounded-lg border-2 border-dashed border-muted-foreground/25 hover:border-muted-foreground/50 bg-background transition-colors">
-                        <div className="flex items-center justify-between p-4">
-                          <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center">
-                              <Package className="w-5 h-5 text-muted-foreground" />
+                      {formData.certFile ? (
+                        // Show file with actions when file exists
+                        <div className="relative rounded-lg border bg-background p-4">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                              <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                                <FileText className="w-5 h-5 text-primary" />
+                              </div>
+                              <div>
+                                <p className="text-sm font-medium">
+                                  {formData.certFile}
+                                </p>
+                                <p className="text-xs text-muted-foreground">
+                                  PDF Document • 2.4 MB
+                                </p>
+                              </div>
                             </div>
-                            <div>
-                              <p className="text-sm font-medium">
-                                {formData.certFile || "No file selected"}
-                              </p>
-                              <p className="text-xs text-muted-foreground">
-                                PDF, DOC, or image files supported
-                              </p>
+                            <div className="flex items-center gap-2">
+                              <Button 
+                                variant="ghost" 
+                                size="sm"
+                                onClick={handleViewCertificate}
+                                className="h-8 w-8 p-0"
+                              >
+                                <Eye className="w-4 h-4" />
+                              </Button>
+                              <Button 
+                                variant="ghost" 
+                                size="sm"
+                                onClick={handleDeleteCertificate}
+                                className="h-8 w-8 p-0 text-destructive hover:text-destructive hover:bg-destructive/10"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </Button>
                             </div>
                           </div>
-                          <Button variant="outline" size="sm" className="px-6">
-                            Browse
-                          </Button>
                         </div>
-                      </div>
+                      ) : (
+                        // Show upload area when no file
+                        <div className="relative rounded-lg border-2 border-dashed border-muted-foreground/25 hover:border-muted-foreground/50 bg-background transition-colors">
+                          <div className="flex items-center justify-between p-4">
+                            <div className="flex items-center gap-3">
+                              <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center">
+                                <Package className="w-5 h-5 text-muted-foreground" />
+                              </div>
+                              <div>
+                                <p className="text-sm font-medium">
+                                  No file selected
+                                </p>
+                                <p className="text-xs text-muted-foreground">
+                                  PDF, DOC, or image files supported
+                                </p>
+                              </div>
+                            </div>
+                            <Button variant="outline" size="sm" className="px-6">
+                              Browse
+                            </Button>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
@@ -2321,6 +2392,37 @@ const FormVariationsDemo = () => {
                 className="bg-primary text-primary-foreground hover:bg-primary/90"
               >
                 Confirm Change
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
+        {/* Delete Certificate Confirmation Dialog */}
+        <Dialog open={showDeleteCertDialog} onOpenChange={setShowDeleteCertDialog}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>Delete Certificate File</DialogTitle>
+            </DialogHeader>
+            <div className="py-4">
+              <p className="text-sm text-muted-foreground">
+                Are you sure you want to delete this certificate file? This action cannot be undone.
+              </p>
+              <div className="mt-4 p-3 rounded-lg bg-muted/50 border">
+                <div className="flex items-center gap-2">
+                  <FileText className="w-4 h-4 text-muted-foreground" />
+                  <span className="text-sm font-medium">{formData.certFile}</span>
+                </div>
+              </div>
+            </div>
+            <DialogFooter className="flex gap-2">
+              <Button variant="outline" onClick={handleCancelDeleteCertificate}>
+                Cancel
+              </Button>
+              <Button 
+                variant="destructive"
+                onClick={handleConfirmDeleteCertificate}
+              >
+                Delete File
               </Button>
             </DialogFooter>
           </DialogContent>
