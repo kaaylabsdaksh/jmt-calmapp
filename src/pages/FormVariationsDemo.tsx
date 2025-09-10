@@ -1406,7 +1406,7 @@ const FormVariationsDemo = () => {
         <CardDescription>Manage product accessories and components</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="grid grid-cols-2 md:grid-cols-6 gap-3 mb-4">
+        <div className="grid grid-cols-2 md:grid-cols-7 gap-3 items-end">
           <div className="space-y-1">
             <Label htmlFor="accessoryType" className="text-xs">Type</Label>
             <Select value={formData.accessoryType} onValueChange={(value) => handleInputChange("accessoryType", value)}>
@@ -1472,7 +1472,7 @@ const FormVariationsDemo = () => {
             />
           </div>
 
-          <div className="flex items-end">
+          <div className="col-span-2 md:col-span-1">
             <Button size="sm" className="h-9 w-full">Add</Button>
           </div>
         </div>
@@ -1504,7 +1504,7 @@ const FormVariationsDemo = () => {
         <CardDescription>Manage replacement parts and components</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-3 mb-4">
+        <div className="grid grid-cols-1 md:grid-cols-6 gap-3 items-end">
           <div className="space-y-1">
             <Label htmlFor="partsCategory" className="text-xs">Category</Label>
             <Select value={formData.partsCategory} onValueChange={(value) => handleInputChange("partsCategory", value)}>
@@ -1564,10 +1564,10 @@ const FormVariationsDemo = () => {
               className="h-9"
             />
           </div>
-        </div>
 
-        <div className="flex justify-end mb-4">
-          <Button size="sm">Add Part</Button>
+          <div>
+            <Button size="sm" className="h-9 w-full">Add Part</Button>
+          </div>
         </div>
 
         <div className="border rounded-lg">
@@ -1598,7 +1598,7 @@ const FormVariationsDemo = () => {
         <CardDescription>Factory communication and documentation</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-4">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 items-end">
           <div className="space-y-1">
             <Label htmlFor="commentType" className="text-xs">Type</Label>
             <Select value={formData.commentType} onValueChange={(value) => handleInputChange("commentType", value)}>
@@ -1620,12 +1620,12 @@ const FormVariationsDemo = () => {
               value={formData.comment}
               onChange={(e) => handleInputChange("comment", e.target.value)}
               placeholder="Enter comment..."
-              className="h-16"
+              className="h-9 resize-none"
             />
           </div>
 
-          <div className="space-y-2">
-            <div className="flex items-center space-x-2">
+          <div className="space-y-1">
+            <div className="flex items-center space-x-2 mb-1">
               <Checkbox
                 id="includeInCopyAsNew"
                 checked={formData.includeInCopyAsNew}
