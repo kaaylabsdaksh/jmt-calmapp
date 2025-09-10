@@ -33,6 +33,18 @@ const FormVariationsDemo = () => {
   const [newManufacturerName, setNewManufacturerName] = useState("");
   const [manufacturerDropdownOpen, setManufacturerDropdownOpen] = useState(false);
   const [manufacturerSearchValue, setManufacturerSearchValue] = useState("");
+  
+  // Model dialog state
+  const [showModelDialog, setShowModelDialog] = useState(false);
+  const [newModelData, setNewModelData] = useState({
+    manufacturer: "",
+    model: "",
+    range: "",
+    option: "",
+    accuracy: "",
+    description: "",
+    labCode: ""
+  });
 
   const [assigneeDropdownOpen, setAssigneeDropdownOpen] = useState(false);
   const [assigneeSearchValue, setAssigneeSearchValue] = useState("");
@@ -249,6 +261,43 @@ const FormVariationsDemo = () => {
   const handleCancelManufacturer = () => {
     setNewManufacturerName("");
     setShowManufacturerDialog(false);
+  };
+
+  // Model dialog handlers
+  const handleAddNewModel = () => {
+    if (newModelData.model.trim()) {
+      handleInputChange("model", newModelData.model.trim());
+      setNewModelData({
+        manufacturer: "",
+        model: "",
+        range: "",
+        option: "",
+        accuracy: "",
+        description: "",
+        labCode: ""
+      });
+      setShowModelDialog(false);
+    }
+  };
+
+  const handleCancelModel = () => {
+    setNewModelData({
+      manufacturer: "",
+      model: "",
+      range: "",
+      option: "",
+      accuracy: "",
+      description: "",
+      labCode: ""
+    });
+    setShowModelDialog(false);
+  };
+
+  const handleModelDataChange = (field: string, value: string) => {
+    setNewModelData(prev => ({
+      ...prev,
+      [field]: value
+    }));
   };
 
   // Status change handlers
@@ -651,13 +700,23 @@ const FormVariationsDemo = () => {
 
           <div className="space-y-2">
             <Label htmlFor="model" className="text-sm font-medium">Model</Label>
-            <Input
-              id="model"
-              value={formData.model}
-              onChange={(e) => handleInputChange("model", e.target.value)}
-              placeholder="Enter model"
-              className="h-11"
-            />
+            <div className="flex gap-2">
+              <Input
+                id="model"
+                value={formData.model}
+                onChange={(e) => handleInputChange("model", e.target.value)}
+                placeholder="Enter model"
+                className="h-11 flex-1"
+              />
+              <Button
+                type="button"
+                size="sm"
+                className="h-11 px-4 bg-primary text-primary-foreground hover:bg-primary/90"
+                onClick={() => setShowModelDialog(true)}
+              >
+                Add New
+              </Button>
+            </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
@@ -1840,6 +1899,141 @@ const FormVariationsDemo = () => {
                 className="bg-primary text-primary-foreground hover:bg-primary/90"
               >
                 Submit
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
+        {/* Add New Model Dialog */}
+        <Dialog open={showModelDialog} onOpenChange={setShowModelDialog}>
+          <DialogContent className="sm:max-w-lg">
+            <DialogHeader>
+              <DialogTitle>Add New Model</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4 py-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="dialogManufacturer" className="text-sm font-medium">Manufacturer</Label>
+                  <Select 
+                    value={newModelData.manufacturer} 
+                    onValueChange={(value) => handleModelDataChange("manufacturer", value)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select manufacturer" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="3m">3M</SelectItem>
+                      <SelectItem value="fluke">Fluke</SelectItem>
+                      <SelectItem value="keysight">Keysight</SelectItem>
+                      <SelectItem value="rohde-schwarz">Rohde & Schwarz</SelectItem>
+                      <SelectItem value="tektronix">Tektronix</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="dialogModel" className="text-sm font-medium">Model</Label>
+                  <Input
+                    id="dialogModel"
+                    value={newModelData.model}
+                    onChange={(e) => handleModelDataChange("model", e.target.value)}
+                    placeholder="Enter model"
+                    className="h-11"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-3 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="dialogRange" className="text-sm font-medium">Range</Label>
+                  <Select 
+                    value={newModelData.range} 
+                    onValueChange={(value) => handleModelDataChange("range", value)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select range" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="0-100">0-100</SelectItem>
+                      <SelectItem value="0-1000">0-1000</SelectItem>
+                      <SelectItem value="0-10000">0-10000</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="dialogOption" className="text-sm font-medium">Option</Label>
+                  <Select 
+                    value={newModelData.option} 
+                    onValueChange={(value) => handleModelDataChange("option", value)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select option" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="standard">Standard</SelectItem>
+                      <SelectItem value="extended">Extended</SelectItem>
+                      <SelectItem value="premium">Premium</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="dialogAccuracy" className="text-sm font-medium">Accuracy</Label>
+                  <Select 
+                    value={newModelData.accuracy} 
+                    onValueChange={(value) => handleModelDataChange("accuracy", value)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select accuracy" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="±0.1%">±0.1%</SelectItem>
+                      <SelectItem value="±0.5%">±0.5%</SelectItem>
+                      <SelectItem value="±1.0%">±1.0%</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="dialogDescription" className="text-sm font-medium">Description</Label>
+                <Textarea
+                  id="dialogDescription"
+                  value={newModelData.description}
+                  onChange={(e) => handleModelDataChange("description", e.target.value)}
+                  placeholder="Enter description"
+                  rows={3}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="dialogLabCode" className="text-sm font-medium">Lab Code</Label>
+                <Select 
+                  value={newModelData.labCode} 
+                  onValueChange={(value) => handleModelDataChange("labCode", value)}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select lab code" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="LAB001">LAB001</SelectItem>
+                    <SelectItem value="LAB002">LAB002</SelectItem>
+                    <SelectItem value="LAB003">LAB003</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <DialogFooter className="flex gap-2">
+              <Button variant="outline" onClick={handleCancelModel}>
+                Cancel
+              </Button>
+              <Button
+                onClick={handleAddNewModel}
+                disabled={!newModelData.model.trim()}
+                className="bg-primary text-primary-foreground hover:bg-primary/90"
+              >
+                Ok
               </Button>
             </DialogFooter>
           </DialogContent>
