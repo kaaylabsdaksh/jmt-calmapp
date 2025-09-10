@@ -1050,8 +1050,43 @@ const FormVariationsDemo = () => {
 
   const renderOptionsSection = () => (
     <div className="space-y-6">
-      {/* Additional Information */}
-      <div className="space-y-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+        {[
+          { key: 'warranty', label: 'Warranty', desc: 'Item is under warranty', icon: '🛡️' },
+          { key: 'estimate', label: 'Estimate', desc: 'Estimate required', icon: '💰' },
+          { key: 'newEquip', label: 'New Equipment', desc: 'Brand new equipment', icon: '✨' },
+          { key: 'usedSurplus', label: 'Used Surplus', desc: 'Previously used equipment', icon: '♻️' },
+          { key: 'iso17025', label: 'ISO 17025', desc: 'ISO 17025 compliance required', icon: '📋' },
+          { key: 'hotList', label: 'Hot List', desc: 'High priority item', icon: '🔥' },
+          { key: 'readyToBill', label: 'Ready to Bill', desc: 'Ready for billing', icon: '💵' },
+          { key: 'inQa', label: 'In QA', desc: 'Currently in quality assurance', icon: '🔍' },
+          { key: 'toShipping', label: 'To Shipping', desc: 'Ready for shipping', icon: '📦' },
+          { key: 'multiParts', label: 'Multi Parts', desc: 'Multiple part item', icon: '🔧' },
+          { key: 'lostEquipment', label: 'Lost Equipment', desc: 'Equipment is lost', icon: '❗' },
+          { key: 'redTag', label: 'Red Tag', desc: 'Red tag status', icon: '🏷️' },
+          { key: 'returned', label: 'Returned', desc: 'Item has been returned', icon: '↩️' },
+          { key: 'coOverride', label: 'C/O Override', desc: 'Customer order override', icon: '⚡' },
+          { key: 'dateValidOverride', label: 'Date Valid. Override', desc: 'Date validation override', icon: '📅' },
+          { key: 'coStdCheckOverride', label: 'C/O Std Check Override', desc: 'Customer order standard check override', icon: '✅' },
+        ].map(({ key, label, desc, icon }) => (
+          <div key={key} className="flex items-center justify-between p-4 rounded-lg border border-border hover:bg-accent/50 transition-colors">
+            <div className="flex items-center gap-3">
+              <span className="text-lg">{icon}</span>
+              <div>
+                <div className="font-medium text-sm">{label}</div>
+                <p className="text-xs text-muted-foreground">{desc}</p>
+              </div>
+            </div>
+            <Switch
+              checked={formData[key as keyof typeof formData] as boolean}
+              onCheckedChange={(checked) => handleInputChange(key, checked)}
+            />
+          </div>
+        ))}
+      </div>
+      
+      {/* Date and Text Fields */}
+      <div className="space-y-4 pt-6 border-t border-border">
         <h3 className="text-lg font-semibold">Additional Information</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="space-y-2">
@@ -1141,42 +1176,6 @@ const FormVariationsDemo = () => {
               className="h-11"
             />
           </div>
-        </div>
-      </div>
-      
-      {/* Status Options Grid */}
-      <div className="space-y-3 pt-6 border-t border-border">
-        <h3 className="text-lg font-semibold">Status Options</h3>
-        <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-2">
-          {[
-            { key: 'warranty', label: 'Warranty', icon: '🛡️' },
-            { key: 'estimate', label: 'Estimate', icon: '💰' },
-            { key: 'newEquip', label: 'New Equipment', icon: '✨' },
-            { key: 'usedSurplus', label: 'Used Surplus', icon: '♻️' },
-            { key: 'iso17025', label: 'ISO 17025', icon: '📋' },
-            { key: 'hotList', label: 'Hot List', icon: '🔥' },
-            { key: 'readyToBill', label: 'Ready to Bill', icon: '💵' },
-            { key: 'inQa', label: 'In QA', icon: '🔍' },
-            { key: 'toShipping', label: 'To Shipping', icon: '📦' },
-            { key: 'multiParts', label: 'Multi Parts', icon: '🔧' },
-            { key: 'lostEquipment', label: 'Lost Equipment', icon: '❗' },
-            { key: 'redTag', label: 'Red Tag', icon: '🏷️' },
-            { key: 'returned', label: 'Returned', icon: '↩️' },
-            { key: 'coOverride', label: 'C/O Override', icon: '⚡' },
-            { key: 'dateValidOverride', label: 'Date Valid. Override', icon: '📅' },
-            { key: 'coStdCheckOverride', label: 'C/O Std Check Override', icon: '✅' },
-          ].map(({ key, label, icon }) => (
-            <div key={key} className="flex items-center justify-between p-2 rounded-md border border-border/50 hover:border-border hover:bg-accent/30 transition-all">
-              <div className="flex items-center gap-2 min-w-0">
-                <span className="text-sm">{icon}</span>
-                <span className="font-medium text-xs truncate">{label}</span>
-              </div>
-              <Switch
-                checked={formData[key as keyof typeof formData] as boolean}
-                onCheckedChange={(checked) => handleInputChange(key, checked)}
-              />
-            </div>
-          ))}
         </div>
       </div>
     </div>
@@ -1674,38 +1673,21 @@ const FormVariationsDemo = () => {
     <Card className="border-0 shadow-md">
       <CardContent className="p-6">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <div className="relative">
-            <TabsList className="inline-flex h-12 items-center justify-start rounded-xl bg-gradient-to-r from-muted/50 to-muted/80 p-1.5 text-muted-foreground w-full shadow-inner backdrop-blur-sm border border-border/50">
-              {currentTabs.map((tab) => {
-                const Icon = tab.icon;
-                const isActive = activeTab === tab.value;
-                return (
-                  <TabsTrigger 
-                    key={tab.value}
-                    value={tab.value}
-                    className={cn(
-                      "relative inline-flex items-center justify-center whitespace-nowrap rounded-lg px-4 py-2.5 text-sm font-medium transition-all duration-300 ease-out",
-                      "ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2", 
-                      "disabled:pointer-events-none disabled:opacity-50",
-                      "hover:text-foreground hover:bg-background/60 hover:shadow-sm",
-                      isActive 
-                        ? "!bg-white !text-slate-900 shadow-md border !border-slate-200" 
-                        : "text-muted-foreground hover:text-foreground"
-                    )}
-                  >
-                    <Icon className={cn(
-                      "h-4 w-4 transition-all duration-300",
-                      isActive ? "text-primary mr-2" : "mr-2"
-                    )} />
-                    <span className="font-medium">{tab.label}</span>
-                    {isActive && (
-                      <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-primary/10 to-primary/5 pointer-events-none" />
-                    )}
-                  </TabsTrigger>
-                );
-              })}
-            </TabsList>
-          </div>
+          <TabsList className="inline-flex h-8 sm:h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground w-full sm:w-auto overflow-x-auto">
+            {currentTabs.map((tab) => {
+              const Icon = tab.icon;
+              return (
+                <TabsTrigger 
+                  key={tab.value}
+                  value={tab.value}
+                  className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+                >
+                  <Icon className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
+                  <span className="hidden sm:inline">{tab.label}</span>
+                </TabsTrigger>
+              );
+            })}
+          </TabsList>
 
           <TabsContent value="general" className="space-y-6">
             {renderGeneralSection()}
