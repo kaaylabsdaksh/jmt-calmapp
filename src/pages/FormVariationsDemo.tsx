@@ -1972,22 +1972,12 @@ const FormVariationsDemo = () => {
               </Button>
             </div>
             
-            <div className="flex items-center gap-2">
-              <Button variant="outline" onClick={handleCancel} className="hover-scale h-8 px-3 text-xs sm:text-sm">
-                <X className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
-                <span className="hidden sm:inline">Cancel</span>
-              </Button>
-              <Button onClick={handleSave} className="bg-primary text-primary-foreground hover:bg-primary/90 hover-scale h-8 px-3 text-xs sm:text-sm">
-                <Save className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
-                <span className="hidden sm:inline">Save Item</span>
-              </Button>
-            </div>
           </div>
         </div>
       </header>
 
       {/* Form Content */}
-      <div className="p-4 sm:p-6">
+      <div className="p-4 sm:p-6 pb-24">{/* Added bottom padding for fixed action bar */}
         {/* Work Order Header */}
         {renderWorkOrderHeader()}
         
@@ -2439,6 +2429,22 @@ const FormVariationsDemo = () => {
             </DialogFooter>
           </DialogContent>
         </Dialog>
+        
+        {/* Fixed Bottom Action Bar */}
+        <div className="fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-t z-50">
+          <div className="container max-w-7xl mx-auto p-4">
+            <div className="flex justify-end gap-3">
+              <Button variant="outline" onClick={handleCancel} className="hover-scale px-6">
+                <X className="h-4 w-4 mr-2" />
+                Cancel
+              </Button>
+              <Button onClick={handleSave} className="bg-primary text-primary-foreground hover:bg-primary/90 hover-scale px-6">
+                <Save className="h-4 w-4 mr-2" />
+                Save Item
+              </Button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
