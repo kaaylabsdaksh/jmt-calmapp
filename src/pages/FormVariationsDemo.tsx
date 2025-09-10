@@ -1996,9 +1996,35 @@ const FormVariationsDemo = () => {
                       <SelectValue placeholder="Select option" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="standard">Standard</SelectItem>
-                      <SelectItem value="extended">Extended</SelectItem>
-                      <SelectItem value="premium">Premium</SelectItem>
+                      <SelectItem value="002">002</SelectItem>
+                      <SelectItem value="03">03</SelectItem>
+                      <SelectItem value="056">056</SelectItem>
+                      <SelectItem value="1&quot;">1&quot;</SelectItem>
+                      <SelectItem value="1/2&quot;">1/2&quot;</SelectItem>
+                      <SelectItem value="1/4&quot;">1/4&quot;</SelectItem>
+                      <SelectItem value="1/4&quot; NPT Male Back Fitting">1/4&quot; NPT Male Back Fitting</SelectItem>
+                      <SelectItem value="1/4&quot; NPT Male Bottom Mount">1/4&quot; NPT Male Bottom Mount</SelectItem>
+                      <SelectItem value="12&quot;">12&quot;</SelectItem>
+                      <SelectItem value="17 liter cylinder">17 liter cylinder</SelectItem>
+                      <SelectItem value="20&quot;">20&quot;</SelectItem>
+                      <SelectItem value="3 phase">3 phase</SelectItem>
+                      <SelectItem value="3/4&quot;">3/4&quot;</SelectItem>
+                      <SelectItem value="3/8&quot;">3/8&quot;</SelectItem>
+                      <SelectItem value="5/16&quot;">5/16&quot;</SelectItem>
+                      <SelectItem value="666">666</SelectItem>
+                      <SelectItem value="676">676</SelectItem>
+                      <SelectItem value="absolute pressure">absolute pressure</SelectItem>
+                      <SelectItem value="ASTM 6">ASTM 6</SelectItem>
+                      <SelectItem value="atmosphere pressure">atmosphere pressure</SelectItem>
+                      <SelectItem value="B89 Grade 0">B89 Grade 0</SelectItem>
+                      <SelectItem value="B89 Grade 00">B89 Grade 00</SelectItem>
+                      <SelectItem value="B89 Grade AS1">B89 Grade AS1</SelectItem>
+                      <SelectItem value="B89 Grade AS2">B89 Grade AS2</SelectItem>
+                      <SelectItem value="Cameron Valve Procedure">Cameron Valve Procedure</SelectItem>
+                      <SelectItem value="Class 0">Class 0</SelectItem>
+                      <SelectItem value="Class 00">Class 00</SelectItem>
+                      <SelectItem value="Class 1">Class 1</SelectItem>
+                      <SelectItem value="Class 2">Class 2</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
