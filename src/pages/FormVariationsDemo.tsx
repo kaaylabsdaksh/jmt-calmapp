@@ -1222,26 +1222,58 @@ const FormVariationsDemo = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t">
-                <div className="flex items-center space-x-3">
-                  <Checkbox
-                    id="noTfCert"
-                    checked={formData.noTfCert}
-                    onCheckedChange={(checked) => handleInputChange("noTfCert", checked)}
-                  />
-                  <Label htmlFor="noTfCert" className="text-sm font-medium">No Certificate Required</Label>
-                </div>
-
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-foreground">Certificate File</Label>
-                  <div className="flex gap-2">
-                    <Input
-                      value={formData.certFile || "No file selected"}
-                      readOnly
-                      className="text-muted-foreground bg-muted/50 border-border"
-                      placeholder="No file selected"
+              <div className="pt-6 border-t space-y-6">
+                {/* Certificate Configuration */}
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between p-4 rounded-lg border bg-card">
+                    <div className="flex flex-col gap-1">
+                      <Label htmlFor="noTfCert" className="text-sm font-medium cursor-pointer">
+                        Certificate Required
+                      </Label>
+                      <p className="text-xs text-muted-foreground">
+                        Toggle to require certificate upload for this work order
+                      </p>
+                    </div>
+                    <Switch
+                      id="noTfCert"
+                      checked={!formData.noTfCert}
+                      onCheckedChange={(checked) => handleInputChange("noTfCert", !checked)}
                     />
-                    <Button variant="outline" size="sm" className="px-4">Browse</Button>
+                  </div>
+
+                  {/* Certificate File Upload */}
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium text-foreground">Certificate File</Label>
+                    <div className={cn(
+                      "relative rounded-lg border-2 border-dashed transition-colors",
+                      formData.noTfCert 
+                        ? "border-muted bg-muted/20 opacity-50 pointer-events-none" 
+                        : "border-muted-foreground/25 hover:border-muted-foreground/50 bg-background"
+                    )}>
+                      <div className="flex items-center justify-between p-4">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center">
+                            <Package className="w-5 h-5 text-muted-foreground" />
+                          </div>
+                          <div>
+                            <p className="text-sm font-medium">
+                              {formData.certFile || "No file selected"}
+                            </p>
+                            <p className="text-xs text-muted-foreground">
+                              PDF, DOC, or image files supported
+                            </p>
+                          </div>
+                        </div>
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          className="px-6"
+                          disabled={formData.noTfCert}
+                        >
+                          Browse
+                        </Button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
