@@ -614,114 +614,107 @@ const FormVariationsDemo = () => {
 
   const renderProductSection = () => (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 auto-rows-min">
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="manufacturer" className="text-sm font-medium">Manufacturer</Label>
-            <div className="flex gap-2">
-              <div className="relative flex-1">
+      <Card className="border-0 shadow-md w-full">
+        <CardContent className="p-4 sm:p-6 space-y-4">
+          <div className="flex items-center gap-3 pb-4 border-b border-border">
+            <div className="p-2 bg-primary/10 rounded-lg">
+              <Package className="h-5 w-5 text-primary" />
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold">Product Information</h3>
+              <p className="text-sm text-muted-foreground">Detailed product specifications and identifiers</p>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="manufacturer" className="text-sm font-medium">Manufacturer *</Label>
+              <Popover open={manufacturerDropdownOpen} onOpenChange={setManufacturerDropdownOpen}>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    role="combobox"
+                    aria-expanded={manufacturerDropdownOpen}
+                    className="h-11 justify-between w-full"
+                  >
+                    {formData.manufacturer
+                      ? manufacturers.find((manufacturer) => manufacturer.value === formData.manufacturer)?.label
+                      : "Select manufacturer..."}
+                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-full p-0" align="start">
+                  <Command>
+                    <CommandInput 
+                      placeholder="Search manufacturer..." 
+                      value={manufacturerSearchValue}
+                      onValueChange={setManufacturerSearchValue}
+                    />
+                    <CommandList>
+                      <CommandEmpty>
+                        <div className="p-2 text-center">
+                          <p className="text-sm text-muted-foreground mb-2">No manufacturer found.</p>
+                          <Button 
+                            variant="outline" 
+                            size="sm" 
+                            onClick={() => {
+                              setNewManufacturerName(manufacturerSearchValue);
+                              setShowManufacturerDialog(true);
+                              setManufacturerDropdownOpen(false);
+                            }}
+                          >
+                            Add "{manufacturerSearchValue}"
+                          </Button>
+                        </div>
+                      </CommandEmpty>
+                      <CommandGroup>
+                        {filteredManufacturers.map((manufacturer) => (
+                          <CommandItem
+                            key={manufacturer.value}
+                            value={manufacturer.value}
+                            onSelect={(currentValue) => {
+                              handleInputChange("manufacturer", currentValue === formData.manufacturer ? "" : currentValue);
+                              setManufacturerDropdownOpen(false);
+                              setManufacturerSearchValue("");
+                            }}
+                          >
+                            <Check
+                              className={cn(
+                                "mr-2 h-4 w-4",
+                                formData.manufacturer === manufacturer.value ? "opacity-100" : "opacity-0"
+                              )}
+                            />
+                            {manufacturer.label}
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </CommandList>
+                  </Command>
+                </PopoverContent>
+              </Popover>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="model" className="text-sm font-medium">Model *</Label>
+              <div className="flex gap-2">
                 <Input
-                  id="manufacturer"
-                  value={manufacturerSearchValue || formData.manufacturer}
-                  onChange={(e) => {
-                    setManufacturerSearchValue(e.target.value);
-                    handleInputChange("manufacturer", e.target.value);
-                  }}
-                  placeholder="Type to search manufacturers..."
-                  className="h-11 pr-10"
+                  id="model"
+                  value={formData.model}
+                  onChange={(e) => handleInputChange("model", e.target.value)}
+                  placeholder="Enter model"
+                  className="h-11"
                 />
-                
-                <Popover open={manufacturerDropdownOpen} onOpenChange={setManufacturerDropdownOpen}>
-                  <PopoverTrigger asChild>
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 p-0 hover:bg-accent"
-                      aria-label="Show all manufacturers"
-                    >
-                      <ChevronsUpDown className="h-4 w-4" />
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-80 p-0" align="end">
-                    <Command>
-                      <CommandList>
-                        <CommandGroup heading="All Manufacturers">
-                          {manufacturers.map((manufacturer) => (
-                            <CommandItem
-                              key={manufacturer.value}
-                              value={manufacturer.value}
-                              onSelect={() => {
-                                handleInputChange("manufacturer", manufacturer.value);
-                                setManufacturerSearchValue("");
-                                setManufacturerDropdownOpen(false);
-                              }}
-                            >
-                              <Check
-                                className={`mr-2 h-4 w-4 ${
-                                  formData.manufacturer === manufacturer.value ? "opacity-100" : "opacity-0"
-                                }`}
-                              />
-                              {manufacturer.label}
-                            </CommandItem>
-                          ))}
-                        </CommandGroup>
-                      </CommandList>
-                    </Command>
-                  </PopoverContent>
-                </Popover>
-
-                {/* Auto-suggestion dropdown */}
-                {manufacturerSearchValue && filteredManufacturers.length > 0 && (
-                  <div className="absolute top-full left-0 right-0 z-50 mt-1 bg-popover border rounded-md shadow-lg max-h-48 overflow-y-auto">
-                    {filteredManufacturers.map((manufacturer) => (
-                      <button
-                        key={manufacturer.value}
-                        type="button"
-                        className="w-full text-left px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground flex items-center"
-                        onClick={() => {
-                          handleInputChange("manufacturer", manufacturer.value);
-                          setManufacturerSearchValue("");
-                        }}
-                      >
-                        {manufacturer.label}
-                      </button>
-                    ))}
-                  </div>
-                )}
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => setShowModelDialog(true)}
+                  className="px-3"
+                >
+                  +
+                </Button>
               </div>
-
-              <Button 
-                type="button"
-                className="h-11 px-4 bg-primary text-primary-foreground hover:bg-primary/90"
-                onClick={() => setShowManufacturerDialog(true)}
-              >
-                Add New
-              </Button>
             </div>
-          </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="model" className="text-sm font-medium">Model</Label>
-            <div className="flex gap-2">
-              <Input
-                id="model"
-                value={formData.model}
-                onChange={(e) => handleInputChange("model", e.target.value)}
-                placeholder="Enter model"
-                className="h-11 flex-1"
-              />
-              <Button
-                type="button"
-                size="sm"
-                className="h-11 px-4 bg-primary text-primary-foreground hover:bg-primary/90"
-                onClick={() => setShowModelDialog(true)}
-              >
-                Add New
-              </Button>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="labCode" className="text-sm font-medium">Lab Code</Label>
               <Input
@@ -732,6 +725,51 @@ const FormVariationsDemo = () => {
                 className="h-11"
               />
             </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="mfgSerial" className="text-sm font-medium">MFG Serial</Label>
+              <Input
+                id="mfgSerial"
+                value={formData.mfgSerial}
+                onChange={(e) => handleInputChange("mfgSerial", e.target.value)}
+                placeholder="Manufacturing serial"
+                className="h-11"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="costId" className="text-sm font-medium">Cost ID</Label>
+              <Input
+                id="costId"
+                value={formData.costId}
+                onChange={(e) => handleInputChange("costId", e.target.value)}
+                placeholder="Cost identifier"
+                className="h-11"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="costSerial" className="text-sm font-medium">Cost Serial</Label>
+              <Input
+                id="costSerial"
+                value={formData.costSerial}
+                onChange={(e) => handleInputChange("costSerial", e.target.value)}
+                placeholder="Cost serial"
+                className="h-11"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="rfid" className="text-sm font-medium">RFID</Label>
+              <Input
+                id="rfid"
+                value={formData.rfid}
+                onChange={(e) => handleInputChange("rfid", e.target.value)}
+                placeholder="RFID tag"
+                className="h-11"
+              />
+            </div>
+
             <div className="space-y-2">
               <Label htmlFor="quantity" className="text-sm font-medium">Quantity</Label>
               <Input
@@ -739,66 +777,31 @@ const FormVariationsDemo = () => {
                 type="number"
                 value={formData.quantity}
                 onChange={(e) => handleInputChange("quantity", e.target.value)}
-                placeholder="0"
+                placeholder="1"
                 className="h-11"
               />
             </div>
-          </div>
-        </div>
 
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="mfgSerial" className="text-sm font-medium">Manufacturing Serial</Label>
-            <Input
-              id="mfgSerial"
-              value={formData.mfgSerial}
-              onChange={(e) => handleInputChange("mfgSerial", e.target.value)}
-              placeholder="Enter serial number"
-              className="h-11"
-            />
+            <div className="space-y-2 md:col-span-2 xl:col-span-1">
+              <Label htmlFor="description" className="text-sm font-medium">Description</Label>
+              <Textarea
+                id="description"
+                value={formData.description}
+                onChange={(e) => handleInputChange("description", e.target.value)}
+                placeholder="Product description"
+                className="min-h-[44px] resize-none"
+                rows={1}
+              />
+            </div>
           </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="costId" className="text-sm font-medium">Cost ID</Label>
-            <Input
-              id="costId"
-              value={formData.costId}
-              onChange={(e) => handleInputChange("costId", e.target.value)}
-              placeholder="Enter cost ID"
-              className="h-11"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="rfid" className="text-sm font-medium">RFID</Label>
-            <Input
-              id="rfid"
-              value={formData.rfid}
-              onChange={(e) => handleInputChange("rfid", e.target.value)}
-              placeholder="Enter RFID"
-              className="h-11"
-            />
-          </div>
-        </div>
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="description" className="text-sm font-medium">Description</Label>
-        <Textarea
-          id="description"
-          value={formData.description}
-          onChange={(e) => handleInputChange("description", e.target.value)}
-          placeholder="Enter detailed item description"
-          rows={4}
-          className="resize-none"
-        />
-      </div>
+        </CardContent>
+      </Card>
     </div>
   );
 
   const renderLogisticsSection = () => (
-    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 auto-rows-min">
-      <Card className="border-0 shadow-md">
+    <div className="space-y-6">
+      <Card className="border-0 shadow-md w-full">
         <CardContent className="p-4 sm:p-6 space-y-4">
           <div className="flex items-center gap-3 pb-4 border-b border-border">
             <div className="p-2 bg-primary/10 rounded-lg">
@@ -806,10 +809,11 @@ const FormVariationsDemo = () => {
             </div>
             <div>
               <h3 className="text-lg font-semibold text-foreground">Arrival Information</h3>
+              <p className="text-sm text-muted-foreground">Track when and how items arrive</p>
             </div>
           </div>
-
-          <div className="space-y-4">
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
             <div className="space-y-2">
               <Label htmlFor="arrivalDate" className="text-sm font-medium">Arrival Date</Label>
               <Input
@@ -824,87 +828,44 @@ const FormVariationsDemo = () => {
             <div className="space-y-2">
               <Label htmlFor="arrivalType" className="text-sm font-medium">Arrival Type</Label>
               <Select value={formData.arrivalType} onValueChange={(value) => handleInputChange("arrivalType", value)}>
-                <SelectTrigger className="h-11">
+                <SelectTrigger className="h-9 sm:h-11">
                   <SelectValue placeholder="Select arrival type" />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="jm-driver-pickup">JM Driver Pickup</SelectItem>
-                  <SelectItem value="customer-dropoff">Customer Dropoff</SelectItem>
-                  <SelectItem value="shipped">Shipped</SelectItem>
-                  <SelectItem value="onsite">Onsite</SelectItem>
-                  <SelectItem value="purchasing-dept">Purchasing Dept.</SelectItem>
-                  <SelectItem value="lab-standard">Lab Standard</SelectItem>
-                  <SelectItem value="surplus">Surplus</SelectItem>
+                <SelectContent className="max-h-48 overflow-y-auto">
+                  <SelectItem value="delivery">Delivery</SelectItem>
+                  <SelectItem value="pickup">Pickup</SelectItem>
+                  <SelectItem value="mail">Mail</SelectItem>
+                  <SelectItem value="courier">Courier</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="arrivalLocation" className="text-sm font-medium">Arrival Location</Label>
-              <Select value={formData.arrivalLocation} onValueChange={(value) => handleInputChange("arrivalLocation", value)}>
-                <SelectTrigger className="h-11">
-                  <SelectValue placeholder="Select arrival location" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="BX">BX</SelectItem>
-                  <SelectItem value="AX">AX</SelectItem>
-                  <SelectItem value="CX">CX</SelectItem>
-                  <SelectItem value="MX">MX</SelectItem>
-                  <SelectItem value="OX">OX</SelectItem>
-                  <SelectItem value="PAX">PAX</SelectItem>
-                  <SelectItem value="BTX">BTX</SelectItem>
-                  <SelectItem value="CAX">CAX</SelectItem>
-                  <SelectItem value="SAX">SAX</SelectItem>
-                  <SelectItem value="MBX">MBX</SelectItem>
-                  <SelectItem value="MOX">MOX</SelectItem>
-                </SelectContent>
-              </Select>
+              <Input
+                id="arrivalLocation"
+                value={formData.arrivalLocation}
+                onChange={(e) => handleInputChange("arrivalLocation", e.target.value)}
+                placeholder="Enter location"
+                className="h-9 sm:h-11"
+              />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="driver" className="text-sm font-medium">Driver</Label>
-              <Select value={formData.driver} onValueChange={(value) => handleInputChange("driver", value)}>
-                <SelectTrigger className="h-11">
-                  <SelectValue placeholder="Select driver" />
-                </SelectTrigger>
-                <SelectContent className="max-h-48 overflow-y-auto">
-                  <SelectItem value="aaron-l-briles">Aaron L Briles</SelectItem>
-                  <SelectItem value="adam-d-eller">Adam D. Eller</SelectItem>
-                  <SelectItem value="admin-user">Admin User</SelectItem>
-                  <SelectItem value="alanna-d-thompson">Alanna D Thompson</SelectItem>
-                  <SelectItem value="alton-t-szlber">Alton T Szlber</SelectItem>
-                  <SelectItem value="alzane-reyes">Alzane Reyes</SelectItem>
-                  <SelectItem value="amanda-r-phillips">Amanda R. Phillips</SelectItem>
-                  <SelectItem value="andrew-d-gina">Andrew D Gina</SelectItem>
-                  <SelectItem value="angel-anthony-g-moreno">Angel-anthony G Moreno</SelectItem>
-                  <SelectItem value="austin-a-behnken">Austin A Behnken</SelectItem>
-                  <SelectItem value="barry-j-chaisson">Barry J Chaisson</SelectItem>
-                  <SelectItem value="blaine-r-glover">Blaine R Glover</SelectItem>
-                  <SelectItem value="blair-brewer">Blair Brewer</SelectItem>
-                  <SelectItem value="brad-l-moulder">Brad L. Moulder</SelectItem>
-                  <SelectItem value="brad-p-morrison">Brad P. Morrison</SelectItem>
-                  <SelectItem value="brad-r-harris">Brad R Harris</SelectItem>
-                  <SelectItem value="brandon-a-underwood">Brandon A Underwood</SelectItem>
-                  <SelectItem value="brandon-g-lowery">Brandon G Lowery</SelectItem>
-                  <SelectItem value="brandon-m-milum">Brandon M Milum</SelectItem>
-                  <SelectItem value="brandy-l-mulkey">Brandy L Mulkey</SelectItem>
-                  <SelectItem value="brent-m-durham">Brent M Durham</SelectItem>
-                  <SelectItem value="brent-m-simoneaux">Brent M Simoneaux</SelectItem>
-                  <SelectItem value="bronson-w-sydow">Bronson W Sydow</SelectItem>
-                  <SelectItem value="bryan-j-morrison">Bryan J Morrison</SelectItem>
-                  <SelectItem value="bryson-t-brown">Bryson T Brown</SelectItem>
-                  <SelectItem value="cade-c-keen">Cade C Keen</SelectItem>
-                  <SelectItem value="cassie-c-pilet">Cassie C. Pilet</SelectItem>
-                  <SelectItem value="chad-p-kitchens">Chad P Kitchens</SelectItem>
-                  <SelectItem value="charles-d-price">Charles D Price</SelectItem>
-                </SelectContent>
-              </Select>
+              <Input
+                id="driver"
+                value={formData.driver}
+                onChange={(e) => handleInputChange("driver", e.target.value)}
+                placeholder="Driver name"
+                className="h-9 sm:h-11"
+              />
             </div>
           </div>
         </CardContent>
       </Card>
 
-      <Card className="border-0 shadow-md">
+      <Card className="border-0 shadow-md w-full">
         <CardContent className="p-4 sm:p-6 space-y-4">
           <div className="flex items-center gap-3 pb-4 border-b border-border">
             <div className="p-2 bg-primary/10 rounded-lg">
@@ -912,10 +873,11 @@ const FormVariationsDemo = () => {
             </div>
             <div>
               <h3 className="text-lg font-semibold text-foreground">Shipping Information</h3>
+              <p className="text-sm text-muted-foreground">Configure pickup and delivery details</p>
             </div>
           </div>
-
-          <div className="space-y-4">
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
             <div className="space-y-2">
               <Label htmlFor="puDate" className="text-sm font-medium">Pickup Date</Label>
               <Input
@@ -930,39 +892,14 @@ const FormVariationsDemo = () => {
             <div className="space-y-2">
               <Label htmlFor="shipType" className="text-sm font-medium">Ship Type</Label>
               <Select value={formData.shipType} onValueChange={(value) => handleInputChange("shipType", value)}>
-                <SelectTrigger className="h-11">
-                  <SelectValue placeholder="Select ship type" />
+                <SelectTrigger className="h-9 sm:h-11">
+                  <SelectValue placeholder="Select shipping method" />
                 </SelectTrigger>
                 <SelectContent className="max-h-48 overflow-y-auto">
-                  <SelectItem value="airborne-do-not-use">AIRBORNE - DO NOT USE</SelectItem>
-                  <SelectItem value="averitt-do-not-use">AVERITT - DO NOT USE</SelectItem>
-                  <SelectItem value="dhl">DHL</SelectItem>
-                  <SelectItem value="fedex-2nd-day">FEDEX 2ND DAY</SelectItem>
-                  <SelectItem value="fedex-grd">FEDEX GRD</SelectItem>
-                  <SelectItem value="fedex-p1-do-not-use">FEDEX P1 - DO NOT USE</SelectItem>
-                  <SelectItem value="fedex-do-not-use">FEDEX - DO NOT USE</SelectItem>
-                  <SelectItem value="motor-freight">MOTOR FREIGHT</SelectItem>
-                  <SelectItem value="hot-shot">HOT SHOT</SelectItem>
-                  <SelectItem value="ups-blue">UPS BLUE</SelectItem>
-                  <SelectItem value="ups-org-do-not-use">UPS ORG - DO NOT USE</SelectItem>
-                  <SelectItem value="ups-red">UPS RED</SelectItem>
-                  <SelectItem value="ups-ground">UPS GROUND</SelectItem>
-                  <SelectItem value="us-post-office">US POST OFFICE</SelectItem>
-                  <SelectItem value="fedex-3day-do-not-use">FEDEX 3DAY - DO NOT USE</SelectItem>
-                  <SelectItem value="drop-ship">DROP SHIP</SelectItem>
-                  <SelectItem value="fedex-1st-on">FEDEX 1ST ON</SelectItem>
-                  <SelectItem value="fedex-2nd-am">FEDEX 2ND AM</SelectItem>
-                  <SelectItem value="fedex-3rd-col">FEDEX 3RD COL</SelectItem>
-                  <SelectItem value="fedex-air-frt">FEDEX AIR FRT</SelectItem>
-                  <SelectItem value="fedex-col-ovrnt">FEDEX COL OVRNT</SelectItem>
-                  <SelectItem value="fedex-col-p1">FEDEX COL P1</SelectItem>
-                  <SelectItem value="fedex-collect">FEDEX COLLECT</SelectItem>
-                  <SelectItem value="fedex-exp-svr">FEDEX EXP SVR</SelectItem>
-                  <SelectItem value="fedex-intl">FEDEX INTL</SelectItem>
-                  <SelectItem value="fedex-intl-exwk">FEDEX INTL EXWK</SelectItem>
-                  <SelectItem value="fedex-mtrft">FEDEX MTRFT</SelectItem>
-                  <SelectItem value="fedex-priority">FEDEX PRIORITY</SelectItem>
-                  <SelectItem value="fedex-sat-p1">FEDEX SAT P1</SelectItem>
+                  <SelectItem value="standard">Standard</SelectItem>
+                  <SelectItem value="express">Express</SelectItem>
+                  <SelectItem value="overnight">Overnight</SelectItem>
+                  <SelectItem value="ground">Ground</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -973,13 +910,24 @@ const FormVariationsDemo = () => {
                 id="name"
                 value={formData.name}
                 onChange={(e) => handleInputChange("name", e.target.value)}
-                placeholder="Enter name"
-                className="h-11"
+                placeholder="Recipient name"
+                className="h-9 sm:h-11"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="needBy" className="text-sm font-medium">Need By Date</Label>
+              <Label htmlFor="poLineNumber" className="text-sm font-medium">PO Line Number</Label>
+              <Input
+                id="poLineNumber"
+                value={formData.poLineNumber}
+                onChange={(e) => handleInputChange("poLineNumber", e.target.value)}
+                placeholder="PO line number"
+                className="h-9 sm:h-11"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="needBy" className="text-sm font-medium">Need By</Label>
               <Input
                 id="needBy"
                 type="date"
@@ -988,11 +936,22 @@ const FormVariationsDemo = () => {
                 className="h-9 sm:h-11"
               />
             </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="deliverByDate" className="text-sm font-medium">Deliver By Date</Label>
+              <Input
+                id="deliverByDate"
+                type="date"
+                value={formData.deliverByDate}
+                onChange={(e) => handleInputChange("deliverByDate", e.target.value)}
+                className="h-9 sm:h-11"
+              />
+            </div>
           </div>
         </CardContent>
       </Card>
 
-      <Card className="border-0 shadow-md">
+      <Card className="border-0 shadow-md w-full">
         <CardContent className="p-4 sm:p-6 space-y-4">
           <div className="flex items-center gap-3 pb-4 border-b border-border">
             <div className="p-2 bg-primary/10 rounded-lg">
@@ -1000,45 +959,44 @@ const FormVariationsDemo = () => {
             </div>
             <div>
               <h3 className="font-semibold">Departure Information</h3>
-              <p className="text-sm text-muted-foreground">Delivery and departure details</p>
+              <p className="text-sm text-muted-foreground">Track outbound shipment details</p>
             </div>
           </div>
-
+          
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="invNumber" className="text-sm font-medium">Inv #</Label>
+              <Label htmlFor="invNumber" className="text-sm font-medium">Invoice Number</Label>
               <Input
                 id="invNumber"
                 value={formData.invNumber}
                 onChange={(e) => handleInputChange("invNumber", e.target.value)}
-                placeholder="Enter invoice number"
-                className="h-11"
+                placeholder="Invoice number"
+                className="h-9 sm:h-11"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="dtNumber" className="text-sm font-medium">DT #</Label>
+              <Label htmlFor="dtNumber" className="text-sm font-medium">DT Number</Label>
               <Input
                 id="dtNumber"
                 value={formData.dtNumber}
                 onChange={(e) => handleInputChange("dtNumber", e.target.value)}
-                placeholder="Enter DT number"
-                className="h-11"
+                placeholder="DT number"
+                className="h-9 sm:h-11"
               />
             </div>
 
             <div className="space-y-2 md:col-span-2">
               <Label htmlFor="deliveryStatus" className="text-sm font-medium">Delivery Status</Label>
               <Select value={formData.deliveryStatus} onValueChange={(value) => handleInputChange("deliveryStatus", value)}>
-                <SelectTrigger className="h-11">
+                <SelectTrigger className="h-9 sm:h-11">
                   <SelectValue placeholder="Select delivery status" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="max-h-48 overflow-y-auto">
                   <SelectItem value="pending">Pending</SelectItem>
                   <SelectItem value="in-transit">In Transit</SelectItem>
                   <SelectItem value="delivered">Delivered</SelectItem>
                   <SelectItem value="returned">Returned</SelectItem>
-                  <SelectItem value="cancelled">Cancelled</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -1050,134 +1008,145 @@ const FormVariationsDemo = () => {
 
   const renderOptionsSection = () => (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 auto-rows-min">
-        {[
-          { key: 'warranty', label: 'Warranty', desc: 'Item is under warranty', icon: '🛡️' },
-          { key: 'estimate', label: 'Estimate', desc: 'Estimate required', icon: '💰' },
-          { key: 'newEquip', label: 'New Equipment', desc: 'Brand new equipment', icon: '✨' },
-          { key: 'usedSurplus', label: 'Used Surplus', desc: 'Previously used equipment', icon: '♻️' },
-          { key: 'iso17025', label: 'ISO 17025', desc: 'ISO 17025 compliance required', icon: '📋' },
-          { key: 'hotList', label: 'Hot List', desc: 'High priority item', icon: '🔥' },
-          { key: 'readyToBill', label: 'Ready to Bill', desc: 'Ready for billing', icon: '💵' },
-          { key: 'inQa', label: 'In QA', desc: 'Currently in quality assurance', icon: '🔍' },
-          { key: 'toShipping', label: 'To Shipping', desc: 'Ready for shipping', icon: '📦' },
-          { key: 'multiParts', label: 'Multi Parts', desc: 'Multiple part item', icon: '🔧' },
-          { key: 'lostEquipment', label: 'Lost Equipment', desc: 'Equipment is lost', icon: '❗' },
-          { key: 'redTag', label: 'Red Tag', desc: 'Red tag status', icon: '🏷️' },
-          { key: 'returned', label: 'Returned', desc: 'Item has been returned', icon: '↩️' },
-          { key: 'coOverride', label: 'C/O Override', desc: 'Customer order override', icon: '⚡' },
-          { key: 'dateValidOverride', label: 'Date Valid. Override', desc: 'Date validation override', icon: '📅' },
-          { key: 'coStdCheckOverride', label: 'C/O Std Check Override', desc: 'Customer order standard check override', icon: '✅' },
-        ].map(({ key, label, desc, icon }) => (
-          <div key={key} className="flex items-center justify-between p-4 rounded-lg border border-border hover:bg-accent/50 transition-colors">
-            <div className="flex items-center gap-3">
-              <span className="text-lg">{icon}</span>
-              <div>
-                <div className="font-medium text-sm">{label}</div>
-                <p className="text-xs text-muted-foreground">{desc}</p>
-              </div>
+      <Card className="border-0 shadow-md w-full">
+        <CardContent className="p-4 sm:p-6 space-y-4">
+          <div className="flex items-center gap-3 pb-4 border-b border-border">
+            <div className="p-2 bg-primary/10 rounded-lg">
+              <Settings className="h-5 w-5 text-primary" />
             </div>
-            <Switch
-              checked={formData[key as keyof typeof formData] as boolean}
-              onCheckedChange={(checked) => handleInputChange(key, checked)}
-            />
+            <div>
+              <h3 className="text-lg font-semibold">Options & Flags</h3>
+              <p className="text-sm text-muted-foreground">Configure item options and special flags</p>
+            </div>
           </div>
-        ))}
-      </div>
-      
-      {/* Date and Text Fields */}
-      <div className="space-y-4 pt-6 border-t border-border">
-        <h3 className="text-lg font-semibold">Additional Information</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label htmlFor="needBy" className="text-sm font-medium">Need By</Label>
-            <Input
-              id="needBy"
-              value={formData.needBy}
-              onChange={(e) => handleInputChange("needBy", e.target.value)}
-              placeholder="Enter need by date"
-              className="h-11"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="deliverByDate" className="text-sm font-medium">Deliver By Date</Label>
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  className={cn(
-                    "h-11 w-full justify-start text-left font-normal",
-                    !formData.deliverByDate && "text-muted-foreground"
-                  )}
-                >
-                  <CalendarIcon className="mr-2 h-4 w-4" />
-                  {formData.deliverByDate || "Select delivery date"}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0" align="start">
-                <Calendar
-                  mode="single"
-                  selected={formData.deliverByDate ? new Date(formData.deliverByDate) : undefined}
-                  onSelect={(date) => handleInputChange("deliverByDate", date?.toISOString().split('T')[0] || "")}
-                  initialFocus
-                  className="p-3 pointer-events-auto"
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
+            {[
+              { key: 'warranty', label: 'Warranty', desc: 'Item is under warranty', icon: '🛡️' },
+              { key: 'estimate', label: 'Estimate', desc: 'Estimate required', icon: '💰' },
+              { key: 'newEquip', label: 'New Equipment', desc: 'Brand new equipment', icon: '✨' },
+              { key: 'usedSurplus', label: 'Used Surplus', desc: 'Previously used equipment', icon: '♻️' },
+              { key: 'iso17025', label: 'ISO 17025', desc: 'ISO 17025 compliance required', icon: '📋' },
+              { key: 'hotList', label: 'Hot List', desc: 'High priority item', icon: '🔥' },
+              { key: 'readyToBill', label: 'Ready to Bill', desc: 'Ready for billing', icon: '💳' },
+              { key: 'inQa', label: 'In QA', desc: 'Currently in quality assurance', icon: '🔍' },
+              { key: 'toShipping', label: 'To Shipping', desc: 'Ready for shipping', icon: '📦' },
+              { key: 'multiParts', label: 'Multi Parts', desc: 'Contains multiple parts', icon: '🔧' },
+              { key: 'lostEquipment', label: 'Lost Equipment', desc: 'Equipment reported as lost', icon: '❓' },
+              { key: 'redTag', label: 'Red Tag', desc: 'Flagged for attention', icon: '🏷️' },
+            ].map(option => (
+              <div key={option.key} className="flex items-start space-x-3 p-3 border rounded-lg hover:bg-muted/50 transition-colors">
+                <Checkbox
+                  id={option.key}
+                  checked={formData[option.key as keyof typeof formData] as boolean}
+                  onCheckedChange={(checked) => handleInputChange(option.key, checked)}
+                  className="mt-1"
                 />
-              </PopoverContent>
-            </Popover>
+                <div className="space-y-1 flex-1">
+                  <div className="flex items-center gap-2">
+                    <span className="text-lg">{option.icon}</span>
+                    <Label 
+                      htmlFor={option.key} 
+                      className="text-sm font-medium cursor-pointer"
+                    >
+                      {option.label}
+                    </Label>
+                  </div>
+                  <p className="text-xs text-muted-foreground">{option.desc}</p>
+                </div>
+              </div>
+            ))}
           </div>
-        </div>
-      </div>
-      
-      {/* Purchase Order Information */}
-      <div className="space-y-4 pt-6 border-t border-border">
-        <h3 className="text-lg font-semibold">Purchase Order Information</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label htmlFor="poNumber" className="text-sm font-medium">PO Number</Label>
-            <Input
-              id="poNumber"
-              value={formData.poNumber}
-              onChange={(e) => handleInputChange("poNumber", e.target.value)}
-              placeholder="CUST/PO #"
-              className="h-11"
-            />
-          </div>
+        </CardContent>
+      </Card>
 
-          <div className="space-y-2">
-            <Label htmlFor="poLineNumber" className="text-sm font-medium">PO Line #</Label>
-            <Input
-              id="poLineNumber"
-              value={formData.poLineNumber}
-              onChange={(e) => handleInputChange("poLineNumber", e.target.value)}
-              placeholder="PO Line #"
-              className="h-11"
-            />
+      <Card className="border-0 shadow-md w-full">
+        <CardContent className="p-4 sm:p-6 space-y-4">
+          <div className="flex items-center gap-3 pb-4 border-b border-border">
+            <div className="p-2 bg-primary/10 rounded-lg">
+              <Info className="h-5 w-5 text-primary" />
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold">Additional Information</h3>
+              <p className="text-sm text-muted-foreground">Purchase order and additional details</p>
+            </div>
           </div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="poNumber" className="text-sm font-medium">PO Number</Label>
+              <Input
+                id="poNumber"
+                value={formData.poNumber}
+                onChange={(e) => handleInputChange("poNumber", e.target.value)}
+                placeholder="Purchase order number"
+                className="h-11"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="soNumber" className="text-sm font-medium">SO Number</Label>
+              <Input
+                id="soNumber"
+                value={formData.soNumber}
+                onChange={(e) => handleInputChange("soNumber", e.target.value)}
+                placeholder="Sales order number"
+                className="h-11"
+              />
+            </div>
+            <div className="space-y-2 sm:col-span-2">
+              <Label htmlFor="jmPartsPoNumber" className="text-sm font-medium">JM Parts PO Number</Label>
+              <Input
+                id="jmPartsPoNumber"
+                value={formData.jmPartsPoNumber}
+                onChange={(e) => handleInputChange("jmPartsPoNumber", e.target.value)}
+                placeholder="JM parts PO number"
+                className="h-11"
+              />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
-          <div className="space-y-2">
-            <Label htmlFor="soNumber" className="text-sm font-medium">SO Number</Label>
-            <Input
-              id="soNumber"
-              value={formData.soNumber}
-              onChange={(e) => handleInputChange("soNumber", e.target.value)}
-              placeholder="SO Number"
-              className="h-11"
-            />
+      <Card className="border-0 shadow-md w-full">
+        <CardContent className="p-4 sm:p-6 space-y-4">
+          <div className="flex items-center gap-3 pb-4 border-b border-border">
+            <div className="p-2 bg-primary/10 rounded-lg">
+              <Settings className="h-5 w-5 text-primary" />
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold">Additional Options</h3>
+              <p className="text-sm text-muted-foreground">Special handling and override options</p>
+            </div>
           </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="jmPartsPoNumber" className="text-sm font-medium">JM Parts PO #</Label>
-            <Input
-              id="jmPartsPoNumber"
-              value={formData.jmPartsPoNumber}
-              onChange={(e) => handleInputChange("jmPartsPoNumber", e.target.value)}
-              placeholder="JM Parts PO #"
-              className="h-11"
-            />
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {[
+              { key: 'returned', label: 'Returned', desc: 'Item has been returned' },
+              { key: 'coOverride', label: 'CO Override', desc: 'Certificate override applied' },
+              { key: 'dateValidOverride', label: 'Date Valid Override', desc: 'Date validation overridden' },
+              { key: 'coStdCheckOverride', label: 'CO Std Check Override', desc: 'Standard check override' },
+            ].map(option => (
+              <div key={option.key} className="flex items-start space-x-3 p-3 border rounded-lg hover:bg-muted/50 transition-colors">
+                <Checkbox
+                  id={option.key}
+                  checked={formData[option.key as keyof typeof formData] as boolean}
+                  onCheckedChange={(checked) => handleInputChange(option.key, checked)}
+                  className="mt-1"
+                />
+                <div className="space-y-1 flex-1">
+                  <Label 
+                    htmlFor={option.key} 
+                    className="text-sm font-medium cursor-pointer"
+                  >
+                    {option.label}
+                  </Label>
+                  <p className="text-xs text-muted-foreground">{option.desc}</p>
+                </div>
+              </div>
+            ))}
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </div>
   );
 
