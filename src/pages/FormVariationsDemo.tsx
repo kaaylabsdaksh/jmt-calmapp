@@ -1954,9 +1954,34 @@ const FormVariationsDemo = () => {
                       <SelectValue placeholder="Select range" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="0-100">0-100</SelectItem>
-                      <SelectItem value="0-1000">0-1000</SelectItem>
-                      <SelectItem value="0-10000">0-10000</SelectItem>
+                      <SelectItem value="WC/PSI">WC/PSI</SelectItem>
+                      <SelectItem value="+-1°F">+-1°F</SelectItem>
+                      <SelectItem value="+/- 25&quot; H2O">+/- 25&quot; H2O</SelectItem>
+                      <SelectItem value="+/-0.125&quot; H2O">+/-0.125&quot; H2O</SelectItem>
+                      <SelectItem value="+/-5&quot; H2O">+/-5&quot; H2O</SelectItem>
+                      <SelectItem value="-1 BAR">-1 BAR</SelectItem>
+                      <SelectItem value="-10/122°C">-10/122°C</SelectItem>
+                      <SelectItem value="-12.5/10,000 PSI">-12.5/10,000 PSI</SelectItem>
+                      <SelectItem value="-12.5/37,500 PSI">-12.5/37,500 PSI</SelectItem>
+                      <SelectItem value="-12.5/6,000 PSI">-12.5/6,000 PSI</SelectItem>
+                      <SelectItem value="-12/100 PSI">-12/100 PSI</SelectItem>
+                      <SelectItem value="-12/30 PSI">-12/30 PSI</SelectItem>
+                      <SelectItem value="-14.5/100 PSI">-14.5/100 PSI</SelectItem>
+                      <SelectItem value="-14.5/15 PSI">-14.5/15 PSI</SelectItem>
+                      <SelectItem value="-14.5/200 PSI">-14.5/200 PSI</SelectItem>
+                      <SelectItem value="-14.7/300 PSI">-14.7/300 PSI</SelectItem>
+                      <SelectItem value="-14.7/300 PSIG">-14.7/300 PSIG</SelectItem>
+                      <SelectItem value="-14.7/500 PSIG">-14.7/500 PSIG</SelectItem>
+                      <SelectItem value="-14.7/85 PSIG">-14.7/85 PSIG</SelectItem>
+                      <SelectItem value="-14/3000 PSI">-14/3000 PSI</SelectItem>
+                      <SelectItem value="-14/375 PSI">-14/375 PSI</SelectItem>
+                      <SelectItem value="-15 PSIG">-15 PSIG</SelectItem>
+                      <SelectItem value="-15/+30 PSIG">-15/+30 PSIG</SelectItem>
+                      <SelectItem value="-15/100 PSIG">-15/100 PSIG</SelectItem>
+                      <SelectItem value="-15/15 PSI">-15/15 PSI</SelectItem>
+                      <SelectItem value="-15/200 PSIG">-15/200 PSIG</SelectItem>
+                      <SelectItem value="-15/2500 PSIG">-15/2500 PSIG</SelectItem>
+                      <SelectItem value="-15/30 PSI">-15/30 PSI</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
