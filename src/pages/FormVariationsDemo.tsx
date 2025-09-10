@@ -9,7 +9,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, Menu } from "lucide-react";
+import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, Menu, CalendarIcon } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
 import { SidebarTrigger } from "@/components/ui/sidebar";
@@ -18,6 +18,8 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, Command
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Calendar } from "@/components/ui/calendar";
+import { cn } from "@/lib/utils";
 
 const FormVariationsDemo = () => {
   const navigate = useNavigate();
@@ -225,6 +227,12 @@ const FormVariationsDemo = () => {
     poNumber: "",
     soNumber: "",
     jmPartsPoNumber: "",
+    
+    // Additional Options checkboxes
+    returned: false,
+    coOverride: false,
+    dateValidOverride: false,
+    coStdCheckOverride: false,
   });
 
   const currentTabs = [
@@ -1057,6 +1065,10 @@ const FormVariationsDemo = () => {
           { key: 'multiParts', label: 'Multi Parts', desc: 'Multiple part item', icon: '🔧' },
           { key: 'lostEquipment', label: 'Lost Equipment', desc: 'Equipment is lost', icon: '❗' },
           { key: 'redTag', label: 'Red Tag', desc: 'Red tag status', icon: '🏷️' },
+          { key: 'returned', label: 'Returned', desc: 'Item has been returned', icon: '↩️' },
+          { key: 'coOverride', label: 'C/O Override', desc: 'Customer order override', icon: '⚡' },
+          { key: 'dateValidOverride', label: 'Date Valid. Override', desc: 'Date validation override', icon: '📅' },
+          { key: 'coStdCheckOverride', label: 'C/O Std Check Override', desc: 'Customer order standard check override', icon: '✅' },
         ].map(({ key, label, desc, icon }) => (
           <div key={key} className="flex items-center justify-between p-4 rounded-lg border border-border hover:bg-accent/50 transition-colors">
             <div className="flex items-center gap-3">
@@ -1072,6 +1084,50 @@ const FormVariationsDemo = () => {
             />
           </div>
         ))}
+      </div>
+      
+      {/* Date and Text Fields */}
+      <div className="space-y-4 pt-6 border-t border-border">
+        <h3 className="text-lg font-semibold">Additional Information</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <Label htmlFor="needBy" className="text-sm font-medium">Need By</Label>
+            <Input
+              id="needBy"
+              value={formData.needBy}
+              onChange={(e) => handleInputChange("needBy", e.target.value)}
+              placeholder="Enter need by date"
+              className="h-11"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="deliverByDate" className="text-sm font-medium">Deliver By Date</Label>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  className={cn(
+                    "h-11 w-full justify-start text-left font-normal",
+                    !formData.deliverByDate && "text-muted-foreground"
+                  )}
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {formData.deliverByDate || "Select delivery date"}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="start">
+                <Calendar
+                  mode="single"
+                  selected={formData.deliverByDate ? new Date(formData.deliverByDate) : undefined}
+                  onSelect={(date) => handleInputChange("deliverByDate", date?.toISOString().split('T')[0] || "")}
+                  initialFocus
+                  className="p-3 pointer-events-auto"
+                />
+              </PopoverContent>
+            </Popover>
+          </div>
+        </div>
       </div>
       
       {/* Purchase Order Information */}
