@@ -1145,34 +1145,31 @@ const FormVariationsDemo = () => {
       </div>
       
       {/* Status Options Grid */}
-      <div className="space-y-4 pt-6 border-t border-border">
+      <div className="space-y-3 pt-6 border-t border-border">
         <h3 className="text-lg font-semibold">Status Options</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-2">
           {[
-            { key: 'warranty', label: 'Warranty', desc: 'Item is under warranty', icon: '🛡️' },
-            { key: 'estimate', label: 'Estimate', desc: 'Estimate required', icon: '💰' },
-            { key: 'newEquip', label: 'New Equipment', desc: 'Brand new equipment', icon: '✨' },
-            { key: 'usedSurplus', label: 'Used Surplus', desc: 'Previously used equipment', icon: '♻️' },
-            { key: 'iso17025', label: 'ISO 17025', desc: 'ISO 17025 compliance required', icon: '📋' },
-            { key: 'hotList', label: 'Hot List', desc: 'High priority item', icon: '🔥' },
-            { key: 'readyToBill', label: 'Ready to Bill', desc: 'Ready for billing', icon: '💵' },
-            { key: 'inQa', label: 'In QA', desc: 'Currently in quality assurance', icon: '🔍' },
-            { key: 'toShipping', label: 'To Shipping', desc: 'Ready for shipping', icon: '📦' },
-            { key: 'multiParts', label: 'Multi Parts', desc: 'Multiple part item', icon: '🔧' },
-            { key: 'lostEquipment', label: 'Lost Equipment', desc: 'Equipment is lost', icon: '❗' },
-            { key: 'redTag', label: 'Red Tag', desc: 'Red tag status', icon: '🏷️' },
-            { key: 'returned', label: 'Returned', desc: 'Item has been returned', icon: '↩️' },
-            { key: 'coOverride', label: 'C/O Override', desc: 'Customer order override', icon: '⚡' },
-            { key: 'dateValidOverride', label: 'Date Valid. Override', desc: 'Date validation override', icon: '📅' },
-            { key: 'coStdCheckOverride', label: 'C/O Std Check Override', desc: 'Customer order standard check override', icon: '✅' },
-          ].map(({ key, label, desc, icon }) => (
-            <div key={key} className="flex items-center justify-between p-4 rounded-lg border border-border hover:bg-accent/50 transition-colors">
-              <div className="flex items-center gap-3">
-                <span className="text-lg">{icon}</span>
-                <div>
-                  <div className="font-medium text-sm">{label}</div>
-                  <p className="text-xs text-muted-foreground">{desc}</p>
-                </div>
+            { key: 'warranty', label: 'Warranty', icon: '🛡️' },
+            { key: 'estimate', label: 'Estimate', icon: '💰' },
+            { key: 'newEquip', label: 'New Equipment', icon: '✨' },
+            { key: 'usedSurplus', label: 'Used Surplus', icon: '♻️' },
+            { key: 'iso17025', label: 'ISO 17025', icon: '📋' },
+            { key: 'hotList', label: 'Hot List', icon: '🔥' },
+            { key: 'readyToBill', label: 'Ready to Bill', icon: '💵' },
+            { key: 'inQa', label: 'In QA', icon: '🔍' },
+            { key: 'toShipping', label: 'To Shipping', icon: '📦' },
+            { key: 'multiParts', label: 'Multi Parts', icon: '🔧' },
+            { key: 'lostEquipment', label: 'Lost Equipment', icon: '❗' },
+            { key: 'redTag', label: 'Red Tag', icon: '🏷️' },
+            { key: 'returned', label: 'Returned', icon: '↩️' },
+            { key: 'coOverride', label: 'C/O Override', icon: '⚡' },
+            { key: 'dateValidOverride', label: 'Date Valid. Override', icon: '📅' },
+            { key: 'coStdCheckOverride', label: 'C/O Std Check Override', icon: '✅' },
+          ].map(({ key, label, icon }) => (
+            <div key={key} className="flex items-center justify-between p-2 rounded-md border border-border/50 hover:border-border hover:bg-accent/30 transition-all">
+              <div className="flex items-center gap-2 min-w-0">
+                <span className="text-sm">{icon}</span>
+                <span className="font-medium text-xs truncate">{label}</span>
               </div>
               <Switch
                 checked={formData[key as keyof typeof formData] as boolean}
