@@ -18,6 +18,7 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, Command
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Badge } from "@/components/ui/badge";
 import { Calendar } from "@/components/ui/calendar";
+import { FixedActionFooter } from "@/components/FixedActionFooter";
 import { cn } from "@/lib/utils";
 
 const FormVariationsDemo = () => {
@@ -1976,7 +1977,7 @@ const FormVariationsDemo = () => {
       </header>
 
       {/* Form Content */}
-      <div className="p-4 sm:p-6 pb-32">{/* Large bottom padding to ensure content doesn't hide behind footer */}
+      <div className="p-4 sm:p-6">{/* Removed bottom padding - footer component handles spacing */}
         {/* Work Order Header */}
         {renderWorkOrderHeader()}
         
@@ -2429,28 +2430,11 @@ const FormVariationsDemo = () => {
           </DialogContent>
         </Dialog>
         
-        {/* Fixed Bottom Action Bar */}
-        <div className="fixed bottom-0 left-[256px] right-0 bg-background border-t border-border shadow-lg z-[100]">
-          <div className="px-6 py-3">
-            <div className="flex justify-end items-center gap-3">
-              <Button 
-                variant="outline" 
-                onClick={handleCancel} 
-                className="px-4 py-2 text-sm font-medium border-border hover:bg-muted transition-colors"
-              >
-                <X className="h-4 w-4 mr-2" />
-                Cancel
-              </Button>
-              <Button 
-                onClick={handleSave} 
-                className="bg-success text-success-foreground hover:bg-success/90 px-4 py-2 text-sm font-medium shadow-sm transition-colors"
-              >
-                <Save className="h-4 w-4 mr-2" />
-                Save Work Order
-              </Button>
-            </div>
-          </div>
-        </div>
+        {/* Fixed Action Footer */}
+        <FixedActionFooter 
+          onCancel={handleCancel}
+          onSave={handleSave}
+        />
       </div>
     </div>
   );
