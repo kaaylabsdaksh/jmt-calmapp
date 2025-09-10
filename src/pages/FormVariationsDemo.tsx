@@ -800,8 +800,9 @@ const FormVariationsDemo = () => {
   );
 
   const renderLogisticsSection = () => (
-    <div className="space-y-6">
-      <Card className="border-0 shadow-md w-full">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      {/* Arrival Information */}
+      <Card className="border-0 shadow-md">
         <CardContent className="p-4 sm:p-6 space-y-4">
           <div className="flex items-center gap-3 pb-4 border-b border-border">
             <div className="p-2 bg-primary/10 rounded-lg">
@@ -809,29 +810,44 @@ const FormVariationsDemo = () => {
             </div>
             <div>
               <h3 className="text-lg font-semibold text-foreground">Arrival Information</h3>
-              <p className="text-sm text-muted-foreground">Track when and how items arrive</p>
             </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+          <div className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="arrivalDate" className="text-sm font-medium">Arrival Date</Label>
-              <Input
-                id="arrivalDate"
-                type="date"
-                value={formData.arrivalDate}
-                onChange={(e) => handleInputChange("arrivalDate", e.target.value)}
-                className="h-9 sm:h-11"
-              />
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className={cn(
+                      "w-full justify-start text-left font-normal h-11",
+                      !formData.arrivalDate && "text-muted-foreground"
+                    )}
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {formData.arrivalDate ? formData.arrivalDate : "dd/mm/yyyy"}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={formData.arrivalDate ? new Date(formData.arrivalDate) : undefined}
+                    onSelect={(date) => handleInputChange("arrivalDate", date ? date.toISOString().split('T')[0] : "")}
+                    initialFocus
+                    className="p-3 pointer-events-auto"
+                  />
+                </PopoverContent>
+              </Popover>
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="arrivalType" className="text-sm font-medium">Arrival Type</Label>
               <Select value={formData.arrivalType} onValueChange={(value) => handleInputChange("arrivalType", value)}>
-                <SelectTrigger className="h-9 sm:h-11">
+                <SelectTrigger className="h-11">
                   <SelectValue placeholder="Select arrival type" />
                 </SelectTrigger>
-                <SelectContent className="max-h-48 overflow-y-auto">
+                <SelectContent>
                   <SelectItem value="delivery">Delivery</SelectItem>
                   <SelectItem value="pickup">Pickup</SelectItem>
                   <SelectItem value="mail">Mail</SelectItem>
@@ -842,30 +858,39 @@ const FormVariationsDemo = () => {
 
             <div className="space-y-2">
               <Label htmlFor="arrivalLocation" className="text-sm font-medium">Arrival Location</Label>
-              <Input
-                id="arrivalLocation"
-                value={formData.arrivalLocation}
-                onChange={(e) => handleInputChange("arrivalLocation", e.target.value)}
-                placeholder="Enter location"
-                className="h-9 sm:h-11"
-              />
+              <Select value={formData.arrivalLocation} onValueChange={(value) => handleInputChange("arrivalLocation", value)}>
+                <SelectTrigger className="h-11">
+                  <SelectValue placeholder="Select arrival location" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="main-office">Main Office</SelectItem>
+                  <SelectItem value="warehouse">Warehouse</SelectItem>
+                  <SelectItem value="loading-dock">Loading Dock</SelectItem>
+                  <SelectItem value="reception">Reception</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="driver" className="text-sm font-medium">Driver</Label>
-              <Input
-                id="driver"
-                value={formData.driver}
-                onChange={(e) => handleInputChange("driver", e.target.value)}
-                placeholder="Driver name"
-                className="h-9 sm:h-11"
-              />
+              <Select value={formData.driver} onValueChange={(value) => handleInputChange("driver", value)}>
+                <SelectTrigger className="h-11">
+                  <SelectValue placeholder="Select driver" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="john-doe">John Doe</SelectItem>
+                  <SelectItem value="jane-smith">Jane Smith</SelectItem>
+                  <SelectItem value="mike-johnson">Mike Johnson</SelectItem>
+                  <SelectItem value="sarah-wilson">Sarah Wilson</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      <Card className="border-0 shadow-md w-full">
+      {/* Shipping Information */}
+      <Card className="border-0 shadow-md">
         <CardContent className="p-4 sm:p-6 space-y-4">
           <div className="flex items-center gap-3 pb-4 border-b border-border">
             <div className="p-2 bg-primary/10 rounded-lg">
@@ -873,29 +898,44 @@ const FormVariationsDemo = () => {
             </div>
             <div>
               <h3 className="text-lg font-semibold text-foreground">Shipping Information</h3>
-              <p className="text-sm text-muted-foreground">Configure pickup and delivery details</p>
             </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+          <div className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="puDate" className="text-sm font-medium">Pickup Date</Label>
-              <Input
-                id="puDate"
-                type="date"
-                value={formData.puDate}
-                onChange={(e) => handleInputChange("puDate", e.target.value)}
-                className="h-9 sm:h-11"
-              />
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className={cn(
+                      "w-full justify-start text-left font-normal h-11",
+                      !formData.puDate && "text-muted-foreground"
+                    )}
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {formData.puDate ? formData.puDate : "dd/mm/yyyy"}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={formData.puDate ? new Date(formData.puDate) : undefined}
+                    onSelect={(date) => handleInputChange("puDate", date ? date.toISOString().split('T')[0] : "")}
+                    initialFocus
+                    className="p-3 pointer-events-auto"
+                  />
+                </PopoverContent>
+              </Popover>
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="shipType" className="text-sm font-medium">Ship Type</Label>
               <Select value={formData.shipType} onValueChange={(value) => handleInputChange("shipType", value)}>
-                <SelectTrigger className="h-9 sm:h-11">
-                  <SelectValue placeholder="Select shipping method" />
+                <SelectTrigger className="h-11">
+                  <SelectValue placeholder="Select ship type" />
                 </SelectTrigger>
-                <SelectContent className="max-h-48 overflow-y-auto">
+                <SelectContent>
                   <SelectItem value="standard">Standard</SelectItem>
                   <SelectItem value="express">Express</SelectItem>
                   <SelectItem value="overnight">Overnight</SelectItem>
@@ -910,89 +950,84 @@ const FormVariationsDemo = () => {
                 id="name"
                 value={formData.name}
                 onChange={(e) => handleInputChange("name", e.target.value)}
-                placeholder="Recipient name"
-                className="h-9 sm:h-11"
+                placeholder="Enter name"
+                className="h-11"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="poLineNumber" className="text-sm font-medium">PO Line Number</Label>
-              <Input
-                id="poLineNumber"
-                value={formData.poLineNumber}
-                onChange={(e) => handleInputChange("poLineNumber", e.target.value)}
-                placeholder="PO line number"
-                className="h-9 sm:h-11"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="needBy" className="text-sm font-medium">Need By</Label>
-              <Input
-                id="needBy"
-                type="date"
-                value={formData.needBy}
-                onChange={(e) => handleInputChange("needBy", e.target.value)}
-                className="h-9 sm:h-11"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="deliverByDate" className="text-sm font-medium">Deliver By Date</Label>
-              <Input
-                id="deliverByDate"
-                type="date"
-                value={formData.deliverByDate}
-                onChange={(e) => handleInputChange("deliverByDate", e.target.value)}
-                className="h-9 sm:h-11"
-              />
+              <Label htmlFor="needBy" className="text-sm font-medium">Need By Date</Label>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className={cn(
+                      "w-full justify-start text-left font-normal h-11",
+                      !formData.needBy && "text-muted-foreground"
+                    )}
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {formData.needBy ? formData.needBy : "dd/mm/yyyy"}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={formData.needBy ? new Date(formData.needBy) : undefined}
+                    onSelect={(date) => handleInputChange("needBy", date ? date.toISOString().split('T')[0] : "")}
+                    initialFocus
+                    className="p-3 pointer-events-auto"
+                  />
+                </PopoverContent>
+              </Popover>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      <Card className="border-0 shadow-md w-full">
+      {/* Departure Information */}
+      <Card className="border-0 shadow-md">
         <CardContent className="p-4 sm:p-6 space-y-4">
           <div className="flex items-center gap-3 pb-4 border-b border-border">
             <div className="p-2 bg-primary/10 rounded-lg">
               <Truck className="h-5 w-5 text-primary" />
             </div>
             <div>
-              <h3 className="font-semibold">Departure Information</h3>
-              <p className="text-sm text-muted-foreground">Track outbound shipment details</p>
+              <h3 className="text-lg font-semibold text-foreground">Departure Information</h3>
+              <p className="text-sm text-muted-foreground">Delivery and departure details</p>
             </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="invNumber" className="text-sm font-medium">Invoice Number</Label>
+              <Label htmlFor="invNumber" className="text-sm font-medium">Inv #</Label>
               <Input
                 id="invNumber"
                 value={formData.invNumber}
                 onChange={(e) => handleInputChange("invNumber", e.target.value)}
-                placeholder="Invoice number"
-                className="h-9 sm:h-11"
+                placeholder="Enter invoice number"
+                className="h-11"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="dtNumber" className="text-sm font-medium">DT Number</Label>
+              <Label htmlFor="dtNumber" className="text-sm font-medium">DT #</Label>
               <Input
                 id="dtNumber"
                 value={formData.dtNumber}
                 onChange={(e) => handleInputChange("dtNumber", e.target.value)}
-                placeholder="DT number"
-                className="h-9 sm:h-11"
+                placeholder="Enter DT number"
+                className="h-11"
               />
             </div>
 
-            <div className="space-y-2 md:col-span-2">
+            <div className="space-y-2">
               <Label htmlFor="deliveryStatus" className="text-sm font-medium">Delivery Status</Label>
               <Select value={formData.deliveryStatus} onValueChange={(value) => handleInputChange("deliveryStatus", value)}>
-                <SelectTrigger className="h-9 sm:h-11">
+                <SelectTrigger className="h-11">
                   <SelectValue placeholder="Select delivery status" />
                 </SelectTrigger>
-                <SelectContent className="max-h-48 overflow-y-auto">
+                <SelectContent>
                   <SelectItem value="pending">Pending</SelectItem>
                   <SelectItem value="in-transit">In Transit</SelectItem>
                   <SelectItem value="delivered">Delivered</SelectItem>
