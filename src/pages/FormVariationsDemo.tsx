@@ -2430,7 +2430,7 @@ const FormVariationsDemo = () => {
         </Dialog>
         
         {/* Fixed Bottom Action Bar */}
-        <div className="fixed bottom-0 left-0 right-0 bg-background border-t border-border shadow-lg z-[100]">
+        <div className="fixed bottom-0 left-[256px] right-0 bg-background border-t border-border shadow-lg z-[100]">
           <div className="px-6 py-3">
             <div className="flex justify-end items-center gap-3">
               <Button 
