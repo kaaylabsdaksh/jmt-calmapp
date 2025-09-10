@@ -2430,7 +2430,7 @@ const FormVariationsDemo = () => {
         </Dialog>
         
         {/* Fixed Bottom Action Bar */}
-        <div className="fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/90 border-t z-50">
+        <div className="fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/90 border-t z-[100]">
           <div className="container max-w-7xl mx-auto px-6 py-4">
             <div className="flex justify-end items-center gap-3">
               <Button variant="outline" onClick={handleCancel} className="hover-scale px-6 py-2">
