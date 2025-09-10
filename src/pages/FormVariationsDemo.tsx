@@ -2430,9 +2430,9 @@ const FormVariationsDemo = () => {
         </Dialog>
         
         {/* Fixed Bottom Action Bar */}
-        <div className="fixed bottom-4 right-6 bg-background border border-border rounded-lg shadow-lg z-[100]">
-          <div className="px-4 py-3">
-            <div className="flex items-center gap-3">
+        <div className="fixed bottom-0 left-[280px] right-0 bg-background border-t border-border shadow-lg z-[100]">
+          <div className="px-6 py-3">
+            <div className="flex justify-end items-center gap-3">
               <Button 
                 variant="outline" 
                 onClick={handleCancel} 
