@@ -120,37 +120,7 @@ const ModernAddNewItem = () => {
 
   const handleSubmit = () => {
     console.log("Submitting:", formData);
-    
-    // Convert form data to work order item format
-    const workOrderItem = {
-      id: `item-${Date.now()}`,
-      itemNumber: formData.reportNumber || "NEW-001",
-      calFreq: "annual",
-      actionCode: "rc",
-      priority: formData.priority,
-      manufacturer: formData.manufacturer || "Unknown",
-      model: formData.model || "Unknown",
-      mfgSerial: formData.serialNumber || "Unknown",
-      custId: formData.assetId || "Unknown",
-      custSN: formData.serialNumber || "Unknown",
-      barcodeNum: formData.rfid || "Unknown",
-      warranty: formData.warranty ? "yes" : "no",
-      iso17025: "yes",
-      estimate: "$125.00",
-      newEquip: "no",
-      needByDate: formData.departureDate ? formData.departureDate.toISOString().split('T')[0] : "2024-12-31"
-    };
-
-    // Save to work order items
-    const existingItems = JSON.parse(localStorage.getItem('workOrderItems') || '[]');
-    const updatedItems = [...existingItems, workOrderItem];
-    localStorage.setItem('workOrderItems', JSON.stringify(updatedItems));
-
-    // Clear the form data after submission
-    localStorage.removeItem('modernAddNewItemData');
-    
-    // Navigate back to work order page
-    navigate('/add-new-work-order');
+    // Add submit logic here
   };
 
   const progressSteps = [
