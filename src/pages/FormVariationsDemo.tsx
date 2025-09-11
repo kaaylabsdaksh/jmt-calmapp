@@ -19,6 +19,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Badge } from "@/components/ui/badge";
 import { Calendar } from "@/components/ui/calendar";
 import { FixedActionFooter } from "@/components/FixedActionFooter";
+import { EstimateDetails } from "@/components/EstimateDetails";
 import { cn } from "@/lib/utils";
 
 const FormVariationsDemo = () => {
@@ -1955,10 +1956,7 @@ const FormVariationsDemo = () => {
         </div>
       </div>
       
-      <div className="text-center py-8 text-muted-foreground">
-        <Info className="h-12 w-12 mx-auto mb-4 opacity-50" />
-        <p>Estimate information will be displayed here.</p>
-      </div>
+      <EstimateDetails />
     </div>
   );
 
