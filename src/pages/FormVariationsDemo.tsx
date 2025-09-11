@@ -236,6 +236,11 @@ const FormVariationsDemo = () => {
     coOverride: false,
     dateValidOverride: false,
     coStdCheckOverride: false,
+    
+    // Product Images
+    primaryImageUrl: "",
+    secondaryImageUrl: "",
+    imageAltText: "",
   });
 
   const currentTabs = [
@@ -1363,34 +1368,50 @@ const FormVariationsDemo = () => {
           <Package className="h-5 w-5 text-primary" />
           Product Images
         </CardTitle>
-        <CardDescription>Manage product media assets</CardDescription>
+        <CardDescription>Upload and manage product images</CardDescription>
       </CardHeader>
-      <CardContent>
-        <Tabs defaultValue="images">
-          <TabsList>
-            <TabsTrigger value="images">Images</TabsTrigger>
-            <TabsTrigger value="dateEntered">Date Entered</TabsTrigger>
-            <TabsTrigger value="actions">Actions</TabsTrigger>
-          </TabsList>
-          
-          <TabsContent value="images" className="mt-4">
-            <div className="border-2 border-dashed rounded-lg p-6 text-center">
-              <p className="text-muted-foreground">No images uploaded</p>
-            </div>
-          </TabsContent>
-          
-          <TabsContent value="dateEntered" className="mt-4">
-            <div className="border rounded-lg p-6 text-center">
-              <p className="text-muted-foreground">No history available</p>
-            </div>
-          </TabsContent>
-          
-          <TabsContent value="actions" className="mt-4">
-            <div className="border rounded-lg p-6 text-center">
-              <p className="text-muted-foreground">No actions recorded</p>
-            </div>
-          </TabsContent>
-        </Tabs>
+      <CardContent className="space-y-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div className="space-y-1">
+            <Label htmlFor="primaryImageUrl" className="text-xs">Primary Image URL</Label>
+            <Input
+              id="primaryImageUrl"
+              value={formData.primaryImageUrl}
+              onChange={(e) => handleInputChange("primaryImageUrl", e.target.value)}
+              placeholder="Enter primary image URL..."
+              className="h-9"
+            />
+          </div>
+
+          <div className="space-y-1">
+            <Label htmlFor="secondaryImageUrl" className="text-xs">Secondary Image URL</Label>
+            <Input
+              id="secondaryImageUrl"
+              value={formData.secondaryImageUrl}
+              onChange={(e) => handleInputChange("secondaryImageUrl", e.target.value)}
+              placeholder="Enter secondary image URL..."
+              className="h-9"
+            />
+          </div>
+
+          <div className="space-y-1 lg:col-span-2">
+            <Label htmlFor="imageAltText" className="text-xs">Image Alt Text</Label>
+            <Input
+              id="imageAltText"
+              value={formData.imageAltText}
+              onChange={(e) => handleInputChange("imageAltText", e.target.value)}
+              placeholder="Enter image alt text..."
+              className="h-9"
+            />
+          </div>
+        </div>
+
+        <div className="flex justify-center pt-4">
+          <Button variant="outline" size="sm">
+            <span className="mr-2">📷</span>
+            Capture Image
+          </Button>
+        </div>
       </CardContent>
     </Card>
   );
