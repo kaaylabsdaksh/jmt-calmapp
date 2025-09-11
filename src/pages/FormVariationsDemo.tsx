@@ -19,7 +19,6 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Badge } from "@/components/ui/badge";
 import { Calendar } from "@/components/ui/calendar";
 import { FixedActionFooter } from "@/components/FixedActionFooter";
-import { SavedDataDisplay } from "@/components/SavedDataDisplay";
 import { cn } from "@/lib/utils";
 
 const FormVariationsDemo = () => {
@@ -2303,9 +2302,6 @@ const FormVariationsDemo = () => {
             QF3
           </Button>
         </div>
-        
-        {/* Saved Data Display */}
-        <SavedDataDisplay />
         
         {/* Content based on active section */}
         {activeSection === 'work-order-items' && (
