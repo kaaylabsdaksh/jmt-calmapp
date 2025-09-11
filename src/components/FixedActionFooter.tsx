@@ -184,40 +184,12 @@ export const FixedActionFooter = ({
               
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Input 
-                    placeholder="Acct #" 
-                    value={acctNum}
-                    onChange={(e) => setAcctNum(e.target.value)}
-                    className="w-16 h-7 text-xs"
-                  />
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Account Number for New Work Order</p>
-                </TooltipContent>
-              </Tooltip>
-              
-              <Tooltip>
-                <TooltipTrigger asChild>
                   <Button size="sm" variant="outline" onClick={handleMoveToNewWO}>
                     <FileText className="h-3 w-3" />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>Move to New Work Order</p>
-                </TooltipContent>
-              </Tooltip>
-              
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Input 
-                    placeholder="WO #" 
-                    value={woNum}
-                    onChange={(e) => setWoNum(e.target.value)}
-                    className="w-16 h-7 text-xs"
-                  />
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Work Order Number</p>
                 </TooltipContent>
               </Tooltip>
               
