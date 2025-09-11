@@ -2312,10 +2312,7 @@ const FormVariationsDemo = () => {
         {activeSection === 'estimate' && (
           <Card className="border-0 shadow-md">
             <CardContent className="p-6">
-              <div className="text-center py-12">
-                <h3 className="text-lg font-semibold text-foreground mb-2">Estimate Section</h3>
-                <p className="text-muted-foreground">Estimate content will be displayed here.</p>
-              </div>
+              {renderEstimateSection()}
             </CardContent>
           </Card>
         )}
