@@ -256,6 +256,15 @@ const FormVariationsDemo = () => {
     coOverride: false,
     dateValidOverride: false,
     coStdCheckOverride: false,
+    
+    // Transit Information
+    originLocation: "",
+    destinationLocation: "",
+    huQty: "",
+    huType: "",
+    deliverTo: "",
+    deliveryType: "",
+    transitNotes: "",
   });
 
   const currentTabs = [
@@ -266,6 +275,7 @@ const FormVariationsDemo = () => {
     { value: 'product-images', label: 'Images', icon: Package },
     { value: 'accessories', label: 'Access.', icon: Layers },
     { value: 'parts', label: 'Parts', icon: Settings },
+    { value: 'transit', label: 'Transit', icon: Truck },
     { value: 'comments', label: 'Comments', icon: List },
     { value: 'options', label: 'Options', icon: Settings }
   ];
@@ -1724,6 +1734,124 @@ const FormVariationsDemo = () => {
     </Card>
   );
 
+  // Render transit section
+  const renderTransitSection = () => (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-3">
+          <Truck className="h-5 w-5 text-primary" />
+          Set In Transit
+        </CardTitle>
+        <CardDescription>Configure transit logistics and delivery details</CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <Label htmlFor="originLocation" className="text-sm font-medium">Origin Location</Label>
+            <Select value={formData.originLocation} onValueChange={(value) => handleInputChange("originLocation", value)}>
+              <SelectTrigger className="h-11">
+                <SelectValue placeholder="Select origin location" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="warehouse-a">Warehouse A</SelectItem>
+                <SelectItem value="warehouse-b">Warehouse B</SelectItem>
+                <SelectItem value="facility-1">Facility 1</SelectItem>
+                <SelectItem value="facility-2">Facility 2</SelectItem>
+                <SelectItem value="depot-main">Main Depot</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="destinationLocation" className="text-sm font-medium">Destination Location</Label>
+            <Select value={formData.destinationLocation} onValueChange={(value) => handleInputChange("destinationLocation", value)}>
+              <SelectTrigger className="h-11">
+                <SelectValue placeholder="Select destination location" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="customer-site-1">Customer Site 1</SelectItem>
+                <SelectItem value="customer-site-2">Customer Site 2</SelectItem>
+                <SelectItem value="branch-office">Branch Office</SelectItem>
+                <SelectItem value="service-center">Service Center</SelectItem>
+                <SelectItem value="field-location">Field Location</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="huQty" className="text-sm font-medium">HU Qty</Label>
+            <Input
+              id="huQty"
+              value={formData.huQty}
+              onChange={(e) => handleInputChange("huQty", e.target.value)}
+              placeholder="Enter quantity"
+              className="h-11"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="huType" className="text-sm font-medium">HU Type</Label>
+            <Select value={formData.huType} onValueChange={(value) => handleInputChange("huType", value)}>
+              <SelectTrigger className="h-11">
+                <SelectValue placeholder="Select HU type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="box">Box</SelectItem>
+                <SelectItem value="pallet">Pallet</SelectItem>
+                <SelectItem value="container">Container</SelectItem>
+                <SelectItem value="crate">Crate</SelectItem>
+                <SelectItem value="case">Case</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="deliverTo" className="text-sm font-medium">Deliver To</Label>
+            <Select value={formData.deliverTo} onValueChange={(value) => handleInputChange("deliverTo", value)}>
+              <SelectTrigger className="h-11">
+                <SelectValue placeholder="Select delivery recipient" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="customer">Customer</SelectItem>
+                <SelectItem value="technician">Field Technician</SelectItem>
+                <SelectItem value="supervisor">Site Supervisor</SelectItem>
+                <SelectItem value="manager">Facility Manager</SelectItem>
+                <SelectItem value="coordinator">Logistics Coordinator</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="deliveryType" className="text-sm font-medium">Delivery Type</Label>
+            <Select value={formData.deliveryType} onValueChange={(value) => handleInputChange("deliveryType", value)}>
+              <SelectTrigger className="h-11">
+                <SelectValue placeholder="Select delivery type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="shuttle">Shuttle</SelectItem>
+                <SelectItem value="courier">Courier</SelectItem>
+                <SelectItem value="freight">Freight</SelectItem>
+                <SelectItem value="express">Express</SelectItem>
+                <SelectItem value="standard">Standard</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="transitNotes" className="text-sm font-medium">Notes</Label>
+          <Textarea
+            id="transitNotes"
+            value={formData.transitNotes}
+            onChange={(e) => handleInputChange("transitNotes", e.target.value)}
+            placeholder="Enter transit notes and special instructions..."
+            className="min-h-[120px] resize-none"
+          />
+        </div>
+      </CardContent>
+    </Card>
+  );
+
   // Render comments section
   const renderCommentsSection = () => (
     <Card>
@@ -1939,6 +2067,10 @@ const FormVariationsDemo = () => {
 
           <TabsContent value="parts" className="space-y-6">
             {renderPartsSection()}
+          </TabsContent>
+
+          <TabsContent value="transit" className="space-y-6">
+            {renderTransitSection()}
           </TabsContent>
 
           <TabsContent value="comments" className="space-y-6">
