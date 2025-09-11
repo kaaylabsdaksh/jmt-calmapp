@@ -139,6 +139,16 @@ const FormVariationsDemo = () => {
     assignee.label.toLowerCase().includes(assigneeSearchValue.toLowerCase())
   );
 
+  // State for accessories list
+  const [accessoriesList, setAccessoriesList] = useState<Array<{
+    id: string;
+    type: string;
+    accessory: string;
+    material: string;
+    color: string;
+    qty: string;
+  }>>([]);
+
   const [formData, setFormData] = useState({
     // Work Order Header
     workOrderNumber: "WO-QOAV2I",
@@ -342,6 +352,33 @@ const FormVariationsDemo = () => {
     setShowStatusChangeDialog(false);
     setPendingStatusChange("");
     setStatusChangeComment("");
+  };
+
+  // Accessories handlers
+  const handleAddAccessory = () => {
+    if (formData.accessoryType && formData.accessory && formData.accessoryQty) {
+      const newAccessory = {
+        id: Date.now().toString(),
+        type: formData.accessoryType,
+        accessory: formData.accessory,
+        material: formData.accessoryMaterial,
+        color: formData.accessoryColor,
+        qty: formData.accessoryQty,
+      };
+      
+      setAccessoriesList(prev => [...prev, newAccessory]);
+      
+      // Clear form fields after adding
+      handleInputChange("accessoryType", "");
+      handleInputChange("accessory", "");
+      handleInputChange("accessoryMaterial", "");
+      handleInputChange("accessoryColor", "");
+      handleInputChange("accessoryQty", "");
+    }
+  };
+
+  const handleRemoveAccessory = (id: string) => {
+    setAccessoriesList(prev => prev.filter(item => item.id !== id));
   };
 
   // Certificate file handlers
@@ -1479,21 +1516,46 @@ const FormVariationsDemo = () => {
           </div>
 
           <div className="col-span-2 md:col-span-1">
-            <Button size="sm" className="h-9 w-full">Add</Button>
+            <Button size="sm" className="h-9 w-full" onClick={handleAddAccessory}>Add</Button>
           </div>
         </div>
 
         <div className="border rounded-lg">
-          <div className="bg-muted grid grid-cols-5 gap-4 p-2 text-xs font-medium">
+          <div className="bg-muted grid grid-cols-6 gap-4 p-2 text-xs font-medium">
             <div>Type</div>
             <div>Accessory</div>
             <div>Material</div>
             <div>Color</div>
             <div>Qty</div>
+            <div>Actions</div>
           </div>
-          <div className="p-6 text-center text-muted-foreground text-sm">
-            No accessories added
-          </div>
+          {accessoriesList.length > 0 ? (
+            <div className="divide-y">
+              {accessoriesList.map((accessory) => (
+                <div key={accessory.id} className="grid grid-cols-6 gap-4 p-3 text-sm">
+                  <div className="capitalize">{accessory.type}</div>
+                  <div className="capitalize">{accessory.accessory}</div>
+                  <div>{accessory.material || '-'}</div>
+                  <div className="capitalize">{accessory.color || '-'}</div>
+                  <div>{accessory.qty}</div>
+                  <div>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleRemoveAccessory(accessory.id)}
+                      className="h-8 w-8 p-0 text-destructive hover:text-destructive"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="p-6 text-center text-muted-foreground text-sm">
+              No accessories added
+            </div>
+          )}
         </div>
       </CardContent>
     </Card>
