@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -43,45 +43,64 @@ const ModernAddNewItem = () => {
   // Advanced options state
   const [showAdvancedOptions, setShowAdvancedOptions] = useState(false);
   
-  // Form state
-  const [formData, setFormData] = useState({
-    // General Information
-    reportNumber: "0152.01-802930-001",
-    createdDate: new Date(),
-    modifiedDate: new Date(),
-    status: "in-lab",
-    priority: "normal",
-    assignedTo: "",
-    division: "",
-    location: "",
-    
-    // Product Information
-    manufacturer: "",
-    model: "",
-    serialNumber: "",
-    accuracy: "",
-    description: "",
-    category: "",
-    rfid: "",
-    assetId: "",
-    
-    // Arrival & Departure
-    arrivalDate: new Date(),
-    departureDate: null as Date | null,
-    driver: "",
-    arrivalLocation: "",
-    shipType: "",
-    deliveryStatus: "",
-    
-    // Other Information
-    poNumber: "",
-    soNumber: "",
-    warranty: false,
-    estimate: false,
-    hotlist: false,
-    readyToBill: false,
-    toShipping: false,
+  // Form state with localStorage persistence
+  const [formData, setFormData] = useState(() => {
+    const savedData = localStorage.getItem('modernAddNewItemData');
+    if (savedData) {
+      const parsed = JSON.parse(savedData);
+      // Convert date strings back to Date objects
+      return {
+        ...parsed,
+        createdDate: new Date(parsed.createdDate),
+        modifiedDate: new Date(parsed.modifiedDate),
+        arrivalDate: new Date(parsed.arrivalDate),
+        departureDate: parsed.departureDate ? new Date(parsed.departureDate) : null
+      };
+    }
+    return {
+      // General Information
+      reportNumber: "0152.01-802930-001",
+      createdDate: new Date(),
+      modifiedDate: new Date(),
+      status: "in-lab",
+      priority: "normal",
+      assignedTo: "",
+      division: "",
+      location: "",
+      
+      // Product Information
+      manufacturer: "",
+      model: "",
+      serialNumber: "",
+      accuracy: "",
+      description: "",
+      category: "",
+      rfid: "",
+      assetId: "",
+      
+      // Arrival & Departure
+      arrivalDate: new Date(),
+      departureDate: null as Date | null,
+      driver: "",
+      arrivalLocation: "",
+      shipType: "",
+      deliveryStatus: "",
+      
+      // Other Information
+      poNumber: "",
+      soNumber: "",
+      warranty: false,
+      estimate: false,
+      hotlist: false,
+      readyToBill: false,
+      toShipping: false,
+    };
   });
+
+  // Save to localStorage whenever formData changes
+  useEffect(() => {
+    localStorage.setItem('modernAddNewItemData', JSON.stringify(formData));
+  }, [formData]);
 
   // Date picker states
   const [showArrivalPicker, setShowArrivalPicker] = useState(false);

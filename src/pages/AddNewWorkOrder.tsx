@@ -21,16 +21,24 @@ const AddNewWorkOrder = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const [activeTab, setActiveTab] = useState("general");
-  const [workOrderData, setWorkOrderData] = useState({
-    workOrderNumber: "WO-QOAV2I",
-    srDocument: "",
-    workOrderStatus: "Created",
-    workOrderType: "Regular work order",
-    accountNumber: "",
-    customer: "",
-    salesperson: "Not assigned",
-    contact: ""
+  const [workOrderData, setWorkOrderData] = useState(() => {
+    const savedData = localStorage.getItem('workOrderData');
+    return savedData ? JSON.parse(savedData) : {
+      workOrderNumber: "WO-QOAV2I",
+      srDocument: "",
+      workOrderStatus: "Created",
+      workOrderType: "Regular work order",
+      accountNumber: "",
+      customer: "",
+      salesperson: "Not assigned",
+      contact: ""
+    };
   });
+
+  // Save to localStorage whenever workOrderData changes
+  useEffect(() => {
+    localStorage.setItem('workOrderData', JSON.stringify(workOrderData));
+  }, [workOrderData]);
 
   const [viewMode, setViewMode] = useState<'table' | 'cards' | 'receiving'>('cards');
   const [showSuggestions, setShowSuggestions] = useState(false);
