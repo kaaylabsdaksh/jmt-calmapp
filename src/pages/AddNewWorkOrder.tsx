@@ -70,7 +70,12 @@ const AddNewWorkOrder = () => {
     estimate: string;
     newEquip: string;
     needByDate: string;
-  }>>([
+  }>>(() => {
+    const savedItems = localStorage.getItem('workOrderItems');
+    const savedWorkOrderItems = savedItems ? JSON.parse(savedItems) : [];
+    
+    return [
+      ...savedWorkOrderItems,
     {
       id: "rec-001",
       itemNumber: "DMM-001",
@@ -125,7 +130,14 @@ const AddNewWorkOrder = () => {
       newEquip: "yes",
       needByDate: "2024-12-01"
     }
-  ]);
+    ];
+  });
+
+  // Save receivingItems to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('workOrderItems', JSON.stringify(receivingItems));
+  }, [receivingItems]);
+
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Mock account data
@@ -795,7 +807,7 @@ const AddNewWorkOrder = () => {
                      {/* Action Buttons */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2 sm:gap-3">
                       <Button 
-                        onClick={() => navigate("/form-variations")}
+                        onClick={() => navigate("/modern-add-new-item")}
                         className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
                       >
                         <Plus className="w-3 h-3 sm:w-4 sm:h-4" />
