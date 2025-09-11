@@ -120,28 +120,37 @@ export const FixedActionFooter = ({
 
             {/* Center Actions */}
             <div className="flex items-center gap-2">
-              <div className="flex items-center gap-1 p-1 rounded border border-border bg-muted/30">
-                <span className="text-xs text-muted-foreground px-1">Tags:</span>
-                {[1,2,3,4,5].map(num => (
-                  <Tooltip key={num}>
-                    <TooltipTrigger asChild>
-                      <Button 
-                        size="sm" 
-                        variant={numTags === num.toString() ? "default" : "ghost"}
-                        className="h-6 w-6 p-0 text-xs"
-                        onClick={() => {
-                          setNumTags(num.toString());
-                          console.log("Print Tags clicked with", num, "tags");
-                        }}
-                      >
-                        {num}
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Print {num} Tag{num > 1 ? 's' : ''}</p>
-                    </TooltipContent>
-                  </Tooltip>
-                ))}
+              <div className="flex items-center gap-1">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div>
+                      <Select value={numTags} onValueChange={setNumTags}>
+                        <SelectTrigger className="w-12 h-7 text-xs">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {[1,2,3,4,5].map(num => (
+                            <SelectItem key={num} value={num.toString()}>{num}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Number of Tags to Print</p>
+                  </TooltipContent>
+                </Tooltip>
+                
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button size="sm" variant="outline" onClick={handlePrintTags}>
+                      Tags
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Print Tags</p>
+                  </TooltipContent>
+                </Tooltip>
               </div>
               
               <Tooltip>
