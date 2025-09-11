@@ -1735,7 +1735,7 @@ const FormVariationsDemo = () => {
         <CardDescription>Factory communication and documentation</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 items-end">
           <div className="space-y-1">
             <Label htmlFor="commentType" className="text-xs">Type</Label>
             <Select value={formData.commentType} onValueChange={(value) => handleInputChange("commentType", value)}>
@@ -1750,7 +1750,7 @@ const FormVariationsDemo = () => {
             </Select>
           </div>
 
-          <div className="space-y-1">
+          <div className="lg:col-span-2 space-y-1">
             <Label htmlFor="comment" className="text-xs">Comment</Label>
             <Textarea
               id="comment"
@@ -1770,9 +1770,6 @@ const FormVariationsDemo = () => {
               />
               <Label htmlFor="includeInCopyAsNew" className="text-xs">Copy Forward</Label>
             </div>
-          </div>
-
-          <div>
             <Button size="sm" className="w-full h-9">Add</Button>
           </div>
         </div>
