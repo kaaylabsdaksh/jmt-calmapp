@@ -17,7 +17,7 @@ export const FixedActionFooter = ({
   onCancel, 
   onSave, 
   saveText = "Save Item",
-  cancelText = "Back",
+  cancelText = "Cancel",
   isLoading = false 
 }: FixedActionFooterProps) => {
   const [numTags, setNumTags] = useState("1");
