@@ -80,15 +80,6 @@ export const FixedActionFooter = ({
             </Button>
             
             <Button 
-              variant="destructive" 
-              onClick={handleCancelled}
-              disabled={isLoading}
-              className="px-4 py-2 text-sm font-medium"
-            >
-              Cancelled
-            </Button>
-            
-            <Button 
               variant="secondary" 
               onClick={handlePrintWO}
               disabled={isLoading}
@@ -120,15 +111,6 @@ export const FixedActionFooter = ({
 
             {/* Right aligned buttons */}
             <div className="ml-auto flex items-center gap-3">
-              <Button 
-                variant="outline" 
-                onClick={onCancel}
-                disabled={isLoading}
-                className="px-6 py-2 text-sm font-medium"
-              >
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                {cancelText}
-              </Button>
               <Button 
                 onClick={onSave}
                 disabled={isLoading}
