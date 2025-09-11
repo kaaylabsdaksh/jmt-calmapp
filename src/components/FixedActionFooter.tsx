@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { X, Save, Copy, Printer, Tag, QrCode, ArrowLeft, FileText, Package } from 'lucide-react';
 
 interface FixedActionFooterProps {
@@ -60,7 +61,7 @@ export const FixedActionFooter = ({
   };
 
   return (
-    <>
+    <TooltipProvider>
       {/* Spacer to prevent content overlap */}
       <div className="h-20" />
       
@@ -72,87 +73,198 @@ export const FixedActionFooter = ({
             
             {/* Left Actions */}
             <div className="flex items-center gap-2">
-              <Button size="sm" variant="outline" onClick={handleCopyAsNew}>
-                <Copy className="h-3 w-3" />
-              </Button>
-              <Button size="sm" variant="outline" onClick={handleCancelled}>
-                Cancelled
-              </Button>
-              <Button size="sm" variant="outline" onClick={handlePrintWO}>
-                <Printer className="h-3 w-3" />
-              </Button>
-              <Button size="sm" variant="outline" onClick={handleLabel}>
-                <Tag className="h-3 w-3" />
-              </Button>
-              <Button size="sm" variant="outline" onClick={handleSticker}>
-                Sticker
-              </Button>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button size="sm" variant="outline" onClick={handleCopyAsNew}>
+                    <Copy className="h-3 w-3" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Copy as New</p>
+                </TooltipContent>
+              </Tooltip>
+              
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button size="sm" variant="outline" onClick={handleCancelled}>
+                    Cancelled
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Mark as Cancelled</p>
+                </TooltipContent>
+              </Tooltip>
+              
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button size="sm" variant="outline" onClick={handlePrintWO}>
+                    <Printer className="h-3 w-3" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Print Work Order</p>
+                </TooltipContent>
+              </Tooltip>
+              
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button size="sm" variant="outline" onClick={handleLabel}>
+                    <Tag className="h-3 w-3" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Print Label</p>
+                </TooltipContent>
+              </Tooltip>
+              
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button size="sm" variant="outline" onClick={handleSticker}>
+                    Sticker
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Print Sticker</p>
+                </TooltipContent>
+              </Tooltip>
             </div>
 
             {/* Center Actions */}
             <div className="flex items-center gap-2">
               <div className="flex items-center gap-1">
-                <Select value={numTags} onValueChange={setNumTags}>
-                  <SelectTrigger className="w-12 h-7 text-xs">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {[1,2,3,4,5].map(num => (
-                      <SelectItem key={num} value={num.toString()}>{num}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <Button size="sm" variant="outline" onClick={handlePrintTags}>
-                  Tags
-                </Button>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div>
+                      <Select value={numTags} onValueChange={setNumTags}>
+                        <SelectTrigger className="w-12 h-7 text-xs">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {[1,2,3,4,5].map(num => (
+                            <SelectItem key={num} value={num.toString()}>{num}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Number of Tags to Print</p>
+                  </TooltipContent>
+                </Tooltip>
+                
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button size="sm" variant="outline" onClick={handlePrintTags}>
+                      Tags
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Print Tags</p>
+                  </TooltipContent>
+                </Tooltip>
               </div>
-              <Button size="sm" variant="outline" onClick={handlePrintQRSheet}>
-                <QrCode className="h-3 w-3" />
-              </Button>
-              <Input 
-                placeholder="Acct #" 
-                value={acctNum}
-                onChange={(e) => setAcctNum(e.target.value)}
-                className="w-16 h-7 text-xs"
-              />
-              <Button size="sm" variant="outline" onClick={handleMoveToNewWO}>
-                <FileText className="h-3 w-3" />
-              </Button>
-              <Input 
-                placeholder="WO #" 
-                value={woNum}
-                onChange={(e) => setWoNum(e.target.value)}
-                className="w-16 h-7 text-xs"
-              />
-              <Button size="sm" variant="outline" onClick={handleMoveToExistingWO}>
-                <Package className="h-3 w-3" />
-              </Button>
+              
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button size="sm" variant="outline" onClick={handlePrintQRSheet}>
+                    <QrCode className="h-3 w-3" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Print QR Code Sheet</p>
+                </TooltipContent>
+              </Tooltip>
+              
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Input 
+                    placeholder="Acct #" 
+                    value={acctNum}
+                    onChange={(e) => setAcctNum(e.target.value)}
+                    className="w-16 h-7 text-xs"
+                  />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Account Number for New Work Order</p>
+                </TooltipContent>
+              </Tooltip>
+              
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button size="sm" variant="outline" onClick={handleMoveToNewWO}>
+                    <FileText className="h-3 w-3" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Move to New Work Order</p>
+                </TooltipContent>
+              </Tooltip>
+              
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Input 
+                    placeholder="WO #" 
+                    value={woNum}
+                    onChange={(e) => setWoNum(e.target.value)}
+                    className="w-16 h-7 text-xs"
+                  />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Work Order Number</p>
+                </TooltipContent>
+              </Tooltip>
+              
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button size="sm" variant="outline" onClick={handleMoveToExistingWO}>
+                    <Package className="h-3 w-3" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Move to Existing Work Order</p>
+                </TooltipContent>
+              </Tooltip>
             </div>
 
             {/* Right Actions */}
             <div className="flex items-center gap-2">
-              <Button 
-                size="sm"
-                variant="outline" 
-                onClick={onCancel}
-                disabled={isLoading}
-              >
-                <ArrowLeft className="h-3 w-3 mr-1" />
-                {cancelText}
-              </Button>
-              <Button 
-                size="sm"
-                onClick={onSave}
-                disabled={isLoading}
-                className="bg-success text-success-foreground hover:bg-success/90"
-              >
-                <Save className="h-3 w-3 mr-1" />
-                {saveText}
-              </Button>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button 
+                    size="sm"
+                    variant="outline" 
+                    onClick={onCancel}
+                    disabled={isLoading}
+                  >
+                    <ArrowLeft className="h-3 w-3 mr-1" />
+                    {cancelText}
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Cancel and Go Back</p>
+                </TooltipContent>
+              </Tooltip>
+              
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button 
+                    size="sm"
+                    onClick={onSave}
+                    disabled={isLoading}
+                    className="bg-success text-success-foreground hover:bg-success/90"
+                  >
+                    <Save className="h-3 w-3 mr-1" />
+                    {saveText}
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Save Changes</p>
+                </TooltipContent>
+              </Tooltip>
             </div>
           </div>
         </div>
       </div>
-    </>
+    </TooltipProvider>
   );
 };
