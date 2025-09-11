@@ -86,17 +86,6 @@ export const FixedActionFooter = ({
               
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button size="sm" variant="outline" onClick={handleCancelled}>
-                    Cancelled
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Mark as Cancelled</p>
-                </TooltipContent>
-              </Tooltip>
-              
-              <Tooltip>
-                <TooltipTrigger asChild>
                   <Button size="sm" variant="outline" onClick={handlePrintWO}>
                     <Printer className="h-3 w-3" />
                   </Button>
