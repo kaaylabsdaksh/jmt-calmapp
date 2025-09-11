@@ -2058,8 +2058,8 @@ const FormVariationsDemo = () => {
             {renderLogisticsSection()}
           </TabsContent>
 
-          <TabsContent value="transit" className="space-y-6">
-            {renderTransitSection()}
+          <TabsContent value="product-images" className="space-y-6">
+            {renderProductImagesSection()}
           </TabsContent>
 
           <TabsContent value="other" className="space-y-6">
@@ -2084,8 +2084,8 @@ const FormVariationsDemo = () => {
                 {renderFactoryConfigSection()}
               </TabsContent>
 
-              <TabsContent value="product-images" className="space-y-6 mt-6">
-                {renderProductImagesSection()}
+              <TabsContent value="transit" className="space-y-6 mt-6">
+                {renderTransitSection()}
               </TabsContent>
 
               <TabsContent value="accessories" className="space-y-6 mt-6">
