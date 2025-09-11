@@ -112,6 +112,15 @@ export const FixedActionFooter = ({
             {/* Right aligned buttons */}
             <div className="ml-auto flex items-center gap-3">
               <Button 
+                variant="outline" 
+                onClick={onCancel}
+                disabled={isLoading}
+                className="px-6 py-2 text-sm font-medium"
+              >
+                <X className="h-4 w-4 mr-2" />
+                {cancelText}
+              </Button>
+              <Button 
                 onClick={onSave}
                 disabled={isLoading}
                 className="bg-success text-success-foreground hover:bg-success/90 px-6 py-2 text-sm font-medium shadow-sm"
