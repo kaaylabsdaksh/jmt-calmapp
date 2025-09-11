@@ -271,13 +271,13 @@ const FormVariationsDemo = () => {
     { value: 'general', label: 'General', icon: Info },
     { value: 'product', label: 'Product', icon: Package },
     { value: 'logistics', label: 'Logistics', icon: Truck },
-    { value: 'transit', label: 'Transit', icon: Truck },
+    { value: 'product-images', label: 'Images', icon: Package },
     { value: 'other', label: 'Other', icon: Settings }
   ];
 
   const otherTabs = [
     { value: 'factory-config', label: 'Factory', icon: Settings },
-    { value: 'product-images', label: 'Images', icon: Package },
+    { value: 'transit', label: 'Transit', icon: Truck },
     { value: 'accessories', label: 'Accessories', icon: Layers },
     { value: 'parts', label: 'Parts', icon: Settings },
     { value: 'comments', label: 'Comments', icon: List },
