@@ -27,6 +27,8 @@ export const FixedActionFooter = ({
   const [woNum, setWoNum] = useState("");
   const [moveToNewWODialog, setMoveToNewWODialog] = useState(false);
   const [newWOAcctNum, setNewWOAcctNum] = useState("");
+  const [moveToExistingWODialog, setMoveToExistingWODialog] = useState(false);
+  const [existingWONum, setExistingWONum] = useState("");
 
   const handleCopyAsNew = () => {
     console.log("Copy as New clicked");
@@ -67,7 +69,13 @@ export const FixedActionFooter = ({
   };
 
   const handleMoveToExistingWO = () => {
-    console.log("Move To Existing Work Order clicked with WO #:", woNum);
+    setMoveToExistingWODialog(true);
+  };
+
+  const confirmMoveToExistingWO = () => {
+    console.log("Move To Existing Work Order confirmed with WO #:", existingWONum);
+    setMoveToExistingWODialog(false);
+    setExistingWONum("");
   };
 
   return (
@@ -288,6 +296,34 @@ export const FixedActionFooter = ({
             </Button>
             <Button onClick={confirmMoveToNewWO} disabled={!newWOAcctNum.trim()}>
               Move to New WO
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Move to Existing Work Order Dialog */}
+      <Dialog open={moveToExistingWODialog} onOpenChange={setMoveToExistingWODialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Move to Existing Work Order</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="work-order-number">Work Order Number</Label>
+              <Input
+                id="work-order-number"
+                placeholder="Enter work order number"
+                value={existingWONum}
+                onChange={(e) => setExistingWONum(e.target.value)}
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setMoveToExistingWODialog(false)}>
+              Cancel
+            </Button>
+            <Button onClick={confirmMoveToExistingWO} disabled={!existingWONum.trim()}>
+              Move to Existing WO
             </Button>
           </DialogFooter>
         </DialogContent>
