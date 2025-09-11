@@ -16,6 +16,7 @@ import { WorkOrderItemsReceiving } from "@/components/WorkOrderItemsReceiving";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { ContactForm, ContactFormData } from "@/components/ContactForm";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import { EstimateDetails } from "@/components/EstimateDetails";
 
 const AddNewWorkOrder = () => {
   const navigate = useNavigate();
@@ -194,8 +195,8 @@ const AddNewWorkOrder = () => {
 
   // Function to check if a tab should be disabled
   const isTabDisabled = (tabValue: string) => {
-    // Always disable warranty and estimate tabs
-    if (tabValue === "warranty" || tabValue === "estimate") {
+    // Always disable warranty tab
+    if (tabValue === "warranty") {
       return true;
     }
     // Only general tab is enabled if account number is not 5 digits
@@ -906,11 +907,7 @@ const AddNewWorkOrder = () => {
             </TabsContent>
 
             <TabsContent value="estimate">
-              <Card>
-                <CardContent className="p-6">
-                  <p className="text-muted-foreground">Estimate content coming soon...</p>
-                </CardContent>
-              </Card>
+              <EstimateDetails />
             </TabsContent>
 
             <TabsContent value="fail-log">
