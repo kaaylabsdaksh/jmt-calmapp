@@ -89,15 +89,6 @@ export const FixedActionFooter = ({
             </Button>
             
             <Button 
-              variant="destructive" 
-              onClick={handleCancelled}
-              disabled={isLoading}
-              className="px-4 py-2 text-sm font-medium"
-            >
-              Cancelled
-            </Button>
-            
-            <Button 
               variant="secondary" 
               onClick={handlePrintWO}
               disabled={isLoading}
