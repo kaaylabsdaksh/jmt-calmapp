@@ -3,6 +3,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
+import { Label } from '@/components/ui/label';
 import { X, Save, Copy, Printer, Tag, QrCode, ArrowLeft, FileText, Package } from 'lucide-react';
 
 interface FixedActionFooterProps {
@@ -23,6 +25,8 @@ export const FixedActionFooter = ({
   const [numTags, setNumTags] = useState("1");
   const [acctNum, setAcctNum] = useState("");
   const [woNum, setWoNum] = useState("");
+  const [moveToNewWODialog, setMoveToNewWODialog] = useState(false);
+  const [newWOAcctNum, setNewWOAcctNum] = useState("");
 
   const handleCopyAsNew = () => {
     console.log("Copy as New clicked");
@@ -53,7 +57,13 @@ export const FixedActionFooter = ({
   };
 
   const handleMoveToNewWO = () => {
-    console.log("Move To New Work Order clicked with acct num:", acctNum);
+    setMoveToNewWODialog(true);
+  };
+
+  const confirmMoveToNewWO = () => {
+    console.log("Move To New Work Order confirmed with account number:", newWOAcctNum);
+    setMoveToNewWODialog(false);
+    setNewWOAcctNum("");
   };
 
   const handleMoveToExistingWO = () => {
@@ -254,6 +264,34 @@ export const FixedActionFooter = ({
           </div>
         </div>
       </div>
+
+      {/* Move to New Work Order Dialog */}
+      <Dialog open={moveToNewWODialog} onOpenChange={setMoveToNewWODialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Move to New Work Order</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="account-number">Account Number</Label>
+              <Input
+                id="account-number"
+                placeholder="Enter account number"
+                value={newWOAcctNum}
+                onChange={(e) => setNewWOAcctNum(e.target.value)}
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setMoveToNewWODialog(false)}>
+              Cancel
+            </Button>
+            <Button onClick={confirmMoveToNewWO} disabled={!newWOAcctNum.trim()}>
+              Move to New WO
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </TooltipProvider>
   );
 };
