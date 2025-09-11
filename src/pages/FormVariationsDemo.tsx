@@ -149,6 +149,16 @@ const FormVariationsDemo = () => {
     qty: string;
   }>>([]);
 
+  // State for parts list
+  const [partsList, setPartsList] = useState<Array<{
+    id: string;
+    category: string;
+    partNumber: string;
+    description: string;
+    cost: string;
+    qty: string;
+  }>>([]);
+
   const [formData, setFormData] = useState({
     // Work Order Header
     workOrderNumber: "WO-QOAV2I",
@@ -379,6 +389,33 @@ const FormVariationsDemo = () => {
 
   const handleRemoveAccessory = (id: string) => {
     setAccessoriesList(prev => prev.filter(item => item.id !== id));
+  };
+
+  // Parts handlers
+  const handleAddPart = () => {
+    if (formData.partsCategory && formData.partsNumber && formData.partsDescription && formData.partsQty) {
+      const newPart = {
+        id: Date.now().toString(),
+        category: formData.partsCategory,
+        partNumber: formData.partsNumber,
+        description: formData.partsDescription,
+        cost: formData.partsCost || "0.00",
+        qty: formData.partsQty,
+      };
+      
+      setPartsList(prev => [...prev, newPart]);
+      
+      // Clear form fields after adding
+      handleInputChange("partsCategory", "");
+      handleInputChange("partsNumber", "");
+      handleInputChange("partsDescription", "");
+      handleInputChange("partsCost", "");
+      handleInputChange("partsQty", "");
+    }
+  };
+
+  const handleRemovePart = (id: string) => {
+    setPartsList(prev => prev.filter(item => item.id !== id));
   };
 
   // Certificate file handlers
@@ -1634,22 +1671,54 @@ const FormVariationsDemo = () => {
           </div>
 
           <div>
-            <Button size="sm" className="h-9 w-full">Add Part</Button>
+            <Button size="sm" className="h-9 w-full" onClick={handleAddPart}>Add Part</Button>
           </div>
         </div>
 
         <div className="border rounded-lg">
-          <div className="bg-muted grid grid-cols-6 gap-4 p-2 text-xs font-medium">
+          <div className="bg-muted grid grid-cols-7 gap-4 p-2 text-xs font-medium">
             <div>Category</div>
             <div>Part Number</div>
             <div>Description</div>
             <div>Cost</div>
             <div>Qty</div>
             <div>Total</div>
+            <div>Actions</div>
           </div>
-          <div className="p-6 text-center text-muted-foreground text-sm">
-            No parts added
-          </div>
+          {partsList.length > 0 ? (
+            <div className="divide-y">
+              {partsList.map((part) => {
+                const cost = parseFloat(part.cost) || 0;
+                const qty = parseInt(part.qty) || 0;
+                const total = (cost * qty).toFixed(2);
+                
+                return (
+                  <div key={part.id} className="grid grid-cols-7 gap-4 p-3 text-sm">
+                    <div className="capitalize">{part.category}</div>
+                    <div>{part.partNumber}</div>
+                    <div>{part.description}</div>
+                    <div>${part.cost}</div>
+                    <div>{part.qty}</div>
+                    <div>${total}</div>
+                    <div>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleRemovePart(part.id)}
+                        className="h-8 w-8 p-0 text-destructive hover:text-destructive"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="p-6 text-center text-muted-foreground text-sm">
+              No parts added
+            </div>
+          )}
         </div>
       </CardContent>
     </Card>
