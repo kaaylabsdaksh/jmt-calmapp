@@ -281,7 +281,7 @@ const FormVariationsDemo = () => {
     { value: 'accessories', label: 'Accessories', icon: Layers },
     { value: 'parts', label: 'Parts', icon: Settings },
     { value: 'comments', label: 'Comments', icon: List },
-    { value: 'options', label: 'Options', icon: Settings }
+    { value: 'options', label: 'Additional', icon: Settings }
   ];
   
   const [activeTab, setActiveTab] = useState('general');
