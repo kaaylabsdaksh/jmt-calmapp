@@ -1367,11 +1367,16 @@ const FormVariationsDemo = () => {
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="images">
-          <TabsList>
-            <TabsTrigger value="images">Images</TabsTrigger>
-            <TabsTrigger value="dateEntered">Date Entered</TabsTrigger>
-            <TabsTrigger value="actions">Actions</TabsTrigger>
-          </TabsList>
+          <div className="flex items-center justify-between">
+            <TabsList>
+              <TabsTrigger value="images">Images</TabsTrigger>
+              <TabsTrigger value="dateEntered">Date Entered</TabsTrigger>
+              <TabsTrigger value="actions">Actions</TabsTrigger>
+            </TabsList>
+            <Button variant="outline" size="sm">
+              Capture
+            </Button>
+          </div>
           
           <TabsContent value="images" className="mt-4">
             <div className="border-2 border-dashed rounded-lg p-6 text-center">
