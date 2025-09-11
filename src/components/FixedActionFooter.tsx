@@ -225,7 +225,7 @@ export const FixedActionFooter = ({
                     onClick={onCancel}
                     disabled={isLoading}
                   >
-                    <ArrowLeft className="h-3 w-3 mr-1" />
+                    <X className="h-3 w-3 mr-1" />
                     {cancelText}
                   </Button>
                 </TooltipTrigger>
