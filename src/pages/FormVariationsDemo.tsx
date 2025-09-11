@@ -271,16 +271,21 @@ const FormVariationsDemo = () => {
     { value: 'general', label: 'General', icon: Info },
     { value: 'product', label: 'Product', icon: Package },
     { value: 'logistics', label: 'Logistics', icon: Truck },
-    { value: 'factory-config', label: 'Config', icon: Settings },
-    { value: 'product-images', label: 'Images', icon: Package },
-    { value: 'accessories', label: 'Access.', icon: Layers },
-    { value: 'parts', label: 'Parts', icon: Settings },
     { value: 'transit', label: 'Transit', icon: Truck },
+    { value: 'other', label: 'Other', icon: Settings }
+  ];
+
+  const otherTabs = [
+    { value: 'factory-config', label: 'Factory', icon: Settings },
+    { value: 'product-images', label: 'Images', icon: Package },
+    { value: 'accessories', label: 'Accessories', icon: Layers },
+    { value: 'parts', label: 'Parts', icon: Settings },
     { value: 'comments', label: 'Comments', icon: List },
     { value: 'options', label: 'Options', icon: Settings }
   ];
   
   const [activeTab, setActiveTab] = useState('general');
+  const [activeOtherTab, setActiveOtherTab] = useState('factory-config');
 
   const handleInputChange = (field: string, value: string | boolean) => {
     setFormData(prev => ({
@@ -2053,32 +2058,52 @@ const FormVariationsDemo = () => {
             {renderLogisticsSection()}
           </TabsContent>
 
-          <TabsContent value="factory-config" className="space-y-6">
-            {renderFactoryConfigSection()}
-          </TabsContent>
-
-          <TabsContent value="product-images" className="space-y-6">
-            {renderProductImagesSection()}
-          </TabsContent>
-
-          <TabsContent value="accessories" className="space-y-6">
-            {renderAccessoriesSection()}
-          </TabsContent>
-
-          <TabsContent value="parts" className="space-y-6">
-            {renderPartsSection()}
-          </TabsContent>
-
           <TabsContent value="transit" className="space-y-6">
             {renderTransitSection()}
           </TabsContent>
 
-          <TabsContent value="comments" className="space-y-6">
-            {renderCommentsSection()}
-          </TabsContent>
+          <TabsContent value="other" className="space-y-6">
+            <Tabs value={activeOtherTab} onValueChange={setActiveOtherTab} className="w-full">
+              <TabsList className="grid w-full grid-cols-6">
+                {otherTabs.map((tab) => {
+                  const Icon = tab.icon;
+                  return (
+                    <TabsTrigger 
+                      key={tab.value} 
+                      value={tab.value}
+                      className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm flex-1"
+                    >
+                      <Icon className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
+                      <span className="hidden sm:inline">{tab.label}</span>
+                    </TabsTrigger>
+                  );
+                })}
+              </TabsList>
 
-          <TabsContent value="options" className="space-y-6">
-            {renderOptionsSection()}
+              <TabsContent value="factory-config" className="space-y-6 mt-6">
+                {renderFactoryConfigSection()}
+              </TabsContent>
+
+              <TabsContent value="product-images" className="space-y-6 mt-6">
+                {renderProductImagesSection()}
+              </TabsContent>
+
+              <TabsContent value="accessories" className="space-y-6 mt-6">
+                {renderAccessoriesSection()}
+              </TabsContent>
+
+              <TabsContent value="parts" className="space-y-6 mt-6">
+                {renderPartsSection()}
+              </TabsContent>
+
+              <TabsContent value="comments" className="space-y-6 mt-6">
+                {renderCommentsSection()}
+              </TabsContent>
+
+              <TabsContent value="options" className="space-y-6 mt-6">
+                {renderOptionsSection()}
+              </TabsContent>
+            </Tabs>
           </TabsContent>
         </Tabs>
       </CardContent>
