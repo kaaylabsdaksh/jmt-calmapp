@@ -14,6 +14,7 @@ interface FixedActionFooterProps {
   cancelText?: string;
   isLoading?: boolean;
   currentSection?: 'work-order-items' | 'estimate' | 'qf3';
+  userRole?: 'admin' | 'technician';
 }
 
 export const FixedActionFooter = ({ 
@@ -22,7 +23,8 @@ export const FixedActionFooter = ({
   saveText = "Save Item",
   cancelText = "Cancel",
   isLoading = false,
-  currentSection = 'work-order-items'
+  currentSection = 'work-order-items',
+  userRole = 'technician'
 }: FixedActionFooterProps) => {
   const [numTags, setNumTags] = useState("1");
   const [acctNum, setAcctNum] = useState("");
@@ -149,8 +151,9 @@ export const FixedActionFooter = ({
         <div className="px-4 py-3">
           {/* Conditional Footer based on current section */}
           {currentSection === 'estimate' ? (
-            // Estimate Footer
+            // Estimate Footer - Conditional based on user role
             <div className="flex flex-wrap items-center justify-center gap-2 text-xs">
+              {/* Common buttons for both roles */}
               <Button 
                 size="sm"
                 onClick={onSave}
@@ -166,33 +169,9 @@ export const FixedActionFooter = ({
                 Print
               </Button>
               
-              <Button size="sm" variant="outline" onClick={handleSendToEstTray}>
-                Send to Est Tray
-              </Button>
-              
               <Button size="sm" variant="outline" onClick={handleEmailToAR}>
                 <Mail className="h-3 w-3 mr-1" />
                 Email to AR
-              </Button>
-              
-              <Button size="sm" variant="outline" onClick={handleSendToCost}>
-                <Send className="h-3 w-3 mr-1" />
-                Send to Cost
-              </Button>
-              
-              <Button size="sm" variant="outline" onClick={handleApprove} className="text-green-600 hover:text-green-700">
-                <CheckCircle className="h-3 w-3 mr-1" />
-                Approve
-              </Button>
-              
-              <Button size="sm" variant="outline" onClick={handleDeclineDispose} className="text-red-600 hover:text-red-700">
-                <XCircle className="h-3 w-3 mr-1" />
-                Decline: Dispose
-              </Button>
-              
-              <Button size="sm" variant="outline" onClick={handleDeclineSendBack} className="text-red-600 hover:text-red-700">
-                <XCircle className="h-3 w-3 mr-1" />
-                Decline: Send Back
               </Button>
               
               <Button size="sm" variant="outline" onClick={handleHold} className="text-orange-600 hover:text-orange-700">
@@ -200,10 +179,39 @@ export const FixedActionFooter = ({
                 Hold
               </Button>
               
-              <Button size="sm" variant="outline" onClick={handleBack}>
-                <ArrowLeft className="h-3 w-3 mr-1" />
-                Back
-              </Button>
+              {/* Admin-only buttons */}
+              {userRole === 'admin' && (
+                <>
+                  <Button size="sm" variant="outline" onClick={handleSendToEstTray}>
+                    Send to Est Tray
+                  </Button>
+                  
+                  <Button size="sm" variant="outline" onClick={handleSendToCost}>
+                    <Send className="h-3 w-3 mr-1" />
+                    Send to Cost
+                  </Button>
+                  
+                  <Button size="sm" variant="outline" onClick={handleApprove} className="text-green-600 hover:text-green-700">
+                    <CheckCircle className="h-3 w-3 mr-1" />
+                    Approve
+                  </Button>
+                  
+                  <Button size="sm" variant="outline" onClick={handleDeclineDispose} className="text-red-600 hover:text-red-700">
+                    <XCircle className="h-3 w-3 mr-1" />
+                    Decline: Dispose
+                  </Button>
+                  
+                  <Button size="sm" variant="outline" onClick={handleDeclineSendBack} className="text-red-600 hover:text-red-700">
+                    <XCircle className="h-3 w-3 mr-1" />
+                    Decline: Send Back
+                  </Button>
+                  
+                  <Button size="sm" variant="outline" onClick={handleBack}>
+                    <ArrowLeft className="h-3 w-3 mr-1" />
+                    Back
+                  </Button>
+                </>
+              )}
             </div>
           ) : (
             // Default Work Order Items Footer

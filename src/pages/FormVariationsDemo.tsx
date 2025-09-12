@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera } from "lucide-react";
+import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
 import { SidebarTrigger } from "@/components/ui/sidebar";
@@ -31,6 +31,9 @@ const FormVariationsDemo = () => {
   
   // Main section state
   const [activeSection, setActiveSection] = useState<'work-order-items' | 'estimate' | 'qf3'>('work-order-items');
+  
+  // User role state for testing different footers
+  const [userRole, setUserRole] = useState<'admin' | 'technician'>('technician');
   
   // QF3 Dialog state
   const [qf3DialogOpen, setQf3DialogOpen] = useState(false);
@@ -2236,6 +2239,30 @@ const FormVariationsDemo = () => {
           
           {/* Interface Switcher */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
+            {/* User Role Switcher - Only for Estimate section */}
+            {activeSection === 'estimate' && (
+              <div className="flex items-center gap-1 p-1 bg-muted rounded-lg">
+                <Button
+                  variant={userRole === 'technician' ? 'default' : 'ghost'}
+                  size="sm"
+                  onClick={() => setUserRole('technician')}
+                  className="flex items-center gap-1 h-7 text-xs px-2 sm:px-3 sm:h-8"
+                >
+                  <User className="h-3 w-3 sm:h-4 sm:w-4" />
+                  <span className="hidden sm:inline">Tech</span>
+                </Button>
+                <Button
+                  variant={userRole === 'admin' ? 'default' : 'ghost'}
+                  size="sm"
+                  onClick={() => setUserRole('admin')}
+                  className="flex items-center gap-1 h-7 text-xs px-2 sm:px-3 sm:h-8"
+                >
+                  <Shield className="h-3 w-3 sm:h-4 sm:w-4" />
+                  <span className="hidden sm:inline">Admin</span>
+                </Button>
+              </div>
+            )}
+            
             {/* Layout Switcher */}
             <div className="flex items-center gap-1 p-1 bg-muted rounded-lg">
               <Button
@@ -2718,6 +2745,7 @@ const FormVariationsDemo = () => {
           onCancel={handleCancel}
           onSave={handleSave}
           currentSection={activeSection}
+          userRole={userRole}
         />
 
         {/* QF3 Dialog */}
