@@ -55,8 +55,7 @@ export const QF3Dialog = ({ open, onOpenChange }: QF3DialogProps) => {
 
         <div className="space-y-6">
           {/* Minimal Header Info */}
-          <div className="text-center space-y-2">
-            <h3 className="text-lg font-semibold text-gray-700">QF3 Created</h3>
+          <div className="text-center">
             <p className="text-sm text-red-600">
               <span className="font-medium">Required:</span> Vendor to Perform • Describe Malfunctions or Special Instructions
             </p>
