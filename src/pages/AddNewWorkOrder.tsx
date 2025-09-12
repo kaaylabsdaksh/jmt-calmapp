@@ -403,7 +403,7 @@ const AddNewWorkOrder = () => {
                 </div>
                 <div className="space-y-2">
                   <Label className="text-sm font-medium text-foreground">Contact</Label>
-                  <div className="text-sm text-foreground p-2 bg-muted rounded border">{workOrderData.contact}</div>
+                  <div className="text-sm text-foreground p-2 bg-muted rounded border">{workOrderData.contact || "Not assigned"}</div>
                 </div>
               </div>
             </CardContent>
