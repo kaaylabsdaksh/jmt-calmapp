@@ -17,6 +17,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { ContactForm, ContactFormData } from "@/components/ContactForm";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { EstimateDetails } from "@/components/EstimateDetails";
+import { RFIDDialog } from "@/components/RFIDDialog";
 
 const AddNewWorkOrder = () => {
   const navigate = useNavigate();
@@ -25,6 +26,8 @@ const AddNewWorkOrder = () => {
     const savedTab = localStorage.getItem('addNewWorkOrderActiveTab');
     return savedTab || "general";
   });
+  
+  const [isRFIDDialogOpen, setIsRFIDDialogOpen] = useState(false);
 
   // Save active tab to localStorage whenever it changes
   useEffect(() => {
@@ -803,7 +806,10 @@ const AddNewWorkOrder = () => {
                         <span className="hidden sm:inline">Add New Item</span>
                         <span className="sm:hidden">Add Item</span>
                       </Button>
-                      <Button className="bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm">
+                      <Button 
+                        onClick={() => setIsRFIDDialogOpen(true)}
+                        className="bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
+                      >
                         <PlusCircle className="w-3 h-3 sm:w-4 sm:h-4" />
                         <span className="hidden sm:inline">Add New Item w/RFID</span>
                         <span className="sm:hidden">Add w/RFID</span>
@@ -982,6 +988,12 @@ const AddNewWorkOrder = () => {
         open={showContactForm}
         onOpenChange={setShowContactForm}
         onSave={handleContactSave}
+      />
+
+      {/* RFID Dialog */}
+      <RFIDDialog 
+        open={isRFIDDialogOpen}
+        onOpenChange={setIsRFIDDialogOpen}
       />
     </div>
   );
