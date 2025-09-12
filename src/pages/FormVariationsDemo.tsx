@@ -2238,31 +2238,7 @@ const FormVariationsDemo = () => {
           </div>
           
           {/* Interface Switcher */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
-            {/* User Role Switcher - Only for Estimate section */}
-            {activeSection === 'estimate' && (
-              <div className="flex items-center gap-1 p-1 bg-muted rounded-lg">
-                <Button
-                  variant={userRole === 'technician' ? 'default' : 'ghost'}
-                  size="sm"
-                  onClick={() => setUserRole('technician')}
-                  className="flex items-center gap-1 h-7 text-xs px-2 sm:px-3 sm:h-8"
-                >
-                  <User className="h-3 w-3 sm:h-4 sm:w-4" />
-                  <span className="hidden sm:inline">Tech</span>
-                </Button>
-                <Button
-                  variant={userRole === 'admin' ? 'default' : 'ghost'}
-                  size="sm"
-                  onClick={() => setUserRole('admin')}
-                  className="flex items-center gap-1 h-7 text-xs px-2 sm:px-3 sm:h-8"
-                >
-                  <Shield className="h-3 w-3 sm:h-4 sm:w-4" />
-                  <span className="hidden sm:inline">Admin</span>
-                </Button>
-              </div>
-            )}
-            
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">            
             {/* Layout Switcher */}
             <div className="flex items-center gap-1 p-1 bg-muted rounded-lg">
               <Button
