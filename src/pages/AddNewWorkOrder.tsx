@@ -22,30 +22,29 @@ import { RFIDDialog } from "@/components/RFIDDialog";
 const AddNewWorkOrder = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
+  const [activeTab, setActiveTab] = useState(() => {
+    const savedTab = localStorage.getItem('addNewWorkOrderActiveTab');
+    return savedTab || "general";
+  });
   
-  // Clear localStorage on component mount to ensure fresh start
-  useEffect(() => {
-    localStorage.removeItem('addNewWorkOrderActiveTab');
-    localStorage.removeItem('workOrderData');
-  }, []);
-  
-  const [activeTab, setActiveTab] = useState("general");
   const [isRFIDDialogOpen, setIsRFIDDialogOpen] = useState(false);
 
   // Save active tab to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem('addNewWorkOrderActiveTab', activeTab);
   }, [activeTab]);
-  
-  const [workOrderData, setWorkOrderData] = useState({
-    workOrderNumber: "WO-QOAV2I",
-    srDocument: "",
-    workOrderStatus: "Created",
-    workOrderType: "Regular work order",
-    accountNumber: "",
-    customer: "",
-    salesperson: "Not assigned",
-    contact: ""
+  const [workOrderData, setWorkOrderData] = useState(() => {
+    const savedData = localStorage.getItem('workOrderData');
+    return savedData ? JSON.parse(savedData) : {
+      workOrderNumber: "WO-QOAV2I",
+      srDocument: "",
+      workOrderStatus: "Created",
+      workOrderType: "Regular work order",
+      accountNumber: "",
+      customer: "",
+      salesperson: "Not assigned",
+      contact: ""
+    };
   });
 
   // Save to localStorage whenever workOrderData changes
