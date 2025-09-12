@@ -10,11 +10,9 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
-import { QF3Dialog } from "./QF3Dialog";
 
 export const EstimateDetails = () => {
   const [estimateDate, setEstimateDate] = useState<Date>();
-  const [qf3DialogOpen, setQf3DialogOpen] = useState(false);
   const [estimateData, setEstimateData] = useState({
     estimateStatus: "In Progress",
     itemNumber: "001",
@@ -244,21 +242,12 @@ export const EstimateDetails = () => {
             <Button variant="outline" size="sm">
               Hold
             </Button>
-            <Button variant="outline" size="sm" onClick={() => setQf3DialogOpen(true)}>
-              Generate QF3
-            </Button>
             <Button variant="secondary" size="sm">
               Back
             </Button>
           </div>
         </CardContent>
       </Card>
-
-      {/* QF3 Dialog */}
-      <QF3Dialog 
-        open={qf3DialogOpen} 
-        onOpenChange={setQf3DialogOpen} 
-      />
     </div>
   );
 };

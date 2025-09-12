@@ -31,6 +31,9 @@ const FormVariationsDemo = () => {
   // Main section state
   const [activeSection, setActiveSection] = useState<'work-order-items' | 'estimate' | 'qf3'>('work-order-items');
   
+  // QF3 Dialog state
+  const [qf3DialogOpen, setQf3DialogOpen] = useState(false);
+  
   // Common state for both interfaces
   const [showManufacturerDialog, setShowManufacturerDialog] = useState(false);
   const [newManufacturerName, setNewManufacturerName] = useState("");
@@ -1348,7 +1351,9 @@ const FormVariationsDemo = () => {
           </div>
 
           <div className="flex items-end">
-            <Button variant="outline" size="sm">Generate QF3</Button>
+            <Button variant="outline" size="sm" onClick={() => setQf3DialogOpen(true)}>
+              Generate QF3
+            </Button>
           </div>
         </div>
 
