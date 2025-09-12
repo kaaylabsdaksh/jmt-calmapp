@@ -74,95 +74,89 @@ export const QF3Dialog = ({ open, onOpenChange }: QF3DialogProps) => {
           </div>
 
           {/* Equipment Information */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-base">Equipment Information</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              {/* Compact Grid Layout */}
-              <div className="bg-muted/30 rounded-lg p-3 border">
-                <div className="grid grid-cols-4 gap-3 text-xs">
-                  {/* Row 1 */}
-                  <div className="space-y-1">
-                    <span className="font-medium text-muted-foreground">MFG:</span>
-                    <Input 
-                      value={qf3Data.mfg}
-                      onChange={(e) => handleInputChange('mfg', e.target.value)}
-                      className="text-xs h-7"
-                    />
-                  </div>
-                  <div className="space-y-1">
-                    <span className="font-medium text-muted-foreground">DATE:</span>
-                    <Input 
-                      value={qf3Data.date}
-                      onChange={(e) => handleInputChange('date', e.target.value)}
-                      className="text-xs h-7"
-                    />
-                  </div>
-                  <div className="space-y-1">
-                    <span className="font-medium text-muted-foreground">TECH:</span>
-                    <Input 
-                      value={qf3Data.tech}
-                      onChange={(e) => handleInputChange('tech', e.target.value)}
-                      className="text-xs h-7"
-                    />
-                  </div>
-                  <div className="space-y-1">
-                    <span className="font-medium text-muted-foreground">CODE:</span>
-                    <Input 
-                      value={qf3Data.code}
-                      onChange={(e) => handleInputChange('code', e.target.value)}
-                      className="text-xs h-7"
-                    />
-                  </div>
-                  
-                  {/* Row 2 */}
-                  <div className="space-y-1">
-                    <span className="font-medium text-muted-foreground">MDL:</span>
-                    <Input 
-                      value={qf3Data.mdl}
-                      onChange={(e) => handleInputChange('mdl', e.target.value)}
-                      className="text-xs h-7"
-                    />
-                  </div>
-                  <div className="space-y-1">
-                    <span className="font-medium text-muted-foreground">S/N:</span>
-                    <Input 
-                      value={qf3Data.sn}
-                      onChange={(e) => handleInputChange('sn', e.target.value)}
-                      className="text-xs h-7"
-                    />
-                  </div>
-                  <div className="space-y-1">
-                    <span className="font-medium text-muted-foreground">W/O #:</span>
-                    <Input 
-                      value={qf3Data.wo}
-                      onChange={(e) => handleInputChange('wo', e.target.value)}
-                      className="text-xs h-7"
-                    />
-                  </div>
-                  <div className="space-y-1">
-                    <span className="font-medium text-muted-foreground">ID #:</span>
-                    <Input 
-                      value={qf3Data.id}
-                      onChange={(e) => handleInputChange('id', e.target.value)}
-                      className="text-xs h-7"
-                    />
-                  </div>
-                </div>
-                
-                {/* Description Row */}
-                <div className="mt-3 space-y-1">
-                  <span className="text-xs font-medium text-muted-foreground">DESC:</span>
-                  <Input 
-                    value={qf3Data.desc}
-                    onChange={(e) => handleInputChange('desc', e.target.value)}
-                    className="text-xs h-7 w-full"
-                  />
-                </div>
+          <div className="space-y-4">
+            <div className="border-b pb-2">
+              <h3 className="text-base font-semibold">Equipment Information</h3>
+              <p className="text-xs text-muted-foreground">Technician must complete equipment information, vendor information, reason for factory return.</p>
+            </div>
+            
+            <div className="grid grid-cols-4 gap-4 text-sm">
+              <div>
+                <span className="font-medium">MFG:</span>
+                <Input 
+                  value={qf3Data.mfg}
+                  onChange={(e) => handleInputChange('mfg', e.target.value)}
+                  className="mt-1 h-8 text-sm"
+                />
               </div>
-            </CardContent>
-          </Card>
+              <div>
+                <span className="font-medium">DATE:</span>
+                <Input 
+                  value={qf3Data.date}
+                  onChange={(e) => handleInputChange('date', e.target.value)}
+                  className="mt-1 h-8 text-sm"
+                />
+              </div>
+              <div>
+                <span className="font-medium">TECH:</span>
+                <Input 
+                  value={qf3Data.tech}
+                  onChange={(e) => handleInputChange('tech', e.target.value)}
+                  className="mt-1 h-8 text-sm"
+                />
+              </div>
+              <div>
+                <span className="font-medium">CODE:</span>
+                <Input 
+                  value={qf3Data.code}
+                  onChange={(e) => handleInputChange('code', e.target.value)}
+                  className="mt-1 h-8 text-sm"
+                />
+              </div>
+              
+              <div>
+                <span className="font-medium">MDL:</span>
+                <Input 
+                  value={qf3Data.mdl}
+                  onChange={(e) => handleInputChange('mdl', e.target.value)}
+                  className="mt-1 h-8 text-sm"
+                />
+              </div>
+              <div>
+                <span className="font-medium">S/N:</span>
+                <Input 
+                  value={qf3Data.sn}
+                  onChange={(e) => handleInputChange('sn', e.target.value)}
+                  className="mt-1 h-8 text-sm"
+                />
+              </div>
+              <div>
+                <span className="font-medium">W/O #:</span>
+                <Input 
+                  value={qf3Data.wo}
+                  onChange={(e) => handleInputChange('wo', e.target.value)}
+                  className="mt-1 h-8 text-sm"
+                />
+              </div>
+              <div>
+                <span className="font-medium">ID #:</span>
+                <Input 
+                  value={qf3Data.id}
+                  onChange={(e) => handleInputChange('id', e.target.value)}
+                  className="mt-1 h-8 text-sm"
+                />
+              </div>
+            </div>
+            
+            <div>
+              <span className="font-medium text-sm">DESC:</span>
+              <Input 
+                value={qf3Data.desc}
+                onChange={(e) => handleInputChange('desc', e.target.value)}
+                className="mt-1 h-8 text-sm w-full"
+              />
+            </div>
+          </div>
 
           {/* Vendor Information */}
           <Card>
