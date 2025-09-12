@@ -325,14 +325,14 @@ const AddNewWorkOrder = () => {
                   <BreadcrumbItem>
                     <BreadcrumbLink 
                       asChild 
-                      className="text-xs sm:text-sm text-muted-foreground hover:text-foreground"
+                      className="text-xs text-muted-foreground hover:text-foreground transition-colors"
                     >
                       <Link to="/">Home</Link>
                     </BreadcrumbLink>
                   </BreadcrumbItem>
                   <BreadcrumbSeparator />
                   <BreadcrumbItem>
-                    <BreadcrumbPage className="text-xs sm:text-sm text-foreground font-medium">
+                    <BreadcrumbPage className="text-xs text-foreground font-medium">
                       Add New Work Order
                     </BreadcrumbPage>
                   </BreadcrumbItem>
