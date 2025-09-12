@@ -62,13 +62,11 @@ export const QF3Dialog = ({ open, onOpenChange }: QF3DialogProps) => {
           </div>
 
           {/* Equipment Information */}
-          <div className="space-y-4">
-            <div className="border-b pb-2">
-              <h3 className="text-base font-semibold text-gray-800">Equipment Information</h3>
-            </div>
-            
-            {/* Clean grid layout */}
-            <div className="bg-gray-50 rounded-lg p-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-base">Equipment Information</CardTitle>
+            </CardHeader>
+            <CardContent>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-6">
                 <div className="space-y-1">
                   <div className="text-xs font-medium text-gray-500 uppercase tracking-wide">MFG</div>
@@ -111,8 +109,8 @@ export const QF3Dialog = ({ open, onOpenChange }: QF3DialogProps) => {
                   <div className="text-sm font-medium text-gray-900">{qf3Data.desc}</div>
                 </div>
               </div>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
 
           {/* Vendor Information */}
           <Card>
