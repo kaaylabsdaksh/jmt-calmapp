@@ -5,7 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
-import { X, Save, Copy, Printer, Tag, QrCode, ArrowLeft, FileText, Package } from 'lucide-react';
+import { X, Save, Copy, Printer, Tag, QrCode, ArrowLeft, FileText, Package, Mail, Send, CheckCircle, XCircle, Clock, Pause } from 'lucide-react';
 
 interface FixedActionFooterProps {
   onCancel: () => void;
@@ -13,6 +13,7 @@ interface FixedActionFooterProps {
   saveText?: string;
   cancelText?: string;
   isLoading?: boolean;
+  currentSection?: 'work-order-items' | 'estimate' | 'qf3';
 }
 
 export const FixedActionFooter = ({ 
@@ -20,7 +21,8 @@ export const FixedActionFooter = ({
   onSave, 
   saveText = "Save Item",
   cancelText = "Cancel",
-  isLoading = false 
+  isLoading = false,
+  currentSection = 'work-order-items'
 }: FixedActionFooterProps) => {
   const [numTags, setNumTags] = useState("1");
   const [acctNum, setAcctNum] = useState("");
@@ -99,6 +101,44 @@ export const FixedActionFooter = ({
     setExistingWONum("");
   };
 
+  // Estimate-specific handlers
+  const handlePrint = () => {
+    console.log("Print estimate");
+  };
+
+  const handleSendToEstTray = () => {
+    console.log("Send to Est Tray");
+  };
+
+  const handleEmailToAR = () => {
+    console.log("Email to AR");
+  };
+
+  const handleSendToCost = () => {
+    console.log("Send to Cost");
+  };
+
+  const handleApprove = () => {
+    console.log("Approve estimate");
+  };
+
+  const handleDeclineDispose = () => {
+    console.log("Decline: Dispose");
+  };
+
+  const handleDeclineSendBack = () => {
+    console.log("Decline: Send Back");
+  };
+
+  const handleHold = () => {
+    console.log("Hold estimate");
+  };
+
+  const handleBack = () => {
+    console.log("Back from estimate");
+    onCancel();
+  };
+
   return (
     <TooltipProvider>
       {/* Spacer to prevent content overlap */}
@@ -107,162 +147,222 @@ export const FixedActionFooter = ({
       {/* Fixed Footer */}
       <div className="fixed bottom-0 left-[256px] right-0 bg-background border-t border-border shadow-lg z-[100]">
         <div className="px-4 py-3">
-          {/* Minimal Multi-Action Footer */}
-          <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
-            
-            {/* Left Actions */}
-            <div className="flex items-center gap-2">
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button size="sm" variant="outline" onClick={handleCopyAsNew}>
-                    <Copy className="h-3 w-3" />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Copy as New</p>
-                </TooltipContent>
-              </Tooltip>
+          {/* Conditional Footer based on current section */}
+          {currentSection === 'estimate' ? (
+            // Estimate Footer
+            <div className="flex flex-wrap items-center justify-center gap-2 text-xs">
+              <Button 
+                size="sm"
+                onClick={onSave}
+                disabled={isLoading}
+                className="bg-primary text-primary-foreground hover:bg-primary/90"
+              >
+                <Save className="h-3 w-3 mr-1" />
+                Save
+              </Button>
               
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button size="sm" variant="outline" onClick={handlePrintWO}>
-                    <Printer className="h-3 w-3" />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Print Work Order</p>
-                </TooltipContent>
-              </Tooltip>
+              <Button size="sm" variant="outline" onClick={handlePrint}>
+                <Printer className="h-3 w-3 mr-1" />
+                Print
+              </Button>
               
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button size="sm" variant="outline" onClick={handleLabel}>
-                    <Tag className="h-3 w-3" />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Print Label</p>
-                </TooltipContent>
-              </Tooltip>
+              <Button size="sm" variant="outline" onClick={handleSendToEstTray}>
+                Send to Est Tray
+              </Button>
               
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button size="sm" variant="outline" onClick={handleSticker}>
-                    Sticker
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Print Sticker</p>
-                </TooltipContent>
-              </Tooltip>
+              <Button size="sm" variant="outline" onClick={handleEmailToAR}>
+                <Mail className="h-3 w-3 mr-1" />
+                Email to AR
+              </Button>
+              
+              <Button size="sm" variant="outline" onClick={handleSendToCost}>
+                <Send className="h-3 w-3 mr-1" />
+                Send to Cost
+              </Button>
+              
+              <Button size="sm" variant="outline" onClick={handleApprove} className="text-green-600 hover:text-green-700">
+                <CheckCircle className="h-3 w-3 mr-1" />
+                Approve
+              </Button>
+              
+              <Button size="sm" variant="outline" onClick={handleDeclineDispose} className="text-red-600 hover:text-red-700">
+                <XCircle className="h-3 w-3 mr-1" />
+                Decline: Dispose
+              </Button>
+              
+              <Button size="sm" variant="outline" onClick={handleDeclineSendBack} className="text-red-600 hover:text-red-700">
+                <XCircle className="h-3 w-3 mr-1" />
+                Decline: Send Back
+              </Button>
+              
+              <Button size="sm" variant="outline" onClick={handleHold} className="text-orange-600 hover:text-orange-700">
+                <Pause className="h-3 w-3 mr-1" />
+                Hold
+              </Button>
+              
+              <Button size="sm" variant="outline" onClick={handleBack}>
+                <ArrowLeft className="h-3 w-3 mr-1" />
+                Back
+              </Button>
             </div>
-
-            {/* Center Actions */}
-            <div className="flex items-center gap-2">
-              <div className="flex items-center gap-1">
+          ) : (
+            // Default Work Order Items Footer
+            <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
+              
+              {/* Left Actions */}
+              <div className="flex items-center gap-2">
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <div>
-                      <Select value={numTags} onValueChange={setNumTags}>
-                        <SelectTrigger className="w-12 h-7 text-xs">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {[1,2,3,4,5].map(num => (
-                            <SelectItem key={num} value={num.toString()}>{num}</SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
+                    <Button size="sm" variant="outline" onClick={handleCopyAsNew}>
+                      <Copy className="h-3 w-3" />
+                    </Button>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>Number of Tags to Print</p>
+                    <p>Copy as New</p>
                   </TooltipContent>
                 </Tooltip>
                 
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Button size="sm" variant="outline" onClick={handlePrintTags}>
-                      Tags
+                    <Button size="sm" variant="outline" onClick={handlePrintWO}>
+                      <Printer className="h-3 w-3" />
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>Print Tags</p>
+                    <p>Print Work Order</p>
+                  </TooltipContent>
+                </Tooltip>
+                
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button size="sm" variant="outline" onClick={handleLabel}>
+                      <Tag className="h-3 w-3" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Print Label</p>
+                  </TooltipContent>
+                </Tooltip>
+                
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button size="sm" variant="outline" onClick={handleSticker}>
+                      Sticker
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Print Sticker</p>
                   </TooltipContent>
                 </Tooltip>
               </div>
-              
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button size="sm" variant="outline" onClick={handlePrintQRSheet}>
-                    <QrCode className="h-3 w-3" />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Print QR Code Sheet</p>
-                </TooltipContent>
-              </Tooltip>
-              
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button size="sm" variant="outline" onClick={handleMoveToNewWO}>
-                    <FileText className="h-3 w-3" />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Move to New Work Order</p>
-                </TooltipContent>
-              </Tooltip>
-              
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button size="sm" variant="outline" onClick={handleMoveToExistingWO}>
-                    <Package className="h-3 w-3" />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Move to Existing Work Order</p>
-                </TooltipContent>
-              </Tooltip>
-            </div>
 
-            {/* Right Actions */}
-            <div className="flex items-center gap-2">
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button 
-                    size="sm"
-                    variant="outline" 
-                    onClick={onCancel}
-                    disabled={isLoading}
-                  >
-                    <X className="h-3 w-3 mr-1" />
-                    {cancelText}
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Cancel and Go Back</p>
-                </TooltipContent>
-              </Tooltip>
-              
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button 
-                    size="sm"
-                    onClick={onSave}
-                    disabled={isLoading}
-                    className="bg-success text-success-foreground hover:bg-success/90"
-                  >
-                    <Save className="h-3 w-3 mr-1" />
-                    {saveText}
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Save Changes</p>
-                </TooltipContent>
-              </Tooltip>
+              {/* Center Actions */}
+              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1">
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <div>
+                        <Select value={numTags} onValueChange={setNumTags}>
+                          <SelectTrigger className="w-12 h-7 text-xs">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {[1,2,3,4,5].map(num => (
+                              <SelectItem key={num} value={num.toString()}>{num}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Number of Tags to Print</p>
+                    </TooltipContent>
+                  </Tooltip>
+                  
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button size="sm" variant="outline" onClick={handlePrintTags}>
+                        Tags
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Print Tags</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </div>
+                
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button size="sm" variant="outline" onClick={handlePrintQRSheet}>
+                      <QrCode className="h-3 w-3" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Print QR Code Sheet</p>
+                  </TooltipContent>
+                </Tooltip>
+                
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button size="sm" variant="outline" onClick={handleMoveToNewWO}>
+                      <FileText className="h-3 w-3" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Move to New Work Order</p>
+                  </TooltipContent>
+                </Tooltip>
+                
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button size="sm" variant="outline" onClick={handleMoveToExistingWO}>
+                      <Package className="h-3 w-3" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Move to Existing Work Order</p>
+                  </TooltipContent>
+                </Tooltip>
+              </div>
+
+              {/* Right Actions */}
+              <div className="flex items-center gap-2">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button 
+                      size="sm"
+                      variant="outline" 
+                      onClick={onCancel}
+                      disabled={isLoading}
+                    >
+                      <X className="h-3 w-3 mr-1" />
+                      {cancelText}
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Cancel and Go Back</p>
+                  </TooltipContent>
+                </Tooltip>
+                
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button 
+                      size="sm"
+                      onClick={onSave}
+                      disabled={isLoading}
+                      className="bg-success text-success-foreground hover:bg-success/90"
+                    >
+                      <Save className="h-3 w-3 mr-1" />
+                      {saveText}
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Save Changes</p>
+                  </TooltipContent>
+                </Tooltip>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
 

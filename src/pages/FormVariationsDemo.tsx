@@ -2717,6 +2717,7 @@ const FormVariationsDemo = () => {
         <FixedActionFooter 
           onCancel={handleCancel}
           onSave={handleSave}
+          currentSection={activeSection}
         />
 
         {/* QF3 Dialog */}
