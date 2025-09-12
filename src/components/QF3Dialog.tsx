@@ -78,87 +78,40 @@ export const QF3Dialog = ({ open, onOpenChange }: QF3DialogProps) => {
             <CardHeader>
               <CardTitle className="text-base">Equipment Information</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
-              {/* Row 1 */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="space-y-2">
+            <CardContent className="space-y-3">
+              {/* Essential Info in Single Row */}
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                <div className="space-y-1">
                   <Label className="text-xs font-medium">MFG:</Label>
                   <Input 
                     value={qf3Data.mfg}
                     onChange={(e) => handleInputChange('mfg', e.target.value)}
-                    className="text-sm"
+                    className="text-sm h-8"
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label className="text-xs font-medium">DATE:</Label>
-                  <Input 
-                    value={qf3Data.date}
-                    onChange={(e) => handleInputChange('date', e.target.value)}
-                    className="text-sm"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label className="text-xs font-medium">TECH:</Label>
-                  <Input 
-                    value={qf3Data.tech}
-                    onChange={(e) => handleInputChange('tech', e.target.value)}
-                    className="text-sm"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label className="text-xs font-medium">CODE:</Label>
-                  <Input 
-                    value={qf3Data.code}
-                    onChange={(e) => handleInputChange('code', e.target.value)}
-                    className="text-sm"
-                  />
-                </div>
-              </div>
-
-              {/* Row 2 */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="space-y-2">
-                  <Label className="text-xs font-medium">MDL:</Label>
+                <div className="space-y-1">
+                  <Label className="text-xs font-medium">MODEL:</Label>
                   <Input 
                     value={qf3Data.mdl}
                     onChange={(e) => handleInputChange('mdl', e.target.value)}
-                    className="text-sm"
+                    className="text-sm h-8"
                   />
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-1">
                   <Label className="text-xs font-medium">S/N:</Label>
                   <Input 
                     value={qf3Data.sn}
                     onChange={(e) => handleInputChange('sn', e.target.value)}
-                    className="text-sm"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label className="text-xs font-medium">W/O #:</Label>
-                  <Input 
-                    value={qf3Data.wo}
-                    onChange={(e) => handleInputChange('wo', e.target.value)}
-                    className="text-sm"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label className="text-xs font-medium">ID #:</Label>
-                  <Input 
-                    value={qf3Data.id}
-                    onChange={(e) => handleInputChange('id', e.target.value)}
-                    className="text-sm"
+                    className="text-sm h-8"
                   />
                 </div>
               </div>
 
-              {/* Description */}
-              <div className="space-y-2">
-                <Label className="text-xs font-medium">DESC:</Label>
-                <Input 
-                  value={qf3Data.desc}
-                  onChange={(e) => handleInputChange('desc', e.target.value)}
-                  className="text-sm"
-                />
+              {/* Secondary Info */}
+              <div className="grid grid-cols-3 gap-3 text-xs text-muted-foreground">
+                <div>DATE: {qf3Data.date}</div>
+                <div>TECH: {qf3Data.tech}</div>
+                <div>W/O #: {qf3Data.wo}</div>
               </div>
             </CardContent>
           </Card>
