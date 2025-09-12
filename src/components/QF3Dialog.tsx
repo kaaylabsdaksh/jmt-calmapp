@@ -80,81 +80,45 @@ export const QF3Dialog = ({ open, onOpenChange }: QF3DialogProps) => {
               <p className="text-xs text-muted-foreground">Technician must complete equipment information, vendor information, reason for factory return.</p>
             </div>
             
-            <div className="grid grid-cols-4 gap-4 text-sm">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               <div>
-                <span className="font-medium">MFG:</span>
-                <Input 
-                  value={qf3Data.mfg}
-                  onChange={(e) => handleInputChange('mfg', e.target.value)}
-                  className="mt-1 h-8 text-sm"
-                />
+                <div className="font-medium text-sm mb-1">MFG:</div>
+                <div className="text-sm">{qf3Data.mfg}</div>
               </div>
               <div>
-                <span className="font-medium">DATE:</span>
-                <Input 
-                  value={qf3Data.date}
-                  onChange={(e) => handleInputChange('date', e.target.value)}
-                  className="mt-1 h-8 text-sm"
-                />
+                <div className="font-medium text-sm mb-1">DATE:</div>
+                <div className="text-sm">{qf3Data.date}</div>
               </div>
               <div>
-                <span className="font-medium">TECH:</span>
-                <Input 
-                  value={qf3Data.tech}
-                  onChange={(e) => handleInputChange('tech', e.target.value)}
-                  className="mt-1 h-8 text-sm"
-                />
+                <div className="font-medium text-sm mb-1">TECH:</div>
+                <div className="text-sm">{qf3Data.tech}</div>
               </div>
               <div>
-                <span className="font-medium">CODE:</span>
-                <Input 
-                  value={qf3Data.code}
-                  onChange={(e) => handleInputChange('code', e.target.value)}
-                  className="mt-1 h-8 text-sm"
-                />
+                <div className="font-medium text-sm mb-1">CODE:</div>
+                <div className="text-sm">{qf3Data.code}</div>
               </div>
               
               <div>
-                <span className="font-medium">MDL:</span>
-                <Input 
-                  value={qf3Data.mdl}
-                  onChange={(e) => handleInputChange('mdl', e.target.value)}
-                  className="mt-1 h-8 text-sm"
-                />
+                <div className="font-medium text-sm mb-1">MDL:</div>
+                <div className="text-sm">{qf3Data.mdl}</div>
               </div>
               <div>
-                <span className="font-medium">S/N:</span>
-                <Input 
-                  value={qf3Data.sn}
-                  onChange={(e) => handleInputChange('sn', e.target.value)}
-                  className="mt-1 h-8 text-sm"
-                />
+                <div className="font-medium text-sm mb-1">S/N:</div>
+                <div className="text-sm">{qf3Data.sn}</div>
               </div>
               <div>
-                <span className="font-medium">W/O #:</span>
-                <Input 
-                  value={qf3Data.wo}
-                  onChange={(e) => handleInputChange('wo', e.target.value)}
-                  className="mt-1 h-8 text-sm"
-                />
+                <div className="font-medium text-sm mb-1">W/O #:</div>
+                <div className="text-sm">{qf3Data.wo}</div>
               </div>
               <div>
-                <span className="font-medium">ID #:</span>
-                <Input 
-                  value={qf3Data.id}
-                  onChange={(e) => handleInputChange('id', e.target.value)}
-                  className="mt-1 h-8 text-sm"
-                />
+                <div className="font-medium text-sm mb-1">ID #:</div>
+                <div className="text-sm">{qf3Data.id}</div>
               </div>
             </div>
             
             <div>
-              <span className="font-medium text-sm">DESC:</span>
-              <Input 
-                value={qf3Data.desc}
-                onChange={(e) => handleInputChange('desc', e.target.value)}
-                className="mt-1 h-8 text-sm w-full"
-              />
+              <div className="font-medium text-sm mb-1">DESC:</div>
+              <div className="text-sm">{qf3Data.desc}</div>
             </div>
           </div>
 
