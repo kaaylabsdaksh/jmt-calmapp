@@ -48,9 +48,9 @@ export const QF3Dialog = ({ open, onOpenChange }: QF3DialogProps) => {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-white">
         <DialogHeader>
-          <DialogTitle className="text-xl font-semibold">QF3 Data</DialogTitle>
+          <DialogTitle className="text-xl font-semibold text-black">QF3 Data</DialogTitle>
         </DialogHeader>
 
         <div className="space-y-6">
