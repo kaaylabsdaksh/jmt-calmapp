@@ -20,6 +20,7 @@ import { Badge } from "@/components/ui/badge";
 import { Calendar } from "@/components/ui/calendar";
 import { FixedActionFooter } from "@/components/FixedActionFooter";
 import { EstimateDetails } from "@/components/EstimateDetails";
+import { QF3Dialog } from "@/components/QF3Dialog";
 import { cn } from "@/lib/utils";
 
 const FormVariationsDemo = () => {
@@ -2716,6 +2717,12 @@ const FormVariationsDemo = () => {
         <FixedActionFooter 
           onCancel={handleCancel}
           onSave={handleSave}
+        />
+
+        {/* QF3 Dialog */}
+        <QF3Dialog 
+          open={qf3DialogOpen} 
+          onOpenChange={setQf3DialogOpen} 
         />
       </div>
     </div>
