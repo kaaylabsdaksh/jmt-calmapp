@@ -805,8 +805,8 @@ const AddNewWorkOrder = () => {
                       </Button>
                       <Button className="bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm">
                         <PlusCircle className="w-3 h-3 sm:w-4 sm:h-4" />
-                        <span className="hidden sm:inline">Add New Item w/PO</span>
-                        <span className="sm:hidden">Add w/PO</span>
+                        <span className="hidden sm:inline">Add New Item w/RFID</span>
+                        <span className="sm:hidden">Add w/RFID</span>
                       </Button>
                       <Button className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm">
                         <QrCode className="w-3 h-3 sm:w-4 sm:h-4" />
