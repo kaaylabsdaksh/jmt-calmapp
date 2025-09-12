@@ -150,72 +150,95 @@ const UnusedItemsManagement = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {/* Table */}
-                <div className="border rounded-lg overflow-hidden">
-                  <Table>
-                    <TableHeader>
-                      <TableRow className="bg-muted/50">
-                        <TableHead className="w-12">
-                          <Checkbox
-                            checked={selectedItems.length === mockUnusedItems.length}
-                            onCheckedChange={handleSelectAll}
-                          />
-                        </TableHead>
-                        <TableHead>Report #</TableHead>
-                        <TableHead>Manufacturer</TableHead>
-                        <TableHead>Model</TableHead>
-                        <TableHead>Serial #</TableHead>
-                        <TableHead>Created</TableHead>
-                        <TableHead>Departure</TableHead>
-                        <TableHead>Item Status</TableHead>
-                        <TableHead>Item Type</TableHead>
-                        <TableHead>Deliver By Date</TableHead>
-                        <TableHead>PO #</TableHead>
-                        <TableHead>Open PO/CO</TableHead>
-                        <TableHead className="w-20">Actions</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {mockUnusedItems.map((item) => (
-                        <TableRow key={item.id} className="hover:bg-muted/50">
-                          <TableCell>
+                {/* Select All */}
+                <div className="flex items-center gap-2 p-4 border rounded-lg bg-muted/50">
+                  <Checkbox
+                    checked={selectedItems.length === mockUnusedItems.length}
+                    onCheckedChange={handleSelectAll}
+                  />
+                  <span className="text-sm font-medium">Select All Items</span>
+                </div>
+
+                {/* Cards Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {mockUnusedItems.map((item) => (
+                    <Card 
+                      key={item.id} 
+                      className={`transition-colors hover:bg-muted/50 ${
+                        selectedItems.includes(item.id) 
+                          ? 'ring-2 ring-primary bg-primary/5' 
+                          : ''
+                      }`}
+                    >
+                      <CardHeader className="pb-3">
+                        <div className="flex items-start justify-between">
+                          <div className="flex-1">
+                            <CardTitle className="text-lg font-semibold">
+                              {item.reportNumber}
+                            </CardTitle>
+                          </div>
+                          <div className="flex items-center gap-2">
                             <Checkbox
                               checked={selectedItems.includes(item.id)}
                               onCheckedChange={(checked) => 
                                 handleSelectItem(item.id, checked as boolean)
                               }
                             />
-                          </TableCell>
-                          <TableCell className="font-medium">
-                            {item.reportNumber}
-                          </TableCell>
-                          <TableCell>{item.manufacturer}</TableCell>
-                          <TableCell>{item.model}</TableCell>
-                          <TableCell>{item.serialNumber}</TableCell>
-                          <TableCell>{item.created}</TableCell>
-                          <TableCell>{item.departure}</TableCell>
-                          <TableCell>
-                            <Badge variant={getStatusBadgeVariant(item.itemStatus)}>
-                              {item.itemStatus}
-                            </Badge>
-                          </TableCell>
-                          <TableCell>
-                            <Badge variant="outline">
-                              {item.itemType}
-                            </Badge>
-                          </TableCell>
-                          <TableCell>{item.deliverByDate}</TableCell>
-                          <TableCell>{item.poNumber}</TableCell>
-                          <TableCell>{item.openPoCo}</TableCell>
-                          <TableCell>
                             <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
                               <Edit className="h-4 w-4" />
                             </Button>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
+                          </div>
+                        </div>
+                      </CardHeader>
+                      <CardContent className="pt-0">
+                        <div className="space-y-3">
+                          <div className="grid grid-cols-2 gap-3 text-sm">
+                            <div>
+                              <span className="text-muted-foreground">Manufacturer:</span>
+                              <p className="font-medium">{item.manufacturer || 'N/A'}</p>
+                            </div>
+                            <div>
+                              <span className="text-muted-foreground">Model:</span>
+                              <p className="font-medium">{item.model || 'N/A'}</p>
+                            </div>
+                            <div>
+                              <span className="text-muted-foreground">Serial #:</span>
+                              <p className="font-medium">{item.serialNumber || 'N/A'}</p>
+                            </div>
+                            <div>
+                              <span className="text-muted-foreground">Created:</span>
+                              <p className="font-medium">{item.created || 'N/A'}</p>
+                            </div>
+                            <div>
+                              <span className="text-muted-foreground">Departure:</span>
+                              <p className="font-medium">{item.departure || 'N/A'}</p>
+                            </div>
+                            <div>
+                              <span className="text-muted-foreground">Deliver By:</span>
+                              <p className="font-medium">{item.deliverByDate || 'N/A'}</p>
+                            </div>
+                            <div>
+                              <span className="text-muted-foreground">PO #:</span>
+                              <p className="font-medium">{item.poNumber || 'N/A'}</p>
+                            </div>
+                            <div>
+                              <span className="text-muted-foreground">Open PO/CO:</span>
+                              <p className="font-medium">{item.openPoCo || 'N/A'}</p>
+                            </div>
+                          </div>
+                          
+                          <div className="flex items-center gap-2 pt-2">
+                            <Badge variant={getStatusBadgeVariant(item.itemStatus)}>
+                              {item.itemStatus}
+                            </Badge>
+                            <Badge variant="outline">
+                              {item.itemType}
+                            </Badge>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
                 </div>
 
                 {/* Pagination */}
