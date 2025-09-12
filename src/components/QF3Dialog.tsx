@@ -54,22 +54,11 @@ export const QF3Dialog = ({ open, onOpenChange }: QF3DialogProps) => {
         </DialogHeader>
 
         <div className="space-y-6">
-          {/* Required Fields Notice */}
-          <div className="bg-red-50 border border-red-200 rounded-md p-3">
-            <p className="text-red-600 text-sm font-medium text-center">
-              The following are required to submit this QF3:
-            </p>
-            <p className="text-red-600 text-xs text-center mt-1">
-              Vendor to Perform<br />
-              Describe Malfunctions or Special Instructions
-            </p>
-          </div>
-
-          {/* QF3 Created Header */}
-          <div className="bg-muted rounded-md p-3">
-            <h3 className="text-center font-semibold text-lg">QF3 Created</h3>
-            <p className="text-center text-sm text-muted-foreground mt-1">
-              Technician must complete equipment information, vendor information, reason for factory return.
+          {/* Minimal Header Info */}
+          <div className="text-center space-y-2">
+            <h3 className="text-lg font-semibold text-gray-700">QF3 Created</h3>
+            <p className="text-sm text-red-600">
+              <span className="font-medium">Required:</span> Vendor to Perform • Describe Malfunctions or Special Instructions
             </p>
           </div>
 
