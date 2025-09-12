@@ -64,49 +64,53 @@ export const QF3Dialog = ({ open, onOpenChange }: QF3DialogProps) => {
           {/* Equipment Information */}
           <div className="space-y-4">
             <div className="border-b pb-2">
-              <h3 className="text-base font-semibold">Equipment Information</h3>
-              <p className="text-xs text-muted-foreground">Technician must complete equipment information, vendor information, reason for factory return.</p>
+              <h3 className="text-base font-semibold text-gray-800">Equipment Information</h3>
             </div>
             
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              <div>
-                <div className="font-medium text-sm mb-1">MFG:</div>
-                <div className="text-sm">{qf3Data.mfg}</div>
-              </div>
-              <div>
-                <div className="font-medium text-sm mb-1">DATE:</div>
-                <div className="text-sm">{qf3Data.date}</div>
-              </div>
-              <div>
-                <div className="font-medium text-sm mb-1">TECH:</div>
-                <div className="text-sm">{qf3Data.tech}</div>
-              </div>
-              <div>
-                <div className="font-medium text-sm mb-1">CODE:</div>
-                <div className="text-sm">{qf3Data.code}</div>
+            {/* Clean grid layout */}
+            <div className="bg-gray-50 rounded-lg p-6">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-6">
+                <div className="space-y-1">
+                  <div className="text-xs font-medium text-gray-500 uppercase tracking-wide">MFG</div>
+                  <div className="text-sm font-medium text-gray-900">{qf3Data.mfg}</div>
+                </div>
+                <div className="space-y-1">
+                  <div className="text-xs font-medium text-gray-500 uppercase tracking-wide">Date</div>  
+                  <div className="text-sm font-medium text-gray-900">{qf3Data.date}</div>
+                </div>
+                <div className="space-y-1">
+                  <div className="text-xs font-medium text-gray-500 uppercase tracking-wide">Tech</div>
+                  <div className="text-sm font-medium text-gray-900">{qf3Data.tech}</div>
+                </div>
+                <div className="space-y-1">
+                  <div className="text-xs font-medium text-gray-500 uppercase tracking-wide">Code</div>
+                  <div className="text-sm font-medium text-gray-900">{qf3Data.code}</div>
+                </div>
+                
+                <div className="space-y-1">
+                  <div className="text-xs font-medium text-gray-500 uppercase tracking-wide">Model</div>
+                  <div className="text-sm font-medium text-gray-900">{qf3Data.mdl}</div>
+                </div>
+                <div className="space-y-1">
+                  <div className="text-xs font-medium text-gray-500 uppercase tracking-wide">S/N</div>
+                  <div className="text-sm font-medium text-gray-900">{qf3Data.sn}</div>
+                </div>
+                <div className="space-y-1">
+                  <div className="text-xs font-medium text-gray-500 uppercase tracking-wide">W/O #</div>
+                  <div className="text-sm font-medium text-gray-900">{qf3Data.wo}</div>
+                </div>
+                <div className="space-y-1">
+                  <div className="text-xs font-medium text-gray-500 uppercase tracking-wide">ID #</div>
+                  <div className="text-sm font-medium text-gray-900">{qf3Data.id}</div>
+                </div>
               </div>
               
-              <div>
-                <div className="font-medium text-sm mb-1">MDL:</div>
-                <div className="text-sm">{qf3Data.mdl}</div>
+              <div className="mt-6 pt-4 border-t border-gray-200">
+                <div className="space-y-1">
+                  <div className="text-xs font-medium text-gray-500 uppercase tracking-wide">Description</div>
+                  <div className="text-sm font-medium text-gray-900">{qf3Data.desc}</div>
+                </div>
               </div>
-              <div>
-                <div className="font-medium text-sm mb-1">S/N:</div>
-                <div className="text-sm">{qf3Data.sn}</div>
-              </div>
-              <div>
-                <div className="font-medium text-sm mb-1">W/O #:</div>
-                <div className="text-sm">{qf3Data.wo}</div>
-              </div>
-              <div>
-                <div className="font-medium text-sm mb-1">ID #:</div>
-                <div className="text-sm">{qf3Data.id}</div>
-              </div>
-            </div>
-            
-            <div>
-              <div className="font-medium text-sm mb-1">DESC:</div>
-              <div className="text-sm">{qf3Data.desc}</div>
             </div>
           </div>
 
