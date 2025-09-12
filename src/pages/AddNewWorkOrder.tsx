@@ -824,7 +824,10 @@ const AddNewWorkOrder = () => {
                         <span className="hidden sm:inline">Copy From Other WO</span>
                         <span className="sm:hidden">Copy WO</span>
                       </Button>
-                      <Button className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm">
+                      <Button 
+                        onClick={() => navigate('/unused-items')}
+                        className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
+                      >
                         <PackagePlus className="w-3 h-3 sm:w-4 sm:h-4" />
                         <span className="hidden sm:inline">Create Unused Items</span>
                         <span className="sm:hidden">Unused Items</span>

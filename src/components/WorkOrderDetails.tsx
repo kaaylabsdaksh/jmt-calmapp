@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -37,6 +38,7 @@ interface WorkOrderDetailsProps {
 
 const WorkOrderDetails = ({ workOrderId }: WorkOrderDetailsProps) => {
   console.log("WorkOrderDetails component rendering with ID:", workOrderId);
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("general");
   const [itemsViewMode, setItemsViewMode] = useState("cards");
   
@@ -386,7 +388,12 @@ const WorkOrderDetails = ({ workOrderId }: WorkOrderDetailsProps) => {
                     <Package className="h-4 w-4" />
                     Copy From Other WO
                   </Button>
-                  <Button variant="secondary" size="sm" className="flex items-center gap-2">
+                  <Button 
+                    variant="secondary" 
+                    size="sm" 
+                    className="flex items-center gap-2"
+                    onClick={() => navigate('/unused-items')}
+                  >
                     <Package className="h-4 w-4" />
                     Create Unused Items
                   </Button>
