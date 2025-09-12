@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -21,7 +21,33 @@ import { RFIDDialog } from "@/components/RFIDDialog";
 
 const AddNewWorkOrder = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const isMobile = useIsMobile();
+
+  // Check if navigated from home page to reset state
+  useEffect(() => {
+    const fromHomePage = location.state?.from === 'home' || 
+                         (document.referrer && document.referrer.endsWith('/')) ||
+                         (!location.state && !localStorage.getItem('navigationSource'));
+    
+    if (fromHomePage) {
+      // Clear localStorage only when coming from home page
+      localStorage.removeItem('addNewWorkOrderActiveTab');
+      localStorage.removeItem('workOrderData');
+      // Set a flag to indicate we're in a fresh session
+      localStorage.setItem('navigationSource', 'home');
+    } else {
+      // Set navigation source to non-home for future reference
+      localStorage.setItem('navigationSource', 'internal');
+    }
+  }, [location]);
+
+  // Clear navigation source when leaving the component
+  useEffect(() => {
+    return () => {
+      localStorage.removeItem('navigationSource');
+    };
+  }, []);
   const [activeTab, setActiveTab] = useState(() => {
     const savedTab = localStorage.getItem('addNewWorkOrderActiveTab');
     return savedTab || "general";

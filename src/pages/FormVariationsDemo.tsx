@@ -302,12 +302,12 @@ const FormVariationsDemo = () => {
   const handleSave = () => {
     console.log("Saving work order item:", formData);
     // Navigate back to main work order page
-    navigate("/add-new-work-order");
+    navigate("/add-new-work-order", { state: { from: 'work-order-items' } });
   };
 
   const handleCancel = () => {
     // Navigate back to main work order page
-    navigate("/add-new-work-order");
+    navigate("/add-new-work-order", { state: { from: 'work-order-items' } });
   };
 
   const handleAddNewManufacturer = () => {

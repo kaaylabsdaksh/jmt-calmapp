@@ -31,7 +31,12 @@ const UnusedItemsTopNav = () => {
                     asChild 
                     className="text-xs text-muted-foreground hover:text-foreground transition-colors"
                   >
-                    <Link to="/add-new-work-order">Add New Work Order</Link>
+                    <Link 
+                      to="/add-new-work-order" 
+                      state={{ from: 'unused-items' }}
+                    >
+                      Add New Work Order
+                    </Link>
                   </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
@@ -50,7 +55,7 @@ const UnusedItemsTopNav = () => {
           <Button 
             variant="outline"
             className="rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border-border text-foreground hover:bg-blue-500 hover:text-white hover:border-blue-500 bg-transparent transform hover:scale-105 text-sm font-medium"
-            onClick={() => navigate("/add-new-work-order")}
+            onClick={() => navigate("/add-new-work-order", { state: { from: 'unused-items' } })}
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Add Work Order

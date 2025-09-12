@@ -36,7 +36,7 @@ const StandardTopNav = ({
     if (addButtonAction) {
       addButtonAction();
     } else {
-      navigate("/add-new-work-order");
+      navigate("/add-new-work-order", { state: { from: 'other' } });
     }
   };
 
