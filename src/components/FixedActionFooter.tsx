@@ -5,7 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
-import { X, Save, Copy, Printer, Tag, QrCode, ArrowLeft, FileText, Package, Mail, Send, CheckCircle, XCircle, Clock, Pause } from 'lucide-react';
+import { X, Save, Copy, Printer, Tag, QrCode, ArrowLeft, FileText, Package, Mail, Send, CheckCircle, XCircle, Clock, Pause, User, Shield } from 'lucide-react';
 
 interface FixedActionFooterProps {
   onCancel: () => void;
@@ -15,6 +15,7 @@ interface FixedActionFooterProps {
   isLoading?: boolean;
   currentSection?: 'work-order-items' | 'estimate' | 'qf3';
   userRole?: 'admin' | 'technician';
+  onUserRoleChange?: (role: 'admin' | 'technician') => void;
 }
 
 export const FixedActionFooter = ({ 
@@ -24,7 +25,8 @@ export const FixedActionFooter = ({
   cancelText = "Cancel",
   isLoading = false,
   currentSection = 'work-order-items',
-  userRole = 'technician'
+  userRole = 'technician',
+  onUserRoleChange
 }: FixedActionFooterProps) => {
   const [numTags, setNumTags] = useState("1");
   const [acctNum, setAcctNum] = useState("");
@@ -152,66 +154,93 @@ export const FixedActionFooter = ({
           {/* Conditional Footer based on current section */}
           {currentSection === 'estimate' ? (
             // Estimate Footer - Conditional based on user role
-            <div className="flex flex-wrap items-center justify-center gap-2 text-xs">
-              {/* Common buttons for both roles */}
-              <Button 
-                size="sm"
-                onClick={onSave}
-                disabled={isLoading}
-                className="bg-primary text-primary-foreground hover:bg-primary/90"
-              >
-                <Save className="h-3 w-3 mr-1" />
-                Save
-              </Button>
+            <div className="space-y-2">
+              {/* Role Toggle in Footer */}
+              <div className="flex justify-center">
+                <div className="flex items-center gap-1 p-1 bg-muted rounded-lg">
+                  <Button
+                    variant={userRole === 'technician' ? 'default' : 'ghost'}
+                    size="sm"
+                    onClick={() => onUserRoleChange?.('technician')}
+                    className="flex items-center gap-1 h-7 text-xs px-2 sm:px-3"
+                  >
+                    <User className="h-3 w-3" />
+                    <span>Technician</span>
+                  </Button>
+                  <Button
+                    variant={userRole === 'admin' ? 'default' : 'ghost'}
+                    size="sm"
+                    onClick={() => onUserRoleChange?.('admin')}
+                    className="flex items-center gap-1 h-7 text-xs px-2 sm:px-3"
+                  >
+                    <Shield className="h-3 w-3" />
+                    <span>Admin</span>
+                  </Button>
+                </div>
+              </div>
               
-              <Button size="sm" variant="outline" onClick={handlePrint}>
-                <Printer className="h-3 w-3 mr-1" />
-                Print
-              </Button>
-              
-              <Button size="sm" variant="outline" onClick={handleEmailToAR}>
-                <Mail className="h-3 w-3 mr-1" />
-                Email to AR
-              </Button>
-              
-              <Button size="sm" variant="outline" onClick={handleHold} className="text-orange-600 hover:text-orange-700">
-                <Pause className="h-3 w-3 mr-1" />
-                Hold
-              </Button>
-              
-              {/* Admin-only buttons */}
-              {userRole === 'admin' && (
-                <>
-                  <Button size="sm" variant="outline" onClick={handleSendToEstTray}>
-                    Send to Est Tray
-                  </Button>
-                  
-                  <Button size="sm" variant="outline" onClick={handleSendToCost}>
-                    <Send className="h-3 w-3 mr-1" />
-                    Send to Cost
-                  </Button>
-                  
-                  <Button size="sm" variant="outline" onClick={handleApprove} className="text-green-600 hover:text-green-700">
-                    <CheckCircle className="h-3 w-3 mr-1" />
-                    Approve
-                  </Button>
-                  
-                  <Button size="sm" variant="outline" onClick={handleDeclineDispose} className="text-red-600 hover:text-red-700">
-                    <XCircle className="h-3 w-3 mr-1" />
-                    Decline: Dispose
-                  </Button>
-                  
-                  <Button size="sm" variant="outline" onClick={handleDeclineSendBack} className="text-red-600 hover:text-red-700">
-                    <XCircle className="h-3 w-3 mr-1" />
-                    Decline: Send Back
-                  </Button>
-                  
-                  <Button size="sm" variant="outline" onClick={handleBack}>
-                    <ArrowLeft className="h-3 w-3 mr-1" />
-                    Back
-                  </Button>
-                </>
-              )}
+              {/* Action Buttons */}
+              <div className="flex flex-wrap items-center justify-center gap-2 text-xs">
+                {/* Common buttons for both roles */}
+                <Button 
+                  size="sm"
+                  onClick={onSave}
+                  disabled={isLoading}
+                  className="bg-primary text-primary-foreground hover:bg-primary/90"
+                >
+                  <Save className="h-3 w-3 mr-1" />
+                  Save
+                </Button>
+                
+                <Button size="sm" variant="outline" onClick={handlePrint}>
+                  <Printer className="h-3 w-3 mr-1" />
+                  Print
+                </Button>
+                
+                <Button size="sm" variant="outline" onClick={handleEmailToAR}>
+                  <Mail className="h-3 w-3 mr-1" />
+                  Email to AR
+                </Button>
+                
+                <Button size="sm" variant="outline" onClick={handleHold} className="text-orange-600 hover:text-orange-700">
+                  <Pause className="h-3 w-3 mr-1" />
+                  Hold
+                </Button>
+                
+                {/* Admin-only buttons */}
+                {userRole === 'admin' && (
+                  <>
+                    <Button size="sm" variant="outline" onClick={handleSendToEstTray}>
+                      Send to Est Tray
+                    </Button>
+                    
+                    <Button size="sm" variant="outline" onClick={handleSendToCost}>
+                      <Send className="h-3 w-3 mr-1" />
+                      Send to Cost
+                    </Button>
+                    
+                    <Button size="sm" variant="outline" onClick={handleApprove} className="text-green-600 hover:text-green-700">
+                      <CheckCircle className="h-3 w-3 mr-1" />
+                      Approve
+                    </Button>
+                    
+                    <Button size="sm" variant="outline" onClick={handleDeclineDispose} className="text-red-600 hover:text-red-700">
+                      <XCircle className="h-3 w-3 mr-1" />
+                      Decline: Dispose
+                    </Button>
+                    
+                    <Button size="sm" variant="outline" onClick={handleDeclineSendBack} className="text-red-600 hover:text-red-700">
+                      <XCircle className="h-3 w-3 mr-1" />
+                      Decline: Send Back
+                    </Button>
+                    
+                    <Button size="sm" variant="outline" onClick={handleBack}>
+                      <ArrowLeft className="h-3 w-3 mr-1" />
+                      Back
+                    </Button>
+                  </>
+                )}
+              </div>
             </div>
           ) : (
             // Default Work Order Items Footer

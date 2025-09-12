@@ -2746,6 +2746,7 @@ const FormVariationsDemo = () => {
           onSave={handleSave}
           currentSection={activeSection}
           userRole={userRole}
+          onUserRoleChange={setUserRole}
         />
 
         {/* QF3 Dialog */}
