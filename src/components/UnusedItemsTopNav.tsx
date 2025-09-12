@@ -27,6 +27,15 @@ const UnusedItemsTopNav = () => {
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
+                  <BreadcrumbLink 
+                    asChild 
+                    className="text-xs text-muted-foreground hover:text-foreground"
+                  >
+                    <Link to="/add-new-work-order">Add New Work Order</Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
                   <BreadcrumbPage className="text-xs text-foreground font-medium">
                     Unused Items
                   </BreadcrumbPage>
@@ -44,7 +53,7 @@ const UnusedItemsTopNav = () => {
             onClick={() => navigate("/add-new-work-order")}
           >
             <Plus className="h-4 w-4 mr-2" />
-            Add New Item
+            Back to Add Work Order
           </Button>
           <Button 
             variant="ghost" 
