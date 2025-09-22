@@ -1477,21 +1477,15 @@ const FormVariationsDemo = () => {
 
   // Render lab section
   const renderLabSection = () => (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-3">
-          <Settings className="h-5 w-5 text-primary" />
-          Lab Details
-        </CardTitle>
-        <CardDescription>Laboratory-specific information for BUILD NEW items</CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-          {/* Condition In */}
+    <div className="space-y-8 animate-fade-in">
+      {/* Condition and Technician Fields */}
+      <div className="space-y-6">
+        {/* Row 1: Condition Fields */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <Label htmlFor="conditionIn" className="text-sm font-medium">Condition In</Label>
+            <Label htmlFor="conditionIn" className="text-sm font-medium text-foreground/90">Condition In</Label>
             <Select value={formData.conditionIn} onValueChange={(value) => handleInputChange("conditionIn", value)}>
-              <SelectTrigger className="h-11">
+              <SelectTrigger className="h-11 border-border/50 hover:border-border transition-colors">
                 <SelectValue placeholder="Select condition" />
               </SelectTrigger>
               <SelectContent className="bg-popover border z-50">
@@ -1503,11 +1497,10 @@ const FormVariationsDemo = () => {
             </Select>
           </div>
 
-          {/* Condition Out */}
           <div className="space-y-2">
-            <Label htmlFor="conditionOut" className="text-sm font-medium">Condition Out</Label>
+            <Label htmlFor="conditionOut" className="text-sm font-medium text-foreground/90">Condition Out</Label>
             <Select value={formData.conditionOut} onValueChange={(value) => handleInputChange("conditionOut", value)}>
-              <SelectTrigger className="h-11">
+              <SelectTrigger className="h-11 border-border/50 hover:border-border transition-colors">
                 <SelectValue placeholder="Select condition" />
               </SelectTrigger>
               <SelectContent className="bg-popover border z-50">
@@ -1518,12 +1511,14 @@ const FormVariationsDemo = () => {
               </SelectContent>
             </Select>
           </div>
+        </div>
 
-          {/* Technician 1 */}
+        {/* Row 2: Technician Fields */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="technician1" className="text-sm font-medium">Technician 1</Label>
+            <Label htmlFor="technician1" className="text-sm font-medium text-foreground/90">Technician 1</Label>
             <Select value={formData.technician1} onValueChange={(value) => handleInputChange("technician1", value)}>
-              <SelectTrigger className="h-11">
+              <SelectTrigger className="h-11 border-border/50 hover:border-border transition-colors">
                 <SelectValue placeholder="Select technician" />
               </SelectTrigger>
               <SelectContent className="bg-popover border z-50">
@@ -1535,11 +1530,10 @@ const FormVariationsDemo = () => {
             </Select>
           </div>
 
-          {/* Technician 2 */}
           <div className="space-y-2">
-            <Label htmlFor="technician2" className="text-sm font-medium">Technician 2</Label>
+            <Label htmlFor="technician2" className="text-sm font-medium text-foreground/90">Technician 2</Label>
             <Select value={formData.technician2} onValueChange={(value) => handleInputChange("technician2", value)}>
-              <SelectTrigger className="h-11">
+              <SelectTrigger className="h-11 border-border/50 hover:border-border transition-colors">
                 <SelectValue placeholder="Select technician" />
               </SelectTrigger>
               <SelectContent className="bg-popover border z-50">
@@ -1551,11 +1545,10 @@ const FormVariationsDemo = () => {
             </Select>
           </div>
 
-          {/* Technician 3 */}
           <div className="space-y-2">
-            <Label htmlFor="technician3" className="text-sm font-medium">Technician 3</Label>
+            <Label htmlFor="technician3" className="text-sm font-medium text-foreground/90">Technician 3</Label>
             <Select value={formData.technician3} onValueChange={(value) => handleInputChange("technician3", value)}>
-              <SelectTrigger className="h-11">
+              <SelectTrigger className="h-11 border-border/50 hover:border-border transition-colors">
                 <SelectValue placeholder="Select technician" />
               </SelectTrigger>
               <SelectContent className="bg-popover border z-50">
@@ -1566,12 +1559,14 @@ const FormVariationsDemo = () => {
               </SelectContent>
             </Select>
           </div>
+        </div>
 
-          {/* Add Comment */}
+        {/* Row 3: Add Comment and Repair */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <Label htmlFor="addComment" className="text-sm font-medium">Add Comment</Label>
+            <Label htmlFor="addComment" className="text-sm font-medium text-foreground/90">Add Comment</Label>
             <Select value={formData.addComment} onValueChange={(value) => handleInputChange("addComment", value)}>
-              <SelectTrigger className="h-11">
+              <SelectTrigger className="h-11 border-border/50 hover:border-border transition-colors">
                 <SelectValue placeholder="Select comment type" />
               </SelectTrigger>
               <SelectContent className="bg-popover border z-50">
@@ -1582,69 +1577,74 @@ const FormVariationsDemo = () => {
               </SelectContent>
             </Select>
           </div>
-        </div>
 
-        {/* Repair Comments - Full width */}
-        <div className="space-y-2">
-          <div className="flex items-center justify-between">
-            <Label htmlFor="repairComments" className="text-sm font-medium">Repair Comments</Label>
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              className="h-8 px-3 text-xs"
-              onClick={() => {
-                const textarea = document.getElementById('repairComments') as HTMLTextAreaElement;
-                if (textarea) {
-                  textarea.style.height = textarea.style.height === '120px' ? '60px' : '120px';
-                }
-              }}
-            >
-              Expand Comments
-            </Button>
-          </div>
-          <textarea
-            id="repairComments"
-            value={formData.repairComments}
-            onChange={(e) => handleInputChange("repairComments", e.target.value)}
-            placeholder="Enter repair comments..."
-            className="w-full h-16 px-3 py-2 border border-input rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 transition-all"
-            style={{ minHeight: '60px' }}
-          />
-        </div>
-
-        {/* Date Fields */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="certificationDate" className="text-sm font-medium">Certification Date</Label>
+            <div className="flex items-center justify-between">
+              <Label htmlFor="repairComments" className="text-sm font-medium text-foreground/90">Repair</Label>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                className="h-7 px-2 text-xs text-muted-foreground hover:text-foreground"
+                onClick={() => {
+                  const textarea = document.getElementById('repairComments') as HTMLTextAreaElement;
+                  if (textarea) {
+                    textarea.style.height = textarea.style.height === '120px' ? '60px' : '120px';
+                  }
+                }}
+              >
+                Expand
+              </Button>
+            </div>
+            <textarea
+              id="repairComments"
+              value={formData.repairComments}
+              onChange={(e) => handleInputChange("repairComments", e.target.value)}
+              placeholder="Enter repair comments..."
+              className="w-full h-16 px-3 py-2 border border-border/50 rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 transition-all hover:border-border"
+              style={{ minHeight: '60px' }}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Dates Section */}
+      <div className="space-y-4">
+        <div className="h-px bg-border/50" />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-2">
+            <Label htmlFor="certificationDate" className="text-sm font-medium text-foreground/90">Certification Date</Label>
             <Input
               id="certificationDate"
               type="date"
               value={formData.certificationDate}
               onChange={(e) => handleInputChange("certificationDate", e.target.value)}
-              className="h-11"
+              className="h-11 border-border/50 hover:border-border transition-colors"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="recalibrationDate" className="text-sm font-medium">Recalibration Date</Label>
+            <Label htmlFor="recalibrationDate" className="text-sm font-medium text-foreground/90">Recalibration Date</Label>
             <Input
               id="recalibrationDate"
               type="date"
               value={formData.recalibrationDate}
               onChange={(e) => handleInputChange("recalibrationDate", e.target.value)}
-              className="h-11"
+              className="h-11 border-border/50 hover:border-border transition-colors"
             />
           </div>
         </div>
+      </div>
 
-        {/* Lab Temperature and RH */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {/* Lab Environment Section */}
+      <div className="space-y-4">
+        <div className="h-px bg-border/50" />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Lab Temp</Label>
+            <Label className="text-sm font-medium text-foreground/90">Lab Temperature</Label>
             <div className="flex gap-2">
               <Select value={formData.labTempUnit} onValueChange={(value) => handleInputChange("labTempUnit", value)}>
-                <SelectTrigger className="h-11 w-20">
+                <SelectTrigger className="h-11 w-20 border-border/50 hover:border-border transition-colors">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="bg-popover border z-50">
@@ -1656,17 +1656,17 @@ const FormVariationsDemo = () => {
               <Input
                 value={formData.labTempValue}
                 onChange={(e) => handleInputChange("labTempValue", e.target.value)}
-                placeholder="Enter value"
-                className="h-11 flex-1"
+                placeholder="Value"
+                className="h-11 flex-1 border-border/50 hover:border-border transition-colors"
               />
             </div>
           </div>
 
           <div className="space-y-2">
-            <Label className="text-sm font-medium">Lab RH</Label>
+            <Label className="text-sm font-medium text-foreground/90">Lab Humidity</Label>
             <div className="flex gap-2">
               <Select value={formData.labRhUnit} onValueChange={(value) => handleInputChange("labRhUnit", value)}>
-                <SelectTrigger className="h-11 w-20">
+                <SelectTrigger className="h-11 w-20 border-border/50 hover:border-border transition-colors">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="bg-popover border z-50">
@@ -1678,97 +1678,105 @@ const FormVariationsDemo = () => {
               <Input
                 value={formData.labRhValue}
                 onChange={(e) => handleInputChange("labRhValue", e.target.value)}
-                placeholder="Enter value"
-                className="h-11 flex-1"
+                placeholder="Value"
+                className="h-11 flex-1 border-border/50 hover:border-border transition-colors"
               />
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Standards and Procedures */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {/* Standards and Procedures Section */}
+      <div className="space-y-4">
+        <div className="h-px bg-border/50" />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <Label htmlFor="standardsUsed" className="text-sm font-medium">Standards Used</Label>
+            <Label htmlFor="standardsUsed" className="text-sm font-medium text-foreground/90">Standards Used</Label>
             <textarea
               id="standardsUsed"
               value={formData.standardsUsed}
               onChange={(e) => handleInputChange("standardsUsed", e.target.value)}
               placeholder="Enter standards used..."
-              className="w-full h-20 px-3 py-2 border border-input rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+              className="w-full h-20 px-3 py-2 border border-border/50 rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 transition-all hover:border-border"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="calProcedureUsed" className="text-sm font-medium">Cal Procedure Used</Label>
+            <Label htmlFor="calProcedureUsed" className="text-sm font-medium text-foreground/90">Calibration Procedure</Label>
             <Input
               id="calProcedureUsed"
               value={formData.calProcedureUsed}
               onChange={(e) => handleInputChange("calProcedureUsed", e.target.value)}
               placeholder="Enter procedure"
-              className="h-11"
+              className="h-11 border-border/50 hover:border-border transition-colors"
             />
           </div>
         </div>
 
-        {/* Procedure Files */}
         <div className="space-y-2">
-          <Label htmlFor="procedureFiles" className="text-sm font-medium">Procedure File(s)</Label>
+          <Label htmlFor="procedureFiles" className="text-sm font-medium text-foreground/90">Procedure Files</Label>
           <Input
             id="procedureFiles"
             value={formData.procedureFiles}
             onChange={(e) => handleInputChange("procedureFiles", e.target.value)}
             placeholder="Enter procedure files"
-            className="h-11"
+            className="h-11 border-border/50 hover:border-border transition-colors"
           />
         </div>
+      </div>
 
-        {/* Supp Data Files Section */}
-        <div className="space-y-4 pt-4 border-t border-border">
-          <h4 className="font-medium text-sm">Supp Data Files</h4>
-          <div className="p-4 bg-muted/50 rounded-lg text-center text-muted-foreground text-sm">
-            No data to display
+      {/* Data Files Section */}
+      <div className="space-y-4">
+        <div className="h-px bg-border/50" />
+        <div className="space-y-3">
+          <Label className="text-sm font-medium text-foreground/90">Supplemental Data Files</Label>
+          <div className="p-6 bg-muted/30 rounded-lg text-center">
+            <p className="text-sm text-muted-foreground">No data files available</p>
           </div>
         </div>
+      </div>
 
-        {/* Action Buttons and Cost Display */}
-        <div className="space-y-4 pt-4 border-t border-border">
-          <div className="flex flex-wrap gap-2">
-            <Button variant="outline" size="sm" className="gap-2">
-              <User className="h-4 w-4" />
-              Print
-            </Button>
-            <Button variant="outline" size="sm" className="gap-2">
-              <Shield className="h-4 w-4" />
-              Email
-            </Button>
-            <Button variant="outline" size="sm" className="gap-2">
-              <FileText className="h-4 w-4" />
-              QF3
-            </Button>
-            <Button variant="outline" size="sm" className="gap-2">
-              <Settings className="h-4 w-4" />
-              Review
-            </Button>
+      {/* Actions and Cost Summary */}
+      <div className="space-y-6">
+        <div className="h-px bg-border/50" />
+        
+        {/* Action Buttons */}
+        <div className="flex flex-wrap gap-2">
+          <Button variant="outline" size="sm" className="gap-2 hover-scale">
+            <User className="h-4 w-4" />
+            Print
+          </Button>
+          <Button variant="outline" size="sm" className="gap-2 hover-scale">
+            <Shield className="h-4 w-4" />
+            Email
+          </Button>
+          <Button variant="outline" size="sm" className="gap-2 hover-scale">
+            <FileText className="h-4 w-4" />
+            QF3
+          </Button>
+          <Button variant="outline" size="sm" className="gap-2 hover-scale">
+            <Settings className="h-4 w-4" />
+            Review
+          </Button>
+        </div>
+
+        {/* Cost Summary */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-4 bg-muted/20 rounded-lg">
+          <div className="text-center">
+            <div className="text-xs text-muted-foreground mb-1">Cal/Cert Cost</div>
+            <div className="text-lg font-semibold">${formData.calCertCost.toFixed(2)}</div>
           </div>
-
-          {/* Cost Summary */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t border-border">
-            <div className="space-y-1">
-              <Label className="text-xs text-muted-foreground">Cal/Cert Cost</Label>
-              <div className="text-lg font-semibold">${formData.calCertCost.toFixed(2)}</div>
-            </div>
-            <div className="space-y-1">
-              <Label className="text-xs text-muted-foreground">Repair Cost</Label>
-              <div className="text-lg font-semibold">${formData.repairCost.toFixed(2)}</div>
-            </div>
-            <div className="space-y-1">
-              <Label className="text-xs text-muted-foreground">Total Cost</Label>
-              <div className="text-xl font-bold text-primary">${formData.totalCost.toFixed(2)}</div>
-            </div>
+          <div className="text-center">
+            <div className="text-xs text-muted-foreground mb-1">Repair Cost</div>
+            <div className="text-lg font-semibold">${formData.repairCost.toFixed(2)}</div>
+          </div>
+          <div className="text-center">
+            <div className="text-xs text-muted-foreground mb-1">Total Cost</div>
+            <div className="text-xl font-bold text-primary">${formData.totalCost.toFixed(2)}</div>
           </div>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 
   // Render product images section
