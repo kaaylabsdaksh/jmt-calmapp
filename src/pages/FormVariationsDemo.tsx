@@ -702,103 +702,102 @@ const FormVariationsDemo = () => {
                 </div>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-                {/* Condition In */}
-                <div className="space-y-2">
-                  <Label htmlFor="conditionIn" className="text-sm font-medium">Condition In</Label>
-                  <Select value={formData.conditionIn} onValueChange={(value) => handleInputChange("conditionIn", value)}>
-                    <SelectTrigger className="h-11">
-                      <SelectValue placeholder="Select condition" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-popover border z-50">
-                      <SelectItem value="good">Good</SelectItem>
-                      <SelectItem value="fair">Fair</SelectItem>
-                      <SelectItem value="poor">Poor</SelectItem>
-                      <SelectItem value="damaged">Damaged</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+        {/* Condition Fields Row */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <Label htmlFor="conditionIn" className="text-sm font-medium">Condition In</Label>
+            <Select value={formData.conditionIn} onValueChange={(value) => handleInputChange("conditionIn", value)}>
+              <SelectTrigger className="h-11">
+                <SelectValue placeholder="Select condition" />
+              </SelectTrigger>
+              <SelectContent className="bg-popover border z-50">
+                <SelectItem value="good">Good</SelectItem>
+                <SelectItem value="fair">Fair</SelectItem>
+                <SelectItem value="poor">Poor</SelectItem>
+                <SelectItem value="damaged">Damaged</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
 
-                {/* Condition Out */}
-                <div className="space-y-2">
-                  <Label htmlFor="conditionOut" className="text-sm font-medium">Condition Out</Label>
-                  <Select value={formData.conditionOut} onValueChange={(value) => handleInputChange("conditionOut", value)}>
-                    <SelectTrigger className="h-11">
-                      <SelectValue placeholder="Select condition" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-popover border z-50">
-                      <SelectItem value="good">Good</SelectItem>
-                      <SelectItem value="fair">Fair</SelectItem>
-                      <SelectItem value="poor">Poor</SelectItem>
-                      <SelectItem value="repaired">Repaired</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+          <div className="space-y-2">
+            <Label htmlFor="conditionOut" className="text-sm font-medium">Condition Out</Label>
+            <Select value={formData.conditionOut} onValueChange={(value) => handleInputChange("conditionOut", value)}>
+              <SelectTrigger className="h-11">
+                <SelectValue placeholder="Select condition" />
+              </SelectTrigger>
+              <SelectContent className="bg-popover border z-50">
+                <SelectItem value="good">Good</SelectItem>
+                <SelectItem value="fair">Fair</SelectItem>
+                <SelectItem value="poor">Poor</SelectItem>
+                <SelectItem value="repaired">Repaired</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
 
-                {/* Technician 1 */}
-                <div className="space-y-2">
-                  <Label htmlFor="technician1" className="text-sm font-medium">Technician 1</Label>
-                  <Select value={formData.technician1} onValueChange={(value) => handleInputChange("technician1", value)}>
-                    <SelectTrigger className="h-11">
-                      <SelectValue placeholder="Select technician" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-popover border z-50">
-                      <SelectItem value="john-doe">John Doe</SelectItem>
-                      <SelectItem value="jane-smith">Jane Smith</SelectItem>
-                      <SelectItem value="mike-johnson">Mike Johnson</SelectItem>
-                      <SelectItem value="sarah-wilson">Sarah Wilson</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+        {/* Technician Fields Row */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="space-y-2">
+            <Label htmlFor="technician1" className="text-sm font-medium">Technician 1</Label>
+            <Select value={formData.technician1} onValueChange={(value) => handleInputChange("technician1", value)}>
+              <SelectTrigger className="h-11">
+                <SelectValue placeholder="Select technician" />
+              </SelectTrigger>
+              <SelectContent className="bg-popover border z-50">
+                <SelectItem value="john-doe">John Doe</SelectItem>
+                <SelectItem value="jane-smith">Jane Smith</SelectItem>
+                <SelectItem value="mike-johnson">Mike Johnson</SelectItem>
+                <SelectItem value="sarah-wilson">Sarah Wilson</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
 
-                {/* Technician 2 */}
-                <div className="space-y-2">
-                  <Label htmlFor="technician2" className="text-sm font-medium">Technician 2</Label>
-                  <Select value={formData.technician2} onValueChange={(value) => handleInputChange("technician2", value)}>
-                    <SelectTrigger className="h-11">
-                      <SelectValue placeholder="Select technician" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-popover border z-50">
-                      <SelectItem value="john-doe">John Doe</SelectItem>
-                      <SelectItem value="jane-smith">Jane Smith</SelectItem>
-                      <SelectItem value="mike-johnson">Mike Johnson</SelectItem>
-                      <SelectItem value="sarah-wilson">Sarah Wilson</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+          <div className="space-y-2">
+            <Label htmlFor="technician2" className="text-sm font-medium">Technician 2</Label>
+            <Select value={formData.technician2} onValueChange={(value) => handleInputChange("technician2", value)}>
+              <SelectTrigger className="h-11">
+                <SelectValue placeholder="Select technician" />
+              </SelectTrigger>
+              <SelectContent className="bg-popover border z-50">
+                <SelectItem value="john-doe">John Doe</SelectItem>
+                <SelectItem value="jane-smith">Jane Smith</SelectItem>
+                <SelectItem value="mike-johnson">Mike Johnson</SelectItem>
+                <SelectItem value="sarah-wilson">Sarah Wilson</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
 
-                {/* Technician 3 */}
-                <div className="space-y-2">
-                  <Label htmlFor="technician3" className="text-sm font-medium">Technician 3</Label>
-                  <Select value={formData.technician3} onValueChange={(value) => handleInputChange("technician3", value)}>
-                    <SelectTrigger className="h-11">
-                      <SelectValue placeholder="Select technician" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-popover border z-50">
-                      <SelectItem value="john-doe">John Doe</SelectItem>
-                      <SelectItem value="jane-smith">Jane Smith</SelectItem>
-                      <SelectItem value="mike-johnson">Mike Johnson</SelectItem>
-                      <SelectItem value="sarah-wilson">Sarah Wilson</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+          <div className="space-y-2">
+            <Label htmlFor="technician3" className="text-sm font-medium">Technician 3</Label>
+            <Select value={formData.technician3} onValueChange={(value) => handleInputChange("technician3", value)}>
+              <SelectTrigger className="h-11">
+                <SelectValue placeholder="Select technician" />
+              </SelectTrigger>
+              <SelectContent className="bg-popover border z-50">
+                <SelectItem value="john-doe">John Doe</SelectItem>
+                <SelectItem value="jane-smith">Jane Smith</SelectItem>
+                <SelectItem value="mike-johnson">Mike Johnson</SelectItem>
+                <SelectItem value="sarah-wilson">Sarah Wilson</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
 
-                {/* Add Comment */}
-                <div className="space-y-2">
-                  <Label htmlFor="addComment" className="text-sm font-medium">Add Comment</Label>
-                  <Select value={formData.addComment} onValueChange={(value) => handleInputChange("addComment", value)}>
-                    <SelectTrigger className="h-11">
-                      <SelectValue placeholder="Select comment type" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-popover border z-50">
-                      <SelectItem value="general">General</SelectItem>
-                      <SelectItem value="technical">Technical</SelectItem>
-                      <SelectItem value="quality">Quality</SelectItem>
-                      <SelectItem value="safety">Safety</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
+        {/* Add Comment Field */}
+        <div className="space-y-2">
+          <Label htmlFor="addComment" className="text-sm font-medium">Add Comment</Label>
+          <Select value={formData.addComment} onValueChange={(value) => handleInputChange("addComment", value)}>
+            <SelectTrigger className="h-11">
+              <SelectValue placeholder="Select comment type" />
+            </SelectTrigger>
+            <SelectContent className="bg-popover border z-50">
+              <SelectItem value="general">General</SelectItem>
+              <SelectItem value="technical">Technical</SelectItem>
+              <SelectItem value="quality">Quality</SelectItem>
+              <SelectItem value="safety">Safety</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
 
               {/* Repair Comments - Full width */}
               <div className="space-y-2">
