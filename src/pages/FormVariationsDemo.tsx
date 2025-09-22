@@ -26,8 +26,6 @@ import { cn } from "@/lib/utils";
 const FormVariationsDemo = () => {
   const navigate = useNavigate();
   
-  // Interface switcher state
-  const [interfaceType, setInterfaceType] = useState<'tabs' | 'accordion'>('tabs');
   
   // Main section state
   const [activeSection, setActiveSection] = useState<'work-order-items' | 'estimate' | 'qf3'>('work-order-items');
@@ -2237,31 +2235,6 @@ const FormVariationsDemo = () => {
             </div>
           </div>
           
-          {/* Interface Switcher */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">            
-            {/* Layout Switcher */}
-            <div className="flex items-center gap-1 p-1 bg-muted rounded-lg">
-              <Button
-                variant={interfaceType === 'tabs' ? 'default' : 'ghost'}
-                size="sm"
-                onClick={() => setInterfaceType('tabs')}
-                className="flex items-center gap-1 h-7 text-xs px-2 sm:px-3 sm:h-8"
-              >
-                <Layers className="h-3 w-3 sm:h-4 sm:w-4" />
-                <span className="hidden sm:inline">Tabs</span>
-              </Button>
-              <Button
-                variant={interfaceType === 'accordion' ? 'default' : 'ghost'}
-                size="sm"
-                onClick={() => setInterfaceType('accordion')}
-                className="flex items-center gap-1 h-7 text-xs px-2 sm:px-3 sm:h-8"
-              >
-                <List className="h-3 w-3 sm:h-4 sm:w-4" />
-                <span className="hidden sm:inline">Accord</span>
-              </Button>
-            </div>
-            
-          </div>
         </div>
       </header>
 
@@ -2313,8 +2286,8 @@ const FormVariationsDemo = () => {
         {/* Content based on active section */}
         {activeSection === 'work-order-items' && (
           <>
-            {/* Tabs/Accordion Interface */}
-            {interfaceType === 'tabs' ? renderTabbedInterface() : renderAccordionInterface()}
+            {/* Tabs Interface */}
+            {renderTabbedInterface()}
           </>
         )}
         
