@@ -1564,10 +1564,9 @@ const FormVariationsDemo = () => {
         {/* Row 3: Add Comment and Repair */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <Label htmlFor="addComment" className="text-sm font-medium text-foreground/90">Add Comment</Label>
             <Select value={formData.addComment} onValueChange={(value) => handleInputChange("addComment", value)}>
               <SelectTrigger className="h-11 border-border/50 hover:border-border transition-colors">
-                <SelectValue placeholder="Select comment type" />
+                <SelectValue placeholder="Add comment type" />
               </SelectTrigger>
               <SelectContent className="bg-popover border z-50">
                 <SelectItem value="general">General</SelectItem>
