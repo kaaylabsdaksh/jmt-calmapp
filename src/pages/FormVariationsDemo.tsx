@@ -783,50 +783,51 @@ const FormVariationsDemo = () => {
           </div>
         </div>
 
-        {/* Add Comment Field */}
-        <div className="space-y-2">
-          <Label htmlFor="addComment" className="text-sm font-medium">Add Comment</Label>
-          <Select value={formData.addComment} onValueChange={(value) => handleInputChange("addComment", value)}>
-            <SelectTrigger className="h-11">
-              <SelectValue placeholder="Select comment type" />
-            </SelectTrigger>
-            <SelectContent className="bg-popover border z-50">
-              <SelectItem value="general">General</SelectItem>
-              <SelectItem value="technical">Technical</SelectItem>
-              <SelectItem value="quality">Quality</SelectItem>
-              <SelectItem value="safety">Safety</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+        {/* Add Comment and Repair Fields Row */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <Label htmlFor="addComment" className="text-sm font-medium">Add Comment</Label>
+            <Select value={formData.addComment} onValueChange={(value) => handleInputChange("addComment", value)}>
+              <SelectTrigger className="h-11">
+                <SelectValue placeholder="Select comment type" />
+              </SelectTrigger>
+              <SelectContent className="bg-popover border z-50">
+                <SelectItem value="general">General</SelectItem>
+                <SelectItem value="technical">Technical</SelectItem>
+                <SelectItem value="quality">Quality</SelectItem>
+                <SelectItem value="safety">Safety</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
 
-              {/* Repair Comments - Full width */}
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="repairComments" className="text-sm font-medium">Repair Comments</Label>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    className="h-8 px-3 text-xs"
-                    onClick={() => {
-                      const textarea = document.getElementById('repairComments') as HTMLTextAreaElement;
-                      if (textarea) {
-                        textarea.style.height = textarea.style.height === '120px' ? '60px' : '120px';
-                      }
-                    }}
-                  >
-                    Expand Comments
-                  </Button>
-                </div>
-                <textarea
-                  id="repairComments"
-                  value={formData.repairComments}
-                  onChange={(e) => handleInputChange("repairComments", e.target.value)}
-                  placeholder="Enter repair comments..."
-                  className="w-full h-16 px-3 py-2 border border-input rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 transition-all"
-                  style={{ minHeight: '60px' }}
-                />
-              </div>
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <Label htmlFor="repairComments" className="text-sm font-medium">Repair</Label>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                className="h-8 px-3 text-xs"
+                onClick={() => {
+                  const textarea = document.getElementById('repairComments') as HTMLTextAreaElement;
+                  if (textarea) {
+                    textarea.style.height = textarea.style.height === '120px' ? '60px' : '120px';
+                  }
+                }}
+              >
+                Expand Comments
+              </Button>
+            </div>
+            <textarea
+              id="repairComments"
+              value={formData.repairComments}
+              onChange={(e) => handleInputChange("repairComments", e.target.value)}
+              placeholder="Enter repair comments..."
+              className="w-full h-16 px-3 py-2 border border-input rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 transition-all"
+              style={{ minHeight: '60px' }}
+            />
+          </div>
+        </div>
 
               {/* Date Fields */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
