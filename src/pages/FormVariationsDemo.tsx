@@ -1579,30 +1579,19 @@ const FormVariationsDemo = () => {
           </div>
 
           <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <Label htmlFor="repairComments" className="text-sm font-medium text-foreground/90">Repair</Label>
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                className="h-7 px-2 text-xs text-muted-foreground hover:text-foreground"
-                onClick={() => {
-                  const textarea = document.getElementById('repairComments') as HTMLTextAreaElement;
-                  if (textarea) {
-                    textarea.style.height = textarea.style.height === '120px' ? '60px' : '120px';
-                  }
-                }}
-              >
-                Expand
-              </Button>
-            </div>
+            <Label htmlFor="repairComments" className="text-sm font-medium text-foreground/90">Repair</Label>
             <textarea
               id="repairComments"
               value={formData.repairComments}
-              onChange={(e) => handleInputChange("repairComments", e.target.value)}
+              onChange={(e) => {
+                handleInputChange("repairComments", e.target.value);
+                // Auto-resize the textarea
+                e.target.style.height = 'auto';
+                e.target.style.height = `${e.target.scrollHeight}px`;
+              }}
               placeholder="Enter repair comments..."
-              className="w-full h-16 px-3 py-2 border border-border/50 rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 transition-all hover:border-border"
-              style={{ minHeight: '60px' }}
+              className="w-full min-h-16 px-3 py-2 border border-border/50 rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 transition-all hover:border-border overflow-hidden"
+              style={{ minHeight: '64px' }}
             />
           </div>
         </div>
