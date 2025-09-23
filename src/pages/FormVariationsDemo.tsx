@@ -299,7 +299,7 @@ const FormVariationsDemo = () => {
     { value: 'product', label: 'Product', icon: Package },
     { value: 'logistics', label: 'Logistics', icon: Truck },
     { value: 'product-images', label: 'Images', icon: Package },
-    ...(formData.actionCode === 'build-new' ? [{ value: 'lab', label: 'Lab', icon: Settings }] : []),
+    { value: 'lab', label: 'Lab', icon: Settings },
     { value: 'other', label: 'Other', icon: Settings }
   ];
 
@@ -2383,11 +2383,9 @@ const FormVariationsDemo = () => {
             {renderProductImagesSection()}
           </TabsContent>
 
-          {formData.actionCode === 'build-new' && (
-            <TabsContent value="lab" className="space-y-6">
-              {renderLabSection()}
-            </TabsContent>
-          )}
+          <TabsContent value="lab" className="space-y-6">
+            {renderLabSection()}
+          </TabsContent>
 
           <TabsContent value="other" className="space-y-6">
             <Tabs value={activeOtherTab} onValueChange={setActiveOtherTab} className="w-full">
