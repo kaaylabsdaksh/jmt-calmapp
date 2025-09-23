@@ -1705,39 +1705,72 @@ const FormVariationsDemo = () => {
             {/* Standards and Procedures Section */}
             <div className="space-y-4">
               <div className="h-px bg-border/50" />
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium text-foreground/90">Lab Temperature</Label>
+                  <div className="flex gap-2">
+                    <Select value={formData.labTempUnit} onValueChange={(value) => handleInputChange("labTempUnit", value)}>
+                      <SelectTrigger className="h-11 w-16 border-border/50 hover:border-border transition-colors">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent className="bg-popover border z-50">
+                        <SelectItem value="#">#</SelectItem>
+                        <SelectItem value="°F">°F</SelectItem>
+                        <SelectItem value="°C">°C</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <Input
+                      value={formData.labTempValue}
+                      onChange={(e) => handleInputChange("labTempValue", e.target.value)}
+                      placeholder="Value"
+                      className="h-11 flex-1 border-border/50 hover:border-border transition-colors"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium text-foreground/90">Lab Humidity</Label>
+                  <div className="flex gap-2">
+                    <Select value={formData.labRhUnit} onValueChange={(value) => handleInputChange("labRhUnit", value)}>
+                      <SelectTrigger className="h-11 w-16 border-border/50 hover:border-border transition-colors">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent className="bg-popover border z-50">
+                        <SelectItem value="#">#</SelectItem>
+                        <SelectItem value="%">%</SelectItem>
+                        <SelectItem value="RH">RH</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <Input
+                      value={formData.labRhValue}
+                      onChange={(e) => handleInputChange("labRhValue", e.target.value)}
+                      placeholder="Value"
+                      className="h-11 flex-1 border-border/50 hover:border-border transition-colors"
+                    />
+                  </div>
+                </div>
+
                 <div className="space-y-2">
                   <Label htmlFor="standardsUsed" className="text-sm font-medium text-foreground/90">Standards Used</Label>
-                  <textarea
+                  <Input
                     id="standardsUsed"
                     value={formData.standardsUsed}
                     onChange={(e) => handleInputChange("standardsUsed", e.target.value)}
                     placeholder="Enter standards used..."
-                    className="w-full h-20 px-3 py-2 border border-border/50 rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 transition-all hover:border-border"
+                    className="h-11 border-border/50 hover:border-border transition-colors"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="calProcedureUsed" className="text-sm font-medium text-foreground/90">Calibration Procedure</Label>
+                  <Label htmlFor="procedureFiles" className="text-sm font-medium text-foreground/90">Procedure Files</Label>
                   <Input
-                    id="calProcedureUsed"
-                    value={formData.calProcedureUsed}
-                    onChange={(e) => handleInputChange("calProcedureUsed", e.target.value)}
-                    placeholder="Enter procedure"
+                    id="procedureFiles"
+                    value={formData.procedureFiles}
+                    onChange={(e) => handleInputChange("procedureFiles", e.target.value)}
+                    placeholder="Enter procedure files"
                     className="h-11 border-border/50 hover:border-border transition-colors"
                   />
                 </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="procedureFiles" className="text-sm font-medium text-foreground/90">Procedure Files</Label>
-                <Input
-                  id="procedureFiles"
-                  value={formData.procedureFiles}
-                  onChange={(e) => handleInputChange("procedureFiles", e.target.value)}
-                  placeholder="Enter procedure files"
-                  className="h-11 border-border/50 hover:border-border transition-colors"
-                />
               </div>
             </div>
 
