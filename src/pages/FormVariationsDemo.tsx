@@ -1476,10 +1476,32 @@ const FormVariationsDemo = () => {
   );
 
   // Render lab section
-  const renderLabSection = () => (
-    <div className="space-y-8 animate-fade-in">
-      {/* Condition and Technician Fields */}
-      <div className="space-y-6">
+  const renderLabSection = () => {
+    const getActionCodeLabel = () => {
+      const actionCodeMap = {
+        "build-new": "BUILD NEW",
+        "cc": "C/C", 
+        "rc": "R/C",
+        "rcc": "R/C/C",
+        "repair": "REPAIR"
+      };
+      return actionCodeMap[formData.actionCode] || formData.actionCode;
+    };
+
+    return (
+      <div className="space-y-8 animate-fade-in">
+        {/* Action Code Display */}
+        {formData.actionCode && (
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-muted-foreground">Action Code:</span>
+            <Badge variant="outline" className="text-xs font-medium">
+              {getActionCodeLabel()}
+            </Badge>
+          </div>
+        )}
+        
+        {/* Condition and Technician Fields */}
+        <div className="space-y-6">
         {/* Row 1: Condition Fields */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
@@ -1767,6 +1789,7 @@ const FormVariationsDemo = () => {
       </div>
     </div>
   );
+};
 
   // Render product images section
   const renderProductImagesSection = () => (
