@@ -1967,8 +1967,270 @@ const FormVariationsDemo = () => {
           </div>
         )}
 
+        {/* C/C Specific Fields */}
+        {formData.actionCode === "cc" && (
+          <div className="space-y-6">
+            {/* Condition Fields */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <Label htmlFor="conditionIn" className="text-sm font-medium text-foreground/90">Condition In:</Label>
+                <Select value={formData.conditionIn} onValueChange={(value) => handleInputChange("conditionIn", value)}>
+                  <SelectTrigger className="h-11">
+                    <SelectValue placeholder="Select condition" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="as-found">As Found</SelectItem>
+                    <SelectItem value="working">Working</SelectItem>
+                    <SelectItem value="defective">Defective</SelectItem>
+                    <SelectItem value="damaged">Damaged</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="conditionOut" className="text-sm font-medium text-foreground/90">Condition Out:</Label>
+                <Select value={formData.conditionOut} onValueChange={(value) => handleInputChange("conditionOut", value)}>
+                  <SelectTrigger className="h-11">
+                    <SelectValue placeholder="Select condition" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="as-left">As Left</SelectItem>
+                    <SelectItem value="calibrated">Calibrated</SelectItem>
+                    <SelectItem value="repaired">Repaired</SelectItem>
+                    <SelectItem value="adjusted">Adjusted</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            {/* Technician Fields */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="space-y-2">
+                <Label htmlFor="technician1" className="text-sm font-medium text-foreground/90">Technician 1:</Label>
+                <Select value={formData.technician1} onValueChange={(value) => handleInputChange("technician1", value)}>
+                  <SelectTrigger className="h-11">
+                    <SelectValue placeholder="Select technician" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="aaron-l-briles">Aaron L Briles</SelectItem>
+                    <SelectItem value="aaron-w-sibley">Aaron W Sibley</SelectItem>
+                    <SelectItem value="adam-d-eller">Adam D. Eller</SelectItem>
+                    <SelectItem value="alexander-j-shepard">Alexander J Shepard</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="technician2" className="text-sm font-medium text-foreground/90">Technician 2:</Label>
+                <Select value={formData.technician2} onValueChange={(value) => handleInputChange("technician2", value)}>
+                  <SelectTrigger className="h-11">
+                    <SelectValue placeholder="Select technician" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="aaron-l-briles">Aaron L Briles</SelectItem>
+                    <SelectItem value="aaron-w-sibley">Aaron W Sibley</SelectItem>
+                    <SelectItem value="adam-d-eller">Adam D. Eller</SelectItem>
+                    <SelectItem value="alexander-j-shepard">Alexander J Shepard</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="technician3" className="text-sm font-medium text-foreground/90">Technician 3:</Label>
+                <Select value={formData.technician3} onValueChange={(value) => handleInputChange("technician3", value)}>
+                  <SelectTrigger className="h-11">
+                    <SelectValue placeholder="Select technician" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="aaron-l-briles">Aaron L Briles</SelectItem>
+                    <SelectItem value="aaron-w-sibley">Aaron W Sibley</SelectItem>
+                    <SelectItem value="adam-d-eller">Adam D. Eller</SelectItem>
+                    <SelectItem value="alexander-j-shepard">Alexander J Shepard</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            {/* Add Comment and Repair Comments */}
+            <div className="space-y-6">
+              <div className="space-y-2">
+                <Label htmlFor="addComment" className="text-sm font-medium text-foreground/90">Add Comment:</Label>
+                <Select value={formData.addComment} onValueChange={(value) => handleInputChange("addComment", value)}>
+                  <SelectTrigger className="h-11">
+                    <SelectValue placeholder="Select comment type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="calibration-complete">Calibration Complete</SelectItem>
+                    <SelectItem value="repair-needed">Repair Needed</SelectItem>
+                    <SelectItem value="test-passed">Test Passed</SelectItem>
+                    <SelectItem value="within-tolerance">Within Tolerance</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="repairComments" className="text-sm font-medium text-foreground/90">Repair Comments:</Label>
+                <div className="relative">
+                  <Textarea
+                    id="repairComments"
+                    value={formData.repairComments}
+                    onChange={(e) => handleInputChange("repairComments", e.target.value)}
+                    placeholder="Enter repair comments..."
+                    className="min-h-[120px] resize-none pr-32"
+                  />
+                  <Button 
+                    type="button" 
+                    variant="outline" 
+                    size="sm"
+                    className="absolute bottom-2 right-2 bg-yellow-100 border-yellow-300 text-yellow-800 hover:bg-yellow-200"
+                  >
+                    Expand Comments
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            {/* Certification and Recalibration Dates */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <Label htmlFor="certificationDate" className="text-sm font-medium text-foreground/90">Certification Date:</Label>
+                <Input
+                  id="certificationDate"
+                  type="date"
+                  value={formData.certificationDate || "2025-09-22"}
+                  onChange={(e) => handleInputChange("certificationDate", e.target.value)}
+                  className="h-11"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="recalibrationDate" className="text-sm font-medium text-foreground/90">Recalibration Date:</Label>
+                <Input
+                  id="recalibrationDate"
+                  type="date"
+                  value={formData.recalibrationDate}
+                  onChange={(e) => handleInputChange("recalibrationDate", e.target.value)}
+                  className="h-11"
+                />
+              </div>
+            </div>
+
+            {/* Lab Temp and RH */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <Label htmlFor="labTemp" className="text-sm font-medium text-foreground/90">Lab Temp:</Label>
+                <div className="flex gap-2">
+                  <Select value={formData.labTempUnit} onValueChange={(value) => handleInputChange("labTempUnit", value)}>
+                    <SelectTrigger className="w-16 h-11">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="#">#</SelectItem>
+                      <SelectItem value="°F">°F</SelectItem>
+                      <SelectItem value="°C">°C</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Input
+                    value={formData.labTempValue}
+                    onChange={(e) => handleInputChange("labTempValue", e.target.value)}
+                    placeholder="Enter temperature"
+                    className="h-11 flex-1"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="labRh" className="text-sm font-medium text-foreground/90">Lab RH:</Label>
+                <div className="flex gap-2">
+                  <Select value={formData.labRhUnit} onValueChange={(value) => handleInputChange("labRhUnit", value)}>
+                    <SelectTrigger className="w-16 h-11">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="#">#</SelectItem>
+                      <SelectItem value="%">%</SelectItem>
+                      <SelectItem value="RH">RH</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Input
+                    value={formData.labRhValue}
+                    onChange={(e) => handleInputChange("labRhValue", e.target.value)}
+                    placeholder="Enter RH value"
+                    className="h-11 flex-1"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Standards Used */}
+            <div className="space-y-2">
+              <Label htmlFor="standardsUsed" className="text-sm font-medium text-foreground/90">Standards Used:</Label>
+              <Textarea
+                id="standardsUsed"
+                value={formData.standardsUsed}
+                onChange={(e) => handleInputChange("standardsUsed", e.target.value)}
+                placeholder="Enter standards used..."
+                className="min-h-[120px] resize-none"
+              />
+            </div>
+
+            {/* Cal Procedure and Files */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <Label htmlFor="calProcedureUsed" className="text-sm font-medium text-foreground/90">Cal Procedure Used:</Label>
+                <Input
+                  id="calProcedureUsed"
+                  value={formData.calProcedureUsed}
+                  onChange={(e) => handleInputChange("calProcedureUsed", e.target.value)}
+                  placeholder="Enter procedure"
+                  className="h-11"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="procedureFiles" className="text-sm font-medium text-foreground/90">Procedure File(s):</Label>
+                <Input
+                  id="procedureFiles"
+                  value={formData.procedureFiles}
+                  onChange={(e) => handleInputChange("procedureFiles", e.target.value)}
+                  placeholder="Enter file references"
+                  className="h-11"
+                />
+              </div>
+            </div>
+
+            {/* Supp Data Files Section */}
+            <div className="border rounded-lg p-4 bg-muted/30">
+              <h4 className="font-medium text-sm mb-4">Supp Data Files</h4>
+              <div className="text-center py-4 text-muted-foreground text-sm mb-4">
+                No data to display
+              </div>
+              <div className="flex gap-2">
+                <Button variant="outline" size="sm" className="bg-yellow-100 border-yellow-300 text-yellow-800 hover:bg-yellow-200">
+                  Post Data
+                </Button>
+                <Button variant="outline" size="sm" className="bg-yellow-100 border-yellow-300 text-yellow-800 hover:bg-yellow-200">
+                  Create Cost
+                </Button>
+                <Button variant="outline" size="sm" className="bg-blue-100 border-blue-300 text-blue-800 hover:bg-blue-200">
+                  Recreate Cal Cert
+                </Button>
+              </div>
+            </div>
+
+            {/* Cost Summary */}
+            <div className="bg-muted/50 rounded-lg p-4">
+              <div className="flex justify-between items-center text-sm">
+                <div className="text-sm font-medium mb-1">CAL/CERT: ${formData.calCertCost.toFixed(2)}</div>
+                <div className="text-sm font-medium mb-1">REPAIR: ${formData.repairCost.toFixed(2)}</div>
+                <div className="text-sm font-medium mb-1">ALL: ${formData.totalCost.toFixed(2)}</div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Default message when no action code selected or unsupported action code */}
-        {(!formData.actionCode || (formData.actionCode !== "build-new" && formData.actionCode !== "rc")) && (
+        {(!formData.actionCode || (formData.actionCode !== "build-new" && formData.actionCode !== "rc" && formData.actionCode !== "cc")) && (
           <div className="text-center p-8 text-muted-foreground">
             <p>Select an action code to view lab-specific details</p>
           </div>
