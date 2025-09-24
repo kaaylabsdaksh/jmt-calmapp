@@ -1206,11 +1206,6 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                   }
                 ].map((item, index, array) => (
                   <div key={index} className="flex flex-col items-center relative flex-1">
-                    {/* Connecting Line - only show between items */}
-                    {index < array.length - 1 && (
-                      <div className="absolute top-6 left-1/2 w-full h-0.5 bg-gradient-to-r from-gray-300 to-gray-300 z-0" 
-                           style={{ transform: 'translateX(50%)' }}></div>
-                    )}
                     
                     {/* Timeline Dot */}
                     <div className="relative z-10 mb-4">
@@ -1440,11 +1435,6 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                   }
                 ].map((item, index, array) => (
                   <div key={index} className="flex flex-col items-center relative flex-1">
-                    {/* Connecting Line - only show between items */}
-                    {index < array.length - 1 && (
-                      <div className="absolute top-6 left-1/2 w-full h-0.5 bg-gradient-to-r from-gray-300 to-gray-300 z-0" 
-                           style={{ transform: 'translateX(50%)' }}></div>
-                    )}
                     
                     {/* Timeline Dot */}
                     <div className="relative z-10 mb-4">
