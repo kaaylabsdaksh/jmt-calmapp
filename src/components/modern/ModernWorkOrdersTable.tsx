@@ -1314,6 +1314,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
     : Math.ceil(filteredWorkOrderItems.length / itemsPerPage);
 
   const openDetails = (order: WorkOrder) => {
+    console.log('Opening details for order:', order.id, 'templateView:', templateView);
     setSelectedWorkOrder(order);
   };
 
@@ -2068,8 +2069,15 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
 
       {/* Work Order Details Dialog */}
       <Dialog open={selectedWorkOrder !== null} onOpenChange={() => setSelectedWorkOrder(null)}>
-        {selectedWorkOrder && templateView && <TemplateWorkOrderDetailsDialog order={selectedWorkOrder} />}
-        {selectedWorkOrder && !templateView && <DefaultWorkOrderDetailsDialog order={selectedWorkOrder} />}
+        {(() => {
+          console.log('Dialog rendering - selectedWorkOrder:', selectedWorkOrder?.id, 'templateView:', templateView);
+          if (selectedWorkOrder && templateView) {
+            return <TemplateWorkOrderDetailsDialog order={selectedWorkOrder} />;
+          } else if (selectedWorkOrder && !templateView) {
+            return <DefaultWorkOrderDetailsDialog order={selectedWorkOrder} />;
+          }
+          return null;
+        })()}
       </Dialog>
     </div>
   );
