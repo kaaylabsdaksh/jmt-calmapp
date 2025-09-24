@@ -3513,7 +3513,11 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
           <div>
             <h2 className="text-xl font-bold text-gray-900">Work Orders</h2>
             <p className="text-sm text-gray-600 mt-1">
-              Showing {filteredWorkOrders.length} of {mockWorkOrders.length} work orders
+              {templateView ? (
+                <>Showing {filteredWorkOrders.length} of {mockWorkOrders.length} work orders</>
+              ) : (
+                <>Showing {filteredWorkOrderItems.length} of {mockWorkOrderItems.length} items</>
+              )}
             </p>
           </div>
           
