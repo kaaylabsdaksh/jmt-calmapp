@@ -1318,6 +1318,15 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
     setSelectedWorkOrder(order);
   };
 
+  const openDetailsFromItem = (item: any) => {
+    // Find the corresponding work order for this item
+    const workOrder = mockWorkOrders.find(wo => wo.id === item.workOrderNumber);
+    if (workOrder) {
+      console.log('Opening details from item:', item.id, 'workOrder:', workOrder.id);
+      setSelectedWorkOrder(workOrder);
+    }
+  };
+
   const handleEditWorkOrder = (workOrderId: string) => {
     navigate(`/work-order/${workOrderId}`);
   };
@@ -1931,6 +1940,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                   <TableRow
                     key={item.id}
                     className="hover:bg-gray-50 cursor-pointer border-b border-gray-100"
+                    onClick={() => openDetailsFromItem(item)}
                   >
                     <TableCell className="font-medium text-blue-600">{item.workOrderNumber}</TableCell>
                     <TableCell className="font-mono text-sm">{item.reportNumber}</TableCell>
@@ -2003,7 +2013,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
               ))
             ) : (
               filteredWorkOrderItems.map((item) => (
-                <div key={item.id} className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer">
+                <div key={item.id} className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer" onClick={() => openDetailsFromItem(item)}>
                   <div className="p-4 border-b border-gray-100">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
