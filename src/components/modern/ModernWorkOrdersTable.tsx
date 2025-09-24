@@ -1072,10 +1072,6 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
               {/* Column 1 */}
               <div className="space-y-3">
                 <div>
-                  <span className="text-gray-500 text-sm font-medium">Items:</span>
-                  <div className="font-semibold text-sm">{order.details.items}</div>
-                </div>
-                <div>
                   <span className="text-gray-500 text-sm font-medium">Lab Code:</span>
                   <div className="font-mono text-sm">{order.details.labCode}</div>
                 </div>
@@ -1315,10 +1311,6 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
               {/* Column 1 */}
               <div className="space-y-3">
-                <div>
-                  <span className="text-gray-500 text-sm font-medium">Items:</span>
-                  <div className="font-semibold text-sm">{order.details.items}</div>
-                </div>
                 <div>
                   <span className="text-gray-500 text-sm font-medium">Lab Code:</span>
                   <div className="font-mono text-sm">{order.details.labCode}</div>
@@ -1605,7 +1597,6 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                     <TableHead className="font-semibold text-gray-900">Status</TableHead>
                     <TableHead className="font-semibold text-gray-900">Priority</TableHead>
                     <TableHead className="font-semibold text-gray-900">Customer</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Items</TableHead>
                     <TableHead className="font-semibold text-gray-900">Division</TableHead>
                     <TableHead className="font-semibold text-gray-900">Created Date</TableHead>
                     <TableHead className="font-semibold text-gray-900">Due Date</TableHead>
@@ -1626,7 +1617,6 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                     // Template View Cells
                     <>
                       <TableCell className="font-medium text-blue-600">{order.id}</TableCell>
-                      <TableCell className="font-mono text-sm">{order.details.items}</TableCell>
                       <TableCell className="font-medium">{order.division}</TableCell>
                       <TableCell className="text-sm">{order.details.createdDate}</TableCell>
                       <TableCell>{getStatusBadge(order.status)}</TableCell>
@@ -1655,7 +1645,6 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                         )}>{order.details.priority}</span>
                       </TableCell>
                       <TableCell className="font-medium">{order.customer}</TableCell>
-                      <TableCell className="font-mono text-sm">{order.details.items}</TableCell>
                       <TableCell className="font-medium">{order.division}</TableCell>
                       <TableCell className="text-sm">{order.details.createdDate}</TableCell>
                       <TableCell>{order.dueDate}</TableCell>
@@ -1703,12 +1692,6 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                         <h3 className="font-bold text-gray-900 text-lg mb-1">{order.details.manufacturer}</h3>
                       </div>
 
-                      <div className="text-sm">
-                        <div>
-                          <span className="text-gray-500">Item:</span>
-                          <div className="font-mono text-xs">{order.details.items}</div>
-                        </div>
-                      </div>
 
                       <div className="grid grid-cols-2 gap-3 text-sm">
                         <div>
@@ -1761,10 +1744,6 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                       </div>
 
                       <div className="grid grid-cols-2 gap-3 text-sm">
-                        <div>
-                          <span className="text-gray-500">Items:</span>
-                          <div className="font-mono text-xs">{order.details.items}</div>
-                        </div>
                         <div>
                           <span className="text-gray-500">Division:</span>
                           <div className="font-medium text-xs">{order.division}</div>
