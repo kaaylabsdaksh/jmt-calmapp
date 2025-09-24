@@ -1525,7 +1525,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                     : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
                 )}
               >
-                Default
+                Item View
               </Button>
               <Button
                 variant={templateView ? 'default' : 'ghost'}
@@ -1599,7 +1599,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                     <TableHead className="w-12"></TableHead>
                   </>
                 ) : (
-                  // Default View Headers
+                  // Item View Headers
                   <>
                     <TableHead className="font-semibold text-gray-900">Work Order #</TableHead>
                     <TableHead className="font-semibold text-gray-900">Status</TableHead>
@@ -1638,7 +1638,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                        <TableCell></TableCell>
                     </>
                   ) : (
-                    // Default View Cells
+                    // Item View Cells
                     <>
                       <TableCell className="font-medium text-blue-600">
                         {order.id}
@@ -1753,7 +1753,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                        </div>
                     </>
                   ) : (
-                    // Default View Content
+                    // Item View Content
                     <>
                       <div>
                         <h3 className="font-semibold text-gray-900 text-base mb-1">{order.customer}</h3>
