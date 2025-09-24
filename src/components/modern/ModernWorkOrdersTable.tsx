@@ -2067,8 +2067,9 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
       </div>
 
       {/* Work Order Details Dialog */}
-      <Dialog open={!!selectedWorkOrder} onOpenChange={() => setSelectedWorkOrder(null)}>
-        {selectedWorkOrder && <DefaultWorkOrderDetailsDialog order={selectedWorkOrder} />}
+      <Dialog open={selectedWorkOrder !== null} onOpenChange={() => setSelectedWorkOrder(null)}>
+        {selectedWorkOrder && templateView && <TemplateWorkOrderDetailsDialog order={selectedWorkOrder} />}
+        {selectedWorkOrder && !templateView && <DefaultWorkOrderDetailsDialog order={selectedWorkOrder} />}
       </Dialog>
     </div>
   );
