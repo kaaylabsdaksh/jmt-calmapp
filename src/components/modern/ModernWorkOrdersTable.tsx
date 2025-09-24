@@ -832,6 +832,281 @@ const mockWorkOrders: WorkOrder[] = [
   }
 ];
 
+// Mock data for work order items (for item view)
+interface WorkOrderItem {
+  id: string;
+  workOrderId: string;
+  workOrderNumber: string;
+  reportNumber: string;
+  manufacturer: string;
+  model: string;
+  serialNumber: string;
+  created: string;
+  departure: string;
+  itemStatus: "In Progress" | "Completed" | "Pending" | "Testing" | "Shipped" | "Failed" | "On Hold";
+  itemType: string;
+  deliverByDate: string;
+  poNumber: string;
+  customer: string;
+  priority: "High" | "Medium" | "Low" | "Critical";
+  assignedTo: string;
+  division: string;
+}
+
+const mockWorkOrderItems: WorkOrderItem[] = [
+  // Multiple items for WO-385737
+  {
+    id: "item-385737-1",
+    workOrderId: "385737",
+    workOrderNumber: "385737",
+    reportNumber: "3455-1",
+    manufacturer: "ADEULIS",
+    model: "PPS-1734",
+    serialNumber: "SN123456",
+    created: "10/15/2024",
+    departure: "11/25/2024",
+    itemStatus: "In Progress",
+    itemType: "Pressure Sensor",
+    deliverByDate: "Nov 24, 2024",
+    poNumber: "PO-2024-001",
+    customer: "ACME Industries",
+    priority: "High",
+    assignedTo: "John Smith",
+    division: "Lab"
+  },
+  {
+    id: "item-385737-2",
+    workOrderId: "385737",
+    workOrderNumber: "385737",
+    reportNumber: "3455-2",
+    manufacturer: "ADEULIS",
+    model: "PPS-1735",
+    serialNumber: "SN123457",
+    created: "10/15/2024",
+    departure: "11/26/2024",
+    itemStatus: "Testing",
+    itemType: "Pressure Sensor",
+    deliverByDate: "Nov 24, 2024",
+    poNumber: "PO-2024-001",
+    customer: "ACME Industries",
+    priority: "High",
+    assignedTo: "John Smith",
+    division: "Lab"
+  },
+  {
+    id: "item-385737-3",
+    workOrderId: "385737",
+    workOrderNumber: "385737",
+    reportNumber: "3455-3",
+    manufacturer: "ADEULIS",
+    model: "PPS-1736",
+    serialNumber: "SN123458",
+    created: "10/15/2024",
+    departure: "11/27/2024",
+    itemStatus: "Pending",
+    itemType: "Pressure Transmitter",
+    deliverByDate: "Nov 24, 2024",
+    poNumber: "PO-2024-001",
+    customer: "ACME Industries",
+    priority: "High",
+    assignedTo: "John Smith",
+    division: "Lab"
+  },
+  // Multiple items for WO-390589
+  {
+    id: "item-390589-1",
+    workOrderId: "390589",
+    workOrderNumber: "390589",
+    reportNumber: "3456-1",
+    manufacturer: "STARRETT",
+    model: "844-441",
+    serialNumber: "SN789012",
+    created: "10/12/2024",
+    departure: "11/21/2024",
+    itemStatus: "Completed",
+    itemType: "Precision Micrometer",
+    deliverByDate: "Nov 20, 2024",
+    poNumber: "PO-2024-002",
+    customer: "Tech Solutions Ltd",
+    priority: "Medium",
+    assignedTo: "Sarah Johnson",
+    division: "Rental"
+  },
+  {
+    id: "item-390589-2",
+    workOrderId: "390589",
+    workOrderNumber: "390589",
+    reportNumber: "3456-2",
+    manufacturer: "STARRETT",
+    model: "844-442",
+    serialNumber: "SN789013",
+    created: "10/12/2024",
+    departure: "11/21/2024",
+    itemStatus: "Completed",
+    itemType: "Digital Caliper",
+    deliverByDate: "Nov 20, 2024",
+    poNumber: "PO-2024-002",
+    customer: "Tech Solutions Ltd",
+    priority: "Medium",
+    assignedTo: "Sarah Johnson",
+    division: "Rental"
+  },
+  // Multiple items for WO-400217
+  {
+    id: "item-400217-1",
+    workOrderId: "400217",
+    workOrderNumber: "400217",
+    reportNumber: "3457-1",
+    manufacturer: "CHARLS LTD",
+    model: "1000PS-A",
+    serialNumber: "SN345678",
+    created: "10/08/2024",
+    departure: "TBD",
+    itemStatus: "On Hold",
+    itemType: "Hydraulic Pump",
+    deliverByDate: "Nov 18, 2024",
+    poNumber: "PO-2024-003",
+    customer: "Manufacturing Corp",
+    priority: "Critical",
+    assignedTo: "Mike Davis",
+    division: "ESL Onsite"
+  },
+  {
+    id: "item-400217-2",
+    workOrderId: "400217",
+    workOrderNumber: "400217",
+    reportNumber: "3457-2",
+    manufacturer: "CHARLS LTD",
+    model: "1000PS-B",
+    serialNumber: "SN345679",
+    created: "10/08/2024",
+    departure: "TBD",
+    itemStatus: "Failed",
+    itemType: "Pressure Control Valve",
+    deliverByDate: "Nov 18, 2024",
+    poNumber: "PO-2024-003",
+    customer: "Manufacturing Corp",
+    priority: "Critical",
+    assignedTo: "Mike Davis",
+    division: "ESL Onsite"
+  },
+  {
+    id: "item-400217-3",
+    workOrderId: "400217",
+    workOrderNumber: "400217",
+    reportNumber: "3457-3",
+    manufacturer: "CHARLS LTD",
+    model: "1000PS-C",
+    serialNumber: "SN345680",
+    created: "10/08/2024",
+    departure: "TBD",
+    itemStatus: "In Progress",
+    itemType: "Safety Relief System",
+    deliverByDate: "Nov 18, 2024",
+    poNumber: "PO-2024-003",
+    customer: "Manufacturing Corp",
+    priority: "Critical",
+    assignedTo: "Mike Davis",
+    division: "ESL Onsite"
+  },
+  // Single item for WO-403946
+  {
+    id: "item-403946-1",
+    workOrderId: "403946",
+    workOrderNumber: "403946",
+    reportNumber: "3458-1",
+    manufacturer: "PRECISION TOOLS",
+    model: "CAL-500",
+    serialNumber: "SN901234",
+    created: "11/01/2024",
+    departure: "12/02/2024",
+    itemStatus: "Testing",
+    itemType: "Digital Calibrator",
+    deliverByDate: "Dec 01, 2024",
+    poNumber: "PO-2024-004",
+    customer: "Quality Systems Inc",
+    priority: "Low",
+    assignedTo: "Emily Wilson",
+    division: "ESL"
+  },
+  // Multiple items for WO-405078
+  {
+    id: "item-405078-1",
+    workOrderId: "405078",
+    workOrderNumber: "405078",
+    reportNumber: "3459-1",
+    manufacturer: "SNAP-ON",
+    model: "TW-PRO-500-10",
+    serialNumber: "SN567890",
+    created: "11/10/2024",
+    departure: "12/06/2024",
+    itemStatus: "Completed",
+    itemType: "10 Nm Torque Wrench",
+    deliverByDate: "Dec 05, 2024",
+    poNumber: "PO-2024-005",
+    customer: "Aerospace Dynamics",
+    priority: "High",
+    assignedTo: "Tom Rodriguez",
+    division: "Lab"
+  },
+  {
+    id: "item-405078-2",
+    workOrderId: "405078",
+    workOrderNumber: "405078",
+    reportNumber: "3459-2",
+    manufacturer: "SNAP-ON",
+    model: "TW-PRO-500-50",
+    serialNumber: "SN567891",
+    created: "11/10/2024",
+    departure: "12/06/2024",
+    itemStatus: "Completed",
+    itemType: "50 Nm Torque Wrench",
+    deliverByDate: "Dec 05, 2024",
+    poNumber: "PO-2024-005",
+    customer: "Aerospace Dynamics",
+    priority: "High",
+    assignedTo: "Tom Rodriguez",
+    division: "Lab"
+  },
+  {
+    id: "item-405078-3",
+    workOrderId: "405078",
+    workOrderNumber: "405078",
+    reportNumber: "3459-3",
+    manufacturer: "SNAP-ON",
+    model: "TW-PRO-500-100",
+    serialNumber: "SN567892",
+    created: "11/10/2024",
+    departure: "12/06/2024",
+    itemStatus: "In Progress",
+    itemType: "100 Nm Torque Wrench",
+    deliverByDate: "Dec 05, 2024",
+    poNumber: "PO-2024-005",
+    customer: "Aerospace Dynamics",
+    priority: "High",
+    assignedTo: "Tom Rodriguez",
+    division: "Lab"
+  }
+];
+
+const getItemStatusBadge = (status: WorkOrderItem["itemStatus"]) => {
+  const variants = {
+    "In Progress": "bg-blue-100 text-blue-800 border-blue-200",
+    "Completed": "bg-green-100 text-green-800 border-green-200",
+    "Pending": "bg-yellow-100 text-yellow-800 border-yellow-200",
+    "Testing": "bg-purple-100 text-purple-800 border-purple-200",
+    "Shipped": "bg-cyan-100 text-cyan-800 border-cyan-200",
+    "Failed": "bg-red-100 text-red-800 border-red-200",
+    "On Hold": "bg-orange-100 text-orange-800 border-orange-200"
+  };
+  
+  return (
+    <Badge className={cn("text-xs font-medium border", variants[status] || "bg-gray-100 text-gray-800 border-gray-200")}>
+      {status}
+    </Badge>
+  );
+};
+
 const getStatusBadge = (status: WorkOrder["status"]) => {
   const variants = {
     "In Lab": "bg-blue-100 text-blue-800 border-blue-200",
@@ -1005,8 +1280,38 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
     
     return statusMatch && searchMatch && priorityMatch && manufacturerMatch && divisionMatch;
   });
+
+  // Filter work order items for item view
+  const filteredWorkOrderItems = mockWorkOrderItems.filter(item => {
+    // Global text search filter from parent
+    const searchMatch = !searchFilters.globalSearch || 
+      item.workOrderNumber.toLowerCase().includes(searchFilters.globalSearch.toLowerCase()) ||
+      item.customer.toLowerCase().includes(searchFilters.globalSearch.toLowerCase()) ||
+      item.assignedTo.toLowerCase().includes(searchFilters.globalSearch.toLowerCase()) ||
+      item.division.toLowerCase().includes(searchFilters.globalSearch.toLowerCase()) ||
+      item.manufacturer.toLowerCase().includes(searchFilters.globalSearch.toLowerCase()) ||
+      item.model.toLowerCase().includes(searchFilters.globalSearch.toLowerCase()) ||
+      item.serialNumber.toLowerCase().includes(searchFilters.globalSearch.toLowerCase()) ||
+      item.itemType.toLowerCase().includes(searchFilters.globalSearch.toLowerCase());
+    
+    // Priority filter
+    const priorityMatch = !searchFilters.priority || 
+      item.priority.toLowerCase() === searchFilters.priority.toLowerCase();
+    
+    // Manufacturer filter
+    const manufacturerMatch = !searchFilters.manufacturer || 
+      item.manufacturer.toLowerCase().includes(searchFilters.manufacturer.toLowerCase());
+    
+    // Division filter
+    const divisionMatch = !searchFilters.division || 
+      item.division.toLowerCase().includes(searchFilters.division.toLowerCase());
+    
+    return searchMatch && priorityMatch && manufacturerMatch && divisionMatch;
+  });
   
-  const totalPages = Math.ceil(filteredWorkOrders.length / itemsPerPage);
+  const totalPages = templateView 
+    ? Math.ceil(filteredWorkOrders.length / itemsPerPage)
+    : Math.ceil(filteredWorkOrderItems.length / itemsPerPage);
 
   const openDetails = (order: WorkOrder) => {
     setSelectedWorkOrder(order);
@@ -1584,12 +1889,14 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                   // Item View Headers
                   <>
                     <TableHead className="font-semibold text-gray-900">Work Order #</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Status</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Report #</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Item Status</TableHead>
                     <TableHead className="font-semibold text-gray-900">Priority</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Manufacturer</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Model</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Serial Number</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Item Type</TableHead>
                     <TableHead className="font-semibold text-gray-900">Customer</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Division</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Created Date</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Due Date</TableHead>
                     <TableHead className="font-semibold text-gray-900">Assigned To</TableHead>
                     <TableHead className="w-12"></TableHead>
                   </>
@@ -1597,183 +1904,177 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredWorkOrders.map((order) => (
-                <TableRow
-                  key={order.id}
-                  className="hover:bg-gray-50 cursor-pointer border-b border-gray-100"
-                  onClick={() => openDetails(order)}
-                >
-                  {templateView ? (
-                    // Template View Cells
-                    <>
-                      <TableCell className="font-medium text-blue-600">{order.id}</TableCell>
-                      <TableCell className="font-medium">{order.division}</TableCell>
-                      <TableCell className="text-sm">{order.details.createdDate}</TableCell>
-                      <TableCell>{getStatusBadge(order.status)}</TableCell>
-                      <TableCell>{order.dueDate}</TableCell>
-                      <TableCell className="font-medium">{order.details.manufacturer}</TableCell>
-                      <TableCell className="font-medium">{order.customer}</TableCell>
-                      <TableCell className="font-mono text-sm">{order.details.modelNumber}</TableCell>
-                      <TableCell className="text-blue-600 underline cursor-pointer hover:text-blue-800">{order.details.template}</TableCell>
-                       <TableCell></TableCell>
-                    </>
-                  ) : (
-                    // Item View Cells
-                    <>
-                      <TableCell className="font-medium text-blue-600">
-                        {order.id}
-                      </TableCell>
-                      <TableCell>
-                        {getStatusBadge(order.status)}
-                      </TableCell>
-                      <TableCell>
-                        <span className={cn("px-2 py-1 rounded-md text-xs font-medium",
-                          order.details.priority === "Critical" ? "bg-red-100 text-red-800" :
-                          order.details.priority === "High" ? "bg-orange-100 text-orange-800" :
-                          order.details.priority === "Medium" ? "bg-yellow-100 text-yellow-800" :
-                          "bg-gray-100 text-gray-800"
-                        )}>{order.details.priority}</span>
-                      </TableCell>
-                      <TableCell className="font-medium">{order.customer}</TableCell>
-                      <TableCell className="font-medium">{order.division}</TableCell>
-                      <TableCell className="text-sm">{order.details.createdDate}</TableCell>
-                      <TableCell>{order.dueDate}</TableCell>
-                      <TableCell>{order.assignedTo}</TableCell>
-                       <TableCell></TableCell>
-                    </>
-                  )}
-                </TableRow>
-              ))}
+              {templateView ? (
+                // Template View - Show Work Orders
+                filteredWorkOrders.map((order) => (
+                  <TableRow
+                    key={order.id}
+                    className="hover:bg-gray-50 cursor-pointer border-b border-gray-100"
+                    onClick={() => openDetails(order)}
+                  >
+                    <TableCell className="font-medium text-blue-600">{order.id}</TableCell>
+                    <TableCell className="font-medium">{order.division}</TableCell>
+                    <TableCell className="text-sm">{order.details.createdDate}</TableCell>
+                    <TableCell>{getStatusBadge(order.status)}</TableCell>
+                    <TableCell>{order.dueDate}</TableCell>
+                    <TableCell className="font-medium">{order.details.manufacturer}</TableCell>
+                    <TableCell className="font-medium">{order.customer}</TableCell>
+                    <TableCell className="font-mono text-sm">{order.details.modelNumber}</TableCell>
+                    <TableCell className="text-blue-600 underline cursor-pointer hover:text-blue-800">{order.details.template}</TableCell>
+                    <TableCell></TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                // Item View - Show Work Order Items
+                filteredWorkOrderItems.map((item) => (
+                  <TableRow
+                    key={item.id}
+                    className="hover:bg-gray-50 cursor-pointer border-b border-gray-100"
+                  >
+                    <TableCell className="font-medium text-blue-600">{item.workOrderNumber}</TableCell>
+                    <TableCell className="font-mono text-sm">{item.reportNumber}</TableCell>
+                    <TableCell>{getItemStatusBadge(item.itemStatus)}</TableCell>
+                    <TableCell>
+                      <span className={cn("px-2 py-1 rounded-md text-xs font-medium",
+                        item.priority === "Critical" ? "bg-red-100 text-red-800" :
+                        item.priority === "High" ? "bg-orange-100 text-orange-800" :
+                        item.priority === "Medium" ? "bg-yellow-100 text-yellow-800" :
+                        "bg-gray-100 text-gray-800"
+                      )}>{item.priority}</span>
+                    </TableCell>
+                    <TableCell className="font-medium">{item.manufacturer}</TableCell>
+                    <TableCell className="font-mono text-sm">{item.model}</TableCell>
+                    <TableCell className="font-mono text-sm">{item.serialNumber}</TableCell>
+                    <TableCell className="text-sm">{item.itemType}</TableCell>
+                    <TableCell className="font-medium">{item.customer}</TableCell>
+                    <TableCell>{item.assignedTo}</TableCell>
+                    <TableCell></TableCell>
+                  </TableRow>
+                ))
+              )}
             </TableBody>
           </Table>
         ) : (
           // Grid View - Cards
           <div className="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-            {filteredWorkOrders.map((order) => (
-              <div
-                key={order.id}
-                className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer"
-                onClick={() => openDetails(order)}
-              >
-                {/* Card Header */}
-                <div className="p-4 border-b border-gray-100">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <span className="font-bold text-blue-600 text-lg">{order.id}</span>
-                      <div className="flex items-center gap-2">
-                        {getStatusBadge(order.status)}
-                        <span className={cn("px-2 py-1 rounded-md text-xs font-medium",
-                          order.details.priority === "Critical" ? "bg-red-100 text-red-800" :
-                          order.details.priority === "High" ? "bg-orange-100 text-orange-800" :
-                          order.details.priority === "Medium" ? "bg-yellow-100 text-yellow-800" :
-                          "bg-gray-100 text-gray-800"
-                        )}>{order.details.priority}</span>
+            {templateView ? (
+              filteredWorkOrders.map((order) => (
+                <div key={order.id} className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer" onClick={() => openDetails(order)}>
+                  <div className="p-4 border-b border-gray-100">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <span className="font-bold text-blue-600 text-lg">{order.id}</span>
+                        <div className="flex items-center gap-2">
+                          {getStatusBadge(order.status)}
+                          <span className={cn("px-2 py-1 rounded-md text-xs font-medium",
+                            order.details.priority === "Critical" ? "bg-red-100 text-red-800" :
+                            order.details.priority === "High" ? "bg-orange-100 text-orange-800" :
+                            order.details.priority === "Medium" ? "bg-yellow-100 text-yellow-800" :
+                            "bg-gray-100 text-gray-800")}>{order.details.priority}</span>
+                        </div>
                       </div>
-                     </div>
-                   </div>
-                 </div>
-
-                {/* Card Content */}
-                <div className="p-4 space-y-3">
-                  {templateView ? (
-                    // Template View Content
-                    <>
+                    </div>
+                  </div>
+                  <div className="p-4 space-y-3">
+                    <div><h3 className="font-bold text-gray-900 text-lg mb-1">{order.details.manufacturer}</h3></div>
+                    <div className="grid grid-cols-2 gap-3 text-sm">
                       <div>
-                        <h3 className="font-bold text-gray-900 text-lg mb-1">{order.details.manufacturer}</h3>
+                        <span className="text-gray-500">Created:</span>
+                        <div className="font-medium text-xs">{order.details.createdDate}</div>
                       </div>
-
-
-                      <div className="grid grid-cols-2 gap-3 text-sm">
-                        <div>
-                          <span className="text-gray-500">Created:</span>
-                          <div className="font-medium text-xs">{order.details.createdDate}</div>
-                        </div>
-                        <div>
-                          <span className="text-gray-500">Due Date:</span>
-                          <div className="font-medium text-xs">{order.dueDate}</div>
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-2 gap-3 text-sm">
-                        <div>
-                          <span className="text-gray-500">Division:</span>
-                          <div className="font-medium text-xs">{order.division}</div>
-                        </div>
-                        <div>
-                          <span className="text-gray-500">Customer:</span>
-                          <div className="font-medium text-xs">{order.customer}</div>
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-2 gap-3 text-sm">
-                        <div>
-                          <span className="text-gray-500">Model:</span>
-                          <div className="font-mono text-xs">{order.details.modelNumber}</div>
-                        </div>
-                        <div>
-                          <span className="text-gray-500">Template:</span>
-                          <div className="text-blue-600 underline cursor-pointer hover:text-blue-800 text-xs">{order.details.template}</div>
-                        </div>
-                      </div>
-
-                       <div className="flex items-center justify-end">
-                         <Button
-                           variant="ghost"
-                           size="sm"
-                           className="h-6 w-6 p-0 text-gray-400"
-                         >
-                         </Button>
-                       </div>
-                    </>
-                  ) : (
-                    // Item View Content
-                    <>
                       <div>
-                        <h3 className="font-semibold text-gray-900 text-base mb-1">{order.customer}</h3>
-                        <p className="text-sm text-gray-600">Assigned to: {order.assignedTo}</p>
+                        <span className="text-gray-500">Due Date:</span>
+                        <div className="font-medium text-xs">{order.dueDate}</div>
                       </div>
-
-                      <div className="grid grid-cols-2 gap-3 text-sm">
-                        <div>
-                          <span className="text-gray-500">Division:</span>
-                          <div className="font-medium text-xs">{order.division}</div>
-                        </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-3 text-sm">
+                      <div>
+                        <span className="text-gray-500">Division:</span>
+                        <div className="font-medium text-xs">{order.division}</div>
                       </div>
-
-                      <div className="grid grid-cols-2 gap-3 text-sm">
-                        <div>
-                          <span className="text-gray-500">Created:</span>
-                          <div className="font-medium text-xs">{order.details.createdDate}</div>
-                        </div>
-                        <div>
-                          <span className="text-gray-500">Due Date:</span>
-                          <div className="font-medium text-xs">{order.dueDate}</div>
-                        </div>
+                      <div>
+                        <span className="text-gray-500">Customer:</span>
+                        <div className="font-medium text-xs">{order.customer}</div>
                       </div>
-
-                      <div className="text-sm">
-                        <div>
-                          <span className="text-gray-500">Model:</span>
-                          <div className="font-mono text-xs">{order.details.modelNumber}</div>
-                        </div>
-                      </div>
-
-                         <div className="flex items-center justify-end">
-                           <Button
-                             variant="ghost"
-                             size="sm"
-                             className="h-6 w-6 p-0 text-gray-400"
-                           >
-                           </Button>
-                         </div>
-                    </>
-                  )}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              filteredWorkOrderItems.map((item) => (
+                <div key={item.id} className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer">
+                  <div className="p-4 border-b border-gray-100">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <span className="font-bold text-blue-600 text-lg">{item.workOrderNumber}</span>
+                        <div className="flex items-center gap-2">
+                          {getItemStatusBadge(item.itemStatus)}
+                          <span className={cn("px-2 py-1 rounded-md text-xs font-medium",
+                            item.priority === "Critical" ? "bg-red-100 text-red-800" :
+                            item.priority === "High" ? "bg-orange-100 text-orange-800" :
+                            item.priority === "Medium" ? "bg-yellow-100 text-yellow-800" :
+                            "bg-gray-100 text-gray-800")}>{item.priority}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="p-4 space-y-3">
+                    <div>
+                      <h3 className="font-semibold text-gray-900 text-base mb-1">{item.customer}</h3>
+                      <p className="text-sm text-gray-600">Report #: {item.reportNumber}</p>
+                    </div>
+                    <div className="grid grid-cols-2 gap-3 text-sm">
+                      <div>
+                        <span className="text-gray-500">Manufacturer:</span>
+                        <div className="font-medium text-xs">{item.manufacturer}</div>
+                      </div>
+                      <div>
+                        <span className="text-gray-500">Model:</span>
+                        <div className="font-mono text-xs">{item.model}</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
           </div>
         )}
+        
+        {/* Pagination */}
+        <div className="p-6 border-t border-gray-200 flex justify-between items-center">
+          <span className="text-sm text-gray-600">
+            Showing {((currentPage - 1) * itemsPerPage) + 1}-{Math.min(currentPage * itemsPerPage, templateView ? filteredWorkOrders.length : filteredWorkOrderItems.length)} of {templateView ? filteredWorkOrders.length : filteredWorkOrderItems.length} items
+          </span>
+          <div className="flex gap-2">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage(currentPage - 1)}
+            >
+              Previous
+            </Button>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              disabled={currentPage === totalPages}
+              onClick={() => setCurrentPage(currentPage + 1)}
+            >
+              Next
+            </Button>
+          </div>
+        </div>
       </div>
+
+      {/* Work Order Details Dialog */}
+      <Dialog open={!!selectedWorkOrder} onOpenChange={() => setSelectedWorkOrder(null)}>
+        {selectedWorkOrder && <DefaultWorkOrderDetailsDialog order={selectedWorkOrder} />}
+      </Dialog>
+    </div>
+  );
+};
+
+export default ModernWorkOrdersTable;
 
       {/* Work Order Details Dialog */}
       <Dialog open={selectedWorkOrder !== null} onOpenChange={() => setSelectedWorkOrder(null)}>
