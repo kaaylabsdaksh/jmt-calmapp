@@ -3014,6 +3014,15 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
     ? Math.ceil(filteredWorkOrders.length / itemsPerPage)
     : Math.ceil(filteredWorkOrderItems.length / itemsPerPage);
 
+  // Get paginated data
+  const paginatedWorkOrders = templateView 
+    ? filteredWorkOrders.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+    : [];
+    
+  const paginatedWorkOrderItems = !templateView 
+    ? filteredWorkOrderItems.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+    : [];
+
   const openDetails = (order: WorkOrder) => {
     console.log('Opening details for order:', order.id, 'templateView:', templateView);
     setSelectedWorkOrder(order);
@@ -3617,7 +3626,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
             <TableBody>
               {templateView ? (
                 // Template View - Show Work Orders
-                filteredWorkOrders.map((order) => (
+                paginatedWorkOrders.map((order) => (
                   <TableRow
                     key={order.id}
                     className="hover:bg-gray-50 cursor-pointer border-b border-gray-100"
@@ -3637,7 +3646,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                 ))
               ) : (
                 // Item View - Show Work Order Items
-                filteredWorkOrderItems.map((item) => (
+                paginatedWorkOrderItems.map((item) => (
                   <TableRow
                     key={item.id}
                     className="hover:bg-gray-50 cursor-pointer border-b border-gray-100"
@@ -3670,7 +3679,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
           // Grid View - Cards
           <div className="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
             {templateView ? (
-              filteredWorkOrders.map((order) => (
+              paginatedWorkOrders.map((order) => (
                 <div key={order.id} className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer" onClick={() => openDetails(order)}>
                   <div className="p-4 border-b border-gray-100">
                     <div className="flex items-center justify-between">
@@ -3713,7 +3722,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                 </div>
               ))
             ) : (
-              filteredWorkOrderItems.map((item) => (
+              paginatedWorkOrderItems.map((item) => (
                 <div key={item.id} className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer" onClick={() => openDetailsFromItem(item)}>
                   <div className="p-4 border-b border-gray-100">
                     <div className="flex items-center justify-between">
