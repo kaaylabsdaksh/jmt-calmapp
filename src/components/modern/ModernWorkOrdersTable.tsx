@@ -4348,235 +4348,6 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
     </DialogContent>
   );
 
-  // Template Work Order Details Dialog Component
-  const TemplateWorkOrderDetailsDialog = ({ order }: { order: WorkOrder }) => (
-    <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
-      <DialogHeader>
-        <DialogTitle className="flex items-center gap-3 text-xl">
-          <span className="font-bold text-blue-600">{order.id}</span>
-          <div className="flex items-center gap-2">
-            {getStatusBadge(order.status)}
-            <span className={cn("px-3 py-1 rounded-md text-sm font-medium",
-              order.details.priority === "Critical" ? "bg-red-100 text-red-800" :
-              order.details.priority === "High" ? "bg-orange-100 text-orange-800" :
-              order.details.priority === "Medium" ? "bg-yellow-100 text-yellow-800" :
-              "bg-gray-100 text-gray-800"
-            )}>{order.details.priority} Priority</span>
-          </div>
-        </DialogTitle>
-      </DialogHeader>
-
-      <div className="space-y-6">
-        {/* Header Info */}
-        <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-sm">
-            <div>
-              <span className="text-blue-700 font-medium">Work Order:</span>
-              <div className="font-bold text-blue-900">{order.id}</div>
-            </div>
-            <div>
-              <span className="text-blue-700 font-medium">Customer:</span>
-              <div className="font-semibold text-blue-900">{order.customer}</div>
-            </div>
-            <div>
-              <span className="text-blue-700 font-medium">Division:</span>
-              <div className="font-semibold text-blue-900">{order.division}</div>
-            </div>
-            <div>
-              <span className="text-blue-700 font-medium">LOC:</span>
-              <div className="font-semibold text-blue-900">{order.details.lots}</div>
-            </div>
-            <div>
-              <span className="text-blue-700 font-medium">Action:</span>
-              <div className="font-semibold text-blue-900">{order.details.action}</div>
-            </div>
-          </div>
-        </div>
-
-        {/* Main Details Grid */}
-        <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
-          <div className="bg-gray-50 px-4 py-2 border-b border-gray-200">
-            <h4 className="font-semibold text-gray-900">Work Order Details</h4>
-          </div>
-          
-          <div className="p-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-              {/* Column 1 */}
-              <div className="space-y-3">
-                <div>
-                  <span className="text-gray-500 text-sm font-medium">Lab Code:</span>
-                  <div className="font-mono text-sm">{order.details.labCode}</div>
-                </div>
-                <div>
-                  <span className="text-gray-500 text-sm font-medium">Original LOC:</span>
-                  <div className="font-mono text-sm">{order.details.originalLoc}</div>
-                </div>
-                <div>
-                  <span className="text-gray-500 text-sm font-medium">Dest LOC:</span>
-                  <div className="font-mono text-sm">{order.details.destLoc}</div>
-                </div>
-                <div>
-                  <span className="text-gray-500 text-sm font-medium">Item Type:</span>
-                  <div className="text-sm">{order.details.itemType}</div>
-                </div>
-                <div>
-                  <span className="text-gray-500 text-sm font-medium">Operation Type:</span>
-                  <div className="text-sm">{order.details.operationType}</div>
-                </div>
-              </div>
-
-              {/* Column 2 */}
-              <div className="space-y-3">
-                <div>
-                  <span className="text-gray-500 text-sm font-medium">Manufacturer:</span>
-                  <div className="font-semibold text-sm">{order.details.manufacturer}</div>
-                </div>
-                <div>
-                  <span className="text-gray-500 text-sm font-medium">Model Number:</span>
-                  <div className="font-mono text-sm">{order.details.modelNumber}</div>
-                </div>
-                <div>
-                  <span className="text-gray-500 text-sm font-medium">Serial No.:</span>
-                  <div className="font-mono text-sm">{order.details.serialNumber}</div>
-                </div>
-                <div>
-                  <span className="text-gray-500 text-sm font-medium">Assigned To:</span>
-                  <div className="font-semibold text-sm">{order.assignedTo}</div>
-                </div>
-              </div>
-
-              {/* Column 3 */}
-              <div className="space-y-3">
-                <div>
-                  <span className="text-gray-500 text-sm font-medium">Cust ID:</span>
-                  <div className="font-mono text-sm">{order.details.custId}</div>
-                </div>
-                <div>
-                  <span className="text-gray-500 text-sm font-medium">Cust S/N:</span>
-                  <div className="font-mono text-sm">{order.details.custSn}</div>
-                </div>
-                <div>
-                  <span className="text-gray-500 text-sm font-medium">PO #:</span>
-                  <div className="font-mono text-sm">{order.details.poNumber}</div>
-                </div>
-                <div>
-                  <span className="text-gray-500 text-sm font-medium">JM PO#:</span>
-                  <div className="font-mono text-sm">{order.details.jmPoNumber}</div>
-                </div>
-                <div>
-                  <span className="text-gray-500 text-sm font-medium">TS:</span>
-                  <div className="font-mono text-sm">{order.details.ts}</div>
-                </div>
-                <div>
-                  <span className="text-gray-500 text-sm font-medium">Hotlist:</span>
-                  <div className="font-mono text-sm">{order.details.hotlist || "N/A"}</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Timeline Card */}
-        <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
-          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 px-4 py-2 border-b border-gray-200">
-            <h4 className="font-semibold text-gray-900 flex items-center gap-2">
-              <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
-              Project Timeline
-            </h4>
-          </div>
-          
-          <div className="p-6">
-            <div className="relative">
-              <div className="flex justify-between items-center">
-                {/* Timeline Items */}
-                {[
-                  {
-                    title: "Created",
-                    date: order.details.createdDate,
-                    description: "Initial Setup",
-                    color: "bg-green-500",
-                    bgColor: "bg-green-50",
-                    textColor: "text-green-700"
-                  },
-                  {
-                    title: "Status Updated", 
-                    date: order.details.statusDate,
-                    description: order.status,
-                    color: "bg-blue-500",
-                    bgColor: "bg-blue-50",
-                    textColor: "text-blue-700"
-                  },
-                  {
-                    title: "Last Modified",
-                    date: order.details.lastModified,
-                    description: "Recent Updates",
-                    color: "bg-yellow-500",
-                    bgColor: "bg-yellow-50", 
-                    textColor: "text-yellow-700"
-                  },
-                  {
-                    title: "Need By Date",
-                    date: order.details.nextBy,
-                    description: "Target Date",
-                    color: order.details.nextBy === "TBD" ? "bg-red-500" : "bg-purple-500",
-                    bgColor: order.details.nextBy === "TBD" ? "bg-red-50" : "bg-purple-50",
-                    textColor: order.details.nextBy === "TBD" ? "text-red-700" : "text-purple-700"
-                  },
-                  {
-                    title: "Departure",
-                    date: "-",
-                    description: "Completion",
-                    color: "bg-gray-400",
-                    bgColor: "bg-gray-50",
-                    textColor: "text-gray-600"
-                  }
-                ].map((item, index, array) => (
-                  <div key={index} className="flex flex-col items-center relative flex-1">
-                    
-                    {/* Timeline Dot */}
-                    <div className="relative z-10 mb-4">
-                      <div className={cn("w-4 h-4 rounded-full border-3 border-white shadow-lg", item.color)}></div>
-                    </div>
-                    
-                    {/* Content */}
-                    <div className="text-center max-w-[120px]">
-                      <div className="text-sm font-semibold text-gray-900 mb-2">{item.title}</div>
-                      <div className={cn("text-xs px-3 py-1.5 rounded-full mb-2 font-medium", item.bgColor, item.textColor)}>
-                        {item.date}
-                      </div>
-                      <div className="text-xs text-gray-500">{item.description}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Comments Section */}
-        <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-          <h4 className="font-semibold text-gray-900 mb-2">Comments:</h4>
-          <div className="text-sm text-gray-700 bg-white p-3 rounded border border-gray-200">
-            {order.details.comments}
-          </div>
-        </div>
-
-        {/* Action Buttons */}
-        <div className="flex justify-end gap-3 pt-4 border-t border-gray-200">
-          <Button variant="outline" onClick={() => handleEditWorkOrder(order.id)}>
-            Edit Order
-          </Button>
-          <Button variant="outline">
-            Assign Tech
-          </Button>
-          <Button>
-            Update Status
-          </Button>
-        </div>
-      </div>
-    </DialogContent>
-  );
-
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200">
       {/* Header */}
@@ -4667,19 +4438,19 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
             <TableHeader className="bg-gray-50 sticky top-0">
               <TableRow className="hover:bg-gray-50">
                 {currentView === 'batch' ? (
-                  // Template View Headers
+                  // Batch View Headers
                   <>
-                    <TableHead className="font-semibold text-gray-900">Work Order #</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Item</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Division</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Created Date</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Item Status</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Due Date</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Manufacturer</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Customer</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Model</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Template</TableHead>
-                    <TableHead className="w-12"></TableHead>
+                    <TableHead className="font-semibold text-gray-900">WO Batch</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Acct #</TableHead>
+                    <TableHead className="font-semibold text-gray-900">SR #</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Customer Name</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Total Lab Open</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Total AR Count</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Total Count</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Last Comment Date</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Last Comment</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Min Need By Date</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Min Follow Up Date</TableHead>
                   </>
                 ) : (
                   // Item View Headers
@@ -4701,23 +4472,23 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
             </TableHeader>
             <TableBody>
               {currentView === 'batch' ? (
-                // Template View - Show Work Orders
-                paginatedWorkOrders.map((order) => (
+                // Batch View - Show Work Order Batches
+                paginatedBatches.map((batch) => (
                   <TableRow
-                    key={order.id}
+                    key={batch.id}
                     className="hover:bg-gray-50 cursor-pointer border-b border-gray-100"
-                    onClick={() => openDetails(order)}
                   >
-                    <TableCell className="font-medium text-blue-600">{order.id}</TableCell>
-                    <TableCell className="font-medium">{order.division}</TableCell>
-                    <TableCell className="text-sm">{order.details.createdDate}</TableCell>
-                    <TableCell>{getStatusBadge(order.status)}</TableCell>
-                    <TableCell>{order.dueDate}</TableCell>
-                    <TableCell className="font-medium">{order.details.manufacturer}</TableCell>
-                    <TableCell className="font-medium">{order.customer}</TableCell>
-                    <TableCell className="font-mono text-sm">{order.details.modelNumber}</TableCell>
-                    <TableCell className="text-blue-600 underline cursor-pointer hover:text-blue-800">{order.details.template}</TableCell>
-                    <TableCell></TableCell>
+                    <TableCell className="font-medium text-blue-600">{batch.woBatch}</TableCell>
+                    <TableCell>{batch.acctNumber}</TableCell>
+                    <TableCell className="text-blue-600">{batch.srNumber}</TableCell>
+                    <TableCell className="font-medium">{batch.customerName}</TableCell>
+                    <TableCell>{batch.totalLabOpen}</TableCell>
+                    <TableCell>{batch.totalArCount}</TableCell>
+                    <TableCell>{batch.totalCount}</TableCell>
+                    <TableCell>{batch.lastCommentDate}</TableCell>
+                    <TableCell className="max-w-xs truncate">{batch.lastComment}</TableCell>
+                    <TableCell>{batch.minNeedByDate}</TableCell>
+                    <TableCell>{batch.minFollowUpDate}</TableCell>
                   </TableRow>
                 ))
               ) : (
@@ -4755,43 +4526,36 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
           // Grid View - Cards
           <div className="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
             {currentView === 'batch' ? (
-              paginatedWorkOrders.map((order) => (
-                <div key={order.id} className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer" onClick={() => openDetails(order)}>
+              paginatedBatches.map((batch) => (
+                <div key={batch.id} className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer">
                   <div className="p-4 border-b border-gray-100">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        <span className="font-bold text-blue-600 text-lg">{order.id}</span>
-                        <div className="flex items-center gap-2">
-                          {getStatusBadge(order.status)}
-                          <span className={cn("px-2 py-1 rounded-md text-xs font-medium",
-                            order.details.priority === "Critical" ? "bg-red-100 text-red-800" :
-                            order.details.priority === "High" ? "bg-orange-100 text-orange-800" :
-                            order.details.priority === "Medium" ? "bg-yellow-100 text-yellow-800" :
-                            "bg-gray-100 text-gray-800")}>{order.details.priority}</span>
-                        </div>
+                        <span className="font-bold text-blue-600 text-lg">{batch.woBatch}</span>
+                        <span className="text-sm text-gray-600">({batch.totalCount} items)</span>
                       </div>
                     </div>
                   </div>
                   <div className="p-4 space-y-3">
-                    <div><h3 className="font-bold text-gray-900 text-lg mb-1">{order.details.manufacturer}</h3></div>
+                    <div><h3 className="font-bold text-gray-900 text-lg mb-1">{batch.customerName}</h3></div>
                     <div className="grid grid-cols-2 gap-3 text-sm">
                       <div>
-                        <span className="text-gray-500">Created:</span>
-                        <div className="font-medium text-xs">{order.details.createdDate}</div>
+                        <span className="text-gray-500">Account #:</span>
+                        <div className="font-medium text-xs">{batch.acctNumber}</div>
                       </div>
                       <div>
-                        <span className="text-gray-500">Due Date:</span>
-                        <div className="font-medium text-xs">{order.dueDate}</div>
+                        <span className="text-gray-500">SR #:</span>
+                        <div className="font-medium text-xs text-blue-600">{batch.srNumber}</div>
                       </div>
                     </div>
                     <div className="grid grid-cols-2 gap-3 text-sm">
                       <div>
-                        <span className="text-gray-500">Division:</span>
-                        <div className="font-medium text-xs">{order.division}</div>
+                        <span className="text-gray-500">Last Comment:</span>
+                        <div className="font-medium text-xs">{batch.lastCommentDate}</div>
                       </div>
                       <div>
-                        <span className="text-gray-500">Customer:</span>
-                        <div className="font-medium text-xs">{order.customer}</div>
+                        <span className="text-gray-500">Min Need By:</span>
+                        <div className="font-medium text-xs">{batch.minNeedByDate}</div>
                       </div>
                     </div>
                   </div>
