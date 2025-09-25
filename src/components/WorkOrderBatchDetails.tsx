@@ -102,7 +102,6 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
           Back to Batches
         </Button>
         <div className="flex items-center space-x-2">
-          <Button variant="outline" size="sm">Add Item</Button>
           <Button variant="outline" size="sm">Export</Button>
         </div>
       </div>
