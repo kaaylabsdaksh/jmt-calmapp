@@ -234,7 +234,7 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
                     items.map((item) => (
                       <div
                         key={item.id}
-                        className="flex items-center justify-between p-3 bg-muted/30 rounded-lg hover:bg-muted/50 transition-colors story-link"
+                        className="flex items-center justify-between p-3 bg-muted/30 rounded-lg transition-colors"
                       >
                         <div className="flex-1">
                           <div className="flex items-center space-x-3">
