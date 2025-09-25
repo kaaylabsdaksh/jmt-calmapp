@@ -8,6 +8,21 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { List, Grid3X3 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+interface WorkOrderBatch {
+  id: string;
+  woBatch: string;
+  acctNumber: string;
+  srNumber: string;
+  customerName: string;
+  totalLabOpen: number;
+  totalArCount: number;
+  totalCount: number;
+  lastCommentDate: string;
+  lastComment: string;
+  minNeedByDate: string;
+  minFollowUpDate: string;
+}
+
 interface WorkOrder {
   id: string;
   status: "In Lab" | "Completed" | "Overdue" | "Pending" | "[Open Items]" | "[Awaiting CDR]" | "[Assign/Tech - Repair - InLab]" | "[Assigned To Tech - Repair Dept]" | "[Q/A Hold - Q/A Disapproved]" | "[Q/A Insp - Q/A Hold - Q/A Fail]" | "[In Lab - Assigned to Tech]" | "[In Lab - Q/A Disapprove]" | "[Estimate - A/R Invoicing]" | "[To Factory - Awaiting Parts]" | "[AR Need By Status]" | "Assigned to Tech" | "In Transit" | "Lab Management" | "Repair Department" | "Rotation" | "Estimate" | "Awaiting Parts" | "Awaiting PR Approval" | "In Metrology" | "To Factory" | "To Factory - Repair by Replacement" | "To Factory - Warranty" | "Lab Hold" | "Q/A Inspection" | "Q/A Inspection - Fail Correction" | "Q/A Hold" | "Q/A Disapproved" | "Q/A Fail Log" | "A/R Invoicing" | "A/R Invoicing/Hold" | "Admin Processing" | "Back to Customer" | "Calibrated on Shelf" | "Cancelled" | "Item Not Found on Site" | "ME Review" | "Not Used" | "Onsite" | "Ready for Departure" | "Return to Lab for Processing" | "Scheduled" | "Surplus Stock" | "Waiting on Customer" | "Calibration Required" | "Quality Review" | "Waiting Parts" | "Ready to Ship" | "Customer Hold" | "In Progress" | "Final Testing" | "Expedited" | "Needs Approval" | "Incoming" | "Parts Ordered" | "Quote Requested" | "Rework Required" | "Documentation Review" | "Shipping Prep";
@@ -2785,6 +2800,219 @@ const mockWorkOrders: WorkOrder[] = [
   }
 ];
 
+const mockWorkOrderBatches: WorkOrderBatch[] = [
+  {
+    id: "1",
+    woBatch: "383727",
+    acctNumber: "13058.06",
+    srNumber: "SR2455",
+    customerName: "Deutsche Windtechnik Inc",
+    totalLabOpen: 0,
+    totalArCount: 0,
+    totalCount: 1,
+    lastCommentDate: "08/10/2023",
+    lastComment: "Wait Cust Followup Date changed from 8/9/2023 to 8...",
+    minNeedByDate: "09/24/2021",
+    minFollowUpDate: "08/11/2023"
+  },
+  {
+    id: "2",
+    woBatch: "390118",
+    acctNumber: "6962.01",
+    srNumber: "SR1820",
+    customerName: "Colonial Pipeline",
+    totalLabOpen: 0,
+    totalArCount: 0,
+    totalCount: 10,
+    lastCommentDate: "08/09/2023",
+    lastComment: "PO Change Order 9524 sent to tammypatt@jmtest.com...",
+    minNeedByDate: "12/20/2022",
+    minFollowUpDate: "08/11/2023"
+  },
+  {
+    id: "3",
+    woBatch: "452463",
+    acctNumber: "6962.01",
+    srNumber: "SR1820",
+    customerName: "Colonial Pipeline",
+    totalLabOpen: 1,
+    totalArCount: 0,
+    totalCount: 2,
+    lastCommentDate: "08/09/2023",
+    lastComment: "PO Change Order 9525 sent to bhavard@colpipe.com...",
+    minNeedByDate: "06/23/2023",
+    minFollowUpDate: "08/11/2023"
+  },
+  {
+    id: "4",
+    woBatch: "393015",
+    acctNumber: "7412.06",
+    srNumber: "",
+    customerName: "Burns & McDonnell",
+    totalLabOpen: 0,
+    totalArCount: 0,
+    totalCount: 6,
+    lastCommentDate: "08/11/2023",
+    lastComment: "Wait Cust Followup Date changed from 8/10/2022 to...",
+    minNeedByDate: "01/17/2022",
+    minFollowUpDate: "08/14/2023"
+  },
+  {
+    id: "5",
+    woBatch: "441228",
+    acctNumber: "2577.50",
+    srNumber: "SR2425",
+    customerName: "Energy Transfer",
+    totalLabOpen: 1,
+    totalArCount: 0,
+    totalCount: 2,
+    lastCommentDate: "08/10/2023",
+    lastComment: "WAITING ON CUSTOMER: (Awaiting Quote Approval)",
+    minNeedByDate: "03/20/2023",
+    minFollowUpDate: "08/14/2023"
+  },
+  {
+    id: "6",
+    woBatch: "452817",
+    acctNumber: "6441.05",
+    srNumber: "SR1299",
+    customerName: "Blue Cube Operations LLC",
+    totalLabOpen: 0,
+    totalArCount: 0,
+    totalCount: 3,
+    lastCommentDate: "08/31/2023",
+    lastComment: "Wait Cust Followup Date changed from 08/11/2023 to...",
+    minNeedByDate: "06/28/2023",
+    minFollowUpDate: "09/05/2023"
+  },
+  {
+    id: "7",
+    woBatch: "411712",
+    acctNumber: "2607.00",
+    srNumber: "SR0248",
+    customerName: "B&B Electrical/Utility",
+    totalLabOpen: 0,
+    totalArCount: 1,
+    totalCount: 3,
+    lastCommentDate: "04/30/2024",
+    lastComment: "Work Order marked Ready to Bill.",
+    minNeedByDate: "06/26/2022",
+    minFollowUpDate: "09/22/2023"
+  },
+  {
+    id: "8",
+    woBatch: "432330",
+    acctNumber: "6333.14",
+    srNumber: "SR1825",
+    customerName: "Dow Chemical",
+    totalLabOpen: 0,
+    totalArCount: 1,
+    totalCount: 62,
+    lastCommentDate: "03/14/2024",
+    lastComment: "Work Order marked Ready to Bill",
+    minNeedByDate: "06/09/2023",
+    minFollowUpDate: "09/22/2023"
+  },
+  {
+    id: "9",
+    woBatch: "434914",
+    acctNumber: "6437.23",
+    srNumber: "SR0654",
+    customerName: "Exxon/Mobil BPEP",
+    totalLabOpen: 0,
+    totalArCount: 0,
+    totalCount: 1,
+    lastCommentDate: "09/26/2023",
+    lastComment: "Wait Cust Followup Date changed from 9/28/2023 to...",
+    minNeedByDate: "01/30/2023",
+    minFollowUpDate: "10/02/2023"
+  },
+  {
+    id: "10",
+    woBatch: "436290",
+    acctNumber: "6121.60",
+    srNumber: "",
+    customerName: "Entergy The Woodlands Tx",
+    totalLabOpen: 0,
+    totalArCount: 0,
+    totalCount: 1,
+    lastCommentDate: "09/28/2023",
+    lastComment: "WAITING ON CUSTOMER: (Awaiting Quote Approval)",
+    minNeedByDate: "02/15/2023",
+    minFollowUpDate: "10/02/2023"
+  },
+  {
+    id: "11",
+    woBatch: "445885",
+    acctNumber: "15573.00",
+    srNumber: "SR1250",
+    customerName: "HP Technologies LLC",
+    totalLabOpen: 0,
+    totalArCount: 0,
+    totalCount: 1,
+    lastCommentDate: "09/29/2023",
+    lastComment: "WAITING ON CUSTOMER: (OTHERtest) test",
+    minNeedByDate: "04/26/2023",
+    minFollowUpDate: "10/02/2023"
+  },
+  {
+    id: "12",
+    woBatch: "451091",
+    acctNumber: "15000.180",
+    srNumber: "SR2244",
+    customerName: "Entergy L-CHOC-STR",
+    totalLabOpen: 0,
+    totalArCount: 0,
+    totalCount: 1,
+    lastCommentDate: "09/28/2023",
+    lastComment: "Status changed from A/R INVOICING to WAITING ON CU...",
+    minNeedByDate: "08/28/2023",
+    minFollowUpDate: "10/02/2023"
+  },
+  {
+    id: "13",
+    woBatch: "450722",
+    acctNumber: "15000.180",
+    srNumber: "SR2344",
+    customerName: "Entergy L-CHOC-STR",
+    totalLabOpen: 0,
+    totalArCount: 0,
+    totalCount: 2,
+    lastCommentDate: "11/03/2023",
+    lastComment: "External File ConfluenceMigrationPlan.xlsx was DEL...",
+    minNeedByDate: "06/28/2023",
+    minFollowUpDate: "10/02/2023"
+  },
+  {
+    id: "14",
+    woBatch: "452661",
+    acctNumber: "6315.60",
+    srNumber: "SR1358",
+    customerName: "Conoco Phillips",
+    totalLabOpen: 2,
+    totalArCount: 9,
+    totalCount: 11,
+    lastCommentDate: "02/27/2024",
+    lastComment: "PO Change Order 9525 was approved by Taylor Swift.",
+    minNeedByDate: "06/28/2023",
+    minFollowUpDate: "10/02/2023"
+  },
+  {
+    id: "15",
+    woBatch: "439064",
+    acctNumber: "6172.63",
+    srNumber: "",
+    customerName: "Dow Chem Sabine-Machine Shop",
+    totalLabOpen: 0,
+    totalArCount: 223,
+    totalCount: 236,
+    lastCommentDate: "11/19/2024",
+    lastComment: "Delivery Ticket #: DT-406502 Delivery Ticket Date...",
+    minNeedByDate: "03/12/2023",
+    minFollowUpDate: "10/03/2023"
+  }
+];
+
 // Mock data for work order items (for item view)
 interface WorkOrderItem {
   id: string;
@@ -3672,7 +3900,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
   const [selectedWorkOrder, setSelectedWorkOrder] = useState<WorkOrder | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [activeStatusFilter, setActiveStatusFilter] = useState<string>('all');
-  const [templateView, setTemplateView] = useState<boolean>(false);
+  const [currentView, setCurrentView] = useState<'item' | 'batch'>('item');
   const navigate = useNavigate();
   const itemsPerPage = 10;
   
@@ -3850,21 +4078,25 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
     return statusMatch && searchMatch && priorityMatch && manufacturerMatch && divisionMatch;
   });
   
-  const totalPages = templateView 
-    ? Math.ceil(filteredWorkOrders.length / itemsPerPage)
+  const totalPages = currentView === 'batch' 
+    ? Math.ceil(mockWorkOrderBatches.length / itemsPerPage)
     : Math.ceil(filteredWorkOrderItems.length / itemsPerPage);
 
   // Get paginated data
-  const paginatedWorkOrders = templateView 
-    ? filteredWorkOrders.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+  const paginatedWorkOrders = currentView === 'item' 
+    ? []
     : [];
     
-  const paginatedWorkOrderItems = !templateView 
+  const paginatedWorkOrderItems = currentView === 'item' 
     ? filteredWorkOrderItems.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
     : [];
 
+  const paginatedBatches = currentView === 'batch'
+    ? mockWorkOrderBatches.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+    : [];
+
   const openDetails = (order: WorkOrder) => {
-    console.log('Opening details for order:', order.id, 'templateView:', templateView);
+    console.log('Opening details for order:', order.id, 'currentView:', currentView);
     setSelectedWorkOrder(order);
   };
 
@@ -4353,12 +4585,45 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
           <div>
             <h2 className="text-xl font-bold text-gray-900">Work Orders</h2>
             <p className="text-sm text-gray-600 mt-1">
-              Showing {filteredWorkOrderItems.length} of {mockWorkOrderItems.length} items
+              {currentView === 'batch' ? (
+                <>Showing {mockWorkOrderBatches.length} batches</>
+              ) : (
+                <>Showing {filteredWorkOrderItems.length} of {mockWorkOrderItems.length} items</>
+              )}
             </p>
           </div>
           
           {/* View Toggle Buttons */}
           <div className="flex items-center gap-3">
+            {/* Item/Batch Toggle */}
+            <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-lg">
+              <Button
+                variant={currentView === 'item' ? 'default' : 'ghost'}
+                size="sm"
+                onClick={() => setCurrentView('item')}
+                className={cn(
+                  "h-8 px-3 rounded-md transition-all",
+                  currentView === 'item' 
+                    ? "bg-white shadow-sm text-gray-900" 
+                    : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
+                )}
+              >
+                Item View
+              </Button>
+              <Button
+                variant={currentView === 'batch' ? 'default' : 'ghost'}
+                size="sm"
+                onClick={() => setCurrentView('batch')}
+                className={cn(
+                  "h-8 px-3 rounded-md transition-all",
+                  currentView === 'batch' 
+                    ? "bg-white shadow-sm text-gray-900" 
+                    : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
+                )}
+              >
+                Batch View
+              </Button>
+            </div>
 
             {/* List/Grid Toggle */}
             <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-lg">
@@ -4401,7 +4666,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
           <Table>
             <TableHeader className="bg-gray-50 sticky top-0">
               <TableRow className="hover:bg-gray-50">
-                {templateView ? (
+                {currentView === 'batch' ? (
                   // Template View Headers
                   <>
                     <TableHead className="font-semibold text-gray-900">Work Order #</TableHead>
@@ -4435,7 +4700,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
               </TableRow>
             </TableHeader>
             <TableBody>
-              {templateView ? (
+              {currentView === 'batch' ? (
                 // Template View - Show Work Orders
                 paginatedWorkOrders.map((order) => (
                   <TableRow
@@ -4489,7 +4754,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
         ) : (
           // Grid View - Cards
           <div className="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-            {templateView ? (
+            {currentView === 'batch' ? (
               paginatedWorkOrders.map((order) => (
                 <div key={order.id} className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer" onClick={() => openDetails(order)}>
                   <div className="p-4 border-b border-gray-100">
@@ -4575,7 +4840,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
         {/* Pagination */}
         <div className="p-6 border-t border-gray-200 flex justify-between items-center">
           <span className="text-sm text-gray-600">
-            Showing {((currentPage - 1) * itemsPerPage) + 1}-{Math.min(currentPage * itemsPerPage, templateView ? filteredWorkOrders.length : filteredWorkOrderItems.length)} of {templateView ? filteredWorkOrders.length : filteredWorkOrderItems.length} items
+            Showing {((currentPage - 1) * itemsPerPage) + 1}-{Math.min(currentPage * itemsPerPage, currentView === 'batch' ? mockWorkOrderBatches.length : filteredWorkOrderItems.length)} of {currentView === 'batch' ? mockWorkOrderBatches.length : filteredWorkOrderItems.length} items
           </span>
           <div className="flex gap-2">
             <Button 
@@ -4601,10 +4866,10 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
       {/* Work Order Details Dialog */}
       <Dialog open={selectedWorkOrder !== null} onOpenChange={() => setSelectedWorkOrder(null)}>
         {(() => {
-          console.log('Dialog rendering - selectedWorkOrder:', selectedWorkOrder?.id, 'templateView:', templateView);
-          if (selectedWorkOrder && templateView) {
-            return <TemplateWorkOrderDetailsDialog order={selectedWorkOrder} />;
-          } else if (selectedWorkOrder && !templateView) {
+          console.log('Dialog rendering - selectedWorkOrder:', selectedWorkOrder?.id, 'currentView:', currentView);
+          if (selectedWorkOrder && currentView === 'batch') {
+            return <DefaultWorkOrderDetailsDialog order={selectedWorkOrder} />;
+          } else if (selectedWorkOrder && currentView === 'item') {
             return <DefaultWorkOrderDetailsDialog order={selectedWorkOrder} />;
           }
           return null;
