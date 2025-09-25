@@ -137,7 +137,7 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
   };
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
@@ -202,7 +202,7 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
               <CollapsibleTrigger asChild>
                 <Button
                   variant="ghost"
-                  className="w-full justify-start p-4 h-auto border rounded-lg transition-colors"
+                  className="w-full justify-start p-4 h-auto border rounded-lg"
                 >
                   <div className="flex items-center space-x-3 w-full">
                     {openSections[status] ? (
@@ -223,7 +223,7 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
                 </Button>
               </CollapsibleTrigger>
               
-              <CollapsibleContent className="pt-4 animate-accordion-down">
+              <CollapsibleContent className="pt-4">
                 <div className="space-y-3 pl-8">
                   {items.length === 0 ? (
                     <p className="text-muted-foreground text-sm py-4">
@@ -233,7 +233,7 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
                     items.map((item) => (
                       <div
                         key={item.id}
-                        className="flex items-center justify-between p-3 bg-muted/30 rounded-lg transition-colors"
+                        className="flex items-center justify-between p-3 bg-muted/30 rounded-lg"
                       >
                         <div className="flex-1">
                           <div className="flex items-center space-x-3">
