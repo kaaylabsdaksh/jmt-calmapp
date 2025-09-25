@@ -217,85 +217,86 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
                     <TableRow className="bg-gradient-to-r from-slate-50 to-gray-50">
                       <TableCell colSpan={12} className="p-0">
                         <div className="p-6 animate-fade-in">
-                          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                            {/* Timeline & Dates Card */}
-                            <div className="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200">
-                              <div className="p-4 border-b border-gray-100">
-                                <div className="flex items-center gap-2">
-                                  <Calendar className="h-4 w-4 text-blue-600" />
-                                  <h4 className="font-semibold text-gray-900 text-sm">Timeline & Dates</h4>
-                                </div>
+                          {/* Timeline & Dates - Full Width */}
+                          <div className="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200 mb-6">
+                            <div className="p-4 border-b border-gray-100">
+                              <div className="flex items-center gap-2">
+                                <Calendar className="h-4 w-4 text-blue-600" />
+                                <h4 className="font-semibold text-gray-900 text-sm">Timeline & Dates</h4>
                               </div>
-                              <div className="p-4">
-                                <div className="relative">
-                                  {/* Horizontal Timeline */}
-                                  <div className="flex items-center justify-between">
-                                    {/* Item Created */}
+                            </div>
+                            <div className="p-6">
+                              <div className="relative">
+                                {/* Horizontal Timeline */}
+                                <div className="flex items-center justify-between max-w-4xl mx-auto">
+                                  {/* Item Created */}
+                                  <div className="flex flex-col items-center text-center flex-1">
+                                    <div className="relative">
+                                      <div className="flex items-center justify-center w-12 h-12 bg-blue-100 border-2 border-blue-300 rounded-full mb-3">
+                                        <Calendar className="h-5 w-5 text-blue-600" />
+                                      </div>
+                                      {/* Connecting line to next item */}
+                                      <div className="absolute top-6 left-12 w-full h-0.5 bg-gradient-to-r from-blue-300 to-orange-300"></div>
+                                    </div>
+                                    <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide mb-1">Item Created</span>
+                                    <p className="text-sm font-medium text-gray-900">{item.itemCreated}</p>
+                                  </div>
+
+                                  {/* Follow Up Date */}
+                                  {item.followUpDate && (
                                     <div className="flex flex-col items-center text-center flex-1">
                                       <div className="relative">
-                                        <div className="flex items-center justify-center w-10 h-10 bg-blue-100 border-2 border-blue-300 rounded-full mb-2">
-                                          <Calendar className="h-4 w-4 text-blue-600" />
+                                        <div className="flex items-center justify-center w-12 h-12 bg-orange-100 border-2 border-orange-300 rounded-full mb-3">
+                                          <Clock className="h-5 w-5 text-orange-600" />
                                         </div>
                                         {/* Connecting line to next item */}
-                                        <div className="absolute top-5 left-10 w-full h-0.5 bg-gradient-to-r from-blue-300 to-orange-300 hidden lg:block"></div>
+                                        {item.departureDate && (
+                                          <div className="absolute top-6 left-12 w-full h-0.5 bg-gradient-to-r from-orange-300 to-green-300"></div>
+                                        )}
                                       </div>
-                                      <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide mb-1">Item Created</span>
-                                      <p className="text-sm font-medium text-gray-900">{item.itemCreated}</p>
+                                      <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide mb-1">Follow Up Date</span>
+                                      <p className="text-sm font-medium text-gray-900">{item.followUpDate}</p>
                                     </div>
+                                  )}
 
-                                    {/* Follow Up Date */}
-                                    {item.followUpDate && (
-                                      <div className="flex flex-col items-center text-center flex-1">
-                                        <div className="relative">
-                                          <div className="flex items-center justify-center w-10 h-10 bg-orange-100 border-2 border-orange-300 rounded-full mb-2">
-                                            <Clock className="h-4 w-4 text-orange-600" />
-                                          </div>
-                                          {/* Connecting line to next item */}
-                                          {item.departureDate && (
-                                            <div className="absolute top-5 left-10 w-full h-0.5 bg-gradient-to-r from-orange-300 to-green-300 hidden lg:block"></div>
-                                          )}
+                                  {/* Departure Date */}
+                                  {item.departureDate && (
+                                    <div className="flex flex-col items-center text-center flex-1">
+                                      <div className="relative">
+                                        <div className="flex items-center justify-center w-12 h-12 bg-green-100 border-2 border-green-300 rounded-full mb-3">
+                                          <Calendar className="h-5 w-5 text-green-600" />
                                         </div>
-                                        <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide mb-1">Follow Up Date</span>
-                                        <p className="text-sm font-medium text-gray-900">{item.followUpDate}</p>
+                                        {/* Connecting line to next item */}
+                                        {item.needByDate && (
+                                          <div className="absolute top-6 left-12 w-full h-0.5 bg-gradient-to-r from-green-300 to-red-300"></div>
+                                        )}
                                       </div>
-                                    )}
+                                      <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide mb-1">Departure Date</span>
+                                      <p className="text-sm font-medium text-gray-900">{item.departureDate}</p>
+                                    </div>
+                                  )}
 
-                                    {/* Departure Date */}
-                                    {item.departureDate && (
-                                      <div className="flex flex-col items-center text-center flex-1">
-                                        <div className="relative">
-                                          <div className="flex items-center justify-center w-10 h-10 bg-green-100 border-2 border-green-300 rounded-full mb-2">
-                                            <Calendar className="h-4 w-4 text-green-600" />
-                                          </div>
-                                          {/* Connecting line to next item */}
-                                          {item.needByDate && (
-                                            <div className="absolute top-5 left-10 w-full h-0.5 bg-gradient-to-r from-green-300 to-red-300 hidden lg:block"></div>
-                                          )}
-                                        </div>
-                                        <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide mb-1">Departure Date</span>
-                                        <p className="text-sm font-medium text-gray-900">{item.departureDate}</p>
+                                  {/* Need By Date */}
+                                  {item.needByDate && (
+                                    <div className="flex flex-col items-center text-center flex-1">
+                                      <div className="flex items-center justify-center w-12 h-12 bg-red-100 border-2 border-red-300 rounded-full mb-3">
+                                        <Clock className="h-5 w-5 text-red-600" />
                                       </div>
-                                    )}
-
-                                    {/* Need By Date */}
-                                    {item.needByDate && (
-                                      <div className="flex flex-col items-center text-center flex-1">
-                                        <div className="flex items-center justify-center w-10 h-10 bg-red-100 border-2 border-red-300 rounded-full mb-2">
-                                          <Clock className="h-4 w-4 text-red-600" />
-                                        </div>
-                                        <div className="flex items-center gap-1 mb-1">
-                                          <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide">Need By Date</span>
-                                          <span className="inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                                            Critical
-                                          </span>
-                                        </div>
-                                        <p className="text-sm font-semibold text-red-600">{item.needByDate}</p>
+                                      <div className="flex items-center gap-1 mb-1">
+                                        <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide">Need By Date</span>
+                                        <span className="inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                          Critical
+                                        </span>
                                       </div>
-                                    )}
-                                  </div>
+                                      <p className="text-sm font-semibold text-red-600">{item.needByDate}</p>
+                                    </div>
+                                  )}
                                 </div>
                               </div>
                             </div>
+                          </div>
+                          
+                          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                             
                             {/* Assignment & Details Card */}
                             <div className="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200">
