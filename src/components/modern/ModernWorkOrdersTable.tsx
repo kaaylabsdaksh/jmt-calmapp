@@ -4619,6 +4619,18 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                         <span className="text-gray-500">Model:</span>
                         <div className="font-mono text-xs">{item.model}</div>
                       </div>
+                      <div>
+                        <span className="text-gray-500">Serial Number:</span>
+                        <div className="font-mono text-xs">{item.serialNumber}</div>
+                      </div>
+                      <div>
+                        <span className="text-gray-500">Item Type:</span>
+                        <div className="font-medium text-xs">{item.itemType}</div>
+                      </div>
+                      <div className="col-span-2">
+                        <span className="text-gray-500">Assigned To:</span>
+                        <div className="font-medium text-xs">{item.assignedTo}</div>
+                      </div>
                     </div>
                   </div>
                 </div>
