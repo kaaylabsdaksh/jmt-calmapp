@@ -25,15 +25,16 @@ interface WorkOrderItemTemplate {
   priority: string;
   manufacturer: string;
   model: string;
+  description: string;
   mfgSerial: string;
   custId: string;
   custSN: string;
-  barcodeNum: string;
-  warranty: string;
+  assetNumber: string;
   iso17025: string;
   estimate: string;
   newEquip: string;
   needByDate: string;
+  ccCost: string;
 }
 
 interface WorkOrderItemsCardsProps {

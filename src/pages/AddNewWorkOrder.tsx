@@ -81,15 +81,16 @@ const AddNewWorkOrder = () => {
     priority: string;
     manufacturer: string;
     model: string;
+    description: string;
     mfgSerial: string;
     custId: string;
     custSN: string;
-    barcodeNum: string;
-    warranty: string;
+    assetNumber: string;
     iso17025: string;
     estimate: string;
     newEquip: string;
     needByDate: string;
+    ccCost: string;
   }>>([
     {
       id: "rec-001",
@@ -99,15 +100,16 @@ const AddNewWorkOrder = () => {
       priority: "normal",
       manufacturer: "3d-instruments",
       model: "DM-5000",
+      description: "Digital Multimeter with advanced measurement capabilities",
       mfgSerial: "SN123456",
       custId: "CUST-001",
       custSN: "C001",
-      barcodeNum: "BC001234567",
-      warranty: "yes",
+      assetNumber: "ASSET-001",
       iso17025: "yes",
       estimate: "$125.00",
       newEquip: "no",
-      needByDate: "2024-12-15"
+      needByDate: "2024-12-15",
+      ccCost: "$50.00"
     },
     {
       id: "rec-002", 
@@ -117,15 +119,16 @@ const AddNewWorkOrder = () => {
       priority: "expedite",
       manufacturer: "3m",
       model: "OSC-3000",
+      description: "High frequency oscilloscope for signal analysis",
       mfgSerial: "SN789012",
       custId: "CUST-002",
       custSN: "C002",
-      barcodeNum: "BC002345678",
-      warranty: "no",
+      assetNumber: "ASSET-002",
       iso17025: "yes",
       estimate: "$350.00",
       newEquip: "no",
-      needByDate: "2024-11-30"
+      needByDate: "2024-11-30",
+      ccCost: "$75.00"
     },
     {
       id: "rec-003",
@@ -135,15 +138,16 @@ const AddNewWorkOrder = () => {
       priority: "rush",
       manufacturer: "4b-components",
       model: "PWR-500",
+      description: "Precision power supply unit with variable output",
       mfgSerial: "SN345678",
       custId: "CUST-003",
       custSN: "C003",
-      barcodeNum: "BC003456789",
-      warranty: "yes",
+      assetNumber: "ASSET-003",
       iso17025: "no",
-      estimate: "$85.00",
+      estimate: "$225.00",
       newEquip: "yes",
-      needByDate: "2024-12-01"
+      needByDate: "2024-12-10",
+      ccCost: "$60.00"
     }
   ]);
   const inputRef = useRef<HTMLInputElement>(null);

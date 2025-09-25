@@ -5,6 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Textarea } from "@/components/ui/textarea";
 import { Plus, Trash2, Edit } from "lucide-react";
 import { useState } from "react";
 
@@ -16,15 +17,16 @@ interface WorkOrderReceivingItem {
   priority: string;
   manufacturer: string;
   model: string;
+  description: string;
   mfgSerial: string;
   custId: string;
   custSN: string;
-  barcodeNum: string;
-  warranty: string;
+  assetNumber: string;
   iso17025: string;
   estimate: string;
   newEquip: string;
   needByDate: string;
+  ccCost: string;
 }
 
 interface WorkOrderItemsReceivingProps {
@@ -40,15 +42,16 @@ const createEmptyItem = (): WorkOrderReceivingItem => ({
   priority: "",
   manufacturer: "",
   model: "",
+  description: "",
   mfgSerial: "",
   custId: "",
   custSN: "",
-  barcodeNum: "",
-  warranty: "",
+  assetNumber: "",
   iso17025: "",
   estimate: "",
   newEquip: "",
   needByDate: "",
+  ccCost: "",
 });
 
 export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsReceivingProps) => {
@@ -109,7 +112,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                 Receive Item
               </Button>
             </DialogTrigger>
-            <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+            <DialogContent className="max-w-5xl max-h-[80vh] overflow-y-auto">
               <DialogHeader>
                 <DialogTitle>Receive New Work Order Item</DialogTitle>
               </DialogHeader>
@@ -191,6 +194,15 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                     onChange={(e) => updateNewItem('model', e.target.value)}
                   />
                 </div>
+                <div className="space-y-2 col-span-3">
+                  <label className="text-sm font-medium">Description</label>
+                  <Textarea 
+                    placeholder="Description"
+                    value={newItem.description}
+                    onChange={(e) => updateNewItem('description', e.target.value)}
+                    className="min-h-[60px]"
+                  />
+                </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Mfg Serial</label>
                   <Input 
@@ -216,21 +228,12 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium">Barcode Num</label>
+                  <label className="text-sm font-medium">Asset Number</label>
                   <Input 
-                    placeholder="Barcode"
-                    value={newItem.barcodeNum}
-                    onChange={(e) => updateNewItem('barcodeNum', e.target.value)}
+                    placeholder="Asset Number"
+                    value={newItem.assetNumber}
+                    onChange={(e) => updateNewItem('assetNumber', e.target.value)}
                   />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Warranty</label>
-                  <Tabs value={newItem.warranty} onValueChange={(value) => updateNewItem('warranty', value)}>
-                    <TabsList className="grid w-full grid-cols-2">
-                      <TabsTrigger value="yes">Yes</TabsTrigger>
-                      <TabsTrigger value="no">No</TabsTrigger>
-                    </TabsList>
-                  </Tabs>
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium">17025</label>
@@ -264,6 +267,14 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                     type="date"
                     value={newItem.needByDate}
                     onChange={(e) => updateNewItem('needByDate', e.target.value)}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">C/C Cost</label>
+                  <Input 
+                    placeholder="C/C Cost"
+                    value={newItem.ccCost}
+                    onChange={(e) => updateNewItem('ccCost', e.target.value)}
                   />
                 </div>
               </div>
@@ -304,21 +315,22 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                     <th className="text-left p-3 text-sm font-medium text-muted-foreground">
                       <Checkbox />
                     </th>
-                    <th className="text-left p-3 text-sm font-medium text-muted-foreground">Item #</th>
+                    <th className="text-left p-3 text-sm font-medium text-muted-foreground">ItemNum</th>
                     <th className="text-left p-3 text-sm font-medium text-muted-foreground">Cal Freq</th>
                     <th className="text-left p-3 text-sm font-medium text-muted-foreground">Action Code</th>
                     <th className="text-left p-3 text-sm font-medium text-muted-foreground">Priority</th>
                     <th className="text-left p-3 text-sm font-medium text-muted-foreground">Manufacturer</th>
                     <th className="text-left p-3 text-sm font-medium text-muted-foreground">Model</th>
+                    <th className="text-left p-3 text-sm font-medium text-muted-foreground">Description</th>
                     <th className="text-left p-3 text-sm font-medium text-muted-foreground">Mfg Serial</th>
                     <th className="text-left p-3 text-sm font-medium text-muted-foreground">CustID</th>
                     <th className="text-left p-3 text-sm font-medium text-muted-foreground">CustSN</th>
-                    <th className="text-left p-3 text-sm font-medium text-muted-foreground">Barcode</th>
-                    <th className="text-left p-3 text-sm font-medium text-muted-foreground">Warranty</th>
+                    <th className="text-left p-3 text-sm font-medium text-muted-foreground">Asset Number</th>
                     <th className="text-left p-3 text-sm font-medium text-muted-foreground">17025</th>
                     <th className="text-left p-3 text-sm font-medium text-muted-foreground">Estimate</th>
                     <th className="text-left p-3 text-sm font-medium text-muted-foreground">New Equip</th>
                     <th className="text-left p-3 text-sm font-medium text-muted-foreground">Need By Date</th>
+                    <th className="text-left p-3 text-sm font-medium text-muted-foreground">C/C Cost</th>
                     <th className="text-right p-3 text-sm font-medium text-muted-foreground">Actions</th>
                   </tr>
                 </thead>
@@ -425,6 +437,20 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                           item.model || "—"
                         )}
                       </td>
+                      <td className="p-3 text-sm max-w-[200px]">
+                        {editingItemId === item.id ? (
+                          <Textarea 
+                            placeholder="Description"
+                            value={item.description}
+                            onChange={(e) => updateItem(item.id, 'description', e.target.value)}
+                            className="h-8 text-sm min-w-[150px] resize-none"
+                          />
+                        ) : (
+                          <div className="truncate" title={item.description}>
+                            {item.description || "—"}
+                          </div>
+                        )}
+                      </td>
                       <td className="p-3 text-sm">
                         {editingItemId === item.id ? (
                           <Input 
@@ -464,25 +490,13 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                       <td className="p-3 text-sm">
                         {editingItemId === item.id ? (
                           <Input 
-                            placeholder="Barcode"
-                            value={item.barcodeNum}
-                            onChange={(e) => updateItem(item.id, 'barcodeNum', e.target.value)}
+                            placeholder="Asset Number"
+                            value={item.assetNumber}
+                            onChange={(e) => updateItem(item.id, 'assetNumber', e.target.value)}
                             className="h-8 text-sm min-w-[100px]"
                           />
                         ) : (
-                          item.barcodeNum || "—"
-                        )}
-                      </td>
-                      <td className="p-3 text-sm">
-                        {editingItemId === item.id ? (
-                          <Tabs value={item.warranty} onValueChange={(value) => updateItem(item.id, 'warranty', value)}>
-                            <TabsList className="grid w-full grid-cols-2 h-8">
-                              <TabsTrigger value="yes" className="text-xs">Yes</TabsTrigger>
-                              <TabsTrigger value="no" className="text-xs">No</TabsTrigger>
-                            </TabsList>
-                          </Tabs>
-                        ) : (
-                          <span className="capitalize">{item.warranty || "—"}</span>
+                          item.assetNumber || "—"
                         )}
                       </td>
                       <td className="p-3 text-sm">
@@ -531,6 +545,18 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                           />
                         ) : (
                           item.needByDate || "—"
+                        )}
+                      </td>
+                      <td className="p-3 text-sm">
+                        {editingItemId === item.id ? (
+                          <Input 
+                            placeholder="C/C Cost"
+                            value={item.ccCost}
+                            onChange={(e) => updateItem(item.id, 'ccCost', e.target.value)}
+                            className="h-8 text-sm min-w-[100px]"
+                          />
+                        ) : (
+                          item.ccCost || "—"
                         )}
                       </td>
                       <td className="p-3">
