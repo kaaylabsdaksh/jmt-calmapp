@@ -7,6 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { List, Grid3X3 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import WorkOrderBatchDetails from "@/components/WorkOrderBatchDetails";
 
 interface WorkOrderBatch {
   id: string;
@@ -3898,6 +3899,7 @@ interface ModernWorkOrdersTableProps {
 // ModernWorkOrdersTable Component - Clean version with only List/Grid toggle icons
 const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: ModernWorkOrdersTableProps) => {
   const [selectedWorkOrder, setSelectedWorkOrder] = useState<WorkOrder | null>(null);
+  const [selectedBatch, setSelectedBatch] = useState<WorkOrderBatch | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [activeStatusFilter, setActiveStatusFilter] = useState<string>('all');
   const [currentView, setCurrentView] = useState<'item' | 'batch'>('item');
@@ -4120,6 +4122,11 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
       console.log('Opening details from item:', item.id, 'workOrder:', workOrder.id);
       setSelectedWorkOrder(workOrder);
     }
+  };
+
+  const openBatchDetails = (batch: WorkOrderBatch) => {
+    console.log('Opening batch details:', batch.id);
+    setSelectedBatch(batch);
   };
 
   const handleEditWorkOrder = (workOrderId: string) => {
@@ -4484,7 +4491,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                   <TableRow
                     key={batch.id}
                     className="hover:bg-gray-50 cursor-pointer border-b border-gray-100"
-                    onClick={() => navigate(`/batch-details?batchId=${batch.id}`)}
+                    onClick={() => openBatchDetails(batch)}
                   >
                     <TableCell className="font-medium text-blue-600">{batch.woBatch}</TableCell>
                     <TableCell>{batch.acctNumber}</TableCell>
@@ -4532,7 +4539,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                 <div 
                   key={batch.id} 
                   className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer"
-                  onClick={() => navigate(`/batch-details?batchId=${batch.id}`)}
+                  onClick={() => openBatchDetails(batch)}
                 >
                   <div className="p-4 border-b border-gray-100">
                     <div className="flex items-center justify-between">
@@ -4637,6 +4644,20 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
           }
           return null;
         })()}
+      </Dialog>
+
+      {/* Batch Details Dialog */}
+      <Dialog open={selectedBatch !== null} onOpenChange={() => setSelectedBatch(null)}>
+        <DialogContent className="max-w-6xl max-h-[90vh] overflow-hidden">
+          <div className="overflow-y-auto max-h-[85vh]">
+            {selectedBatch && (
+              <WorkOrderBatchDetails 
+                batchId={selectedBatch.id}
+                onBack={() => setSelectedBatch(null)}
+              />
+            )}
+          </div>
+        </DialogContent>
       </Dialog>
     </div>
   );
