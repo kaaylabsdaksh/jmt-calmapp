@@ -214,154 +214,96 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
                     </TableCell>
                   </TableRow>
                   {expandedItems.has(item.id) && (
-                    <TableRow className="bg-gradient-to-r from-slate-50 to-gray-50">
-                      <TableCell colSpan={12} className="p-0">
-                        <div className="p-6 animate-fade-in">
-                          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                            {/* Timeline & Dates Card */}
-                            <div className="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200">
-                              <div className="p-4 border-b border-gray-100">
-                                <div className="flex items-center gap-2">
-                                  <Calendar className="h-4 w-4 text-blue-600" />
-                                  <h4 className="font-semibold text-gray-900 text-sm">Timeline & Dates</h4>
-                                </div>
+                    <TableRow className="bg-gray-50">
+                      <TableCell colSpan={12} className="p-6">
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                          {/* Timeline & Dates */}
+                          <div>
+                            <h4 className="font-medium text-gray-900 text-sm mb-4">Timeline</h4>
+                            <div className="flex items-center gap-4 text-xs">
+                              <div className="text-center">
+                                <div className="text-gray-500 mb-1">Created</div>
+                                <div className="font-medium">{item.itemCreated}</div>
                               </div>
-                              <div className="p-4">
-                                <div className="relative">
-                                  {/* Horizontal Timeline */}
-                                  <div className="flex items-center justify-between">
-                                    {/* Item Created */}
-                                    <div className="flex flex-col items-center text-center flex-1">
-                                      <div className="relative">
-                                        <div className="flex items-center justify-center w-10 h-10 bg-blue-100 border-2 border-blue-300 rounded-full mb-2">
-                                          <Calendar className="h-4 w-4 text-blue-600" />
-                                        </div>
-                                        {/* Connecting line to next item */}
-                                        <div className="absolute top-5 left-10 w-full h-0.5 bg-gradient-to-r from-blue-300 to-orange-300 hidden lg:block"></div>
-                                      </div>
-                                      <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide mb-1">Item Created</span>
-                                      <p className="text-sm font-medium text-gray-900">{item.itemCreated}</p>
-                                    </div>
-
-                                    {/* Follow Up Date */}
-                                    {item.followUpDate && (
-                                      <div className="flex flex-col items-center text-center flex-1">
-                                        <div className="relative">
-                                          <div className="flex items-center justify-center w-10 h-10 bg-orange-100 border-2 border-orange-300 rounded-full mb-2">
-                                            <Clock className="h-4 w-4 text-orange-600" />
-                                          </div>
-                                          {/* Connecting line to next item */}
-                                          {item.departureDate && (
-                                            <div className="absolute top-5 left-10 w-full h-0.5 bg-gradient-to-r from-orange-300 to-green-300 hidden lg:block"></div>
-                                          )}
-                                        </div>
-                                        <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide mb-1">Follow Up Date</span>
-                                        <p className="text-sm font-medium text-gray-900">{item.followUpDate}</p>
-                                      </div>
-                                    )}
-
-                                    {/* Departure Date */}
-                                    {item.departureDate && (
-                                      <div className="flex flex-col items-center text-center flex-1">
-                                        <div className="relative">
-                                          <div className="flex items-center justify-center w-10 h-10 bg-green-100 border-2 border-green-300 rounded-full mb-2">
-                                            <Calendar className="h-4 w-4 text-green-600" />
-                                          </div>
-                                          {/* Connecting line to next item */}
-                                          {item.needByDate && (
-                                            <div className="absolute top-5 left-10 w-full h-0.5 bg-gradient-to-r from-green-300 to-red-300 hidden lg:block"></div>
-                                          )}
-                                        </div>
-                                        <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide mb-1">Departure Date</span>
-                                        <p className="text-sm font-medium text-gray-900">{item.departureDate}</p>
-                                      </div>
-                                    )}
-
-                                    {/* Need By Date */}
-                                    {item.needByDate && (
-                                      <div className="flex flex-col items-center text-center flex-1">
-                                        <div className="flex items-center justify-center w-10 h-10 bg-red-100 border-2 border-red-300 rounded-full mb-2">
-                                          <Clock className="h-4 w-4 text-red-600" />
-                                        </div>
-                                        <div className="flex items-center gap-1 mb-1">
-                                          <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide">Need By Date</span>
-                                          <span className="inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                                            Critical
-                                          </span>
-                                        </div>
-                                        <p className="text-sm font-semibold text-red-600">{item.needByDate}</p>
-                                      </div>
-                                    )}
+                              {item.followUpDate && (
+                                <>
+                                  <div className="w-4 h-px bg-gray-300"></div>
+                                  <div className="text-center">
+                                    <div className="text-gray-500 mb-1">Follow Up</div>
+                                    <div className="font-medium">{item.followUpDate}</div>
                                   </div>
+                                </>
+                              )}
+                              {item.departureDate && (
+                                <>
+                                  <div className="w-4 h-px bg-gray-300"></div>
+                                  <div className="text-center">
+                                    <div className="text-gray-500 mb-1">Departure</div>
+                                    <div className="font-medium">{item.departureDate}</div>
+                                  </div>
+                                </>
+                              )}
+                              {item.needByDate && (
+                                <>
+                                  <div className="w-4 h-px bg-red-300"></div>
+                                  <div className="text-center">
+                                    <div className="text-red-500 mb-1">Need By</div>
+                                    <div className="font-medium text-red-600">{item.needByDate}</div>
+                                  </div>
+                                </>
+                              )}
+                            </div>
+                          </div>
+                          
+                          {/* Assignment & Details */}
+                          <div>
+                            <h4 className="font-medium text-gray-900 text-sm mb-4">Details</h4>
+                            <div className="space-y-2 text-sm">
+                              {item.assignedTo && (
+                                <div className="flex justify-between">
+                                  <span className="text-gray-500">Assigned</span>
+                                  <span>{item.assignedTo}</span>
                                 </div>
+                              )}
+                              {item.operationType && (
+                                <div className="flex justify-between">
+                                  <span className="text-gray-500">Operation</span>
+                                  <span>{item.operationType}</span>
+                                </div>
+                              )}
+                              <div className="flex justify-between">
+                                <span className="text-gray-500">Location</span>
+                                <span>{item.location}</span>
+                              </div>
+                              <div className="flex justify-between">
+                                <span className="text-gray-500">Lab Code</span>
+                                <span className="font-mono">{item.labCode}</span>
                               </div>
                             </div>
-                            
-                            {/* Assignment & Details Card */}
-                            <div className="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200">
-                              <div className="p-4 border-b border-gray-100">
-                                <div className="flex items-center gap-2">
-                                  <User className="h-4 w-4 text-purple-600" />
-                                  <h4 className="font-semibold text-gray-900 text-sm">Assignment & Details</h4>
+                          </div>
+                          
+                          {/* Cost & Comments */}
+                          <div>
+                            <h4 className="font-medium text-gray-900 text-sm mb-4">Cost</h4>
+                            <div className="space-y-2 text-sm">
+                              {item.estimatedCost && (
+                                <div className="flex justify-between">
+                                  <span className="text-gray-500">Estimated</span>
+                                  <span className="text-green-600">{item.estimatedCost}</span>
                                 </div>
-                              </div>
-                              <div className="p-4 space-y-3">
-                                {item.assignedTo && (
-                                  <div className="flex justify-between items-center">
-                                    <span className="text-sm text-gray-600">Assigned To</span>
-                                    <span className="text-sm font-medium text-gray-900">{item.assignedTo}</span>
-                                  </div>
-                                )}
-                                {item.operationType && (
-                                  <div className="flex justify-between items-center">
-                                    <span className="text-sm text-gray-600">Operation</span>
-                                    <span className="text-sm font-medium text-gray-900">{item.operationType}</span>
-                                  </div>
-                                )}
-                                <div className="flex justify-between items-center">
-                                  <span className="text-sm text-gray-600">Location</span>
-                                  <span className="text-sm font-medium text-gray-900">{item.location}</span>
+                              )}
+                              {item.actualCost && (
+                                <div className="flex justify-between">
+                                  <span className="text-gray-500">Actual</span>
+                                  <span className="text-blue-600">{item.actualCost}</span>
                                 </div>
-                                <div className="flex justify-between items-center">
-                                  <span className="text-sm text-gray-600">Lab Code</span>
-                                  <span className="text-sm font-mono font-medium text-gray-900">{item.labCode}</span>
+                              )}
+                              {item.lastComment && (
+                                <div className="mt-4 pt-4 border-t border-gray-200">
+                                  <div className="text-gray-500 text-xs mb-2">Latest Comment ({item.lastCommentDate})</div>
+                                  <p className="text-xs text-gray-700">{item.lastComment}</p>
                                 </div>
-                              </div>
-                            </div>
-                            
-                            {/* Cost & Comments Card */}
-                            <div className="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200">
-                              <div className="p-4 border-b border-gray-100">
-                                <div className="flex items-center gap-2">
-                                  <DollarSign className="h-4 w-4 text-green-600" />
-                                  <h4 className="font-semibold text-gray-900 text-sm">Cost & Comments</h4>
-                                </div>
-                              </div>
-                              <div className="p-4 space-y-3">
-                                {item.estimatedCost && (
-                                  <div className="flex justify-between items-center">
-                                    <span className="text-sm text-gray-600">Estimated</span>
-                                    <span className="text-sm font-semibold text-green-600">{item.estimatedCost}</span>
-                                  </div>
-                                )}
-                                {item.actualCost && (
-                                  <div className="flex justify-between items-center">
-                                    <span className="text-sm text-gray-600">Actual</span>
-                                    <span className="text-sm font-semibold text-blue-600">{item.actualCost}</span>
-                                  </div>
-                                )}
-                                {item.lastCommentDate && (
-                                  <div className="flex justify-between items-center">
-                                    <span className="text-sm text-gray-600">Last Comment</span>
-                                    <span className="text-sm font-medium text-gray-900">{item.lastCommentDate}</span>
-                                  </div>
-                                )}
-                                {item.lastComment && (
-                                  <div className="mt-3 pt-3 border-t border-gray-100">
-                                    <p className="text-xs text-gray-700 leading-relaxed">{item.lastComment}</p>
-                                  </div>
-                                )}
-                              </div>
+                              )}
                             </div>
                           </div>
                         </div>
