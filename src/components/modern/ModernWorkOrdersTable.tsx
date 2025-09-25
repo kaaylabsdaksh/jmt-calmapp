@@ -4353,45 +4353,12 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
           <div>
             <h2 className="text-xl font-bold text-gray-900">Work Orders</h2>
             <p className="text-sm text-gray-600 mt-1">
-              {templateView ? (
-                <>Showing {filteredWorkOrders.length} of {mockWorkOrders.length} work orders</>
-              ) : (
-                <>Showing {filteredWorkOrderItems.length} of {mockWorkOrderItems.length} items</>
-              )}
+              Showing {filteredWorkOrderItems.length} of {mockWorkOrderItems.length} items
             </p>
           </div>
           
           {/* View Toggle Buttons */}
           <div className="flex items-center gap-3">
-            {/* Template/Default Toggle */}
-            <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-lg">
-              <Button
-                variant={!templateView ? 'default' : 'ghost'}
-                size="sm"
-                onClick={() => setTemplateView(false)}
-                className={cn(
-                  "h-8 px-3 rounded-md transition-all",
-                  !templateView 
-                    ? "bg-white shadow-sm text-gray-900" 
-                    : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
-                )}
-              >
-                Item View
-              </Button>
-              <Button
-                variant={templateView ? 'default' : 'ghost'}
-                size="sm"
-                onClick={() => setTemplateView(true)}
-                className={cn(
-                  "h-8 px-3 rounded-md transition-all",
-                  templateView 
-                    ? "bg-white shadow-sm text-gray-900" 
-                    : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
-                )}
-              >
-                Template
-              </Button>
-            </div>
 
             {/* List/Grid Toggle */}
             <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-lg">
