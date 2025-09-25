@@ -4077,9 +4077,22 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
     
     return statusMatch && searchMatch && priorityMatch && manufacturerMatch && divisionMatch;
   });
+
+  // Filter work order batches for batch view
+  const filteredWorkOrderBatches = mockWorkOrderBatches.filter(batch => {
+    // Global search across batch fields
+    const searchTerm = searchFilters.globalSearch.toLowerCase();
+    const searchMatch = !searchTerm || 
+      batch.woBatch.toLowerCase().includes(searchTerm) ||
+      batch.acctNumber.toLowerCase().includes(searchTerm) ||
+      batch.srNumber.toLowerCase().includes(searchTerm) ||
+      batch.customerName.toLowerCase().includes(searchTerm);
+    
+    return searchMatch;
+  });
   
   const totalPages = currentView === 'batch' 
-    ? Math.ceil(mockWorkOrderBatches.length / itemsPerPage)
+    ? Math.ceil(filteredWorkOrderBatches.length / itemsPerPage)
     : Math.ceil(filteredWorkOrderItems.length / itemsPerPage);
 
   // Get paginated data
@@ -4092,7 +4105,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
     : [];
 
   const paginatedBatches = currentView === 'batch'
-    ? mockWorkOrderBatches.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+    ? filteredWorkOrderBatches.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
     : [];
 
   const openDetails = (order: WorkOrder) => {
@@ -4357,7 +4370,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
             <h2 className="text-xl font-bold text-gray-900">Work Orders</h2>
             <p className="text-sm text-gray-600 mt-1">
               {currentView === 'batch' ? (
-                <>Showing {mockWorkOrderBatches.length} batches</>
+                <>Showing {filteredWorkOrderBatches.length} of {mockWorkOrderBatches.length} batches</>
               ) : (
                 <>Showing {filteredWorkOrderItems.length} of {mockWorkOrderItems.length} items</>
               )}
@@ -4585,7 +4598,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
         {/* Pagination */}
         <div className="p-6 border-t border-gray-200 flex justify-between items-center">
           <span className="text-sm text-gray-600">
-            Showing {((currentPage - 1) * itemsPerPage) + 1}-{Math.min(currentPage * itemsPerPage, currentView === 'batch' ? mockWorkOrderBatches.length : filteredWorkOrderItems.length)} of {currentView === 'batch' ? mockWorkOrderBatches.length : filteredWorkOrderItems.length} items
+            Showing {((currentPage - 1) * itemsPerPage) + 1}-{Math.min(currentPage * itemsPerPage, currentView === 'batch' ? filteredWorkOrderBatches.length : filteredWorkOrderItems.length)} of {currentView === 'batch' ? filteredWorkOrderBatches.length : filteredWorkOrderItems.length} items
           </span>
           <div className="flex gap-2">
             <Button 
