@@ -4484,6 +4484,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                   <TableRow
                     key={batch.id}
                     className="hover:bg-gray-50 cursor-pointer border-b border-gray-100"
+                    onClick={() => navigate(`/batch-details?batchId=${batch.id}`)}
                   >
                     <TableCell className="font-medium text-blue-600">{batch.woBatch}</TableCell>
                     <TableCell>{batch.acctNumber}</TableCell>
@@ -4528,7 +4529,11 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
           <div className="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
             {currentView === 'batch' ? (
               paginatedBatches.map((batch) => (
-                <div key={batch.id} className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer">
+                <div 
+                  key={batch.id} 
+                  className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer"
+                  onClick={() => navigate(`/batch-details?batchId=${batch.id}`)}
+                >
                   <div className="p-4 border-b border-gray-100">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
