@@ -107,19 +107,6 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
         </div>
       </div>
 
-      {/* Batch Info */}
-      <div className="pb-4">
-        <div className="flex items-center justify-between mb-3">
-          <h2 className="text-lg font-semibold">WO Batch: {mockBatch.batchNumber}</h2>
-          <span className="text-sm text-muted-foreground">{mockBatch.status}</span>
-        </div>
-        <div className="grid grid-cols-3 gap-4 text-sm text-muted-foreground">
-          <div>Customer: {mockBatch.customer}</div>
-          <div>Account: {mockBatch.accountNumber}</div>
-          <div>SR#: {mockBatch.srNumber}</div>
-        </div>
-      </div>
-
       {/* Items Table */}
       <div>
         <h3 className="text-base font-medium mb-3">Items in Batch ({mockBatch.items.length})</h3>
