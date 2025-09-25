@@ -4465,9 +4465,9 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                     <TableHead className="font-semibold text-gray-900">SR #</TableHead>
                     <TableHead className="font-semibold text-gray-900">Customer Name</TableHead>
                     <TableHead className="font-semibold text-gray-900">Min Need By Date</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Total Count</TableHead>
                     <TableHead className="font-semibold text-gray-900">Total Lab Open</TableHead>
                     <TableHead className="font-semibold text-gray-900">Total AR Count</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Total Count</TableHead>
                   </>
                 ) : (
                   // Item View Headers
@@ -4501,9 +4501,9 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                     <TableCell className="text-blue-600">{batch.srNumber}</TableCell>
                     <TableCell className="font-medium">{batch.customerName}</TableCell>
                     <TableCell>{batch.minNeedByDate}</TableCell>
+                    <TableCell className="text-center font-medium">{batch.totalCount}</TableCell>
                     <TableCell className="text-center">{batch.totalLabOpen}</TableCell>
                     <TableCell className="text-center">{batch.totalArCount}</TableCell>
-                    <TableCell className="text-center font-medium">{batch.totalCount}</TableCell>
                   </TableRow>
                 ))
               ) : (
