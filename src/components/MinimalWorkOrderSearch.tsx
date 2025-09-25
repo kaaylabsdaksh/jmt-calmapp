@@ -6,7 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Search, Plus, RotateCcw, Filter, Building2, User, Package } from "lucide-react";
 
-// Mock work order batch data for suggestions
+// Mock work order batch data for suggestions - matching the actual data
 const mockWorkOrderBatches = [
   {
     id: "1",
@@ -18,26 +18,42 @@ const mockWorkOrderBatches = [
   },
   {
     id: "2", 
-    woBatch: "384552",
-    acctNumber: "13058.12",
-    srNumber: "SR2456",
-    customerName: "Tech Solutions Ltd",
-    minNeedByDate: "10/15/2021",
+    woBatch: "390118",
+    acctNumber: "6962.01",
+    srNumber: "SR1820",
+    customerName: "Colonial Pipeline",
+    minNeedByDate: "12/20/2022",
   },
   {
     id: "3",
-    woBatch: "385123",
-    acctNumber: "13058.15",
-    srNumber: "SR2457", 
-    customerName: "ACME Industries",
-    minNeedByDate: "11/20/2021",
+    woBatch: "452463",
+    acctNumber: "6962.01",
+    srNumber: "SR1820",
+    customerName: "Colonial Pipeline",
+    minNeedByDate: "06/23/2023",
   },
   {
     id: "4",
+    woBatch: "393015",
+    acctNumber: "7412.06",
+    srNumber: "",
+    customerName: "Burns & McDonnell",
+    minNeedByDate: "01/17/2022",
+  },
+  {
+    id: "5",
+    woBatch: "441228",
+    acctNumber: "2577.50",
+    srNumber: "SR2425",
+    customerName: "Energy Transfer",
+    minNeedByDate: "03/20/2023",
+  },
+  {
+    id: "6",
     woBatch: "438752",
     acctNumber: "13058.20",
     srNumber: "SR2458",
-    customerName: "Manufacturing Corp",
+    customerName: "Nuclear Research Institute",
     minNeedByDate: "12/10/2021",
   }
 ];
@@ -84,6 +100,8 @@ const MinimalWorkOrderSearch = ({ onSearch }: MinimalWorkOrderSearchProps) => {
 
   // Generate suggestions based on search input
   const generateSuggestions = (query: string, fieldType: string) => {
+    console.log('Generating suggestions for:', query, 'field:', fieldType); // Debug log
+    
     if (!query || query.length < 1) {
       setSuggestions([]);
       setShowSuggestions(false);
@@ -94,24 +112,17 @@ const MinimalWorkOrderSearch = ({ onSearch }: MinimalWorkOrderSearchProps) => {
     const matchingSuggestions = [];
 
     mockWorkOrderBatches.forEach(batch => {
-      if (fieldType === 'workOrderNumber' && batch.woBatch.toLowerCase().includes(searchTerm)) {
-        matchingSuggestions.push({
-          type: 'work-order',
-          value: batch.woBatch,
-          label: `WO Batch: ${batch.woBatch}`,
-          subtitle: batch.customerName
-        });
-      }
-      if (fieldType === 'customerName' && batch.customerName.toLowerCase().includes(searchTerm)) {
-        matchingSuggestions.push({
-          type: 'customer',
-          value: batch.customerName,
-          label: `Customer: ${batch.customerName}`,
-          subtitle: `WO Batch: ${batch.woBatch}`
-        });
-      }
-      // Add suggestions for account number and SR number for work order field
       if (fieldType === 'workOrderNumber') {
+        // Check WO batch
+        if (batch.woBatch.toLowerCase().includes(searchTerm)) {
+          matchingSuggestions.push({
+            type: 'work-order',
+            value: batch.woBatch,
+            label: `WO Batch: ${batch.woBatch}`,
+            subtitle: batch.customerName
+          });
+        }
+        // Check account number
         if (batch.acctNumber.toLowerCase().includes(searchTerm)) {
           matchingSuggestions.push({
             type: 'account',
@@ -120,7 +131,8 @@ const MinimalWorkOrderSearch = ({ onSearch }: MinimalWorkOrderSearchProps) => {
             subtitle: batch.customerName
           });
         }
-        if (batch.srNumber.toLowerCase().includes(searchTerm)) {
+        // Check SR number
+        if (batch.srNumber && batch.srNumber.toLowerCase().includes(searchTerm)) {
           matchingSuggestions.push({
             type: 'sr',
             value: batch.srNumber,
@@ -129,13 +141,23 @@ const MinimalWorkOrderSearch = ({ onSearch }: MinimalWorkOrderSearchProps) => {
           });
         }
       }
+      
+      if (fieldType === 'customerName' && batch.customerName.toLowerCase().includes(searchTerm)) {
+        matchingSuggestions.push({
+          type: 'customer',
+          value: batch.customerName,
+          label: `Customer: ${batch.customerName}`,
+          subtitle: `WO Batch: ${batch.woBatch}`
+        });
+      }
     });
 
     // Remove duplicates and limit results
     const uniqueSuggestions = matchingSuggestions.filter((suggestion, index, arr) => 
       arr.findIndex(s => s.label === suggestion.label) === index
-    ).slice(0, 5);
+    ).slice(0, 8);
 
+    console.log('Generated suggestions:', uniqueSuggestions); // Debug log
     setSuggestions(uniqueSuggestions);
     setShowSuggestions(uniqueSuggestions.length > 0);
     setSelectedSuggestionIndex(-1);
