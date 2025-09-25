@@ -141,7 +141,7 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
-          <Button variant="ghost" size="sm" onClick={onBack} className="hover-scale">
+          <Button variant="ghost" size="sm" onClick={onBack}>
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Batches
           </Button>
@@ -159,7 +159,7 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
       </div>
 
       {/* Batch Summary Card */}
-      <Card className="hover-scale">
+      <Card>
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
             <span>WO Batch: {mockBatch.batchNumber}</span>
@@ -198,12 +198,11 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
               key={status}
               open={openSections[status]}
               onOpenChange={() => toggleSection(status)}
-              className="animate-scale-in"
             >
               <CollapsibleTrigger asChild>
                 <Button
                   variant="ghost"
-                  className="w-full justify-start p-4 h-auto border rounded-lg hover:bg-muted/50 transition-colors"
+                  className="w-full justify-start p-4 h-auto border rounded-lg transition-colors"
                 >
                   <div className="flex items-center space-x-3 w-full">
                     {openSections[status] ? (
