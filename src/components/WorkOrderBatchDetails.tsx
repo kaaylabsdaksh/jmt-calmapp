@@ -305,38 +305,26 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
                                   <h4 className="font-semibold text-gray-900 text-sm">Assignment & Details</h4>
                                 </div>
                               </div>
-                              <div className="p-4 space-y-4">
+                              <div className="p-4 space-y-3">
                                 {item.assignedTo && (
-                                  <div className="flex flex-col space-y-1">
-                                    <div className="flex items-center gap-2">
-                                      <User className="h-3 w-3 text-blue-500" />
-                                      <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">Assigned To</span>
-                                    </div>
-                                    <div className="font-semibold text-blue-600 text-sm pl-5">{item.assignedTo}</div>
+                                  <div className="flex justify-between items-center">
+                                    <span className="text-sm text-gray-600">Assigned To</span>
+                                    <span className="text-sm font-medium text-gray-900">{item.assignedTo}</span>
                                   </div>
                                 )}
                                 {item.operationType && (
-                                  <div className="flex flex-col space-y-1">
-                                    <div className="flex items-center gap-2">
-                                      <Settings className="h-3 w-3 text-purple-500" />
-                                      <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">Operation Type</span>
-                                    </div>
-                                    <div className="font-medium text-gray-900 text-sm pl-5">{item.operationType}</div>
+                                  <div className="flex justify-between items-center">
+                                    <span className="text-sm text-gray-600">Operation</span>
+                                    <span className="text-sm font-medium text-gray-900">{item.operationType}</span>
                                   </div>
                                 )}
-                                <div className="flex flex-col space-y-1">
-                                  <div className="flex items-center gap-2">
-                                    <MapPin className="h-3 w-3 text-green-500" />
-                                    <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">Location</span>
-                                  </div>
-                                  <div className="font-medium text-gray-900 text-sm pl-5">{item.location}</div>
+                                <div className="flex justify-between items-center">
+                                  <span className="text-sm text-gray-600">Location</span>
+                                  <span className="text-sm font-medium text-gray-900">{item.location}</span>
                                 </div>
-                                <div className="flex flex-col space-y-1">
-                                  <div className="flex items-center gap-2">
-                                    <Settings className="h-3 w-3 text-gray-500" />
-                                    <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">Lab Code</span>
-                                  </div>
-                                  <div className="font-mono text-sm text-gray-900 pl-5 bg-gray-50 px-2 py-1 rounded">{item.labCode}</div>
+                                <div className="flex justify-between items-center">
+                                  <span className="text-sm text-gray-600">Lab Code</span>
+                                  <span className="text-sm font-mono font-medium text-gray-900">{item.labCode}</span>
                                 </div>
                               </div>
                             </div>
@@ -349,43 +337,28 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
                                   <h4 className="font-semibold text-gray-900 text-sm">Cost & Comments</h4>
                                 </div>
                               </div>
-                              <div className="p-4 space-y-4">
+                              <div className="p-4 space-y-3">
                                 {item.estimatedCost && (
-                                  <div className="flex flex-col space-y-1">
-                                    <div className="flex items-center gap-2">
-                                      <DollarSign className="h-3 w-3 text-green-500" />
-                                      <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">Estimated Cost</span>
-                                    </div>
-                                    <div className="font-semibold text-green-600 text-sm pl-5">{item.estimatedCost}</div>
+                                  <div className="flex justify-between items-center">
+                                    <span className="text-sm text-gray-600">Estimated</span>
+                                    <span className="text-sm font-semibold text-green-600">{item.estimatedCost}</span>
                                   </div>
                                 )}
                                 {item.actualCost && (
-                                  <div className="flex flex-col space-y-1">
-                                    <div className="flex items-center gap-2">
-                                      <DollarSign className="h-3 w-3 text-blue-500" />
-                                      <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">Actual Cost</span>
-                                    </div>
-                                    <div className="font-semibold text-blue-600 text-sm pl-5">{item.actualCost}</div>
+                                  <div className="flex justify-between items-center">
+                                    <span className="text-sm text-gray-600">Actual</span>
+                                    <span className="text-sm font-semibold text-blue-600">{item.actualCost}</span>
                                   </div>
                                 )}
                                 {item.lastCommentDate && (
-                                  <div className="flex flex-col space-y-1">
-                                    <div className="flex items-center gap-2">
-                                      <MessageSquare className="h-3 w-3 text-orange-500" />
-                                      <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">Last Comment Date</span>
-                                    </div>
-                                    <div className="font-medium text-gray-900 text-sm pl-5">{item.lastCommentDate}</div>
+                                  <div className="flex justify-between items-center">
+                                    <span className="text-sm text-gray-600">Last Comment</span>
+                                    <span className="text-sm font-medium text-gray-900">{item.lastCommentDate}</span>
                                   </div>
                                 )}
                                 {item.lastComment && (
-                                  <div className="flex flex-col space-y-2">
-                                    <div className="flex items-center gap-2">
-                                      <MessageSquare className="h-3 w-3 text-gray-500" />
-                                      <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">Last Comment</span>
-                                    </div>
-                                    <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-3 ml-5">
-                                      <p className="text-xs text-gray-800 leading-relaxed">{item.lastComment}</p>
-                                    </div>
+                                  <div className="mt-3 pt-3 border-t border-gray-100">
+                                    <p className="text-xs text-gray-700 leading-relaxed">{item.lastComment}</p>
                                   </div>
                                 )}
                               </div>
