@@ -14,7 +14,23 @@ interface SearchForm {
   manufacturer: string;
 }
 
-const MinimalWorkOrderSearch = () => {
+interface SearchFilters {
+  globalSearch: string;
+  status: string;
+  assignee: string;
+  priority: string;
+  manufacturer: string;
+  division: string;
+  dateFrom?: Date;
+  dateTo?: Date;
+  dateType: string;
+}
+
+interface MinimalWorkOrderSearchProps {
+  onSearch?: (filters: SearchFilters) => void;
+}
+
+const MinimalWorkOrderSearch = ({ onSearch }: MinimalWorkOrderSearchProps) => {
   const [searchForm, setSearchForm] = useState<SearchForm>({
     workOrderNumber: '',
     customerName: '',
@@ -43,7 +59,17 @@ const MinimalWorkOrderSearch = () => {
   };
 
   const handleSearch = () => {
-    console.log("Searching with:", searchForm);
+    if (onSearch) {
+      onSearch({
+        globalSearch: searchForm.workOrderNumber || searchForm.customerName || '',
+        status: searchForm.status,
+        assignee: '',
+        priority: searchForm.priority,
+        manufacturer: searchForm.manufacturer,
+        division: '',
+        dateType: ''
+      });
+    }
   };
 
   return (
