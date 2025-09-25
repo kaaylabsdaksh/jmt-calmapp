@@ -8,6 +8,17 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { List, Grid3X3 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+interface BatchWorkOrder {
+  workOrderNumber: string;
+  customer: string;
+  division: string;
+  assignedTo: string;
+  createdDate: string;
+  priority: 'Low' | 'Medium' | 'High' | 'Critical';
+  itemCount: number;
+  items: WorkOrderItem[];
+}
+
 interface WorkOrder {
   id: string;
   status: "In Lab" | "Completed" | "Overdue" | "Pending" | "[Open Items]" | "[Awaiting CDR]" | "[Assign/Tech - Repair - InLab]" | "[Assigned To Tech - Repair Dept]" | "[Q/A Hold - Q/A Disapproved]" | "[Q/A Insp - Q/A Hold - Q/A Fail]" | "[In Lab - Assigned to Tech]" | "[In Lab - Q/A Disapprove]" | "[Estimate - A/R Invoicing]" | "[To Factory - Awaiting Parts]" | "[AR Need By Status]" | "Assigned to Tech" | "In Transit" | "Lab Management" | "Repair Department" | "Rotation" | "Estimate" | "Awaiting Parts" | "Awaiting PR Approval" | "In Metrology" | "To Factory" | "To Factory - Repair by Replacement" | "To Factory - Warranty" | "Lab Hold" | "Q/A Inspection" | "Q/A Inspection - Fail Correction" | "Q/A Hold" | "Q/A Disapproved" | "Q/A Fail Log" | "A/R Invoicing" | "A/R Invoicing/Hold" | "Admin Processing" | "Back to Customer" | "Calibrated on Shelf" | "Cancelled" | "Item Not Found on Site" | "ME Review" | "Not Used" | "Onsite" | "Ready for Departure" | "Return to Lab for Processing" | "Scheduled" | "Surplus Stock" | "Waiting on Customer" | "Calibration Required" | "Quality Review" | "Waiting Parts" | "Ready to Ship" | "Customer Hold" | "In Progress" | "Final Testing" | "Expedited" | "Needs Approval" | "Incoming" | "Parts Ordered" | "Quote Requested" | "Rework Required" | "Documentation Review" | "Shipping Prep";
@@ -3672,10 +3683,36 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
   const [selectedWorkOrder, setSelectedWorkOrder] = useState<WorkOrder | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [activeStatusFilter, setActiveStatusFilter] = useState<string>('all');
-  const [templateView, setTemplateView] = useState<boolean>(false);
+  const [currentView, setCurrentView] = useState<'item' | 'template' | 'batch'>('item');
+  const [selectedBatch, setSelectedBatch] = useState<BatchWorkOrder | null>(null);
+  const [expandedBatch, setExpandedBatch] = useState<string | null>(null);
   const navigate = useNavigate();
   const itemsPerPage = 10;
   
+  
+  // Create batch work orders by grouping items by work order number
+  const mockBatchWorkOrders: BatchWorkOrder[] = Array.from(
+    mockWorkOrderItems.reduce((acc, item) => {
+      const existingBatch = acc.get(item.workOrderNumber);
+      if (existingBatch) {
+        existingBatch.items.push(item);
+        existingBatch.itemCount = existingBatch.items.length;
+      } else {
+        acc.set(item.workOrderNumber, {
+          workOrderNumber: item.workOrderNumber,
+          customer: item.customer,
+          division: item.division,
+          assignedTo: item.assignedTo,
+          createdDate: item.created,
+          priority: item.priority,
+          itemCount: 1,
+          items: [item]
+        });
+      }
+      return acc;
+    }, new Map<string, BatchWorkOrder>()).values()
+  );
+
   // Filter work orders based on search filters from parent and status
   // Helper function to convert status names to filter values
   const getStatusFilterValue = (status: string) => {
@@ -3850,21 +3887,44 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
     return statusMatch && searchMatch && priorityMatch && manufacturerMatch && divisionMatch;
   });
   
-  const totalPages = templateView 
+  // Filter batch work orders
+  const filteredBatchWorkOrders = mockBatchWorkOrders.filter(batch => {
+    const searchMatch = !searchFilters.globalSearch || 
+      batch.workOrderNumber.toLowerCase().includes(searchFilters.globalSearch.toLowerCase()) ||
+      batch.customer.toLowerCase().includes(searchFilters.globalSearch.toLowerCase()) ||
+      batch.assignedTo.toLowerCase().includes(searchFilters.globalSearch.toLowerCase()) ||
+      batch.division.toLowerCase().includes(searchFilters.globalSearch.toLowerCase());
+    
+    const priorityMatch = !searchFilters.priority || 
+      batch.priority.toLowerCase() === searchFilters.priority.toLowerCase();
+    
+    const divisionMatch = !searchFilters.division || 
+      batch.division.toLowerCase().includes(searchFilters.division.toLowerCase());
+    
+    return searchMatch && priorityMatch && divisionMatch;
+  });
+  
+  const totalPages = currentView === 'template'
     ? Math.ceil(filteredWorkOrders.length / itemsPerPage)
+    : currentView === 'batch'
+    ? Math.ceil(filteredBatchWorkOrders.length / itemsPerPage)
     : Math.ceil(filteredWorkOrderItems.length / itemsPerPage);
 
   // Get paginated data
-  const paginatedWorkOrders = templateView 
+  const paginatedWorkOrders = currentView === 'template'
     ? filteredWorkOrders.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
     : [];
     
-  const paginatedWorkOrderItems = !templateView 
+  const paginatedWorkOrderItems = currentView === 'item'
     ? filteredWorkOrderItems.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
     : [];
 
+  const paginatedBatchWorkOrders = currentView === 'batch'
+    ? filteredBatchWorkOrders.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+    : [];
+
   const openDetails = (order: WorkOrder) => {
-    console.log('Opening details for order:', order.id, 'templateView:', templateView);
+    console.log('Opening details for order:', order.id, 'currentView:', currentView);
     setSelectedWorkOrder(order);
   };
 
@@ -4353,8 +4413,10 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
           <div>
             <h2 className="text-xl font-bold text-gray-900">Work Orders</h2>
             <p className="text-sm text-gray-600 mt-1">
-              {templateView ? (
+              {currentView === 'template' ? (
                 <>Showing {filteredWorkOrders.length} of {mockWorkOrders.length} work orders</>
+              ) : currentView === 'batch' ? (
+                <>Showing {filteredBatchWorkOrders.length} of {mockBatchWorkOrders.length} batches</>
               ) : (
                 <>Showing {filteredWorkOrderItems.length} of {mockWorkOrderItems.length} items</>
               )}
@@ -4363,15 +4425,15 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
           
           {/* View Toggle Buttons */}
           <div className="flex items-center gap-3">
-            {/* Template/Default Toggle */}
+            {/* View Mode Toggle - Item/Template/Batch */}
             <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-lg">
               <Button
-                variant={!templateView ? 'default' : 'ghost'}
+                variant={currentView === 'item' ? 'default' : 'ghost'}
                 size="sm"
-                onClick={() => setTemplateView(false)}
+                onClick={() => setCurrentView('item')}
                 className={cn(
                   "h-8 px-3 rounded-md transition-all",
-                  !templateView 
+                  currentView === 'item'
                     ? "bg-white shadow-sm text-gray-900" 
                     : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
                 )}
@@ -4379,17 +4441,30 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                 Item View
               </Button>
               <Button
-                variant={templateView ? 'default' : 'ghost'}
+                variant={currentView === 'template' ? 'default' : 'ghost'}
                 size="sm"
-                onClick={() => setTemplateView(true)}
+                onClick={() => setCurrentView('template')}
                 className={cn(
                   "h-8 px-3 rounded-md transition-all",
-                  templateView 
+                  currentView === 'template'
                     ? "bg-white shadow-sm text-gray-900" 
                     : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
                 )}
               >
                 Template
+              </Button>
+              <Button
+                variant={currentView === 'batch' ? 'default' : 'ghost'}
+                size="sm"
+                onClick={() => setCurrentView('batch')}
+                className={cn(
+                  "h-8 px-3 rounded-md transition-all",
+                  currentView === 'batch'
+                    ? "bg-white shadow-sm text-gray-900" 
+                    : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
+                )}
+              >
+                Batch View
               </Button>
             </div>
 
@@ -4434,7 +4509,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
           <Table>
             <TableHeader className="bg-gray-50 sticky top-0">
               <TableRow className="hover:bg-gray-50">
-                {templateView ? (
+                {currentView === 'template' ? (
                   // Template View Headers
                   <>
                     <TableHead className="font-semibold text-gray-900">Work Order #</TableHead>
@@ -4447,6 +4522,18 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                     <TableHead className="font-semibold text-gray-900">Customer</TableHead>
                     <TableHead className="font-semibold text-gray-900">Model</TableHead>
                     <TableHead className="font-semibold text-gray-900">Template</TableHead>
+                    <TableHead className="w-12"></TableHead>
+                  </>
+                ) : currentView === 'batch' ? (
+                  // Batch View Headers
+                  <>
+                    <TableHead className="font-semibold text-gray-900">Work Order #</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Customer</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Division</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Priority</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Assigned To</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Items Count</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Created Date</TableHead>
                     <TableHead className="w-12"></TableHead>
                   </>
                 ) : (
@@ -4468,7 +4555,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
               </TableRow>
             </TableHeader>
             <TableBody>
-              {templateView ? (
+              {currentView === 'template' ? (
                 // Template View - Show Work Orders
                 paginatedWorkOrders.map((order) => (
                   <TableRow
@@ -4486,6 +4573,42 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                     <TableCell className="font-mono text-sm">{order.details.modelNumber}</TableCell>
                     <TableCell className="text-blue-600 underline cursor-pointer hover:text-blue-800">{order.details.template}</TableCell>
                     <TableCell></TableCell>
+                  </TableRow>
+                ))
+              ) : currentView === 'batch' ? (
+                // Batch View - Show Batch Work Orders
+                paginatedBatchWorkOrders.map((batch) => (
+                  <TableRow
+                    key={batch.workOrderNumber}
+                    className="hover:bg-gray-50 cursor-pointer border-b border-gray-100"
+                    onClick={() => setSelectedBatch(batch)}
+                  >
+                    <TableCell className="font-medium text-blue-600">{batch.workOrderNumber}</TableCell>
+                    <TableCell className="font-medium">{batch.customer}</TableCell>
+                    <TableCell className="text-sm">{batch.division}</TableCell>
+                    <TableCell>
+                      <span className={cn("px-2 py-1 rounded-md text-xs font-medium",
+                        batch.priority === "Critical" ? "bg-red-100 text-red-800" :
+                        batch.priority === "High" ? "bg-orange-100 text-orange-800" :
+                        batch.priority === "Medium" ? "bg-yellow-100 text-yellow-800" :
+                        "bg-gray-100 text-gray-800"
+                      )}>{batch.priority}</span>
+                    </TableCell>
+                    <TableCell>{batch.assignedTo}</TableCell>
+                    <TableCell className="font-medium">{batch.itemCount}</TableCell>
+                    <TableCell className="text-sm">{batch.createdDate}</TableCell>
+                    <TableCell>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setExpandedBatch(expandedBatch === batch.workOrderNumber ? null : batch.workOrderNumber);
+                        }}
+                      >
+                        {expandedBatch === batch.workOrderNumber ? 'Collapse' : 'Expand'}
+                      </Button>
+                    </TableCell>
                   </TableRow>
                 ))
               ) : (
@@ -4522,7 +4645,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
         ) : (
           // Grid View - Cards
           <div className="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-            {templateView ? (
+            {currentView === 'template' ? (
               paginatedWorkOrders.map((order) => (
                 <div key={order.id} className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer" onClick={() => openDetails(order)}>
                   <div className="p-4 border-b border-gray-100">
@@ -4560,6 +4683,51 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                       <div>
                         <span className="text-gray-500">Customer:</span>
                         <div className="font-medium text-xs">{order.customer}</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))
+            ) : currentView === 'batch' ? (
+              paginatedBatchWorkOrders.map((batch) => (
+                <div key={batch.workOrderNumber} className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer" onClick={() => setSelectedBatch(batch)}>
+                  <div className="p-4 border-b border-gray-100">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <span className="font-bold text-blue-600 text-lg">{batch.workOrderNumber}</span>
+                        <div className="flex items-center gap-2">
+                          <span className={cn("px-2 py-1 rounded-md text-xs font-medium",
+                            batch.priority === "Critical" ? "bg-red-100 text-red-800" :
+                            batch.priority === "High" ? "bg-orange-100 text-orange-800" :
+                            batch.priority === "Medium" ? "bg-yellow-100 text-yellow-800" :
+                            "bg-gray-100 text-gray-800")}>{batch.priority}</span>
+                          <span className="px-2 py-1 rounded-md text-xs font-medium bg-blue-100 text-blue-800">
+                            {batch.itemCount} items
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="p-4 space-y-3">
+                    <div><h3 className="font-bold text-gray-900 text-lg mb-1">{batch.customer}</h3></div>
+                    <div className="grid grid-cols-2 gap-3 text-sm">
+                      <div>
+                        <span className="text-gray-500">Created:</span>
+                        <div className="font-medium text-xs">{batch.createdDate}</div>
+                      </div>
+                      <div>
+                        <span className="text-gray-500">Division:</span>
+                        <div className="font-medium text-xs">{batch.division}</div>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-3 text-sm">
+                      <div>
+                        <span className="text-gray-500">Assigned To:</span>
+                        <div className="font-medium text-xs">{batch.assignedTo}</div>
+                      </div>
+                      <div>
+                        <span className="text-gray-500">Items:</span>
+                        <div className="font-medium text-xs">{batch.itemCount}</div>
                       </div>
                     </div>
                   </div>
@@ -4608,7 +4776,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
         {/* Pagination */}
         <div className="p-6 border-t border-gray-200 flex justify-between items-center">
           <span className="text-sm text-gray-600">
-            Showing {((currentPage - 1) * itemsPerPage) + 1}-{Math.min(currentPage * itemsPerPage, templateView ? filteredWorkOrders.length : filteredWorkOrderItems.length)} of {templateView ? filteredWorkOrders.length : filteredWorkOrderItems.length} items
+            Showing {((currentPage - 1) * itemsPerPage) + 1}-{Math.min(currentPage * itemsPerPage, currentView === 'template' ? filteredWorkOrders.length : currentView === 'batch' ? filteredBatchWorkOrders.length : filteredWorkOrderItems.length)} of {currentView === 'template' ? filteredWorkOrders.length : currentView === 'batch' ? filteredBatchWorkOrders.length : filteredWorkOrderItems.length} items
           </span>
           <div className="flex gap-2">
             <Button 
@@ -4634,14 +4802,60 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
       {/* Work Order Details Dialog */}
       <Dialog open={selectedWorkOrder !== null} onOpenChange={() => setSelectedWorkOrder(null)}>
         {(() => {
-          console.log('Dialog rendering - selectedWorkOrder:', selectedWorkOrder?.id, 'templateView:', templateView);
-          if (selectedWorkOrder && templateView) {
+          console.log('Dialog rendering - selectedWorkOrder:', selectedWorkOrder?.id, 'currentView:', currentView);
+          if (selectedWorkOrder && currentView === 'template') {
             return <TemplateWorkOrderDetailsDialog order={selectedWorkOrder} />;
-          } else if (selectedWorkOrder && !templateView) {
+          } else if (selectedWorkOrder && currentView !== 'template') {
             return <DefaultWorkOrderDetailsDialog order={selectedWorkOrder} />;
           }
           return null;
         })()}
+      </Dialog>
+
+      {/* Batch Details Dialog */}
+      <Dialog open={selectedBatch !== null} onOpenChange={() => setSelectedBatch(null)}>
+        {selectedBatch && (
+          <DialogContent className="max-w-6xl max-h-[80vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-3 text-xl">
+                <span className="font-bold text-blue-600">Work Order {selectedBatch.workOrderNumber}</span>
+                <span className="text-sm text-gray-500">({selectedBatch.itemCount} items)</span>
+              </DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4">
+              <div className="grid grid-cols-4 gap-4 text-sm">
+                <div><strong>Customer:</strong> {selectedBatch.customer}</div>
+                <div><strong>Division:</strong> {selectedBatch.division}</div>
+                <div><strong>Priority:</strong> {selectedBatch.priority}</div>
+                <div><strong>Assigned To:</strong> {selectedBatch.assignedTo}</div>
+              </div>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Report #</TableHead>
+                    <TableHead>Item Status</TableHead>
+                    <TableHead>Manufacturer</TableHead>
+                    <TableHead>Model</TableHead>
+                    <TableHead>Serial Number</TableHead>
+                    <TableHead>Item Type</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {selectedBatch.items.map((item) => (
+                    <TableRow key={item.id}>
+                      <TableCell className="font-mono text-sm">{item.reportNumber}</TableCell>
+                      <TableCell>{getItemStatusBadge(item.itemStatus)}</TableCell>
+                      <TableCell>{item.manufacturer}</TableCell>
+                      <TableCell className="font-mono text-sm">{item.model}</TableCell>
+                      <TableCell className="font-mono text-sm">{item.serialNumber}</TableCell>
+                      <TableCell>{item.itemType}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          </DialogContent>
+        )}
       </Dialog>
     </div>
   );
