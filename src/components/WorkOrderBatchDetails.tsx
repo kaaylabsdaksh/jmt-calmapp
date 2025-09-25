@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { ChevronDown, ChevronRight, ArrowLeft, Plus, Download, User, Calendar, Package } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { ChevronDown, ChevronRight, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 interface WorkOrderItem {
@@ -118,81 +116,37 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
     }));
   };
 
-  const getStatusBadgeVariant = (status: string) => {
-    switch (status) {
-      case 'Open': return 'destructive';
-      case 'In Progress': return 'default';
-      case 'Completed': return 'secondary';
-      default: return 'outline';
-    }
-  };
-
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'Open': return '⭕';
-      case 'In Progress': return '🔄';
-      case 'Completed': return '✅';
-      default: return '❓';
-    }
-  };
-
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-4">
-          <Button variant="ghost" size="sm" onClick={onBack}>
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Batches
-          </Button>
-        </div>
+      <div className="flex items-center justify-between pb-4 border-b">
+        <Button variant="ghost" size="sm" onClick={onBack}>
+          <ArrowLeft className="h-4 w-4 mr-2" />
+          Back to Batches
+        </Button>
         <div className="flex items-center space-x-2">
-          <Button variant="outline" size="sm">
-            <Plus className="h-4 w-4 mr-2" />
-            Add Item
-          </Button>
-          <Button variant="outline" size="sm">
-            <Download className="h-4 w-4 mr-2" />
-            Export
-          </Button>
+          <Button variant="outline" size="sm">Add Item</Button>
+          <Button variant="outline" size="sm">Export</Button>
         </div>
       </div>
 
-      {/* Batch Summary Card */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center justify-between">
-            <span>WO Batch: {mockBatch.batchNumber}</span>
-            <Badge variant="outline">{mockBatch.status}</Badge>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-            <div className="flex items-center space-x-2">
-              <User className="h-4 w-4 text-muted-foreground" />
-              <span className="font-medium">Customer:</span>
-              <span>{mockBatch.customer}</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Package className="h-4 w-4 text-muted-foreground" />
-              <span className="font-medium">Account:</span>
-              <span>{mockBatch.accountNumber}</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Calendar className="h-4 w-4 text-muted-foreground" />
-              <span className="font-medium">SR#:</span>
-              <span>{mockBatch.srNumber}</span>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      {/* Batch Info */}
+      <div className="pb-4">
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="text-lg font-semibold">WO Batch: {mockBatch.batchNumber}</h2>
+          <span className="text-sm text-muted-foreground">{mockBatch.status}</span>
+        </div>
+        <div className="grid grid-cols-3 gap-4 text-sm text-muted-foreground">
+          <div>Customer: {mockBatch.customer}</div>
+          <div>Account: {mockBatch.accountNumber}</div>
+          <div>SR#: {mockBatch.srNumber}</div>
+        </div>
+      </div>
 
-      {/* Items by Status */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Items in Batch ({mockBatch.items.length} items)</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
+      {/* Items */}
+      <div>
+        <h3 className="text-base font-medium mb-3">Items in Batch ({mockBatch.items.length})</h3>
+        <div className="space-y-2">
           {Object.entries(groupedItems).map(([status, items]) => (
             <Collapsible
               key={status}
@@ -200,68 +154,40 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
               onOpenChange={() => toggleSection(status)}
             >
               <CollapsibleTrigger asChild>
-                <Button
-                  variant="ghost"
-                  className="w-full justify-start p-4 h-auto border rounded-lg"
-                >
-                  <div className="flex items-center space-x-3 w-full">
+                <div className="flex items-center justify-between py-2 px-3 rounded border cursor-pointer">
+                  <div className="flex items-center space-x-2">
                     {openSections[status] ? (
                       <ChevronDown className="h-4 w-4" />
                     ) : (
                       <ChevronRight className="h-4 w-4" />
                     )}
-                    <span className="text-lg">{getStatusIcon(status)}</span>
-                    <span className="font-medium text-left">
-                      {status} Items ({items.length})
-                    </span>
-                    <div className="ml-auto">
-                      <Badge variant={getStatusBadgeVariant(status)}>
-                        {items.length}
-                      </Badge>
-                    </div>
+                    <span className="text-sm font-medium">{status} Items</span>
                   </div>
-                </Button>
+                  <span className="text-xs text-muted-foreground">{items.length}</span>
+                </div>
               </CollapsibleTrigger>
               
-              <CollapsibleContent className="pt-4">
-                <div className="space-y-3 pl-8">
+              <CollapsibleContent className="pt-2">
+                <div className="pl-6 space-y-2">
                   {items.length === 0 ? (
-                    <p className="text-muted-foreground text-sm py-4">
-                      No items in this status
-                    </p>
+                    <p className="text-sm text-muted-foreground py-2">No items</p>
                   ) : (
                     items.map((item) => (
-                      <div
-                        key={item.id}
-                        className="flex items-center justify-between p-3 bg-muted/30 rounded-lg"
-                      >
+                      <div key={item.id} className="flex items-center justify-between py-2 px-3 bg-muted/20 rounded text-sm">
                         <div className="flex-1">
                           <div className="flex items-center space-x-3">
-                            <span className="font-medium text-sm">
-                              {item.itemNumber}
-                            </span>
-                            <span className="text-sm">
-                              {item.description}
-                            </span>
-                            <Badge variant="outline" className="text-xs">
-                              Qty: {item.quantity}
-                            </Badge>
+                            <span className="font-medium">{item.itemNumber}</span>
+                            <span>{item.description}</span>
+                            <span className="text-xs text-muted-foreground">Qty: {item.quantity}</span>
                           </div>
-                          <div className="flex items-center space-x-4 mt-2 text-xs text-muted-foreground">
-                            <span>Assigned to: {item.assignedTo}</span>
-                            <span>Need by: {item.needByDate}</span>
-                            {item.notes && (
-                              <span className="italic">Note: {item.notes}</span>
-                            )}
+                          <div className="text-xs text-muted-foreground mt-1">
+                            {item.assignedTo} • {item.needByDate}
+                            {item.notes && <span className="ml-2 italic">{item.notes}</span>}
                           </div>
                         </div>
-                        <div className="flex items-center space-x-2">
-                          <Button variant="ghost" size="sm">
-                            Edit
-                          </Button>
-                          <Button variant="ghost" size="sm">
-                            View
-                          </Button>
+                        <div className="flex space-x-1">
+                          <Button variant="ghost" size="sm" className="h-7 px-2 text-xs">Edit</Button>
+                          <Button variant="ghost" size="sm" className="h-7 px-2 text-xs">View</Button>
                         </div>
                       </div>
                     ))
@@ -270,8 +196,8 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
               </CollapsibleContent>
             </Collapsible>
           ))}
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 };
