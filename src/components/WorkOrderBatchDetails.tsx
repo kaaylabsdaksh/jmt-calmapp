@@ -1,7 +1,8 @@
 import React, { useState, useMemo } from 'react';
-import { ArrowLeft, ChevronDown, ChevronUp, Calendar, User, MapPin, DollarSign, MessageSquare, Clock, Settings, Search } from 'lucide-react';
+import { ArrowLeft, ChevronDown, ChevronUp, Calendar, User, MapPin, DollarSign, MessageSquare, Clock, Settings, Search, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
 interface WorkOrderItem {
@@ -133,27 +134,54 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
 }) => {
   const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
   const [searchQuery, setSearchQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState<string>("");
+  const [labCodeFilter, setLabCodeFilter] = useState<string>("");
+
+  // Get unique values for filters
+  const uniqueStatuses = Array.from(new Set(mockBatch.items.map(item => item.itemStatus)));
+  const uniqueLabCodes = Array.from(new Set(mockBatch.items.map(item => item.labCode)));
 
   const filteredItems = useMemo(() => {
-    if (!searchQuery.trim()) return mockBatch.items;
+    let items = mockBatch.items;
     
-    const query = searchQuery.toLowerCase();
-    return mockBatch.items.filter(item => 
-      item.item.toLowerCase().includes(query) ||
-      item.division.toLowerCase().includes(query) ||
-      item.location.toLowerCase().includes(query) ||
-      item.action.toLowerCase().includes(query) ||
-      item.itemStatus.toLowerCase().includes(query) ||
-      item.manufacturer.toLowerCase().includes(query) ||
-      item.model.toLowerCase().includes(query) ||
-      item.labCode.toLowerCase().includes(query) ||
-      item.serialNumber.toLowerCase().includes(query) ||
-      item.poNumber.toLowerCase().includes(query) ||
-      (item.assignedTo?.toLowerCase() || "").includes(query) ||
-      (item.operationType?.toLowerCase() || "").includes(query) ||
-      (item.lastComment?.toLowerCase() || "").includes(query)
-    );
-  }, [searchQuery]);
+    // Apply search filter
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
+      items = items.filter(item => 
+        item.item.toLowerCase().includes(query) ||
+        item.division.toLowerCase().includes(query) ||
+        item.location.toLowerCase().includes(query) ||
+        item.action.toLowerCase().includes(query) ||
+        item.itemStatus.toLowerCase().includes(query) ||
+        item.manufacturer.toLowerCase().includes(query) ||
+        item.model.toLowerCase().includes(query) ||
+        item.labCode.toLowerCase().includes(query) ||
+        item.serialNumber.toLowerCase().includes(query) ||
+        item.poNumber.toLowerCase().includes(query) ||
+        (item.assignedTo?.toLowerCase() || "").includes(query) ||
+        (item.operationType?.toLowerCase() || "").includes(query) ||
+        (item.lastComment?.toLowerCase() || "").includes(query)
+      );
+    }
+    
+    // Apply status filter
+    if (statusFilter) {
+      items = items.filter(item => item.itemStatus === statusFilter);
+    }
+    
+    // Apply lab code filter
+    if (labCodeFilter) {
+      items = items.filter(item => item.labCode === labCodeFilter);
+    }
+    
+    return items;
+  }, [searchQuery, statusFilter, labCodeFilter]);
+
+  const clearAllFilters = () => {
+    setSearchQuery("");
+    setStatusFilter("");
+    setLabCodeFilter("");
+  };
 
   const toggleItemExpanded = (itemId: string) => {
     const newExpandedItems = new Set(expandedItems);
@@ -177,23 +205,72 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
         </div>
       </div>
 
-      {/* Global Search */}
-      <div className="flex items-center space-x-2">
-        <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-          <Input 
-            type="text"
-            placeholder="Search across all items..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10"
-          />
-        </div>
-        {searchQuery && (
-          <div className="text-sm text-muted-foreground">
-            {filteredItems.length} of {mockBatch.items.length} items
+      {/* Filters */}
+      <div className="space-y-3">
+        <div className="flex flex-wrap items-center gap-3">
+          {/* Global Search */}
+          <div className="relative flex-1 min-w-[300px]">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+            <Input 
+              type="text"
+              placeholder="Search across all items..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-10"
+            />
           </div>
-        )}
+          
+          {/* Status Filter */}
+          <Select value={statusFilter} onValueChange={setStatusFilter}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Filter by Status" />
+            </SelectTrigger>
+            <SelectContent>
+              {uniqueStatuses.map(status => (
+                <SelectItem key={status} value={status}>{status}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          
+          {/* Lab Code Filter */}
+          <Select value={labCodeFilter} onValueChange={setLabCodeFilter}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Filter by Lab Code" />
+            </SelectTrigger>
+            <SelectContent>
+              {uniqueLabCodes.map(labCode => (
+                <SelectItem key={labCode} value={labCode}>{labCode}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          
+          {/* Clear All Button */}
+          {(searchQuery || statusFilter || labCodeFilter) && (
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={clearAllFilters}
+              className="flex items-center gap-2"
+            >
+              <X className="h-4 w-4" />
+              Clear All
+            </Button>
+          )}
+        </div>
+        
+        {/* Results Counter */}
+        <div className="flex items-center justify-between">
+          <div className="text-sm text-muted-foreground">
+            Showing {filteredItems.length} of {mockBatch.items.length} items
+            {(searchQuery || statusFilter || labCodeFilter) && (
+              <span className="ml-2 text-primary">
+                {searchQuery && `• Search: "${searchQuery}"`}
+                {statusFilter && ` • Status: ${statusFilter}`}
+                {labCodeFilter && ` • Lab Code: ${labCodeFilter}`}
+              </span>
+            )}
+          </div>
+        </div>
       </div>
 
       {/* Items Table */}
