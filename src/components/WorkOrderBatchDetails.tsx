@@ -226,40 +226,73 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
                                   <h4 className="font-semibold text-gray-900 text-sm">Timeline & Dates</h4>
                                 </div>
                               </div>
-                              <div className="p-4 space-y-4">
-                                {item.needByDate && (
-                                  <div className="flex flex-col space-y-1">
-                                    <div className="flex items-center gap-2">
-                                      <Clock className="h-3 w-3 text-red-500" />
-                                      <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">Need By Date</span>
+                              <div className="p-4">
+                                <div className="relative">
+                                  {/* Vertical Timeline */}
+                                  <div className="absolute left-4 top-6 bottom-6 w-0.5 bg-gradient-to-b from-blue-200 via-orange-200 via-green-200 to-red-200"></div>
+                                  
+                                  <div className="space-y-6">
+                                    {/* Item Created */}
+                                    <div className="flex items-start gap-4">
+                                      <div className="relative z-10 flex items-center justify-center w-8 h-8 bg-blue-100 border-2 border-blue-300 rounded-full">
+                                        <Calendar className="h-3 w-3 text-blue-600" />
+                                      </div>
+                                      <div className="flex-1 min-w-0 pt-1">
+                                        <div className="flex items-center gap-2 mb-1">
+                                          <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide">Item Created</span>
+                                        </div>
+                                        <p className="text-sm font-medium text-gray-900">{item.itemCreated}</p>
+                                      </div>
                                     </div>
-                                    <div className="font-semibold text-red-600 text-sm pl-5">{item.needByDate}</div>
+
+                                    {/* Follow Up Date */}
+                                    {item.followUpDate && (
+                                      <div className="flex items-start gap-4">
+                                        <div className="relative z-10 flex items-center justify-center w-8 h-8 bg-orange-100 border-2 border-orange-300 rounded-full">
+                                          <Clock className="h-3 w-3 text-orange-600" />
+                                        </div>
+                                        <div className="flex-1 min-w-0 pt-1">
+                                          <div className="flex items-center gap-2 mb-1">
+                                            <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide">Follow Up Date</span>
+                                          </div>
+                                          <p className="text-sm font-medium text-gray-900">{item.followUpDate}</p>
+                                        </div>
+                                      </div>
+                                    )}
+
+                                    {/* Departure Date */}
+                                    {item.departureDate && (
+                                      <div className="flex items-start gap-4">
+                                        <div className="relative z-10 flex items-center justify-center w-8 h-8 bg-green-100 border-2 border-green-300 rounded-full">
+                                          <Calendar className="h-3 w-3 text-green-600" />
+                                        </div>
+                                        <div className="flex-1 min-w-0 pt-1">
+                                          <div className="flex items-center gap-2 mb-1">
+                                            <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide">Departure Date</span>
+                                          </div>
+                                          <p className="text-sm font-medium text-gray-900">{item.departureDate}</p>
+                                        </div>
+                                      </div>
+                                    )}
+
+                                    {/* Need By Date */}
+                                    {item.needByDate && (
+                                      <div className="flex items-start gap-4">
+                                        <div className="relative z-10 flex items-center justify-center w-8 h-8 bg-red-100 border-2 border-red-300 rounded-full">
+                                          <Clock className="h-3 w-3 text-red-600" />
+                                        </div>
+                                        <div className="flex-1 min-w-0 pt-1">
+                                          <div className="flex items-center gap-2 mb-1">
+                                            <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide">Need By Date</span>
+                                            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                              Critical
+                                            </span>
+                                          </div>
+                                          <p className="text-sm font-semibold text-red-600">{item.needByDate}</p>
+                                        </div>
+                                      </div>
+                                    )}
                                   </div>
-                                )}
-                                {item.followUpDate && (
-                                  <div className="flex flex-col space-y-1">
-                                    <div className="flex items-center gap-2">
-                                      <Calendar className="h-3 w-3 text-orange-500" />
-                                      <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">Follow Up Date</span>
-                                    </div>
-                                    <div className="font-medium text-gray-900 text-sm pl-5">{item.followUpDate}</div>
-                                  </div>
-                                )}
-                                {item.departureDate && (
-                                  <div className="flex flex-col space-y-1">
-                                    <div className="flex items-center gap-2">
-                                      <Calendar className="h-3 w-3 text-green-500" />
-                                      <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">Departure Date</span>
-                                    </div>
-                                    <div className="font-medium text-gray-900 text-sm pl-5">{item.departureDate}</div>
-                                  </div>
-                                )}
-                                <div className="flex flex-col space-y-1">
-                                  <div className="flex items-center gap-2">
-                                    <Calendar className="h-3 w-3 text-gray-500" />
-                                    <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">Item Created</span>
-                                  </div>
-                                  <div className="font-medium text-gray-900 text-sm pl-5">{item.itemCreated}</div>
                                 </div>
                               </div>
                             </div>
