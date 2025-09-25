@@ -1,13 +1,14 @@
 import React from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import WorkOrderBatchDetails from '@/components/WorkOrderBatchDetails';
 
 const WorkOrderBatchDetailsDemo: React.FC = () => {
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const batchId = searchParams.get('batchId');
 
   const handleBack = () => {
-    window.history.back();
+    navigate('/');
   };
 
   return (
