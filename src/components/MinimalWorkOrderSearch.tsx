@@ -1,10 +1,46 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Search, Plus, RotateCcw, Filter } from "lucide-react";
+import { Search, Plus, RotateCcw, Filter, Building2, User, Package } from "lucide-react";
+
+// Mock work order batch data for suggestions
+const mockWorkOrderBatches = [
+  {
+    id: "1",
+    woBatch: "383727",
+    acctNumber: "13058.06",
+    srNumber: "SR2455",
+    customerName: "Deutsche Windtechnik Inc",
+    minNeedByDate: "09/24/2021",
+  },
+  {
+    id: "2", 
+    woBatch: "384552",
+    acctNumber: "13058.12",
+    srNumber: "SR2456",
+    customerName: "Tech Solutions Ltd",
+    minNeedByDate: "10/15/2021",
+  },
+  {
+    id: "3",
+    woBatch: "385123",
+    acctNumber: "13058.15",
+    srNumber: "SR2457", 
+    customerName: "ACME Industries",
+    minNeedByDate: "11/20/2021",
+  },
+  {
+    id: "4",
+    woBatch: "438752",
+    acctNumber: "13058.20",
+    srNumber: "SR2458",
+    customerName: "Manufacturing Corp",
+    minNeedByDate: "12/10/2021",
+  }
+];
 
 interface SearchForm {
   workOrderNumber: string;
@@ -40,6 +76,135 @@ const MinimalWorkOrderSearch = ({ onSearch }: MinimalWorkOrderSearchProps) => {
   });
 
   const [showAdvanced, setShowAdvanced] = useState(false);
+  const [suggestions, setSuggestions] = useState<any[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState(-1);
+  const [activeField, setActiveField] = useState<string>('');
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  // Generate suggestions based on search input
+  const generateSuggestions = (query: string, fieldType: string) => {
+    if (!query || query.length < 1) {
+      setSuggestions([]);
+      setShowSuggestions(false);
+      return;
+    }
+
+    const searchTerm = query.toLowerCase();
+    const matchingSuggestions = [];
+
+    mockWorkOrderBatches.forEach(batch => {
+      if (fieldType === 'workOrderNumber' && batch.woBatch.toLowerCase().includes(searchTerm)) {
+        matchingSuggestions.push({
+          type: 'work-order',
+          value: batch.woBatch,
+          label: `WO Batch: ${batch.woBatch}`,
+          subtitle: batch.customerName
+        });
+      }
+      if (fieldType === 'customerName' && batch.customerName.toLowerCase().includes(searchTerm)) {
+        matchingSuggestions.push({
+          type: 'customer',
+          value: batch.customerName,
+          label: `Customer: ${batch.customerName}`,
+          subtitle: `WO Batch: ${batch.woBatch}`
+        });
+      }
+      // Add suggestions for account number and SR number for work order field
+      if (fieldType === 'workOrderNumber') {
+        if (batch.acctNumber.toLowerCase().includes(searchTerm)) {
+          matchingSuggestions.push({
+            type: 'account',
+            value: batch.acctNumber,
+            label: `Account: ${batch.acctNumber}`,
+            subtitle: batch.customerName
+          });
+        }
+        if (batch.srNumber.toLowerCase().includes(searchTerm)) {
+          matchingSuggestions.push({
+            type: 'sr',
+            value: batch.srNumber,
+            label: `SR: ${batch.srNumber}`,
+            subtitle: batch.customerName
+          });
+        }
+      }
+    });
+
+    // Remove duplicates and limit results
+    const uniqueSuggestions = matchingSuggestions.filter((suggestion, index, arr) => 
+      arr.findIndex(s => s.label === suggestion.label) === index
+    ).slice(0, 5);
+
+    setSuggestions(uniqueSuggestions);
+    setShowSuggestions(uniqueSuggestions.length > 0);
+    setSelectedSuggestionIndex(-1);
+  };
+
+  // Handle input changes with suggestions
+  const handleInputChange = (field: keyof SearchForm, value: string) => {
+    updateSearchForm(field, value);
+    setActiveField(field);
+    generateSuggestions(value, field);
+  };
+
+  // Handle suggestion selection
+  const handleSuggestionSelect = (suggestion: any) => {
+    if (activeField === 'workOrderNumber') {
+      updateSearchForm('workOrderNumber', suggestion.value);
+    } else if (activeField === 'customerName') {
+      updateSearchForm('customerName', suggestion.value);
+    }
+    setSuggestions([]);
+    setShowSuggestions(false);
+    setSelectedSuggestionIndex(-1);
+  };
+
+  // Handle keyboard navigation
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (!showSuggestions || suggestions.length === 0) return;
+
+    switch (e.key) {
+      case 'ArrowDown':
+        e.preventDefault();
+        setSelectedSuggestionIndex(prev => 
+          prev < suggestions.length - 1 ? prev + 1 : 0
+        );
+        break;
+      case 'ArrowUp':
+        e.preventDefault();
+        setSelectedSuggestionIndex(prev => 
+          prev > 0 ? prev - 1 : suggestions.length - 1
+        );
+        break;
+      case 'Enter':
+        e.preventDefault();
+        if (selectedSuggestionIndex >= 0) {
+          handleSuggestionSelect(suggestions[selectedSuggestionIndex]);
+        } else {
+          handleSearch();
+        }
+        break;
+      case 'Escape':
+        setSuggestions([]);
+        setShowSuggestions(false);
+        setSelectedSuggestionIndex(-1);
+        break;
+    }
+  };
+
+  // Close suggestions when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (searchInputRef.current && !searchInputRef.current.contains(event.target as Node)) {
+        setSuggestions([]);
+        setShowSuggestions(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const updateSearchForm = (field: keyof SearchForm, value: string) => {
     setSearchForm(prev => ({
@@ -96,30 +261,86 @@ const MinimalWorkOrderSearch = ({ onSearch }: MinimalWorkOrderSearchProps) => {
       <CardContent className="space-y-6">
         {/* Essential Search Fields */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="space-y-2">
+          <div className="space-y-2 relative">
             <Label htmlFor="wo-number" className="text-sm font-medium">
               Work Order Number
             </Label>
-            <Input
-              id="wo-number"
-              placeholder="Enter WO #"
-              value={searchForm.workOrderNumber}
-              onChange={(e) => updateSearchForm('workOrderNumber', e.target.value)}
-              className="transition-all focus:ring-2 focus:ring-primary/20"
-            />
+            <div className="relative">
+              <Input
+                ref={searchInputRef}
+                id="wo-number"
+                placeholder="Enter WO #, Account #, or SR #"
+                value={searchForm.workOrderNumber}
+                onChange={(e) => handleInputChange('workOrderNumber', e.target.value)}
+                onKeyDown={handleKeyDown}
+                className="transition-all focus:ring-2 focus:ring-primary/20"
+              />
+              
+              {/* Suggestions Dropdown */}
+              {showSuggestions && suggestions.length > 0 && activeField === 'workOrderNumber' && (
+                <div className="absolute top-full left-0 right-0 z-50 bg-popover border border-border rounded-md shadow-lg mt-1 max-h-60 overflow-auto">
+                  {suggestions.map((suggestion, index) => (
+                    <div
+                      key={`${suggestion.type}-${suggestion.value}-${index}`}
+                      className={`px-3 py-2 cursor-pointer hover:bg-muted/50 transition-colors ${
+                        index === selectedSuggestionIndex ? 'bg-muted' : ''
+                      }`}
+                      onClick={() => handleSuggestionSelect(suggestion)}
+                    >
+                      <div className="flex items-center gap-2">
+                        {suggestion.type === 'work-order' && <Package className="h-4 w-4 text-blue-500" />}
+                        {suggestion.type === 'customer' && <Building2 className="h-4 w-4 text-green-500" />}
+                        {suggestion.type === 'account' && <User className="h-4 w-4 text-purple-500" />}
+                        {suggestion.type === 'sr' && <Search className="h-4 w-4 text-orange-500" />}
+                        <div className="flex-1 min-w-0">
+                          <div className="font-medium text-sm truncate">{suggestion.label}</div>
+                          <div className="text-xs text-muted-foreground truncate">{suggestion.subtitle}</div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-2 relative">
             <Label htmlFor="customer" className="text-sm font-medium">
               Customer Name
             </Label>
-            <Input
-              id="customer"
-              placeholder="Enter customer name"
-              value={searchForm.customerName}
-              onChange={(e) => updateSearchForm('customerName', e.target.value)}
-              className="transition-all focus:ring-2 focus:ring-primary/20"
-            />
+            <div className="relative">
+              <Input
+                id="customer"
+                placeholder="Enter customer name"
+                value={searchForm.customerName}
+                onChange={(e) => handleInputChange('customerName', e.target.value)}
+                onKeyDown={handleKeyDown}
+                className="transition-all focus:ring-2 focus:ring-primary/20"
+              />
+              
+              {/* Customer Suggestions Dropdown */}
+              {showSuggestions && suggestions.length > 0 && activeField === 'customerName' && (
+                <div className="absolute top-full left-0 right-0 z-50 bg-popover border border-border rounded-md shadow-lg mt-1 max-h-60 overflow-auto">
+                  {suggestions.map((suggestion, index) => (
+                    <div
+                      key={`${suggestion.type}-${suggestion.value}-${index}`}
+                      className={`px-3 py-2 cursor-pointer hover:bg-muted/50 transition-colors ${
+                        index === selectedSuggestionIndex ? 'bg-muted' : ''
+                      }`}
+                      onClick={() => handleSuggestionSelect(suggestion)}
+                    >
+                      <div className="flex items-center gap-2">
+                        <Building2 className="h-4 w-4 text-green-500" />
+                        <div className="flex-1 min-w-0">
+                          <div className="font-medium text-sm truncate">{suggestion.label}</div>
+                          <div className="text-xs text-muted-foreground truncate">{suggestion.subtitle}</div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
 
           <div className="space-y-2">
