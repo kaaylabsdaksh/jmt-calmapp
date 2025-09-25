@@ -28,8 +28,8 @@ interface ModernTopSearchFiltersProps {
 // Mock work orders for suggestions (in a real app, this would come from props or API)
 const mockWorkOrders = [
   {
-    id: "385737",
-    customer: "ACME Industries", 
+    id: "383727",
+    customer: "Deutsche Windtechnik Inc", 
     assignedTo: "John Smith",
     division: "Lab",
     manufacturer: "ADEULIS",
@@ -37,8 +37,8 @@ const mockWorkOrders = [
     labCode: "LAB-001"
   },
   {
-    id: "390589", 
-    customer: "Tech Solutions Ltd",
+    id: "390118", 
+    customer: "Colonial Pipeline",
     assignedTo: "Sarah Johnson", 
     division: "Rental",
     manufacturer: "STARRETT",
@@ -46,8 +46,8 @@ const mockWorkOrders = [
     labCode: "LAB-002"
   },
   {
-    id: "400217",
-    customer: "Manufacturing Corp",
+    id: "452463",
+    customer: "Colonial Pipeline",
     assignedTo: "Mike Davis",
     division: "ESL Onsite", 
     manufacturer: "CHARLS LTD",
@@ -55,8 +55,8 @@ const mockWorkOrders = [
     labCode: "LAB-003"
   },
   {
-    id: "403946",
-    customer: "Quality Systems Inc",
+    id: "393015",
+    customer: "Burns & McDonnell",
     assignedTo: "Emily Wilson",
     division: "ESL",
     manufacturer: "PRECISION TOOLS", 
@@ -64,104 +64,13 @@ const mockWorkOrders = [
     labCode: "LAB-004"
   },
   {
-    id: "405078",
-    customer: "Aerospace Dynamics",
+    id: "441228",
+    customer: "Energy Transfer",
     assignedTo: "Tom Rodriguez",
     division: "Lab",
     manufacturer: "SNAP-ON",
     modelNumber: "TW-PRO-500", 
     labCode: "LAB-005"
-  },
-  {
-    id: "408881",
-    customer: "Pharmaceutical Labs Inc", 
-    assignedTo: "Dr. Amanda Foster",
-    division: "Rental",
-    manufacturer: "METTLER TOLEDO",
-    modelNumber: "AB-220",
-    labCode: "LAB-006"
-  },
-  // Additional entries
-  {
-    id: "412340",
-    customer: "Energy Solutions Corp",
-    assignedTo: "Alex Thompson",
-    division: "Lab",
-    manufacturer: "FLUKE",
-    modelNumber: "PM-850",
-    labCode: "LAB-007"
-  },
-  {
-    id: "415629",
-    customer: "Medical Devices Inc",
-    assignedTo: "Dr. Rachel Martinez",
-    division: "ESL",
-    manufacturer: "BRANSON",
-    modelNumber: "UC-750",
-    labCode: "LAB-008"
-  },
-  {
-    id: "418974",
-    customer: "Precision Manufacturing Ltd",
-    assignedTo: "Kevin Park",
-    division: "ESL Onsite",
-    manufacturer: "ZEISS",
-    modelNumber: "CMM-3000",
-    labCode: "LAB-009"
-  },
-  {
-    id: "421587",
-    customer: "Automotive Testing Labs",
-    assignedTo: "Lisa Chen",
-    division: "Rental",
-    manufacturer: "BRUEL & KJAER",
-    modelNumber: "VA-2500",
-    labCode: "LAB-010"
-  },
-  {
-    id: "424833",
-    customer: "Chemical Analysis Corp",
-    assignedTo: "Dr. Patricia Lee",
-    division: "Lab",
-    manufacturer: "HACH",
-    modelNumber: "pH-850",
-    labCode: "LAB-011"
-  },
-  {
-    id: "427965",
-    customer: "Environmental Testing Solutions",
-    assignedTo: "Michael Johnson",
-    division: "ESL",
-    manufacturer: "AGILENT",
-    modelNumber: "GC-7890",
-    labCode: "LAB-012"
-  },
-  {
-    id: "430771",
-    customer: "Telecommunications Inc",
-    assignedTo: "Jennifer Walsh",
-    division: "Lab",
-    manufacturer: "KEYSIGHT",
-    modelNumber: "E5071C",
-    labCode: "LAB-013"
-  },
-  {
-    id: "433498",
-    customer: "Food Safety Labs",
-    assignedTo: "Dr. Mark Roberts",
-    division: "ESL",
-    manufacturer: "THERMO FISHER",
-    modelNumber: "TSQ-9000",
-    labCode: "LAB-014"
-  },
-  {
-    id: "436125",
-    customer: "Aerospace Systems Ltd",
-    assignedTo: "Amanda Clark",
-    division: "Rental",
-    manufacturer: "ROHDE & SCHWARZ",
-    modelNumber: "FSW-26",
-    labCode: "LAB-015"
   },
   {
     id: "438752",
@@ -171,6 +80,33 @@ const mockWorkOrders = [
     manufacturer: "CANBERRA",
     modelNumber: "DSA-1000",
     labCode: "LAB-016"
+  },
+  {
+    id: "385737",
+    customer: "ACME Industries", 
+    assignedTo: "John Smith",
+    division: "Lab",
+    manufacturer: "ADEULIS",
+    modelNumber: "PPS-1734",
+    labCode: "LAB-007"
+  },
+  {
+    id: "390589", 
+    customer: "Tech Solutions Ltd",
+    assignedTo: "Sarah Johnson", 
+    division: "Rental",
+    manufacturer: "STARRETT",
+    modelNumber: "844-441",
+    labCode: "LAB-008"
+  },
+  {
+    id: "400217",
+    customer: "Manufacturing Corp",
+    assignedTo: "Mike Davis",
+    division: "ESL Onsite", 
+    manufacturer: "CHARLS LTD",
+    modelNumber: "1000PS",
+    labCode: "LAB-009"
   }
 ];
 
