@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { List, Grid3X3 } from "lucide-react";
+import { List, Grid3X3, ChevronUp, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import WorkOrderBatchDetails from "@/components/WorkOrderBatchDetails";
 
@@ -3033,6 +3033,16 @@ interface WorkOrderItem {
   priority: "High" | "Medium" | "Low" | "Critical";
   assignedTo: string;
   division: string;
+  // Additional fields for expandable details
+  lastComment?: string;
+  lastCommentDate?: string;
+  needByDate?: string;
+  followUpDate?: string;
+  labCode?: string;
+  location?: string;
+  operationType?: string;
+  estimatedCost?: string;
+  actualCost?: string;
 }
 
 const mockWorkOrderItems: WorkOrderItem[] = [
@@ -3054,7 +3064,16 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     customer: "ACME Industries",
     priority: "High",
     assignedTo: "John Smith",
-    division: "Lab"
+    division: "Lab",
+    lastComment: "Calibration procedure started. Initial testing shows pressure reading within acceptable range.",
+    lastCommentDate: "11/20/2024",
+    needByDate: "11/24/2024",
+    followUpDate: "11/22/2024",
+    labCode: "LAB-001",
+    location: "Lab Building A - Room 205",
+    operationType: "Calibration",
+    estimatedCost: "$1,250.00",
+    actualCost: "$1,180.00"
   },
   {
     id: "item-385737-2",
@@ -3073,7 +3092,16 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     customer: "ACME Industries",
     priority: "High",
     assignedTo: "John Smith",
-    division: "Lab"
+    division: "Lab",
+    lastComment: "Quality assurance inspection in progress. All tests are passing so far.",
+    lastCommentDate: "11/21/2024",
+    needByDate: "11/24/2024",
+    followUpDate: "11/23/2024",
+    labCode: "LAB-002",
+    location: "Lab Building A - Room 210",
+    operationType: "Inspection",
+    estimatedCost: "$850.00",
+    actualCost: "$825.00"
   },
   {
     id: "item-385737-3",
@@ -3903,8 +3931,20 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
   const [currentPage, setCurrentPage] = useState(1);
   const [activeStatusFilter, setActiveStatusFilter] = useState<string>('all');
   const [currentView, setCurrentView] = useState<'item' | 'batch'>('item');
+  const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
   const navigate = useNavigate();
   const itemsPerPage = 10;
+  
+  // Toggle expand/collapse for items
+  const toggleItemExpanded = (itemId: string) => {
+    const newExpandedItems = new Set(expandedItems);
+    if (newExpandedItems.has(itemId)) {
+      newExpandedItems.delete(itemId);
+    } else {
+      newExpandedItems.add(itemId);
+    }
+    setExpandedItems(newExpandedItems);
+  };
   
   // Filter work orders based on search filters from parent and status
   // Helper function to convert status names to filter values
@@ -4509,30 +4549,131 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
               ) : (
                 // Item View - Show Work Order Items
                 paginatedWorkOrderItems.map((item) => (
-                  <TableRow
-                    key={item.id}
-                    className="hover:bg-gray-50 cursor-pointer border-b border-gray-100"
-                    onClick={() => openDetailsFromItem(item)}
-                  >
-                    <TableCell className="font-medium text-blue-600">{item.workOrderNumber}</TableCell>
-                    <TableCell className="font-mono text-sm">{item.reportNumber}</TableCell>
-                    <TableCell>{getItemStatusBadge(item.itemStatus)}</TableCell>
-                    <TableCell>
-                      <span className={cn("px-2 py-1 rounded-md text-xs font-medium",
-                        item.priority === "Critical" ? "bg-red-100 text-red-800" :
-                        item.priority === "High" ? "bg-orange-100 text-orange-800" :
-                        item.priority === "Medium" ? "bg-yellow-100 text-yellow-800" :
-                        "bg-gray-100 text-gray-800"
-                      )}>{item.priority}</span>
-                    </TableCell>
-                    <TableCell className="font-medium">{item.manufacturer}</TableCell>
-                    <TableCell className="font-mono text-sm">{item.model}</TableCell>
-                    <TableCell className="font-mono text-sm">{item.serialNumber}</TableCell>
-                    <TableCell className="text-sm">{item.itemType}</TableCell>
-                    <TableCell className="font-medium">{item.customer}</TableCell>
-                    <TableCell>{item.assignedTo}</TableCell>
-                    <TableCell></TableCell>
-                  </TableRow>
+                  <React.Fragment key={item.id}>
+                    <TableRow className="hover:bg-gray-50 border-b border-gray-100">
+                      <TableCell className="font-medium text-blue-600">{item.workOrderNumber}</TableCell>
+                      <TableCell className="font-mono text-sm">{item.reportNumber}</TableCell>
+                      <TableCell>{getItemStatusBadge(item.itemStatus)}</TableCell>
+                      <TableCell>
+                        <span className={cn("px-2 py-1 rounded-md text-xs font-medium",
+                          item.priority === "Critical" ? "bg-red-100 text-red-800" :
+                          item.priority === "High" ? "bg-orange-100 text-orange-800" :
+                          item.priority === "Medium" ? "bg-yellow-100 text-yellow-800" :
+                          "bg-gray-100 text-gray-800"
+                        )}>{item.priority}</span>
+                      </TableCell>
+                      <TableCell className="font-medium">{item.manufacturer}</TableCell>
+                      <TableCell className="font-mono text-sm">{item.model}</TableCell>
+                      <TableCell className="font-mono text-sm">{item.serialNumber}</TableCell>
+                      <TableCell className="text-sm">{item.itemType}</TableCell>
+                      <TableCell className="font-medium">{item.customer}</TableCell>
+                      <TableCell>{item.assignedTo}</TableCell>
+                      <TableCell className="w-12">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleItemExpanded(item.id);
+                          }}
+                          className="h-8 w-8 p-0"
+                        >
+                          {expandedItems.has(item.id) ? (
+                            <ChevronUp className="h-4 w-4" />
+                          ) : (
+                            <ChevronDown className="h-4 w-4" />
+                          )}
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                    {expandedItems.has(item.id) && (
+                      <TableRow className="bg-gray-50">
+                        <TableCell colSpan={11} className="p-6">
+                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <div className="space-y-3">
+                              <h4 className="font-semibold text-gray-900 text-sm">Timeline & Dates</h4>
+                              {item.needByDate && (
+                                <div className="text-sm">
+                                  <span className="text-gray-500">Need By Date:</span>
+                                  <div className="font-medium text-red-600">{item.needByDate}</div>
+                                </div>
+                              )}
+                              {item.followUpDate && (
+                                <div className="text-sm">
+                                  <span className="text-gray-500">Follow Up Date:</span>
+                                  <div className="font-medium">{item.followUpDate}</div>
+                                </div>
+                              )}
+                              <div className="text-sm">
+                                <span className="text-gray-500">Created:</span>
+                                <div className="font-medium">{item.created}</div>
+                              </div>
+                              <div className="text-sm">
+                                <span className="text-gray-500">Departure:</span>
+                                <div className="font-medium">{item.departure}</div>
+                              </div>
+                            </div>
+                            
+                            <div className="space-y-3">
+                              <h4 className="font-semibold text-gray-900 text-sm">Location & Details</h4>
+                              {item.location && (
+                                <div className="text-sm">
+                                  <span className="text-gray-500">Location:</span>
+                                  <div className="font-medium">{item.location}</div>
+                                </div>
+                              )}
+                              {item.labCode && (
+                                <div className="text-sm">
+                                  <span className="text-gray-500">Lab Code:</span>
+                                  <div className="font-mono text-xs">{item.labCode}</div>
+                                </div>
+                              )}
+                              {item.operationType && (
+                                <div className="text-sm">
+                                  <span className="text-gray-500">Operation Type:</span>
+                                  <div className="font-medium">{item.operationType}</div>
+                                </div>
+                              )}
+                              <div className="text-sm">
+                                <span className="text-gray-500">PO Number:</span>
+                                <div className="font-mono text-xs">{item.poNumber}</div>
+                              </div>
+                            </div>
+                            
+                            <div className="space-y-3">
+                              <h4 className="font-semibold text-gray-900 text-sm">Cost & Comments</h4>
+                              {item.estimatedCost && (
+                                <div className="text-sm">
+                                  <span className="text-gray-500">Estimated Cost:</span>
+                                  <div className="font-medium text-green-600">{item.estimatedCost}</div>
+                                </div>
+                              )}
+                              {item.actualCost && (
+                                <div className="text-sm">
+                                  <span className="text-gray-500">Actual Cost:</span>
+                                  <div className="font-medium text-blue-600">{item.actualCost}</div>
+                                </div>
+                              )}
+                              {item.lastCommentDate && (
+                                <div className="text-sm">
+                                  <span className="text-gray-500">Last Comment Date:</span>
+                                  <div className="font-medium">{item.lastCommentDate}</div>
+                                </div>
+                              )}
+                              {item.lastComment && (
+                                <div className="text-sm">
+                                  <span className="text-gray-500">Last Comment:</span>
+                                  <div className="font-medium text-gray-800 mt-1 p-2 bg-white rounded border text-xs leading-relaxed">
+                                    {item.lastComment}
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    )}
+                  </React.Fragment>
                 ))
               )}
             </TableBody>
