@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { ArrowLeft, ChevronDown, ChevronUp, Calendar, User, MapPin, DollarSign, MessageSquare, Clock, Settings } from 'lucide-react';
+import React, { useState, useMemo } from 'react';
+import { ArrowLeft, ChevronDown, ChevronUp, Calendar, User, MapPin, DollarSign, MessageSquare, Clock, Settings, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
 interface WorkOrderItem {
@@ -131,6 +132,28 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
   onBack 
 }) => {
   const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredItems = useMemo(() => {
+    if (!searchQuery.trim()) return mockBatch.items;
+    
+    const query = searchQuery.toLowerCase();
+    return mockBatch.items.filter(item => 
+      item.item.toLowerCase().includes(query) ||
+      item.division.toLowerCase().includes(query) ||
+      item.location.toLowerCase().includes(query) ||
+      item.action.toLowerCase().includes(query) ||
+      item.itemStatus.toLowerCase().includes(query) ||
+      item.manufacturer.toLowerCase().includes(query) ||
+      item.model.toLowerCase().includes(query) ||
+      item.labCode.toLowerCase().includes(query) ||
+      item.serialNumber.toLowerCase().includes(query) ||
+      item.poNumber.toLowerCase().includes(query) ||
+      (item.assignedTo?.toLowerCase() || "").includes(query) ||
+      (item.operationType?.toLowerCase() || "").includes(query) ||
+      (item.lastComment?.toLowerCase() || "").includes(query)
+    );
+  }, [searchQuery]);
 
   const toggleItemExpanded = (itemId: string) => {
     const newExpandedItems = new Set(expandedItems);
@@ -154,9 +177,28 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
         </div>
       </div>
 
+      {/* Global Search */}
+      <div className="flex items-center space-x-2">
+        <div className="relative flex-1 max-w-md">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+          <Input 
+            type="text"
+            placeholder="Search across all items..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-10"
+          />
+        </div>
+        {searchQuery && (
+          <div className="text-sm text-muted-foreground">
+            {filteredItems.length} of {mockBatch.items.length} items
+          </div>
+        )}
+      </div>
+
       {/* Items Table */}
       <div>
-        <h3 className="text-base font-medium mb-3">Items in Batch ({mockBatch.items.length})</h3>
+        <h3 className="text-base font-medium mb-3">Items in Batch ({filteredItems.length})</h3>
         <div className="border rounded-lg overflow-hidden">
           <Table>
             <TableHeader>
@@ -176,7 +218,7 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
               </TableRow>
             </TableHeader>
             <TableBody>
-              {mockBatch.items.map((item) => (
+              {filteredItems.map((item) => (
                 <React.Fragment key={item.id}>
                   <TableRow className="hover:bg-muted/30">
                     <TableCell className="font-medium text-blue-600">{item.item}</TableCell>
