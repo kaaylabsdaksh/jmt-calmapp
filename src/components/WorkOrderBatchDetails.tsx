@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowLeft, ChevronDown, ChevronUp } from 'lucide-react';
+import { ArrowLeft, ChevronDown, ChevronUp, Calendar, User, MapPin, DollarSign, MessageSquare, Clock, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
@@ -214,87 +214,149 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
                     </TableCell>
                   </TableRow>
                   {expandedItems.has(item.id) && (
-                    <TableRow className="bg-muted/20">
-                      <TableCell colSpan={12} className="p-6">
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                          <div className="space-y-3">
-                            <h4 className="font-semibold text-gray-900 text-sm">Timeline & Dates</h4>
-                            {item.needByDate && (
-                              <div className="text-sm">
-                                <span className="text-gray-500">Need By Date:</span>
-                                <div className="font-medium text-red-600">{item.needByDate}</div>
-                              </div>
-                            )}
-                            {item.followUpDate && (
-                              <div className="text-sm">
-                                <span className="text-gray-500">Follow Up Date:</span>
-                                <div className="font-medium">{item.followUpDate}</div>
-                              </div>
-                            )}
-                            {item.departureDate && (
-                              <div className="text-sm">
-                                <span className="text-gray-500">Departure Date:</span>
-                                <div className="font-medium">{item.departureDate}</div>
-                              </div>
-                            )}
-                            <div className="text-sm">
-                              <span className="text-gray-500">Item Created:</span>
-                              <div className="font-medium">{item.itemCreated}</div>
-                            </div>
-                          </div>
-                          
-                          <div className="space-y-3">
-                            <h4 className="font-semibold text-gray-900 text-sm">Assignment & Details</h4>
-                            {item.assignedTo && (
-                              <div className="text-sm">
-                                <span className="text-gray-500">Assigned To:</span>
-                                <div className="font-medium">{item.assignedTo}</div>
-                              </div>
-                            )}
-                            {item.operationType && (
-                              <div className="text-sm">
-                                <span className="text-gray-500">Operation Type:</span>
-                                <div className="font-medium">{item.operationType}</div>
-                              </div>
-                            )}
-                            <div className="text-sm">
-                              <span className="text-gray-500">Location:</span>
-                              <div className="font-medium">{item.location}</div>
-                            </div>
-                            <div className="text-sm">
-                              <span className="text-gray-500">Lab Code:</span>
-                              <div className="font-mono text-xs">{item.labCode}</div>
-                            </div>
-                          </div>
-                          
-                          <div className="space-y-3">
-                            <h4 className="font-semibold text-gray-900 text-sm">Cost & Comments</h4>
-                            {item.estimatedCost && (
-                              <div className="text-sm">
-                                <span className="text-gray-500">Estimated Cost:</span>
-                                <div className="font-medium text-green-600">{item.estimatedCost}</div>
-                              </div>
-                            )}
-                            {item.actualCost && (
-                              <div className="text-sm">
-                                <span className="text-gray-500">Actual Cost:</span>
-                                <div className="font-medium text-blue-600">{item.actualCost}</div>
-                              </div>
-                            )}
-                            {item.lastCommentDate && (
-                              <div className="text-sm">
-                                <span className="text-gray-500">Last Comment Date:</span>
-                                <div className="font-medium">{item.lastCommentDate}</div>
-                              </div>
-                            )}
-                            {item.lastComment && (
-                              <div className="text-sm">
-                                <span className="text-gray-500">Last Comment:</span>
-                                <div className="font-medium text-gray-800 mt-1 p-2 bg-white rounded border text-xs leading-relaxed">
-                                  {item.lastComment}
+                    <TableRow className="bg-gradient-to-r from-slate-50 to-gray-50">
+                      <TableCell colSpan={12} className="p-0">
+                        <div className="p-6 animate-fade-in">
+                          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            {/* Timeline & Dates Card */}
+                            <div className="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200">
+                              <div className="p-4 border-b border-gray-100">
+                                <div className="flex items-center gap-2">
+                                  <Calendar className="h-4 w-4 text-blue-600" />
+                                  <h4 className="font-semibold text-gray-900 text-sm">Timeline & Dates</h4>
                                 </div>
                               </div>
-                            )}
+                              <div className="p-4 space-y-4">
+                                {item.needByDate && (
+                                  <div className="flex flex-col space-y-1">
+                                    <div className="flex items-center gap-2">
+                                      <Clock className="h-3 w-3 text-red-500" />
+                                      <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">Need By Date</span>
+                                    </div>
+                                    <div className="font-semibold text-red-600 text-sm pl-5">{item.needByDate}</div>
+                                  </div>
+                                )}
+                                {item.followUpDate && (
+                                  <div className="flex flex-col space-y-1">
+                                    <div className="flex items-center gap-2">
+                                      <Calendar className="h-3 w-3 text-orange-500" />
+                                      <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">Follow Up Date</span>
+                                    </div>
+                                    <div className="font-medium text-gray-900 text-sm pl-5">{item.followUpDate}</div>
+                                  </div>
+                                )}
+                                {item.departureDate && (
+                                  <div className="flex flex-col space-y-1">
+                                    <div className="flex items-center gap-2">
+                                      <Calendar className="h-3 w-3 text-green-500" />
+                                      <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">Departure Date</span>
+                                    </div>
+                                    <div className="font-medium text-gray-900 text-sm pl-5">{item.departureDate}</div>
+                                  </div>
+                                )}
+                                <div className="flex flex-col space-y-1">
+                                  <div className="flex items-center gap-2">
+                                    <Calendar className="h-3 w-3 text-gray-500" />
+                                    <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">Item Created</span>
+                                  </div>
+                                  <div className="font-medium text-gray-900 text-sm pl-5">{item.itemCreated}</div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            {/* Assignment & Details Card */}
+                            <div className="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200">
+                              <div className="p-4 border-b border-gray-100">
+                                <div className="flex items-center gap-2">
+                                  <User className="h-4 w-4 text-purple-600" />
+                                  <h4 className="font-semibold text-gray-900 text-sm">Assignment & Details</h4>
+                                </div>
+                              </div>
+                              <div className="p-4 space-y-4">
+                                {item.assignedTo && (
+                                  <div className="flex flex-col space-y-1">
+                                    <div className="flex items-center gap-2">
+                                      <User className="h-3 w-3 text-blue-500" />
+                                      <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">Assigned To</span>
+                                    </div>
+                                    <div className="font-semibold text-blue-600 text-sm pl-5">{item.assignedTo}</div>
+                                  </div>
+                                )}
+                                {item.operationType && (
+                                  <div className="flex flex-col space-y-1">
+                                    <div className="flex items-center gap-2">
+                                      <Settings className="h-3 w-3 text-purple-500" />
+                                      <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">Operation Type</span>
+                                    </div>
+                                    <div className="font-medium text-gray-900 text-sm pl-5">{item.operationType}</div>
+                                  </div>
+                                )}
+                                <div className="flex flex-col space-y-1">
+                                  <div className="flex items-center gap-2">
+                                    <MapPin className="h-3 w-3 text-green-500" />
+                                    <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">Location</span>
+                                  </div>
+                                  <div className="font-medium text-gray-900 text-sm pl-5">{item.location}</div>
+                                </div>
+                                <div className="flex flex-col space-y-1">
+                                  <div className="flex items-center gap-2">
+                                    <Settings className="h-3 w-3 text-gray-500" />
+                                    <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">Lab Code</span>
+                                  </div>
+                                  <div className="font-mono text-sm text-gray-900 pl-5 bg-gray-50 px-2 py-1 rounded">{item.labCode}</div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            {/* Cost & Comments Card */}
+                            <div className="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200">
+                              <div className="p-4 border-b border-gray-100">
+                                <div className="flex items-center gap-2">
+                                  <DollarSign className="h-4 w-4 text-green-600" />
+                                  <h4 className="font-semibold text-gray-900 text-sm">Cost & Comments</h4>
+                                </div>
+                              </div>
+                              <div className="p-4 space-y-4">
+                                {item.estimatedCost && (
+                                  <div className="flex flex-col space-y-1">
+                                    <div className="flex items-center gap-2">
+                                      <DollarSign className="h-3 w-3 text-green-500" />
+                                      <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">Estimated Cost</span>
+                                    </div>
+                                    <div className="font-semibold text-green-600 text-sm pl-5">{item.estimatedCost}</div>
+                                  </div>
+                                )}
+                                {item.actualCost && (
+                                  <div className="flex flex-col space-y-1">
+                                    <div className="flex items-center gap-2">
+                                      <DollarSign className="h-3 w-3 text-blue-500" />
+                                      <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">Actual Cost</span>
+                                    </div>
+                                    <div className="font-semibold text-blue-600 text-sm pl-5">{item.actualCost}</div>
+                                  </div>
+                                )}
+                                {item.lastCommentDate && (
+                                  <div className="flex flex-col space-y-1">
+                                    <div className="flex items-center gap-2">
+                                      <MessageSquare className="h-3 w-3 text-orange-500" />
+                                      <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">Last Comment Date</span>
+                                    </div>
+                                    <div className="font-medium text-gray-900 text-sm pl-5">{item.lastCommentDate}</div>
+                                  </div>
+                                )}
+                                {item.lastComment && (
+                                  <div className="flex flex-col space-y-2">
+                                    <div className="flex items-center gap-2">
+                                      <MessageSquare className="h-3 w-3 text-gray-500" />
+                                      <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">Last Comment</span>
+                                    </div>
+                                    <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-3 ml-5">
+                                      <p className="text-xs text-gray-800 leading-relaxed">{item.lastComment}</p>
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </TableCell>
