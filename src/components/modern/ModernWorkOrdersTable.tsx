@@ -4444,13 +4444,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                     <TableHead className="font-semibold text-gray-900">Acct #</TableHead>
                     <TableHead className="font-semibold text-gray-900">SR #</TableHead>
                     <TableHead className="font-semibold text-gray-900">Customer Name</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Total Lab Open</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Total AR Count</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Total Count</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Last Comment Date</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Last Comment</TableHead>
                     <TableHead className="font-semibold text-gray-900">Min Need By Date</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Min Follow Up Date</TableHead>
                   </>
                 ) : (
                   // Item View Headers
@@ -4482,13 +4476,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                     <TableCell>{batch.acctNumber}</TableCell>
                     <TableCell className="text-blue-600">{batch.srNumber}</TableCell>
                     <TableCell className="font-medium">{batch.customerName}</TableCell>
-                    <TableCell>{batch.totalLabOpen}</TableCell>
-                    <TableCell>{batch.totalArCount}</TableCell>
-                    <TableCell>{batch.totalCount}</TableCell>
-                    <TableCell>{batch.lastCommentDate}</TableCell>
-                    <TableCell className="max-w-xs truncate">{batch.lastComment}</TableCell>
                     <TableCell>{batch.minNeedByDate}</TableCell>
-                    <TableCell>{batch.minFollowUpDate}</TableCell>
                   </TableRow>
                 ))
               ) : (
@@ -4532,7 +4520,6 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
                         <span className="font-bold text-blue-600 text-lg">{batch.woBatch}</span>
-                        <span className="text-sm text-gray-600">({batch.totalCount} items)</span>
                       </div>
                     </div>
                   </div>
@@ -4548,15 +4535,9 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                         <div className="font-medium text-xs text-blue-600">{batch.srNumber}</div>
                       </div>
                     </div>
-                    <div className="grid grid-cols-2 gap-3 text-sm">
-                      <div>
-                        <span className="text-gray-500">Last Comment:</span>
-                        <div className="font-medium text-xs">{batch.lastCommentDate}</div>
-                      </div>
-                      <div>
-                        <span className="text-gray-500">Min Need By:</span>
-                        <div className="font-medium text-xs">{batch.minNeedByDate}</div>
-                      </div>
+                    <div className="text-sm">
+                      <span className="text-gray-500">Min Need By:</span>
+                      <div className="font-medium text-xs">{batch.minNeedByDate}</div>
                     </div>
                   </div>
                 </div>
