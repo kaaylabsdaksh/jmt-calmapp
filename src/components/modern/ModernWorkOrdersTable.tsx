@@ -4570,6 +4570,20 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                       <span className="text-gray-500">Min Need By:</span>
                       <div className="font-medium text-xs">{batch.minNeedByDate}</div>
                     </div>
+                    <div className="grid grid-cols-3 gap-3 text-sm border-t border-gray-100 pt-3">
+                      <div className="text-center">
+                        <span className="text-gray-500 block text-xs">Total Count</span>
+                        <div className="font-bold text-lg text-gray-900">{batch.totalCount}</div>
+                      </div>
+                      <div className="text-center">
+                        <span className="text-gray-500 block text-xs">Total Lab Open</span>
+                        <div className="font-medium text-lg text-orange-600">{batch.totalLabOpen}</div>
+                      </div>
+                      <div className="text-center">
+                        <span className="text-gray-500 block text-xs">Total AR Count</span>
+                        <div className="font-medium text-lg text-blue-600">{batch.totalArCount}</div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               ))
