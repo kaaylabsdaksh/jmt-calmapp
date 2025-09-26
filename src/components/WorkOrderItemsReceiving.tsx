@@ -219,20 +219,20 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                 {/* Add new item row */}
                 {isAddingNew && (
                   <tr className="border-b bg-blue-50">
-                    <td className="p-2">
+                    <td className="p-3">
                       {/* Empty checkbox cell */}
                     </td>
-                    <td className="p-2 text-xs">
+                    <td className="p-3 text-xs">
                       <Input 
                         placeholder="Item #"
                         value={newItem.itemNumber}
                         onChange={(e) => updateNewItem('itemNumber', e.target.value)}
-                        className="h-6 text-xs"
+                        className="h-10 text-sm"
                       />
                     </td>
-                    <td className="p-2 text-xs">
+                    <td className="p-3 text-xs">
                       <Select value={newItem.calFreq} onValueChange={(value) => updateNewItem('calFreq', value)}>
-                        <SelectTrigger className="h-6 text-xs">
+                        <SelectTrigger className="h-10 text-sm">
                           <SelectValue placeholder="Select..." />
                         </SelectTrigger>
                         <SelectContent>
@@ -242,9 +242,9 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                         </SelectContent>
                       </Select>
                     </td>
-                    <td className="p-2 text-xs">
+                    <td className="p-3 text-xs">
                       <Select value={newItem.actionCode} onValueChange={(value) => updateNewItem('actionCode', value)}>
-                        <SelectTrigger className="h-6 text-xs">
+                        <SelectTrigger className="h-10 text-sm">
                           <SelectValue placeholder="Select..." />
                         </SelectTrigger>
                         <SelectContent>
@@ -257,9 +257,9 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                         </SelectContent>
                       </Select>
                     </td>
-                    <td className="p-2 text-xs">
+                    <td className="p-3 text-xs">
                       <Select value={newItem.priority} onValueChange={(value) => updateNewItem('priority', value)}>
-                        <SelectTrigger className="h-6 text-xs">
+                        <SelectTrigger className="h-10 text-sm">
                           <SelectValue placeholder="Select..." />
                         </SelectTrigger>
                         <SelectContent>
@@ -271,9 +271,9 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                         </SelectContent>
                       </Select>
                     </td>
-                    <td className="p-2 text-xs">
+                    <td className="p-3 text-xs">
                       <Select value={newItem.manufacturer} onValueChange={(value) => updateNewItem('manufacturer', value)}>
-                        <SelectTrigger className="h-6 text-xs">
+                        <SelectTrigger className="h-10 text-sm">
                           <SelectValue placeholder="Select..." />
                         </SelectTrigger>
                         <SelectContent>
@@ -287,57 +287,57 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                         </SelectContent>
                       </Select>
                     </td>
-                    <td className="p-2 text-xs">
+                    <td className="p-3 text-xs">
                       <Input 
                         placeholder="Model"
                         value={newItem.model}
                         onChange={(e) => updateNewItem('model', e.target.value)}
-                        className="h-6 text-xs"
+                        className="h-10 text-sm"
                       />
                     </td>
-                    <td className="p-2 text-xs">
+                    <td className="p-3 text-xs">
                       <Textarea 
                         placeholder="Description"
                         value={newItem.description}
                         onChange={(e) => updateNewItem('description', e.target.value)}
-                        className="h-6 min-h-6 text-xs resize-none"
+                        className="h-10 min-h-10 text-sm resize-none"
                       />
                     </td>
-                    <td className="p-2 text-xs">
+                    <td className="p-3 text-xs">
                       <Input 
                         placeholder="Mfg Serial"
                         value={newItem.mfgSerial}
                         onChange={(e) => updateNewItem('mfgSerial', e.target.value)}
-                        className="h-6 text-xs"
+                        className="h-10 text-sm"
                       />
                     </td>
-                    <td className="p-2 text-xs">
+                    <td className="p-3 text-xs">
                       <Input 
                         placeholder="CustID"
                         value={newItem.custId}
                         onChange={(e) => updateNewItem('custId', e.target.value)}
-                        className="h-6 text-xs"
+                        className="h-10 text-sm"
                       />
                     </td>
-                    <td className="p-2 text-xs">
+                    <td className="p-3 text-xs">
                       <Input 
                         placeholder="CustSN"
                         value={newItem.custSN}
                         onChange={(e) => updateNewItem('custSN', e.target.value)}
-                        className="h-6 text-xs"
+                        className="h-10 text-sm"
                       />
                     </td>
-                    <td className="p-2 text-xs">
+                    <td className="p-3 text-xs">
                       <Input 
                         placeholder="Asset Number"
                         value={newItem.assetNumber}
                         onChange={(e) => updateNewItem('assetNumber', e.target.value)}
-                        className="h-6 text-xs"
+                        className="h-10 text-sm"
                       />
                     </td>
-                    <td className="p-2 text-xs">
+                    <td className="p-3 text-xs">
                       <Select value={newItem.iso17025} onValueChange={(value) => updateNewItem('iso17025', value)}>
-                        <SelectTrigger className="h-6 text-xs">
+                        <SelectTrigger className="h-10 text-sm">
                           <SelectValue placeholder="Select..." />
                         </SelectTrigger>
                         <SelectContent>
@@ -346,17 +346,17 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                         </SelectContent>
                       </Select>
                     </td>
-                    <td className="p-2 text-xs">
+                    <td className="p-3 text-xs">
                       <Input 
                         placeholder="Estimate"
                         value={newItem.estimate}
                         onChange={(e) => updateNewItem('estimate', e.target.value)}
-                        className="h-6 text-xs"
+                        className="h-10 text-sm"
                       />
                     </td>
-                    <td className="p-2 text-xs">
+                    <td className="p-3 text-xs">
                       <Select value={newItem.newEquip} onValueChange={(value) => updateNewItem('newEquip', value)}>
-                        <SelectTrigger className="h-6 text-xs">
+                        <SelectTrigger className="h-10 text-sm">
                           <SelectValue placeholder="Select..." />
                         </SelectTrigger>
                         <SelectContent>
@@ -365,28 +365,28 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                         </SelectContent>
                       </Select>
                     </td>
-                    <td className="p-2 text-xs">
+                    <td className="p-3 text-xs">
                       <Input 
                         type="date"
                         value={newItem.needByDate}
                         onChange={(e) => updateNewItem('needByDate', e.target.value)}
-                        className="h-6 text-xs"
+                        className="h-10 text-sm"
                       />
                     </td>
-                    <td className="p-2 text-xs">
+                    <td className="p-3 text-xs">
                       <Input 
                         placeholder="C/C Cost"
                         value={newItem.ccCost}
                         onChange={(e) => updateNewItem('ccCost', e.target.value)}
-                        className="h-6 text-xs"
+                        className="h-10 text-sm"
                       />
                     </td>
-                    <td className="p-2">
-                      <div className="flex items-center justify-end gap-1">
+                    <td className="p-3">
+                      <div className="flex items-center justify-end gap-2">
                         <Button 
                           size="sm" 
                           variant="ghost" 
-                          className="h-6 w-6 p-0 text-green-600"
+                          className="h-8 w-8 p-0 text-green-600 hover:bg-green-50"
                           onClick={handleSaveNewItem}
                         >
                           ✓
@@ -394,7 +394,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                         <Button 
                           size="sm" 
                           variant="ghost" 
-                          className="h-6 w-6 p-0 text-red-600"
+                          className="h-8 w-8 p-0 text-red-600 hover:bg-red-50"
                           onClick={handleCancelNewItem}
                         >
                           ✕
@@ -751,20 +751,20 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                 {/* Add new item row for tablet */}
                 {isAddingNew && (
                   <tr className="border-b bg-blue-50">
-                    <td className="p-2">
+                    <td className="p-3">
                       {/* Empty checkbox cell */}
                     </td>
-                    <td className="p-2 text-xs">
+                    <td className="p-3 text-xs">
                       <Input 
                         placeholder="Item #"
                         value={newItem.itemNumber}
                         onChange={(e) => updateNewItem('itemNumber', e.target.value)}
-                        className="h-6 text-xs"
+                        className="h-10 text-sm"
                       />
                     </td>
-                    <td className="p-2 text-xs">
+                    <td className="p-3 text-xs">
                       <Select value={newItem.actionCode} onValueChange={(value) => updateNewItem('actionCode', value)}>
-                        <SelectTrigger className="h-6 text-xs">
+                        <SelectTrigger className="h-10 text-sm">
                           <SelectValue placeholder="Select..." />
                         </SelectTrigger>
                         <SelectContent>
@@ -777,9 +777,9 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                         </SelectContent>
                       </Select>
                     </td>
-                    <td className="p-2 text-xs">
+                    <td className="p-3 text-xs">
                       <Select value={newItem.priority} onValueChange={(value) => updateNewItem('priority', value)}>
-                        <SelectTrigger className="h-6 text-xs">
+                        <SelectTrigger className="h-10 text-sm">
                           <SelectValue placeholder="Select..." />
                         </SelectTrigger>
                         <SelectContent>
@@ -791,9 +791,9 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                         </SelectContent>
                       </Select>
                     </td>
-                    <td className="p-2 text-xs">
+                    <td className="p-3 text-xs">
                       <Select value={newItem.manufacturer} onValueChange={(value) => updateNewItem('manufacturer', value)}>
-                        <SelectTrigger className="h-6 text-xs">
+                        <SelectTrigger className="h-10 text-sm">
                           <SelectValue placeholder="Select..." />
                         </SelectTrigger>
                         <SelectContent>
@@ -807,36 +807,36 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                         </SelectContent>
                       </Select>
                     </td>
-                    <td className="p-2 text-xs">
+                    <td className="p-3 text-xs">
                       <Input 
                         placeholder="Model"
                         value={newItem.model}
                         onChange={(e) => updateNewItem('model', e.target.value)}
-                        className="h-6 text-xs"
+                        className="h-10 text-sm"
                       />
                     </td>
-                    <td className="p-2 text-xs">
+                    <td className="p-3 text-xs">
                       <Textarea 
                         placeholder="Description"
                         value={newItem.description}
                         onChange={(e) => updateNewItem('description', e.target.value)}
-                        className="h-6 min-h-6 text-xs resize-none"
+                        className="h-10 min-h-10 text-sm resize-none"
                       />
                     </td>
-                    <td className="p-2 text-xs">
+                    <td className="p-3 text-xs">
                       <Input 
                         type="date"
                         value={newItem.needByDate}
                         onChange={(e) => updateNewItem('needByDate', e.target.value)}
-                        className="h-6 text-xs"
+                        className="h-10 text-sm"
                       />
                     </td>
-                    <td className="p-2">
-                      <div className="flex items-center justify-end gap-1">
+                    <td className="p-3">
+                      <div className="flex items-center justify-end gap-2">
                         <Button 
                           size="sm" 
                           variant="ghost" 
-                          className="h-6 w-6 p-0 text-green-600"
+                          className="h-8 w-8 p-0 text-green-600 hover:bg-green-50"
                           onClick={handleSaveNewItem}
                         >
                           ✓
@@ -844,7 +844,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                         <Button 
                           size="sm" 
                           variant="ghost" 
-                          className="h-6 w-6 p-0 text-red-600"
+                          className="h-8 w-8 p-0 text-red-600 hover:bg-red-50"
                           onClick={handleCancelNewItem}
                         >
                           ✕
