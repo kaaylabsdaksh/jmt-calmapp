@@ -190,6 +190,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
             <table className="w-full min-w-[1200px]">
               <thead className="bg-muted/20 border-b">
                 <tr>
+                  <th className="text-right p-2 text-xs font-medium text-muted-foreground w-20">Actions</th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-8">
                     <Checkbox 
                       checked={isAllSelected}
@@ -212,13 +213,32 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-16">New Equip</th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-24">Need By Date</th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-16">C/C Cost</th>
-                  <th className="text-right p-2 text-xs font-medium text-muted-foreground w-20">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {/* Add new item row */}
                 {isAddingNew && (
                   <tr className="border-b bg-blue-50">
+                    <td className="p-3">
+                      <div className="flex items-center justify-end gap-2">
+                        <Button 
+                          size="sm" 
+                          variant="ghost" 
+                          className="h-10 px-4 text-sm"
+                          onClick={handleSaveNewItem}
+                        >
+                          ✓
+                        </Button>
+                        <Button 
+                          size="sm" 
+                          variant="ghost" 
+                          className="h-10 px-4 text-sm"
+                          onClick={handleCancelNewItem}
+                        >
+                          ✕
+                        </Button>
+                      </div>
+                    </td>
                     <td className="p-3">
                       {/* Empty checkbox cell */}
                     </td>
@@ -405,6 +425,58 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                 )}
                 {items.map((item, index) => (
                   <tr key={item.id} className="border-b hover:bg-muted/10">
+                    <td className="p-2">
+                      <div className="flex items-center justify-end gap-1">
+                        {editingItemId === item.id ? (
+                          <>
+                            <Button 
+                              size="sm" 
+                              variant="ghost" 
+                              className="h-6 w-6 p-0"
+                              onClick={stopEditing}
+                            >
+                              ✓
+                            </Button>
+                          </>
+                        ) : (
+                          <>
+                            <Button 
+                              size="sm" 
+                              variant="ghost" 
+                              className="h-6 w-6 p-0"
+                              onClick={() => startEditing(item.id)}
+                            >
+                              <Edit className="w-3 h-3" />
+                            </Button>
+                          </>
+                        )}
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <Button 
+                              size="sm" 
+                              variant="ghost" 
+                              className="h-6 w-6 p-0 text-destructive hover:text-destructive"
+                            >
+                              <Trash2 className="w-3 h-3" />
+                            </Button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent>
+                            <AlertDialogHeader>
+                              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                              <AlertDialogDescription>
+                                This action cannot be undone. This will permanently delete this received item.
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel>Cancel</AlertDialogCancel>
+                              <AlertDialogAction onClick={() => removeItem(item.id)}>
+                                Delete
+                              </AlertDialogAction>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
+                      </div>
+                    </td>
                     <td className="p-2">
                       <Checkbox 
                         checked={selectedItems.includes(item.id)}
@@ -668,58 +740,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                           {item.ccCost || "—"}
                         </div>
                       )}
-                    </td>
-                    <td className="p-2">
-                      <div className="flex items-center justify-end gap-1">
-                        {editingItemId === item.id ? (
-                          <>
-                            <Button 
-                              size="sm" 
-                              variant="ghost" 
-                              className="h-6 w-6 p-0"
-                              onClick={stopEditing}
-                            >
-                              ✓
-                            </Button>
-                          </>
-                        ) : (
-                          <>
-                            <Button 
-                              size="sm" 
-                              variant="ghost" 
-                              className="h-6 w-6 p-0"
-                              onClick={() => startEditing(item.id)}
-                            >
-                              <Edit className="w-3 h-3" />
-                            </Button>
-                          </>
-                        )}
-                        <AlertDialog>
-                          <AlertDialogTrigger asChild>
-                            <Button 
-                              size="sm" 
-                              variant="ghost" 
-                              className="h-6 w-6 p-0 text-destructive hover:text-destructive"
-                              onClick={() => setDeleteItemId(item.id)}
-                            >
-                              <Trash2 className="w-3 h-3" />
-                            </Button>
-                          </AlertDialogTrigger>
-                          <AlertDialogContent>
-                            <AlertDialogHeader>
-                              <AlertDialogTitle>Remove Item</AlertDialogTitle>
-                              <AlertDialogDescription>
-                                Are you sure you want to remove this item? This action cannot be undone.
-                              </AlertDialogDescription>
-                            </AlertDialogHeader>
-                            <AlertDialogFooter>
-                              <AlertDialogCancel onClick={() => setDeleteItemId(null)}>Cancel</AlertDialogCancel>
-                              <AlertDialogAction onClick={() => removeItem(item.id)}>Remove</AlertDialogAction>
-                            </AlertDialogFooter>
-                          </AlertDialogContent>
-                        </AlertDialog>
-                      </div>
-                    </td>
+                     </td>
                   </tr>
                 ))}
               </tbody>
@@ -731,6 +752,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
             <table className="w-full min-w-[800px]">
               <thead className="bg-muted/20 border-b">
                 <tr>
+                  <th className="text-right p-2 text-xs font-medium text-muted-foreground">Actions</th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-8">
                     <Checkbox 
                       checked={isAllSelected}
@@ -744,13 +766,32 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground">Model</th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground">Description</th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground">Need By</th>
-                  <th className="text-right p-2 text-xs font-medium text-muted-foreground">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {/* Add new item row for tablet */}
                 {isAddingNew && (
                   <tr className="border-b bg-blue-50">
+                    <td className="p-3">
+                      <div className="flex items-center justify-end gap-2">
+                        <Button 
+                          size="sm" 
+                          variant="ghost" 
+                          className="h-8 w-8 p-0 text-green-600 hover:bg-green-50"
+                          onClick={handleSaveNewItem}
+                        >
+                          ✓
+                        </Button>
+                        <Button 
+                          size="sm" 
+                          variant="ghost" 
+                          className="h-8 w-8 p-0 text-red-600 hover:bg-red-50"
+                          onClick={handleCancelNewItem}
+                        >
+                          ✕
+                        </Button>
+                      </div>
+                    </td>
                     <td className="p-3">
                       {/* Empty checkbox cell */}
                     </td>
@@ -830,37 +871,52 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                         onChange={(e) => updateNewItem('needByDate', e.target.value)}
                         className="h-10 text-sm"
                       />
-                    </td>
-                    <td className="p-3">
-                      <div className="flex items-center justify-end gap-2">
-                        <Button 
-                          size="sm" 
-                          variant="ghost" 
-                          className="h-8 w-8 p-0 text-green-600 hover:bg-green-50"
-                          onClick={handleSaveNewItem}
-                        >
-                          ✓
-                        </Button>
-                        <Button 
-                          size="sm" 
-                          variant="ghost" 
-                          className="h-8 w-8 p-0 text-red-600 hover:bg-red-50"
-                          onClick={handleCancelNewItem}
-                        >
-                          ✕
-                        </Button>
-                      </div>
-                    </td>
-                  </tr>
-                )}
-                {items.map((item) => (
-                  <tr key={item.id} className="border-b hover:bg-muted/10">
-                    <td className="p-2">
-                      <Checkbox 
-                        checked={selectedItems.includes(item.id)}
-                        onCheckedChange={(checked) => handleItemSelect(item.id, checked as boolean)}
-                      />
-                    </td>
+                     </td>
+                   </tr>
+                 )}
+                 {items.map((item) => (
+                   <tr key={item.id} className="border-b hover:bg-muted/10">
+                     <td className="p-2">
+                       <div className="flex items-center justify-end gap-1">
+                         <Button 
+                           size="sm" 
+                           variant="ghost" 
+                           className="h-6 w-6 p-0"
+                           onClick={() => startEditing && startEditing(item.id)}
+                         >
+                           <Edit className="w-3 h-3" />
+                         </Button>
+                         <AlertDialog>
+                           <AlertDialogTrigger asChild>
+                             <Button 
+                               size="sm" 
+                               variant="ghost" 
+                               className="h-6 w-6 p-0 text-destructive hover:text-destructive"
+                             >
+                               <Trash2 className="w-3 h-3" />
+                             </Button>
+                           </AlertDialogTrigger>
+                           <AlertDialogContent>
+                             <AlertDialogHeader>
+                               <AlertDialogTitle>Remove Item</AlertDialogTitle>
+                               <AlertDialogDescription>
+                                 Are you sure you want to remove this item? This action cannot be undone.
+                               </AlertDialogDescription>
+                             </AlertDialogHeader>
+                             <AlertDialogFooter>
+                               <AlertDialogCancel>Cancel</AlertDialogCancel>
+                               <AlertDialogAction onClick={() => removeItem(item.id)}>Remove</AlertDialogAction>
+                             </AlertDialogFooter>
+                           </AlertDialogContent>
+                         </AlertDialog>
+                       </div>
+                     </td>
+                     <td className="p-2">
+                       <Checkbox 
+                         checked={selectedItems.includes(item.id)}
+                         onCheckedChange={(checked) => handleItemSelect(item.id, checked as boolean)}
+                       />
+                     </td>
                     <td className="p-2 text-xs font-medium">{item.itemNumber || "—"}</td>
                     <td className="p-2 text-xs uppercase">{item.actionCode || "—"}</td>
                     <td className="p-2 text-xs capitalize">{item.priority || "—"}</td>
@@ -880,44 +936,9 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                         </Tooltip>
                       </TooltipProvider>
                     </td>
-                    <td className="p-2 text-xs">{item.needByDate || "—"}</td>
-                    <td className="p-2">
-                      <div className="flex items-center justify-end gap-1">
-                        <Button 
-                          size="sm" 
-                          variant="ghost" 
-                          className="h-6 w-6 p-0"
-                          onClick={() => startEditing(item.id)}
-                        >
-                          <Edit className="w-3 h-3" />
-                        </Button>
-                        <AlertDialog>
-                          <AlertDialogTrigger asChild>
-                            <Button 
-                              size="sm" 
-                              variant="ghost" 
-                              className="h-6 w-6 p-0 text-destructive hover:text-destructive"
-                            >
-                              <Trash2 className="w-3 h-3" />
-                            </Button>
-                          </AlertDialogTrigger>
-                          <AlertDialogContent>
-                            <AlertDialogHeader>
-                              <AlertDialogTitle>Remove Item</AlertDialogTitle>
-                              <AlertDialogDescription>
-                                Are you sure you want to remove this item? This action cannot be undone.
-                              </AlertDialogDescription>
-                            </AlertDialogHeader>
-                            <AlertDialogFooter>
-                              <AlertDialogCancel>Cancel</AlertDialogCancel>
-                              <AlertDialogAction onClick={() => removeItem(item.id)}>Remove</AlertDialogAction>
-                            </AlertDialogFooter>
-                          </AlertDialogContent>
-                        </AlertDialog>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                     <td className="p-2 text-xs">{item.needByDate || "—"}</td>
+                   </tr>
+                 ))}
               </tbody>
             </table>
           </div>
