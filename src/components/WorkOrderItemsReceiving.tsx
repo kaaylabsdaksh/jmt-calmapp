@@ -6,7 +6,7 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Plus, Trash2, Edit } from "lucide-react";
+import { Plus, Trash2, Edit, Check, X } from "lucide-react";
 import { useState } from "react";
 
 interface WorkOrderReceivingItem {
@@ -224,18 +224,18 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                         <Button 
                           size="sm" 
                           variant="ghost" 
-                          className="h-10 px-4 text-sm"
+                          className="h-6 w-6 p-0"
                           onClick={handleSaveNewItem}
                         >
-                          ✓
+                          <Check className="w-3 h-3" />
                         </Button>
                         <Button 
                           size="sm" 
                           variant="ghost" 
-                          className="h-10 px-4 text-sm"
+                          className="h-6 w-6 p-0"
                           onClick={handleCancelNewItem}
                         >
-                          ✕
+                          <X className="w-3 h-3" />
                         </Button>
                       </div>
                     </td>
@@ -777,18 +777,18 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                         <Button 
                           size="sm" 
                           variant="ghost" 
-                          className="h-8 w-8 p-0 text-green-600 hover:bg-green-50"
+                          className="h-6 w-6 p-0"
                           onClick={handleSaveNewItem}
                         >
-                          ✓
+                          <Check className="w-3 h-3" />
                         </Button>
                         <Button 
                           size="sm" 
                           variant="ghost" 
-                          className="h-8 w-8 p-0 text-red-600 hover:bg-red-50"
+                          className="h-6 w-6 p-0"
                           onClick={handleCancelNewItem}
                         >
-                          ✕
+                          <X className="w-3 h-3" />
                         </Button>
                       </div>
                     </td>
