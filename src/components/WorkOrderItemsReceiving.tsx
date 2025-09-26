@@ -308,8 +308,8 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
           </div>
           
           {/* Desktop Table View */}
-          <div className="hidden lg:block border rounded-lg overflow-hidden">
-            <table className="w-full table-fixed">
+          <div className="hidden lg:block border rounded-lg overflow-x-auto">
+            <table className="w-full min-w-[1200px]">
               <thead className="bg-muted/20 border-b">
                 <tr>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-8">
