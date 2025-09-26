@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
@@ -63,12 +62,12 @@ const truncateDescription = (description: string): string => {
 };
 
 export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsReceivingProps) => {
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [newItem, setNewItem] = useState<WorkOrderReceivingItem>(createEmptyItem());
   const [editingItemId, setEditingItemId] = useState<string | null>(null);
   const [deleteItemId, setDeleteItemId] = useState<string | null>(null);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [isClearAllDialogOpen, setIsClearAllDialogOpen] = useState(false);
+  const [isAddingNew, setIsAddingNew] = useState(false);
 
   // Handle individual item selection
   const handleItemSelect = (itemId: string, checked: boolean) => {
@@ -92,15 +91,20 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
   const isAllSelected = items.length > 0 && selectedItems.length === items.length;
   const isIndeterminate = selectedItems.length > 0 && selectedItems.length < items.length;
 
-  const handleDialogSubmit = () => {
-    setItems([...items, newItem]);
+  const handleAddNewItem = () => {
+    setIsAddingNew(true);
     setNewItem(createEmptyItem());
-    setIsDialogOpen(false);
   };
 
-  const handleDialogCancel = () => {
+  const handleSaveNewItem = () => {
+    setItems([...items, newItem]);
     setNewItem(createEmptyItem());
-    setIsDialogOpen(false);
+    setIsAddingNew(false);
+  };
+
+  const handleCancelNewItem = () => {
+    setNewItem(createEmptyItem());
+    setIsAddingNew(false);
   };
 
   const removeItem = (id: string) => {
@@ -136,188 +140,15 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
     <div className="border rounded-lg overflow-hidden">
       <div className="flex justify-between items-center p-2 bg-muted/20 border-b">
         <div className="flex items-center gap-2">
-          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-            <DialogTrigger asChild>
-              <Button 
-                variant="link" 
-                className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto flex items-center gap-1"
-              >
-                <Plus className="w-4 h-4" />
-                Receive Item
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="max-w-5xl max-h-[80vh] overflow-y-auto">
-              <DialogHeader>
-                <DialogTitle>Receive New Work Order Item</DialogTitle>
-              </DialogHeader>
-              <div className="grid grid-cols-3 gap-4 py-4">
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Item #</label>
-                  <Input 
-                    placeholder="Item #"
-                    value={newItem.itemNumber}
-                    onChange={(e) => updateNewItem('itemNumber', e.target.value)}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Cal Freq</label>
-                  <Select value={newItem.calFreq} onValueChange={(value) => updateNewItem('calFreq', value)}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select..." />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="annual">Annual</SelectItem>
-                      <SelectItem value="monthly">Monthly</SelectItem>
-                      <SelectItem value="quarterly">Quarterly</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Action Code</label>
-                  <Select value={newItem.actionCode} onValueChange={(value) => updateNewItem('actionCode', value)}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select..." />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="repair">REPAIR</SelectItem>
-                      <SelectItem value="rc">R/C</SelectItem>
-                      <SelectItem value="rcc">R/C/C</SelectItem>
-                      <SelectItem value="cc">C/C</SelectItem>
-                      <SelectItem value="test">TEST</SelectItem>
-                      <SelectItem value="build-new">BUILD NEW</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Priority</label>
-                  <Select value={newItem.priority} onValueChange={(value) => updateNewItem('priority', value)}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select..." />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="rush">Rush</SelectItem>
-                      <SelectItem value="normal">Normal</SelectItem>
-                      <SelectItem value="expedite">Expedite</SelectItem>
-                      <SelectItem value="emergency">Emergency</SelectItem>
-                      <SelectItem value="damaged">Damaged</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Manufacturer</label>
-                  <Select value={newItem.manufacturer} onValueChange={(value) => updateNewItem('manufacturer', value)}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select..." />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="1m-working-stand">1M WORKING STAND.</SelectItem>
-                      <SelectItem value="3d-instruments">3D INSTRUMENTS</SelectItem>
-                      <SelectItem value="3e">3E</SelectItem>
-                      <SelectItem value="3m">3M</SelectItem>
-                      <SelectItem value="3z-telecom">3Z TELECOM</SelectItem>
-                      <SelectItem value="4b-components">4B COMPONENTS LIMITED</SelectItem>
-                      <SelectItem value="5ft-wking">5FT WKING STANDARD</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Model</label>
-                  <Input 
-                    placeholder="Model"
-                    value={newItem.model}
-                    onChange={(e) => updateNewItem('model', e.target.value)}
-                  />
-                </div>
-                <div className="space-y-2 col-span-3">
-                  <label className="text-sm font-medium">Description</label>
-                  <Textarea 
-                    placeholder="Description"
-                    value={newItem.description}
-                    onChange={(e) => updateNewItem('description', e.target.value)}
-                    className="min-h-[60px]"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Mfg Serial</label>
-                  <Input 
-                    placeholder="Mfg Serial"
-                    value={newItem.mfgSerial}
-                    onChange={(e) => updateNewItem('mfgSerial', e.target.value)}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">CustID</label>
-                  <Input 
-                    placeholder="CustID"
-                    value={newItem.custId}
-                    onChange={(e) => updateNewItem('custId', e.target.value)}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">CustSN</label>
-                  <Input 
-                    placeholder="CustSN"
-                    value={newItem.custSN}
-                    onChange={(e) => updateNewItem('custSN', e.target.value)}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Asset Number</label>
-                  <Input 
-                    placeholder="Asset Number"
-                    value={newItem.assetNumber}
-                    onChange={(e) => updateNewItem('assetNumber', e.target.value)}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">17025</label>
-                  <Tabs value={newItem.iso17025} onValueChange={(value) => updateNewItem('iso17025', value)}>
-                    <TabsList className="grid w-full grid-cols-2">
-                      <TabsTrigger value="yes">Yes</TabsTrigger>
-                      <TabsTrigger value="no">No</TabsTrigger>
-                    </TabsList>
-                  </Tabs>
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Estimate</label>
-                  <Input 
-                    placeholder="Estimate"
-                    value={newItem.estimate}
-                    onChange={(e) => updateNewItem('estimate', e.target.value)}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">New Equip</label>
-                  <Tabs value={newItem.newEquip} onValueChange={(value) => updateNewItem('newEquip', value)}>
-                    <TabsList className="grid w-full grid-cols-2">
-                      <TabsTrigger value="yes">Yes</TabsTrigger>
-                      <TabsTrigger value="no">No</TabsTrigger>
-                    </TabsList>
-                  </Tabs>
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Need By Date</label>
-                  <Input 
-                    type="date"
-                    value={newItem.needByDate}
-                    onChange={(e) => updateNewItem('needByDate', e.target.value)}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">C/C Cost</label>
-                  <Input 
-                    placeholder="C/C Cost"
-                    value={newItem.ccCost}
-                    onChange={(e) => updateNewItem('ccCost', e.target.value)}
-                  />
-                </div>
-              </div>
-              <div className="flex justify-end gap-2 pt-4">
-                <Button variant="outline" onClick={handleDialogCancel}>Cancel</Button>
-                <Button onClick={handleDialogSubmit}>Receive Item</Button>
-              </div>
-            </DialogContent>
-          </Dialog>
+          <Button 
+            variant="link" 
+            className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto flex items-center gap-1"
+            onClick={handleAddNewItem}
+            disabled={isAddingNew}
+          >
+            <Plus className="w-4 h-4" />
+            Receive Item
+          </Button>
         </div>
         <div className="flex items-center gap-2">
           <AlertDialog open={isClearAllDialogOpen} onOpenChange={setIsClearAllDialogOpen}>
@@ -385,6 +216,193 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                 </tr>
               </thead>
               <tbody>
+                {/* Add new item row */}
+                {isAddingNew && (
+                  <tr className="border-b bg-blue-50">
+                    <td className="p-2">
+                      {/* Empty checkbox cell */}
+                    </td>
+                    <td className="p-2 text-xs">
+                      <Input 
+                        placeholder="Item #"
+                        value={newItem.itemNumber}
+                        onChange={(e) => updateNewItem('itemNumber', e.target.value)}
+                        className="h-6 text-xs"
+                      />
+                    </td>
+                    <td className="p-2 text-xs">
+                      <Select value={newItem.calFreq} onValueChange={(value) => updateNewItem('calFreq', value)}>
+                        <SelectTrigger className="h-6 text-xs">
+                          <SelectValue placeholder="Select..." />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="annual">Annual</SelectItem>
+                          <SelectItem value="monthly">Monthly</SelectItem>
+                          <SelectItem value="quarterly">Quarterly</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </td>
+                    <td className="p-2 text-xs">
+                      <Select value={newItem.actionCode} onValueChange={(value) => updateNewItem('actionCode', value)}>
+                        <SelectTrigger className="h-6 text-xs">
+                          <SelectValue placeholder="Select..." />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="repair">REPAIR</SelectItem>
+                          <SelectItem value="rc">R/C</SelectItem>
+                          <SelectItem value="rcc">R/C/C</SelectItem>
+                          <SelectItem value="cc">C/C</SelectItem>
+                          <SelectItem value="test">TEST</SelectItem>
+                          <SelectItem value="build-new">BUILD NEW</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </td>
+                    <td className="p-2 text-xs">
+                      <Select value={newItem.priority} onValueChange={(value) => updateNewItem('priority', value)}>
+                        <SelectTrigger className="h-6 text-xs">
+                          <SelectValue placeholder="Select..." />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="rush">Rush</SelectItem>
+                          <SelectItem value="normal">Normal</SelectItem>
+                          <SelectItem value="expedite">Expedite</SelectItem>
+                          <SelectItem value="emergency">Emergency</SelectItem>
+                          <SelectItem value="damaged">Damaged</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </td>
+                    <td className="p-2 text-xs">
+                      <Select value={newItem.manufacturer} onValueChange={(value) => updateNewItem('manufacturer', value)}>
+                        <SelectTrigger className="h-6 text-xs">
+                          <SelectValue placeholder="Select..." />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="1m-working-stand">1M WORKING STAND.</SelectItem>
+                          <SelectItem value="3d-instruments">3D INSTRUMENTS</SelectItem>
+                          <SelectItem value="3e">3E</SelectItem>
+                          <SelectItem value="3m">3M</SelectItem>
+                          <SelectItem value="3z-telecom">3Z TELECOM</SelectItem>
+                          <SelectItem value="4b-components">4B COMPONENTS LIMITED</SelectItem>
+                          <SelectItem value="5ft-wking">5FT WKING STANDARD</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </td>
+                    <td className="p-2 text-xs">
+                      <Input 
+                        placeholder="Model"
+                        value={newItem.model}
+                        onChange={(e) => updateNewItem('model', e.target.value)}
+                        className="h-6 text-xs"
+                      />
+                    </td>
+                    <td className="p-2 text-xs">
+                      <Textarea 
+                        placeholder="Description"
+                        value={newItem.description}
+                        onChange={(e) => updateNewItem('description', e.target.value)}
+                        className="h-6 min-h-6 text-xs resize-none"
+                      />
+                    </td>
+                    <td className="p-2 text-xs">
+                      <Input 
+                        placeholder="Mfg Serial"
+                        value={newItem.mfgSerial}
+                        onChange={(e) => updateNewItem('mfgSerial', e.target.value)}
+                        className="h-6 text-xs"
+                      />
+                    </td>
+                    <td className="p-2 text-xs">
+                      <Input 
+                        placeholder="CustID"
+                        value={newItem.custId}
+                        onChange={(e) => updateNewItem('custId', e.target.value)}
+                        className="h-6 text-xs"
+                      />
+                    </td>
+                    <td className="p-2 text-xs">
+                      <Input 
+                        placeholder="CustSN"
+                        value={newItem.custSN}
+                        onChange={(e) => updateNewItem('custSN', e.target.value)}
+                        className="h-6 text-xs"
+                      />
+                    </td>
+                    <td className="p-2 text-xs">
+                      <Input 
+                        placeholder="Asset Number"
+                        value={newItem.assetNumber}
+                        onChange={(e) => updateNewItem('assetNumber', e.target.value)}
+                        className="h-6 text-xs"
+                      />
+                    </td>
+                    <td className="p-2 text-xs">
+                      <Select value={newItem.iso17025} onValueChange={(value) => updateNewItem('iso17025', value)}>
+                        <SelectTrigger className="h-6 text-xs">
+                          <SelectValue placeholder="Select..." />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="yes">Yes</SelectItem>
+                          <SelectItem value="no">No</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </td>
+                    <td className="p-2 text-xs">
+                      <Input 
+                        placeholder="Estimate"
+                        value={newItem.estimate}
+                        onChange={(e) => updateNewItem('estimate', e.target.value)}
+                        className="h-6 text-xs"
+                      />
+                    </td>
+                    <td className="p-2 text-xs">
+                      <Select value={newItem.newEquip} onValueChange={(value) => updateNewItem('newEquip', value)}>
+                        <SelectTrigger className="h-6 text-xs">
+                          <SelectValue placeholder="Select..." />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="yes">Yes</SelectItem>
+                          <SelectItem value="no">No</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </td>
+                    <td className="p-2 text-xs">
+                      <Input 
+                        type="date"
+                        value={newItem.needByDate}
+                        onChange={(e) => updateNewItem('needByDate', e.target.value)}
+                        className="h-6 text-xs"
+                      />
+                    </td>
+                    <td className="p-2 text-xs">
+                      <Input 
+                        placeholder="C/C Cost"
+                        value={newItem.ccCost}
+                        onChange={(e) => updateNewItem('ccCost', e.target.value)}
+                        className="h-6 text-xs"
+                      />
+                    </td>
+                    <td className="p-2">
+                      <div className="flex items-center justify-end gap-1">
+                        <Button 
+                          size="sm" 
+                          variant="ghost" 
+                          className="h-6 w-6 p-0 text-green-600"
+                          onClick={handleSaveNewItem}
+                        >
+                          ✓
+                        </Button>
+                        <Button 
+                          size="sm" 
+                          variant="ghost" 
+                          className="h-6 w-6 p-0 text-red-600"
+                          onClick={handleCancelNewItem}
+                        >
+                          ✕
+                        </Button>
+                      </div>
+                    </td>
+                  </tr>
+                )}
                 {items.map((item, index) => (
                   <tr key={item.id} className="border-b hover:bg-muted/10">
                     <td className="p-2">
@@ -730,6 +748,111 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                 </tr>
               </thead>
               <tbody>
+                {/* Add new item row for tablet */}
+                {isAddingNew && (
+                  <tr className="border-b bg-blue-50">
+                    <td className="p-2">
+                      {/* Empty checkbox cell */}
+                    </td>
+                    <td className="p-2 text-xs">
+                      <Input 
+                        placeholder="Item #"
+                        value={newItem.itemNumber}
+                        onChange={(e) => updateNewItem('itemNumber', e.target.value)}
+                        className="h-6 text-xs"
+                      />
+                    </td>
+                    <td className="p-2 text-xs">
+                      <Select value={newItem.actionCode} onValueChange={(value) => updateNewItem('actionCode', value)}>
+                        <SelectTrigger className="h-6 text-xs">
+                          <SelectValue placeholder="Select..." />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="repair">REPAIR</SelectItem>
+                          <SelectItem value="rc">R/C</SelectItem>
+                          <SelectItem value="rcc">R/C/C</SelectItem>
+                          <SelectItem value="cc">C/C</SelectItem>
+                          <SelectItem value="test">TEST</SelectItem>
+                          <SelectItem value="build-new">BUILD NEW</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </td>
+                    <td className="p-2 text-xs">
+                      <Select value={newItem.priority} onValueChange={(value) => updateNewItem('priority', value)}>
+                        <SelectTrigger className="h-6 text-xs">
+                          <SelectValue placeholder="Select..." />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="rush">Rush</SelectItem>
+                          <SelectItem value="normal">Normal</SelectItem>
+                          <SelectItem value="expedite">Expedite</SelectItem>
+                          <SelectItem value="emergency">Emergency</SelectItem>
+                          <SelectItem value="damaged">Damaged</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </td>
+                    <td className="p-2 text-xs">
+                      <Select value={newItem.manufacturer} onValueChange={(value) => updateNewItem('manufacturer', value)}>
+                        <SelectTrigger className="h-6 text-xs">
+                          <SelectValue placeholder="Select..." />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="1m-working-stand">1M WORKING STAND.</SelectItem>
+                          <SelectItem value="3d-instruments">3D INSTRUMENTS</SelectItem>
+                          <SelectItem value="3e">3E</SelectItem>
+                          <SelectItem value="3m">3M</SelectItem>
+                          <SelectItem value="3z-telecom">3Z TELECOM</SelectItem>
+                          <SelectItem value="4b-components">4B COMPONENTS LIMITED</SelectItem>
+                          <SelectItem value="5ft-wking">5FT WKING STANDARD</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </td>
+                    <td className="p-2 text-xs">
+                      <Input 
+                        placeholder="Model"
+                        value={newItem.model}
+                        onChange={(e) => updateNewItem('model', e.target.value)}
+                        className="h-6 text-xs"
+                      />
+                    </td>
+                    <td className="p-2 text-xs">
+                      <Textarea 
+                        placeholder="Description"
+                        value={newItem.description}
+                        onChange={(e) => updateNewItem('description', e.target.value)}
+                        className="h-6 min-h-6 text-xs resize-none"
+                      />
+                    </td>
+                    <td className="p-2 text-xs">
+                      <Input 
+                        type="date"
+                        value={newItem.needByDate}
+                        onChange={(e) => updateNewItem('needByDate', e.target.value)}
+                        className="h-6 text-xs"
+                      />
+                    </td>
+                    <td className="p-2">
+                      <div className="flex items-center justify-end gap-1">
+                        <Button 
+                          size="sm" 
+                          variant="ghost" 
+                          className="h-6 w-6 p-0 text-green-600"
+                          onClick={handleSaveNewItem}
+                        >
+                          ✓
+                        </Button>
+                        <Button 
+                          size="sm" 
+                          variant="ghost" 
+                          className="h-6 w-6 p-0 text-red-600"
+                          onClick={handleCancelNewItem}
+                        >
+                          ✕
+                        </Button>
+                      </div>
+                    </td>
+                  </tr>
+                )}
                 {items.map((item) => (
                   <tr key={item.id} className="border-b hover:bg-muted/10">
                     <td className="p-2">
