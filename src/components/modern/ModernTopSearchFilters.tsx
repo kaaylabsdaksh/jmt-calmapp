@@ -590,9 +590,9 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
       </div>
 
       {/* Specific Search Fields */}
-      <div className="px-4 pb-3">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
-          {/* Date Type Selection */}
+      <div className="px-4 pb-3 space-y-3">
+        {/* Date Type - Full Width */}
+        <div>
           <Select value={dateType} onValueChange={setDateType}>
             <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
               <SelectValue placeholder="Select Date Type" />
@@ -607,7 +607,10 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
               <SelectItem value="samsara-doc-submit">Samsara Doc Submit Date</SelectItem>
             </SelectContent>
           </Select>
+        </div>
 
+        {/* From and To Date - Side by Side */}
+        <div className="grid grid-cols-2 gap-3">
           {/* From Date */}
           <Popover>
             <PopoverTrigger asChild>
@@ -665,7 +668,10 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
               />
             </PopoverContent>
           </Popover>
+        </div>
 
+        {/* Work Order Type and Priority - Side by Side */}
+        <div className="grid grid-cols-2 gap-3">
           {/* WO Type Selection */}
           <Select value={searchValues.woType || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, woType: value === 'all' ? '' : value }))}>
             <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
@@ -695,7 +701,7 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
 
         {/* Advanced Filters Row */}
         {showAdvanced && (
-          <div className="mt-4 pt-4 border-t border-gray-100">
+          <div className="px-4 mt-4 pt-4 border-t border-gray-100">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Input
                 placeholder="Manufacturer"
