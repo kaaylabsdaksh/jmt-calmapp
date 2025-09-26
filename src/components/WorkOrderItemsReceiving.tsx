@@ -6,6 +6,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Plus, Trash2, Edit } from "lucide-react";
 import { useState } from "react";
 
@@ -53,6 +54,13 @@ const createEmptyItem = (): WorkOrderReceivingItem => ({
   needByDate: "",
   ccCost: "",
 });
+
+// Helper function to truncate description to 2-3 words
+const truncateDescription = (description: string): string => {
+  if (!description) return "—";
+  const words = description.split(" ");
+  return words.length > 3 ? words.slice(0, 3).join(" ") + "..." : description;
+};
 
 export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsReceivingProps) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -458,9 +466,18 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                           className="h-6 min-h-6 text-xs resize-none"
                         />
                       ) : (
-                        <div className="truncate" title={item.description}>
-                          {item.description || "—"}
-                        </div>
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <div className="cursor-help">
+                                {truncateDescription(item.description)}
+                              </div>
+                            </TooltipTrigger>
+                            <TooltipContent side="top" className="max-w-xs">
+                              <p>{item.description || "No description available"}</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
                       )}
                     </td>
                     <td className="p-2 text-xs">
@@ -675,8 +692,19 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                     <td className="p-2 text-xs capitalize">{item.priority || "—"}</td>
                     <td className="p-2 text-xs">{item.manufacturer || "—"}</td>
                     <td className="p-2 text-xs">{item.model || "—"}</td>
-                    <td className="p-2 text-xs max-w-[200px] truncate" title={item.description}>
-                      {item.description || "—"}
+                    <td className="p-2 text-xs">
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <div className="cursor-help">
+                              {truncateDescription(item.description)}
+                            </div>
+                          </TooltipTrigger>
+                          <TooltipContent side="top" className="max-w-xs">
+                            <p>{item.description || "No description available"}</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     </td>
                     <td className="p-2 text-xs">{item.needByDate || "—"}</td>
                     <td className="p-2">
@@ -783,7 +811,18 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                   </div>
                   <div className="col-span-2">
                     <div className="text-muted-foreground text-xs">Description</div>
-                    <div className="font-medium">{item.description || "—"}</div>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <div className="font-medium cursor-help">
+                            {truncateDescription(item.description)}
+                          </div>
+                        </TooltipTrigger>
+                        <TooltipContent side="top" className="max-w-xs">
+                          <p>{item.description || "No description available"}</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
                   </div>
                   <div>
                     <div className="text-muted-foreground text-xs">Cal Freq</div>
