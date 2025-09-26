@@ -186,8 +186,8 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
       ) : (
         <div className="p-4">
           {/* Desktop Table View */}
-          <div className="hidden lg:block border rounded-lg overflow-x-auto">
-            <table className="w-full min-w-[1200px]">
+          <div className="hidden lg:block border rounded-lg overflow-x-auto scroll-smooth">
+            <table className="w-full min-w-[2400px]">
               <thead className="bg-muted/20 border-b">
                 <tr>
                   <th className="text-right p-2 text-xs font-medium text-muted-foreground w-20">Actions</th>
@@ -219,7 +219,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                 {/* Add new item row */}
                 {isAddingNew && (
                   <tr className="border-b bg-blue-50">
-                    <td className="p-3">
+                     <td className="p-4 sticky left-0 bg-blue-50 z-10">
                       <div className="flex items-center justify-end gap-2">
                         <Button 
                           size="sm" 
@@ -239,20 +239,25 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                         </Button>
                       </div>
                     </td>
-                    <td className="p-3">
+                     <td className="p-4 sticky left-20 bg-blue-50 z-10">
                       {/* Empty checkbox cell */}
                     </td>
-                    <td className="p-3 text-xs">
-                      <Input 
-                        placeholder="Item #"
-                        value={newItem.itemNumber}
-                        onChange={(e) => updateNewItem('itemNumber', e.target.value)}
-                        className="h-10 text-sm"
-                      />
-                    </td>
-                    <td className="p-3 text-xs">
-                      <Select value={newItem.calFreq} onValueChange={(value) => updateNewItem('calFreq', value)}>
-                        <SelectTrigger className="h-10 text-sm">
+                     <td className="p-4 min-w-[150px]">
+                       <Input 
+                         placeholder="Item #"
+                         value={newItem.itemNumber}
+                         onChange={(e) => updateNewItem('itemNumber', e.target.value)}
+                         className="h-12 text-base font-medium border-2 focus:border-primary"
+                         onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
+                         autoComplete="off"
+                        />
+                     </td>
+                     <td className="p-4 min-w-[140px]">
+                       <Select value={newItem.calFreq} onValueChange={(value) => updateNewItem('calFreq', value)}>
+                         <SelectTrigger 
+                           className="h-12 text-base border-2 focus:border-primary"
+                           onFocus={(e) => e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
+                         >
                           <SelectValue placeholder="Select..." />
                         </SelectTrigger>
                         <SelectContent>
@@ -262,9 +267,12 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                         </SelectContent>
                       </Select>
                     </td>
-                    <td className="p-3 text-xs">
-                      <Select value={newItem.actionCode} onValueChange={(value) => updateNewItem('actionCode', value)}>
-                        <SelectTrigger className="h-10 text-sm">
+                     <td className="p-4 min-w-[160px]">
+                       <Select value={newItem.actionCode} onValueChange={(value) => updateNewItem('actionCode', value)}>
+                         <SelectTrigger 
+                           className="h-12 text-base border-2 focus:border-primary"
+                           onFocus={(e) => e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
+                         >
                           <SelectValue placeholder="Select..." />
                         </SelectTrigger>
                         <SelectContent>
@@ -277,9 +285,12 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                         </SelectContent>
                       </Select>
                     </td>
-                    <td className="p-3 text-xs">
-                      <Select value={newItem.priority} onValueChange={(value) => updateNewItem('priority', value)}>
-                        <SelectTrigger className="h-10 text-sm">
+                     <td className="p-4 min-w-[140px]">
+                       <Select value={newItem.priority} onValueChange={(value) => updateNewItem('priority', value)}>
+                         <SelectTrigger 
+                           className="h-12 text-base border-2 focus:border-primary"
+                           onFocus={(e) => e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
+                         >
                           <SelectValue placeholder="Select..." />
                         </SelectTrigger>
                         <SelectContent>
@@ -291,9 +302,12 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                         </SelectContent>
                       </Select>
                     </td>
-                    <td className="p-3 text-xs">
-                      <Select value={newItem.manufacturer} onValueChange={(value) => updateNewItem('manufacturer', value)}>
-                        <SelectTrigger className="h-10 text-sm">
+                     <td className="p-4 min-w-[180px]">
+                       <Select value={newItem.manufacturer} onValueChange={(value) => updateNewItem('manufacturer', value)}>
+                         <SelectTrigger 
+                           className="h-12 text-base border-2 focus:border-primary"
+                           onFocus={(e) => e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
+                         >
                           <SelectValue placeholder="Select..." />
                         </SelectTrigger>
                         <SelectContent>
@@ -307,99 +321,121 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                         </SelectContent>
                       </Select>
                     </td>
-                    <td className="p-3 text-xs">
-                      <Input 
-                        placeholder="Model"
-                        value={newItem.model}
-                        onChange={(e) => updateNewItem('model', e.target.value)}
-                        className="h-10 text-sm"
-                      />
-                    </td>
-                    <td className="p-3 text-xs">
-                      <Textarea 
-                        placeholder="Description"
-                        value={newItem.description}
-                        onChange={(e) => updateNewItem('description', e.target.value)}
-                        className="h-10 min-h-10 text-sm resize-none"
-                      />
-                    </td>
-                    <td className="p-3 text-xs">
-                      <Input 
-                        placeholder="Mfg Serial"
-                        value={newItem.mfgSerial}
-                        onChange={(e) => updateNewItem('mfgSerial', e.target.value)}
-                        className="h-10 text-sm"
-                      />
-                    </td>
-                    <td className="p-3 text-xs">
-                      <Input 
-                        placeholder="CustID"
-                        value={newItem.custId}
-                        onChange={(e) => updateNewItem('custId', e.target.value)}
-                        className="h-10 text-sm"
-                      />
-                    </td>
-                    <td className="p-3 text-xs">
-                      <Input 
-                        placeholder="CustSN"
-                        value={newItem.custSN}
-                        onChange={(e) => updateNewItem('custSN', e.target.value)}
-                        className="h-10 text-sm"
-                      />
-                    </td>
-                    <td className="p-3 text-xs">
-                      <Input 
-                        placeholder="Asset Number"
-                        value={newItem.assetNumber}
-                        onChange={(e) => updateNewItem('assetNumber', e.target.value)}
-                        className="h-10 text-sm"
-                      />
-                    </td>
-                    <td className="p-3 text-xs">
-                      <Select value={newItem.iso17025} onValueChange={(value) => updateNewItem('iso17025', value)}>
-                        <SelectTrigger className="h-10 text-sm">
-                          <SelectValue placeholder="Select..." />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="yes">Yes</SelectItem>
-                          <SelectItem value="no">No</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </td>
-                    <td className="p-3 text-xs">
-                      <Input 
-                        placeholder="Estimate"
-                        value={newItem.estimate}
-                        onChange={(e) => updateNewItem('estimate', e.target.value)}
-                        className="h-10 text-sm"
-                      />
-                    </td>
-                    <td className="p-3 text-xs">
-                      <Select value={newItem.newEquip} onValueChange={(value) => updateNewItem('newEquip', value)}>
-                        <SelectTrigger className="h-10 text-sm">
-                          <SelectValue placeholder="Select..." />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="yes">Yes</SelectItem>
-                          <SelectItem value="no">No</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </td>
-                    <td className="p-3 text-xs">
-                      <Input 
-                        type="date"
-                        value={newItem.needByDate}
-                        onChange={(e) => updateNewItem('needByDate', e.target.value)}
-                        className="h-10 text-sm"
-                      />
-                    </td>
-                    <td className="p-3 text-xs">
-                      <Input 
-                        placeholder="C/C Cost"
-                        value={newItem.ccCost}
-                        onChange={(e) => updateNewItem('ccCost', e.target.value)}
-                        className="h-10 text-sm"
-                      />
+                     <td className="p-4 min-w-[140px]">
+                       <Input 
+                         placeholder="Model"
+                         value={newItem.model}
+                         onChange={(e) => updateNewItem('model', e.target.value)}
+                         className="h-12 text-base font-medium border-2 focus:border-primary"
+                         onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
+                         autoComplete="off"
+                        />
+                     </td>
+                     <td className="p-4 min-w-[200px]">
+                       <Textarea 
+                         placeholder="Description"
+                         value={newItem.description}
+                         onChange={(e) => updateNewItem('description', e.target.value)}
+                         className="h-12 min-h-12 text-base resize-none border-2 focus:border-primary"
+                         onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
+                       />
+                     </td>
+                     <td className="p-4 min-w-[150px]">
+                       <Input 
+                         placeholder="Mfg Serial"
+                         value={newItem.mfgSerial}
+                         onChange={(e) => updateNewItem('mfgSerial', e.target.value)}
+                         className="h-12 text-base font-medium border-2 focus:border-primary"
+                         onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
+                         autoComplete="off"
+                       />
+                     </td>
+                     <td className="p-4 min-w-[120px]">
+                       <Input 
+                         placeholder="CustID"
+                         value={newItem.custId}
+                         onChange={(e) => updateNewItem('custId', e.target.value)}
+                         className="h-12 text-base font-medium border-2 focus:border-primary"
+                         onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
+                         autoComplete="off"
+                       />
+                     </td>
+                     <td className="p-4 min-w-[120px]">
+                       <Input 
+                         placeholder="CustSN"
+                         value={newItem.custSN}
+                         onChange={(e) => updateNewItem('custSN', e.target.value)}
+                         className="h-12 text-base font-medium border-2 focus:border-primary"
+                         onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
+                         autoComplete="off"
+                       />
+                     </td>
+                     <td className="p-4 min-w-[150px]">
+                       <Input 
+                         placeholder="Asset Number"
+                         value={newItem.assetNumber}
+                         onChange={(e) => updateNewItem('assetNumber', e.target.value)}
+                         className="h-12 text-base font-medium border-2 focus:border-primary"
+                         onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
+                         autoComplete="off"
+                       />
+                     </td>
+                     <td className="p-4 min-w-[120px]">
+                       <Select value={newItem.iso17025} onValueChange={(value) => updateNewItem('iso17025', value)}>
+                         <SelectTrigger 
+                           className="h-12 text-base border-2 focus:border-primary"
+                           onFocus={(e) => e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
+                         >
+                           <SelectValue placeholder="Select..." />
+                         </SelectTrigger>
+                         <SelectContent>
+                           <SelectItem value="yes">Yes</SelectItem>
+                           <SelectItem value="no">No</SelectItem>
+                         </SelectContent>
+                       </Select>
+                     </td>
+                     <td className="p-4 min-w-[130px]">
+                       <Input 
+                         placeholder="Estimate"
+                         value={newItem.estimate}
+                         onChange={(e) => updateNewItem('estimate', e.target.value)}
+                         className="h-12 text-base font-medium border-2 focus:border-primary"
+                         onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
+                         autoComplete="off"
+                       />
+                     </td>
+                     <td className="p-4 min-w-[130px]">
+                       <Select value={newItem.newEquip} onValueChange={(value) => updateNewItem('newEquip', value)}>
+                         <SelectTrigger 
+                           className="h-12 text-base border-2 focus:border-primary"
+                           onFocus={(e) => e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
+                         >
+                           <SelectValue placeholder="Select..." />
+                         </SelectTrigger>
+                         <SelectContent>
+                           <SelectItem value="yes">Yes</SelectItem>
+                           <SelectItem value="no">No</SelectItem>
+                         </SelectContent>
+                       </Select>
+                     </td>
+                     <td className="p-4 min-w-[150px]">
+                       <Input 
+                         type="date"
+                         value={newItem.needByDate}
+                         onChange={(e) => updateNewItem('needByDate', e.target.value)}
+                         className="h-12 text-base border-2 focus:border-primary"
+                         onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
+                       />
+                     </td>
+                     <td className="p-4 min-w-[130px]">
+                       <Input 
+                         placeholder="C/C Cost"
+                         value={newItem.ccCost}
+                         onChange={(e) => updateNewItem('ccCost', e.target.value)}
+                         className="h-12 text-base font-medium border-2 focus:border-primary"
+                         onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
+                         autoComplete="off"
+                       />
                     </td>
                     <td className="p-3">
                       <div className="flex items-center justify-end gap-2">
