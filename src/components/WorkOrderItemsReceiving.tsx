@@ -310,18 +310,13 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
         </div>
       ) : (
         <div className="p-4">
-          <div className="flex items-center gap-2 mb-4">
-            <Checkbox />
-            <span className="text-sm text-muted-foreground">Select All</span>
-          </div>
-          
           {/* Desktop Table View */}
           <div className="hidden lg:block border rounded-lg overflow-x-auto">
             <table className="w-full min-w-[1200px]">
               <thead className="bg-muted/20 border-b">
                 <tr>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-8">
-                    <Checkbox />
+                    
                   </th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-20">ItemNum</th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-16">Cal Freq</th>
@@ -669,7 +664,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
               <thead className="bg-muted/20 border-b">
                 <tr>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-8">
-                    <Checkbox />
+                    
                   </th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground">Item #</th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground">Action</th>
