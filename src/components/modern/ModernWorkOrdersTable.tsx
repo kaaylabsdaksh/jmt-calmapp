@@ -4399,8 +4399,93 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200">
       {/* Header */}
-      <div className="p-6 border-b border-gray-200">
-        <div className="flex items-center justify-between mb-4">
+      <div className="p-4 sm:p-6 border-b border-gray-200">
+        {/* Mobile Layout - Stacked */}
+        <div className="block lg:hidden space-y-4">
+          {/* Title and Count */}
+          <div className="text-center sm:text-left">
+            <h2 className="text-lg sm:text-xl font-bold text-gray-900">Work Orders</h2>
+            <p className="text-xs sm:text-sm text-gray-600 mt-1">
+              {currentView === 'batch' ? (
+                <>Showing {filteredWorkOrderBatches.length} of {mockWorkOrderBatches.length} batches</>
+              ) : (
+                <>Showing {filteredWorkOrderItems.length} of {mockWorkOrderItems.length} items</>
+              )}
+            </p>
+          </div>
+          
+          {/* Toggle Buttons - Full Width on Mobile */}
+          <div className="space-y-3">
+            {/* Item/Batch Toggle */}
+            <div className="flex items-center justify-center">
+              <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-lg w-full max-w-xs">
+                <Button
+                  variant={currentView === 'item' ? 'default' : 'ghost'}
+                  size="sm"
+                  onClick={() => setCurrentView('item')}
+                  className={cn(
+                    "h-9 flex-1 rounded-md transition-all text-xs sm:text-sm",
+                    currentView === 'item' 
+                      ? "bg-white shadow-sm text-gray-900" 
+                      : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
+                  )}
+                >
+                  <span className="hidden sm:inline">Item View</span>
+                  <span className="sm:hidden">Items</span>
+                </Button>
+                <Button
+                  variant={currentView === 'batch' ? 'default' : 'ghost'}
+                  size="sm"
+                  onClick={() => setCurrentView('batch')}
+                  className={cn(
+                    "h-9 flex-1 rounded-md transition-all text-xs sm:text-sm",
+                    currentView === 'batch' 
+                      ? "bg-white shadow-sm text-gray-900" 
+                      : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
+                  )}
+                >
+                  <span className="hidden sm:inline">Batch View</span>
+                  <span className="sm:hidden">Batches</span>
+                </Button>
+              </div>
+            </div>
+
+            {/* List/Grid Toggle */}
+            <div className="flex items-center justify-center">
+              <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-lg">
+                <Button
+                  variant={viewMode === 'list' ? 'default' : 'ghost'}
+                  size="sm"
+                  onClick={() => onViewModeChange('list')}
+                  className={cn(
+                    "h-9 px-4 rounded-md transition-all",
+                    viewMode === 'list' 
+                      ? "bg-white shadow-sm text-gray-900" 
+                      : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
+                  )}
+                >
+                  <List className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant={viewMode === 'grid' ? 'default' : 'ghost'}
+                  size="sm"
+                  onClick={() => onViewModeChange('grid')}
+                  className={cn(
+                    "h-9 px-4 rounded-md transition-all",
+                    viewMode === 'grid' 
+                      ? "bg-white shadow-sm text-gray-900" 
+                      : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
+                  )}
+                >
+                  <Grid3X3 className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Desktop/Tablet Layout - Horizontal */}
+        <div className="hidden lg:flex items-center justify-between">
           <div>
             <h2 className="text-xl font-bold text-gray-900">Work Orders</h2>
             <p className="text-sm text-gray-600 mt-1">
