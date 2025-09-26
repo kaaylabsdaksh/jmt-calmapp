@@ -339,17 +339,12 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
               <thead className="bg-muted/20 border-b">
                 <tr>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-8">
-                    
+                    <Checkbox 
+                      checked={isAllSelected}
+                      onCheckedChange={handleSelectAll}
+                    />
                   </th>
-                  <th className="text-left p-2 text-xs font-medium text-muted-foreground w-20">
-                    <div className="flex items-center gap-2">
-                      <Checkbox 
-                        checked={isAllSelected}
-                        onCheckedChange={handleSelectAll}
-                      />
-                      <span>ItemNum</span>
-                    </div>
-                  </th>
+                  <th className="text-left p-2 text-xs font-medium text-muted-foreground w-20">ItemNum</th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-16">Cal Freq</th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-16">Action Code</th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-16">Priority</th>
@@ -698,17 +693,12 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
               <thead className="bg-muted/20 border-b">
                 <tr>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-8">
-                    
+                    <Checkbox 
+                      checked={isAllSelected}
+                      onCheckedChange={handleSelectAll}
+                    />
                   </th>
-                  <th className="text-left p-2 text-xs font-medium text-muted-foreground">
-                    <div className="flex items-center gap-2">
-                      <Checkbox 
-                        checked={isAllSelected}
-                        onCheckedChange={handleSelectAll}
-                      />
-                      <span>Item #</span>
-                    </div>
-                  </th>
+                  <th className="text-left p-2 text-xs font-medium text-muted-foreground">Item #</th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground">Action</th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground">Priority</th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground">Manufacturer</th>
