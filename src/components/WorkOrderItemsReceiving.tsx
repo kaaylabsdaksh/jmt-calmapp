@@ -307,7 +307,8 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
             <span className="text-sm text-muted-foreground">Select All</span>
           </div>
           
-          <div className="border rounded-lg overflow-hidden">
+          {/* Desktop Table View */}
+          <div className="hidden lg:block border rounded-lg overflow-hidden">
             <table className="w-full table-fixed">
               <thead className="bg-muted/20 border-b">
                 <tr>
@@ -429,7 +430,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                           </SelectContent>
                         </Select>
                       ) : (
-                        <div className="truncate" title={item.manufacturer}>
+                        <div className="truncate uppercase" title={item.manufacturer}>
                           {item.manufacturer || "—"}
                         </div>
                       )}
@@ -450,11 +451,11 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                     </td>
                     <td className="p-2 text-xs">
                       {editingItemId === item.id ? (
-                        <Input 
+                        <Textarea 
                           placeholder="Description"
                           value={item.description}
                           onChange={(e) => updateItem(item.id, 'description', e.target.value)}
-                          className="h-6 text-xs"
+                          className="h-6 min-h-6 text-xs resize-none"
                         />
                       ) : (
                         <div className="truncate" title={item.description}>
@@ -589,52 +590,51 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                       )}
                     </td>
                     <td className="p-2">
-                      <div className="flex items-center gap-1 justify-end">
+                      <div className="flex items-center justify-end gap-1">
                         {editingItemId === item.id ? (
-                          <Button 
-                            variant="ghost" 
-                            size="sm" 
-                            onClick={stopEditing}
-                            className="text-green-600 hover:text-green-700 hover:bg-green-50 h-6 w-6 p-0"
-                          >
-                            ✓
-                          </Button>
+                          <>
+                            <Button 
+                              size="sm" 
+                              variant="ghost" 
+                              className="h-6 w-6 p-0"
+                              onClick={stopEditing}
+                            >
+                              ✓
+                            </Button>
+                          </>
                         ) : (
-                          <Button 
-                            variant="ghost" 
-                            size="sm" 
-                            onClick={() => startEditing(item.id)}
-                            className="text-blue-600 hover:text-blue-700 hover:bg-blue-50 h-6 w-6 p-0"
-                          >
-                            <Edit className="w-3 h-3" />
-                          </Button>
+                          <>
+                            <Button 
+                              size="sm" 
+                              variant="ghost" 
+                              className="h-6 w-6 p-0"
+                              onClick={() => startEditing(item.id)}
+                            >
+                              <Edit className="w-3 h-3" />
+                            </Button>
+                          </>
                         )}
-                        <AlertDialog open={deleteItemId === item.id} onOpenChange={(open) => !open && setDeleteItemId(null)}>
+                        <AlertDialog>
                           <AlertDialogTrigger asChild>
                             <Button 
-                              variant="ghost" 
                               size="sm" 
+                              variant="ghost" 
+                              className="h-6 w-6 p-0 text-destructive hover:text-destructive"
                               onClick={() => setDeleteItemId(item.id)}
-                              className="text-destructive hover:text-destructive hover:bg-destructive/10 h-6 w-6 p-0"
                             >
                               <Trash2 className="w-3 h-3" />
                             </Button>
                           </AlertDialogTrigger>
                           <AlertDialogContent>
                             <AlertDialogHeader>
-                              <AlertDialogTitle>Delete Received Item</AlertDialogTitle>
+                              <AlertDialogTitle>Remove Item</AlertDialogTitle>
                               <AlertDialogDescription>
-                                Are you sure you want to delete this received item? This action cannot be undone.
+                                Are you sure you want to remove this item? This action cannot be undone.
                               </AlertDialogDescription>
                             </AlertDialogHeader>
                             <AlertDialogFooter>
-                              <AlertDialogCancel>Cancel</AlertDialogCancel>
-                              <AlertDialogAction 
-                                onClick={() => removeItem(item.id)}
-                                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-                              >
-                                Delete
-                              </AlertDialogAction>
+                              <AlertDialogCancel onClick={() => setDeleteItemId(null)}>Cancel</AlertDialogCancel>
+                              <AlertDialogAction onClick={() => removeItem(item.id)}>Remove</AlertDialogAction>
                             </AlertDialogFooter>
                           </AlertDialogContent>
                         </AlertDialog>
@@ -644,6 +644,166 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                 ))}
               </tbody>
             </table>
+          </div>
+
+          {/* Tablet Simplified Table View */}
+          <div className="hidden md:block lg:hidden border rounded-lg overflow-x-auto">
+            <table className="w-full min-w-[800px]">
+              <thead className="bg-muted/20 border-b">
+                <tr>
+                  <th className="text-left p-2 text-xs font-medium text-muted-foreground w-8">
+                    <Checkbox />
+                  </th>
+                  <th className="text-left p-2 text-xs font-medium text-muted-foreground">Item #</th>
+                  <th className="text-left p-2 text-xs font-medium text-muted-foreground">Action</th>
+                  <th className="text-left p-2 text-xs font-medium text-muted-foreground">Priority</th>
+                  <th className="text-left p-2 text-xs font-medium text-muted-foreground">Manufacturer</th>
+                  <th className="text-left p-2 text-xs font-medium text-muted-foreground">Model</th>
+                  <th className="text-left p-2 text-xs font-medium text-muted-foreground">Description</th>
+                  <th className="text-left p-2 text-xs font-medium text-muted-foreground">Need By</th>
+                  <th className="text-right p-2 text-xs font-medium text-muted-foreground">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {items.map((item) => (
+                  <tr key={item.id} className="border-b hover:bg-muted/10">
+                    <td className="p-2">
+                      <Checkbox />
+                    </td>
+                    <td className="p-2 text-xs font-medium">{item.itemNumber || "—"}</td>
+                    <td className="p-2 text-xs uppercase">{item.actionCode || "—"}</td>
+                    <td className="p-2 text-xs capitalize">{item.priority || "—"}</td>
+                    <td className="p-2 text-xs">{item.manufacturer || "—"}</td>
+                    <td className="p-2 text-xs">{item.model || "—"}</td>
+                    <td className="p-2 text-xs max-w-[200px] truncate" title={item.description}>
+                      {item.description || "—"}
+                    </td>
+                    <td className="p-2 text-xs">{item.needByDate || "—"}</td>
+                    <td className="p-2">
+                      <div className="flex items-center justify-end gap-1">
+                        <Button 
+                          size="sm" 
+                          variant="ghost" 
+                          className="h-6 w-6 p-0"
+                          onClick={() => startEditing(item.id)}
+                        >
+                          <Edit className="w-3 h-3" />
+                        </Button>
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <Button 
+                              size="sm" 
+                              variant="ghost" 
+                              className="h-6 w-6 p-0 text-destructive hover:text-destructive"
+                            >
+                              <Trash2 className="w-3 h-3" />
+                            </Button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent>
+                            <AlertDialogHeader>
+                              <AlertDialogTitle>Remove Item</AlertDialogTitle>
+                              <AlertDialogDescription>
+                                Are you sure you want to remove this item? This action cannot be undone.
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel>Cancel</AlertDialogCancel>
+                              <AlertDialogAction onClick={() => removeItem(item.id)}>Remove</AlertDialogAction>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Mobile Card View */}
+          <div className="md:hidden space-y-4">
+            {items.map((item, index) => (
+              <div key={item.id} className="border rounded-lg p-4 bg-card">
+                <div className="flex items-start justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    <Checkbox />
+                    <div className="font-medium text-sm">#{item.itemNumber || "—"}</div>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Button 
+                      size="sm" 
+                      variant="ghost" 
+                      className="h-8 w-8 p-0"
+                      onClick={() => startEditing(item.id)}
+                    >
+                      <Edit className="w-4 h-4" />
+                    </Button>
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button 
+                          size="sm" 
+                          variant="ghost" 
+                          className="h-8 w-8 p-0 text-destructive hover:text-destructive"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>Remove Item</AlertDialogTitle>
+                          <AlertDialogDescription>
+                            Are you sure you want to remove this item? This action cannot be undone.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogAction onClick={() => removeItem(item.id)}>Remove</AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-3 text-sm">
+                  <div>
+                    <div className="text-muted-foreground text-xs">Action Code</div>
+                    <div className="font-medium uppercase">{item.actionCode || "—"}</div>
+                  </div>
+                  <div>
+                    <div className="text-muted-foreground text-xs">Priority</div>
+                    <div className="font-medium capitalize">{item.priority || "—"}</div>
+                  </div>
+                  <div>
+                    <div className="text-muted-foreground text-xs">Manufacturer</div>
+                    <div className="font-medium">{item.manufacturer || "—"}</div>
+                  </div>
+                  <div>
+                    <div className="text-muted-foreground text-xs">Model</div>
+                    <div className="font-medium">{item.model || "—"}</div>
+                  </div>
+                  <div className="col-span-2">
+                    <div className="text-muted-foreground text-xs">Description</div>
+                    <div className="font-medium">{item.description || "—"}</div>
+                  </div>
+                  <div>
+                    <div className="text-muted-foreground text-xs">Cal Freq</div>
+                    <div className="font-medium capitalize">{item.calFreq || "—"}</div>
+                  </div>
+                  <div>
+                    <div className="text-muted-foreground text-xs">Need By Date</div>
+                    <div className="font-medium">{item.needByDate || "—"}</div>
+                  </div>
+                  <div>
+                    <div className="text-muted-foreground text-xs">17025</div>
+                    <div className="font-medium capitalize">{item.iso17025 || "—"}</div>
+                  </div>
+                  <div>
+                    <div className="text-muted-foreground text-xs">C/C Cost</div>
+                    <div className="font-medium">{item.ccCost || "—"}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       )}
