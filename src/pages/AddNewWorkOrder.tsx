@@ -68,7 +68,7 @@ const AddNewWorkOrder = () => {
     localStorage.setItem('workOrderData', JSON.stringify(workOrderData));
   }, [workOrderData]);
 
-  const [viewMode, setViewMode] = useState<'table' | 'cards' | 'receiving'>('cards');
+  const [viewMode, setViewMode] = useState<'table' | 'cards' | 'receiving'>('receiving');
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [accountSuggestions, setAccountSuggestions] = useState<Array<{accountNumber: string, customerName: string, srDocument: string, salesperson: string, contact: string}>>([]);
   const [highlightedSuggestion, setHighlightedSuggestion] = useState(-1);
