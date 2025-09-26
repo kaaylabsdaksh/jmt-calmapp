@@ -67,6 +67,29 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
   const [newItem, setNewItem] = useState<WorkOrderReceivingItem>(createEmptyItem());
   const [editingItemId, setEditingItemId] = useState<string | null>(null);
   const [deleteItemId, setDeleteItemId] = useState<string | null>(null);
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+
+  // Handle individual item selection
+  const handleItemSelect = (itemId: string, checked: boolean) => {
+    if (checked) {
+      setSelectedItems(prev => [...prev, itemId]);
+    } else {
+      setSelectedItems(prev => prev.filter(id => id !== itemId));
+    }
+  };
+
+  // Handle select all functionality
+  const handleSelectAll = (checked: boolean) => {
+    if (checked) {
+      setSelectedItems(items.map(item => item.id));
+    } else {
+      setSelectedItems([]);
+    }
+  };
+
+  // Check if all items are selected
+  const isAllSelected = items.length > 0 && selectedItems.length === items.length;
+  const isIndeterminate = selectedItems.length > 0 && selectedItems.length < items.length;
 
   const handleDialogSubmit = () => {
     setItems([...items, newItem]);
@@ -320,7 +343,10 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                   </th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-20">
                     <div className="flex items-center gap-2">
-                      <Checkbox />
+                      <Checkbox 
+                        checked={isAllSelected}
+                        onCheckedChange={handleSelectAll}
+                      />
                       <span>ItemNum</span>
                     </div>
                   </th>
@@ -346,7 +372,10 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                 {items.map((item, index) => (
                   <tr key={item.id} className="border-b hover:bg-muted/10">
                     <td className="p-2">
-                      <Checkbox />
+                      <Checkbox 
+                        checked={selectedItems.includes(item.id)}
+                        onCheckedChange={(checked) => handleItemSelect(item.id, checked as boolean)}
+                      />
                     </td>
                     <td className="p-2 text-xs">
                       {editingItemId === item.id ? (
@@ -673,7 +702,10 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                   </th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground">
                     <div className="flex items-center gap-2">
-                      <Checkbox />
+                      <Checkbox 
+                        checked={isAllSelected}
+                        onCheckedChange={handleSelectAll}
+                      />
                       <span>Item #</span>
                     </div>
                   </th>
@@ -690,7 +722,10 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                 {items.map((item) => (
                   <tr key={item.id} className="border-b hover:bg-muted/10">
                     <td className="p-2">
-                      <Checkbox />
+                      <Checkbox 
+                        checked={selectedItems.includes(item.id)}
+                        onCheckedChange={(checked) => handleItemSelect(item.id, checked as boolean)}
+                      />
                     </td>
                     <td className="p-2 text-xs font-medium">{item.itemNumber || "—"}</td>
                     <td className="p-2 text-xs uppercase">{item.actionCode || "—"}</td>
@@ -759,7 +794,10 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
               <div key={item.id} className="border rounded-lg p-4 bg-card">
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center gap-2">
-                    <Checkbox />
+                    <Checkbox 
+                      checked={selectedItems.includes(item.id)}
+                      onCheckedChange={(checked) => handleItemSelect(item.id, checked as boolean)}
+                    />
                     <div className="font-medium text-sm">#{item.itemNumber || "—"}</div>
                   </div>
                   <div className="flex items-center gap-1">
