@@ -68,6 +68,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
   const [editingItemId, setEditingItemId] = useState<string | null>(null);
   const [deleteItemId, setDeleteItemId] = useState<string | null>(null);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const [isClearAllDialogOpen, setIsClearAllDialogOpen] = useState(false);
 
   // Handle individual item selection
   const handleItemSelect = (itemId: string, checked: boolean) => {
@@ -119,6 +120,8 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
 
   const clearAllItems = () => {
     setItems([]);
+    setSelectedItems([]);
+    setIsClearAllDialogOpen(false);
   };
 
   const startEditing = (id: string) => {
@@ -317,13 +320,31 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
           </Dialog>
         </div>
         <div className="flex items-center gap-2">
-          <Button 
-            variant="link" 
-            className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto"
-            onClick={clearAllItems}
-          >
-            Clear All
-          </Button>
+          <AlertDialog open={isClearAllDialogOpen} onOpenChange={setIsClearAllDialogOpen}>
+            <AlertDialogTrigger asChild>
+              <Button 
+                variant="link" 
+                className="text-red-600 hover:text-red-700 text-sm p-0 h-auto"
+                disabled={items.length === 0}
+              >
+                Clear All
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Clear All Items</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Are you sure you want to clear all received items? This action cannot be undone and will remove all {items.length} item{items.length !== 1 ? 's' : ''} from the list.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel onClick={() => setIsClearAllDialogOpen(false)}>Cancel</AlertDialogCancel>
+                <AlertDialogAction onClick={clearAllItems} className="bg-red-600 hover:bg-red-700 text-white">
+                  Clear All Items
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       </div>
       
