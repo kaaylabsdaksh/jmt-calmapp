@@ -12,7 +12,7 @@ const WorkOrderBatchDetailsDemo: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="w-full px-2 sm:px-4 lg:px-6 py-3 sm:py-6">
       <WorkOrderBatchDetails 
         batchId={batchId || "383727"} 
         onBack={handleBack}

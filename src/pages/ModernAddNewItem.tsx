@@ -148,12 +148,12 @@ const ModernAddNewItem = () => {
     <div className="min-h-screen bg-gradient-to-br from-background to-muted/20">
       {/* Header */}
       <div className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-4">
+      <div className="w-full px-2 sm:px-4 lg:px-6 h-auto sm:h-16 py-3 sm:py-0 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
+          <div className="flex items-center gap-2 sm:gap-4">
             <SidebarTrigger className="p-2 rounded-lg hover:bg-muted hover:text-foreground transition-all duration-300" />
             <div>
-              <h1 className="text-xl font-semibold">Add New Item</h1>
-              <Breadcrumb className="mt-1">
+              <h1 className="text-lg sm:text-xl font-semibold">Add New Item</h1>
+              <Breadcrumb className="mt-1 hidden sm:block">
                 <BreadcrumbList>
                   <BreadcrumbItem>
                     <BreadcrumbLink 
@@ -184,12 +184,13 @@ const ModernAddNewItem = () => {
           </div>
           
           {/* Action Buttons */}
-          <div className="flex items-center gap-2">
-            <Button variant="outline" onClick={handleSaveDraft}>
+          <div className="flex items-center gap-2 w-full sm:w-auto">
+            <Button variant="outline" onClick={handleSaveDraft} className="flex-1 sm:flex-initial">
               <Save className="h-4 w-4 mr-2" />
-              Save Draft
+              <span className="hidden sm:inline">Save Draft</span>
+              <span className="sm:hidden">Save</span>
             </Button>
-            <Button onClick={handleSubmit}>
+            <Button onClick={handleSubmit} className="flex-1 sm:flex-initial">
               <Send className="h-4 w-4 mr-2" />
               Submit
             </Button>
@@ -197,7 +198,7 @@ const ModernAddNewItem = () => {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-8 space-y-8">
+      <div className="w-full px-2 sm:px-4 lg:px-6 py-4 sm:py-8 space-y-4 sm:space-y-8">
         {/* Progress Tracker */}
         <Card>
           <CardContent className="p-6">
@@ -237,7 +238,7 @@ const ModernAddNewItem = () => {
           </CardContent>
         </Card>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8">
           {/* General Information */}
           <Card>
             <CardHeader>

@@ -38,15 +38,15 @@ const WorkOrderSearchV2 = () => {
     <div className="bg-background min-h-screen">
       {/* Header matching v1 style */}
       <header className="bg-card shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
-          <div className="flex items-center justify-between">
+        <div className="w-full px-2 sm:px-4 lg:px-6 py-3 sm:py-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
             <div className="flex items-center gap-2 sm:gap-4">
               <SidebarTrigger className="p-2 rounded-lg hover:bg-muted hover:text-foreground transition-all duration-300" />
               <div>
                 <span className="text-sm text-muted-foreground block">
                   JM Test Systems
                 </span>
-                <Breadcrumb className="mt-1">
+                <Breadcrumb className="mt-1 hidden sm:block">
                   <BreadcrumbList>
                     <BreadcrumbItem>
                       <BreadcrumbLink 
@@ -66,21 +66,23 @@ const WorkOrderSearchV2 = () => {
                 </Breadcrumb>
               </div>
             </div>
-            <div className="flex items-center">
-              <div className="flex gap-2">
+            <div className="flex items-center w-full sm:w-auto">
+              <div className="flex gap-2 w-full sm:w-auto">
                 <Button 
                   variant="outline" 
                   size="sm"
-                  className="text-sm"
+                  className="text-xs sm:text-sm flex-1 sm:flex-initial"
                 >
-                  Pricing History
+                  <span className="hidden sm:inline">Pricing History</span>
+                  <span className="sm:hidden">Pricing</span>
                 </Button>
                 <Button 
                   variant="outline" 
                   size="sm"
-                  className="text-sm"
+                  className="text-xs sm:text-sm flex-1 sm:flex-initial"
                 >
-                  User Guide
+                  <span className="hidden sm:inline">User Guide</span>
+                  <span className="sm:hidden">Guide</span>
                 </Button>
               </div>
             </div>
@@ -89,7 +91,7 @@ const WorkOrderSearchV2 = () => {
       </header>
       
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 py-6 space-y-6">
+      <main className="w-full px-2 sm:px-4 lg:px-6 py-3 sm:py-6 space-y-4 sm:space-y-6">
         <MinimalWorkOrderSearch onSearch={handleSearch} />
         <ModernWorkOrdersTable 
           viewMode={viewMode}

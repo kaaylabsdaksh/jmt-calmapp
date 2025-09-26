@@ -140,18 +140,18 @@ const UnusedItemsManagement = () => {
   return (
     <div className="bg-background min-h-full">
       <UnusedItemsTopNav />
-      <main className="w-full max-w-none px-4 sm:px-6 py-6">
-        <div className="w-full space-y-6">
+      <main className="w-full max-w-none px-2 sm:px-4 lg:px-6 py-3 sm:py-6">
+        <div className="w-full space-y-4 sm:space-y-6">
           <UnusedItemsSearchFilters onSearch={handleSearch} />
           
           <Card>
-            <CardHeader>
-              <CardTitle>Unused Items</CardTitle>
+            <CardHeader className="p-4 sm:p-6">
+              <CardTitle className="text-lg sm:text-xl">Unused Items</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-4 sm:p-6 pt-0">
               <div className="space-y-4">
                 {/* Select All */}
-                <div className="flex items-center gap-2 p-4 border rounded-lg bg-muted/50">
+                <div className="flex items-center gap-2 p-3 sm:p-4 border rounded-lg bg-muted/50">
                   <Checkbox
                     checked={selectedItems.length === mockUnusedItems.length}
                     onCheckedChange={handleSelectAll}
@@ -160,7 +160,7 @@ const UnusedItemsManagement = () => {
                 </div>
 
                 {/* Cards Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                   {mockUnusedItems.map((item) => (
                     <Card 
                       key={item.id} 
@@ -170,10 +170,10 @@ const UnusedItemsManagement = () => {
                           : ''
                       }`}
                     >
-                      <CardHeader className="pb-3">
+                      <CardHeader className="pb-3 p-3 sm:p-6 sm:pb-3">
                         <div className="flex items-start justify-between">
                           <div className="flex-1">
-                            <CardTitle className="text-lg font-semibold">
+                            <CardTitle className="text-base sm:text-lg font-semibold break-all">
                               {item.reportNumber}
                             </CardTitle>
                           </div>
@@ -190,9 +190,9 @@ const UnusedItemsManagement = () => {
                           </div>
                         </div>
                       </CardHeader>
-                      <CardContent className="pt-0">
+                      <CardContent className="pt-0 p-3 sm:p-6 sm:pt-0">
                         <div className="space-y-3">
-                          <div className="grid grid-cols-2 gap-3 text-sm">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 text-sm">
                             <div>
                               <span className="text-muted-foreground">Manufacturer:</span>
                               <p className="font-medium">{item.manufacturer || 'N/A'}</p>
@@ -242,15 +242,15 @@ const UnusedItemsManagement = () => {
                 </div>
 
                 {/* Pagination */}
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-0">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
                     <span className="text-sm text-muted-foreground">
                       Page {currentPage} of {totalPages} ({totalItems} items)
                     </span>
-                    <div className="flex items-center gap-2 ml-4">
+                    <div className="flex items-center gap-2">
                       <span className="text-sm text-muted-foreground">Page size:</span>
                       <Select value={pageSize} onValueChange={setPageSize}>
-                        <SelectTrigger className="w-20 h-8">
+                        <SelectTrigger className="w-16 sm:w-20 h-8">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>

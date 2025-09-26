@@ -368,19 +368,19 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
       </div>
 
       {/* Global Search */}
-      <div className="p-4 pb-3">
+      <div className="p-2 sm:p-4 pb-2 sm:pb-3">
         {/* Mobile: Search in first row */}
-        <div className="flex flex-col md:flex-row gap-3">
+        <div className="flex flex-col md:flex-row gap-2 sm:gap-3">
           <div className="relative flex-1">
-            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <Search className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 h-4 sm:h-5 w-4 sm:w-5 text-gray-400" />
             <Input
-              placeholder="Search work orders, customers, serial numbers, manufacturers..."
+              placeholder="Search work orders, customers, serial numbers..."
               value={globalSearch}
               onChange={handleSearchInputChange}
               onKeyDown={handleKeyDown}
               onFocus={() => globalSearch.length >= 2 && suggestions.length > 0 && setShowSuggestions(true)}
               onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
-              className="pl-12 bg-white border border-gray-300 rounded-lg h-11 text-sm placeholder:text-gray-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
+              className="pl-10 sm:pl-12 bg-white border border-gray-300 rounded-lg h-10 sm:h-11 text-sm placeholder:text-gray-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
             />
             
             {/* Search Suggestions Dropdown */}
@@ -448,9 +448,9 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
           </div>
           
           {/* Desktop: Status and Assignee in same row as search */}
-          <div className="hidden md:flex gap-3">
+          <div className="hidden md:flex gap-2 sm:gap-3">
             <Select value={searchValues.status || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, status: value === 'all' ? '' : value }))}>
-              <SelectTrigger className="w-40 bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
+              <SelectTrigger className="w-36 sm:w-40 bg-white border border-gray-300 rounded-lg h-10 sm:h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
                 <SelectValue placeholder="All Status" />
               </SelectTrigger>
               <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">

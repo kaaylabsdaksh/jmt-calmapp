@@ -8,14 +8,14 @@ const UnusedItemsTopNav = () => {
   const navigate = useNavigate();
 
   return (
-    <header className="bg-white px-6 py-3 border-b border-border">
-      <div className="flex items-center justify-between">
+    <header className="bg-white px-2 sm:px-4 lg:px-6 py-3 border-b border-border">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
         {/* Sidebar Toggle and Title */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
           <SidebarTrigger className="text-foreground hover:bg-muted hover:text-foreground transition-all duration-300 transform hover:scale-105" />
           <div>
-            <h1 className="text-lg font-semibold text-foreground leading-tight">Unused Items Management</h1>
-            <Breadcrumb className="mt-1">
+            <h1 className="text-base sm:text-lg font-semibold text-foreground leading-tight">Unused Items Management</h1>
+            <Breadcrumb className="mt-1 hidden lg:block">
               <BreadcrumbList>
                 <BreadcrumbItem>
                   <BreadcrumbLink 
@@ -51,14 +51,15 @@ const UnusedItemsTopNav = () => {
         </div>
 
         {/* Action Buttons */}
-        <div className="flex items-center gap-1 sm:gap-2">
+        <div className="flex items-center gap-1 sm:gap-2 w-full sm:w-auto">
           <Button 
             variant="outline"
-            className="rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border-border text-foreground hover:bg-blue-500 hover:text-white hover:border-blue-500 bg-transparent transform hover:scale-105 text-sm font-medium"
+            className="rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border-border text-foreground hover:bg-blue-500 hover:text-white hover:border-blue-500 bg-transparent transform hover:scale-105 text-xs sm:text-sm font-medium flex-1 sm:flex-initial"
             onClick={() => navigate("/add-new-work-order", { state: { from: 'unused-items' } })}
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Add Work Order
+            <span className="hidden sm:inline">Back to Add Work Order</span>
+            <span className="sm:hidden">Back</span>
           </Button>
           <Button 
             variant="ghost" 
