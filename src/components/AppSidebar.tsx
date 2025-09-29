@@ -217,7 +217,6 @@ export function AppSidebar() {
             <Separator className="mb-3 bg-sidebar-border" />
             <div className="text-xs text-sidebar-foreground/70">
               <p className="font-medium">System Status</p>
-              <p className="text-xs mt-1 text-green-600">● All systems operational</p>
             </div>
           </div>
         )}
