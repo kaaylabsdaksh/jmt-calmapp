@@ -155,35 +155,35 @@ const AddNewWorkOrder = () => {
   // Mock account data
   const mockAccounts = [
     {
-      accountNumber: "15000",
+      accountNumber: "1500.00",
       customerName: "Entergy Inventory",
       srDocument: "SR2244",
       salesperson: "ZZEN - House - Entergy", 
       contact: "Brad Morrison"
     },
     {
-      accountNumber: "15001",
+      accountNumber: "1500.01",
       customerName: "Gulf Power Company",
       srDocument: "SR3345",
       salesperson: "John Smith - Gulf Power Rep",
       contact: "Mike Johnson"
     },
     {
-      accountNumber: "15002", 
+      accountNumber: "0152.01", 
       customerName: "Florida Power & Light",
       srDocument: "SR4456",
       salesperson: "Sarah Wilson - FPL Account Manager",
       contact: "Lisa Anderson"
     },
     {
-      accountNumber: "15003",
+      accountNumber: "1500.03",
       customerName: "Duke Energy Corporation",
       srDocument: "SR5567",
       salesperson: "Robert Davis - Duke Energy Sales",
       contact: "Jennifer Martinez"
     },
     {
-      accountNumber: "15004",
+      accountNumber: "1500.04",
       customerName: "Southern Company Services",
       srDocument: "SR6678",
       salesperson: "Amanda Brown - Southern Rep",
@@ -222,24 +222,31 @@ const AddNewWorkOrder = () => {
     if (tabValue === "warranty") {
       return true;
     }
-    // Only general tab is enabled if account number is not 5 digits
-    return tabValue !== "general" && workOrderData.accountNumber.length !== 5;
+    // Only general tab is enabled if account number is not in format XXXX.XX
+    const isValidFormat = /^\d{4}\.\d{2}$/.test(workOrderData.accountNumber);
+    return tabValue !== "general" && !isValidFormat;
   };
 
   // Function to check if form fields should be disabled
   const areFieldsDisabled = () => {
-    return !workOrderData.accountNumber || workOrderData.accountNumber.length !== 5;
+    const isValidFormat = /^\d{4}\.\d{2}$/.test(workOrderData.accountNumber);
+    return !workOrderData.accountNumber || !isValidFormat;
   };
 
   // Handle account number input change
   const handleAccountNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/\D/g, '').slice(0, 5); // Only allow 5 digits
+    let value = e.target.value.replace(/\D/g, ''); // Remove non-digits
     
-    if (value.length === 0) {
+    // Format as XXXX.XX
+    if (value.length > 4) {
+      value = value.slice(0, 4) + '.' + value.slice(4, 6);
+    }
+    
+    if (value.length === 0 || value === '.') {
       // Reset to default values when account number is cleared
       setWorkOrderData(prev => ({ 
         ...prev, 
-        accountNumber: value,
+        accountNumber: '',
         customer: "",
         srDocument: "",
         salesperson: "Not assigned",
@@ -255,10 +262,13 @@ const AddNewWorkOrder = () => {
         contact: ""
       }));
       
-      const filtered = mockAccounts.filter(account => 
-        account.accountNumber.startsWith(value) ||
-        account.customerName.toLowerCase().includes(value.toLowerCase())
-      );
+      // Filter suggestions - match against the formatted number
+      const searchValue = value.replace('.', '');
+      const filtered = mockAccounts.filter(account => {
+        const accountDigits = account.accountNumber.replace('.', '');
+        return accountDigits.startsWith(searchValue) ||
+               account.customerName.toLowerCase().includes(value.toLowerCase());
+      });
       setAccountSuggestions(filtered);
       setShowSuggestions(true);
       setHighlightedSuggestion(-1);
@@ -488,11 +498,11 @@ const AddNewWorkOrder = () => {
                       <div className="relative">
                         <Input
                           id="accountNumber"
-                          placeholder="Enter 5-digit account number"
+                          placeholder="e.g., 0152.01"
                           value={workOrderData.accountNumber}
                           onChange={handleAccountNumberChange}
                           onKeyDown={handleKeyDown}
-                          maxLength={5}
+                          maxLength={7}
                           className={`h-9 sm:h-10 ${!workOrderData.accountNumber ? "border-destructive" : ""}`}
                         />
                         {!workOrderData.accountNumber && (
