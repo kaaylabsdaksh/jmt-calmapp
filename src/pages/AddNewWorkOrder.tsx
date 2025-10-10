@@ -498,7 +498,7 @@ const AddNewWorkOrder = () => {
                       <div className="relative">
                         <Input
                           id="accountNumber"
-                          placeholder="e.g., 0152.01"
+                          placeholder="0152.01"
                           value={workOrderData.accountNumber}
                           onChange={handleAccountNumberChange}
                           onKeyDown={handleKeyDown}
