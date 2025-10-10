@@ -838,7 +838,7 @@ const AddNewWorkOrder = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2 sm:gap-3">
                       <Button 
                         onClick={() => navigate("/form-variations")}
-                        className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
+                        className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
                       >
                         <Plus className="w-3 h-3 sm:w-4 sm:h-4" />
                         <span className="hidden sm:inline">Add New Item</span>
@@ -846,25 +846,25 @@ const AddNewWorkOrder = () => {
                       </Button>
                       <Button 
                         onClick={() => setIsRFIDDialogOpen(true)}
-                        className="bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
+                        className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
                       >
                         <PlusCircle className="w-3 h-3 sm:w-4 sm:h-4" />
                         <span className="hidden sm:inline">Add New Item w/RFID</span>
                         <span className="sm:hidden">Add w/RFID</span>
                       </Button>
-                      <Button className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm">
+                      <Button className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm">
                         <QrCode className="w-3 h-3 sm:w-4 sm:h-4" />
                         <span className="hidden sm:inline">Print QR Sheet</span>
                         <span className="sm:hidden">QR Sheet</span>
                       </Button>
-                      <Button className="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm">
+                      <Button className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm">
                         <Copy className="w-3 h-3 sm:w-4 sm:h-4" />
                         <span className="hidden sm:inline">Copy From Other WO</span>
                         <span className="sm:hidden">Copy WO</span>
                       </Button>
                       <Button 
                         onClick={() => navigate('/unused-items')}
-                        className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
+                        className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
                       >
                         <PackagePlus className="w-3 h-3 sm:w-4 sm:h-4" />
                         <span className="hidden sm:inline">Create Unused Items</span>
