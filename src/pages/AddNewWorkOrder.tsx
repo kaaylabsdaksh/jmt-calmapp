@@ -222,15 +222,23 @@ const AddNewWorkOrder = () => {
     if (tabValue === "warranty") {
       return true;
     }
-    // Only general tab is enabled if account number is not in format XXXX.XX
+    // Only general tab is enabled if account number is not in format XXXX.XX or contact is not selected
     const isValidFormat = /^\d{4}\.\d{2}$/.test(workOrderData.accountNumber);
-    return tabValue !== "general" && !isValidFormat;
+    const hasContact = workOrderData.contact && workOrderData.contact !== "";
+    return tabValue !== "general" && (!isValidFormat || !hasContact);
   };
 
-  // Function to check if form fields should be disabled
+  // Function to check if form fields should be disabled (for contact field)
   const areFieldsDisabled = () => {
     const isValidFormat = /^\d{4}\.\d{2}$/.test(workOrderData.accountNumber);
     return !workOrderData.accountNumber || !isValidFormat;
+  };
+
+  // Function to check if other fields (non-contact) should be disabled
+  const areOtherFieldsDisabled = () => {
+    const isValidFormat = /^\d{4}\.\d{2}$/.test(workOrderData.accountNumber);
+    const hasContact = workOrderData.contact && workOrderData.contact !== "";
+    return !isValidFormat || !hasContact;
   };
 
   // Handle account number input change
@@ -407,7 +415,7 @@ const AddNewWorkOrder = () => {
                     placeholder="SR Document"
                     value={workOrderData.srDocument}
                     onChange={(e) => setWorkOrderData(prev => ({ ...prev, srDocument: e.target.value }))}
-                    disabled={areFieldsDisabled()}
+                    disabled={areOtherFieldsDisabled()}
                     className="h-9 sm:h-10"
                   />
                 </div>
@@ -592,7 +600,7 @@ const AddNewWorkOrder = () => {
                         id="workOrderNumber"
                         value={workOrderData.workOrderNumber}
                         onChange={(e) => setWorkOrderData(prev => ({ ...prev, workOrderNumber: e.target.value }))}
-                        disabled={areFieldsDisabled()}
+                        disabled={areOtherFieldsDisabled()}
                         className="h-9 sm:h-10"
                       />
                     </div>
@@ -600,7 +608,7 @@ const AddNewWorkOrder = () => {
                     {/* Work Order Status */}
                     <div className="space-y-2">
                       <Label className="text-sm font-medium">Work Order Status</Label>
-                      <Select value={workOrderData.workOrderStatus} onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, workOrderStatus: value }))} disabled={areFieldsDisabled()}>
+                      <Select value={workOrderData.workOrderStatus} onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, workOrderStatus: value }))} disabled={areOtherFieldsDisabled()}>
                         <SelectTrigger className="h-9 sm:h-10">
                           <SelectValue />
                         </SelectTrigger>
@@ -616,7 +624,7 @@ const AddNewWorkOrder = () => {
                     {/* Work Order Type */}
                     <div className="space-y-2">
                       <Label className="text-sm font-medium">Work Order Type</Label>
-                      <Select value={workOrderData.workOrderType} onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, workOrderType: value }))} disabled={areFieldsDisabled()}>
+                      <Select value={workOrderData.workOrderType} onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, workOrderType: value }))} disabled={areOtherFieldsDisabled()}>
                         <SelectTrigger className="h-9 sm:h-10">
                           <SelectValue />
                         </SelectTrigger>
@@ -635,7 +643,7 @@ const AddNewWorkOrder = () => {
                         placeholder="Customer name"
                         value={workOrderData.customer}
                         onChange={(e) => setWorkOrderData(prev => ({ ...prev, customer: e.target.value }))}
-                        disabled={areFieldsDisabled()}
+                        disabled={areOtherFieldsDisabled()}
                         className="h-9 sm:h-10"
                       />
                     </div>
