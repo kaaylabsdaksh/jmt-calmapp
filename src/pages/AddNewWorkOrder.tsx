@@ -401,12 +401,12 @@ const AddNewWorkOrder = () => {
       <div className="px-3 sm:px-4 lg:px-6 py-4 sm:py-6 pb-20 sm:pb-24">
         <div className="w-full space-y-4 sm:space-y-6">
           {/* Header Info Card */}
-          <Card className="border-l-4 border-l-primary bg-gradient-to-r from-primary/5 to-transparent">
+          <Card>
             <CardContent className="p-4 sm:p-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                 <div className="space-y-2">
                   <Label className="text-sm font-medium text-foreground">Work Order #</Label>
-                  <div className="text-base sm:text-lg font-bold text-primary">{workOrderData.workOrderNumber}</div>
+                  <div className="text-base sm:text-lg font-bold text-foreground">{workOrderData.workOrderNumber}</div>
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="srDocument" className="text-sm font-medium text-foreground">SR Doc</Label>
@@ -416,16 +416,16 @@ const AddNewWorkOrder = () => {
                     value={workOrderData.srDocument}
                     onChange={(e) => setWorkOrderData(prev => ({ ...prev, srDocument: e.target.value }))}
                     disabled={areOtherFieldsDisabled()}
-                    className="h-9 sm:h-10 border-primary/20 focus:border-primary"
+                    className="h-9 sm:h-10"
                   />
                 </div>
                 <div className="space-y-2">
                   <Label className="text-sm font-medium text-foreground">Salesperson</Label>
-                  <div className="text-sm text-foreground p-2 bg-purple/10 rounded border border-purple/20">{workOrderData.salesperson}</div>
+                  <div className="text-sm text-foreground p-2 bg-muted rounded border">{workOrderData.salesperson}</div>
                 </div>
                 <div className="space-y-2">
                   <Label className="text-sm font-medium text-foreground">Contact</Label>
-                  <div className="text-sm text-foreground p-2 bg-success/10 rounded border border-success/20">{workOrderData.contact || "Not assigned"}</div>
+                  <div className="text-sm text-foreground p-2 bg-muted rounded border">{workOrderData.contact || "Not assigned"}</div>
                 </div>
               </div>
             </CardContent>
@@ -495,7 +495,7 @@ const AddNewWorkOrder = () => {
             )}
 
             <TabsContent value="general" className="space-y-4 sm:space-y-6">
-              <Card className="border-l-4 border-l-success bg-gradient-to-r from-success/5 to-transparent">
+              <Card>
                 <CardContent className="p-4 sm:p-6">
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                     {/* Account Number */}
@@ -511,7 +511,7 @@ const AddNewWorkOrder = () => {
                           onChange={handleAccountNumberChange}
                           onKeyDown={handleKeyDown}
                           maxLength={7}
-                          className={`h-9 sm:h-10 ${!workOrderData.accountNumber ? "border-destructive" : "border-success/20 focus:border-success"}`}
+                          className={`h-9 sm:h-10 ${!workOrderData.accountNumber ? "border-destructive" : ""}`}
                         />
                         {!workOrderData.accountNumber && (
                           <div className="absolute right-3 top-1/2 -translate-y-1/2 w-2 h-2 bg-destructive rounded-full"></div>
@@ -556,7 +556,7 @@ const AddNewWorkOrder = () => {
                         onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, contact: value }))}
                         disabled={areFieldsDisabled()}
                       >
-                        <SelectTrigger className="h-9 sm:h-10 border-success/20 focus:border-success">
+                        <SelectTrigger className="h-9 sm:h-10">
                           <SelectValue placeholder="Select contact" />
                         </SelectTrigger>
                         <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-[60] max-h-60 overflow-y-auto">
@@ -601,7 +601,7 @@ const AddNewWorkOrder = () => {
                         value={workOrderData.workOrderNumber}
                         onChange={(e) => setWorkOrderData(prev => ({ ...prev, workOrderNumber: e.target.value }))}
                         disabled={areOtherFieldsDisabled()}
-                        className="h-9 sm:h-10 border-orange/20 focus:border-orange"
+                        className="h-9 sm:h-10"
                       />
                     </div>
 
@@ -609,7 +609,7 @@ const AddNewWorkOrder = () => {
                     <div className="space-y-2">
                       <Label className="text-sm font-medium">Work Order Status</Label>
                       <Select value={workOrderData.workOrderStatus} onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, workOrderStatus: value }))} disabled={areOtherFieldsDisabled()}>
-                        <SelectTrigger className="h-9 sm:h-10 border-purple/20 focus:border-purple">
+                        <SelectTrigger className="h-9 sm:h-10">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -625,7 +625,7 @@ const AddNewWorkOrder = () => {
                     <div className="space-y-2">
                       <Label className="text-sm font-medium">Work Order Type</Label>
                       <Select value={workOrderData.workOrderType} onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, workOrderType: value }))} disabled={areOtherFieldsDisabled()}>
-                        <SelectTrigger className="h-9 sm:h-10 border-primary/20 focus:border-primary">
+                        <SelectTrigger className="h-9 sm:h-10">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -644,7 +644,7 @@ const AddNewWorkOrder = () => {
                         value={workOrderData.customer}
                         onChange={(e) => setWorkOrderData(prev => ({ ...prev, customer: e.target.value }))}
                         disabled={areOtherFieldsDisabled()}
-                        className="h-9 sm:h-10 border-success/20 focus:border-success"
+                        className="h-9 sm:h-10"
                       />
                     </div>
                   </div>
@@ -654,7 +654,7 @@ const AddNewWorkOrder = () => {
 
             {/* Placeholder content for other tabs */}
             <TabsContent value="account-info">
-              <Card className="border-l-4 border-l-purple bg-gradient-to-r from-purple/5 to-transparent">
+              <Card>
                 <CardContent className="p-4 sm:p-6">
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                     {/* Left Column */}
@@ -743,7 +743,7 @@ const AddNewWorkOrder = () => {
             </TabsContent>
 
             <TabsContent value="contacts">
-              <Card className="border-l-4 border-l-orange bg-gradient-to-r from-orange/5 to-transparent">
+              <Card>
                 <CardContent className="p-6">
                   <div className="space-y-6">
                     <div className="flex items-center justify-between">
@@ -804,7 +804,7 @@ const AddNewWorkOrder = () => {
             </TabsContent>
 
             <TabsContent value="items">
-              <Card className="border-l-4 border-l-warning bg-gradient-to-r from-warning/5 to-transparent">
+              <Card>
                 <CardHeader className="pb-3 sm:pb-4">
                   <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
                     <h2 className="text-lg sm:text-xl font-semibold text-foreground">Work Order Items</h2>
@@ -946,7 +946,7 @@ const AddNewWorkOrder = () => {
             </TabsContent>
 
             <TabsContent value="quote">
-              <Card className="border-l-4 border-l-primary bg-gradient-to-r from-primary/5 to-transparent">
+              <Card>
                 <CardContent className="p-6">
                   <p className="text-muted-foreground">Quote Details content coming soon...</p>
                 </CardContent>
@@ -958,7 +958,7 @@ const AddNewWorkOrder = () => {
             </TabsContent>
 
             <TabsContent value="fail-log">
-              <Card className="border-l-4 border-l-destructive bg-gradient-to-r from-destructive/5 to-transparent">
+              <Card>
                 <CardContent className="p-6">
                   <p className="text-muted-foreground">Fail Log content coming soon...</p>
                 </CardContent>
@@ -966,7 +966,7 @@ const AddNewWorkOrder = () => {
             </TabsContent>
 
             <TabsContent value="external">
-              <Card className="border-l-4 border-l-success bg-gradient-to-r from-success/5 to-transparent">
+              <Card>
                 <CardContent className="p-6">
                   <p className="text-muted-foreground">External Files content coming soon...</p>
                 </CardContent>
@@ -974,7 +974,7 @@ const AddNewWorkOrder = () => {
             </TabsContent>
 
             <TabsContent value="cert">
-              <Card className="border-l-4 border-l-purple bg-gradient-to-r from-purple/5 to-transparent">
+              <Card>
                 <CardContent className="p-6">
                   <p className="text-muted-foreground">Cert Files content coming soon...</p>
                 </CardContent>
@@ -982,7 +982,7 @@ const AddNewWorkOrder = () => {
             </TabsContent>
 
             <TabsContent value="warranty">
-              <Card className="border-l-4 border-l-warning bg-gradient-to-r from-warning/5 to-transparent">
+              <Card>
                 <CardContent className="p-6">
                   <p className="text-muted-foreground">Warranty content coming soon...</p>
                 </CardContent>
@@ -990,7 +990,7 @@ const AddNewWorkOrder = () => {
             </TabsContent>
 
             <TabsContent value="qfd">
-              <Card className="border-l-4 border-l-orange bg-gradient-to-r from-orange/5 to-transparent">
+              <Card>
                 <CardContent className="p-6">
                   <p className="text-muted-foreground">QFD Data content coming soon...</p>
                 </CardContent>
