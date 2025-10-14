@@ -3760,7 +3760,7 @@ const EditOrder = () => {
           <div className="flex items-center gap-3">
             <SidebarTrigger className="p-2 rounded-lg hover:bg-muted hover:text-foreground transition-all duration-300" />
             <div>
-              <h1 className="text-lg sm:text-xl font-semibold text-foreground">Add New Work Order Item</h1>
+              <h1 className="text-lg sm:text-xl font-semibold text-foreground">Edit Order</h1>
               <Breadcrumb className="mt-1">
                 <BreadcrumbList>
                   <BreadcrumbItem>
@@ -3768,22 +3768,13 @@ const EditOrder = () => {
                       asChild 
                       className="text-xs text-muted-foreground hover:text-foreground transition-colors"
                     >
-                      <Link to="/">Home</Link>
-                    </BreadcrumbLink>
-                  </BreadcrumbItem>
-                  <BreadcrumbSeparator />
-                  <BreadcrumbItem>
-                    <BreadcrumbLink 
-                      asChild 
-                      className="text-xs text-muted-foreground hover:text-foreground transition-colors"
-                    >
-                      <Link to="/add-new-work-order">Add New Work Order</Link>
+                      <Link to="/">Work Order Management</Link>
                     </BreadcrumbLink>
                   </BreadcrumbItem>
                   <BreadcrumbSeparator />
                   <BreadcrumbItem>
                     <BreadcrumbPage className="text-xs text-foreground font-medium">
-                      Add New Item
+                      Edit Order
                     </BreadcrumbPage>
                   </BreadcrumbItem>
                 </BreadcrumbList>
