@@ -304,6 +304,8 @@ const FormVariationsDemo = () => {
     { value: 'logistics', label: 'Logistics', icon: Truck },
     { value: 'product-images', label: 'Images', icon: Package },
     { value: 'lab', label: 'Lab', icon: Settings },
+    { value: 'external-files', label: 'External Files', icon: FileText },
+    { value: 'cert-files', label: 'Cert Files', icon: Shield },
     { value: 'other', label: 'Other', icon: Settings }
   ];
 
@@ -3621,6 +3623,44 @@ const FormVariationsDemo = () => {
 
           <TabsContent value="lab" className="space-y-6">
             {renderLabSection()}
+          </TabsContent>
+
+          <TabsContent value="external-files" className="space-y-6">
+            <Card className="border-0 shadow-md">
+              <CardContent className="p-6">
+                <div className="flex items-center gap-3 pb-4 border-b border-border mb-6">
+                  <div className="p-2 bg-primary/10 rounded-lg">
+                    <FileText className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold">External Files</h3>
+                    <p className="text-sm text-muted-foreground">Manage external documents and files</p>
+                  </div>
+                </div>
+                <div className="text-center py-8 text-muted-foreground">
+                  Content will be added here
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="cert-files" className="space-y-6">
+            <Card className="border-0 shadow-md">
+              <CardContent className="p-6">
+                <div className="flex items-center gap-3 pb-4 border-b border-border mb-6">
+                  <div className="p-2 bg-primary/10 rounded-lg">
+                    <Shield className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold">Certification Files</h3>
+                    <p className="text-sm text-muted-foreground">Manage certification documents</p>
+                  </div>
+                </div>
+                <div className="text-center py-8 text-muted-foreground">
+                  Content will be added here
+                </div>
+              </CardContent>
+            </Card>
           </TabsContent>
 
           <TabsContent value="other" className="space-y-6">
