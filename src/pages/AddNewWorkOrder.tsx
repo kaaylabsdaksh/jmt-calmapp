@@ -18,6 +18,7 @@ import { ContactForm, ContactFormData } from "@/components/ContactForm";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { EstimateDetails } from "@/components/EstimateDetails";
 import { RFIDDialog } from "@/components/RFIDDialog";
+import WorkOrderInfoBar from "@/components/WorkOrderInfoBar";
 
 const AddNewWorkOrder = () => {
   const navigate = useNavigate();
@@ -397,39 +398,19 @@ const AddNewWorkOrder = () => {
         </div>
       </div>
 
+      {/* Work Order Info Bar */}
+      <WorkOrderInfoBar
+        workOrderNumber={workOrderData.workOrderNumber}
+        accountNumber={workOrderData.accountNumber}
+        customer={workOrderData.customer}
+        srDocument={workOrderData.srDocument}
+        salesperson={workOrderData.salesperson}
+        contact={workOrderData.contact}
+      />
+
       {/* Content Area */}
       <div className="px-3 sm:px-4 lg:px-6 py-4 sm:py-6 pb-20 sm:pb-24">
         <div className="w-full space-y-4 sm:space-y-6">
-          {/* Header Info Card */}
-          <Card>
-            <CardContent className="p-4 sm:p-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-foreground">Work Order #</Label>
-                  <div className="text-base sm:text-lg font-bold text-foreground">{workOrderData.workOrderNumber}</div>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="srDocument" className="text-sm font-medium text-foreground">SR Doc</Label>
-                  <Input
-                    id="srDocument"
-                    placeholder="SR Document"
-                    value={workOrderData.srDocument}
-                    onChange={(e) => setWorkOrderData(prev => ({ ...prev, srDocument: e.target.value }))}
-                    disabled={areOtherFieldsDisabled()}
-                    className="h-9 sm:h-10"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-foreground">Salesperson</Label>
-                  <div className="text-sm text-foreground p-2 bg-muted rounded border">{workOrderData.salesperson}</div>
-                </div>
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-foreground">Contact</Label>
-                  <div className="text-sm text-foreground p-2 bg-muted rounded border">{workOrderData.contact || "Not assigned"}</div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
 
           {/* Tabs */}
           <Tabs value={activeTab} onValueChange={(value) => !isTabDisabled(value) && setActiveTab(value)} className="space-y-6">
