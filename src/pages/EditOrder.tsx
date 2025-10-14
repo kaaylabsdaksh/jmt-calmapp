@@ -28,6 +28,19 @@ const EditOrder = () => {
   const location = useLocation();
   const workOrderData = location.state?.workOrderData;
   
+  // Map action code from dialog format to form format
+  const mapActionCode = (actionCode: string) => {
+    const actionCodeMap: Record<string, string> = {
+      "C/C": "cc",
+      "R/C": "rc",
+      "R/C/C": "rcc",
+      "BUILD NEW": "build-new",
+      "REPAIR": "repair",
+      "TEST": "test"
+    };
+    return actionCodeMap[actionCode?.toUpperCase()] || actionCode?.toLowerCase() || "";
+  };
+  
   
   // Main section state
   const [activeSection, setActiveSection] = useState<'work-order-items' | 'estimate' | 'qf3' | 'external-files' | 'cert-files'>('work-order-items');
@@ -37,6 +50,16 @@ const EditOrder = () => {
   
   // QF3 Dialog state
   const [qf3DialogOpen, setQf3DialogOpen] = useState(false);
+  
+  // Log workOrderData for debugging
+  useEffect(() => {
+    if (workOrderData) {
+      console.log("Work Order Data received:", workOrderData);
+      console.log("Work Order Details:", workOrderData.details);
+      console.log("Action Code (raw):", workOrderData?.details?.action || workOrderData?.details?.job);
+      console.log("Action Code (mapped):", mapActionCode(workOrderData?.details?.action || workOrderData?.details?.job || ""));
+    }
+  }, [workOrderData]);
   
   // Common state for both interfaces
   const [showManufacturerDialog, setShowManufacturerDialog] = useState(false);
@@ -183,7 +206,7 @@ const EditOrder = () => {
     location: workOrderData?.location || "",
     division: workOrderData?.division || "",
     calFreq: workOrderData?.calFreq || "",
-    actionCode: workOrderData?.details?.action || workOrderData?.details?.job || "",
+    actionCode: mapActionCode(workOrderData?.details?.action || workOrderData?.details?.job || ""),
     
     // Product Information - Auto-fill from workOrderData.details
     manufacturer: workOrderData?.details?.manufacturer || "",
