@@ -236,7 +236,7 @@ const EditOrder = () => {
     costSerial: workOrderData?.details?.custSn || "",
     rfid: workOrderData?.rfid || "",
     quantity: workOrderData?.details?.items || "",
-    description: workOrderData?.details?.operationType || workOrderData?.details?.workDescription || "",
+    description: workOrderData?.equipmentType || workOrderData?.details?.workDescription || "",
     
     // Logistics Information - Auto-fill from workOrderData.details
     arrivalDate: workOrderData?.arrivalDate || workOrderData?.details?.createdDate || "",
