@@ -41,6 +41,23 @@ const EditOrder = () => {
     return actionCodeMap[actionCode?.toUpperCase()] || actionCode?.toLowerCase() || "";
   };
   
+  // Map item type from dialog format to form format
+  const mapItemType = (itemType: string) => {
+    if (!itemType) return "";
+    
+    // If it's "SINGLE", return "single"
+    if (itemType.toUpperCase() === "SINGLE") return "single";
+    
+    // If it has a count in parentheses like "ESL - Gloves (12)", extract the base type
+    // Remove the count in parentheses
+    const typeWithoutCount = itemType.replace(/\s*\(\d+\)\s*$/, '').trim();
+    
+    // Convert to lowercase and replace spaces with dashes
+    // "ESL - Gloves" -> "esl-gloves"
+    // "ITL - Gauges" -> "itl-gauges"
+    return typeWithoutCount.toLowerCase().replace(/\s+/g, '-');
+  };
+  
   
   // Main section state
   const [activeSection, setActiveSection] = useState<'work-order-items' | 'estimate' | 'qf3' | 'external-files' | 'cert-files'>('work-order-items');
@@ -58,6 +75,8 @@ const EditOrder = () => {
       console.log("Work Order Details:", workOrderData.details);
       console.log("Action Code (raw):", workOrderData?.details?.action || workOrderData?.details?.job);
       console.log("Action Code (mapped):", mapActionCode(workOrderData?.details?.action || workOrderData?.details?.job || ""));
+      console.log("Item Type (raw):", workOrderData?.details?.itemType);
+      console.log("Item Type (mapped):", mapItemType(workOrderData?.details?.itemType || ""));
     }
   }, [workOrderData]);
   
@@ -198,7 +217,7 @@ const EditOrder = () => {
     contact: workOrderData?.contact || "",
     
     // General Information - Auto-fill from workOrderData and details
-    type: workOrderData?.details?.itemType || "",
+    type: mapItemType(workOrderData?.details?.itemType || ""),
     reportNumber: workOrderData?.details?.batch || "",
     itemStatus: workOrderData?.status || "",
     assignedTo: workOrderData?.assignedTo || "",
