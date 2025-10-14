@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -25,6 +25,8 @@ import { cn } from "@/lib/utils";
 
 const FormVariationsDemo = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { workOrderData, isEditMode } = location.state || {};
   
   
   // Main section state
@@ -167,17 +169,17 @@ const FormVariationsDemo = () => {
 
   const [formData, setFormData] = useState({
     // Work Order Header
-    workOrderNumber: "WO-QOAV2I",
-    srDoc: "SR Document",
-    salesperson: "Not assigned",
-    contact: "",
+    workOrderNumber: workOrderData?.id || "WO-QOAV2I",
+    srDoc: workOrderData?.srDoc || "SR Document",
+    salesperson: workOrderData?.salesperson || "Not assigned",
+    contact: workOrderData?.contact || "",
     
     // General Information
-    type: "",
-    reportNumber: "",
-    itemStatus: "",
-    assignedTo: "",
-    priority: "Normal",
+    type: workOrderData?.type || "",
+    reportNumber: workOrderData?.reportNumber || "",
+    itemStatus: workOrderData?.status || "",
+    assignedTo: workOrderData?.assignedTo || "",
+    priority: workOrderData?.priority || "Normal",
     location: "",
     division: "",
     calFreq: "",

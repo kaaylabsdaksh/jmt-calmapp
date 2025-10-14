@@ -4158,7 +4158,17 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
   };
 
   const handleEditWorkOrder = (workOrderId: string) => {
-    navigate(`/work-order/${workOrderId}`);
+    // Find the work order data
+    const workOrder = mockWorkOrders.find(wo => wo.id === workOrderId);
+    if (workOrder) {
+      // Navigate to form variations page with work order data
+      navigate('/form-variations', { 
+        state: { 
+          workOrderData: workOrder,
+          isEditMode: true 
+        } 
+      });
+    }
   };
 
   // Default Work Order Details Dialog Component  
