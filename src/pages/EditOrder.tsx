@@ -3777,7 +3777,7 @@ const EditOrder = () => {
                       asChild 
                       className="text-xs text-muted-foreground hover:text-foreground transition-colors"
                     >
-                      <Link to="/add-new-work-order">Work Orders</Link>
+                      <Link to="/add-new-work-order">Add New Work Order</Link>
                     </BreadcrumbLink>
                   </BreadcrumbItem>
                   <BreadcrumbSeparator />
