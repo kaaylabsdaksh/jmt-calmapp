@@ -174,44 +174,44 @@ const EditOrder = () => {
     salesperson: workOrderData?.salesperson || "Not assigned",
     contact: workOrderData?.contact || "",
     
-    // General Information - Auto-fill from workOrderData
-    type: workOrderData?.type || "",
-    reportNumber: workOrderData?.reportNumber || "",
+    // General Information - Auto-fill from workOrderData and details
+    type: workOrderData?.details?.itemType || "",
+    reportNumber: workOrderData?.details?.batch || "",
     itemStatus: workOrderData?.status || "",
     assignedTo: workOrderData?.assignedTo || "",
-    priority: workOrderData?.priority || "Normal",
+    priority: workOrderData?.details?.priority || workOrderData?.urgencyLevel || "Normal",
     location: workOrderData?.location || "",
     division: workOrderData?.division || "",
     calFreq: workOrderData?.calFreq || "",
-    actionCode: workOrderData?.actionCode || "",
+    actionCode: workOrderData?.details?.action || workOrderData?.details?.job || "",
     
-    // Product Information - Auto-fill from workOrderData
-    manufacturer: workOrderData?.manufacturer || "",
-    model: workOrderData?.model || "",
-    labCode: workOrderData?.labCode || "",
-    mfgSerial: workOrderData?.mfgSerial || "",
-    costId: workOrderData?.costId || "",
-    costSerial: workOrderData?.costSerial || "",
+    // Product Information - Auto-fill from workOrderData.details
+    manufacturer: workOrderData?.details?.manufacturer || "",
+    model: workOrderData?.details?.modelNumber || "",
+    labCode: workOrderData?.details?.labCode || "",
+    mfgSerial: workOrderData?.details?.serialNumber || "",
+    costId: workOrderData?.details?.custId || "",
+    costSerial: workOrderData?.details?.custSn || "",
     rfid: workOrderData?.rfid || "",
-    quantity: workOrderData?.quantity || "",
-    description: workOrderData?.equipmentType || "",
+    quantity: workOrderData?.details?.items || "",
+    description: workOrderData?.equipmentType || workOrderData?.details?.workDescription || "",
     
-    // Logistics Information - Auto-fill from workOrderData
-    arrivalDate: workOrderData?.arrivalDate || "",
+    // Logistics Information - Auto-fill from workOrderData.details
+    arrivalDate: workOrderData?.arrivalDate || workOrderData?.details?.createdDate || "",
     arrivalType: workOrderData?.arrivalType || "",
-    arrivalLocation: workOrderData?.arrivalLocation || "",
+    arrivalLocation: workOrderData?.arrivalLocation || workOrderData?.details?.originalLoc || "",
     driver: workOrderData?.driver || "",
     puDate: workOrderData?.puDate || "",
     shipType: workOrderData?.shipType || "",
     name: workOrderData?.customer || "",
-    poLineNumber: workOrderData?.poLineNumber || "",
-    needBy: workOrderData?.needBy || "",
-    deliverByDate: workOrderData?.dueDate || "",
+    poLineNumber: workOrderData?.details?.poNumber || "",
+    needBy: workOrderData?.needBy || workOrderData?.details?.nextBy || "",
+    deliverByDate: workOrderData?.dueDate || workOrderData?.details?.departureDate || "",
     
-    // Departure Information
-    invNumber: "",
-    dtNumber: "",
-    deliveryStatus: "",
+    // Departure Information - Auto-fill from workOrderData.details
+    invNumber: workOrderData?.details?.invoiceNumber || "",
+    dtNumber: workOrderData?.dtNumber || "",
+    deliveryStatus: workOrderData?.details?.proofOfDelivery || "",
     
     // Options
     warranty: false,
@@ -254,10 +254,10 @@ const EditOrder = () => {
     comment: "",
     includeInCopyAsNew: false,
     
-    // Purchase Order Information  
-    poNumber: "",
-    soNumber: "",
-    jmPartsPoNumber: "",
+    // Purchase Order Information - Auto-fill from workOrderData.details
+    poNumber: workOrderData?.details?.poNumber || workOrderData?.details?.purchase || "",
+    soNumber: workOrderData?.soNumber || "",
+    jmPartsPoNumber: workOrderData?.jmPartsPoNumber || "",
     
     // Additional Options checkboxes
     returned: false,
@@ -265,39 +265,39 @@ const EditOrder = () => {
     dateValidOverride: false,
     coStdCheckOverride: false,
     
-    // Transit Information
-    originLocation: "",
-    destinationLocation: "",
-    huQty: "",
-    huType: "",
-    deliverTo: "",
-    deliveryType: "",
-    transitNotes: "",
+    // Transit Information - Auto-fill from workOrderData.details
+    originLocation: workOrderData?.details?.originalLoc || "",
+    destinationLocation: workOrderData?.details?.destLoc || "",
+    huQty: workOrderData?.huQty || "",
+    huType: workOrderData?.huType || "",
+    deliverTo: workOrderData?.deliverTo || "",
+    deliveryType: workOrderData?.details?.serviceType || "",
+    transitNotes: workOrderData?.transitNotes || workOrderData?.details?.technicalNotes || "",
     
-    // Lab Information (for BUILD NEW action code)
-    conditionIn: "",
-    conditionOut: "",
-    technician1: "",
-    technician2: "",
-    technician3: "",
-    addComment: "",
-    repairComments: "",
-    certificationDate: "",
-    recalibrationDate: "",
+    // Lab Information (for BUILD NEW action code) - Auto-fill from workOrderData.details
+    conditionIn: workOrderData?.conditionIn || "",
+    conditionOut: workOrderData?.conditionOut || "",
+    technician1: workOrderData?.assignedTo || "",
+    technician2: workOrderData?.technician2 || "",
+    technician3: workOrderData?.technician3 || "",
+    addComment: workOrderData?.addComment || "",
+    repairComments: workOrderData?.details?.comments || "",
+    certificationDate: workOrderData?.details?.statusDate || "",
+    recalibrationDate: workOrderData?.recalibrationDate || "",
     labTempUnit: "#",
-    labTempValue: "",
+    labTempValue: workOrderData?.labTempValue || "",
     labRhUnit: "#",
-    labRhValue: "",
-    standardsUsed: "",
-    calProcedureUsed: "",
-    procedureFiles: "",
-    calCertCost: 0,
-    repairCost: 0,
-    totalCost: 0,
-    completionDate: "",
-    testDate: "",
-    retestDate: "",
-    procedureUsed: "",
+    labRhValue: workOrderData?.labRhValue || "",
+    standardsUsed: workOrderData?.standardsUsed || "",
+    calProcedureUsed: workOrderData?.calProcedureUsed || "",
+    procedureFiles: workOrderData?.details?.template || "",
+    calCertCost: workOrderData?.estimatedCost ? parseFloat(workOrderData.estimatedCost.replace(/[$,]/g, '')) : 0,
+    repairCost: workOrderData?.actualCost ? parseFloat(workOrderData.actualCost.replace(/[$,]/g, '')) : 0,
+    totalCost: workOrderData?.actualCost ? parseFloat(workOrderData.actualCost.replace(/[$,]/g, '')) : 0,
+    completionDate: workOrderData?.details?.lastModified || "",
+    testDate: workOrderData?.testDate || "",
+    retestDate: workOrderData?.retestDate || "",
+    procedureUsed: workOrderData?.procedureUsed || "",
   });
 
   const currentTabs = [
