@@ -4230,7 +4230,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                   <div className="font-mono text-sm">{order.details.labCode}</div>
                 </div>
                 <div>
-                  <span className="text-gray-500 text-sm font-medium">Item Type:</span>
+                  <span className="text-gray-500 text-sm font-medium">Type:</span>
                   <div className="text-sm">{order.details.itemType}</div>
                 </div>
                 <div>
@@ -4601,7 +4601,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                     <TableHead className="font-semibold text-gray-900">Manufacturer</TableHead>
                     <TableHead className="font-semibold text-gray-900">Model</TableHead>
                     <TableHead className="font-semibold text-gray-900">Serial Number</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Item Type</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Type</TableHead>
                     <TableHead className="font-semibold text-gray-900">Customer</TableHead>
                     <TableHead className="font-semibold text-gray-900">Assigned To</TableHead>
                     <TableHead className="w-12"></TableHead>
@@ -4746,7 +4746,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                         <div className="font-mono text-xs">{item.serialNumber}</div>
                       </div>
                       <div>
-                        <span className="text-gray-500">Item Type:</span>
+                        <span className="text-gray-500">Type:</span>
                         <div className="font-medium text-xs">{item.itemType}</div>
                       </div>
                       <div className="col-span-2">
