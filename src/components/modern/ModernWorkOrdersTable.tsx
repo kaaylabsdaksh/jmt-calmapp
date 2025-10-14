@@ -4158,7 +4158,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
   };
 
   const handleEditWorkOrder = (workOrderId: string) => {
-    navigate(`/work-order/${workOrderId}`);
+    navigate(`/edit-order`);
   };
 
   // Default Work Order Details Dialog Component  
