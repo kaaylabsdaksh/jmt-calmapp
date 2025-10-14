@@ -4161,8 +4161,8 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
     // Find the work order data
     const workOrder = mockWorkOrders.find(wo => wo.id === workOrderId);
     if (workOrder) {
-      // Navigate to form variations page with work order data
-      navigate('/form-variations', { 
+      // Navigate to edit order page with work order data
+      navigate('/edit-order', { 
         state: { 
           workOrderData: workOrder,
           isEditMode: true 
