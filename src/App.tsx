@@ -7,7 +7,6 @@ import FormVariationsDemo from "./pages/FormVariationsDemo";
 import ModernAddNewItem from "./pages/ModernAddNewItem";
 import UnusedItemsManagement from "./pages/UnusedItemsManagement";
 import WorkOrderBatchDetailsDemo from "./pages/WorkOrderBatchDetailsDemo";
-import EditOrder from "./pages/EditOrder";
 import NotFound from "./pages/NotFound";
 import { Layout } from "./components/Layout";
 
@@ -23,7 +22,6 @@ const App = () => {
           <Route path="/modern-add-new-item" element={<ModernAddNewItem />} />
           <Route path="/unused-items" element={<UnusedItemsManagement />} />
           <Route path="/form-variations" element={<FormVariationsDemo />} />
-          <Route path="/edit-order" element={<EditOrder />} />
           <Route path="/work-orders-v2" element={<WorkOrderSearchV2 />} />
           <Route path="/work-order/:id" element={<WorkOrderDetail />} />
           <Route path="/batch-details" element={<WorkOrderBatchDetailsDemo />} />
