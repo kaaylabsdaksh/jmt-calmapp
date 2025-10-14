@@ -9,7 +9,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { 
   ArrowLeft, 
   Save, 
@@ -226,111 +225,102 @@ const WorkOrderDetails = ({ workOrderId }: WorkOrderDetailsProps) => {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
-                <Accordion type="single" collapsible defaultValue="work-order-info">
-                  <AccordionItem value="work-order-info" className="border-none">
-                    <AccordionTrigger className="text-lg font-medium hover:no-underline py-2">
-                      Work Order Information
-                    </AccordionTrigger>
-                    <AccordionContent className="space-y-6 pt-4">
-                      {/* Basic Information */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="workOrderNumber">Work Order #</Label>
-                          <Input 
-                            id="workOrderNumber" 
-                            value={workOrderData.id}
-                            className="bg-muted" 
-                            readOnly
-                          />
-                        </div>
-                        
-                        <div className="space-y-2">
-                          <Label htmlFor="workOrderStatus">Work Order Status</Label>
-                          <Select defaultValue="in-process">
-                            <SelectTrigger>
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="in-process">In Process</SelectItem>
-                              <SelectItem value="complete">Complete</SelectItem>
-                              <SelectItem value="pending">Pending</SelectItem>
-                              <SelectItem value="cancelled">Cancelled</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </div>
+                {/* Basic Information */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="workOrderNumber">Work Order #</Label>
+                    <Input 
+                      id="workOrderNumber" 
+                      value={workOrderData.id}
+                      className="bg-muted" 
+                      readOnly
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="workOrderStatus">Work Order Status</Label>
+                    <Select defaultValue="in-process">
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="in-process">In Process</SelectItem>
+                        <SelectItem value="complete">Complete</SelectItem>
+                        <SelectItem value="pending">Pending</SelectItem>
+                        <SelectItem value="cancelled">Cancelled</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
 
-                        <div className="space-y-2">
-                          <Label htmlFor="workOrderType">Work Order Type</Label>
-                          <Select defaultValue="regular">
-                            <SelectTrigger>
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="regular">Regular Work Order</SelectItem>
-                              <SelectItem value="rush">Rush Order</SelectItem>
-                              <SelectItem value="warranty">Warranty</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="workOrderType">Work Order Type</Label>
+                    <Select defaultValue="regular">
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="regular">Regular Work Order</SelectItem>
+                        <SelectItem value="rush">Rush Order</SelectItem>
+                        <SelectItem value="warranty">Warranty</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
 
-                        <div className="space-y-2">
-                          <Label htmlFor="actNumber">Act #</Label>
-                          <div className="relative">
-                            <Input 
-                              id="actNumber" 
-                              value={workOrderData.number}
-                              readOnly
-                            />
-                            <div className="absolute right-2 top-2">
-                              <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                            </div>
-                          </div>
-                        </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="actNumber">Act #</Label>
+                    <div className="relative">
+                      <Input 
+                        id="actNumber" 
+                        value={workOrderData.number}
+                        readOnly
+                      />
+                      <div className="absolute right-2 top-2">
+                        <div className="w-2 h-2 bg-red-500 rounded-full"></div>
                       </div>
+                    </div>
+                  </div>
+                </div>
 
-                      <Separator />
+                <Separator />
 
-                      {/* Customer Information */}
-                      <div className="space-y-4">
-                        <h3 className="text-lg font-medium flex items-center gap-2">
-                          <User className="h-5 w-5 text-primary" />
-                          Customer Information
-                        </h3>
-                        
-                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                          <div className="space-y-2">
-                            <Label htmlFor="customer">Customer</Label>
-                            <Textarea 
-                              id="customer" 
-                              value={`${workOrderData.customer.name}\n${workOrderData.customer.address}`}
-                              rows={3}
-                              className="resize-none"
-                              readOnly
-                            />
-                          </div>
-                          
-                          <div className="space-y-2">
-                            <Label htmlFor="contact">Contact</Label>
-                            <Input 
-                              id="contact" 
-                              value={workOrderData.customer.contact}
-                              readOnly
-                            />
-                          </div>
-                          
-                          <div className="space-y-2">
-                            <Label htmlFor="phone">Phone</Label>
-                            <Input 
-                              id="phone" 
-                              value={workOrderData.customer.phone}
-                              readOnly
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
+                {/* Customer Information */}
+                <div className="space-y-4">
+                  <h3 className="text-lg font-medium flex items-center gap-2">
+                    <User className="h-5 w-5 text-primary" />
+                    Customer Information
+                  </h3>
+                  
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="customer">Customer</Label>
+                      <Textarea 
+                        id="customer" 
+                        value={`${workOrderData.customer.name}\n${workOrderData.customer.address}`}
+                        rows={3}
+                        className="resize-none"
+                        readOnly
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="contact">Contact</Label>
+                      <Input 
+                        id="contact" 
+                        value={workOrderData.customer.contact}
+                        readOnly
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="phone">Phone</Label>
+                      <Input 
+                        id="phone" 
+                        value={workOrderData.customer.phone}
+                        readOnly
+                      />
+                    </div>
+                  </div>
+                </div>
               </CardContent>
             </Card>
           </TabsContent>
