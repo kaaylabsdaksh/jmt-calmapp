@@ -28,7 +28,7 @@ const FormVariationsDemo = () => {
   
   
   // Main section state
-  const [activeSection, setActiveSection] = useState<'work-order-items' | 'estimate' | 'qf3'>('work-order-items');
+  const [activeSection, setActiveSection] = useState<'work-order-items' | 'estimate' | 'qf3' | 'external-files' | 'cert-files'>('work-order-items');
   
   // User role state for testing different footers
   const [userRole, setUserRole] = useState<'admin' | 'technician'>('technician');
@@ -304,8 +304,6 @@ const FormVariationsDemo = () => {
     { value: 'logistics', label: 'Logistics', icon: Truck },
     { value: 'product-images', label: 'Images', icon: Package },
     { value: 'lab', label: 'Lab', icon: Settings },
-    { value: 'external-files', label: 'External Files', icon: FileText },
-    { value: 'cert-files', label: 'Cert Files', icon: Shield },
     { value: 'other', label: 'Other', icon: Settings }
   ];
 
@@ -3625,44 +3623,6 @@ const FormVariationsDemo = () => {
             {renderLabSection()}
           </TabsContent>
 
-          <TabsContent value="external-files" className="space-y-6">
-            <Card className="border-0 shadow-md">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-3 pb-4 border-b border-border mb-6">
-                  <div className="p-2 bg-primary/10 rounded-lg">
-                    <FileText className="h-5 w-5 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold">External Files</h3>
-                    <p className="text-sm text-muted-foreground">Manage external documents and files</p>
-                  </div>
-                </div>
-                <div className="text-center py-8 text-muted-foreground">
-                  Content will be added here
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="cert-files" className="space-y-6">
-            <Card className="border-0 shadow-md">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-3 pb-4 border-b border-border mb-6">
-                  <div className="p-2 bg-primary/10 rounded-lg">
-                    <Shield className="h-5 w-5 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold">Certification Files</h3>
-                    <p className="text-sm text-muted-foreground">Manage certification documents</p>
-                  </div>
-                </div>
-                <div className="text-center py-8 text-muted-foreground">
-                  Content will be added here
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
           <TabsContent value="other" className="space-y-6">
             <Tabs value={activeOtherTab} onValueChange={setActiveOtherTab} className="w-full">
               <TabsList className="grid w-full grid-cols-6">
@@ -3877,6 +3837,30 @@ const FormVariationsDemo = () => {
             <Settings className="h-4 w-4" />
             QF3
           </Button>
+          <Button
+            variant="ghost"
+            onClick={() => setActiveSection('external-files')}
+            className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all border ${
+              activeSection === 'external-files'
+                ? 'bg-primary text-primary-foreground shadow-sm border-primary'
+                : 'bg-background text-muted-foreground hover:text-foreground border-border hover:border-border/80'
+            }`}
+          >
+            <FileText className="h-4 w-4" />
+            External Files
+          </Button>
+          <Button
+            variant="ghost"
+            onClick={() => setActiveSection('cert-files')}
+            className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all border ${
+              activeSection === 'cert-files'
+                ? 'bg-primary text-primary-foreground shadow-sm border-primary'
+                : 'bg-background text-muted-foreground hover:text-foreground border-border hover:border-border/80'
+            }`}
+          >
+            <Shield className="h-4 w-4" />
+            Cert Files
+          </Button>
         </div>
         
         {/* Content based on active section */}
@@ -3901,6 +3885,44 @@ const FormVariationsDemo = () => {
               <div className="text-center py-12">
                 <h3 className="text-lg font-semibold text-foreground mb-2">QF3 Data Section</h3>
                 <p className="text-muted-foreground">QF3 data content will be displayed here.</p>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+        
+        {activeSection === 'external-files' && (
+          <Card className="border-0 shadow-md">
+            <CardContent className="p-6">
+              <div className="flex items-center gap-3 pb-4 border-b border-border mb-6">
+                <div className="p-2 bg-primary/10 rounded-lg">
+                  <FileText className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold">External Files</h3>
+                  <p className="text-sm text-muted-foreground">Manage external documents and files</p>
+                </div>
+              </div>
+              <div className="text-center py-8 text-muted-foreground">
+                Content will be added here
+              </div>
+            </CardContent>
+          </Card>
+        )}
+        
+        {activeSection === 'cert-files' && (
+          <Card className="border-0 shadow-md">
+            <CardContent className="p-6">
+              <div className="flex items-center gap-3 pb-4 border-b border-border mb-6">
+                <div className="p-2 bg-primary/10 rounded-lg">
+                  <Shield className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold">Certification Files</h3>
+                  <p className="text-sm text-muted-foreground">Manage certification documents</p>
+                </div>
+              </div>
+              <div className="text-center py-8 text-muted-foreground">
+                Content will be added here
               </div>
             </CardContent>
           </Card>

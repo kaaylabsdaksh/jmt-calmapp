@@ -13,7 +13,7 @@ interface FixedActionFooterProps {
   saveText?: string;
   cancelText?: string;
   isLoading?: boolean;
-  currentSection?: 'work-order-items' | 'estimate' | 'qf3';
+  currentSection?: 'work-order-items' | 'estimate' | 'qf3' | 'external-files' | 'cert-files';
   userRole?: 'admin' | 'technician';
   onUserRoleChange?: (role: 'admin' | 'technician') => void;
 }
