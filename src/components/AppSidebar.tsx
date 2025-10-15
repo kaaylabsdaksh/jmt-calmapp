@@ -1,6 +1,6 @@
 import { useState } from "react";
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { 
   Settings, 
   FileText, 
@@ -141,28 +141,52 @@ export function AppSidebar() {
                             tooltip={action.title}
                             className="group"
                           >
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              className={`
-                                w-full justify-start h-10 px-3 
-                                ${isActiveItem(action.title) 
-                                  ? "bg-sidebar-accent text-sidebar-accent-foreground shadow-sm font-semibold" 
-                                  : "text-sidebar-foreground hover:text-sidebar-accent-foreground"
-                                }
-                                hover:bg-sidebar-accent hover:shadow-sm
-                                transition-all duration-200 ease-in-out
-                                group-hover:translate-x-1
-                              `}
-                              style={{
-                                animationDelay: `${(categoryIndex * 100) + (index * 50)}ms`
-                              }}
-                            >
-                              {React.createElement(action.icon, { className: "h-4 w-4 shrink-0 text-sidebar-foreground group-hover:scale-110 transition-transform duration-200" })}
-                              <span className="ml-3 font-medium text-sm animate-fade-in">
-                                {action.title}
-                              </span>
-                            </Button>
+                            {action.title === "Work Orders" ? (
+                              <Link
+                                to="/"
+                                className={`
+                                  flex items-center w-full h-10 px-3 rounded-md
+                                  ${isActiveItem(action.title) 
+                                    ? "bg-sidebar-accent text-sidebar-accent-foreground shadow-sm font-semibold" 
+                                    : "text-sidebar-foreground hover:text-sidebar-accent-foreground"
+                                  }
+                                  hover:bg-sidebar-accent hover:shadow-sm
+                                  transition-all duration-200 ease-in-out
+                                  group-hover:translate-x-1
+                                `}
+                                style={{
+                                  animationDelay: `${(categoryIndex * 100) + (index * 50)}ms`
+                                }}
+                              >
+                                {React.createElement(action.icon, { className: "h-4 w-4 shrink-0 text-sidebar-foreground group-hover:scale-110 transition-transform duration-200" })}
+                                <span className="ml-3 font-medium text-sm animate-fade-in">
+                                  {action.title}
+                                </span>
+                              </Link>
+                            ) : (
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className={`
+                                  w-full justify-start h-10 px-3 
+                                  ${isActiveItem(action.title) 
+                                    ? "bg-sidebar-accent text-sidebar-accent-foreground shadow-sm font-semibold" 
+                                    : "text-sidebar-foreground hover:text-sidebar-accent-foreground"
+                                  }
+                                  hover:bg-sidebar-accent hover:shadow-sm
+                                  transition-all duration-200 ease-in-out
+                                  group-hover:translate-x-1
+                                `}
+                                style={{
+                                  animationDelay: `${(categoryIndex * 100) + (index * 50)}ms`
+                                }}
+                              >
+                                {React.createElement(action.icon, { className: "h-4 w-4 shrink-0 text-sidebar-foreground group-hover:scale-110 transition-transform duration-200" })}
+                                <span className="ml-3 font-medium text-sm animate-fade-in">
+                                  {action.title}
+                                </span>
+                              </Button>
+                            )}
                           </SidebarMenuButton>
                         </SidebarMenuItem>
                       ))}
@@ -181,24 +205,44 @@ export function AppSidebar() {
                         tooltip={action.title}
                         className="group"
                       >
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className={`
-                            w-full justify-center h-10 px-0
-                            ${isActiveItem(action.title) 
-                              ? "bg-sidebar-accent text-sidebar-accent-foreground shadow-sm font-semibold" 
-                              : "text-sidebar-foreground hover:text-sidebar-accent-foreground"
-                            }
-                            hover:bg-sidebar-accent hover:shadow-sm
-                            transition-all duration-200 ease-in-out
-                          `}
-                          style={{
-                            animationDelay: `${(categoryIndex * 100) + (index * 50)}ms`
-                          }}
-                        >
-                          {React.createElement(action.icon, { className: "h-4 w-4 shrink-0 text-sidebar-foreground group-hover:scale-110 transition-transform duration-200" })}
-                        </Button>
+                        {action.title === "Work Orders" ? (
+                          <Link
+                            to="/"
+                            className={`
+                              flex items-center justify-center w-full h-10 px-0 rounded-md
+                              ${isActiveItem(action.title) 
+                                ? "bg-sidebar-accent text-sidebar-accent-foreground shadow-sm font-semibold" 
+                                : "text-sidebar-foreground hover:text-sidebar-accent-foreground"
+                              }
+                              hover:bg-sidebar-accent hover:shadow-sm
+                              transition-all duration-200 ease-in-out
+                            `}
+                            style={{
+                              animationDelay: `${(categoryIndex * 100) + (index * 50)}ms`
+                            }}
+                          >
+                            {React.createElement(action.icon, { className: "h-4 w-4 shrink-0 text-sidebar-foreground group-hover:scale-110 transition-transform duration-200" })}
+                          </Link>
+                        ) : (
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className={`
+                              w-full justify-center h-10 px-0
+                              ${isActiveItem(action.title) 
+                                ? "bg-sidebar-accent text-sidebar-accent-foreground shadow-sm font-semibold" 
+                                : "text-sidebar-foreground hover:text-sidebar-accent-foreground"
+                              }
+                              hover:bg-sidebar-accent hover:shadow-sm
+                              transition-all duration-200 ease-in-out
+                            `}
+                            style={{
+                              animationDelay: `${(categoryIndex * 100) + (index * 50)}ms`
+                            }}
+                          >
+                            {React.createElement(action.icon, { className: "h-4 w-4 shrink-0 text-sidebar-foreground group-hover:scale-110 transition-transform duration-200" })}
+                          </Button>
+                        )}
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                   ))}
