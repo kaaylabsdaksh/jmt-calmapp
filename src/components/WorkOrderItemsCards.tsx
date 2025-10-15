@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
+import { useNavigate } from "react-router-dom";
 
 interface WorkOrderItem {
   id: string;
@@ -166,6 +167,8 @@ const getStatusColor = (status: string) => {
 };
 
 export const WorkOrderItemsCards = ({ templateItems = [] }: WorkOrderItemsCardsProps) => {
+  const navigate = useNavigate();
+
   // Combine template items and mock data
   const allItems = [
     ...templateItems.map(item => ({
@@ -183,6 +186,29 @@ export const WorkOrderItemsCards = ({ templateItems = [] }: WorkOrderItemsCardsP
     })),
     ...mockData
   ];
+
+  const handleViewDetails = (item: typeof allItems[0]) => {
+    // Map item data to the format expected by EditOrder
+    const workOrderData = {
+      id: item.reportNumber,
+      srDoc: "SR Document",
+      salesperson: "Not assigned",
+      contact: "",
+      status: item.itemStatus,
+      details: {
+        manufacturer: item.manufacturer,
+        modelNumber: item.model,
+        serialNumber: item.serialNumber,
+        itemType: item.itemType,
+        priority: item.itemStatus,
+        action: item.itemType,
+        batch: item.reportNumber,
+        nextBy: item.deliverByDate,
+      }
+    };
+
+    navigate("/edit-order", { state: { workOrderData } });
+  };
 
   return (
     <div className="space-y-4">
@@ -266,7 +292,11 @@ export const WorkOrderItemsCards = ({ templateItems = [] }: WorkOrderItemsCardsP
               </div>
 
               <div className="mt-4 pt-3 border-t flex justify-end">
-                <Button variant="link" className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto">
+                <Button 
+                  variant="link" 
+                  className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto"
+                  onClick={() => index === 0 ? null : handleViewDetails(item)}
+                >
                   {index === 0 ? 'Clear' : 'View Details'}
                 </Button>
               </div>
