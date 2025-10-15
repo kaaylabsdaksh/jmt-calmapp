@@ -4171,6 +4171,61 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
     }
   };
 
+  const handleItemTypeClick = (item: any, e: React.MouseEvent) => {
+    // Stop propagation to prevent opening the details dialog
+    e.stopPropagation();
+    
+    // Create workOrderData from item
+    const workOrderData = {
+      id: item.workOrderNumber,
+      srDoc: "SR Document",
+      salesperson: "Not assigned",
+      contact: "Brad Morrison",
+      status: item.itemStatus,
+      customer: item.customer,
+      equipmentType: item.itemType,
+      location: "baton-rouge",
+      division: item.division || "esl",
+      assignedTo: item.assignedTo,
+      urgencyLevel: item.priority || "normal",
+      dueDate: item.deliverByDate,
+      arrivalDate: item.created,
+      needBy: item.deliverByDate,
+      calFreq: "Annual",
+      details: {
+        manufacturer: item.manufacturer,
+        modelNumber: item.model,
+        serialNumber: item.serialNumber,
+        itemType: item.itemType,
+        priority: item.priority,
+        action: "C/C",
+        job: "C/C",
+        batch: item.reportNumber,
+        nextBy: item.deliverByDate,
+        createdDate: item.created,
+        departureDate: item.departure,
+        originalLoc: "warehouse",
+        destLoc: "main-office",
+        serviceType: "standard",
+        technicalNotes: `${item.itemType} - Standard processing`,
+        comments: "Item ready for processing",
+        poNumber: item.poNumber,
+        custId: "CUST-001",
+        custSn: "CSN-001",
+        labCode: "LAB-001",
+        workDescription: `${item.manufacturer} ${item.model} - ${item.itemType}`,
+        invoiceNumber: "",
+        proofOfDelivery: "pending",
+        statusDate: item.created,
+        lastModified: item.created,
+        template: "Standard Procedure",
+        items: "1",
+      }
+    };
+    
+    navigate('/edit-order', { state: { workOrderData } });
+  };
+
   // Default Work Order Details Dialog Component  
   const DefaultWorkOrderDetailsDialog = ({ order }: { order: WorkOrder }) => (
     <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
@@ -4656,7 +4711,14 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                     <TableCell className="font-medium">{item.manufacturer}</TableCell>
                     <TableCell className="font-mono text-sm">{item.model}</TableCell>
                     <TableCell className="font-mono text-sm">{item.serialNumber}</TableCell>
-                    <TableCell className="text-sm">{item.itemType}</TableCell>
+                    <TableCell className="text-sm">
+                      <button
+                        onClick={(e) => handleItemTypeClick(item, e)}
+                        className="text-blue-600 hover:text-blue-800 hover:underline font-medium transition-colors"
+                      >
+                        {item.itemType}
+                      </button>
+                    </TableCell>
                     <TableCell className="font-medium">{item.customer}</TableCell>
                     <TableCell>{item.assignedTo}</TableCell>
                     <TableCell></TableCell>
@@ -4753,7 +4815,12 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                       </div>
                       <div>
                         <span className="text-gray-500">Type:</span>
-                        <div className="font-medium text-xs">{item.itemType}</div>
+                        <button
+                          onClick={(e) => handleItemTypeClick(item, e)}
+                          className="text-blue-600 hover:text-blue-800 hover:underline font-medium text-xs transition-colors block"
+                        >
+                          {item.itemType}
+                        </button>
                       </div>
                       <div className="col-span-2">
                         <span className="text-gray-500">Assigned To:</span>
