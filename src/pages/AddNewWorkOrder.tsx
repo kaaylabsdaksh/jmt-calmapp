@@ -808,36 +808,54 @@ const AddNewWorkOrder = () => {
                 <CardHeader className="pb-3 sm:pb-4">
                   <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
                     <h2 className="text-lg sm:text-xl font-semibold text-foreground">Work Order Items</h2>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="outline" className="flex items-center gap-2 bg-background text-sm w-full sm:w-auto">
-                          {viewMode === 'table' ? 'Table View' : viewMode === 'cards' ? 'Grid View' : 'Receiving View'}
-                          <ChevronDown className="w-4 h-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent className="bg-background border shadow-lg z-50" align="end">
-                        <DropdownMenuItem 
-                          onClick={() => setViewMode('table')}
-                          className={`cursor-pointer ${viewMode === 'table' ? 'bg-muted' : ''}`}
-                        >
-                          <Table className="w-4 h-4 mr-2" />
-                          Table View
-                        </DropdownMenuItem>
-                        <DropdownMenuItem 
-                          onClick={() => setViewMode('cards')}
-                          className={`cursor-pointer ${viewMode === 'cards' ? 'bg-muted' : ''}`}
-                        >
-                          <LayoutGrid className="w-4 h-4 mr-2" />
-                          Grid View
-                        </DropdownMenuItem>
-                        <DropdownMenuItem 
-                          onClick={() => setViewMode('receiving')}
-                          className={`cursor-pointer ${viewMode === 'receiving' ? 'bg-muted' : ''}`}
-                        >
-                          Receiving View
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+                    <div className="flex items-center gap-3 w-full sm:w-auto">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="outline" className="flex items-center gap-2 bg-background text-sm w-full sm:w-auto">
+                            {viewMode === 'receiving' ? 'Receiving View' : 'Default View'}
+                            <ChevronDown className="w-4 h-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent className="bg-background border shadow-lg z-50" align="end">
+                          <DropdownMenuItem 
+                            onClick={() => setViewMode('cards')}
+                            className={`cursor-pointer ${viewMode === 'cards' || viewMode === 'table' ? 'bg-muted' : ''}`}
+                          >
+                            Default View
+                          </DropdownMenuItem>
+                          <DropdownMenuItem 
+                            onClick={() => setViewMode('receiving')}
+                            className={`cursor-pointer ${viewMode === 'receiving' ? 'bg-muted' : ''}`}
+                          >
+                            <Package className="w-4 h-4 mr-2" />
+                            Receiving View
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+
+                      {(viewMode === 'table' || viewMode === 'cards') && (
+                        <div className="flex items-center gap-1 bg-muted rounded-lg p-1">
+                          <Button
+                            variant={viewMode === 'table' ? 'default' : 'ghost'}
+                            size="sm"
+                            onClick={() => setViewMode('table')}
+                            className="flex items-center gap-1.5 h-8 px-3"
+                          >
+                            <Table className="w-4 h-4" />
+                            <span className="hidden sm:inline">Table</span>
+                          </Button>
+                          <Button
+                            variant={viewMode === 'cards' ? 'default' : 'ghost'}
+                            size="sm"
+                            onClick={() => setViewMode('cards')}
+                            className="flex items-center gap-1.5 h-8 px-3"
+                          >
+                            <LayoutGrid className="w-4 h-4" />
+                            <span className="hidden sm:inline">Grid</span>
+                          </Button>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </CardHeader>
                 <CardContent className="p-4 sm:p-6 pt-0">
