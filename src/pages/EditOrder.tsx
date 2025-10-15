@@ -218,10 +218,10 @@ const EditOrder = () => {
     
     // General Information - Auto-fill from workOrderData and details
     type: mapItemType(workOrderData?.details?.itemType || ""),
-    reportNumber: workOrderData?.details?.batch || "",
+    reportNumber: workOrderData?.details?.batch || workOrderData?.id || "",
     itemStatus: workOrderData?.status || "",
     assignedTo: workOrderData?.assignedTo || "",
-    priority: workOrderData?.details?.priority || workOrderData?.urgencyLevel || "Normal",
+    priority: workOrderData?.urgencyLevel || workOrderData?.details?.priority || "Normal",
     location: workOrderData?.location || "",
     division: workOrderData?.division || "",
     calFreq: workOrderData?.calFreq || "",
@@ -235,8 +235,8 @@ const EditOrder = () => {
     costId: workOrderData?.details?.custId || "",
     costSerial: workOrderData?.details?.custSn || "",
     rfid: workOrderData?.rfid || "",
-    quantity: workOrderData?.details?.items || "",
-    description: workOrderData?.equipmentType || workOrderData?.details?.workDescription || "",
+    quantity: workOrderData?.details?.items || "1",
+    description: workOrderData?.details?.workDescription || workOrderData?.equipmentType || "",
     
     // Logistics Information - Auto-fill from workOrderData.details
     arrivalDate: workOrderData?.arrivalDate || workOrderData?.details?.createdDate || "",

@@ -188,22 +188,51 @@ export const WorkOrderItemsCards = ({ templateItems = [] }: WorkOrderItemsCardsP
   ];
 
   const handleViewDetails = (item: typeof allItems[0]) => {
-    // Map item data to the format expected by EditOrder
+    // Map item data to the format expected by EditOrder with comprehensive field mapping
     const workOrderData = {
       id: item.reportNumber,
-      srDoc: "SR Document",
+      srDoc: "SR-" + item.reportNumber,
       salesperson: "Not assigned",
-      contact: "",
+      contact: "Brad Morrison",
       status: item.itemStatus,
+      customer: "Entergy Inventory",
+      equipmentType: "Calibration Equipment",
+      location: "Baton Rouge",
+      division: "ESL",
+      assignedTo: "Aaron L Briles",
+      urgencyLevel: item.itemStatus || "Normal",
+      dueDate: item.deliverByDate,
+      arrivalDate: item.created || new Date().toISOString().split('T')[0],
+      needBy: item.deliverByDate,
+      calFreq: "Annual",
       details: {
         manufacturer: item.manufacturer,
         modelNumber: item.model,
         serialNumber: item.serialNumber,
         itemType: item.itemType,
-        priority: item.itemStatus,
+        priority: item.itemStatus || "Normal",
         action: item.itemType,
+        job: item.itemType,
         batch: item.reportNumber,
         nextBy: item.deliverByDate,
+        createdDate: item.created || new Date().toISOString().split('T')[0],
+        departureDate: item.departure || "",
+        originalLoc: "Warehouse",
+        destLoc: "Main Office",
+        serviceType: "Standard",
+        technicalNotes: "Standard calibration required",
+        comments: "Item ready for processing",
+        poNumber: item.poNumber || "",
+        custId: "CUST-001",
+        custSn: "CSN-" + item.reportNumber,
+        labCode: "LAB-" + item.manufacturer.substring(0, 3).toUpperCase(),
+        workDescription: `${item.manufacturer} ${item.model} - Standard calibration and testing`,
+        invoiceNumber: "",
+        proofOfDelivery: "",
+        statusDate: new Date().toISOString().split('T')[0],
+        lastModified: new Date().toISOString().split('T')[0],
+        template: "Standard Calibration Procedure",
+        items: "1",
       }
     };
 
