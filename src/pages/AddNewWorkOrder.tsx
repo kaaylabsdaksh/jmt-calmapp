@@ -811,16 +811,24 @@ const AddNewWorkOrder = () => {
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button variant="outline" className="flex items-center gap-2 bg-background text-sm w-full sm:w-auto">
-                          {viewMode === 'receiving' ? 'Receiving View' : 'Default View'}
+                          {viewMode === 'table' ? 'Table View' : viewMode === 'cards' ? 'Grid View' : 'Receiving View'}
                           <ChevronDown className="w-4 h-4" />
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent className="bg-background border shadow-lg z-50" align="end">
                         <DropdownMenuItem 
-                          onClick={() => setViewMode('cards')}
-                          className={`cursor-pointer ${viewMode === 'cards' || viewMode === 'table' ? 'bg-muted' : ''}`}
+                          onClick={() => setViewMode('table')}
+                          className={`cursor-pointer ${viewMode === 'table' ? 'bg-muted' : ''}`}
                         >
-                          Default View
+                          <Table className="w-4 h-4 mr-2" />
+                          Table View
+                        </DropdownMenuItem>
+                        <DropdownMenuItem 
+                          onClick={() => setViewMode('cards')}
+                          className={`cursor-pointer ${viewMode === 'cards' ? 'bg-muted' : ''}`}
+                        >
+                          <LayoutGrid className="w-4 h-4 mr-2" />
+                          Grid View
                         </DropdownMenuItem>
                         <DropdownMenuItem 
                           onClick={() => setViewMode('receiving')}
