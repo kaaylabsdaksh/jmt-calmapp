@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, ChevronDown, ChevronUp, Calendar, User, MapPin, DollarSign, MessageSquare, Clock, Settings, Search, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -132,6 +133,7 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
   batchId, 
   onBack 
 }) => {
+  const navigate = useNavigate();
   const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("");
@@ -191,6 +193,61 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
       newExpandedItems.add(itemId);
     }
     setExpandedItems(newExpandedItems);
+  };
+
+  const handleItemClick = (item: WorkOrderItem, e: React.MouseEvent) => {
+    // Stop propagation to prevent row expansion
+    e.stopPropagation();
+    
+    // Create workOrderData from item
+    const workOrderData = {
+      id: mockBatch.batchNumber + "-" + item.id,
+      srDoc: mockBatch.srNumber,
+      salesperson: "Not assigned",
+      contact: "Brad Morrison",
+      status: item.itemStatus,
+      customer: mockBatch.customer,
+      equipmentType: item.item,
+      location: item.location.toLowerCase().replace(/\s+/g, '-'),
+      division: item.division.toLowerCase(),
+      assignedTo: item.assignedTo || "not-assigned",
+      urgencyLevel: "normal",
+      dueDate: item.needByDate || "",
+      arrivalDate: item.itemCreated,
+      needBy: item.needByDate || "",
+      calFreq: "Annual",
+      details: {
+        manufacturer: item.manufacturer || "",
+        modelNumber: item.model || "",
+        serialNumber: item.serialNumber || "",
+        itemType: item.item,
+        priority: "normal",
+        action: item.action,
+        job: item.action,
+        batch: mockBatch.batchNumber,
+        nextBy: item.needByDate || "",
+        createdDate: item.itemCreated,
+        departureDate: item.departureDate || "",
+        originalLoc: item.location,
+        destLoc: "main-office",
+        serviceType: item.operationType || "standard",
+        technicalNotes: item.lastComment || "",
+        comments: item.lastComment || "Item ready for processing",
+        poNumber: item.poNumber,
+        custId: "CUST-001",
+        custSn: "CSN-001",
+        labCode: item.labCode,
+        workDescription: `${item.item} - ${item.operationType || item.action}`,
+        invoiceNumber: "",
+        proofOfDelivery: "pending",
+        statusDate: item.itemCreated,
+        lastModified: item.lastCommentDate || item.itemCreated,
+        template: "Standard Procedure",
+        items: "1",
+      }
+    };
+    
+    navigate('/edit-order', { state: { workOrderData } });
   };
   return (
     <div className="space-y-4">
@@ -298,7 +355,14 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
               {filteredItems.map((item) => (
                 <React.Fragment key={item.id}>
                   <TableRow className="hover:bg-muted/30">
-                    <TableCell className="font-medium text-blue-600">{item.item}</TableCell>
+                    <TableCell className="font-medium">
+                      <button
+                        onClick={(e) => handleItemClick(item, e)}
+                        className="text-blue-600 hover:text-blue-800 hover:underline font-medium transition-colors"
+                      >
+                        {item.item}
+                      </button>
+                    </TableCell>
                     <TableCell>{item.division}</TableCell>
                     <TableCell>{item.location}</TableCell>
                     <TableCell>{item.itemCreated}</TableCell>
