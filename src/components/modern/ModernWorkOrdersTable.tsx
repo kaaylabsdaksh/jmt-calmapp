@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { List, Grid3X3 } from "lucide-react";
+import { List, Grid3X3, Pencil } from "lucide-react";
 import { cn } from "@/lib/utils";
 import WorkOrderBatchDetails from "@/components/WorkOrderBatchDetails";
 
@@ -4697,7 +4697,17 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                     className="hover:bg-gray-50 cursor-pointer border-b border-gray-100"
                     onClick={() => openDetailsFromItem(item)}
                   >
-                    <TableCell className="font-medium text-blue-600">{item.workOrderNumber}</TableCell>
+                    <TableCell className="font-medium text-blue-600">
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={(e) => handleItemTypeClick(item, e)}
+                          className="text-gray-400 hover:text-blue-600 transition-colors"
+                        >
+                          <Pencil className="h-4 w-4" />
+                        </button>
+                        {item.workOrderNumber}
+                      </div>
+                    </TableCell>
                     <TableCell className="font-mono text-sm">{item.reportNumber}</TableCell>
                     <TableCell>{getItemStatusBadge(item.itemStatus)}</TableCell>
                     <TableCell>
@@ -4783,7 +4793,15 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
                   <div className="p-4 border-b border-gray-100">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        <span className="font-bold text-blue-600 text-lg">{item.workOrderNumber}</span>
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={(e) => handleItemTypeClick(item, e)}
+                            className="text-gray-400 hover:text-blue-600 transition-colors"
+                          >
+                            <Pencil className="h-4 w-4" />
+                          </button>
+                          <span className="font-bold text-blue-600 text-lg">{item.workOrderNumber}</span>
+                        </div>
                         <div className="flex items-center gap-2">
                           {getItemStatusBadge(item.itemStatus)}
                           <span className={cn("px-2 py-1 rounded-md text-xs font-medium",
