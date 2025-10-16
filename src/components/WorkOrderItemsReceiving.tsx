@@ -47,6 +47,16 @@ const manufacturers = [
   { value: "5ft-wking", label: "5FT WKING STANDARD" },
 ];
 
+const models = [
+  { value: "dm-5000", label: "DM-5000" },
+  { value: "osc-3000", label: "OSC-3000" },
+  { value: "pwr-500", label: "PWR-500" },
+  { value: "sig-gen-2000", label: "SIG-GEN-2000" },
+  { value: "ps-750", label: "PS-750" },
+  { value: "freq-counter-1000", label: "FREQ-COUNTER-1000" },
+  { value: "multi-cal-400", label: "MULTI-CAL-400" },
+];
+
 const createEmptyItem = (): WorkOrderReceivingItem => ({
   id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
   itemNumber: "",
@@ -83,6 +93,8 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
   const [isAddingNew, setIsAddingNew] = useState(false);
   const [manufacturerPopoverOpen, setManufacturerPopoverOpen] = useState(false);
   const [editManufacturerPopoverOpen, setEditManufacturerPopoverOpen] = useState<{[key: string]: boolean}>({});
+  const [modelPopoverOpen, setModelPopoverOpen] = useState(false);
+  const [editModelPopoverOpen, setEditModelPopoverOpen] = useState<{[key: string]: boolean}>({});
 
   // Handle individual item selection
   const handleItemSelect = (itemId: string, checked: boolean) => {
@@ -358,14 +370,44 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                        </Popover>
                     </td>
                      <td className="p-4 min-w-[140px]">
-                       <Input 
-                         placeholder="Model"
-                         value={newItem.model}
-                         onChange={(e) => updateNewItem('model', e.target.value)}
-                         className="h-12 text-base font-medium border-2 focus:border-primary"
-                         onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
-                         autoComplete="off"
-                        />
+                       <Popover open={modelPopoverOpen} onOpenChange={setModelPopoverOpen}>
+                         <PopoverTrigger asChild>
+                           <Button
+                             variant="outline"
+                             role="combobox"
+                             aria-expanded={modelPopoverOpen}
+                             className="h-12 w-full justify-between text-base border-2 focus:border-primary"
+                             onFocus={(e) => e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
+                           >
+                             {newItem.model
+                               ? models.find((mdl) => mdl.value === newItem.model)?.label
+                               : "Select..."}
+                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                           </Button>
+                         </PopoverTrigger>
+                         <PopoverContent className="w-[200px] p-0 bg-background" align="start">
+                           <Command>
+                             <CommandInput placeholder="Search model..." className="h-9" />
+                             <CommandList>
+                               <CommandEmpty>No model found.</CommandEmpty>
+                               <CommandGroup>
+                                 {models.map((mdl) => (
+                                   <CommandItem
+                                     key={mdl.value}
+                                     value={mdl.label}
+                                     onSelect={() => {
+                                       updateNewItem('model', mdl.value);
+                                       setModelPopoverOpen(false);
+                                     }}
+                                   >
+                                     {mdl.label}
+                                   </CommandItem>
+                                 ))}
+                               </CommandGroup>
+                             </CommandList>
+                           </Command>
+                         </PopoverContent>
+                       </Popover>
                      </td>
                      <td className="p-4 min-w-[200px]">
                        <Textarea 
@@ -678,12 +720,46 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                     </td>
                     <td className="p-2 text-xs">
                       {editingItemId === item.id ? (
-                        <Input 
-                          placeholder="Model"
-                          value={item.model}
-                          onChange={(e) => updateItem(item.id, 'model', e.target.value)}
-                          className="h-6 text-xs"
-                        />
+                        <Popover 
+                          open={editModelPopoverOpen[item.id] || false} 
+                          onOpenChange={(open) => setEditModelPopoverOpen(prev => ({...prev, [item.id]: open}))}
+                        >
+                          <PopoverTrigger asChild>
+                            <Button
+                              variant="outline"
+                              role="combobox"
+                              aria-expanded={editModelPopoverOpen[item.id] || false}
+                              className="h-6 w-full justify-between text-xs"
+                            >
+                              {item.model
+                                ? models.find((mdl) => mdl.value === item.model)?.label
+                                : "Select..."}
+                              <ChevronsUpDown className="ml-2 h-3 w-3 shrink-0 opacity-50" />
+                            </Button>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-[200px] p-0 bg-background" align="start">
+                            <Command>
+                              <CommandInput placeholder="Search model..." className="h-9" />
+                              <CommandList>
+                                <CommandEmpty>No model found.</CommandEmpty>
+                                <CommandGroup>
+                                  {models.map((mdl) => (
+                                    <CommandItem
+                                      key={mdl.value}
+                                      value={mdl.label}
+                                      onSelect={() => {
+                                        updateItem(item.id, 'model', mdl.value);
+                                        setEditModelPopoverOpen(prev => ({...prev, [item.id]: false}));
+                                      }}
+                                    >
+                                      {mdl.label}
+                                    </CommandItem>
+                                  ))}
+                                </CommandGroup>
+                              </CommandList>
+                            </Command>
+                          </PopoverContent>
+                        </Popover>
                       ) : (
                         <div className="truncate" title={item.model}>
                           {item.model || "—"}
