@@ -6,8 +6,11 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Plus, Trash2, Edit, Check, X } from "lucide-react";
+import { Plus, Trash2, Edit, Check, X, ChevronsUpDown, Search } from "lucide-react";
 import { useState } from "react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
+import { cn } from "@/lib/utils";
 
 interface WorkOrderReceivingItem {
   id: string;
@@ -33,6 +36,16 @@ interface WorkOrderItemsReceivingProps {
   items: WorkOrderReceivingItem[];
   setItems: React.Dispatch<React.SetStateAction<WorkOrderReceivingItem[]>>;
 }
+
+const manufacturers = [
+  { value: "1m-working-stand", label: "1M WORKING STAND." },
+  { value: "3d-instruments", label: "3D-INSTRUMENTS" },
+  { value: "3e", label: "3E" },
+  { value: "3m", label: "3M" },
+  { value: "3z-telecom", label: "3Z TELECOM" },
+  { value: "4b-components", label: "4B-COMPONENTS" },
+  { value: "5ft-wking", label: "5FT WKING STANDARD" },
+];
 
 const createEmptyItem = (): WorkOrderReceivingItem => ({
   id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
@@ -68,6 +81,8 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [isClearAllDialogOpen, setIsClearAllDialogOpen] = useState(false);
   const [isAddingNew, setIsAddingNew] = useState(false);
+  const [manufacturerPopoverOpen, setManufacturerPopoverOpen] = useState(false);
+  const [editManufacturerPopoverOpen, setEditManufacturerPopoverOpen] = useState<{[key: string]: boolean}>({});
 
   // Handle individual item selection
   const handleItemSelect = (itemId: string, checked: boolean) => {
@@ -301,25 +316,46 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                           <SelectItem value="damaged">Damaged</SelectItem>
                         </SelectContent>
                       </Select>
-                    </td>
+                     </td>
                      <td className="p-4 min-w-[180px]">
-                       <Select value={newItem.manufacturer} onValueChange={(value) => updateNewItem('manufacturer', value)}>
-                         <SelectTrigger 
-                           className="h-12 text-base border-2 focus:border-primary"
-                           onFocus={(e) => e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
-                         >
-                          <SelectValue placeholder="Select..." />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="1m-working-stand">1M WORKING STAND.</SelectItem>
-                          <SelectItem value="3d-instruments">3D INSTRUMENTS</SelectItem>
-                          <SelectItem value="3e">3E</SelectItem>
-                          <SelectItem value="3m">3M</SelectItem>
-                          <SelectItem value="3z-telecom">3Z TELECOM</SelectItem>
-                          <SelectItem value="4b-components">4B COMPONENTS LIMITED</SelectItem>
-                          <SelectItem value="5ft-wking">5FT WKING STANDARD</SelectItem>
-                        </SelectContent>
-                      </Select>
+                       <Popover open={manufacturerPopoverOpen} onOpenChange={setManufacturerPopoverOpen}>
+                         <PopoverTrigger asChild>
+                           <Button
+                             variant="outline"
+                             role="combobox"
+                             aria-expanded={manufacturerPopoverOpen}
+                             className="h-12 w-full justify-between text-base border-2 focus:border-primary"
+                             onFocus={(e) => e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
+                           >
+                             {newItem.manufacturer
+                               ? manufacturers.find((mfr) => mfr.value === newItem.manufacturer)?.label
+                               : "Select..."}
+                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                           </Button>
+                         </PopoverTrigger>
+                         <PopoverContent className="w-[200px] p-0 bg-background" align="start">
+                           <Command>
+                             <CommandInput placeholder="Search manufacturer..." className="h-9" />
+                             <CommandList>
+                               <CommandEmpty>No manufacturer found.</CommandEmpty>
+                               <CommandGroup>
+                                 {manufacturers.map((mfr) => (
+                                   <CommandItem
+                                     key={mfr.value}
+                                     value={mfr.label}
+                                     onSelect={() => {
+                                       updateNewItem('manufacturer', mfr.value);
+                                       setManufacturerPopoverOpen(false);
+                                     }}
+                                   >
+                                     {mfr.label}
+                                   </CommandItem>
+                                 ))}
+                               </CommandGroup>
+                             </CommandList>
+                           </Command>
+                         </PopoverContent>
+                       </Popover>
                     </td>
                      <td className="p-4 min-w-[140px]">
                        <Input 
@@ -594,20 +630,46 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                     </td>
                     <td className="p-2 text-xs">
                       {editingItemId === item.id ? (
-                        <Select value={item.manufacturer} onValueChange={(value) => updateItem(item.id, 'manufacturer', value)}>
-                          <SelectTrigger className="h-6 text-xs">
-                            <SelectValue placeholder="Select..." />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="1m-working-stand">1M WORKING STAND.</SelectItem>
-                            <SelectItem value="3d-instruments">3D INSTRUMENTS</SelectItem>
-                            <SelectItem value="3e">3E</SelectItem>
-                            <SelectItem value="3m">3M</SelectItem>
-                            <SelectItem value="3z-telecom">3Z TELECOM</SelectItem>
-                            <SelectItem value="4b-components">4B COMPONENTS LIMITED</SelectItem>
-                            <SelectItem value="5ft-wking">5FT WKING STANDARD</SelectItem>
-                          </SelectContent>
-                        </Select>
+                        <Popover 
+                          open={editManufacturerPopoverOpen[item.id] || false} 
+                          onOpenChange={(open) => setEditManufacturerPopoverOpen(prev => ({...prev, [item.id]: open}))}
+                        >
+                          <PopoverTrigger asChild>
+                            <Button
+                              variant="outline"
+                              role="combobox"
+                              aria-expanded={editManufacturerPopoverOpen[item.id] || false}
+                              className="h-6 w-full justify-between text-xs"
+                            >
+                              {item.manufacturer
+                                ? manufacturers.find((mfr) => mfr.value === item.manufacturer)?.label
+                                : "Select..."}
+                              <ChevronsUpDown className="ml-2 h-3 w-3 shrink-0 opacity-50" />
+                            </Button>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-[200px] p-0 bg-background" align="start">
+                            <Command>
+                              <CommandInput placeholder="Search manufacturer..." className="h-9" />
+                              <CommandList>
+                                <CommandEmpty>No manufacturer found.</CommandEmpty>
+                                <CommandGroup>
+                                  {manufacturers.map((mfr) => (
+                                    <CommandItem
+                                      key={mfr.value}
+                                      value={mfr.label}
+                                      onSelect={() => {
+                                        updateItem(item.id, 'manufacturer', mfr.value);
+                                        setEditManufacturerPopoverOpen(prev => ({...prev, [item.id]: false}));
+                                      }}
+                                    >
+                                      {mfr.label}
+                                    </CommandItem>
+                                  ))}
+                                </CommandGroup>
+                              </CommandList>
+                            </Command>
+                          </PopoverContent>
+                        </Popover>
                       ) : (
                         <div className="truncate uppercase" title={item.manufacturer}>
                           {item.manufacturer || "—"}
