@@ -44,20 +44,20 @@ const Login = () => {
       <header className="w-full bg-card border-b shadow-sm py-4">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center">
-            {/* Left - Details */}
+            {/* Left - JM Test Systems & CalMapp */}
             <div className="text-left space-y-0.5">
-              <p className="text-sm text-muted-foreground">
-                Calibration Management and Processing Program
-              </p>
-              <p className="text-xs text-muted-foreground">Version 3.0.46 - 10/10/2025</p>
-            </div>
-            
-            {/* Right - JM Test Systems & CalMapp */}
-            <div className="text-right space-y-0.5">
               <h1 className="text-xl font-bold text-foreground tracking-tight">
                 JM Test Systems
               </h1>
               <h2 className="text-xl font-semibold text-primary">CalMapp</h2>
+            </div>
+            
+            {/* Right - Details */}
+            <div className="text-right space-y-0.5">
+              <p className="text-sm text-muted-foreground">
+                Calibration Management and Processing Program
+              </p>
+              <p className="text-xs text-muted-foreground">Version 3.0.46 - 10/10/2025</p>
             </div>
           </div>
         </div>
