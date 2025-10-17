@@ -39,24 +39,28 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-secondary to-background p-4">
-      <div className="w-full max-w-6xl space-y-8">
-        {/* Header */}
-        <div className="text-center space-y-2">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-background via-secondary to-background">
+      {/* Header */}
+      <header className="w-full bg-card border-b shadow-sm py-6">
+        <div className="container mx-auto px-4 text-center space-y-2">
           <h1 className="text-4xl font-bold text-foreground tracking-tight">
             JM Test Systems
           </h1>
           <div className="space-y-1">
-            <h2 className="text-2xl font-semibold text-primary">CalMapp</h2>
-            <p className="text-sm text-muted-foreground">
+            <h2 className="text-3xl font-semibold text-primary">CalMapp</h2>
+            <p className="text-base text-muted-foreground">
               Calibration Management and Processing Program
             </p>
-            <p className="text-xs text-muted-foreground">Version 3.0.46 - 10/10/2025</p>
+            <p className="text-sm text-muted-foreground">Version 3.0.46 - 10/10/2025</p>
           </div>
         </div>
+      </header>
 
-        {/* Login Card with Image */}
-        <Card className="border-2 shadow-lg overflow-hidden">
+      {/* Main Content */}
+      <div className="flex-1 flex items-center justify-center p-4">
+        <div className="w-full max-w-6xl">
+          {/* Login Card with Image */}
+          <Card className="border-2 shadow-lg overflow-hidden">
           <div className="grid md:grid-cols-2 gap-0">
             {/* Left Side - Image */}
             <div className="hidden md:block relative">
@@ -142,10 +146,11 @@ const Login = () => {
           </div>
         </Card>
 
-        {/* Footer */}
-        <p className="text-center text-xs text-muted-foreground">
-          TEST SYSTEM (do not use for live data)
-        </p>
+          {/* Footer */}
+          <p className="text-center text-xs text-muted-foreground mt-8">
+            TEST SYSTEM (do not use for live data)
+          </p>
+        </div>
       </div>
     </div>
   );
