@@ -19,7 +19,8 @@ import {
   Clock,
   Zap,
   ClipboardList,
-  Clipboard
+  Clipboard,
+  LogOut
 } from "lucide-react";
 
 import {
@@ -32,6 +33,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarHeader,
+  SidebarFooter,
   useSidebar,
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
@@ -74,6 +76,11 @@ export function AppSidebar() {
   const { open } = useSidebar();
   const location = useLocation();
   const [expandedGroups, setExpandedGroups] = useState<string[]>(["Core Operations"]);
+
+  const handleLogout = () => {
+    // Navigate to login page
+    window.location.href = "/login";
+  };
 
   const toggleGroup = (groupName: string) => {
     setExpandedGroups(prev => 
@@ -252,16 +259,29 @@ export function AppSidebar() {
           </SidebarGroup>
         ))}
         
-        {/* Footer section when expanded */}
-        {open && (
-          <div className="mt-auto px-3 py-4 animate-fade-in">
-            <Separator className="mb-3 bg-sidebar-border" />
-            <div className="text-xs text-sidebar-foreground/70">
-              <p className="font-medium">System Status</p>
-            </div>
-          </div>
-        )}
       </SidebarContent>
+
+      <SidebarFooter className="border-t border-sidebar-border p-2">
+        {open ? (
+          <Button
+            variant="ghost"
+            onClick={handleLogout}
+            className="w-full justify-start text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
+          >
+            <LogOut className="h-4 w-4 mr-3" />
+            <span className="text-sm font-medium">Logout</span>
+          </Button>
+        ) : (
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={handleLogout}
+            className="w-full text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
+          >
+            <LogOut className="h-4 w-4" />
+          </Button>
+        )}
+      </SidebarFooter>
     </Sidebar>
   );
 }
