@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { Lock, User } from "lucide-react";
+import loginBanner from "@/assets/login-banner.jpg";
 
 const Login = () => {
   const [login, setLogin] = useState("");
@@ -39,7 +40,7 @@ const Login = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-secondary to-background p-4">
-      <div className="w-full max-w-md space-y-8">
+      <div className="w-full max-w-6xl space-y-8">
         {/* Header */}
         <div className="text-center space-y-2">
           <h1 className="text-4xl font-bold text-foreground tracking-tight">
@@ -54,67 +55,91 @@ const Login = () => {
           </div>
         </div>
 
-        {/* Login Card */}
-        <Card className="border-2 shadow-lg">
-          <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl text-center">Sign In</CardTitle>
-            <CardDescription className="text-center">
-              Enter your credentials to access your account
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleLogin} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="login" className="text-sm font-medium">
-                  Login
-                </Label>
-                <div className="relative">
-                  <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    id="login"
-                    type="text"
-                    placeholder="Enter your login"
-                    value={login}
-                    onChange={(e) => setLogin(e.target.value)}
-                    className="pl-10"
-                    required
-                  />
+        {/* Login Card with Image */}
+        <Card className="border-2 shadow-lg overflow-hidden">
+          <div className="grid md:grid-cols-2 gap-0">
+            {/* Left Side - Image */}
+            <div className="hidden md:block relative">
+              <img
+                src={loginBanner}
+                alt="Calibration equipment"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary/70 flex items-center justify-center p-8">
+                <div className="text-center space-y-4">
+                  <h3 className="text-3xl font-bold text-white">
+                    Welcome Back
+                  </h3>
+                  <p className="text-lg text-white/90">
+                    Professional calibration management at your fingertips
+                  </p>
                 </div>
               </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="password" className="text-sm font-medium">
-                  Password
-                </Label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    id="password"
-                    type="password"
-                    placeholder="Enter your password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="pl-10"
-                    required
-                  />
-                </div>
-              </div>
-
-              <Button
-                type="submit"
-                className="w-full"
-                disabled={isLoading}
-              >
-                {isLoading ? "Logging in..." : "Login"}
-              </Button>
-            </form>
-
-            <div className="mt-4 text-center">
-              <a href="#" className="text-sm text-primary hover:underline">
-                Forgot password?
-              </a>
             </div>
-          </CardContent>
+
+            {/* Right Side - Form */}
+            <div className="p-8 md:p-12">
+              <CardHeader className="space-y-1 p-0 mb-8">
+                <CardTitle className="text-2xl">Sign In</CardTitle>
+                <CardDescription>
+                  Enter your credentials to access your account
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="p-0">
+                <form onSubmit={handleLogin} className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="login" className="text-sm font-medium">
+                      Login
+                    </Label>
+                    <div className="relative">
+                      <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                      <Input
+                        id="login"
+                        type="text"
+                        placeholder="Enter your login"
+                        value={login}
+                        onChange={(e) => setLogin(e.target.value)}
+                        className="pl-10"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="password" className="text-sm font-medium">
+                      Password
+                    </Label>
+                    <div className="relative">
+                      <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                      <Input
+                        id="password"
+                        type="password"
+                        placeholder="Enter your password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="pl-10"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <Button
+                    type="submit"
+                    className="w-full"
+                    disabled={isLoading}
+                  >
+                    {isLoading ? "Logging in..." : "Login"}
+                  </Button>
+                </form>
+
+                <div className="mt-4 text-center">
+                  <a href="#" className="text-sm text-primary hover:underline">
+                    Forgot password?
+                  </a>
+                </div>
+              </CardContent>
+            </div>
+          </div>
         </Card>
 
         {/* Footer */}
