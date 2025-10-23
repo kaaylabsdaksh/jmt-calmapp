@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield } from "lucide-react";
+import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield, MessageSquare } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
 import { SidebarTrigger } from "@/components/ui/sidebar";
@@ -349,6 +349,7 @@ const EditOrder = () => {
     { value: 'logistics', label: 'Logistics', icon: Truck },
     { value: 'product-images', label: 'Images', icon: Package },
     { value: 'lab', label: 'Lab', icon: Settings },
+    { value: 'comments', label: 'Activity', icon: MessageSquare },
     { value: 'other', label: 'Other', icon: Settings }
   ];
 
@@ -3464,7 +3465,67 @@ const EditOrder = () => {
 
   // Render comments section
   const renderCommentsSection = () => (
-    <WorkOrderItemComments workOrderItemId={formData.workOrderNumber} />
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-3">
+          <List className="h-5 w-5 text-primary" />
+          Comments
+        </CardTitle>
+        <CardDescription>Factory communication and documentation</CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 items-end">
+          <div className="space-y-1">
+            <Label htmlFor="commentType" className="text-xs">Type</Label>
+            <Select value={formData.commentType} onValueChange={(value) => handleInputChange("commentType", value)}>
+              <SelectTrigger className="h-9">
+                <SelectValue placeholder="Type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="general">General</SelectItem>
+                <SelectItem value="technical">Technical</SelectItem>
+                <SelectItem value="quality">Quality</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="lg:col-span-2 space-y-1">
+            <Label htmlFor="comment" className="text-xs">Comment</Label>
+            <Textarea
+              id="comment"
+              value={formData.comment}
+              onChange={(e) => handleInputChange("comment", e.target.value)}
+              placeholder="Enter comment..."
+              className="h-9 resize-none"
+            />
+          </div>
+
+          <div className="space-y-1">
+            <div className="flex items-center space-x-2 mb-1">
+              <Checkbox
+                id="includeInCopyAsNew"
+                checked={formData.includeInCopyAsNew}
+                onCheckedChange={(checked) => handleInputChange("includeInCopyAsNew", checked)}
+              />
+              <Label htmlFor="includeInCopyAsNew" className="text-xs">Copy Forward</Label>
+            </div>
+            <Button size="sm" className="w-full h-9">Add</Button>
+          </div>
+        </div>
+
+        <div className="border rounded-lg">
+          <div className="bg-muted grid grid-cols-4 gap-4 p-2 text-xs font-medium">
+            <div>Type</div>
+            <div>User</div>
+            <div>Date</div>
+            <div>Comment</div>
+          </div>
+          <div className="p-6 text-center text-muted-foreground text-sm">
+            No comments added
+          </div>
+        </div>
+      </CardContent>
+    </Card>
   );
 
   // Render Work Order Items section
@@ -3606,6 +3667,10 @@ const EditOrder = () => {
 
           <TabsContent value="lab" className="space-y-6">
             {renderLabSection()}
+          </TabsContent>
+
+          <TabsContent value="comments" className="space-y-6">
+            <WorkOrderItemComments workOrderItemId={formData.workOrderNumber} />
           </TabsContent>
 
           <TabsContent value="other" className="space-y-6">
