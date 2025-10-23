@@ -115,130 +115,144 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
   };
 
   return (
-    <Card className="rounded-t-none border-t-0">
-      <CardContent className="p-6 space-y-6">
-        {/* Add Comment Form - Clean Modern Design */}
-        <div className="space-y-4">
-          <div className="flex items-start gap-4">
-            <div className="w-48 shrink-0">
-              <Label htmlFor="comment-type" className="text-sm font-medium mb-2 block">
-                Type
-              </Label>
-              <Select value={commentType} onValueChange={setCommentType}>
-                <SelectTrigger className="h-10 bg-background border-border/60">
-                  <SelectValue placeholder="Select type" />
-                </SelectTrigger>
-                <SelectContent className="z-50 bg-popover border">
-                  <SelectItem value="General">General</SelectItem>
-                  <SelectItem value="Estimate">Estimate</SelectItem>
-                  <SelectItem value="Status">Status Change</SelectItem>
-                  <SelectItem value="Other">Other</SelectItem>
-                  <SelectItem value="Technical">Technical</SelectItem>
-                  <SelectItem value="Quality">Quality</SelectItem>
-                </SelectContent>
-              </Select>
+    <Card className="rounded-t-none border-t-0 bg-gradient-to-br from-background to-muted/20">
+      <CardContent className="p-8 space-y-8">
+        {/* Add Comment Form - Modern Sleek Design */}
+        <div className="relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-primary/10 rounded-xl blur-xl" />
+          <div className="relative bg-card/80 backdrop-blur-sm border border-border/50 rounded-xl p-6 shadow-lg">
+            <div className="flex items-start gap-4">
+              <div className="w-52 shrink-0">
+                <Label htmlFor="comment-type" className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-3 block">
+                  Type
+                </Label>
+                <Select value={commentType} onValueChange={setCommentType}>
+                  <SelectTrigger className="h-11 bg-background/50 backdrop-blur-sm border-border/60 hover:border-primary/50 transition-colors">
+                    <SelectValue placeholder="Select type" />
+                  </SelectTrigger>
+                  <SelectContent className="z-50 bg-popover border">
+                    <SelectItem value="General">General</SelectItem>
+                    <SelectItem value="Estimate">Estimate</SelectItem>
+                    <SelectItem value="Status">Status Change</SelectItem>
+                    <SelectItem value="Other">Other</SelectItem>
+                    <SelectItem value="Technical">Technical</SelectItem>
+                    <SelectItem value="Quality">Quality</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="flex-1">
+                <Label htmlFor="comment-text" className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-3 block">
+                  Comment
+                </Label>
+                <Textarea
+                  id="comment-text"
+                  value={commentText}
+                  onChange={(e) => setCommentText(e.target.value)}
+                  placeholder="Enter your comment..."
+                  className="min-h-[110px] resize-none bg-background/50 backdrop-blur-sm border-border/60 hover:border-primary/50 focus:border-primary transition-colors"
+                />
+              </div>
+
+              <div className="shrink-0 self-end">
+                <Button 
+                  onClick={handleAddComment}
+                  disabled={!commentType || !commentText.trim()}
+                  className="gap-2 h-11 px-8 shadow-md hover:shadow-lg transition-shadow"
+                >
+                  <Plus className="h-4 w-4" />
+                  Add
+                </Button>
+              </div>
             </div>
 
-            <div className="flex-1">
-              <Label htmlFor="comment-text" className="text-sm font-medium mb-2 block">
-                Comment
-              </Label>
-              <Textarea
-                id="comment-text"
-                value={commentText}
-                onChange={(e) => setCommentText(e.target.value)}
-                placeholder="Enter your comment..."
-                className="min-h-[100px] resize-none bg-background border-border/60"
+            <div className="flex items-center space-x-2 mt-4 pl-56">
+              <Checkbox
+                id="include-copy"
+                checked={includeInCopy}
+                onCheckedChange={(checked) => setIncludeInCopy(checked as boolean)}
+                className="border-border/60"
               />
-            </div>
-
-            <div className="shrink-0 self-end">
-              <Button 
-                onClick={handleAddComment}
-                disabled={!commentType || !commentText.trim()}
-                className="gap-2 h-10 px-6"
+              <Label
+                htmlFor="include-copy"
+                className="text-sm font-normal cursor-pointer text-muted-foreground hover:text-foreground transition-colors"
               >
-                <Plus className="h-4 w-4" />
-                Add Comment
-              </Button>
+                Include in Copy as New
+              </Label>
             </div>
-          </div>
-
-          <div className="flex items-center space-x-2 pl-52">
-            <Checkbox
-              id="include-copy"
-              checked={includeInCopy}
-              onCheckedChange={(checked) => setIncludeInCopy(checked as boolean)}
-            />
-            <Label
-              htmlFor="include-copy"
-              className="text-sm font-normal cursor-pointer text-muted-foreground"
-            >
-              Include in Copy as New
-            </Label>
           </div>
         </div>
 
-        {/* Comments History */}
-        <div className="space-y-3">
-          <div className="flex items-center justify-between">
-            <h3 className="text-sm font-semibold text-foreground/90">
-              History ({comments.length} {comments.length === 1 ? 'entry' : 'entries'})
-            </h3>
+        {/* Comments History - Modern Design */}
+        <div className="space-y-4">
+          <div className="flex items-center justify-between px-1">
+            <div className="flex items-center gap-3">
+              <div className="h-8 w-1 bg-gradient-to-b from-primary to-primary/30 rounded-full" />
+              <h3 className="text-base font-bold text-foreground">
+                Activity History
+              </h3>
+              <Badge variant="secondary" className="rounded-full px-3">
+                {comments.length}
+              </Badge>
+            </div>
           </div>
 
           {comments.length === 0 ? (
-            <div className="border rounded-lg p-8 text-center">
-              <MessageSquare className="h-12 w-12 mx-auto mb-3 text-muted-foreground/50" />
-              <p className="text-sm text-muted-foreground">
-                No comments recorded yet
+            <div className="border border-dashed rounded-xl p-12 text-center bg-muted/20">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-muted/50 mb-4">
+                <MessageSquare className="h-8 w-8 text-muted-foreground/50" />
+              </div>
+              <p className="text-sm font-medium text-muted-foreground mb-1">
+                No activity recorded yet
               </p>
-              <p className="text-xs text-muted-foreground mt-1">
+              <p className="text-xs text-muted-foreground">
                 All changes and updates will appear here
               </p>
             </div>
           ) : (
-            <div className="border rounded-lg overflow-hidden">
+            <div className="border border-border/50 rounded-xl overflow-hidden bg-card/50 backdrop-blur-sm shadow-md">
               {/* Desktop Table View */}
               <div className="hidden md:block overflow-x-auto">
                 <table className="w-full">
                   <thead>
-                    <tr className="bg-muted/50 border-b">
-                      <th className="text-left p-3 text-xs font-semibold text-foreground/80 w-[100px]">
+                    <tr className="bg-muted/40 backdrop-blur-sm border-b border-border/50">
+                      <th className="text-left p-4 text-xs font-bold uppercase tracking-wider text-muted-foreground w-[100px]">
                         Type
                       </th>
-                      <th className="text-left p-3 text-xs font-semibold text-foreground/80 w-[140px]">
+                      <th className="text-left p-4 text-xs font-bold uppercase tracking-wider text-muted-foreground w-[140px]">
                         User
                       </th>
-                      <th className="text-left p-3 text-xs font-semibold text-foreground/80 w-[160px]">
-                        Date Entered
+                      <th className="text-left p-4 text-xs font-bold uppercase tracking-wider text-muted-foreground w-[160px]">
+                        Date
                       </th>
-                      <th className="text-left p-3 text-xs font-semibold text-foreground/80">
-                        Comment
+                      <th className="text-left p-4 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                        Details
                       </th>
                     </tr>
                   </thead>
                   <tbody>
-                    {comments.map((comment) => (
+                    {comments.map((comment, index) => (
                       <tr
                         key={comment.id}
-                        className="border-b last:border-b-0 hover:bg-muted/20 transition-colors"
+                        className={`border-b border-border/30 last:border-b-0 hover:bg-muted/30 transition-all duration-200 ${
+                          index % 2 === 0 ? 'bg-background/50' : 'bg-muted/10'
+                        }`}
                       >
-                        <td className="p-3">
+                        <td className="p-4">
                           <Badge
                             variant="outline"
-                            className={`${getTypeColor(comment.type)} text-xs font-medium`}
+                            className={`${getTypeColor(comment.type)} text-xs font-semibold shadow-sm`}
                           >
                             {comment.type}
                           </Badge>
                         </td>
-                        <td className="p-3 text-sm text-foreground/90">
+                        <td className="p-4 text-sm font-medium text-foreground">
                           {comment.user}
                         </td>
-                        <td className="p-3 text-sm text-muted-foreground">
+                        <td className="p-4 text-sm text-muted-foreground font-mono">
                           {format(comment.dateEntered, "MM/dd/yyyy hh:mm a")}
                         </td>
-                        <td className="p-3 text-sm text-foreground/90">
+                        <td className="p-4 text-sm text-foreground/90 leading-relaxed">
                           <div className="line-clamp-2 whitespace-pre-wrap">
                             {comment.comment}
                           </div>
@@ -250,24 +264,29 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
               </div>
 
               {/* Mobile Card View */}
-              <div className="md:hidden divide-y">
-                {comments.map((comment) => (
-                  <div key={comment.id} className="p-4 space-y-3">
+              <div className="md:hidden divide-y divide-border/30">
+                {comments.map((comment, index) => (
+                  <div 
+                    key={comment.id} 
+                    className={`p-5 space-y-3 hover:bg-muted/30 transition-colors ${
+                      index % 2 === 0 ? 'bg-background/50' : 'bg-muted/10'
+                    }`}
+                  >
                     <div className="flex items-start justify-between gap-2">
                       <Badge
                         variant="outline"
-                        className={`${getTypeColor(comment.type)} text-xs font-medium`}
+                        className={`${getTypeColor(comment.type)} text-xs font-semibold shadow-sm`}
                       >
                         {comment.type}
                       </Badge>
-                      <span className="text-xs text-muted-foreground">
+                      <span className="text-xs text-muted-foreground font-mono">
                         {format(comment.dateEntered, "MM/dd/yyyy hh:mm a")}
                       </span>
                     </div>
-                    <div className="text-sm font-medium text-foreground/90">
+                    <div className="text-sm font-semibold text-foreground">
                       {comment.user}
                     </div>
-                    <div className="text-sm text-foreground/80 whitespace-pre-wrap">
+                    <div className="text-sm text-foreground/85 whitespace-pre-wrap leading-relaxed">
                       {comment.comment}
                     </div>
                   </div>
