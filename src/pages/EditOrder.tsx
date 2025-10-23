@@ -349,7 +349,6 @@ const EditOrder = () => {
     { value: 'logistics', label: 'Logistics', icon: Truck },
     { value: 'product-images', label: 'Images', icon: Package },
     { value: 'lab', label: 'Lab', icon: Settings },
-    { value: 'comments', label: 'Activity', icon: MessageSquare },
     { value: 'other', label: 'Other', icon: Settings }
   ];
 
@@ -364,6 +363,7 @@ const EditOrder = () => {
   
   const [activeTab, setActiveTab] = useState('general');
   const [activeOtherTab, setActiveOtherTab] = useState('factory-config');
+  const [showComments, setShowComments] = useState(true);
 
   const handleInputChange = (field: string, value: string | boolean) => {
     setFormData(prev => ({
@@ -3669,10 +3669,6 @@ const EditOrder = () => {
             {renderLabSection()}
           </TabsContent>
 
-          <TabsContent value="comments" className="space-y-6">
-            <WorkOrderItemComments workOrderItemId={formData.workOrderNumber} />
-          </TabsContent>
-
           <TabsContent value="other" className="space-y-6">
             <Tabs value={activeOtherTab} onValueChange={setActiveOtherTab} className="w-full">
               <TabsList className="grid w-full grid-cols-6">
@@ -3909,6 +3905,22 @@ const EditOrder = () => {
           <>
             {/* Tabs Interface */}
             {renderTabbedInterface()}
+            
+            {/* Collapsible Comments Section */}
+            <div className="mt-6">
+              <Button
+                variant="outline"
+                onClick={() => setShowComments(!showComments)}
+                className="mb-4 gap-2"
+              >
+                <MessageSquare className="h-4 w-4" />
+                {showComments ? 'Hide' : 'Show'} Activity Log
+              </Button>
+              
+              {showComments && (
+                <WorkOrderItemComments workOrderItemId={formData.workOrderNumber} />
+              )}
+            </div>
           </>
         )}
         
