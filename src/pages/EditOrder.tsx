@@ -226,6 +226,8 @@ const EditOrder = () => {
     location: workOrderData?.location || "",
     division: workOrderData?.division || "",
     calFreq: workOrderData?.calFreq || "",
+    calFreqNumber: "",
+    calFreqType: "",
     actionCode: mapActionCode(workOrderData?.details?.action || workOrderData?.details?.job || ""),
     
     // Product Information - Auto-fill from workOrderData.details
@@ -711,16 +713,26 @@ const EditOrder = () => {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="calFreq" className="text-sm font-medium">Cal Freq</Label>
-          <Select value={formData.calFreq} onValueChange={(value) => handleInputChange("calFreq", value)}>
-            <SelectTrigger className="h-11">
-              <SelectValue placeholder="Select frequency" />
-            </SelectTrigger>
-            <SelectContent className="z-50 bg-popover border">
-              <SelectItem value="yearly">Yearly</SelectItem>
-              <SelectItem value="monthly">Monthly</SelectItem>
-            </SelectContent>
-          </Select>
+          <Label className="text-sm font-medium">Cal Freq</Label>
+          <div className="flex gap-2">
+            <Input
+              type="number"
+              min="1"
+              value={formData.calFreqNumber}
+              onChange={(e) => handleInputChange("calFreqNumber", e.target.value)}
+              placeholder="Enter number"
+              className="h-11 flex-1"
+            />
+            <Select value={formData.calFreqType} onValueChange={(value) => handleInputChange("calFreqType", value)}>
+              <SelectTrigger className="h-11 w-[140px]">
+                <SelectValue placeholder="Select" />
+              </SelectTrigger>
+              <SelectContent className="z-50 bg-popover border">
+                <SelectItem value="yearly">Yearly</SelectItem>
+                <SelectItem value="monthly">Monthly</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
 
         <div className="space-y-2">
