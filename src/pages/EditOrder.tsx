@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield, MessageSquare } from "lucide-react";
+import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield, MessageSquare, ChevronDown, ChevronUp } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
 import { SidebarTrigger } from "@/components/ui/sidebar";
@@ -3908,17 +3908,40 @@ const EditOrder = () => {
             
             {/* Collapsible Comments Section */}
             <div className="mt-6">
-              <Button
-                variant="outline"
-                onClick={() => setShowComments(!showComments)}
-                className="mb-4 gap-2"
-              >
-                <MessageSquare className="h-4 w-4" />
-                {showComments ? 'Hide' : 'Show'} Activity Log
-              </Button>
+              <div className="flex items-center justify-between p-4 bg-muted/30 rounded-t-lg border border-border">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-primary/10 rounded-lg">
+                    <MessageSquare className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-semibold text-foreground">Activity Log</h3>
+                    <p className="text-xs text-muted-foreground">Track all changes and updates</p>
+                  </div>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowComments(!showComments)}
+                  className="gap-2 hover:bg-primary/10 hover:text-primary transition-all"
+                >
+                  {showComments ? (
+                    <>
+                      <ChevronUp className="h-4 w-4" />
+                      Hide
+                    </>
+                  ) : (
+                    <>
+                      <ChevronDown className="h-4 w-4" />
+                      View
+                    </>
+                  )}
+                </Button>
+              </div>
               
               {showComments && (
-                <WorkOrderItemComments workOrderItemId={formData.workOrderNumber} />
+                <div className="animate-accordion-down">
+                  <WorkOrderItemComments workOrderItemId={formData.workOrderNumber} />
+                </div>
               )}
             </div>
           </>

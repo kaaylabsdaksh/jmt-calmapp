@@ -115,17 +115,8 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-3">
-          <MessageSquare className="h-5 w-5 text-primary" />
-          Item Comments
-        </CardTitle>
-        <CardDescription>
-          Activity history and change log for this work order item
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-6">
+    <Card className="rounded-t-none border-t-0">
+      <CardContent className="p-6 space-y-6">
         {/* Add Comment Form */}
         <div className="grid grid-cols-1 gap-4 p-4 bg-muted/30 rounded-lg border">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
