@@ -115,117 +115,105 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
   };
 
   return (
-    <Card className="rounded-t-none border-t-0 bg-gradient-to-br from-background to-muted/20">
-      <CardContent className="p-8 space-y-8">
-        {/* Add Comment Form - Modern Sleek Design */}
-        <div className="relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-primary/10 rounded-xl blur-xl" />
-          <div className="relative bg-card/80 backdrop-blur-sm border border-border/50 rounded-xl p-6 shadow-lg">
-            <div className="flex items-start gap-4">
-              <div className="w-52 shrink-0">
-                <Label htmlFor="comment-type" className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-3 block">
-                  Type
-                </Label>
-                <Select value={commentType} onValueChange={setCommentType}>
-                  <SelectTrigger className="h-11 bg-background/50 backdrop-blur-sm border-border/60 hover:border-primary/50 transition-colors">
-                    <SelectValue placeholder="Select type" />
-                  </SelectTrigger>
-                  <SelectContent className="z-50 bg-popover border">
-                    <SelectItem value="General">General</SelectItem>
-                    <SelectItem value="Estimate">Estimate</SelectItem>
-                    <SelectItem value="Status">Status Change</SelectItem>
-                    <SelectItem value="Other">Other</SelectItem>
-                    <SelectItem value="Technical">Technical</SelectItem>
-                    <SelectItem value="Quality">Quality</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="flex-1">
-                <Label htmlFor="comment-text" className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-3 block">
-                  Comment
-                </Label>
-                <Textarea
-                  id="comment-text"
-                  value={commentText}
-                  onChange={(e) => setCommentText(e.target.value)}
-                  placeholder="Enter your comment..."
-                  className="min-h-[110px] resize-none bg-background/50 backdrop-blur-sm border-border/60 hover:border-primary/50 focus:border-primary transition-colors"
-                />
-              </div>
-
-              <div className="shrink-0 self-end">
-                <Button 
-                  onClick={handleAddComment}
-                  disabled={!commentType || !commentText.trim()}
-                  className="gap-2 h-11 px-8 shadow-md hover:shadow-lg transition-shadow"
-                >
-                  <Plus className="h-4 w-4" />
-                  Add
-                </Button>
-              </div>
-            </div>
-
-            <div className="flex items-center space-x-2 mt-4 pl-56">
-              <Checkbox
-                id="include-copy"
-                checked={includeInCopy}
-                onCheckedChange={(checked) => setIncludeInCopy(checked as boolean)}
-                className="border-border/60"
-              />
-              <Label
-                htmlFor="include-copy"
-                className="text-sm font-normal cursor-pointer text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Include in Copy as New
+    <Card className="rounded-t-none border-t-0">
+      <CardContent className="p-6 space-y-6">
+        {/* Add Comment Form - Minimal Design */}
+        <div className="bg-muted/30 rounded-lg p-4">
+          <div className="flex items-start gap-3">
+            <div className="w-48 shrink-0">
+              <Label htmlFor="comment-type" className="text-xs font-medium uppercase tracking-wide text-muted-foreground mb-2 block">
+                Type
               </Label>
+              <Select value={commentType} onValueChange={setCommentType}>
+                <SelectTrigger className="h-9 bg-background border-border">
+                  <SelectValue placeholder="Select type" />
+                </SelectTrigger>
+                <SelectContent className="z-50 bg-popover border">
+                  <SelectItem value="General">General</SelectItem>
+                  <SelectItem value="Estimate">Estimate</SelectItem>
+                  <SelectItem value="Status">Status Change</SelectItem>
+                  <SelectItem value="Other">Other</SelectItem>
+                  <SelectItem value="Technical">Technical</SelectItem>
+                  <SelectItem value="Quality">Quality</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
+
+            <div className="flex-1">
+              <Label htmlFor="comment-text" className="text-xs font-medium uppercase tracking-wide text-muted-foreground mb-2 block">
+                Comment
+              </Label>
+              <Textarea
+                id="comment-text"
+                value={commentText}
+                onChange={(e) => setCommentText(e.target.value)}
+                placeholder="Enter your comment..."
+                className="min-h-[70px] resize-none bg-background border-border text-sm"
+              />
+            </div>
+
+            <div className="shrink-0 self-end">
+              <Button 
+                onClick={handleAddComment}
+                disabled={!commentType || !commentText.trim()}
+                className="gap-2 h-9 px-6"
+              >
+                <Plus className="h-4 w-4" />
+                Add
+              </Button>
+            </div>
+          </div>
+
+          <div className="flex items-center space-x-2 mt-3 ml-[200px]">
+            <Checkbox
+              id="include-copy"
+              checked={includeInCopy}
+              onCheckedChange={(checked) => setIncludeInCopy(checked as boolean)}
+            />
+            <Label
+              htmlFor="include-copy"
+              className="text-sm font-normal cursor-pointer text-muted-foreground"
+            >
+              Include in Copy as New
+            </Label>
           </div>
         </div>
 
-        {/* Comments History - Modern Design */}
-        <div className="space-y-4">
-          <div className="flex items-center justify-between px-1">
-            <div className="flex items-center gap-3">
-              <div className="h-8 w-1 bg-gradient-to-b from-primary to-primary/30 rounded-full" />
-              <h3 className="text-base font-bold text-foreground">
-                Activity History
-              </h3>
-              <Badge variant="secondary" className="rounded-full px-3">
-                {comments.length}
-              </Badge>
-            </div>
+        {/* Comments History - Minimal Design */}
+        <div className="space-y-3">
+          <div className="flex items-center gap-2 px-1">
+            <h3 className="text-sm font-semibold text-foreground">
+              Activity History
+            </h3>
+            <Badge variant="secondary" className="h-5 px-2 text-xs">
+              {comments.length}
+            </Badge>
           </div>
 
           {comments.length === 0 ? (
-            <div className="border border-dashed rounded-xl p-12 text-center bg-muted/20">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-muted/50 mb-4">
-                <MessageSquare className="h-8 w-8 text-muted-foreground/50" />
-              </div>
-              <p className="text-sm font-medium text-muted-foreground mb-1">
+            <div className="border border-dashed rounded-lg p-8 text-center bg-muted/20">
+              <MessageSquare className="h-10 w-10 text-muted-foreground/40 mx-auto mb-2" />
+              <p className="text-sm text-muted-foreground">
                 No activity recorded yet
-              </p>
-              <p className="text-xs text-muted-foreground">
-                All changes and updates will appear here
               </p>
             </div>
           ) : (
-            <div className="border border-border/50 rounded-xl overflow-hidden bg-card/50 backdrop-blur-sm shadow-md">
+            <div className="border border-border rounded-lg overflow-hidden bg-background">
               {/* Desktop Table View */}
               <div className="hidden md:block overflow-x-auto">
                 <table className="w-full">
                   <thead>
-                    <tr className="bg-muted/40 backdrop-blur-sm border-b border-border/50">
-                      <th className="text-left p-4 text-xs font-bold uppercase tracking-wider text-muted-foreground w-[100px]">
+                    <tr className="bg-muted/30 border-b border-border">
+                      <th className="text-left p-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground w-[100px]">
                         Type
                       </th>
-                      <th className="text-left p-4 text-xs font-bold uppercase tracking-wider text-muted-foreground w-[140px]">
+                      <th className="text-left p-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground w-[130px]">
                         User
                       </th>
-                      <th className="text-left p-4 text-xs font-bold uppercase tracking-wider text-muted-foreground w-[160px]">
+                      <th className="text-left p-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground w-[150px]">
                         Date
                       </th>
-                      <th className="text-left p-4 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                      <th className="text-left p-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                         Details
                       </th>
                     </tr>
@@ -234,26 +222,24 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
                     {comments.map((comment, index) => (
                       <tr
                         key={comment.id}
-                        className={`border-b border-border/30 last:border-b-0 hover:bg-muted/30 transition-all duration-200 ${
-                          index % 2 === 0 ? 'bg-background/50' : 'bg-muted/10'
-                        }`}
+                        className="border-b border-border last:border-b-0 hover:bg-muted/20 transition-colors"
                       >
-                        <td className="p-4">
+                        <td className="p-3">
                           <Badge
                             variant="outline"
-                            className={`${getTypeColor(comment.type)} text-xs font-semibold shadow-sm`}
+                            className={`${getTypeColor(comment.type)} text-xs`}
                           >
                             {comment.type}
                           </Badge>
                         </td>
-                        <td className="p-4 text-sm font-medium text-foreground">
+                        <td className="p-3 text-sm text-foreground">
                           {comment.user}
                         </td>
-                        <td className="p-4 text-sm text-muted-foreground font-mono">
+                        <td className="p-3 text-sm text-muted-foreground font-mono">
                           {format(comment.dateEntered, "MM/dd/yyyy hh:mm a")}
                         </td>
-                        <td className="p-4 text-sm text-foreground/90 leading-relaxed">
-                          <div className="line-clamp-2 whitespace-pre-wrap">
+                        <td className="p-3 text-sm text-foreground/90">
+                          <div className="line-clamp-2">
                             {comment.comment}
                           </div>
                         </td>
@@ -264,18 +250,16 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
               </div>
 
               {/* Mobile Card View */}
-              <div className="md:hidden divide-y divide-border/30">
+              <div className="md:hidden divide-y divide-border">
                 {comments.map((comment, index) => (
                   <div 
                     key={comment.id} 
-                    className={`p-5 space-y-3 hover:bg-muted/30 transition-colors ${
-                      index % 2 === 0 ? 'bg-background/50' : 'bg-muted/10'
-                    }`}
+                    className="p-4 space-y-2 hover:bg-muted/20 transition-colors"
                   >
                     <div className="flex items-start justify-between gap-2">
                       <Badge
                         variant="outline"
-                        className={`${getTypeColor(comment.type)} text-xs font-semibold shadow-sm`}
+                        className={`${getTypeColor(comment.type)} text-xs`}
                       >
                         {comment.type}
                       </Badge>
@@ -283,10 +267,10 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
                         {format(comment.dateEntered, "MM/dd/yyyy hh:mm a")}
                       </span>
                     </div>
-                    <div className="text-sm font-semibold text-foreground">
+                    <div className="text-sm font-medium text-foreground">
                       {comment.user}
                     </div>
-                    <div className="text-sm text-foreground/85 whitespace-pre-wrap leading-relaxed">
+                    <div className="text-sm text-foreground/85">
                       {comment.comment}
                     </div>
                   </div>
