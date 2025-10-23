@@ -117,18 +117,18 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
   return (
     <Card className="rounded-t-none border-t-0">
       <CardContent className="p-6 space-y-6">
-        {/* Add Comment Form - Minimal Design */}
-        <div className="bg-muted/20 rounded-lg p-6">
-          <div className="grid grid-cols-1 md:grid-cols-[300px_1fr] gap-6 mb-4">
-            <div className="space-y-2">
-              <Label htmlFor="comment-type" className="text-sm font-medium text-foreground/70">
+        {/* Add Comment Form - Clean Modern Design */}
+        <div className="space-y-4">
+          <div className="flex items-start gap-4">
+            <div className="w-48 shrink-0">
+              <Label htmlFor="comment-type" className="text-sm font-medium mb-2 block">
                 Type
               </Label>
               <Select value={commentType} onValueChange={setCommentType}>
-                <SelectTrigger className="h-11 bg-background">
+                <SelectTrigger className="h-10 bg-background border-border/60">
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
-                <SelectContent className="z-50 bg-popover">
+                <SelectContent className="z-50 bg-popover border">
                   <SelectItem value="General">General</SelectItem>
                   <SelectItem value="Estimate">Estimate</SelectItem>
                   <SelectItem value="Status">Status Change</SelectItem>
@@ -139,8 +139,8 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
               </Select>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="comment-text" className="text-sm font-medium text-foreground/70">
+            <div className="flex-1">
+              <Label htmlFor="comment-text" className="text-sm font-medium mb-2 block">
                 Comment
               </Label>
               <Textarea
@@ -148,33 +148,34 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
                 value={commentText}
                 onChange={(e) => setCommentText(e.target.value)}
                 placeholder="Enter your comment..."
-                className="min-h-[100px] resize-y bg-background"
+                className="min-h-[100px] resize-none bg-background border-border/60"
               />
+            </div>
+
+            <div className="shrink-0 self-end">
+              <Button 
+                onClick={handleAddComment}
+                disabled={!commentType || !commentText.trim()}
+                className="gap-2 h-10 px-6"
+              >
+                <Plus className="h-4 w-4" />
+                Add Comment
+              </Button>
             </div>
           </div>
 
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="include-copy"
-                checked={includeInCopy}
-                onCheckedChange={(checked) => setIncludeInCopy(checked as boolean)}
-              />
-              <Label
-                htmlFor="include-copy"
-                className="text-sm font-normal cursor-pointer text-foreground/70"
-              >
-                Include in Copy as New
-              </Label>
-            </div>
-            <Button 
-              onClick={handleAddComment}
-              disabled={!commentType || !commentText.trim()}
-              className="gap-2 px-6"
+          <div className="flex items-center space-x-2 pl-52">
+            <Checkbox
+              id="include-copy"
+              checked={includeInCopy}
+              onCheckedChange={(checked) => setIncludeInCopy(checked as boolean)}
+            />
+            <Label
+              htmlFor="include-copy"
+              className="text-sm font-normal cursor-pointer text-muted-foreground"
             >
-              <Plus className="h-4 w-4" />
-              Add Comment
-            </Button>
+              Include in Copy as New
+            </Label>
           </div>
         </div>
 
