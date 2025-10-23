@@ -117,18 +117,18 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
   return (
     <Card className="rounded-t-none border-t-0">
       <CardContent className="p-6 space-y-6">
-        {/* Add Comment Form */}
-        <div className="grid grid-cols-1 gap-4 p-4 bg-muted/30 rounded-lg border">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+        {/* Add Comment Form - Minimal Design */}
+        <div className="bg-muted/20 rounded-lg p-6">
+          <div className="grid grid-cols-1 md:grid-cols-[300px_1fr] gap-6 mb-4">
             <div className="space-y-2">
-              <Label htmlFor="comment-type" className="text-sm font-medium">
+              <Label htmlFor="comment-type" className="text-sm font-medium text-foreground/70">
                 Type
               </Label>
               <Select value={commentType} onValueChange={setCommentType}>
-                <SelectTrigger className="h-10">
+                <SelectTrigger className="h-11 bg-background">
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="z-50 bg-popover">
                   <SelectItem value="General">General</SelectItem>
                   <SelectItem value="Estimate">Estimate</SelectItem>
                   <SelectItem value="Status">Status Change</SelectItem>
@@ -139,8 +139,8 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
               </Select>
             </div>
 
-            <div className="md:col-span-3 space-y-2">
-              <Label htmlFor="comment-text" className="text-sm font-medium">
+            <div className="space-y-2">
+              <Label htmlFor="comment-text" className="text-sm font-medium text-foreground/70">
                 Comment
               </Label>
               <Textarea
@@ -148,7 +148,7 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
                 value={commentText}
                 onChange={(e) => setCommentText(e.target.value)}
                 placeholder="Enter your comment..."
-                className="min-h-[80px] resize-y"
+                className="min-h-[100px] resize-y bg-background"
               />
             </div>
           </div>
@@ -162,7 +162,7 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
               />
               <Label
                 htmlFor="include-copy"
-                className="text-sm font-normal cursor-pointer"
+                className="text-sm font-normal cursor-pointer text-foreground/70"
               >
                 Include in Copy as New
               </Label>
@@ -170,7 +170,7 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
             <Button 
               onClick={handleAddComment}
               disabled={!commentType || !commentText.trim()}
-              className="gap-2"
+              className="gap-2 px-6"
             >
               <Plus className="h-4 w-4" />
               Add Comment
