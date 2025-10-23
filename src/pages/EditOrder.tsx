@@ -712,13 +712,15 @@ const EditOrder = () => {
 
         <div className="space-y-2">
           <Label htmlFor="calFreq" className="text-sm font-medium">Cal Freq</Label>
-          <Input
-            id="calFreq"
-            value={formData.calFreq}
-            onChange={(e) => handleInputChange("calFreq", e.target.value)}
-            placeholder="Enter calibration frequency"
-            className="h-11"
-          />
+          <Select value={formData.calFreq} onValueChange={(value) => handleInputChange("calFreq", value)}>
+            <SelectTrigger className="h-11">
+              <SelectValue placeholder="Select frequency" />
+            </SelectTrigger>
+            <SelectContent className="z-50 bg-popover border">
+              <SelectItem value="yearly">Yearly</SelectItem>
+              <SelectItem value="monthly">Monthly</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
 
         <div className="space-y-2">
