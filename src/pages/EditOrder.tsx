@@ -218,17 +218,17 @@ const EditOrder = () => {
     contact: workOrderData?.contact || "",
     
     // General Information - Auto-fill from workOrderData and details
-    type: mapItemType(workOrderData?.details?.itemType || ""),
-    reportNumber: workOrderData?.details?.batch || workOrderData?.id || "",
-    itemStatus: workOrderData?.status || "",
-    assignedTo: workOrderData?.assignedTo || "",
+    type: mapItemType(workOrderData?.details?.itemType || "") || "single",
+    reportNumber: workOrderData?.details?.batch || workOrderData?.id || "3455-1",
+    itemStatus: workOrderData?.status || "in-lab",
+    assignedTo: workOrderData?.assignedTo || "john-smith",
     priority: workOrderData?.urgencyLevel || workOrderData?.details?.priority || "Normal",
-    location: workOrderData?.location || "",
-    division: workOrderData?.division || "",
+    location: workOrderData?.location || "baton-rouge",
+    division: workOrderData?.division || "lab",
     calFreq: workOrderData?.calFreq || "",
     calFreqNumber: "",
     calFreqType: "",
-    actionCode: mapActionCode(workOrderData?.details?.action || workOrderData?.details?.job || ""),
+    actionCode: mapActionCode(workOrderData?.details?.action || workOrderData?.details?.job || "") || "cc",
     
     // Product Information - Auto-fill from workOrderData.details
     manufacturer: workOrderData?.details?.manufacturer || "",
