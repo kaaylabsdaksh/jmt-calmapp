@@ -4881,7 +4881,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
               </Select>
             </div>
           </div>
-          <div className="flex gap-2">
+          <div className="flex items-center gap-1">
             <Button 
               variant="outline" 
               size="sm" 
@@ -4890,6 +4890,90 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
             >
               Previous
             </Button>
+            
+            {/* Page numbers */}
+            {(() => {
+              const pageNumbers = [];
+              const maxPagesToShow = 5;
+              
+              if (totalPages <= maxPagesToShow + 2) {
+                // Show all pages if total is small
+                for (let i = 1; i <= totalPages; i++) {
+                  pageNumbers.push(
+                    <Button
+                      key={i}
+                      variant={currentPage === i ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setCurrentPage(i)}
+                      className="min-w-[40px]"
+                    >
+                      {i}
+                    </Button>
+                  );
+                }
+              } else {
+                // Always show first page
+                pageNumbers.push(
+                  <Button
+                    key={1}
+                    variant={currentPage === 1 ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setCurrentPage(1)}
+                    className="min-w-[40px]"
+                  >
+                    1
+                  </Button>
+                );
+                
+                // Show ellipsis or pages near current page
+                if (currentPage > 3) {
+                  pageNumbers.push(
+                    <span key="ellipsis1" className="px-2 text-gray-500">...</span>
+                  );
+                }
+                
+                // Show pages around current page
+                const startPage = Math.max(2, currentPage - 1);
+                const endPage = Math.min(totalPages - 1, currentPage + 1);
+                
+                for (let i = startPage; i <= endPage; i++) {
+                  pageNumbers.push(
+                    <Button
+                      key={i}
+                      variant={currentPage === i ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setCurrentPage(i)}
+                      className="min-w-[40px]"
+                    >
+                      {i}
+                    </Button>
+                  );
+                }
+                
+                // Show ellipsis before last page
+                if (currentPage < totalPages - 2) {
+                  pageNumbers.push(
+                    <span key="ellipsis2" className="px-2 text-gray-500">...</span>
+                  );
+                }
+                
+                // Always show last page
+                pageNumbers.push(
+                  <Button
+                    key={totalPages}
+                    variant={currentPage === totalPages ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setCurrentPage(totalPages)}
+                    className="min-w-[40px]"
+                  >
+                    {totalPages}
+                  </Button>
+                );
+              }
+              
+              return pageNumbers;
+            })()}
+            
             <Button 
               variant="outline" 
               size="sm" 
