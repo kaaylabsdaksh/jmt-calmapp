@@ -20,7 +20,12 @@ import {
   Zap,
   ClipboardList,
   Clipboard,
-  LogOut
+  LogOut,
+  Flame,
+  TruckIcon,
+  Wifi,
+  FileCheck,
+  Barcode
 } from "lucide-react";
 
 import {
@@ -41,9 +46,22 @@ import { Separator } from "@/components/ui/separator";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ChevronDown, ChevronRight } from "lucide-react";
 
+const workOrderQuickActions = [
+  { title: "Hot List", icon: Flame },
+  { title: "Transit Log", icon: TruckIcon },
+  { title: "Update RFID's", icon: Wifi },
+  { title: "Rental Batch Certs", icon: FileCheck },
+  { title: "PO/Change Orders", icon: FileText },
+  { title: "Assign Techs", icon: Users },
+  { title: "Assign Departure Info", icon: MapPin },
+  { title: "Export Excel", icon: FileSpreadsheet },
+  { title: "Missing Cost", icon: DollarSign },
+  { title: "Create Barcode", icon: Barcode },
+];
+
 const quickActionCategories = {
   "Core Operations": [
-    { title: "Work Orders", icon: ClipboardList },
+    { title: "Work Orders", icon: ClipboardList, hasSubItems: true },
     { title: "Standards", icon: CheckCircle },
     { title: "Invoicing", icon: CreditCard },
     { title: "Quotes", icon: FileText },
@@ -76,6 +94,7 @@ export function AppSidebar() {
   const { open } = useSidebar();
   const location = useLocation();
   const [expandedGroups, setExpandedGroups] = useState<string[]>(["Core Operations"]);
+  const [expandedWorkOrders, setExpandedWorkOrders] = useState(false);
 
   const handleLogout = () => {
     // Navigate to login page
@@ -143,34 +162,75 @@ export function AppSidebar() {
                     <SidebarMenu className="space-y-1">
                       {actions.map((action, index) => (
                         <SidebarMenuItem key={action.title}>
-                          <SidebarMenuButton 
-                            asChild
-                            tooltip={action.title}
-                            className="group"
-                          >
-                            {action.title === "Work Orders" ? (
-                              <Link
-                                to="/"
-                                className={`
-                                  flex items-center w-full h-10 px-3 rounded-md
-                                  ${isActiveItem(action.title) 
-                                    ? "bg-sidebar-accent text-sidebar-accent-foreground shadow-sm font-semibold" 
-                                    : "text-sidebar-foreground hover:text-sidebar-accent-foreground"
-                                  }
-                                  hover:bg-sidebar-accent hover:shadow-sm
-                                  transition-all duration-200 ease-in-out
-                                  group-hover:translate-x-1
-                                `}
-                                style={{
-                                  animationDelay: `${(categoryIndex * 100) + (index * 50)}ms`
-                                }}
-                              >
-                                {React.createElement(action.icon, { className: "h-4 w-4 shrink-0 text-sidebar-foreground group-hover:scale-110 transition-transform duration-200" })}
-                                <span className="ml-3 font-medium text-sm animate-fade-in">
-                                  {action.title}
-                                </span>
-                              </Link>
-                            ) : (
+                          {action.title === "Work Orders" && action.hasSubItems ? (
+                            <Collapsible 
+                              open={expandedWorkOrders} 
+                              onOpenChange={setExpandedWorkOrders}
+                            >
+                              <div>
+                                <div className="flex items-center gap-1">
+                                  <SidebarMenuButton 
+                                    asChild
+                                    tooltip={action.title}
+                                    className="group flex-1"
+                                  >
+                                    <Link
+                                      to="/"
+                                      className={`
+                                        flex items-center w-full h-10 px-3 rounded-md
+                                        ${isActiveItem(action.title) 
+                                          ? "bg-sidebar-accent text-sidebar-accent-foreground shadow-sm font-semibold" 
+                                          : "text-sidebar-foreground hover:text-sidebar-accent-foreground"
+                                        }
+                                        hover:bg-sidebar-accent hover:shadow-sm
+                                        transition-all duration-200 ease-in-out
+                                        group-hover:translate-x-1
+                                      `}
+                                    >
+                                      {React.createElement(action.icon, { className: "h-4 w-4 shrink-0 text-sidebar-foreground group-hover:scale-110 transition-transform duration-200" })}
+                                      <span className="ml-3 font-medium text-sm animate-fade-in">
+                                        {action.title}
+                                      </span>
+                                    </Link>
+                                  </SidebarMenuButton>
+                                  <CollapsibleTrigger asChild>
+                                    <Button
+                                      variant="ghost"
+                                      size="sm"
+                                      className="h-8 w-8 p-0 hover:bg-sidebar-accent"
+                                    >
+                                      {expandedWorkOrders ? (
+                                        <ChevronDown className="h-3 w-3" />
+                                      ) : (
+                                        <ChevronRight className="h-3 w-3" />
+                                      )}
+                                    </Button>
+                                  </CollapsibleTrigger>
+                                </div>
+                                
+                                <CollapsibleContent>
+                                  <div className="ml-6 mt-1 space-y-1 border-l-2 border-sidebar-border pl-3">
+                                    {workOrderQuickActions.map((subAction) => (
+                                      <Button
+                                        key={subAction.title}
+                                        variant="ghost"
+                                        size="sm"
+                                        className="w-full justify-start h-9 px-2 text-sidebar-foreground/80 hover:text-sidebar-accent-foreground hover:bg-sidebar-accent/50 transition-all"
+                                      >
+                                        {React.createElement(subAction.icon, { className: "h-3.5 w-3.5 shrink-0 mr-2" })}
+                                        <span className="text-xs">{subAction.title}</span>
+                                      </Button>
+                                    ))}
+                                  </div>
+                                </CollapsibleContent>
+                              </div>
+                            </Collapsible>
+                          ) : (
+                            <SidebarMenuButton 
+                              asChild
+                              tooltip={action.title}
+                              className="group"
+                            >
                               <Button
                                 variant="ghost"
                                 size="sm"
@@ -193,8 +253,8 @@ export function AppSidebar() {
                                   {action.title}
                                 </span>
                               </Button>
-                            )}
-                          </SidebarMenuButton>
+                            </SidebarMenuButton>
+                          )}
                         </SidebarMenuItem>
                       ))}
                     </SidebarMenu>
