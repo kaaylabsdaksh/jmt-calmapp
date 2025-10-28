@@ -235,6 +235,8 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-24">Manufacturer</th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-16">Model</th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-32">Description</th>
+                  <th className="text-left p-2 text-xs font-medium text-muted-foreground w-12">TF</th>
+                  <th className="text-left p-2 text-xs font-medium text-muted-foreground w-32">Capable Locations</th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-20">Mfg Serial</th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-16">CustID</th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-16">CustSN</th>
@@ -244,8 +246,6 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-16">New Equip</th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-24">Need By Date</th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-16">C/C Cost</th>
-                  <th className="text-left p-2 text-xs font-medium text-muted-foreground w-12">TF</th>
-                  <th className="text-left p-2 text-xs font-medium text-muted-foreground w-32">Capable Locations</th>
                 </tr>
               </thead>
               <tbody>
@@ -416,24 +416,48 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                        </Popover>
                      </td>
                      <td className="p-4 min-w-[200px]">
-                       <Textarea 
-                         placeholder="Description"
-                         value={newItem.description}
-                         onChange={(e) => updateNewItem('description', e.target.value)}
-                         className="h-12 min-h-12 text-base resize-none border-2 focus:border-primary"
-                         onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
-                       />
-                     </td>
-                     <td className="p-4 min-w-[150px]">
-                       <Input 
-                         placeholder="Mfg Serial"
-                         value={newItem.mfgSerial}
-                         onChange={(e) => updateNewItem('mfgSerial', e.target.value)}
-                         className="h-12 text-base font-medium border-2 focus:border-primary"
-                         onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
-                         autoComplete="off"
-                       />
-                     </td>
+                        <Textarea 
+                          placeholder="Description"
+                          value={newItem.description}
+                          onChange={(e) => updateNewItem('description', e.target.value)}
+                          className="h-12 min-h-12 text-base resize-none border-2 focus:border-primary"
+                          onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
+                        />
+                      </td>
+                      <td className="p-4 min-w-[120px]">
+                        <Select value={newItem.tf} onValueChange={(value) => updateNewItem('tf', value)}>
+                          <SelectTrigger 
+                            className="h-12 text-base border-2 focus:border-primary"
+                            onFocus={(e) => e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
+                          >
+                            <SelectValue placeholder="Select..." />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="yes">Yes</SelectItem>
+                            <SelectItem value="no">No</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </td>
+                      <td className="p-4 min-w-[200px]">
+                        <Input 
+                          placeholder="Capable Locations"
+                          value={newItem.capableLocations}
+                          onChange={(e) => updateNewItem('capableLocations', e.target.value)}
+                          className="h-12 text-base font-medium border-2 focus:border-primary"
+                          onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
+                          autoComplete="off"
+                        />
+                      </td>
+                      <td className="p-4 min-w-[150px]">
+                        <Input 
+                          placeholder="Mfg Serial"
+                          value={newItem.mfgSerial}
+                          onChange={(e) => updateNewItem('mfgSerial', e.target.value)}
+                          className="h-12 text-base font-medium border-2 focus:border-primary"
+                          onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
+                          autoComplete="off"
+                        />
+                      </td>
                      <td className="p-4 min-w-[120px]">
                        <Input 
                          placeholder="CustID"
@@ -520,30 +544,6 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                           onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
                           autoComplete="off"
                         />
-                     </td>
-                     <td className="p-4 min-w-[120px]">
-                       <Select value={newItem.tf} onValueChange={(value) => updateNewItem('tf', value)}>
-                         <SelectTrigger 
-                           className="h-12 text-base border-2 focus:border-primary"
-                           onFocus={(e) => e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
-                         >
-                           <SelectValue placeholder="Select..." />
-                         </SelectTrigger>
-                         <SelectContent>
-                           <SelectItem value="yes">Yes</SelectItem>
-                           <SelectItem value="no">No</SelectItem>
-                         </SelectContent>
-                       </Select>
-                     </td>
-                     <td className="p-4 min-w-[200px]">
-                       <Input 
-                         placeholder="Capable Locations"
-                         value={newItem.capableLocations}
-                         onChange={(e) => updateNewItem('capableLocations', e.target.value)}
-                         className="h-12 text-base font-medium border-2 focus:border-primary"
-                         onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
-                         autoComplete="off"
-                       />
                      </td>
                      <td className="p-3">
                        <div className="flex items-center justify-end gap-2">
@@ -821,6 +821,34 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                     </td>
                     <td className="p-2 text-xs">
                       {editingItemId === item.id ? (
+                        <Tabs value={item.tf} onValueChange={(value) => updateItem(item.id, 'tf', value)}>
+                          <TabsList className="grid w-full grid-cols-2 h-6">
+                            <TabsTrigger value="yes" className="text-xs">Yes</TabsTrigger>
+                            <TabsTrigger value="no" className="text-xs">No</TabsTrigger>
+                          </TabsList>
+                        </Tabs>
+                      ) : (
+                        <div className="truncate capitalize" title={item.tf}>
+                          {item.tf || "—"}
+                        </div>
+                      )}
+                    </td>
+                    <td className="p-2 text-xs">
+                      {editingItemId === item.id ? (
+                        <Input 
+                          placeholder="Capable Locations"
+                          value={item.capableLocations}
+                          onChange={(e) => updateItem(item.id, 'capableLocations', e.target.value)}
+                          className="h-6 text-xs"
+                        />
+                      ) : (
+                        <div className="truncate" title={item.capableLocations}>
+                          {item.capableLocations || "—"}
+                        </div>
+                      )}
+                    </td>
+                    <td className="p-2 text-xs">
+                      {editingItemId === item.id ? (
                         <Input 
                           placeholder="Mfg Serial"
                           value={item.mfgSerial}
@@ -942,34 +970,6 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                       ) : (
                         <div className="truncate" title={item.ccCost}>
                           {item.ccCost || "—"}
-                        </div>
-                      )}
-                     </td>
-                     <td className="p-2 text-xs">
-                      {editingItemId === item.id ? (
-                        <Tabs value={item.tf} onValueChange={(value) => updateItem(item.id, 'tf', value)}>
-                          <TabsList className="grid w-full grid-cols-2 h-6">
-                            <TabsTrigger value="yes" className="text-xs">Yes</TabsTrigger>
-                            <TabsTrigger value="no" className="text-xs">No</TabsTrigger>
-                          </TabsList>
-                        </Tabs>
-                      ) : (
-                        <div className="truncate capitalize" title={item.tf}>
-                          {item.tf || "—"}
-                        </div>
-                      )}
-                     </td>
-                     <td className="p-2 text-xs">
-                      {editingItemId === item.id ? (
-                        <Input 
-                          placeholder="Capable Locations"
-                          value={item.capableLocations}
-                          onChange={(e) => updateItem(item.id, 'capableLocations', e.target.value)}
-                          className="h-6 text-xs"
-                        />
-                      ) : (
-                        <div className="truncate" title={item.capableLocations}>
-                          {item.capableLocations || "—"}
                         </div>
                       )}
                      </td>
