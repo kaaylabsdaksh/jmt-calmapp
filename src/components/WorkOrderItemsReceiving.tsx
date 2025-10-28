@@ -1406,7 +1406,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
                         <SelectItem value="SINGLE">SINGLE</SelectItem>
                         <SelectItem value="ESL - Blankets">ESL - Blankets</SelectItem>
                         <SelectItem value="ESL - Bucket Trucks">ESL - Bucket Trucks</SelectItem>
-                        <SelectItem value="ESL - Cranes">ESL - Cranes</SelectItem>
+                        <SelectItem value="ESL - CoverUps">ESL - CoverUps</SelectItem>
                         <SelectItem value="ESL - Grounds">ESL - Grounds</SelectItem>
                         <SelectItem value="ESL - Hotsticks">ESL - Hotsticks</SelectItem>
                         <SelectItem value="ESL - Jumpers">ESL - Jumpers</SelectItem>
@@ -1436,9 +1436,9 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="Normal">Normal</SelectItem>
-                        <SelectItem value="High">High</SelectItem>
-                        <SelectItem value="Low">Low</SelectItem>
-                        <SelectItem value="Urgent">Urgent</SelectItem>
+                        <SelectItem value="Rush">Rush</SelectItem>
+                        <SelectItem value="Expedite">Expedite</SelectItem>
+                        <SelectItem value="Emergency">Emergency</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -1453,8 +1453,21 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="Baton Rouge">Baton Rouge</SelectItem>
-                        <SelectItem value="Houston">Houston</SelectItem>
-                        <SelectItem value="Lafayette">Lafayette</SelectItem>
+                        <SelectItem value="Alexandria">Alexandria</SelectItem>
+                        <SelectItem value="Odessa">Odessa</SelectItem>
+                        <SelectItem value="Clute">Clute</SelectItem>
+                        <SelectItem value="Mattoon">Mattoon</SelectItem>
+                        <SelectItem value="Groves">Groves</SelectItem>
+                        <SelectItem value="Candia">Candia</SelectItem>
+                        <SelectItem value="San Angelo">San Angelo</SelectItem>
+                        <SelectItem value="Berthold">Berthold</SelectItem>
+                        <SelectItem value="Mount Braddock">Mount Braddock</SelectItem>
+                        <SelectItem value="Port Arthur">Port Arthur</SelectItem>
+                        <SelectItem value="Mathiston">Mathiston</SelectItem>
+                        <SelectItem value="Billings">Billings</SelectItem>
+                        <SelectItem value="Mobile">Mobile</SelectItem>
+                        <SelectItem value="Onsite">Onsite</SelectItem>
+                        <SelectItem value="Leechburg">Leechburg</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -1528,9 +1541,13 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
                         <SelectValue placeholder="Select..." />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="Walk-in">Walk-in</SelectItem>
+                        <SelectItem value="JM Driver Pickup">JM Driver Pickup</SelectItem>
+                        <SelectItem value="Customer Dropoff">Customer Dropoff</SelectItem>
                         <SelectItem value="Shipped">Shipped</SelectItem>
-                        <SelectItem value="Picked-up">Picked-up</SelectItem>
+                        <SelectItem value="Onsite">Onsite</SelectItem>
+                        <SelectItem value="Purchasing Dept.">Purchasing Dept.</SelectItem>
+                        <SelectItem value="Lab Standard">Lab Standard</SelectItem>
+                        <SelectItem value="Surplus">Surplus</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
