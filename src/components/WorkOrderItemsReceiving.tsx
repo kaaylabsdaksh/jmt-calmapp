@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -94,6 +96,26 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
   const [deleteItemId, setDeleteItemId] = useState<string | null>(null);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [isClearAllDialogOpen, setIsClearAllDialogOpen] = useState(false);
+  const [isQuickAddDialogOpen, setIsQuickAddDialogOpen] = useState(false);
+  const [quickAddData, setQuickAddData] = useState({
+    type: "SINGLE",
+    calFreq: "",
+    priority: "Normal",
+    location: "Baton Rouge",
+    division: "Lab",
+    actionCode: "",
+    arrivalDate: "",
+    arrivalType: "",
+    poNumber: "",
+    recdBy: "",
+    deliverByDate: "",
+    soNumber: "",
+    newEquip: false,
+    iso17025: false,
+    multiParts: false,
+    estimate: false,
+    usedSurplus: false,
+  });
   const [manufacturerPopoverOpen, setManufacturerPopoverOpen] = useState<{[key: string]: boolean}>({});
   const [editManufacturerPopoverOpen, setEditManufacturerPopoverOpen] = useState<{[key: string]: boolean}>({});
   const [modelPopoverOpen, setModelPopoverOpen] = useState<{[key: string]: boolean}>({});
@@ -166,6 +188,53 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
     setIsClearAllDialogOpen(false);
   };
 
+  const handleQuickAddApply = () => {
+    if (selectedItems.length === 0) {
+      return;
+    }
+
+    // Apply the quick add data to all selected items
+    const updatedNewItems = newItems.map(item => {
+      if (selectedItems.includes(item.id)) {
+        return {
+          ...item,
+          calFreq: quickAddData.calFreq || item.calFreq,
+          priority: quickAddData.priority || item.priority,
+          actionCode: quickAddData.actionCode || item.actionCode,
+          iso17025: quickAddData.iso17025 ? "yes" : item.iso17025,
+          estimate: quickAddData.estimate ? "yes" : item.estimate,
+          newEquip: quickAddData.newEquip ? "yes" : item.newEquip,
+          needByDate: quickAddData.deliverByDate || item.needByDate,
+        };
+      }
+      return item;
+    });
+
+    setNewItems(updatedNewItems);
+    setIsQuickAddDialogOpen(false);
+    
+    // Reset form
+    setQuickAddData({
+      type: "SINGLE",
+      calFreq: "",
+      priority: "Normal",
+      location: "Baton Rouge",
+      division: "Lab",
+      actionCode: "",
+      arrivalDate: "",
+      arrivalType: "",
+      poNumber: "",
+      recdBy: "",
+      deliverByDate: "",
+      soNumber: "",
+      newEquip: false,
+      iso17025: false,
+      multiParts: false,
+      estimate: false,
+      usedSurplus: false,
+    });
+  };
+
   const startEditing = (id: string) => {
     setEditingItemId(id);
   };
@@ -178,6 +247,14 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
     <div className="border rounded-lg overflow-hidden">
       <div className="flex justify-between items-center p-2 bg-muted/20 border-b">
         <div className="flex items-center gap-2">
+          <Button 
+            onClick={() => setIsQuickAddDialogOpen(true)}
+            size="sm"
+            variant="secondary"
+            disabled={selectedItems.length === 0}
+          >
+            Quick Add New Items
+          </Button>
           <Button 
             variant="link" 
             className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto flex items-center gap-1"
@@ -1321,6 +1398,238 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
           </div>
         </div>
       )}
+
+      {/* Quick Add Dialog */}
+      <Dialog open={isQuickAddDialogOpen} onOpenChange={setIsQuickAddDialogOpen}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Quick Add New Items</DialogTitle>
+          </DialogHeader>
+          
+          <div className="grid grid-cols-3 gap-6">
+            {/* General Information */}
+            <div className="space-y-4">
+              <h3 className="font-semibold text-sm border-b pb-2">General Information</h3>
+              
+              <div className="space-y-2">
+                <Label htmlFor="type" className="text-xs">Type:</Label>
+                <Select value={quickAddData.type} onValueChange={(value) => setQuickAddData({...quickAddData, type: value})}>
+                  <SelectTrigger id="type" className="h-8 text-xs">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="SINGLE">SINGLE</SelectItem>
+                    <SelectItem value="BATCH">BATCH</SelectItem>
+                    <SelectItem value="MULTIPLE">MULTIPLE</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="calFreq" className="text-xs">Cal Freq:</Label>
+                <Input 
+                  id="calFreq"
+                  value={quickAddData.calFreq}
+                  onChange={(e) => setQuickAddData({...quickAddData, calFreq: e.target.value})}
+                  className="h-8 text-xs"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="priority" className="text-xs">Priority:</Label>
+                <Select value={quickAddData.priority} onValueChange={(value) => setQuickAddData({...quickAddData, priority: value})}>
+                  <SelectTrigger id="priority" className="h-8 text-xs">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Normal">Normal</SelectItem>
+                    <SelectItem value="High">High</SelectItem>
+                    <SelectItem value="Low">Low</SelectItem>
+                    <SelectItem value="Urgent">Urgent</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="location" className="text-xs">Location:</Label>
+                <Select value={quickAddData.location} onValueChange={(value) => setQuickAddData({...quickAddData, location: value})}>
+                  <SelectTrigger id="location" className="h-8 text-xs">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Baton Rouge">Baton Rouge</SelectItem>
+                    <SelectItem value="Houston">Houston</SelectItem>
+                    <SelectItem value="Lafayette">Lafayette</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="division" className="text-xs">Division:</Label>
+                <Select value={quickAddData.division} onValueChange={(value) => setQuickAddData({...quickAddData, division: value})}>
+                  <SelectTrigger id="division" className="h-8 text-xs">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Lab">Lab</SelectItem>
+                    <SelectItem value="Field">Field</SelectItem>
+                    <SelectItem value="Mobile">Mobile</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="actionCode" className="text-xs">Action Code:</Label>
+                <Select value={quickAddData.actionCode} onValueChange={(value) => setQuickAddData({...quickAddData, actionCode: value})}>
+                  <SelectTrigger id="actionCode" className="h-8 text-xs">
+                    <SelectValue placeholder="Select..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="repair">REPAIR</SelectItem>
+                    <SelectItem value="rc">R/C</SelectItem>
+                    <SelectItem value="rcc">R/C/C</SelectItem>
+                    <SelectItem value="cc">C/C</SelectItem>
+                    <SelectItem value="test">TEST</SelectItem>
+                    <SelectItem value="build-new">BUILD NEW</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            {/* Arrival Information */}
+            <div className="space-y-4">
+              <h3 className="font-semibold text-sm border-b pb-2">Arrival Information</h3>
+              
+              <div className="space-y-2">
+                <Label htmlFor="arrivalDate" className="text-xs">Date:</Label>
+                <Input 
+                  id="arrivalDate"
+                  type="date"
+                  value={quickAddData.arrivalDate}
+                  onChange={(e) => setQuickAddData({...quickAddData, arrivalDate: e.target.value})}
+                  className="h-8 text-xs"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="arrivalType" className="text-xs">Type:</Label>
+                <Select value={quickAddData.arrivalType} onValueChange={(value) => setQuickAddData({...quickAddData, arrivalType: value})}>
+                  <SelectTrigger id="arrivalType" className="h-8 text-xs">
+                    <SelectValue placeholder="Select..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Walk-in">Walk-in</SelectItem>
+                    <SelectItem value="Shipped">Shipped</SelectItem>
+                    <SelectItem value="Picked-up">Picked-up</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            {/* Other Information */}
+            <div className="space-y-4">
+              <h3 className="font-semibold text-sm border-b pb-2">Other Information</h3>
+              
+              <div className="space-y-2">
+                <Label htmlFor="poNumber" className="text-xs">PO Number:</Label>
+                <Input 
+                  id="poNumber"
+                  value={quickAddData.poNumber}
+                  onChange={(e) => setQuickAddData({...quickAddData, poNumber: e.target.value})}
+                  className="h-8 text-xs"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="recdBy" className="text-xs">Recd By:</Label>
+                <Input 
+                  id="recdBy"
+                  value={quickAddData.recdBy}
+                  onChange={(e) => setQuickAddData({...quickAddData, recdBy: e.target.value})}
+                  className="h-8 text-xs"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="deliverByDate" className="text-xs">Deliver By Date:</Label>
+                <Input 
+                  id="deliverByDate"
+                  type="date"
+                  value={quickAddData.deliverByDate}
+                  onChange={(e) => setQuickAddData({...quickAddData, deliverByDate: e.target.value})}
+                  className="h-8 text-xs"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="soNumber" className="text-xs">SO Number:</Label>
+                <Input 
+                  id="soNumber"
+                  value={quickAddData.soNumber}
+                  onChange={(e) => setQuickAddData({...quickAddData, soNumber: e.target.value})}
+                  className="h-8 text-xs"
+                />
+              </div>
+
+              <div className="space-y-3 pt-2">
+                <div className="flex items-center space-x-2">
+                  <Checkbox 
+                    id="newEquip"
+                    checked={quickAddData.newEquip}
+                    onCheckedChange={(checked) => setQuickAddData({...quickAddData, newEquip: checked as boolean})}
+                  />
+                  <Label htmlFor="newEquip" className="text-xs">New Equip</Label>
+                </div>
+
+                <div className="flex items-center space-x-2">
+                  <Checkbox 
+                    id="iso17025"
+                    checked={quickAddData.iso17025}
+                    onCheckedChange={(checked) => setQuickAddData({...quickAddData, iso17025: checked as boolean})}
+                  />
+                  <Label htmlFor="iso17025" className="text-xs">17025</Label>
+                </div>
+
+                <div className="flex items-center space-x-2">
+                  <Checkbox 
+                    id="multiParts"
+                    checked={quickAddData.multiParts}
+                    onCheckedChange={(checked) => setQuickAddData({...quickAddData, multiParts: checked as boolean})}
+                  />
+                  <Label htmlFor="multiParts" className="text-xs">Multi Parts</Label>
+                </div>
+
+                <div className="flex items-center space-x-2">
+                  <Checkbox 
+                    id="estimate"
+                    checked={quickAddData.estimate}
+                    onCheckedChange={(checked) => setQuickAddData({...quickAddData, estimate: checked as boolean})}
+                  />
+                  <Label htmlFor="estimate" className="text-xs">Estimate</Label>
+                </div>
+
+                <div className="flex items-center space-x-2">
+                  <Checkbox 
+                    id="usedSurplus"
+                    checked={quickAddData.usedSurplus}
+                    onCheckedChange={(checked) => setQuickAddData({...quickAddData, usedSurplus: checked as boolean})}
+                  />
+                  <Label htmlFor="usedSurplus" className="text-xs">Used/Surplus</Label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsQuickAddDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button onClick={handleQuickAddApply} disabled={selectedItems.length === 0}>
+              Apply/Save WO
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
