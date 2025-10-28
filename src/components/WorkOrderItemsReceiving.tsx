@@ -1598,101 +1598,105 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
         </DialogContent>
       </Dialog>
 
-      {/* Pagination */}
+      {/* Pagination and Action Buttons */}
       {items.length > 0 && (
-        <div className="bg-card border-t p-4 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <div className="flex items-center gap-4">
-            <span className="text-sm text-muted-foreground">
-              Showing {startIndex + 1}–{endIndex} of {totalSavedItems} items
-            </span>
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-muted-foreground">Show:</span>
-              <Select value={itemsPerPage.toString()} onValueChange={handleItemsPerPageChange}>
-                <SelectTrigger className="h-9 w-20">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="10">10</SelectItem>
-                  <SelectItem value="25">25</SelectItem>
-                  <SelectItem value="50">50</SelectItem>
-                  <SelectItem value="100">100</SelectItem>
-                </SelectContent>
-              </Select>
+        <div className="bg-card border-t p-4">
+          <div className="flex flex-col lg:flex-row justify-between items-center gap-4">
+            {/* Left side: Pagination info and controls */}
+            <div className="flex items-center gap-4 flex-wrap">
+              <span className="text-sm text-muted-foreground whitespace-nowrap">
+                Showing {startIndex + 1}–{endIndex} of {totalSavedItems} items
+              </span>
+              
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-muted-foreground">Show:</span>
+                <Select value={itemsPerPage.toString()} onValueChange={handleItemsPerPageChange}>
+                  <SelectTrigger className="h-9 w-20">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="10">10</SelectItem>
+                    <SelectItem value="25">25</SelectItem>
+                    <SelectItem value="50">50</SelectItem>
+                    <SelectItem value="100">100</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="flex items-center gap-1">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1}
+                >
+                  Previous
+                </Button>
+                
+                {Array.from({ length: Math.min(totalPages, 4) }, (_, i) => i + 1).map((page) => (
+                  <Button
+                    key={page}
+                    variant={currentPage === page ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => handlePageChange(page)}
+                    className={currentPage === page ? "bg-yellow-400 hover:bg-yellow-500 text-black" : ""}
+                  >
+                    {page}
+                  </Button>
+                ))}
+                
+                {totalPages > 4 && currentPage < totalPages - 1 && (
+                  <span className="px-2 text-muted-foreground">...</span>
+                )}
+                
+                {totalPages > 4 && currentPage < totalPages && (
+                  <Button
+                    variant={currentPage === totalPages ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => handlePageChange(totalPages)}
+                    className={currentPage === totalPages ? "bg-yellow-400 hover:bg-yellow-500 text-black" : ""}
+                  >
+                    {totalPages}
+                  </Button>
+                )}
+
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                >
+                  Next
+                </Button>
+              </div>
             </div>
-          </div>
 
-          <div className="flex items-center gap-1">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1}
-            >
-              Previous
-            </Button>
-            
-            {Array.from({ length: Math.min(totalPages, 4) }, (_, i) => i + 1).map((page) => (
-              <Button
-                key={page}
-                variant={currentPage === page ? "default" : "outline"}
-                size="sm"
-                onClick={() => handlePageChange(page)}
-                className={currentPage === page ? "bg-yellow-400 hover:bg-yellow-500 text-black" : ""}
+            {/* Right side: Action buttons */}
+            <div className="flex items-center gap-2">
+              <Button 
+                variant="outline" 
+                size="default"
+                onClick={handlePreviewChanges}
+                disabled={newItems.length === 0}
               >
-                {page}
+                Preview Changes
               </Button>
-            ))}
-            
-            {totalPages > 4 && currentPage < totalPages - 1 && (
-              <span className="px-2 text-muted-foreground">...</span>
-            )}
-            
-            {totalPages > 4 && currentPage < totalPages && (
-              <Button
-                variant={currentPage === totalPages ? "default" : "outline"}
-                size="sm"
-                onClick={() => handlePageChange(totalPages)}
-                className={currentPage === totalPages ? "bg-yellow-400 hover:bg-yellow-500 text-black" : ""}
+              <Button 
+                variant="outline" 
+                size="default"
               >
-                {totalPages}
+                Cancel Changes
               </Button>
-            )}
-
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages}
-            >
-              Next
-            </Button>
+              <Button 
+                variant="default" 
+                size="default"
+              >
+                Save Changes
+              </Button>
+            </div>
           </div>
         </div>
       )}
-
-      {/* Sticky Action Buttons */}
-      <div className="bg-card border-t p-4 flex justify-end gap-2 shadow-lg">
-        <Button 
-          variant="outline" 
-          size="default"
-          onClick={handlePreviewChanges}
-          disabled={newItems.length === 0}
-        >
-          Preview Changes
-        </Button>
-        <Button 
-          variant="outline" 
-          size="default"
-        >
-          Cancel Changes
-        </Button>
-        <Button 
-          variant="default" 
-          size="default"
-        >
-          Save Changes
-        </Button>
-      </div>
     </div>
   );
 };
