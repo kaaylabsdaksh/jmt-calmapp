@@ -10,9 +10,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 interface QF3DialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onSubmit?: (data: any) => void;
 }
 
-export const QF3Dialog = ({ open, onOpenChange }: QF3DialogProps) => {
+export const QF3Dialog = ({ open, onOpenChange, onSubmit }: QF3DialogProps) => {
   const [qf3Data, setQf3Data] = useState({
     mfg: "JM WORKING STAND.",
     date: "09/11/2025",
@@ -39,6 +40,7 @@ export const QF3Dialog = ({ open, onOpenChange }: QF3DialogProps) => {
 
   const handleSubmit = () => {
     console.log("QF3 Data submitted:", qf3Data);
+    onSubmit?.(qf3Data);
     onOpenChange(false);
   };
 
