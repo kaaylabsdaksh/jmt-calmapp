@@ -739,31 +739,6 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
                             </Button>
                           </>
                         )}
-                        <AlertDialog>
-                          <AlertDialogTrigger asChild>
-                            <Button 
-                              size="sm" 
-                              variant="ghost" 
-                              className="h-6 w-6 p-0 text-destructive hover:text-destructive"
-                            >
-                              <Trash2 className="w-3 h-3" />
-                            </Button>
-                          </AlertDialogTrigger>
-                          <AlertDialogContent>
-                            <AlertDialogHeader>
-                              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                              <AlertDialogDescription>
-                                This action cannot be undone. This will permanently delete this received item.
-                              </AlertDialogDescription>
-                            </AlertDialogHeader>
-                            <AlertDialogFooter>
-                              <AlertDialogCancel>Cancel</AlertDialogCancel>
-                              <AlertDialogAction onClick={() => removeItem(item.id)}>
-                                Delete
-                              </AlertDialogAction>
-                            </AlertDialogFooter>
-                          </AlertDialogContent>
-                        </AlertDialog>
                       </div>
                     </td>
                     <td className="p-2">
@@ -1267,29 +1242,6 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
                          >
                            <Edit className="w-3 h-3" />
                          </Button>
-                         <AlertDialog>
-                           <AlertDialogTrigger asChild>
-                             <Button 
-                               size="sm" 
-                               variant="ghost" 
-                               className="h-6 w-6 p-0 text-destructive hover:text-destructive"
-                             >
-                               <Trash2 className="w-3 h-3" />
-                             </Button>
-                           </AlertDialogTrigger>
-                           <AlertDialogContent>
-                             <AlertDialogHeader>
-                               <AlertDialogTitle>Remove Item</AlertDialogTitle>
-                               <AlertDialogDescription>
-                                 Are you sure you want to remove this item? This action cannot be undone.
-                               </AlertDialogDescription>
-                             </AlertDialogHeader>
-                             <AlertDialogFooter>
-                               <AlertDialogCancel>Cancel</AlertDialogCancel>
-                               <AlertDialogAction onClick={() => removeItem(item.id)}>Remove</AlertDialogAction>
-                             </AlertDialogFooter>
-                           </AlertDialogContent>
-                         </AlertDialog>
                        </div>
                      </td>
                      <td className="p-2">
@@ -1345,29 +1297,6 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
                     >
                       <Edit className="w-4 h-4" />
                     </Button>
-                    <AlertDialog>
-                      <AlertDialogTrigger asChild>
-                        <Button 
-                          size="sm" 
-                          variant="ghost" 
-                          className="h-8 w-8 p-0 text-destructive hover:text-destructive"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
-                      </AlertDialogTrigger>
-                      <AlertDialogContent>
-                        <AlertDialogHeader>
-                          <AlertDialogTitle>Remove Item</AlertDialogTitle>
-                          <AlertDialogDescription>
-                            Are you sure you want to remove this item? This action cannot be undone.
-                          </AlertDialogDescription>
-                        </AlertDialogHeader>
-                        <AlertDialogFooter>
-                          <AlertDialogCancel>Cancel</AlertDialogCancel>
-                          <AlertDialogAction onClick={() => removeItem(item.id)}>Remove</AlertDialogAction>
-                        </AlertDialogFooter>
-                      </AlertDialogContent>
-                    </AlertDialog>
                   </div>
                 </div>
                 
