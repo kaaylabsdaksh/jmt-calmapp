@@ -45,10 +45,9 @@ const Login = () => {
       <header className="w-full bg-card border-b shadow-sm py-4">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center">
-            {/* Left - JM Test Systems & CalMapp */}
-            <div className="text-left space-y-2">
+            {/* Left - JM Test Systems */}
+            <div className="text-left">
               <img src={jmTestLogo} alt="JM Test Systems" className="h-10" />
-              <h2 className="text-xl font-semibold text-primary">CalMapp</h2>
             </div>
             
             {/* Right - Details */}
