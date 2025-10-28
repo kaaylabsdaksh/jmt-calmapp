@@ -861,22 +861,14 @@ const AddNewWorkOrder = () => {
                 <CardContent className="p-4 sm:p-6 pt-0">
                   <div className="space-y-4 sm:space-y-6">
                      {/* Action Buttons */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2 sm:gap-3">
-                      <Button 
-                        onClick={() => navigate("/form-variations")}
-                        className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
-                      >
-                        <Plus className="w-3 h-3 sm:w-4 sm:h-4" />
-                        <span className="hidden sm:inline">Add New Item</span>
-                        <span className="sm:hidden">Add Item</span>
-                      </Button>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
                       <Button 
                         onClick={() => setIsRFIDDialogOpen(true)}
                         className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
                       >
-                        <PlusCircle className="w-3 h-3 sm:w-4 sm:h-4" />
-                        <span className="hidden sm:inline">Add New Item w/RFID</span>
-                        <span className="sm:hidden">Add w/RFID</span>
+                        <Plus className="w-3 h-3 sm:w-4 sm:h-4" />
+                        <span className="hidden sm:inline">Quick Add New Items</span>
+                        <span className="sm:hidden">Quick Add</span>
                       </Button>
                       <Button className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm">
                         <QrCode className="w-3 h-3 sm:w-4 sm:h-4" />
