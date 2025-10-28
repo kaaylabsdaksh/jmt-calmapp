@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import jmTestLogo from "@/assets/jm-test-logo.png";
 
 const WorkOrderHeader = () => {
 
@@ -6,9 +7,7 @@ const WorkOrderHeader = () => {
     <header className="bg-card border-b border-border/50">
       <div className="px-4 py-2">
         <div className="flex items-center justify-between">
-          <span className="text-xs text-muted-foreground">
-            JM Test Systems
-          </span>
+          <img src={jmTestLogo} alt="JM Test Systems" className="h-6" />
           <div className="flex gap-1">
             <Button 
               variant="ghost" 

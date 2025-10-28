@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import MinimalWorkOrderSearch from "@/components/MinimalWorkOrderSearch";
 import ModernWorkOrdersTable from "@/components/modern/ModernWorkOrdersTable";
+import jmTestLogo from "@/assets/jm-test-logo.png";
 
 interface SearchFilters {
   globalSearch: string;
@@ -43,9 +44,7 @@ const WorkOrderSearchV2 = () => {
             <div className="flex items-center gap-2 sm:gap-4">
               <SidebarTrigger className="p-2 rounded-lg hover:bg-muted hover:text-foreground transition-all duration-300" />
               <div>
-                <span className="text-sm text-muted-foreground block">
-                  JM Test Systems
-                </span>
+                <img src={jmTestLogo} alt="JM Test Systems" className="h-6" />
                 <Breadcrumb className="mt-1 hidden sm:block">
                   <BreadcrumbList>
                     <BreadcrumbItem>

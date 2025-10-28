@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { useToast } from "@/hooks/use-toast";
 import { Lock, User } from "lucide-react";
 import loginBanner from "@/assets/login-banner.jpg";
+import jmTestLogo from "@/assets/jm-test-logo.png";
 
 const Login = () => {
   const [login, setLogin] = useState("");
@@ -45,10 +46,8 @@ const Login = () => {
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center">
             {/* Left - JM Test Systems & CalMapp */}
-            <div className="text-left space-y-0.5">
-              <h1 className="text-xl font-bold text-foreground tracking-tight">
-                JM Test Systems
-              </h1>
+            <div className="text-left space-y-2">
+              <img src={jmTestLogo} alt="JM Test Systems" className="h-10" />
               <h2 className="text-xl font-semibold text-primary">CalMapp</h2>
             </div>
             
