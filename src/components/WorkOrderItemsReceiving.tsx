@@ -187,7 +187,40 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
             Receive Item
           </Button>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
+            <span className="text-sm font-medium text-muted-foreground">Special Action:</span>
+            <Select
+              disabled={selectedItems.length === 0}
+              onValueChange={(value) => {
+                // Handle special action selection
+                console.log(`Special action: ${value} for ${selectedItems.length} item(s)`);
+              }}
+            >
+              <SelectTrigger className="w-[200px] h-8 text-sm bg-background">
+                <SelectValue placeholder="Select action..." />
+              </SelectTrigger>
+              <SelectContent className="bg-background">
+                <SelectItem value="add-comments">Add Comments</SelectItem>
+                <SelectItem value="cancel-items">Cancel Item(s)</SelectItem>
+                <SelectItem value="change-esl-type">Change ESL Type</SelectItem>
+                <SelectItem value="cust-reply-received">Cust Reply Received</SelectItem>
+                <SelectItem value="del-ticket-followup">Del Ticket Followup</SelectItem>
+                <SelectItem value="ready-to-bill">Ready to Bill</SelectItem>
+                <SelectItem value="to-ar">To A/R</SelectItem>
+                <SelectItem value="update-cal-freq">Update Cal Freq's</SelectItem>
+                <SelectItem value="update-po">Update PO #'s</SelectItem>
+                <SelectItem value="update-tf-status">Update T/F Status</SelectItem>
+                <SelectItem value="waiting-on-customer">Waiting on Customer</SelectItem>
+                <SelectItem value="waiting-on-parts">Waiting on Parts</SelectItem>
+                <SelectItem value="update-deliver-by-date">Update Deliver By Date</SelectItem>
+                <SelectItem value="print-wos">Print WOs</SelectItem>
+                <SelectItem value="print-labels">Print Labels</SelectItem>
+                <SelectItem value="print-barcodes">Print Barcodes</SelectItem>
+                <SelectItem value="user-samples">User/Samples</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
           <AlertDialog open={isClearAllDialogOpen} onOpenChange={setIsClearAllDialogOpen}>
             <AlertDialogTrigger asChild>
               <Button 
