@@ -1404,8 +1404,13 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="SINGLE">SINGLE</SelectItem>
-                        <SelectItem value="BATCH">BATCH</SelectItem>
-                        <SelectItem value="MULTIPLE">MULTIPLE</SelectItem>
+                        <SelectItem value="ESL - Blankets">ESL - Blankets</SelectItem>
+                        <SelectItem value="ESL - Bucket Trucks">ESL - Bucket Trucks</SelectItem>
+                        <SelectItem value="ESL - Cranes">ESL - Cranes</SelectItem>
+                        <SelectItem value="ESL - Grounds">ESL - Grounds</SelectItem>
+                        <SelectItem value="ESL - Hotsticks">ESL - Hotsticks</SelectItem>
+                        <SelectItem value="ESL - Jumpers">ESL - Jumpers</SelectItem>
+                        <SelectItem value="ESL - Line Hoses">ESL - Line Hoses</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -1463,9 +1468,15 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
+                        <SelectItem value="ESL">ESL</SelectItem>
+                        <SelectItem value="OnSite">OnSite</SelectItem>
+                        <SelectItem value="MFG">MFG</SelectItem>
+                        <SelectItem value="Rental">Rental</SelectItem>
                         <SelectItem value="Lab">Lab</SelectItem>
-                        <SelectItem value="Field">Field</SelectItem>
-                        <SelectItem value="Mobile">Mobile</SelectItem>
+                        <SelectItem value="Surplus">Surplus</SelectItem>
+                        <SelectItem value="ESL Onsite">ESL Onsite</SelectItem>
+                        <SelectItem value="ITL Onsite">ITL Onsite</SelectItem>
+                        <SelectItem value="GMFG">GMFG</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -1479,12 +1490,12 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
                         <SelectValue placeholder="Select..." />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="repair">REPAIR</SelectItem>
-                        <SelectItem value="rc">R/C</SelectItem>
-                        <SelectItem value="rcc">R/C/C</SelectItem>
-                        <SelectItem value="cc">C/C</SelectItem>
-                        <SelectItem value="test">TEST</SelectItem>
-                        <SelectItem value="build-new">BUILD NEW</SelectItem>
+                        <SelectItem value="BUILD NEW">BUILD NEW</SelectItem>
+                        <SelectItem value="C/C">C/C</SelectItem>
+                        <SelectItem value="R/C">R/C</SelectItem>
+                        <SelectItem value="R/C/C">R/C/C</SelectItem>
+                        <SelectItem value="REPAIR">REPAIR</SelectItem>
+                        <SelectItem value="TEST">TEST</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
