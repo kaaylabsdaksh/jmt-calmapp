@@ -1384,230 +1384,274 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
 
       {/* Quick Add Dialog */}
       <Dialog open={isQuickAddDialogOpen} onOpenChange={setIsQuickAddDialogOpen}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>Quick Add New Items</DialogTitle>
+        <DialogContent className="max-w-5xl max-h-[90vh] overflow-hidden flex flex-col">
+          <DialogHeader className="pb-4 border-b">
+            <DialogTitle className="text-2xl font-bold">Quick Add New Items</DialogTitle>
+            <p className="text-sm text-muted-foreground mt-1">Fill in the details to update selected items</p>
           </DialogHeader>
           
-          <div className="grid grid-cols-3 gap-6">
-            {/* General Information */}
-            <div className="space-y-4">
-              <h3 className="font-semibold text-sm border-b pb-2">General Information</h3>
-              
-              <div className="space-y-2">
-                <Label htmlFor="type" className="text-xs">Type:</Label>
-                <Select value={quickAddData.type} onValueChange={(value) => setQuickAddData({...quickAddData, type: value})}>
-                  <SelectTrigger id="type" className="h-8 text-xs">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="SINGLE">SINGLE</SelectItem>
-                    <SelectItem value="BATCH">BATCH</SelectItem>
-                    <SelectItem value="MULTIPLE">MULTIPLE</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+          <div className="flex-1 overflow-y-auto p-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* General Information */}
+              <div className="bg-card border rounded-xl p-5 shadow-sm">
+                <h3 className="font-semibold text-base mb-4 flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                    <span className="text-primary font-bold text-sm">1</span>
+                  </div>
+                  General Information
+                </h3>
+                
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="type" className="text-sm font-medium">Type</Label>
+                    <Select value={quickAddData.type} onValueChange={(value) => setQuickAddData({...quickAddData, type: value})}>
+                      <SelectTrigger id="type" className="h-10">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="SINGLE">SINGLE</SelectItem>
+                        <SelectItem value="BATCH">BATCH</SelectItem>
+                        <SelectItem value="MULTIPLE">MULTIPLE</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="calFreq" className="text-xs">Cal Freq:<span className="text-red-500 ml-1">*</span></Label>
-                <Input 
-                  id="calFreq"
-                  value={quickAddData.calFreq}
-                  onChange={(e) => setQuickAddData({...quickAddData, calFreq: e.target.value})}
-                  className="h-8 text-xs"
-                />
-              </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="calFreq" className="text-sm font-medium">
+                      Cal Freq<span className="text-red-500 ml-1">*</span>
+                    </Label>
+                    <Input 
+                      id="calFreq"
+                      value={quickAddData.calFreq}
+                      onChange={(e) => setQuickAddData({...quickAddData, calFreq: e.target.value})}
+                      className="h-10"
+                      placeholder="Enter calibration frequency"
+                    />
+                  </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="priority" className="text-xs">Priority:</Label>
-                <Select value={quickAddData.priority} onValueChange={(value) => setQuickAddData({...quickAddData, priority: value})}>
-                  <SelectTrigger id="priority" className="h-8 text-xs">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Normal">Normal</SelectItem>
-                    <SelectItem value="High">High</SelectItem>
-                    <SelectItem value="Low">Low</SelectItem>
-                    <SelectItem value="Urgent">Urgent</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="priority" className="text-sm font-medium">Priority</Label>
+                    <Select value={quickAddData.priority} onValueChange={(value) => setQuickAddData({...quickAddData, priority: value})}>
+                      <SelectTrigger id="priority" className="h-10">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Normal">Normal</SelectItem>
+                        <SelectItem value="High">High</SelectItem>
+                        <SelectItem value="Low">Low</SelectItem>
+                        <SelectItem value="Urgent">Urgent</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="location" className="text-xs">Location:<span className="text-red-500 ml-1">*</span></Label>
-                <Select value={quickAddData.location} onValueChange={(value) => setQuickAddData({...quickAddData, location: value})}>
-                  <SelectTrigger id="location" className="h-8 text-xs">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Baton Rouge">Baton Rouge</SelectItem>
-                    <SelectItem value="Houston">Houston</SelectItem>
-                    <SelectItem value="Lafayette">Lafayette</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="location" className="text-sm font-medium">
+                      Location<span className="text-red-500 ml-1">*</span>
+                    </Label>
+                    <Select value={quickAddData.location} onValueChange={(value) => setQuickAddData({...quickAddData, location: value})}>
+                      <SelectTrigger id="location" className="h-10">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Baton Rouge">Baton Rouge</SelectItem>
+                        <SelectItem value="Houston">Houston</SelectItem>
+                        <SelectItem value="Lafayette">Lafayette</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="division" className="text-xs">Division:<span className="text-red-500 ml-1">*</span></Label>
-                <Select value={quickAddData.division} onValueChange={(value) => setQuickAddData({...quickAddData, division: value})}>
-                  <SelectTrigger id="division" className="h-8 text-xs">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Lab">Lab</SelectItem>
-                    <SelectItem value="Field">Field</SelectItem>
-                    <SelectItem value="Mobile">Mobile</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="division" className="text-sm font-medium">
+                      Division<span className="text-red-500 ml-1">*</span>
+                    </Label>
+                    <Select value={quickAddData.division} onValueChange={(value) => setQuickAddData({...quickAddData, division: value})}>
+                      <SelectTrigger id="division" className="h-10">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Lab">Lab</SelectItem>
+                        <SelectItem value="Field">Field</SelectItem>
+                        <SelectItem value="Mobile">Mobile</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="actionCode" className="text-xs">Action Code:<span className="text-red-500 ml-1">*</span></Label>
-                <Select value={quickAddData.actionCode} onValueChange={(value) => setQuickAddData({...quickAddData, actionCode: value})}>
-                  <SelectTrigger id="actionCode" className="h-8 text-xs">
-                    <SelectValue placeholder="Select..." />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="repair">REPAIR</SelectItem>
-                    <SelectItem value="rc">R/C</SelectItem>
-                    <SelectItem value="rcc">R/C/C</SelectItem>
-                    <SelectItem value="cc">C/C</SelectItem>
-                    <SelectItem value="test">TEST</SelectItem>
-                    <SelectItem value="build-new">BUILD NEW</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-
-            {/* Arrival Information */}
-            <div className="space-y-4">
-              <h3 className="font-semibold text-sm border-b pb-2">Arrival Information</h3>
-              
-              <div className="space-y-2">
-                <Label htmlFor="arrivalDate" className="text-xs">Date:<span className="text-red-500 ml-1">*</span></Label>
-                <Input 
-                  id="arrivalDate"
-                  type="date"
-                  value={quickAddData.arrivalDate}
-                  onChange={(e) => setQuickAddData({...quickAddData, arrivalDate: e.target.value})}
-                  className="h-8 text-xs"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="arrivalType" className="text-xs">Type:<span className="text-red-500 ml-1">*</span></Label>
-                <Select value={quickAddData.arrivalType} onValueChange={(value) => setQuickAddData({...quickAddData, arrivalType: value})}>
-                  <SelectTrigger id="arrivalType" className="h-8 text-xs">
-                    <SelectValue placeholder="Select..." />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Walk-in">Walk-in</SelectItem>
-                    <SelectItem value="Shipped">Shipped</SelectItem>
-                    <SelectItem value="Picked-up">Picked-up</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-
-            {/* Other Information */}
-            <div className="space-y-4">
-              <h3 className="font-semibold text-sm border-b pb-2">Other Information</h3>
-              
-              <div className="space-y-2">
-                <Label htmlFor="poNumber" className="text-xs">PO Number:<span className="text-red-500 ml-1">*</span></Label>
-                <Input 
-                  id="poNumber"
-                  value={quickAddData.poNumber}
-                  onChange={(e) => setQuickAddData({...quickAddData, poNumber: e.target.value})}
-                  className="h-8 text-xs"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="recdBy" className="text-xs">Recd By:</Label>
-                <Input 
-                  id="recdBy"
-                  value={quickAddData.recdBy}
-                  onChange={(e) => setQuickAddData({...quickAddData, recdBy: e.target.value})}
-                  className="h-8 text-xs"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="deliverByDate" className="text-xs">Deliver By Date:<span className="text-red-500 ml-1">*</span></Label>
-                <Input 
-                  id="deliverByDate"
-                  type="date"
-                  value={quickAddData.deliverByDate}
-                  onChange={(e) => setQuickAddData({...quickAddData, deliverByDate: e.target.value})}
-                  className="h-8 text-xs"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="soNumber" className="text-xs">SO Number:</Label>
-                <Input 
-                  id="soNumber"
-                  value={quickAddData.soNumber}
-                  onChange={(e) => setQuickAddData({...quickAddData, soNumber: e.target.value})}
-                  className="h-8 text-xs"
-                />
-              </div>
-
-              <div className="space-y-3 pt-2">
-                <div className="flex items-center space-x-2">
-                  <Checkbox 
-                    id="newEquip"
-                    checked={quickAddData.newEquip}
-                    onCheckedChange={(checked) => setQuickAddData({...quickAddData, newEquip: checked as boolean})}
-                  />
-                  <Label htmlFor="newEquip" className="text-xs">New Equip</Label>
+                  <div className="space-y-2">
+                    <Label htmlFor="actionCode" className="text-sm font-medium">
+                      Action Code<span className="text-red-500 ml-1">*</span>
+                    </Label>
+                    <Select value={quickAddData.actionCode} onValueChange={(value) => setQuickAddData({...quickAddData, actionCode: value})}>
+                      <SelectTrigger id="actionCode" className="h-10">
+                        <SelectValue placeholder="Select action code..." />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="repair">REPAIR</SelectItem>
+                        <SelectItem value="rc">R/C</SelectItem>
+                        <SelectItem value="rcc">R/C/C</SelectItem>
+                        <SelectItem value="cc">C/C</SelectItem>
+                        <SelectItem value="test">TEST</SelectItem>
+                        <SelectItem value="build-new">BUILD NEW</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
+              </div>
 
-                <div className="flex items-center space-x-2">
-                  <Checkbox 
-                    id="iso17025"
-                    checked={quickAddData.iso17025}
-                    onCheckedChange={(checked) => setQuickAddData({...quickAddData, iso17025: checked as boolean})}
-                  />
-                  <Label htmlFor="iso17025" className="text-xs">17025</Label>
+              {/* Arrival Information */}
+              <div className="bg-card border rounded-xl p-5 shadow-sm">
+                <h3 className="font-semibold text-base mb-4 flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                    <span className="text-primary font-bold text-sm">2</span>
+                  </div>
+                  Arrival Information
+                </h3>
+                
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="arrivalDate" className="text-sm font-medium">
+                      Date<span className="text-red-500 ml-1">*</span>
+                    </Label>
+                    <Input 
+                      id="arrivalDate"
+                      type="date"
+                      value={quickAddData.arrivalDate}
+                      onChange={(e) => setQuickAddData({...quickAddData, arrivalDate: e.target.value})}
+                      className="h-10"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="arrivalType" className="text-sm font-medium">
+                      Type<span className="text-red-500 ml-1">*</span>
+                    </Label>
+                    <Select value={quickAddData.arrivalType} onValueChange={(value) => setQuickAddData({...quickAddData, arrivalType: value})}>
+                      <SelectTrigger id="arrivalType" className="h-10">
+                        <SelectValue placeholder="Select arrival type..." />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Walk-in">Walk-in</SelectItem>
+                        <SelectItem value="Shipped">Shipped</SelectItem>
+                        <SelectItem value="Picked-up">Picked-up</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
+              </div>
 
-                <div className="flex items-center space-x-2">
-                  <Checkbox 
-                    id="multiParts"
-                    checked={quickAddData.multiParts}
-                    onCheckedChange={(checked) => setQuickAddData({...quickAddData, multiParts: checked as boolean})}
-                  />
-                  <Label htmlFor="multiParts" className="text-xs">Multi Parts</Label>
-                </div>
+              {/* Other Information */}
+              <div className="bg-card border rounded-xl p-5 shadow-sm">
+                <h3 className="font-semibold text-base mb-4 flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                    <span className="text-primary font-bold text-sm">3</span>
+                  </div>
+                  Other Information
+                </h3>
+                
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="poNumber" className="text-sm font-medium">
+                      PO Number<span className="text-red-500 ml-1">*</span>
+                    </Label>
+                    <Input 
+                      id="poNumber"
+                      value={quickAddData.poNumber}
+                      onChange={(e) => setQuickAddData({...quickAddData, poNumber: e.target.value})}
+                      className="h-10"
+                      placeholder="Enter PO number"
+                    />
+                  </div>
 
-                <div className="flex items-center space-x-2">
-                  <Checkbox 
-                    id="estimate"
-                    checked={quickAddData.estimate}
-                    onCheckedChange={(checked) => setQuickAddData({...quickAddData, estimate: checked as boolean})}
-                  />
-                  <Label htmlFor="estimate" className="text-xs">Estimate</Label>
-                </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="recdBy" className="text-sm font-medium">Recd By</Label>
+                    <Input 
+                      id="recdBy"
+                      value={quickAddData.recdBy}
+                      onChange={(e) => setQuickAddData({...quickAddData, recdBy: e.target.value})}
+                      className="h-10"
+                      placeholder="Received by"
+                    />
+                  </div>
 
-                <div className="flex items-center space-x-2">
-                  <Checkbox 
-                    id="usedSurplus"
-                    checked={quickAddData.usedSurplus}
-                    onCheckedChange={(checked) => setQuickAddData({...quickAddData, usedSurplus: checked as boolean})}
-                  />
-                  <Label htmlFor="usedSurplus" className="text-xs">Used/Surplus</Label>
+                  <div className="space-y-2">
+                    <Label htmlFor="deliverByDate" className="text-sm font-medium">
+                      Deliver By Date<span className="text-red-500 ml-1">*</span>
+                    </Label>
+                    <Input 
+                      id="deliverByDate"
+                      type="date"
+                      value={quickAddData.deliverByDate}
+                      onChange={(e) => setQuickAddData({...quickAddData, deliverByDate: e.target.value})}
+                      className="h-10"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="soNumber" className="text-sm font-medium">SO Number</Label>
+                    <Input 
+                      id="soNumber"
+                      value={quickAddData.soNumber}
+                      onChange={(e) => setQuickAddData({...quickAddData, soNumber: e.target.value})}
+                      className="h-10"
+                      placeholder="Enter SO number"
+                    />
+                  </div>
+
+                  <div className="pt-2 space-y-3 border-t">
+                    <div className="flex items-center space-x-2">
+                      <Checkbox 
+                        id="newEquip"
+                        checked={quickAddData.newEquip}
+                        onCheckedChange={(checked) => setQuickAddData({...quickAddData, newEquip: checked as boolean})}
+                      />
+                      <Label htmlFor="newEquip" className="text-sm font-normal cursor-pointer">New Equip</Label>
+                    </div>
+
+                    <div className="flex items-center space-x-2">
+                      <Checkbox 
+                        id="iso17025"
+                        checked={quickAddData.iso17025}
+                        onCheckedChange={(checked) => setQuickAddData({...quickAddData, iso17025: checked as boolean})}
+                      />
+                      <Label htmlFor="iso17025" className="text-sm font-normal cursor-pointer">17025</Label>
+                    </div>
+
+                    <div className="flex items-center space-x-2">
+                      <Checkbox 
+                        id="multiParts"
+                        checked={quickAddData.multiParts}
+                        onCheckedChange={(checked) => setQuickAddData({...quickAddData, multiParts: checked as boolean})}
+                      />
+                      <Label htmlFor="multiParts" className="text-sm font-normal cursor-pointer">Multi Parts</Label>
+                    </div>
+
+                    <div className="flex items-center space-x-2">
+                      <Checkbox 
+                        id="estimate"
+                        checked={quickAddData.estimate}
+                        onCheckedChange={(checked) => setQuickAddData({...quickAddData, estimate: checked as boolean})}
+                      />
+                      <Label htmlFor="estimate" className="text-sm font-normal cursor-pointer">Estimate</Label>
+                    </div>
+
+                    <div className="flex items-center space-x-2">
+                      <Checkbox 
+                        id="usedSurplus"
+                        checked={quickAddData.usedSurplus}
+                        onCheckedChange={(checked) => setQuickAddData({...quickAddData, usedSurplus: checked as boolean})}
+                      />
+                      <Label htmlFor="usedSurplus" className="text-sm font-normal cursor-pointer">Used/Surplus</Label>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setIsQuickAddDialogOpen && setIsQuickAddDialogOpen(false)}>
+          <DialogFooter className="border-t pt-4 flex-row gap-2">
+            <Button variant="outline" onClick={() => setIsQuickAddDialogOpen && setIsQuickAddDialogOpen(false)} className="flex-1 sm:flex-none">
               Cancel
             </Button>
-            <Button onClick={handleQuickAddApply} disabled={selectedItems.length === 0}>
+            <Button onClick={handleQuickAddApply} disabled={selectedItems.length === 0} className="flex-1 sm:flex-none">
               Apply/Save WO
             </Button>
           </DialogFooter>
