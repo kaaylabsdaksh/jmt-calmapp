@@ -1602,12 +1602,8 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
       {items.length > 0 && (
         <div className="bg-card border-t p-4">
           <div className="flex flex-col lg:flex-row justify-between items-center gap-4">
-            {/* Left side: Pagination info and controls */}
+            {/* Left side: Pagination controls */}
             <div className="flex items-center gap-4 flex-wrap">
-              <span className="text-sm text-muted-foreground whitespace-nowrap">
-                Showing {startIndex + 1}–{endIndex} of {totalSavedItems} items
-              </span>
-              
               <div className="flex items-center gap-2">
                 <span className="text-sm text-muted-foreground">Show:</span>
                 <Select value={itemsPerPage.toString()} onValueChange={handleItemsPerPageChange}>
