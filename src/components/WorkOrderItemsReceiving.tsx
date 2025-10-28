@@ -139,8 +139,9 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
   // Handle select all functionality
   const handleSelectAll = (checked: boolean) => {
     if (checked) {
-      setSelectedItems(items.map(item => item.id));
-      onSelectedItemsChange?.(items.length);
+      const allItemIds = [...items.map(item => item.id), ...newItems.map(item => item.id)];
+      setSelectedItems(allItemIds);
+      onSelectedItemsChange?.(allItemIds.length);
     } else {
       setSelectedItems([]);
       onSelectedItemsChange?.(0);
@@ -148,8 +149,9 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
   };
 
   // Check if all items are selected
-  const isAllSelected = items.length > 0 && selectedItems.length === items.length;
-  const isIndeterminate = selectedItems.length > 0 && selectedItems.length < items.length;
+  const totalItems = items.length + newItems.length;
+  const isAllSelected = totalItems > 0 && selectedItems.length === totalItems;
+  const isIndeterminate = selectedItems.length > 0 && selectedItems.length < totalItems;
 
   const handleAddNewItem = () => {
     setNewItems([...newItems, createEmptyItem()]);
@@ -356,10 +358,13 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
                           <X className="w-3 h-3" />
                         </Button>
                       </div>
-                    </td>
+                     </td>
                      <td className="p-4 sticky left-20 bg-blue-50 z-10">
-                      {/* Empty checkbox cell */}
-                    </td>
+                       <Checkbox 
+                         checked={selectedItems.includes(newItem.id)}
+                         onCheckedChange={(checked) => handleItemSelect(newItem.id, checked as boolean)}
+                       />
+                     </td>
                      <td className="p-4 min-w-[150px]">
                        <Input 
                          placeholder="Item #"
@@ -1114,11 +1119,14 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
                           <X className="w-3 h-3" />
                         </Button>
                       </div>
-                    </td>
-                    <td className="p-3">
-                      {/* Empty checkbox cell */}
-                    </td>
-                    <td className="p-3 text-xs">
+                     </td>
+                     <td className="p-3">
+                       <Checkbox 
+                         checked={selectedItems.includes(newItem.id)}
+                         onCheckedChange={(checked) => handleItemSelect(newItem.id, checked as boolean)}
+                       />
+                     </td>
+                     <td className="p-3 text-xs">
                       <Input 
                         placeholder="Item #"
                         value={newItem.itemNumber}
