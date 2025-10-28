@@ -327,7 +327,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
             <table className="w-full min-w-[2400px]">
               <thead className="bg-muted/20 border-b">
                 <tr>
-                  <th className="text-right p-2 text-xs font-medium text-muted-foreground w-20">Actions</th>
+                  <th className="text-right p-2 text-xs font-medium text-muted-foreground w-12"></th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-8">
                     <Checkbox 
                       checked={isAllSelected}
@@ -1101,7 +1101,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
             <table className="w-full min-w-[800px]">
               <thead className="bg-muted/20 border-b">
                 <tr>
-                  <th className="text-right p-2 text-xs font-medium text-muted-foreground">Actions</th>
+                  <th className="text-right p-2 text-xs font-medium text-muted-foreground w-12"></th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-8">
                     <Checkbox 
                       checked={isAllSelected}
