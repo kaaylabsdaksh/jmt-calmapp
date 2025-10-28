@@ -99,7 +99,7 @@ const AddNewWorkOrder = () => {
     {
       id: "rec-001",
       itemNumber: "DMM-001",
-      calFreq: "annual",
+      calFreq: "12",
       actionCode: "rc",
       priority: "normal",
       manufacturer: "3d-instruments",
@@ -120,7 +120,7 @@ const AddNewWorkOrder = () => {
     {
       id: "rec-002", 
       itemNumber: "OSC-002",
-      calFreq: "quarterly",
+      calFreq: "3",
       actionCode: "repair",
       priority: "expedite",
       manufacturer: "3m",
@@ -141,7 +141,7 @@ const AddNewWorkOrder = () => {
     {
       id: "rec-003",
       itemNumber: "PSU-003",
-      calFreq: "monthly",
+      calFreq: "1",
       actionCode: "cc",
       priority: "rush",
       manufacturer: "4b-components",
