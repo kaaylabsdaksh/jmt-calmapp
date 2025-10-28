@@ -123,6 +123,8 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
   const [modelPopoverOpen, setModelPopoverOpen] = useState<{[key: string]: boolean}>({});
   const [editModelPopoverOpen, setEditModelPopoverOpen] = useState<{[key: string]: boolean}>({});
   const [highlightNewItems, setHighlightNewItems] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
   // Handle individual item selection
   const handleItemSelect = (itemId: string, checked: boolean) => {
@@ -290,6 +292,22 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
     setTimeout(() => {
       setHighlightNewItems(false);
     }, 3000);
+  };
+
+  // Pagination calculations
+  const totalSavedItems = items.length;
+  const totalPages = Math.ceil(totalSavedItems / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = Math.min(startIndex + itemsPerPage, totalSavedItems);
+  const paginatedItems = items.slice(startIndex, endIndex);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const handleItemsPerPageChange = (value: string) => {
+    setItemsPerPage(Number(value));
+    setCurrentPage(1); // Reset to first page when changing items per page
   };
 
   return (
@@ -704,7 +722,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
                      </td>
                   </tr>
                 ))}
-                {items.map((item, index) => (
+                {paginatedItems.map((item, index) => (
                   <tr key={item.id} className="border-b hover:bg-muted/10">
                     <td className="p-2">
                       <div className="flex items-center justify-end gap-1">
@@ -1220,9 +1238,9 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
                         className="h-10 text-sm"
                       />
                      </td>
-                   </tr>
+                 </tr>
                  ))}
-                 {items.map((item) => (
+                 {paginatedItems.map((item) => (
                    <tr key={item.id} className="border-b hover:bg-muted/10">
                      <td className="p-2">
                        <div className="flex items-center justify-end gap-1">
@@ -1270,7 +1288,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
 
           {/* Mobile Card View */}
           <div className="md:hidden space-y-4">
-            {items.map((item, index) => (
+            {paginatedItems.map((item, index) => (
               <div key={item.id} className="border rounded-lg p-4 bg-card">
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center gap-2">
@@ -1579,6 +1597,78 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Pagination */}
+      {items.length > 0 && (
+        <div className="bg-card border-t p-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <div className="flex items-center gap-4">
+            <span className="text-sm text-muted-foreground">
+              Showing {startIndex + 1}–{endIndex} of {totalSavedItems} items
+            </span>
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-muted-foreground">Show:</span>
+              <Select value={itemsPerPage.toString()} onValueChange={handleItemsPerPageChange}>
+                <SelectTrigger className="h-9 w-20">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="10">10</SelectItem>
+                  <SelectItem value="25">25</SelectItem>
+                  <SelectItem value="50">50</SelectItem>
+                  <SelectItem value="100">100</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-1">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+            >
+              Previous
+            </Button>
+            
+            {Array.from({ length: Math.min(totalPages, 4) }, (_, i) => i + 1).map((page) => (
+              <Button
+                key={page}
+                variant={currentPage === page ? "default" : "outline"}
+                size="sm"
+                onClick={() => handlePageChange(page)}
+                className={currentPage === page ? "bg-yellow-400 hover:bg-yellow-500 text-black" : ""}
+              >
+                {page}
+              </Button>
+            ))}
+            
+            {totalPages > 4 && currentPage < totalPages - 1 && (
+              <span className="px-2 text-muted-foreground">...</span>
+            )}
+            
+            {totalPages > 4 && currentPage < totalPages && (
+              <Button
+                variant={currentPage === totalPages ? "default" : "outline"}
+                size="sm"
+                onClick={() => handlePageChange(totalPages)}
+                className={currentPage === totalPages ? "bg-yellow-400 hover:bg-yellow-500 text-black" : ""}
+              >
+                {totalPages}
+              </Button>
+            )}
+
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </Button>
+          </div>
+        </div>
+      )}
 
       {/* Sticky Action Buttons */}
       <div className="bg-card border-t p-4 flex justify-end gap-2 shadow-lg">
