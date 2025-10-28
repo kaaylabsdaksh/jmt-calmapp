@@ -1384,28 +1384,46 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
 
       {/* Quick Add Dialog */}
       <Dialog open={isQuickAddDialogOpen} onOpenChange={setIsQuickAddDialogOpen}>
-        <DialogContent className="max-w-5xl max-h-[90vh] overflow-hidden flex flex-col">
-          <DialogHeader className="pb-4 border-b">
-            <DialogTitle className="text-2xl font-bold">Quick Add New Items</DialogTitle>
-            <p className="text-sm text-muted-foreground mt-1">Fill in the details to update selected items</p>
-          </DialogHeader>
+        <DialogContent className="max-w-6xl max-h-[95vh] overflow-hidden flex flex-col p-0 gap-0">
+          {/* Header with gradient */}
+          <div className="relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-primary/10 to-transparent"></div>
+            <DialogHeader className="relative p-6 pb-4">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-xl bg-primary flex items-center justify-center shadow-lg">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary-foreground">
+                    <path d="M12 5v14M5 12h14"/>
+                  </svg>
+                </div>
+                <div>
+                  <DialogTitle className="text-2xl font-bold">Quick Add New Items</DialogTitle>
+                  <p className="text-sm text-muted-foreground mt-1">Update multiple items at once with ease</p>
+                </div>
+              </div>
+            </DialogHeader>
+          </div>
           
-          <div className="flex-1 overflow-y-auto p-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* General Information */}
-              <div className="bg-card border rounded-xl p-5 shadow-sm">
-                <h3 className="font-semibold text-base mb-4 flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <span className="text-primary font-bold text-sm">1</span>
+          <div className="flex-1 overflow-y-auto px-6 py-4">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+              {/* General Information Card */}
+              <div className="group relative bg-gradient-to-br from-card to-card/50 border border-border/50 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-300">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl -z-10"></div>
+                
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-primary/20 rounded-xl blur-md"></div>
+                    <div className="relative w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center text-primary-foreground font-bold text-sm shadow-lg">
+                      1
+                    </div>
                   </div>
-                  General Information
-                </h3>
+                  <h3 className="font-semibold text-lg">General Information</h3>
+                </div>
                 
                 <div className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="type" className="text-sm font-medium">Type</Label>
+                    <Label htmlFor="type" className="text-sm font-medium text-foreground/90">Type</Label>
                     <Select value={quickAddData.type} onValueChange={(value) => setQuickAddData({...quickAddData, type: value})}>
-                      <SelectTrigger id="type" className="h-10">
+                      <SelectTrigger id="type" className="h-11 border-border/50 hover:border-primary/50 transition-colors">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -1417,22 +1435,23 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="calFreq" className="text-sm font-medium">
-                      Cal Freq<span className="text-red-500 ml-1">*</span>
+                    <Label htmlFor="calFreq" className="text-sm font-medium text-foreground/90 flex items-center gap-1">
+                      Cal Freq
+                      <span className="text-red-500 text-base">*</span>
                     </Label>
                     <Input 
                       id="calFreq"
                       value={quickAddData.calFreq}
                       onChange={(e) => setQuickAddData({...quickAddData, calFreq: e.target.value})}
-                      className="h-10"
-                      placeholder="Enter calibration frequency"
+                      className="h-11 border-border/50 hover:border-primary/50 focus:border-primary transition-colors"
+                      placeholder="Enter frequency..."
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="priority" className="text-sm font-medium">Priority</Label>
+                    <Label htmlFor="priority" className="text-sm font-medium text-foreground/90">Priority</Label>
                     <Select value={quickAddData.priority} onValueChange={(value) => setQuickAddData({...quickAddData, priority: value})}>
-                      <SelectTrigger id="priority" className="h-10">
+                      <SelectTrigger id="priority" className="h-11 border-border/50 hover:border-primary/50 transition-colors">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -1445,11 +1464,12 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="location" className="text-sm font-medium">
-                      Location<span className="text-red-500 ml-1">*</span>
+                    <Label htmlFor="location" className="text-sm font-medium text-foreground/90 flex items-center gap-1">
+                      Location
+                      <span className="text-red-500 text-base">*</span>
                     </Label>
                     <Select value={quickAddData.location} onValueChange={(value) => setQuickAddData({...quickAddData, location: value})}>
-                      <SelectTrigger id="location" className="h-10">
+                      <SelectTrigger id="location" className="h-11 border-border/50 hover:border-primary/50 transition-colors">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -1461,11 +1481,12 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="division" className="text-sm font-medium">
-                      Division<span className="text-red-500 ml-1">*</span>
+                    <Label htmlFor="division" className="text-sm font-medium text-foreground/90 flex items-center gap-1">
+                      Division
+                      <span className="text-red-500 text-base">*</span>
                     </Label>
                     <Select value={quickAddData.division} onValueChange={(value) => setQuickAddData({...quickAddData, division: value})}>
-                      <SelectTrigger id="division" className="h-10">
+                      <SelectTrigger id="division" className="h-11 border-border/50 hover:border-primary/50 transition-colors">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -1477,12 +1498,13 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="actionCode" className="text-sm font-medium">
-                      Action Code<span className="text-red-500 ml-1">*</span>
+                    <Label htmlFor="actionCode" className="text-sm font-medium text-foreground/90 flex items-center gap-1">
+                      Action Code
+                      <span className="text-red-500 text-base">*</span>
                     </Label>
                     <Select value={quickAddData.actionCode} onValueChange={(value) => setQuickAddData({...quickAddData, actionCode: value})}>
-                      <SelectTrigger id="actionCode" className="h-10">
-                        <SelectValue placeholder="Select action code..." />
+                      <SelectTrigger id="actionCode" className="h-11 border-border/50 hover:border-primary/50 transition-colors">
+                        <SelectValue placeholder="Select action..." />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="repair">REPAIR</SelectItem>
@@ -1497,36 +1519,43 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
                 </div>
               </div>
 
-              {/* Arrival Information */}
-              <div className="bg-card border rounded-xl p-5 shadow-sm">
-                <h3 className="font-semibold text-base mb-4 flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <span className="text-primary font-bold text-sm">2</span>
+              {/* Arrival Information Card */}
+              <div className="group relative bg-gradient-to-br from-card to-card/50 border border-border/50 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-300">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl -z-10"></div>
+                
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-primary/20 rounded-xl blur-md"></div>
+                    <div className="relative w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center text-primary-foreground font-bold text-sm shadow-lg">
+                      2
+                    </div>
                   </div>
-                  Arrival Information
-                </h3>
+                  <h3 className="font-semibold text-lg">Arrival Information</h3>
+                </div>
                 
                 <div className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="arrivalDate" className="text-sm font-medium">
-                      Date<span className="text-red-500 ml-1">*</span>
+                    <Label htmlFor="arrivalDate" className="text-sm font-medium text-foreground/90 flex items-center gap-1">
+                      Date
+                      <span className="text-red-500 text-base">*</span>
                     </Label>
                     <Input 
                       id="arrivalDate"
                       type="date"
                       value={quickAddData.arrivalDate}
                       onChange={(e) => setQuickAddData({...quickAddData, arrivalDate: e.target.value})}
-                      className="h-10"
+                      className="h-11 border-border/50 hover:border-primary/50 focus:border-primary transition-colors"
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="arrivalType" className="text-sm font-medium">
-                      Type<span className="text-red-500 ml-1">*</span>
+                    <Label htmlFor="arrivalType" className="text-sm font-medium text-foreground/90 flex items-center gap-1">
+                      Type
+                      <span className="text-red-500 text-base">*</span>
                     </Label>
                     <Select value={quickAddData.arrivalType} onValueChange={(value) => setQuickAddData({...quickAddData, arrivalType: value})}>
-                      <SelectTrigger id="arrivalType" className="h-10">
-                        <SelectValue placeholder="Select arrival type..." />
+                      <SelectTrigger id="arrivalType" className="h-11 border-border/50 hover:border-primary/50 transition-colors">
+                        <SelectValue placeholder="Select type..." />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="Walk-in">Walk-in</SelectItem>
@@ -1538,108 +1567,120 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
                 </div>
               </div>
 
-              {/* Other Information */}
-              <div className="bg-card border rounded-xl p-5 shadow-sm">
-                <h3 className="font-semibold text-base mb-4 flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <span className="text-primary font-bold text-sm">3</span>
+              {/* Other Information Card */}
+              <div className="group relative bg-gradient-to-br from-card to-card/50 border border-border/50 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-300">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl -z-10"></div>
+                
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-primary/20 rounded-xl blur-md"></div>
+                    <div className="relative w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center text-primary-foreground font-bold text-sm shadow-lg">
+                      3
+                    </div>
                   </div>
-                  Other Information
-                </h3>
+                  <h3 className="font-semibold text-lg">Other Information</h3>
+                </div>
                 
                 <div className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="poNumber" className="text-sm font-medium">
-                      PO Number<span className="text-red-500 ml-1">*</span>
+                    <Label htmlFor="poNumber" className="text-sm font-medium text-foreground/90 flex items-center gap-1">
+                      PO Number
+                      <span className="text-red-500 text-base">*</span>
                     </Label>
                     <Input 
                       id="poNumber"
                       value={quickAddData.poNumber}
                       onChange={(e) => setQuickAddData({...quickAddData, poNumber: e.target.value})}
-                      className="h-10"
-                      placeholder="Enter PO number"
+                      className="h-11 border-border/50 hover:border-primary/50 focus:border-primary transition-colors"
+                      placeholder="Enter PO number..."
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="recdBy" className="text-sm font-medium">Recd By</Label>
+                    <Label htmlFor="recdBy" className="text-sm font-medium text-foreground/90">Recd By</Label>
                     <Input 
                       id="recdBy"
                       value={quickAddData.recdBy}
                       onChange={(e) => setQuickAddData({...quickAddData, recdBy: e.target.value})}
-                      className="h-10"
-                      placeholder="Received by"
+                      className="h-11 border-border/50 hover:border-primary/50 focus:border-primary transition-colors"
+                      placeholder="Received by..."
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="deliverByDate" className="text-sm font-medium">
-                      Deliver By Date<span className="text-red-500 ml-1">*</span>
+                    <Label htmlFor="deliverByDate" className="text-sm font-medium text-foreground/90 flex items-center gap-1">
+                      Deliver By Date
+                      <span className="text-red-500 text-base">*</span>
                     </Label>
                     <Input 
                       id="deliverByDate"
                       type="date"
                       value={quickAddData.deliverByDate}
                       onChange={(e) => setQuickAddData({...quickAddData, deliverByDate: e.target.value})}
-                      className="h-10"
+                      className="h-11 border-border/50 hover:border-primary/50 focus:border-primary transition-colors"
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="soNumber" className="text-sm font-medium">SO Number</Label>
+                    <Label htmlFor="soNumber" className="text-sm font-medium text-foreground/90">SO Number</Label>
                     <Input 
                       id="soNumber"
                       value={quickAddData.soNumber}
                       onChange={(e) => setQuickAddData({...quickAddData, soNumber: e.target.value})}
-                      className="h-10"
-                      placeholder="Enter SO number"
+                      className="h-11 border-border/50 hover:border-primary/50 focus:border-primary transition-colors"
+                      placeholder="Enter SO number..."
                     />
                   </div>
 
-                  <div className="pt-2 space-y-3 border-t">
-                    <div className="flex items-center space-x-2">
+                  <div className="pt-3 space-y-3 border-t border-border/50">
+                    <div className="flex items-center space-x-3 p-2 rounded-lg hover:bg-muted/50 transition-colors cursor-pointer">
                       <Checkbox 
                         id="newEquip"
                         checked={quickAddData.newEquip}
                         onCheckedChange={(checked) => setQuickAddData({...quickAddData, newEquip: checked as boolean})}
+                        className="border-border/50"
                       />
-                      <Label htmlFor="newEquip" className="text-sm font-normal cursor-pointer">New Equip</Label>
+                      <Label htmlFor="newEquip" className="text-sm font-medium cursor-pointer flex-1">New Equip</Label>
                     </div>
 
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-x-3 p-2 rounded-lg hover:bg-muted/50 transition-colors cursor-pointer">
                       <Checkbox 
                         id="iso17025"
                         checked={quickAddData.iso17025}
                         onCheckedChange={(checked) => setQuickAddData({...quickAddData, iso17025: checked as boolean})}
+                        className="border-border/50"
                       />
-                      <Label htmlFor="iso17025" className="text-sm font-normal cursor-pointer">17025</Label>
+                      <Label htmlFor="iso17025" className="text-sm font-medium cursor-pointer flex-1">17025</Label>
                     </div>
 
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-x-3 p-2 rounded-lg hover:bg-muted/50 transition-colors cursor-pointer">
                       <Checkbox 
                         id="multiParts"
                         checked={quickAddData.multiParts}
                         onCheckedChange={(checked) => setQuickAddData({...quickAddData, multiParts: checked as boolean})}
+                        className="border-border/50"
                       />
-                      <Label htmlFor="multiParts" className="text-sm font-normal cursor-pointer">Multi Parts</Label>
+                      <Label htmlFor="multiParts" className="text-sm font-medium cursor-pointer flex-1">Multi Parts</Label>
                     </div>
 
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-x-3 p-2 rounded-lg hover:bg-muted/50 transition-colors cursor-pointer">
                       <Checkbox 
                         id="estimate"
                         checked={quickAddData.estimate}
                         onCheckedChange={(checked) => setQuickAddData({...quickAddData, estimate: checked as boolean})}
+                        className="border-border/50"
                       />
-                      <Label htmlFor="estimate" className="text-sm font-normal cursor-pointer">Estimate</Label>
+                      <Label htmlFor="estimate" className="text-sm font-medium cursor-pointer flex-1">Estimate</Label>
                     </div>
 
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-x-3 p-2 rounded-lg hover:bg-muted/50 transition-colors cursor-pointer">
                       <Checkbox 
                         id="usedSurplus"
                         checked={quickAddData.usedSurplus}
                         onCheckedChange={(checked) => setQuickAddData({...quickAddData, usedSurplus: checked as boolean})}
+                        className="border-border/50"
                       />
-                      <Label htmlFor="usedSurplus" className="text-sm font-normal cursor-pointer">Used/Surplus</Label>
+                      <Label htmlFor="usedSurplus" className="text-sm font-medium cursor-pointer flex-1">Used/Surplus</Label>
                     </div>
                   </div>
                 </div>
@@ -1647,14 +1688,25 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
             </div>
           </div>
 
-          <DialogFooter className="border-t pt-4 flex-row gap-2">
-            <Button variant="outline" onClick={() => setIsQuickAddDialogOpen && setIsQuickAddDialogOpen(false)} className="flex-1 sm:flex-none">
-              Cancel
-            </Button>
-            <Button onClick={handleQuickAddApply} disabled={selectedItems.length === 0} className="flex-1 sm:flex-none">
-              Apply/Save WO
-            </Button>
-          </DialogFooter>
+          {/* Footer with gradient */}
+          <div className="relative border-t bg-gradient-to-r from-muted/30 to-transparent">
+            <DialogFooter className="p-6 flex-row justify-end gap-3">
+              <Button 
+                variant="outline" 
+                onClick={() => setIsQuickAddDialogOpen && setIsQuickAddDialogOpen(false)} 
+                className="min-w-[120px] h-11 border-border/50 hover:bg-muted"
+              >
+                Cancel
+              </Button>
+              <Button 
+                onClick={handleQuickAddApply} 
+                disabled={selectedItems.length === 0} 
+                className="min-w-[160px] h-11 bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20"
+              >
+                Apply Changes
+              </Button>
+            </DialogFooter>
+          </div>
         </DialogContent>
       </Dialog>
 
