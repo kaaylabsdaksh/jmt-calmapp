@@ -206,6 +206,22 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
       return;
     }
 
+    // Validate mandatory fields
+    const missingFields = [];
+    if (!quickAddData.calFreq) missingFields.push("Cal Freq");
+    if (!quickAddData.location) missingFields.push("Location");
+    if (!quickAddData.division) missingFields.push("Division");
+    if (!quickAddData.actionCode) missingFields.push("Action Code");
+    if (!quickAddData.arrivalDate) missingFields.push("Date");
+    if (!quickAddData.arrivalType) missingFields.push("Type");
+    if (!quickAddData.poNumber) missingFields.push("PO Number");
+    if (!quickAddData.deliverByDate) missingFields.push("Deliver By Date");
+
+    if (missingFields.length > 0) {
+      alert(`Please fill in the following mandatory fields: ${missingFields.join(", ")}`);
+      return;
+    }
+
     // Apply the quick add data to all selected new items
     const updatedNewItems = newItems.map(item => {
       if (selectedItems.includes(item.id)) {
@@ -1393,7 +1409,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="calFreq" className="text-xs">Cal Freq:</Label>
+                <Label htmlFor="calFreq" className="text-xs">Cal Freq:<span className="text-red-500 ml-1">*</span></Label>
                 <Input 
                   id="calFreq"
                   value={quickAddData.calFreq}
@@ -1418,7 +1434,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="location" className="text-xs">Location:</Label>
+                <Label htmlFor="location" className="text-xs">Location:<span className="text-red-500 ml-1">*</span></Label>
                 <Select value={quickAddData.location} onValueChange={(value) => setQuickAddData({...quickAddData, location: value})}>
                   <SelectTrigger id="location" className="h-8 text-xs">
                     <SelectValue />
@@ -1432,7 +1448,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="division" className="text-xs">Division:</Label>
+                <Label htmlFor="division" className="text-xs">Division:<span className="text-red-500 ml-1">*</span></Label>
                 <Select value={quickAddData.division} onValueChange={(value) => setQuickAddData({...quickAddData, division: value})}>
                   <SelectTrigger id="division" className="h-8 text-xs">
                     <SelectValue />
@@ -1446,7 +1462,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="actionCode" className="text-xs">Action Code:</Label>
+                <Label htmlFor="actionCode" className="text-xs">Action Code:<span className="text-red-500 ml-1">*</span></Label>
                 <Select value={quickAddData.actionCode} onValueChange={(value) => setQuickAddData({...quickAddData, actionCode: value})}>
                   <SelectTrigger id="actionCode" className="h-8 text-xs">
                     <SelectValue placeholder="Select..." />
@@ -1468,7 +1484,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
               <h3 className="font-semibold text-sm border-b pb-2">Arrival Information</h3>
               
               <div className="space-y-2">
-                <Label htmlFor="arrivalDate" className="text-xs">Date:</Label>
+                <Label htmlFor="arrivalDate" className="text-xs">Date:<span className="text-red-500 ml-1">*</span></Label>
                 <Input 
                   id="arrivalDate"
                   type="date"
@@ -1479,7 +1495,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="arrivalType" className="text-xs">Type:</Label>
+                <Label htmlFor="arrivalType" className="text-xs">Type:<span className="text-red-500 ml-1">*</span></Label>
                 <Select value={quickAddData.arrivalType} onValueChange={(value) => setQuickAddData({...quickAddData, arrivalType: value})}>
                   <SelectTrigger id="arrivalType" className="h-8 text-xs">
                     <SelectValue placeholder="Select..." />
@@ -1498,7 +1514,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
               <h3 className="font-semibold text-sm border-b pb-2">Other Information</h3>
               
               <div className="space-y-2">
-                <Label htmlFor="poNumber" className="text-xs">PO Number:</Label>
+                <Label htmlFor="poNumber" className="text-xs">PO Number:<span className="text-red-500 ml-1">*</span></Label>
                 <Input 
                   id="poNumber"
                   value={quickAddData.poNumber}
@@ -1518,7 +1534,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="deliverByDate" className="text-xs">Deliver By Date:</Label>
+                <Label htmlFor="deliverByDate" className="text-xs">Deliver By Date:<span className="text-red-500 ml-1">*</span></Label>
                 <Input 
                   id="deliverByDate"
                   type="date"
