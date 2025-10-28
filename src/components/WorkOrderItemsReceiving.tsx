@@ -1635,7 +1635,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
                     variant={currentPage === page ? "default" : "outline"}
                     size="sm"
                     onClick={() => handlePageChange(page)}
-                    className={currentPage === page ? "bg-yellow-400 hover:bg-yellow-500 text-black" : ""}
+                    className={currentPage === page ? "bg-primary hover:bg-primary/90 text-primary-foreground" : ""}
                   >
                     {page}
                   </Button>
@@ -1650,7 +1650,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
                     variant={currentPage === totalPages ? "default" : "outline"}
                     size="sm"
                     onClick={() => handlePageChange(totalPages)}
-                    className={currentPage === totalPages ? "bg-yellow-400 hover:bg-yellow-500 text-black" : ""}
+                    className={currentPage === totalPages ? "bg-primary hover:bg-primary/90 text-primary-foreground" : ""}
                   >
                     {totalPages}
                   </Button>
