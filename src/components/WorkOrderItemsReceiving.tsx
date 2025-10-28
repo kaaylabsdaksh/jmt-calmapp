@@ -9,7 +9,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Plus, Trash2, Edit, Check, X, ChevronsUpDown, Search } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { cn } from "@/lib/utils";
@@ -42,8 +42,6 @@ interface WorkOrderItemsReceivingProps {
   isQuickAddDialogOpen?: boolean;
   setIsQuickAddDialogOpen?: (open: boolean) => void;
   onSelectedItemsChange?: (count: number) => void;
-  onSelectedIdsChange?: (ids: string[]) => void;
-  onRegisterUpdateCallback?: (callback: (ids: string[], data: any) => void) => void;
 }
 
 const manufacturers = [
@@ -95,37 +93,11 @@ const truncateDescription = (description: string): string => {
   return words.length > 3 ? words.slice(0, 3).join(" ") + "..." : description;
 };
 
-export const WorkOrderItemsReceiving = ({ 
-  items, 
-  setItems, 
-  isQuickAddDialogOpen = false, 
-  setIsQuickAddDialogOpen, 
-  onSelectedItemsChange,
-  onSelectedIdsChange,
-  onRegisterUpdateCallback 
-}: WorkOrderItemsReceivingProps) => {
+export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen = false, setIsQuickAddDialogOpen, onSelectedItemsChange }: WorkOrderItemsReceivingProps) => {
   const [newItems, setNewItems] = useState<WorkOrderReceivingItem[]>([]);
   const [editingItemId, setEditingItemId] = useState<string | null>(null);
   const [deleteItemId, setDeleteItemId] = useState<string | null>(null);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
-  
-  // Register update callback on mount
-  useEffect(() => {
-    if (onRegisterUpdateCallback) {
-      onRegisterUpdateCallback((ids: string[], data: any) => {
-        setNewItems(prevItems => 
-          prevItems.map(item => 
-            ids.includes(item.id) ? {
-              ...item,
-              model: data.mdl || item.model,
-              mfgSerial: data.sn || item.mfgSerial,
-              description: data.desc || item.description,
-            } : item
-          )
-        );
-      });
-    }
-  }, [onRegisterUpdateCallback]);
   const [isClearAllDialogOpen, setIsClearAllDialogOpen] = useState(false);
   const [quickAddData, setQuickAddData] = useState({
     type: "SINGLE",
@@ -157,12 +129,10 @@ export const WorkOrderItemsReceiving = ({
       const newSelected = [...selectedItems, itemId];
       setSelectedItems(newSelected);
       onSelectedItemsChange?.(newSelected.length);
-      onSelectedIdsChange?.(newSelected);
     } else {
       const newSelected = selectedItems.filter(id => id !== itemId);
       setSelectedItems(newSelected);
       onSelectedItemsChange?.(newSelected.length);
-      onSelectedIdsChange?.(newSelected);
     }
   };
 
@@ -172,11 +142,9 @@ export const WorkOrderItemsReceiving = ({
       const allItemIds = [...items.map(item => item.id), ...newItems.map(item => item.id)];
       setSelectedItems(allItemIds);
       onSelectedItemsChange?.(allItemIds.length);
-      onSelectedIdsChange?.(allItemIds);
     } else {
       setSelectedItems([]);
       onSelectedItemsChange?.(0);
-      onSelectedIdsChange?.([]);
     }
   };
 

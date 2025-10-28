@@ -18,7 +18,6 @@ import { ContactForm, ContactFormData } from "@/components/ContactForm";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { EstimateDetails } from "@/components/EstimateDetails";
 import { RFIDDialog } from "@/components/RFIDDialog";
-import { QF3Dialog } from "@/components/QF3Dialog";
 
 const AddNewWorkOrder = () => {
   const navigate = useNavigate();
@@ -47,8 +46,6 @@ const AddNewWorkOrder = () => {
   const [isRFIDDialogOpen, setIsRFIDDialogOpen] = useState(false);
   const [isQuickAddDialogOpen, setIsQuickAddDialogOpen] = useState(false);
   const [selectedItemsCount, setSelectedItemsCount] = useState(0);
-  const [selectedItemIds, setSelectedItemIds] = useState<string[]>([]);
-  const [onUpdateNewItems, setOnUpdateNewItems] = useState<((ids: string[], data: any) => void) | null>(null);
 
   // Save active tab to localStorage whenever it changes
   useEffect(() => {
@@ -227,12 +224,6 @@ const AddNewWorkOrder = () => {
 
   const handleCancel = () => {
     navigate("/");
-  };
-
-  const handleQuickAddSubmit = (qf3Data: any) => {
-    if (onUpdateNewItems && selectedItemIds.length > 0) {
-      onUpdateNewItems(selectedItemIds, qf3Data);
-    }
   };
 
   // Function to check if a tab should be disabled
@@ -1025,8 +1016,6 @@ const AddNewWorkOrder = () => {
                         isQuickAddDialogOpen={isQuickAddDialogOpen}
                         setIsQuickAddDialogOpen={setIsQuickAddDialogOpen}
                         onSelectedItemsChange={setSelectedItemsCount}
-                        onSelectedIdsChange={setSelectedItemIds}
-                        onRegisterUpdateCallback={(callback) => setOnUpdateNewItems(() => callback)}
                       />
                     ) : viewMode === 'table' ? (
                       <WorkOrderItemsTable />
@@ -1128,13 +1117,6 @@ const AddNewWorkOrder = () => {
       <RFIDDialog 
         open={isRFIDDialogOpen}
         onOpenChange={setIsRFIDDialogOpen}
-      />
-
-      {/* Quick Add Dialog */}
-      <QF3Dialog 
-        open={isQuickAddDialogOpen}
-        onOpenChange={setIsQuickAddDialogOpen}
-        onSubmit={handleQuickAddSubmit}
       />
     </div>
   );
