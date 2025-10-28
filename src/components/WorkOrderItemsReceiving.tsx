@@ -268,7 +268,28 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
             Receive Item
           </Button>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
+          <Button 
+            variant="outline" 
+            size="sm"
+            className="h-8"
+          >
+            Preview Changes
+          </Button>
+          <Button 
+            variant="default" 
+            size="sm"
+            className="h-8"
+          >
+            Save Changes
+          </Button>
+          <Button 
+            variant="outline" 
+            size="sm"
+            className="h-8"
+          >
+            Cancel Changes
+          </Button>
           <AlertDialog open={isClearAllDialogOpen} onOpenChange={setIsClearAllDialogOpen}>
             <AlertDialogTrigger asChild>
               <Button 
