@@ -1384,19 +1384,18 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
 
       {/* Quick Add Dialog */}
       <Dialog open={isQuickAddDialogOpen} onOpenChange={setIsQuickAddDialogOpen}>
-        <DialogContent className="max-w-5xl max-h-[90vh] overflow-hidden flex flex-col gap-0 p-0">
+        <DialogContent className="max-w-6xl max-h-[90vh] overflow-hidden flex flex-col gap-0 p-0">
           <DialogHeader className="px-6 pt-6 pb-4 space-y-1">
             <DialogTitle className="text-xl font-semibold">Quick Add New Items</DialogTitle>
             <p className="text-sm text-muted-foreground">Fill in the required fields to update selected items</p>
           </DialogHeader>
           
           <div className="flex-1 overflow-y-auto px-6 pb-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="space-y-6">
               {/* General Information */}
-              <div className="space-y-4">
+              <div className="space-y-3">
                 <h3 className="font-medium text-sm text-muted-foreground uppercase tracking-wide">General Information</h3>
-                
-                <div className="space-y-4">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                   <div className="space-y-1.5">
                     <Label htmlFor="type" className="text-sm">Type</Label>
                     <Select value={quickAddData.type} onValueChange={(value) => setQuickAddData({...quickAddData, type: value})}>
@@ -1493,10 +1492,9 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
               </div>
 
               {/* Arrival Information */}
-              <div className="space-y-4">
+              <div className="space-y-3">
                 <h3 className="font-medium text-sm text-muted-foreground uppercase tracking-wide">Arrival Information</h3>
-                
-                <div className="space-y-4">
+                <div className="grid grid-cols-2 md:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
                     <Label htmlFor="arrivalDate" className="text-sm">
                       Date <span className="text-red-500">*</span>
@@ -1529,10 +1527,9 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
               </div>
 
               {/* Other Information */}
-              <div className="space-y-4">
+              <div className="space-y-3">
                 <h3 className="font-medium text-sm text-muted-foreground uppercase tracking-wide">Other Information</h3>
-                
-                <div className="space-y-4">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   <div className="space-y-1.5">
                     <Label htmlFor="poNumber" className="text-sm">
                       PO Number <span className="text-red-500">*</span>
@@ -1580,52 +1577,52 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
                       placeholder="Enter value"
                     />
                   </div>
+                </div>
 
-                  <div className="pt-2 space-y-2.5">
-                    <div className="flex items-center space-x-2">
-                      <Checkbox 
-                        id="newEquip"
-                        checked={quickAddData.newEquip}
-                        onCheckedChange={(checked) => setQuickAddData({...quickAddData, newEquip: checked as boolean})}
-                      />
-                      <Label htmlFor="newEquip" className="text-sm font-normal cursor-pointer">New Equip</Label>
-                    </div>
+                <div className="flex flex-wrap gap-4 pt-2">
+                  <div className="flex items-center space-x-2">
+                    <Checkbox 
+                      id="newEquip"
+                      checked={quickAddData.newEquip}
+                      onCheckedChange={(checked) => setQuickAddData({...quickAddData, newEquip: checked as boolean})}
+                    />
+                    <Label htmlFor="newEquip" className="text-sm font-normal cursor-pointer">New Equip</Label>
+                  </div>
 
-                    <div className="flex items-center space-x-2">
-                      <Checkbox 
-                        id="iso17025"
-                        checked={quickAddData.iso17025}
-                        onCheckedChange={(checked) => setQuickAddData({...quickAddData, iso17025: checked as boolean})}
-                      />
-                      <Label htmlFor="iso17025" className="text-sm font-normal cursor-pointer">17025</Label>
-                    </div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox 
+                      id="iso17025"
+                      checked={quickAddData.iso17025}
+                      onCheckedChange={(checked) => setQuickAddData({...quickAddData, iso17025: checked as boolean})}
+                    />
+                    <Label htmlFor="iso17025" className="text-sm font-normal cursor-pointer">17025</Label>
+                  </div>
 
-                    <div className="flex items-center space-x-2">
-                      <Checkbox 
-                        id="multiParts"
-                        checked={quickAddData.multiParts}
-                        onCheckedChange={(checked) => setQuickAddData({...quickAddData, multiParts: checked as boolean})}
-                      />
-                      <Label htmlFor="multiParts" className="text-sm font-normal cursor-pointer">Multi Parts</Label>
-                    </div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox 
+                      id="multiParts"
+                      checked={quickAddData.multiParts}
+                      onCheckedChange={(checked) => setQuickAddData({...quickAddData, multiParts: checked as boolean})}
+                    />
+                    <Label htmlFor="multiParts" className="text-sm font-normal cursor-pointer">Multi Parts</Label>
+                  </div>
 
-                    <div className="flex items-center space-x-2">
-                      <Checkbox 
-                        id="estimate"
-                        checked={quickAddData.estimate}
-                        onCheckedChange={(checked) => setQuickAddData({...quickAddData, estimate: checked as boolean})}
-                      />
-                      <Label htmlFor="estimate" className="text-sm font-normal cursor-pointer">Estimate</Label>
-                    </div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox 
+                      id="estimate"
+                      checked={quickAddData.estimate}
+                      onCheckedChange={(checked) => setQuickAddData({...quickAddData, estimate: checked as boolean})}
+                    />
+                    <Label htmlFor="estimate" className="text-sm font-normal cursor-pointer">Estimate</Label>
+                  </div>
 
-                    <div className="flex items-center space-x-2">
-                      <Checkbox 
-                        id="usedSurplus"
-                        checked={quickAddData.usedSurplus}
-                        onCheckedChange={(checked) => setQuickAddData({...quickAddData, usedSurplus: checked as boolean})}
-                      />
-                      <Label htmlFor="usedSurplus" className="text-sm font-normal cursor-pointer">Used/Surplus</Label>
-                    </div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox 
+                      id="usedSurplus"
+                      checked={quickAddData.usedSurplus}
+                      onCheckedChange={(checked) => setQuickAddData({...quickAddData, usedSurplus: checked as boolean})}
+                    />
+                    <Label htmlFor="usedSurplus" className="text-sm font-normal cursor-pointer">Used/Surplus</Label>
                   </div>
                 </div>
               </div>
