@@ -360,10 +360,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
                   <tr 
                     key={newItem.id} 
                     data-new-item="true"
-                    className={cn(
-                      "border-b bg-blue-50 transition-all duration-300",
-                      highlightNewItems && "ring-4 ring-primary/50 shadow-lg"
-                    )}
+                    className="border-b bg-blue-50"
                   >
                      <td className="p-4 sticky left-0 bg-blue-50 z-10">
                       <div className="flex items-center justify-end gap-2">
@@ -396,7 +393,10 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
                          placeholder="Item #"
                          value={newItem.itemNumber}
                          onChange={(e) => updateNewItem(newItem.id, 'itemNumber', e.target.value)}
-                         className="h-12 text-base font-medium border-2 focus:border-primary"
+                         className={cn(
+                           "h-12 text-base font-medium border-2 focus:border-primary transition-all duration-300",
+                           highlightNewItems && newItem.itemNumber && "ring-2 ring-primary bg-primary/5"
+                         )}
                          onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
                          autoComplete="off"
                         />
@@ -407,7 +407,10 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
                          placeholder="Cal Freq"
                          value={newItem.calFreq}
                          onChange={(e) => updateNewItem(newItem.id, 'calFreq', e.target.value)}
-                         className="h-12 text-base font-medium border-2 focus:border-primary"
+                         className={cn(
+                           "h-12 text-base font-medium border-2 focus:border-primary transition-all duration-300",
+                           highlightNewItems && newItem.calFreq && "ring-2 ring-primary bg-primary/5"
+                         )}
                          onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
                          autoComplete="off"
                        />
@@ -415,7 +418,10 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
                      <td className="p-4 min-w-[160px]">
                        <Select value={newItem.actionCode} onValueChange={(value) => updateNewItem(newItem.id, 'actionCode', value)}>
                          <SelectTrigger 
-                           className="h-12 text-base border-2 focus:border-primary"
+                           className={cn(
+                             "h-12 text-base border-2 focus:border-primary transition-all duration-300",
+                             highlightNewItems && newItem.actionCode && "ring-2 ring-primary bg-primary/5"
+                           )}
                            onFocus={(e) => e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
                          >
                           <SelectValue placeholder="Select..." />
@@ -433,7 +439,10 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
                      <td className="p-4 min-w-[140px]">
                        <Select value={newItem.priority} onValueChange={(value) => updateNewItem(newItem.id, 'priority', value)}>
                          <SelectTrigger 
-                           className="h-12 text-base border-2 focus:border-primary"
+                           className={cn(
+                             "h-12 text-base border-2 focus:border-primary transition-all duration-300",
+                             highlightNewItems && newItem.priority && "ring-2 ring-primary bg-primary/5"
+                           )}
                            onFocus={(e) => e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
                          >
                           <SelectValue placeholder="Select..." />
@@ -452,14 +461,17 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
                          open={manufacturerPopoverOpen[newItem.id] || false} 
                          onOpenChange={(open) => setManufacturerPopoverOpen(prev => ({...prev, [newItem.id]: open}))}
                        >
-                         <PopoverTrigger asChild>
-                           <Button
-                             variant="outline"
-                             role="combobox"
-                             aria-expanded={manufacturerPopoverOpen[newItem.id] || false}
-                             className="h-12 w-full justify-between text-base border-2 focus:border-primary"
-                             onFocus={(e) => e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
-                           >
+                          <PopoverTrigger asChild>
+                            <Button
+                              variant="outline"
+                              role="combobox"
+                              aria-expanded={manufacturerPopoverOpen[newItem.id] || false}
+                              className={cn(
+                                "h-12 w-full justify-between text-base border-2 focus:border-primary transition-all duration-300",
+                                highlightNewItems && newItem.manufacturer && "ring-2 ring-primary bg-primary/5"
+                              )}
+                              onFocus={(e) => e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
+                            >
                              {newItem.manufacturer
                                ? manufacturers.find((mfr) => mfr.value === newItem.manufacturer)?.label
                                : "Select..."}
@@ -495,14 +507,17 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
                          open={modelPopoverOpen[newItem.id] || false} 
                          onOpenChange={(open) => setModelPopoverOpen(prev => ({...prev, [newItem.id]: open}))}
                        >
-                         <PopoverTrigger asChild>
-                           <Button
-                             variant="outline"
-                             role="combobox"
-                             aria-expanded={modelPopoverOpen[newItem.id] || false}
-                             className="h-12 w-full justify-between text-base border-2 focus:border-primary"
-                             onFocus={(e) => e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
-                           >
+                          <PopoverTrigger asChild>
+                            <Button
+                              variant="outline"
+                              role="combobox"
+                              aria-expanded={modelPopoverOpen[newItem.id] || false}
+                              className={cn(
+                                "h-12 w-full justify-between text-base border-2 focus:border-primary transition-all duration-300",
+                                highlightNewItems && newItem.model && "ring-2 ring-primary bg-primary/5"
+                              )}
+                              onFocus={(e) => e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
+                            >
                              {newItem.model
                                ? models.find((mdl) => mdl.value === newItem.model)?.label
                                : "Select..."}
@@ -533,15 +548,18 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
                          </PopoverContent>
                        </Popover>
                      </td>
-                     <td className="p-4 min-w-[200px]">
-                        <Textarea 
-                          placeholder="Description"
-                          value={newItem.description}
-                          onChange={(e) => updateNewItem(newItem.id, 'description', e.target.value)}
-                          className="h-12 min-h-12 text-base resize-none border-2 focus:border-primary"
-                          onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
-                        />
-                      </td>
+                       <td className="p-4 min-w-[200px]">
+                         <Textarea 
+                           placeholder="Description"
+                           value={newItem.description}
+                           onChange={(e) => updateNewItem(newItem.id, 'description', e.target.value)}
+                           className={cn(
+                             "h-12 min-h-12 text-base resize-none border-2 focus:border-primary transition-all duration-300",
+                             highlightNewItems && newItem.description && "ring-2 ring-primary bg-primary/5"
+                           )}
+                           onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
+                         />
+                       </td>
                       <td className="p-4 min-w-[120px]">
                         <Select value={newItem.tf} onValueChange={(value) => updateNewItem(newItem.id, 'tf', value)}>
                           <SelectTrigger 
@@ -566,22 +584,28 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
                           autoComplete="off"
                         />
                       </td>
-                      <td className="p-4 min-w-[150px]">
-                        <Input 
-                          placeholder="Mfg Serial"
-                          value={newItem.mfgSerial}
-                          onChange={(e) => updateNewItem(newItem.id, 'mfgSerial', e.target.value)}
-                          className="h-12 text-base font-medium border-2 focus:border-primary"
-                          onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
-                          autoComplete="off"
-                        />
-                      </td>
+                       <td className="p-4 min-w-[150px]">
+                         <Input 
+                           placeholder="Mfg Serial"
+                           value={newItem.mfgSerial}
+                           onChange={(e) => updateNewItem(newItem.id, 'mfgSerial', e.target.value)}
+                           className={cn(
+                             "h-12 text-base font-medium border-2 focus:border-primary transition-all duration-300",
+                             highlightNewItems && newItem.mfgSerial && "ring-2 ring-primary bg-primary/5"
+                           )}
+                           onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
+                           autoComplete="off"
+                         />
+                       </td>
                      <td className="p-4 min-w-[120px]">
                        <Input 
                          placeholder="CustID"
                          value={newItem.custId}
                          onChange={(e) => updateNewItem(newItem.id, 'custId', e.target.value)}
-                         className="h-12 text-base font-medium border-2 focus:border-primary"
+                         className={cn(
+                           "h-12 text-base font-medium border-2 focus:border-primary transition-all duration-300",
+                           highlightNewItems && newItem.custId && "ring-2 ring-primary bg-primary/5"
+                         )}
                          onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
                          autoComplete="off"
                        />
@@ -591,7 +615,10 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
                          placeholder="CustSN"
                          value={newItem.custSN}
                          onChange={(e) => updateNewItem(newItem.id, 'custSN', e.target.value)}
-                         className="h-12 text-base font-medium border-2 focus:border-primary"
+                         className={cn(
+                           "h-12 text-base font-medium border-2 focus:border-primary transition-all duration-300",
+                           highlightNewItems && newItem.custSN && "ring-2 ring-primary bg-primary/5"
+                         )}
                          onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
                          autoComplete="off"
                        />
@@ -1121,10 +1148,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
                   <tr 
                     key={newItem.id} 
                     data-new-item="true"
-                    className={cn(
-                      "border-b bg-blue-50 transition-all duration-300",
-                      highlightNewItems && "ring-4 ring-primary/50 shadow-lg"
-                    )}
+                    className="border-b bg-blue-50"
                   >
                     <td className="p-3">
                       <div className="flex items-center justify-end gap-2">
