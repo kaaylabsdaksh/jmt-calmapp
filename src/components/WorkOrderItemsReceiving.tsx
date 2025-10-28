@@ -204,7 +204,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
       return;
     }
 
-    // Apply the quick add data to all selected items
+    // Apply the quick add data to all selected new items
     const updatedNewItems = newItems.map(item => {
       if (selectedItems.includes(item.id)) {
         return {
@@ -221,7 +221,26 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
       return item;
     });
 
+    // Apply the quick add data to all selected existing items
+    const updatedItems = items.map(item => {
+      if (selectedItems.includes(item.id)) {
+        return {
+          ...item,
+          calFreq: quickAddData.calFreq || item.calFreq,
+          priority: quickAddData.priority || item.priority,
+          actionCode: quickAddData.actionCode || item.actionCode,
+          iso17025: quickAddData.iso17025 ? "yes" : item.iso17025,
+          estimate: quickAddData.estimate ? "yes" : item.estimate,
+          newEquip: quickAddData.newEquip ? "yes" : item.newEquip,
+          needByDate: quickAddData.deliverByDate || item.needByDate,
+        };
+      }
+      return item;
+    });
+
     setNewItems(updatedNewItems);
+    setItems(updatedItems);
+    
     if (setIsQuickAddDialogOpen) {
       setIsQuickAddDialogOpen(false);
     }
