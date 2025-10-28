@@ -294,11 +294,11 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
 
   return (
     <div className="border rounded-lg overflow-hidden flex flex-col">
-      <div className="flex justify-between items-center p-2 bg-muted/20 border-b">
+      <div className="flex justify-between items-center p-3 bg-muted/20 border-b">
         <div className="flex items-center gap-2">
           <Button 
-            variant="link" 
-            className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto flex items-center gap-1"
+            variant="default" 
+            className="flex items-center gap-2"
             onClick={handleAddNewItem}
           >
             <Plus className="w-4 h-4" />
