@@ -1671,7 +1671,15 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
             </Button>
             <Button 
               onClick={handleQuickAddApply} 
-              disabled={selectedItems.length === 0}
+              disabled={
+                !quickAddData.calFreq || 
+                !quickAddData.location || 
+                !quickAddData.division || 
+                !quickAddData.actionCode || 
+                !quickAddData.arrivalDate || 
+                !quickAddData.arrivalType || 
+                !quickAddData.poNumber
+              }
             >
               Apply/Save WO
             </Button>
