@@ -122,7 +122,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
   const [editManufacturerPopoverOpen, setEditManufacturerPopoverOpen] = useState<{[key: string]: boolean}>({});
   const [modelPopoverOpen, setModelPopoverOpen] = useState<{[key: string]: boolean}>({});
   const [editModelPopoverOpen, setEditModelPopoverOpen] = useState<{[key: string]: boolean}>({});
-  const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+  const [highlightNewItems, setHighlightNewItems] = useState(false);
 
   // Handle individual item selection
   const handleItemSelect = (itemId: string, checked: boolean) => {
@@ -256,6 +256,23 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
     setEditingItemId(null);
   };
 
+  const handlePreviewChanges = () => {
+    if (newItems.length === 0) return;
+    
+    setHighlightNewItems(true);
+    
+    // Scroll to first new item
+    const firstNewItemElement = document.querySelector('[data-new-item="true"]');
+    if (firstNewItemElement) {
+      firstNewItemElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    
+    // Remove highlight after 3 seconds
+    setTimeout(() => {
+      setHighlightNewItems(false);
+    }, 3000);
+  };
+
   return (
     <div className="border rounded-lg overflow-hidden flex flex-col">
       <div className="flex justify-between items-center p-2 bg-muted/20 border-b">
@@ -340,7 +357,14 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
               <tbody>
                 {/* Add new item rows */}
                 {newItems.map((newItem) => (
-                  <tr key={newItem.id} className="border-b bg-blue-50">
+                  <tr 
+                    key={newItem.id} 
+                    data-new-item="true"
+                    className={cn(
+                      "border-b bg-blue-50 transition-all duration-300",
+                      highlightNewItems && "ring-4 ring-primary/50 shadow-lg"
+                    )}
+                  >
                      <td className="p-4 sticky left-0 bg-blue-50 z-10">
                       <div className="flex items-center justify-end gap-2">
                         <Button 
@@ -1094,7 +1118,14 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
               <tbody>
                 {/* Add new item rows for tablet */}
                 {newItems.map((newItem) => (
-                  <tr key={newItem.id} className="border-b bg-blue-50">
+                  <tr 
+                    key={newItem.id} 
+                    data-new-item="true"
+                    className={cn(
+                      "border-b bg-blue-50 transition-all duration-300",
+                      highlightNewItems && "ring-4 ring-primary/50 shadow-lg"
+                    )}
+                  >
                     <td className="p-3">
                       <div className="flex items-center justify-end gap-2">
                         <Button 
@@ -1604,106 +1635,12 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
         </DialogContent>
       </Dialog>
 
-      {/* Preview Changes Dialog */}
-      <Dialog open={isPreviewOpen} onOpenChange={setIsPreviewOpen}>
-        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>Preview Changes</DialogTitle>
-          </DialogHeader>
-          <div className="space-y-4">
-            {newItems.length === 0 ? (
-              <p className="text-muted-foreground text-center py-8">No new items to preview.</p>
-            ) : (
-              <>
-                <p className="text-sm text-muted-foreground">
-                  The following {newItems.length} item{newItems.length !== 1 ? 's' : ''} will be added when you save:
-                </p>
-                <div className="space-y-4">
-                  {newItems.map((item, index) => (
-                    <div key={item.id} className="border rounded-lg p-4 bg-blue-50/50">
-                      <h4 className="font-semibold mb-3 text-sm">New Item #{index + 1}</h4>
-                      <div className="grid grid-cols-2 gap-3 text-sm">
-                        <div>
-                          <span className="font-medium text-muted-foreground">Item Number:</span>
-                          <p>{item.itemNumber || "—"}</p>
-                        </div>
-                        <div>
-                          <span className="font-medium text-muted-foreground">Cal Freq:</span>
-                          <p>{item.calFreq || "—"}</p>
-                        </div>
-                        <div>
-                          <span className="font-medium text-muted-foreground">Action Code:</span>
-                          <p>{item.actionCode ? item.actionCode.toUpperCase() : "—"}</p>
-                        </div>
-                        <div>
-                          <span className="font-medium text-muted-foreground">Priority:</span>
-                          <p>{item.priority || "—"}</p>
-                        </div>
-                        <div>
-                          <span className="font-medium text-muted-foreground">Manufacturer:</span>
-                          <p>{manufacturers.find(m => m.value === item.manufacturer)?.label || item.manufacturer || "—"}</p>
-                        </div>
-                        <div>
-                          <span className="font-medium text-muted-foreground">Model:</span>
-                          <p>{models.find(m => m.value === item.model)?.label || item.model || "—"}</p>
-                        </div>
-                        <div className="col-span-2">
-                          <span className="font-medium text-muted-foreground">Description:</span>
-                          <p>{item.description || "—"}</p>
-                        </div>
-                        <div>
-                          <span className="font-medium text-muted-foreground">Mfg Serial:</span>
-                          <p>{item.mfgSerial || "—"}</p>
-                        </div>
-                        <div>
-                          <span className="font-medium text-muted-foreground">Cust ID:</span>
-                          <p>{item.custId || "—"}</p>
-                        </div>
-                        <div>
-                          <span className="font-medium text-muted-foreground">Cust SN:</span>
-                          <p>{item.custSN || "—"}</p>
-                        </div>
-                        <div>
-                          <span className="font-medium text-muted-foreground">Asset Number:</span>
-                          <p>{item.assetNumber || "—"}</p>
-                        </div>
-                        <div>
-                          <span className="font-medium text-muted-foreground">ISO 17025:</span>
-                          <p>{item.iso17025 || "—"}</p>
-                        </div>
-                        <div>
-                          <span className="font-medium text-muted-foreground">Estimate:</span>
-                          <p>{item.estimate || "—"}</p>
-                        </div>
-                        <div>
-                          <span className="font-medium text-muted-foreground">New Equip:</span>
-                          <p>{item.newEquip || "—"}</p>
-                        </div>
-                        <div>
-                          <span className="font-medium text-muted-foreground">Need By Date:</span>
-                          <p>{item.needByDate || "—"}</p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </>
-            )}
-          </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setIsPreviewOpen(false)}>
-              Close
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-
       {/* Sticky Action Buttons */}
       <div className="bg-card border-t p-4 flex justify-end gap-2 shadow-lg">
         <Button 
           variant="outline" 
           size="default"
-          onClick={() => setIsPreviewOpen(true)}
+          onClick={handlePreviewChanges}
           disabled={newItems.length === 0}
         >
           Preview Changes
