@@ -268,28 +268,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
             Receive Item
           </Button>
         </div>
-        <div className="flex items-center gap-2">
-          <Button 
-            variant="outline" 
-            size="sm"
-            className="h-8"
-          >
-            Preview Changes
-          </Button>
-          <Button 
-            variant="default" 
-            size="sm"
-            className="h-8"
-          >
-            Save Changes
-          </Button>
-          <Button 
-            variant="outline" 
-            size="sm"
-            className="h-8"
-          >
-            Cancel Changes
-          </Button>
+        <div className="flex items-center gap-4">
           <AlertDialog open={isClearAllDialogOpen} onOpenChange={setIsClearAllDialogOpen}>
             <AlertDialogTrigger asChild>
               <Button 
@@ -1628,6 +1607,28 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Sticky Action Buttons */}
+      <div className="sticky bottom-0 left-0 right-0 bg-card border-t p-4 flex justify-end gap-2 shadow-lg z-20">
+        <Button 
+          variant="outline" 
+          size="default"
+        >
+          Preview Changes
+        </Button>
+        <Button 
+          variant="outline" 
+          size="default"
+        >
+          Cancel Changes
+        </Button>
+        <Button 
+          variant="default" 
+          size="default"
+        >
+          Save Changes
+        </Button>
+      </div>
     </div>
   );
 };
