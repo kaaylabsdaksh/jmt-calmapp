@@ -1585,6 +1585,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
                       id="newEquip"
                       checked={quickAddData.newEquip}
                       onCheckedChange={(checked) => setQuickAddData({...quickAddData, newEquip: checked as boolean})}
+                      className="border-black data-[state=checked]:bg-black data-[state=checked]:border-black"
                     />
                     <Label htmlFor="newEquip" className="text-sm font-normal cursor-pointer">New Equip</Label>
                   </div>
@@ -1594,6 +1595,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
                       id="iso17025"
                       checked={quickAddData.iso17025}
                       onCheckedChange={(checked) => setQuickAddData({...quickAddData, iso17025: checked as boolean})}
+                      className="border-black data-[state=checked]:bg-black data-[state=checked]:border-black"
                     />
                     <Label htmlFor="iso17025" className="text-sm font-normal cursor-pointer">17025</Label>
                   </div>
@@ -1603,6 +1605,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
                       id="multiParts"
                       checked={quickAddData.multiParts}
                       onCheckedChange={(checked) => setQuickAddData({...quickAddData, multiParts: checked as boolean})}
+                      className="border-black data-[state=checked]:bg-black data-[state=checked]:border-black"
                     />
                     <Label htmlFor="multiParts" className="text-sm font-normal cursor-pointer">Multi Parts</Label>
                   </div>
@@ -1612,6 +1615,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
                       id="estimate"
                       checked={quickAddData.estimate}
                       onCheckedChange={(checked) => setQuickAddData({...quickAddData, estimate: checked as boolean})}
+                      className="border-black data-[state=checked]:bg-black data-[state=checked]:border-black"
                     />
                     <Label htmlFor="estimate" className="text-sm font-normal cursor-pointer">Estimate</Label>
                   </div>
@@ -1621,6 +1625,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
                       id="usedSurplus"
                       checked={quickAddData.usedSurplus}
                       onCheckedChange={(checked) => setQuickAddData({...quickAddData, usedSurplus: checked as boolean})}
+                      className="border-black data-[state=checked]:bg-black data-[state=checked]:border-black"
                     />
                     <Label htmlFor="usedSurplus" className="text-sm font-normal cursor-pointer">Used/Surplus</Label>
                   </div>
