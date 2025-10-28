@@ -39,6 +39,8 @@ interface WorkOrderReceivingItem {
 interface WorkOrderItemsReceivingProps {
   items: WorkOrderReceivingItem[];
   setItems: React.Dispatch<React.SetStateAction<WorkOrderReceivingItem[]>>;
+  isQuickAddDialogOpen?: boolean;
+  setIsQuickAddDialogOpen?: (open: boolean) => void;
 }
 
 const manufacturers = [
@@ -90,13 +92,12 @@ const truncateDescription = (description: string): string => {
   return words.length > 3 ? words.slice(0, 3).join(" ") + "..." : description;
 };
 
-export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsReceivingProps) => {
+export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen = false, setIsQuickAddDialogOpen }: WorkOrderItemsReceivingProps) => {
   const [newItems, setNewItems] = useState<WorkOrderReceivingItem[]>([]);
   const [editingItemId, setEditingItemId] = useState<string | null>(null);
   const [deleteItemId, setDeleteItemId] = useState<string | null>(null);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [isClearAllDialogOpen, setIsClearAllDialogOpen] = useState(false);
-  const [isQuickAddDialogOpen, setIsQuickAddDialogOpen] = useState(false);
   const [quickAddData, setQuickAddData] = useState({
     type: "SINGLE",
     calFreq: "",
@@ -211,7 +212,9 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
     });
 
     setNewItems(updatedNewItems);
-    setIsQuickAddDialogOpen(false);
+    if (setIsQuickAddDialogOpen) {
+      setIsQuickAddDialogOpen(false);
+    }
     
     // Reset form
     setQuickAddData({
@@ -247,14 +250,6 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
     <div className="border rounded-lg overflow-hidden">
       <div className="flex justify-between items-center p-2 bg-muted/20 border-b">
         <div className="flex items-center gap-2">
-          <Button 
-            onClick={() => setIsQuickAddDialogOpen(true)}
-            size="sm"
-            variant="secondary"
-            disabled={selectedItems.length === 0}
-          >
-            Quick Add New Items
-          </Button>
           <Button 
             variant="link" 
             className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto flex items-center gap-1"
@@ -1621,7 +1616,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
           </div>
 
           <DialogFooter>
-            <Button variant="outline" onClick={() => setIsQuickAddDialogOpen(false)}>
+            <Button variant="outline" onClick={() => setIsQuickAddDialogOpen && setIsQuickAddDialogOpen(false)}>
               Cancel
             </Button>
             <Button onClick={handleQuickAddApply} disabled={selectedItems.length === 0}>

@@ -44,6 +44,7 @@ const AddNewWorkOrder = () => {
   });
   
   const [isRFIDDialogOpen, setIsRFIDDialogOpen] = useState(false);
+  const [isQuickAddDialogOpen, setIsQuickAddDialogOpen] = useState(false);
 
   // Save active tab to localStorage whenever it changes
   useEffect(() => {
@@ -871,8 +872,8 @@ const AddNewWorkOrder = () => {
                      {/* Action Buttons */}
                     {viewMode === 'receiving' ? (
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
-                        <Button 
-                          onClick={() => setIsRFIDDialogOpen(true)}
+                      <Button 
+                          onClick={() => setIsQuickAddDialogOpen(true)}
                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
                         >
                           <Plus className="w-3 h-3 sm:w-4 sm:h-4" />
@@ -999,7 +1000,12 @@ const AddNewWorkOrder = () => {
 
                     {/* Conditional View Rendering */}
                     {viewMode === 'receiving' ? (
-                      <WorkOrderItemsReceiving items={receivingItems} setItems={setReceivingItems} />
+                      <WorkOrderItemsReceiving 
+                        items={receivingItems} 
+                        setItems={setReceivingItems}
+                        isQuickAddDialogOpen={isQuickAddDialogOpen}
+                        setIsQuickAddDialogOpen={setIsQuickAddDialogOpen}
+                      />
                     ) : viewMode === 'table' ? (
                       <WorkOrderItemsTable />
                     ) : (
