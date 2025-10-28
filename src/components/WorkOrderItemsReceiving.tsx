@@ -377,20 +377,16 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
                         />
                      </td>
                      <td className="p-4 min-w-[140px]">
-                       <Select value={newItem.calFreq} onValueChange={(value) => updateNewItem(newItem.id, 'calFreq', value)}>
-                         <SelectTrigger 
-                           className="h-12 text-base border-2 focus:border-primary"
-                           onFocus={(e) => e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
-                         >
-                          <SelectValue placeholder="Select..." />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="annual">Annual</SelectItem>
-                          <SelectItem value="monthly">Monthly</SelectItem>
-                          <SelectItem value="quarterly">Quarterly</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </td>
+                       <Input 
+                         type="number"
+                         placeholder="Cal Freq"
+                         value={newItem.calFreq}
+                         onChange={(e) => updateNewItem(newItem.id, 'calFreq', e.target.value)}
+                         className="h-12 text-base font-medium border-2 focus:border-primary"
+                         onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
+                         autoComplete="off"
+                       />
+                     </td>
                      <td className="p-4 min-w-[160px]">
                        <Select value={newItem.actionCode} onValueChange={(value) => updateNewItem(newItem.id, 'actionCode', value)}>
                          <SelectTrigger 
@@ -740,18 +736,15 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
                     </td>
                     <td className="p-2 text-xs">
                       {editingItemId === item.id ? (
-                        <Select value={item.calFreq} onValueChange={(value) => updateItem(item.id, 'calFreq', value)}>
-                          <SelectTrigger className="h-6 text-xs">
-                            <SelectValue placeholder="Select..." />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="annual">Annual</SelectItem>
-                            <SelectItem value="monthly">Monthly</SelectItem>
-                            <SelectItem value="quarterly">Quarterly</SelectItem>
-                          </SelectContent>
-                        </Select>
+                        <Input 
+                          type="number"
+                          value={item.calFreq}
+                          onChange={(e) => updateItem(item.id, 'calFreq', e.target.value)}
+                          className="h-6 text-xs border-2 focus:border-primary"
+                          autoComplete="off"
+                        />
                       ) : (
-                        <div className="truncate capitalize" title={item.calFreq}>
+                        <div className="truncate" title={item.calFreq}>
                           {item.calFreq || "—"}
                         </div>
                       )}
