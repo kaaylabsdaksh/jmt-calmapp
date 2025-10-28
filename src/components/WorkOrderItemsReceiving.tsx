@@ -256,7 +256,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
   };
 
   return (
-    <div className="border rounded-lg overflow-hidden">
+    <div className="border rounded-lg overflow-hidden flex flex-col">
       <div className="flex justify-between items-center p-2 bg-muted/20 border-b">
         <div className="flex items-center gap-2">
           <Button 
@@ -297,12 +297,13 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
         </div>
       </div>
       
-      {items.length === 0 ? (
-        <div className="p-8 text-center text-muted-foreground">
-          No items received yet. Click "Receive Item" to add your first received work order item.
-        </div>
-      ) : (
-        <div className="p-4">
+      <div className="flex-1 overflow-y-auto">
+        {items.length === 0 ? (
+          <div className="p-8 text-center text-muted-foreground">
+            No items received yet. Click "Receive Item" to add your first received work order item.
+          </div>
+        ) : (
+          <div className="p-4">
           {/* Desktop Table View */}
           <div className="hidden lg:block border rounded-lg overflow-x-auto scroll-smooth">
             <table className="w-full min-w-[2400px]">
@@ -1375,6 +1376,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
           </div>
         </div>
       )}
+      </div>
 
       {/* Quick Add Dialog */}
       <Dialog open={isQuickAddDialogOpen} onOpenChange={setIsQuickAddDialogOpen}>
@@ -1609,7 +1611,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, isQuickAddDialogOpen 
       </Dialog>
 
       {/* Sticky Action Buttons */}
-      <div className="sticky bottom-0 left-0 right-0 bg-card border-t p-4 flex justify-end gap-2 shadow-lg z-20">
+      <div className="bg-card border-t p-4 flex justify-end gap-2 shadow-lg">
         <Button 
           variant="outline" 
           size="default"
