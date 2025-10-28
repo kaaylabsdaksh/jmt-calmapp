@@ -45,6 +45,7 @@ const AddNewWorkOrder = () => {
   
   const [isRFIDDialogOpen, setIsRFIDDialogOpen] = useState(false);
   const [isQuickAddDialogOpen, setIsQuickAddDialogOpen] = useState(false);
+  const [selectedItemsCount, setSelectedItemsCount] = useState(0);
 
   // Save active tab to localStorage whenever it changes
   useEffect(() => {
@@ -969,12 +970,17 @@ const AddNewWorkOrder = () => {
 
                         <div className="flex items-center gap-2">
                           <Label className="text-sm font-medium whitespace-nowrap min-w-fit"># of Items:</Label>
-                          <span className="text-sm font-medium min-w-fit">0</span>
+                          <span className="text-sm font-medium min-w-fit">{selectedItemsCount}</span>
                         </div>
 
                         <div className="flex items-center gap-2">
                           <Label className="text-sm font-medium whitespace-nowrap min-w-fit">Special Action:</Label>
-                          <Select>
+                          <Select
+                            disabled={selectedItemsCount === 0}
+                            onValueChange={(value) => {
+                              console.log(`Special action: ${value} for ${selectedItemsCount} item(s)`);
+                            }}
+                          >
                             <SelectTrigger className="w-48 border-gray-400">
                               <SelectValue placeholder="Select action..." />
                             </SelectTrigger>
@@ -986,12 +992,16 @@ const AddNewWorkOrder = () => {
                               <SelectItem value="del-ticket-followup">Del Ticket Followup</SelectItem>
                               <SelectItem value="ready-to-bill">Ready to Bill</SelectItem>
                               <SelectItem value="to-ar">To A/R</SelectItem>
-                              <SelectItem value="update-cal-freqs">Update Cal Freqs</SelectItem>
-                              <SelectItem value="update-po-numbers">Update PO #'s</SelectItem>
+                              <SelectItem value="update-cal-freq">Update Cal Freq's</SelectItem>
+                              <SelectItem value="update-po">Update PO #'s</SelectItem>
                               <SelectItem value="update-tf-status">Update T/F Status</SelectItem>
                               <SelectItem value="waiting-on-customer">Waiting on Customer</SelectItem>
-                              <SelectItem value="wait-cust-followup">Wait Cust Followup</SelectItem>
+                              <SelectItem value="waiting-on-parts">Waiting on Parts</SelectItem>
                               <SelectItem value="update-deliver-by-date">Update Deliver By Date</SelectItem>
+                              <SelectItem value="print-wos">Print WOs</SelectItem>
+                              <SelectItem value="print-labels">Print Labels</SelectItem>
+                              <SelectItem value="print-barcodes">Print Barcodes</SelectItem>
+                              <SelectItem value="user-samples">User/Samples</SelectItem>
                             </SelectContent>
                           </Select>
                         </div>
@@ -1005,6 +1015,7 @@ const AddNewWorkOrder = () => {
                         setItems={setReceivingItems}
                         isQuickAddDialogOpen={isQuickAddDialogOpen}
                         setIsQuickAddDialogOpen={setIsQuickAddDialogOpen}
+                        onSelectedItemsChange={setSelectedItemsCount}
                       />
                     ) : viewMode === 'table' ? (
                       <WorkOrderItemsTable />
