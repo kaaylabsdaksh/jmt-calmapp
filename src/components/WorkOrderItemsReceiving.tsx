@@ -89,15 +89,14 @@ const truncateDescription = (description: string): string => {
 };
 
 export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsReceivingProps) => {
-  const [newItem, setNewItem] = useState<WorkOrderReceivingItem>(createEmptyItem());
+  const [newItems, setNewItems] = useState<WorkOrderReceivingItem[]>([]);
   const [editingItemId, setEditingItemId] = useState<string | null>(null);
   const [deleteItemId, setDeleteItemId] = useState<string | null>(null);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [isClearAllDialogOpen, setIsClearAllDialogOpen] = useState(false);
-  const [isAddingNew, setIsAddingNew] = useState(false);
-  const [manufacturerPopoverOpen, setManufacturerPopoverOpen] = useState(false);
+  const [manufacturerPopoverOpen, setManufacturerPopoverOpen] = useState<{[key: string]: boolean}>({});
   const [editManufacturerPopoverOpen, setEditManufacturerPopoverOpen] = useState<{[key: string]: boolean}>({});
-  const [modelPopoverOpen, setModelPopoverOpen] = useState(false);
+  const [modelPopoverOpen, setModelPopoverOpen] = useState<{[key: string]: boolean}>({});
   const [editModelPopoverOpen, setEditModelPopoverOpen] = useState<{[key: string]: boolean}>({});
 
   // Handle individual item selection
@@ -123,24 +122,25 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
   const isIndeterminate = selectedItems.length > 0 && selectedItems.length < items.length;
 
   const handleAddNewItem = () => {
-    setIsAddingNew(true);
-    setNewItem(createEmptyItem());
+    setNewItems([...newItems, createEmptyItem()]);
   };
 
-  const handleSaveNewItem = () => {
+  const handleSaveNewItem = (newItemId: string) => {
+    const itemToSave = newItems.find(item => item.id === newItemId);
+    if (!itemToSave) return;
+    
     // Validate mandatory fields
-    if (!newItem.manufacturer || !newItem.model || !newItem.custId || !newItem.custSN || !newItem.mfgSerial) {
+    if (!itemToSave.manufacturer || !itemToSave.model || !itemToSave.custId || !itemToSave.custSN || !itemToSave.mfgSerial) {
       alert('Please fill in all mandatory fields: Manufacturer, Model, Cust ID, Cust SN, and Mfg Serial Number');
       return;
     }
-    setItems([...items, newItem]);
-    setNewItem(createEmptyItem());
-    setIsAddingNew(false);
+    
+    setItems([...items, itemToSave]);
+    setNewItems(newItems.filter(item => item.id !== newItemId));
   };
 
-  const handleCancelNewItem = () => {
-    setNewItem(createEmptyItem());
-    setIsAddingNew(false);
+  const handleCancelNewItem = (newItemId: string) => {
+    setNewItems(newItems.filter(item => item.id !== newItemId));
   };
 
   const removeItem = (id: string) => {
@@ -154,8 +154,10 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
     ));
   };
 
-  const updateNewItem = (field: keyof WorkOrderReceivingItem, value: string) => {
-    setNewItem(prev => ({ ...prev, [field]: value }));
+  const updateNewItem = (itemId: string, field: keyof WorkOrderReceivingItem, value: string) => {
+    setNewItems(prev => prev.map(item => 
+      item.id === itemId ? { ...item, [field]: value } : item
+    ));
   };
 
   const clearAllItems = () => {
@@ -180,7 +182,6 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
             variant="link" 
             className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto flex items-center gap-1"
             onClick={handleAddNewItem}
-            disabled={isAddingNew}
           >
             <Plus className="w-4 h-4" />
             Receive Item
@@ -254,16 +255,16 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                 </tr>
               </thead>
               <tbody>
-                {/* Add new item row */}
-                {isAddingNew && (
-                  <tr className="border-b bg-blue-50">
+                {/* Add new item rows */}
+                {newItems.map((newItem) => (
+                  <tr key={newItem.id} className="border-b bg-blue-50">
                      <td className="p-4 sticky left-0 bg-blue-50 z-10">
                       <div className="flex items-center justify-end gap-2">
                         <Button 
                           size="sm" 
                           variant="ghost" 
                           className="h-6 w-6 p-0"
-                          onClick={handleSaveNewItem}
+                          onClick={() => handleSaveNewItem(newItem.id)}
                         >
                           <Check className="w-3 h-3" />
                         </Button>
@@ -271,7 +272,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                           size="sm" 
                           variant="ghost" 
                           className="h-6 w-6 p-0"
-                          onClick={handleCancelNewItem}
+                          onClick={() => handleCancelNewItem(newItem.id)}
                         >
                           <X className="w-3 h-3" />
                         </Button>
@@ -284,14 +285,14 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                        <Input 
                          placeholder="Item #"
                          value={newItem.itemNumber}
-                         onChange={(e) => updateNewItem('itemNumber', e.target.value)}
+                         onChange={(e) => updateNewItem(newItem.id, 'itemNumber', e.target.value)}
                          className="h-12 text-base font-medium border-2 focus:border-primary"
                          onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
                          autoComplete="off"
                         />
                      </td>
                      <td className="p-4 min-w-[140px]">
-                       <Select value={newItem.calFreq} onValueChange={(value) => updateNewItem('calFreq', value)}>
+                       <Select value={newItem.calFreq} onValueChange={(value) => updateNewItem(newItem.id, 'calFreq', value)}>
                          <SelectTrigger 
                            className="h-12 text-base border-2 focus:border-primary"
                            onFocus={(e) => e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
@@ -306,7 +307,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                       </Select>
                     </td>
                      <td className="p-4 min-w-[160px]">
-                       <Select value={newItem.actionCode} onValueChange={(value) => updateNewItem('actionCode', value)}>
+                       <Select value={newItem.actionCode} onValueChange={(value) => updateNewItem(newItem.id, 'actionCode', value)}>
                          <SelectTrigger 
                            className="h-12 text-base border-2 focus:border-primary"
                            onFocus={(e) => e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
@@ -324,7 +325,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                       </Select>
                     </td>
                      <td className="p-4 min-w-[140px]">
-                       <Select value={newItem.priority} onValueChange={(value) => updateNewItem('priority', value)}>
+                       <Select value={newItem.priority} onValueChange={(value) => updateNewItem(newItem.id, 'priority', value)}>
                          <SelectTrigger 
                            className="h-12 text-base border-2 focus:border-primary"
                            onFocus={(e) => e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
@@ -341,12 +342,15 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                       </Select>
                      </td>
                      <td className="p-4 min-w-[180px]">
-                       <Popover open={manufacturerPopoverOpen} onOpenChange={setManufacturerPopoverOpen}>
+                       <Popover 
+                         open={manufacturerPopoverOpen[newItem.id] || false} 
+                         onOpenChange={(open) => setManufacturerPopoverOpen(prev => ({...prev, [newItem.id]: open}))}
+                       >
                          <PopoverTrigger asChild>
                            <Button
                              variant="outline"
                              role="combobox"
-                             aria-expanded={manufacturerPopoverOpen}
+                             aria-expanded={manufacturerPopoverOpen[newItem.id] || false}
                              className="h-12 w-full justify-between text-base border-2 focus:border-primary"
                              onFocus={(e) => e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
                            >
@@ -367,8 +371,8 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                                      key={mfr.value}
                                      value={mfr.label}
                                      onSelect={() => {
-                                       updateNewItem('manufacturer', mfr.value);
-                                       setManufacturerPopoverOpen(false);
+                                       updateNewItem(newItem.id, 'manufacturer', mfr.value);
+                                       setManufacturerPopoverOpen(prev => ({...prev, [newItem.id]: false}));
                                      }}
                                    >
                                      {mfr.label}
@@ -381,12 +385,15 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                        </Popover>
                     </td>
                      <td className="p-4 min-w-[140px]">
-                       <Popover open={modelPopoverOpen} onOpenChange={setModelPopoverOpen}>
+                       <Popover 
+                         open={modelPopoverOpen[newItem.id] || false} 
+                         onOpenChange={(open) => setModelPopoverOpen(prev => ({...prev, [newItem.id]: open}))}
+                       >
                          <PopoverTrigger asChild>
                            <Button
                              variant="outline"
                              role="combobox"
-                             aria-expanded={modelPopoverOpen}
+                             aria-expanded={modelPopoverOpen[newItem.id] || false}
                              className="h-12 w-full justify-between text-base border-2 focus:border-primary"
                              onFocus={(e) => e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
                            >
@@ -407,8 +414,8 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                                      key={mdl.value}
                                      value={mdl.label}
                                      onSelect={() => {
-                                       updateNewItem('model', mdl.value);
-                                       setModelPopoverOpen(false);
+                                       updateNewItem(newItem.id, 'model', mdl.value);
+                                       setModelPopoverOpen(prev => ({...prev, [newItem.id]: false}));
                                      }}
                                    >
                                      {mdl.label}
@@ -424,13 +431,13 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                         <Textarea 
                           placeholder="Description"
                           value={newItem.description}
-                          onChange={(e) => updateNewItem('description', e.target.value)}
+                          onChange={(e) => updateNewItem(newItem.id, 'description', e.target.value)}
                           className="h-12 min-h-12 text-base resize-none border-2 focus:border-primary"
                           onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
                         />
                       </td>
                       <td className="p-4 min-w-[120px]">
-                        <Select value={newItem.tf} onValueChange={(value) => updateNewItem('tf', value)}>
+                        <Select value={newItem.tf} onValueChange={(value) => updateNewItem(newItem.id, 'tf', value)}>
                           <SelectTrigger 
                             className="h-12 text-base border-2 focus:border-primary"
                             onFocus={(e) => e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
@@ -447,7 +454,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                         <Input 
                           placeholder="Capable Locations"
                           value={newItem.capableLocations}
-                          onChange={(e) => updateNewItem('capableLocations', e.target.value)}
+                          onChange={(e) => updateNewItem(newItem.id, 'capableLocations', e.target.value)}
                           className="h-12 text-base font-medium border-2 focus:border-primary"
                           onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
                           autoComplete="off"
@@ -457,7 +464,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                         <Input 
                           placeholder="Mfg Serial"
                           value={newItem.mfgSerial}
-                          onChange={(e) => updateNewItem('mfgSerial', e.target.value)}
+                          onChange={(e) => updateNewItem(newItem.id, 'mfgSerial', e.target.value)}
                           className="h-12 text-base font-medium border-2 focus:border-primary"
                           onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
                           autoComplete="off"
@@ -467,7 +474,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                        <Input 
                          placeholder="CustID"
                          value={newItem.custId}
-                         onChange={(e) => updateNewItem('custId', e.target.value)}
+                         onChange={(e) => updateNewItem(newItem.id, 'custId', e.target.value)}
                          className="h-12 text-base font-medium border-2 focus:border-primary"
                          onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
                          autoComplete="off"
@@ -477,7 +484,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                        <Input 
                          placeholder="CustSN"
                          value={newItem.custSN}
-                         onChange={(e) => updateNewItem('custSN', e.target.value)}
+                         onChange={(e) => updateNewItem(newItem.id, 'custSN', e.target.value)}
                          className="h-12 text-base font-medium border-2 focus:border-primary"
                          onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
                          autoComplete="off"
@@ -487,14 +494,14 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                        <Input 
                          placeholder="Asset Number"
                          value={newItem.assetNumber}
-                         onChange={(e) => updateNewItem('assetNumber', e.target.value)}
+                         onChange={(e) => updateNewItem(newItem.id, 'assetNumber', e.target.value)}
                          className="h-12 text-base font-medium border-2 focus:border-primary"
                          onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
                          autoComplete="off"
                        />
                      </td>
                      <td className="p-4 min-w-[120px]">
-                       <Select value={newItem.iso17025} onValueChange={(value) => updateNewItem('iso17025', value)}>
+                       <Select value={newItem.iso17025} onValueChange={(value) => updateNewItem(newItem.id, 'iso17025', value)}>
                          <SelectTrigger 
                            className="h-12 text-base border-2 focus:border-primary"
                            onFocus={(e) => e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
@@ -511,14 +518,14 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                        <Input 
                          placeholder="Estimate"
                          value={newItem.estimate}
-                         onChange={(e) => updateNewItem('estimate', e.target.value)}
+                         onChange={(e) => updateNewItem(newItem.id, 'estimate', e.target.value)}
                          className="h-12 text-base font-medium border-2 focus:border-primary"
                          onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
                          autoComplete="off"
                        />
                      </td>
                      <td className="p-4 min-w-[130px]">
-                       <Select value={newItem.newEquip} onValueChange={(value) => updateNewItem('newEquip', value)}>
+                       <Select value={newItem.newEquip} onValueChange={(value) => updateNewItem(newItem.id, 'newEquip', value)}>
                          <SelectTrigger 
                            className="h-12 text-base border-2 focus:border-primary"
                            onFocus={(e) => e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
@@ -535,7 +542,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                        <Input 
                          type="date"
                          value={newItem.needByDate}
-                         onChange={(e) => updateNewItem('needByDate', e.target.value)}
+                         onChange={(e) => updateNewItem(newItem.id, 'needByDate', e.target.value)}
                          className="h-12 text-base border-2 focus:border-primary"
                          onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
                        />
@@ -544,7 +551,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                         <Input 
                           placeholder="C/C Cost"
                           value={newItem.ccCost}
-                          onChange={(e) => updateNewItem('ccCost', e.target.value)}
+                          onChange={(e) => updateNewItem(newItem.id, 'ccCost', e.target.value)}
                           className="h-12 text-base font-medium border-2 focus:border-primary"
                           onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
                           autoComplete="off"
@@ -556,7 +563,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                            size="sm" 
                            variant="ghost" 
                            className="h-8 w-8 p-0 text-green-600 hover:bg-green-50"
-                           onClick={handleSaveNewItem}
+                           onClick={() => handleSaveNewItem(newItem.id)}
                          >
                            ✓
                          </Button>
@@ -564,14 +571,14 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                            size="sm" 
                            variant="ghost" 
                            className="h-8 w-8 p-0 text-red-600 hover:bg-red-50"
-                           onClick={handleCancelNewItem}
+                           onClick={() => handleCancelNewItem(newItem.id)}
                          >
                            ✕
                          </Button>
                        </div>
                      </td>
                   </tr>
-                )}
+                ))}
                 {items.map((item, index) => (
                   <tr key={item.id} className="border-b hover:bg-muted/10">
                     <td className="p-2">
@@ -1006,16 +1013,16 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                 </tr>
               </thead>
               <tbody>
-                {/* Add new item row for tablet */}
-                {isAddingNew && (
-                  <tr className="border-b bg-blue-50">
+                {/* Add new item rows for tablet */}
+                {newItems.map((newItem) => (
+                  <tr key={newItem.id} className="border-b bg-blue-50">
                     <td className="p-3">
                       <div className="flex items-center justify-end gap-2">
                         <Button 
                           size="sm" 
                           variant="ghost" 
                           className="h-6 w-6 p-0"
-                          onClick={handleSaveNewItem}
+                          onClick={() => handleSaveNewItem(newItem.id)}
                         >
                           <Check className="w-3 h-3" />
                         </Button>
@@ -1023,7 +1030,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                           size="sm" 
                           variant="ghost" 
                           className="h-6 w-6 p-0"
-                          onClick={handleCancelNewItem}
+                          onClick={() => handleCancelNewItem(newItem.id)}
                         >
                           <X className="w-3 h-3" />
                         </Button>
@@ -1036,12 +1043,12 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                       <Input 
                         placeholder="Item #"
                         value={newItem.itemNumber}
-                        onChange={(e) => updateNewItem('itemNumber', e.target.value)}
+                        onChange={(e) => updateNewItem(newItem.id, 'itemNumber', e.target.value)}
                         className="h-10 text-sm"
                       />
                     </td>
                     <td className="p-3 text-xs">
-                      <Select value={newItem.actionCode} onValueChange={(value) => updateNewItem('actionCode', value)}>
+                      <Select value={newItem.actionCode} onValueChange={(value) => updateNewItem(newItem.id, 'actionCode', value)}>
                         <SelectTrigger className="h-10 text-sm">
                           <SelectValue placeholder="Select..." />
                         </SelectTrigger>
@@ -1056,7 +1063,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                       </Select>
                     </td>
                     <td className="p-3 text-xs">
-                      <Select value={newItem.priority} onValueChange={(value) => updateNewItem('priority', value)}>
+                      <Select value={newItem.priority} onValueChange={(value) => updateNewItem(newItem.id, 'priority', value)}>
                         <SelectTrigger className="h-10 text-sm">
                           <SelectValue placeholder="Select..." />
                         </SelectTrigger>
@@ -1070,7 +1077,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                       </Select>
                     </td>
                     <td className="p-3 text-xs">
-                      <Select value={newItem.manufacturer} onValueChange={(value) => updateNewItem('manufacturer', value)}>
+                      <Select value={newItem.manufacturer} onValueChange={(value) => updateNewItem(newItem.id, 'manufacturer', value)}>
                         <SelectTrigger className="h-10 text-sm">
                           <SelectValue placeholder="Select..." />
                         </SelectTrigger>
@@ -1089,7 +1096,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                       <Input 
                         placeholder="Model"
                         value={newItem.model}
-                        onChange={(e) => updateNewItem('model', e.target.value)}
+                        onChange={(e) => updateNewItem(newItem.id, 'model', e.target.value)}
                         className="h-10 text-sm"
                       />
                     </td>
@@ -1097,7 +1104,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                       <Textarea 
                         placeholder="Description"
                         value={newItem.description}
-                        onChange={(e) => updateNewItem('description', e.target.value)}
+                        onChange={(e) => updateNewItem(newItem.id, 'description', e.target.value)}
                         className="h-10 min-h-10 text-sm resize-none"
                       />
                     </td>
@@ -1105,12 +1112,12 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                       <Input 
                         type="date"
                         value={newItem.needByDate}
-                        onChange={(e) => updateNewItem('needByDate', e.target.value)}
+                        onChange={(e) => updateNewItem(newItem.id, 'needByDate', e.target.value)}
                         className="h-10 text-sm"
                       />
                      </td>
                    </tr>
-                 )}
+                 ))}
                  {items.map((item) => (
                    <tr key={item.id} className="border-b hover:bg-muted/10">
                      <td className="p-2">
