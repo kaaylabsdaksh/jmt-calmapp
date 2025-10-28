@@ -128,6 +128,11 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
   };
 
   const handleSaveNewItem = () => {
+    // Validate mandatory fields
+    if (!newItem.manufacturer || !newItem.model || !newItem.custId || !newItem.custSN || !newItem.mfgSerial) {
+      alert('Please fill in all mandatory fields: Manufacturer, Model, Cust ID, Cust SN, and Mfg Serial Number');
+      return;
+    }
     setItems([...items, newItem]);
     setNewItem(createEmptyItem());
     setIsAddingNew(false);
@@ -232,14 +237,14 @@ export const WorkOrderItemsReceiving = ({ items, setItems }: WorkOrderItemsRecei
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-16">Cal Freq</th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-16">Action Code</th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-16">Priority</th>
-                  <th className="text-left p-2 text-xs font-medium text-muted-foreground w-24">Manufacturer</th>
-                  <th className="text-left p-2 text-xs font-medium text-muted-foreground w-16">Model</th>
+                  <th className="text-left p-2 text-xs font-medium text-muted-foreground w-24">Manufacturer<span className="text-red-500 ml-1">*</span></th>
+                  <th className="text-left p-2 text-xs font-medium text-muted-foreground w-16">Model<span className="text-red-500 ml-1">*</span></th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-32">Description</th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-12">TF</th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-32">Capable Locations</th>
-                  <th className="text-left p-2 text-xs font-medium text-muted-foreground w-20">Mfg Serial</th>
-                  <th className="text-left p-2 text-xs font-medium text-muted-foreground w-16">CustID</th>
-                  <th className="text-left p-2 text-xs font-medium text-muted-foreground w-16">CustSN</th>
+                  <th className="text-left p-2 text-xs font-medium text-muted-foreground w-20">Mfg Serial<span className="text-red-500 ml-1">*</span></th>
+                  <th className="text-left p-2 text-xs font-medium text-muted-foreground w-16">CustID<span className="text-red-500 ml-1">*</span></th>
+                  <th className="text-left p-2 text-xs font-medium text-muted-foreground w-16">CustSN<span className="text-red-500 ml-1">*</span></th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-20">Asset Number</th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-12">17025</th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-16">Estimate</th>
