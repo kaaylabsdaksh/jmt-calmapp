@@ -91,6 +91,8 @@ const AddNewWorkOrder = () => {
     newEquip: string;
     needByDate: string;
     ccCost: string;
+    tf: string;
+    capableLocations: string;
   }>>([
     {
       id: "rec-001",
@@ -109,7 +111,9 @@ const AddNewWorkOrder = () => {
       estimate: "$125.00",
       newEquip: "no",
       needByDate: "2024-12-15",
-      ccCost: "$50.00"
+      ccCost: "$50.00",
+      tf: "yes",
+      capableLocations: "Lab A, Lab B"
     },
     {
       id: "rec-002", 
@@ -128,7 +132,9 @@ const AddNewWorkOrder = () => {
       estimate: "$350.00",
       newEquip: "no",
       needByDate: "2024-11-30",
-      ccCost: "$75.00"
+      ccCost: "$75.00",
+      tf: "no",
+      capableLocations: "Lab C"
     },
     {
       id: "rec-003",
@@ -147,7 +153,9 @@ const AddNewWorkOrder = () => {
       estimate: "$225.00",
       newEquip: "yes",
       needByDate: "2024-12-10",
-      ccCost: "$60.00"
+      ccCost: "$60.00",
+      tf: "yes",
+      capableLocations: "Lab A, Lab D"
     }
   ]);
   const inputRef = useRef<HTMLInputElement>(null);
