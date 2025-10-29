@@ -30,6 +30,12 @@ const toastVariants = cva(
         default: "border bg-background text-foreground",
         destructive:
           "destructive group border-destructive bg-destructive text-destructive-foreground",
+        success:
+          "success group border-primary/50 bg-primary/10 text-primary-foreground",
+        warning:
+          "warning group border-secondary/50 bg-secondary/10 text-secondary-foreground",
+        info:
+          "info group border-accent/50 bg-accent/10 text-accent-foreground",
       },
     },
     defaultVariants: {
@@ -75,7 +81,7 @@ const ToastClose = React.forwardRef<
   <ToastPrimitives.Close
     ref={ref}
     className={cn(
-      "absolute right-2 top-2 rounded-md p-1 text-foreground/50 opacity-0 transition-opacity hover:text-foreground focus:opacity-100 focus:outline-none focus:ring-2 group-hover:opacity-100 group-[.destructive]:text-red-300 group-[.destructive]:hover:text-red-50 group-[.destructive]:focus:ring-red-400 group-[.destructive]:focus:ring-offset-red-600",
+      "absolute right-2 top-2 rounded-md p-1 text-foreground/50 opacity-0 transition-opacity hover:text-foreground focus:opacity-100 focus:outline-none focus:ring-2 group-hover:opacity-100 group-[.destructive]:text-red-300 group-[.destructive]:hover:text-red-50 group-[.destructive]:focus:ring-red-400 group-[.destructive]:focus:ring-offset-red-600 group-[.success]:text-primary-foreground/70 group-[.success]:hover:text-primary-foreground group-[.warning]:text-secondary-foreground/70 group-[.warning]:hover:text-secondary-foreground group-[.info]:text-accent-foreground/70 group-[.info]:hover:text-accent-foreground",
       className
     )}
     toast-close=""

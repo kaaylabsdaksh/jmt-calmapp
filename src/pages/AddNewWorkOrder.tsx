@@ -222,6 +222,7 @@ const AddNewWorkOrder = () => {
     // TODO: Implement save functionality
     console.log("Saving work order:", workOrderData);
     toast({
+      variant: "success",
       title: "Work Order Saved",
       description: "Your work order has been successfully created.",
     });
