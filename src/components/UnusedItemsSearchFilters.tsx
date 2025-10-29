@@ -246,7 +246,7 @@ const UnusedItemsSearchFilters = ({ onSearch }: UnusedItemsSearchFiltersProps) =
             onClick={() => setShowAdvanced(!showAdvanced)}
             className={cn(
               "rounded-lg transition-all duration-300 transform hover:scale-105",
-              showAdvanced ? "bg-blue-50 text-blue-600 hover:bg-black hover:text-white" : "text-gray-500 hover:bg-black hover:text-white"
+              showAdvanced ? "bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground" : "text-muted-foreground hover:bg-primary hover:text-primary-foreground"
             )}
           >
             <Filter className="h-4 w-4 mr-2" />
@@ -282,7 +282,7 @@ const UnusedItemsSearchFilters = ({ onSearch }: UnusedItemsSearchFiltersProps) =
               onKeyDown={handleKeyDown}
               onFocus={() => globalSearch.length >= 2 && suggestions.length > 0 && setShowSuggestions(true)}
               onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
-              className="pl-12 bg-white border border-gray-300 rounded-lg h-11 text-sm placeholder:text-gray-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
+              className="pl-12 bg-white border border-gray-300 rounded-lg h-11 text-sm placeholder:text-gray-500 focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all shadow-sm"
             />
             
             {/* Search Suggestions Dropdown */}
@@ -296,14 +296,14 @@ const UnusedItemsSearchFilters = ({ onSearch }: UnusedItemsSearchFiltersProps) =
                       className={cn(
                         "px-4 py-3 cursor-pointer transition-colors border-b border-gray-100 last:border-b-0",
                         selectedSuggestionIndex === index 
-                          ? "bg-blue-50 border-blue-100" 
+                          ? "bg-primary/10 border-primary/20" 
                           : "hover:bg-gray-50"
                       )}
                     >
                       <div className="flex items-center gap-3">
                         <div className="flex-shrink-0">
                           {suggestion.type === 'report-number' && (
-                            <div className="w-8 h-8 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center text-xs font-semibold">
+                            <div className="w-8 h-8 bg-primary/20 text-primary rounded-lg flex items-center justify-center text-xs font-semibold">
                               R#
                             </div>
                           )}
@@ -341,7 +341,7 @@ const UnusedItemsSearchFilters = ({ onSearch }: UnusedItemsSearchFiltersProps) =
           
           <Button
             onClick={handleSearch}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 rounded-lg h-11 font-medium shadow-sm transition-all duration-300 transform hover:scale-105"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 rounded-lg h-11 font-medium shadow-sm transition-all duration-300 transform hover:scale-105"
           >
             <Search className="h-4 w-4 mr-2" />
             Search

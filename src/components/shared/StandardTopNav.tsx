@@ -87,7 +87,7 @@ const StandardTopNav = ({
           {showBackButton && (
             <Button 
               variant="outline"
-              className="rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border-border text-foreground hover:bg-blue-500 hover:text-white hover:border-blue-500 bg-transparent transform hover:scale-105 text-sm font-medium"
+              className="rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border-border text-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary bg-transparent transform hover:scale-105 text-sm font-medium"
               onClick={handleBackClick}
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
@@ -97,7 +97,7 @@ const StandardTopNav = ({
           {showAddButton && (
             <Button 
               variant="outline"
-              className="rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border-border text-foreground hover:bg-blue-500 hover:text-white hover:border-blue-500 bg-transparent transform hover:scale-105 text-sm font-medium"
+              className="rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border-border text-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary bg-transparent transform hover:scale-105 text-sm font-medium"
               onClick={handleAddClick}
             >
               <Plus className="h-4 w-4 mr-2" />
@@ -107,7 +107,7 @@ const StandardTopNav = ({
           <Button 
             variant="ghost" 
             size="sm" 
-            className="p-2 rounded-lg hover:bg-blue-500 hover:text-white hover:shadow-md transition-all duration-300 transform hover:scale-105"
+            className="p-2 rounded-lg hover:bg-primary hover:text-primary-foreground hover:shadow-md transition-all duration-300 transform hover:scale-105"
             title="Download"
           >
             <Download className="h-4 w-4" />
@@ -115,7 +115,7 @@ const StandardTopNav = ({
           <Button 
             variant="ghost" 
             size="sm" 
-            className="p-2 rounded-lg hover:bg-blue-500 hover:text-white hover:shadow-md transition-all duration-300 transform hover:scale-105"
+            className="p-2 rounded-lg hover:bg-primary hover:text-primary-foreground hover:shadow-md transition-all duration-300 transform hover:scale-105"
             title="Settings"
           >
             <Settings className="h-4 w-4" />
