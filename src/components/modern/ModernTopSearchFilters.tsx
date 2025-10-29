@@ -4,6 +4,8 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 import { Calendar as CalendarIcon, Search, X, Filter } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
@@ -29,6 +31,16 @@ interface SearchFilters {
   workOrderItemStatus: string;
   workOrderItemType: string;
   location: string;
+  newEquip: boolean;
+  usedSurplus: boolean;
+  warranty: boolean;
+  toFactory: boolean;
+  proofOfDelivery: boolean;
+  only17025: boolean;
+  onlyHotList: boolean;
+  onlyLostEquip: boolean;
+  nonJMAccts: boolean;
+  viewTemplate: boolean;
 }
 
 interface ModernTopSearchFiltersProps {
@@ -286,7 +298,17 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
     salesperson: '',
     workOrderItemStatus: '',
     workOrderItemType: '',
-    location: ''
+    location: '',
+    newEquip: false,
+    usedSurplus: false,
+    warranty: false,
+    toFactory: false,
+    proofOfDelivery: false,
+    only17025: false,
+    onlyHotList: false,
+    onlyLostEquip: false,
+    nonJMAccts: false,
+    viewTemplate: false
   });
 
   // Generate suggestions based on search input
@@ -541,7 +563,17 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
         salesperson: searchValues.salesperson,
         workOrderItemStatus: searchValues.workOrderItemStatus,
         workOrderItemType: searchValues.workOrderItemType,
-        location: searchValues.location
+        location: searchValues.location,
+        newEquip: searchValues.newEquip,
+        usedSurplus: searchValues.usedSurplus,
+        warranty: searchValues.warranty,
+        toFactory: searchValues.toFactory,
+        proofOfDelivery: searchValues.proofOfDelivery,
+        only17025: searchValues.only17025,
+        onlyHotList: searchValues.onlyHotList,
+        onlyLostEquip: searchValues.onlyLostEquip,
+        nonJMAccts: searchValues.nonJMAccts,
+        viewTemplate: searchValues.viewTemplate
       });
     }
     setGlobalSearch('');
@@ -575,7 +607,17 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
       salesperson: searchValues.salesperson,
       workOrderItemStatus: searchValues.workOrderItemStatus,
       workOrderItemType: searchValues.workOrderItemType,
-      location: searchValues.location
+      location: searchValues.location,
+      newEquip: searchValues.newEquip,
+      usedSurplus: searchValues.usedSurplus,
+      warranty: searchValues.warranty,
+      toFactory: searchValues.toFactory,
+      proofOfDelivery: searchValues.proofOfDelivery,
+      only17025: searchValues.only17025,
+      onlyHotList: searchValues.onlyHotList,
+      onlyLostEquip: searchValues.onlyLostEquip,
+      nonJMAccts: searchValues.nonJMAccts,
+      viewTemplate: searchValues.viewTemplate
     });
   };
 
@@ -606,7 +648,17 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
         salesperson: searchValues.salesperson,
         workOrderItemStatus: searchValues.workOrderItemStatus,
         workOrderItemType: searchValues.workOrderItemType,
-        location: searchValues.location
+        location: searchValues.location,
+        newEquip: searchValues.newEquip,
+        usedSurplus: searchValues.usedSurplus,
+        warranty: searchValues.warranty,
+        toFactory: searchValues.toFactory,
+        proofOfDelivery: searchValues.proofOfDelivery,
+        only17025: searchValues.only17025,
+        onlyHotList: searchValues.onlyHotList,
+        onlyLostEquip: searchValues.onlyLostEquip,
+        nonJMAccts: searchValues.nonJMAccts,
+        viewTemplate: searchValues.viewTemplate
       };
       console.log('Searching with filters:', filters);
       onSearch(filters);
@@ -632,7 +684,17 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
         salesperson: searchValues.salesperson,
         workOrderItemStatus: searchValues.workOrderItemStatus,
         workOrderItemType: searchValues.workOrderItemType,
-        location: searchValues.location
+        location: searchValues.location,
+        newEquip: searchValues.newEquip,
+        usedSurplus: searchValues.usedSurplus,
+        warranty: searchValues.warranty,
+        toFactory: searchValues.toFactory,
+        proofOfDelivery: searchValues.proofOfDelivery,
+        only17025: searchValues.only17025,
+        onlyHotList: searchValues.onlyHotList,
+        onlyLostEquip: searchValues.onlyLostEquip,
+        nonJMAccts: searchValues.nonJMAccts,
+        viewTemplate: searchValues.viewTemplate
       };
       console.log('Searching with filters:', filters);
       onSearch(filters);
@@ -659,7 +721,17 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
       salesperson: '',
       workOrderItemStatus: '',
       workOrderItemType: '',
-      location: ''
+      location: '',
+      newEquip: false,
+      usedSurplus: false,
+      warranty: false,
+      toFactory: false,
+      proofOfDelivery: false,
+      only17025: false,
+      onlyHotList: false,
+      onlyLostEquip: false,
+      nonJMAccts: false,
+      viewTemplate: false
     });
     setDateFrom(undefined);
     setDateTo(undefined);
@@ -686,7 +758,17 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
       salesperson: '',
       workOrderItemStatus: '',
       workOrderItemType: '',
-      location: ''
+      location: '',
+      newEquip: false,
+      usedSurplus: false,
+      warranty: false,
+      toFactory: false,
+      proofOfDelivery: false,
+      only17025: false,
+      onlyHotList: false,
+      onlyLostEquip: false,
+      nonJMAccts: false,
+      viewTemplate: false
     });
   };
 
@@ -1423,6 +1505,182 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
                   <SelectItem value="od">OD - Odessa</SelectItem>
                 </SelectContent>
               </Select>
+            </div>
+
+            {/* Checkbox Filters Section */}
+            <div className="mt-6 pt-6 border-t border-gray-100">
+              <h3 className="text-sm font-semibold text-gray-700 mb-4">Additional Filters</h3>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                {/* New Equip */}
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="newEquip"
+                    checked={searchValues.newEquip}
+                    onCheckedChange={(checked) => 
+                      setSearchValues(prev => ({ ...prev, newEquip: checked as boolean }))
+                    }
+                  />
+                  <Label
+                    htmlFor="newEquip"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                  >
+                    New Equip
+                  </Label>
+                </div>
+
+                {/* Used/Surplus */}
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="usedSurplus"
+                    checked={searchValues.usedSurplus}
+                    onCheckedChange={(checked) => 
+                      setSearchValues(prev => ({ ...prev, usedSurplus: checked as boolean }))
+                    }
+                  />
+                  <Label
+                    htmlFor="usedSurplus"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                  >
+                    Used/Surplus
+                  </Label>
+                </div>
+
+                {/* Warranty */}
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="warranty"
+                    checked={searchValues.warranty}
+                    onCheckedChange={(checked) => 
+                      setSearchValues(prev => ({ ...prev, warranty: checked as boolean }))
+                    }
+                  />
+                  <Label
+                    htmlFor="warranty"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                  >
+                    Warranty
+                  </Label>
+                </div>
+
+                {/* To Factory */}
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="toFactory"
+                    checked={searchValues.toFactory}
+                    onCheckedChange={(checked) => 
+                      setSearchValues(prev => ({ ...prev, toFactory: checked as boolean }))
+                    }
+                  />
+                  <Label
+                    htmlFor="toFactory"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                  >
+                    To Factory
+                  </Label>
+                </div>
+
+                {/* Proof of Delivery */}
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="proofOfDelivery"
+                    checked={searchValues.proofOfDelivery}
+                    onCheckedChange={(checked) => 
+                      setSearchValues(prev => ({ ...prev, proofOfDelivery: checked as boolean }))
+                    }
+                  />
+                  <Label
+                    htmlFor="proofOfDelivery"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                  >
+                    Proof of Delivery
+                  </Label>
+                </div>
+
+                {/* Only 17025 */}
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="only17025"
+                    checked={searchValues.only17025}
+                    onCheckedChange={(checked) => 
+                      setSearchValues(prev => ({ ...prev, only17025: checked as boolean }))
+                    }
+                  />
+                  <Label
+                    htmlFor="only17025"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                  >
+                    Only 17025
+                  </Label>
+                </div>
+
+                {/* Only Hot List */}
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="onlyHotList"
+                    checked={searchValues.onlyHotList}
+                    onCheckedChange={(checked) => 
+                      setSearchValues(prev => ({ ...prev, onlyHotList: checked as boolean }))
+                    }
+                  />
+                  <Label
+                    htmlFor="onlyHotList"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                  >
+                    Only Hot List
+                  </Label>
+                </div>
+
+                {/* Only Lost Equip */}
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="onlyLostEquip"
+                    checked={searchValues.onlyLostEquip}
+                    onCheckedChange={(checked) => 
+                      setSearchValues(prev => ({ ...prev, onlyLostEquip: checked as boolean }))
+                    }
+                  />
+                  <Label
+                    htmlFor="onlyLostEquip"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                  >
+                    Only Lost Equip
+                  </Label>
+                </div>
+
+                {/* Non JM Accts */}
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="nonJMAccts"
+                    checked={searchValues.nonJMAccts}
+                    onCheckedChange={(checked) => 
+                      setSearchValues(prev => ({ ...prev, nonJMAccts: checked as boolean }))
+                    }
+                  />
+                  <Label
+                    htmlFor="nonJMAccts"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                  >
+                    Non JM Accts
+                  </Label>
+                </div>
+
+                {/* View Template */}
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="viewTemplate"
+                    checked={searchValues.viewTemplate}
+                    onCheckedChange={(checked) => 
+                      setSearchValues(prev => ({ ...prev, viewTemplate: checked as boolean }))
+                    }
+                  />
+                  <Label
+                    htmlFor="viewTemplate"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                  >
+                    View Template
+                  </Label>
+                </div>
+              </div>
             </div>
           </div>
         )}

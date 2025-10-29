@@ -28,6 +28,16 @@ interface SearchFilters {
   workOrderItemStatus: string;
   workOrderItemType: string;
   location: string;
+  newEquip: boolean;
+  usedSurplus: boolean;
+  warranty: boolean;
+  toFactory: boolean;
+  proofOfDelivery: boolean;
+  only17025: boolean;
+  onlyHotList: boolean;
+  onlyLostEquip: boolean;
+  nonJMAccts: boolean;
+  viewTemplate: boolean;
 }
 
 const WorkOrderSearchV2 = () => {
@@ -50,7 +60,17 @@ const WorkOrderSearchV2 = () => {
     salesperson: '',
     workOrderItemStatus: '',
     workOrderItemType: '',
-    location: ''
+    location: '',
+    newEquip: false,
+    usedSurplus: false,
+    warranty: false,
+    toFactory: false,
+    proofOfDelivery: false,
+    only17025: false,
+    onlyHotList: false,
+    onlyLostEquip: false,
+    nonJMAccts: false,
+    viewTemplate: false
   });
 
   const handleSearch = (filters: SearchFilters) => {
