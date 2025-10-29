@@ -31,11 +31,11 @@ const toastVariants = cva(
         destructive:
           "destructive group border-destructive bg-destructive text-destructive-foreground",
         success:
-          "success group border-primary bg-primary text-primary-foreground",
+          "success group border-success bg-success text-success-foreground",
         warning:
-          "warning group border-secondary bg-secondary text-secondary-foreground",
+          "warning group border-warning bg-warning text-warning-foreground",
         info:
-          "info group border-accent bg-accent text-accent-foreground",
+          "info group border-info bg-info text-info-foreground",
       },
     },
     defaultVariants: {
@@ -81,7 +81,7 @@ const ToastClose = React.forwardRef<
   <ToastPrimitives.Close
     ref={ref}
     className={cn(
-      "absolute right-2 top-2 rounded-md p-1 text-foreground/50 opacity-0 transition-opacity hover:text-foreground focus:opacity-100 focus:outline-none focus:ring-2 group-hover:opacity-100 group-[.destructive]:text-red-300 group-[.destructive]:hover:text-red-50 group-[.destructive]:focus:ring-red-400 group-[.destructive]:focus:ring-offset-red-600 group-[.success]:text-primary-foreground/70 group-[.success]:hover:text-primary-foreground group-[.warning]:text-secondary-foreground/70 group-[.warning]:hover:text-secondary-foreground group-[.info]:text-accent-foreground/70 group-[.info]:hover:text-accent-foreground",
+      "absolute right-2 top-2 rounded-md p-1 text-foreground/50 opacity-0 transition-opacity hover:text-foreground focus:opacity-100 focus:outline-none focus:ring-2 group-hover:opacity-100 group-[.destructive]:text-destructive-foreground/70 group-[.destructive]:hover:text-destructive-foreground group-[.success]:text-success-foreground/70 group-[.success]:hover:text-success-foreground group-[.warning]:text-warning-foreground/70 group-[.warning]:hover:text-warning-foreground group-[.info]:text-info-foreground/70 group-[.info]:hover:text-info-foreground",
       className
     )}
     toast-close=""
