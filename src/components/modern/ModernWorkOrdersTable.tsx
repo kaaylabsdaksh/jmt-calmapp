@@ -3915,11 +3915,13 @@ interface ModernWorkOrdersTableProps {
   onViewModeChange: (mode: 'list' | 'grid') => void;
   searchFilters: {
     globalSearch: string;
+    searchTags: string[];
     status: string;
     assignee: string;
     priority: string;
     manufacturer: string;
     division: string;
+    woType: string;
     dateFrom?: Date;
     dateTo?: Date;
     dateType: string;
@@ -4009,7 +4011,28 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
       order.division.toLowerCase().includes(searchFilters.globalSearch.toLowerCase()) ||
       order.details.manufacturer.toLowerCase().includes(searchFilters.globalSearch.toLowerCase()) ||
       order.details.modelNumber.toLowerCase().includes(searchFilters.globalSearch.toLowerCase()) ||
-      order.details.labCode.toLowerCase().includes(searchFilters.globalSearch.toLowerCase());
+      order.details.serialNumber.toLowerCase().includes(searchFilters.globalSearch.toLowerCase()) ||
+      order.details.labCode.toLowerCase().includes(searchFilters.globalSearch.toLowerCase()) ||
+      order.details.poNumber.toLowerCase().includes(searchFilters.globalSearch.toLowerCase()) ||
+      order.details.custId.toLowerCase().includes(searchFilters.globalSearch.toLowerCase());
+    
+    // Search tags filter - ALL tags must match (each tag can match ANY field)
+    const searchTagsMatch = !searchFilters.searchTags || searchFilters.searchTags.length === 0 || 
+      searchFilters.searchTags.every(tag => {
+        const tagLower = tag.toLowerCase();
+        return order.id.toLowerCase().includes(tagLower) ||
+          order.customer.toLowerCase().includes(tagLower) ||
+          order.assignedTo.toLowerCase().includes(tagLower) ||
+          order.division.toLowerCase().includes(tagLower) ||
+          order.details.manufacturer.toLowerCase().includes(tagLower) ||
+          order.details.modelNumber.toLowerCase().includes(tagLower) ||
+          order.details.serialNumber.toLowerCase().includes(tagLower) ||
+          order.details.labCode.toLowerCase().includes(tagLower) ||
+          order.details.poNumber.toLowerCase().includes(tagLower) ||
+          order.details.custId.toLowerCase().includes(tagLower) ||
+          order.details.custSn.toLowerCase().includes(tagLower) ||
+          order.details.cartSn.toLowerCase().includes(tagLower);
+      });
     
     // Priority filter
     const priorityMatch = !searchFilters.priority || 
@@ -4023,7 +4046,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
     const divisionMatch = !searchFilters.division || 
       order.division.toLowerCase().includes(searchFilters.division.toLowerCase());
     
-    return statusMatch && searchMatch && priorityMatch && manufacturerMatch && divisionMatch;
+    return statusMatch && searchMatch && searchTagsMatch && priorityMatch && manufacturerMatch && divisionMatch;
   });
 
   // Filter work order items for item view
@@ -4095,6 +4118,21 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
       item.serialNumber.toLowerCase().includes(searchFilters.globalSearch.toLowerCase()) ||
       item.itemType.toLowerCase().includes(searchFilters.globalSearch.toLowerCase());
     
+    // Search tags filter - ALL tags must match (each tag can match ANY field)
+    const searchTagsMatch = !searchFilters.searchTags || searchFilters.searchTags.length === 0 || 
+      searchFilters.searchTags.every(tag => {
+        const tagLower = tag.toLowerCase();
+        return item.workOrderNumber.toLowerCase().includes(tagLower) ||
+          item.customer.toLowerCase().includes(tagLower) ||
+          item.assignedTo.toLowerCase().includes(tagLower) ||
+          item.division.toLowerCase().includes(tagLower) ||
+          item.manufacturer.toLowerCase().includes(tagLower) ||
+          item.model.toLowerCase().includes(tagLower) ||
+          item.serialNumber.toLowerCase().includes(tagLower) ||
+          item.itemType.toLowerCase().includes(tagLower) ||
+          item.poNumber?.toLowerCase().includes(tagLower);
+      });
+    
     // Priority filter
     const priorityMatch = !searchFilters.priority || 
       item.priority.toLowerCase() === searchFilters.priority.toLowerCase();
@@ -4107,7 +4145,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
     const divisionMatch = !searchFilters.division || 
       item.division.toLowerCase().includes(searchFilters.division.toLowerCase());
     
-    return statusMatch && searchMatch && priorityMatch && manufacturerMatch && divisionMatch;
+    return statusMatch && searchMatch && searchTagsMatch && priorityMatch && manufacturerMatch && divisionMatch;
   });
 
   // Filter work order batches for batch view
@@ -4120,7 +4158,17 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
       batch.srNumber.toLowerCase().includes(searchTerm) ||
       batch.customerName.toLowerCase().includes(searchTerm);
     
-    return searchMatch;
+    // Search tags filter - ALL tags must match (each tag can match ANY field)
+    const searchTagsMatch = !searchFilters.searchTags || searchFilters.searchTags.length === 0 || 
+      searchFilters.searchTags.every(tag => {
+        const tagLower = tag.toLowerCase();
+        return batch.woBatch.toLowerCase().includes(tagLower) ||
+          batch.acctNumber.toLowerCase().includes(tagLower) ||
+          batch.srNumber.toLowerCase().includes(tagLower) ||
+          batch.customerName.toLowerCase().includes(tagLower);
+      });
+    
+    return searchMatch && searchTagsMatch;
   });
   
   const totalPages = currentView === 'batch' 
