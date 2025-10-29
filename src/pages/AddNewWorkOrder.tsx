@@ -1088,7 +1088,6 @@ const AddNewWorkOrder = () => {
           <Button 
             variant="ghost" 
             onClick={handleCancel} 
-            disabled={workOrderData.accountNumber.length !== 5}
             className="text-muted-foreground hover:text-foreground text-xs sm:text-sm px-2 sm:px-3 py-1.5 sm:py-2 disabled:opacity-50 h-8 sm:h-9"
           >
             <X className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
@@ -1096,7 +1095,7 @@ const AddNewWorkOrder = () => {
           </Button>
           <Button 
             onClick={handleSave} 
-            disabled={workOrderData.accountNumber.length !== 5}
+            disabled={!/^\d{4}\.\d{2}$/.test(workOrderData.accountNumber) || !workOrderData.contact}
             className="bg-success text-success-foreground hover:bg-success/90 text-xs sm:text-sm px-2 sm:px-3 py-1.5 sm:py-2 disabled:opacity-50 disabled:cursor-not-allowed h-8 sm:h-9"
           >
             <Save className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
