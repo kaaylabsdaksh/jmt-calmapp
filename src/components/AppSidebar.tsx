@@ -328,8 +328,8 @@ export function AppSidebar() {
               variant="ghost"
               className="w-full justify-start text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
             >
-              <Archive className="h-4 w-4 mr-3" />
-              <span className="text-sm font-medium">Take Old App</span>
+              <span className="h-4 w-4 mr-3 text-xs font-bold flex items-center justify-center">JM</span>
+              <span className="text-sm font-medium">Old App</span>
             </Button>
             <Button
               variant="ghost"
@@ -347,7 +347,7 @@ export function AppSidebar() {
               size="icon"
               className="w-full text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
             >
-              <Archive className="h-4 w-4" />
+              <span className="text-[10px] font-bold">JM</span>
             </Button>
             <Button
               variant="ghost"
