@@ -11,6 +11,7 @@ import WorkOrderBatchDetailsDemo from "./pages/WorkOrderBatchDetailsDemo";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import { Layout } from "./components/Layout";
+import { Toaster } from "@/components/ui/toaster";
 
 const App = () => {
   console.log("App component rendering");
@@ -32,6 +33,7 @@ const App = () => {
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
+      <Toaster />
     </BrowserRouter>
   );
 };

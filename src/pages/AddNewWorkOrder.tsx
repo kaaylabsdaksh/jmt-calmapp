@@ -18,6 +18,7 @@ import { ContactForm, ContactFormData } from "@/components/ContactForm";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { EstimateDetails } from "@/components/EstimateDetails";
 import { RFIDDialog } from "@/components/RFIDDialog";
+import { toast } from "@/hooks/use-toast";
 
 const AddNewWorkOrder = () => {
   const navigate = useNavigate();
@@ -220,6 +221,10 @@ const AddNewWorkOrder = () => {
   const handleSave = () => {
     // TODO: Implement save functionality
     console.log("Saving work order:", workOrderData);
+    toast({
+      title: "Work Order Saved",
+      description: "Your work order has been successfully created.",
+    });
   };
 
   const handleCancel = () => {
