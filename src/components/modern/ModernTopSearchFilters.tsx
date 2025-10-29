@@ -1153,12 +1153,12 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
                   variant="outline"
                   disabled={!dateType}
                   className={cn(
-                    "w-full justify-start text-left font-normal bg-white border border-gray-300 rounded-lg h-11 text-sm hover:bg-gray-50 transition-all shadow-sm",
+                    "w-full justify-start text-left font-normal bg-white border border-gray-300 rounded-lg h-9 text-xs hover:bg-gray-50 transition-all shadow-sm px-2.5",
                     !dateFrom && "text-gray-500",
                     !dateType && "opacity-50 cursor-not-allowed bg-gray-50"
                   )}
                 >
-                  <CalendarIcon className="mr-2 h-4 w-4 text-gray-500 flex-shrink-0" />
+                  <CalendarIcon className="mr-1.5 h-3.5 w-3.5 text-gray-500 flex-shrink-0" />
                   <span className="truncate">
                     {dateFrom ? format(dateFrom, "MMM dd") : "From"}
                   </span>
@@ -1182,12 +1182,12 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
                   variant="outline"
                   disabled={!dateType}
                   className={cn(
-                    "w-full justify-start text-left font-normal bg-white border border-gray-300 rounded-lg h-11 text-sm hover:bg-gray-50 transition-all shadow-sm",
+                    "w-full justify-start text-left font-normal bg-white border border-gray-300 rounded-lg h-9 text-xs hover:bg-gray-50 transition-all shadow-sm px-2.5",
                     !dateTo && "text-gray-500",
                     !dateType && "opacity-50 cursor-not-allowed bg-gray-50"
                   )}
                 >
-                  <CalendarIcon className="mr-2 h-4 w-4 text-gray-500 flex-shrink-0" />
+                  <CalendarIcon className="mr-1.5 h-3.5 w-3.5 text-gray-500 flex-shrink-0" />
                   <span className="truncate">
                     {dateTo ? format(dateTo, "MMM dd") : "To"}
                   </span>
@@ -1261,12 +1261,12 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
                   variant="outline"
                   disabled={!dateType}
                   className={cn(
-                    "w-full justify-start text-left font-normal bg-white border border-gray-300 rounded-lg h-11 text-sm hover:bg-gray-50 transition-all shadow-sm",
+                    "w-full justify-start text-left font-normal bg-white border border-gray-300 rounded-lg h-9 text-xs hover:bg-gray-50 transition-all shadow-sm px-2.5",
                     !dateFrom && "text-gray-500",
                     !dateType && "opacity-50 cursor-not-allowed bg-gray-50"
                   )}
                 >
-                  <CalendarIcon className="mr-2 h-4 w-4 text-gray-500 flex-shrink-0" />
+                  <CalendarIcon className="mr-1.5 h-3.5 w-3.5 text-gray-500 flex-shrink-0" />
                   <span className="truncate">
                     {dateFrom ? format(dateFrom, "MMM dd") : "From"}
                   </span>
@@ -1290,12 +1290,12 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
                   variant="outline"
                   disabled={!dateType}
                   className={cn(
-                    "w-full justify-start text-left font-normal bg-white border border-gray-300 rounded-lg h-11 text-sm hover:bg-gray-50 transition-all shadow-sm",
+                    "w-full justify-start text-left font-normal bg-white border border-gray-300 rounded-lg h-9 text-xs hover:bg-gray-50 transition-all shadow-sm px-2.5",
                     !dateTo && "text-gray-500",
                     !dateType && "opacity-50 cursor-not-allowed bg-gray-50"
                   )}
                 >
-                  <CalendarIcon className="mr-2 h-4 w-4 text-gray-500 flex-shrink-0" />
+                  <CalendarIcon className="mr-1.5 h-3.5 w-3.5 text-gray-500 flex-shrink-0" />
                   <span className="truncate">
                     {dateTo ? format(dateTo, "MMM dd") : "To"}
                   </span>
