@@ -321,25 +321,43 @@ export function AppSidebar() {
         
       </SidebarContent>
 
-      <SidebarFooter className="border-t border-sidebar-border p-2">
+      <SidebarFooter className="border-t border-sidebar-border p-2 space-y-1">
         {open ? (
-          <Button
-            variant="ghost"
-            onClick={handleLogout}
-            className="w-full justify-start text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
-          >
-            <LogOut className="h-4 w-4 mr-3" />
-            <span className="text-sm font-medium">Logout</span>
-          </Button>
+          <>
+            <Button
+              variant="ghost"
+              className="w-full justify-start text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
+            >
+              <Archive className="h-4 w-4 mr-3" />
+              <span className="text-sm font-medium">Take Old App</span>
+            </Button>
+            <Button
+              variant="ghost"
+              onClick={handleLogout}
+              className="w-full justify-start text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
+            >
+              <LogOut className="h-4 w-4 mr-3" />
+              <span className="text-sm font-medium">Logout</span>
+            </Button>
+          </>
         ) : (
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={handleLogout}
-            className="w-full text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
-          >
-            <LogOut className="h-4 w-4" />
-          </Button>
+          <>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="w-full text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
+            >
+              <Archive className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleLogout}
+              className="w-full text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
+            >
+              <LogOut className="h-4 w-4" />
+            </Button>
+          </>
         )}
       </SidebarFooter>
     </Sidebar>
