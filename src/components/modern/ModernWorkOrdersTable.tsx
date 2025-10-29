@@ -3925,6 +3925,15 @@ interface ModernWorkOrdersTableProps {
     dateFrom?: Date;
     dateTo?: Date;
     dateType: string;
+    actionCode: string;
+    labCode: string;
+    rotationManagement: string;
+    invoiceStatus: string;
+    departureType: string;
+    salesperson: string;
+    workOrderItemStatus: string;
+    workOrderItemType: string;
+    location: string;
   };
 }
 

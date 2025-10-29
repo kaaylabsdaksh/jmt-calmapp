@@ -20,6 +20,15 @@ interface SearchFilters {
   dateFrom?: Date;
   dateTo?: Date;
   dateType: string;
+  actionCode: string;
+  labCode: string;
+  rotationManagement: string;
+  invoiceStatus: string;
+  departureType: string;
+  salesperson: string;
+  workOrderItemStatus: string;
+  workOrderItemType: string;
+  location: string;
 }
 
 interface ModernTopSearchFiltersProps {
@@ -268,7 +277,16 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
     priority: '',
     assignee: '',
     division: '',
-    woType: ''
+    woType: '',
+    actionCode: '',
+    labCode: '',
+    rotationManagement: '',
+    invoiceStatus: '',
+    departureType: '',
+    salesperson: '',
+    workOrderItemStatus: '',
+    workOrderItemType: '',
+    location: ''
   });
 
   // Generate suggestions based on search input
@@ -514,7 +532,16 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
         woType: searchValues.woType,
         dateFrom,
         dateTo,
-        dateType
+        dateType,
+        actionCode: searchValues.actionCode,
+        labCode: searchValues.labCode,
+        rotationManagement: searchValues.rotationManagement,
+        invoiceStatus: searchValues.invoiceStatus,
+        departureType: searchValues.departureType,
+        salesperson: searchValues.salesperson,
+        workOrderItemStatus: searchValues.workOrderItemStatus,
+        workOrderItemType: searchValues.workOrderItemType,
+        location: searchValues.location
       });
     }
     setGlobalSearch('');
@@ -539,7 +566,16 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
       woType: searchValues.woType,
       dateFrom,
       dateTo,
-      dateType
+      dateType,
+      actionCode: searchValues.actionCode,
+      labCode: searchValues.labCode,
+      rotationManagement: searchValues.rotationManagement,
+      invoiceStatus: searchValues.invoiceStatus,
+      departureType: searchValues.departureType,
+      salesperson: searchValues.salesperson,
+      workOrderItemStatus: searchValues.workOrderItemStatus,
+      workOrderItemType: searchValues.workOrderItemType,
+      location: searchValues.location
     });
   };
 
@@ -561,7 +597,16 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
         woType: searchValues.woType,
         dateFrom,
         dateTo,
-        dateType
+        dateType,
+        actionCode: searchValues.actionCode,
+        labCode: searchValues.labCode,
+        rotationManagement: searchValues.rotationManagement,
+        invoiceStatus: searchValues.invoiceStatus,
+        departureType: searchValues.departureType,
+        salesperson: searchValues.salesperson,
+        workOrderItemStatus: searchValues.workOrderItemStatus,
+        workOrderItemType: searchValues.workOrderItemType,
+        location: searchValues.location
       };
       console.log('Searching with filters:', filters);
       onSearch(filters);
@@ -578,7 +623,16 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
         woType: searchValues.woType,
         dateFrom,
         dateTo,
-        dateType
+        dateType,
+        actionCode: searchValues.actionCode,
+        labCode: searchValues.labCode,
+        rotationManagement: searchValues.rotationManagement,
+        invoiceStatus: searchValues.invoiceStatus,
+        departureType: searchValues.departureType,
+        salesperson: searchValues.salesperson,
+        workOrderItemStatus: searchValues.workOrderItemStatus,
+        workOrderItemType: searchValues.workOrderItemType,
+        location: searchValues.location
       };
       console.log('Searching with filters:', filters);
       onSearch(filters);
@@ -596,7 +650,16 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
       priority: '',
       assignee: '',
       division: '',
-      woType: ''
+      woType: '',
+      actionCode: '',
+      labCode: '',
+      rotationManagement: '',
+      invoiceStatus: '',
+      departureType: '',
+      salesperson: '',
+      workOrderItemStatus: '',
+      workOrderItemType: '',
+      location: ''
     });
     setDateFrom(undefined);
     setDateTo(undefined);
@@ -614,11 +677,23 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
       woType: '',
       dateFrom: undefined,
       dateTo: undefined,
-      dateType: ''
+      dateType: '',
+      actionCode: '',
+      labCode: '',
+      rotationManagement: '',
+      invoiceStatus: '',
+      departureType: '',
+      salesperson: '',
+      workOrderItemStatus: '',
+      workOrderItemType: '',
+      location: ''
     });
   };
 
-  const hasActiveFilters = globalSearch || searchTags.length > 0 || Object.values(searchValues).some(value => value && value !== 'all') || dateFrom || dateTo || dateType;
+  const hasActiveFilters = globalSearch || searchTags.length > 0 || Object.values(searchValues).some(value => {
+    if (Array.isArray(value)) return value.length > 0;
+    return value && value !== 'all';
+  }) || dateFrom || dateTo || dateType;
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 mb-6">
@@ -1186,7 +1261,8 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
         {/* Advanced Filters Row */}
         {showAdvanced && (
           <div className="px-4 mt-4 pt-4 border-t border-gray-100">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {/* Manufacturer */}
               <Input
                 placeholder="Manufacturer"
                 value={searchValues.manufacturer}
@@ -1194,15 +1270,133 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
                 className="bg-white border border-gray-300 rounded-lg h-11 text-sm placeholder:text-gray-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
               />
 
-              <Select value={searchValues.division} onValueChange={(value) => setSearchValues(prev => ({ ...prev, division: value }))}>
+              {/* Division */}
+              <Select value={searchValues.division || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, division: value === 'all' ? '' : value }))}>
                 <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
                   <SelectValue placeholder="Division" />
                 </SelectTrigger>
                 <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
-                  <SelectItem value="electronics">Electronics</SelectItem>
-                  <SelectItem value="mechanical">Mechanical</SelectItem>
+                  <SelectItem value="all">All Divisions</SelectItem>
+                  <SelectItem value="lab">Lab</SelectItem>
+                  <SelectItem value="rental">Rental</SelectItem>
+                  <SelectItem value="esl">ESL</SelectItem>
+                  <SelectItem value="esl-onsite">ESL Onsite</SelectItem>
+                </SelectContent>
+              </Select>
+
+              {/* Action Code */}
+              <Select value={searchValues.actionCode || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, actionCode: value === 'all' ? '' : value }))}>
+                <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
+                  <SelectValue placeholder="Action Code" />
+                </SelectTrigger>
+                <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
+                  <SelectItem value="all">All Action Codes</SelectItem>
+                  <SelectItem value="c/c">C/C</SelectItem>
+                  <SelectItem value="r/c/c">R/C/C</SelectItem>
+                  <SelectItem value="repair">REPAIR</SelectItem>
+                  <SelectItem value="test">TEST</SelectItem>
+                </SelectContent>
+              </Select>
+
+              {/* Lab Code */}
+              <Input
+                placeholder="Lab Code"
+                value={searchValues.labCode}
+                onChange={(e) => setSearchValues(prev => ({ ...prev, labCode: e.target.value }))}
+                className="bg-white border border-gray-300 rounded-lg h-11 text-sm placeholder:text-gray-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
+              />
+
+              {/* Rotation Management */}
+              <Select value={searchValues.rotationManagement || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, rotationManagement: value === 'all' ? '' : value }))}>
+                <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
+                  <SelectValue placeholder="Rotation Management" />
+                </SelectTrigger>
+                <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
+                  <SelectItem value="all">All</SelectItem>
+                  <SelectItem value="rotation">Rotation</SelectItem>
+                  <SelectItem value="non-rotation">Non-Rotation</SelectItem>
+                </SelectContent>
+              </Select>
+
+              {/* Invoice Status */}
+              <Select value={searchValues.invoiceStatus || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, invoiceStatus: value === 'all' ? '' : value }))}>
+                <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
+                  <SelectValue placeholder="Invoice Status" />
+                </SelectTrigger>
+                <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
+                  <SelectItem value="all">All Invoice Status</SelectItem>
+                  <SelectItem value="paid">Paid</SelectItem>
+                  <SelectItem value="pending">Pending</SelectItem>
+                  <SelectItem value="on-hold">On Hold</SelectItem>
+                  <SelectItem value="quote-approved">Quote Approved</SelectItem>
+                </SelectContent>
+              </Select>
+
+              {/* Departure Type */}
+              <Select value={searchValues.departureType || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, departureType: value === 'all' ? '' : value }))}>
+                <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
+                  <SelectValue placeholder="Departure Type" />
+                </SelectTrigger>
+                <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
+                  <SelectItem value="all">All Departure Types</SelectItem>
+                  <SelectItem value="ship">Ship</SelectItem>
+                  <SelectItem value="pickup">Pickup</SelectItem>
+                  <SelectItem value="courier">Courier</SelectItem>
+                </SelectContent>
+              </Select>
+
+              {/* Salesperson */}
+              <Select value={searchValues.salesperson || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, salesperson: value === 'all' ? '' : value }))}>
+                <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
+                  <SelectValue placeholder="Salesperson" />
+                </SelectTrigger>
+                <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
+                  <SelectItem value="all">All Salespeople</SelectItem>
+                  <SelectItem value="john-doe">John Doe</SelectItem>
+                  <SelectItem value="jane-smith">Jane Smith</SelectItem>
+                  <SelectItem value="mike-johnson">Mike Johnson</SelectItem>
+                </SelectContent>
+              </Select>
+
+              {/* Work Order Item Status */}
+              <Select value={searchValues.workOrderItemStatus || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, workOrderItemStatus: value === 'all' ? '' : value }))}>
+                <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
+                  <SelectValue placeholder="WO Item Status" />
+                </SelectTrigger>
+                <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
+                  <SelectItem value="all">All Item Status</SelectItem>
+                  <SelectItem value="in-lab">In Lab</SelectItem>
+                  <SelectItem value="assigned">Assigned</SelectItem>
+                  <SelectItem value="qa-inspection">QA Inspection</SelectItem>
+                  <SelectItem value="complete">Complete</SelectItem>
+                </SelectContent>
+              </Select>
+
+              {/* Work Order Item Type */}
+              <Select value={searchValues.workOrderItemType || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, workOrderItemType: value === 'all' ? '' : value }))}>
+                <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
+                  <SelectValue placeholder="WO Item Type" />
+                </SelectTrigger>
+                <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
+                  <SelectItem value="all">All Item Types</SelectItem>
+                  <SelectItem value="esl-gloves">ESL - Gloves</SelectItem>
+                  <SelectItem value="esl-blankets">ESL - Blankets</SelectItem>
                   <SelectItem value="calibration">Calibration</SelectItem>
                   <SelectItem value="repair">Repair</SelectItem>
+                </SelectContent>
+              </Select>
+
+              {/* Location */}
+              <Select value={searchValues.location || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, location: value === 'all' ? '' : value }))}>
+                <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
+                  <SelectValue placeholder="Location" />
+                </SelectTrigger>
+                <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
+                  <SelectItem value="all">All Locations</SelectItem>
+                  <SelectItem value="al">AL - Alabama</SelectItem>
+                  <SelectItem value="br">BR - Brazil</SelectItem>
+                  <SelectItem value="bi">BI - Biloxi</SelectItem>
+                  <SelectItem value="od">OD - Odessa</SelectItem>
                 </SelectContent>
               </Select>
             </div>

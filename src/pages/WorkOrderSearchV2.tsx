@@ -19,6 +19,15 @@ interface SearchFilters {
   dateFrom?: Date;
   dateTo?: Date;
   dateType: string;
+  actionCode: string;
+  labCode: string;
+  rotationManagement: string;
+  invoiceStatus: string;
+  departureType: string;
+  salesperson: string;
+  workOrderItemStatus: string;
+  workOrderItemType: string;
+  location: string;
 }
 
 const WorkOrderSearchV2 = () => {
@@ -32,7 +41,16 @@ const WorkOrderSearchV2 = () => {
     manufacturer: '',
     division: '',
     woType: '',
-    dateType: ''
+    dateType: '',
+    actionCode: '',
+    labCode: '',
+    rotationManagement: '',
+    invoiceStatus: '',
+    departureType: '',
+    salesperson: '',
+    workOrderItemStatus: '',
+    workOrderItemType: '',
+    location: ''
   });
 
   const handleSearch = (filters: SearchFilters) => {
