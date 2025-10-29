@@ -337,7 +337,7 @@ const MinimalWorkOrderSearch = ({ onSearch }: MinimalWorkOrderSearchProps) => {
                 value={searchForm.workOrderNumber}
                 onChange={(e) => handleInputChange('workOrderNumber', e.target.value)}
                 onKeyDown={handleKeyDown}
-                className="transition-all focus:ring-2 focus:ring-primary/20"
+                className="h-10 transition-all focus:ring-2 focus:ring-primary/20"
               />
               
               {/* Suggestions Dropdown */}
@@ -379,7 +379,7 @@ const MinimalWorkOrderSearch = ({ onSearch }: MinimalWorkOrderSearchProps) => {
                 value={searchForm.customerName}
                 onChange={(e) => handleInputChange('customerName', e.target.value)}
                 onKeyDown={handleKeyDown}
-                className="transition-all focus:ring-2 focus:ring-primary/20"
+                className="h-10 transition-all focus:ring-2 focus:ring-primary/20"
               />
               
               {/* Customer Suggestions Dropdown */}
@@ -412,7 +412,7 @@ const MinimalWorkOrderSearch = ({ onSearch }: MinimalWorkOrderSearchProps) => {
               Status
             </Label>
             <Select value={searchForm.status} onValueChange={(value) => updateSearchForm('status', value)}>
-              <SelectTrigger>
+              <SelectTrigger className="h-10">
                 <SelectValue placeholder="All statuses" />
               </SelectTrigger>
               <SelectContent className="bg-popover border shadow-lg z-50">
@@ -435,7 +435,7 @@ const MinimalWorkOrderSearch = ({ onSearch }: MinimalWorkOrderSearchProps) => {
                   Priority
                 </Label>
                 <Select value={searchForm.priority} onValueChange={(value) => updateSearchForm('priority', value)}>
-                  <SelectTrigger>
+                  <SelectTrigger className="h-10">
                     <SelectValue placeholder="All priorities" />
                   </SelectTrigger>
                   <SelectContent className="bg-popover border shadow-lg z-50">
@@ -456,7 +456,7 @@ const MinimalWorkOrderSearch = ({ onSearch }: MinimalWorkOrderSearchProps) => {
                   placeholder="Enter manufacturer"
                   value={searchForm.manufacturer}
                   onChange={(e) => updateSearchForm('manufacturer', e.target.value)}
-                  className="transition-all focus:ring-2 focus:ring-primary/20"
+                  className="h-10 transition-all focus:ring-2 focus:ring-primary/20"
                 />
               </div>
             </div>
