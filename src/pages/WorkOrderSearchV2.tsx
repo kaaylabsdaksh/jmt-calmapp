@@ -9,11 +9,13 @@ import jmTestLogo from "@/assets/jm-test-logo.png";
 
 interface SearchFilters {
   globalSearch: string;
+  searchTags: string[];
   status: string;
   assignee: string;
   priority: string;
   manufacturer: string;
   division: string;
+  woType: string;
   dateFrom?: Date;
   dateTo?: Date;
   dateType: string;
@@ -23,11 +25,13 @@ const WorkOrderSearchV2 = () => {
   const [viewMode, setViewMode] = useState<'list' | 'grid'>('list');
   const [searchFilters, setSearchFilters] = useState<SearchFilters>({
     globalSearch: '',
+    searchTags: [],
     status: '',
     assignee: '',
     priority: '',
     manufacturer: '',
     division: '',
+    woType: '',
     dateType: ''
   });
 

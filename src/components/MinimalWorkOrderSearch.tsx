@@ -68,11 +68,13 @@ interface SearchForm {
 
 interface SearchFilters {
   globalSearch: string;
+  searchTags: string[];
   status: string;
   assignee: string;
   priority: string;
   manufacturer: string;
   division: string;
+  woType: string;
   dateFrom?: Date;
   dateTo?: Date;
   dateType: string;
@@ -249,11 +251,13 @@ const MinimalWorkOrderSearch = ({ onSearch }: MinimalWorkOrderSearchProps) => {
     if (onSearch) {
       onSearch({
         globalSearch: searchForm.workOrderNumber || searchForm.customerName || '',
+        searchTags: [],
         status: searchForm.status,
         assignee: '',
         priority: searchForm.priority,
         manufacturer: searchForm.manufacturer,
         division: '',
+        woType: '',
         dateType: ''
       });
     }

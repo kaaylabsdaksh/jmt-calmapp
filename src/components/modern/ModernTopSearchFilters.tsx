@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 
 interface SearchFilters {
   globalSearch: string;
+  searchTags: string[];
   status: string;
   assignee: string;
   priority: string;
@@ -145,6 +146,7 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
   const [dateType, setDateType] = useState('');
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [globalSearch, setGlobalSearch] = useState('');
+  const [searchTags, setSearchTags] = useState<string[]>([]);
   const [suggestions, setSuggestions] = useState<any[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState(-1);
@@ -349,6 +351,18 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
 
   // Handle keyboard navigation
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    // Always allow Enter key to work
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      if (showSuggestions && suggestions.length > 0 && selectedSuggestionIndex >= 0) {
+        handleSuggestionClick(suggestions[selectedSuggestionIndex]);
+      } else {
+        handleSearch();
+      }
+      return;
+    }
+
+    // Other keys only work when suggestions are visible
     if (!showSuggestions || suggestions.length === 0) return;
 
     switch (e.key) {
@@ -364,14 +378,6 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
           prev > 0 ? prev - 1 : suggestions.length - 1
         );
         break;
-      case 'Enter':
-        e.preventDefault();
-        if (selectedSuggestionIndex >= 0) {
-          handleSuggestionClick(suggestions[selectedSuggestionIndex]);
-        } else {
-          handleSearch();
-        }
-        break;
       case 'Escape':
         setShowSuggestions(false);
         setSelectedSuggestionIndex(-1);
@@ -381,20 +387,40 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
 
   // Handle suggestion selection
   const handleSuggestionClick = (suggestion: any) => {
-    setGlobalSearch(suggestion.value);
+    const value = suggestion.value;
+    // Add to tags if not already present
+    if (!searchTags.includes(value)) {
+      const newTags = [...searchTags, value];
+      setSearchTags(newTags);
+      // Trigger search with new tag
+      onSearch({
+        globalSearch: '',
+        searchTags: newTags,
+        status: searchValues.status,
+        assignee: searchValues.assignee,
+        priority: searchValues.priority,
+        manufacturer: searchValues.manufacturer,
+        division: searchValues.division,
+        woType: searchValues.woType,
+        dateFrom,
+        dateTo,
+        dateType
+      });
+    }
+    setGlobalSearch('');
     setSuggestions([]);
     setShowSuggestions(false);
     setSelectedSuggestionIndex(-1);
-    
-    // Auto-trigger search when suggestion is selected
-    setTimeout(() => {
-      handleSearch();
-    }, 100);
   };
 
-  const handleSearch = () => {
-    const filters = {
-      globalSearch,
+  // Remove a search tag
+  const removeSearchTag = (tagToRemove: string) => {
+    const newTags = searchTags.filter(tag => tag !== tagToRemove);
+    setSearchTags(newTags);
+    // Trigger search with updated tags
+    onSearch({
+      globalSearch: '',
+      searchTags: newTags,
       status: searchValues.status,
       assignee: searchValues.assignee,
       priority: searchValues.priority,
@@ -404,13 +430,54 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
       dateFrom,
       dateTo,
       dateType
-    };
-    console.log('Searching with filters:', filters);
-    onSearch(filters);
+    });
+  };
+
+  const handleSearch = () => {
+    // Add current search to tags if not empty and not already present
+    if (globalSearch.trim() && !searchTags.includes(globalSearch.trim())) {
+      const newTags = [...searchTags, globalSearch.trim()];
+      setSearchTags(newTags);
+      setGlobalSearch('');
+      
+      const filters = {
+        globalSearch: '',
+        searchTags: newTags,
+        status: searchValues.status,
+        assignee: searchValues.assignee,
+        priority: searchValues.priority,
+        manufacturer: searchValues.manufacturer,
+        division: searchValues.division,
+        woType: searchValues.woType,
+        dateFrom,
+        dateTo,
+        dateType
+      };
+      console.log('Searching with filters:', filters);
+      onSearch(filters);
+    } else {
+      // Just search with current tags and filters
+      const filters = {
+        globalSearch: '',
+        searchTags,
+        status: searchValues.status,
+        assignee: searchValues.assignee,
+        priority: searchValues.priority,
+        manufacturer: searchValues.manufacturer,
+        division: searchValues.division,
+        woType: searchValues.woType,
+        dateFrom,
+        dateTo,
+        dateType
+      };
+      console.log('Searching with filters:', filters);
+      onSearch(filters);
+    }
   };
 
   const clearAllFilters = () => {
     setGlobalSearch('');
+    setSearchTags([]);
     setSearchValues({
       woNumber: '',
       customer: '',
@@ -428,6 +495,7 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
     // Trigger search with empty filters to show all results
     onSearch({
       globalSearch: '',
+      searchTags: [],
       status: '',
       assignee: '',
       priority: '',
@@ -440,30 +508,7 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
     });
   };
 
-  // Automatically search when globalSearch is cleared manually
-  useEffect(() => {
-    if (globalSearch === '' && globalSearch !== undefined) {
-      // Small delay to avoid rapid fire during typing
-      const timeoutId = setTimeout(() => {
-        onSearch({
-          globalSearch: '',
-          status: searchValues.status,
-          assignee: searchValues.assignee,
-          priority: searchValues.priority,
-          manufacturer: searchValues.manufacturer,
-          division: searchValues.division,
-          woType: searchValues.woType,
-          dateFrom,
-          dateTo,
-          dateType
-        });
-      }, 300);
-      
-      return () => clearTimeout(timeoutId);
-    }
-  }, [globalSearch]);
-
-  const hasActiveFilters = globalSearch || Object.values(searchValues).some(value => value && value !== 'all') || dateFrom || dateTo || dateType;
+  const hasActiveFilters = globalSearch || searchTags.length > 0 || Object.values(searchValues).some(value => value && value !== 'all') || dateFrom || dateTo || dateType;
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 mb-6">
@@ -504,6 +549,27 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
 
       {/* Global Search */}
       <div className="p-2 sm:p-4 pb-2 sm:pb-3">
+        {/* Active Search Tags */}
+        {searchTags.length > 0 && (
+          <div className="mb-3 flex flex-wrap gap-2">
+            {searchTags.map((tag, index) => (
+              <div
+                key={`tag-${index}`}
+                className="inline-flex items-center gap-1.5 bg-primary/10 text-primary border border-primary/20 px-3 py-1.5 rounded-full text-sm font-medium"
+              >
+                <span>{tag}</span>
+                <button
+                  onClick={() => removeSearchTag(tag)}
+                  className="hover:bg-primary/20 rounded-full p-0.5 transition-colors"
+                  aria-label="Remove filter"
+                >
+                  <X className="h-3.5 w-3.5" />
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+        
         {/* Mobile: Search in first row */}
         <div className="flex flex-col md:flex-row gap-2 sm:gap-3">
           <div className="relative flex-1">

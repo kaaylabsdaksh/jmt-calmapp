@@ -5,11 +5,13 @@ import ModernWorkOrdersTable from "@/components/modern/ModernWorkOrdersTable";
 
 interface SearchFilters {
   globalSearch: string;
+  searchTags: string[];
   status: string;
   assignee: string;
   priority: string;
   manufacturer: string;
   division: string;
+  woType: string;
   dateFrom?: Date;
   dateTo?: Date;
   dateType: string;
@@ -25,11 +27,13 @@ const ModernWorkOrderManagement = () => {
   // Initialize with empty filters to show all work orders
   const [searchFilters, setSearchFilters] = useState<SearchFilters>({
     globalSearch: '',
+    searchTags: [],
     status: '',
     assignee: '',
     priority: '',
     manufacturer: '',
     division: '',
+    woType: '',
     dateType: ''
   });
 
