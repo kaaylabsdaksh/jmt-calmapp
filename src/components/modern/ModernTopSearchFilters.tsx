@@ -40,7 +40,7 @@ const mockWorkOrders = [
     onsiteProjectNumber: "OSP-2024-001",
     poNumber: "PO-123456",
     toFactoryPO: "FPO-789012",
-    serialNumber: "SN-ADEU-001",
+    serialNumber: "SN123456",
     custID: "CUST-DW-001",
     mfgSerial: "MFG-12345",
     productDescription: "Precision Positioning System",
@@ -62,7 +62,7 @@ const mockWorkOrders = [
     onsiteProjectNumber: "OSP-2024-002",
     poNumber: "PO-234567",
     toFactoryPO: "FPO-890123",
-    serialNumber: "SN-STAR-002",
+    serialNumber: "SN234567",
     custID: "CUST-CP-002",
     mfgSerial: "MFG-23456",
     productDescription: "Digital Height Gauge",
@@ -84,7 +84,7 @@ const mockWorkOrders = [
     onsiteProjectNumber: "OSP-2024-003",
     poNumber: "PO-345678",
     toFactoryPO: "FPO-901234",
-    serialNumber: "SN-CHAR-003",
+    serialNumber: "SN345678",
     custID: "CUST-CP-003",
     mfgSerial: "MFG-34567",
     productDescription: "Pressure Sensor",
@@ -106,7 +106,7 @@ const mockWorkOrders = [
     onsiteProjectNumber: "OSP-2024-004",
     poNumber: "PO-456789",
     toFactoryPO: "FPO-012345",
-    serialNumber: "SN-PREC-004",
+    serialNumber: "SN456789",
     custID: "CUST-BM-004",
     mfgSerial: "MFG-45678",
     productDescription: "Calibration Tool",
@@ -114,6 +114,28 @@ const mockWorkOrders = [
     rfid: "RFID-TAG-004",
     quoteNumber: "QT-2024-004",
     vendorRMA: "RMA-VENDOR-004"
+  },
+  {
+    id: "441228",
+    itemNumber: "441228-01",
+    accountNumber: "ACC-2024-005",
+    customer: "Energy Transfer",
+    assignedTo: "Tom Rodriguez",
+    division: "Lab",
+    manufacturer: "SNAP-ON",
+    modelNumber: "TW-PRO-500",
+    labCode: "LAB-005",
+    onsiteProjectNumber: "OSP-2024-005",
+    poNumber: "PO-567890",
+    toFactoryPO: "FPO-123456",
+    serialNumber: "SN567890",
+    custID: "CUST-ET-005",
+    mfgSerial: "MFG-56789",
+    productDescription: "Torque Wrench",
+    eslID: "ESL-005",
+    rfid: "RFID-TAG-005",
+    quoteNumber: "QT-2024-005",
+    vendorRMA: "RMA-VENDOR-005"
   }
 ];
 
@@ -147,6 +169,7 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
 
     const searchTerm = query.toLowerCase();
     const matchingSuggestions = [];
+    console.log('Generating suggestions for:', searchTerm);
 
     mockWorkOrders.forEach(order => {
       // Check different fields and create suggestion objects
@@ -311,6 +334,7 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
       )
       .slice(0, 8);
 
+    console.log('Generated suggestions:', uniqueSuggestions.length, uniqueSuggestions);
     setSuggestions(uniqueSuggestions);
     setShowSuggestions(uniqueSuggestions.length > 0);
   };
