@@ -665,12 +665,12 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
             {searchTags.map((tag, index) => (
               <div
                 key={`tag-${index}`}
-                className="inline-flex items-center gap-1.5 bg-primary/10 text-primary border border-primary/20 px-3 py-1.5 rounded-full text-sm font-medium"
+                className="inline-flex items-center gap-1.5 bg-primary text-primary-foreground px-3 py-1.5 rounded-full text-sm font-medium shadow-sm"
               >
                 <span>{tag}</span>
                 <button
                   onClick={() => removeSearchTag(tag)}
-                  className="hover:bg-primary/20 rounded-full p-0.5 transition-colors"
+                  className="hover:bg-primary-foreground/20 rounded-full p-0.5 transition-colors"
                   aria-label="Remove filter"
                 >
                   <X className="h-3.5 w-3.5" />
