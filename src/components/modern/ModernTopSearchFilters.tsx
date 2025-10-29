@@ -29,84 +29,91 @@ interface ModernTopSearchFiltersProps {
 const mockWorkOrders = [
   {
     id: "383727",
+    itemNumber: "383727-01",
+    accountNumber: "ACC-2024-001",
     customer: "Deutsche Windtechnik Inc", 
     assignedTo: "John Smith",
     division: "Lab",
     manufacturer: "ADEULIS",
     modelNumber: "PPS-1734",
-    labCode: "LAB-001"
+    labCode: "LAB-001",
+    onsiteProjectNumber: "OSP-2024-001",
+    poNumber: "PO-123456",
+    toFactoryPO: "FPO-789012",
+    serialNumber: "SN-ADEU-001",
+    custID: "CUST-DW-001",
+    mfgSerial: "MFG-12345",
+    productDescription: "Precision Positioning System",
+    eslID: "ESL-001",
+    rfid: "RFID-TAG-001",
+    quoteNumber: "QT-2024-001",
+    vendorRMA: "RMA-VENDOR-001"
   },
   {
     id: "390118", 
+    itemNumber: "390118-01",
+    accountNumber: "ACC-2024-002",
     customer: "Colonial Pipeline",
     assignedTo: "Sarah Johnson", 
     division: "Rental",
     manufacturer: "STARRETT",
     modelNumber: "844-441",
-    labCode: "LAB-002"
+    labCode: "LAB-002",
+    onsiteProjectNumber: "OSP-2024-002",
+    poNumber: "PO-234567",
+    toFactoryPO: "FPO-890123",
+    serialNumber: "SN-STAR-002",
+    custID: "CUST-CP-002",
+    mfgSerial: "MFG-23456",
+    productDescription: "Digital Height Gauge",
+    eslID: "ESL-002",
+    rfid: "RFID-TAG-002",
+    quoteNumber: "QT-2024-002",
+    vendorRMA: "RMA-VENDOR-002"
   },
   {
     id: "452463",
+    itemNumber: "452463-01",
+    accountNumber: "ACC-2024-003",
     customer: "Colonial Pipeline",
     assignedTo: "Mike Davis",
     division: "ESL Onsite", 
     manufacturer: "CHARLS LTD",
     modelNumber: "1000PS",
-    labCode: "LAB-003"
+    labCode: "LAB-003",
+    onsiteProjectNumber: "OSP-2024-003",
+    poNumber: "PO-345678",
+    toFactoryPO: "FPO-901234",
+    serialNumber: "SN-CHAR-003",
+    custID: "CUST-CP-003",
+    mfgSerial: "MFG-34567",
+    productDescription: "Pressure Sensor",
+    eslID: "ESL-003",
+    rfid: "RFID-TAG-003",
+    quoteNumber: "QT-2024-003",
+    vendorRMA: "RMA-VENDOR-003"
   },
   {
     id: "393015",
+    itemNumber: "393015-01",
+    accountNumber: "ACC-2024-004",
     customer: "Burns & McDonnell",
     assignedTo: "Emily Wilson",
     division: "ESL",
     manufacturer: "PRECISION TOOLS", 
     modelNumber: "CAL-500",
-    labCode: "LAB-004"
-  },
-  {
-    id: "441228",
-    customer: "Energy Transfer",
-    assignedTo: "Tom Rodriguez",
-    division: "Lab",
-    manufacturer: "SNAP-ON",
-    modelNumber: "TW-PRO-500", 
-    labCode: "LAB-005"
-  },
-  {
-    id: "438752",
-    customer: "Nuclear Research Institute",
-    assignedTo: "Dr. David Kumar",
-    division: "ESL Onsite",
-    manufacturer: "CANBERRA",
-    modelNumber: "DSA-1000",
-    labCode: "LAB-016"
-  },
-  {
-    id: "385737",
-    customer: "ACME Industries", 
-    assignedTo: "John Smith",
-    division: "Lab",
-    manufacturer: "ADEULIS",
-    modelNumber: "PPS-1734",
-    labCode: "LAB-007"
-  },
-  {
-    id: "390589", 
-    customer: "Tech Solutions Ltd",
-    assignedTo: "Sarah Johnson", 
-    division: "Rental",
-    manufacturer: "STARRETT",
-    modelNumber: "844-441",
-    labCode: "LAB-008"
-  },
-  {
-    id: "400217",
-    customer: "Manufacturing Corp",
-    assignedTo: "Mike Davis",
-    division: "ESL Onsite", 
-    manufacturer: "CHARLS LTD",
-    modelNumber: "1000PS",
-    labCode: "LAB-009"
+    labCode: "LAB-004",
+    onsiteProjectNumber: "OSP-2024-004",
+    poNumber: "PO-456789",
+    toFactoryPO: "FPO-012345",
+    serialNumber: "SN-PREC-004",
+    custID: "CUST-BM-004",
+    mfgSerial: "MFG-45678",
+    productDescription: "Calibration Tool",
+    eslID: "ESL-004",
+    rfid: "RFID-TAG-004",
+    quoteNumber: "QT-2024-004",
+    vendorRMA: "RMA-VENDOR-004"
   }
 ];
 
@@ -151,6 +158,22 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
           subtitle: order.customer
         });
       }
+      if (order.itemNumber?.toLowerCase().includes(searchTerm)) {
+        matchingSuggestions.push({
+          type: 'item-number',
+          value: order.itemNumber,
+          label: `Item #: ${order.itemNumber}`,
+          subtitle: `WO: ${order.id}`
+        });
+      }
+      if (order.accountNumber?.toLowerCase().includes(searchTerm)) {
+        matchingSuggestions.push({
+          type: 'account',
+          value: order.accountNumber,
+          label: `Account: ${order.accountNumber}`,
+          subtitle: order.customer
+        });
+      }
       if (order.customer.toLowerCase().includes(searchTerm)) {
         matchingSuggestions.push({
           type: 'customer',
@@ -159,12 +182,60 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
           subtitle: `Work Order: ${order.id}`
         });
       }
-      if (order.assignedTo.toLowerCase().includes(searchTerm)) {
+      if (order.onsiteProjectNumber?.toLowerCase().includes(searchTerm)) {
         matchingSuggestions.push({
-          type: 'assignee', 
-          value: order.assignedTo,
-          label: `Assignee: ${order.assignedTo}`,
-          subtitle: `${order.division} Division`
+          type: 'onsite-project',
+          value: order.onsiteProjectNumber,
+          label: `Onsite Project: ${order.onsiteProjectNumber}`,
+          subtitle: order.customer
+        });
+      }
+      if (order.poNumber?.toLowerCase().includes(searchTerm)) {
+        matchingSuggestions.push({
+          type: 'po-number',
+          value: order.poNumber,
+          label: `PO #: ${order.poNumber}`,
+          subtitle: `WO: ${order.id}`
+        });
+      }
+      if (order.toFactoryPO?.toLowerCase().includes(searchTerm)) {
+        matchingSuggestions.push({
+          type: 'factory-po',
+          value: order.toFactoryPO,
+          label: `Factory PO: ${order.toFactoryPO}`,
+          subtitle: order.manufacturer
+        });
+      }
+      if (order.serialNumber?.toLowerCase().includes(searchTerm)) {
+        matchingSuggestions.push({
+          type: 'serial',
+          value: order.serialNumber,
+          label: `Serial #: ${order.serialNumber}`,
+          subtitle: `${order.manufacturer} ${order.modelNumber}`
+        });
+      }
+      if (order.custID?.toLowerCase().includes(searchTerm)) {
+        matchingSuggestions.push({
+          type: 'cust-id',
+          value: order.custID,
+          label: `Cust ID: ${order.custID}`,
+          subtitle: order.customer
+        });
+      }
+      if (order.mfgSerial?.toLowerCase().includes(searchTerm)) {
+        matchingSuggestions.push({
+          type: 'mfg-serial',
+          value: order.mfgSerial,
+          label: `MFG Serial: ${order.mfgSerial}`,
+          subtitle: order.manufacturer
+        });
+      }
+      if (order.modelNumber.toLowerCase().includes(searchTerm)) {
+        matchingSuggestions.push({
+          type: 'model',
+          value: order.modelNumber,
+          label: `Model: ${order.modelNumber}`,
+          subtitle: order.manufacturer
         });
       }
       if (order.manufacturer.toLowerCase().includes(searchTerm)) {
@@ -175,12 +246,52 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
           subtitle: `Model: ${order.modelNumber}`
         });
       }
-      if (order.modelNumber.toLowerCase().includes(searchTerm)) {
+      if (order.productDescription?.toLowerCase().includes(searchTerm)) {
         matchingSuggestions.push({
-          type: 'model',
-          value: order.modelNumber,
-          label: `Model: ${order.modelNumber}`,
+          type: 'product',
+          value: order.productDescription,
+          label: `Product: ${order.productDescription}`,
           subtitle: order.manufacturer
+        });
+      }
+      if (order.eslID?.toLowerCase().includes(searchTerm)) {
+        matchingSuggestions.push({
+          type: 'esl-id',
+          value: order.eslID,
+          label: `ESL ID: ${order.eslID}`,
+          subtitle: `WO: ${order.id}`
+        });
+      }
+      if (order.rfid?.toLowerCase().includes(searchTerm)) {
+        matchingSuggestions.push({
+          type: 'rfid',
+          value: order.rfid,
+          label: `RFID: ${order.rfid}`,
+          subtitle: `Serial: ${order.serialNumber}`
+        });
+      }
+      if (order.quoteNumber?.toLowerCase().includes(searchTerm)) {
+        matchingSuggestions.push({
+          type: 'quote',
+          value: order.quoteNumber,
+          label: `Quote #: ${order.quoteNumber}`,
+          subtitle: order.customer
+        });
+      }
+      if (order.vendorRMA?.toLowerCase().includes(searchTerm)) {
+        matchingSuggestions.push({
+          type: 'vendor-rma',
+          value: order.vendorRMA,
+          label: `Vendor RMA: ${order.vendorRMA}`,
+          subtitle: order.manufacturer
+        });
+      }
+      if (order.assignedTo.toLowerCase().includes(searchTerm)) {
+        matchingSuggestions.push({
+          type: 'assignee', 
+          value: order.assignedTo,
+          label: `Assignee: ${order.assignedTo}`,
+          subtitle: `${order.division} Division`
         });
       }
       if (order.labCode.toLowerCase().includes(searchTerm)) {
@@ -405,14 +516,54 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
                               WO
                             </div>
                           )}
+                          {suggestion.type === 'item-number' && (
+                            <div className="w-8 h-8 bg-cyan-100 text-cyan-600 rounded-lg flex items-center justify-center text-xs font-semibold">
+                              IT
+                            </div>
+                          )}
+                          {suggestion.type === 'account' && (
+                            <div className="w-8 h-8 bg-teal-100 text-teal-600 rounded-lg flex items-center justify-center text-xs font-semibold">
+                              AC
+                            </div>
+                          )}
                           {suggestion.type === 'customer' && (
                             <div className="w-8 h-8 bg-green-100 text-green-600 rounded-lg flex items-center justify-center text-xs font-semibold">
                               C
                             </div>
                           )}
-                          {suggestion.type === 'assignee' && (
-                            <div className="w-8 h-8 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center text-xs font-semibold">
-                              A
+                          {suggestion.type === 'onsite-project' && (
+                            <div className="w-8 h-8 bg-lime-100 text-lime-600 rounded-lg flex items-center justify-center text-xs font-semibold">
+                              OS
+                            </div>
+                          )}
+                          {suggestion.type === 'po-number' && (
+                            <div className="w-8 h-8 bg-amber-100 text-amber-600 rounded-lg flex items-center justify-center text-xs font-semibold">
+                              PO
+                            </div>
+                          )}
+                          {suggestion.type === 'factory-po' && (
+                            <div className="w-8 h-8 bg-yellow-100 text-yellow-600 rounded-lg flex items-center justify-center text-xs font-semibold">
+                              FP
+                            </div>
+                          )}
+                          {suggestion.type === 'serial' && (
+                            <div className="w-8 h-8 bg-red-100 text-red-600 rounded-lg flex items-center justify-center text-xs font-semibold">
+                              SN
+                            </div>
+                          )}
+                          {suggestion.type === 'cust-id' && (
+                            <div className="w-8 h-8 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center text-xs font-semibold">
+                              CI
+                            </div>
+                          )}
+                          {suggestion.type === 'mfg-serial' && (
+                            <div className="w-8 h-8 bg-rose-100 text-rose-600 rounded-lg flex items-center justify-center text-xs font-semibold">
+                              MS
+                            </div>
+                          )}
+                          {suggestion.type === 'model' && (
+                            <div className="w-8 h-8 bg-pink-100 text-pink-600 rounded-lg flex items-center justify-center text-xs font-semibold">
+                              #
                             </div>
                           )}
                           {suggestion.type === 'manufacturer' && (
@@ -420,9 +571,34 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
                               M
                             </div>
                           )}
-                          {suggestion.type === 'model' && (
-                            <div className="w-8 h-8 bg-pink-100 text-pink-600 rounded-lg flex items-center justify-center text-xs font-semibold">
-                              #
+                          {suggestion.type === 'product' && (
+                            <div className="w-8 h-8 bg-fuchsia-100 text-fuchsia-600 rounded-lg flex items-center justify-center text-xs font-semibold">
+                              PR
+                            </div>
+                          )}
+                          {suggestion.type === 'esl-id' && (
+                            <div className="w-8 h-8 bg-violet-100 text-violet-600 rounded-lg flex items-center justify-center text-xs font-semibold">
+                              ES
+                            </div>
+                          )}
+                          {suggestion.type === 'rfid' && (
+                            <div className="w-8 h-8 bg-sky-100 text-sky-600 rounded-lg flex items-center justify-center text-xs font-semibold">
+                              RF
+                            </div>
+                          )}
+                          {suggestion.type === 'quote' && (
+                            <div className="w-8 h-8 bg-slate-100 text-slate-600 rounded-lg flex items-center justify-center text-xs font-semibold">
+                              QT
+                            </div>
+                          )}
+                          {suggestion.type === 'vendor-rma' && (
+                            <div className="w-8 h-8 bg-zinc-100 text-zinc-600 rounded-lg flex items-center justify-center text-xs font-semibold">
+                              RM
+                            </div>
+                          )}
+                          {suggestion.type === 'assignee' && (
+                            <div className="w-8 h-8 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center text-xs font-semibold">
+                              A
                             </div>
                           )}
                           {suggestion.type === 'lab-code' && (
