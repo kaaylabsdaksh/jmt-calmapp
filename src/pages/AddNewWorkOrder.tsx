@@ -48,6 +48,7 @@ const AddNewWorkOrder = () => {
   const [isQuickAddDialogOpen, setIsQuickAddDialogOpen] = useState(false);
   
   // Copy from other WO states
+  const [isCopyFromWOExpanded, setIsCopyFromWOExpanded] = useState(false);
   const [copyWorkOrder, setCopyWorkOrder] = useState("");
   const [copyItemFrom, setCopyItemFrom] = useState("");
   const [copyItemTo, setCopyItemTo] = useState("");
@@ -1021,7 +1022,12 @@ const AddNewWorkOrder = () => {
                           <span className="sm:hidden">Unused Items</span>
                         </Button>
                         <Button 
-                          onClick={() => document.getElementById('copy-from-other-wo')?.scrollIntoView({ behavior: 'smooth' })}
+                          onClick={() => {
+                            setIsCopyFromWOExpanded(!isCopyFromWOExpanded);
+                            if (!isCopyFromWOExpanded) {
+                              setTimeout(() => document.getElementById('copy-from-other-wo')?.scrollIntoView({ behavior: 'smooth' }), 100);
+                            }
+                          }}
                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
                         >
                           <Copy className="w-3 h-3 sm:w-4 sm:h-4" />
@@ -1061,7 +1067,12 @@ const AddNewWorkOrder = () => {
                           <span className="sm:hidden">Unused Items</span>
                         </Button>
                         <Button 
-                          onClick={() => document.getElementById('copy-from-other-wo')?.scrollIntoView({ behavior: 'smooth' })}
+                          onClick={() => {
+                            setIsCopyFromWOExpanded(!isCopyFromWOExpanded);
+                            if (!isCopyFromWOExpanded) {
+                              setTimeout(() => document.getElementById('copy-from-other-wo')?.scrollIntoView({ behavior: 'smooth' }), 100);
+                            }
+                          }}
                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
                         >
                           <Copy className="w-3 h-3 sm:w-4 sm:h-4" />
@@ -1073,14 +1084,15 @@ const AddNewWorkOrder = () => {
 
 
                     {/* Copy From Other WO Section */}
-                    <div id="copy-from-other-wo" className="bg-muted/30 p-4 rounded-lg border-2 border-primary/20">
-                      <div className="flex flex-col gap-4">
-                        <div className="flex items-center gap-2">
-                          <Copy className="w-5 h-5 text-primary" />
-                          <h3 className="text-base font-semibold text-foreground">Copy From Other Work Order</h3>
-                        </div>
-                        
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    {isCopyFromWOExpanded && (
+                      <div id="copy-from-other-wo" className="bg-muted/30 p-4 rounded-lg border-2 border-primary/20">
+                        <div className="flex flex-col gap-4">
+                          <div className="flex items-center gap-2">
+                            <Copy className="w-5 h-5 text-primary" />
+                            <h3 className="text-base font-semibold text-foreground">Copy From Other Work Order</h3>
+                          </div>
+                          
+                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                           <div className="space-y-2">
                             <Label htmlFor="copyWorkOrder" className="text-sm font-medium">
                               Work Order # <span className="text-destructive">*</span>
@@ -1151,6 +1163,7 @@ const AddNewWorkOrder = () => {
                         </div>
                       </div>
                     </div>
+                    )}
 
                     {/* Filter Controls */}
                     <div className="bg-muted/30 p-4 rounded-lg overflow-x-auto">
