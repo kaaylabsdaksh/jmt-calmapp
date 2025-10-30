@@ -918,73 +918,84 @@ const AddNewWorkOrder = () => {
                         </Button>
                       </div>
                     ) : (
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2 sm:gap-3">
-                        <Button 
-                          onClick={() => navigate("/form-variations")}
-                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
-                        >
-                          <Plus className="w-3 h-3 sm:w-4 sm:h-4" />
-                          <span className="hidden sm:inline">Add New Item</span>
-                          <span className="sm:hidden">Add Item</span>
-                        </Button>
-                        <Button 
-                          onClick={() => setIsRFIDDialogOpen(true)}
-                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
-                        >
-                          <PlusCircle className="w-3 h-3 sm:w-4 sm:h-4" />
-                          <span className="hidden sm:inline">Add New Item w/RFID</span>
-                          <span className="sm:hidden">Add w/RFID</span>
-                        </Button>
-                        <Button className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm">
-                          <QrCode className="w-3 h-3 sm:w-4 sm:h-4" />
-                          <span className="hidden sm:inline">Print QR Sheet</span>
-                          <span className="sm:hidden">QR Sheet</span>
-                        </Button>
-                        <Button className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm">
-                          <Copy className="w-3 h-3 sm:w-4 sm:h-4" />
-                          <span className="hidden sm:inline">Copy From Other WO</span>
-                          <span className="sm:hidden">Copy WO</span>
-                        </Button>
-                        <Button 
-                          onClick={() => navigate('/unused-items')}
-                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
-                        >
-                          <PackagePlus className="w-3 h-3 sm:w-4 sm:h-4" />
-                          <span className="hidden sm:inline">Create Unused Items</span>
-                          <span className="sm:hidden">Unused Items</span>
-                        </Button>
+                      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                        {/* Column 1: Quick Add and Print QR stacked */}
+                        <div className="space-y-2">
+                          <Button 
+                            onClick={() => navigate("/form-variations")}
+                            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
+                          >
+                            <Plus className="w-4 h-4" />
+                            Quick Add New Items
+                          </Button>
+                          <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm">
+                            <QrCode className="w-4 h-4" />
+                            Print QR Sheet
+                          </Button>
+                        </div>
+
+                        {/* Column 2: Copy From Other WO with fields */}
+                        <div className="bg-muted/30 border rounded-lg p-4 space-y-3">
+                          <div className="flex items-center gap-2 mb-3">
+                            <Copy className="w-4 h-4" />
+                            <span className="font-semibold text-sm">Copy From Other WO</span>
+                          </div>
+                          <div className="space-y-2">
+                            <div className="flex items-center gap-2">
+                              <Label className="text-sm font-medium whitespace-nowrap min-w-fit">Work Order:</Label>
+                              <Input className="flex-1 border-gray-400" placeholder="WO#" />
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Label className="text-sm font-medium whitespace-nowrap min-w-fit">Item #:</Label>
+                              <Input className="w-20 border-gray-400" placeholder="From" />
+                              <span className="text-sm text-muted-foreground">-</span>
+                              <Input className="w-20 border-gray-400" placeholder="To" />
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Label className="text-sm font-medium whitespace-nowrap min-w-fit">Groupable:</Label>
+                              <Select>
+                                <SelectTrigger className="flex-1 border-gray-400">
+                                  <SelectValue placeholder="Select..." />
+                                </SelectTrigger>
+                                <SelectContent className="bg-background border shadow-lg z-50">
+                                  <SelectItem value="yes">Yes</SelectItem>
+                                  <SelectItem value="no">No</SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Column 3: Create Unused Items with number input */}
+                        <div className="bg-muted/30 border rounded-lg p-4 space-y-3">
+                          <div className="flex items-center gap-2 mb-3">
+                            <PackagePlus className="w-4 h-4" />
+                            <span className="font-semibold text-sm">Create Unused Items</span>
+                          </div>
+                          <div className="space-y-2">
+                            <div className="flex items-center gap-2">
+                              <Label className="text-sm font-medium whitespace-nowrap">Number of Items:</Label>
+                              <Input 
+                                type="number" 
+                                className="w-24 border-gray-400" 
+                                placeholder="0"
+                                min="0"
+                              />
+                            </div>
+                            <Button 
+                              onClick={() => navigate('/unused-items')}
+                              className="w-full bg-success hover:bg-success/90 text-white h-9"
+                            >
+                              Create Items
+                            </Button>
+                          </div>
+                        </div>
                       </div>
                     )}
 
-                    {/* Filter Controls */}
-                    <div className="bg-muted/30 p-4 rounded-lg overflow-x-auto">
-                      <div className="flex items-center gap-4 min-w-fit">
-                        <div className="flex items-center gap-2">
-                          <Label className="text-sm font-medium whitespace-nowrap min-w-fit">Work Order:</Label>
-                          <Input className="w-24 border-gray-400" />
-                        </div>
-                        
-                        <div className="flex items-center gap-2">
-                          <Label className="text-sm font-medium whitespace-nowrap min-w-fit">Item #:</Label>
-                          <Input className="w-16 border-gray-400" />
-                          <span className="text-sm text-muted-foreground">-</span>
-                          <Input className="w-16 border-gray-400" />
-                          <span className="text-sm text-muted-foreground">or</span>
-                        </div>
-
-                        <div className="flex items-center gap-2">
-                          <Label className="text-sm font-medium whitespace-nowrap min-w-fit">Groupable:</Label>
-                          <Select>
-                            <SelectTrigger className="w-28 border-gray-400">
-                              <SelectValue placeholder="Select..." />
-                            </SelectTrigger>
-                            <SelectContent className="bg-background border shadow-lg z-50">
-                              <SelectItem value="yes">Yes</SelectItem>
-                              <SelectItem value="no">No</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </div>
-
+                    {/* Filter Controls - Below the three columns */}
+                    <div className="bg-muted/30 p-4 rounded-lg">
+                      <div className="flex items-center gap-4 flex-wrap">
                         <div className="flex items-center gap-2">
                           <Label className="text-sm font-medium whitespace-nowrap min-w-fit"># of Items:</Label>
                           <span className="text-sm font-medium min-w-fit">{selectedItemsCount}</span>
@@ -1034,8 +1045,9 @@ const AddNewWorkOrder = () => {
                           </Select>
                         </div>
                       </div>
+                    </div>
 
-                      {/* Special Action Form Fields */}
+                    {/* Special Action Form Fields */}
                       {selectedSpecialAction && selectedSpecialAction !== "none" && (
                         <div className="bg-muted/30 border rounded-lg p-4 space-y-3 mt-4">
                           {/* Add Comments */}
@@ -1443,6 +1455,7 @@ const AddNewWorkOrder = () => {
                         </div>
                       )}
                     </div>
+                  </div>
 
                     {/* Conditional View Rendering */}
                     {viewMode === 'receiving' ? (
