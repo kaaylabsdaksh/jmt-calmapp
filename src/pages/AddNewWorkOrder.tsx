@@ -56,6 +56,8 @@ const AddNewWorkOrder = () => {
   const [currentEslType, setCurrentEslType] = useState("");
   const [changeToEslType, setChangeToEslType] = useState("");
   const [clearInvoiceData, setClearInvoiceData] = useState(false);
+  const [customerWaitStatus, setCustomerWaitStatus] = useState("");
+  const [deliverByDate, setDeliverByDate] = useState("");
 
   // Save active tab to localStorage whenever it changes
   useEffect(() => {
@@ -1003,6 +1005,8 @@ const AddNewWorkOrder = () => {
                               setCurrentEslType("");
                               setChangeToEslType("");
                               setClearInvoiceData(false);
+                              setCustomerWaitStatus("");
+                              setDeliverByDate("");
                             }}
                           >
                             <SelectTrigger className="w-48 border-gray-400">
@@ -1019,7 +1023,12 @@ const AddNewWorkOrder = () => {
                               <SelectItem value="update-cal-freq">Update Cal Freq's</SelectItem>
                               <SelectItem value="update-po">Update PO #'s</SelectItem>
                               <SelectItem value="update-tf-status">Update T/F Status</SelectItem>
+                              <SelectItem value="waiting-on-customer">Waiting on Customer</SelectItem>
                               <SelectItem value="wait-cust-followup">Wait Cust Followup</SelectItem>
+                              <SelectItem value="update-deliver-by-date">Update Deliver By Date</SelectItem>
+                              <SelectItem value="print-wos">Print WOs</SelectItem>
+                              <SelectItem value="print-labels">Print Labels</SelectItem>
+                              <SelectItem value="print-barcodes">Print Barcodes</SelectItem>
                             </SelectContent>
                           </Select>
                         </div>
@@ -1348,6 +1357,91 @@ const AddNewWorkOrder = () => {
                               />
                               <Button size="sm" className="bg-success hover:bg-success/90">
                                 Wait Cust Followup
+                              </Button>
+                            </div>
+                          )}
+
+                          {/* Waiting on Customer */}
+                          {selectedSpecialAction === "waiting-on-customer" && (
+                            <>
+                              <div className="flex items-center gap-4">
+                                <Label className="text-sm font-medium whitespace-nowrap">Customer Wait Status</Label>
+                                <Select value={customerWaitStatus} onValueChange={setCustomerWaitStatus}>
+                                  <SelectTrigger className="w-60 border-gray-400">
+                                    <SelectValue placeholder="Select..." />
+                                  </SelectTrigger>
+                                  <SelectContent className="bg-background border shadow-lg z-50">
+                                    <SelectItem value="pending-response">Pending Response</SelectItem>
+                                    <SelectItem value="awaiting-approval">Awaiting Approval</SelectItem>
+                                    <SelectItem value="awaiting-parts">Awaiting Parts</SelectItem>
+                                  </SelectContent>
+                                </Select>
+                              </div>
+                              <div className="space-y-2">
+                                <div className="flex items-center gap-2">
+                                  <Label className="text-sm font-medium">Enter a comment</Label>
+                                  <Select>
+                                    <SelectTrigger className="w-48 border-gray-400 h-8">
+                                      <SelectValue placeholder="Pre-select Comment Text" />
+                                    </SelectTrigger>
+                                    <SelectContent className="bg-background border shadow-lg z-50">
+                                      <SelectItem value="template1">Template 1</SelectItem>
+                                      <SelectItem value="template2">Template 2</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+                                <textarea
+                                  className="w-full min-h-[80px] px-3 py-2 text-sm border border-gray-400 rounded-md bg-background"
+                                  placeholder="Enter comment..."
+                                  value={specialActionComment}
+                                  onChange={(e) => setSpecialActionComment(e.target.value)}
+                                />
+                                <Button size="sm" className="bg-success hover:bg-success/90">
+                                  Set Waiting on Customer
+                                </Button>
+                              </div>
+                            </>
+                          )}
+
+                          {/* Update Deliver By Date */}
+                          {selectedSpecialAction === "update-deliver-by-date" && (
+                            <div className="space-y-2">
+                              <Label className="text-sm font-medium">Enter Deliver By Date</Label>
+                              <Input
+                                type="date"
+                                className="w-60 border-gray-400"
+                                value={deliverByDate}
+                                onChange={(e) => setDeliverByDate(e.target.value)}
+                              />
+                              <Button size="sm" className="bg-success hover:bg-success/90">
+                                Update Deliver By Date
+                              </Button>
+                            </div>
+                          )}
+
+                          {/* Print WOs */}
+                          {selectedSpecialAction === "print-wos" && (
+                            <div className="flex justify-center py-2">
+                              <Button size="sm" className="bg-muted text-foreground hover:bg-muted/90 border">
+                                Print WOs
+                              </Button>
+                            </div>
+                          )}
+
+                          {/* Print Labels */}
+                          {selectedSpecialAction === "print-labels" && (
+                            <div className="flex justify-center py-2">
+                              <Button size="sm" className="bg-muted text-foreground hover:bg-muted/90 border">
+                                Print Label
+                              </Button>
+                            </div>
+                          )}
+
+                          {/* Print Barcodes */}
+                          {selectedSpecialAction === "print-barcodes" && (
+                            <div className="flex justify-center py-2">
+                              <Button size="sm" className="bg-muted text-foreground hover:bg-muted/90 border">
+                                Print Barcodes
                               </Button>
                             </div>
                           )}
