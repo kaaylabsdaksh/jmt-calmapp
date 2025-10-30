@@ -1330,9 +1330,13 @@ const AddNewWorkOrder = () => {
                                     <SelectValue placeholder="Select..." />
                                   </SelectTrigger>
                                   <SelectContent className="bg-background border shadow-lg z-50">
+                                    <SelectItem value="jm-driver-pickup">JM Driver Pickup</SelectItem>
+                                    <SelectItem value="customer-dropoff">Customer Dropoff</SelectItem>
                                     <SelectItem value="shipped">Shipped</SelectItem>
-                                    <SelectItem value="hand-delivered">Hand Delivered</SelectItem>
-                                    <SelectItem value="pickup">Pickup</SelectItem>
+                                    <SelectItem value="onsite">Onsite</SelectItem>
+                                    <SelectItem value="purchasing-dept">Purchasing Dept.</SelectItem>
+                                    <SelectItem value="lab-standard">Lab Standard</SelectItem>
+                                    <SelectItem value="surplus">Surplus</SelectItem>
                                   </SelectContent>
                                 </Select>
                               </div>
