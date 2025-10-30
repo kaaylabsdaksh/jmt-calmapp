@@ -1368,29 +1368,31 @@ const AddNewWorkOrder = () => {
                           {/* Change ESL Type */}
                           {selectedSpecialAction === "change-esl-type" && (
                             <div className="space-y-3">
-                              <div className="flex items-center gap-4">
-                                <Label className="text-sm font-medium whitespace-nowrap">Current Item:</Label>
-                                <Select value={currentEslType} onValueChange={setCurrentEslType}>
-                                  <SelectTrigger className="w-60 border-gray-400">
-                                    <SelectValue placeholder="Select..." />
-                                  </SelectTrigger>
-                                  <SelectContent className="bg-background border shadow-lg z-50">
-                                    <SelectItem value="type1">Type 1</SelectItem>
-                                    <SelectItem value="type2">Type 2</SelectItem>
-                                  </SelectContent>
-                                </Select>
-                              </div>
-                              <div className="flex items-center gap-4">
-                                <Label className="text-sm font-medium whitespace-nowrap">Change to:</Label>
-                                <Select value={changeToEslType} onValueChange={setChangeToEslType}>
-                                  <SelectTrigger className="w-60 border-gray-400">
-                                    <SelectValue placeholder="Select..." />
-                                  </SelectTrigger>
-                                  <SelectContent className="bg-background border shadow-lg z-50">
-                                    <SelectItem value="type1">Type 1</SelectItem>
-                                    <SelectItem value="type2">Type 2</SelectItem>
-                                  </SelectContent>
-                                </Select>
+                              <div className="flex items-center gap-4 flex-wrap">
+                                <div className="flex items-center gap-2">
+                                  <Label className="text-sm font-medium whitespace-nowrap">Current Item:</Label>
+                                  <Select value={currentEslType} onValueChange={setCurrentEslType}>
+                                    <SelectTrigger className="w-60 border-gray-400">
+                                      <SelectValue placeholder="Select..." />
+                                    </SelectTrigger>
+                                    <SelectContent className="bg-background border shadow-lg z-50">
+                                      <SelectItem value="type1">Type 1</SelectItem>
+                                      <SelectItem value="type2">Type 2</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <Label className="text-sm font-medium whitespace-nowrap">Change to:</Label>
+                                  <Select value={changeToEslType} onValueChange={setChangeToEslType}>
+                                    <SelectTrigger className="w-60 border-gray-400">
+                                      <SelectValue placeholder="Select..." />
+                                    </SelectTrigger>
+                                    <SelectContent className="bg-background border shadow-lg z-50">
+                                      <SelectItem value="type1">Type 1</SelectItem>
+                                      <SelectItem value="type2">Type 2</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </div>
                               </div>
                               <Button size="sm" className="bg-success hover:bg-success/90">
                                 Change ESL Type
