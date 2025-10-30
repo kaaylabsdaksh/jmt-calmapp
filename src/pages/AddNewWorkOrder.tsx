@@ -1002,12 +1002,11 @@ const AddNewWorkOrder = () => {
                               <SelectItem value="update-po">Update PO #'s</SelectItem>
                               <SelectItem value="update-tf-status">Update T/F Status</SelectItem>
                               <SelectItem value="waiting-on-customer">Waiting on Customer</SelectItem>
-                              <SelectItem value="waiting-on-parts">Waiting on Parts</SelectItem>
+                              <SelectItem value="wait-cust-followup">Wait Cust Followup</SelectItem>
                               <SelectItem value="update-deliver-by-date">Update Deliver By Date</SelectItem>
                               <SelectItem value="print-wos">Print WOs</SelectItem>
                               <SelectItem value="print-labels">Print Labels</SelectItem>
                               <SelectItem value="print-barcodes">Print Barcodes</SelectItem>
-                              <SelectItem value="user-samples">User/Samples</SelectItem>
                             </SelectContent>
                           </Select>
                         </div>
