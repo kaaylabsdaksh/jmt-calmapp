@@ -1454,8 +1454,6 @@ const AddNewWorkOrder = () => {
                           )}
                         </div>
                       )}
-                    </div>
-                  </div>
 
                     {/* Conditional View Rendering */}
                     {viewMode === 'receiving' ? (
