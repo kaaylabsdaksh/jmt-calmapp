@@ -58,6 +58,12 @@ const AddNewWorkOrder = () => {
   const [clearInvoiceData, setClearInvoiceData] = useState(false);
   const [customerWaitStatus, setCustomerWaitStatus] = useState("");
   const [deliverByDate, setDeliverByDate] = useState("");
+  
+  // Copy from other WO states
+  const [copyWorkOrder, setCopyWorkOrder] = useState("");
+  const [copyItemFrom, setCopyItemFrom] = useState("");
+  const [copyItemTo, setCopyItemTo] = useState("");
+  const [copyGroupable, setCopyGroupable] = useState("");
 
   // Save active tab to localStorage whenever it changes
   useEffect(() => {
@@ -374,6 +380,109 @@ const AddNewWorkOrder = () => {
       ...prev,
       contact: fullName || contactData.emailAddress || "Contact Added"
     }));
+  };
+
+  // Handler for Copy from Other WO
+  const handleCopyFromOtherWO = () => {
+    if (!copyWorkOrder) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Please enter a Work Order number",
+      });
+      return;
+    }
+
+    // Validate that either item range or groupable is provided
+    const hasItemRange = copyItemFrom && copyItemTo;
+    const hasGroupable = copyGroupable;
+
+    if (!hasItemRange && !hasGroupable) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Please enter Item # range or select Groupable option",
+      });
+      return;
+    }
+
+    // Mock data for items from other work orders
+    const mockOtherWOItems = [
+      {
+        id: `copy-${Date.now()}-1`,
+        itemNumber: "TEMP-001",
+        calFreq: "6",
+        actionCode: "rc",
+        priority: "normal",
+        manufacturer: "fluke",
+        model: "87V",
+        description: "Digital Multimeter - Copied from WO",
+        mfgSerial: "SN987654",
+        custId: "CUST-004",
+        custSN: "C004",
+        assetNumber: "ASSET-004",
+        iso17025: "yes",
+        estimate: "$150.00",
+        newEquip: "no",
+        needByDate: "2024-12-20",
+        ccCost: "$55.00",
+        tf: "yes",
+        capableLocations: "Lab A"
+      },
+      {
+        id: `copy-${Date.now()}-2`,
+        itemNumber: "TEMP-002",
+        calFreq: "12",
+        actionCode: "cc",
+        priority: "expedite",
+        manufacturer: "keysight",
+        model: "34460A",
+        description: "Digital Multimeter 6.5 Digit - Copied from WO",
+        mfgSerial: "SN123789",
+        custId: "CUST-005",
+        custSN: "C005",
+        assetNumber: "ASSET-005",
+        iso17025: "yes",
+        estimate: "$200.00",
+        newEquip: "no",
+        needByDate: "2024-12-25",
+        ccCost: "$70.00",
+        tf: "no",
+        capableLocations: "Lab B, Lab C"
+      }
+    ];
+
+    // Filter items based on criteria
+    let itemsToAdd = [...mockOtherWOItems];
+
+    // If item range is specified, filter by range
+    if (hasItemRange) {
+      const fromNum = parseInt(copyItemFrom);
+      const toNum = parseInt(copyItemTo);
+      itemsToAdd = itemsToAdd.slice(fromNum - 1, toNum);
+    }
+
+    // If groupable is specified, filter accordingly (mock logic)
+    if (hasGroupable) {
+      // In a real scenario, this would filter based on groupable status
+      itemsToAdd = hasGroupable === "yes" ? itemsToAdd : itemsToAdd.slice(0, 1);
+    }
+
+    // Add items to the receiving list
+    setReceivingItems(prev => [...prev, ...itemsToAdd]);
+
+    // Show success message
+    toast({
+      variant: "success",
+      title: "Items Copied",
+      description: `Successfully copied ${itemsToAdd.length} item(s) from Work Order ${copyWorkOrder}`,
+    });
+
+    // Reset copy fields
+    setCopyWorkOrder("");
+    setCopyItemFrom("");
+    setCopyItemTo("");
+    setCopyGroupable("");
   };
 
   return (
@@ -903,7 +1012,10 @@ const AddNewWorkOrder = () => {
                           <span className="hidden sm:inline">Print QR Sheet</span>
                           <span className="sm:hidden">QR Sheet</span>
                         </Button>
-                        <Button className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm">
+                        <Button 
+                          onClick={handleCopyFromOtherWO}
+                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
+                        >
                           <Copy className="w-3 h-3 sm:w-4 sm:h-4" />
                           <span className="hidden sm:inline">Copy From Other WO</span>
                           <span className="sm:hidden">Copy WO</span>
@@ -940,12 +1052,15 @@ const AddNewWorkOrder = () => {
                           <span className="hidden sm:inline">Print QR Sheet</span>
                           <span className="sm:hidden">QR Sheet</span>
                         </Button>
-                        <Button className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm">
+                        <Button 
+                          onClick={handleCopyFromOtherWO}
+                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
+                        >
                           <Copy className="w-3 h-3 sm:w-4 sm:h-4" />
                           <span className="hidden sm:inline">Copy From Other WO</span>
                           <span className="sm:hidden">Copy WO</span>
                         </Button>
-                        <Button 
+                        <Button
                           onClick={() => navigate('/unused-items')}
                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
                         >
@@ -961,20 +1076,35 @@ const AddNewWorkOrder = () => {
                       <div className="flex items-center gap-4 min-w-fit">
                         <div className="flex items-center gap-2">
                           <Label className="text-sm font-medium whitespace-nowrap min-w-fit">Work Order:</Label>
-                          <Input className="w-24 border-gray-400" />
+                          <Input 
+                            className="w-24 border-gray-400" 
+                            value={copyWorkOrder}
+                            onChange={(e) => setCopyWorkOrder(e.target.value)}
+                            placeholder="WO-123"
+                          />
                         </div>
                         
                         <div className="flex items-center gap-2">
                           <Label className="text-sm font-medium whitespace-nowrap min-w-fit">Item #:</Label>
-                          <Input className="w-16 border-gray-400" />
+                          <Input 
+                            className="w-16 border-gray-400" 
+                            value={copyItemFrom}
+                            onChange={(e) => setCopyItemFrom(e.target.value)}
+                            placeholder="1"
+                          />
                           <span className="text-sm text-muted-foreground">-</span>
-                          <Input className="w-16 border-gray-400" />
+                          <Input 
+                            className="w-16 border-gray-400" 
+                            value={copyItemTo}
+                            onChange={(e) => setCopyItemTo(e.target.value)}
+                            placeholder="10"
+                          />
                           <span className="text-sm text-muted-foreground">or</span>
                         </div>
 
                         <div className="flex items-center gap-2">
                           <Label className="text-sm font-medium whitespace-nowrap min-w-fit">Groupable:</Label>
-                          <Select>
+                          <Select value={copyGroupable} onValueChange={setCopyGroupable}>
                             <SelectTrigger className="w-28 border-gray-400">
                               <SelectValue placeholder="Select..." />
                             </SelectTrigger>
