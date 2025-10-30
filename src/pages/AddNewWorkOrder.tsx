@@ -58,7 +58,6 @@ const AddNewWorkOrder = () => {
   const [clearInvoiceData, setClearInvoiceData] = useState(false);
   const [customerWaitStatus, setCustomerWaitStatus] = useState("");
   const [deliverByDate, setDeliverByDate] = useState("");
-  const [showFilters, setShowFilters] = useState(true);
 
   // Save active tab to localStorage whenever it changes
   useEffect(() => {
@@ -958,20 +957,7 @@ const AddNewWorkOrder = () => {
                     )}
 
                     {/* Filter Controls */}
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => setShowFilters(!showFilters)}
-                          className="text-sm font-medium"
-                        >
-                          {showFilters ? 'Hide Filters' : 'Show Filters'}
-                        </Button>
-                      </div>
-                      
-                      {showFilters && (
-                        <div className="bg-muted/30 p-4 rounded-lg overflow-x-auto">
+                    <div className="bg-muted/30 p-4 rounded-lg overflow-x-auto">
                       <div className="flex items-center gap-4 min-w-fit">
                         <div className="flex items-center gap-2">
                           <Label className="text-sm font-medium whitespace-nowrap min-w-fit">Work Order:</Label>
@@ -1453,8 +1439,6 @@ const AddNewWorkOrder = () => {
                               Print Barcodes
                             </Button>
                           )}
-                        </div>
-                      )}
                         </div>
                       )}
                     </div>
