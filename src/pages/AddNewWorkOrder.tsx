@@ -1013,7 +1013,7 @@ const AddNewWorkOrder = () => {
                               <SelectValue placeholder="Select action..." />
                             </SelectTrigger>
                             <SelectContent className="bg-background border shadow-lg z-50 max-h-60 overflow-y-auto">
-                              <SelectItem value="" className="text-muted-foreground italic">None</SelectItem>
+                              <SelectItem value="none" className="text-muted-foreground italic">None</SelectItem>
                               <SelectItem value="add-comments">Add Comments</SelectItem>
                               <SelectItem value="cancel-items">Cancel Item(s)</SelectItem>
                               <SelectItem value="change-esl-type">Change ESL Type</SelectItem>
@@ -1036,7 +1036,7 @@ const AddNewWorkOrder = () => {
                       </div>
 
                       {/* Special Action Form Fields */}
-                      {selectedSpecialAction && (
+                      {selectedSpecialAction && selectedSpecialAction !== "none" && (
                         <div className="bg-muted/30 border rounded-lg p-4 space-y-3 mt-4">
                           {/* Add Comments */}
                           {selectedSpecialAction === "add-comments" && (
