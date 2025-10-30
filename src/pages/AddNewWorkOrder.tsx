@@ -15,7 +15,7 @@ import { WorkOrderItemsCards } from "@/components/WorkOrderItemsCards";
 import { WorkOrderItemsReceiving } from "@/components/WorkOrderItemsReceiving";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { ContactForm, ContactFormData } from "@/components/ContactForm";
-import { SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarTrigger, useSidebar } from "@/components/ui/sidebar";
 import { EstimateDetails } from "@/components/EstimateDetails";
 import { RFIDDialog } from "@/components/RFIDDialog";
 import { toast } from "@/hooks/use-toast";
@@ -24,6 +24,7 @@ const AddNewWorkOrder = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const isMobile = useIsMobile();
+  const { open: sidebarOpen } = useSidebar();
 
   // Always ensure account field starts empty - this is the main entry point
   useEffect(() => {
@@ -2361,7 +2362,11 @@ const AddNewWorkOrder = () => {
       </div>
 
       {/* Fixed Bottom Action Bar */}
-      <div className="fixed bottom-0 left-0 right-0 bg-card border-t px-3 sm:px-4 lg:px-6 py-2 sm:py-3 lg:py-4 shadow-lg">
+      <div 
+        className={`fixed bottom-0 right-0 bg-card border-t px-3 sm:px-4 lg:px-6 py-2 sm:py-3 lg:py-4 shadow-lg transition-all duration-300 ${
+          sidebarOpen ? 'left-64' : 'left-16'
+        }`}
+      >
         <div className="w-full flex items-center justify-between gap-2 sm:gap-3">
           {/* Created By and Modified By Information */}
           <div className="flex flex-col text-xs text-muted-foreground">
