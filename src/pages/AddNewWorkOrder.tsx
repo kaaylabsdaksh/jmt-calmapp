@@ -897,7 +897,7 @@ const AddNewWorkOrder = () => {
                   <div className="space-y-4 sm:space-y-6">
                      {/* Action Buttons */}
                     {viewMode === 'receiving' ? (
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
                         <Button 
                           onClick={() => setIsQuickAddDialogOpen(true)}
                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
@@ -919,9 +919,18 @@ const AddNewWorkOrder = () => {
                           <span className="hidden sm:inline">Create Unused Items</span>
                           <span className="sm:hidden">Unused Items</span>
                         </Button>
+                        <Button 
+                          onClick={() => setIsCopyFromWODialogOpen(true)}
+                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
+                          disabled={areOtherFieldsDisabled()}
+                        >
+                          <Copy className="w-3 h-3 sm:w-4 sm:h-4" />
+                          <span className="hidden sm:inline">Copy From Other WO</span>
+                          <span className="sm:hidden">Copy WO</span>
+                        </Button>
                       </div>
                     ) : (
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2 sm:gap-3">
                         <Button 
                           onClick={() => navigate("/form-variations")}
                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
@@ -951,20 +960,18 @@ const AddNewWorkOrder = () => {
                           <span className="hidden sm:inline">Create Unused Items</span>
                           <span className="sm:hidden">Unused Items</span>
                         </Button>
+                        <Button 
+                          onClick={() => setIsCopyFromWODialogOpen(true)}
+                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
+                          disabled={areOtherFieldsDisabled()}
+                        >
+                          <Copy className="w-3 h-3 sm:w-4 sm:h-4" />
+                          <span className="hidden sm:inline">Copy From Other WO</span>
+                          <span className="sm:hidden">Copy WO</span>
+                        </Button>
                       </div>
                     )}
 
-                    {/* Copy From Other WO Button */}
-                    <div className="flex justify-start">
-                      <Button 
-                        onClick={() => setIsCopyFromWODialogOpen(true)}
-                        className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center gap-2 h-10 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm px-6"
-                        disabled={areOtherFieldsDisabled()}
-                      >
-                        <Copy className="w-4 h-4" />
-                        Copy From Other WO
-                      </Button>
-                    </div>
 
                     {/* Filter Controls */}
                     <div className="bg-muted/30 p-4 rounded-lg overflow-x-auto">
