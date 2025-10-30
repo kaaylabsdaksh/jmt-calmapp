@@ -1020,9 +1020,17 @@ const AddNewWorkOrder = () => {
                           <span className="hidden sm:inline">Create Unused Items</span>
                           <span className="sm:hidden">Unused Items</span>
                         </Button>
+                        <Button 
+                          onClick={() => document.getElementById('copy-from-other-wo')?.scrollIntoView({ behavior: 'smooth' })}
+                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
+                        >
+                          <Copy className="w-3 h-3 sm:w-4 sm:h-4" />
+                          <span className="hidden sm:inline">Copy From Other Work Order</span>
+                          <span className="sm:hidden">Copy WO</span>
+                        </Button>
                       </div>
                     ) : (
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2 sm:gap-3">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-2 sm:gap-3">
                         <Button 
                           onClick={() => navigate("/form-variations")}
                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
@@ -1052,12 +1060,20 @@ const AddNewWorkOrder = () => {
                           <span className="hidden sm:inline">Create Unused Items</span>
                           <span className="sm:hidden">Unused Items</span>
                         </Button>
+                        <Button 
+                          onClick={() => document.getElementById('copy-from-other-wo')?.scrollIntoView({ behavior: 'smooth' })}
+                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
+                        >
+                          <Copy className="w-3 h-3 sm:w-4 sm:h-4" />
+                          <span className="hidden sm:inline">Copy From Other Work Order</span>
+                          <span className="sm:hidden">Copy WO</span>
+                        </Button>
                       </div>
                     )}
 
 
                     {/* Copy From Other WO Section */}
-                    <div className="bg-muted/30 p-4 rounded-lg border-2 border-primary/20">
+                    <div id="copy-from-other-wo" className="bg-muted/30 p-4 rounded-lg border-2 border-primary/20">
                       <div className="flex flex-col gap-4">
                         <div className="flex items-center gap-2">
                           <Copy className="w-5 h-5 text-primary" />
