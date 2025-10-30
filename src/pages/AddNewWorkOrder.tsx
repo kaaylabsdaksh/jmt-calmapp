@@ -1707,7 +1707,44 @@ const AddNewWorkOrder = () => {
                               placeholder="0"
                               className="w-32 border-gray-400"
                             />
-                            <Button size="sm" className="bg-success hover:bg-success/90">
+                            <Button 
+                              size="sm" 
+                              className="bg-success hover:bg-success/90"
+                              onClick={() => {
+                                const num = parseInt(numUnusedItems);
+                                if (num > 0) {
+                                  const newItems = Array.from({ length: num }, (_, index) => ({
+                                    id: `unused-${Date.now()}-${index}`,
+                                    itemNumber: "",
+                                    calFreq: "",
+                                    actionCode: "",
+                                    priority: "",
+                                    manufacturer: "",
+                                    model: "",
+                                    description: "",
+                                    mfgSerial: "",
+                                    custId: "",
+                                    custSN: "",
+                                    assetNumber: "",
+                                    iso17025: "",
+                                    estimate: "",
+                                    newEquip: "",
+                                    needByDate: "",
+                                    ccCost: "",
+                                    tf: "",
+                                    capableLocations: ""
+                                  }));
+                                  setReceivingItems([...receivingItems, ...newItems]);
+                                  setNumUnusedItems("");
+                                  setIsCreateUnusedItemsExpanded(false);
+                                  toast({
+                                    title: "Success",
+                                    description: `${num} unused item${num > 1 ? 's' : ''} created successfully`,
+                                  });
+                                  setTimeout(() => document.getElementById('items-table')?.scrollIntoView({ behavior: 'smooth' }), 100);
+                                }
+                              }}
+                            >
                               Create
                             </Button>
                           </div>
