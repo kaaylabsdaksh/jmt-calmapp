@@ -60,6 +60,11 @@ const AddNewWorkOrder = () => {
     actionCode: "",
     arrivalDate: "",
     arrivalType: "",
+    arrivalLocation: "",
+    shipType: "",
+    customerName: "",
+    driver: "",
+    puDate: "",
     poNumber: "",
     recdBy: "",
     deliverByDate: "",
@@ -1302,7 +1307,7 @@ const AddNewWorkOrder = () => {
                           {/* ARRIVAL INFORMATION Section */}
                           <div className="space-y-4">
                             <h4 className="text-sm font-semibold text-muted-foreground uppercase">Arrival Information</h4>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                               <div className="space-y-2">
                                 <Label htmlFor="qa-arrivalDate" className="text-sm font-medium">
                                   Date <span className="text-destructive">*</span>
@@ -1340,6 +1345,86 @@ const AddNewWorkOrder = () => {
                                   </SelectContent>
                                 </Select>
                               </div>
+
+                              {/* Conditional fields based on arrival type */}
+                              {quickAddData.arrivalType === "surplus" && (
+                                <div className="space-y-2">
+                                  <Label htmlFor="qa-arrivalLocation" className="text-sm font-medium">Location</Label>
+                                  <Input 
+                                    id="qa-arrivalLocation"
+                                    value={quickAddData.arrivalLocation}
+                                    onChange={(e) => setQuickAddData({...quickAddData, arrivalLocation: e.target.value})}
+                                    placeholder="Enter location"
+                                    disabled={areOtherFieldsDisabled()}
+                                  />
+                                </div>
+                              )}
+
+                              {quickAddData.arrivalType === "shipped" && (
+                                <div className="space-y-2">
+                                  <Label htmlFor="qa-shipType" className="text-sm font-medium">Ship Type</Label>
+                                  <Select 
+                                    value={quickAddData.shipType} 
+                                    onValueChange={(value) => setQuickAddData({...quickAddData, shipType: value})}
+                                    disabled={areOtherFieldsDisabled()}
+                                  >
+                                    <SelectTrigger id="qa-shipType">
+                                      <SelectValue placeholder="Select..." />
+                                    </SelectTrigger>
+                                    <SelectContent className="bg-background border shadow-lg z-50">
+                                      <SelectItem value="dhl">DHL</SelectItem>
+                                      <SelectItem value="fedex">FedEx</SelectItem>
+                                      <SelectItem value="ups">UPS</SelectItem>
+                                      <SelectItem value="usps">USPS</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+                              )}
+
+                              {quickAddData.arrivalType === "customer-dropoff" && (
+                                <div className="space-y-2">
+                                  <Label htmlFor="qa-customerName" className="text-sm font-medium">Name</Label>
+                                  <Input 
+                                    id="qa-customerName"
+                                    value={quickAddData.customerName}
+                                    onChange={(e) => setQuickAddData({...quickAddData, customerName: e.target.value})}
+                                    placeholder="Enter name"
+                                    disabled={areOtherFieldsDisabled()}
+                                  />
+                                </div>
+                              )}
+
+                              {quickAddData.arrivalType === "jm-driver-pickup" && (
+                                <>
+                                  <div className="space-y-2">
+                                    <Label htmlFor="qa-driver" className="text-sm font-medium">Driver</Label>
+                                    <Select 
+                                      value={quickAddData.driver} 
+                                      onValueChange={(value) => setQuickAddData({...quickAddData, driver: value})}
+                                      disabled={areOtherFieldsDisabled()}
+                                    >
+                                      <SelectTrigger id="qa-driver">
+                                        <SelectValue placeholder="Select driver" />
+                                      </SelectTrigger>
+                                      <SelectContent className="bg-background border shadow-lg z-50">
+                                        <SelectItem value="driver1">Driver 1</SelectItem>
+                                        <SelectItem value="driver2">Driver 2</SelectItem>
+                                        <SelectItem value="driver3">Driver 3</SelectItem>
+                                      </SelectContent>
+                                    </Select>
+                                  </div>
+                                  <div className="space-y-2">
+                                    <Label htmlFor="qa-puDate" className="text-sm font-medium">PU Date</Label>
+                                    <Input 
+                                      id="qa-puDate"
+                                      type="date"
+                                      value={quickAddData.puDate}
+                                      onChange={(e) => setQuickAddData({...quickAddData, puDate: e.target.value})}
+                                      disabled={areOtherFieldsDisabled()}
+                                    />
+                                  </div>
+                                </>
+                              )}
                             </div>
                           </div>
 
@@ -1465,6 +1550,11 @@ const AddNewWorkOrder = () => {
                                   actionCode: "",
                                   arrivalDate: "",
                                   arrivalType: "",
+                                  arrivalLocation: "",
+                                  shipType: "",
+                                  customerName: "",
+                                  driver: "",
+                                  puDate: "",
                                   poNumber: "",
                                   recdBy: "",
                                   deliverByDate: "",
@@ -1534,6 +1624,11 @@ const AddNewWorkOrder = () => {
                                   actionCode: "",
                                   arrivalDate: "",
                                   arrivalType: "",
+                                  arrivalLocation: "",
+                                  shipType: "",
+                                  customerName: "",
+                                  driver: "",
+                                  puDate: "",
                                   poNumber: "",
                                   recdBy: "",
                                   deliverByDate: "",
