@@ -1169,11 +1169,6 @@ const AddNewWorkOrder = () => {
                     <div className="bg-muted/30 p-4 rounded-lg overflow-x-auto">
                       <div className="flex items-center gap-4 min-w-fit">
                         <div className="flex items-center gap-2">
-                          <Label className="text-sm font-medium whitespace-nowrap min-w-fit"># of Items:</Label>
-                          <span className="text-sm font-medium min-w-fit">{selectedItemsCount}</span>
-                        </div>
-
-                        <div className="flex items-center gap-2">
                           <Label className="text-sm font-medium whitespace-nowrap min-w-fit">Special Action:</Label>
                           <Select
                             value={selectedSpecialAction}
