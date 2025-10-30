@@ -45,12 +45,12 @@ const AddNewWorkOrder = () => {
   });
   
   const [isRFIDDialogOpen, setIsRFIDDialogOpen] = useState(false);
-  const [isQuickAddDialogOpen, setIsQuickAddDialogOpen] = useState(false);
   
   // Copy from other WO states
   const [isCopyFromWOExpanded, setIsCopyFromWOExpanded] = useState(false);
   const [isSpecialActionExpanded, setIsSpecialActionExpanded] = useState(false);
   const [isCreateUnusedItemsExpanded, setIsCreateUnusedItemsExpanded] = useState(false);
+  const [isQuickAddExpanded, setIsQuickAddExpanded] = useState(false);
   const [numUnusedItems, setNumUnusedItems] = useState("");
   const [copyWorkOrder, setCopyWorkOrder] = useState("");
   const [copyItemFrom, setCopyItemFrom] = useState("");
@@ -1004,7 +1004,16 @@ const AddNewWorkOrder = () => {
                      {viewMode === 'receiving' ? (
                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2 sm:gap-3">
                         <Button 
-                          onClick={() => setIsQuickAddDialogOpen(true)}
+                          onClick={() => {
+                            const newState = !isQuickAddExpanded;
+                            setIsQuickAddExpanded(newState);
+                            if (newState) {
+                              setIsCopyFromWOExpanded(false);
+                              setIsSpecialActionExpanded(false);
+                              setIsCreateUnusedItemsExpanded(false);
+                              setTimeout(() => document.getElementById('quick-add-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
+                            }
+                          }}
                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
                         >
                           <Plus className="w-3 h-3 sm:w-4 sm:h-4" />
@@ -1023,6 +1032,7 @@ const AddNewWorkOrder = () => {
                             if (newState) {
                               setIsCopyFromWOExpanded(false);
                               setIsSpecialActionExpanded(false);
+                              setIsQuickAddExpanded(false);
                               setTimeout(() => document.getElementById('create-unused-items-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
                             }
                           }}
@@ -1039,6 +1049,7 @@ const AddNewWorkOrder = () => {
                             if (newState) {
                               setIsSpecialActionExpanded(false);
                               setIsCreateUnusedItemsExpanded(false);
+                              setIsQuickAddExpanded(false);
                               setTimeout(() => document.getElementById('copy-from-other-wo')?.scrollIntoView({ behavior: 'smooth' }), 100);
                             }
                           }}
@@ -1055,6 +1066,7 @@ const AddNewWorkOrder = () => {
                             if (newState) {
                               setIsCopyFromWOExpanded(false);
                               setIsCreateUnusedItemsExpanded(false);
+                              setIsQuickAddExpanded(false);
                               setTimeout(() => document.getElementById('special-action-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
                             }
                           }}
@@ -1139,6 +1151,21 @@ const AddNewWorkOrder = () => {
                       </div>
                     )}
 
+
+                    {/* Quick Add Section */}
+                    {isQuickAddExpanded && (
+                      <div id="quick-add-section" className="bg-muted/30 p-4 rounded-lg border-2 border-primary/20">
+                        <div className="flex flex-col gap-4">
+                          <div className="flex items-center gap-2">
+                            <Plus className="w-5 h-5 text-primary" />
+                            <h3 className="text-base font-semibold text-foreground">Quick Add New Items</h3>
+                          </div>
+                          <p className="text-sm text-muted-foreground">
+                            Select items from the table below and fill in the form to quickly add multiple items with the same data.
+                          </p>
+                        </div>
+                      </div>
+                    )}
 
                     {/* Copy From Other WO Section */}
                     {isCopyFromWOExpanded && (
@@ -1782,8 +1809,6 @@ const AddNewWorkOrder = () => {
                       <WorkOrderItemsReceiving 
                         items={receivingItems} 
                         setItems={setReceivingItems}
-                        isQuickAddDialogOpen={isQuickAddDialogOpen}
-                        setIsQuickAddDialogOpen={setIsQuickAddDialogOpen}
                         onSelectedItemsChange={setSelectedItemsCount}
                       />
                     ) : viewMode === 'table' ? (
