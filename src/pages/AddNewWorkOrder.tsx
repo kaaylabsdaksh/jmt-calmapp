@@ -998,8 +998,8 @@ const AddNewWorkOrder = () => {
                   <div className="space-y-4 sm:space-y-6">
                      {/* Action Buttons */}
                     {viewMode === 'receiving' ? (
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
-                      <Button 
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3">
+                        <Button 
                           onClick={() => setIsQuickAddDialogOpen(true)}
                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
                         >
@@ -1013,14 +1013,6 @@ const AddNewWorkOrder = () => {
                           <span className="sm:hidden">QR Sheet</span>
                         </Button>
                         <Button 
-                          onClick={handleCopyFromOtherWO}
-                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
-                        >
-                          <Copy className="w-3 h-3 sm:w-4 sm:h-4" />
-                          <span className="hidden sm:inline">Copy From Other WO</span>
-                          <span className="sm:hidden">Copy WO</span>
-                        </Button>
-                        <Button 
                           onClick={() => navigate('/unused-items')}
                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
                         >
@@ -1030,7 +1022,7 @@ const AddNewWorkOrder = () => {
                         </Button>
                       </div>
                     ) : (
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2 sm:gap-3">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
                         <Button 
                           onClick={() => navigate("/form-variations")}
                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
@@ -1052,14 +1044,6 @@ const AddNewWorkOrder = () => {
                           <span className="hidden sm:inline">Print QR Sheet</span>
                           <span className="sm:hidden">QR Sheet</span>
                         </Button>
-                        <Button 
-                          onClick={handleCopyFromOtherWO}
-                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
-                        >
-                          <Copy className="w-3 h-3 sm:w-4 sm:h-4" />
-                          <span className="hidden sm:inline">Copy From Other WO</span>
-                          <span className="sm:hidden">Copy WO</span>
-                        </Button>
                         <Button
                           onClick={() => navigate('/unused-items')}
                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
@@ -1071,50 +1055,70 @@ const AddNewWorkOrder = () => {
                       </div>
                     )}
 
+                    {/* Copy From Other WO Section */}
+                    <div className="bg-muted/30 p-4 rounded-lg border-2 border-primary/20">
+                      <div className="flex flex-col gap-3">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Copy className="w-4 h-4 text-primary" />
+                          <h3 className="text-sm font-semibold text-foreground">Copy From Other Work Order</h3>
+                        </div>
+                        
+                        <div className="flex flex-wrap items-center gap-4">
+                          <div className="flex items-center gap-2">
+                            <Label className="text-sm font-medium whitespace-nowrap min-w-fit">Work Order:</Label>
+                            <Input 
+                              className="w-32 border-gray-400" 
+                              value={copyWorkOrder}
+                              onChange={(e) => setCopyWorkOrder(e.target.value)}
+                              placeholder="WO-123456"
+                            />
+                          </div>
+                          
+                          <div className="flex items-center gap-2">
+                            <Label className="text-sm font-medium whitespace-nowrap min-w-fit">Item #:</Label>
+                            <Input 
+                              className="w-16 border-gray-400" 
+                              value={copyItemFrom}
+                              onChange={(e) => setCopyItemFrom(e.target.value)}
+                              placeholder="1"
+                            />
+                            <span className="text-sm text-muted-foreground">to</span>
+                            <Input 
+                              className="w-16 border-gray-400" 
+                              value={copyItemTo}
+                              onChange={(e) => setCopyItemTo(e.target.value)}
+                              placeholder="10"
+                            />
+                            <span className="text-sm text-muted-foreground">or</span>
+                          </div>
+
+                          <div className="flex items-center gap-2">
+                            <Label className="text-sm font-medium whitespace-nowrap min-w-fit">Groupable:</Label>
+                            <Select value={copyGroupable} onValueChange={setCopyGroupable}>
+                              <SelectTrigger className="w-28 border-gray-400">
+                                <SelectValue placeholder="Select..." />
+                              </SelectTrigger>
+                              <SelectContent className="bg-background border shadow-lg z-50">
+                                <SelectItem value="yes">Yes</SelectItem>
+                                <SelectItem value="no">No</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+
+                          <Button 
+                            onClick={handleCopyFromOtherWO}
+                            className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center gap-2 h-10 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm px-6"
+                          >
+                            <Copy className="w-4 h-4" />
+                            Copy Items
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+
                     {/* Filter Controls */}
                     <div className="bg-muted/30 p-4 rounded-lg overflow-x-auto">
                       <div className="flex items-center gap-4 min-w-fit">
-                        <div className="flex items-center gap-2">
-                          <Label className="text-sm font-medium whitespace-nowrap min-w-fit">Work Order:</Label>
-                          <Input 
-                            className="w-24 border-gray-400" 
-                            value={copyWorkOrder}
-                            onChange={(e) => setCopyWorkOrder(e.target.value)}
-                            placeholder="WO-123"
-                          />
-                        </div>
-                        
-                        <div className="flex items-center gap-2">
-                          <Label className="text-sm font-medium whitespace-nowrap min-w-fit">Item #:</Label>
-                          <Input 
-                            className="w-16 border-gray-400" 
-                            value={copyItemFrom}
-                            onChange={(e) => setCopyItemFrom(e.target.value)}
-                            placeholder="1"
-                          />
-                          <span className="text-sm text-muted-foreground">-</span>
-                          <Input 
-                            className="w-16 border-gray-400" 
-                            value={copyItemTo}
-                            onChange={(e) => setCopyItemTo(e.target.value)}
-                            placeholder="10"
-                          />
-                          <span className="text-sm text-muted-foreground">or</span>
-                        </div>
-
-                        <div className="flex items-center gap-2">
-                          <Label className="text-sm font-medium whitespace-nowrap min-w-fit">Groupable:</Label>
-                          <Select value={copyGroupable} onValueChange={setCopyGroupable}>
-                            <SelectTrigger className="w-28 border-gray-400">
-                              <SelectValue placeholder="Select..." />
-                            </SelectTrigger>
-                            <SelectContent className="bg-background border shadow-lg z-50">
-                              <SelectItem value="yes">Yes</SelectItem>
-                              <SelectItem value="no">No</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </div>
-
                         <div className="flex items-center gap-2">
                           <Label className="text-sm font-medium whitespace-nowrap min-w-fit"># of Items:</Label>
                           <span className="text-sm font-medium min-w-fit">{selectedItemsCount}</span>
