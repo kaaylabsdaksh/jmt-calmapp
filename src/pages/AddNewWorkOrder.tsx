@@ -1280,39 +1280,39 @@ const AddNewWorkOrder = () => {
                           {/* Add Comments */}
                           {selectedSpecialAction === "add-comments" && (
                             <>
-                              <div className="flex items-center gap-4">
-                                <Label className="text-sm font-medium whitespace-nowrap">Comment Type</Label>
-                                <Select value={specialActionCommentType} onValueChange={setSpecialActionCommentType}>
-                                  <SelectTrigger className="w-60 border-gray-400">
-                                    <SelectValue placeholder="Select..." />
-                                  </SelectTrigger>
-                                  <SelectContent className="bg-background border shadow-lg z-50 max-h-80 overflow-y-auto">
-                                    <SelectItem value="sales">Sales</SelectItem>
-                                    <SelectItem value="sales-order">Sales Order</SelectItem>
-                                    <SelectItem value="shipping">Shipping</SelectItem>
-                                    <SelectItem value="delivery">Delivery</SelectItem>
-                                    <SelectItem value="receiving">Receiving</SelectItem>
-                                    <SelectItem value="technical">Technical</SelectItem>
-                                    <SelectItem value="purchasing">Purchasing</SelectItem>
-                                    <SelectItem value="accounting">Accounting</SelectItem>
-                                    <SelectItem value="qa">QA</SelectItem>
-                                    <SelectItem value="rental">Rental</SelectItem>
-                                    <SelectItem value="tf">T/F</SelectItem>
-                                    <SelectItem value="transit">Transit</SelectItem>
-                                    <SelectItem value="other">Other</SelectItem>
-                                    <SelectItem value="onsite">Onsite</SelectItem>
-                                    <SelectItem value="user-status-change">User Status Change</SelectItem>
-                                    <SelectItem value="estimate">Estimate</SelectItem>
-                                    <SelectItem value="hot-list">Hot List</SelectItem>
-                                    <SelectItem value="batch-cert">Batch Cert</SelectItem>
-                                    <SelectItem value="warranty">Warranty</SelectItem>
-                                    <SelectItem value="lost-equip">Lost Equip</SelectItem>
-                                  </SelectContent>
-                                </Select>
-                              </div>
-                              <div className="space-y-2">
+                              <div className="flex items-center gap-4 flex-wrap">
                                 <div className="flex items-center gap-2">
-                                  <Label className="text-sm font-medium">Enter a comment</Label>
+                                  <Label className="text-sm font-medium whitespace-nowrap">Comment Type</Label>
+                                  <Select value={specialActionCommentType} onValueChange={setSpecialActionCommentType}>
+                                    <SelectTrigger className="w-60 border-gray-400">
+                                      <SelectValue placeholder="Select..." />
+                                    </SelectTrigger>
+                                    <SelectContent className="bg-background border shadow-lg z-50 max-h-80 overflow-y-auto">
+                                      <SelectItem value="sales">Sales</SelectItem>
+                                      <SelectItem value="sales-order">Sales Order</SelectItem>
+                                      <SelectItem value="shipping">Shipping</SelectItem>
+                                      <SelectItem value="delivery">Delivery</SelectItem>
+                                      <SelectItem value="receiving">Receiving</SelectItem>
+                                      <SelectItem value="technical">Technical</SelectItem>
+                                      <SelectItem value="purchasing">Purchasing</SelectItem>
+                                      <SelectItem value="accounting">Accounting</SelectItem>
+                                      <SelectItem value="qa">QA</SelectItem>
+                                      <SelectItem value="rental">Rental</SelectItem>
+                                      <SelectItem value="tf">T/F</SelectItem>
+                                      <SelectItem value="transit">Transit</SelectItem>
+                                      <SelectItem value="other">Other</SelectItem>
+                                      <SelectItem value="onsite">Onsite</SelectItem>
+                                      <SelectItem value="user-status-change">User Status Change</SelectItem>
+                                      <SelectItem value="estimate">Estimate</SelectItem>
+                                      <SelectItem value="hot-list">Hot List</SelectItem>
+                                      <SelectItem value="batch-cert">Batch Cert</SelectItem>
+                                      <SelectItem value="warranty">Warranty</SelectItem>
+                                      <SelectItem value="lost-equip">Lost Equip</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <Label className="text-sm font-medium whitespace-nowrap">Enter a comment</Label>
                                   <Select>
                                     <SelectTrigger className="w-48 border-gray-400 h-8">
                                       <SelectValue placeholder="Pre-select Comment Text" />
@@ -1323,6 +1323,8 @@ const AddNewWorkOrder = () => {
                                     </SelectContent>
                                   </Select>
                                 </div>
+                              </div>
+                              <div className="space-y-2">
                                 <textarea
                                   className="w-full min-h-[80px] px-3 py-2 text-sm border border-gray-400 rounded-md bg-background"
                                   placeholder="Enter comment..."
