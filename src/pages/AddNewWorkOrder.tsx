@@ -1331,7 +1331,7 @@ const AddNewWorkOrder = () => {
                                   value={specialActionComment}
                                   onChange={(e) => setSpecialActionComment(e.target.value)}
                                 />
-                                <Button size="sm" className="bg-[#FDB022] hover:bg-[#FDB022]/90 text-black font-semibold">
+                                <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
                                   Set Comments
                                 </Button>
                               </div>
@@ -1359,7 +1359,7 @@ const AddNewWorkOrder = () => {
                                 value={specialActionComment}
                                 onChange={(e) => setSpecialActionComment(e.target.value)}
                               />
-                              <Button size="sm" className="bg-[#FDB022] hover:bg-[#FDB022]/90 text-black font-semibold">
+                              <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
                                 Cancel Item(s)
                               </Button>
                             </div>
@@ -1394,7 +1394,7 @@ const AddNewWorkOrder = () => {
                                   </Select>
                                 </div>
                               </div>
-                              <Button size="sm" className="bg-[#FDB022] hover:bg-[#FDB022]/90 text-black font-semibold">
+                              <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
                                 Change ESL Type
                               </Button>
                             </div>
@@ -1421,7 +1421,7 @@ const AddNewWorkOrder = () => {
                                 value={specialActionComment}
                                 onChange={(e) => setSpecialActionComment(e.target.value)}
                               />
-                              <Button size="sm" className="bg-[#FDB022] hover:bg-[#FDB022]/90 text-black font-semibold">
+                              <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
                                 Set Customer Replied Received
                               </Button>
                             </div>
@@ -1448,7 +1448,7 @@ const AddNewWorkOrder = () => {
                                 value={specialActionComment}
                                 onChange={(e) => setSpecialActionComment(e.target.value)}
                               />
-                              <Button size="sm" className="bg-[#FDB022] hover:bg-[#FDB022]/90 text-black font-semibold">
+                              <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
                                 Set Del Ticket Followup
                               </Button>
                             </div>
@@ -1464,7 +1464,7 @@ const AddNewWorkOrder = () => {
                                 value={specialActionComment}
                                 onChange={(e) => setSpecialActionComment(e.target.value)}
                               />
-                              <Button size="sm" className="bg-[#FDB022] hover:bg-[#FDB022]/90 text-black font-semibold">
+                              <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
                                 Set Ready To Bill
                               </Button>
                             </div>
@@ -1516,7 +1516,7 @@ const AddNewWorkOrder = () => {
                                   value={specialActionComment}
                                   onChange={(e) => setSpecialActionComment(e.target.value)}
                                 />
-                                <Button size="sm" className="bg-[#FDB022] hover:bg-[#FDB022]/90 text-black font-semibold">
+                                <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
                                   To A/R
                                 </Button>
                               </div>
@@ -1535,7 +1535,7 @@ const AddNewWorkOrder = () => {
                                   onChange={(e) => setCalFreqValue(e.target.value)}
                                 />
                               </div>
-                              <Button size="sm" className="bg-[#FDB022] hover:bg-[#FDB022]/90 text-black font-semibold">
+                              <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
                                 Update Cal Freq's
                               </Button>
                             </div>
@@ -1551,7 +1551,7 @@ const AddNewWorkOrder = () => {
                                 value={poNumberValue}
                                 onChange={(e) => setPoNumberValue(e.target.value)}
                               />
-                              <Button size="sm" className="bg-[#FDB022] hover:bg-[#FDB022]/90 text-black font-semibold">
+                              <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
                                 Update PO #'s
                               </Button>
                             </div>
@@ -1591,7 +1591,7 @@ const AddNewWorkOrder = () => {
                                   </SelectContent>
                                 </Select>
                               </div>
-                              <Button size="sm" className="bg-[#FDB022] hover:bg-[#FDB022]/90 text-black font-semibold">
+                              <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
                                 Update T/F Status
                               </Button>
                             </div>
@@ -1618,7 +1618,7 @@ const AddNewWorkOrder = () => {
                                 value={specialActionComment}
                                 onChange={(e) => setSpecialActionComment(e.target.value)}
                               />
-                              <Button size="sm" className="bg-[#FDB022] hover:bg-[#FDB022]/90 text-black font-semibold">
+                              <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
                                 Wait Cust Followup
                               </Button>
                             </div>
@@ -1661,7 +1661,7 @@ const AddNewWorkOrder = () => {
                                   value={specialActionComment}
                                   onChange={(e) => setSpecialActionComment(e.target.value)}
                                 />
-                                <Button size="sm" className="bg-[#FDB022] hover:bg-[#FDB022]/90 text-black font-semibold">
+                                <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
                                   Set Waiting on Customer
                                 </Button>
                               </div>
@@ -1678,7 +1678,7 @@ const AddNewWorkOrder = () => {
                                 value={deliverByDate}
                                 onChange={(e) => setDeliverByDate(e.target.value)}
                               />
-                              <Button size="sm" className="bg-[#FDB022] hover:bg-[#FDB022]/90 text-black font-semibold">
+                              <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
                                 Update Deliver By Date
                               </Button>
                             </div>
@@ -1734,7 +1734,7 @@ const AddNewWorkOrder = () => {
                             />
                             <Button 
                               size="sm" 
-                              className="bg-[#FDB022] hover:bg-[#FDB022]/90 text-black font-semibold"
+                              className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
                               onClick={() => {
                                 const num = parseInt(numUnusedItems);
                                 if (num > 0) {
