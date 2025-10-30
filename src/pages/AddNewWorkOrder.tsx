@@ -47,6 +47,15 @@ const AddNewWorkOrder = () => {
   const [isRFIDDialogOpen, setIsRFIDDialogOpen] = useState(false);
   const [isQuickAddDialogOpen, setIsQuickAddDialogOpen] = useState(false);
   const [selectedItemsCount, setSelectedItemsCount] = useState(0);
+  const [selectedSpecialAction, setSelectedSpecialAction] = useState<string>("");
+  const [specialActionComment, setSpecialActionComment] = useState("");
+  const [specialActionCommentType, setSpecialActionCommentType] = useState("");
+  const [calFreqValue, setCalFreqValue] = useState("");
+  const [poNumberValue, setPoNumberValue] = useState("");
+  const [tfStatusValue, setTfStatusValue] = useState("");
+  const [currentEslType, setCurrentEslType] = useState("");
+  const [changeToEslType, setChangeToEslType] = useState("");
+  const [clearInvoiceData, setClearInvoiceData] = useState(false);
 
   // Save active tab to localStorage whenever it changes
   useEffect(() => {
@@ -982,8 +991,18 @@ const AddNewWorkOrder = () => {
                         <div className="flex items-center gap-2">
                           <Label className="text-sm font-medium whitespace-nowrap min-w-fit">Special Action:</Label>
                           <Select
+                            value={selectedSpecialAction}
                             onValueChange={(value) => {
-                              console.log(`Special action: ${value} for ${selectedItemsCount} item(s)`);
+                              setSelectedSpecialAction(value);
+                              // Reset form fields when action changes
+                              setSpecialActionComment("");
+                              setSpecialActionCommentType("");
+                              setCalFreqValue("");
+                              setPoNumberValue("");
+                              setTfStatusValue("");
+                              setCurrentEslType("");
+                              setChangeToEslType("");
+                              setClearInvoiceData(false);
                             }}
                           >
                             <SelectTrigger className="w-48 border-gray-400">
@@ -1000,16 +1019,340 @@ const AddNewWorkOrder = () => {
                               <SelectItem value="update-cal-freq">Update Cal Freq's</SelectItem>
                               <SelectItem value="update-po">Update PO #'s</SelectItem>
                               <SelectItem value="update-tf-status">Update T/F Status</SelectItem>
-                              <SelectItem value="waiting-on-customer">Waiting on Customer</SelectItem>
                               <SelectItem value="wait-cust-followup">Wait Cust Followup</SelectItem>
-                              <SelectItem value="update-deliver-by-date">Update Deliver By Date</SelectItem>
-                              <SelectItem value="print-wos">Print WOs</SelectItem>
-                              <SelectItem value="print-labels">Print Labels</SelectItem>
-                              <SelectItem value="print-barcodes">Print Barcodes</SelectItem>
                             </SelectContent>
                           </Select>
                         </div>
                       </div>
+
+                      {/* Special Action Form Fields */}
+                      {selectedSpecialAction && (
+                        <div className="bg-muted/30 border rounded-lg p-4 space-y-3 mt-4">
+                          {/* Add Comments */}
+                          {selectedSpecialAction === "add-comments" && (
+                            <>
+                              <div className="flex items-center gap-4">
+                                <Label className="text-sm font-medium whitespace-nowrap">Comment Type</Label>
+                                <Select value={specialActionCommentType} onValueChange={setSpecialActionCommentType}>
+                                  <SelectTrigger className="w-60 border-gray-400">
+                                    <SelectValue placeholder="Select..." />
+                                  </SelectTrigger>
+                                  <SelectContent className="bg-background border shadow-lg z-50">
+                                    <SelectItem value="general">General Comment</SelectItem>
+                                    <SelectItem value="technical">Technical Note</SelectItem>
+                                    <SelectItem value="customer">Customer Note</SelectItem>
+                                  </SelectContent>
+                                </Select>
+                              </div>
+                              <div className="space-y-2">
+                                <div className="flex items-center gap-2">
+                                  <Label className="text-sm font-medium">Enter a comment</Label>
+                                  <Select>
+                                    <SelectTrigger className="w-48 border-gray-400 h-8">
+                                      <SelectValue placeholder="Pre-select Comment Text" />
+                                    </SelectTrigger>
+                                    <SelectContent className="bg-background border shadow-lg z-50">
+                                      <SelectItem value="template1">Template 1</SelectItem>
+                                      <SelectItem value="template2">Template 2</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+                                <textarea
+                                  className="w-full min-h-[80px] px-3 py-2 text-sm border border-gray-400 rounded-md bg-background"
+                                  placeholder="Enter comment..."
+                                  value={specialActionComment}
+                                  onChange={(e) => setSpecialActionComment(e.target.value)}
+                                />
+                                <Button size="sm" className="bg-success hover:bg-success/90">
+                                  Set Comments
+                                </Button>
+                              </div>
+                            </>
+                          )}
+
+                          {/* Cancel Item(s) */}
+                          {selectedSpecialAction === "cancel-items" && (
+                            <div className="space-y-2">
+                              <div className="flex items-center gap-2">
+                                <Label className="text-sm font-medium">Enter a comment</Label>
+                                <Select>
+                                  <SelectTrigger className="w-48 border-gray-400 h-8">
+                                    <SelectValue placeholder="Pre-select Comment Text" />
+                                  </SelectTrigger>
+                                  <SelectContent className="bg-background border shadow-lg z-50">
+                                    <SelectItem value="template1">Template 1</SelectItem>
+                                    <SelectItem value="template2">Template 2</SelectItem>
+                                  </SelectContent>
+                                </Select>
+                              </div>
+                              <textarea
+                                className="w-full min-h-[80px] px-3 py-2 text-sm border border-gray-400 rounded-md bg-background"
+                                placeholder="Enter comment..."
+                                value={specialActionComment}
+                                onChange={(e) => setSpecialActionComment(e.target.value)}
+                              />
+                              <Button size="sm" className="bg-success hover:bg-success/90">
+                                Cancel Item(s)
+                              </Button>
+                            </div>
+                          )}
+
+                          {/* Change ESL Type */}
+                          {selectedSpecialAction === "change-esl-type" && (
+                            <div className="space-y-3">
+                              <div className="flex items-center gap-4">
+                                <Label className="text-sm font-medium whitespace-nowrap">Current Item:</Label>
+                                <Select value={currentEslType} onValueChange={setCurrentEslType}>
+                                  <SelectTrigger className="w-60 border-gray-400">
+                                    <SelectValue placeholder="Select..." />
+                                  </SelectTrigger>
+                                  <SelectContent className="bg-background border shadow-lg z-50">
+                                    <SelectItem value="type1">Type 1</SelectItem>
+                                    <SelectItem value="type2">Type 2</SelectItem>
+                                  </SelectContent>
+                                </Select>
+                              </div>
+                              <div className="flex items-center gap-4">
+                                <Label className="text-sm font-medium whitespace-nowrap">Change to:</Label>
+                                <Select value={changeToEslType} onValueChange={setChangeToEslType}>
+                                  <SelectTrigger className="w-60 border-gray-400">
+                                    <SelectValue placeholder="Select..." />
+                                  </SelectTrigger>
+                                  <SelectContent className="bg-background border shadow-lg z-50">
+                                    <SelectItem value="type1">Type 1</SelectItem>
+                                    <SelectItem value="type2">Type 2</SelectItem>
+                                  </SelectContent>
+                                </Select>
+                              </div>
+                              <Button size="sm" className="bg-success hover:bg-success/90">
+                                Change ESL Type
+                              </Button>
+                            </div>
+                          )}
+
+                          {/* Cust Reply Received */}
+                          {selectedSpecialAction === "cust-reply-received" && (
+                            <div className="space-y-2">
+                              <div className="flex items-center gap-2">
+                                <Label className="text-sm font-medium">Enter a comment</Label>
+                                <Select>
+                                  <SelectTrigger className="w-48 border-gray-400 h-8">
+                                    <SelectValue placeholder="Pre-select Comment Text" />
+                                  </SelectTrigger>
+                                  <SelectContent className="bg-background border shadow-lg z-50">
+                                    <SelectItem value="template1">Template 1</SelectItem>
+                                    <SelectItem value="template2">Template 2</SelectItem>
+                                  </SelectContent>
+                                </Select>
+                              </div>
+                              <textarea
+                                className="w-full min-h-[80px] px-3 py-2 text-sm border border-gray-400 rounded-md bg-background"
+                                placeholder="Enter comment..."
+                                value={specialActionComment}
+                                onChange={(e) => setSpecialActionComment(e.target.value)}
+                              />
+                              <Button size="sm" className="bg-success hover:bg-success/90">
+                                Set Customer Replied Received
+                              </Button>
+                            </div>
+                          )}
+
+                          {/* Del Ticket Followup */}
+                          {selectedSpecialAction === "del-ticket-followup" && (
+                            <div className="space-y-2">
+                              <div className="flex items-center gap-2">
+                                <Label className="text-sm font-medium">Enter a comment</Label>
+                                <Select>
+                                  <SelectTrigger className="w-48 border-gray-400 h-8">
+                                    <SelectValue placeholder="Pre-select Comment Text" />
+                                  </SelectTrigger>
+                                  <SelectContent className="bg-background border shadow-lg z-50">
+                                    <SelectItem value="template1">Template 1</SelectItem>
+                                    <SelectItem value="template2">Template 2</SelectItem>
+                                  </SelectContent>
+                                </Select>
+                              </div>
+                              <textarea
+                                className="w-full min-h-[80px] px-3 py-2 text-sm border border-gray-400 rounded-md bg-background"
+                                placeholder="Enter comment..."
+                                value={specialActionComment}
+                                onChange={(e) => setSpecialActionComment(e.target.value)}
+                              />
+                              <Button size="sm" className="bg-success hover:bg-success/90">
+                                Set Del Ticket Followup
+                              </Button>
+                            </div>
+                          )}
+
+                          {/* Ready to Bill */}
+                          {selectedSpecialAction === "ready-to-bill" && (
+                            <div className="space-y-2">
+                              <Label className="text-sm font-medium">Enter a comment</Label>
+                              <textarea
+                                className="w-full min-h-[80px] px-3 py-2 text-sm border border-gray-400 rounded-md bg-background"
+                                placeholder="Enter comment..."
+                                value={specialActionComment}
+                                onChange={(e) => setSpecialActionComment(e.target.value)}
+                              />
+                              <Button size="sm" className="bg-success hover:bg-success/90">
+                                Set Ready To Bill
+                              </Button>
+                            </div>
+                          )}
+
+                          {/* To A/R */}
+                          {selectedSpecialAction === "to-ar" && (
+                            <>
+                              <div className="flex items-center gap-4">
+                                <Label className="text-sm font-medium whitespace-nowrap">Comment Type</Label>
+                                <Select value={specialActionCommentType} onValueChange={setSpecialActionCommentType}>
+                                  <SelectTrigger className="w-60 border-gray-400">
+                                    <SelectValue placeholder="Select..." />
+                                  </SelectTrigger>
+                                  <SelectContent className="bg-background border shadow-lg z-50">
+                                    <SelectItem value="general">General Comment</SelectItem>
+                                    <SelectItem value="technical">Technical Note</SelectItem>
+                                  </SelectContent>
+                                </Select>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <Checkbox 
+                                  id="clearInvoice"
+                                  checked={clearInvoiceData}
+                                  onCheckedChange={(checked) => setClearInvoiceData(checked as boolean)}
+                                />
+                                <Label htmlFor="clearInvoice" className="text-sm font-medium cursor-pointer">
+                                  Clear Invoice Data
+                                </Label>
+                              </div>
+                              <div className="space-y-2">
+                                <div className="flex items-center gap-2">
+                                  <Label className="text-sm font-medium">Enter a comment</Label>
+                                  <Select>
+                                    <SelectTrigger className="w-48 border-gray-400 h-8">
+                                      <SelectValue placeholder="Pre-select Comment Text" />
+                                    </SelectTrigger>
+                                    <SelectContent className="bg-background border shadow-lg z-50">
+                                      <SelectItem value="template1">Template 1</SelectItem>
+                                      <SelectItem value="template2">Template 2</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+                                <textarea
+                                  className="w-full min-h-[80px] px-3 py-2 text-sm border border-gray-400 rounded-md bg-background"
+                                  placeholder="Enter comment..."
+                                  value={specialActionComment}
+                                  onChange={(e) => setSpecialActionComment(e.target.value)}
+                                />
+                                <Button size="sm" className="bg-success hover:bg-success/90">
+                                  To A/R
+                                </Button>
+                              </div>
+                            </>
+                          )}
+
+                          {/* Update Cal Freq's */}
+                          {selectedSpecialAction === "update-cal-freq" && (
+                            <div className="space-y-2">
+                              <div className="flex items-center gap-4">
+                                <Label className="text-sm font-medium whitespace-nowrap">Cal Freq:</Label>
+                                <Input
+                                  className="w-40 border-gray-400"
+                                  placeholder="Enter frequency"
+                                  value={calFreqValue}
+                                  onChange={(e) => setCalFreqValue(e.target.value)}
+                                />
+                              </div>
+                              <Button size="sm" className="bg-success hover:bg-success/90">
+                                Update Cal Freq's
+                              </Button>
+                            </div>
+                          )}
+
+                          {/* Update PO #'s */}
+                          {selectedSpecialAction === "update-po" && (
+                            <div className="space-y-2">
+                              <Label className="text-sm font-medium">Enter a PO Number</Label>
+                              <Input
+                                className="w-60 border-gray-400"
+                                placeholder="PO Number"
+                                value={poNumberValue}
+                                onChange={(e) => setPoNumberValue(e.target.value)}
+                              />
+                              <Button size="sm" className="bg-success hover:bg-success/90">
+                                Update PO #'s
+                              </Button>
+                            </div>
+                          )}
+
+                          {/* Update T/F Status */}
+                          {selectedSpecialAction === "update-tf-status" && (
+                            <div className="space-y-2">
+                              <div className="flex items-center gap-2">
+                                <Label className="text-sm font-medium">Enter a comment</Label>
+                                <Select>
+                                  <SelectTrigger className="w-48 border-gray-400 h-8">
+                                    <SelectValue placeholder="Pre-select Comment Text" />
+                                  </SelectTrigger>
+                                  <SelectContent className="bg-background border shadow-lg z-50">
+                                    <SelectItem value="template1">Template 1</SelectItem>
+                                    <SelectItem value="template2">Template 2</SelectItem>
+                                  </SelectContent>
+                                </Select>
+                              </div>
+                              <textarea
+                                className="w-full min-h-[80px] px-3 py-2 text-sm border border-gray-400 rounded-md bg-background"
+                                placeholder="Enter comment..."
+                                value={specialActionComment}
+                                onChange={(e) => setSpecialActionComment(e.target.value)}
+                              />
+                              <div className="flex items-center gap-4">
+                                <Label className="text-sm font-medium whitespace-nowrap">Enter T/F Status</Label>
+                                <Select value={tfStatusValue} onValueChange={setTfStatusValue}>
+                                  <SelectTrigger className="w-60 border-gray-400">
+                                    <SelectValue placeholder="Select..." />
+                                  </SelectTrigger>
+                                  <SelectContent className="bg-background border shadow-lg z-50">
+                                    <SelectItem value="pass">Pass</SelectItem>
+                                    <SelectItem value="fail">Fail</SelectItem>
+                                    <SelectItem value="pending">Pending</SelectItem>
+                                  </SelectContent>
+                                </Select>
+                              </div>
+                              <Button size="sm" className="bg-success hover:bg-success/90">
+                                Update T/F Status
+                              </Button>
+                            </div>
+                          )}
+
+                          {/* Wait Cust Followup */}
+                          {selectedSpecialAction === "wait-cust-followup" && (
+                            <div className="space-y-2">
+                              <div className="flex items-center gap-2">
+                                <Label className="text-sm font-medium">Enter a comment</Label>
+                                <Select>
+                                  <SelectTrigger className="w-48 border-gray-400 h-8">
+                                    <SelectValue placeholder="Pre-select Comment Text" />
+                                  </SelectTrigger>
+                                  <SelectContent className="bg-background border shadow-lg z-50">
+                                    <SelectItem value="template1">Template 1</SelectItem>
+                                    <SelectItem value="template2">Template 2</SelectItem>
+                                  </SelectContent>
+                                </Select>
+                              </div>
+                              <textarea
+                                className="w-full min-h-[80px] px-3 py-2 text-sm border border-gray-400 rounded-md bg-background"
+                                placeholder="Enter comment..."
+                                value={specialActionComment}
+                                onChange={(e) => setSpecialActionComment(e.target.value)}
+                              />
+                              <Button size="sm" className="bg-success hover:bg-success/90">
+                                Wait Cust Followup
+                              </Button>
+                            </div>
+                          )}
+                        </div>
+                      )}
                     </div>
 
                     {/* Conditional View Rendering */}
