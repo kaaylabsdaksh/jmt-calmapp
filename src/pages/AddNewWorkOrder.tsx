@@ -76,6 +76,7 @@ const AddNewWorkOrder = () => {
   const [copyItemTo, setCopyItemTo] = useState("");
   const [copyGroupable, setCopyGroupable] = useState("");
   const [selectedItemsCount, setSelectedItemsCount] = useState(0);
+  const [selectedItemIds, setSelectedItemIds] = useState<string[]>([]);
   const [selectedSpecialAction, setSelectedSpecialAction] = useState<string>("");
   const [specialActionComment, setSpecialActionComment] = useState("");
   const [specialActionCommentType, setSpecialActionCommentType] = useState("");
@@ -1484,11 +1485,39 @@ const AddNewWorkOrder = () => {
                                   });
                                   return;
                                 }
+
+                                if (selectedItemIds.length === 0) {
+                                  toast({
+                                    variant: "destructive",
+                                    title: "No Items Selected",
+                                    description: "Please select at least one item to apply changes",
+                                  });
+                                  return;
+                                }
+                                
+                                // Update selected items with quick add data
+                                setReceivingItems(prevItems => 
+                                  prevItems.map(item => {
+                                    if (selectedItemIds.includes(item.id)) {
+                                      return {
+                                        ...item,
+                                        calFreq: quickAddData.calFreq,
+                                        actionCode: quickAddData.actionCode,
+                                        priority: quickAddData.priority,
+                                        needByDate: quickAddData.deliverByDate,
+                                        iso17025: quickAddData.iso17025 ? "yes" : "no",
+                                        estimate: quickAddData.estimate ? "$0.00" : "",
+                                        newEquip: quickAddData.newEquip ? "yes" : "no"
+                                      };
+                                    }
+                                    return item;
+                                  })
+                                );
                                 
                                 toast({
                                   variant: "success",
                                   title: "Quick Add Applied",
-                                  description: `Data applied to selected items`,
+                                  description: `Data applied to ${selectedItemIds.length} selected item${selectedItemIds.length > 1 ? 's' : ''}`,
                                 });
                                 
                                 setIsQuickAddExpanded(false);
@@ -1512,7 +1541,7 @@ const AddNewWorkOrder = () => {
                                   usedSurplus: false
                                 });
                               }}
-                              disabled={!quickAddData.calFreq || !quickAddData.actionCode || !quickAddData.location || !quickAddData.division || !quickAddData.arrivalDate || !quickAddData.arrivalType || !quickAddData.poNumber || !quickAddData.deliverByDate}
+                              disabled={!quickAddData.calFreq || !quickAddData.actionCode || !quickAddData.location || !quickAddData.division || !quickAddData.arrivalDate || !quickAddData.arrivalType || !quickAddData.poNumber || !quickAddData.deliverByDate || selectedItemIds.length === 0}
                               className="bg-primary hover:bg-primary/90 text-primary-foreground"
                             >
                               Apply/Save WO
@@ -2165,6 +2194,7 @@ const AddNewWorkOrder = () => {
                         items={receivingItems} 
                         setItems={setReceivingItems}
                         onSelectedItemsChange={setSelectedItemsCount}
+                        onSelectedItemsIdsChange={setSelectedItemIds}
                       />
                     ) : viewMode === 'table' ? (
                       <WorkOrderItemsTable />

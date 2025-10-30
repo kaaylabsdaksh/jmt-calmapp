@@ -40,6 +40,7 @@ interface WorkOrderItemsReceivingProps {
   items: WorkOrderReceivingItem[];
   setItems: React.Dispatch<React.SetStateAction<WorkOrderReceivingItem[]>>;
   onSelectedItemsChange?: (count: number) => void;
+  onSelectedItemsIdsChange?: (ids: string[]) => void;
 }
 
 const manufacturers = [
@@ -91,7 +92,7 @@ const truncateDescription = (description: string): string => {
   return words.length > 3 ? words.slice(0, 3).join(" ") + "..." : description;
 };
 
-export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange }: WorkOrderItemsReceivingProps) => {
+export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange, onSelectedItemsIdsChange }: WorkOrderItemsReceivingProps) => {
   const [newItems, setNewItems] = useState<WorkOrderReceivingItem[]>([]);
   const [editingItemId, setEditingItemId] = useState<string | null>(null);
   const [deleteItemId, setDeleteItemId] = useState<string | null>(null);
@@ -130,10 +131,12 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
       const newSelected = [...selectedItems, itemId];
       setSelectedItems(newSelected);
       onSelectedItemsChange?.(newSelected.length);
+      onSelectedItemsIdsChange?.(newSelected);
     } else {
       const newSelected = selectedItems.filter(id => id !== itemId);
       setSelectedItems(newSelected);
       onSelectedItemsChange?.(newSelected.length);
+      onSelectedItemsIdsChange?.(newSelected);
     }
   };
 
@@ -143,9 +146,11 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
       const allItemIds = [...items.map(item => item.id), ...newItems.map(item => item.id)];
       setSelectedItems(allItemIds);
       onSelectedItemsChange?.(allItemIds.length);
+      onSelectedItemsIdsChange?.(allItemIds);
     } else {
       setSelectedItems([]);
       onSelectedItemsChange?.(0);
+      onSelectedItemsIdsChange?.([]);
     }
   };
 
@@ -196,6 +201,8 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
   const clearAllItems = () => {
     setItems([]);
     setSelectedItems([]);
+    onSelectedItemsChange?.(0);
+    onSelectedItemsIdsChange?.([]);
     setIsClearAllDialogOpen(false);
   };
 
