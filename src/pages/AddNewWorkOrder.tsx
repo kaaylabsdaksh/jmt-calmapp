@@ -1496,10 +1496,8 @@ const AddNewWorkOrder = () => {
                                     Clear Invoice Data
                                   </Label>
                                 </div>
-                              </div>
-                              <div className="space-y-2">
                                 <div className="flex items-center gap-2">
-                                  <Label className="text-sm font-medium">Enter a comment</Label>
+                                  <Label className="text-sm font-medium whitespace-nowrap">Enter a comment</Label>
                                   <Select>
                                     <SelectTrigger className="w-48 border-gray-400 h-8">
                                       <SelectValue placeholder="Pre-select Comment Text" />
@@ -1510,6 +1508,8 @@ const AddNewWorkOrder = () => {
                                     </SelectContent>
                                   </Select>
                                 </div>
+                              </div>
+                              <div className="space-y-2">
                                 <textarea
                                   className="w-full min-h-[80px] px-3 py-2 text-sm border border-gray-400 rounded-md bg-background"
                                   placeholder="Enter comment..."
