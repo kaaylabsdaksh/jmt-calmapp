@@ -1013,6 +1013,7 @@ const AddNewWorkOrder = () => {
                               <SelectValue placeholder="Select action..." />
                             </SelectTrigger>
                             <SelectContent className="bg-background border shadow-lg z-50 max-h-60 overflow-y-auto">
+                              <SelectItem value="" className="text-muted-foreground italic">None</SelectItem>
                               <SelectItem value="add-comments">Add Comments</SelectItem>
                               <SelectItem value="cancel-items">Cancel Item(s)</SelectItem>
                               <SelectItem value="change-esl-type">Change ESL Type</SelectItem>
