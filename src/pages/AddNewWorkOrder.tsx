@@ -1287,26 +1287,12 @@ const AddNewWorkOrder = () => {
                                     <SelectValue placeholder="Select..." />
                                   </SelectTrigger>
                                   <SelectContent className="bg-background border shadow-lg z-50 max-h-80 overflow-y-auto">
-                                    <SelectItem value="sales">Sales</SelectItem>
-                                    <SelectItem value="sales-order">Sales Order</SelectItem>
-                                    <SelectItem value="shipping">Shipping</SelectItem>
-                                    <SelectItem value="delivery">Delivery</SelectItem>
-                                    <SelectItem value="receiving">Receiving</SelectItem>
-                                    <SelectItem value="technical">Technical</SelectItem>
-                                    <SelectItem value="purchasing">Purchasing</SelectItem>
-                                    <SelectItem value="accounting">Accounting</SelectItem>
-                                    <SelectItem value="qa">QA</SelectItem>
-                                    <SelectItem value="rental">Rental</SelectItem>
-                                    <SelectItem value="tf">T/F</SelectItem>
-                                    <SelectItem value="transit">Transit</SelectItem>
-                                    <SelectItem value="other">Other</SelectItem>
-                                    <SelectItem value="onsite">Onsite</SelectItem>
-                                    <SelectItem value="user-status-change">User Status Change</SelectItem>
-                                    <SelectItem value="estimate">Estimate</SelectItem>
-                                    <SelectItem value="hot-list">Hot List</SelectItem>
-                                    <SelectItem value="batch-cert">Batch Cert</SelectItem>
-                                    <SelectItem value="warranty">Warranty</SelectItem>
-                                    <SelectItem value="lost-equip">Lost Equip</SelectItem>
+                                    <SelectItem value="accounting-ar-emailed-quote">Accounting: AR - Emailed quote to customer</SelectItem>
+                                    <SelectItem value="accounting-ar-follow-up-quote">Accounting: AR - Follow up sent to customer for quote</SelectItem>
+                                    <SelectItem value="accounting-ar-follow-up-repair">Accounting: AR - Follow up sent to customer for repair estimate</SelectItem>
+                                    <SelectItem value="accounting-ar-wo-shipping">Accounting: AR - W/O sent to shipping</SelectItem>
+                                    <SelectItem value="accounting-sent-billing">Accounting: Sent to AR Billing specialist for invoicing</SelectItem>
+                                    <SelectItem value="receiving-auto-replace">Receiving: Auto replace failures and return the failures to the customer.</SelectItem>
                                   </SelectContent>
                                 </Select>
                               </div>
