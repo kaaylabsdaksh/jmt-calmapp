@@ -1404,6 +1404,10 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                 </Select>
               </div>
 
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <span>Showing {startIndex + 1}-{endIndex} of {totalSavedItems} items</span>
+              </div>
+
               <div className="flex items-center gap-1">
                 <Button
                   variant="outline"
