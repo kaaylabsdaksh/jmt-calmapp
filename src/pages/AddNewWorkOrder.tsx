@@ -1202,53 +1202,50 @@ const AddNewWorkOrder = () => {
                           </div>
                         
                           <div className="flex items-center gap-4 min-w-fit">
-                            <div className="flex items-center gap-2">
-                              <Label className="text-sm font-medium whitespace-nowrap min-w-fit">Special Action:</Label>
-                          <Select
-                            value={selectedSpecialAction}
-                            onValueChange={(value) => {
-                              setSelectedSpecialAction(value);
-                              // Reset form fields when action changes
-                              setSpecialActionComment("");
-                              setSpecialActionCommentType("");
-                              setCalFreqValue("");
-                              setPoNumberValue("");
-                              setTfStatusValue("");
-                              setCurrentEslType("");
-                              setChangeToEslType("");
-                              setClearInvoiceData(false);
-                              setCustomerWaitStatus("");
-                              setDeliverByDate("");
-                            }}
-                          >
-                            <SelectTrigger className="w-48 border-gray-400">
-                              <SelectValue placeholder="Select action..." />
-                            </SelectTrigger>
-                            <SelectContent className="bg-background border shadow-lg z-50 max-h-60 overflow-y-auto">
-                              <SelectItem value="none" className="text-muted-foreground italic">None</SelectItem>
-                              <SelectItem value="add-comments">Add Comments</SelectItem>
-                              <SelectItem value="cancel-items">Cancel Item(s)</SelectItem>
-                              <SelectItem value="change-esl-type">Change ESL Type</SelectItem>
-                              <SelectItem value="cust-reply-received">Cust Reply Received</SelectItem>
-                              <SelectItem value="del-ticket-followup">Del Ticket Followup</SelectItem>
-                              <SelectItem value="ready-to-bill">Ready to Bill</SelectItem>
-                              <SelectItem value="to-ar">To A/R</SelectItem>
-                              <SelectItem value="update-cal-freq">Update Cal Freq's</SelectItem>
-                              <SelectItem value="update-po">Update PO #'s</SelectItem>
-                              <SelectItem value="update-tf-status">Update T/F Status</SelectItem>
-                              <SelectItem value="waiting-on-customer">Waiting on Customer</SelectItem>
-                              <SelectItem value="wait-cust-followup">Wait Cust Followup</SelectItem>
-                              <SelectItem value="update-deliver-by-date">Update Deliver By Date</SelectItem>
-                              <SelectItem value="print-wos">Print WOs</SelectItem>
-                              <SelectItem value="print-labels">Print Labels</SelectItem>
-                              <SelectItem value="print-barcodes">Print Barcodes</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </div>
-                      </div>
+                            <Select
+                              value={selectedSpecialAction}
+                              onValueChange={(value) => {
+                                setSelectedSpecialAction(value);
+                                // Reset form fields when action changes
+                                setSpecialActionComment("");
+                                setSpecialActionCommentType("");
+                                setCalFreqValue("");
+                                setPoNumberValue("");
+                                setTfStatusValue("");
+                                setCurrentEslType("");
+                                setChangeToEslType("");
+                                setClearInvoiceData(false);
+                                setCustomerWaitStatus("");
+                                setDeliverByDate("");
+                              }}
+                            >
+                              <SelectTrigger className="w-48 border-gray-400">
+                                <SelectValue placeholder="Select action..." />
+                              </SelectTrigger>
+                              <SelectContent className="bg-background border shadow-lg z-50 max-h-60 overflow-y-auto">
+                                <SelectItem value="none" className="text-muted-foreground italic">None</SelectItem>
+                                <SelectItem value="add-comments">Add Comments</SelectItem>
+                                <SelectItem value="cancel-items">Cancel Item(s)</SelectItem>
+                                <SelectItem value="change-esl-type">Change ESL Type</SelectItem>
+                                <SelectItem value="cust-reply-received">Cust Reply Received</SelectItem>
+                                <SelectItem value="del-ticket-followup">Del Ticket Followup</SelectItem>
+                                <SelectItem value="ready-to-bill">Ready to Bill</SelectItem>
+                                <SelectItem value="to-ar">To A/R</SelectItem>
+                                <SelectItem value="update-cal-freq">Update Cal Freq's</SelectItem>
+                                <SelectItem value="update-po">Update PO #'s</SelectItem>
+                                <SelectItem value="update-tf-status">Update T/F Status</SelectItem>
+                                <SelectItem value="waiting-on-customer">Waiting on Customer</SelectItem>
+                                <SelectItem value="wait-cust-followup">Wait Cust Followup</SelectItem>
+                                <SelectItem value="update-deliver-by-date">Update Deliver By Date</SelectItem>
+                                <SelectItem value="print-wos">Print WOs</SelectItem>
+                                <SelectItem value="print-labels">Print Labels</SelectItem>
+                                <SelectItem value="print-barcodes">Print Barcodes</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
 
-                      {/* Special Action Form Fields */}
-                      {selectedSpecialAction && selectedSpecialAction !== "none" && (
+                        {/* Special Action Form Fields */}
+                        {selectedSpecialAction && selectedSpecialAction !== "none" && (
                         <div className="bg-muted/30 border rounded-lg p-4 space-y-3 mt-4">
                           {/* Add Comments */}
                           {selectedSpecialAction === "add-comments" && (
