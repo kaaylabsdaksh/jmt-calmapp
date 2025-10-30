@@ -890,7 +890,7 @@ const AddNewWorkOrder = () => {
                       <h3 className="text-lg font-medium text-foreground">Account's Contact(s) for this Work Order:</h3>
                       <Button 
                         variant="default" 
-                        className="bg-warning text-black hover:bg-warning/90"
+                        className="bg-primary text-primary-foreground hover:bg-primary/90"
                         onClick={() => setShowContactForm(true)}
                       >
                         Add Contact
