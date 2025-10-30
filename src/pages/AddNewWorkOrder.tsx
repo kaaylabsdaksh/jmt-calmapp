@@ -2362,24 +2362,37 @@ const AddNewWorkOrder = () => {
 
       {/* Fixed Bottom Action Bar */}
       <div className="fixed bottom-0 left-0 right-0 bg-card border-t px-3 sm:px-4 lg:px-6 py-2 sm:py-3 lg:py-4 shadow-lg">
-        <div className="w-full flex items-center justify-end gap-2 sm:gap-3">
-          <Button 
-            variant="ghost" 
-            onClick={handleCancel} 
-            className="text-muted-foreground hover:text-foreground text-xs sm:text-sm px-2 sm:px-3 py-1.5 sm:py-2 disabled:opacity-50 h-8 sm:h-9"
-          >
-            <X className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
-            Cancel
-          </Button>
-          <Button 
-            onClick={handleSave} 
-            disabled={!/^\d{4}\.\d{2}$/.test(workOrderData.accountNumber) || !workOrderData.contact}
-            className="bg-success text-success-foreground hover:bg-success/90 text-xs sm:text-sm px-2 sm:px-3 py-1.5 sm:py-2 disabled:opacity-50 disabled:cursor-not-allowed h-8 sm:h-9"
-          >
-            <Save className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
-            <span className="hidden sm:inline">Save Work Order</span>
-            <span className="sm:hidden">Save</span>
-          </Button>
+        <div className="w-full flex items-center justify-between gap-2 sm:gap-3">
+          {/* Created By and Modified By Information */}
+          <div className="flex flex-col text-xs text-muted-foreground">
+            <div>
+              <span className="font-semibold text-foreground">Created By:</span> JeQuelle R Beechem 04/01/2016
+            </div>
+            <div>
+              <span className="font-semibold text-foreground">Modified By:</span> Admin User 10/30/2025
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            <Button 
+              variant="ghost" 
+              onClick={handleCancel} 
+              className="text-muted-foreground hover:text-foreground text-xs sm:text-sm px-2 sm:px-3 py-1.5 sm:py-2 disabled:opacity-50 h-8 sm:h-9"
+            >
+              <X className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
+              Cancel
+            </Button>
+            <Button 
+              onClick={handleSave} 
+              disabled={!/^\d{4}\.\d{2}$/.test(workOrderData.accountNumber) || !workOrderData.contact}
+              className="bg-success text-success-foreground hover:bg-success/90 text-xs sm:text-sm px-2 sm:px-3 py-1.5 sm:py-2 disabled:opacity-50 disabled:cursor-not-allowed h-8 sm:h-9"
+            >
+              <Save className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+              <span className="hidden sm:inline">Save Work Order</span>
+              <span className="sm:hidden">Save</span>
+            </Button>
+          </div>
         </div>
       </div>
 
