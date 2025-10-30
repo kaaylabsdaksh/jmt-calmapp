@@ -8,7 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { X, Download, Settings, User, CreditCard, Users, Package, FileText, Calculator, AlertCircle, ExternalLink, Award, Shield, BarChart, Save, LayoutGrid, Table, ChevronDown, Plus, PlusCircle, QrCode, Copy, PackagePlus, Menu } from "lucide-react";
+import { X, Download, Settings, User, CreditCard, Users, Package, FileText, Calculator, AlertCircle, ExternalLink, Award, Shield, BarChart, Save, LayoutGrid, Table, ChevronDown, Plus, PlusCircle, QrCode, Copy, PackagePlus, Menu, Wand2 } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { WorkOrderItemsTable } from "@/components/WorkOrderItemsTable";
 import { WorkOrderItemsCards } from "@/components/WorkOrderItemsCards";
@@ -49,6 +49,7 @@ const AddNewWorkOrder = () => {
   
   // Copy from other WO states
   const [isCopyFromWOExpanded, setIsCopyFromWOExpanded] = useState(false);
+  const [isSpecialActionExpanded, setIsSpecialActionExpanded] = useState(false);
   const [copyWorkOrder, setCopyWorkOrder] = useState("");
   const [copyItemFrom, setCopyItemFrom] = useState("");
   const [copyItemTo, setCopyItemTo] = useState("");
@@ -998,8 +999,8 @@ const AddNewWorkOrder = () => {
                 <CardContent className="p-4 sm:p-6 pt-0">
                   <div className="space-y-4 sm:space-y-6">
                      {/* Action Buttons */}
-                    {viewMode === 'receiving' ? (
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
+                     {viewMode === 'receiving' ? (
+                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2 sm:gap-3">
                         <Button 
                           onClick={() => setIsQuickAddDialogOpen(true)}
                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
@@ -1034,9 +1035,22 @@ const AddNewWorkOrder = () => {
                           <span className="hidden sm:inline">Copy From Other Work Order</span>
                           <span className="sm:hidden">Copy WO</span>
                         </Button>
+                        <Button 
+                          onClick={() => {
+                            setIsSpecialActionExpanded(!isSpecialActionExpanded);
+                            if (!isSpecialActionExpanded) {
+                              setTimeout(() => document.getElementById('special-action-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
+                            }
+                          }}
+                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
+                        >
+                          <Wand2 className="w-3 h-3 sm:w-4 sm:h-4" />
+                          <span className="hidden sm:inline">Special Action</span>
+                          <span className="sm:hidden">Action</span>
+                        </Button>
                       </div>
                     ) : (
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-2 sm:gap-3">
+                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-2 sm:gap-3">
                         <Button 
                           onClick={() => navigate("/form-variations")}
                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
@@ -1078,6 +1092,19 @@ const AddNewWorkOrder = () => {
                           <Copy className="w-3 h-3 sm:w-4 sm:h-4" />
                           <span className="hidden sm:inline">Copy From Other Work Order</span>
                           <span className="sm:hidden">Copy WO</span>
+                        </Button>
+                        <Button 
+                          onClick={() => {
+                            setIsSpecialActionExpanded(!isSpecialActionExpanded);
+                            if (!isSpecialActionExpanded) {
+                              setTimeout(() => document.getElementById('special-action-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
+                            }
+                          }}
+                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
+                        >
+                          <Wand2 className="w-3 h-3 sm:w-4 sm:h-4" />
+                          <span className="hidden sm:inline">Special Action</span>
+                          <span className="sm:hidden">Action</span>
                         </Button>
                       </div>
                     )}
@@ -1165,11 +1192,18 @@ const AddNewWorkOrder = () => {
                     </div>
                     )}
 
-                    {/* Filter Controls */}
-                    <div className="bg-muted/30 p-4 rounded-lg overflow-x-auto">
-                      <div className="flex items-center gap-4 min-w-fit">
-                        <div className="flex items-center gap-2">
-                          <Label className="text-sm font-medium whitespace-nowrap min-w-fit">Special Action:</Label>
+                    {/* Special Action Section */}
+                    {isSpecialActionExpanded && (
+                      <div id="special-action-section" className="bg-muted/30 p-4 rounded-lg overflow-x-auto">
+                        <div className="flex flex-col gap-4">
+                          <div className="flex items-center gap-2">
+                            <Wand2 className="w-5 h-5 text-primary" />
+                            <h3 className="text-base font-semibold text-foreground">Special Action</h3>
+                          </div>
+                        
+                          <div className="flex items-center gap-4 min-w-fit">
+                            <div className="flex items-center gap-2">
+                              <Label className="text-sm font-medium whitespace-nowrap min-w-fit">Special Action:</Label>
                           <Select
                             value={selectedSpecialAction}
                             onValueChange={(value) => {
@@ -1620,7 +1654,9 @@ const AddNewWorkOrder = () => {
                           )}
                         </div>
                       )}
-                    </div>
+                        </div>
+                      </div>
+                    )}
 
                     {/* Conditional View Rendering */}
                     {viewMode === 'receiving' ? (
