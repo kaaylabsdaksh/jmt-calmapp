@@ -1627,22 +1627,22 @@ const AddNewWorkOrder = () => {
                           {/* Waiting on Customer */}
                           {selectedSpecialAction === "waiting-on-customer" && (
                             <>
-                              <div className="flex items-center gap-4">
-                                <Label className="text-sm font-medium whitespace-nowrap">Customer Wait Status</Label>
-                                <Select value={customerWaitStatus} onValueChange={setCustomerWaitStatus}>
-                                  <SelectTrigger className="w-60 border-gray-400">
-                                    <SelectValue placeholder="Select..." />
-                                  </SelectTrigger>
-                                  <SelectContent className="bg-background border shadow-lg z-50">
-                                    <SelectItem value="pending-response">Pending Response</SelectItem>
-                                    <SelectItem value="awaiting-approval">Awaiting Approval</SelectItem>
-                                    <SelectItem value="awaiting-parts">Awaiting Parts</SelectItem>
-                                  </SelectContent>
-                                </Select>
-                              </div>
-                              <div className="space-y-2">
+                              <div className="flex items-center gap-4 flex-wrap">
                                 <div className="flex items-center gap-2">
-                                  <Label className="text-sm font-medium">Enter a comment</Label>
+                                  <Label className="text-sm font-medium whitespace-nowrap">Customer Wait Status</Label>
+                                  <Select value={customerWaitStatus} onValueChange={setCustomerWaitStatus}>
+                                    <SelectTrigger className="w-60 border-gray-400">
+                                      <SelectValue placeholder="Select..." />
+                                    </SelectTrigger>
+                                    <SelectContent className="bg-background border shadow-lg z-50">
+                                      <SelectItem value="pending-response">Pending Response</SelectItem>
+                                      <SelectItem value="awaiting-approval">Awaiting Approval</SelectItem>
+                                      <SelectItem value="awaiting-parts">Awaiting Parts</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <Label className="text-sm font-medium whitespace-nowrap">Enter a comment</Label>
                                   <Select>
                                     <SelectTrigger className="w-48 border-gray-400 h-8">
                                       <SelectValue placeholder="Pre-select Comment Text" />
@@ -1653,6 +1653,8 @@ const AddNewWorkOrder = () => {
                                     </SelectContent>
                                   </Select>
                                 </div>
+                              </div>
+                              <div className="space-y-2">
                                 <textarea
                                   className="w-full min-h-[80px] px-3 py-2 text-sm border border-gray-400 rounded-md bg-background"
                                   placeholder="Enter comment..."
