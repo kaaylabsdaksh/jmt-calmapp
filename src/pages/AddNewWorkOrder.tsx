@@ -1024,8 +1024,10 @@ const AddNewWorkOrder = () => {
                         </Button>
                         <Button 
                           onClick={() => {
-                            setIsCopyFromWOExpanded(!isCopyFromWOExpanded);
-                            if (!isCopyFromWOExpanded) {
+                            const newState = !isCopyFromWOExpanded;
+                            setIsCopyFromWOExpanded(newState);
+                            if (newState) {
+                              setIsSpecialActionExpanded(false);
                               setTimeout(() => document.getElementById('copy-from-other-wo')?.scrollIntoView({ behavior: 'smooth' }), 100);
                             }
                           }}
@@ -1037,8 +1039,10 @@ const AddNewWorkOrder = () => {
                         </Button>
                         <Button 
                           onClick={() => {
-                            setIsSpecialActionExpanded(!isSpecialActionExpanded);
-                            if (!isSpecialActionExpanded) {
+                            const newState = !isSpecialActionExpanded;
+                            setIsSpecialActionExpanded(newState);
+                            if (newState) {
+                              setIsCopyFromWOExpanded(false);
                               setTimeout(() => document.getElementById('special-action-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
                             }
                           }}
@@ -1082,8 +1086,10 @@ const AddNewWorkOrder = () => {
                         </Button>
                         <Button 
                           onClick={() => {
-                            setIsCopyFromWOExpanded(!isCopyFromWOExpanded);
-                            if (!isCopyFromWOExpanded) {
+                            const newState = !isCopyFromWOExpanded;
+                            setIsCopyFromWOExpanded(newState);
+                            if (newState) {
+                              setIsSpecialActionExpanded(false);
                               setTimeout(() => document.getElementById('copy-from-other-wo')?.scrollIntoView({ behavior: 'smooth' }), 100);
                             }
                           }}
@@ -1095,8 +1101,10 @@ const AddNewWorkOrder = () => {
                         </Button>
                         <Button 
                           onClick={() => {
-                            setIsSpecialActionExpanded(!isSpecialActionExpanded);
-                            if (!isSpecialActionExpanded) {
+                            const newState = !isSpecialActionExpanded;
+                            setIsSpecialActionExpanded(newState);
+                            if (newState) {
+                              setIsCopyFromWOExpanded(false);
                               setTimeout(() => document.getElementById('special-action-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
                             }
                           }}
