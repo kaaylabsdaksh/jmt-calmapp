@@ -18,6 +18,7 @@ import { ContactForm, ContactFormData } from "@/components/ContactForm";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { EstimateDetails } from "@/components/EstimateDetails";
 import { RFIDDialog } from "@/components/RFIDDialog";
+import { CopyFromOtherWODialog } from "@/components/CopyFromOtherWODialog";
 import { toast } from "@/hooks/use-toast";
 
 const AddNewWorkOrder = () => {
@@ -46,6 +47,7 @@ const AddNewWorkOrder = () => {
   
   const [isRFIDDialogOpen, setIsRFIDDialogOpen] = useState(false);
   const [isQuickAddDialogOpen, setIsQuickAddDialogOpen] = useState(false);
+  const [isCopyFromWODialogOpen, setIsCopyFromWODialogOpen] = useState(false);
   const [selectedItemsCount, setSelectedItemsCount] = useState(0);
   const [selectedSpecialAction, setSelectedSpecialAction] = useState<string>("");
   const [specialActionComment, setSpecialActionComment] = useState("");
@@ -59,11 +61,6 @@ const AddNewWorkOrder = () => {
   const [customerWaitStatus, setCustomerWaitStatus] = useState("");
   const [deliverByDate, setDeliverByDate] = useState("");
   
-  // Copy from other WO states
-  const [copyWorkOrder, setCopyWorkOrder] = useState("");
-  const [copyItemFrom, setCopyItemFrom] = useState("");
-  const [copyItemTo, setCopyItemTo] = useState("");
-  const [copyGroupable, setCopyGroupable] = useState("");
 
   // Save active tab to localStorage whenever it changes
   useEffect(() => {
@@ -382,107 +379,9 @@ const AddNewWorkOrder = () => {
     }));
   };
 
-  // Handler for Copy from Other WO
-  const handleCopyFromOtherWO = () => {
-    if (!copyWorkOrder) {
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: "Please enter a Work Order number",
-      });
-      return;
-    }
-
-    // Validate that either item range or groupable is provided
-    const hasItemRange = copyItemFrom && copyItemTo;
-    const hasGroupable = copyGroupable;
-
-    if (!hasItemRange && !hasGroupable) {
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: "Please enter Item # range or select Groupable option",
-      });
-      return;
-    }
-
-    // Mock data for items from other work orders
-    const mockOtherWOItems = [
-      {
-        id: `copy-${Date.now()}-1`,
-        itemNumber: "TEMP-001",
-        calFreq: "6",
-        actionCode: "rc",
-        priority: "normal",
-        manufacturer: "fluke",
-        model: "87V",
-        description: "Digital Multimeter - Copied from WO",
-        mfgSerial: "SN987654",
-        custId: "CUST-004",
-        custSN: "C004",
-        assetNumber: "ASSET-004",
-        iso17025: "yes",
-        estimate: "$150.00",
-        newEquip: "no",
-        needByDate: "2024-12-20",
-        ccCost: "$55.00",
-        tf: "yes",
-        capableLocations: "Lab A"
-      },
-      {
-        id: `copy-${Date.now()}-2`,
-        itemNumber: "TEMP-002",
-        calFreq: "12",
-        actionCode: "cc",
-        priority: "expedite",
-        manufacturer: "keysight",
-        model: "34460A",
-        description: "Digital Multimeter 6.5 Digit - Copied from WO",
-        mfgSerial: "SN123789",
-        custId: "CUST-005",
-        custSN: "C005",
-        assetNumber: "ASSET-005",
-        iso17025: "yes",
-        estimate: "$200.00",
-        newEquip: "no",
-        needByDate: "2024-12-25",
-        ccCost: "$70.00",
-        tf: "no",
-        capableLocations: "Lab B, Lab C"
-      }
-    ];
-
-    // Filter items based on criteria
-    let itemsToAdd = [...mockOtherWOItems];
-
-    // If item range is specified, filter by range
-    if (hasItemRange) {
-      const fromNum = parseInt(copyItemFrom);
-      const toNum = parseInt(copyItemTo);
-      itemsToAdd = itemsToAdd.slice(fromNum - 1, toNum);
-    }
-
-    // If groupable is specified, filter accordingly (mock logic)
-    if (hasGroupable) {
-      // In a real scenario, this would filter based on groupable status
-      itemsToAdd = hasGroupable === "yes" ? itemsToAdd : itemsToAdd.slice(0, 1);
-    }
-
-    // Add items to the receiving list
-    setReceivingItems(prev => [...prev, ...itemsToAdd]);
-
-    // Show success message
-    toast({
-      variant: "success",
-      title: "Items Copied",
-      description: `Successfully copied ${itemsToAdd.length} item(s) from Work Order ${copyWorkOrder}`,
-    });
-
-    // Reset copy fields
-    setCopyWorkOrder("");
-    setCopyItemFrom("");
-    setCopyItemTo("");
-    setCopyGroupable("");
+  // Handler for adding items from Copy dialog
+  const handleCopyItemsAdded = (items: any[]) => {
+    setReceivingItems(prev => [...prev, ...items]);
   };
 
   return (
@@ -1055,65 +954,16 @@ const AddNewWorkOrder = () => {
                       </div>
                     )}
 
-                    {/* Copy From Other WO Section */}
-                    <div className="bg-muted/30 p-4 rounded-lg border-2 border-primary/20">
-                      <div className="flex flex-col gap-3">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Copy className="w-4 h-4 text-primary" />
-                          <h3 className="text-sm font-semibold text-foreground">Copy From Other Work Order</h3>
-                        </div>
-                        
-                        <div className="flex flex-wrap items-center gap-4">
-                          <div className="flex items-center gap-2">
-                            <Label className="text-sm font-medium whitespace-nowrap min-w-fit">Work Order:</Label>
-                            <Input 
-                              className="w-32 border-gray-400" 
-                              value={copyWorkOrder}
-                              onChange={(e) => setCopyWorkOrder(e.target.value)}
-                              placeholder="WO-123456"
-                            />
-                          </div>
-                          
-                          <div className="flex items-center gap-2">
-                            <Label className="text-sm font-medium whitespace-nowrap min-w-fit">Item #:</Label>
-                            <Input 
-                              className="w-16 border-gray-400" 
-                              value={copyItemFrom}
-                              onChange={(e) => setCopyItemFrom(e.target.value)}
-                              placeholder="1"
-                            />
-                            <span className="text-sm text-muted-foreground">to</span>
-                            <Input 
-                              className="w-16 border-gray-400" 
-                              value={copyItemTo}
-                              onChange={(e) => setCopyItemTo(e.target.value)}
-                              placeholder="10"
-                            />
-                            <span className="text-sm text-muted-foreground">or</span>
-                          </div>
-
-                          <div className="flex items-center gap-2">
-                            <Label className="text-sm font-medium whitespace-nowrap min-w-fit">Groupable:</Label>
-                            <Select value={copyGroupable} onValueChange={setCopyGroupable}>
-                              <SelectTrigger className="w-28 border-gray-400">
-                                <SelectValue placeholder="Select..." />
-                              </SelectTrigger>
-                              <SelectContent className="bg-background border shadow-lg z-50">
-                                <SelectItem value="yes">Yes</SelectItem>
-                                <SelectItem value="no">No</SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </div>
-
-                          <Button 
-                            onClick={handleCopyFromOtherWO}
-                            className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center gap-2 h-10 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm px-6"
-                          >
-                            <Copy className="w-4 h-4" />
-                            Copy Items
-                          </Button>
-                        </div>
-                      </div>
+                    {/* Copy From Other WO Button */}
+                    <div className="flex justify-start">
+                      <Button 
+                        onClick={() => setIsCopyFromWODialogOpen(true)}
+                        className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center gap-2 h-10 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm px-6"
+                        disabled={areOtherFieldsDisabled()}
+                      >
+                        <Copy className="w-4 h-4" />
+                        Copy From Other WO
+                      </Button>
                     </div>
 
                     {/* Filter Controls */}
@@ -1686,6 +1536,13 @@ const AddNewWorkOrder = () => {
       <RFIDDialog 
         open={isRFIDDialogOpen}
         onOpenChange={setIsRFIDDialogOpen}
+      />
+
+      {/* Copy From Other WO Dialog */}
+      <CopyFromOtherWODialog
+        open={isCopyFromWODialogOpen}
+        onOpenChange={setIsCopyFromWODialogOpen}
+        onItemsAdded={handleCopyItemsAdded}
       />
     </div>
   );
