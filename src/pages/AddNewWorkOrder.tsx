@@ -52,13 +52,23 @@ const AddNewWorkOrder = () => {
   const [isCreateUnusedItemsExpanded, setIsCreateUnusedItemsExpanded] = useState(false);
   const [isQuickAddExpanded, setIsQuickAddExpanded] = useState(false);
   const [quickAddData, setQuickAddData] = useState({
+    type: "SINGLE",
     calFreq: "",
     priority: "Normal",
+    location: "Baton Rouge",
+    division: "Lab",
     actionCode: "",
+    arrivalDate: "",
+    arrivalType: "",
+    poNumber: "",
+    recdBy: "",
     deliverByDate: "",
+    soNumber: "",
+    newEquip: false,
     iso17025: false,
+    multiParts: false,
     estimate: false,
-    newEquip: false
+    usedSurplus: false
   });
   const [numUnusedItems, setNumUnusedItems] = useState("");
   const [copyWorkOrder, setCopyWorkOrder] = useState("");
@@ -1170,75 +1180,220 @@ const AddNewWorkOrder = () => {
                             <h3 className="text-base font-semibold text-foreground">Quick Add New Items</h3>
                           </div>
                           <p className="text-sm text-muted-foreground">
-                            Select items from the table below and fill in the form to quickly add data to multiple items at once. {selectedItemsCount > 0 ? `(${selectedItemsCount} item${selectedItemsCount > 1 ? 's' : ''} selected)` : ''}
+                            Fill in the required fields to update selected items
                           </p>
 
-                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                            <div className="space-y-2">
-                              <Label htmlFor="qa-calFreq" className="text-sm font-medium">
-                                Cal Freq <span className="text-destructive">*</span>
-                              </Label>
-                              <Input 
-                                id="qa-calFreq"
-                                value={quickAddData.calFreq}
-                                onChange={(e) => setQuickAddData({...quickAddData, calFreq: e.target.value})}
-                                placeholder="e.g., 12"
-                                disabled={areOtherFieldsDisabled()}
-                              />
-                            </div>
+                          {/* GENERAL INFORMATION Section */}
+                          <div className="space-y-4">
+                            <h4 className="text-sm font-semibold text-muted-foreground uppercase">General Information</h4>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
+                              <div className="space-y-2">
+                                <Label htmlFor="qa-type" className="text-sm font-medium">Type</Label>
+                                <Select 
+                                  value={quickAddData.type} 
+                                  onValueChange={(value) => setQuickAddData({...quickAddData, type: value})}
+                                  disabled={areOtherFieldsDisabled()}
+                                >
+                                  <SelectTrigger id="qa-type">
+                                    <SelectValue />
+                                  </SelectTrigger>
+                                  <SelectContent className="bg-background border shadow-lg z-50">
+                                    <SelectItem value="SINGLE">SINGLE</SelectItem>
+                                    <SelectItem value="BATCH">BATCH</SelectItem>
+                                    <SelectItem value="GROUP">GROUP</SelectItem>
+                                  </SelectContent>
+                                </Select>
+                              </div>
 
-                            <div className="space-y-2">
-                              <Label htmlFor="qa-priority" className="text-sm font-medium">Priority</Label>
-                              <Select 
-                                value={quickAddData.priority} 
-                                onValueChange={(value) => setQuickAddData({...quickAddData, priority: value})}
-                                disabled={areOtherFieldsDisabled()}
-                              >
-                                <SelectTrigger id="qa-priority">
-                                  <SelectValue placeholder="Select priority" />
-                                </SelectTrigger>
-                                <SelectContent className="bg-background border shadow-lg z-50">
-                                  <SelectItem value="Normal">Normal</SelectItem>
-                                  <SelectItem value="Expedite">Expedite</SelectItem>
-                                  <SelectItem value="Rush">Rush</SelectItem>
-                                </SelectContent>
-                              </Select>
-                            </div>
+                              <div className="space-y-2">
+                                <Label htmlFor="qa-calFreq" className="text-sm font-medium">
+                                  Cal Freq <span className="text-destructive">*</span>
+                                </Label>
+                                <Input 
+                                  id="qa-calFreq"
+                                  value={quickAddData.calFreq}
+                                  onChange={(e) => setQuickAddData({...quickAddData, calFreq: e.target.value})}
+                                  placeholder="Enter value"
+                                  disabled={areOtherFieldsDisabled()}
+                                />
+                              </div>
 
-                            <div className="space-y-2">
-                              <Label htmlFor="qa-actionCode" className="text-sm font-medium">
-                                Action Code <span className="text-destructive">*</span>
-                              </Label>
-                              <Select 
-                                value={quickAddData.actionCode} 
-                                onValueChange={(value) => setQuickAddData({...quickAddData, actionCode: value})}
-                                disabled={areOtherFieldsDisabled()}
-                              >
-                                <SelectTrigger id="qa-actionCode">
-                                  <SelectValue placeholder="Select action" />
-                                </SelectTrigger>
-                                <SelectContent className="bg-background border shadow-lg z-50">
-                                  <SelectItem value="rc">RC - Regular Calibration</SelectItem>
-                                  <SelectItem value="repair">Repair</SelectItem>
-                                  <SelectItem value="cc">CC - Certificate Only</SelectItem>
-                                </SelectContent>
-                              </Select>
-                            </div>
+                              <div className="space-y-2">
+                                <Label htmlFor="qa-priority" className="text-sm font-medium">Priority</Label>
+                                <Select 
+                                  value={quickAddData.priority} 
+                                  onValueChange={(value) => setQuickAddData({...quickAddData, priority: value})}
+                                  disabled={areOtherFieldsDisabled()}
+                                >
+                                  <SelectTrigger id="qa-priority">
+                                    <SelectValue />
+                                  </SelectTrigger>
+                                  <SelectContent className="bg-background border shadow-lg z-50">
+                                    <SelectItem value="Normal">Normal</SelectItem>
+                                    <SelectItem value="Expedite">Expedite</SelectItem>
+                                    <SelectItem value="Rush">Rush</SelectItem>
+                                  </SelectContent>
+                                </Select>
+                              </div>
 
-                            <div className="space-y-2">
-                              <Label htmlFor="qa-deliverBy" className="text-sm font-medium">
-                                Deliver By Date <span className="text-destructive">*</span>
-                              </Label>
-                              <Input 
-                                id="qa-deliverBy"
-                                type="date"
-                                value={quickAddData.deliverByDate}
-                                onChange={(e) => setQuickAddData({...quickAddData, deliverByDate: e.target.value})}
-                                disabled={areOtherFieldsDisabled()}
-                              />
+                              <div className="space-y-2">
+                                <Label htmlFor="qa-location" className="text-sm font-medium">
+                                  Location <span className="text-destructive">*</span>
+                                </Label>
+                                <Select 
+                                  value={quickAddData.location} 
+                                  onValueChange={(value) => setQuickAddData({...quickAddData, location: value})}
+                                  disabled={areOtherFieldsDisabled()}
+                                >
+                                  <SelectTrigger id="qa-location">
+                                    <SelectValue />
+                                  </SelectTrigger>
+                                  <SelectContent className="bg-background border shadow-lg z-50">
+                                    <SelectItem value="Baton Rouge">Baton Rouge</SelectItem>
+                                    <SelectItem value="Houston">Houston</SelectItem>
+                                    <SelectItem value="Dallas">Dallas</SelectItem>
+                                  </SelectContent>
+                                </Select>
+                              </div>
+
+                              <div className="space-y-2">
+                                <Label htmlFor="qa-division" className="text-sm font-medium">
+                                  Division <span className="text-destructive">*</span>
+                                </Label>
+                                <Select 
+                                  value={quickAddData.division} 
+                                  onValueChange={(value) => setQuickAddData({...quickAddData, division: value})}
+                                  disabled={areOtherFieldsDisabled()}
+                                >
+                                  <SelectTrigger id="qa-division">
+                                    <SelectValue />
+                                  </SelectTrigger>
+                                  <SelectContent className="bg-background border shadow-lg z-50">
+                                    <SelectItem value="Lab">Lab</SelectItem>
+                                    <SelectItem value="Field">Field</SelectItem>
+                                    <SelectItem value="Engineering">Engineering</SelectItem>
+                                  </SelectContent>
+                                </Select>
+                              </div>
+
+                              <div className="space-y-2">
+                                <Label htmlFor="qa-actionCode" className="text-sm font-medium">
+                                  Action Code <span className="text-destructive">*</span>
+                                </Label>
+                                <Select 
+                                  value={quickAddData.actionCode} 
+                                  onValueChange={(value) => setQuickAddData({...quickAddData, actionCode: value})}
+                                  disabled={areOtherFieldsDisabled()}
+                                >
+                                  <SelectTrigger id="qa-actionCode">
+                                    <SelectValue placeholder="Select..." />
+                                  </SelectTrigger>
+                                  <SelectContent className="bg-background border shadow-lg z-50">
+                                    <SelectItem value="rc">RC - Regular Calibration</SelectItem>
+                                    <SelectItem value="repair">Repair</SelectItem>
+                                    <SelectItem value="cc">CC - Certificate Only</SelectItem>
+                                  </SelectContent>
+                                </Select>
+                              </div>
                             </div>
                           </div>
 
+                          {/* ARRIVAL INFORMATION Section */}
+                          <div className="space-y-4">
+                            <h4 className="text-sm font-semibold text-muted-foreground uppercase">Arrival Information</h4>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                              <div className="space-y-2">
+                                <Label htmlFor="qa-arrivalDate" className="text-sm font-medium">
+                                  Date <span className="text-destructive">*</span>
+                                </Label>
+                                <Input 
+                                  id="qa-arrivalDate"
+                                  type="date"
+                                  value={quickAddData.arrivalDate}
+                                  onChange={(e) => setQuickAddData({...quickAddData, arrivalDate: e.target.value})}
+                                  disabled={areOtherFieldsDisabled()}
+                                  placeholder="dd/mm/yyyy"
+                                />
+                              </div>
+
+                              <div className="space-y-2">
+                                <Label htmlFor="qa-arrivalType" className="text-sm font-medium">
+                                  Type <span className="text-destructive">*</span>
+                                </Label>
+                                <Select 
+                                  value={quickAddData.arrivalType} 
+                                  onValueChange={(value) => setQuickAddData({...quickAddData, arrivalType: value})}
+                                  disabled={areOtherFieldsDisabled()}
+                                >
+                                  <SelectTrigger id="qa-arrivalType">
+                                    <SelectValue placeholder="Select..." />
+                                  </SelectTrigger>
+                                  <SelectContent className="bg-background border shadow-lg z-50">
+                                    <SelectItem value="shipped">Shipped</SelectItem>
+                                    <SelectItem value="hand-delivered">Hand Delivered</SelectItem>
+                                    <SelectItem value="pickup">Pickup</SelectItem>
+                                  </SelectContent>
+                                </Select>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* OTHER INFORMATION Section */}
+                          <div className="space-y-4">
+                            <h4 className="text-sm font-semibold text-muted-foreground uppercase">Other Information</h4>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                              <div className="space-y-2">
+                                <Label htmlFor="qa-poNumber" className="text-sm font-medium">
+                                  PO Number <span className="text-destructive">*</span>
+                                </Label>
+                                <Input 
+                                  id="qa-poNumber"
+                                  value={quickAddData.poNumber}
+                                  onChange={(e) => setQuickAddData({...quickAddData, poNumber: e.target.value})}
+                                  placeholder="Enter value"
+                                  disabled={areOtherFieldsDisabled()}
+                                />
+                              </div>
+
+                              <div className="space-y-2">
+                                <Label htmlFor="qa-recdBy" className="text-sm font-medium">Recd By</Label>
+                                <Input 
+                                  id="qa-recdBy"
+                                  value={quickAddData.recdBy}
+                                  onChange={(e) => setQuickAddData({...quickAddData, recdBy: e.target.value})}
+                                  placeholder="Enter value"
+                                  disabled={areOtherFieldsDisabled()}
+                                />
+                              </div>
+
+                              <div className="space-y-2">
+                                <Label htmlFor="qa-deliverBy" className="text-sm font-medium">
+                                  Deliver By Date <span className="text-destructive">*</span>
+                                </Label>
+                                <Input 
+                                  id="qa-deliverBy"
+                                  type="date"
+                                  value={quickAddData.deliverByDate}
+                                  onChange={(e) => setQuickAddData({...quickAddData, deliverByDate: e.target.value})}
+                                  disabled={areOtherFieldsDisabled()}
+                                  placeholder="dd/mm/yyyy"
+                                />
+                              </div>
+
+                              <div className="space-y-2">
+                                <Label htmlFor="qa-soNumber" className="text-sm font-medium">SO Number</Label>
+                                <Input 
+                                  id="qa-soNumber"
+                                  value={quickAddData.soNumber}
+                                  onChange={(e) => setQuickAddData({...quickAddData, soNumber: e.target.value})}
+                                  placeholder="Enter value"
+                                  disabled={areOtherFieldsDisabled()}
+                                />
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Checkboxes */}
                           <div className="flex flex-wrap gap-4 pt-2">
                             <div className="flex items-center space-x-2">
                               <Checkbox 
@@ -1262,12 +1417,32 @@ const AddNewWorkOrder = () => {
 
                             <div className="flex items-center space-x-2">
                               <Checkbox 
+                                id="qa-multiParts"
+                                checked={quickAddData.multiParts}
+                                onCheckedChange={(checked) => setQuickAddData({...quickAddData, multiParts: checked as boolean})}
+                                disabled={areOtherFieldsDisabled()}
+                              />
+                              <Label htmlFor="qa-multiParts" className="text-sm font-normal cursor-pointer">Multi Parts</Label>
+                            </div>
+
+                            <div className="flex items-center space-x-2">
+                              <Checkbox 
                                 id="qa-estimate"
                                 checked={quickAddData.estimate}
                                 onCheckedChange={(checked) => setQuickAddData({...quickAddData, estimate: checked as boolean})}
                                 disabled={areOtherFieldsDisabled()}
                               />
                               <Label htmlFor="qa-estimate" className="text-sm font-normal cursor-pointer">Estimate</Label>
+                            </div>
+
+                            <div className="flex items-center space-x-2">
+                              <Checkbox 
+                                id="qa-usedSurplus"
+                                checked={quickAddData.usedSurplus}
+                                onCheckedChange={(checked) => setQuickAddData({...quickAddData, usedSurplus: checked as boolean})}
+                                disabled={areOtherFieldsDisabled()}
+                              />
+                              <Label htmlFor="qa-usedSurplus" className="text-sm font-normal cursor-pointer">Used/Surplus</Label>
                             </div>
                           </div>
 
@@ -1277,13 +1452,23 @@ const AddNewWorkOrder = () => {
                               onClick={() => {
                                 setIsQuickAddExpanded(false);
                                 setQuickAddData({
+                                  type: "SINGLE",
                                   calFreq: "",
                                   priority: "Normal",
+                                  location: "Baton Rouge",
+                                  division: "Lab",
                                   actionCode: "",
+                                  arrivalDate: "",
+                                  arrivalType: "",
+                                  poNumber: "",
+                                  recdBy: "",
                                   deliverByDate: "",
+                                  soNumber: "",
+                                  newEquip: false,
                                   iso17025: false,
+                                  multiParts: false,
                                   estimate: false,
-                                  newEquip: false
+                                  usedSurplus: false
                                 });
                               }}
                             >
@@ -1291,11 +1476,11 @@ const AddNewWorkOrder = () => {
                             </Button>
                             <Button 
                               onClick={() => {
-                                if (!quickAddData.calFreq || !quickAddData.actionCode || !quickAddData.deliverByDate) {
+                                if (!quickAddData.calFreq || !quickAddData.actionCode || !quickAddData.location || !quickAddData.division || !quickAddData.arrivalDate || !quickAddData.arrivalType || !quickAddData.poNumber || !quickAddData.deliverByDate) {
                                   toast({
                                     variant: "destructive",
                                     title: "Missing Required Fields",
-                                    description: "Please fill in Cal Freq, Action Code, and Deliver By Date",
+                                    description: "Please fill in all required fields marked with *",
                                   });
                                   return;
                                 }
@@ -1303,24 +1488,34 @@ const AddNewWorkOrder = () => {
                                 toast({
                                   variant: "success",
                                   title: "Quick Add Applied",
-                                  description: `Data applied to ${selectedItemsCount} selected item${selectedItemsCount > 1 ? 's' : ''}`,
+                                  description: `Data applied to selected items`,
                                 });
                                 
                                 setIsQuickAddExpanded(false);
                                 setQuickAddData({
+                                  type: "SINGLE",
                                   calFreq: "",
                                   priority: "Normal",
+                                  location: "Baton Rouge",
+                                  division: "Lab",
                                   actionCode: "",
+                                  arrivalDate: "",
+                                  arrivalType: "",
+                                  poNumber: "",
+                                  recdBy: "",
                                   deliverByDate: "",
+                                  soNumber: "",
+                                  newEquip: false,
                                   iso17025: false,
+                                  multiParts: false,
                                   estimate: false,
-                                  newEquip: false
+                                  usedSurplus: false
                                 });
                               }}
-                              disabled={!quickAddData.calFreq || !quickAddData.actionCode || !quickAddData.deliverByDate || selectedItemsCount === 0}
+                              disabled={!quickAddData.calFreq || !quickAddData.actionCode || !quickAddData.location || !quickAddData.division || !quickAddData.arrivalDate || !quickAddData.arrivalType || !quickAddData.poNumber || !quickAddData.deliverByDate}
                               className="bg-primary hover:bg-primary/90 text-primary-foreground"
                             >
-                              Apply to Selected Items
+                              Apply/Save WO
                             </Button>
                           </div>
                         </div>
