@@ -1421,29 +1421,23 @@ const AddNewWorkOrder = () => {
 
                           {/* Print WOs */}
                           {selectedSpecialAction === "print-wos" && (
-                            <div className="flex justify-center py-2">
-                              <Button size="sm" className="bg-muted text-foreground hover:bg-muted/90 border">
-                                Print WOs
-                              </Button>
-                            </div>
+                            <Button size="sm" className="bg-muted text-foreground hover:bg-muted/90 border">
+                              Print WOs
+                            </Button>
                           )}
 
                           {/* Print Labels */}
                           {selectedSpecialAction === "print-labels" && (
-                            <div className="flex justify-center py-2">
-                              <Button size="sm" className="bg-muted text-foreground hover:bg-muted/90 border">
-                                Print Label
-                              </Button>
-                            </div>
+                            <Button size="sm" className="bg-muted text-foreground hover:bg-muted/90 border">
+                              Print Label
+                            </Button>
                           )}
 
                           {/* Print Barcodes */}
                           {selectedSpecialAction === "print-barcodes" && (
-                            <div className="flex justify-center py-2">
-                              <Button size="sm" className="bg-muted text-foreground hover:bg-muted/90 border">
-                                Print Barcodes
-                              </Button>
-                            </div>
+                            <Button size="sm" className="bg-muted text-foreground hover:bg-muted/90 border">
+                              Print Barcodes
+                            </Button>
                           )}
                         </div>
                       )}
