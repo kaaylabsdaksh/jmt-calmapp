@@ -982,7 +982,6 @@ const AddNewWorkOrder = () => {
                         <div className="flex items-center gap-2">
                           <Label className="text-sm font-medium whitespace-nowrap min-w-fit">Special Action:</Label>
                           <Select
-                            disabled={selectedItemsCount === 0}
                             onValueChange={(value) => {
                               console.log(`Special action: ${value} for ${selectedItemsCount} item(s)`);
                             }}
