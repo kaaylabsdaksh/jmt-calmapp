@@ -1473,27 +1473,29 @@ const AddNewWorkOrder = () => {
                           {/* To A/R */}
                           {selectedSpecialAction === "to-ar" && (
                             <>
-                              <div className="flex items-center gap-4">
-                                <Label className="text-sm font-medium whitespace-nowrap">Comment Type</Label>
-                                <Select value={specialActionCommentType} onValueChange={setSpecialActionCommentType}>
-                                  <SelectTrigger className="w-60 border-gray-400">
-                                    <SelectValue placeholder="Select..." />
-                                  </SelectTrigger>
-                                  <SelectContent className="bg-background border shadow-lg z-50">
-                                    <SelectItem value="general">General Comment</SelectItem>
-                                    <SelectItem value="technical">Technical Note</SelectItem>
-                                  </SelectContent>
-                                </Select>
-                              </div>
-                              <div className="flex items-center gap-2">
-                                <Checkbox 
-                                  id="clearInvoice"
-                                  checked={clearInvoiceData}
-                                  onCheckedChange={(checked) => setClearInvoiceData(checked as boolean)}
-                                />
-                                <Label htmlFor="clearInvoice" className="text-sm font-medium cursor-pointer">
-                                  Clear Invoice Data
-                                </Label>
+                              <div className="flex items-center gap-4 flex-wrap">
+                                <div className="flex items-center gap-2">
+                                  <Label className="text-sm font-medium whitespace-nowrap">Comment Type</Label>
+                                  <Select value={specialActionCommentType} onValueChange={setSpecialActionCommentType}>
+                                    <SelectTrigger className="w-60 border-gray-400">
+                                      <SelectValue placeholder="Select..." />
+                                    </SelectTrigger>
+                                    <SelectContent className="bg-background border shadow-lg z-50">
+                                      <SelectItem value="general">General Comment</SelectItem>
+                                      <SelectItem value="technical">Technical Note</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <Checkbox 
+                                    id="clearInvoice"
+                                    checked={clearInvoiceData}
+                                    onCheckedChange={(checked) => setClearInvoiceData(checked as boolean)}
+                                  />
+                                  <Label htmlFor="clearInvoice" className="text-sm font-medium cursor-pointer">
+                                    Clear Invoice Data
+                                  </Label>
+                                </div>
                               </div>
                               <div className="space-y-2">
                                 <div className="flex items-center gap-2">
