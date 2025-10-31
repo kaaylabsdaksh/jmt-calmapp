@@ -801,7 +801,7 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
         </div>
 
         {/* Desktop Layout - All in One Row */}
-        <div className="hidden lg:flex gap-2 flex-wrap">
+        <div className="hidden lg:flex gap-2 items-center overflow-x-auto">
           {/* Status */}
           <Select value={searchValues.status || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, status: value === 'all' ? '' : value }))}>
             <SelectTrigger className="w-[160px] bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
