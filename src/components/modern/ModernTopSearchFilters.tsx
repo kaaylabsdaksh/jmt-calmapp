@@ -6,9 +6,37 @@ import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { Calendar as CalendarIcon, Search, X, Filter } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Calendar as CalendarIcon, Search, X, Filter, Plus } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
+
+interface SearchChip {
+  id: string;
+  type: string;
+  value: string;
+  label: string;
+}
+
+const searchTypeOptions = [
+  { value: 'workOrderNumber', label: 'Work Order Number' },
+  { value: 'workOrderItemNumber', label: 'Work Order Item Number' },
+  { value: 'accountNumber', label: 'Account Number' },
+  { value: 'customerName', label: 'Customer Name' },
+  { value: 'onsiteProjectNumber', label: 'Onsite Project Number' },
+  { value: 'poNumber', label: 'PO Number' },
+  { value: 'toFactoryPONumber', label: 'To Factory PO Number' },
+  { value: 'serialNumber', label: 'Serial Number' },
+  { value: 'custID', label: 'Cust ID' },
+  { value: 'mfgSerial', label: 'MFG Serial' },
+  { value: 'modelNumber', label: 'Model Number' },
+  { value: 'manufacturer', label: 'Manufacturer' },
+  { value: 'productDescription', label: 'Product Description' },
+  { value: 'eslID', label: 'ESL ID' },
+  { value: 'rfid', label: 'RFID' },
+  { value: 'quoteNumber', label: 'Quote Number' },
+  { value: 'vendorRMANumber', label: 'Vendor RMA Number' },
+];
 
 interface SearchFilters {
   globalSearch: string;
@@ -277,10 +305,9 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
   const [dateType, setDateType] = useState('');
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [globalSearch, setGlobalSearch] = useState('');
-  const [searchTags, setSearchTags] = useState<string[]>([]);
-  const [suggestions, setSuggestions] = useState<any[]>([]);
-  const [showSuggestions, setShowSuggestions] = useState(false);
-  const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState(-1);
+  const [searchChips, setSearchChips] = useState<SearchChip[]>([]);
+  const [selectedSearchType, setSelectedSearchType] = useState('workOrderNumber');
+  const [searchInput, setSearchInput] = useState('');
   const [searchValues, setSearchValues] = useState({
     woNumber: '',
     customer: '',
@@ -311,285 +338,28 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
     viewTemplate: false
   });
 
-  // Generate suggestions based on search input
-  const generateSuggestions = (query: string) => {
-    if (!query || query.length < 2) {
-      setSuggestions([]);
-      setShowSuggestions(false);
-      return;
-    }
+  const addSearchChip = () => {
+    if (!searchInput.trim()) return;
 
-    const searchTerm = query.toLowerCase();
-    const matchingSuggestions = [];
-    console.log('Generating suggestions for:', searchTerm);
+    const selectedOption = searchTypeOptions.find(opt => opt.value === selectedSearchType);
+    if (!selectedOption) return;
 
-    mockWorkOrders.forEach(order => {
-      // Check different fields and create suggestion objects
-      if (order.id.toLowerCase().includes(searchTerm)) {
-        matchingSuggestions.push({
-          type: 'work-order',
-          value: order.id,
-          label: `Work Order: ${order.id}`,
-          subtitle: order.customer
-        });
-      }
-      if (order.itemNumber?.toLowerCase().includes(searchTerm)) {
-        matchingSuggestions.push({
-          type: 'item-number',
-          value: order.itemNumber,
-          label: `Item #: ${order.itemNumber}`,
-          subtitle: `WO: ${order.id}`
-        });
-      }
-      if (order.accountNumber?.toLowerCase().includes(searchTerm)) {
-        matchingSuggestions.push({
-          type: 'account',
-          value: order.accountNumber,
-          label: `Account: ${order.accountNumber}`,
-          subtitle: order.customer
-        });
-      }
-      if (order.customer.toLowerCase().includes(searchTerm)) {
-        matchingSuggestions.push({
-          type: 'customer',
-          value: order.customer,
-          label: `Customer: ${order.customer}`,
-          subtitle: `Work Order: ${order.id}`
-        });
-      }
-      if (order.onsiteProjectNumber?.toLowerCase().includes(searchTerm)) {
-        matchingSuggestions.push({
-          type: 'onsite-project',
-          value: order.onsiteProjectNumber,
-          label: `Onsite Project: ${order.onsiteProjectNumber}`,
-          subtitle: order.customer
-        });
-      }
-      if (order.poNumber?.toLowerCase().includes(searchTerm)) {
-        matchingSuggestions.push({
-          type: 'po-number',
-          value: order.poNumber,
-          label: `PO #: ${order.poNumber}`,
-          subtitle: `WO: ${order.id}`
-        });
-      }
-      if (order.toFactoryPO?.toLowerCase().includes(searchTerm)) {
-        matchingSuggestions.push({
-          type: 'factory-po',
-          value: order.toFactoryPO,
-          label: `Factory PO: ${order.toFactoryPO}`,
-          subtitle: order.manufacturer
-        });
-      }
-      if (order.serialNumber?.toLowerCase().includes(searchTerm)) {
-        matchingSuggestions.push({
-          type: 'serial',
-          value: order.serialNumber,
-          label: `Serial #: ${order.serialNumber}`,
-          subtitle: `${order.manufacturer} ${order.modelNumber}`
-        });
-      }
-      if (order.custID?.toLowerCase().includes(searchTerm)) {
-        matchingSuggestions.push({
-          type: 'cust-id',
-          value: order.custID,
-          label: `Cust ID: ${order.custID}`,
-          subtitle: order.customer
-        });
-      }
-      if (order.mfgSerial?.toLowerCase().includes(searchTerm)) {
-        matchingSuggestions.push({
-          type: 'mfg-serial',
-          value: order.mfgSerial,
-          label: `MFG Serial: ${order.mfgSerial}`,
-          subtitle: order.manufacturer
-        });
-      }
-      if (order.modelNumber.toLowerCase().includes(searchTerm)) {
-        matchingSuggestions.push({
-          type: 'model',
-          value: order.modelNumber,
-          label: `Model: ${order.modelNumber}`,
-          subtitle: order.manufacturer
-        });
-      }
-      if (order.manufacturer.toLowerCase().includes(searchTerm)) {
-        matchingSuggestions.push({
-          type: 'manufacturer',
-          value: order.manufacturer,
-          label: `Manufacturer: ${order.manufacturer}`,
-          subtitle: `Model: ${order.modelNumber}`
-        });
-      }
-      if (order.productDescription?.toLowerCase().includes(searchTerm)) {
-        matchingSuggestions.push({
-          type: 'product',
-          value: order.productDescription,
-          label: `Product: ${order.productDescription}`,
-          subtitle: order.manufacturer
-        });
-      }
-      if (order.eslID?.toLowerCase().includes(searchTerm)) {
-        matchingSuggestions.push({
-          type: 'esl-id',
-          value: order.eslID,
-          label: `ESL ID: ${order.eslID}`,
-          subtitle: `WO: ${order.id}`
-        });
-      }
-      if (order.rfid?.toLowerCase().includes(searchTerm)) {
-        matchingSuggestions.push({
-          type: 'rfid',
-          value: order.rfid,
-          label: `RFID: ${order.rfid}`,
-          subtitle: `Serial: ${order.serialNumber}`
-        });
-      }
-      if (order.quoteNumber?.toLowerCase().includes(searchTerm)) {
-        matchingSuggestions.push({
-          type: 'quote',
-          value: order.quoteNumber,
-          label: `Quote #: ${order.quoteNumber}`,
-          subtitle: order.customer
-        });
-      }
-      if (order.vendorRMA?.toLowerCase().includes(searchTerm)) {
-        matchingSuggestions.push({
-          type: 'vendor-rma',
-          value: order.vendorRMA,
-          label: `Vendor RMA: ${order.vendorRMA}`,
-          subtitle: order.manufacturer
-        });
-      }
-      if (order.assignedTo.toLowerCase().includes(searchTerm)) {
-        matchingSuggestions.push({
-          type: 'assignee', 
-          value: order.assignedTo,
-          label: `Assignee: ${order.assignedTo}`,
-          subtitle: `${order.division} Division`
-        });
-      }
-      if (order.labCode.toLowerCase().includes(searchTerm)) {
-        matchingSuggestions.push({
-          type: 'lab-code',
-          value: order.labCode,
-          label: `Lab Code: ${order.labCode}`,
-          subtitle: `Work Order: ${order.id}`
-        });
-      }
-    });
+    const newChip: SearchChip = {
+      id: `${selectedSearchType}-${Date.now()}`,
+      type: selectedSearchType,
+      value: searchInput.trim(),
+      label: selectedOption.label,
+    };
 
-    // Remove duplicates and limit to 8 suggestions
-    const uniqueSuggestions = matchingSuggestions
-      .filter((suggestion, index, self) => 
-        index === self.findIndex(s => s.value === suggestion.value && s.type === suggestion.type)
-      )
-      .slice(0, 8);
-
-    console.log('Generated suggestions:', uniqueSuggestions.length, uniqueSuggestions);
-    setSuggestions(uniqueSuggestions);
-    setShowSuggestions(uniqueSuggestions.length > 0);
-  };
-
-  // Handle search input changes
-  const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setGlobalSearch(value);
-    setSelectedSuggestionIndex(-1);
-    generateSuggestions(value);
-  };
-
-  // Handle keyboard navigation
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    // Always allow Enter key to work
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      if (showSuggestions && suggestions.length > 0 && selectedSuggestionIndex >= 0) {
-        handleSuggestionClick(suggestions[selectedSuggestionIndex]);
-      } else {
-        handleSearch();
-      }
-      return;
-    }
-
-    // Other keys only work when suggestions are visible
-    if (!showSuggestions || suggestions.length === 0) return;
-
-    switch (e.key) {
-      case 'ArrowDown':
-        e.preventDefault();
-        setSelectedSuggestionIndex(prev => 
-          prev < suggestions.length - 1 ? prev + 1 : 0
-        );
-        break;
-      case 'ArrowUp':
-        e.preventDefault();
-        setSelectedSuggestionIndex(prev => 
-          prev > 0 ? prev - 1 : suggestions.length - 1
-        );
-        break;
-      case 'Escape':
-        setShowSuggestions(false);
-        setSelectedSuggestionIndex(-1);
-        break;
-    }
-  };
-
-  // Handle suggestion selection
-  const handleSuggestionClick = (suggestion: any) => {
-    const value = suggestion.value;
-    // Add to tags if not already present
-    if (!searchTags.includes(value)) {
-      const newTags = [...searchTags, value];
-      setSearchTags(newTags);
-      // Trigger search with new tag
-      onSearch({
-        globalSearch: '',
-        searchTags: newTags,
-        status: searchValues.status,
-        assignee: searchValues.assignee,
-        priority: searchValues.priority,
-        manufacturer: searchValues.manufacturer,
-        division: searchValues.division,
-        woType: searchValues.woType,
-        dateFrom,
-        dateTo,
-        dateType,
-        actionCode: searchValues.actionCode,
-        labCode: searchValues.labCode,
-        rotationManagement: searchValues.rotationManagement,
-        invoiceStatus: searchValues.invoiceStatus,
-        departureType: searchValues.departureType,
-        salesperson: searchValues.salesperson,
-        workOrderItemStatus: searchValues.workOrderItemStatus,
-        workOrderItemType: searchValues.workOrderItemType,
-        location: searchValues.location,
-        newEquip: searchValues.newEquip,
-        usedSurplus: searchValues.usedSurplus,
-        warranty: searchValues.warranty,
-        toFactory: searchValues.toFactory,
-        proofOfDelivery: searchValues.proofOfDelivery,
-        only17025: searchValues.only17025,
-        onlyHotList: searchValues.onlyHotList,
-        onlyLostEquip: searchValues.onlyLostEquip,
-        nonJMAccts: searchValues.nonJMAccts,
-        viewTemplate: searchValues.viewTemplate
-      });
-    }
-    setGlobalSearch('');
-    setSuggestions([]);
-    setShowSuggestions(false);
-    setSelectedSuggestionIndex(-1);
-  };
-
-  // Remove a search tag
-  const removeSearchTag = (tagToRemove: string) => {
-    const newTags = searchTags.filter(tag => tag !== tagToRemove);
-    setSearchTags(newTags);
-    // Trigger search with updated tags
+    setSearchChips(prev => [...prev, newChip]);
+    setSearchInput('');
+    
+    // Trigger search with new chips
+    const updatedChips = [...searchChips, newChip];
+    const searchTags = updatedChips.map(chip => `${chip.label}: ${chip.value}`);
     onSearch({
       globalSearch: '',
-      searchTags: newTags,
+      searchTags: searchTags,
       status: searchValues.status,
       assignee: searchValues.assignee,
       priority: searchValues.priority,
@@ -621,89 +391,60 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
     });
   };
 
-  const handleSearch = () => {
-    // Add current search to tags if not empty and not already present
-    if (globalSearch.trim() && !searchTags.includes(globalSearch.trim())) {
-      const newTags = [...searchTags, globalSearch.trim()];
-      setSearchTags(newTags);
-      setGlobalSearch('');
-      
-      const filters = {
-        globalSearch: '',
-        searchTags: newTags,
-        status: searchValues.status,
-        assignee: searchValues.assignee,
-        priority: searchValues.priority,
-        manufacturer: searchValues.manufacturer,
-        division: searchValues.division,
-        woType: searchValues.woType,
-        dateFrom,
-        dateTo,
-        dateType,
-        actionCode: searchValues.actionCode,
-        labCode: searchValues.labCode,
-        rotationManagement: searchValues.rotationManagement,
-        invoiceStatus: searchValues.invoiceStatus,
-        departureType: searchValues.departureType,
-        salesperson: searchValues.salesperson,
-        workOrderItemStatus: searchValues.workOrderItemStatus,
-        workOrderItemType: searchValues.workOrderItemType,
-        location: searchValues.location,
-        newEquip: searchValues.newEquip,
-        usedSurplus: searchValues.usedSurplus,
-        warranty: searchValues.warranty,
-        toFactory: searchValues.toFactory,
-        proofOfDelivery: searchValues.proofOfDelivery,
-        only17025: searchValues.only17025,
-        onlyHotList: searchValues.onlyHotList,
-        onlyLostEquip: searchValues.onlyLostEquip,
-        nonJMAccts: searchValues.nonJMAccts,
-        viewTemplate: searchValues.viewTemplate
-      };
-      console.log('Searching with filters:', filters);
-      onSearch(filters);
-    } else {
-      // Just search with current tags and filters
-      const filters = {
-        globalSearch: '',
-        searchTags,
-        status: searchValues.status,
-        assignee: searchValues.assignee,
-        priority: searchValues.priority,
-        manufacturer: searchValues.manufacturer,
-        division: searchValues.division,
-        woType: searchValues.woType,
-        dateFrom,
-        dateTo,
-        dateType,
-        actionCode: searchValues.actionCode,
-        labCode: searchValues.labCode,
-        rotationManagement: searchValues.rotationManagement,
-        invoiceStatus: searchValues.invoiceStatus,
-        departureType: searchValues.departureType,
-        salesperson: searchValues.salesperson,
-        workOrderItemStatus: searchValues.workOrderItemStatus,
-        workOrderItemType: searchValues.workOrderItemType,
-        location: searchValues.location,
-        newEquip: searchValues.newEquip,
-        usedSurplus: searchValues.usedSurplus,
-        warranty: searchValues.warranty,
-        toFactory: searchValues.toFactory,
-        proofOfDelivery: searchValues.proofOfDelivery,
-        only17025: searchValues.only17025,
-        onlyHotList: searchValues.onlyHotList,
-        onlyLostEquip: searchValues.onlyLostEquip,
-        nonJMAccts: searchValues.nonJMAccts,
-        viewTemplate: searchValues.viewTemplate
-      };
-      console.log('Searching with filters:', filters);
-      onSearch(filters);
+  const removeSearchChip = (chipId: string) => {
+    const updatedChips = searchChips.filter(chip => chip.id !== chipId);
+    setSearchChips(updatedChips);
+    
+    // Trigger search with updated chips
+    const searchTags = updatedChips.map(chip => `${chip.label}: ${chip.value}`);
+    onSearch({
+      globalSearch: '',
+      searchTags: searchTags,
+      status: searchValues.status,
+      assignee: searchValues.assignee,
+      priority: searchValues.priority,
+      manufacturer: searchValues.manufacturer,
+      division: searchValues.division,
+      woType: searchValues.woType,
+      dateFrom,
+      dateTo,
+      dateType,
+      actionCode: searchValues.actionCode,
+      labCode: searchValues.labCode,
+      rotationManagement: searchValues.rotationManagement,
+      invoiceStatus: searchValues.invoiceStatus,
+      departureType: searchValues.departureType,
+      salesperson: searchValues.salesperson,
+      workOrderItemStatus: searchValues.workOrderItemStatus,
+      workOrderItemType: searchValues.workOrderItemType,
+      location: searchValues.location,
+      newEquip: searchValues.newEquip,
+      usedSurplus: searchValues.usedSurplus,
+      warranty: searchValues.warranty,
+      toFactory: searchValues.toFactory,
+      proofOfDelivery: searchValues.proofOfDelivery,
+      only17025: searchValues.only17025,
+      onlyHotList: searchValues.onlyHotList,
+      onlyLostEquip: searchValues.onlyLostEquip,
+      nonJMAccts: searchValues.nonJMAccts,
+      viewTemplate: searchValues.viewTemplate
+    });
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      addSearchChip();
     }
   };
 
+  const handleSearch = () => {
+    addSearchChip();
+  };
+
   const clearAllFilters = () => {
-    setGlobalSearch('');
-    setSearchTags([]);
+    setSearchChips([]);
+    setSearchInput('');
     setSearchValues({
       woNumber: '',
       customer: '',
@@ -772,7 +513,7 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
     });
   };
 
-  const hasActiveFilters = globalSearch || searchTags.length > 0 || Object.values(searchValues).some(value => {
+  const hasActiveFilters = searchChips.length > 0 || Object.values(searchValues).some(value => {
     if (Array.isArray(value)) return value.length > 0;
     return value && value !== 'all';
   }) || dateFrom || dateTo || dateType;
@@ -816,169 +557,69 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
 
       {/* Global Search */}
       <div className="p-2 sm:p-4 pb-2 sm:pb-3">
-        {/* Active Search Tags */}
-        {searchTags.length > 0 && (
+        {/* Active Search Chips */}
+        {searchChips.length > 0 && (
           <div className="mb-3 flex flex-wrap gap-2">
-            {searchTags.map((tag, index) => (
-              <div
-                key={`tag-${index}`}
-                className="inline-flex items-center gap-1.5 bg-primary text-primary-foreground px-3 py-1.5 rounded-full text-sm font-medium shadow-sm"
+            {searchChips.map((chip) => (
+              <Badge
+                key={chip.id}
+                variant="default"
+                className="px-3 py-1.5 text-sm flex items-center gap-2"
               >
-                <span>{tag}</span>
+                <span className="font-medium">{chip.label}:</span>
+                <span>{chip.value}</span>
                 <button
-                  onClick={() => removeSearchTag(tag)}
-                  className="hover:bg-primary-foreground/20 rounded-full p-0.5 transition-colors"
+                  onClick={() => removeSearchChip(chip.id)}
+                  className="ml-1 hover:bg-primary-foreground/20 rounded-full p-0.5 transition-colors"
                   aria-label="Remove filter"
                 >
                   <X className="h-3.5 w-3.5" />
                 </button>
-              </div>
+              </Badge>
             ))}
           </div>
         )}
         
-        {/* Mobile: Search in first row */}
-        <div className="flex flex-col md:flex-row gap-2 sm:gap-3">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 h-4 sm:h-5 w-4 sm:w-5 text-gray-400" />
-            <Input
-              placeholder="Search work orders, customers, serial numbers..."
-              value={globalSearch}
-              onChange={handleSearchInputChange}
-              onKeyDown={handleKeyDown}
-              onFocus={() => globalSearch.length >= 2 && suggestions.length > 0 && setShowSuggestions(true)}
-              onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
-              className="pl-10 sm:pl-12 bg-white border border-gray-300 rounded-lg h-10 sm:h-11 text-sm placeholder:text-gray-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
-            />
-            
-            {/* Search Suggestions Dropdown */}
-            {showSuggestions && suggestions.length > 0 && (
-              <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-xl z-[9999] max-h-80 overflow-y-auto">
-                <div className="py-2">
-                  {suggestions.map((suggestion, index) => (
-                    <div
-                      key={`${suggestion.type}-${suggestion.value}-${index}`}
-                      onClick={() => handleSuggestionClick(suggestion)}
-                      className={cn(
-                        "px-4 py-3 cursor-pointer transition-colors border-b border-gray-100 last:border-b-0",
-                        selectedSuggestionIndex === index 
-                          ? "bg-blue-50 border-blue-100" 
-                          : "hover:bg-gray-50"
-                      )}
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className="flex-shrink-0">
-                          {suggestion.type === 'work-order' && (
-                            <div className="w-8 h-8 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center text-xs font-semibold">
-                              WO
-                            </div>
-                          )}
-                          {suggestion.type === 'item-number' && (
-                            <div className="w-8 h-8 bg-cyan-100 text-cyan-600 rounded-lg flex items-center justify-center text-xs font-semibold">
-                              IT
-                            </div>
-                          )}
-                          {suggestion.type === 'account' && (
-                            <div className="w-8 h-8 bg-teal-100 text-teal-600 rounded-lg flex items-center justify-center text-xs font-semibold">
-                              AC
-                            </div>
-                          )}
-                          {suggestion.type === 'customer' && (
-                            <div className="w-8 h-8 bg-green-100 text-green-600 rounded-lg flex items-center justify-center text-xs font-semibold">
-                              C
-                            </div>
-                          )}
-                          {suggestion.type === 'onsite-project' && (
-                            <div className="w-8 h-8 bg-lime-100 text-lime-600 rounded-lg flex items-center justify-center text-xs font-semibold">
-                              OS
-                            </div>
-                          )}
-                          {suggestion.type === 'po-number' && (
-                            <div className="w-8 h-8 bg-amber-100 text-amber-600 rounded-lg flex items-center justify-center text-xs font-semibold">
-                              PO
-                            </div>
-                          )}
-                          {suggestion.type === 'factory-po' && (
-                            <div className="w-8 h-8 bg-yellow-100 text-yellow-600 rounded-lg flex items-center justify-center text-xs font-semibold">
-                              FP
-                            </div>
-                          )}
-                          {suggestion.type === 'serial' && (
-                            <div className="w-8 h-8 bg-red-100 text-red-600 rounded-lg flex items-center justify-center text-xs font-semibold">
-                              SN
-                            </div>
-                          )}
-                          {suggestion.type === 'cust-id' && (
-                            <div className="w-8 h-8 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center text-xs font-semibold">
-                              CI
-                            </div>
-                          )}
-                          {suggestion.type === 'mfg-serial' && (
-                            <div className="w-8 h-8 bg-rose-100 text-rose-600 rounded-lg flex items-center justify-center text-xs font-semibold">
-                              MS
-                            </div>
-                          )}
-                          {suggestion.type === 'model' && (
-                            <div className="w-8 h-8 bg-pink-100 text-pink-600 rounded-lg flex items-center justify-center text-xs font-semibold">
-                              #
-                            </div>
-                          )}
-                          {suggestion.type === 'manufacturer' && (
-                            <div className="w-8 h-8 bg-orange-100 text-orange-600 rounded-lg flex items-center justify-center text-xs font-semibold">
-                              M
-                            </div>
-                          )}
-                          {suggestion.type === 'product' && (
-                            <div className="w-8 h-8 bg-fuchsia-100 text-fuchsia-600 rounded-lg flex items-center justify-center text-xs font-semibold">
-                              PR
-                            </div>
-                          )}
-                          {suggestion.type === 'esl-id' && (
-                            <div className="w-8 h-8 bg-violet-100 text-violet-600 rounded-lg flex items-center justify-center text-xs font-semibold">
-                              ES
-                            </div>
-                          )}
-                          {suggestion.type === 'rfid' && (
-                            <div className="w-8 h-8 bg-sky-100 text-sky-600 rounded-lg flex items-center justify-center text-xs font-semibold">
-                              RF
-                            </div>
-                          )}
-                          {suggestion.type === 'quote' && (
-                            <div className="w-8 h-8 bg-slate-100 text-slate-600 rounded-lg flex items-center justify-center text-xs font-semibold">
-                              QT
-                            </div>
-                          )}
-                          {suggestion.type === 'vendor-rma' && (
-                            <div className="w-8 h-8 bg-zinc-100 text-zinc-600 rounded-lg flex items-center justify-center text-xs font-semibold">
-                              RM
-                            </div>
-                          )}
-                          {suggestion.type === 'assignee' && (
-                            <div className="w-8 h-8 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center text-xs font-semibold">
-                              A
-                            </div>
-                          )}
-                          {suggestion.type === 'lab-code' && (
-                            <div className="w-8 h-8 bg-indigo-100 text-indigo-600 rounded-lg flex items-center justify-center text-xs font-semibold">
-                              L
-                            </div>
-                          )}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="font-medium text-gray-900 text-sm truncate">
-                            {suggestion.label}
-                          </div>
-                          <div className="text-gray-500 text-xs truncate">
-                            {suggestion.subtitle}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
+        {/* Main Search Bar with Dropdown */}
+        <div className="flex flex-col md:flex-row gap-2 sm:gap-3 mb-3">
+          <Select value={selectedSearchType} onValueChange={setSelectedSearchType}>
+            <SelectTrigger className="w-full md:w-[240px] bg-white border border-gray-300 rounded-lg h-10 sm:h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-[9999]">
+              {searchTypeOptions.map((option) => (
+                <SelectItem key={option.value} value={option.value}>
+                  {option.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          
+          <div className="flex-1 flex gap-2">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 h-4 sm:h-5 w-4 sm:w-5 text-gray-400" />
+              <Input
+                placeholder={`Enter ${searchTypeOptions.find(opt => opt.value === selectedSearchType)?.label}...`}
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+                onKeyDown={handleKeyDown}
+                className="pl-10 sm:pl-12 bg-white border border-gray-300 rounded-lg h-10 sm:h-11 text-sm placeholder:text-gray-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
+              />
+            </div>
+            <Button 
+              onClick={addSearchChip}
+              variant="default"
+              size="sm"
+              className="h-10 sm:h-11 px-4 sm:px-6"
+            >
+              <Plus className="h-4 w-4 mr-2" />
+              <span className="hidden sm:inline">Add</span>
+            </Button>
           </div>
+        </div>
+        
+        <div className="flex gap-2 sm:gap-3">
+          <div className="hidden md:block w-[240px]"></div>
           
           {/* Desktop: Status and Assignee in same row as search */}
           <div className="hidden md:flex gap-2 sm:gap-3">
