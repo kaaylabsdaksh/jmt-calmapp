@@ -978,26 +978,6 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
       {showAdvanced && (
         <div className="px-4 mt-4 pt-4 border-t border-gray-100">
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {/* Manufacturer */}
-              <Select value={searchValues.manufacturer || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, manufacturer: value === 'all' ? '' : value }))}>
-                <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
-                  <SelectValue placeholder="Manufacturer" />
-                </SelectTrigger>
-                <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
-                  <SelectItem value="all">All Manufacturers</SelectItem>
-                  <SelectItem value="adeulis">ADEULIS</SelectItem>
-                  <SelectItem value="starrett">STARRETT</SelectItem>
-                  <SelectItem value="charls-ltd">CHARLS LTD</SelectItem>
-                  <SelectItem value="precision-tools">PRECISION TOOLS</SelectItem>
-                  <SelectItem value="snap-on">SNAP-ON</SelectItem>
-                  <SelectItem value="mettler-toledo">METTLER TOLEDO</SelectItem>
-                  <SelectItem value="fluke">FLUKE</SelectItem>
-                  <SelectItem value="bosch">BOSCH</SelectItem>
-                  <SelectItem value="tektronix">TEKTRONIX</SelectItem>
-                  <SelectItem value="omega">OMEGA</SelectItem>
-                </SelectContent>
-              </Select>
-
               {/* Division */}
               <Select value={searchValues.division || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, division: value === 'all' ? '' : value }))}>
                 <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
