@@ -4,7 +4,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Search, Plus, RotateCcw, Filter, Building2, User, Package } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Search, Plus, RotateCcw, Filter, X } from "lucide-react";
 
 // Mock work order batch data for suggestions - matching the actual data
 const mockWorkOrderBatches = [
@@ -58,13 +59,32 @@ const mockWorkOrderBatches = [
   }
 ];
 
-interface SearchForm {
-  workOrderNumber: string;
-  customerName: string;
-  status: string;
-  priority: string;
-  manufacturer: string;
+interface SearchChip {
+  id: string;
+  type: string;
+  value: string;
+  label: string;
 }
+
+const searchTypeOptions = [
+  { value: 'workOrderNumber', label: 'Work Order Number' },
+  { value: 'workOrderItemNumber', label: 'Work Order Item Number' },
+  { value: 'accountNumber', label: 'Account Number' },
+  { value: 'customerName', label: 'Customer Name' },
+  { value: 'onsiteProjectNumber', label: 'Onsite Project Number' },
+  { value: 'poNumber', label: 'PO Number' },
+  { value: 'toFactoryPONumber', label: 'To Factory PO Number' },
+  { value: 'serialNumber', label: 'Serial Number' },
+  { value: 'custID', label: 'Cust ID' },
+  { value: 'mfgSerial', label: 'MFG Serial' },
+  { value: 'modelNumber', label: 'Model Number' },
+  { value: 'manufacturer', label: 'Manufacturer' },
+  { value: 'productDescription', label: 'Product Description' },
+  { value: 'eslID', label: 'ESL ID' },
+  { value: 'rfid', label: 'RFID' },
+  { value: 'quoteNumber', label: 'Quote Number' },
+  { value: 'vendorRMANumber', label: 'Vendor RMA Number' },
+];
 
 interface SearchFilters {
   globalSearch: string;
@@ -104,177 +124,56 @@ interface MinimalWorkOrderSearchProps {
 }
 
 const MinimalWorkOrderSearch = ({ onSearch }: MinimalWorkOrderSearchProps) => {
-  const [searchForm, setSearchForm] = useState<SearchForm>({
-    workOrderNumber: '',
-    customerName: '',
-    status: '',
-    priority: '',
-    manufacturer: ''
-  });
-
+  const [searchChips, setSearchChips] = useState<SearchChip[]>([]);
+  const [selectedSearchType, setSelectedSearchType] = useState('workOrderNumber');
+  const [searchInput, setSearchInput] = useState('');
   const [showAdvanced, setShowAdvanced] = useState(false);
-  const [suggestions, setSuggestions] = useState<any[]>([]);
-  const [showSuggestions, setShowSuggestions] = useState(false);
-  const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState(-1);
-  const [activeField, setActiveField] = useState<string>('');
   const searchInputRef = useRef<HTMLInputElement>(null);
 
-  // Generate suggestions based on search input
-  const generateSuggestions = (query: string, fieldType: string) => {
-    console.log('Generating suggestions for:', query, 'field:', fieldType); // Debug log
-    
-    if (!query || query.length < 1) {
-      setSuggestions([]);
-      setShowSuggestions(false);
-      return;
-    }
+  const addSearchChip = () => {
+    if (!searchInput.trim()) return;
 
-    const searchTerm = query.toLowerCase();
-    const matchingSuggestions = [];
+    const selectedOption = searchTypeOptions.find(opt => opt.value === selectedSearchType);
+    if (!selectedOption) return;
 
-    mockWorkOrderBatches.forEach(batch => {
-      if (fieldType === 'workOrderNumber') {
-        // Check WO batch
-        if (batch.woBatch.toLowerCase().includes(searchTerm)) {
-          matchingSuggestions.push({
-            type: 'work-order',
-            value: batch.woBatch,
-            label: `WO Batch: ${batch.woBatch}`,
-            subtitle: batch.customerName
-          });
-        }
-        // Check account number
-        if (batch.acctNumber.toLowerCase().includes(searchTerm)) {
-          matchingSuggestions.push({
-            type: 'account',
-            value: batch.acctNumber,
-            label: `Account: ${batch.acctNumber}`,
-            subtitle: batch.customerName
-          });
-        }
-        // Check SR number
-        if (batch.srNumber && batch.srNumber.toLowerCase().includes(searchTerm)) {
-          matchingSuggestions.push({
-            type: 'sr',
-            value: batch.srNumber,
-            label: `SR: ${batch.srNumber}`,
-            subtitle: batch.customerName
-          });
-        }
-      }
-      
-      if (fieldType === 'customerName' && batch.customerName.toLowerCase().includes(searchTerm)) {
-        matchingSuggestions.push({
-          type: 'customer',
-          value: batch.customerName,
-          label: `Customer: ${batch.customerName}`,
-          subtitle: `WO Batch: ${batch.woBatch}`
-        });
-      }
-    });
-
-    // Remove duplicates and limit results
-    const uniqueSuggestions = matchingSuggestions.filter((suggestion, index, arr) => 
-      arr.findIndex(s => s.label === suggestion.label) === index
-    ).slice(0, 8);
-
-    console.log('Generated suggestions:', uniqueSuggestions); // Debug log
-    setSuggestions(uniqueSuggestions);
-    setShowSuggestions(uniqueSuggestions.length > 0);
-    setSelectedSuggestionIndex(-1);
-  };
-
-  // Handle input changes with suggestions
-  const handleInputChange = (field: keyof SearchForm, value: string) => {
-    updateSearchForm(field, value);
-    setActiveField(field);
-    generateSuggestions(value, field);
-  };
-
-  // Handle suggestion selection
-  const handleSuggestionSelect = (suggestion: any) => {
-    if (activeField === 'workOrderNumber') {
-      updateSearchForm('workOrderNumber', suggestion.value);
-    } else if (activeField === 'customerName') {
-      updateSearchForm('customerName', suggestion.value);
-    }
-    setSuggestions([]);
-    setShowSuggestions(false);
-    setSelectedSuggestionIndex(-1);
-  };
-
-  // Handle keyboard navigation
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (!showSuggestions || suggestions.length === 0) return;
-
-    switch (e.key) {
-      case 'ArrowDown':
-        e.preventDefault();
-        setSelectedSuggestionIndex(prev => 
-          prev < suggestions.length - 1 ? prev + 1 : 0
-        );
-        break;
-      case 'ArrowUp':
-        e.preventDefault();
-        setSelectedSuggestionIndex(prev => 
-          prev > 0 ? prev - 1 : suggestions.length - 1
-        );
-        break;
-      case 'Enter':
-        e.preventDefault();
-        if (selectedSuggestionIndex >= 0) {
-          handleSuggestionSelect(suggestions[selectedSuggestionIndex]);
-        } else {
-          handleSearch();
-        }
-        break;
-      case 'Escape':
-        setSuggestions([]);
-        setShowSuggestions(false);
-        setSelectedSuggestionIndex(-1);
-        break;
-    }
-  };
-
-  // Close suggestions when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (searchInputRef.current && !searchInputRef.current.contains(event.target as Node)) {
-        setSuggestions([]);
-        setShowSuggestions(false);
-      }
+    const newChip: SearchChip = {
+      id: `${selectedSearchType}-${Date.now()}`,
+      type: selectedSearchType,
+      value: searchInput.trim(),
+      label: selectedOption.label,
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+    setSearchChips(prev => [...prev, newChip]);
+    setSearchInput('');
+    searchInputRef.current?.focus();
+  };
 
-  const updateSearchForm = (field: keyof SearchForm, value: string) => {
-    setSearchForm(prev => ({
-      ...prev,
-      [field]: value
-    }));
+  const removeSearchChip = (chipId: string) => {
+    setSearchChips(prev => prev.filter(chip => chip.id !== chipId));
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      addSearchChip();
+    }
   };
 
   const clearAllFilters = () => {
-    setSearchForm({
-      workOrderNumber: '',
-      customerName: '',
-      status: '',
-      priority: '',
-      manufacturer: ''
-    });
+    setSearchChips([]);
+    setSearchInput('');
   };
 
   const handleSearch = () => {
     if (onSearch) {
+      const searchTags = searchChips.map(chip => `${chip.label}: ${chip.value}`);
       onSearch({
-        globalSearch: searchForm.workOrderNumber || searchForm.customerName || '',
-        searchTags: [],
-        status: searchForm.status,
+        globalSearch: searchChips.map(chip => chip.value).join(' '),
+        searchTags: searchTags,
+        status: '',
         assignee: '',
-        priority: searchForm.priority,
-        manufacturer: searchForm.manufacturer,
+        priority: '',
+        manufacturer: '',
         division: '',
         woType: '',
         dateType: '',
@@ -323,136 +222,65 @@ const MinimalWorkOrderSearch = ({ onSearch }: MinimalWorkOrderSearchProps) => {
       </CardHeader>
       
       <CardContent className="space-y-6">
-        {/* Essential Search Fields */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="space-y-2 relative">
-            <Label htmlFor="wo-number" className="text-sm font-medium">
-              Work Order Number
-            </Label>
-            <div className="relative">
-              <Input
-                ref={searchInputRef}
-                id="wo-number"
-                placeholder="Enter WO #, Account #, or SR #"
-                value={searchForm.workOrderNumber}
-                onChange={(e) => handleInputChange('workOrderNumber', e.target.value)}
-                onKeyDown={handleKeyDown}
-                className="h-10 transition-all focus:ring-2 focus:ring-primary/20"
-              />
-              
-              {/* Suggestions Dropdown */}
-              {showSuggestions && suggestions.length > 0 && activeField === 'workOrderNumber' && (
-                <div className="absolute top-full left-0 right-0 z-50 bg-popover border border-border rounded-md shadow-lg mt-1 max-h-60 overflow-auto">
-                  {suggestions.map((suggestion, index) => (
-                    <div
-                      key={`${suggestion.type}-${suggestion.value}-${index}`}
-                      className={`px-3 py-2 cursor-pointer hover:bg-muted/50 transition-colors ${
-                        index === selectedSuggestionIndex ? 'bg-muted' : ''
-                      }`}
-                      onClick={() => handleSuggestionSelect(suggestion)}
-                    >
-                      <div className="flex items-center gap-2">
-                        {suggestion.type === 'work-order' && <Package className="h-4 w-4 text-blue-500" />}
-                        {suggestion.type === 'customer' && <Building2 className="h-4 w-4 text-green-500" />}
-                        {suggestion.type === 'account' && <User className="h-4 w-4 text-purple-500" />}
-                        {suggestion.type === 'sr' && <Search className="h-4 w-4 text-orange-500" />}
-                        <div className="flex-1 min-w-0">
-                          <div className="font-medium text-sm truncate">{suggestion.label}</div>
-                          <div className="text-xs text-muted-foreground truncate">{suggestion.subtitle}</div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div className="space-y-2 relative">
-            <Label htmlFor="customer" className="text-sm font-medium">
-              Customer Name
-            </Label>
-            <div className="relative">
-              <Input
-                id="customer"
-                placeholder="Enter customer name"
-                value={searchForm.customerName}
-                onChange={(e) => handleInputChange('customerName', e.target.value)}
-                onKeyDown={handleKeyDown}
-                className="h-10 transition-all focus:ring-2 focus:ring-primary/20"
-              />
-              
-              {/* Customer Suggestions Dropdown */}
-              {showSuggestions && suggestions.length > 0 && activeField === 'customerName' && (
-                <div className="absolute top-full left-0 right-0 z-50 bg-popover border border-border rounded-md shadow-lg mt-1 max-h-60 overflow-auto">
-                  {suggestions.map((suggestion, index) => (
-                    <div
-                      key={`${suggestion.type}-${suggestion.value}-${index}`}
-                      className={`px-3 py-2 cursor-pointer hover:bg-muted/50 transition-colors ${
-                        index === selectedSuggestionIndex ? 'bg-muted' : ''
-                      }`}
-                      onClick={() => handleSuggestionSelect(suggestion)}
-                    >
-                      <div className="flex items-center gap-2">
-                        <Building2 className="h-4 w-4 text-green-500" />
-                        <div className="flex-1 min-w-0">
-                          <div className="font-medium text-sm truncate">{suggestion.label}</div>
-                          <div className="text-xs text-muted-foreground truncate">{suggestion.subtitle}</div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="status" className="text-sm font-medium">
-              Status
-            </Label>
-            <Input
-              id="status"
-              placeholder="Enter status"
-              value={searchForm.status}
-              onChange={(e) => updateSearchForm('status', e.target.value)}
-              className="h-10 transition-all focus:ring-2 focus:ring-primary/20"
-            />
-          </div>
-        </div>
-
-        {/* Advanced Filters - Collapsible */}
-        {showAdvanced && (
-          <div className="border-t pt-6 space-y-4 animate-in slide-in-from-top-2 duration-300">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="priority" className="text-sm font-medium">
-                  Priority
-                </Label>
-                <Input
-                  id="priority"
-                  placeholder="Enter priority"
-                  value={searchForm.priority}
-                  onChange={(e) => updateSearchForm('priority', e.target.value)}
-                  className="h-10 transition-all focus:ring-2 focus:ring-primary/20"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="manufacturer" className="text-sm font-medium">
-                  Manufacturer
-                </Label>
-                <Input
-                  id="manufacturer"
-                  placeholder="Enter manufacturer"
-                  value={searchForm.manufacturer}
-                  onChange={(e) => updateSearchForm('manufacturer', e.target.value)}
-                  className="h-10 transition-all focus:ring-2 focus:ring-primary/20"
-                />
-              </div>
-            </div>
+        {/* Search Chips Display */}
+        {searchChips.length > 0 && (
+          <div className="flex flex-wrap gap-2 p-4 bg-muted/30 rounded-lg border">
+            {searchChips.map((chip) => (
+              <Badge
+                key={chip.id}
+                variant="secondary"
+                className="px-3 py-1.5 text-sm flex items-center gap-2"
+              >
+                <span className="font-medium">{chip.label}:</span>
+                <span>{chip.value}</span>
+                <button
+                  onClick={() => removeSearchChip(chip.id)}
+                  className="ml-1 hover:bg-muted rounded-full p-0.5 transition-colors"
+                >
+                  <X className="h-3 w-3" />
+                </button>
+              </Badge>
+            ))}
           </div>
         )}
+
+        {/* Main Search Bar with Dropdown */}
+        <div className="space-y-2">
+          <Label className="text-sm font-medium">Search Criteria</Label>
+          <div className="flex gap-2">
+            <Select value={selectedSearchType} onValueChange={setSelectedSearchType}>
+              <SelectTrigger className="w-[240px] h-11 bg-popover">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="bg-popover border shadow-lg z-50">
+                {searchTypeOptions.map((option) => (
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            
+            <div className="flex-1 flex gap-2">
+              <Input
+                ref={searchInputRef}
+                placeholder={`Enter ${searchTypeOptions.find(opt => opt.value === selectedSearchType)?.label}...`}
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+                onKeyDown={handleKeyDown}
+                className="h-11 transition-all focus:ring-2 focus:ring-primary/20"
+              />
+              <Button 
+                onClick={addSearchChip}
+                variant="secondary"
+                className="h-11 px-6"
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                Add
+              </Button>
+            </div>
+          </div>
+        </div>
 
         {/* Action Buttons */}
         <div className="flex items-center justify-between pt-4 border-t">
