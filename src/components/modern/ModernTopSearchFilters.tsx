@@ -619,156 +619,83 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
           </Button>
         </div>
         
-        <div className="flex gap-2 sm:gap-3">
-          <div className="hidden md:block w-[240px]"></div>
-          
-          {/* Desktop: Status and Assignee in same row as search */}
-          <div className="hidden md:flex gap-2 sm:gap-3">
-            <Select value={searchValues.status || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, status: value === 'all' ? '' : value }))}>
-              <SelectTrigger className="w-36 sm:w-40 bg-white border border-gray-300 rounded-lg h-10 sm:h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
-                <SelectValue placeholder="All Status" />
-              </SelectTrigger>
-              <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
-                <SelectItem value="all">All Status</SelectItem>
-                <SelectItem value="open-items">[Open Items]</SelectItem>
-                <SelectItem value="awaiting-cdr">[Awaiting CDR]</SelectItem>
-                <SelectItem value="assign-tech-repair-inlab">[Assign/Tech - Repair - InLab]</SelectItem>
-                <SelectItem value="assigned-tech-repair-dept">[Assigned To Tech - Repair Dept]</SelectItem>
-                <SelectItem value="qa-hold-disapproved">[Q/A Hold - Q/A Disapproved]</SelectItem>
-                <SelectItem value="qa-insp-hold-fail">[Q/A Insp - Q/A Hold - Q/A Fail]</SelectItem>
-                <SelectItem value="in-lab-assigned-tech">[In Lab - Assigned to Tech]</SelectItem>
-                <SelectItem value="in-lab-qa-disapprove">[In Lab - Q/A Disapprove]</SelectItem>
-                <SelectItem value="estimate-ar-invoicing">[Estimate - A/R Invoicing]</SelectItem>
-                <SelectItem value="to-factory-awaiting-parts">[To Factory - Awaiting Parts]</SelectItem>
-                <SelectItem value="ar-need-by-status">[AR Need By Status]</SelectItem>
-                <SelectItem value="in-lab">In Lab</SelectItem>
-                <SelectItem value="assigned-to-tech">Assigned to Tech</SelectItem>
-                <SelectItem value="in-transit">In Transit</SelectItem>
-                <SelectItem value="lab-management">Lab Management</SelectItem>
-                <SelectItem value="repair-department">Repair Department</SelectItem>
-                <SelectItem value="rotation">Rotation</SelectItem>
-                <SelectItem value="estimate">Estimate</SelectItem>
-                <SelectItem value="awaiting-parts">Awaiting Parts</SelectItem>
-                <SelectItem value="awaiting-pr-approval">Awaiting PR Approval</SelectItem>
-                <SelectItem value="in-metrology">In Metrology</SelectItem>
-                <SelectItem value="to-factory">To Factory</SelectItem>
-                <SelectItem value="to-factory-repair-replacement">To Factory - Repair by Replacement</SelectItem>
-                <SelectItem value="to-factory-warranty">To Factory - Warranty</SelectItem>
-                <SelectItem value="lab-hold">Lab Hold</SelectItem>
-                <SelectItem value="qa-inspection">Q/A Inspection</SelectItem>
-                <SelectItem value="qa-inspection-fail-correction">Q/A Inspection - Fail Correction</SelectItem>
-                <SelectItem value="qa-hold">Q/A Hold</SelectItem>
-                <SelectItem value="qa-disapproved">Q/A Disapproved</SelectItem>
-                <SelectItem value="qa-fail-log">Q/A Fail Log</SelectItem>
-                <SelectItem value="ar-invoicing">A/R Invoicing</SelectItem>
-                <SelectItem value="ar-invoicing-hold">A/R Invoicing/Hold</SelectItem>
-                <SelectItem value="admin-processing">Admin Processing</SelectItem>
-                <SelectItem value="back-to-customer">Back to Customer</SelectItem>
-                <SelectItem value="calibrated-on-shelf">Calibrated on Shelf</SelectItem>
-                <SelectItem value="cancelled">Cancelled</SelectItem>
-                <SelectItem value="item-not-found-on-site">Item Not Found on Site</SelectItem>
-                <SelectItem value="me-review">ME Review</SelectItem>
-                <SelectItem value="not-used">Not Used</SelectItem>
-                <SelectItem value="onsite">Onsite</SelectItem>
-                <SelectItem value="ready-for-departure">Ready for Departure</SelectItem>
-                <SelectItem value="return-to-lab-processing">Return to Lab for Processing</SelectItem>
-                <SelectItem value="scheduled">Scheduled</SelectItem>
-                <SelectItem value="surplus-stock">Surplus Stock</SelectItem>
-                <SelectItem value="waiting-on-customer">Waiting on Customer</SelectItem>
-              </SelectContent>
-            </Select>
-            <Select value={searchValues.assignee || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, assignee: value === 'all' ? '' : value }))}>
-              <SelectTrigger className="w-40 bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
-                <SelectValue placeholder="Assignee" />
-              </SelectTrigger>
-              <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
-                <SelectItem value="all">All Assignees</SelectItem>
-                <SelectItem value="john-doe">John Doe</SelectItem>
-                <SelectItem value="jane-smith">Jane Smith</SelectItem>
-                <SelectItem value="mike-johnson">Mike Johnson</SelectItem>
-                <SelectItem value="sarah-wilson">Sarah Wilson</SelectItem>
-                <SelectItem value="unassigned">Unassigned</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          
-          {/* Mobile: Status and Assignee in second row */}
-          <div className="flex md:hidden gap-3">
-            <Select value={searchValues.status || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, status: value === 'all' ? '' : value }))}>
-              <SelectTrigger className="flex-1 bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
-                <SelectValue placeholder="All Status" />
-              </SelectTrigger>
-              <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
-                <SelectItem value="all">All Status</SelectItem>
-                <SelectItem value="open-items">[Open Items]</SelectItem>
-                <SelectItem value="awaiting-cdr">[Awaiting CDR]</SelectItem>
-                <SelectItem value="assign-tech-repair-inlab">[Assign/Tech - Repair - InLab]</SelectItem>
-                <SelectItem value="assigned-tech-repair-dept">[Assigned To Tech - Repair Dept]</SelectItem>
-                <SelectItem value="qa-hold-disapproved">[Q/A Hold - Q/A Disapproved]</SelectItem>
-                <SelectItem value="qa-insp-hold-fail">[Q/A Insp - Q/A Hold - Q/A Fail]</SelectItem>
-                <SelectItem value="in-lab-assigned-tech">[In Lab - Assigned to Tech]</SelectItem>
-                <SelectItem value="in-lab-qa-disapprove">[In Lab - Q/A Disapprove]</SelectItem>
-                <SelectItem value="estimate-ar-invoicing">[Estimate - A/R Invoicing]</SelectItem>
-                <SelectItem value="to-factory-awaiting-parts">[To Factory - Awaiting Parts]</SelectItem>
-                <SelectItem value="ar-need-by-status">[AR Need By Status]</SelectItem>
-                <SelectItem value="in-lab">In Lab</SelectItem>
-                <SelectItem value="assigned-to-tech">Assigned to Tech</SelectItem>
-                <SelectItem value="in-transit">In Transit</SelectItem>
-                <SelectItem value="lab-management">Lab Management</SelectItem>
-                <SelectItem value="repair-department">Repair Department</SelectItem>
-                <SelectItem value="rotation">Rotation</SelectItem>
-                <SelectItem value="estimate">Estimate</SelectItem>
-                <SelectItem value="awaiting-parts">Awaiting Parts</SelectItem>
-                <SelectItem value="awaiting-pr-approval">Awaiting PR Approval</SelectItem>
-                <SelectItem value="in-metrology">In Metrology</SelectItem>
-                <SelectItem value="to-factory">To Factory</SelectItem>
-                <SelectItem value="to-factory-repair-replacement">To Factory - Repair by Replacement</SelectItem>
-                <SelectItem value="to-factory-warranty">To Factory - Warranty</SelectItem>
-                <SelectItem value="lab-hold">Lab Hold</SelectItem>
-                <SelectItem value="qa-inspection">Q/A Inspection</SelectItem>
-                <SelectItem value="qa-inspection-fail-correction">Q/A Inspection - Fail Correction</SelectItem>
-                <SelectItem value="qa-hold">Q/A Hold</SelectItem>
-                <SelectItem value="qa-disapproved">Q/A Disapproved</SelectItem>
-                <SelectItem value="qa-fail-log">Q/A Fail Log</SelectItem>
-                <SelectItem value="ar-invoicing">A/R Invoicing</SelectItem>
-                <SelectItem value="ar-invoicing-hold">A/R Invoicing/Hold</SelectItem>
-                <SelectItem value="admin-processing">Admin Processing</SelectItem>
-                <SelectItem value="back-to-customer">Back to Customer</SelectItem>
-                <SelectItem value="calibrated-on-shelf">Calibrated on Shelf</SelectItem>
-                <SelectItem value="cancelled">Cancelled</SelectItem>
-                <SelectItem value="item-not-found-on-site">Item Not Found on Site</SelectItem>
-                <SelectItem value="me-review">ME Review</SelectItem>
-                <SelectItem value="not-used">Not Used</SelectItem>
-                <SelectItem value="onsite">Onsite</SelectItem>
-                <SelectItem value="ready-for-departure">Ready for Departure</SelectItem>
-                <SelectItem value="return-to-lab-processing">Return to Lab for Processing</SelectItem>
-                <SelectItem value="scheduled">Scheduled</SelectItem>
-                <SelectItem value="surplus-stock">Surplus Stock</SelectItem>
-                <SelectItem value="waiting-on-customer">Waiting on Customer</SelectItem>
-              </SelectContent>
-            </Select>
-            <Select value={searchValues.assignee || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, assignee: value === 'all' ? '' : value }))}>
-              <SelectTrigger className="flex-1 bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
-                <SelectValue placeholder="Assignee" />
-              </SelectTrigger>
-              <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
-                <SelectItem value="all">All Assignees</SelectItem>
-                <SelectItem value="john-doe">John Doe</SelectItem>
-                <SelectItem value="jane-smith">Jane Smith</SelectItem>
-                <SelectItem value="mike-johnson">Mike Johnson</SelectItem>
-                <SelectItem value="sarah-wilson">Sarah Wilson</SelectItem>
-                <SelectItem value="unassigned">Unassigned</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
       </div>
 
-      {/* Specific Search Fields */}
-      <div className="px-4 pb-3 space-y-3">
+      {/* All Filters in One Row */}
+      <div className="px-2 sm:px-4 pb-3">
         {/* Mobile Layout - Stacked */}
         <div className="lg:hidden space-y-3">
-          {/* Date Type - Full Width */}
+          {/* Status and Assignee */}
+          <div className="grid grid-cols-2 gap-3">
+            <Select value={searchValues.status || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, status: value === 'all' ? '' : value }))}>
+              <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
+                <SelectValue placeholder="All Status" />
+              </SelectTrigger>
+              <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
+                <SelectItem value="all">All Status</SelectItem>
+                <SelectItem value="open-items">[Open Items]</SelectItem>
+                <SelectItem value="awaiting-cdr">[Awaiting CDR]</SelectItem>
+                <SelectItem value="assign-tech-repair-inlab">[Assign/Tech - Repair - InLab]</SelectItem>
+                <SelectItem value="assigned-tech-repair-dept">[Assigned To Tech - Repair Dept]</SelectItem>
+                <SelectItem value="qa-hold-disapproved">[Q/A Hold - Q/A Disapproved]</SelectItem>
+                <SelectItem value="qa-insp-hold-fail">[Q/A Insp - Q/A Hold - Q/A Fail]</SelectItem>
+                <SelectItem value="in-lab-assigned-tech">[In Lab - Assigned to Tech]</SelectItem>
+                <SelectItem value="in-lab-qa-disapprove">[In Lab - Q/A Disapprove]</SelectItem>
+                <SelectItem value="estimate-ar-invoicing">[Estimate - A/R Invoicing]</SelectItem>
+                <SelectItem value="to-factory-awaiting-parts">[To Factory - Awaiting Parts]</SelectItem>
+                <SelectItem value="ar-need-by-status">[AR Need By Status]</SelectItem>
+                <SelectItem value="in-lab">In Lab</SelectItem>
+                <SelectItem value="assigned-to-tech">Assigned to Tech</SelectItem>
+                <SelectItem value="in-transit">In Transit</SelectItem>
+                <SelectItem value="lab-management">Lab Management</SelectItem>
+                <SelectItem value="repair-department">Repair Department</SelectItem>
+                <SelectItem value="rotation">Rotation</SelectItem>
+                <SelectItem value="estimate">Estimate</SelectItem>
+                <SelectItem value="awaiting-parts">Awaiting Parts</SelectItem>
+                <SelectItem value="awaiting-pr-approval">Awaiting PR Approval</SelectItem>
+                <SelectItem value="in-metrology">In Metrology</SelectItem>
+                <SelectItem value="to-factory">To Factory</SelectItem>
+                <SelectItem value="to-factory-repair-replacement">To Factory - Repair by Replacement</SelectItem>
+                <SelectItem value="to-factory-warranty">To Factory - Warranty</SelectItem>
+                <SelectItem value="lab-hold">Lab Hold</SelectItem>
+                <SelectItem value="qa-inspection">Q/A Inspection</SelectItem>
+                <SelectItem value="qa-inspection-fail-correction">Q/A Inspection - Fail Correction</SelectItem>
+                <SelectItem value="qa-hold">Q/A Hold</SelectItem>
+                <SelectItem value="qa-disapproved">Q/A Disapproved</SelectItem>
+                <SelectItem value="qa-fail-log">Q/A Fail Log</SelectItem>
+                <SelectItem value="ar-invoicing">A/R Invoicing</SelectItem>
+                <SelectItem value="ar-invoicing-hold">A/R Invoicing/Hold</SelectItem>
+                <SelectItem value="admin-processing">Admin Processing</SelectItem>
+                <SelectItem value="back-to-customer">Back to Customer</SelectItem>
+                <SelectItem value="calibrated-on-shelf">Calibrated on Shelf</SelectItem>
+                <SelectItem value="cancelled">Cancelled</SelectItem>
+                <SelectItem value="item-not-found-on-site">Item Not Found on Site</SelectItem>
+                <SelectItem value="me-review">ME Review</SelectItem>
+                <SelectItem value="not-used">Not Used</SelectItem>
+                <SelectItem value="onsite">Onsite</SelectItem>
+                <SelectItem value="ready-for-departure">Ready for Departure</SelectItem>
+                <SelectItem value="return-to-lab-processing">Return to Lab for Processing</SelectItem>
+                <SelectItem value="scheduled">Scheduled</SelectItem>
+                <SelectItem value="surplus-stock">Surplus Stock</SelectItem>
+                <SelectItem value="waiting-on-customer">Waiting on Customer</SelectItem>
+              </SelectContent>
+            </Select>
+            <Select value={searchValues.assignee || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, assignee: value === 'all' ? '' : value }))}>
+              <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
+                <SelectValue placeholder="All Assignees" />
+              </SelectTrigger>
+              <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
+                <SelectItem value="all">All Assignees</SelectItem>
+                <SelectItem value="john-doe">John Doe</SelectItem>
+                <SelectItem value="jane-smith">Jane Smith</SelectItem>
+                <SelectItem value="mike-johnson">Mike Johnson</SelectItem>
+                <SelectItem value="sarah-wilson">Sarah Wilson</SelectItem>
+                <SelectItem value="unassigned">Unassigned</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          
+          {/* Date Type */}
           <div>
             <Select value={dateType} onValueChange={setDateType}>
               <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
@@ -786,9 +713,8 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
             </Select>
           </div>
 
-          {/* From and To Date - Side by Side */}
+          {/* From and To Date */}
           <div className="grid grid-cols-2 gap-3">
-            {/* From Date */}
             <Popover>
               <PopoverTrigger asChild>
                 <Button
@@ -817,7 +743,6 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
               </PopoverContent>
             </Popover>
 
-            {/* To Date */}
             <Popover>
               <PopoverTrigger asChild>
                 <Button
@@ -847,9 +772,8 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
             </Popover>
           </div>
 
-          {/* Work Order Type and Priority - Side by Side */}
+          {/* Work Order Type and Priority */}
           <div className="grid grid-cols-2 gap-3">
-            {/* WO Type Selection */}
             <Select value={searchValues.woType || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, woType: value === 'all' ? '' : value }))}>
               <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
                 <SelectValue placeholder="All WO Types" />
@@ -861,7 +785,6 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
               </SelectContent>
             </Select>
 
-            {/* Priority Selection */}
             <Select value={searchValues.priority || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, priority: value === 'all' ? '' : value }))}>
               <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
                 <SelectValue placeholder="All Priority" />
@@ -878,52 +801,178 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
         </div>
 
         {/* Desktop Layout - All in One Row */}
-        <div className="hidden lg:block">
-          <div className="grid grid-cols-5 gap-3">
-            {/* Date Type */}
-            <Select value={dateType} onValueChange={setDateType}>
-              <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
-                <SelectValue placeholder="Select Date Type" />
-              </SelectTrigger>
-              <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-[60]">
-                <SelectItem value="created">Created</SelectItem>
-                <SelectItem value="arrival">Arrival</SelectItem>
-                <SelectItem value="need-by">Need By</SelectItem>
-                <SelectItem value="status-date">Status Date</SelectItem>
-                <SelectItem value="last-comment">Last Comment</SelectItem>
-                <SelectItem value="departure-date">Departure Date</SelectItem>
-                <SelectItem value="samsara-doc-submit">Samsara Doc Submit Date</SelectItem>
-              </SelectContent>
-            </Select>
+        <div className="hidden lg:flex gap-2 flex-wrap">
+          {/* Status */}
+          <Select value={searchValues.status || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, status: value === 'all' ? '' : value }))}>
+            <SelectTrigger className="w-[160px] bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
+              <SelectValue placeholder="All Status" />
+            </SelectTrigger>
+            <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
+              <SelectItem value="all">All Status</SelectItem>
+              <SelectItem value="open-items">[Open Items]</SelectItem>
+              <SelectItem value="awaiting-cdr">[Awaiting CDR]</SelectItem>
+              <SelectItem value="assign-tech-repair-inlab">[Assign/Tech - Repair - InLab]</SelectItem>
+              <SelectItem value="assigned-tech-repair-dept">[Assigned To Tech - Repair Dept]</SelectItem>
+              <SelectItem value="qa-hold-disapproved">[Q/A Hold - Q/A Disapproved]</SelectItem>
+              <SelectItem value="qa-insp-hold-fail">[Q/A Insp - Q/A Hold - Q/A Fail]</SelectItem>
+              <SelectItem value="in-lab-assigned-tech">[In Lab - Assigned to Tech]</SelectItem>
+              <SelectItem value="in-lab-qa-disapprove">[In Lab - Q/A Disapprove]</SelectItem>
+              <SelectItem value="estimate-ar-invoicing">[Estimate - A/R Invoicing]</SelectItem>
+              <SelectItem value="to-factory-awaiting-parts">[To Factory - Awaiting Parts]</SelectItem>
+              <SelectItem value="ar-need-by-status">[AR Need By Status]</SelectItem>
+              <SelectItem value="in-lab">In Lab</SelectItem>
+              <SelectItem value="assigned-to-tech">Assigned to Tech</SelectItem>
+              <SelectItem value="in-transit">In Transit</SelectItem>
+              <SelectItem value="lab-management">Lab Management</SelectItem>
+              <SelectItem value="repair-department">Repair Department</SelectItem>
+              <SelectItem value="rotation">Rotation</SelectItem>
+              <SelectItem value="estimate">Estimate</SelectItem>
+              <SelectItem value="awaiting-parts">Awaiting Parts</SelectItem>
+              <SelectItem value="awaiting-pr-approval">Awaiting PR Approval</SelectItem>
+              <SelectItem value="in-metrology">In Metrology</SelectItem>
+              <SelectItem value="to-factory">To Factory</SelectItem>
+              <SelectItem value="to-factory-repair-replacement">To Factory - Repair by Replacement</SelectItem>
+              <SelectItem value="to-factory-warranty">To Factory - Warranty</SelectItem>
+              <SelectItem value="lab-hold">Lab Hold</SelectItem>
+              <SelectItem value="qa-inspection">Q/A Inspection</SelectItem>
+              <SelectItem value="qa-inspection-fail-correction">Q/A Inspection - Fail Correction</SelectItem>
+              <SelectItem value="qa-hold">Q/A Hold</SelectItem>
+              <SelectItem value="qa-disapproved">Q/A Disapproved</SelectItem>
+              <SelectItem value="qa-fail-log">Q/A Fail Log</SelectItem>
+              <SelectItem value="ar-invoicing">A/R Invoicing</SelectItem>
+              <SelectItem value="ar-invoicing-hold">A/R Invoicing/Hold</SelectItem>
+              <SelectItem value="admin-processing">Admin Processing</SelectItem>
+              <SelectItem value="back-to-customer">Back to Customer</SelectItem>
+              <SelectItem value="calibrated-on-shelf">Calibrated on Shelf</SelectItem>
+              <SelectItem value="cancelled">Cancelled</SelectItem>
+              <SelectItem value="item-not-found-on-site">Item Not Found on Site</SelectItem>
+              <SelectItem value="me-review">ME Review</SelectItem>
+              <SelectItem value="not-used">Not Used</SelectItem>
+              <SelectItem value="onsite">Onsite</SelectItem>
+              <SelectItem value="ready-for-departure">Ready for Departure</SelectItem>
+              <SelectItem value="return-to-lab-processing">Return to Lab for Processing</SelectItem>
+              <SelectItem value="scheduled">Scheduled</SelectItem>
+              <SelectItem value="surplus-stock">Surplus Stock</SelectItem>
+              <SelectItem value="waiting-on-customer">Waiting on Customer</SelectItem>
+            </SelectContent>
+          </Select>
+          
+          {/* Assignee */}
+          <Select value={searchValues.assignee || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, assignee: value === 'all' ? '' : value }))}>
+            <SelectTrigger className="w-[160px] bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
+              <SelectValue placeholder="All Assignees" />
+            </SelectTrigger>
+            <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
+              <SelectItem value="all">All Assignees</SelectItem>
+              <SelectItem value="john-doe">John Doe</SelectItem>
+              <SelectItem value="jane-smith">Jane Smith</SelectItem>
+              <SelectItem value="mike-johnson">Mike Johnson</SelectItem>
+              <SelectItem value="sarah-wilson">Sarah Wilson</SelectItem>
+              <SelectItem value="unassigned">Unassigned</SelectItem>
+            </SelectContent>
+          </Select>
 
-            {/* From Date */}
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  disabled={!dateType}
-                  className={cn(
-                    "w-full justify-start text-left font-normal bg-white border border-gray-300 rounded-lg h-11 text-sm hover:bg-gray-50 transition-all shadow-sm",
-                    !dateFrom && "text-gray-500",
-                    !dateType && "opacity-50 cursor-not-allowed bg-gray-50"
-                  )}
-                >
-                  <CalendarIcon className="mr-2 h-4 w-4 text-gray-500 flex-shrink-0" />
-                  <span className="truncate">
-                    {dateFrom ? format(dateFrom, "MMM dd") : "From"}
-                  </span>
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0 border border-gray-200 shadow-xl rounded-lg z-[70]" align="start">
-                <Calendar
-                  mode="single"
-                  selected={dateFrom}
-                  onSelect={setDateFrom}
-                  initialFocus
-                  className="pointer-events-auto rounded-lg p-3"
-                />
-              </PopoverContent>
-            </Popover>
+          {/* Date Type */}
+          <Select value={dateType} onValueChange={setDateType}>
+            <SelectTrigger className="w-[180px] bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
+              <SelectValue placeholder="Select Date Type" />
+            </SelectTrigger>
+            <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-[60]">
+              <SelectItem value="created">Created</SelectItem>
+              <SelectItem value="arrival">Arrival</SelectItem>
+              <SelectItem value="need-by">Need By</SelectItem>
+              <SelectItem value="status-date">Status Date</SelectItem>
+              <SelectItem value="last-comment">Last Comment</SelectItem>
+              <SelectItem value="departure-date">Departure Date</SelectItem>
+              <SelectItem value="samsara-doc-submit">Samsara Doc Submit Date</SelectItem>
+            </SelectContent>
+          </Select>
+
+          {/* From Date */}
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                disabled={!dateType}
+                className={cn(
+                  "w-[140px] justify-start text-left font-normal bg-white border border-gray-300 rounded-lg h-11 text-sm hover:bg-gray-50 transition-all shadow-sm",
+                  !dateFrom && "text-gray-500",
+                  !dateType && "opacity-50 cursor-not-allowed bg-gray-50"
+                )}
+              >
+                <CalendarIcon className="mr-2 h-4 w-4 text-gray-500 flex-shrink-0" />
+                <span className="truncate">
+                  {dateFrom ? format(dateFrom, "MMM dd, yyyy") : "From"}
+                </span>
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0 border border-gray-200 shadow-xl rounded-lg z-[70]" align="start">
+              <Calendar
+                mode="single"
+                selected={dateFrom}
+                onSelect={setDateFrom}
+                initialFocus
+                className="pointer-events-auto rounded-lg p-3"
+              />
+            </PopoverContent>
+          </Popover>
+
+          {/* To Date */}
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                disabled={!dateType}
+                className={cn(
+                  "w-[140px] justify-start text-left font-normal bg-white border border-gray-300 rounded-lg h-11 text-sm hover:bg-gray-50 transition-all shadow-sm",
+                  !dateTo && "text-gray-500",
+                  !dateType && "opacity-50 cursor-not-allowed bg-gray-50"
+                )}
+              >
+                <CalendarIcon className="mr-2 h-4 w-4 text-gray-500 flex-shrink-0" />
+                <span className="truncate">
+                  {dateTo ? format(dateTo, "MMM dd, yyyy") : "To"}
+                </span>
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0 border border-gray-200 shadow-xl rounded-lg z-[70]" align="start">
+              <Calendar
+                mode="single"
+                selected={dateTo}
+                onSelect={setDateTo}
+                initialFocus
+                className="pointer-events-auto rounded-lg p-3"
+              />
+            </PopoverContent>
+          </Popover>
+
+          {/* WO Type */}
+          <Select value={searchValues.woType || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, woType: value === 'all' ? '' : value }))}>
+            <SelectTrigger className="w-[180px] bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
+              <SelectValue placeholder="All WO Types" />
+            </SelectTrigger>
+            <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-[60]">
+              <SelectItem value="all">All Workorder Types</SelectItem>
+              <SelectItem value="regular">Regular Work Order</SelectItem>
+              <SelectItem value="onsite">Onsite Work Order</SelectItem>
+            </SelectContent>
+          </Select>
+
+          {/* Priority */}
+          <Select value={searchValues.priority || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, priority: value === 'all' ? '' : value }))}>
+            <SelectTrigger className="w-[140px] bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
+              <SelectValue placeholder="All Priority" />
+            </SelectTrigger>
+            <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-[60]">
+              <SelectItem value="all">All Priority</SelectItem>
+              <SelectItem value="critical">Critical</SelectItem>
+              <SelectItem value="high">High</SelectItem>
+              <SelectItem value="medium">Medium</SelectItem>
+              <SelectItem value="low">Low</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
 
             {/* To Date */}
             <Popover>
@@ -984,7 +1033,7 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
 
         {/* Advanced Filters Row */}
         {showAdvanced && (
-          <div className="px-4 mt-4 pt-4 border-t border-gray-100">
+          <div className="mt-4 pt-4 border-t border-gray-100">
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {/* Manufacturer */}
               <Select value={searchValues.manufacturer || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, manufacturer: value === 'all' ? '' : value }))}>
