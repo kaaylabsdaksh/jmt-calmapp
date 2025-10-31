@@ -411,18 +411,13 @@ const MinimalWorkOrderSearch = ({ onSearch }: MinimalWorkOrderSearchProps) => {
             <Label htmlFor="status" className="text-sm font-medium">
               Status
             </Label>
-            <Select value={searchForm.status} onValueChange={(value) => updateSearchForm('status', value)}>
-              <SelectTrigger className="h-10">
-                <SelectValue placeholder="All statuses" />
-              </SelectTrigger>
-              <SelectContent className="bg-popover border shadow-lg z-50">
-                <SelectItem value="all">All Statuses</SelectItem>
-                <SelectItem value="in-lab">In Lab</SelectItem>
-                <SelectItem value="complete">Complete</SelectItem>
-                <SelectItem value="pending">Pending</SelectItem>
-                <SelectItem value="shipped">Shipped</SelectItem>
-              </SelectContent>
-            </Select>
+            <Input
+              id="status"
+              placeholder="Enter status"
+              value={searchForm.status}
+              onChange={(e) => updateSearchForm('status', e.target.value)}
+              className="h-10 transition-all focus:ring-2 focus:ring-primary/20"
+            />
           </div>
         </div>
 
@@ -434,17 +429,13 @@ const MinimalWorkOrderSearch = ({ onSearch }: MinimalWorkOrderSearchProps) => {
                 <Label htmlFor="priority" className="text-sm font-medium">
                   Priority
                 </Label>
-                <Select value={searchForm.priority} onValueChange={(value) => updateSearchForm('priority', value)}>
-                  <SelectTrigger className="h-10">
-                    <SelectValue placeholder="All priorities" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-popover border shadow-lg z-50">
-                    <SelectItem value="all">All Priorities</SelectItem>
-                    <SelectItem value="normal">Normal</SelectItem>
-                    <SelectItem value="rush">Rush</SelectItem>
-                    <SelectItem value="emergency">Emergency</SelectItem>
-                  </SelectContent>
-                </Select>
+                <Input
+                  id="priority"
+                  placeholder="Enter priority"
+                  value={searchForm.priority}
+                  onChange={(e) => updateSearchForm('priority', e.target.value)}
+                  className="h-10 transition-all focus:ring-2 focus:ring-primary/20"
+                />
               </div>
 
               <div className="space-y-2">
