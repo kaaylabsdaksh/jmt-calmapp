@@ -4028,19 +4028,23 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
     // Search tags filter - ALL tags must match (each tag can match ANY field)
     const searchTagsMatch = !searchFilters.searchTags || searchFilters.searchTags.length === 0 || 
       searchFilters.searchTags.every(tag => {
-        const tagLower = tag.toLowerCase();
-        return order.id.toLowerCase().includes(tagLower) ||
-          order.customer.toLowerCase().includes(tagLower) ||
-          order.assignedTo.toLowerCase().includes(tagLower) ||
-          order.division.toLowerCase().includes(tagLower) ||
-          order.details.manufacturer.toLowerCase().includes(tagLower) ||
-          order.details.modelNumber.toLowerCase().includes(tagLower) ||
-          order.details.serialNumber.toLowerCase().includes(tagLower) ||
-          order.details.labCode.toLowerCase().includes(tagLower) ||
-          order.details.poNumber.toLowerCase().includes(tagLower) ||
-          order.details.custId.toLowerCase().includes(tagLower) ||
-          order.details.custSn.toLowerCase().includes(tagLower) ||
-          order.details.cartSn.toLowerCase().includes(tagLower);
+        // Extract the value from "Label: value" format
+        const colonIndex = tag.indexOf(':');
+        const searchValue = colonIndex !== -1 ? tag.substring(colonIndex + 1).trim() : tag;
+        const searchLower = searchValue.toLowerCase();
+        
+        return order.id.toLowerCase().includes(searchLower) ||
+          order.customer.toLowerCase().includes(searchLower) ||
+          order.assignedTo.toLowerCase().includes(searchLower) ||
+          order.division.toLowerCase().includes(searchLower) ||
+          order.details.manufacturer.toLowerCase().includes(searchLower) ||
+          order.details.modelNumber.toLowerCase().includes(searchLower) ||
+          order.details.serialNumber.toLowerCase().includes(searchLower) ||
+          order.details.labCode.toLowerCase().includes(searchLower) ||
+          order.details.poNumber.toLowerCase().includes(searchLower) ||
+          order.details.custId.toLowerCase().includes(searchLower) ||
+          order.details.custSn.toLowerCase().includes(searchLower) ||
+          order.details.cartSn.toLowerCase().includes(searchLower);
       });
     
     // Priority filter
@@ -4130,16 +4134,20 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
     // Search tags filter - ALL tags must match (each tag can match ANY field)
     const searchTagsMatch = !searchFilters.searchTags || searchFilters.searchTags.length === 0 || 
       searchFilters.searchTags.every(tag => {
-        const tagLower = tag.toLowerCase();
-        return item.workOrderNumber.toLowerCase().includes(tagLower) ||
-          item.customer.toLowerCase().includes(tagLower) ||
-          item.assignedTo.toLowerCase().includes(tagLower) ||
-          item.division.toLowerCase().includes(tagLower) ||
-          item.manufacturer.toLowerCase().includes(tagLower) ||
-          item.model.toLowerCase().includes(tagLower) ||
-          item.serialNumber.toLowerCase().includes(tagLower) ||
-          item.itemType.toLowerCase().includes(tagLower) ||
-          item.poNumber?.toLowerCase().includes(tagLower);
+        // Extract the value from "Label: value" format
+        const colonIndex = tag.indexOf(':');
+        const searchValue = colonIndex !== -1 ? tag.substring(colonIndex + 1).trim() : tag;
+        const searchLower = searchValue.toLowerCase();
+        
+        return item.workOrderNumber.toLowerCase().includes(searchLower) ||
+          item.customer.toLowerCase().includes(searchLower) ||
+          item.assignedTo.toLowerCase().includes(searchLower) ||
+          item.division.toLowerCase().includes(searchLower) ||
+          item.manufacturer.toLowerCase().includes(searchLower) ||
+          item.model.toLowerCase().includes(searchLower) ||
+          item.serialNumber.toLowerCase().includes(searchLower) ||
+          item.itemType.toLowerCase().includes(searchLower) ||
+          item.poNumber?.toLowerCase().includes(searchLower);
       });
     
     // Priority filter
@@ -4170,11 +4178,15 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
     // Search tags filter - ALL tags must match (each tag can match ANY field)
     const searchTagsMatch = !searchFilters.searchTags || searchFilters.searchTags.length === 0 || 
       searchFilters.searchTags.every(tag => {
-        const tagLower = tag.toLowerCase();
-        return batch.woBatch.toLowerCase().includes(tagLower) ||
-          batch.acctNumber.toLowerCase().includes(tagLower) ||
-          batch.srNumber.toLowerCase().includes(tagLower) ||
-          batch.customerName.toLowerCase().includes(tagLower);
+        // Extract the value from "Label: value" format
+        const colonIndex = tag.indexOf(':');
+        const searchValue = colonIndex !== -1 ? tag.substring(colonIndex + 1).trim() : tag;
+        const searchLower = searchValue.toLowerCase();
+        
+        return batch.woBatch.toLowerCase().includes(searchLower) ||
+          batch.acctNumber.toLowerCase().includes(searchLower) ||
+          batch.srNumber.toLowerCase().includes(searchLower) ||
+          batch.customerName.toLowerCase().includes(searchLower);
       });
     
     return searchMatch && searchTagsMatch;
