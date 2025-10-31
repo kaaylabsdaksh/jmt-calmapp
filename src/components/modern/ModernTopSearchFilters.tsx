@@ -580,42 +580,43 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
           </div>
         )}
         
-        {/* Main Search Bar with Dropdown */}
-        <div className="flex flex-col md:flex-row gap-2 sm:gap-3 mb-3">
-          <Select value={selectedSearchType} onValueChange={setSelectedSearchType}>
-            <SelectTrigger className="w-full md:w-[240px] bg-white border border-gray-300 rounded-lg h-10 sm:h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-[9999]">
-              {searchTypeOptions.map((option) => (
-                <SelectItem key={option.value} value={option.value}>
-                  {option.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          
-          <div className="flex-1 flex gap-2">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 h-4 sm:h-5 w-4 sm:w-5 text-gray-400" />
+        {/* Unified Search Bar with Integrated Dropdown */}
+        <div className="flex gap-2 mb-3">
+          <div className="relative flex-1 flex items-center bg-white border border-gray-300 rounded-lg h-10 sm:h-11 shadow-sm focus-within:ring-2 focus-within:ring-blue-500/20 focus-within:border-blue-500 transition-all">
+            <Select value={selectedSearchType} onValueChange={setSelectedSearchType}>
+              <SelectTrigger className="w-[180px] sm:w-[220px] border-0 border-r border-gray-300 rounded-l-lg rounded-r-none h-full text-xs sm:text-sm bg-transparent hover:bg-gray-50 focus:ring-0 focus:ring-offset-0">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-[9999]">
+                {searchTypeOptions.map((option) => (
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            
+            <div className="relative flex-1 flex items-center">
+              <Search className="absolute left-3 sm:left-4 h-4 sm:h-5 w-4 sm:w-5 text-gray-400" />
               <Input
                 placeholder={`Enter ${searchTypeOptions.find(opt => opt.value === selectedSearchType)?.label}...`}
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
                 onKeyDown={handleKeyDown}
-                className="pl-10 sm:pl-12 bg-white border border-gray-300 rounded-lg h-10 sm:h-11 text-sm placeholder:text-gray-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
+                className="pl-10 sm:pl-12 pr-3 border-0 h-full text-sm placeholder:text-gray-500 focus-visible:ring-0 focus-visible:ring-offset-0 bg-transparent"
               />
             </div>
-            <Button 
-              onClick={addSearchChip}
-              variant="default"
-              size="sm"
-              className="h-10 sm:h-11 px-4 sm:px-6"
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              <span className="hidden sm:inline">Add</span>
-            </Button>
           </div>
+          
+          <Button 
+            onClick={addSearchChip}
+            variant="default"
+            size="sm"
+            className="h-10 sm:h-11 px-4 sm:px-6"
+          >
+            <Plus className="h-4 w-4 mr-2" />
+            <span className="hidden sm:inline">Add</span>
+          </Button>
         </div>
         
         <div className="flex gap-2 sm:gap-3">
