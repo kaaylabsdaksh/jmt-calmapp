@@ -38,9 +38,17 @@ export const ContactForm = ({ open, onOpenChange, onSave }: ContactFormProps) =>
   };
 
   const handleSave = () => {
+    // Validate required fields
+    if (!formData.firstName.trim() || !formData.lastName.trim() || !formData.phone.trim()) {
+      return;
+    }
     onSave?.(formData);
     onOpenChange(false);
   };
+
+  const isFormValid = formData.firstName.trim() !== "" && 
+                      formData.lastName.trim() !== "" && 
+                      formData.phone.trim() !== "";
 
   const handleClear = () => {
     setFormData({
@@ -71,24 +79,28 @@ export const ContactForm = ({ open, onOpenChange, onSave }: ContactFormProps) =>
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="firstName" className="text-sm font-medium">
-                Contact Name:
+                Contact Name: <span className="text-destructive">*</span>
               </Label>
               <Input
                 id="firstName"
                 placeholder="First Name"
                 value={formData.firstName}
                 onChange={(e) => handleInputChange("firstName", e.target.value)}
+                required
+                className={!formData.firstName.trim() ? "border-destructive" : ""}
               />
             </div>
             <div className="space-y-2">
               <Label htmlFor="lastName" className="text-sm font-medium">
-                &nbsp;
+                <span className="text-destructive">*</span>
               </Label>
               <Input
                 id="lastName"
                 placeholder="Last Name"
                 value={formData.lastName}
                 onChange={(e) => handleInputChange("lastName", e.target.value)}
+                required
+                className={!formData.lastName.trim() ? "border-destructive" : ""}
               />
             </div>
           </div>
@@ -110,13 +122,15 @@ export const ContactForm = ({ open, onOpenChange, onSave }: ContactFormProps) =>
           <div className="grid grid-cols-3 gap-4">
             <div className="space-y-2">
               <Label htmlFor="phone" className="text-sm font-medium">
-                Phone:
+                Phone: <span className="text-destructive">*</span>
               </Label>
               <Input
                 id="phone"
                 placeholder="Phone"
                 value={formData.phone}
                 onChange={(e) => handleInputChange("phone", e.target.value)}
+                required
+                className={!formData.phone.trim() ? "border-destructive" : ""}
               />
             </div>
             <div className="space-y-2">
@@ -174,7 +188,8 @@ export const ContactForm = ({ open, onOpenChange, onSave }: ContactFormProps) =>
           <div className="flex justify-start gap-3 pt-4">
             <Button 
               onClick={handleSave}
-              className="bg-warning text-black hover:bg-warning/90"
+              disabled={!isFormValid}
+              className="bg-warning text-black hover:bg-warning/90 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Save
             </Button>
