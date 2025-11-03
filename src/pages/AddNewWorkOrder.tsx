@@ -35,7 +35,7 @@ const AddNewWorkOrder = () => {
       customer: "",
       srDocument: "",
       salesperson: "Not assigned",
-      contact: ""
+      contact: "no-contact"
     }));
     // Reset to general tab when account is cleared
     setActiveTab("general");
@@ -110,7 +110,7 @@ const AddNewWorkOrder = () => {
       accountNumber: "",
       customer: "",
       salesperson: "Not assigned",
-      contact: ""
+      contact: "no-contact"
     };
   });
 
@@ -288,7 +288,7 @@ const AddNewWorkOrder = () => {
     }
     
     const isValidFormat = /^\d{4}\.\d{2}$/.test(workOrderData.accountNumber);
-    const hasContact = workOrderData.contact && workOrderData.contact !== "";
+    const hasContact = workOrderData.contact && workOrderData.contact !== "" && workOrderData.contact !== "no-contact";
     
     // If no valid account, only general is enabled
     if (!isValidFormat) {
@@ -313,7 +313,7 @@ const AddNewWorkOrder = () => {
   // Function to check if other fields (non-contact) should be disabled
   const areOtherFieldsDisabled = () => {
     const isValidFormat = /^\d{4}\.\d{2}$/.test(workOrderData.accountNumber);
-    const hasContact = workOrderData.contact && workOrderData.contact !== "";
+    const hasContact = workOrderData.contact && workOrderData.contact !== "" && workOrderData.contact !== "no-contact";
     return !isValidFormat || !hasContact;
   };
 
@@ -334,7 +334,7 @@ const AddNewWorkOrder = () => {
         customer: "",
         srDocument: "",
         salesperson: "Not assigned",
-        contact: ""
+        contact: "no-contact"
       }));
       setShowSuggestions(false);
       setAccountSuggestions([]);
@@ -343,7 +343,7 @@ const AddNewWorkOrder = () => {
       setWorkOrderData(prev => ({ 
         ...prev, 
         accountNumber: value,
-        contact: ""
+        contact: "no-contact"
       }));
       
       // Filter suggestions - match against the formatted number
