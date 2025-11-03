@@ -115,6 +115,7 @@ const AddNewWorkOrder = () => {
   });
 
   const [isSaved, setIsSaved] = useState(false);
+  const [hasContact, setHasContact] = useState(false);
 
   // Save to localStorage whenever workOrderData changes
   useEffect(() => {
@@ -272,6 +273,13 @@ const AddNewWorkOrder = () => {
     // TODO: Implement save functionality
     console.log("Saving work order:", workOrderData);
     setIsSaved(true);
+    
+    // Check if contact is selected
+    const contactSelected = workOrderData.contact && workOrderData.contact !== "no-contact";
+    if (contactSelected) {
+      setHasContact(true);
+    }
+    
     toast({
       variant: "success",
       title: "Work Order Saved",
@@ -297,12 +305,17 @@ const AddNewWorkOrder = () => {
       return tabValue !== "general";
     }
     
-    // If account is valid but not saved yet, enable general, account-info, and contacts
+    // If account is valid but not saved yet, only general is enabled
     if (!isSaved) {
+      return tabValue !== "general";
+    }
+    
+    // If saved but no contact selected yet, enable general, account-info, and contacts
+    if (!hasContact) {
       return !["general", "account-info", "contacts"].includes(tabValue);
     }
     
-    // If saved, enable all tabs except warranty
+    // If saved with contact, enable all tabs except warranty
     return false;
   };
 
@@ -314,8 +327,7 @@ const AddNewWorkOrder = () => {
 
   // Function to check if other fields (non-contact) should be disabled
   const areOtherFieldsDisabled = () => {
-    const isValidFormat = /^\d{4}\.\d{2}$/.test(workOrderData.accountNumber);
-    return !isValidFormat || !isSaved;
+    return !hasContact;
   };
 
   // Handle account number input change
@@ -338,6 +350,7 @@ const AddNewWorkOrder = () => {
         contact: "no-contact"
       }));
       setIsSaved(false);
+      setHasContact(false);
       setShowSuggestions(false);
       setAccountSuggestions([]);
     } else {
@@ -348,6 +361,7 @@ const AddNewWorkOrder = () => {
         contact: "no-contact"
       }));
       setIsSaved(false);
+      setHasContact(false);
       
       // Filter suggestions - match against the formatted number
       const searchValue = value.replace('.', '');
@@ -735,7 +749,7 @@ const AddNewWorkOrder = () => {
                       <Select 
                         value={workOrderData.contact || "no-contact"} 
                         onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, contact: value === "no-contact" ? "" : value }))}
-                        disabled={areFieldsDisabled()}
+                        disabled={!isSaved}
                       >
                         <SelectTrigger className="h-9 sm:h-10">
                           <SelectValue placeholder="Select contact" />
