@@ -605,14 +605,28 @@ const AddNewWorkOrder = () => {
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="srDocument" className="text-sm font-medium text-foreground">SR Doc</Label>
-                  <Input
-                    id="srDocument"
-                    placeholder="SR Document"
-                    value={workOrderData.srDocument}
-                    onChange={(e) => setWorkOrderData(prev => ({ ...prev, srDocument: e.target.value }))}
-                    disabled={areOtherFieldsDisabled()}
-                    className="h-9 sm:h-10"
-                  />
+                  {workOrderData.srDocument ? (
+                    <a 
+                      href={`#/sr-document/${workOrderData.srDocument}`}
+                      className="text-sm text-blue-600 hover:text-blue-800 underline p-2 block"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        // TODO: Navigate to SR document or open in modal
+                        console.log('Opening SR Document:', workOrderData.srDocument);
+                      }}
+                    >
+                      {workOrderData.srDocument}
+                    </a>
+                  ) : (
+                    <Input
+                      id="srDocument"
+                      placeholder="SR Document"
+                      value={workOrderData.srDocument}
+                      onChange={(e) => setWorkOrderData(prev => ({ ...prev, srDocument: e.target.value }))}
+                      disabled={areOtherFieldsDisabled()}
+                      className="h-9 sm:h-10"
+                    />
+                  )}
                 </div>
                 <div className="space-y-2">
                   <Label className="text-sm font-medium text-foreground">Salesperson</Label>
