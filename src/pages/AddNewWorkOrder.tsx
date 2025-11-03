@@ -286,10 +286,21 @@ const AddNewWorkOrder = () => {
     if (tabValue === "warranty") {
       return true;
     }
-    // Only general tab is enabled if account number is not in format XXXX.XX or contact is not selected
     const isValidFormat = /^\d{4}\.\d{2}$/.test(workOrderData.accountNumber);
     const hasContact = workOrderData.contact && workOrderData.contact !== "";
-    return tabValue !== "general" && (!isValidFormat || !hasContact);
+    
+    // If account is valid but no contact, only allow General, Account Info, and Work Order Contacts
+    if (isValidFormat && !hasContact) {
+      return tabValue !== "general" && tabValue !== "account-info" && tabValue !== "contacts";
+    }
+    
+    // If account is not valid, only allow General
+    if (!isValidFormat) {
+      return tabValue !== "general";
+    }
+    
+    // If both account and contact are valid, all tabs except warranty are enabled
+    return false;
   };
 
   // Function to check if form fields should be disabled (for contact field)
@@ -726,6 +737,9 @@ const AddNewWorkOrder = () => {
                           <SelectValue placeholder="Select contact" />
                         </SelectTrigger>
                         <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-[60] max-h-60 overflow-y-auto">
+                          <SelectItem value="" className="px-3 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white data-[highlighted]:bg-blue-500 data-[highlighted]:text-white">
+                            (No contact selected)
+                          </SelectItem>
                           {workOrderData.accountNumber && workOrderData.customer && (
                             <SelectItem 
                               value={mockAccounts.find(acc => acc.accountNumber === workOrderData.accountNumber)?.contact || "Not specified"}
