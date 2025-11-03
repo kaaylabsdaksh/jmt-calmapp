@@ -43,7 +43,28 @@ const ModernWorkOrderManagement = () => {
   const handleSearch = (filters: SearchFilters) => {
     console.log('Parent received search filters:', filters);
     setSearchFilters(filters);
-    setHasSearched(true);
+    
+    // Check if all filters are empty - if so, show empty state
+    const hasAnyFilter = !!(
+      filters.globalSearch || 
+      filters.searchTags.length > 0 || 
+      filters.status || 
+      filters.assignee ||
+      filters.dateType ||
+      filters.dateFrom ||
+      filters.dateTo ||
+      filters.woType ||
+      filters.priority ||
+      filters.division ||
+      filters.actionCode ||
+      filters.labCode ||
+      filters.newEquip ||
+      filters.usedSurplus ||
+      filters.warranty ||
+      filters.toFactory
+    );
+    
+    setHasSearched(hasAnyFilter);
   };
 
   // Initialize with empty filters to show all work orders
