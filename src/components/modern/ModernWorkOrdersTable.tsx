@@ -4546,13 +4546,15 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
           {/* Title and Count */}
           <div className="text-center sm:text-left">
             <h2 className="text-lg sm:text-xl font-bold text-gray-900">Work Orders</h2>
-            <p className="text-xs sm:text-sm text-gray-600 mt-1">
-              {currentView === 'batch' ? (
-                <>Showing {filteredWorkOrderBatches.length} of {mockWorkOrderBatches.length} batches</>
-              ) : (
-                <>Showing {filteredWorkOrderItems.length} of {mockWorkOrderItems.length} items</>
-              )}
-            </p>
+            {hasSearched && (
+              <p className="text-xs sm:text-sm text-gray-600 mt-1">
+                {currentView === 'batch' ? (
+                  <>Showing {filteredWorkOrderBatches.length} of {mockWorkOrderBatches.length} batches</>
+                ) : (
+                  <>Showing {filteredWorkOrderItems.length} of {mockWorkOrderItems.length} items</>
+                )}
+              </p>
+            )}
           </div>
           
           {/* Toggle Buttons - Full Width on Mobile */}
@@ -4629,13 +4631,15 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
         <div className="hidden lg:flex items-center justify-between">
           <div>
             <h2 className="text-xl font-bold text-gray-900">Work Orders</h2>
-            <p className="text-sm text-gray-600 mt-1">
-              {currentView === 'batch' ? (
-                <>Showing {filteredWorkOrderBatches.length} of {mockWorkOrderBatches.length} batches</>
-              ) : (
-                <>Showing {filteredWorkOrderItems.length} of {mockWorkOrderItems.length} items</>
-              )}
-            </p>
+            {hasSearched && (
+              <p className="text-sm text-gray-600 mt-1">
+                {currentView === 'batch' ? (
+                  <>Showing {filteredWorkOrderBatches.length} of {mockWorkOrderBatches.length} batches</>
+                ) : (
+                  <>Showing {filteredWorkOrderItems.length} of {mockWorkOrderItems.length} items</>
+                )}
+              </p>
+            )}
           </div>
           
           {/* View Toggle Buttons */}
