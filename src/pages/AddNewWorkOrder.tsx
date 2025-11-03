@@ -993,6 +993,19 @@ const AddNewWorkOrder = () => {
                           </SelectContent>
                         </Select>
                       </div>
+
+                      {/* Additional Contact 3 */}
+                      <div>
+                        <Select>
+                          <SelectTrigger className="w-64">
+                            <SelectValue placeholder="Select additional contact..." />
+                          </SelectTrigger>
+                          <SelectContent className="bg-background border shadow-lg z-50">
+                            <SelectItem value="barry-white">Barry White</SelectItem>
+                            <SelectItem value="netasha-gray">Netasha Gray</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
                     </div>
                   </div>
                 </CardContent>
