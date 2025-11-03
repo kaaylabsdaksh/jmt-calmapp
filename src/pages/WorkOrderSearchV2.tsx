@@ -42,6 +42,7 @@ interface SearchFilters {
 
 const WorkOrderSearchV2 = () => {
   const [viewMode, setViewMode] = useState<'list' | 'grid'>('list');
+  const [hasSearched, setHasSearched] = useState(false);
   const [searchFilters, setSearchFilters] = useState<SearchFilters>({
     globalSearch: '',
     searchTags: [],
@@ -75,6 +76,7 @@ const WorkOrderSearchV2 = () => {
 
   const handleSearch = (filters: SearchFilters) => {
     setSearchFilters(filters);
+    setHasSearched(true);
   };
 
   return (
@@ -138,6 +140,7 @@ const WorkOrderSearchV2 = () => {
           viewMode={viewMode}
           onViewModeChange={setViewMode}
           searchFilters={searchFilters}
+          hasSearched={hasSearched}
         />
       </main>
     </div>

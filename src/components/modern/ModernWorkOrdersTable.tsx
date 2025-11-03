@@ -3935,10 +3935,11 @@ interface ModernWorkOrdersTableProps {
     workOrderItemType: string;
     location: string;
   };
+  hasSearched: boolean;
 }
 
 // ModernWorkOrdersTable Component - Clean version with only List/Grid toggle icons
-const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: ModernWorkOrdersTableProps) => {
+const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasSearched }: ModernWorkOrdersTableProps) => {
   const [selectedWorkOrder, setSelectedWorkOrder] = useState<WorkOrder | null>(null);
   const [selectedBatch, setSelectedBatch] = useState<WorkOrderBatch | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -4704,6 +4705,13 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
       </div>
 
       {/* Content - List or Grid View */}
+      {!hasSearched ? (
+        <div className="p-12 text-center">
+          <p className="text-muted-foreground text-lg">
+            Please enter search criteria in the Work Order Search above to view results
+          </p>
+        </div>
+      ) : (
       <div className="overflow-hidden">
         {viewMode === 'list' ? (
           // List View - Table
@@ -5054,6 +5062,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters }: Mo
           </div>
         </div>
       </div>
+      )}
 
       {/* Work Order Details Dialog */}
       <Dialog open={selectedWorkOrder !== null} onOpenChange={() => setSelectedWorkOrder(null)}>

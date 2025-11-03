@@ -38,9 +38,12 @@ interface SearchFilters {
 
 const ModernWorkOrderManagement = () => {
   const [viewMode, setViewMode] = useState<'list' | 'grid'>('list');
+  const [hasSearched, setHasSearched] = useState(false);
+  
   const handleSearch = (filters: SearchFilters) => {
     console.log('Parent received search filters:', filters);
     setSearchFilters(filters);
+    setHasSearched(true);
   };
 
   // Initialize with empty filters to show all work orders
@@ -85,6 +88,7 @@ const ModernWorkOrderManagement = () => {
             viewMode={viewMode} 
             onViewModeChange={setViewMode}
             searchFilters={searchFilters}
+            hasSearched={hasSearched}
           />
         </div>
       </main>
