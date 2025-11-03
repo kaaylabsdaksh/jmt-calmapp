@@ -4176,13 +4176,21 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
       batch.srNumber.toLowerCase().includes(searchTerm) ||
       batch.customerName.toLowerCase().includes(searchTerm);
     
-    // Search tags filter - ALL tags must match (each tag can match ANY field)
+    // Search tags filter - only apply batch-relevant tags
     const searchTagsMatch = !searchFilters.searchTags || searchFilters.searchTags.length === 0 || 
       searchFilters.searchTags.every(tag => {
-        // Extract the value from "Label: value" format
+        // Extract label and value from "Label: value" format
         const colonIndex = tag.indexOf(':');
+        const label = colonIndex !== -1 ? tag.substring(0, colonIndex).trim() : '';
         const searchValue = colonIndex !== -1 ? tag.substring(colonIndex + 1).trim() : tag;
         const searchLower = searchValue.toLowerCase();
+        
+        // Only apply batch-relevant search tags (skip item-specific tags)
+        const batchRelevantLabels = ['Account Number', 'Customer Name', 'SR Number'];
+        if (!batchRelevantLabels.some(relevantLabel => label.includes(relevantLabel))) {
+          // For item-specific tags, don't filter batches (show all)
+          return true;
+        }
         
         return batch.woBatch.toLowerCase().includes(searchLower) ||
           batch.acctNumber.toLowerCase().includes(searchLower) ||
