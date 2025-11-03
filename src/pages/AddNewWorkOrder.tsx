@@ -114,6 +114,8 @@ const AddNewWorkOrder = () => {
     };
   });
 
+  const [isSaved, setIsSaved] = useState(false);
+
   // Save to localStorage whenever workOrderData changes
   useEffect(() => {
     localStorage.setItem('workOrderData', JSON.stringify(workOrderData));
@@ -269,6 +271,7 @@ const AddNewWorkOrder = () => {
   const handleSave = () => {
     // TODO: Implement save functionality
     console.log("Saving work order:", workOrderData);
+    setIsSaved(true);
     toast({
       variant: "success",
       title: "Work Order Saved",
@@ -288,19 +291,18 @@ const AddNewWorkOrder = () => {
     }
     
     const isValidFormat = /^\d{4}\.\d{2}$/.test(workOrderData.accountNumber);
-    const hasContact = workOrderData.contact && workOrderData.contact !== "" && workOrderData.contact !== "no-contact";
     
     // If no valid account, only general is enabled
     if (!isValidFormat) {
       return tabValue !== "general";
     }
     
-    // If account is valid but no contact selected, enable general, account-info, and contacts
-    if (!hasContact) {
+    // If account is valid but not saved yet, enable general, account-info, and contacts
+    if (!isSaved) {
       return !["general", "account-info", "contacts"].includes(tabValue);
     }
     
-    // If both account and contact are valid, enable all tabs except warranty
+    // If saved, enable all tabs except warranty
     return false;
   };
 
@@ -313,8 +315,7 @@ const AddNewWorkOrder = () => {
   // Function to check if other fields (non-contact) should be disabled
   const areOtherFieldsDisabled = () => {
     const isValidFormat = /^\d{4}\.\d{2}$/.test(workOrderData.accountNumber);
-    const hasContact = workOrderData.contact && workOrderData.contact !== "" && workOrderData.contact !== "no-contact";
-    return !isValidFormat || !hasContact;
+    return !isValidFormat || !isSaved;
   };
 
   // Handle account number input change
@@ -336,6 +337,7 @@ const AddNewWorkOrder = () => {
         salesperson: "Not assigned",
         contact: "no-contact"
       }));
+      setIsSaved(false);
       setShowSuggestions(false);
       setAccountSuggestions([]);
     } else {
@@ -345,6 +347,7 @@ const AddNewWorkOrder = () => {
         accountNumber: value,
         contact: "no-contact"
       }));
+      setIsSaved(false);
       
       // Filter suggestions - match against the formatted number
       const searchValue = value.replace('.', '');
