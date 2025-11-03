@@ -2805,20 +2805,6 @@ const mockWorkOrders: WorkOrder[] = [
 
 const mockWorkOrderBatches: WorkOrderBatch[] = [
   {
-    id: "0",
-    woBatch: "385737",
-    acctNumber: "CUST-001",
-    srNumber: "SR2024-001",
-    customerName: "ACME Industries",
-    totalLabOpen: 1,
-    totalArCount: 0,
-    totalCount: 5,
-    lastCommentDate: "11/22/2024",
-    lastComment: "Calibration required for pressure sensor",
-    minNeedByDate: "11/24/2024",
-    minFollowUpDate: "11/25/2024"
-  },
-  {
     id: "1",
     woBatch: "383727",
     acctNumber: "13058.06",
@@ -4193,29 +4179,11 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
     // Search tags filter - ALL tags must match (each tag can match ANY field)
     const searchTagsMatch = !searchFilters.searchTags || searchFilters.searchTags.length === 0 || 
       searchFilters.searchTags.every(tag => {
-        // Extract the label and value from "Label: value" format
+        // Extract the value from "Label: value" format
         const colonIndex = tag.indexOf(':');
-        if (colonIndex !== -1) {
-          const label = tag.substring(0, colonIndex).trim();
-          const searchValue = tag.substring(colonIndex + 1).trim().toLowerCase();
-          
-          // Map specific labels to batch fields
-          if (label === 'Work Order Number') {
-            return batch.woBatch.toLowerCase().includes(searchValue);
-          }
-          if (label === 'Account Number') {
-            return batch.acctNumber.toLowerCase().includes(searchValue);
-          }
-          if (label === 'Customer Name') {
-            return batch.customerName.toLowerCase().includes(searchValue);
-          }
-          if (label === 'SR Number') {
-            return batch.srNumber.toLowerCase().includes(searchValue);
-          }
-        }
+        const searchValue = colonIndex !== -1 ? tag.substring(colonIndex + 1).trim() : tag;
+        const searchLower = searchValue.toLowerCase();
         
-        // Fall back to searching all batch fields if no label found
-        const searchLower = tag.toLowerCase();
         return batch.woBatch.toLowerCase().includes(searchLower) ||
           batch.acctNumber.toLowerCase().includes(searchLower) ||
           batch.srNumber.toLowerCase().includes(searchLower) ||
