@@ -4691,13 +4691,6 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
       </div>
 
       {/* Content - List or Grid View */}
-      {!hasSearched ? (
-        <div className="p-12 text-center">
-          <p className="text-muted-foreground text-lg">
-            Please enter search criteria in the Work Order Search above to view results
-          </p>
-        </div>
-      ) : (
       <div className="overflow-hidden">
         {viewMode === 'list' ? (
           // List View - Table
@@ -4735,9 +4728,19 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
               </TableRow>
             </TableHeader>
             <TableBody>
-              {currentView === 'batch' ? (
-                // Batch View - Show Work Order Batches
-                paginatedBatches.map((batch) => (
+              {!hasSearched ? (
+                <TableRow>
+                  <TableCell colSpan={currentView === 'batch' ? 8 : 11} className="text-center py-12">
+                    <p className="text-muted-foreground text-lg">
+                      Please enter search criteria in the Work Order Search above to view results
+                    </p>
+                  </TableCell>
+                </TableRow>
+              ) : (
+                <>
+                  {currentView === 'batch' ? (
+                    // Batch View - Show Work Order Batches
+                    paginatedBatches.map((batch) => (
                   <TableRow
                     key={batch.id}
                     className="hover:bg-gray-50 cursor-pointer border-b border-gray-100"
@@ -4799,13 +4802,23 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                   </TableRow>
                 ))
               )}
+              </>
+            )}
             </TableBody>
           </Table>
         ) : (
           // Grid View - Cards
           <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {currentView === 'batch' ? (
-              paginatedBatches.map((batch) => (
+            {!hasSearched ? (
+              <div className="col-span-full text-center py-12">
+                <p className="text-muted-foreground text-lg">
+                  Please enter search criteria in the Work Order Search above to view results
+                </p>
+              </div>
+            ) : (
+              <>
+                {currentView === 'batch' ? (
+                  paginatedBatches.map((batch) => (
                 <div 
                   key={batch.id} 
                   className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer"
@@ -4911,7 +4924,9 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                     </div>
                   </div>
                 </div>
-              ))
+                ))
+              )}
+              </>
             )}
           </div>
         )}
@@ -5048,7 +5063,6 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
           </div>
         </div>
       </div>
-      )}
 
       {/* Work Order Details Dialog */}
       <Dialog open={selectedWorkOrder !== null} onOpenChange={() => setSelectedWorkOrder(null)}>
