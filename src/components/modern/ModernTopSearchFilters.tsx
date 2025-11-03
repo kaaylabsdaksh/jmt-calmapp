@@ -439,45 +439,7 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
   };
 
   const handleSearch = () => {
-    // Add chip if there's input
-    if (searchInput.trim()) {
-      addSearchChip();
-    } else {
-      // Even without new chips, trigger search with current filters
-      const searchTags = searchChips.map(chip => `${chip.label}: ${chip.value}`);
-      onSearch({
-        globalSearch: '',
-        searchTags: searchTags,
-        status: searchValues.status,
-        assignee: searchValues.assignee,
-        priority: searchValues.priority,
-        manufacturer: searchValues.manufacturer,
-        division: searchValues.division,
-        woType: searchValues.woType,
-        dateFrom,
-        dateTo,
-        dateType,
-        actionCode: searchValues.actionCode,
-        labCode: searchValues.labCode,
-        rotationManagement: searchValues.rotationManagement,
-        invoiceStatus: searchValues.invoiceStatus,
-        departureType: searchValues.departureType,
-        salesperson: searchValues.salesperson,
-        workOrderItemStatus: searchValues.workOrderItemStatus,
-        workOrderItemType: searchValues.workOrderItemType,
-        location: searchValues.location,
-        newEquip: searchValues.newEquip,
-        usedSurplus: searchValues.usedSurplus,
-        warranty: searchValues.warranty,
-        toFactory: searchValues.toFactory,
-        proofOfDelivery: searchValues.proofOfDelivery,
-        only17025: searchValues.only17025,
-        onlyHotList: searchValues.onlyHotList,
-        onlyLostEquip: searchValues.onlyLostEquip,
-        nonJMAccts: searchValues.nonJMAccts,
-        viewTemplate: searchValues.viewTemplate
-      });
-    }
+    addSearchChip();
   };
 
   const clearAllFilters = () => {
@@ -1327,7 +1289,13 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
       <div className="px-4 pb-4 flex justify-end">
         <Button 
           onClick={handleSearch}
-          className="rounded-lg h-11 px-6 font-medium shadow-sm hover:shadow-md transition-all bg-blue-600 hover:bg-blue-700 text-white"
+          disabled={!hasActiveFilters}
+          className={cn(
+            "rounded-lg h-11 px-6 font-medium shadow-sm hover:shadow-md transition-all",
+            hasActiveFilters 
+              ? "bg-blue-600 hover:bg-blue-700 text-white" 
+              : "bg-gray-300 text-gray-500 cursor-not-allowed"
+          )}
         >
           <Search className="h-4 w-4 mr-2" />
           Search
