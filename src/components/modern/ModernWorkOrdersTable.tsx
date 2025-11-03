@@ -4932,6 +4932,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
         )}
         
         {/* Pagination */}
+        {hasSearched && (
         <div className="p-6 border-t border-gray-200 flex justify-between items-center">
           <div className="flex items-center gap-4">
             <span className="text-sm text-gray-600">
@@ -5062,6 +5063,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
             </Button>
           </div>
         </div>
+        )}
       </div>
 
       {/* Work Order Details Dialog */}
