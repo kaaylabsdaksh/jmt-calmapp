@@ -286,10 +286,22 @@ const AddNewWorkOrder = () => {
     if (tabValue === "warranty") {
       return true;
     }
-    // Only general tab is enabled if account number is not in format XXXX.XX or contact is not selected
+    
     const isValidFormat = /^\d{4}\.\d{2}$/.test(workOrderData.accountNumber);
     const hasContact = workOrderData.contact && workOrderData.contact !== "";
-    return tabValue !== "general" && (!isValidFormat || !hasContact);
+    
+    // If no valid account, only general is enabled
+    if (!isValidFormat) {
+      return tabValue !== "general";
+    }
+    
+    // If account is valid but no contact selected, enable general, account-info, and contacts
+    if (!hasContact) {
+      return !["general", "account-info", "contacts"].includes(tabValue);
+    }
+    
+    // If both account and contact are valid, enable all tabs except warranty
+    return false;
   };
 
   // Function to check if form fields should be disabled (for contact field)
@@ -726,6 +738,7 @@ const AddNewWorkOrder = () => {
                           <SelectValue placeholder="Select contact" />
                         </SelectTrigger>
                         <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-[60] max-h-60 overflow-y-auto">
+                          <SelectItem value="" className="px-3 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white data-[highlighted]:bg-blue-500 data-[highlighted]:text-white">(No contact selected)</SelectItem>
                           {workOrderData.accountNumber && workOrderData.customer && (
                             <SelectItem 
                               value={mockAccounts.find(acc => acc.accountNumber === workOrderData.accountNumber)?.contact || "Not specified"}
@@ -2390,7 +2403,7 @@ const AddNewWorkOrder = () => {
             </Button>
             <Button 
               onClick={handleSave} 
-              disabled={!/^\d{4}\.\d{2}$/.test(workOrderData.accountNumber) || !workOrderData.contact}
+              disabled={!/^\d{4}\.\d{2}$/.test(workOrderData.accountNumber)}
               className="bg-success text-success-foreground hover:bg-success/90 text-xs sm:text-sm px-2 sm:px-3 py-1.5 sm:py-2 disabled:opacity-50 disabled:cursor-not-allowed h-8 sm:h-9"
             >
               <Save className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
