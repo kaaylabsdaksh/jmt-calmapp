@@ -730,15 +730,15 @@ const AddNewWorkOrder = () => {
                         Contact <span className="text-destructive">*</span>
                       </Label>
                       <Select 
-                        value={workOrderData.contact} 
-                        onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, contact: value }))}
+                        value={workOrderData.contact || "no-contact"} 
+                        onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, contact: value === "no-contact" ? "" : value }))}
                         disabled={areFieldsDisabled()}
                       >
                         <SelectTrigger className="h-9 sm:h-10">
                           <SelectValue placeholder="Select contact" />
                         </SelectTrigger>
                         <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-[60] max-h-60 overflow-y-auto">
-                          <SelectItem value="" className="px-3 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white data-[highlighted]:bg-blue-500 data-[highlighted]:text-white">(No contact selected)</SelectItem>
+                          <SelectItem value="no-contact" className="px-3 py-2 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white data-[highlighted]:bg-blue-500 data-[highlighted]:text-white">(No contact selected)</SelectItem>
                           {workOrderData.accountNumber && workOrderData.customer && (
                             <SelectItem 
                               value={mockAccounts.find(acc => acc.accountNumber === workOrderData.accountNumber)?.contact || "Not specified"}
