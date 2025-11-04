@@ -834,29 +834,28 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
                     : "All Priority"}
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-56 p-3 bg-white border border-gray-200 shadow-xl rounded-lg z-[60]" align="start">
-                <div className="space-y-2">
+              <PopoverContent className="w-56 p-2 bg-white border border-gray-200 shadow-xl rounded-lg z-[60]" align="start">
+                <div className="space-y-1">
                   {['critical', 'high', 'medium', 'low'].map((priority) => (
-                    <div key={priority} className="flex items-center space-x-2">
-                      <Checkbox
-                        id={`priority-mobile-${priority}`}
-                        checked={searchValues.priority.includes(priority)}
-                        onCheckedChange={(checked) => {
-                          setSearchValues(prev => ({
-                            ...prev,
-                            priority: checked
-                              ? [...prev.priority, priority]
-                              : prev.priority.filter(p => p !== priority)
-                          }));
-                        }}
-                      />
-                      <Label
-                        htmlFor={`priority-mobile-${priority}`}
-                        className="text-sm font-normal capitalize cursor-pointer"
-                      >
-                        {priority}
-                      </Label>
-                    </div>
+                    <button
+                      key={priority}
+                      onClick={() => {
+                        setSearchValues(prev => ({
+                          ...prev,
+                          priority: prev.priority.includes(priority)
+                            ? prev.priority.filter(p => p !== priority)
+                            : [...prev.priority, priority]
+                        }));
+                      }}
+                      className={cn(
+                        "w-full text-left px-3 py-2 rounded-md text-sm capitalize transition-colors",
+                        searchValues.priority.includes(priority)
+                          ? "bg-blue-50 text-blue-700 font-medium"
+                          : "hover:bg-gray-100 text-gray-700"
+                      )}
+                    >
+                      {priority}
+                    </button>
                   ))}
                 </div>
               </PopoverContent>
@@ -1034,29 +1033,28 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
                   : "All Priority"}
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-56 p-3 bg-white border border-gray-200 shadow-xl rounded-lg z-[60]" align="start">
-              <div className="space-y-2">
+            <PopoverContent className="w-56 p-2 bg-white border border-gray-200 shadow-xl rounded-lg z-[60]" align="start">
+              <div className="space-y-1">
                 {['critical', 'high', 'medium', 'low'].map((priority) => (
-                  <div key={priority} className="flex items-center space-x-2">
-                    <Checkbox
-                      id={`priority-desktop-${priority}`}
-                      checked={searchValues.priority.includes(priority)}
-                      onCheckedChange={(checked) => {
-                        setSearchValues(prev => ({
-                          ...prev,
-                          priority: checked
-                            ? [...prev.priority, priority]
-                            : prev.priority.filter(p => p !== priority)
-                        }));
-                      }}
-                    />
-                    <Label
-                      htmlFor={`priority-desktop-${priority}`}
-                      className="text-sm font-normal capitalize cursor-pointer"
-                    >
-                      {priority}
-                    </Label>
-                  </div>
+                  <button
+                    key={priority}
+                    onClick={() => {
+                      setSearchValues(prev => ({
+                        ...prev,
+                        priority: prev.priority.includes(priority)
+                          ? prev.priority.filter(p => p !== priority)
+                          : [...prev.priority, priority]
+                      }));
+                    }}
+                    className={cn(
+                      "w-full text-left px-3 py-2 rounded-md text-sm capitalize transition-colors",
+                      searchValues.priority.includes(priority)
+                        ? "bg-blue-50 text-blue-700 font-medium"
+                        : "hover:bg-gray-100 text-gray-700"
+                    )}
+                  >
+                    {priority}
+                  </button>
                 ))}
               </div>
             </PopoverContent>
