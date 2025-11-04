@@ -453,28 +453,28 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-32">Action</th>
                 </tr>
                 {/* Quick Search Row */}
-                <tr className="bg-background/50 backdrop-blur-sm border-b">
+                <tr className="bg-muted/30 border-b-2">
                   <th className="p-2"></th>
                   <th className="p-2"></th>
                   <th className="p-2">
                     <Input 
-                      placeholder="Filter..."
+                      placeholder="Search..."
                       value={columnFilters.itemNumber}
                       onChange={(e) => handleFilterChange('itemNumber', e.target.value)}
-                      className="h-9 text-xs bg-background/80 border-muted-foreground/20 focus-visible:ring-1 focus-visible:ring-primary rounded-md shadow-sm"
+                      className="h-8 text-xs bg-background"
                     />
                   </th>
                   <th className="p-2">
                     <Input 
-                      placeholder="Filter..."
+                      placeholder="Search..."
                       value={columnFilters.calFreq}
                       onChange={(e) => handleFilterChange('calFreq', e.target.value)}
-                      className="h-9 text-xs bg-background/80 border-muted-foreground/20 focus-visible:ring-1 focus-visible:ring-primary rounded-md shadow-sm"
+                      className="h-8 text-xs bg-background"
                     />
                   </th>
                   <th className="p-2">
                     <Select value={columnFilters.actionCode || "all"} onValueChange={(value) => handleFilterChange('actionCode', value === "all" ? "" : value)}>
-                      <SelectTrigger className="h-9 text-xs bg-background/80 border-muted-foreground/20 focus:ring-1 focus:ring-primary rounded-md shadow-sm">
+                      <SelectTrigger className="h-8 text-xs bg-background">
                         <SelectValue placeholder="All" />
                       </SelectTrigger>
                       <SelectContent>
@@ -490,7 +490,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                   </th>
                   <th className="p-2">
                     <Select value={columnFilters.priority || "all"} onValueChange={(value) => handleFilterChange('priority', value === "all" ? "" : value)}>
-                      <SelectTrigger className="h-9 text-xs bg-background/80 border-muted-foreground/20 focus:ring-1 focus:ring-primary rounded-md shadow-sm">
+                      <SelectTrigger className="h-8 text-xs bg-background">
                         <SelectValue placeholder="All" />
                       </SelectTrigger>
                       <SelectContent>
@@ -505,7 +505,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                   </th>
                   <th className="p-2">
                     <Select value={columnFilters.manufacturer || "all"} onValueChange={(value) => handleFilterChange('manufacturer', value === "all" ? "" : value)}>
-                      <SelectTrigger className="h-9 text-xs bg-background/80 border-muted-foreground/20 focus:ring-1 focus:ring-primary rounded-md shadow-sm">
+                      <SelectTrigger className="h-8 text-xs bg-background">
                         <SelectValue placeholder="All" />
                       </SelectTrigger>
                       <SelectContent>
@@ -520,71 +520,71 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                   </th>
                   <th className="p-2">
                     <Input 
-                      placeholder="Filter..."
+                      placeholder="Search..."
                       value={columnFilters.model}
                       onChange={(e) => handleFilterChange('model', e.target.value)}
-                      className="h-9 text-xs bg-background/80 border-muted-foreground/20 focus-visible:ring-1 focus-visible:ring-primary rounded-md shadow-sm"
+                      className="h-8 text-xs bg-background"
                     />
                   </th>
                   <th className="p-2">
                     <Input 
-                      placeholder="Filter..."
+                      placeholder="Search..."
                       value={columnFilters.description}
                       onChange={(e) => handleFilterChange('description', e.target.value)}
-                      className="h-9 text-xs bg-background/80 border-muted-foreground/20 focus-visible:ring-1 focus-visible:ring-primary rounded-md shadow-sm"
+                      className="h-8 text-xs bg-background"
                     />
                   </th>
                   <th className="p-2">
                     <Input 
-                      placeholder="Filter..."
+                      placeholder="Search..."
                       value={columnFilters.tf}
                       onChange={(e) => handleFilterChange('tf', e.target.value)}
-                      className="h-9 text-xs bg-background/80 border-muted-foreground/20 focus-visible:ring-1 focus-visible:ring-primary rounded-md shadow-sm"
+                      className="h-8 text-xs bg-background"
                     />
                   </th>
                   <th className="p-2">
                     <Input 
-                      placeholder="Filter..."
+                      placeholder="Search..."
                       value={columnFilters.capableLocations}
                       onChange={(e) => handleFilterChange('capableLocations', e.target.value)}
-                      className="h-9 text-xs bg-background/80 border-muted-foreground/20 focus-visible:ring-1 focus-visible:ring-primary rounded-md shadow-sm"
+                      className="h-8 text-xs bg-background"
                     />
                   </th>
                   <th className="p-2">
                     <Input 
-                      placeholder="Filter..."
+                      placeholder="Search..."
                       value={columnFilters.mfgSerial}
                       onChange={(e) => handleFilterChange('mfgSerial', e.target.value)}
-                      className="h-9 text-xs bg-background/80 border-muted-foreground/20 focus-visible:ring-1 focus-visible:ring-primary rounded-md shadow-sm"
+                      className="h-8 text-xs bg-background"
                     />
                   </th>
                   <th className="p-2">
                     <Input 
-                      placeholder="Filter..."
+                      placeholder="Search..."
                       value={columnFilters.custId}
                       onChange={(e) => handleFilterChange('custId', e.target.value)}
-                      className="h-9 text-xs bg-background/80 border-muted-foreground/20 focus-visible:ring-1 focus-visible:ring-primary rounded-md shadow-sm"
+                      className="h-8 text-xs bg-background"
                     />
                   </th>
                   <th className="p-2">
                     <Input 
-                      placeholder="Filter..."
+                      placeholder="Search..."
                       value={columnFilters.custSN}
                       onChange={(e) => handleFilterChange('custSN', e.target.value)}
-                      className="h-9 text-xs bg-background/80 border-muted-foreground/20 focus-visible:ring-1 focus-visible:ring-primary rounded-md shadow-sm"
+                      className="h-8 text-xs bg-background"
                     />
                   </th>
                   <th className="p-2">
                     <Input 
-                      placeholder="Filter..."
+                      placeholder="Search..."
                       value={columnFilters.assetNumber}
                       onChange={(e) => handleFilterChange('assetNumber', e.target.value)}
-                      className="h-9 text-xs bg-background/80 border-muted-foreground/20 focus-visible:ring-1 focus-visible:ring-primary rounded-md shadow-sm"
+                      className="h-8 text-xs bg-background"
                     />
                   </th>
                   <th className="p-2">
                     <Select value={columnFilters.iso17025 || "all"} onValueChange={(value) => handleFilterChange('iso17025', value === "all" ? "" : value)}>
-                      <SelectTrigger className="h-9 text-xs bg-background/80 border-muted-foreground/20 focus:ring-1 focus:ring-primary rounded-md shadow-sm">
+                      <SelectTrigger className="h-8 text-xs bg-background">
                         <SelectValue placeholder="All" />
                       </SelectTrigger>
                       <SelectContent>
@@ -596,7 +596,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                   </th>
                   <th className="p-2">
                     <Select value={columnFilters.estimate || "all"} onValueChange={(value) => handleFilterChange('estimate', value === "all" ? "" : value)}>
-                      <SelectTrigger className="h-9 text-xs bg-background/80 border-muted-foreground/20 focus:ring-1 focus:ring-primary rounded-md shadow-sm">
+                      <SelectTrigger className="h-8 text-xs bg-background">
                         <SelectValue placeholder="All" />
                       </SelectTrigger>
                       <SelectContent>
@@ -608,7 +608,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                   </th>
                   <th className="p-2">
                     <Select value={columnFilters.newEquip || "all"} onValueChange={(value) => handleFilterChange('newEquip', value === "all" ? "" : value)}>
-                      <SelectTrigger className="h-9 text-xs bg-background/80 border-muted-foreground/20 focus:ring-1 focus:ring-primary rounded-md shadow-sm">
+                      <SelectTrigger className="h-8 text-xs bg-background">
                         <SelectValue placeholder="All" />
                       </SelectTrigger>
                       <SelectContent>
@@ -620,18 +620,18 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                   </th>
                   <th className="p-2">
                     <Input 
-                      placeholder="Filter..."
+                      placeholder="Search..."
                       value={columnFilters.needByDate}
                       onChange={(e) => handleFilterChange('needByDate', e.target.value)}
-                      className="h-9 text-xs bg-background/80 border-muted-foreground/20 focus-visible:ring-1 focus-visible:ring-primary rounded-md shadow-sm"
+                      className="h-8 text-xs bg-background"
                     />
                   </th>
                   <th className="p-2">
                     <Input 
-                      placeholder="Filter..."
+                      placeholder="Search..."
                       value={columnFilters.ccCost}
                       onChange={(e) => handleFilterChange('ccCost', e.target.value)}
-                      className="h-9 text-xs bg-background/80 border-muted-foreground/20 focus-visible:ring-1 focus-visible:ring-primary rounded-md shadow-sm"
+                      className="h-8 text-xs bg-background"
                     />
                   </th>
                   <th className="p-2"></th>
