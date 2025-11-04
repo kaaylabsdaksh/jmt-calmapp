@@ -8,7 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { X, Download, Settings, User, CreditCard, Users, Package, FileText, Calculator, AlertCircle, ExternalLink, Award, Shield, BarChart, Save, LayoutGrid, Table, ChevronDown, Plus, PlusCircle, QrCode, Copy, PackagePlus, Menu, Wand2 } from "lucide-react";
+import { X, Download, Settings, User, CreditCard, Users, Package, FileText, Calculator, AlertCircle, ExternalLink, Award, Shield, BarChart, Save, LayoutGrid, Table, ChevronDown, Plus, PlusCircle, QrCode, Copy, PackagePlus, Menu, Wand2, BookmarkCheck } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { WorkOrderItemsTable } from "@/components/WorkOrderItemsTable";
 import { WorkOrderItemsCards } from "@/components/WorkOrderItemsCards";
@@ -1048,10 +1048,10 @@ const AddNewWorkOrder = () => {
                 <CardHeader className="pb-3 sm:pb-4">
                   <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
                     <h2 className="text-lg sm:text-xl font-semibold text-foreground">Work Order Items</h2>
-                    <div className="flex items-center gap-3 w-full sm:w-auto">
+                    <div className="flex items-center gap-2 w-full sm:w-auto flex-wrap">
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <Button variant="outline" className="flex items-center gap-2 bg-background text-sm w-full sm:w-auto">
+                          <Button variant="outline" className="flex items-center gap-2 bg-background text-sm">
                             {viewMode === 'receiving' ? 'Receiving View' : 'Default View'}
                             <ChevronDown className="w-4 h-4" />
                           </Button>
@@ -1072,6 +1072,22 @@ const AddNewWorkOrder = () => {
                           </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
+
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          localStorage.setItem('workOrderViewMode', viewMode);
+                          toast({
+                            title: "View Preference Saved",
+                            description: `${viewMode === 'receiving' ? 'Receiving View' : viewMode === 'table' ? 'Table View' : 'Cards View'} will be your default view.`,
+                          });
+                        }}
+                        className="flex items-center gap-2"
+                      >
+                        <BookmarkCheck className="w-4 h-4" />
+                        <span className="hidden sm:inline">Save as Default</span>
+                      </Button>
 
                       {(viewMode === 'table' || viewMode === 'cards') && (
                         <div className="flex items-center gap-1 bg-muted rounded-lg p-1">
