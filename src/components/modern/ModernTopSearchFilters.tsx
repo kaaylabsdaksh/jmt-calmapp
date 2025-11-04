@@ -7,7 +7,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Calendar as CalendarIcon, Search, X, Filter, Plus } from "lucide-react";
+import { Calendar as CalendarIcon, Search, X, Filter, Plus, Check } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 
@@ -847,13 +847,13 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
                             : [...prev.priority, priority]
                         }));
                       }}
-                    className={cn(
-                      "w-full text-left px-3 py-2 rounded-md text-sm capitalize transition-colors",
-                      searchValues.priority.includes(priority)
-                        ? "bg-foreground text-background font-medium"
-                        : "hover:bg-muted text-foreground"
-                    )}
+                      className="w-full flex items-center gap-2 text-left px-3 py-2 rounded-md text-sm capitalize transition-colors hover:bg-muted text-foreground"
                     >
+                      <span className="flex h-4 w-4 items-center justify-center">
+                        {searchValues.priority.includes(priority) && (
+                          <Check className="h-4 w-4 stroke-[3]" />
+                        )}
+                      </span>
                       {priority}
                     </button>
                   ))}
@@ -1046,13 +1046,13 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
                           : [...prev.priority, priority]
                       }));
                     }}
-                    className={cn(
-                      "w-full text-left px-3 py-2 rounded-md text-sm capitalize transition-colors",
-                      searchValues.priority.includes(priority)
-                        ? "bg-foreground text-background font-medium"
-                        : "hover:bg-muted text-foreground"
-                    )}
+                    className="w-full flex items-center gap-2 text-left px-3 py-2 rounded-md text-sm capitalize transition-colors hover:bg-muted text-foreground"
                   >
+                    <span className="flex h-4 w-4 items-center justify-center">
+                      {searchValues.priority.includes(priority) && (
+                        <Check className="h-4 w-4 stroke-[3]" />
+                      )}
+                    </span>
                     {priority}
                   </button>
                 ))}
