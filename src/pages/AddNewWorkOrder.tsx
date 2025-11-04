@@ -454,15 +454,22 @@ const AddNewWorkOrder = () => {
       return;
     }
 
-    // Validate that either Item # From OR Groupable is provided
-    const hasItemFrom = copyItemFrom && copyItemFrom.trim() !== '';
-    const hasGroupable = copyGroupable && copyGroupable !== '';
-
-    if (!hasItemFrom && !hasGroupable) {
+    // Validate Item # From is mandatory
+    if (!copyItemFrom || copyItemFrom.trim() === '') {
       toast({
         variant: "destructive",
         title: "Error",
-        description: "Please enter Item # From or select a Groupable option (Yes/No)",
+        description: "Please enter Item # From",
+      });
+      return;
+    }
+
+    // Validate Groupable is mandatory
+    if (!copyGroupable || copyGroupable === '') {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Please select a Groupable option (Yes/No)",
       });
       return;
     }
@@ -524,8 +531,8 @@ const AddNewWorkOrder = () => {
       itemsToAdd = itemsToAdd.slice(fromNum - 1, toNum);
     }
 
-    // If groupable is specified, filter accordingly (mock logic)
-    if (hasGroupable) {
+    // Filter based on groupable selection (mock logic)
+    if (copyGroupable) {
       itemsToAdd = copyGroupable === "yes" ? itemsToAdd : itemsToAdd.slice(0, 1);
     }
 
@@ -1772,7 +1779,7 @@ const AddNewWorkOrder = () => {
 
                           <div className="space-y-2">
                             <Label htmlFor="copyGroupable" className="text-sm font-medium">
-                              Groupable <span className="text-muted-foreground text-xs">(or)</span>
+                              Groupable <span className="text-destructive">*</span>
                             </Label>
                             <Select 
                               value={copyGroupable} 
