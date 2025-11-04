@@ -583,28 +583,40 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                     />
                   </th>
                   <th className="p-1">
-                    <Input 
-                      placeholder="Search..."
-                      value={columnFilters.iso17025}
-                      onChange={(e) => handleFilterChange('iso17025', e.target.value)}
-                      className="h-7 text-xs"
-                    />
+                    <Select value={columnFilters.iso17025 || "all"} onValueChange={(value) => handleFilterChange('iso17025', value === "all" ? "" : value)}>
+                      <SelectTrigger className="h-7 text-xs">
+                        <SelectValue placeholder="All" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All</SelectItem>
+                        <SelectItem value="yes">Yes</SelectItem>
+                        <SelectItem value="no">No</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </th>
                   <th className="p-1">
-                    <Input 
-                      placeholder="Search..."
-                      value={columnFilters.estimate}
-                      onChange={(e) => handleFilterChange('estimate', e.target.value)}
-                      className="h-7 text-xs"
-                    />
+                    <Select value={columnFilters.estimate || "all"} onValueChange={(value) => handleFilterChange('estimate', value === "all" ? "" : value)}>
+                      <SelectTrigger className="h-7 text-xs">
+                        <SelectValue placeholder="All" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All</SelectItem>
+                        <SelectItem value="yes">Yes</SelectItem>
+                        <SelectItem value="no">No</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </th>
                   <th className="p-1">
-                    <Input 
-                      placeholder="Search..."
-                      value={columnFilters.newEquip}
-                      onChange={(e) => handleFilterChange('newEquip', e.target.value)}
-                      className="h-7 text-xs"
-                    />
+                    <Select value={columnFilters.newEquip || "all"} onValueChange={(value) => handleFilterChange('newEquip', value === "all" ? "" : value)}>
+                      <SelectTrigger className="h-7 text-xs">
+                        <SelectValue placeholder="All" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All</SelectItem>
+                        <SelectItem value="yes">Yes</SelectItem>
+                        <SelectItem value="no">No</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </th>
                   <th className="p-1">
                     <Input 
