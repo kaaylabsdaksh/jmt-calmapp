@@ -8,7 +8,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Plus, Trash2, Edit, Check, X, ChevronsUpDown, Search } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Plus, Trash2, Edit, Check, X, ChevronsUpDown, Search, ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
@@ -150,6 +151,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
     needByDate: "",
     ccCost: "",
   });
+  const [isSearchBarOpen, setIsSearchBarOpen] = useState(true);
 
   // Handle individual item selection
   const handleItemSelect = (itemId: string, checked: boolean) => {
@@ -422,17 +424,24 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
           <div className="p-4">
           {/* Desktop Table View */}
           <div className="hidden lg:block border rounded-lg overflow-x-auto scroll-smooth">
-            <table className="w-full min-w-[2400px]">
-              <thead className="bg-muted/20">
-                <tr className="border-b">
-                  <th className="text-right p-2 text-xs font-medium text-muted-foreground w-12"></th>
-                  <th className="text-left p-2 text-xs font-medium text-muted-foreground w-8">
-                    <Checkbox 
-                      checked={isAllSelected}
-                      onCheckedChange={handleSelectAll}
-                    />
-                  </th>
-                  <th className="text-left p-2 text-xs font-medium text-muted-foreground w-20">ItemNum</th>
+            <Collapsible open={isSearchBarOpen} onOpenChange={setIsSearchBarOpen}>
+              <table className="w-full min-w-[2400px]">
+                <thead className="bg-muted/20">
+                  <tr className="border-b">
+                    <th className="text-right p-2 text-xs font-medium text-muted-foreground w-12">
+                      <CollapsibleTrigger asChild>
+                        <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
+                          {isSearchBarOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                        </Button>
+                      </CollapsibleTrigger>
+                    </th>
+                    <th className="text-left p-2 text-xs font-medium text-muted-foreground w-8">
+                      <Checkbox 
+                        checked={isAllSelected}
+                        onCheckedChange={handleSelectAll}
+                      />
+                    </th>
+                    <th className="text-left p-2 text-xs font-medium text-muted-foreground w-20">ItemNum</th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-16">Cal Freq</th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-16">Action Code</th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-16">Priority</th>
@@ -453,7 +462,8 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-32">Action</th>
                 </tr>
                 {/* Quick Search Row */}
-                <tr className="bg-muted/30 border-b-2">
+                <CollapsibleContent asChild>
+                  <tr className="bg-muted/30 border-b-2">
                   <th className="p-2"></th>
                   <th className="p-2"></th>
                   <th className="p-2">
@@ -636,6 +646,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                   </th>
                   <th className="p-2"></th>
                 </tr>
+                </CollapsibleContent>
               </thead>
               <tbody>
                 {/* Add new item rows */}
@@ -1371,6 +1382,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                 ))}
               </tbody>
             </table>
+            </Collapsible>
           </div>
 
           {/* Tablet Simplified Table View */}
