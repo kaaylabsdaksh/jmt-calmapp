@@ -662,42 +662,28 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                        />
                      </td>
                      <td className="p-4 min-w-[120px]">
-                       <Select value={newItem.iso17025} onValueChange={(value) => updateNewItem(newItem.id, 'iso17025', value)}>
-                         <SelectTrigger 
-                           className="h-12 text-base border-2 focus:border-primary"
-                           onFocus={(e) => e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
-                         >
-                           <SelectValue placeholder="Select..." />
-                         </SelectTrigger>
-                         <SelectContent>
-                           <SelectItem value="yes">Yes</SelectItem>
-                           <SelectItem value="no">No</SelectItem>
-                         </SelectContent>
-                       </Select>
+                       <div className="flex justify-center items-center h-12">
+                         <Checkbox 
+                           checked={newItem.iso17025 === "yes"}
+                           onCheckedChange={(checked) => updateNewItem(newItem.id, 'iso17025', checked ? "yes" : "no")}
+                         />
+                       </div>
                      </td>
                      <td className="p-4 min-w-[130px]">
-                       <Input 
-                         placeholder="Estimate"
-                         value={newItem.estimate}
-                         onChange={(e) => updateNewItem(newItem.id, 'estimate', e.target.value)}
-                         className="h-12 text-base font-medium border-2 focus:border-primary"
-                         onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
-                         autoComplete="off"
-                       />
+                       <div className="flex justify-center items-center h-12">
+                         <Checkbox 
+                           checked={!!newItem.estimate && newItem.estimate !== "—"}
+                           onCheckedChange={(checked) => updateNewItem(newItem.id, 'estimate', checked ? "yes" : "")}
+                         />
+                       </div>
                      </td>
                      <td className="p-4 min-w-[130px]">
-                       <Select value={newItem.newEquip} onValueChange={(value) => updateNewItem(newItem.id, 'newEquip', value)}>
-                         <SelectTrigger 
-                           className="h-12 text-base border-2 focus:border-primary"
-                           onFocus={(e) => e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
-                         >
-                           <SelectValue placeholder="Select..." />
-                         </SelectTrigger>
-                         <SelectContent>
-                           <SelectItem value="yes">Yes</SelectItem>
-                           <SelectItem value="no">No</SelectItem>
-                         </SelectContent>
-                       </Select>
+                       <div className="flex justify-center items-center h-12">
+                         <Checkbox 
+                           checked={newItem.newEquip === "yes"}
+                           onCheckedChange={(checked) => updateNewItem(newItem.id, 'newEquip', checked ? "yes" : "no")}
+                         />
+                       </div>
                      </td>
                      <td className="p-4 min-w-[150px]">
                        <Input 
@@ -1365,7 +1351,12 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                   </div>
                   <div>
                     <div className="text-muted-foreground text-xs">17025</div>
-                    <div className="font-medium capitalize">{item.iso17025 || "—"}</div>
+                    <div className="flex items-center h-6">
+                      <Checkbox 
+                        checked={item.iso17025 === "yes"}
+                        onCheckedChange={(checked) => updateItem(item.id, 'iso17025', checked ? "yes" : "no")}
+                      />
+                    </div>
                   </div>
                   <div>
                     <div className="text-muted-foreground text-xs">C/C Cost</div>
