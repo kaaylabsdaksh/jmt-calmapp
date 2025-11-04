@@ -1053,18 +1053,12 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                       )}
                     </td>
                     <td className="p-2 text-xs">
-                      {editingItemId === item.id ? (
-                        <Tabs value={item.iso17025} onValueChange={(value) => updateItem(item.id, 'iso17025', value)}>
-                          <TabsList className="grid w-full grid-cols-2 h-6">
-                            <TabsTrigger value="yes" className="text-xs">Yes</TabsTrigger>
-                            <TabsTrigger value="no" className="text-xs">No</TabsTrigger>
-                          </TabsList>
-                        </Tabs>
-                      ) : (
-                        <div className="truncate capitalize" title={item.iso17025}>
-                          {item.iso17025 || "—"}
-                        </div>
-                      )}
+                      <div className="flex justify-center">
+                        <Checkbox 
+                          checked={item.iso17025 === "yes"}
+                          onCheckedChange={(checked) => updateItem(item.id, 'iso17025', checked ? "yes" : "no")}
+                        />
+                      </div>
                     </td>
                     <td className="p-2 text-xs">
                       {editingItemId === item.id ? (
@@ -1075,24 +1069,21 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                           className="h-6 text-xs"
                         />
                       ) : (
-                        <div className="truncate" title={item.estimate}>
-                          {item.estimate || "—"}
+                        <div className="flex justify-center">
+                          <Checkbox 
+                            checked={!!item.estimate && item.estimate !== "—"}
+                            onCheckedChange={(checked) => updateItem(item.id, 'estimate', checked ? "yes" : "")}
+                          />
                         </div>
                       )}
                     </td>
                     <td className="p-2 text-xs">
-                      {editingItemId === item.id ? (
-                        <Tabs value={item.newEquip} onValueChange={(value) => updateItem(item.id, 'newEquip', value)}>
-                          <TabsList className="grid w-full grid-cols-2 h-6">
-                            <TabsTrigger value="yes" className="text-xs">Yes</TabsTrigger>
-                            <TabsTrigger value="no" className="text-xs">No</TabsTrigger>
-                          </TabsList>
-                        </Tabs>
-                      ) : (
-                        <div className="truncate capitalize" title={item.newEquip}>
-                          {item.newEquip || "—"}
-                        </div>
-                      )}
+                      <div className="flex justify-center">
+                        <Checkbox 
+                          checked={item.newEquip === "yes"}
+                          onCheckedChange={(checked) => updateItem(item.id, 'newEquip', checked ? "yes" : "no")}
+                        />
+                      </div>
                     </td>
                     <td className="p-2 text-xs">
                       {editingItemId === item.id ? (
