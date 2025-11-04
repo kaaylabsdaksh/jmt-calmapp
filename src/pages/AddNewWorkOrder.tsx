@@ -20,6 +20,7 @@ import { SidebarTrigger, useSidebar } from "@/components/ui/sidebar";
 import { EstimateDetails } from "@/components/EstimateDetails";
 import { RFIDDialog } from "@/components/RFIDDialog";
 import { toast } from "@/hooks/use-toast";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 
 const AddNewWorkOrder = () => {
   const navigate = useNavigate();
@@ -47,6 +48,7 @@ const AddNewWorkOrder = () => {
   });
   
   const [isRFIDDialogOpen, setIsRFIDDialogOpen] = useState(false);
+  const [isCopyConfirmDialogOpen, setIsCopyConfirmDialogOpen] = useState(false);
   
   // Copy from other WO states
   const [isCopyFromWOExpanded, setIsCopyFromWOExpanded] = useState(false);
@@ -487,6 +489,12 @@ const AddNewWorkOrder = () => {
       return;
     }
 
+    // Show confirmation dialog
+    setIsCopyConfirmDialogOpen(true);
+  };
+
+  // Actually perform the copy after confirmation
+  const confirmCopyFromOtherWO = () => {
     // Mock data for items from other work orders
     const mockOtherWOItems = [
       {
@@ -565,6 +573,7 @@ const AddNewWorkOrder = () => {
     setCopyItemFrom("");
     setCopyItemTo("");
     setCopyGroupable("");
+    setIsCopyConfirmDialogOpen(false);
   };
 
   return (
@@ -2537,6 +2546,22 @@ const AddNewWorkOrder = () => {
         open={isRFIDDialogOpen}
         onOpenChange={setIsRFIDDialogOpen}
       />
+
+      {/* Copy Work Order Confirmation Dialog */}
+      <AlertDialog open={isCopyConfirmDialogOpen} onOpenChange={setIsCopyConfirmDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Confirm Copy Operation</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to copy items from Work Order <span className="font-semibold">{copyWorkOrder}</span> to Account Number <span className="font-semibold">{workOrderData.accountNumber}</span>?
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>No</AlertDialogCancel>
+            <AlertDialogAction onClick={confirmCopyFromOtherWO}>Yes</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };
