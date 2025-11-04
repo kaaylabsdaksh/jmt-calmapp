@@ -43,7 +43,7 @@ interface SearchFilters {
   searchTags: string[];
   status: string;
   assignee: string;
-  priority: string;
+  priority: string[];
   manufacturer: string;
   division: string;
   woType: string;
@@ -313,7 +313,7 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
     customer: '',
     status: '',
     manufacturer: '',
-    priority: '',
+    priority: [] as string[],
     assignee: '',
     division: '',
     woType: '',
@@ -488,7 +488,7 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
       customer: '',
       status: '',
       manufacturer: '',
-      priority: '',
+      priority: [],
       assignee: '',
       division: '',
       woType: '',
@@ -522,7 +522,7 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
       searchTags: [],
       status: '',
       assignee: '',
-      priority: '',
+      priority: [],
       manufacturer: '',
       division: '',
       woType: '',
@@ -823,18 +823,44 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
               </SelectContent>
             </Select>
 
-            <Select value={searchValues.priority || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, priority: value === 'all' ? '' : value }))}>
-              <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
-                <SelectValue placeholder="All Priority" />
-              </SelectTrigger>
-              <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-[60]">
-                <SelectItem value="all">All Priority</SelectItem>
-                <SelectItem value="critical">Critical</SelectItem>
-                <SelectItem value="high">High</SelectItem>
-                <SelectItem value="medium">Medium</SelectItem>
-                <SelectItem value="low">Low</SelectItem>
-              </SelectContent>
-            </Select>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm justify-start text-left font-normal"
+                >
+                  {searchValues.priority.length > 0 
+                    ? `Priority (${searchValues.priority.length})`
+                    : "All Priority"}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-56 p-3 bg-white border border-gray-200 shadow-xl rounded-lg z-[60]" align="start">
+                <div className="space-y-2">
+                  {['critical', 'high', 'medium', 'low'].map((priority) => (
+                    <div key={priority} className="flex items-center space-x-2">
+                      <Checkbox
+                        id={`priority-mobile-${priority}`}
+                        checked={searchValues.priority.includes(priority)}
+                        onCheckedChange={(checked) => {
+                          setSearchValues(prev => ({
+                            ...prev,
+                            priority: checked
+                              ? [...prev.priority, priority]
+                              : prev.priority.filter(p => p !== priority)
+                          }));
+                        }}
+                      />
+                      <Label
+                        htmlFor={`priority-mobile-${priority}`}
+                        className="text-sm font-normal capitalize cursor-pointer"
+                      >
+                        {priority}
+                      </Label>
+                    </div>
+                  ))}
+                </div>
+              </PopoverContent>
+            </Popover>
           </div>
         </div>
 
@@ -997,18 +1023,44 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
           </Select>
 
           {/* Priority */}
-          <Select value={searchValues.priority || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, priority: value === 'all' ? '' : value }))}>
-            <SelectTrigger className="w-[140px] bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
-              <SelectValue placeholder="All Priority" />
-            </SelectTrigger>
-            <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-[60]">
-              <SelectItem value="all">All Priority</SelectItem>
-              <SelectItem value="critical">Critical</SelectItem>
-              <SelectItem value="high">High</SelectItem>
-              <SelectItem value="medium">Medium</SelectItem>
-              <SelectItem value="low">Low</SelectItem>
-            </SelectContent>
-          </Select>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                className="w-[140px] bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm justify-start text-left font-normal"
+              >
+                {searchValues.priority.length > 0 
+                  ? `Priority (${searchValues.priority.length})`
+                  : "All Priority"}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-56 p-3 bg-white border border-gray-200 shadow-xl rounded-lg z-[60]" align="start">
+              <div className="space-y-2">
+                {['critical', 'high', 'medium', 'low'].map((priority) => (
+                  <div key={priority} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`priority-desktop-${priority}`}
+                      checked={searchValues.priority.includes(priority)}
+                      onCheckedChange={(checked) => {
+                        setSearchValues(prev => ({
+                          ...prev,
+                          priority: checked
+                            ? [...prev.priority, priority]
+                            : prev.priority.filter(p => p !== priority)
+                        }));
+                      }}
+                    />
+                    <Label
+                      htmlFor={`priority-desktop-${priority}`}
+                      className="text-sm font-normal capitalize cursor-pointer"
+                    >
+                      {priority}
+                    </Label>
+                  </div>
+                ))}
+              </div>
+            </PopoverContent>
+          </Popover>
         </div>
       </div>
 

@@ -12,7 +12,7 @@ interface SearchFilters {
   searchTags: string[];
   status: string;
   assignee: string;
-  priority: string;
+  priority: string[];
   manufacturer: string;
   division: string;
   woType: string;
@@ -48,7 +48,7 @@ const WorkOrderSearchV2 = () => {
     searchTags: [],
     status: '',
     assignee: '',
-    priority: '',
+    priority: [],
     manufacturer: '',
     division: '',
     woType: '',

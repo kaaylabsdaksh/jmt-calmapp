@@ -8,7 +8,7 @@ interface SearchFilters {
   searchTags: string[];
   status: string;
   assignee: string;
-  priority: string;
+  priority: string[];
   manufacturer: string;
   division: string;
   woType: string;
@@ -54,7 +54,7 @@ const ModernWorkOrderManagement = () => {
       filters.dateFrom ||
       filters.dateTo ||
       filters.woType ||
-      filters.priority ||
+      filters.priority.length > 0 ||
       filters.division ||
       filters.actionCode ||
       filters.labCode ||
@@ -73,7 +73,7 @@ const ModernWorkOrderManagement = () => {
     searchTags: [],
     status: '',
     assignee: '',
-    priority: '',
+    priority: [],
     manufacturer: '',
     division: '',
     woType: '',

@@ -3918,7 +3918,7 @@ interface ModernWorkOrdersTableProps {
     searchTags: string[];
     status: string;
     assignee: string;
-    priority: string;
+    priority: string[];
     manufacturer: string;
     division: string;
     woType: string;
@@ -4049,8 +4049,8 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
       });
     
     // Priority filter
-    const priorityMatch = !searchFilters.priority || 
-      order.details.priority.toLowerCase() === searchFilters.priority.toLowerCase();
+    const priorityMatch = searchFilters.priority.length === 0 || 
+      searchFilters.priority.some(p => order.details.priority.toLowerCase() === p.toLowerCase());
     
     // Manufacturer filter
     const manufacturerMatch = !searchFilters.manufacturer || 
@@ -4152,8 +4152,8 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
       });
     
     // Priority filter
-    const priorityMatch = !searchFilters.priority || 
-      item.priority.toLowerCase() === searchFilters.priority.toLowerCase();
+    const priorityMatch = searchFilters.priority.length === 0 || 
+      searchFilters.priority.some(p => item.priority.toLowerCase() === p.toLowerCase());
     
     // Manufacturer filter
     const manufacturerMatch = !searchFilters.manufacturer || 
