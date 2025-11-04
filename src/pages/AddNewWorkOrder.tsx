@@ -1077,6 +1077,162 @@ const AddNewWorkOrder = () => {
                       </p>
                     </div>
                   </div>
+
+                  {/* Items Table */}
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center">
+                      <a href="#" className="text-sm text-primary hover:underline">Select All</a>
+                    </div>
+                    
+                    <div className="border rounded-lg overflow-x-auto">
+                      <table className="w-full text-sm">
+                        <thead className="bg-muted">
+                          <tr>
+                            <th className="text-left p-2 font-medium">Rcv</th>
+                            <th className="text-left p-2 font-medium">Manufacturer</th>
+                            <th className="text-left p-2 font-medium">Model</th>
+                            <th className="text-left p-2 font-medium">Item Description</th>
+                            <th className="text-left p-2 font-medium">Qty</th>
+                            <th className="text-left p-2 font-medium">Prev WO #</th>
+                            <th className="text-left p-2 font-medium">WO Item</th>
+                            <th className="text-left p-2 font-medium">Serial Number</th>
+                            <th className="text-left p-2 font-medium">Cust ID</th>
+                            <th className="text-left p-2 font-medium">Cust Serial</th>
+                            <th className="text-left p-2 font-medium">Priority</th>
+                            <th className="text-left p-2 font-medium">Repair</th>
+                            <th className="text-left p-2 font-medium">17025</th>
+                          </tr>
+                        </thead>
+                        <tbody className="bg-background">
+                          <tr className="border-t">
+                            <td className="p-2">
+                              <Checkbox />
+                            </td>
+                            <td className="p-2">AEMC</td>
+                            <td className="p-2">275HVD</td>
+                            <td className="p-2 font-medium">HIGH VOLTAGE DETECTOR</td>
+                            <td className="p-2">
+                              <Input type="number" defaultValue="1" className="h-8 w-16" />
+                            </td>
+                            <td className="p-2">
+                              <Input defaultValue="-" className="h-8 w-20" />
+                            </td>
+                            <td className="p-2"></td>
+                            <td className="p-2">
+                              <Input placeholder="N/A" className="h-8 w-24" />
+                            </td>
+                            <td className="p-2">
+                              <Input placeholder="" className="h-8 w-24" />
+                            </td>
+                            <td className="p-2">
+                              <Input placeholder="N/A" className="h-8 w-24" />
+                            </td>
+                            <td className="p-2">
+                              <Select defaultValue="normal">
+                                <SelectTrigger className="h-8 w-24">
+                                  <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent className="bg-background border shadow-lg z-50">
+                                  <SelectItem value="normal">Normal</SelectItem>
+                                  <SelectItem value="expedite">Expedite</SelectItem>
+                                  <SelectItem value="rush">Rush</SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </td>
+                            <td className="p-2">
+                              <Checkbox />
+                            </td>
+                            <td className="p-2">
+                              <Checkbox />
+                            </td>
+                          </tr>
+                          <tr className="border-t bg-cyan-50">
+                            <td className="p-2">
+                              <Checkbox />
+                            </td>
+                            <td className="p-2">A.B. CHANCE</td>
+                            <td className="p-2">C403-0979</td>
+                            <td className="p-2 font-medium">VOLTAGE DETECTOR</td>
+                            <td className="p-2">
+                              <Input type="number" defaultValue="1" className="h-8 w-16" />
+                            </td>
+                            <td className="p-2">
+                              <Input defaultValue="-" className="h-8 w-20" />
+                            </td>
+                            <td className="p-2">
+                              <a href="#" className="text-primary hover:underline">802614-001</a>
+                            </td>
+                            <td className="p-2">
+                              <Input placeholder="N/A" className="h-8 w-24" />
+                            </td>
+                            <td className="p-2">
+                              <Input defaultValue="SX-17933" className="h-8 w-24" />
+                            </td>
+                            <td className="p-2">
+                              <Input placeholder="N/A" className="h-8 w-24" />
+                            </td>
+                            <td className="p-2">
+                              <Select defaultValue="normal">
+                                <SelectTrigger className="h-8 w-24">
+                                  <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent className="bg-background border shadow-lg z-50">
+                                  <SelectItem value="normal">Normal</SelectItem>
+                                  <SelectItem value="expedite">Expedite</SelectItem>
+                                  <SelectItem value="rush">Rush</SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </td>
+                            <td className="p-2">
+                              <Checkbox />
+                            </td>
+                            <td className="p-2">
+                              <Checkbox />
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+
+                    {/* Pagination and Action Button */}
+                    <div className="flex flex-col sm:flex-row justify-between items-center gap-3">
+                      <div className="flex items-center gap-2 text-sm">
+                        <span>Page 1 of 1 (2 items)</span>
+                        <div className="flex items-center gap-1">
+                          <Button variant="outline" size="sm" className="h-7 w-7 p-0">
+                            <span>&lt;</span>
+                          </Button>
+                          <Button variant="outline" size="sm" className="h-7 w-7 p-0 bg-warning text-warning-foreground">
+                            1
+                          </Button>
+                          <Button variant="outline" size="sm" className="h-7 w-7 p-0">
+                            <span>&gt;</span>
+                          </Button>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-center gap-2">
+                        <Label className="text-sm whitespace-nowrap">Page size:</Label>
+                        <Select defaultValue="10">
+                          <SelectTrigger className="h-8 w-16">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent className="bg-background border shadow-lg z-50">
+                            <SelectItem value="5">5</SelectItem>
+                            <SelectItem value="10">10</SelectItem>
+                            <SelectItem value="20">20</SelectItem>
+                            <SelectItem value="50">50</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+
+                    <div className="flex justify-center">
+                      <Button className="bg-primary hover:bg-primary/90">
+                        Receive and Add WO Items
+                      </Button>
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
             </TabsContent>
