@@ -8,6 +8,7 @@ import EditOrder from "./pages/EditOrder";
 import ModernAddNewItem from "./pages/ModernAddNewItem";
 import UnusedItemsManagement from "./pages/UnusedItemsManagement";
 import WorkOrderBatchDetailsDemo from "./pages/WorkOrderBatchDetailsDemo";
+import ItemDetail from "./pages/ItemDetail";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import { Layout } from "./components/Layout";
@@ -29,6 +30,7 @@ const App = () => {
           <Route path="/edit-order" element={<EditOrder />} />
           <Route path="/work-orders-v2" element={<WorkOrderSearchV2 />} />
           <Route path="/work-order/:id" element={<WorkOrderDetail />} />
+          <Route path="/item/:id" element={<ItemDetail />} />
           <Route path="/batch-details" element={<WorkOrderBatchDetailsDemo />} />
           <Route path="*" element={<NotFound />} />
         </Route>

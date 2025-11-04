@@ -13,6 +13,7 @@ import { useState } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { cn } from "@/lib/utils";
+import { Link } from "react-router-dom";
 
 interface WorkOrderReceivingItem {
   id: string;
@@ -783,9 +784,13 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                           className="h-6 text-xs"
                         />
                       ) : (
-                        <div className="truncate" title={item.itemNumber}>
+                        <Link 
+                          to={`/item/${item.id}`}
+                          className="truncate text-primary hover:underline font-medium" 
+                          title={item.itemNumber}
+                        >
                           {item.itemNumber || "—"}
-                        </div>
+                        </Link>
                       )}
                     </td>
                     <td className="p-2 text-xs">
