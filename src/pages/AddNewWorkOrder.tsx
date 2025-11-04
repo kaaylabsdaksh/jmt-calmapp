@@ -907,24 +907,24 @@ const AddNewWorkOrder = () => {
                       
                       <div className="border rounded-lg overflow-hidden">
                         <table className="w-full text-sm">
-                          <thead className="bg-muted">
+                          <thead className="bg-muted/50">
                             <tr>
-                              <th className="text-left p-2 font-medium">Customer Quotes</th>
-                              <th className="text-left p-2 font-medium">Type</th>
+                              <th className="text-left p-2 font-medium text-foreground">Customer Quotes</th>
+                              <th className="text-left p-2 font-medium text-foreground">Type</th>
                             </tr>
                           </thead>
-                          <tbody className="bg-background">
+                          <tbody className="bg-card">
                             <tr className="border-t">
                               <td className="p-2">
-                                <a href="#" className="text-primary hover:underline">48020</a>
+                                <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">48020</a>
                               </td>
-                              <td className="p-2">Regular</td>
+                              <td className="p-2 text-foreground">Regular</td>
                             </tr>
                             <tr className="border-t">
                               <td className="p-2">
-                                <a href="#" className="text-primary hover:underline">48034</a>
+                                <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">48034</a>
                               </td>
-                              <td className="p-2">ESL Onsite</td>
+                              <td className="p-2 text-foreground">ESL Onsite</td>
                             </tr>
                           </tbody>
                         </table>
@@ -936,20 +936,20 @@ const AddNewWorkOrder = () => {
                       <h3 className="text-sm font-medium">Other WO's & Quotes</h3>
                       <div className="border rounded-lg overflow-hidden">
                         <table className="w-full text-sm">
-                          <thead className="bg-muted">
+                          <thead className="bg-muted/50">
                             <tr>
-                              <th className="text-left p-2 font-medium">Open</th>
-                              <th className="text-left p-2 font-medium">Closed</th>
-                              <th className="text-left p-2 font-medium">Quotes</th>
+                              <th className="text-left p-2 font-medium text-foreground">Open</th>
+                              <th className="text-left p-2 font-medium text-foreground">Closed</th>
+                              <th className="text-left p-2 font-medium text-foreground">Quotes</th>
                             </tr>
                           </thead>
-                          <tbody className="bg-background">
+                          <tbody className="bg-card">
                             <tr className="border-t">
                               <td className="p-2">
-                                <a href="#" className="text-primary hover:underline">802614</a>
+                                <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">802614</a>
                               </td>
-                              <td className="p-2">-</td>
-                              <td className="p-2">-</td>
+                              <td className="p-2 text-foreground">-</td>
+                              <td className="p-2 text-foreground">-</td>
                             </tr>
                           </tbody>
                         </table>
