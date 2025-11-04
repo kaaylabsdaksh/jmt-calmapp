@@ -108,6 +108,11 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
     actionCode: "",
     arrivalDate: "",
     arrivalType: "",
+    arrivalLocation: "",
+    shipType: "",
+    customerName: "",
+    driver: "",
+    puDate: "",
     poNumber: "",
     recdBy: "",
     deliverByDate: "",
@@ -220,6 +225,22 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
     if (!quickAddData.actionCode) missingFields.push("Action Code");
     if (!quickAddData.arrivalDate) missingFields.push("Date");
     if (!quickAddData.arrivalType) missingFields.push("Type");
+    
+    // Conditional arrival information validation based on arrival type
+    if (quickAddData.arrivalType === "surplus" && !quickAddData.arrivalLocation) {
+      missingFields.push("Location");
+    }
+    if (quickAddData.arrivalType === "shipped" && !quickAddData.shipType) {
+      missingFields.push("Ship Type");
+    }
+    if (quickAddData.arrivalType === "customer-dropoff" && !quickAddData.customerName) {
+      missingFields.push("Name");
+    }
+    if (quickAddData.arrivalType === "jm-driver-pickup") {
+      if (!quickAddData.driver) missingFields.push("Driver");
+      if (!quickAddData.puDate) missingFields.push("PU Date");
+    }
+    
     if (!quickAddData.poNumber) missingFields.push("PO Number");
     if (!quickAddData.deliverByDate) missingFields.push("Deliver By Date");
 
@@ -275,6 +296,11 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
       actionCode: "",
       arrivalDate: "",
       arrivalType: "",
+      arrivalLocation: "",
+      shipType: "",
+      customerName: "",
+      driver: "",
+      puDate: "",
       poNumber: "",
       recdBy: "",
       deliverByDate: "",

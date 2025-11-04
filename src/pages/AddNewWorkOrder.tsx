@@ -1407,7 +1407,9 @@ const AddNewWorkOrder = () => {
                               {/* Conditional fields based on arrival type */}
                               {quickAddData.arrivalType === "surplus" && (
                                 <div className="space-y-2">
-                                  <Label htmlFor="qa-arrivalLocation" className="text-sm font-medium">Location</Label>
+                                  <Label htmlFor="qa-arrivalLocation" className="text-sm font-medium">
+                                    Location <span className="text-destructive">*</span>
+                                  </Label>
                                   <Input 
                                     id="qa-arrivalLocation"
                                     value={quickAddData.arrivalLocation}
@@ -1420,7 +1422,9 @@ const AddNewWorkOrder = () => {
 
                               {quickAddData.arrivalType === "shipped" && (
                                 <div className="space-y-2">
-                                  <Label htmlFor="qa-shipType" className="text-sm font-medium">Ship Type</Label>
+                                  <Label htmlFor="qa-shipType" className="text-sm font-medium">
+                                    Ship Type <span className="text-destructive">*</span>
+                                  </Label>
                                   <Select 
                                     value={quickAddData.shipType} 
                                     onValueChange={(value) => setQuickAddData({...quickAddData, shipType: value})}
@@ -1441,7 +1445,9 @@ const AddNewWorkOrder = () => {
 
                               {quickAddData.arrivalType === "customer-dropoff" && (
                                 <div className="space-y-2">
-                                  <Label htmlFor="qa-customerName" className="text-sm font-medium">Name</Label>
+                                  <Label htmlFor="qa-customerName" className="text-sm font-medium">
+                                    Name <span className="text-destructive">*</span>
+                                  </Label>
                                   <Input 
                                     id="qa-customerName"
                                     value={quickAddData.customerName}
@@ -1455,7 +1461,9 @@ const AddNewWorkOrder = () => {
                               {quickAddData.arrivalType === "jm-driver-pickup" && (
                                 <>
                                   <div className="space-y-2">
-                                    <Label htmlFor="qa-driver" className="text-sm font-medium">Driver</Label>
+                                    <Label htmlFor="qa-driver" className="text-sm font-medium">
+                                      Driver <span className="text-destructive">*</span>
+                                    </Label>
                                     <Select 
                                       value={quickAddData.driver} 
                                       onValueChange={(value) => setQuickAddData({...quickAddData, driver: value})}
@@ -1472,7 +1480,9 @@ const AddNewWorkOrder = () => {
                                     </Select>
                                   </div>
                                   <div className="space-y-2">
-                                    <Label htmlFor="qa-puDate" className="text-sm font-medium">PU Date</Label>
+                                    <Label htmlFor="qa-puDate" className="text-sm font-medium">
+                                      PU Date <span className="text-destructive">*</span>
+                                    </Label>
                                     <Input 
                                       id="qa-puDate"
                                       type="date"
