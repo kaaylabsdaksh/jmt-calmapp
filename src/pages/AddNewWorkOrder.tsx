@@ -884,6 +884,201 @@ const AddNewWorkOrder = () => {
                   </div>
                 </CardContent>
               </Card>
+
+              {/* RECEIVED Section */}
+              <Card>
+                <CardContent className="p-4 sm:p-6 space-y-4">
+                  {/* Customer Quote and Other WOs Section */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    {/* Customer Quote Section */}
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2">
+                        <Label className="text-sm font-medium whitespace-nowrap">Cust Quote #:</Label>
+                        <Select defaultValue="48020">
+                          <SelectTrigger className="h-9">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent className="bg-background border shadow-lg z-50">
+                            <SelectItem value="48020">48020</SelectItem>
+                            <SelectItem value="48034">48034</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      
+                      <div className="border rounded-lg overflow-hidden">
+                        <table className="w-full text-sm">
+                          <thead className="bg-muted">
+                            <tr>
+                              <th className="text-left p-2 font-medium">Customer Quotes</th>
+                              <th className="text-left p-2 font-medium">Type</th>
+                            </tr>
+                          </thead>
+                          <tbody className="bg-background">
+                            <tr className="border-t">
+                              <td className="p-2">
+                                <a href="#" className="text-primary hover:underline">48020</a>
+                              </td>
+                              <td className="p-2">Regular</td>
+                            </tr>
+                            <tr className="border-t">
+                              <td className="p-2">
+                                <a href="#" className="text-primary hover:underline">48034</a>
+                              </td>
+                              <td className="p-2">ESL Onsite</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                    {/* Other WO's & Quotes Section */}
+                    <div className="space-y-3">
+                      <h3 className="text-sm font-medium">Other WO's & Quotes</h3>
+                      <div className="border rounded-lg overflow-hidden">
+                        <table className="w-full text-sm">
+                          <thead className="bg-muted">
+                            <tr>
+                              <th className="text-left p-2 font-medium">Open</th>
+                              <th className="text-left p-2 font-medium">Closed</th>
+                              <th className="text-left p-2 font-medium">Quotes</th>
+                            </tr>
+                          </thead>
+                          <tbody className="bg-background">
+                            <tr className="border-t">
+                              <td className="p-2">
+                                <a href="#" className="text-primary hover:underline">802614</a>
+                              </td>
+                              <td className="p-2">-</td>
+                              <td className="p-2">-</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Remarks Section */}
+                  <div className="border-2 border-destructive bg-destructive/5 rounded-lg p-3">
+                    <p className="text-sm">
+                      <span className="font-semibold text-destructive">Remarks:</span>{" "}
+                      <span className="font-medium">ESL TIER 2 USE TAG NO# AS ID#!</span>
+                    </p>
+                  </div>
+
+                  {/* RECEIVED Section */}
+                  <div className="border rounded-lg">
+                    <div className="bg-muted border-b px-4 py-2">
+                      <h3 className="text-sm font-semibold text-center">RECEIVED</h3>
+                    </div>
+                    
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 p-4">
+                      {/* General Information */}
+                      <div className="space-y-3">
+                        <h4 className="text-sm font-medium text-muted-foreground border-b pb-1">General Information</h4>
+                        <div className="space-y-2">
+                          <div className="flex items-center gap-2">
+                            <Label className="text-sm whitespace-nowrap min-w-[80px]">Cal Freq:</Label>
+                            <Input type="number" defaultValue="12" className="h-8" />
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Label className="text-sm whitespace-nowrap min-w-[80px]">Location:</Label>
+                            <Select defaultValue="alexandria">
+                              <SelectTrigger className="h-8">
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent className="bg-background border shadow-lg z-50">
+                                <SelectItem value="alexandria">Alexandria</SelectItem>
+                                <SelectItem value="baton-rouge">Baton Rouge</SelectItem>
+                                <SelectItem value="houston">Houston</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Label className="text-sm whitespace-nowrap min-w-[80px]">Division:</Label>
+                            <Select defaultValue="lab">
+                              <SelectTrigger className="h-8">
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent className="bg-background border shadow-lg z-50">
+                                <SelectItem value="lab">Lab</SelectItem>
+                                <SelectItem value="field">Field</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Label className="text-sm whitespace-nowrap min-w-[80px]">PO #:</Label>
+                            <Input defaultValue="W/OPO" className="h-8" />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Arrival Information */}
+                      <div className="space-y-3">
+                        <h4 className="text-sm font-medium text-muted-foreground border-b pb-1">Arrival Information</h4>
+                        <div className="space-y-2">
+                          <div className="flex items-center gap-2">
+                            <Label className="text-sm whitespace-nowrap min-w-[60px]">Date:</Label>
+                            <Input type="date" defaultValue="2016-03-28" className="h-8" />
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Label className="text-sm whitespace-nowrap min-w-[60px]">Type:</Label>
+                            <Select defaultValue="onsite">
+                              <SelectTrigger className="h-8">
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent className="bg-background border shadow-lg z-50">
+                                <SelectItem value="onsite">Onsite</SelectItem>
+                                <SelectItem value="pickup">Pickup</SelectItem>
+                                <SelectItem value="delivery">Delivery</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Override Fields */}
+                      <div className="space-y-3">
+                        <h4 className="text-sm font-medium text-muted-foreground border-b pb-1">Override Fields</h4>
+                        <div className="space-y-2">
+                          <div className="flex items-center gap-2">
+                            <Label className="text-sm whitespace-nowrap min-w-[70px]">Priority:</Label>
+                            <Select defaultValue="rush">
+                              <SelectTrigger className="h-8">
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent className="bg-background border shadow-lg z-50">
+                                <SelectItem value="normal">Normal</SelectItem>
+                                <SelectItem value="expedite">Expedite</SelectItem>
+                                <SelectItem value="rush">Rush</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Label className="text-sm whitespace-nowrap min-w-[70px]">Need By:</Label>
+                            <Input type="date" defaultValue="2016-04-05" className="h-8" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Include Special Instructions */}
+                  <div className="flex items-start gap-2">
+                    <Checkbox id="special-instructions" />
+                    <div className="grid gap-1.5 leading-none">
+                      <label
+                        htmlFor="special-instructions"
+                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                      >
+                        Include Special Instructions
+                      </label>
+                      <p className="text-sm text-muted-foreground">
+                        Return Address: 2020 Alberta Way, Baton Rouge, LA 70822
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </TabsContent>
 
             {/* Placeholder content for other tabs */}
