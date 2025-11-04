@@ -1012,57 +1012,58 @@ const AddNewWorkOrder = () => {
                       </Select>
                     </div>
 
-                    {/* Customer Quotes Table */}
-                    <div className="border rounded-lg overflow-hidden">
-                      <table className="w-full text-sm">
-                        <thead className="bg-muted/50">
-                          <tr>
-                            <th className="text-left p-2 font-medium text-foreground">Customer Quotes</th>
-                            <th className="text-left p-2 font-medium text-foreground">Type</th>
-                          </tr>
-                        </thead>
-                        <tbody className="bg-card">
-                          <tr className="border-t">
-                            <td className="p-2">
-                              <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">48020</a>
-                            </td>
-                            <td className="p-2 text-foreground">Regular</td>
-                          </tr>
-                          <tr className="border-t">
-                            <td className="p-2">
-                              <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">48034</a>
-                            </td>
-                            <td className="p-2 text-foreground">ESL Onsite</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
+                    {/* Tables Side by Side */}
+                    <div className="grid grid-cols-2 gap-3">
+                      {/* Customer Quotes Table */}
+                      <div className="border rounded-lg overflow-hidden">
+                        <table className="w-full text-xs">
+                          <thead className="bg-muted/50">
+                            <tr>
+                              <th className="text-left p-2 font-medium text-foreground">Customer Quotes</th>
+                              <th className="text-left p-2 font-medium text-foreground">Type</th>
+                            </tr>
+                          </thead>
+                          <tbody className="bg-card">
+                            <tr className="border-t">
+                              <td className="p-2">
+                                <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">48020</a>
+                              </td>
+                              <td className="p-2 text-foreground">Regular</td>
+                            </tr>
+                            <tr className="border-t">
+                              <td className="p-2">
+                                <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">48034</a>
+                              </td>
+                              <td className="p-2 text-foreground">ESL Onsite</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
 
-                    {/* Other WO's & Quotes Table */}
-                    <div className="border rounded-lg overflow-hidden">
-                      <table className="w-full text-sm">
-                        <thead className="bg-muted/50">
-                          <tr>
-                            <th className="text-left p-2 font-medium text-foreground">Other WO's & Quotes</th>
-                            <th className="text-left p-2 font-medium text-foreground"></th>
-                            <th className="text-left p-2 font-medium text-foreground"></th>
-                          </tr>
-                          <tr className="border-t">
-                            <th className="text-left p-2 font-medium text-muted-foreground">Open</th>
-                            <th className="text-left p-2 font-medium text-muted-foreground">Closed</th>
-                            <th className="text-left p-2 font-medium text-muted-foreground">Quotes</th>
-                          </tr>
-                        </thead>
-                        <tbody className="bg-card">
-                          <tr className="border-t">
-                            <td className="p-2">
-                              <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">802614</a>
-                            </td>
-                            <td className="p-2 text-foreground">-</td>
-                            <td className="p-2 text-foreground">-</td>
-                          </tr>
-                        </tbody>
-                      </table>
+                      {/* Other WO's & Quotes Table */}
+                      <div className="border rounded-lg overflow-hidden">
+                        <table className="w-full text-xs">
+                          <thead className="bg-muted/50">
+                            <tr>
+                              <th colSpan={3} className="text-left p-2 font-medium text-foreground">Other WO's & Quotes</th>
+                            </tr>
+                            <tr className="border-t">
+                              <th className="text-left p-2 font-medium text-muted-foreground">Open</th>
+                              <th className="text-left p-2 font-medium text-muted-foreground">Closed</th>
+                              <th className="text-left p-2 font-medium text-muted-foreground">Quotes</th>
+                            </tr>
+                          </thead>
+                          <tbody className="bg-card">
+                            <tr className="border-t">
+                              <td className="p-2">
+                                <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">802614</a>
+                              </td>
+                              <td className="p-2 text-foreground">-</td>
+                              <td className="p-2 text-foreground">-</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
                   </div>
 
