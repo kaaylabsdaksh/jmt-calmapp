@@ -312,6 +312,15 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
     }, 3000);
   };
 
+  const handleCopyAsNew = (item: WorkOrderReceivingItem) => {
+    const copiedItem = {
+      ...item,
+      id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
+      itemNumber: `${item.itemNumber}-COPY`
+    };
+    setItems([...items, copiedItem]);
+  };
+
   // Pagination calculations
   const totalSavedItems = items.length;
   const totalPages = Math.ceil(totalSavedItems / itemsPerPage);
@@ -380,6 +389,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-16">New Equip</th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-24">Need By Date</th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-16">C/C Cost</th>
+                  <th className="text-left p-2 text-xs font-medium text-muted-foreground w-32">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -703,6 +713,9 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                           onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
                           autoComplete="off"
                         />
+                     </td>
+                     <td className="p-4 min-w-[130px]">
+                       {/* Empty Action column for new items */}
                      </td>
                      <td className="p-3">
                        <div className="flex items-center justify-end gap-2">
@@ -1099,6 +1112,16 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                         </div>
                       )}
                      </td>
+                     <td className="p-2 text-xs">
+                       <Button 
+                         size="sm" 
+                         variant="outline"
+                         className="h-6 text-xs whitespace-nowrap"
+                         onClick={() => handleCopyAsNew(item)}
+                       >
+                         Copy as New
+                       </Button>
+                     </td>
                   </tr>
                 ))}
               </tbody>
@@ -1118,12 +1141,13 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                     />
                   </th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground">Item #</th>
-                  <th className="text-left p-2 text-xs font-medium text-muted-foreground">Action</th>
+                  <th className="text-left p-2 text-xs font-medium text-muted-foreground">Action Code</th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground">Priority</th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground">Manufacturer</th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground">Model</th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground">Description</th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground">Need By</th>
+                  <th className="text-left p-2 text-xs font-medium text-muted-foreground">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -1228,16 +1252,19 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                         onChange={(e) => updateNewItem(newItem.id, 'description', e.target.value)}
                         className="h-10 min-h-10 text-sm resize-none"
                       />
-                    </td>
-                    <td className="p-3 text-xs">
-                      <Input 
-                        type="date"
-                        value={newItem.needByDate}
-                        onChange={(e) => updateNewItem(newItem.id, 'needByDate', e.target.value)}
-                        className="h-10 text-sm"
-                      />
                      </td>
-                 </tr>
+                     <td className="p-3 text-xs">
+                       <Input 
+                         type="date"
+                         value={newItem.needByDate}
+                         onChange={(e) => updateNewItem(newItem.id, 'needByDate', e.target.value)}
+                         className="h-10 text-sm"
+                       />
+                      </td>
+                      <td className="p-3 text-xs">
+                        {/* Empty Action column for new items */}
+                      </td>
+                  </tr>
                  ))}
                  {paginatedItems.map((item) => (
                    <tr key={item.id} className="border-b hover:bg-muted/10">
@@ -1277,8 +1304,18 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                           </TooltipContent>
                         </Tooltip>
                       </TooltipProvider>
-                    </td>
-                     <td className="p-2 text-xs">{item.needByDate || "—"}</td>
+                     </td>
+                      <td className="p-2 text-xs">{item.needByDate || "—"}</td>
+                      <td className="p-2 text-xs">
+                        <Button 
+                          size="sm" 
+                          variant="outline"
+                          className="h-6 text-xs whitespace-nowrap"
+                          onClick={() => handleCopyAsNew(item)}
+                        >
+                          Copy as New
+                        </Button>
+                      </td>
                    </tr>
                  ))}
               </tbody>
@@ -1361,6 +1398,16 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                   <div>
                     <div className="text-muted-foreground text-xs">C/C Cost</div>
                     <div className="font-medium">{item.ccCost || "—"}</div>
+                  </div>
+                  <div className="col-span-2">
+                    <Button 
+                      size="sm" 
+                      variant="outline"
+                      className="w-full text-xs"
+                      onClick={() => handleCopyAsNew(item)}
+                    >
+                      Copy as New
+                    </Button>
                   </div>
                 </div>
               </div>
