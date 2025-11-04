@@ -1538,7 +1538,7 @@ const AddNewWorkOrder = () => {
 
                               <div className="space-y-2">
                                 <Label htmlFor="qa-deliverBy" className="text-sm font-medium">
-                                  Deliver By Date <span className="text-destructive">*</span>
+                                  Deliver By Date
                                 </Label>
                                 <Input 
                                   id="qa-deliverBy"
@@ -1651,7 +1651,7 @@ const AddNewWorkOrder = () => {
                             </Button>
                             <Button 
                               onClick={() => {
-                                if (!quickAddData.calFreq || !quickAddData.actionCode || !quickAddData.location || !quickAddData.division || !quickAddData.arrivalDate || !quickAddData.arrivalType || !quickAddData.poNumber || !quickAddData.deliverByDate) {
+                                if (!quickAddData.calFreq || !quickAddData.actionCode || !quickAddData.location || !quickAddData.division || !quickAddData.arrivalDate || !quickAddData.arrivalType || !quickAddData.poNumber || !quickAddData.needByDate) {
                                   toast({
                                     variant: "destructive",
                                     title: "Missing Required Fields",
@@ -1720,7 +1720,7 @@ const AddNewWorkOrder = () => {
                                   usedSurplus: false
                                 });
                               }}
-                              disabled={!quickAddData.calFreq || !quickAddData.actionCode || !quickAddData.location || !quickAddData.division || !quickAddData.arrivalDate || !quickAddData.arrivalType || !quickAddData.poNumber || !quickAddData.deliverByDate || selectedItemIds.length === 0}
+                              disabled={!quickAddData.calFreq || !quickAddData.actionCode || !quickAddData.location || !quickAddData.division || !quickAddData.arrivalDate || !quickAddData.arrivalType || !quickAddData.poNumber || !quickAddData.needByDate || selectedItemIds.length === 0}
                               className="bg-primary hover:bg-primary/90 text-primary-foreground"
                             >
                               Apply/Save WO
