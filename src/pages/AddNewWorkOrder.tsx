@@ -1077,23 +1077,23 @@ const AddNewWorkOrder = () => {
 
                   {/* RECEIVED Section */}
                   <div className="border rounded-lg">
-                    <div className="bg-muted border-b px-4 py-2">
-                      <h3 className="text-sm font-semibold text-center">RECEIVED</h3>
+                    <div className="bg-muted border-b px-3 py-1">
+                      <h3 className="text-xs font-semibold text-center">RECEIVED</h3>
                     </div>
                     
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 p-4">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 p-2">
                       {/* General Information */}
-                      <div className="space-y-3">
-                        <h4 className="text-sm font-medium text-muted-foreground border-b pb-1">General Information</h4>
-                        <div className="space-y-2">
-                          <div className="flex items-center gap-2">
-                            <Label className="text-sm whitespace-nowrap min-w-[80px]">Cal Freq:</Label>
-                            <Input type="number" value={quoteData[selectedQuote].received.calFreq} className="h-8" readOnly />
+                      <div className="space-y-1.5">
+                        <h4 className="text-xs font-medium text-muted-foreground border-b pb-0.5">General Information</h4>
+                        <div className="space-y-1.5">
+                          <div className="flex items-center gap-1.5">
+                            <Label className="text-xs whitespace-nowrap min-w-[70px]">Cal Freq:</Label>
+                            <Input type="number" value={quoteData[selectedQuote].received.calFreq} className="h-7 text-xs" readOnly />
                           </div>
-                          <div className="flex items-center gap-2">
-                            <Label className="text-sm whitespace-nowrap min-w-[80px]">Location:</Label>
+                          <div className="flex items-center gap-1.5">
+                            <Label className="text-xs whitespace-nowrap min-w-[70px]">Location:</Label>
                             <Select value={quoteData[selectedQuote].received.location}>
-                              <SelectTrigger className="h-8">
+                              <SelectTrigger className="h-7 text-xs">
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent className="bg-popover border shadow-lg z-50">
@@ -1103,10 +1103,10 @@ const AddNewWorkOrder = () => {
                               </SelectContent>
                             </Select>
                           </div>
-                          <div className="flex items-center gap-2">
-                            <Label className="text-sm whitespace-nowrap min-w-[80px]">Division:</Label>
+                          <div className="flex items-center gap-1.5">
+                            <Label className="text-xs whitespace-nowrap min-w-[70px]">Division:</Label>
                             <Select value={quoteData[selectedQuote].received.division}>
-                              <SelectTrigger className="h-8">
+                              <SelectTrigger className="h-7 text-xs">
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent className="bg-popover border shadow-lg z-50">
@@ -1115,25 +1115,25 @@ const AddNewWorkOrder = () => {
                               </SelectContent>
                             </Select>
                           </div>
-                          <div className="flex items-center gap-2">
-                            <Label className="text-sm whitespace-nowrap min-w-[80px]">PO #:</Label>
-                            <Input value={quoteData[selectedQuote].received.poNumber} className="h-8" readOnly />
+                          <div className="flex items-center gap-1.5">
+                            <Label className="text-xs whitespace-nowrap min-w-[70px]">PO #:</Label>
+                            <Input value={quoteData[selectedQuote].received.poNumber} className="h-7 text-xs" readOnly />
                           </div>
                         </div>
                       </div>
 
                       {/* Arrival Information */}
-                      <div className="space-y-3">
-                        <h4 className="text-sm font-medium text-muted-foreground border-b pb-1">Arrival Information</h4>
-                        <div className="space-y-2">
-                          <div className="flex items-center gap-2">
-                            <Label className="text-sm whitespace-nowrap min-w-[60px]">Date:</Label>
-                            <Input type="date" value={quoteData[selectedQuote].received.arrivalDate} className="h-8" readOnly />
+                      <div className="space-y-1.5">
+                        <h4 className="text-xs font-medium text-muted-foreground border-b pb-0.5">Arrival Information</h4>
+                        <div className="space-y-1.5">
+                          <div className="flex items-center gap-1.5">
+                            <Label className="text-xs whitespace-nowrap min-w-[55px]">Date:</Label>
+                            <Input type="date" value={quoteData[selectedQuote].received.arrivalDate} className="h-7 text-xs" readOnly />
                           </div>
-                          <div className="flex items-center gap-2">
-                            <Label className="text-sm whitespace-nowrap min-w-[60px]">Type:</Label>
+                          <div className="flex items-center gap-1.5">
+                            <Label className="text-xs whitespace-nowrap min-w-[55px]">Type:</Label>
                             <Select value={quoteData[selectedQuote].received.arrivalType}>
-                              <SelectTrigger className="h-8">
+                              <SelectTrigger className="h-7 text-xs">
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent className="bg-popover border shadow-lg z-50">
@@ -1147,13 +1147,13 @@ const AddNewWorkOrder = () => {
                       </div>
 
                       {/* Override Fields */}
-                      <div className="space-y-3">
-                        <h4 className="text-sm font-medium text-muted-foreground border-b pb-1">Override Fields</h4>
-                        <div className="space-y-2">
-                          <div className="flex items-center gap-2">
-                            <Label className="text-sm whitespace-nowrap min-w-[70px]">Priority:</Label>
+                      <div className="space-y-1.5">
+                        <h4 className="text-xs font-medium text-muted-foreground border-b pb-0.5">Override Fields</h4>
+                        <div className="space-y-1.5">
+                          <div className="flex items-center gap-1.5">
+                            <Label className="text-xs whitespace-nowrap min-w-[60px]">Priority:</Label>
                             <Select value={quoteData[selectedQuote].received.priority}>
-                              <SelectTrigger className="h-8">
+                              <SelectTrigger className="h-7 text-xs">
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent className="bg-popover border shadow-lg z-50">
@@ -1163,9 +1163,9 @@ const AddNewWorkOrder = () => {
                               </SelectContent>
                             </Select>
                           </div>
-                          <div className="flex items-center gap-2">
-                            <Label className="text-sm whitespace-nowrap min-w-[70px]">Need By:</Label>
-                            <Input type="date" value={quoteData[selectedQuote].received.needByDate} className="h-8" readOnly />
+                          <div className="flex items-center gap-1.5">
+                            <Label className="text-xs whitespace-nowrap min-w-[60px]">Need By:</Label>
+                            <Input type="date" value={quoteData[selectedQuote].received.needByDate} className="h-7 text-xs" readOnly />
                           </div>
                         </div>
                       </div>
