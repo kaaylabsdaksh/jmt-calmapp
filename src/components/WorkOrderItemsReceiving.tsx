@@ -473,12 +473,12 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                     />
                   </th>
                   <th className="p-1">
-                    <Select value={columnFilters.actionCode} onValueChange={(value) => handleFilterChange('actionCode', value)}>
+                    <Select value={columnFilters.actionCode || "all"} onValueChange={(value) => handleFilterChange('actionCode', value === "all" ? "" : value)}>
                       <SelectTrigger className="h-7 text-xs">
                         <SelectValue placeholder="All" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="">All</SelectItem>
+                        <SelectItem value="all">All</SelectItem>
                         <SelectItem value="repair">REPAIR</SelectItem>
                         <SelectItem value="rc">R/C</SelectItem>
                         <SelectItem value="rcc">R/C/C</SelectItem>
@@ -489,12 +489,12 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                     </Select>
                   </th>
                   <th className="p-1">
-                    <Select value={columnFilters.priority} onValueChange={(value) => handleFilterChange('priority', value)}>
+                    <Select value={columnFilters.priority || "all"} onValueChange={(value) => handleFilterChange('priority', value === "all" ? "" : value)}>
                       <SelectTrigger className="h-7 text-xs">
                         <SelectValue placeholder="All" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="">All</SelectItem>
+                        <SelectItem value="all">All</SelectItem>
                         <SelectItem value="rush">Rush</SelectItem>
                         <SelectItem value="normal">Normal</SelectItem>
                         <SelectItem value="expedite">Expedite</SelectItem>
