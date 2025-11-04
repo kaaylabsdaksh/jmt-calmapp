@@ -100,6 +100,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
   const [deleteItemId, setDeleteItemId] = useState<string | null>(null);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [isClearAllDialogOpen, setIsClearAllDialogOpen] = useState(false);
+  const [validationErrors, setValidationErrors] = useState<{[key: string]: string[]}>({});
   const [quickAddData, setQuickAddData] = useState({
     type: "SINGLE",
     calFreq: "",
@@ -195,11 +196,25 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
     const itemToSave = newItems.find(item => item.id === newItemId);
     if (!itemToSave) return;
     
-    // Validate mandatory fields
-    if (!itemToSave.manufacturer || !itemToSave.model || !itemToSave.custId || !itemToSave.custSN || !itemToSave.mfgSerial) {
-      alert('Please fill in all mandatory fields: Manufacturer, Model, Cust ID, Cust SN, and Mfg Serial Number');
+    // Validate mandatory fields and collect errors
+    const errors: string[] = [];
+    if (!itemToSave.manufacturer) errors.push('manufacturer');
+    if (!itemToSave.model) errors.push('model');
+    if (!itemToSave.custId) errors.push('custId');
+    if (!itemToSave.custSN) errors.push('custSN');
+    if (!itemToSave.mfgSerial) errors.push('mfgSerial');
+    
+    if (errors.length > 0) {
+      setValidationErrors(prev => ({...prev, [newItemId]: errors}));
       return;
     }
+    
+    // Clear validation errors on successful save
+    setValidationErrors(prev => {
+      const newErrors = {...prev};
+      delete newErrors[newItemId];
+      return newErrors;
+    });
     
     setItems([...items, itemToSave]);
     setNewItems(newItems.filter(item => item.id !== newItemId));
@@ -207,6 +222,12 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
 
   const handleCancelNewItem = (newItemId: string) => {
     setNewItems(newItems.filter(item => item.id !== newItemId));
+    // Clear validation errors when canceling
+    setValidationErrors(prev => {
+      const newErrors = {...prev};
+      delete newErrors[newItemId];
+      return newErrors;
+    });
   };
 
   const removeItem = (id: string) => {
@@ -761,7 +782,8 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                               role="combobox"
                               aria-expanded={manufacturerPopoverOpen[newItem.id] || false}
                               className={cn(
-                                "h-12 w-full justify-between text-base border-2 focus:border-primary transition-all duration-300",
+                                "h-12 w-full justify-between text-base border-2 transition-all duration-300",
+                                validationErrors[newItem.id]?.includes('manufacturer') ? "border-destructive focus:border-destructive" : "focus:border-primary",
                                 highlightNewItems && newItem.manufacturer && "ring-2 ring-primary bg-primary/5"
                               )}
                               onFocus={(e) => e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
@@ -785,6 +807,15 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                                      onSelect={() => {
                                        updateNewItem(newItem.id, 'manufacturer', mfr.value);
                                        setManufacturerPopoverOpen(prev => ({...prev, [newItem.id]: false}));
+                                       // Clear error when field is filled
+                                       setValidationErrors(prev => {
+                                         const newErrors = {...prev};
+                                         if (newErrors[newItem.id]) {
+                                           newErrors[newItem.id] = newErrors[newItem.id].filter(e => e !== 'manufacturer');
+                                           if (newErrors[newItem.id].length === 0) delete newErrors[newItem.id];
+                                         }
+                                         return newErrors;
+                                       });
                                      }}
                                    >
                                      {mfr.label}
@@ -795,6 +826,9 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                            </Command>
                          </PopoverContent>
                        </Popover>
+                       {validationErrors[newItem.id]?.includes('manufacturer') && (
+                         <p className="text-xs text-destructive mt-1">Required field</p>
+                       )}
                     </td>
                      <td className="p-4 min-w-[140px]">
                        <Popover 
@@ -807,7 +841,8 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                               role="combobox"
                               aria-expanded={modelPopoverOpen[newItem.id] || false}
                               className={cn(
-                                "h-12 w-full justify-between text-base border-2 focus:border-primary transition-all duration-300",
+                                "h-12 w-full justify-between text-base border-2 transition-all duration-300",
+                                validationErrors[newItem.id]?.includes('model') ? "border-destructive focus:border-destructive" : "focus:border-primary",
                                 highlightNewItems && newItem.model && "ring-2 ring-primary bg-primary/5"
                               )}
                               onFocus={(e) => e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
@@ -831,6 +866,15 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                                      onSelect={() => {
                                        updateNewItem(newItem.id, 'model', mdl.value);
                                        setModelPopoverOpen(prev => ({...prev, [newItem.id]: false}));
+                                       // Clear error when field is filled
+                                       setValidationErrors(prev => {
+                                         const newErrors = {...prev};
+                                         if (newErrors[newItem.id]) {
+                                           newErrors[newItem.id] = newErrors[newItem.id].filter(e => e !== 'model');
+                                           if (newErrors[newItem.id].length === 0) delete newErrors[newItem.id];
+                                         }
+                                         return newErrors;
+                                       });
                                      }}
                                    >
                                      {mdl.label}
@@ -841,6 +885,9 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                            </Command>
                          </PopoverContent>
                        </Popover>
+                       {validationErrors[newItem.id]?.includes('model') && (
+                         <p className="text-xs text-destructive mt-1">Required field</p>
+                       )}
                      </td>
                        <td className="p-4 min-w-[200px]">
                          <Textarea 
@@ -882,40 +929,91 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                          <Input 
                            placeholder="Mfg Serial"
                            value={newItem.mfgSerial}
-                           onChange={(e) => updateNewItem(newItem.id, 'mfgSerial', e.target.value)}
+                           onChange={(e) => {
+                             updateNewItem(newItem.id, 'mfgSerial', e.target.value);
+                             // Clear error when field is filled
+                             if (e.target.value) {
+                               setValidationErrors(prev => {
+                                 const newErrors = {...prev};
+                                 if (newErrors[newItem.id]) {
+                                   newErrors[newItem.id] = newErrors[newItem.id].filter(err => err !== 'mfgSerial');
+                                   if (newErrors[newItem.id].length === 0) delete newErrors[newItem.id];
+                                 }
+                                 return newErrors;
+                               });
+                             }
+                           }}
                            className={cn(
-                             "h-12 text-base font-medium border-2 focus:border-primary transition-all duration-300",
+                             "h-12 text-base font-medium border-2 transition-all duration-300",
+                             validationErrors[newItem.id]?.includes('mfgSerial') ? "border-destructive focus:border-destructive" : "focus:border-primary",
                              highlightNewItems && newItem.mfgSerial && "ring-2 ring-primary bg-primary/5"
                            )}
                            onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
                            autoComplete="off"
                          />
+                         {validationErrors[newItem.id]?.includes('mfgSerial') && (
+                           <p className="text-xs text-destructive mt-1">Required field</p>
+                         )}
                        </td>
                      <td className="p-4 min-w-[120px]">
                        <Input 
                          placeholder="CustID"
                          value={newItem.custId}
-                         onChange={(e) => updateNewItem(newItem.id, 'custId', e.target.value)}
+                         onChange={(e) => {
+                           updateNewItem(newItem.id, 'custId', e.target.value);
+                           // Clear error when field is filled
+                           if (e.target.value) {
+                             setValidationErrors(prev => {
+                               const newErrors = {...prev};
+                               if (newErrors[newItem.id]) {
+                                 newErrors[newItem.id] = newErrors[newItem.id].filter(err => err !== 'custId');
+                                 if (newErrors[newItem.id].length === 0) delete newErrors[newItem.id];
+                               }
+                               return newErrors;
+                             });
+                           }
+                         }}
                          className={cn(
-                           "h-12 text-base font-medium border-2 focus:border-primary transition-all duration-300",
+                           "h-12 text-base font-medium border-2 transition-all duration-300",
+                           validationErrors[newItem.id]?.includes('custId') ? "border-destructive focus:border-destructive" : "focus:border-primary",
                            highlightNewItems && newItem.custId && "ring-2 ring-primary bg-primary/5"
                          )}
                          onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
                          autoComplete="off"
                        />
+                       {validationErrors[newItem.id]?.includes('custId') && (
+                         <p className="text-xs text-destructive mt-1">Required field</p>
+                       )}
                      </td>
                      <td className="p-4 min-w-[120px]">
                        <Input 
                          placeholder="CustSN"
                          value={newItem.custSN}
-                         onChange={(e) => updateNewItem(newItem.id, 'custSN', e.target.value)}
+                         onChange={(e) => {
+                           updateNewItem(newItem.id, 'custSN', e.target.value);
+                           // Clear error when field is filled
+                           if (e.target.value) {
+                             setValidationErrors(prev => {
+                               const newErrors = {...prev};
+                               if (newErrors[newItem.id]) {
+                                 newErrors[newItem.id] = newErrors[newItem.id].filter(err => err !== 'custSN');
+                                 if (newErrors[newItem.id].length === 0) delete newErrors[newItem.id];
+                               }
+                               return newErrors;
+                             });
+                           }
+                         }}
                          className={cn(
-                           "h-12 text-base font-medium border-2 focus:border-primary transition-all duration-300",
+                           "h-12 text-base font-medium border-2 transition-all duration-300",
+                           validationErrors[newItem.id]?.includes('custSN') ? "border-destructive focus:border-destructive" : "focus:border-primary",
                            highlightNewItems && newItem.custSN && "ring-2 ring-primary bg-primary/5"
                          )}
                          onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
                          autoComplete="off"
                        />
+                       {validationErrors[newItem.id]?.includes('custSN') && (
+                         <p className="text-xs text-destructive mt-1">Required field</p>
+                       )}
                      </td>
                      <td className="p-4 min-w-[150px]">
                        <Input 
