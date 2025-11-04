@@ -1191,7 +1191,7 @@ const AddNewWorkOrder = () => {
                   {/* Items Table */}
                   <div className="space-y-3">
                     <div className="flex justify-between items-center">
-                      <a href="#" className="text-sm text-primary hover:underline">Select All</a>
+                      <a href="#" className="text-sm text-foreground font-medium hover:text-primary hover:underline">Select All</a>
                     </div>
                     
                     <div className="border rounded-lg overflow-x-auto">
