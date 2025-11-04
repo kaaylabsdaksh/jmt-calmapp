@@ -444,6 +444,7 @@ const AddNewWorkOrder = () => {
 
   // Handler for Copy from Other WO
   const handleCopyFromOtherWO = () => {
+    // Validate Work Order # is mandatory
     if (!copyWorkOrder) {
       toast({
         variant: "destructive",
@@ -453,15 +454,15 @@ const AddNewWorkOrder = () => {
       return;
     }
 
-    // Validate that either item range or groupable is provided
-    const hasItemRange = copyItemFrom && copyItemTo;
-    const hasGroupable = copyGroupable;
+    // Validate that either Item # From OR Groupable is provided
+    const hasItemFrom = copyItemFrom && copyItemFrom.trim() !== '';
+    const hasGroupable = copyGroupable && copyGroupable !== '';
 
-    if (!hasItemRange && !hasGroupable) {
+    if (!hasItemFrom && !hasGroupable) {
       toast({
         variant: "destructive",
         title: "Error",
-        description: "Please enter Item # range or select Groupable option",
+        description: "Please enter Item # From or select a Groupable option (Yes/No)",
       });
       return;
     }
@@ -516,6 +517,7 @@ const AddNewWorkOrder = () => {
     let itemsToAdd = [...mockOtherWOItems];
 
     // If item range is specified, filter by range
+    const hasItemRange = copyItemFrom && copyItemTo;
     if (hasItemRange) {
       const fromNum = parseInt(copyItemFrom);
       const toNum = parseInt(copyItemTo);
@@ -524,7 +526,7 @@ const AddNewWorkOrder = () => {
 
     // If groupable is specified, filter accordingly (mock logic)
     if (hasGroupable) {
-      itemsToAdd = hasGroupable === "yes" ? itemsToAdd : itemsToAdd.slice(0, 1);
+      itemsToAdd = copyGroupable === "yes" ? itemsToAdd : itemsToAdd.slice(0, 1);
     }
 
     // Add items to the receiving list
@@ -1743,7 +1745,9 @@ const AddNewWorkOrder = () => {
                           </div>
                           
                           <div className="space-y-2">
-                            <Label className="text-sm font-medium">Item # From</Label>
+                            <Label className="text-sm font-medium">
+                              Item # From <span className="text-destructive">*</span>
+                            </Label>
                             <Input 
                               value={copyItemFrom}
                               onChange={(e) => setCopyItemFrom(e.target.value)}
