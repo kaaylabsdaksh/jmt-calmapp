@@ -467,23 +467,15 @@ const AddNewWorkOrder = () => {
       return;
     }
 
-    // Validate Item # From is mandatory
-    if (!copyItemFrom || copyItemFrom.trim() === '') {
+    // Validate that either Item # From OR Groupable is filled (at least one)
+    const hasItemRange = copyItemFrom && copyItemFrom.trim() !== '';
+    const hasGroupable = copyGroupable && copyGroupable !== '';
+    
+    if (!hasItemRange && !hasGroupable) {
       toast({
         variant: "destructive",
         title: "Error",
-        description: "Please enter Item # From",
-        duration: 1500,
-      });
-      return;
-    }
-
-    // Validate Groupable is mandatory
-    if (!copyGroupable || copyGroupable === '') {
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: "Please select a Groupable option (Yes/No)",
+        description: "Please either enter Item # From or select Groupable",
         duration: 1500,
       });
       return;
@@ -1811,9 +1803,15 @@ const AddNewWorkOrder = () => {
                             </Label>
                             <Input 
                               value={copyItemFrom}
-                              onChange={(e) => setCopyItemFrom(e.target.value)}
+                              onChange={(e) => {
+                                setCopyItemFrom(e.target.value);
+                                // Clear groupable when item from is filled
+                                if (e.target.value && copyGroupable) {
+                                  setCopyGroupable("");
+                                }
+                              }}
                               placeholder="1"
-                              disabled={areOtherFieldsDisabled()}
+                              disabled={areOtherFieldsDisabled() || (copyGroupable !== "")}
                               className="h-10"
                               type="number"
                             />
@@ -1825,7 +1823,7 @@ const AddNewWorkOrder = () => {
                               value={copyItemTo}
                               onChange={(e) => setCopyItemTo(e.target.value)}
                               placeholder="10"
-                              disabled={areOtherFieldsDisabled()}
+                              disabled={areOtherFieldsDisabled() || (copyGroupable !== "")}
                               className="h-10"
                               type="number"
                             />
@@ -1837,8 +1835,15 @@ const AddNewWorkOrder = () => {
                             </Label>
                             <Select 
                               value={copyGroupable} 
-                              onValueChange={setCopyGroupable}
-                              disabled={areOtherFieldsDisabled()}
+                              onValueChange={(value) => {
+                                setCopyGroupable(value);
+                                // Clear item range when groupable is selected
+                                if (value && copyItemFrom) {
+                                  setCopyItemFrom("");
+                                  setCopyItemTo("");
+                                }
+                              }}
+                              disabled={areOtherFieldsDisabled() || (copyItemFrom !== "")}
                             >
                               <SelectTrigger id="copyGroupable" className="h-10">
                                 <SelectValue placeholder="Select..." />
