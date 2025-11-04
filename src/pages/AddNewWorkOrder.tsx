@@ -122,7 +122,15 @@ const AddNewWorkOrder = () => {
     localStorage.setItem('workOrderData', JSON.stringify(workOrderData));
   }, [workOrderData]);
 
-  const [viewMode, setViewMode] = useState<'table' | 'cards' | 'receiving'>('receiving');
+  const [viewMode, setViewMode] = useState<'table' | 'cards' | 'receiving'>(() => {
+    const savedViewMode = localStorage.getItem('workOrderViewMode');
+    return (savedViewMode as 'table' | 'cards' | 'receiving') || 'receiving';
+  });
+
+  // Save viewMode to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('workOrderViewMode', viewMode);
+  }, [viewMode]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [accountSuggestions, setAccountSuggestions] = useState<Array<{accountNumber: string, customerName: string, srDocument: string, salesperson: string, contact: string}>>([]);
   const [highlightedSuggestion, setHighlightedSuggestion] = useState(-1);
