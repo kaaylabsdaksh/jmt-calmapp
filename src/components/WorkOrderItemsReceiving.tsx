@@ -130,6 +130,26 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
   const [highlightNewItems, setHighlightNewItems] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [columnFilters, setColumnFilters] = useState({
+    itemNumber: "",
+    calFreq: "",
+    actionCode: "",
+    priority: "",
+    manufacturer: "",
+    model: "",
+    description: "",
+    tf: "",
+    capableLocations: "",
+    mfgSerial: "",
+    custId: "",
+    custSN: "",
+    assetNumber: "",
+    iso17025: "",
+    estimate: "",
+    newEquip: "",
+    needByDate: "",
+    ccCost: "",
+  });
 
   // Handle individual item selection
   const handleItemSelect = (itemId: string, checked: boolean) => {
@@ -347,13 +367,27 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
     setItems([...items, copiedItem]);
   };
 
+  // Filter items based on column filters
+  const filteredItems = items.filter(item => {
+    return Object.entries(columnFilters).every(([key, value]) => {
+      if (!value) return true;
+      const itemValue = item[key as keyof WorkOrderReceivingItem]?.toString().toLowerCase() || "";
+      return itemValue.includes(value.toLowerCase());
+    });
+  });
+
   // Pagination calculations
-  const totalSavedItems = items.length;
+  const totalSavedItems = filteredItems.length;
   const isShowingAll = itemsPerPage >= 999999;
   const totalPages = isShowingAll ? 1 : Math.ceil(totalSavedItems / itemsPerPage);
   const startIndex = isShowingAll ? 0 : (currentPage - 1) * itemsPerPage;
   const endIndex = isShowingAll ? totalSavedItems : Math.min(startIndex + itemsPerPage, totalSavedItems);
-  const paginatedItems = items.slice(startIndex, endIndex);
+  const paginatedItems = filteredItems.slice(startIndex, endIndex);
+
+  const handleFilterChange = (column: string, value: string) => {
+    setColumnFilters(prev => ({ ...prev, [column]: value }));
+    setCurrentPage(1); // Reset to first page when filtering
+  };
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -389,8 +423,8 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
           {/* Desktop Table View */}
           <div className="hidden lg:block border rounded-lg overflow-x-auto scroll-smooth">
             <table className="w-full min-w-[2400px]">
-              <thead className="bg-muted/20 border-b">
-                <tr>
+              <thead className="bg-muted/20">
+                <tr className="border-b">
                   <th className="text-right p-2 text-xs font-medium text-muted-foreground w-12"></th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-8">
                     <Checkbox 
@@ -417,6 +451,156 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-24">Need By Date</th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-16">C/C Cost</th>
                   <th className="text-left p-2 text-xs font-medium text-muted-foreground w-32">Action</th>
+                </tr>
+                {/* Quick Search Row */}
+                <tr className="border-b">
+                  <th className="p-1"></th>
+                  <th className="p-1"></th>
+                  <th className="p-1">
+                    <Input 
+                      placeholder="Search..."
+                      value={columnFilters.itemNumber}
+                      onChange={(e) => handleFilterChange('itemNumber', e.target.value)}
+                      className="h-7 text-xs"
+                    />
+                  </th>
+                  <th className="p-1">
+                    <Input 
+                      placeholder="Search..."
+                      value={columnFilters.calFreq}
+                      onChange={(e) => handleFilterChange('calFreq', e.target.value)}
+                      className="h-7 text-xs"
+                    />
+                  </th>
+                  <th className="p-1">
+                    <Input 
+                      placeholder="Search..."
+                      value={columnFilters.actionCode}
+                      onChange={(e) => handleFilterChange('actionCode', e.target.value)}
+                      className="h-7 text-xs"
+                    />
+                  </th>
+                  <th className="p-1">
+                    <Input 
+                      placeholder="Search..."
+                      value={columnFilters.priority}
+                      onChange={(e) => handleFilterChange('priority', e.target.value)}
+                      className="h-7 text-xs"
+                    />
+                  </th>
+                  <th className="p-1">
+                    <Input 
+                      placeholder="Search..."
+                      value={columnFilters.manufacturer}
+                      onChange={(e) => handleFilterChange('manufacturer', e.target.value)}
+                      className="h-7 text-xs"
+                    />
+                  </th>
+                  <th className="p-1">
+                    <Input 
+                      placeholder="Search..."
+                      value={columnFilters.model}
+                      onChange={(e) => handleFilterChange('model', e.target.value)}
+                      className="h-7 text-xs"
+                    />
+                  </th>
+                  <th className="p-1">
+                    <Input 
+                      placeholder="Search..."
+                      value={columnFilters.description}
+                      onChange={(e) => handleFilterChange('description', e.target.value)}
+                      className="h-7 text-xs"
+                    />
+                  </th>
+                  <th className="p-1">
+                    <Input 
+                      placeholder="Search..."
+                      value={columnFilters.tf}
+                      onChange={(e) => handleFilterChange('tf', e.target.value)}
+                      className="h-7 text-xs"
+                    />
+                  </th>
+                  <th className="p-1">
+                    <Input 
+                      placeholder="Search..."
+                      value={columnFilters.capableLocations}
+                      onChange={(e) => handleFilterChange('capableLocations', e.target.value)}
+                      className="h-7 text-xs"
+                    />
+                  </th>
+                  <th className="p-1">
+                    <Input 
+                      placeholder="Search..."
+                      value={columnFilters.mfgSerial}
+                      onChange={(e) => handleFilterChange('mfgSerial', e.target.value)}
+                      className="h-7 text-xs"
+                    />
+                  </th>
+                  <th className="p-1">
+                    <Input 
+                      placeholder="Search..."
+                      value={columnFilters.custId}
+                      onChange={(e) => handleFilterChange('custId', e.target.value)}
+                      className="h-7 text-xs"
+                    />
+                  </th>
+                  <th className="p-1">
+                    <Input 
+                      placeholder="Search..."
+                      value={columnFilters.custSN}
+                      onChange={(e) => handleFilterChange('custSN', e.target.value)}
+                      className="h-7 text-xs"
+                    />
+                  </th>
+                  <th className="p-1">
+                    <Input 
+                      placeholder="Search..."
+                      value={columnFilters.assetNumber}
+                      onChange={(e) => handleFilterChange('assetNumber', e.target.value)}
+                      className="h-7 text-xs"
+                    />
+                  </th>
+                  <th className="p-1">
+                    <Input 
+                      placeholder="Search..."
+                      value={columnFilters.iso17025}
+                      onChange={(e) => handleFilterChange('iso17025', e.target.value)}
+                      className="h-7 text-xs"
+                    />
+                  </th>
+                  <th className="p-1">
+                    <Input 
+                      placeholder="Search..."
+                      value={columnFilters.estimate}
+                      onChange={(e) => handleFilterChange('estimate', e.target.value)}
+                      className="h-7 text-xs"
+                    />
+                  </th>
+                  <th className="p-1">
+                    <Input 
+                      placeholder="Search..."
+                      value={columnFilters.newEquip}
+                      onChange={(e) => handleFilterChange('newEquip', e.target.value)}
+                      className="h-7 text-xs"
+                    />
+                  </th>
+                  <th className="p-1">
+                    <Input 
+                      placeholder="Search..."
+                      value={columnFilters.needByDate}
+                      onChange={(e) => handleFilterChange('needByDate', e.target.value)}
+                      className="h-7 text-xs"
+                    />
+                  </th>
+                  <th className="p-1">
+                    <Input 
+                      placeholder="Search..."
+                      value={columnFilters.ccCost}
+                      onChange={(e) => handleFilterChange('ccCost', e.target.value)}
+                      className="h-7 text-xs"
+                    />
+                  </th>
+                  <th className="p-1"></th>
                 </tr>
               </thead>
               <tbody>
