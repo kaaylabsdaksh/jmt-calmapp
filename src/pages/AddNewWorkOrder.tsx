@@ -996,34 +996,72 @@ const AddNewWorkOrder = () => {
               {isSaved && workOrderData.accountNumber && (
               <Card>
                 <CardContent className="p-4 sm:p-6 space-y-4">
-                  {/* Customer Quote and Other WOs Section - Minimal */}
-                  <div className="flex flex-col sm:flex-row items-start gap-4 text-sm">
+                  {/* Customer Quote and Other WOs Section */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     {/* Customer Quote Section */}
-                    <div className="flex items-center gap-2">
-                      <Label className="text-sm font-medium whitespace-nowrap">Cust Quote #:</Label>
-                      <Select value={selectedQuote} onValueChange={setSelectedQuote}>
-                        <SelectTrigger className="h-8 w-32">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent className="bg-popover border shadow-lg z-50">
-                          <SelectItem value="48020">48020</SelectItem>
-                          <SelectItem value="48034">48034</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    
-                    {/* Quotes List */}
-                    <div className="flex items-center gap-3 text-xs">
-                      <span className="text-muted-foreground">Quotes:</span>
-                      <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline">48020</a>
-                      <span className="text-muted-foreground">|</span>
-                      <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline">48034</a>
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2">
+                        <Label className="text-sm font-medium whitespace-nowrap">Cust Quote #:</Label>
+                        <Select value={selectedQuote} onValueChange={setSelectedQuote}>
+                          <SelectTrigger className="h-9">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent className="bg-popover border shadow-lg z-50">
+                            <SelectItem value="48020">48020</SelectItem>
+                            <SelectItem value="48034">48034</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      
+                      <div className="border rounded-lg overflow-hidden">
+                        <table className="w-full text-sm">
+                          <thead className="bg-muted/50">
+                            <tr>
+                              <th className="text-left p-2 font-medium text-foreground">Customer Quotes</th>
+                              <th className="text-left p-2 font-medium text-foreground">Type</th>
+                            </tr>
+                          </thead>
+                          <tbody className="bg-card">
+                            <tr className="border-t">
+                              <td className="p-2">
+                                <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">48020</a>
+                              </td>
+                              <td className="p-2 text-foreground">Regular</td>
+                            </tr>
+                            <tr className="border-t">
+                              <td className="p-2">
+                                <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">48034</a>
+                              </td>
+                              <td className="p-2 text-foreground">ESL Onsite</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
 
-                    {/* Other WO's */}
-                    <div className="flex items-center gap-3 text-xs">
-                      <span className="text-muted-foreground">Open:</span>
-                      <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline">802614</a>
+                    {/* Other WO's & Quotes Section */}
+                    <div className="space-y-3">
+                      <h3 className="text-sm font-medium">Other WO's & Quotes</h3>
+                      <div className="border rounded-lg overflow-hidden">
+                        <table className="w-full text-sm">
+                          <thead className="bg-muted/50">
+                            <tr>
+                              <th className="text-left p-2 font-medium text-foreground">Open</th>
+                              <th className="text-left p-2 font-medium text-foreground">Closed</th>
+                              <th className="text-left p-2 font-medium text-foreground">Quotes</th>
+                            </tr>
+                          </thead>
+                          <tbody className="bg-card">
+                            <tr className="border-t">
+                              <td className="p-2">
+                                <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">802614</a>
+                              </td>
+                              <td className="p-2 text-foreground">-</td>
+                              <td className="p-2 text-foreground">-</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
                   </div>
 
