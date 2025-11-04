@@ -1074,7 +1074,7 @@ const AddNewWorkOrder = () => {
                       </DropdownMenu>
 
                       <Button
-                        variant="outline"
+                        variant="ghost"
                         size="sm"
                         onClick={() => {
                           localStorage.setItem('workOrderViewMode', viewMode);
@@ -1083,10 +1083,10 @@ const AddNewWorkOrder = () => {
                             description: `${viewMode === 'receiving' ? 'Receiving View' : viewMode === 'table' ? 'Table View' : 'Cards View'} will be your default view.`,
                           });
                         }}
-                        className="flex items-center gap-2"
+                        className="h-8 w-8 p-0"
+                        title="Save as default view"
                       >
                         <BookmarkCheck className="w-4 h-4" />
-                        <span className="hidden sm:inline">Save as Default</span>
                       </Button>
 
                       {(viewMode === 'table' || viewMode === 'cards') && (
