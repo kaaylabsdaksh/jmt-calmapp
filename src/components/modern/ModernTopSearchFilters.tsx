@@ -625,9 +625,9 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
               <SelectTrigger className="w-[180px] sm:w-[220px] border-0 border-r border-gray-300 rounded-l-lg rounded-r-none h-full text-xs sm:text-sm bg-transparent hover:bg-gray-50 focus:ring-0 focus:ring-offset-0">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-[9999]">
+              <SelectContent className="bg-white border border-gray-200 shadow-md rounded-md z-[9999] p-1">
                 {searchTypeOptions.map((option) => (
-                  <SelectItem key={option.value} value={option.value}>
+                  <SelectItem key={option.value} value={option.value} className="py-1.5 text-sm">
                     {option.label}
                   </SelectItem>
                 ))}
