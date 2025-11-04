@@ -98,6 +98,113 @@ const AddNewWorkOrder = () => {
   const [customerWaitStatus, setCustomerWaitStatus] = useState("");
   const [deliverByDate, setDeliverByDate] = useState("");
   
+  // Customer Quote Selection
+  const [selectedQuote, setSelectedQuote] = useState("48020");
+  
+  // Mock data for different customer quotes
+  const quoteData = {
+    "48020": {
+      received: {
+        calFreq: "12",
+        location: "alexandria",
+        division: "lab",
+        poNumber: "W/OPO",
+        arrivalDate: "2016-03-28",
+        arrivalType: "onsite",
+        priority: "rush",
+        needByDate: "2016-04-05"
+      },
+      items: [
+        {
+          manufacturer: "AEMC",
+          model: "275HVD",
+          description: "HIGH VOLTAGE DETECTOR",
+          qty: "1",
+          prevWO: "-",
+          woItem: "",
+          serialNumber: "",
+          custId: "",
+          custSerial: "",
+          priority: "normal",
+          repair: false,
+          iso17025: false
+        },
+        {
+          manufacturer: "A.B. CHANCE",
+          model: "C403-0979",
+          description: "VOLTAGE DETECTOR",
+          qty: "1",
+          prevWO: "-",
+          woItem: "802614-001",
+          serialNumber: "",
+          custId: "SX-17933",
+          custSerial: "",
+          priority: "normal",
+          repair: false,
+          iso17025: false,
+          highlighted: true
+        }
+      ]
+    },
+    "48034": {
+      received: {
+        calFreq: "6",
+        location: "houston",
+        division: "field",
+        poNumber: "PO-12345",
+        arrivalDate: "2016-04-15",
+        arrivalType: "pickup",
+        priority: "expedite",
+        needByDate: "2016-04-20"
+      },
+      items: [
+        {
+          manufacturer: "FLUKE",
+          model: "87V",
+          description: "DIGITAL MULTIMETER",
+          qty: "2",
+          prevWO: "801500",
+          woItem: "801500-001",
+          serialNumber: "12345678",
+          custId: "FLUKE-001",
+          custSerial: "SN001",
+          priority: "expedite",
+          repair: true,
+          iso17025: true
+        },
+        {
+          manufacturer: "KEYSIGHT",
+          model: "34465A",
+          description: "BENCHTOP MULTIMETER",
+          qty: "1",
+          prevWO: "-",
+          woItem: "",
+          serialNumber: "MY54321",
+          custId: "KEY-002",
+          custSerial: "SN002",
+          priority: "rush",
+          repair: false,
+          iso17025: true
+        },
+        {
+          manufacturer: "TEKTRONIX",
+          model: "TBS1052B",
+          description: "OSCILLOSCOPE",
+          qty: "1",
+          prevWO: "801600",
+          woItem: "801600-003",
+          serialNumber: "TEK789",
+          custId: "TEK-003",
+          custSerial: "SN003",
+          priority: "normal",
+          repair: true,
+          iso17025: false,
+          highlighted: true
+        }
+      ]
+    }
+  };
+  
 
   // Save active tab to localStorage whenever it changes
   useEffect(() => {
@@ -894,11 +1001,11 @@ const AddNewWorkOrder = () => {
                     <div className="space-y-3">
                       <div className="flex items-center gap-2">
                         <Label className="text-sm font-medium whitespace-nowrap">Cust Quote #:</Label>
-                        <Select defaultValue="48020">
+                        <Select value={selectedQuote} onValueChange={setSelectedQuote}>
                           <SelectTrigger className="h-9">
                             <SelectValue />
                           </SelectTrigger>
-                          <SelectContent className="bg-background border shadow-lg z-50">
+                          <SelectContent className="bg-popover border shadow-lg z-50">
                             <SelectItem value="48020">48020</SelectItem>
                             <SelectItem value="48034">48034</SelectItem>
                           </SelectContent>
@@ -978,15 +1085,15 @@ const AddNewWorkOrder = () => {
                         <div className="space-y-2">
                           <div className="flex items-center gap-2">
                             <Label className="text-sm whitespace-nowrap min-w-[80px]">Cal Freq:</Label>
-                            <Input type="number" defaultValue="12" className="h-8" />
+                            <Input type="number" value={quoteData[selectedQuote].received.calFreq} className="h-8" readOnly />
                           </div>
                           <div className="flex items-center gap-2">
                             <Label className="text-sm whitespace-nowrap min-w-[80px]">Location:</Label>
-                            <Select defaultValue="alexandria">
+                            <Select value={quoteData[selectedQuote].received.location}>
                               <SelectTrigger className="h-8">
                                 <SelectValue />
                               </SelectTrigger>
-                              <SelectContent className="bg-background border shadow-lg z-50">
+                              <SelectContent className="bg-popover border shadow-lg z-50">
                                 <SelectItem value="alexandria">Alexandria</SelectItem>
                                 <SelectItem value="baton-rouge">Baton Rouge</SelectItem>
                                 <SelectItem value="houston">Houston</SelectItem>
@@ -995,11 +1102,11 @@ const AddNewWorkOrder = () => {
                           </div>
                           <div className="flex items-center gap-2">
                             <Label className="text-sm whitespace-nowrap min-w-[80px]">Division:</Label>
-                            <Select defaultValue="lab">
+                            <Select value={quoteData[selectedQuote].received.division}>
                               <SelectTrigger className="h-8">
                                 <SelectValue />
                               </SelectTrigger>
-                              <SelectContent className="bg-background border shadow-lg z-50">
+                              <SelectContent className="bg-popover border shadow-lg z-50">
                                 <SelectItem value="lab">Lab</SelectItem>
                                 <SelectItem value="field">Field</SelectItem>
                               </SelectContent>
@@ -1007,7 +1114,7 @@ const AddNewWorkOrder = () => {
                           </div>
                           <div className="flex items-center gap-2">
                             <Label className="text-sm whitespace-nowrap min-w-[80px]">PO #:</Label>
-                            <Input defaultValue="W/OPO" className="h-8" />
+                            <Input value={quoteData[selectedQuote].received.poNumber} className="h-8" readOnly />
                           </div>
                         </div>
                       </div>
@@ -1018,15 +1125,15 @@ const AddNewWorkOrder = () => {
                         <div className="space-y-2">
                           <div className="flex items-center gap-2">
                             <Label className="text-sm whitespace-nowrap min-w-[60px]">Date:</Label>
-                            <Input type="date" defaultValue="2016-03-28" className="h-8" />
+                            <Input type="date" value={quoteData[selectedQuote].received.arrivalDate} className="h-8" readOnly />
                           </div>
                           <div className="flex items-center gap-2">
                             <Label className="text-sm whitespace-nowrap min-w-[60px]">Type:</Label>
-                            <Select defaultValue="onsite">
+                            <Select value={quoteData[selectedQuote].received.arrivalType}>
                               <SelectTrigger className="h-8">
                                 <SelectValue />
                               </SelectTrigger>
-                              <SelectContent className="bg-background border shadow-lg z-50">
+                              <SelectContent className="bg-popover border shadow-lg z-50">
                                 <SelectItem value="onsite">Onsite</SelectItem>
                                 <SelectItem value="pickup">Pickup</SelectItem>
                                 <SelectItem value="delivery">Delivery</SelectItem>
@@ -1042,11 +1149,11 @@ const AddNewWorkOrder = () => {
                         <div className="space-y-2">
                           <div className="flex items-center gap-2">
                             <Label className="text-sm whitespace-nowrap min-w-[70px]">Priority:</Label>
-                            <Select defaultValue="rush">
+                            <Select value={quoteData[selectedQuote].received.priority}>
                               <SelectTrigger className="h-8">
                                 <SelectValue />
                               </SelectTrigger>
-                              <SelectContent className="bg-background border shadow-lg z-50">
+                              <SelectContent className="bg-popover border shadow-lg z-50">
                                 <SelectItem value="normal">Normal</SelectItem>
                                 <SelectItem value="expedite">Expedite</SelectItem>
                                 <SelectItem value="rush">Rush</SelectItem>
@@ -1055,7 +1162,7 @@ const AddNewWorkOrder = () => {
                           </div>
                           <div className="flex items-center gap-2">
                             <Label className="text-sm whitespace-nowrap min-w-[70px]">Need By:</Label>
-                            <Input type="date" defaultValue="2016-04-05" className="h-8" />
+                            <Input type="date" value={quoteData[selectedQuote].received.needByDate} className="h-8" readOnly />
                           </div>
                         </div>
                       </div>
@@ -1103,101 +1210,63 @@ const AddNewWorkOrder = () => {
                             <th className="text-left p-2 font-medium">17025</th>
                           </tr>
                         </thead>
-                        <tbody className="bg-background">
-                          <tr className="border-t">
-                            <td className="p-2">
-                              <Checkbox />
-                            </td>
-                            <td className="p-2">AEMC</td>
-                            <td className="p-2">275HVD</td>
-                            <td className="p-2 font-medium">HIGH VOLTAGE DETECTOR</td>
-                            <td className="p-2">
-                              <Input type="number" defaultValue="1" className="h-8 w-16" />
-                            </td>
-                            <td className="p-2">
-                              <Input defaultValue="-" className="h-8 w-20" />
-                            </td>
-                            <td className="p-2"></td>
-                            <td className="p-2">
-                              <Input placeholder="N/A" className="h-8 w-24" />
-                            </td>
-                            <td className="p-2">
-                              <Input placeholder="" className="h-8 w-24" />
-                            </td>
-                            <td className="p-2">
-                              <Input placeholder="N/A" className="h-8 w-24" />
-                            </td>
-                            <td className="p-2">
-                              <Select defaultValue="normal">
-                                <SelectTrigger className="h-8 w-24">
-                                  <SelectValue />
-                                </SelectTrigger>
-                                <SelectContent className="bg-background border shadow-lg z-50">
-                                  <SelectItem value="normal">Normal</SelectItem>
-                                  <SelectItem value="expedite">Expedite</SelectItem>
-                                  <SelectItem value="rush">Rush</SelectItem>
-                                </SelectContent>
-                              </Select>
-                            </td>
-                            <td className="p-2">
-                              <Checkbox />
-                            </td>
-                            <td className="p-2">
-                              <Checkbox />
-                            </td>
-                          </tr>
-                          <tr className="border-t bg-cyan-50">
-                            <td className="p-2">
-                              <Checkbox />
-                            </td>
-                            <td className="p-2">A.B. CHANCE</td>
-                            <td className="p-2">C403-0979</td>
-                            <td className="p-2 font-medium">VOLTAGE DETECTOR</td>
-                            <td className="p-2">
-                              <Input type="number" defaultValue="1" className="h-8 w-16" />
-                            </td>
-                            <td className="p-2">
-                              <Input defaultValue="-" className="h-8 w-20" />
-                            </td>
-                            <td className="p-2">
-                              <a href="#" className="text-primary hover:underline">802614-001</a>
-                            </td>
-                            <td className="p-2">
-                              <Input placeholder="N/A" className="h-8 w-24" />
-                            </td>
-                            <td className="p-2">
-                              <Input defaultValue="SX-17933" className="h-8 w-24" />
-                            </td>
-                            <td className="p-2">
-                              <Input placeholder="N/A" className="h-8 w-24" />
-                            </td>
-                            <td className="p-2">
-                              <Select defaultValue="normal">
-                                <SelectTrigger className="h-8 w-24">
-                                  <SelectValue />
-                                </SelectTrigger>
-                                <SelectContent className="bg-background border shadow-lg z-50">
-                                  <SelectItem value="normal">Normal</SelectItem>
-                                  <SelectItem value="expedite">Expedite</SelectItem>
-                                  <SelectItem value="rush">Rush</SelectItem>
-                                </SelectContent>
-                              </Select>
-                            </td>
-                            <td className="p-2">
-                              <Checkbox />
-                            </td>
-                            <td className="p-2">
-                              <Checkbox />
-                            </td>
-                          </tr>
+                        <tbody className="bg-card">
+                          {quoteData[selectedQuote].items.map((item, index) => (
+                            <tr key={index} className={`border-t ${item.highlighted ? 'bg-cyan-50 dark:bg-cyan-950/20' : ''}`}>
+                              <td className="p-2">
+                                <Checkbox />
+                              </td>
+                              <td className="p-2 text-foreground">{item.manufacturer}</td>
+                              <td className="p-2 text-foreground">{item.model}</td>
+                              <td className="p-2 font-medium text-foreground">{item.description}</td>
+                              <td className="p-2">
+                                <Input type="number" defaultValue={item.qty} className="h-8 w-16" />
+                              </td>
+                              <td className="p-2">
+                                <Input defaultValue={item.prevWO} className="h-8 w-20" />
+                              </td>
+                              <td className="p-2">
+                                {item.woItem ? (
+                                  <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">{item.woItem}</a>
+                                ) : null}
+                              </td>
+                              <td className="p-2">
+                                <Input placeholder={item.serialNumber || "N/A"} defaultValue={item.serialNumber} className="h-8 w-24" />
+                              </td>
+                              <td className="p-2">
+                                <Input placeholder="" defaultValue={item.custId} className="h-8 w-24" />
+                              </td>
+                              <td className="p-2">
+                                <Input placeholder={item.custSerial || "N/A"} defaultValue={item.custSerial} className="h-8 w-24" />
+                              </td>
+                              <td className="p-2">
+                                <Select defaultValue={item.priority}>
+                                  <SelectTrigger className="h-8 w-24">
+                                    <SelectValue />
+                                  </SelectTrigger>
+                                  <SelectContent className="bg-popover border shadow-lg z-50">
+                                    <SelectItem value="normal">Normal</SelectItem>
+                                    <SelectItem value="expedite">Expedite</SelectItem>
+                                    <SelectItem value="rush">Rush</SelectItem>
+                                  </SelectContent>
+                                </Select>
+                              </td>
+                              <td className="p-2">
+                                <Checkbox defaultChecked={item.repair} />
+                              </td>
+                              <td className="p-2">
+                                <Checkbox defaultChecked={item.iso17025} />
+                              </td>
+                            </tr>
+                          ))}
                         </tbody>
                       </table>
                     </div>
 
                     {/* Pagination and Action Button */}
                     <div className="flex flex-col sm:flex-row justify-between items-center gap-3">
-                      <div className="flex items-center gap-2 text-sm">
-                        <span>Page 1 of 1 (2 items)</span>
+                      <div className="flex items-center gap-2 text-sm text-foreground">
+                        <span>Page 1 of 1 ({quoteData[selectedQuote].items.length} items)</span>
                         <div className="flex items-center gap-1">
                           <Button variant="outline" size="sm" className="h-7 w-7 p-0">
                             <span>&lt;</span>
