@@ -992,7 +992,8 @@ const AddNewWorkOrder = () => {
                 </CardContent>
               </Card>
 
-              {/* RECEIVED Section */}
+              {/* RECEIVED Section - Only show after account is saved */}
+              {isSaved && workOrderData.accountNumber && (
               <Card>
                 <CardContent className="p-4 sm:p-6 space-y-4">
                   {/* Customer Quote and Other WOs Section */}
@@ -1304,6 +1305,7 @@ const AddNewWorkOrder = () => {
                   </div>
                 </CardContent>
               </Card>
+              )}
             </TabsContent>
 
             {/* Placeholder content for other tabs */}
