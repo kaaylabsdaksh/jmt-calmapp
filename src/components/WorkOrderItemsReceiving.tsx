@@ -504,12 +504,19 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                     </Select>
                   </th>
                   <th className="p-1">
-                    <Input 
-                      placeholder="Search..."
-                      value={columnFilters.manufacturer}
-                      onChange={(e) => handleFilterChange('manufacturer', e.target.value)}
-                      className="h-7 text-xs"
-                    />
+                    <Select value={columnFilters.manufacturer || "all"} onValueChange={(value) => handleFilterChange('manufacturer', value === "all" ? "" : value)}>
+                      <SelectTrigger className="h-7 text-xs">
+                        <SelectValue placeholder="All" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All</SelectItem>
+                        {manufacturers.map((mfr) => (
+                          <SelectItem key={mfr.value} value={mfr.value}>
+                            {mfr.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </th>
                   <th className="p-1">
                     <Input 
