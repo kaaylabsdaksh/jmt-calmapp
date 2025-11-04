@@ -4198,16 +4198,17 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
     : Math.ceil(filteredWorkOrderItems.length / itemsPerPage);
 
   // Get paginated data
+  const isShowingAll = itemsPerPage >= 999999;
   const paginatedWorkOrders = currentView === 'item' 
     ? []
     : [];
     
   const paginatedWorkOrderItems = currentView === 'item' 
-    ? filteredWorkOrderItems.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+    ? (isShowingAll ? filteredWorkOrderItems : filteredWorkOrderItems.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage))
     : [];
 
   const paginatedBatches = currentView === 'batch'
-    ? filteredWorkOrderBatches.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+    ? (isShowingAll ? filteredWorkOrderBatches : filteredWorkOrderBatches.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage))
     : [];
 
   const openDetails = (order: WorkOrder) => {
@@ -4947,7 +4948,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                   setCurrentPage(1);
                 }}
               >
-                <SelectTrigger className="w-[80px] h-8">
+                <SelectTrigger className="w-[100px] h-8">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -4956,6 +4957,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                   <SelectItem value="50">50</SelectItem>
                   <SelectItem value="100">100</SelectItem>
                   <SelectItem value="250">250</SelectItem>
+                  <SelectItem value="999999">All items</SelectItem>
                 </SelectContent>
               </Select>
             </div>

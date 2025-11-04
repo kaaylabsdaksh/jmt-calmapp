@@ -349,9 +349,10 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
 
   // Pagination calculations
   const totalSavedItems = items.length;
-  const totalPages = Math.ceil(totalSavedItems / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = Math.min(startIndex + itemsPerPage, totalSavedItems);
+  const isShowingAll = itemsPerPage >= 999999;
+  const totalPages = isShowingAll ? 1 : Math.ceil(totalSavedItems / itemsPerPage);
+  const startIndex = isShowingAll ? 0 : (currentPage - 1) * itemsPerPage;
+  const endIndex = isShowingAll ? totalSavedItems : Math.min(startIndex + itemsPerPage, totalSavedItems);
   const paginatedItems = items.slice(startIndex, endIndex);
 
   const handlePageChange = (page: number) => {
@@ -1452,7 +1453,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
               <div className="flex items-center gap-2">
                 <span className="text-sm text-muted-foreground">Show:</span>
                 <Select value={itemsPerPage.toString()} onValueChange={handleItemsPerPageChange}>
-                  <SelectTrigger className="h-9 w-20">
+                  <SelectTrigger className="h-9 w-24">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -1460,6 +1461,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                     <SelectItem value="25">25</SelectItem>
                     <SelectItem value="50">50</SelectItem>
                     <SelectItem value="100">100</SelectItem>
+                    <SelectItem value="999999">All items</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

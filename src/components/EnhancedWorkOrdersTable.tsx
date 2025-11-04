@@ -186,7 +186,7 @@ const EnhancedWorkOrdersTable = () => {
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <span>Show:</span>
               <Select value={pageSize.toString()} onValueChange={(value) => setPageSize(Number(value))}>
-                <SelectTrigger className="w-20 h-8">
+                <SelectTrigger className="w-24 h-8">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="bg-popover border shadow-lg z-50">
@@ -195,6 +195,7 @@ const EnhancedWorkOrdersTable = () => {
                   <SelectItem value="30">30</SelectItem>
                   <SelectItem value="50">50</SelectItem>
                   <SelectItem value="100">100</SelectItem>
+                  <SelectItem value="999999">All items</SelectItem>
                 </SelectContent>
               </Select>
               <span>per page</span>
