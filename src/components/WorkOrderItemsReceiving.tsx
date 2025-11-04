@@ -473,20 +473,35 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                     />
                   </th>
                   <th className="p-1">
-                    <Input 
-                      placeholder="Search..."
-                      value={columnFilters.actionCode}
-                      onChange={(e) => handleFilterChange('actionCode', e.target.value)}
-                      className="h-7 text-xs"
-                    />
+                    <Select value={columnFilters.actionCode} onValueChange={(value) => handleFilterChange('actionCode', value)}>
+                      <SelectTrigger className="h-7 text-xs">
+                        <SelectValue placeholder="All" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="">All</SelectItem>
+                        <SelectItem value="repair">REPAIR</SelectItem>
+                        <SelectItem value="rc">R/C</SelectItem>
+                        <SelectItem value="rcc">R/C/C</SelectItem>
+                        <SelectItem value="cc">C/C</SelectItem>
+                        <SelectItem value="test">TEST</SelectItem>
+                        <SelectItem value="build-new">BUILD NEW</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </th>
                   <th className="p-1">
-                    <Input 
-                      placeholder="Search..."
-                      value={columnFilters.priority}
-                      onChange={(e) => handleFilterChange('priority', e.target.value)}
-                      className="h-7 text-xs"
-                    />
+                    <Select value={columnFilters.priority} onValueChange={(value) => handleFilterChange('priority', value)}>
+                      <SelectTrigger className="h-7 text-xs">
+                        <SelectValue placeholder="All" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="">All</SelectItem>
+                        <SelectItem value="rush">Rush</SelectItem>
+                        <SelectItem value="normal">Normal</SelectItem>
+                        <SelectItem value="expedite">Expedite</SelectItem>
+                        <SelectItem value="emergency">Emergency</SelectItem>
+                        <SelectItem value="damaged">Damaged</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </th>
                   <th className="p-1">
                     <Input 
