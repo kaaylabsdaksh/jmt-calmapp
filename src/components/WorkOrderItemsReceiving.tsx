@@ -786,7 +786,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                       ) : (
                         <Link 
                           to={`/item/${item.id}`}
-                          className="truncate text-primary hover:underline font-medium" 
+                          className="truncate text-black hover:underline font-medium" 
                           title={item.itemNumber}
                         >
                           {item.itemNumber || "—"}
