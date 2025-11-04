@@ -67,7 +67,7 @@ const AddNewWorkOrder = () => {
     driver: "",
     puDate: "",
     poNumber: "",
-    recdBy: "",
+    needByDate: "",
     deliverByDate: "",
     soNumber: "",
     newEquip: false,
@@ -1523,12 +1523,15 @@ const AddNewWorkOrder = () => {
                               </div>
 
                               <div className="space-y-2">
-                                <Label htmlFor="qa-recdBy" className="text-sm font-medium">Recd By</Label>
+                                <Label htmlFor="qa-needByDate" className="text-sm font-medium">
+                                  Need by date <span className="text-destructive">*</span>
+                                </Label>
                                 <Input 
-                                  id="qa-recdBy"
-                                  value={quickAddData.recdBy}
-                                  onChange={(e) => setQuickAddData({...quickAddData, recdBy: e.target.value})}
-                                  placeholder="Enter value"
+                                  id="qa-needByDate"
+                                  type="date"
+                                  value={quickAddData.needByDate}
+                                  onChange={(e) => setQuickAddData({...quickAddData, needByDate: e.target.value})}
+                                  placeholder="dd/mm/yyyy"
                                   disabled={areOtherFieldsDisabled()}
                                 />
                               </div>
@@ -1633,7 +1636,7 @@ const AddNewWorkOrder = () => {
                                   driver: "",
                                   puDate: "",
                                   poNumber: "",
-                                  recdBy: "",
+                                  needByDate: "",
                                   deliverByDate: "",
                                   soNumber: "",
                                   newEquip: false,
@@ -1707,7 +1710,7 @@ const AddNewWorkOrder = () => {
                                   driver: "",
                                   puDate: "",
                                   poNumber: "",
-                                  recdBy: "",
+                                  needByDate: "",
                                   deliverByDate: "",
                                   soNumber: "",
                                   newEquip: false,
