@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { X, Download, Settings, User, CreditCard, Users, Package, FileText, Calculator, AlertCircle, ExternalLink, Award, Shield, BarChart, Save, LayoutGrid, Table, ChevronDown, Plus, PlusCircle, QrCode, Copy, PackagePlus, Menu, Wand2, BookmarkCheck } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { WorkOrderItemsTable } from "@/components/WorkOrderItemsTable";
 import { WorkOrderItemsCards } from "@/components/WorkOrderItemsCards";
 import { WorkOrderItemsReceiving } from "@/components/WorkOrderItemsReceiving";
@@ -1073,21 +1074,29 @@ const AddNewWorkOrder = () => {
                         </DropdownMenuContent>
                       </DropdownMenu>
 
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => {
-                          localStorage.setItem('workOrderViewMode', viewMode);
-                          toast({
-                            title: "View Preference Saved",
-                            description: `${viewMode === 'receiving' ? 'Receiving View' : viewMode === 'table' ? 'Table View' : 'Cards View'} will be your default view.`,
-                          });
-                        }}
-                        className="h-8 w-8 p-0"
-                        title="Save as default view"
-                      >
-                        <BookmarkCheck className="w-4 h-4" />
-                      </Button>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => {
+                                localStorage.setItem('workOrderViewMode', viewMode);
+                                toast({
+                                  title: "View Preference Saved",
+                                  description: `${viewMode === 'receiving' ? 'Receiving View' : viewMode === 'table' ? 'Table View' : 'Cards View'} will be your default view.`,
+                                });
+                              }}
+                              className="h-8 w-8 p-0"
+                            >
+                              <BookmarkCheck className="w-4 h-4" />
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Set as default view</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
 
                       {(viewMode === 'table' || viewMode === 'cards') && (
                         <div className="flex items-center gap-1 bg-muted rounded-lg p-1">
