@@ -293,7 +293,7 @@ const AddNewWorkOrder = () => {
       variant: "success",
       title: "Work Order Saved",
       description: "Your work order has been successfully created.",
-      duration: 3000,
+      duration: 1500,
     });
   };
 
@@ -460,7 +460,7 @@ const AddNewWorkOrder = () => {
         variant: "destructive",
         title: "Error",
         description: "Please enter a Work Order number",
-        duration: 3000,
+        duration: 1500,
       });
       return;
     }
@@ -471,7 +471,7 @@ const AddNewWorkOrder = () => {
         variant: "destructive",
         title: "Error",
         description: "Please enter Item # From",
-        duration: 3000,
+        duration: 1500,
       });
       return;
     }
@@ -482,7 +482,7 @@ const AddNewWorkOrder = () => {
         variant: "destructive",
         title: "Error",
         description: "Please select a Groupable option (Yes/No)",
-        duration: 3000,
+        duration: 1500,
       });
       return;
     }
@@ -557,7 +557,7 @@ const AddNewWorkOrder = () => {
       variant: "success",
       title: "Items Copied",
       description: `Successfully copied ${itemsToAdd.length} item(s) from Work Order ${copyWorkOrder}`,
-      duration: 3000,
+      duration: 1500,
     });
 
     // Reset copy fields
@@ -1090,7 +1090,7 @@ const AddNewWorkOrder = () => {
                                 toast({
                                   title: "View Preference Saved",
                                   description: `${viewMode === 'receiving' ? 'Receiving View' : viewMode === 'table' ? 'Table View' : 'Cards View'} will be your default view.`,
-                                  duration: 3000,
+                                  duration: 1500,
                                 });
                               }}
                               className="h-8 w-8 p-0"
@@ -1695,7 +1695,7 @@ const AddNewWorkOrder = () => {
                                     variant: "destructive",
                                     title: "Missing Required Fields",
                                     description: "Please fill in all required fields marked with *",
-                                    duration: 3000,
+                                    duration: 1500,
                                   });
                                   return;
                                 }
@@ -1705,7 +1705,7 @@ const AddNewWorkOrder = () => {
                                     variant: "destructive",
                                     title: "No Items Selected",
                                     description: "Please select at least one item to apply changes",
-                                    duration: 3000,
+                                    duration: 1500,
                                   });
                                   return;
                                 }
@@ -1733,7 +1733,7 @@ const AddNewWorkOrder = () => {
                                   variant: "success",
                                   title: "Quick Add Applied",
                                   description: `Data applied to ${selectedItemIds.length} selected item${selectedItemIds.length > 1 ? 's' : ''}`,
-                                  duration: 3000,
+                                  duration: 1500,
                                 });
                                 
                                 setIsQuickAddExpanded(false);
@@ -2399,7 +2399,7 @@ const AddNewWorkOrder = () => {
                                   toast({
                                     title: "Success",
                                     description: `${num} unused item${num > 1 ? 's' : ''} created successfully`,
-                                    duration: 3000,
+                                    duration: 1500,
                                   });
                                   setTimeout(() => document.getElementById('items-table')?.scrollIntoView({ behavior: 'smooth' }), 100);
                                 }
