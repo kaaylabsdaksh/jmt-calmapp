@@ -847,12 +847,12 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
                             : [...prev.priority, priority]
                         }));
                       }}
-                      className={cn(
-                        "w-full text-left px-3 py-2 rounded-md text-sm capitalize transition-colors",
-                        searchValues.priority.includes(priority)
-                          ? "bg-primary/10 text-primary-foreground font-medium"
-                          : "hover:bg-muted text-foreground"
-                      )}
+                    className={cn(
+                      "w-full text-left px-3 py-2 rounded-md text-sm capitalize transition-colors",
+                      searchValues.priority.includes(priority)
+                        ? "bg-foreground text-background font-medium"
+                        : "hover:bg-muted text-foreground"
+                    )}
                     >
                       {priority}
                     </button>
@@ -1049,7 +1049,7 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
                     className={cn(
                       "w-full text-left px-3 py-2 rounded-md text-sm capitalize transition-colors",
                       searchValues.priority.includes(priority)
-                        ? "bg-primary/10 text-primary-foreground font-medium"
+                        ? "bg-foreground text-background font-medium"
                         : "hover:bg-muted text-foreground"
                     )}
                   >
