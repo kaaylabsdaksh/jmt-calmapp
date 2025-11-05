@@ -21,6 +21,7 @@ import { EstimateDetails } from "@/components/EstimateDetails";
 import { RFIDDialog } from "@/components/RFIDDialog";
 import { toast } from "@/hooks/use-toast";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const AddNewWorkOrder = () => {
   const navigate = useNavigate();
@@ -1013,462 +1014,480 @@ const AddNewWorkOrder = () => {
               {/* Customer PO Card - Only show after account is saved */}
               {isSaved && workOrderData.accountNumber && (
                 <Card>
-                  <CardContent className="p-4 sm:p-6">
-                    <div className="space-y-3">
-                      {/* Dropdown */}
-                      <div className="flex items-center gap-2">
-                        <Label className="text-sm font-medium whitespace-nowrap">Cust PO #:</Label>
-                        <Select value={selectedCustPO} onValueChange={setSelectedCustPO}>
-                          <SelectTrigger className="h-9 w-48">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent className="bg-popover border shadow-lg z-50">
-                            {custPOData.map((po) => (
-                              <SelectItem key={po.id} value={po.id}>{po.id}</SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
+                  <Accordion type="single" collapsible defaultValue="cust-po">
+                    <AccordionItem value="cust-po" className="border-0">
+                      <AccordionTrigger className="px-4 sm:px-6 py-3 hover:no-underline">
+                        <span className="text-sm font-semibold">Customer Purchase Orders</span>
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <CardContent className="p-4 sm:p-6 pt-0">
+                          <div className="space-y-3">
+                            {/* Dropdown */}
+                            <div className="flex items-center gap-2">
+                              <Label className="text-sm font-medium whitespace-nowrap">Cust PO #:</Label>
+                              <Select value={selectedCustPO} onValueChange={setSelectedCustPO}>
+                                <SelectTrigger className="h-9 w-48">
+                                  <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent className="bg-popover border shadow-lg z-50">
+                                  {custPOData.map((po) => (
+                                    <SelectItem key={po.id} value={po.id}>{po.id}</SelectItem>
+                                  ))}
+                                </SelectContent>
+                              </Select>
+                            </div>
 
-                      {/* Customer Purchase Orders Table */}
-                      <div className="border rounded-lg overflow-hidden">
-                        <table className="w-full text-xs">
-                          <thead className="bg-muted/50">
-                            <tr>
-                              <th className="text-left p-2 font-medium text-foreground">Customer Purchase Orders</th>
-                            </tr>
-                          </thead>
-                          <tbody className="bg-card">
-                            {custPOData
-                              .slice((custPOCurrentPage - 1) * custPOPageSize, custPOCurrentPage * custPOPageSize)
-                              .map((po) => (
-                                <tr key={po.id} className="border-t">
-                                  <td className="p-2">
-                                    <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">
-                                      {po.id}
-                                    </a>
-                                  </td>
-                                </tr>
-                              ))}
-                          </tbody>
-                        </table>
+                            {/* Customer Purchase Orders Table */}
+                            <div className="border rounded-lg overflow-hidden">
+                              <table className="w-full text-xs">
+                                <thead className="bg-muted/50">
+                                  <tr>
+                                    <th className="text-left p-2 font-medium text-foreground">Customer Purchase Orders</th>
+                                  </tr>
+                                </thead>
+                                <tbody className="bg-card">
+                                  {custPOData
+                                    .slice((custPOCurrentPage - 1) * custPOPageSize, custPOCurrentPage * custPOPageSize)
+                                    .map((po) => (
+                                      <tr key={po.id} className="border-t">
+                                        <td className="p-2">
+                                          <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">
+                                            {po.id}
+                                          </a>
+                                        </td>
+                                      </tr>
+                                    ))}
+                                </tbody>
+                              </table>
 
-                        {/* Pagination Controls */}
-                        <div className="flex items-center justify-between border-t p-2 bg-muted/20">
-                          <div className="flex items-center gap-2">
-                            <button
-                              onClick={() => setCustPOCurrentPage(p => Math.max(1, p - 1))}
-                              disabled={custPOCurrentPage === 1}
-                              className="p-1 hover:bg-muted rounded disabled:opacity-50 disabled:cursor-not-allowed"
-                            >
-                              <ChevronDown className="w-4 h-4 rotate-90" />
-                            </button>
-                            <button
-                              onClick={() => setCustPOCurrentPage(p => Math.min(Math.ceil(custPOData.length / custPOPageSize), p + 1))}
-                              disabled={custPOCurrentPage >= Math.ceil(custPOData.length / custPOPageSize)}
-                              className="p-1 hover:bg-muted rounded disabled:opacity-50 disabled:cursor-not-allowed"
-                            >
-                              <ChevronDown className="w-4 h-4 -rotate-90" />
-                            </button>
+                              {/* Pagination Controls */}
+                              <div className="flex items-center justify-between border-t p-2 bg-muted/20">
+                                <div className="flex items-center gap-2">
+                                  <button
+                                    onClick={() => setCustPOCurrentPage(p => Math.max(1, p - 1))}
+                                    disabled={custPOCurrentPage === 1}
+                                    className="p-1 hover:bg-muted rounded disabled:opacity-50 disabled:cursor-not-allowed"
+                                  >
+                                    <ChevronDown className="w-4 h-4 rotate-90" />
+                                  </button>
+                                  <button
+                                    onClick={() => setCustPOCurrentPage(p => Math.min(Math.ceil(custPOData.length / custPOPageSize), p + 1))}
+                                    disabled={custPOCurrentPage >= Math.ceil(custPOData.length / custPOPageSize)}
+                                    className="p-1 hover:bg-muted rounded disabled:opacity-50 disabled:cursor-not-allowed"
+                                  >
+                                    <ChevronDown className="w-4 h-4 -rotate-90" />
+                                  </button>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <Label className="text-xs">Page size:</Label>
+                                  <Select value={String(custPOPageSize)} onValueChange={(v) => {
+                                    setCustPOPageSize(Number(v));
+                                    setCustPOCurrentPage(1);
+                                  }}>
+                                    <SelectTrigger className="h-7 w-16 text-xs">
+                                      <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent className="bg-popover border shadow-lg z-50">
+                                      <SelectItem value="5">5</SelectItem>
+                                      <SelectItem value="10">10</SelectItem>
+                                      <SelectItem value="20">20</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+                              </div>
+                            </div>
                           </div>
-                          <div className="flex items-center gap-2">
-                            <Label className="text-xs">Page size:</Label>
-                            <Select value={String(custPOPageSize)} onValueChange={(v) => {
-                              setCustPOPageSize(Number(v));
-                              setCustPOCurrentPage(1);
-                            }}>
-                              <SelectTrigger className="h-7 w-16 text-xs">
-                                <SelectValue />
-                              </SelectTrigger>
-                              <SelectContent className="bg-popover border shadow-lg z-50">
-                                <SelectItem value="5">5</SelectItem>
-                                <SelectItem value="10">10</SelectItem>
-                                <SelectItem value="20">20</SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
+                        </CardContent>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
                 </Card>
               )}
 
               {/* RECEIVED Section - Only show after account is saved */}
               {isSaved && workOrderData.accountNumber && (
               <Card>
-                <CardContent className="p-4 sm:p-6 space-y-4">
-                  {/* Customer Quote Section with integrated tables */}
-                  <div className="space-y-3">
-                    {/* Dropdown */}
-                    <div className="flex items-center gap-2">
-                      <Label className="text-sm font-medium whitespace-nowrap">Cust Quote #:</Label>
-                      <Select value={selectedQuote} onValueChange={setSelectedQuote}>
-                        <SelectTrigger className="h-9 w-40">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent className="bg-popover border shadow-lg z-50">
-                          <SelectItem value="48020">48020</SelectItem>
-                          <SelectItem value="48034">48034</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    {/* Tables Side by Side */}
-                    <div className="grid grid-cols-2 gap-3">
-                      {/* Customer Quotes Table */}
-                      <div className="border rounded-lg overflow-hidden">
-                        <table className="w-full text-xs">
-                          <thead className="bg-muted/50">
-                            <tr>
-                              <th className="text-left p-2 font-medium text-foreground">Customer Quotes</th>
-                              <th className="text-left p-2 font-medium text-foreground">Type</th>
-                            </tr>
-                          </thead>
-                          <tbody className="bg-card">
-                            <tr className="border-t">
-                              <td className="p-2">
-                                <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">48020</a>
-                              </td>
-                              <td className="p-2 text-foreground">Regular</td>
-                            </tr>
-                            <tr className="border-t">
-                              <td className="p-2">
-                                <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">48034</a>
-                              </td>
-                              <td className="p-2 text-foreground">ESL Onsite</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-
-                      {/* Other WO's & Quotes Table */}
-                      <div className="border rounded-lg overflow-hidden">
-                        <table className="w-full text-xs">
-                          <thead className="bg-muted/50">
-                            <tr>
-                              <th colSpan={3} className="text-left p-2 font-medium text-foreground">Other WO's & Quotes</th>
-                            </tr>
-                            <tr className="border-t">
-                              <th className="text-left p-2 font-medium text-muted-foreground">Open</th>
-                              <th className="text-left p-2 font-medium text-muted-foreground">Closed</th>
-                              <th className="text-left p-2 font-medium text-muted-foreground">Quotes</th>
-                            </tr>
-                          </thead>
-                          <tbody className="bg-card">
-                            <tr className="border-t">
-                              <td className="p-2">
-                                <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">802614</a>
-                              </td>
-                              <td className="p-2 text-foreground">-</td>
-                              <td className="p-2 text-foreground">-</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Remarks Section */}
-                  <div className="border-2 border-destructive bg-destructive/5 rounded-lg p-3">
-                    <p className="text-sm">
-                      <span className="font-semibold text-destructive">Remarks:</span>{" "}
-                      <span className="font-medium">ESL TIER 2 USE TAG NO# AS ID#!</span>
-                    </p>
-                  </div>
-
-                  {/* RECEIVED Section */}
-                  <div className="border rounded-lg">
-                    <div className="bg-muted border-b px-3 py-1">
-                      <h3 className="text-xs font-semibold text-center">RECEIVED</h3>
-                    </div>
-                    
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 p-2">
-                      {/* General Information */}
-                      <div className="space-y-1.5">
-                        <h4 className="text-xs font-medium text-muted-foreground border-b pb-0.5">General Information</h4>
-                        <div className="space-y-1.5">
-                          <div className="flex items-center gap-1.5">
-                            <Label className="text-xs whitespace-nowrap min-w-[70px]">Cal Freq:</Label>
-                            <Input type="number" value={quoteData[selectedQuote].received.calFreq} className="h-7 text-xs" readOnly />
-                          </div>
-                          <div className="flex items-center gap-1.5">
-                            <Label className="text-xs whitespace-nowrap min-w-[70px]">Location:</Label>
-                            <Select value={quoteData[selectedQuote].received.location}>
-                              <SelectTrigger className="h-7 text-xs">
+                <Accordion type="single" collapsible defaultValue="cust-quote">
+                  <AccordionItem value="cust-quote" className="border-0">
+                    <AccordionTrigger className="px-4 sm:px-6 py-3 hover:no-underline">
+                      <span className="text-sm font-semibold">Customer Quote</span>
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <CardContent className="p-4 sm:p-6 pt-0 space-y-4">
+                        {/* Customer Quote Section with integrated tables */}
+                        <div className="space-y-3">
+                          {/* Dropdown */}
+                          <div className="flex items-center gap-2">
+                            <Label className="text-sm font-medium whitespace-nowrap">Cust Quote #:</Label>
+                            <Select value={selectedQuote} onValueChange={setSelectedQuote}>
+                              <SelectTrigger className="h-9 w-40">
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent className="bg-popover border shadow-lg z-50">
-                                <SelectItem value="alexandria">Alexandria</SelectItem>
-                                <SelectItem value="baton-rouge">Baton Rouge</SelectItem>
-                                <SelectItem value="houston">Houston</SelectItem>
+                                <SelectItem value="48020">48020</SelectItem>
+                                <SelectItem value="48034">48034</SelectItem>
                               </SelectContent>
                             </Select>
                           </div>
-                          <div className="flex items-center gap-1.5">
-                            <Label className="text-xs whitespace-nowrap min-w-[70px]">Division:</Label>
-                            <Select value={quoteData[selectedQuote].received.division}>
-                              <SelectTrigger className="h-7 text-xs">
-                                <SelectValue />
-                              </SelectTrigger>
-                              <SelectContent className="bg-popover border shadow-lg z-50">
-                                <SelectItem value="lab">Lab</SelectItem>
-                                <SelectItem value="field">Field</SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </div>
-                          <div className="flex items-center gap-1.5">
-                            <Label className="text-xs whitespace-nowrap min-w-[70px]">PO #:</Label>
-                            <Input value={quoteData[selectedQuote].received.poNumber} className="h-7 text-xs" readOnly />
-                          </div>
-                        </div>
-                      </div>
 
-                      {/* Arrival Information */}
-                      <div className="space-y-1.5">
-                        <h4 className="text-xs font-medium text-muted-foreground border-b pb-0.5">Arrival Information</h4>
-                        <div className="space-y-1.5">
-                          <div className="flex items-center gap-1.5">
-                            <Label className="text-xs whitespace-nowrap min-w-[55px]">Date:</Label>
-                            <Input type="date" value={quoteData[selectedQuote].received.arrivalDate} className="h-7 text-xs" readOnly />
-                          </div>
-                          <div className="flex items-center gap-1.5">
-                            <Label className="text-xs whitespace-nowrap min-w-[55px]">Type:</Label>
-                            <Select value={quoteData[selectedQuote].received.arrivalType}>
-                              <SelectTrigger className="h-7 text-xs">
-                                <SelectValue />
-                              </SelectTrigger>
-                              <SelectContent className="bg-popover border shadow-lg z-50">
-                                <SelectItem value="onsite">Onsite</SelectItem>
-                                <SelectItem value="pickup">Pickup</SelectItem>
-                                <SelectItem value="delivery">Delivery</SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </div>
-                        </div>
-                      </div>
+                          {/* Tables Side by Side */}
+                          <div className="grid grid-cols-2 gap-3">
+                            {/* Customer Quotes Table */}
+                            <div className="border rounded-lg overflow-hidden">
+                              <table className="w-full text-xs">
+                                <thead className="bg-muted/50">
+                                  <tr>
+                                    <th className="text-left p-2 font-medium text-foreground">Customer Quotes</th>
+                                    <th className="text-left p-2 font-medium text-foreground">Type</th>
+                                  </tr>
+                                </thead>
+                                <tbody className="bg-card">
+                                  <tr className="border-t">
+                                    <td className="p-2">
+                                      <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">48020</a>
+                                    </td>
+                                    <td className="p-2 text-foreground">Regular</td>
+                                  </tr>
+                                  <tr className="border-t">
+                                    <td className="p-2">
+                                      <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">48034</a>
+                                    </td>
+                                    <td className="p-2 text-foreground">ESL Onsite</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
 
-                      {/* Override Fields */}
-                      <div className="space-y-1.5">
-                        <h4 className="text-xs font-medium text-muted-foreground border-b pb-0.5">Override Fields</h4>
-                        <div className="space-y-1.5">
-                          <div className="flex items-center gap-1.5">
-                            <Label className="text-xs whitespace-nowrap min-w-[60px]">Priority:</Label>
-                            <Select value={quoteData[selectedQuote].received.priority}>
-                              <SelectTrigger className="h-7 text-xs">
-                                <SelectValue />
-                              </SelectTrigger>
-                              <SelectContent className="bg-popover border shadow-lg z-50">
-                                <SelectItem value="normal">Normal</SelectItem>
-                                <SelectItem value="expedite">Expedite</SelectItem>
-                                <SelectItem value="rush">Rush</SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </div>
-                          <div className="flex items-center gap-1.5">
-                            <Label className="text-xs whitespace-nowrap min-w-[60px]">Need By:</Label>
-                            <Input type="date" value={quoteData[selectedQuote].received.needByDate} className="h-7 text-xs" readOnly />
+                            {/* Other WO's & Quotes Table */}
+                            <div className="border rounded-lg overflow-hidden">
+                              <table className="w-full text-xs">
+                                <thead className="bg-muted/50">
+                                  <tr>
+                                    <th colSpan={3} className="text-left p-2 font-medium text-foreground">Other WO's & Quotes</th>
+                                  </tr>
+                                  <tr className="border-t">
+                                    <th className="text-left p-2 font-medium text-muted-foreground">Open</th>
+                                    <th className="text-left p-2 font-medium text-muted-foreground">Closed</th>
+                                    <th className="text-left p-2 font-medium text-muted-foreground">Quotes</th>
+                                  </tr>
+                                </thead>
+                                <tbody className="bg-card">
+                                  <tr className="border-t">
+                                    <td className="p-2">
+                                      <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">802614</a>
+                                    </td>
+                                    <td className="p-2 text-foreground">-</td>
+                                    <td className="p-2 text-foreground">-</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                  </div>
 
-                  {/* Include Special Instructions */}
-                  <div className="flex items-start gap-2">
-                    <Checkbox id="special-instructions" />
-                    <div className="grid gap-1.5 leading-none">
-                      <label
-                        htmlFor="special-instructions"
-                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                      >
-                        Include Special Instructions
-                      </label>
-                      <p className="text-sm text-muted-foreground">
-                        Return Address: 2020 Alberta Way, Baton Rouge, LA 70822
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Items Table */}
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center">
-                      <a 
-                        href="#" 
-                        className="text-sm text-foreground font-medium hover:text-primary hover:underline"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          if (selectedQuoteItems.length === quoteData[selectedQuote].items.length) {
-                            setSelectedQuoteItems([]);
-                          } else {
-                            setSelectedQuoteItems(quoteData[selectedQuote].items.map((_, idx) => idx));
-                          }
-                        }}
-                      >
-                        {selectedQuoteItems.length === quoteData[selectedQuote].items.length ? "Deselect All" : "Select All"}
-                      </a>
-                    </div>
-                    
-                    <div className="border rounded-lg overflow-x-auto">
-                      <table className="w-full text-sm">
-                        <thead className="bg-muted">
-                          <tr>
-                            <th className="text-left p-2 font-medium">Rcv</th>
-                            <th className="text-left p-2 font-medium">Manufacturer</th>
-                            <th className="text-left p-2 font-medium">Model</th>
-                            <th className="text-left p-2 font-medium">Item Description</th>
-                            <th className="text-left p-2 font-medium">Qty</th>
-                            <th className="text-left p-2 font-medium">Prev WO #</th>
-                            <th className="text-left p-2 font-medium">WO Item</th>
-                            <th className="text-left p-2 font-medium">Serial Number</th>
-                            <th className="text-left p-2 font-medium">Cust ID</th>
-                            <th className="text-left p-2 font-medium">Cust Serial</th>
-                            <th className="text-left p-2 font-medium">Priority</th>
-                            <th className="text-left p-2 font-medium">Repair</th>
-                            <th className="text-left p-2 font-medium">17025</th>
-                          </tr>
-                        </thead>
-                        <tbody className="bg-card">
-                          {quoteData[selectedQuote].items.map((item, index) => (
-                            <tr key={index} className={`border-t ${item.highlighted ? 'bg-muted/30' : ''}`}>
-                              <td className="p-2">
-                                <Checkbox 
-                                  checked={selectedQuoteItems.includes(index)}
-                                  onCheckedChange={(checked) => {
-                                    if (checked) {
-                                      setSelectedQuoteItems([...selectedQuoteItems, index]);
-                                    } else {
-                                      setSelectedQuoteItems(selectedQuoteItems.filter(i => i !== index));
-                                    }
-                                  }}
-                                />
-                              </td>
-                              <td className="p-2 text-foreground">{item.manufacturer}</td>
-                              <td className="p-2 text-foreground">{item.model}</td>
-                              <td className="p-2 font-medium text-foreground">{item.description}</td>
-                              <td className="p-2">
-                                <Input type="number" defaultValue={item.qty} className="h-8 w-16" />
-                              </td>
-                              <td className="p-2">
-                                <Input defaultValue={item.prevWO} className="h-8 w-20" />
-                              </td>
-                              <td className="p-2">
-                                {item.woItem ? (
-                                  <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">{item.woItem}</a>
-                                ) : null}
-                              </td>
-                              <td className="p-2">
-                                <Input placeholder={item.serialNumber || "N/A"} defaultValue={item.serialNumber} className="h-8 w-24" />
-                              </td>
-                              <td className="p-2">
-                                <Input placeholder="" defaultValue={item.custId} className="h-8 w-24" />
-                              </td>
-                              <td className="p-2">
-                                <Input placeholder={item.custSerial || "N/A"} defaultValue={item.custSerial} className="h-8 w-24" />
-                              </td>
-                              <td className="p-2">
-                                <Select defaultValue={item.priority}>
-                                  <SelectTrigger className="h-8 w-24">
-                                    <SelectValue />
-                                  </SelectTrigger>
-                                  <SelectContent className="bg-popover border shadow-lg z-50">
-                                    <SelectItem value="normal">Normal</SelectItem>
-                                    <SelectItem value="expedite">Expedite</SelectItem>
-                                    <SelectItem value="rush">Rush</SelectItem>
-                                  </SelectContent>
-                                </Select>
-                              </td>
-                              <td className="p-2">
-                                <Checkbox defaultChecked={item.repair} />
-                              </td>
-                              <td className="p-2">
-                                <Checkbox defaultChecked={item.iso17025} />
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-
-                    {/* Pagination and Action Button */}
-                    <div className="flex flex-col sm:flex-row justify-between items-center gap-3">
-                      <div className="flex items-center gap-2 text-sm text-foreground">
-                        <span>Page 1 of 1 ({quoteData[selectedQuote].items.length} items)</span>
-                        <div className="flex items-center gap-1">
-                          <Button variant="outline" size="sm" className="h-7 w-7 p-0">
-                            <span>&lt;</span>
-                          </Button>
-                          <Button variant="outline" size="sm" className="h-7 w-7 p-0 bg-primary text-primary-foreground">
-                            1
-                          </Button>
-                          <Button variant="outline" size="sm" className="h-7 w-7 p-0">
-                            <span>&gt;</span>
-                          </Button>
+                        {/* Remarks Section */}
+                        <div className="border-2 border-destructive bg-destructive/5 rounded-lg p-3">
+                          <p className="text-sm">
+                            <span className="font-semibold text-destructive">Remarks:</span>{" "}
+                            <span className="font-medium">ESL TIER 2 USE TAG NO# AS ID#!</span>
+                          </p>
                         </div>
-                      </div>
-                      
-                      <div className="flex items-center gap-2">
-                        <Label className="text-sm whitespace-nowrap">Page size:</Label>
-                        <Select defaultValue="10">
-                          <SelectTrigger className="h-8 w-16">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent className="bg-background border shadow-lg z-50">
-                            <SelectItem value="5">5</SelectItem>
-                            <SelectItem value="10">10</SelectItem>
-                            <SelectItem value="20">20</SelectItem>
-                            <SelectItem value="50">50</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    </div>
 
-                    <div className="flex justify-center">
-                      <Button 
-                        className="bg-primary hover:bg-primary/90"
-                        disabled={selectedQuoteItems.length === 0}
-                        onClick={() => {
-                          const selectedItems = selectedQuoteItems.map(index => {
-                            const item = quoteData[selectedQuote].items[index];
-                            return {
-                              id: `quo-${selectedQuote}-${index}`,
-                              itemNumber: item.woItem || `NEW-${Date.now()}-${index}`,
-                              calFreq: quoteData[selectedQuote].received.calFreq,
-                              actionCode: "rc",
-                              priority: item.priority,
-                              manufacturer: item.manufacturer,
-                              model: item.model,
-                              description: item.description,
-                              mfgSerial: item.serialNumber,
-                              custId: item.custId,
-                              custSN: item.custSerial,
-                              assetNumber: "",
-                              iso17025: item.iso17025 ? "yes" : "no",
-                              estimate: "",
-                              newEquip: "no",
-                              needByDate: quoteData[selectedQuote].received.needByDate,
-                              ccCost: "",
-                              tf: "no",
-                              capableLocations: ""
-                            };
-                          });
+                        {/* RECEIVED Section */}
+                        <div className="border rounded-lg">
+                          <div className="bg-muted border-b px-3 py-1">
+                            <h3 className="text-xs font-semibold text-center">RECEIVED</h3>
+                          </div>
                           
-                          setReceivingItems([...receivingItems, ...selectedItems]);
-                          setSelectedQuoteItems([]);
+                          <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 p-2">
+                            {/* General Information */}
+                            <div className="space-y-1.5">
+                              <h4 className="text-xs font-medium text-muted-foreground border-b pb-0.5">General Information</h4>
+                              <div className="space-y-1.5">
+                                <div className="flex items-center gap-1.5">
+                                  <Label className="text-xs whitespace-nowrap min-w-[70px]">Cal Freq:</Label>
+                                  <Input type="number" value={quoteData[selectedQuote].received.calFreq} className="h-7 text-xs" readOnly />
+                                </div>
+                                <div className="flex items-center gap-1.5">
+                                  <Label className="text-xs whitespace-nowrap min-w-[70px]">Location:</Label>
+                                  <Select value={quoteData[selectedQuote].received.location}>
+                                    <SelectTrigger className="h-7 text-xs">
+                                      <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent className="bg-popover border shadow-lg z-50">
+                                      <SelectItem value="alexandria">Alexandria</SelectItem>
+                                      <SelectItem value="baton-rouge">Baton Rouge</SelectItem>
+                                      <SelectItem value="houston">Houston</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+                                <div className="flex items-center gap-1.5">
+                                  <Label className="text-xs whitespace-nowrap min-w-[70px]">Division:</Label>
+                                  <Select value={quoteData[selectedQuote].received.division}>
+                                    <SelectTrigger className="h-7 text-xs">
+                                      <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent className="bg-popover border shadow-lg z-50">
+                                      <SelectItem value="lab">Lab</SelectItem>
+                                      <SelectItem value="field">Field</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+                                <div className="flex items-center gap-1.5">
+                                  <Label className="text-xs whitespace-nowrap min-w-[70px]">PO #:</Label>
+                                  <Input value={quoteData[selectedQuote].received.poNumber} className="h-7 text-xs" readOnly />
+                                </div>
+                              </div>
+                            </div>
+
+                            {/* Arrival Information */}
+                            <div className="space-y-1.5">
+                              <h4 className="text-xs font-medium text-muted-foreground border-b pb-0.5">Arrival Information</h4>
+                              <div className="space-y-1.5">
+                                <div className="flex items-center gap-1.5">
+                                  <Label className="text-xs whitespace-nowrap min-w-[55px]">Date:</Label>
+                                  <Input type="date" value={quoteData[selectedQuote].received.arrivalDate} className="h-7 text-xs" readOnly />
+                                </div>
+                                <div className="flex items-center gap-1.5">
+                                  <Label className="text-xs whitespace-nowrap min-w-[55px]">Type:</Label>
+                                  <Select value={quoteData[selectedQuote].received.arrivalType}>
+                                    <SelectTrigger className="h-7 text-xs">
+                                      <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent className="bg-popover border shadow-lg z-50">
+                                      <SelectItem value="onsite">Onsite</SelectItem>
+                                      <SelectItem value="pickup">Pickup</SelectItem>
+                                      <SelectItem value="delivery">Delivery</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+                              </div>
+                            </div>
+
+                            {/* Override Fields */}
+                            <div className="space-y-1.5">
+                              <h4 className="text-xs font-medium text-muted-foreground border-b pb-0.5">Override Fields</h4>
+                              <div className="space-y-1.5">
+                                <div className="flex items-center gap-1.5">
+                                  <Label className="text-xs whitespace-nowrap min-w-[60px]">Priority:</Label>
+                                  <Select value={quoteData[selectedQuote].received.priority}>
+                                    <SelectTrigger className="h-7 text-xs">
+                                      <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent className="bg-popover border shadow-lg z-50">
+                                      <SelectItem value="normal">Normal</SelectItem>
+                                      <SelectItem value="expedite">Expedite</SelectItem>
+                                      <SelectItem value="rush">Rush</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+                                <div className="flex items-center gap-1.5">
+                                  <Label className="text-xs whitespace-nowrap min-w-[60px]">Need By:</Label>
+                                  <Input type="date" value={quoteData[selectedQuote].received.needByDate} className="h-7 text-xs" readOnly />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Include Special Instructions */}
+                        <div className="flex items-start gap-2">
+                          <Checkbox id="special-instructions" />
+                          <div className="grid gap-1.5 leading-none">
+                            <label
+                              htmlFor="special-instructions"
+                              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                            >
+                              Include Special Instructions
+                            </label>
+                            <p className="text-sm text-muted-foreground">
+                              Return Address: 2020 Alberta Way, Baton Rouge, LA 70822
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Items Table */}
+                        <div className="space-y-3">
+                          <div className="flex justify-between items-center">
+                            <a 
+                              href="#" 
+                              className="text-sm text-foreground font-medium hover:text-primary hover:underline"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                if (selectedQuoteItems.length === quoteData[selectedQuote].items.length) {
+                                  setSelectedQuoteItems([]);
+                                } else {
+                                  setSelectedQuoteItems(quoteData[selectedQuote].items.map((_, idx) => idx));
+                                }
+                              }}
+                            >
+                              {selectedQuoteItems.length === quoteData[selectedQuote].items.length ? "Deselect All" : "Select All"}
+                            </a>
+                          </div>
                           
-                          toast({
-                            variant: "success",
-                            title: "Items Added",
-                            description: `${selectedItems.length} item(s) added to work order`,
-                            duration: 2000,
-                          });
-                        }}
-                      >
-                        Receive and Add WO Items {selectedQuoteItems.length > 0 && `(${selectedQuoteItems.length})`}
-                      </Button>
-                    </div>
-                  </div>
-                </CardContent>
+                          <div className="border rounded-lg overflow-x-auto">
+                            <table className="w-full text-sm">
+                              <thead className="bg-muted">
+                                <tr>
+                                  <th className="text-left p-2 font-medium">Rcv</th>
+                                  <th className="text-left p-2 font-medium">Manufacturer</th>
+                                  <th className="text-left p-2 font-medium">Model</th>
+                                  <th className="text-left p-2 font-medium">Item Description</th>
+                                  <th className="text-left p-2 font-medium">Qty</th>
+                                  <th className="text-left p-2 font-medium">Prev WO #</th>
+                                  <th className="text-left p-2 font-medium">WO Item</th>
+                                  <th className="text-left p-2 font-medium">Serial Number</th>
+                                  <th className="text-left p-2 font-medium">Cust ID</th>
+                                  <th className="text-left p-2 font-medium">Cust Serial</th>
+                                  <th className="text-left p-2 font-medium">Priority</th>
+                                  <th className="text-left p-2 font-medium">Repair</th>
+                                  <th className="text-left p-2 font-medium">17025</th>
+                                </tr>
+                              </thead>
+                              <tbody className="bg-card">
+                                {quoteData[selectedQuote].items.map((item, index) => (
+                                  <tr key={index} className={`border-t ${item.highlighted ? 'bg-muted/30' : ''}`}>
+                                    <td className="p-2">
+                                      <Checkbox 
+                                        checked={selectedQuoteItems.includes(index)}
+                                        onCheckedChange={(checked) => {
+                                          if (checked) {
+                                            setSelectedQuoteItems([...selectedQuoteItems, index]);
+                                          } else {
+                                            setSelectedQuoteItems(selectedQuoteItems.filter(i => i !== index));
+                                          }
+                                        }}
+                                      />
+                                    </td>
+                                    <td className="p-2 text-foreground">{item.manufacturer}</td>
+                                    <td className="p-2 text-foreground">{item.model}</td>
+                                    <td className="p-2 font-medium text-foreground">{item.description}</td>
+                                    <td className="p-2">
+                                      <Input type="number" defaultValue={item.qty} className="h-8 w-16" />
+                                    </td>
+                                    <td className="p-2">
+                                      <Input defaultValue={item.prevWO} className="h-8 w-20" />
+                                    </td>
+                                    <td className="p-2">
+                                      {item.woItem ? (
+                                        <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">{item.woItem}</a>
+                                      ) : null}
+                                    </td>
+                                    <td className="p-2">
+                                      <Input placeholder={item.serialNumber || "N/A"} defaultValue={item.serialNumber} className="h-8 w-24" />
+                                    </td>
+                                    <td className="p-2">
+                                      <Input placeholder="" defaultValue={item.custId} className="h-8 w-24" />
+                                    </td>
+                                    <td className="p-2">
+                                      <Input placeholder={item.custSerial || "N/A"} defaultValue={item.custSerial} className="h-8 w-24" />
+                                    </td>
+                                    <td className="p-2">
+                                      <Select defaultValue={item.priority}>
+                                        <SelectTrigger className="h-8 w-24">
+                                          <SelectValue />
+                                        </SelectTrigger>
+                                        <SelectContent className="bg-popover border shadow-lg z-50">
+                                          <SelectItem value="normal">Normal</SelectItem>
+                                          <SelectItem value="expedite">Expedite</SelectItem>
+                                          <SelectItem value="rush">Rush</SelectItem>
+                                        </SelectContent>
+                                      </Select>
+                                    </td>
+                                    <td className="p-2">
+                                      <Checkbox defaultChecked={item.repair} />
+                                    </td>
+                                    <td className="p-2">
+                                      <Checkbox defaultChecked={item.iso17025} />
+                                    </td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+
+                          {/* Pagination and Action Button */}
+                          <div className="flex flex-col sm:flex-row justify-between items-center gap-3">
+                            <div className="flex items-center gap-2 text-sm text-foreground">
+                              <span>Page 1 of 1 ({quoteData[selectedQuote].items.length} items)</span>
+                              <div className="flex items-center gap-1">
+                                <Button variant="outline" size="sm" className="h-7 w-7 p-0">
+                                  <span>&lt;</span>
+                                </Button>
+                                <Button variant="outline" size="sm" className="h-7 w-7 p-0 bg-primary text-primary-foreground">
+                                  1
+                                </Button>
+                                <Button variant="outline" size="sm" className="h-7 w-7 p-0">
+                                  <span>&gt;</span>
+                                </Button>
+                              </div>
+                            </div>
+                            
+                            <div className="flex items-center gap-2">
+                              <Label className="text-sm whitespace-nowrap">Page size:</Label>
+                              <Select defaultValue="10">
+                                <SelectTrigger className="h-8 w-16">
+                                  <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent className="bg-background border shadow-lg z-50">
+                                  <SelectItem value="5">5</SelectItem>
+                                  <SelectItem value="10">10</SelectItem>
+                                  <SelectItem value="20">20</SelectItem>
+                                  <SelectItem value="50">50</SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </div>
+                          </div>
+
+                          <div className="flex justify-center">
+                            <Button 
+                              className="bg-primary hover:bg-primary/90"
+                              disabled={selectedQuoteItems.length === 0}
+                              onClick={() => {
+                                const selectedItems = selectedQuoteItems.map(index => {
+                                  const item = quoteData[selectedQuote].items[index];
+                                  return {
+                                    id: `quo-${selectedQuote}-${index}`,
+                                    itemNumber: item.woItem || `NEW-${Date.now()}-${index}`,
+                                    calFreq: quoteData[selectedQuote].received.calFreq,
+                                    actionCode: "rc",
+                                    priority: item.priority,
+                                    manufacturer: item.manufacturer,
+                                    model: item.model,
+                                    description: item.description,
+                                    mfgSerial: item.serialNumber,
+                                    custId: item.custId,
+                                    custSN: item.custSerial,
+                                    assetNumber: "",
+                                    iso17025: item.iso17025 ? "yes" : "no",
+                                    estimate: "",
+                                    newEquip: "no",
+                                    needByDate: quoteData[selectedQuote].received.needByDate,
+                                    ccCost: "",
+                                    tf: "no",
+                                    capableLocations: ""
+                                  };
+                                });
+                                
+                                setReceivingItems([...receivingItems, ...selectedItems]);
+                                setSelectedQuoteItems([]);
+                                
+                                toast({
+                                  variant: "success",
+                                  title: "Items Added",
+                                  description: `${selectedItems.length} item(s) added to work order`,
+                                  duration: 2000,
+                                });
+                              }}
+                            >
+                              Receive and Add WO Items {selectedQuoteItems.length > 0 && `(${selectedQuoteItems.length})`}
+                            </Button>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
               </Card>
               )}
             </TabsContent>
