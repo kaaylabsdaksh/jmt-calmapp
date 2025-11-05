@@ -1345,23 +1345,32 @@ const AddNewWorkOrder = () => {
                                 </tr>
                               </thead>
                               <tbody className="bg-card">
-                                {quoteData[selectedQuote].items.map((item, index) => (
-                                  <tr key={index} className={`border-t ${item.highlighted ? 'bg-muted/30' : ''}`}>
-                                    <td className="p-2">
-                                      <Checkbox 
-                                        checked={selectedQuoteItems.includes(index)}
-                                        onCheckedChange={(checked) => {
-                                          if (checked) {
-                                            setSelectedQuoteItems([...selectedQuoteItems, index]);
-                                          } else {
-                                            setSelectedQuoteItems(selectedQuoteItems.filter(i => i !== index));
-                                          }
-                                        }}
-                                      />
-                                    </td>
-                                    <td className="p-2 text-foreground">{item.manufacturer}</td>
-                                    <td className="p-2 text-foreground">{item.model}</td>
-                                    <td className="p-2 font-medium text-foreground">{item.description}</td>
+                                {quoteData[selectedQuote].items.map((item, index) => {
+                                  // Check if this item has been added to receivingItems
+                                  const itemId = `quo-${selectedQuote}-${index}`;
+                                  const isItemAdded = receivingItems.some(ri => ri.id === itemId);
+                                  
+                                  return (
+                                    <tr 
+                                      key={index} 
+                                      className={`border-t ${item.highlighted ? 'bg-muted/30' : ''} ${isItemAdded ? 'opacity-50 pointer-events-none' : ''}`}
+                                    >
+                                      <td className="p-2">
+                                        <Checkbox 
+                                          checked={selectedQuoteItems.includes(index)}
+                                          disabled={isItemAdded}
+                                          onCheckedChange={(checked) => {
+                                            if (checked) {
+                                              setSelectedQuoteItems([...selectedQuoteItems, index]);
+                                            } else {
+                                              setSelectedQuoteItems(selectedQuoteItems.filter(i => i !== index));
+                                            }
+                                          }}
+                                        />
+                                      </td>
+                                      <td className="p-2 text-foreground">{item.manufacturer}</td>
+                                      <td className="p-2 text-foreground">{item.model}</td>
+                                      <td className="p-2 font-medium text-foreground">{item.description}</td>
                                     <td className="p-2">
                                       <Input type="number" defaultValue={item.qty} className="h-8 w-16" />
                                     </td>
@@ -1394,14 +1403,15 @@ const AddNewWorkOrder = () => {
                                         </SelectContent>
                                       </Select>
                                     </td>
-                                    <td className="p-2">
-                                      <Checkbox defaultChecked={item.repair} />
-                                    </td>
-                                    <td className="p-2">
-                                      <Checkbox defaultChecked={item.iso17025} />
-                                    </td>
-                                  </tr>
-                                ))}
+                                      <td className="p-2">
+                                        <Checkbox defaultChecked={item.repair} disabled={isItemAdded} />
+                                      </td>
+                                      <td className="p-2">
+                                        <Checkbox defaultChecked={item.iso17025} disabled={isItemAdded} />
+                                      </td>
+                                    </tr>
+                                  );
+                                })}
                               </tbody>
                             </table>
                           </div>
