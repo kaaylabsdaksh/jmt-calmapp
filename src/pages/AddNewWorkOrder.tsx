@@ -1022,9 +1022,23 @@ const AddNewWorkOrder = () => {
                       <AccordionContent>
                         <CardContent className="p-4 sm:p-6 pt-0">
                           <div className="space-y-3">
-                            {/* Horizontal Tabs */}
+                            {/* Dropdown */}
+                            <div className="flex items-center gap-2">
+                              <Label className="text-sm font-medium whitespace-nowrap">Cust PO #:</Label>
+                              <Select value={selectedCustPO} onValueChange={setSelectedCustPO}>
+                                <SelectTrigger className="h-9 w-48">
+                                  <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent className="bg-popover border shadow-lg z-50">
+                                  {custPOData.map((po) => (
+                                    <SelectItem key={po.id} value={po.id}>{po.id}</SelectItem>
+                                  ))}
+                                </SelectContent>
+                              </Select>
+                            </div>
+
+                            {/* Customer Purchase Orders Tabs */}
                             <div>
-                              <Label className="text-sm font-medium mb-2 block">Cust PO #:</Label>
                               <Tabs value={selectedCustPO} onValueChange={setSelectedCustPO}>
                                 <TabsList className="w-full justify-start overflow-x-auto flex-nowrap h-auto">
                                   {custPOData.map((po) => (
@@ -1034,66 +1048,6 @@ const AddNewWorkOrder = () => {
                                   ))}
                                 </TabsList>
                               </Tabs>
-                            </div>
-
-                            {/* Customer Purchase Orders Table */}
-                            <div className="border rounded-lg overflow-hidden">
-                              <table className="w-full text-xs">
-                                <thead className="bg-muted/50">
-                                  <tr>
-                                    <th className="text-left p-2 font-medium text-foreground">Customer Purchase Orders</th>
-                                  </tr>
-                                </thead>
-                                <tbody className="bg-card">
-                                  {custPOData
-                                    .slice((custPOCurrentPage - 1) * custPOPageSize, custPOCurrentPage * custPOPageSize)
-                                    .map((po) => (
-                                      <tr key={po.id} className="border-t">
-                                        <td className="p-2">
-                                          <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">
-                                            {po.id}
-                                          </a>
-                                        </td>
-                                      </tr>
-                                    ))}
-                                </tbody>
-                              </table>
-
-                              {/* Pagination Controls */}
-                              <div className="flex items-center justify-between border-t p-2 bg-muted/20">
-                                <div className="flex items-center gap-2">
-                                  <button
-                                    onClick={() => setCustPOCurrentPage(p => Math.max(1, p - 1))}
-                                    disabled={custPOCurrentPage === 1}
-                                    className="p-1 hover:bg-muted rounded disabled:opacity-50 disabled:cursor-not-allowed"
-                                  >
-                                    <ChevronDown className="w-4 h-4 rotate-90" />
-                                  </button>
-                                  <button
-                                    onClick={() => setCustPOCurrentPage(p => Math.min(Math.ceil(custPOData.length / custPOPageSize), p + 1))}
-                                    disabled={custPOCurrentPage >= Math.ceil(custPOData.length / custPOPageSize)}
-                                    className="p-1 hover:bg-muted rounded disabled:opacity-50 disabled:cursor-not-allowed"
-                                  >
-                                    <ChevronDown className="w-4 h-4 -rotate-90" />
-                                  </button>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                  <Label className="text-xs">Page size:</Label>
-                                  <Select value={String(custPOPageSize)} onValueChange={(v) => {
-                                    setCustPOPageSize(Number(v));
-                                    setCustPOCurrentPage(1);
-                                  }}>
-                                    <SelectTrigger className="h-7 w-16 text-xs">
-                                      <SelectValue />
-                                    </SelectTrigger>
-                                    <SelectContent className="bg-popover border shadow-lg z-50">
-                                      <SelectItem value="5">5</SelectItem>
-                                      <SelectItem value="10">10</SelectItem>
-                                      <SelectItem value="20">20</SelectItem>
-                                    </SelectContent>
-                                  </Select>
-                                </div>
-                              </div>
                             </div>
                           </div>
                         </CardContent>
