@@ -83,7 +83,11 @@ const mockData: WorkOrderItem[] = [
   },
 ];
 
-export const WorkOrderItemsTable = () => {
+interface WorkOrderItemsTableProps {
+  selectedPoNumber?: string;
+}
+
+export const WorkOrderItemsTable = ({ selectedPoNumber }: WorkOrderItemsTableProps) => {
   return (
     <div className="border rounded-lg overflow-hidden">
       <div className="flex justify-end p-2 bg-muted/20 border-b">
@@ -126,7 +130,7 @@ export const WorkOrderItemsTable = () => {
               <td className="p-3">{item.itemStatus}</td>
               <td className="p-3">{item.itemType}</td>
               <td className="p-3">{item.deliverByDate}</td>
-              <td className="p-3">{item.poNumber}</td>
+              <td className="p-3">{selectedPoNumber || item.poNumber}</td>
               <td className="p-3">
                 <Button variant="link" className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto">
                   {index === 0 ? 'Clear' : 'View'}

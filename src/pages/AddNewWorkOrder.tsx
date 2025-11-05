@@ -3051,7 +3051,7 @@ const AddNewWorkOrder = () => {
                         onSelectedItemsIdsChange={setSelectedItemIds}
                       />
                     ) : viewMode === 'table' ? (
-                      <WorkOrderItemsTable />
+                      <WorkOrderItemsTable selectedPoNumber={selectedCustPO} />
                     ) : (
                       <WorkOrderItemsCards templateItems={receivingItems} />
                     )}
