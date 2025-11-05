@@ -1039,15 +1039,22 @@ const AddNewWorkOrder = () => {
 
                             {/* Customer Purchase Orders Tabs */}
                             <div>
-                              <Tabs value={selectedCustPO} onValueChange={setSelectedCustPO}>
-                                <TabsList className="w-full justify-start overflow-x-auto flex-nowrap h-auto">
-                                  {custPOData.map((po) => (
-                                    <TabsTrigger key={po.id} value={po.id} className="px-4">
-                                      {po.id}
-                                    </TabsTrigger>
-                                  ))}
-                                </TabsList>
-                              </Tabs>
+                              <div className="flex gap-2 overflow-x-auto pb-2">
+                                {custPOData.map((po) => (
+                                  <a
+                                    key={po.id}
+                                    href="#"
+                                    className="text-primary hover:underline font-medium whitespace-nowrap px-3 py-1.5 text-sm"
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      // Add hyperlink functionality here
+                                      console.log('Clicked PO:', po.id);
+                                    }}
+                                  >
+                                    {po.id}
+                                  </a>
+                                ))}
+                              </div>
                             </div>
                           </div>
                         </CardContent>
