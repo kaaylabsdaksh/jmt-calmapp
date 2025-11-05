@@ -1215,7 +1215,7 @@ const AddNewWorkOrder = () => {
                         </thead>
                         <tbody className="bg-card">
                           {quoteData[selectedQuote].items.map((item, index) => (
-                            <tr key={index} className={`border-t ${item.highlighted ? 'bg-cyan-50 dark:bg-cyan-950/20' : ''}`}>
+                            <tr key={index} className={`border-t ${item.highlighted ? 'bg-muted/30' : ''}`}>
                               <td className="p-2">
                                 <Checkbox />
                               </td>
