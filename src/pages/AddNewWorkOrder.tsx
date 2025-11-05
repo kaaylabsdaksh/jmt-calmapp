@@ -1787,10 +1787,10 @@ const AddNewWorkOrder = () => {
                       </div>
                      ) : (
                        <div className="flex gap-2 sm:gap-3 flex-nowrap overflow-x-auto">
-                        <Button
-                          onClick={() => navigate("/form-variations")}
-                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm flex-1 min-w-fit"
-                        >
+                         <Button
+                           onClick={() => navigate("/form-variations")}
+                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm flex-1 min-w-fit"
+                         >
                           <Plus className="w-3 h-3 sm:w-4 sm:h-4" />
                           <span>Add New Item</span>
                         </Button>
