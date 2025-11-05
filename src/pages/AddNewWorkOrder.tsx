@@ -102,6 +102,23 @@ const AddNewWorkOrder = () => {
   const [selectedQuote, setSelectedQuote] = useState("48020");
   const [selectedQuoteItems, setSelectedQuoteItems] = useState<number[]>([]);
   
+  // Customer PO Selection
+  const [selectedCustPO, setSelectedCustPO] = useState("4510114092");
+  const [custPOPageSize, setCustPOPageSize] = useState(5);
+  const [custPOCurrentPage, setCustPOCurrentPage] = useState(1);
+  
+  // Mock data for Customer Purchase Orders
+  const custPOData = [
+    { id: "4510114092", date: "2024-01-15" },
+    { id: "4510114093", date: "2024-01-16" },
+    { id: "4510114094", date: "2024-01-17" },
+    { id: "4510114095", date: "2024-01-18" },
+    { id: "4510114096", date: "2024-01-19" },
+    { id: "4510114097", date: "2024-01-20" },
+    { id: "4510114098", date: "2024-01-21" },
+    { id: "4510114099", date: "2024-01-22" },
+  ];
+  
   // Mock data for different customer quotes
   const quoteData = {
     "48020": {
@@ -992,6 +1009,90 @@ const AddNewWorkOrder = () => {
                   </div>
                 </CardContent>
               </Card>
+
+              {/* Customer PO Card - Only show after account is saved */}
+              {isSaved && workOrderData.accountNumber && (
+                <Card>
+                  <CardContent className="p-4 sm:p-6">
+                    <div className="space-y-3">
+                      {/* Dropdown */}
+                      <div className="flex items-center gap-2">
+                        <Label className="text-sm font-medium whitespace-nowrap">Cust PO #:</Label>
+                        <Select value={selectedCustPO} onValueChange={setSelectedCustPO}>
+                          <SelectTrigger className="h-9 w-48">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent className="bg-popover border shadow-lg z-50">
+                            {custPOData.map((po) => (
+                              <SelectItem key={po.id} value={po.id}>{po.id}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      {/* Customer Purchase Orders Table */}
+                      <div className="border rounded-lg overflow-hidden">
+                        <table className="w-full text-xs">
+                          <thead className="bg-muted/50">
+                            <tr>
+                              <th className="text-left p-2 font-medium text-foreground">Customer Purchase Orders</th>
+                            </tr>
+                          </thead>
+                          <tbody className="bg-card">
+                            {custPOData
+                              .slice((custPOCurrentPage - 1) * custPOPageSize, custPOCurrentPage * custPOPageSize)
+                              .map((po) => (
+                                <tr key={po.id} className="border-t">
+                                  <td className="p-2">
+                                    <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">
+                                      {po.id}
+                                    </a>
+                                  </td>
+                                </tr>
+                              ))}
+                          </tbody>
+                        </table>
+
+                        {/* Pagination Controls */}
+                        <div className="flex items-center justify-between border-t p-2 bg-muted/20">
+                          <div className="flex items-center gap-2">
+                            <button
+                              onClick={() => setCustPOCurrentPage(p => Math.max(1, p - 1))}
+                              disabled={custPOCurrentPage === 1}
+                              className="p-1 hover:bg-muted rounded disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                              <ChevronDown className="w-4 h-4 rotate-90" />
+                            </button>
+                            <button
+                              onClick={() => setCustPOCurrentPage(p => Math.min(Math.ceil(custPOData.length / custPOPageSize), p + 1))}
+                              disabled={custPOCurrentPage >= Math.ceil(custPOData.length / custPOPageSize)}
+                              className="p-1 hover:bg-muted rounded disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                              <ChevronDown className="w-4 h-4 -rotate-90" />
+                            </button>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Label className="text-xs">Page size:</Label>
+                            <Select value={String(custPOPageSize)} onValueChange={(v) => {
+                              setCustPOPageSize(Number(v));
+                              setCustPOCurrentPage(1);
+                            }}>
+                              <SelectTrigger className="h-7 w-16 text-xs">
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent className="bg-popover border shadow-lg z-50">
+                                <SelectItem value="5">5</SelectItem>
+                                <SelectItem value="10">10</SelectItem>
+                                <SelectItem value="20">20</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
 
               {/* RECEIVED Section - Only show after account is saved */}
               {isSaved && workOrderData.accountNumber && (
