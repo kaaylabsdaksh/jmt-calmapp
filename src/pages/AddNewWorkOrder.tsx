@@ -1022,19 +1022,18 @@ const AddNewWorkOrder = () => {
                       <AccordionContent>
                         <CardContent className="p-4 sm:p-6 pt-0">
                           <div className="space-y-3">
-                            {/* Dropdown */}
-                            <div className="flex items-center gap-2">
-                              <Label className="text-sm font-medium whitespace-nowrap">Cust PO #:</Label>
-                              <Select value={selectedCustPO} onValueChange={setSelectedCustPO}>
-                                <SelectTrigger className="h-9 w-48">
-                                  <SelectValue />
-                                </SelectTrigger>
-                                <SelectContent className="bg-popover border shadow-lg z-50">
+                            {/* Horizontal Tabs */}
+                            <div>
+                              <Label className="text-sm font-medium mb-2 block">Cust PO #:</Label>
+                              <Tabs value={selectedCustPO} onValueChange={setSelectedCustPO}>
+                                <TabsList className="w-full justify-start overflow-x-auto flex-nowrap h-auto">
                                   {custPOData.map((po) => (
-                                    <SelectItem key={po.id} value={po.id}>{po.id}</SelectItem>
+                                    <TabsTrigger key={po.id} value={po.id} className="px-4">
+                                      {po.id}
+                                    </TabsTrigger>
                                   ))}
-                                </SelectContent>
-                              </Select>
+                                </TabsList>
+                              </Tabs>
                             </div>
 
                             {/* Customer Purchase Orders Table */}
