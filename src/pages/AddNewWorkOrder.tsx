@@ -870,11 +870,8 @@ const AddNewWorkOrder = () => {
                           onChange={handleAccountNumberChange}
                           onKeyDown={handleKeyDown}
                           maxLength={7}
-                          className={`h-9 sm:h-10 ${!workOrderData.accountNumber ? "border-destructive" : ""}`}
+                          className="h-9 sm:h-10"
                         />
-                        {!workOrderData.accountNumber && (
-                          <div className="absolute right-3 top-1/2 -translate-y-1/2 w-2 h-2 bg-destructive rounded-full"></div>
-                        )}
                         
                         {/* Suggestions Dropdown */}
                         {showSuggestions && accountSuggestions.length > 0 && (
