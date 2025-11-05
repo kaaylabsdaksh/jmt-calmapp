@@ -1011,47 +1011,6 @@ const AddNewWorkOrder = () => {
               {/* Customer PO and Quote Section - Side by Side */}
               {isSaved && workOrderData.accountNumber && (
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                  {/* Customer Purchase Orders */}
-                  <Card className="border">
-                    <CardHeader className="p-3 border-b bg-muted/30">
-                      <h3 className="text-sm font-semibold">Customer Purchase Orders</h3>
-                    </CardHeader>
-                    <CardContent className="p-3 space-y-3">
-                      {/* Dropdown */}
-                      <div className="flex items-center gap-2">
-                        <Label className="text-sm font-medium whitespace-nowrap">Cust PO #:</Label>
-                        <Select value={selectedCustPO} onValueChange={setSelectedCustPO}>
-                          <SelectTrigger className="h-8 w-32 text-sm">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent className="bg-popover border shadow-lg z-50">
-                            {custPOData.map((po) => (
-                              <SelectItem key={po.id} value={po.id}>
-                                {po.id}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      {/* PO List */}
-                      <div className="border rounded">
-                        <div className="bg-muted/30 p-2 border-b">
-                          <p className="text-xs font-medium">Customer Purchase Orders</p>
-                        </div>
-                        <div className="bg-card">
-                          {custPOData.slice(0, 5).map((po) => (
-                            <div key={po.id} className="border-b last:border-b-0 p-2">
-                              <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline text-sm font-medium">
-                                {po.id}
-                              </a>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-
                   {/* Customer Quote */}
                   <Card className="border">
                     <Accordion type="single" collapsible defaultValue="cust-quote">
@@ -1140,6 +1099,47 @@ const AddNewWorkOrder = () => {
                         </AccordionContent>
                       </AccordionItem>
                     </Accordion>
+                  </Card>
+
+                  {/* Customer Purchase Orders */}
+                  <Card className="border">
+                    <CardHeader className="p-3 border-b bg-muted/30">
+                      <h3 className="text-sm font-semibold">Customer Purchase Orders</h3>
+                    </CardHeader>
+                    <CardContent className="p-3 space-y-3">
+                      {/* Dropdown */}
+                      <div className="flex items-center gap-2">
+                        <Label className="text-sm font-medium whitespace-nowrap">Cust PO #:</Label>
+                        <Select value={selectedCustPO} onValueChange={setSelectedCustPO}>
+                          <SelectTrigger className="h-8 w-32 text-sm">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent className="bg-popover border shadow-lg z-50">
+                            {custPOData.map((po) => (
+                              <SelectItem key={po.id} value={po.id}>
+                                {po.id}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      {/* PO List */}
+                      <div className="border rounded">
+                        <div className="bg-muted/30 p-2 border-b">
+                          <p className="text-xs font-medium">Customer Purchase Orders</p>
+                        </div>
+                        <div className="bg-card">
+                          {custPOData.slice(0, 5).map((po) => (
+                            <div key={po.id} className="border-b last:border-b-0 p-2">
+                              <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline text-sm font-medium">
+                                {po.id}
+                              </a>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </CardContent>
                   </Card>
                 </div>
               )}
