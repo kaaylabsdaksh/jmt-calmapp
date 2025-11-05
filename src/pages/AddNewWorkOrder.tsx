@@ -1825,28 +1825,25 @@ const AddNewWorkOrder = () => {
                           <span className="sm:hidden">Action</span>
                         </Button>
                       </div>
-                    ) : (
-                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-2 sm:gap-3">
+                     ) : (
+                       <div className="flex gap-2 sm:gap-3 flex-wrap">
                         <Button 
                           onClick={() => navigate("/form-variations")}
-                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
+                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm flex-1 min-w-fit"
                         >
                           <Plus className="w-3 h-3 sm:w-4 sm:h-4" />
-                          <span className="hidden sm:inline">Add New Item</span>
-                          <span className="sm:hidden">Add Item</span>
+                          <span>Add New Item</span>
                         </Button>
                         <Button 
                           onClick={() => setIsRFIDDialogOpen(true)}
-                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
+                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm flex-1 min-w-fit"
                         >
                           <PlusCircle className="w-3 h-3 sm:w-4 sm:h-4" />
-                          <span className="hidden sm:inline">Add New Item w/RFID</span>
-                          <span className="sm:hidden">Add w/RFID</span>
+                          <span>Add New Item w/RFID</span>
                         </Button>
-                        <Button className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm">
+                        <Button className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm flex-1 min-w-fit">
                           <QrCode className="w-3 h-3 sm:w-4 sm:h-4" />
-                          <span className="hidden sm:inline">Print QR Sheet</span>
-                          <span className="sm:hidden">QR Sheet</span>
+                          <span>Print QR Sheet</span>
                         </Button>
                         <Button
                           onClick={() => {
@@ -1858,11 +1855,10 @@ const AddNewWorkOrder = () => {
                               setTimeout(() => document.getElementById('create-unused-items-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
                             }
                           }}
-                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
+                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm flex-1 min-w-fit"
                         >
                           <PackagePlus className="w-3 h-3 sm:w-4 sm:h-4" />
-                          <span className="hidden sm:inline">Create Unused Items</span>
-                          <span className="sm:hidden">Unused Items</span>
+                          <span>Create Unused Items</span>
                         </Button>
                         <Button 
                           onClick={() => {
@@ -1874,11 +1870,10 @@ const AddNewWorkOrder = () => {
                               setTimeout(() => document.getElementById('copy-from-other-wo')?.scrollIntoView({ behavior: 'smooth' }), 100);
                             }
                           }}
-                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
+                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm flex-1 min-w-fit"
                         >
                           <Copy className="w-3 h-3 sm:w-4 sm:h-4" />
-                          <span className="hidden sm:inline">Copy From Other Work Order</span>
-                          <span className="sm:hidden">Copy WO</span>
+                          <span>Copy From Other Work Order</span>
                         </Button>
                         <Button 
                           onClick={() => {
@@ -1890,11 +1885,10 @@ const AddNewWorkOrder = () => {
                               setTimeout(() => document.getElementById('special-action-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
                             }
                           }}
-                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
+                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm flex-1 min-w-fit"
                         >
                           <Wand2 className="w-3 h-3 sm:w-4 sm:h-4" />
-                          <span className="hidden sm:inline">Special Action</span>
-                          <span className="sm:hidden">Action</span>
+                          <span>Special Action</span>
                         </Button>
                       </div>
                     )}
