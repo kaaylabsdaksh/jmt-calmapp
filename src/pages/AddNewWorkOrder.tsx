@@ -1044,7 +1044,7 @@ const AddNewWorkOrder = () => {
                                   <a
                                     key={po.id}
                                     href="#"
-                                    className="text-primary hover:underline font-medium whitespace-nowrap px-3 py-1.5 text-sm"
+                                    className="text-blue-600 dark:text-blue-400 hover:underline font-medium whitespace-nowrap px-3 py-1.5 text-sm"
                                     onClick={(e) => {
                                       e.preventDefault();
                                       // Add hyperlink functionality here
