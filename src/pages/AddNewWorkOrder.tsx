@@ -1011,11 +1011,9 @@ const AddNewWorkOrder = () => {
                 </CardContent>
               </Card>
 
-              {/* Customer PO and Customer Quote Cards Side by Side - Only show after account is saved */}
+              {/* Customer PO Card - Only show after account is saved */}
               {isSaved && workOrderData.accountNumber && (
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-                  {/* Customer PO Card */}
-                  <Card>
+                <Card>
                   <Accordion type="single" collapsible defaultValue="cust-po">
                     <AccordionItem value="cust-po" className="border-0">
                       <AccordionTrigger className="px-4 sm:px-6 py-3 hover:no-underline">
@@ -1103,10 +1101,12 @@ const AddNewWorkOrder = () => {
                       </AccordionContent>
                     </AccordionItem>
                   </Accordion>
-                  </Card>
+                </Card>
+              )}
 
-                  {/* Customer Quote Card */}
-                  <Card>
+              {/* RECEIVED Section - Only show after account is saved */}
+              {isSaved && workOrderData.accountNumber && (
+              <Card>
                 <Accordion type="single" collapsible defaultValue="cust-quote">
                   <AccordionItem value="cust-quote" className="border-0">
                     <AccordionTrigger className="px-4 sm:px-6 py-3 hover:no-underline">
@@ -1488,8 +1488,7 @@ const AddNewWorkOrder = () => {
                     </AccordionContent>
                   </AccordionItem>
                 </Accordion>
-                  </Card>
-                </div>
+              </Card>
               )}
             </TabsContent>
 
