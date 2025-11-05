@@ -90,12 +90,6 @@ interface WorkOrderItemsTableProps {
 export const WorkOrderItemsTable = ({ selectedPoNumber }: WorkOrderItemsTableProps) => {
   return (
     <div className="border rounded-lg overflow-hidden">
-      <div className="flex justify-end p-2 bg-muted/20 border-b">
-        <Button variant="link" className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto">
-          Clear
-        </Button>
-      </div>
-      
       <table className="w-full text-sm">
         <thead className="bg-muted">
           <tr>
@@ -133,7 +127,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber }: WorkOrderItemsTablePro
               <td className="p-3">{selectedPoNumber || item.poNumber}</td>
               <td className="p-3">
                 <Button variant="link" className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto">
-                  {index === 0 ? 'Clear' : 'View'}
+                  View
                 </Button>
               </td>
             </tr>
