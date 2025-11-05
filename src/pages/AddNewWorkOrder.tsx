@@ -100,6 +100,7 @@ const AddNewWorkOrder = () => {
   
   // Customer Quote Selection
   const [selectedQuote, setSelectedQuote] = useState("48020");
+  const [selectedQuoteItems, setSelectedQuoteItems] = useState<number[]>([]);
   
   // Mock data for different customer quotes
   const quoteData = {
@@ -1191,7 +1192,20 @@ const AddNewWorkOrder = () => {
                   {/* Items Table */}
                   <div className="space-y-3">
                     <div className="flex justify-between items-center">
-                      <a href="#" className="text-sm text-foreground font-medium hover:text-primary hover:underline">Select All</a>
+                      <a 
+                        href="#" 
+                        className="text-sm text-foreground font-medium hover:text-primary hover:underline"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          if (selectedQuoteItems.length === quoteData[selectedQuote].items.length) {
+                            setSelectedQuoteItems([]);
+                          } else {
+                            setSelectedQuoteItems(quoteData[selectedQuote].items.map((_, idx) => idx));
+                          }
+                        }}
+                      >
+                        {selectedQuoteItems.length === quoteData[selectedQuote].items.length ? "Deselect All" : "Select All"}
+                      </a>
                     </div>
                     
                     <div className="border rounded-lg overflow-x-auto">
@@ -1217,7 +1231,16 @@ const AddNewWorkOrder = () => {
                           {quoteData[selectedQuote].items.map((item, index) => (
                             <tr key={index} className={`border-t ${item.highlighted ? 'bg-muted/30' : ''}`}>
                               <td className="p-2">
-                                <Checkbox />
+                                <Checkbox 
+                                  checked={selectedQuoteItems.includes(index)}
+                                  onCheckedChange={(checked) => {
+                                    if (checked) {
+                                      setSelectedQuoteItems([...selectedQuoteItems, index]);
+                                    } else {
+                                      setSelectedQuoteItems(selectedQuoteItems.filter(i => i !== index));
+                                    }
+                                  }}
+                                />
                               </td>
                               <td className="p-2 text-foreground">{item.manufacturer}</td>
                               <td className="p-2 text-foreground">{item.model}</td>
@@ -1300,8 +1323,47 @@ const AddNewWorkOrder = () => {
                     </div>
 
                     <div className="flex justify-center">
-                      <Button className="bg-primary hover:bg-primary/90">
-                        Receive and Add WO Items
+                      <Button 
+                        className="bg-primary hover:bg-primary/90"
+                        disabled={selectedQuoteItems.length === 0}
+                        onClick={() => {
+                          const selectedItems = selectedQuoteItems.map(index => {
+                            const item = quoteData[selectedQuote].items[index];
+                            return {
+                              id: `quo-${selectedQuote}-${index}`,
+                              itemNumber: item.woItem || `NEW-${Date.now()}-${index}`,
+                              calFreq: quoteData[selectedQuote].received.calFreq,
+                              actionCode: "rc",
+                              priority: item.priority,
+                              manufacturer: item.manufacturer,
+                              model: item.model,
+                              description: item.description,
+                              mfgSerial: item.serialNumber,
+                              custId: item.custId,
+                              custSN: item.custSerial,
+                              assetNumber: "",
+                              iso17025: item.iso17025 ? "yes" : "no",
+                              estimate: "",
+                              newEquip: "no",
+                              needByDate: quoteData[selectedQuote].received.needByDate,
+                              ccCost: "",
+                              tf: "no",
+                              capableLocations: ""
+                            };
+                          });
+                          
+                          setReceivingItems([...receivingItems, ...selectedItems]);
+                          setSelectedQuoteItems([]);
+                          
+                          toast({
+                            variant: "success",
+                            title: "Items Added",
+                            description: `${selectedItems.length} item(s) added to work order`,
+                            duration: 2000,
+                          });
+                        }}
+                      >
+                        Receive and Add WO Items {selectedQuoteItems.length > 0 && `(${selectedQuoteItems.length})`}
                       </Button>
                     </div>
                   </div>
