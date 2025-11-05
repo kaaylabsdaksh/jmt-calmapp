@@ -1353,7 +1353,7 @@ const AddNewWorkOrder = () => {
                                   return (
                                     <tr 
                                       key={index} 
-                                      className={`border-t ${item.highlighted ? 'bg-muted/30' : ''} ${isItemAdded ? 'opacity-50 pointer-events-none' : ''}`}
+                                      className={`border-t ${item.highlighted ? 'bg-muted/30' : ''} ${isItemAdded ? 'opacity-50' : ''}`}
                                     >
                                       <td className="p-2">
                                         <Checkbox 
