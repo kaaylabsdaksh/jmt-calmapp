@@ -1788,6 +1788,22 @@ const AddNewWorkOrder = () => {
                      ) : (
                        <div className="flex gap-2 sm:gap-3 flex-wrap">
                         <Button 
+                          onClick={() => {
+                            const newState = !isQuickAddExpanded;
+                            setIsQuickAddExpanded(newState);
+                            if (newState) {
+                              setIsCopyFromWOExpanded(false);
+                              setIsSpecialActionExpanded(false);
+                              setIsCreateUnusedItemsExpanded(false);
+                              setTimeout(() => document.getElementById('quick-add-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
+                            }
+                          }}
+                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm flex-1 min-w-fit"
+                        >
+                          <Plus className="w-3 h-3 sm:w-4 sm:h-4" />
+                          <span>Quick Add Items</span>
+                        </Button>
+                        <Button 
                           onClick={() => navigate("/form-variations")}
                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm flex-1 min-w-fit"
                         >
@@ -1812,6 +1828,7 @@ const AddNewWorkOrder = () => {
                             if (newState) {
                               setIsCopyFromWOExpanded(false);
                               setIsSpecialActionExpanded(false);
+                              setIsQuickAddExpanded(false);
                               setTimeout(() => document.getElementById('create-unused-items-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
                             }
                           }}
@@ -1827,6 +1844,7 @@ const AddNewWorkOrder = () => {
                             if (newState) {
                               setIsSpecialActionExpanded(false);
                               setIsCreateUnusedItemsExpanded(false);
+                              setIsQuickAddExpanded(false);
                               setTimeout(() => document.getElementById('copy-from-other-wo')?.scrollIntoView({ behavior: 'smooth' }), 100);
                             }
                           }}
@@ -1842,6 +1860,7 @@ const AddNewWorkOrder = () => {
                             if (newState) {
                               setIsCopyFromWOExpanded(false);
                               setIsCreateUnusedItemsExpanded(false);
+                              setIsQuickAddExpanded(false);
                               setTimeout(() => document.getElementById('special-action-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
                             }
                           }}
