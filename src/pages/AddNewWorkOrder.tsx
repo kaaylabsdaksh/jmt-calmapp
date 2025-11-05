@@ -1274,7 +1274,7 @@ const AddNewWorkOrder = () => {
                           <Button variant="outline" size="sm" className="h-7 w-7 p-0">
                             <span>&lt;</span>
                           </Button>
-                          <Button variant="outline" size="sm" className="h-7 w-7 p-0 bg-warning text-warning-foreground">
+                          <Button variant="outline" size="sm" className="h-7 w-7 p-0 bg-primary text-primary-foreground">
                             1
                           </Button>
                           <Button variant="outline" size="sm" className="h-7 w-7 p-0">
