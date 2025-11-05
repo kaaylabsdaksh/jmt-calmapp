@@ -870,8 +870,11 @@ const AddNewWorkOrder = () => {
                           onChange={handleAccountNumberChange}
                           onKeyDown={handleKeyDown}
                           maxLength={7}
-                          className="h-9 sm:h-10"
+                          className={`h-9 sm:h-10 ${!workOrderData.accountNumber ? "border-destructive" : ""}`}
                         />
+                        {!workOrderData.accountNumber && (
+                          <div className="absolute right-3 top-1/2 -translate-y-1/2 w-2 h-2 bg-destructive rounded-full"></div>
+                        )}
                         
                         {/* Suggestions Dropdown */}
                         {showSuggestions && accountSuggestions.length > 0 && (
@@ -1008,151 +1011,193 @@ const AddNewWorkOrder = () => {
                 </CardContent>
               </Card>
 
-              {/* Customer PO and Quote Section - Side by Side */}
+              {/* Customer PO Card - Only show after account is saved */}
               {isSaved && workOrderData.accountNumber && (
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                  {/* Customer Quote */}
-                  <Card className="border">
-                    <Accordion type="single" collapsible defaultValue="cust-quote">
-                      <AccordionItem value="cust-quote" className="border-0">
-                        <AccordionTrigger className="px-3 py-2 hover:no-underline border-b bg-muted/30">
-                          <span className="text-sm font-semibold">Customer Quote</span>
-                        </AccordionTrigger>
-                        <AccordionContent>
-                          <CardContent className="p-3 space-y-3">
+                <Card>
+                  <Accordion type="single" collapsible defaultValue="cust-po">
+                    <AccordionItem value="cust-po" className="border-0">
+                      <AccordionTrigger className="px-4 sm:px-6 py-3 hover:no-underline">
+                        <span className="text-sm font-semibold">Customer Purchase Orders</span>
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <CardContent className="p-4 sm:p-6 pt-0">
+                          <div className="space-y-3">
                             {/* Dropdown */}
                             <div className="flex items-center gap-2">
-                              <Label className="text-sm font-medium whitespace-nowrap">Cust Quote #:</Label>
-                              <Select value={selectedQuote} onValueChange={setSelectedQuote}>
-                                <SelectTrigger className="h-8 w-32 text-sm">
+                              <Label className="text-sm font-medium whitespace-nowrap">Cust PO #:</Label>
+                              <Select value={selectedCustPO} onValueChange={setSelectedCustPO}>
+                                <SelectTrigger className="h-9 w-48">
                                   <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent className="bg-popover border shadow-lg z-50">
-                                  <SelectItem value="48020">48020</SelectItem>
-                                  <SelectItem value="48034">48034</SelectItem>
+                                  {custPOData.map((po) => (
+                                    <SelectItem key={po.id} value={po.id}>{po.id}</SelectItem>
+                                  ))}
                                 </SelectContent>
                               </Select>
                             </div>
 
-                            {/* Tables */}
-                            <div className="space-y-3">
-                              {/* Customer Quotes Table */}
-                              <div className="border rounded overflow-hidden">
-                                <table className="w-full text-sm">
-                                  <thead className="bg-muted/30">
-                                    <tr>
-                                      <th className="text-left p-2 font-medium">Customer Quotes</th>
-                                      <th className="text-left p-2 font-medium">Type</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody className="bg-card">
-                                    <tr className="border-t">
-                                      <td className="p-2">
-                                        <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">48020</a>
-                                      </td>
-                                      <td className="p-2">Regular</td>
-                                    </tr>
-                                    <tr className="border-t">
-                                      <td className="p-2">
-                                        <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">48034</a>
-                                      </td>
-                                      <td className="p-2">ESL Onsite</td>
-                                    </tr>
-                                  </tbody>
-                                </table>
+                            {/* Customer Purchase Orders Table */}
+                            <div className="border rounded-lg overflow-hidden">
+                              <table className="w-full text-xs">
+                                <thead className="bg-muted/50">
+                                  <tr>
+                                    <th className="text-left p-2 font-medium text-foreground">Customer Purchase Orders</th>
+                                  </tr>
+                                </thead>
+                                <tbody className="bg-card">
+                                  {custPOData
+                                    .slice((custPOCurrentPage - 1) * custPOPageSize, custPOCurrentPage * custPOPageSize)
+                                    .map((po) => (
+                                      <tr key={po.id} className="border-t">
+                                        <td className="p-2">
+                                          <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">
+                                            {po.id}
+                                          </a>
+                                        </td>
+                                      </tr>
+                                    ))}
+                                </tbody>
+                              </table>
+
+                              {/* Pagination Controls */}
+                              <div className="flex items-center justify-between border-t p-2 bg-muted/20">
+                                <div className="flex items-center gap-2">
+                                  <button
+                                    onClick={() => setCustPOCurrentPage(p => Math.max(1, p - 1))}
+                                    disabled={custPOCurrentPage === 1}
+                                    className="p-1 hover:bg-muted rounded disabled:opacity-50 disabled:cursor-not-allowed"
+                                  >
+                                    <ChevronDown className="w-4 h-4 rotate-90" />
+                                  </button>
+                                  <button
+                                    onClick={() => setCustPOCurrentPage(p => Math.min(Math.ceil(custPOData.length / custPOPageSize), p + 1))}
+                                    disabled={custPOCurrentPage >= Math.ceil(custPOData.length / custPOPageSize)}
+                                    className="p-1 hover:bg-muted rounded disabled:opacity-50 disabled:cursor-not-allowed"
+                                  >
+                                    <ChevronDown className="w-4 h-4 -rotate-90" />
+                                  </button>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <Label className="text-xs">Page size:</Label>
+                                  <Select value={String(custPOPageSize)} onValueChange={(v) => {
+                                    setCustPOPageSize(Number(v));
+                                    setCustPOCurrentPage(1);
+                                  }}>
+                                    <SelectTrigger className="h-7 w-16 text-xs">
+                                      <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent className="bg-popover border shadow-lg z-50">
+                                      <SelectItem value="5">5</SelectItem>
+                                      <SelectItem value="10">10</SelectItem>
+                                      <SelectItem value="20">20</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </div>
                               </div>
-
-                              {/* Other WO's & Quotes Table */}
-                              <div className="border rounded overflow-hidden">
-                                <table className="w-full text-sm">
-                                  <thead className="bg-muted/30">
-                                    <tr>
-                                      <th colSpan={3} className="text-left p-2 font-medium">Other WO's & Quotes</th>
-                                    </tr>
-                                    <tr className="border-t bg-muted/20">
-                                      <th className="text-left p-2 text-xs font-medium text-muted-foreground">Open</th>
-                                      <th className="text-left p-2 text-xs font-medium text-muted-foreground">Closed</th>
-                                      <th className="text-left p-2 text-xs font-medium text-muted-foreground">Quotes</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody className="bg-card">
-                                    <tr className="border-t">
-                                      <td className="p-2">
-                                        <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">802614</a>
-                                      </td>
-                                      <td className="p-2 text-center">-</td>
-                                      <td className="p-2 text-center">-</td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </div>
                             </div>
-
-                            {/* Remarks Section */}
-                            <div className="border-2 border-destructive bg-destructive/5 rounded p-2">
-                              <p className="text-sm">
-                                <span className="font-semibold text-destructive">Remarks:</span>{" "}
-                                <span className="font-medium">ESL TIER 2 USE TAG NO# AS ID#!</span>
-                              </p>
-                            </div>
-                          </CardContent>
-                        </AccordionContent>
-                      </AccordionItem>
-                    </Accordion>
-                  </Card>
-
-                  {/* Customer Purchase Orders */}
-                  <Card className="border">
-                    <CardHeader className="p-3 border-b bg-muted/30">
-                      <h3 className="text-sm font-semibold">Customer Purchase Orders</h3>
-                    </CardHeader>
-                    <CardContent className="p-3 space-y-3">
-                      {/* Dropdown */}
-                      <div className="flex items-center gap-2">
-                        <Label className="text-sm font-medium whitespace-nowrap">Cust PO #:</Label>
-                        <Select value={selectedCustPO} onValueChange={setSelectedCustPO}>
-                          <SelectTrigger className="h-8 w-32 text-sm">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent className="bg-popover border shadow-lg z-50">
-                            {custPOData.map((po) => (
-                              <SelectItem key={po.id} value={po.id}>
-                                {po.id}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      {/* PO List */}
-                      <div className="border rounded">
-                        <div className="bg-muted/30 p-2 border-b">
-                          <p className="text-xs font-medium">Customer Purchase Orders</p>
-                        </div>
-                        <div className="bg-card">
-                          {custPOData.slice(0, 5).map((po) => (
-                            <div key={po.id} className="border-b last:border-b-0 p-2">
-                              <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline text-sm font-medium">
-                                {po.id}
-                              </a>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
+                          </div>
+                        </CardContent>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+                </Card>
               )}
 
               {/* RECEIVED Section - Only show after account is saved */}
               {isSaved && workOrderData.accountNumber && (
               <Card>
-                <CardContent className="p-4 sm:p-6 space-y-4">
-                  {/* RECEIVED Section */}
-                  <div className="border rounded-lg">
-                    <div className="bg-muted border-b px-3 py-1">
-                      <h3 className="text-xs font-semibold text-center">RECEIVED</h3>
-                    </div>
+                <Accordion type="single" collapsible defaultValue="cust-quote">
+                  <AccordionItem value="cust-quote" className="border-0">
+                    <AccordionTrigger className="px-4 sm:px-6 py-3 hover:no-underline">
+                      <span className="text-sm font-semibold">Customer Quote</span>
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <CardContent className="p-4 sm:p-6 pt-0 space-y-4">
+                        {/* Customer Quote Section with integrated tables */}
+                        <div className="space-y-3">
+                          {/* Dropdown */}
+                          <div className="flex items-center gap-2">
+                            <Label className="text-sm font-medium whitespace-nowrap">Cust Quote #:</Label>
+                            <Select value={selectedQuote} onValueChange={setSelectedQuote}>
+                              <SelectTrigger className="h-9 w-40">
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent className="bg-popover border shadow-lg z-50">
+                                <SelectItem value="48020">48020</SelectItem>
+                                <SelectItem value="48034">48034</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+
+                          {/* Tables Side by Side */}
+                          <div className="grid grid-cols-2 gap-3">
+                            {/* Customer Quotes Table */}
+                            <div className="border rounded-lg overflow-hidden">
+                              <table className="w-full text-xs">
+                                <thead className="bg-muted/50">
+                                  <tr>
+                                    <th className="text-left p-2 font-medium text-foreground">Customer Quotes</th>
+                                    <th className="text-left p-2 font-medium text-foreground">Type</th>
+                                  </tr>
+                                </thead>
+                                <tbody className="bg-card">
+                                  <tr className="border-t">
+                                    <td className="p-2">
+                                      <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">48020</a>
+                                    </td>
+                                    <td className="p-2 text-foreground">Regular</td>
+                                  </tr>
+                                  <tr className="border-t">
+                                    <td className="p-2">
+                                      <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">48034</a>
+                                    </td>
+                                    <td className="p-2 text-foreground">ESL Onsite</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+
+                            {/* Other WO's & Quotes Table */}
+                            <div className="border rounded-lg overflow-hidden">
+                              <table className="w-full text-xs">
+                                <thead className="bg-muted/50">
+                                  <tr>
+                                    <th colSpan={3} className="text-left p-2 font-medium text-foreground">Other WO's & Quotes</th>
+                                  </tr>
+                                  <tr className="border-t">
+                                    <th className="text-left p-2 font-medium text-muted-foreground">Open</th>
+                                    <th className="text-left p-2 font-medium text-muted-foreground">Closed</th>
+                                    <th className="text-left p-2 font-medium text-muted-foreground">Quotes</th>
+                                  </tr>
+                                </thead>
+                                <tbody className="bg-card">
+                                  <tr className="border-t">
+                                    <td className="p-2">
+                                      <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">802614</a>
+                                    </td>
+                                    <td className="p-2 text-foreground">-</td>
+                                    <td className="p-2 text-foreground">-</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Remarks Section */}
+                        <div className="border-2 border-destructive bg-destructive/5 rounded-lg p-3">
+                          <p className="text-sm">
+                            <span className="font-semibold text-destructive">Remarks:</span>{" "}
+                            <span className="font-medium">ESL TIER 2 USE TAG NO# AS ID#!</span>
+                          </p>
+                        </div>
+
+                        {/* RECEIVED Section */}
+                        <div className="border rounded-lg">
+                          <div className="bg-muted border-b px-3 py-1">
+                            <h3 className="text-xs font-semibold text-center">RECEIVED</h3>
+                          </div>
                           
                           <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 p-2">
                             {/* General Information */}
@@ -1440,7 +1485,10 @@ const AddNewWorkOrder = () => {
                           </div>
                         </div>
                       </CardContent>
-                    </Card>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </Card>
               )}
             </TabsContent>
 
