@@ -38,6 +38,7 @@ const FormVariationsDemo = () => {
   
   // Refs for each section
   const sectionRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+  const scrollViewportRef = useRef<HTMLDivElement | null>(null);
   
   const sections = [
     { id: 'general', label: 'General', icon: Info },
@@ -57,14 +58,19 @@ const FormVariationsDemo = () => {
   useEffect(() => {
     if (layoutVariant !== 'minimal') return;
 
+    const viewport = scrollViewportRef.current;
+    if (!viewport) return;
+
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + 200;
+      const scrollPosition = viewport.scrollTop + 100;
 
       for (const section of sections) {
         const element = sectionRefs.current[section.id];
         if (element) {
-          const { offsetTop, offsetHeight } = element;
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+          const elementTop = element.offsetTop;
+          const elementBottom = elementTop + element.offsetHeight;
+          
+          if (scrollPosition >= elementTop && scrollPosition < elementBottom) {
             setActiveScrollSection(section.id);
             break;
           }
@@ -72,16 +78,17 @@ const FormVariationsDemo = () => {
       }
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    viewport.addEventListener('scroll', handleScroll, { passive: true });
+    return () => viewport.removeEventListener('scroll', handleScroll);
   }, [layoutVariant]);
 
   const scrollToSection = (sectionId: string) => {
     const element = sectionRefs.current[sectionId];
-    if (element) {
-      const yOffset = -120;
-      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: 'smooth' });
+    const viewport = scrollViewportRef.current;
+    
+    if (element && viewport) {
+      const elementTop = element.offsetTop;
+      viewport.scrollTo({ top: elementTop - 20, behavior: 'smooth' });
     }
   };
   
@@ -3854,7 +3861,7 @@ const FormVariationsDemo = () => {
           </div>
         </div>
 
-        <ScrollArea className="h-[calc(100vh-320px)]">
+        <div className="h-[calc(100vh-320px)] overflow-auto" ref={scrollViewportRef}>
           <div className="p-6 space-y-8">
             {/* General Section */}
             <div 
@@ -3988,7 +3995,7 @@ const FormVariationsDemo = () => {
               {renderOptionsSection()}
             </div>
           </div>
-        </ScrollArea>
+        </div>
       </CardContent>
     </Card>
   );
