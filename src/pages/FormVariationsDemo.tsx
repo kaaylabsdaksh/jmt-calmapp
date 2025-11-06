@@ -3129,7 +3129,7 @@ const FormVariationsDemo = () => {
         <CardDescription>Manage product accessories and components</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="grid grid-cols-2 md:grid-cols-7 gap-3 items-end">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3 items-end">
           <div className="space-y-1">
             <Label htmlFor="accessoryType" className="text-xs">Type</Label>
             <Select value={formData.accessoryType} onValueChange={(value) => handleInputChange("accessoryType", value)}>
@@ -3200,8 +3200,8 @@ const FormVariationsDemo = () => {
           </div>
         </div>
 
-        <div className="border rounded-lg">
-          <div className="bg-muted grid grid-cols-6 gap-4 p-2 text-xs font-medium">
+        <div className="border rounded-lg overflow-x-auto">
+          <div className="bg-muted grid grid-cols-6 gap-4 p-2 text-xs font-medium min-w-[600px]">
             <div>Type</div>
             <div>Accessory</div>
             <div>Material</div>
@@ -3212,7 +3212,7 @@ const FormVariationsDemo = () => {
           {accessoriesList.length > 0 ? (
             <div className="divide-y">
               {accessoriesList.map((accessory) => (
-                <div key={accessory.id} className="grid grid-cols-6 gap-4 p-3 text-sm">
+                <div key={accessory.id} className="grid grid-cols-6 gap-4 p-3 text-sm min-w-[600px]">
                   <div className="capitalize">{accessory.type}</div>
                   <div className="capitalize">{accessory.accessory}</div>
                   <div>{accessory.material || '-'}</div>
@@ -3318,8 +3318,8 @@ const FormVariationsDemo = () => {
           </div>
         </div>
 
-        <div className="border rounded-lg">
-          <div className="bg-muted grid grid-cols-7 gap-4 p-2 text-xs font-medium">
+        <div className="border rounded-lg overflow-x-auto">
+          <div className="bg-muted grid grid-cols-7 gap-4 p-2 text-xs font-medium min-w-[700px]">
             <div>Category</div>
             <div>Part Number</div>
             <div>Description</div>
@@ -3336,7 +3336,7 @@ const FormVariationsDemo = () => {
                 const total = (cost * qty).toFixed(2);
                 
                 return (
-                  <div key={part.id} className="grid grid-cols-7 gap-4 p-3 text-sm">
+                  <div key={part.id} className="grid grid-cols-7 gap-4 p-3 text-sm min-w-[700px]">
                     <div className="capitalize">{part.category}</div>
                     <div>{part.partNumber}</div>
                     <div>{part.description}</div>
@@ -3713,7 +3713,7 @@ const FormVariationsDemo = () => {
 
           <TabsContent value="other" className="space-y-6">
             <Tabs value={activeOtherTab} onValueChange={setActiveOtherTab} className="w-full">
-              <TabsList className="grid w-full grid-cols-6">
+              <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-6">
                 {otherTabs.map((tab) => {
                   const Icon = tab.icon;
                   return (
@@ -4326,7 +4326,7 @@ const FormVariationsDemo = () => {
               <DialogTitle>Add New Model</DialogTitle>
             </DialogHeader>
             <div className="space-y-4 py-4">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="dialogManufacturer" className="text-sm font-medium">Manufacturer</Label>
                   <Select 
