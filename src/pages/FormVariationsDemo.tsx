@@ -3646,7 +3646,7 @@ const FormVariationsDemo = () => {
 
   // Render minimal work order header
   const renderMinimalWorkOrderHeader = () => (
-    <div className="mb-4 sm:mb-6 pb-3 border-b border-border -mx-3 sm:-mx-4 lg:-mx-6 px-3 sm:px-4 lg:px-6">
+    <div className="pt-4 sm:pt-6 mb-4 sm:mb-6 pb-3 border-b border-border -mx-3 sm:-mx-4 lg:-mx-6 px-3 sm:px-4 lg:px-6">
       <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
         <div className="flex items-center gap-2">
           <span className="text-xs text-muted-foreground">Work Order:</span>
