@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,7 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield } from "lucide-react";
+import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield, Wrench, MessageSquare } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
 import { SidebarTrigger } from "@/components/ui/sidebar";
@@ -32,6 +32,58 @@ const FormVariationsDemo = () => {
   
   // Main section state
   const [activeSection, setActiveSection] = useState<'work-order-items' | 'estimate' | 'qf3' | 'external-files' | 'cert-files'>('work-order-items');
+  
+  // Scroll section tracking for minimal variant
+  const [activeScrollSection, setActiveScrollSection] = useState('general');
+  
+  // Refs for each section
+  const sectionRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+  
+  const sections = [
+    { id: 'general', label: 'General', icon: Info },
+    { id: 'product', label: 'Product', icon: Package },
+    { id: 'logistics', label: 'Logistics', icon: Truck },
+    { id: 'product-images', label: 'Images', icon: Camera },
+    { id: 'lab', label: 'Lab', icon: Settings },
+    { id: 'factory-config', label: 'Factory', icon: Settings },
+    { id: 'transit', label: 'Transit', icon: Truck },
+    { id: 'accessories', label: 'Accessories', icon: Layers },
+    { id: 'parts', label: 'Parts', icon: Wrench },
+    { id: 'comments', label: 'Comments', icon: MessageSquare },
+    { id: 'options', label: 'Options', icon: List },
+  ];
+
+  // Scroll spy effect
+  useEffect(() => {
+    if (layoutVariant !== 'minimal') return;
+
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + 200;
+
+      for (const section of sections) {
+        const element = sectionRefs.current[section.id];
+        if (element) {
+          const { offsetTop, offsetHeight } = element;
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveScrollSection(section.id);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [layoutVariant]);
+
+  const scrollToSection = (sectionId: string) => {
+    const element = sectionRefs.current[sectionId];
+    if (element) {
+      const yOffset = -120;
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  };
   
   // User role state for testing different footers
   const [userRole, setUserRole] = useState<'admin' | 'technician'>('technician');
@@ -3779,10 +3831,36 @@ const FormVariationsDemo = () => {
   const renderMinimalScrollInterface = () => (
     <Card className="border-0 shadow-md">
       <CardContent className="p-0">
-        <ScrollArea className="h-[calc(100vh-280px)]">
+        {/* Sticky Section Navigation */}
+        <div className="sticky top-0 z-20 bg-card border-b border-border">
+          <div className="flex items-center gap-1 p-2 overflow-x-auto">
+            {sections.map((section) => {
+              const Icon = section.icon;
+              return (
+                <button
+                  key={section.id}
+                  onClick={() => scrollToSection(section.id)}
+                  className={`flex items-center gap-2 px-3 py-2 rounded-md whitespace-nowrap transition-colors ${
+                    activeScrollSection === section.id
+                      ? 'bg-primary text-primary-foreground'
+                      : 'hover:bg-muted'
+                  }`}
+                >
+                  <Icon className="h-4 w-4" />
+                  <span className="text-sm font-medium">{section.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        <ScrollArea className="h-[calc(100vh-320px)]">
           <div className="p-6 space-y-8">
             {/* General Section */}
-            <div className="space-y-4">
+            <div 
+              ref={(el) => (sectionRefs.current['general'] = el)}
+              className="space-y-4 scroll-mt-32"
+            >
               <div className="flex items-center gap-3 pb-3 border-b border-border">
                 <Info className="h-5 w-5 text-primary" />
                 <h3 className="font-semibold text-lg">General Information</h3>
@@ -3791,7 +3869,10 @@ const FormVariationsDemo = () => {
             </div>
 
             {/* Product Section */}
-            <div className="space-y-4">
+            <div 
+              ref={(el) => (sectionRefs.current['product'] = el)}
+              className="space-y-4 scroll-mt-32"
+            >
               <div className="flex items-center gap-3 pb-3 border-b border-border">
                 <Package className="h-5 w-5 text-primary" />
                 <h3 className="font-semibold text-lg">Product Information</h3>
@@ -3800,7 +3881,10 @@ const FormVariationsDemo = () => {
             </div>
 
             {/* Logistics Section */}
-            <div className="space-y-4">
+            <div 
+              ref={(el) => (sectionRefs.current['logistics'] = el)}
+              className="space-y-4 scroll-mt-32"
+            >
               <div className="flex items-center gap-3 pb-3 border-b border-border">
                 <Truck className="h-5 w-5 text-primary" />
                 <h3 className="font-semibold text-lg">Logistics Information</h3>
@@ -3809,7 +3893,10 @@ const FormVariationsDemo = () => {
             </div>
 
             {/* Product Images Section */}
-            <div className="space-y-4">
+            <div 
+              ref={(el) => (sectionRefs.current['product-images'] = el)}
+              className="space-y-4 scroll-mt-32"
+            >
               <div className="flex items-center gap-3 pb-3 border-b border-border">
                 <Camera className="h-5 w-5 text-primary" />
                 <h3 className="font-semibold text-lg">Product Images</h3>
@@ -3818,7 +3905,10 @@ const FormVariationsDemo = () => {
             </div>
 
             {/* Lab Section */}
-            <div className="space-y-4">
+            <div 
+              ref={(el) => (sectionRefs.current['lab'] = el)}
+              className="space-y-4 scroll-mt-32"
+            >
               <div className="flex items-center gap-3 pb-3 border-b border-border">
                 <Settings className="h-5 w-5 text-primary" />
                 <h3 className="font-semibold text-lg">Lab Information</h3>
@@ -3827,7 +3917,10 @@ const FormVariationsDemo = () => {
             </div>
 
             {/* Factory Config Section */}
-            <div className="space-y-4">
+            <div 
+              ref={(el) => (sectionRefs.current['factory-config'] = el)}
+              className="space-y-4 scroll-mt-32"
+            >
               <div className="flex items-center gap-3 pb-3 border-b border-border">
                 <Settings className="h-5 w-5 text-primary" />
                 <h3 className="font-semibold text-lg">Factory Configuration</h3>
@@ -3836,7 +3929,10 @@ const FormVariationsDemo = () => {
             </div>
 
             {/* Transit Section */}
-            <div className="space-y-4">
+            <div 
+              ref={(el) => (sectionRefs.current['transit'] = el)}
+              className="space-y-4 scroll-mt-32"
+            >
               <div className="flex items-center gap-3 pb-3 border-b border-border">
                 <Truck className="h-5 w-5 text-primary" />
                 <h3 className="font-semibold text-lg">Transit Information</h3>
@@ -3845,7 +3941,10 @@ const FormVariationsDemo = () => {
             </div>
 
             {/* Accessories Section */}
-            <div className="space-y-4">
+            <div 
+              ref={(el) => (sectionRefs.current['accessories'] = el)}
+              className="space-y-4 scroll-mt-32"
+            >
               <div className="flex items-center gap-3 pb-3 border-b border-border">
                 <Layers className="h-5 w-5 text-primary" />
                 <h3 className="font-semibold text-lg">Product Accessories</h3>
@@ -3854,27 +3953,36 @@ const FormVariationsDemo = () => {
             </div>
 
             {/* Parts Section */}
-            <div className="space-y-4">
+            <div 
+              ref={(el) => (sectionRefs.current['parts'] = el)}
+              className="space-y-4 scroll-mt-32"
+            >
               <div className="flex items-center gap-3 pb-3 border-b border-border">
-                <Settings className="h-5 w-5 text-primary" />
+                <Wrench className="h-5 w-5 text-primary" />
                 <h3 className="font-semibold text-lg">Parts</h3>
               </div>
               {renderPartsSection()}
             </div>
 
             {/* Comments Section */}
-            <div className="space-y-4">
+            <div 
+              ref={(el) => (sectionRefs.current['comments'] = el)}
+              className="space-y-4 scroll-mt-32"
+            >
               <div className="flex items-center gap-3 pb-3 border-b border-border">
-                <List className="h-5 w-5 text-primary" />
+                <MessageSquare className="h-5 w-5 text-primary" />
                 <h3 className="font-semibold text-lg">Comments</h3>
               </div>
               {renderCommentsSection()}
             </div>
 
             {/* Additional Options Section */}
-            <div className="space-y-4">
+            <div 
+              ref={(el) => (sectionRefs.current['options'] = el)}
+              className="space-y-4 scroll-mt-32"
+            >
               <div className="flex items-center gap-3 pb-3 border-b border-border">
-                <Settings className="h-5 w-5 text-primary" />
+                <List className="h-5 w-5 text-primary" />
                 <h3 className="font-semibold text-lg">Additional Options</h3>
               </div>
               {renderOptionsSection()}
