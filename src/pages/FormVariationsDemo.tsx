@@ -4067,67 +4067,77 @@ const FormVariationsDemo = () => {
         {layoutVariant === 'default' ? renderWorkOrderHeader() : renderMinimalWorkOrderHeader()}
         
         {/* Main Section Toggles */}
-        <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-3 mb-4 sm:mb-6 overflow-x-auto pb-2">
-          <Button
-            variant="ghost"
+        <div className="flex items-center gap-0 mb-4 sm:mb-6 overflow-x-auto border-b border-border">
+          <button
             onClick={() => setActiveSection('work-order-items')}
-            className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all border ${
+            className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all relative ${
               activeSection === 'work-order-items'
-                ? 'bg-primary text-primary-foreground shadow-sm border-primary'
-                : 'bg-background text-muted-foreground hover:text-foreground border-border hover:border-border/80'
+                ? 'text-foreground'
+                : 'text-muted-foreground hover:text-foreground'
             }`}
           >
             <Package className="h-4 w-4" />
             Work Order Items
-          </Button>
-          <Button
-            variant="ghost"
+            {activeSection === 'work-order-items' && (
+              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary" />
+            )}
+          </button>
+          <button
             onClick={() => setActiveSection('estimate')}
-            className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all border ${
+            className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all relative ${
               activeSection === 'estimate'
-                ? 'bg-primary text-primary-foreground shadow-sm border-primary'
-                : 'bg-background text-muted-foreground hover:text-foreground border-border hover:border-border/80'
+                ? 'text-foreground'
+                : 'text-muted-foreground hover:text-foreground'
             }`}
           >
             <Info className="h-4 w-4" />
             Estimate
-          </Button>
-          <Button
-            variant="ghost"
+            {activeSection === 'estimate' && (
+              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary" />
+            )}
+          </button>
+          <button
             onClick={() => setActiveSection('qf3')}
-            className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all border ${
+            className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all relative ${
               activeSection === 'qf3'
-                ? 'bg-primary text-primary-foreground shadow-sm border-primary'
-                : 'bg-background text-muted-foreground hover:text-foreground border-border hover:border-border/80'
+                ? 'text-foreground'
+                : 'text-muted-foreground hover:text-foreground'
             }`}
           >
             <Settings className="h-4 w-4" />
             QF3
-          </Button>
-          <Button
-            variant="ghost"
+            {activeSection === 'qf3' && (
+              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary" />
+            )}
+          </button>
+          <button
             onClick={() => setActiveSection('external-files')}
-            className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all border ${
+            className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all relative ${
               activeSection === 'external-files'
-                ? 'bg-primary text-primary-foreground shadow-sm border-primary'
-                : 'bg-background text-muted-foreground hover:text-foreground border-border hover:border-border/80'
+                ? 'text-foreground'
+                : 'text-muted-foreground hover:text-foreground'
             }`}
           >
             <FileText className="h-4 w-4" />
             External Files
-          </Button>
-          <Button
-            variant="ghost"
+            {activeSection === 'external-files' && (
+              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary" />
+            )}
+          </button>
+          <button
             onClick={() => setActiveSection('cert-files')}
-            className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all border ${
+            className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all relative ${
               activeSection === 'cert-files'
-                ? 'bg-primary text-primary-foreground shadow-sm border-primary'
-                : 'bg-background text-muted-foreground hover:text-foreground border-border hover:border-border/80'
+                ? 'text-foreground'
+                : 'text-muted-foreground hover:text-foreground'
             }`}
           >
             <Shield className="h-4 w-4" />
             Cert Files
-          </Button>
+            {activeSection === 'cert-files' && (
+              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary" />
+            )}
+          </button>
         </div>
         
         {/* Content based on active section */}
