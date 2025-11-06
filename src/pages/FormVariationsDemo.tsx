@@ -3654,28 +3654,28 @@ const FormVariationsDemo = () => {
   const renderMinimalWorkOrderHeader = () => (
     <div className="pt-4 sm:pt-6 mb-4 sm:mb-6 -mx-3 sm:-mx-4 lg:-mx-6 px-3 sm:px-4 lg:px-6">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="space-y-1.5">
+        <div className="space-y-2">
           <span className="text-sm text-muted-foreground">Work Order #</span>
-          <div className="bg-muted/50 rounded-md px-3 py-2.5 text-sm font-medium">
-            {formData.workOrderNumber}
+          <div className="bg-card border border-border rounded-lg px-4 py-3 shadow-sm hover:shadow-md transition-shadow">
+            <span className="text-sm font-medium">{formData.workOrderNumber}</span>
           </div>
         </div>
-        <div className="space-y-1.5">
+        <div className="space-y-2">
           <span className="text-sm text-muted-foreground">SR Doc</span>
-          <div className="bg-muted/50 rounded-md px-3 py-2.5 text-sm">
-            {formData.srDoc}
+          <div className="bg-card border border-border rounded-lg px-4 py-3 shadow-sm hover:shadow-md transition-shadow">
+            <span className="text-sm">{formData.srDoc}</span>
           </div>
         </div>
-        <div className="space-y-1.5">
+        <div className="space-y-2">
           <span className="text-sm text-muted-foreground">Salesperson</span>
-          <div className="bg-muted/50 rounded-md px-3 py-2.5 text-sm">
-            {formData.salesperson}
+          <div className="bg-card border border-border rounded-lg px-4 py-3 shadow-sm hover:shadow-md transition-shadow">
+            <span className="text-sm">{formData.salesperson}</span>
           </div>
         </div>
-        <div className="space-y-1.5">
+        <div className="space-y-2">
           <span className="text-sm text-muted-foreground">Contact</span>
-          <div className="bg-muted/50 rounded-md px-3 py-2.5 text-sm">
-            Contact information
+          <div className="bg-card border border-border rounded-lg px-4 py-3 shadow-sm hover:shadow-md transition-shadow">
+            <span className="text-sm">Contact information</span>
           </div>
         </div>
       </div>
