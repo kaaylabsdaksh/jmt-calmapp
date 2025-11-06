@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -26,6 +27,8 @@ import { cn } from "@/lib/utils";
 const FormVariationsDemo = () => {
   const navigate = useNavigate();
   
+  // Layout variant state
+  const [layoutVariant, setLayoutVariant] = useState<'default' | 'minimal'>('default');
   
   // Main section state
   const [activeSection, setActiveSection] = useState<'work-order-items' | 'estimate' | 'qf3' | 'external-files' | 'cert-files'>('work-order-items');
@@ -3539,7 +3542,7 @@ const FormVariationsDemo = () => {
     </div>
   );
 
-  // Render work order header
+  // Render work order header (default style)
   const renderWorkOrderHeader = () => (
     <div className="bg-card border border-border rounded-lg p-4 sm:p-6 mb-4 sm:mb-6">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-min">
@@ -3577,6 +3580,26 @@ const FormVariationsDemo = () => {
             placeholder="Contact information"
             className="mt-1"
           />
+        </div>
+      </div>
+    </div>
+  );
+
+  // Render minimal work order header
+  const renderMinimalWorkOrderHeader = () => (
+    <div className="mb-4 sm:mb-6 pb-3 border-b border-border">
+      <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-muted-foreground">Work Order:</span>
+          <span className="font-semibold text-sm">{formData.workOrderNumber}</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-muted-foreground">SR Doc:</span>
+          <span className="text-sm">{formData.srDoc}</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-muted-foreground">Salesperson:</span>
+          <span className="text-sm">{formData.salesperson}</span>
         </div>
       </div>
     </div>
@@ -3752,6 +3775,103 @@ const FormVariationsDemo = () => {
     </Card>
   );
 
+  // Render minimal single-scroll interface
+  const renderMinimalScrollInterface = () => (
+    <Card className="border-0 shadow-md">
+      <CardContent className="p-0">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="flex flex-col h-[calc(100vh-280px)]">
+          {/* Tabs at the top */}
+          <div className="sticky top-0 z-10 bg-card border-b border-border">
+            <TabsList className="flex h-10 items-center justify-start rounded-none bg-muted/50 p-1 text-muted-foreground w-full overflow-x-auto">
+              {currentTabs.map((tab) => {
+                const Icon = tab.icon;
+                return (
+                  <TabsTrigger 
+                    key={tab.value}
+                    value={tab.value}
+                    className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-2 text-sm font-medium transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+                  >
+                    <Icon className="h-4 w-4 mr-2" />
+                    {tab.label}
+                  </TabsTrigger>
+                );
+              })}
+            </TabsList>
+          </div>
+
+          {/* Scrollable content */}
+          <ScrollArea className="flex-1">
+            <div className="p-6">
+              <TabsContent value="general" className="mt-0">
+                {renderGeneralSection()}
+              </TabsContent>
+
+              <TabsContent value="product" className="mt-0">
+                {renderProductSection()}
+              </TabsContent>
+
+              <TabsContent value="logistics" className="mt-0">
+                {renderLogisticsSection()}
+              </TabsContent>
+
+              <TabsContent value="product-images" className="mt-0">
+                {renderProductImagesSection()}
+              </TabsContent>
+
+              <TabsContent value="lab" className="mt-0">
+                {renderLabSection()}
+              </TabsContent>
+
+              <TabsContent value="other" className="mt-0">
+                <Tabs value={activeOtherTab} onValueChange={setActiveOtherTab} className="w-full">
+                  <TabsList className="grid w-full grid-cols-6 mb-6">
+                    {otherTabs.map((tab) => {
+                      const Icon = tab.icon;
+                      return (
+                        <TabsTrigger 
+                          key={tab.value} 
+                          value={tab.value}
+                          className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-2 text-sm font-medium"
+                        >
+                          <Icon className="h-4 w-4 mr-2" />
+                          <span className="hidden sm:inline">{tab.label}</span>
+                        </TabsTrigger>
+                      );
+                    })}
+                  </TabsList>
+
+                  <TabsContent value="factory-config" className="space-y-6">
+                    {renderFactoryConfigSection()}
+                  </TabsContent>
+
+                  <TabsContent value="transit" className="space-y-6">
+                    {renderTransitSection()}
+                  </TabsContent>
+
+                  <TabsContent value="accessories" className="space-y-6">
+                    {renderAccessoriesSection()}
+                  </TabsContent>
+
+                  <TabsContent value="parts" className="space-y-6">
+                    {renderPartsSection()}
+                  </TabsContent>
+
+                  <TabsContent value="comments" className="space-y-6">
+                    {renderCommentsSection()}
+                  </TabsContent>
+
+                  <TabsContent value="options" className="space-y-6">
+                    {renderOptionsSection()}
+                  </TabsContent>
+                </Tabs>
+              </TabsContent>
+            </div>
+          </ScrollArea>
+        </Tabs>
+      </CardContent>
+    </Card>
+  );
+
   return (
     <div className="min-h-screen bg-background px-3 sm:px-4 lg:px-6">
       {/* Header */}
@@ -3791,13 +3911,32 @@ const FormVariationsDemo = () => {
             </div>
           </div>
           
+          {/* Variant Toggle */}
+          <div className="flex gap-2">
+            <Button
+              variant={layoutVariant === 'default' ? 'default' : 'outline'}
+              size="sm"
+              onClick={() => setLayoutVariant('default')}
+              className="text-xs"
+            >
+              Default
+            </Button>
+            <Button
+              variant={layoutVariant === 'minimal' ? 'default' : 'outline'}
+              size="sm"
+              onClick={() => setLayoutVariant('minimal')}
+              className="text-xs"
+            >
+              Minimal
+            </Button>
+          </div>
         </div>
       </header>
 
       {/* Form Content */}
       <div className="p-4 sm:p-6">{/* Removed bottom padding - footer component handles spacing */}
         {/* Work Order Header */}
-        {renderWorkOrderHeader()}
+        {layoutVariant === 'default' ? renderWorkOrderHeader() : renderMinimalWorkOrderHeader()}
         
         {/* Main Section Toggles */}
         <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-3 mb-4 sm:mb-6 overflow-x-auto pb-2">
@@ -3866,8 +4005,8 @@ const FormVariationsDemo = () => {
         {/* Content based on active section */}
         {activeSection === 'work-order-items' && (
           <>
-            {/* Tabs Interface */}
-            {renderTabbedInterface()}
+            {/* Interface based on variant */}
+            {layoutVariant === 'default' ? renderTabbedInterface() : renderMinimalScrollInterface()}
           </>
         )}
         
