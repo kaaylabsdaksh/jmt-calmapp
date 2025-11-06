@@ -3646,7 +3646,7 @@ const FormVariationsDemo = () => {
 
   // Render minimal work order header
   const renderMinimalWorkOrderHeader = () => (
-    <div className="mb-4 sm:mb-6 pb-3 border-b border-border">
+    <div className="mb-4 sm:mb-6 pb-3 border-b border-border -mx-3 sm:-mx-4 lg:-mx-6 px-3 sm:px-4 lg:px-6">
       <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
         <div className="flex items-center gap-2">
           <span className="text-xs text-muted-foreground">Work Order:</span>
@@ -4004,9 +4004,9 @@ const FormVariationsDemo = () => {
   );
 
   return (
-    <div className="min-h-screen bg-background px-3 sm:px-4 lg:px-6">
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="bg-background px-3 sm:px-4 lg:px-6 py-4 border-b border-border sticky top-0 z-10 backdrop-blur-sm bg-background/80">
+      <header className="bg-background py-4 border-b border-border sticky top-0 z-10 backdrop-blur-sm bg-background/80 px-3 sm:px-4 lg:px-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between w-full gap-4">
           <div className="flex items-center gap-3">
             <SidebarTrigger className="p-2 rounded-lg hover:bg-muted hover:text-foreground transition-all duration-300" />
@@ -4065,13 +4065,13 @@ const FormVariationsDemo = () => {
       </header>
 
       {/* Form Content */}
-      <div className="p-4 sm:p-6">{/* Removed bottom padding - footer component handles spacing */}
+      <div className="px-3 sm:px-4 lg:px-6">{/* Removed bottom padding - footer component handles spacing */}
         {/* Work Order Header */}
         {layoutVariant === 'default' ? renderWorkOrderHeader() : renderMinimalWorkOrderHeader()}
         
         {/* Main Section Toggles */}
         {layoutVariant === 'minimal' ? (
-          <div className="flex items-center gap-0 mb-4 sm:mb-6 overflow-x-auto border-b border-border">
+          <div className="flex items-center gap-0 mb-4 sm:mb-6 overflow-x-auto border-b border-border -mx-3 sm:-mx-4 lg:-mx-6 px-3 sm:px-4 lg:px-6">
             <button
               onClick={() => setActiveSection('work-order-items')}
               className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all relative whitespace-nowrap ${

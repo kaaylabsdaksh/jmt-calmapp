@@ -697,7 +697,7 @@ const AddNewWorkOrder = () => {
   return (
     <div className="bg-background min-h-screen">
       {/* Navigation Bar */}
-      <div className="bg-card border-b px-4 sm:px-6 py-4">
+      <div className="bg-card border-b py-4 px-3 sm:px-4 lg:px-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <SidebarTrigger className="p-2 rounded-lg hover:bg-blue-500 hover:text-white hover:shadow-md transition-all duration-300 transform hover:scale-105" />
@@ -743,7 +743,7 @@ const AddNewWorkOrder = () => {
       </div>
 
       {/* Content Area */}
-      <div className="px-3 sm:px-4 lg:px-6 py-4 sm:py-6 pb-20 sm:pb-24">
+      <div className="py-4 sm:py-6 pb-20 sm:pb-24 px-3 sm:px-4 lg:px-6">
         <div className="w-full space-y-4 sm:space-y-6">
           {/* Header Info Card */}
           <Card>
