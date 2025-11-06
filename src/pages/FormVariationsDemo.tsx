@@ -35,10 +35,12 @@ const FormVariationsDemo = () => {
   
   // Scroll section tracking for minimal variant
   const [activeScrollSection, setActiveScrollSection] = useState('general');
+  const [isNavVisible, setIsNavVisible] = useState(true);
   
   // Refs for each section
   const sectionRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
   const scrollViewportRef = useRef<HTMLDivElement | null>(null);
+  const lastScrollY = useRef(0);
   
   const sections = [
     { id: 'general', label: 'General', icon: Info },
@@ -54,7 +56,7 @@ const FormVariationsDemo = () => {
     { id: 'options', label: 'Options', icon: List },
   ];
 
-  // Scroll spy effect
+  // Scroll spy effect with auto-hide navigation
   useEffect(() => {
     if (layoutVariant !== 'minimal') return;
 
@@ -62,8 +64,18 @@ const FormVariationsDemo = () => {
     if (!viewport) return;
 
     const handleScroll = () => {
-      const scrollPosition = viewport.scrollTop + 100;
+      const currentScrollY = viewport.scrollTop;
+      const scrollPosition = currentScrollY + 100;
 
+      // Auto-hide logic: hide when scrolling down, show when scrolling up
+      if (currentScrollY > lastScrollY.current && currentScrollY > 50) {
+        setIsNavVisible(false);
+      } else {
+        setIsNavVisible(true);
+      }
+      lastScrollY.current = currentScrollY;
+
+      // Section tracking
       for (const section of sections) {
         const element = sectionRefs.current[section.id];
         if (element) {
@@ -3839,7 +3851,11 @@ const FormVariationsDemo = () => {
     <Card className="border-0 shadow-md">
       <CardContent className="p-0">
         {/* Sticky Section Navigation */}
-        <div className="sticky top-0 z-20 bg-card border-b border-border">
+        <div 
+          className={`sticky top-0 z-20 bg-card border-b border-border transition-transform duration-300 ${
+            isNavVisible ? 'translate-y-0' : '-translate-y-full'
+          }`}
+        >
           <div className="flex items-center gap-1 p-2 overflow-x-auto">
             {sections.map((section) => {
               const Icon = section.icon;
