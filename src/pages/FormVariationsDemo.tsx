@@ -3840,21 +3840,24 @@ const FormVariationsDemo = () => {
       <CardContent className="p-0">
         {/* Sticky Section Navigation */}
         <div className="sticky top-0 z-20 bg-card border-b border-border">
-          <div className="flex items-center gap-1 p-2 overflow-x-auto">
+          <div className="flex items-center gap-0 overflow-x-auto">
             {sections.map((section) => {
               const Icon = section.icon;
               return (
                 <button
                   key={section.id}
                   onClick={() => scrollToSection(section.id)}
-                  className={`flex items-center gap-2 px-3 py-2 rounded-md whitespace-nowrap transition-colors ${
+                  className={`flex items-center gap-2 px-4 py-3 whitespace-nowrap transition-colors relative ${
                     activeScrollSection === section.id
-                      ? 'bg-primary text-primary-foreground'
-                      : 'hover:bg-muted'
+                      ? 'text-foreground'
+                      : 'text-muted-foreground hover:text-foreground'
                   }`}
                 >
                   <Icon className="h-4 w-4" />
                   <span className="text-sm font-medium">{section.label}</span>
+                  {activeScrollSection === section.id && (
+                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary" />
+                  )}
                 </button>
               );
             })}
@@ -4071,7 +4074,7 @@ const FormVariationsDemo = () => {
           <div className="flex items-center gap-0 mb-4 sm:mb-6 overflow-x-auto border-b border-border">
             <button
               onClick={() => setActiveSection('work-order-items')}
-              className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all relative ${
+              className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all relative whitespace-nowrap ${
                 activeSection === 'work-order-items'
                   ? 'text-foreground'
                   : 'text-muted-foreground hover:text-foreground'
@@ -4085,7 +4088,7 @@ const FormVariationsDemo = () => {
             </button>
             <button
               onClick={() => setActiveSection('estimate')}
-              className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all relative ${
+              className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all relative whitespace-nowrap ${
                 activeSection === 'estimate'
                   ? 'text-foreground'
                   : 'text-muted-foreground hover:text-foreground'
@@ -4099,7 +4102,7 @@ const FormVariationsDemo = () => {
             </button>
             <button
               onClick={() => setActiveSection('qf3')}
-              className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all relative ${
+              className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all relative whitespace-nowrap ${
                 activeSection === 'qf3'
                   ? 'text-foreground'
                   : 'text-muted-foreground hover:text-foreground'
@@ -4113,7 +4116,7 @@ const FormVariationsDemo = () => {
             </button>
             <button
               onClick={() => setActiveSection('external-files')}
-              className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all relative ${
+              className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all relative whitespace-nowrap ${
                 activeSection === 'external-files'
                   ? 'text-foreground'
                   : 'text-muted-foreground hover:text-foreground'
@@ -4127,7 +4130,7 @@ const FormVariationsDemo = () => {
             </button>
             <button
               onClick={() => setActiveSection('cert-files')}
-              className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all relative ${
+              className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all relative whitespace-nowrap ${
                 activeSection === 'cert-files'
                   ? 'text-foreground'
                   : 'text-muted-foreground hover:text-foreground'
