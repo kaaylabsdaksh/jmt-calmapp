@@ -35,6 +35,7 @@ const FormVariationsDemo = () => {
   
   // Scroll section tracking for minimal variant
   const [activeScrollSection, setActiveScrollSection] = useState('general');
+  const [scrollProgress, setScrollProgress] = useState(0);
   
   // Refs for each section
   const sectionRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
@@ -63,6 +64,11 @@ const FormVariationsDemo = () => {
 
     const handleScroll = () => {
       const scrollPosition = viewport.scrollTop + 150; // Increased offset for better detection
+
+      // Calculate scroll progress
+      const scrollHeight = viewport.scrollHeight - viewport.clientHeight;
+      const progress = scrollHeight > 0 ? (viewport.scrollTop / scrollHeight) * 100 : 0;
+      setScrollProgress(progress);
 
       // Find the section that's currently in view
       let currentSection = sections[0].id;
@@ -3846,6 +3852,9 @@ const FormVariationsDemo = () => {
       <CardContent className="p-0">
         {/* Sticky Section Navigation */}
         <div className="sticky top-0 z-20 bg-card border-b border-border">
+          {/* Progress Bar */}
+          <div className="absolute bottom-0 left-0 h-0.5 bg-primary transition-all duration-300" style={{ width: `${scrollProgress}%` }} />
+          
           <div className="flex items-center gap-0 overflow-x-auto">
             {sections.map((section) => {
               const Icon = section.icon;
