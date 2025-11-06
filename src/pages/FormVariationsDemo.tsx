@@ -3535,11 +3535,11 @@ const FormVariationsDemo = () => {
           </div>
         </div>
 
-        <div className="border rounded-lg">
-          <div className="bg-muted grid grid-cols-4 gap-4 p-2 text-xs font-medium">
+        <div className="border rounded-lg overflow-hidden">
+          <div className="bg-muted grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 p-2 text-xs font-medium">
             <div>Type</div>
             <div>User</div>
-            <div>Date</div>
+            <div className="hidden sm:block">Date</div>
             <div>Comment</div>
           </div>
           <div className="p-6 text-center text-muted-foreground text-sm">
@@ -4358,7 +4358,7 @@ const FormVariationsDemo = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="dialogRange" className="text-sm font-medium">Range</Label>
                   <Select 
