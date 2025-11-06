@@ -62,25 +62,31 @@ const FormVariationsDemo = () => {
     if (!viewport) return;
 
     const handleScroll = () => {
-      const scrollPosition = viewport.scrollTop + 100;
+      const scrollPosition = viewport.scrollTop + 150; // Increased offset for better detection
 
+      // Find the section that's currently in view
+      let currentSection = sections[0].id;
+      
       for (const section of sections) {
         const element = sectionRefs.current[section.id];
         if (element) {
           const elementTop = element.offsetTop;
-          const elementBottom = elementTop + element.offsetHeight;
           
-          if (scrollPosition >= elementTop && scrollPosition < elementBottom) {
-            setActiveScrollSection(section.id);
-            break;
+          if (scrollPosition >= elementTop) {
+            currentSection = section.id;
           }
         }
       }
+      
+      setActiveScrollSection(currentSection);
     };
+
+    // Initial call to set the active section
+    handleScroll();
 
     viewport.addEventListener('scroll', handleScroll, { passive: true });
     return () => viewport.removeEventListener('scroll', handleScroll);
-  }, [layoutVariant]);
+  }, [layoutVariant, sections]);
 
   const scrollToSection = (sectionId: string) => {
     const element = sectionRefs.current[sectionId];
