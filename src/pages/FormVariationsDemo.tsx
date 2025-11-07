@@ -4442,6 +4442,26 @@ const FormVariationsDemo = () => {
         </CardContent>
       </Card>
 
+      {/* Product Images */}
+      <Card className="md:col-span-2">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Camera className="w-5 h-5" />
+            Product Images
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="border-2 border-dashed border-border rounded-lg p-8 text-center">
+            <Upload className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
+            <p className="text-sm text-muted-foreground mb-2">Drop images here or click to upload</p>
+            <Button variant="outline" size="sm">
+              Choose Files
+            </Button>
+            <p className="text-xs text-muted-foreground mt-2">No images uploaded</p>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Lab Information */}
       <Card className="lg:col-span-1">
         <CardHeader>
@@ -4494,8 +4514,48 @@ const FormVariationsDemo = () => {
         </CardContent>
       </Card>
 
-      {/* Purchase Orders */}
+      {/* Transit Information */}
       <Card className="md:col-span-2">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Truck className="w-5 h-5" />
+            Transit Information
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="v3-origin">Origin Location</Label>
+              <Input id="v3-origin" value={formData.originLocation} onChange={(e) => handleInputChange("originLocation", e.target.value)} placeholder="Origin" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="v3-destination">Destination Location</Label>
+              <Input id="v3-destination" value={formData.destinationLocation} onChange={(e) => handleInputChange("destinationLocation", e.target.value)} placeholder="Destination" />
+            </div>
+          </div>
+          <div className="grid grid-cols-3 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="v3-hu-qty">HU Qty</Label>
+              <Input id="v3-hu-qty" value={formData.huQty} onChange={(e) => handleInputChange("huQty", e.target.value)} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="v3-hu-type">HU Type</Label>
+              <Input id="v3-hu-type" value={formData.huType} onChange={(e) => handleInputChange("huType", e.target.value)} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="v3-deliver-to">Deliver To</Label>
+              <Input id="v3-deliver-to" value={formData.deliverTo} onChange={(e) => handleInputChange("deliverTo", e.target.value)} />
+            </div>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="v3-transit-notes">Transit Notes</Label>
+            <Textarea id="v3-transit-notes" value={formData.transitNotes} onChange={(e) => handleInputChange("transitNotes", e.target.value)} rows={2} />
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Purchase Orders */}
+      <Card className="md:col-span-2 lg:col-span-1">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <FileText className="w-5 h-5" />
@@ -4503,19 +4563,17 @@ const FormVariationsDemo = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid grid-cols-3 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="v3-po-number">PO Number</Label>
-              <Input id="v3-po-number" value={formData.poNumber} onChange={(e) => handleInputChange("poNumber", e.target.value)} />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="v3-po-line">PO Line</Label>
-              <Input id="v3-po-line" value={formData.poLine} onChange={(e) => handleInputChange("poLine", e.target.value)} />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="v3-deliver-by">Deliver By Date</Label>
-              <Input id="v3-deliver-by" type="date" value={formData.deliverByDate} onChange={(e) => handleInputChange("deliverByDate", e.target.value)} />
-            </div>
+          <div className="space-y-2">
+            <Label htmlFor="v3-po-number">PO Number</Label>
+            <Input id="v3-po-number" value={formData.poNumber} onChange={(e) => handleInputChange("poNumber", e.target.value)} />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="v3-po-line">PO Line</Label>
+            <Input id="v3-po-line" value={formData.poLine} onChange={(e) => handleInputChange("poLine", e.target.value)} />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="v3-deliver-by">Deliver By Date</Label>
+            <Input id="v3-deliver-by" type="date" value={formData.deliverByDate} onChange={(e) => handleInputChange("deliverByDate", e.target.value)} />
           </div>
         </CardContent>
       </Card>
