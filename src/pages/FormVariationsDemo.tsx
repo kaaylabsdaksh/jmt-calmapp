@@ -4315,31 +4315,31 @@ const FormVariationsDemo = () => {
           <CardDescription>Detailed product specifications and identifiers</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid grid-cols-3 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="v3-manufacturer">Manufacturer *</Label>
-              <div className="flex gap-2">
-                <Select value={formData.manufacturer} onValueChange={(value) => handleInputChange("manufacturer", value)}>
-                  <SelectTrigger id="v3-manufacturer">
-                    <SelectValue placeholder="Select manufacturer..." />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="fluke">Fluke</SelectItem>
-                    <SelectItem value="keysight">Keysight</SelectItem>
-                    <SelectItem value="tektronix">Tektronix</SelectItem>
-                    <SelectItem value="rohde-schwarz">Rohde & Schwarz</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Button variant="outline" size="icon">
-                  <span className="text-lg">+</span>
-                </Button>
-              </div>
+          <div className="space-y-2">
+            <Label htmlFor="v3-manufacturer">Manufacturer *</Label>
+            <div className="flex gap-2">
+              <Select value={formData.manufacturer} onValueChange={(value) => handleInputChange("manufacturer", value)}>
+                <SelectTrigger id="v3-manufacturer" className="flex-1">
+                  <SelectValue placeholder="Select manufacturer..." />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="fluke">Fluke</SelectItem>
+                  <SelectItem value="keysight">Keysight</SelectItem>
+                  <SelectItem value="tektronix">Tektronix</SelectItem>
+                  <SelectItem value="rohde-schwarz">Rohde & Schwarz</SelectItem>
+                </SelectContent>
+              </Select>
+              <Button variant="outline" size="icon" className="shrink-0">
+                <span className="text-lg">+</span>
+              </Button>
             </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="v3-model">Model *</Label>
               <div className="flex gap-2">
-                <Input id="v3-model" value={formData.model} onChange={(e) => handleInputChange("model", e.target.value)} placeholder="Enter model" />
-                <Button variant="outline" size="icon">
+                <Input id="v3-model" value={formData.model} onChange={(e) => handleInputChange("model", e.target.value)} placeholder="Enter model" className="flex-1" />
+                <Button variant="outline" size="icon" className="shrink-0">
                   <span className="text-lg">+</span>
                 </Button>
               </div>
@@ -4347,8 +4347,8 @@ const FormVariationsDemo = () => {
             <div className="space-y-2">
               <Label htmlFor="v3-lab-code">Lab Code</Label>
               <div className="flex gap-2">
-                <Input id="v3-lab-code" value={formData.labCode} onChange={(e) => handleInputChange("labCode", e.target.value)} placeholder="Lab code" />
-                <Button variant="outline" size="icon">
+                <Input id="v3-lab-code" value={formData.labCode} onChange={(e) => handleInputChange("labCode", e.target.value)} placeholder="Lab code" className="flex-1" />
+                <Button variant="outline" size="icon" className="shrink-0">
                   <span className="text-lg">+</span>
                 </Button>
               </div>
