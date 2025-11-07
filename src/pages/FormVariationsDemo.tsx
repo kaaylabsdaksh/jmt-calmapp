@@ -4027,7 +4027,7 @@ const FormVariationsDemo = () => {
       <CardContent className="p-0">
         <div className="flex min-h-[calc(100vh-320px)]">
           {/* Left Sidebar with Tabs */}
-          <div className="w-56 border-r border-border bg-muted/30">
+          <div className="w-56 border-r border-border bg-muted/30 sticky top-0 self-start h-[calc(100vh-320px)] overflow-y-auto">
             <div className="space-y-1 p-2">
               {sections.map((section) => {
                 const Icon = section.icon;
