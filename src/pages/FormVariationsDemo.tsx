@@ -28,13 +28,27 @@ const FormVariationsDemo = () => {
   const navigate = useNavigate();
   
   // Layout variant state
-  const [layoutVariant, setLayoutVariant] = useState<'default' | 'minimal' | 'minimal2'>('default');
+  const [layoutVariant, setLayoutVariant] = useState<'default' | 'minimal' | 'minimal2' | 'version3'>('default');
   
   // Main section state
   const [activeSection, setActiveSection] = useState<'work-order-items' | 'estimate' | 'qf3' | 'external-files' | 'cert-files'>('work-order-items');
   
   // Scroll section tracking for minimal variant
   const [activeScrollSection, setActiveScrollSection] = useState('general');
+  
+  // Add missing icons
+  const { 
+    AlertCircle, 
+    DollarSign, 
+    Calendar: CalendarIconComponent, 
+    Paperclip, 
+    Upload, 
+    Printer, 
+    Mail, 
+    CheckCircle, 
+    XCircle, 
+    Clock 
+  } = require("lucide-react");
   
   // Refs for each section
   const sectionRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
@@ -56,7 +70,7 @@ const FormVariationsDemo = () => {
 
   // Scroll spy effect
   useEffect(() => {
-    if (layoutVariant !== 'minimal' && layoutVariant !== 'minimal2') return;
+    if (layoutVariant !== 'minimal' && layoutVariant !== 'minimal2' && layoutVariant !== 'version3') return;
 
     const viewport = scrollViewportRef.current;
     if (!viewport) return;
@@ -4024,170 +4038,287 @@ const FormVariationsDemo = () => {
   // Render minimal interface with tabs on left and content on right
   const renderMinimal2Interface = () => (
     <Card className="border-0 shadow-md">
-      <CardContent className="p-0">
-        <div className="flex">
-          {/* Left Sidebar with Tabs */}
-          <div className="w-56 border-r border-border bg-muted/30 sticky top-0 self-start max-h-screen overflow-y-auto">
-            <div className="space-y-1 p-2">
-              {sections.map((section) => {
-                const Icon = section.icon;
-                return (
-                  <button
-                    key={section.id}
-                    onClick={() => scrollToSection(section.id)}
-                    className={`flex items-center gap-3 px-4 py-3 w-full rounded-lg transition-all ${
-                      activeScrollSection === section.id
-                        ? 'bg-primary text-primary-foreground shadow-sm'
-                        : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
-                    }`}
-                  >
-                    <Icon className="h-4 w-4 flex-shrink-0" />
-                    <span className="text-sm font-medium">{section.label}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Right Content Area */}
-          <div className="flex-1 overflow-auto h-[calc(100vh-200px)]" ref={scrollViewportRef}>
-            <div className="p-6 space-y-8">
-              {/* General Section */}
-              <div 
-                ref={(el) => (sectionRefs.current['general'] = el)}
-                className="space-y-4 scroll-mt-32"
-              >
-                <div className="flex items-center gap-3 pb-3 border-b border-border">
-                  <Info className="h-5 w-5 text-primary" />
-                  <h3 className="font-semibold text-lg">General Information</h3>
-                </div>
-                {renderGeneralSection()}
-              </div>
-
-              {/* Product Section */}
-              <div 
-                ref={(el) => (sectionRefs.current['product'] = el)}
-                className="space-y-4 scroll-mt-32"
-              >
-                <div className="flex items-center gap-3 pb-3 border-b border-border">
-                  <Package className="h-5 w-5 text-primary" />
-                  <h3 className="font-semibold text-lg">Product Information</h3>
-                </div>
-                {renderProductSection()}
-              </div>
-
-              {/* Logistics Section */}
-              <div 
-                ref={(el) => (sectionRefs.current['logistics'] = el)}
-                className="space-y-4 scroll-mt-32"
-              >
-                <div className="flex items-center gap-3 pb-3 border-b border-border">
-                  <Truck className="h-5 w-5 text-primary" />
-                  <h3 className="font-semibold text-lg">Logistics Information</h3>
-                </div>
-                {renderLogisticsSection()}
-              </div>
-
-              {/* Product Images Section */}
-              <div 
-                ref={(el) => (sectionRefs.current['product-images'] = el)}
-                className="space-y-4 scroll-mt-32"
-              >
-                <div className="flex items-center gap-3 pb-3 border-b border-border">
-                  <Camera className="h-5 w-5 text-primary" />
-                  <h3 className="font-semibold text-lg">Product Images</h3>
-                </div>
-                {renderProductImagesSection()}
-              </div>
-
-              {/* Lab Section */}
-              <div 
-                ref={(el) => (sectionRefs.current['lab'] = el)}
-                className="space-y-4 scroll-mt-32"
-              >
-                <div className="flex items-center gap-3 pb-3 border-b border-border">
-                  <Settings className="h-5 w-5 text-primary" />
-                  <h3 className="font-semibold text-lg">Lab Information</h3>
-                </div>
-                {renderLabSection()}
-              </div>
-
-              {/* Factory Config Section */}
-              <div 
-                ref={(el) => (sectionRefs.current['factory-config'] = el)}
-                className="space-y-4 scroll-mt-32"
-              >
-                <div className="flex items-center gap-3 pb-3 border-b border-border">
-                  <Settings className="h-5 w-5 text-primary" />
-                  <h3 className="font-semibold text-lg">Factory Configuration</h3>
-                </div>
-                {renderFactoryConfigSection()}
-              </div>
-
-              {/* Transit Section */}
-              <div 
-                ref={(el) => (sectionRefs.current['transit'] = el)}
-                className="space-y-4 scroll-mt-32"
-              >
-                <div className="flex items-center gap-3 pb-3 border-b border-border">
-                  <Truck className="h-5 w-5 text-primary" />
-                  <h3 className="font-semibold text-lg">Transit Information</h3>
-                </div>
-                {renderTransitSection()}
-              </div>
-
-              {/* Accessories Section */}
-              <div 
-                ref={(el) => (sectionRefs.current['accessories'] = el)}
-                className="space-y-4 scroll-mt-32"
-              >
-                <div className="flex items-center gap-3 pb-3 border-b border-border">
-                  <Layers className="h-5 w-5 text-primary" />
-                  <h3 className="font-semibold text-lg">Product Accessories</h3>
-                </div>
-                {renderAccessoriesSection()}
-              </div>
-
-              {/* Parts Section */}
-              <div 
-                ref={(el) => (sectionRefs.current['parts'] = el)}
-                className="space-y-4 scroll-mt-32"
-              >
-                <div className="flex items-center gap-3 pb-3 border-b border-border">
-                  <Wrench className="h-5 w-5 text-primary" />
-                  <h3 className="font-semibold text-lg">Parts</h3>
-                </div>
-                {renderPartsSection()}
-              </div>
-
-              {/* Comments Section */}
-              <div 
-                ref={(el) => (sectionRefs.current['comments'] = el)}
-                className="space-y-4 scroll-mt-32"
-              >
-                <div className="flex items-center gap-3 pb-3 border-b border-border">
-                  <MessageSquare className="h-5 w-5 text-primary" />
-                  <h3 className="font-semibold text-lg">Comments</h3>
-                </div>
-                {renderCommentsSection()}
-              </div>
-
-              {/* Additional Options Section */}
-              <div 
-                ref={(el) => (sectionRefs.current['options'] = el)}
-                className="space-y-4 scroll-mt-32"
-              >
-                <div className="flex items-center gap-3 pb-3 border-b border-border">
-                  <List className="h-5 w-5 text-primary" />
-                  <h3 className="font-semibold text-lg">Additional Options</h3>
-                </div>
-                {renderOptionsSection()}
-              </div>
-            </div>
-          </div>
-        </div>
-      </CardContent>
+...
     </Card>
+  );
+
+  // Render Version 3 with bento grid layout
+  const renderVersion3Interface = () => (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-min">
+      {/* General Section */}
+      <Card className="md:col-span-2 lg:col-span-2">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Info className="w-5 h-5" />
+            General
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="v3-status">Status</Label>
+              <Select value={formData.itemStatus} onValueChange={(value) => handleInputChange("itemStatus", value)}>
+                <SelectTrigger id="v3-status">
+                  <SelectValue placeholder="Select status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="pending">Pending</SelectItem>
+                  <SelectItem value="in-progress">In Progress</SelectItem>
+                  <SelectItem value="completed">Completed</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="v3-priority">Priority</Label>
+              <Select value={formData.priority || "Normal"} onValueChange={(value) => handleInputChange("priority", value)}>
+                <SelectTrigger id="v3-priority">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Low">Low</SelectItem>
+                  <SelectItem value="Normal">Normal</SelectItem>
+                  <SelectItem value="High">High</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="v3-type">Type</Label>
+              <Input id="v3-type" value={formData.type} onChange={(e) => handleInputChange("type", e.target.value)} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="v3-report-number">Report Number</Label>
+              <Input id="v3-report-number" value={formData.reportNumber} onChange={(e) => handleInputChange("reportNumber", e.target.value)} />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Product Information */}
+      <Card className="lg:row-span-2">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Package className="w-5 h-5" />
+            Product
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="v3-manufacturer">Manufacturer</Label>
+            <Input id="v3-manufacturer" value={formData.manufacturer} onChange={(e) => handleInputChange("manufacturer", e.target.value)} />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="v3-model">Model</Label>
+            <Input id="v3-model" value={formData.model} onChange={(e) => handleInputChange("model", e.target.value)} />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="v3-serial">Mfg Serial</Label>
+            <Input id="v3-serial" value={formData.mfgSerial} onChange={(e) => handleInputChange("mfgSerial", e.target.value)} />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="v3-description">Description</Label>
+            <Textarea id="v3-description" value={formData.description} onChange={(e) => handleInputChange("description", e.target.value)} rows={3} />
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Logistics */}
+      <Card className="md:col-span-2">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Truck className="w-5 h-5" />
+            Logistics
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="v3-arrival-date">Arrival Date</Label>
+              <Input id="v3-arrival-date" type="date" value={formData.arrivalDate} onChange={(e) => handleInputChange("arrivalDate", e.target.value)} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="v3-arrival-type">Arrival Type</Label>
+              <Input id="v3-arrival-type" value={formData.arrivalType} onChange={(e) => handleInputChange("arrivalType", e.target.value)} />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="v3-location">Location</Label>
+              <Input id="v3-location" value={formData.location} onChange={(e) => handleInputChange("location", e.target.value)} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="v3-need-by">Need By</Label>
+              <Input id="v3-need-by" type="date" value={formData.needBy} onChange={(e) => handleInputChange("needBy", e.target.value)} />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Lab Information */}
+      <Card className="md:col-span-1">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Settings className="w-5 h-5" />
+            Lab
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="v3-condition-in">Condition In</Label>
+            <Input id="v3-condition-in" value={formData.conditionIn} onChange={(e) => handleInputChange("conditionIn", e.target.value)} />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="v3-condition-out">Condition Out</Label>
+            <Input id="v3-condition-out" value={formData.conditionOut} onChange={(e) => handleInputChange("conditionOut", e.target.value)} />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="v3-technician">Technician</Label>
+            <Input id="v3-technician" value={formData.technician1} onChange={(e) => handleInputChange("technician1", e.target.value)} />
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Factory Config */}
+      <Card className="md:col-span-2 lg:col-span-1">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Settings className="w-5 h-5" />
+            Factory
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="flex items-center space-x-2">
+            <Checkbox 
+              id="v3-to-factory" 
+              checked={formData.toFactory}
+              onCheckedChange={(checked) => handleInputChange("toFactory", checked as boolean)}
+            />
+            <Label htmlFor="v3-to-factory">To Factory</Label>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="v3-tf-po">TF PO Number</Label>
+            <Input id="v3-tf-po" value={formData.tfPoNumber} onChange={(e) => handleInputChange("tfPoNumber", e.target.value)} />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="v3-vendor-rma">Vendor RMA</Label>
+            <Input id="v3-vendor-rma" value={formData.vendorRmaNumber} onChange={(e) => handleInputChange("vendorRmaNumber", e.target.value)} />
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Accessories */}
+      <Card className="md:col-span-1">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Layers className="w-5 h-5" />
+            Accessories
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-2">
+            <Label htmlFor="v3-accessory">Accessory</Label>
+            <Input 
+              id="v3-accessory" 
+              value={formData.accessory} 
+              onChange={(e) => handleInputChange("accessory", e.target.value)} 
+              placeholder="Add accessory"
+            />
+          </div>
+          <div className="mt-4 text-sm text-muted-foreground">
+            {accessoriesList.length} accessory items
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Parts */}
+      <Card className="md:col-span-2 lg:col-span-1">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Wrench className="w-5 h-5" />
+            Parts
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-2">
+            <Label htmlFor="v3-part-number">Part Number</Label>
+            <Input 
+              id="v3-part-number" 
+              value={formData.partsNumber} 
+              onChange={(e) => handleInputChange("partsNumber", e.target.value)} 
+              placeholder="Enter part number"
+            />
+          </div>
+          <div className="mt-4 text-sm text-muted-foreground">
+            {partsList.length} parts listed
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Comments */}
+      <Card className="md:col-span-2 lg:col-span-2">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <MessageSquare className="w-5 h-5" />
+            Comments
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Textarea 
+            value={formData.comment} 
+            onChange={(e) => handleInputChange("comment", e.target.value)} 
+            placeholder="Add comments..."
+            rows={4}
+          />
+        </CardContent>
+      </Card>
+
+      {/* Options */}
+      <Card className="md:col-span-2 lg:col-span-1">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <List className="w-5 h-5" />
+            Options
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex items-center space-x-2">
+              <Checkbox 
+                id="v3-warranty" 
+                checked={formData.warranty}
+                onCheckedChange={(checked) => handleInputChange("warranty", checked as boolean)}
+              />
+              <Label htmlFor="v3-warranty" className="text-sm">Warranty</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Checkbox 
+                id="v3-estimate" 
+                checked={formData.estimate}
+                onCheckedChange={(checked) => handleInputChange("estimate", checked as boolean)}
+              />
+              <Label htmlFor="v3-estimate" className="text-sm">Estimate</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Checkbox 
+                id="v3-iso17025" 
+                checked={formData.iso17025}
+                onCheckedChange={(checked) => handleInputChange("iso17025", checked as boolean)}
+              />
+              <Label htmlFor="v3-iso17025" className="text-sm">ISO 17025</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Checkbox 
+                id="v3-hot-list" 
+                checked={formData.hotList}
+                onCheckedChange={(checked) => handleInputChange("hotList", checked as boolean)}
+              />
+              <Label htmlFor="v3-hot-list" className="text-sm">Hot List</Label>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   );
 
   return (
@@ -4255,6 +4386,14 @@ const FormVariationsDemo = () => {
             >
               Minimal 2
             </Button>
+            <Button
+              variant={layoutVariant === 'version3' ? 'default' : 'outline'}
+              size="sm"
+              onClick={() => setLayoutVariant('version3')}
+              className="text-xs"
+            >
+              Version 3
+            </Button>
           </div>
         </div>
       </header>
@@ -4265,7 +4404,7 @@ const FormVariationsDemo = () => {
         {layoutVariant === 'default' ? renderWorkOrderHeader() : renderMinimalWorkOrderHeader()}
         
         {/* Main Section Toggles */}
-        {(layoutVariant === 'minimal' || layoutVariant === 'minimal2') ? (
+        {(layoutVariant === 'minimal' || layoutVariant === 'minimal2' || layoutVariant === 'version3') ? (
           <div className="flex items-center gap-2 mb-4 sm:mb-6 overflow-x-auto -mx-3 sm:-mx-4 lg:-mx-6 px-3 sm:px-4 lg:px-6 pb-4">
             <button
               onClick={() => setActiveSection('work-order-items')}
@@ -4394,7 +4533,8 @@ const FormVariationsDemo = () => {
             {/* Interface based on variant */}
             {layoutVariant === 'default' ? renderTabbedInterface() : 
              layoutVariant === 'minimal' ? renderMinimalScrollInterface() : 
-             renderMinimal2Interface()}
+             layoutVariant === 'minimal2' ? renderMinimal2Interface() :
+             renderVersion3Interface()}
           </>
         )}
         
