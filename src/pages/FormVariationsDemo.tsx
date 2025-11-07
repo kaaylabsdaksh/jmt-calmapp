@@ -4310,59 +4310,77 @@ const FormVariationsDemo = () => {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Package className="w-5 h-5" />
-            Product
+            Product Information
           </CardTitle>
+          <CardDescription>Detailed product specifications and identifiers</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="v3-manufacturer">Manufacturer</Label>
-            <Input id="v3-manufacturer" value={formData.manufacturer} onChange={(e) => handleInputChange("manufacturer", e.target.value)} />
+          <div className="grid grid-cols-3 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="v3-manufacturer">Manufacturer *</Label>
+              <div className="flex gap-2">
+                <Select value={formData.manufacturer} onValueChange={(value) => handleInputChange("manufacturer", value)}>
+                  <SelectTrigger id="v3-manufacturer">
+                    <SelectValue placeholder="Select manufacturer..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="fluke">Fluke</SelectItem>
+                    <SelectItem value="keysight">Keysight</SelectItem>
+                    <SelectItem value="tektronix">Tektronix</SelectItem>
+                    <SelectItem value="rohde-schwarz">Rohde & Schwarz</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Button variant="outline" size="icon">
+                  <span className="text-lg">+</span>
+                </Button>
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="v3-model">Model *</Label>
+              <div className="flex gap-2">
+                <Input id="v3-model" value={formData.model} onChange={(e) => handleInputChange("model", e.target.value)} placeholder="Enter model" />
+                <Button variant="outline" size="icon">
+                  <span className="text-lg">+</span>
+                </Button>
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="v3-lab-code">Lab Code</Label>
+              <div className="flex gap-2">
+                <Input id="v3-lab-code" value={formData.labCode} onChange={(e) => handleInputChange("labCode", e.target.value)} placeholder="Lab code" />
+                <Button variant="outline" size="icon">
+                  <span className="text-lg">+</span>
+                </Button>
+              </div>
+            </div>
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="v3-model">Model</Label>
-            <Input id="v3-model" value={formData.model} onChange={(e) => handleInputChange("model", e.target.value)} />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="v3-lab-code">Lab Code</Label>
-            <Input id="v3-lab-code" value={formData.labCode} onChange={(e) => handleInputChange("labCode", e.target.value)} />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="v3-serial">Mfg Serial</Label>
-            <Input id="v3-serial" value={formData.mfgSerial} onChange={(e) => handleInputChange("mfgSerial", e.target.value)} />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="v3-quantity">Quantity</Label>
-            <Input id="v3-quantity" type="number" value={formData.quantity} onChange={(e) => handleInputChange("quantity", e.target.value)} />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="v3-description">Description</Label>
-            <Textarea id="v3-description" value={formData.description} onChange={(e) => handleInputChange("description", e.target.value)} rows={2} />
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Identification & Costs */}
-      <Card className="md:col-span-2">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <DollarSign className="w-5 h-5" />
-            Identification & Costs
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-3 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="v3-serial">MFG Serial</Label>
+              <Input id="v3-serial" value={formData.mfgSerial} onChange={(e) => handleInputChange("mfgSerial", e.target.value)} placeholder="Manufacturing serial" />
+            </div>
             <div className="space-y-2">
               <Label htmlFor="v3-cost-id">Cost ID</Label>
-              <Input id="v3-cost-id" value={formData.costId} onChange={(e) => handleInputChange("costId", e.target.value)} />
+              <Input id="v3-cost-id" value={formData.costId} onChange={(e) => handleInputChange("costId", e.target.value)} placeholder="Cost identifier" />
             </div>
             <div className="space-y-2">
               <Label htmlFor="v3-cost-serial">Cost Serial</Label>
-              <Input id="v3-cost-serial" value={formData.costSerial} onChange={(e) => handleInputChange("costSerial", e.target.value)} />
+              <Input id="v3-cost-serial" value={formData.costSerial} onChange={(e) => handleInputChange("costSerial", e.target.value)} placeholder="Cost serial" />
             </div>
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="v3-rfid">RFID</Label>
-            <Input id="v3-rfid" value={formData.rfid} onChange={(e) => handleInputChange("rfid", e.target.value)} />
+          <div className="grid grid-cols-3 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="v3-rfid">RFID</Label>
+              <Input id="v3-rfid" value={formData.rfid} onChange={(e) => handleInputChange("rfid", e.target.value)} placeholder="RFID tag" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="v3-quantity">Quantity</Label>
+              <Input id="v3-quantity" type="number" value={formData.quantity} onChange={(e) => handleInputChange("quantity", e.target.value)} defaultValue="1" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="v3-description">Description</Label>
+              <Input id="v3-description" value={formData.description} onChange={(e) => handleInputChange("description", e.target.value)} placeholder="Product description" />
+            </div>
           </div>
         </CardContent>
       </Card>
