@@ -4025,7 +4025,169 @@ const FormVariationsDemo = () => {
   // Render minimal interface with tabs on left and content on right
   const renderMinimal2Interface = () => (
     <Card className="border-0 shadow-md">
-...
+      <CardContent className="p-0">
+        <div className="flex h-[calc(100vh-320px)]">
+          {/* Left Sidebar Navigation */}
+          <div className="w-48 border-r border-border bg-muted/30 flex-shrink-0">
+            <div className="p-2 space-y-1">
+              {sections.map((section) => {
+                const Icon = section.icon;
+                return (
+                  <button
+                    key={section.id}
+                    onClick={() => scrollToSection(section.id)}
+                    className={`w-full flex items-center gap-2 px-3 py-2 rounded-md text-sm transition-colors ${
+                      activeScrollSection === section.id
+                        ? 'bg-primary text-primary-foreground'
+                        : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                    }`}
+                  >
+                    <Icon className="h-4 w-4" />
+                    <span>{section.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Right Content Area */}
+          <div className="flex-1 overflow-auto h-[calc(100vh-320px)]" ref={scrollViewportRef}>
+            <div className="p-6 space-y-8">
+              {/* General Section */}
+              <div 
+                ref={(el) => (sectionRefs.current['general'] = el)}
+                className="space-y-4 scroll-mt-32"
+              >
+                <div className="flex items-center gap-3 pb-3 border-b border-border">
+                  <Info className="h-5 w-5 text-primary" />
+                  <h3 className="font-semibold text-lg">General Information</h3>
+                </div>
+                {renderGeneralSection()}
+              </div>
+
+              {/* Product Section */}
+              <div 
+                ref={(el) => (sectionRefs.current['product'] = el)}
+                className="space-y-4 scroll-mt-32"
+              >
+                <div className="flex items-center gap-3 pb-3 border-b border-border">
+                  <Package className="h-5 w-5 text-primary" />
+                  <h3 className="font-semibold text-lg">Product Information</h3>
+                </div>
+                {renderProductSection()}
+              </div>
+
+              {/* Logistics Section */}
+              <div 
+                ref={(el) => (sectionRefs.current['logistics'] = el)}
+                className="space-y-4 scroll-mt-32"
+              >
+                <div className="flex items-center gap-3 pb-3 border-b border-border">
+                  <Truck className="h-5 w-5 text-primary" />
+                  <h3 className="font-semibold text-lg">Logistics Information</h3>
+                </div>
+                {renderLogisticsSection()}
+              </div>
+
+              {/* Product Images Section */}
+              <div 
+                ref={(el) => (sectionRefs.current['product-images'] = el)}
+                className="space-y-4 scroll-mt-32"
+              >
+                <div className="flex items-center gap-3 pb-3 border-b border-border">
+                  <Camera className="h-5 w-5 text-primary" />
+                  <h3 className="font-semibold text-lg">Product Images</h3>
+                </div>
+                {renderProductImagesSection()}
+              </div>
+
+              {/* Lab Section */}
+              <div 
+                ref={(el) => (sectionRefs.current['lab'] = el)}
+                className="space-y-4 scroll-mt-32"
+              >
+                <div className="flex items-center gap-3 pb-3 border-b border-border">
+                  <Settings className="h-5 w-5 text-primary" />
+                  <h3 className="font-semibold text-lg">Lab Information</h3>
+                </div>
+                {renderLabSection()}
+              </div>
+
+              {/* Factory Config Section */}
+              <div 
+                ref={(el) => (sectionRefs.current['factory-config'] = el)}
+                className="space-y-4 scroll-mt-32"
+              >
+                <div className="flex items-center gap-3 pb-3 border-b border-border">
+                  <Settings className="h-5 w-5 text-primary" />
+                  <h3 className="font-semibold text-lg">Factory Configuration</h3>
+                </div>
+                {renderFactoryConfigSection()}
+              </div>
+
+              {/* Transit Section */}
+              <div 
+                ref={(el) => (sectionRefs.current['transit'] = el)}
+                className="space-y-4 scroll-mt-32"
+              >
+                <div className="flex items-center gap-3 pb-3 border-b border-border">
+                  <Truck className="h-5 w-5 text-primary" />
+                  <h3 className="font-semibold text-lg">Transit Information</h3>
+                </div>
+                {renderTransitSection()}
+              </div>
+
+              {/* Accessories Section */}
+              <div 
+                ref={(el) => (sectionRefs.current['accessories'] = el)}
+                className="space-y-4 scroll-mt-32"
+              >
+                <div className="flex items-center gap-3 pb-3 border-b border-border">
+                  <Layers className="h-5 w-5 text-primary" />
+                  <h3 className="font-semibold text-lg">Product Accessories</h3>
+                </div>
+                {renderAccessoriesSection()}
+              </div>
+
+              {/* Parts Section */}
+              <div 
+                ref={(el) => (sectionRefs.current['parts'] = el)}
+                className="space-y-4 scroll-mt-32"
+              >
+                <div className="flex items-center gap-3 pb-3 border-b border-border">
+                  <Wrench className="h-5 w-5 text-primary" />
+                  <h3 className="font-semibold text-lg">Parts</h3>
+                </div>
+                {renderPartsSection()}
+              </div>
+
+              {/* Comments Section */}
+              <div 
+                ref={(el) => (sectionRefs.current['comments'] = el)}
+                className="space-y-4 scroll-mt-32"
+              >
+                <div className="flex items-center gap-3 pb-3 border-b border-border">
+                  <MessageSquare className="h-5 w-5 text-primary" />
+                  <h3 className="font-semibold text-lg">Comments</h3>
+                </div>
+                {renderCommentsSection()}
+              </div>
+
+              {/* Additional Options Section */}
+              <div 
+                ref={(el) => (sectionRefs.current['options'] = el)}
+                className="space-y-4 scroll-mt-32"
+              >
+                <div className="flex items-center gap-3 pb-3 border-b border-border">
+                  <List className="h-5 w-5 text-primary" />
+                  <h3 className="font-semibold text-lg">Additional Options</h3>
+                </div>
+                {renderOptionsSection()}
+              </div>
+            </div>
+          </div>
+        </div>
+      </CardContent>
     </Card>
   );
 
