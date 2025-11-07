@@ -4025,9 +4025,9 @@ const FormVariationsDemo = () => {
   const renderMinimal2Interface = () => (
     <Card className="border-0 shadow-md">
       <CardContent className="p-0">
-        <div className="flex min-h-[calc(100vh-320px)]">
+        <div className="flex">
           {/* Left Sidebar with Tabs */}
-          <div className="w-56 border-r border-border bg-muted/30 sticky top-0 self-start h-[calc(100vh-320px)] overflow-y-auto">
+          <div className="w-56 border-r border-border bg-muted/30 sticky top-0 self-start max-h-screen overflow-y-auto">
             <div className="space-y-1 p-2">
               {sections.map((section) => {
                 const Icon = section.icon;
@@ -4050,7 +4050,7 @@ const FormVariationsDemo = () => {
           </div>
 
           {/* Right Content Area */}
-          <div className="flex-1 overflow-auto" ref={scrollViewportRef}>
+          <div className="flex-1" ref={scrollViewportRef}>
             <div className="p-6 space-y-8">
               {/* General Section */}
               <div 
