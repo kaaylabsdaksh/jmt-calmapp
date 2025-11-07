@@ -4203,9 +4203,26 @@ const FormVariationsDemo = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-3 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="v3-status">Status</Label>
+              <Label htmlFor="v3-type">Type *</Label>
+              <Select value={formData.type} onValueChange={(value) => handleInputChange("type", value)}>
+                <SelectTrigger id="v3-type">
+                  <SelectValue placeholder="Select type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="calibration">Calibration</SelectItem>
+                  <SelectItem value="repair">Repair</SelectItem>
+                  <SelectItem value="inspection">Inspection</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="v3-report-number">Report Number *</Label>
+              <Input id="v3-report-number" value={formData.reportNumber} onChange={(e) => handleInputChange("reportNumber", e.target.value)} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="v3-status">Item Status</Label>
               <Select value={formData.itemStatus} onValueChange={(value) => handleInputChange("itemStatus", value)}>
                 <SelectTrigger id="v3-status">
                   <SelectValue placeholder="Select status" />
@@ -4217,6 +4234,8 @@ const FormVariationsDemo = () => {
                 </SelectContent>
               </Select>
             </div>
+          </div>
+          <div className="grid grid-cols-3 gap-4">
             <div className="space-y-2">
               <Label htmlFor="v3-priority">Priority</Label>
               <Select value={formData.priority || "Normal"} onValueChange={(value) => handleInputChange("priority", value)}>
@@ -4230,15 +4249,57 @@ const FormVariationsDemo = () => {
                 </SelectContent>
               </Select>
             </div>
-          </div>
-          <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="v3-type">Type</Label>
-              <Input id="v3-type" value={formData.type} onChange={(e) => handleInputChange("type", e.target.value)} />
+              <Label htmlFor="v3-location">Location</Label>
+              <Select value={formData.location} onValueChange={(value) => handleInputChange("location", value)}>
+                <SelectTrigger id="v3-location">
+                  <SelectValue placeholder="Select location" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="warehouse-a">Warehouse A</SelectItem>
+                  <SelectItem value="warehouse-b">Warehouse B</SelectItem>
+                  <SelectItem value="lab">Lab</SelectItem>
+                  <SelectItem value="office">Office</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="v3-report-number">Report Number</Label>
-              <Input id="v3-report-number" value={formData.reportNumber} onChange={(e) => handleInputChange("reportNumber", e.target.value)} />
+              <Label htmlFor="v3-division">Division</Label>
+              <Select value={formData.division} onValueChange={(value) => handleInputChange("division", value)}>
+                <SelectTrigger id="v3-division">
+                  <SelectValue placeholder="Select division" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="electronics">Electronics</SelectItem>
+                  <SelectItem value="mechanical">Mechanical</SelectItem>
+                  <SelectItem value="chemical">Chemical</SelectItem>
+                  <SelectItem value="biomedical">Biomedical</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          <div className="grid grid-cols-3 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="v3-cal-freq">Cal Freq</Label>
+              <Input id="v3-cal-freq" value={formData.calFreq} onChange={(e) => handleInputChange("calFreq", e.target.value)} placeholder="Enter calibration frequency" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="v3-action-code">Action Code</Label>
+              <Select value={formData.actionCode} onValueChange={(value) => handleInputChange("actionCode", value)}>
+                <SelectTrigger id="v3-action-code">
+                  <SelectValue placeholder="Select action code" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="calibrate">Calibrate</SelectItem>
+                  <SelectItem value="repair">Repair</SelectItem>
+                  <SelectItem value="inspect">Inspect</SelectItem>
+                  <SelectItem value="test">Test</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="v3-assigned-to">Assigned To</Label>
+              <Input id="v3-assigned-to" value={formData.assignedTo} onChange={(e) => handleInputChange("assignedTo", e.target.value)} placeholder="Type to search assignees..." />
             </div>
           </div>
         </CardContent>
