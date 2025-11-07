@@ -3663,7 +3663,7 @@ const FormVariationsDemo = () => {
         <div className="space-y-2">
           <span className="text-sm text-muted-foreground">SR Doc</span>
           <div className="bg-card border border-border rounded-lg px-4 py-3 shadow-sm hover:shadow-md transition-shadow">
-            <span className="text-sm">{formData.srDoc}</span>
+            <a href="#" className="text-sm text-foreground hover:underline">{formData.srDoc}</a>
           </div>
         </div>
         <div className="space-y-2">
