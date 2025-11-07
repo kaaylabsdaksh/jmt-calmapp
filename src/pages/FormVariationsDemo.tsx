@@ -322,6 +322,7 @@ const FormVariationsDemo = () => {
     
     // Purchase Order Information  
     poNumber: "",
+    poLine: "",
     soNumber: "",
     jmPartsPoNumber: "",
     
@@ -4032,7 +4033,7 @@ const FormVariationsDemo = () => {
   const renderVersion3Interface = () => (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-min">
       {/* General Section */}
-      <Card className="md:col-span-2 lg:col-span-2">
+      <Card className="md:col-span-2">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Info className="w-5 h-5" />
@@ -4099,22 +4100,56 @@ const FormVariationsDemo = () => {
             <Input id="v3-model" value={formData.model} onChange={(e) => handleInputChange("model", e.target.value)} />
           </div>
           <div className="space-y-2">
+            <Label htmlFor="v3-lab-code">Lab Code</Label>
+            <Input id="v3-lab-code" value={formData.labCode} onChange={(e) => handleInputChange("labCode", e.target.value)} />
+          </div>
+          <div className="space-y-2">
             <Label htmlFor="v3-serial">Mfg Serial</Label>
             <Input id="v3-serial" value={formData.mfgSerial} onChange={(e) => handleInputChange("mfgSerial", e.target.value)} />
           </div>
           <div className="space-y-2">
+            <Label htmlFor="v3-quantity">Quantity</Label>
+            <Input id="v3-quantity" type="number" value={formData.quantity} onChange={(e) => handleInputChange("quantity", e.target.value)} />
+          </div>
+          <div className="space-y-2">
             <Label htmlFor="v3-description">Description</Label>
-            <Textarea id="v3-description" value={formData.description} onChange={(e) => handleInputChange("description", e.target.value)} rows={3} />
+            <Textarea id="v3-description" value={formData.description} onChange={(e) => handleInputChange("description", e.target.value)} rows={2} />
           </div>
         </CardContent>
       </Card>
 
-      {/* Logistics */}
+      {/* Identification & Costs */}
+      <Card className="md:col-span-2">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <DollarSign className="w-5 h-5" />
+            Identification & Costs
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="v3-cost-id">Cost ID</Label>
+              <Input id="v3-cost-id" value={formData.costId} onChange={(e) => handleInputChange("costId", e.target.value)} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="v3-cost-serial">Cost Serial</Label>
+              <Input id="v3-cost-serial" value={formData.costSerial} onChange={(e) => handleInputChange("costSerial", e.target.value)} />
+            </div>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="v3-rfid">RFID</Label>
+            <Input id="v3-rfid" value={formData.rfid} onChange={(e) => handleInputChange("rfid", e.target.value)} />
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Arrival Information */}
       <Card className="md:col-span-2">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Truck className="w-5 h-5" />
-            Logistics
+            Arrival
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -4125,24 +4160,128 @@ const FormVariationsDemo = () => {
             </div>
             <div className="space-y-2">
               <Label htmlFor="v3-arrival-type">Arrival Type</Label>
-              <Input id="v3-arrival-type" value={formData.arrivalType} onChange={(e) => handleInputChange("arrivalType", e.target.value)} />
+              <Select value={formData.arrivalType} onValueChange={(value) => handleInputChange("arrivalType", value)}>
+                <SelectTrigger id="v3-arrival-type">
+                  <SelectValue placeholder="Select type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="delivery">Delivery</SelectItem>
+                  <SelectItem value="pickup">Pickup</SelectItem>
+                  <SelectItem value="mail">Mail</SelectItem>
+                  <SelectItem value="courier">Courier</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="v3-location">Location</Label>
-              <Input id="v3-location" value={formData.location} onChange={(e) => handleInputChange("location", e.target.value)} />
+              <Label htmlFor="v3-arrival-location">Arrival Location</Label>
+              <Select value={formData.arrivalLocation} onValueChange={(value) => handleInputChange("arrivalLocation", value)}>
+                <SelectTrigger id="v3-arrival-location">
+                  <SelectValue placeholder="Select location" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="main-office">Main Office</SelectItem>
+                  <SelectItem value="warehouse">Warehouse</SelectItem>
+                  <SelectItem value="loading-dock">Loading Dock</SelectItem>
+                  <SelectItem value="reception">Reception</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="v3-need-by">Need By</Label>
-              <Input id="v3-need-by" type="date" value={formData.needBy} onChange={(e) => handleInputChange("needBy", e.target.value)} />
+              <Label htmlFor="v3-driver">Driver</Label>
+              <Select value={formData.driver} onValueChange={(value) => handleInputChange("driver", value)}>
+                <SelectTrigger id="v3-driver">
+                  <SelectValue placeholder="Select driver" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="john-doe">John Doe</SelectItem>
+                  <SelectItem value="jane-smith">Jane Smith</SelectItem>
+                  <SelectItem value="mike-johnson">Mike Johnson</SelectItem>
+                  <SelectItem value="sarah-wilson">Sarah Wilson</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Shipping Information */}
+      <Card className="lg:col-span-1">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Package className="w-5 h-5" />
+            Shipping
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="v3-pu-date">Pickup Date</Label>
+            <Input id="v3-pu-date" type="date" value={formData.puDate} onChange={(e) => handleInputChange("puDate", e.target.value)} />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="v3-ship-type">Ship Type</Label>
+            <Select value={formData.shipType} onValueChange={(value) => handleInputChange("shipType", value)}>
+              <SelectTrigger id="v3-ship-type">
+                <SelectValue placeholder="Select type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="standard">Standard</SelectItem>
+                <SelectItem value="express">Express</SelectItem>
+                <SelectItem value="overnight">Overnight</SelectItem>
+                <SelectItem value="ground">Ground</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="v3-name">Name</Label>
+            <Input id="v3-name" value={formData.name} onChange={(e) => handleInputChange("name", e.target.value)} />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="v3-need-by">Need By</Label>
+            <Input id="v3-need-by" type="date" value={formData.needBy} onChange={(e) => handleInputChange("needBy", e.target.value)} />
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Departure Information */}
+      <Card className="md:col-span-2">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Truck className="w-5 h-5" />
+            Departure
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-3 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="v3-inv-number">Invoice #</Label>
+              <Input id="v3-inv-number" value={formData.invNumber} onChange={(e) => handleInputChange("invNumber", e.target.value)} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="v3-dt-number">DT #</Label>
+              <Input id="v3-dt-number" value={formData.dtNumber} onChange={(e) => handleInputChange("dtNumber", e.target.value)} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="v3-delivery-status">Delivery Status</Label>
+              <Select value={formData.deliveryStatus} onValueChange={(value) => handleInputChange("deliveryStatus", value)}>
+                <SelectTrigger id="v3-delivery-status">
+                  <SelectValue placeholder="Select status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="pending">Pending</SelectItem>
+                  <SelectItem value="in-transit">In Transit</SelectItem>
+                  <SelectItem value="delivered">Delivered</SelectItem>
+                  <SelectItem value="returned">Returned</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
         </CardContent>
       </Card>
 
       {/* Lab Information */}
-      <Card className="md:col-span-1">
+      <Card className="lg:col-span-1">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Settings className="w-5 h-5" />
@@ -4193,8 +4332,34 @@ const FormVariationsDemo = () => {
         </CardContent>
       </Card>
 
+      {/* Purchase Orders */}
+      <Card className="md:col-span-2">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <FileText className="w-5 h-5" />
+            Purchase Orders
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-3 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="v3-po-number">PO Number</Label>
+              <Input id="v3-po-number" value={formData.poNumber} onChange={(e) => handleInputChange("poNumber", e.target.value)} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="v3-po-line">PO Line</Label>
+              <Input id="v3-po-line" value={formData.poLine} onChange={(e) => handleInputChange("poLine", e.target.value)} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="v3-deliver-by">Deliver By Date</Label>
+              <Input id="v3-deliver-by" type="date" value={formData.deliverByDate} onChange={(e) => handleInputChange("deliverByDate", e.target.value)} />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Accessories */}
-      <Card className="md:col-span-1">
+      <Card className="lg:col-span-1">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Layers className="w-5 h-5" />
