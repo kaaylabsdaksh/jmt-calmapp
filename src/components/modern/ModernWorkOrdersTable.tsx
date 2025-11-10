@@ -4776,7 +4776,17 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                         {item.workOrderNumber}
                       </div>
                     </TableCell>
-                    <TableCell className="font-mono text-sm">{item.itemNumber}</TableCell>
+                    <TableCell className="font-mono text-sm">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigate(`/work-order/${item.workOrderId}`);
+                        }}
+                        className="text-blue-600 hover:text-blue-800 hover:underline font-medium transition-colors"
+                      >
+                        {item.itemNumber}
+                      </button>
+                    </TableCell>
                     <TableCell>{getItemStatusBadge(item.itemStatus)}</TableCell>
                     <TableCell>
                       <span className={cn("px-2 py-1 rounded-md text-xs font-medium",
@@ -4894,7 +4904,17 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                   <div className="p-4 space-y-3">
                     <div>
                       <h3 className="font-semibold text-gray-900 text-base mb-1">{item.customer}</h3>
-                      <p className="text-sm text-gray-600">Item: {item.itemNumber}</p>
+                      <p className="text-sm text-gray-600">
+                        Item: <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            navigate(`/work-order/${item.workOrderId}`);
+                          }}
+                          className="text-blue-600 hover:text-blue-800 hover:underline font-medium transition-colors"
+                        >
+                          {item.itemNumber}
+                        </button>
+                      </p>
                     </div>
                     <div className="grid grid-cols-2 gap-3 text-sm">
                       <div>
