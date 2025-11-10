@@ -4780,7 +4780,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
-                          navigate(`/work-order/${item.workOrderId}`);
+                          navigate(`/edit-order`);
                         }}
                         className="text-blue-600 hover:text-blue-800 hover:underline font-medium transition-colors"
                       >
@@ -4908,7 +4908,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                         Item: <button
                           onClick={(e) => {
                             e.stopPropagation();
-                            navigate(`/work-order/${item.workOrderId}`);
+                            navigate(`/edit-order`);
                           }}
                           className="text-blue-600 hover:text-blue-800 hover:underline font-medium transition-colors"
                         >
