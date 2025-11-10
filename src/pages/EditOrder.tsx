@@ -3601,7 +3601,7 @@ const EditOrder = () => {
 
   // Render work order header
   const renderWorkOrderHeader = () => (
-    <div className="bg-card border border-border rounded-lg p-4 sm:p-6 mb-4 sm:mb-6">
+    <div className="bg-card border border-border rounded-lg p-4 sm:p-6 mb-4 sm:mb-6 mt-6">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-min">
         <div>
           <Label className="text-sm font-medium text-muted-foreground">Work Order #</Label>
