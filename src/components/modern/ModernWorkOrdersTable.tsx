@@ -4773,7 +4773,15 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                         >
                           <Pencil className="h-4 w-4" />
                         </button>
-                        {item.workOrderNumber}
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            navigate(`/work-order/${item.workOrderId}`);
+                          }}
+                          className="text-blue-600 hover:text-blue-800 hover:underline font-medium transition-colors"
+                        >
+                          {item.workOrderNumber}
+                        </button>
                       </div>
                     </TableCell>
                     <TableCell className="font-mono text-sm">
@@ -4888,7 +4896,15 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                           >
                             <Pencil className="h-4 w-4" />
                           </button>
-                          <span className="font-bold text-blue-600 text-lg">{item.workOrderNumber}</span>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              navigate(`/work-order/${item.workOrderId}`);
+                            }}
+                            className="font-bold text-blue-600 text-lg hover:text-blue-800 hover:underline transition-colors"
+                          >
+                            {item.workOrderNumber}
+                          </button>
                         </div>
                         <div className="flex items-center gap-2">
                           {getItemStatusBadge(item.itemStatus)}
