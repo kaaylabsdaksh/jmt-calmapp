@@ -97,6 +97,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber }: WorkOrderItemsTablePro
       <table className="w-full text-sm">
         <thead className="bg-muted">
           <tr>
+            <th className="text-left p-3 w-12">Actions</th>
             <th className="text-left p-3 w-12">
               <Checkbox />
             </th>
@@ -117,6 +118,16 @@ export const WorkOrderItemsTable = ({ selectedPoNumber }: WorkOrderItemsTablePro
           {mockData.map((item, index) => (
             <tr key={item.id} className={`border-t ${index > 0 ? 'hover:bg-muted/50' : ''}`}>
               <td className="p-3">
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => navigate("/edit-order")}
+                  className="h-8"
+                >
+                  <Edit className="w-4 h-4" />
+                </Button>
+              </td>
+              <td className="p-3">
                 <Checkbox />
               </td>
               <td className="p-3">{item.reportNumber}</td>
@@ -130,19 +141,9 @@ export const WorkOrderItemsTable = ({ selectedPoNumber }: WorkOrderItemsTablePro
               <td className="p-3">{item.deliverByDate}</td>
               <td className="p-3">{selectedPoNumber || item.poNumber}</td>
               <td className="p-3">
-                <div className="flex gap-2">
-                  <Button variant="link" className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto">
-                    View
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    onClick={() => navigate("/edit-order")}
-                    className="h-8"
-                  >
-                    <Edit className="w-4 h-4" />
-                  </Button>
-                </div>
+                <Button variant="link" className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto">
+                  View
+                </Button>
               </td>
             </tr>
           ))}
