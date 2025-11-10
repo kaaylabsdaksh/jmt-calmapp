@@ -4776,7 +4776,14 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
-                            navigate(`/work-order/${item.workOrderId}`);
+                            navigate(`/add-new-work-order`, {
+                              state: {
+                                workOrderId: item.workOrderId,
+                                accountNumber: "1500.00", // TODO: Get from actual data
+                                customer: item.customer,
+                                showItems: true
+                              }
+                            });
                           }}
                           className="text-blue-600 hover:text-blue-800 hover:underline font-medium transition-colors"
                         >
@@ -4899,7 +4906,14 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
-                              navigate(`/work-order/${item.workOrderId}`);
+                              navigate(`/add-new-work-order`, {
+                                state: {
+                                  workOrderId: item.workOrderId,
+                                  accountNumber: "1500.00", // TODO: Get from actual data
+                                  customer: item.customer,
+                                  showItems: true
+                                }
+                              });
                             }}
                             className="font-bold text-blue-600 text-lg hover:text-blue-800 hover:underline transition-colors"
                           >

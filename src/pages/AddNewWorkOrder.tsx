@@ -29,20 +29,41 @@ const AddNewWorkOrder = () => {
   const isMobile = useIsMobile();
   const { open: sidebarOpen } = useSidebar();
 
-  // Always ensure account field starts empty - this is the main entry point
+  // Check for navigation state on mount
   useEffect(() => {
-    // Always reset account-related fields when component mounts
-    setWorkOrderData(prev => ({
-      ...prev,
-      accountNumber: "",
-      customer: "",
-      srDocument: "",
-      salesperson: "Not assigned",
-      contact: "no-contact"
-    }));
-    // Reset to general tab when account is cleared
-    setActiveTab("general");
-  }, []);
+    if (location.state && 'showItems' in location.state) {
+      // Coming from work order click - pre-fill and show items
+      const { accountNumber, customer, workOrderId } = location.state as { 
+        accountNumber: string; 
+        customer: string; 
+        workOrderId: string;
+        showItems: boolean;
+      };
+      
+      setWorkOrderData(prev => ({
+        ...prev,
+        accountNumber: accountNumber,
+        customer: customer,
+        srDocument: "SR2244", // Mock data
+        salesperson: "ZZEN - House - Entergy",
+        contact: "Brad Morrison"
+      }));
+      setIsSaved(true);
+      setHasContact(true);
+      setActiveTab("items");
+    } else {
+      // Normal entry - reset fields
+      setWorkOrderData(prev => ({
+        ...prev,
+        accountNumber: "",
+        customer: "",
+        srDocument: "",
+        salesperson: "Not assigned",
+        contact: "no-contact"
+      }));
+      setActiveTab("general");
+    }
+  }, [location.state]);
   const [activeTab, setActiveTab] = useState(() => {
     const savedTab = localStorage.getItem('addNewWorkOrderActiveTab');
     return savedTab || "general";
