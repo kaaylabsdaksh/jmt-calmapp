@@ -1,5 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useNavigate } from "react-router-dom";
+import { Edit } from "lucide-react";
 
 interface WorkOrderItem {
   id: string;
@@ -88,6 +90,8 @@ interface WorkOrderItemsTableProps {
 }
 
 export const WorkOrderItemsTable = ({ selectedPoNumber }: WorkOrderItemsTableProps) => {
+  const navigate = useNavigate();
+  
   return (
     <div className="border rounded-lg overflow-hidden">
       <table className="w-full text-sm">
@@ -126,9 +130,19 @@ export const WorkOrderItemsTable = ({ selectedPoNumber }: WorkOrderItemsTablePro
               <td className="p-3">{item.deliverByDate}</td>
               <td className="p-3">{selectedPoNumber || item.poNumber}</td>
               <td className="p-3">
-                <Button variant="link" className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto">
-                  View
-                </Button>
+                <div className="flex gap-2">
+                  <Button variant="link" className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto">
+                    View
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => navigate("/edit-order")}
+                    className="h-8"
+                  >
+                    <Edit className="w-4 h-4" />
+                  </Button>
+                </div>
               </td>
             </tr>
           ))}
