@@ -5,7 +5,7 @@ import { Edit } from "lucide-react";
 
 interface WorkOrderItem {
   id: string;
-  reportNumber: string;
+  itemNumber: string;
   manufacturer: string;
   model: string;
   serialNumber: string;
@@ -20,7 +20,7 @@ interface WorkOrderItem {
 const mockData: WorkOrderItem[] = [
   {
     id: "1",
-    reportNumber: "3455",
+    itemNumber: "001",
     manufacturer: "3243",
     model: "",
     serialNumber: "2343",
@@ -33,7 +33,7 @@ const mockData: WorkOrderItem[] = [
   },
   {
     id: "2",
-    reportNumber: "3456",
+    itemNumber: "002",
     manufacturer: "General Electric",
     model: "GE-4500",
     serialNumber: "GE445789",
@@ -46,20 +46,20 @@ const mockData: WorkOrderItem[] = [
   },
   {
     id: "3",
-    reportNumber: "3457",
+    itemNumber: "003 - Gloves, Hotsticks",
     manufacturer: "Siemens",
     model: "S7-1200",
     serialNumber: "SIE123456",
     created: "2024-01-20",
     departure: "2024-02-05",
     itemStatus: "Completed",
-    itemType: "Control Panel",
+    itemType: "ESL",
     deliverByDate: "2024-02-28",
     poNumber: "PO-2024-002",
   },
   {
     id: "4",
-    reportNumber: "3458",
+    itemNumber: "004",
     manufacturer: "ABB",
     model: "REF615",
     serialNumber: "ABB789123",
@@ -72,14 +72,14 @@ const mockData: WorkOrderItem[] = [
   },
   {
     id: "5",
-    reportNumber: "3459",
+    itemNumber: "005 - Gloves, Hotsticks",
     manufacturer: "Schneider Electric",
     model: "SEPAM-80",
     serialNumber: "SCH456789",
     created: "2024-02-01",
     departure: "2024-02-15",
     itemStatus: "Pending",
-    itemType: "Switchgear",
+    itemType: "ESL",
     deliverByDate: "2024-03-20",
     poNumber: "PO-2024-004",
   },
@@ -101,7 +101,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber }: WorkOrderItemsTablePro
             <th className="text-left p-3 w-12">
               <Checkbox />
             </th>
-            <th className="text-left p-3 font-medium">Report #</th>
+            <th className="text-left p-3 font-medium">Item</th>
             <th className="text-left p-3 font-medium">Manufacturer</th>
             <th className="text-left p-3 font-medium">Model</th>
             <th className="text-left p-3 font-medium">Serial #</th>
@@ -130,7 +130,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber }: WorkOrderItemsTablePro
               <td className="p-3">
                 <Checkbox />
               </td>
-              <td className="p-3">{item.reportNumber}</td>
+              <td className="p-3">{item.itemNumber}</td>
               <td className="p-3">{item.manufacturer}</td>
               <td className="p-3">{item.model}</td>
               <td className="p-3">{item.serialNumber}</td>
