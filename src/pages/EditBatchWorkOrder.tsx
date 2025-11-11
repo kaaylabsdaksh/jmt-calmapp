@@ -26,6 +26,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
+import WorkOrderHeader from "@/components/WorkOrderHeader";
 
 const EditBatchWorkOrder = () => {
   const navigate = useNavigate();
@@ -719,6 +720,7 @@ const EditBatchWorkOrder = () => {
 
   return (
     <div className="bg-background min-h-screen">
+      <WorkOrderHeader />
 
       {/* Content Area */}
       <div className="py-4 sm:py-6 pb-20 sm:pb-24 px-3 sm:px-4 lg:px-6">
