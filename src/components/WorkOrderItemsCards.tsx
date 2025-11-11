@@ -42,73 +42,7 @@ interface WorkOrderItemsCardsProps {
   templateItems?: WorkOrderItemTemplate[];
 }
 
-const mockData: WorkOrderItem[] = [
-  {
-    id: "1",
-    reportNumber: "3455",
-    manufacturer: "3243",
-    model: "Model-X200",
-    serialNumber: "2343",
-    created: "2024-01-10",
-    departure: "2024-01-28",
-    itemStatus: "normal",
-    itemType: "rc",
-    deliverByDate: "2024-12-15",
-    poNumber: "PO-2024-001",
-  },
-  {
-    id: "2",
-    reportNumber: "OSC-002",
-    manufacturer: "3M",
-    model: "OSC-3000",
-    serialNumber: "SN789012",
-    created: "2024-01-15",
-    departure: "2024-02-05",
-    itemStatus: "expedite",
-    itemType: "repair",
-    deliverByDate: "2024-11-30",
-    poNumber: "PO-2024-002",
-  },
-  {
-    id: "3",
-    reportNumber: "3457",
-    manufacturer: "Siemens",
-    model: "S7-1200",
-    serialNumber: "SIE123456",
-    created: "2024-01-20",
-    departure: "2024-02-05",
-    itemStatus: "Completed",
-    itemType: "Control Panel",
-    deliverByDate: "2024-02-28",
-    poNumber: "PO-2024-002",
-  },
-  {
-    id: "4",
-    reportNumber: "3458",
-    manufacturer: "ABB",
-    model: "REF615",
-    serialNumber: "ABB789123",
-    created: "2024-01-25",
-    departure: "2024-02-10",
-    itemStatus: "Testing",
-    itemType: "Protection Relay",
-    deliverByDate: "2024-03-01",
-    poNumber: "PO-2024-003",
-  },
-  {
-    id: "5",
-    reportNumber: "3459",
-    manufacturer: "Schneider Electric",
-    model: "SEPAM-80",
-    serialNumber: "SCH456789",
-    created: "2024-02-01",
-    departure: "2024-02-15",
-    itemStatus: "Pending",
-    itemType: "Switchgear",
-    deliverByDate: "2024-03-20",
-    poNumber: "PO-2024-004",
-  },
-];
+const mockData: WorkOrderItem[] = [];
 
 const getStatusColor = (status: string) => {
   switch (status.toLowerCase()) {
