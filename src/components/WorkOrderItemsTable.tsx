@@ -17,14 +17,83 @@ interface WorkOrderItem {
   poNumber: string;
 }
 
-const mockData: WorkOrderItem[] = [];
+const mockData: WorkOrderItem[] = [
+  {
+    id: "1",
+    itemNumber: "001",
+    manufacturer: "3243",
+    model: "",
+    serialNumber: "2343",
+    created: "",
+    departure: "",
+    itemStatus: "",
+    itemType: "",
+    deliverByDate: "",
+    poNumber: "",
+  },
+  {
+    id: "2",
+    itemNumber: "002",
+    manufacturer: "General Electric",
+    model: "GE-4500",
+    serialNumber: "GE445789",
+    created: "2024-01-15",
+    departure: "2024-02-01",
+    itemStatus: "In Progress",
+    itemType: "Transformer",
+    deliverByDate: "2024-03-15",
+    poNumber: "PO-2024-001",
+  },
+  {
+    id: "3",
+    itemNumber: "003 - Gloves, Hotsticks",
+    manufacturer: "Siemens",
+    model: "S7-1200",
+    serialNumber: "SIE123456",
+    created: "2024-01-20",
+    departure: "2024-02-05",
+    itemStatus: "Completed",
+    itemType: "ESL",
+    deliverByDate: "2024-02-28",
+    poNumber: "PO-2024-002",
+  },
+  {
+    id: "4",
+    itemNumber: "004",
+    manufacturer: "ABB",
+    model: "REF615",
+    serialNumber: "ABB789123",
+    created: "2024-01-25",
+    departure: "2024-02-10",
+    itemStatus: "Testing",
+    itemType: "Protection Relay",
+    deliverByDate: "2024-03-01",
+    poNumber: "PO-2024-003",
+  },
+  {
+    id: "5",
+    itemNumber: "005 - Gloves, Hotsticks",
+    manufacturer: "Schneider Electric",
+    model: "SEPAM-80",
+    serialNumber: "SCH456789",
+    created: "2024-02-01",
+    departure: "2024-02-15",
+    itemStatus: "Pending",
+    itemType: "ESL",
+    deliverByDate: "2024-03-20",
+    poNumber: "PO-2024-004",
+  },
+];
 
 interface WorkOrderItemsTableProps {
   selectedPoNumber?: string;
+  showMockData?: boolean;
 }
 
-export const WorkOrderItemsTable = ({ selectedPoNumber }: WorkOrderItemsTableProps) => {
+export const WorkOrderItemsTable = ({ selectedPoNumber, showMockData = true }: WorkOrderItemsTableProps) => {
   const navigate = useNavigate();
+  
+  const displayData = showMockData ? mockData : [];
   
   return (
     <div className="border rounded-lg overflow-hidden">
@@ -49,7 +118,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber }: WorkOrderItemsTablePro
           </tr>
         </thead>
         <tbody>
-          {mockData.map((item, index) => (
+          {displayData.map((item, index) => (
             <tr key={item.id} className={`border-t ${index > 0 ? 'hover:bg-muted/50' : ''}`}>
               <td className="p-3">
                 <Button 
