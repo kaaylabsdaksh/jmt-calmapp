@@ -416,7 +416,6 @@ const AddNewWorkOrder = () => {
     { value: "account-info", label: "Account Info", icon: CreditCard, shortLabel: "Account" },
     { value: "contacts", label: "Work Order Contacts", icon: Users, shortLabel: "Contacts" },
     { value: "items", label: "Work Order Items", icon: Package, shortLabel: "Items" },
-    { value: "quote", label: "Quote Details", icon: FileText, shortLabel: "Quote" },
     { value: "estimate", label: "Estimate", icon: Calculator, shortLabel: "Est" },
     { value: "fail-log", label: "Fail Log", icon: AlertCircle, shortLabel: "Fail" },
     { value: "external", label: "External Files", icon: ExternalLink, shortLabel: "Ext" },
@@ -3035,13 +3034,6 @@ const AddNewWorkOrder = () => {
               </Card>
             </TabsContent>
 
-            <TabsContent value="quote">
-              <Card>
-                <CardContent className="p-6">
-                  <p className="text-muted-foreground">Quote Details content coming soon...</p>
-                </CardContent>
-              </Card>
-            </TabsContent>
 
             <TabsContent value="estimate">
               <EstimateDetails />
