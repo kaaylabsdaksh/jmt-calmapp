@@ -1730,24 +1730,7 @@ const AddNewWorkOrder = () => {
                   <div className="space-y-4 sm:space-y-6">
                      {/* Action Buttons */}
                      {viewMode === 'receiving' ? (
-                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2 sm:gap-3">
-                        <Button 
-                          onClick={() => {
-                            const newState = !isQuickAddExpanded;
-                            setIsQuickAddExpanded(newState);
-                            if (newState) {
-                              setIsCopyFromWOExpanded(false);
-                              setIsSpecialActionExpanded(false);
-                              setIsCreateUnusedItemsExpanded(false);
-                              setTimeout(() => document.getElementById('quick-add-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
-                            }
-                          }}
-                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
-                        >
-                          <Plus className="w-3 h-3 sm:w-4 sm:h-4" />
-                          <span className="hidden sm:inline">Quick Add New Items</span>
-                          <span className="sm:hidden">Quick Add</span>
-                        </Button>
+                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
                         <Button className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm">
                           <QrCode className="w-3 h-3 sm:w-4 sm:h-4" />
                           <span className="hidden sm:inline">Print QR Sheet</span>
@@ -1760,7 +1743,6 @@ const AddNewWorkOrder = () => {
                             if (newState) {
                               setIsCopyFromWOExpanded(false);
                               setIsSpecialActionExpanded(false);
-                              setIsQuickAddExpanded(false);
                               setTimeout(() => document.getElementById('create-unused-items-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
                             }
                           }}
@@ -1777,7 +1759,6 @@ const AddNewWorkOrder = () => {
                             if (newState) {
                               setIsSpecialActionExpanded(false);
                               setIsCreateUnusedItemsExpanded(false);
-                              setIsQuickAddExpanded(false);
                               setTimeout(() => document.getElementById('copy-from-other-wo')?.scrollIntoView({ behavior: 'smooth' }), 100);
                             }
                           }}
@@ -1794,7 +1775,6 @@ const AddNewWorkOrder = () => {
                             if (newState) {
                               setIsCopyFromWOExpanded(false);
                               setIsCreateUnusedItemsExpanded(false);
-                              setIsQuickAddExpanded(false);
                               setTimeout(() => document.getElementById('special-action-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
                             }
                           }}
@@ -1875,8 +1855,7 @@ const AddNewWorkOrder = () => {
 
 
                     {/* Quick Add Section */}
-                    {isQuickAddExpanded && (
-                      <div id="quick-add-section" className="bg-muted/30 p-4 rounded-lg border-2 border-primary/20">
+                    <div id="quick-add-section" className="bg-muted/30 p-4 rounded-lg border-2 border-primary/20">
                         <div className="flex flex-col gap-4">
                           <div className="flex items-center gap-2">
                             <Plus className="w-5 h-5 text-primary" />
@@ -2250,7 +2229,6 @@ const AddNewWorkOrder = () => {
                             <Button 
                               variant="outline"
                               onClick={() => {
-                                setIsQuickAddExpanded(false);
                                 setQuickAddData({
                                   type: "SINGLE",
                                   calFreq: "",
@@ -2327,7 +2305,6 @@ const AddNewWorkOrder = () => {
                                   duration: 1500,
                                 });
                                 
-                                setIsQuickAddExpanded(false);
                                 setQuickAddData({
                                   type: "SINGLE",
                                   calFreq: "",
@@ -2361,7 +2338,6 @@ const AddNewWorkOrder = () => {
                           </div>
                         </div>
                       </div>
-                    )}
 
                     {/* Copy From Other WO Section */}
                     {isCopyFromWOExpanded && (
