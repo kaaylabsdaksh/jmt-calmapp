@@ -31,13 +31,12 @@ const AddNewWorkOrder = () => {
 
   // Check for navigation state on mount
   useEffect(() => {
-    if (location.state && 'showItems' in location.state) {
-      // Coming from work order click - pre-fill and show items
+    if (location.state && 'workOrderId' in location.state) {
+      // Coming from work order click - pre-fill and show general tab
       const { accountNumber, customer, workOrderId } = location.state as { 
         accountNumber: string; 
         customer: string; 
         workOrderId: string;
-        showItems: boolean;
       };
       
       setWorkOrderData(prev => ({
@@ -50,7 +49,7 @@ const AddNewWorkOrder = () => {
       }));
       setIsSaved(true);
       setHasContact(true);
-      setActiveTab("items");
+      setActiveTab("general");
     } else {
       // Normal entry - reset fields
       setWorkOrderData(prev => ({
