@@ -454,8 +454,8 @@ const AddNewWorkOrder = () => {
 
   // Function to check if a tab should be disabled
   const isTabDisabled = (tabValue: string) => {
-    // Always disable warranty tab
-    if (tabValue === "warranty") {
+    // Always disable these tabs
+    if (["warranty", "estimate", "fail-log", "cert"].includes(tabValue)) {
       return true;
     }
     
@@ -476,7 +476,7 @@ const AddNewWorkOrder = () => {
       return !["general", "account-info", "contacts"].includes(tabValue);
     }
     
-    // If saved with contact, enable all tabs except warranty
+    // If saved with contact, enable all tabs except the disabled ones
     return false;
   };
 
