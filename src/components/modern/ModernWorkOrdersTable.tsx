@@ -4780,8 +4780,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                               state: {
                                 workOrderId: item.workOrderId,
                                 accountNumber: "1500.00", // TODO: Get from actual data
-                                customer: item.customer,
-                                showItems: true
+                                customer: item.customer
                               }
                             });
                           }}
@@ -4910,8 +4909,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                                 state: {
                                   workOrderId: item.workOrderId,
                                   accountNumber: "1500.00", // TODO: Get from actual data
-                                  customer: item.customer,
-                                  showItems: true
+                                  customer: item.customer
                                 }
                               });
                             }}
