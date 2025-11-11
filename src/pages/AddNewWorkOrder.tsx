@@ -1871,7 +1871,7 @@ const AddNewWorkOrder = () => {
                             <h4 className="text-xs font-semibold text-muted-foreground uppercase">General Information</h4>
                           </CardHeader>
                           <CardContent className="p-3 pt-2">
-                            <div className="space-y-3">
+                            <div className="grid grid-cols-2 gap-3">
                               <div className="space-y-1">
                                 <Label htmlFor="qa-type" className="text-xs font-medium">Type</Label>
                                 <Select 
@@ -1990,7 +1990,7 @@ const AddNewWorkOrder = () => {
                             <h4 className="text-xs font-semibold text-muted-foreground uppercase">Arrival Information</h4>
                           </CardHeader>
                           <CardContent className="p-3 pt-2">
-                            <div className="space-y-3">
+                            <div className="grid grid-cols-2 gap-3">
                               <div className="space-y-1">
                                 <Label htmlFor="qa-arrivalDate" className="text-xs font-medium">
                                   Date <span className="text-destructive">*</span>
@@ -2128,7 +2128,7 @@ const AddNewWorkOrder = () => {
                             <h4 className="text-xs font-semibold text-muted-foreground uppercase">Other Information</h4>
                           </CardHeader>
                           <CardContent className="p-3 pt-2 space-y-4">
-                            <div className="space-y-3">
+                            <div className="grid grid-cols-2 gap-3">
                               <div className="space-y-1">
                                 <Label htmlFor="qa-poNumber" className="text-xs font-medium">
                                   PO Number <span className="text-destructive">*</span>
