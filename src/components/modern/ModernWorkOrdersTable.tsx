@@ -4776,7 +4776,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
-                            navigate(`/add-new-work-order`, {
+                            navigate(`/edit-batch-work-order`, {
                               state: {
                                 workOrderId: item.workOrderId,
                                 accountNumber: "1500.00", // TODO: Get from actual data
@@ -4905,7 +4905,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
-                              navigate(`/add-new-work-order`, {
+                              navigate(`/edit-batch-work-order`, {
                                 state: {
                                   workOrderId: item.workOrderId,
                                   accountNumber: "1500.00", // TODO: Get from actual data
