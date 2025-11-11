@@ -308,71 +308,7 @@ const AddNewWorkOrder = () => {
     ccCost: string;
     tf: string;
     capableLocations: string;
-  }>>([
-    {
-      id: "rec-001",
-      itemNumber: "DMM-001",
-      calFreq: "12",
-      actionCode: "rc",
-      priority: "normal",
-      manufacturer: "3d-instruments",
-      model: "DM-5000",
-      description: "Digital Multimeter with advanced measurement capabilities",
-      mfgSerial: "SN123456",
-      custId: "CUST-001",
-      custSN: "C001",
-      assetNumber: "ASSET-001",
-      iso17025: "yes",
-      estimate: "$125.00",
-      newEquip: "no",
-      needByDate: "2024-12-15",
-      ccCost: "$50.00",
-      tf: "yes",
-      capableLocations: "Lab A, Lab B"
-    },
-    {
-      id: "rec-002", 
-      itemNumber: "OSC-002",
-      calFreq: "3",
-      actionCode: "repair",
-      priority: "expedite",
-      manufacturer: "3m",
-      model: "OSC-3000",
-      description: "High frequency oscilloscope for signal analysis",
-      mfgSerial: "SN789012",
-      custId: "CUST-002",
-      custSN: "C002",
-      assetNumber: "ASSET-002",
-      iso17025: "yes",
-      estimate: "$350.00",
-      newEquip: "no",
-      needByDate: "2024-11-30",
-      ccCost: "$75.00",
-      tf: "no",
-      capableLocations: "Lab C"
-    },
-    {
-      id: "rec-003",
-      itemNumber: "PSU-003",
-      calFreq: "1",
-      actionCode: "cc",
-      priority: "rush",
-      manufacturer: "4b-components",
-      model: "PWR-500",
-      description: "Precision power supply unit with variable output",
-      mfgSerial: "SN345678",
-      custId: "CUST-003",
-      custSN: "C003",
-      assetNumber: "ASSET-003",
-      iso17025: "no",
-      estimate: "$225.00",
-      newEquip: "yes",
-      needByDate: "2024-12-10",
-      ccCost: "$60.00",
-      tf: "yes",
-      capableLocations: "Lab A, Lab D"
-    }
-  ]);
+  }>>([]);
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Mock account data
