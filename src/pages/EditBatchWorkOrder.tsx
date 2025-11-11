@@ -26,7 +26,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
-import WorkOrderHeader from "@/components/WorkOrderHeader";
+
 
 const EditBatchWorkOrder = () => {
   const navigate = useNavigate();
@@ -720,7 +720,51 @@ const EditBatchWorkOrder = () => {
 
   return (
     <div className="bg-background min-h-screen">
-      <WorkOrderHeader />
+      {/* Navigation Bar */}
+      <div className="bg-card border-b py-4 px-3 sm:px-4 lg:px-6">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <SidebarTrigger className="p-2 rounded-lg hover:bg-blue-500 hover:text-white hover:shadow-md transition-all duration-300 transform hover:scale-105" />
+            <div>
+              <h1 className="text-lg sm:text-xl font-semibold text-foreground">Edit Batch Work Order</h1>
+              <Breadcrumb className="mt-1">
+                <BreadcrumbList>
+                  <BreadcrumbItem>
+                    <BreadcrumbLink 
+                      asChild 
+                      className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      <Link to="/">Home</Link>
+                    </BreadcrumbLink>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator />
+                  <BreadcrumbItem>
+                    <BreadcrumbPage className="text-xs text-foreground font-medium">
+                      Edit Batch Work Order
+                    </BreadcrumbPage>
+                  </BreadcrumbItem>
+                </BreadcrumbList>
+              </Breadcrumb>
+            </div>
+          </div>
+          <div className="flex items-center gap-1 sm:gap-2">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="p-2 rounded-lg hover:bg-blue-500 hover:text-white hover:shadow-md transition-all duration-300 transform hover:scale-105"
+            >
+              <Download className="h-4 w-4" />
+            </Button>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="p-2 rounded-lg hover:bg-blue-500 hover:text-white hover:shadow-md transition-all duration-300 transform hover:scale-105"
+            >
+              <Settings className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+      </div>
 
       {/* Content Area */}
       <div className="py-4 sm:py-6 pb-20 sm:pb-24 px-3 sm:px-4 lg:px-6">
