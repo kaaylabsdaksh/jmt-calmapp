@@ -1864,7 +1864,7 @@ const AddNewWorkOrder = () => {
                         Fill in the required fields to update selected items
                       </p>
 
-                      <div className="flex flex-col gap-4">
+                      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                         {/* GENERAL INFORMATION Card */}
                         <Card>
                           <CardHeader className="pb-4">
