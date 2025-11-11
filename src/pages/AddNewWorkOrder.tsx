@@ -1854,6 +1854,223 @@ const AddNewWorkOrder = () => {
                     )}
 
 
+                    {/* Copy From Other WO Section */}
+                    {isCopyFromWOExpanded && (
+                      <div id="copy-from-other-wo" className="bg-muted/30 p-4 rounded-lg border-2 border-primary/20">
+                        <div className="flex flex-col gap-4">
+                          <div className="flex items-center gap-2">
+                            <Copy className="w-5 h-5 text-primary" />
+                            <h3 className="text-base font-semibold text-foreground">Copy From Other Work Order</h3>
+                          </div>
+                          
+                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                          <div className="space-y-2">
+                            <Label htmlFor="copyWorkOrder" className="text-sm font-medium">
+                              Work Order # <span className="text-destructive">*</span>
+                            </Label>
+                            <Input 
+                              id="copyWorkOrder"
+                              value={copyWorkOrder}
+                              onChange={(e) => setCopyWorkOrder(e.target.value)}
+                              placeholder="WO-123456"
+                              disabled={areOtherFieldsDisabled()}
+                              className="h-10"
+                            />
+                          </div>
+                          
+                          <div className="space-y-2">
+                            <Label className="text-sm font-medium">
+                              Item # From <span className="text-destructive">*</span>
+                            </Label>
+                            <Input 
+                              value={copyItemFrom}
+                              onChange={(e) => {
+                                setCopyItemFrom(e.target.value);
+                                if (e.target.value && copyGroupable) {
+                                  setCopyGroupable("");
+                                }
+                              }}
+                              placeholder="1"
+                              disabled={areOtherFieldsDisabled() || (copyGroupable !== "")}
+                              className="h-10"
+                              type="number"
+                            />
+                          </div>
+
+                          <div className="space-y-2">
+                            <Label className="text-sm font-medium">Item # To</Label>
+                            <Input 
+                              value={copyItemTo}
+                              onChange={(e) => setCopyItemTo(e.target.value)}
+                              placeholder="10"
+                              disabled={areOtherFieldsDisabled() || (copyGroupable !== "")}
+                              className="h-10"
+                              type="number"
+                            />
+                          </div>
+
+                          <div className="space-y-2">
+                            <Label htmlFor="copyGroupable" className="text-sm font-medium">
+                              Groupable <span className="text-destructive">*</span>
+                            </Label>
+                            <Select 
+                              value={copyGroupable} 
+                              onValueChange={(value) => {
+                                setCopyGroupable(value);
+                                if (value && copyItemFrom) {
+                                  setCopyItemFrom("");
+                                  setCopyItemTo("");
+                                }
+                              }}
+                              disabled={areOtherFieldsDisabled() || (copyItemFrom !== "")}
+                            >
+                              <SelectTrigger id="copyGroupable" className="h-10">
+                                <SelectValue placeholder="Select..." />
+                              </SelectTrigger>
+                              <SelectContent className="bg-background border shadow-lg z-50">
+                                <SelectItem value="yes">Yes</SelectItem>
+                                <SelectItem value="no">No</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                        </div>
+
+                        <div className="flex justify-end">
+                          <Button 
+                            onClick={handleCopyFromOtherWO}
+                            className="bg-primary hover:bg-primary/90 flex items-center gap-2 h-10"
+                            disabled={areOtherFieldsDisabled()}
+                          >
+                            <Copy className="w-4 h-4" />
+                            Copy Items
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                    )}
+
+                    {/* Special Action Section */}
+                    {isSpecialActionExpanded && (
+                      <div id="special-action-section" className="bg-muted/30 p-4 rounded-lg overflow-x-auto">
+                        <div className="flex flex-col gap-4">
+                          <div className="flex items-center gap-2">
+                            <Wand2 className="w-5 h-5 text-primary" />
+                            <h3 className="text-base font-semibold text-foreground">Special Action</h3>
+                          </div>
+                        
+                          <div className="flex items-center gap-4 min-w-fit">
+                            <Select
+                              value={selectedSpecialAction}
+                              onValueChange={(value) => {
+                                setSelectedSpecialAction(value);
+                                setSpecialActionComment("");
+                                setSpecialActionCommentType("");
+                                setCalFreqValue("");
+                                setPoNumberValue("");
+                                setTfStatusValue("");
+                                setCurrentEslType("");
+                                setChangeToEslType("");
+                                setClearInvoiceData(false);
+                                setCustomerWaitStatus("");
+                                setDeliverByDate("");
+                              }}
+                            >
+                              <SelectTrigger className="w-48 border-gray-400">
+                                <SelectValue placeholder="Select action..." />
+                              </SelectTrigger>
+                              <SelectContent className="bg-background border shadow-lg z-50 max-h-60 overflow-y-auto">
+                                <SelectItem value="none" className="text-muted-foreground italic">None</SelectItem>
+                                <SelectItem value="add-comments">Add Comments</SelectItem>
+                                <SelectItem value="cancel-items">Cancel Item(s)</SelectItem>
+                                <SelectItem value="change-esl-type">Change ESL Type</SelectItem>
+                                <SelectItem value="cust-reply-received">Cust Reply Received</SelectItem>
+                                <SelectItem value="del-ticket-followup">Del Ticket Followup</SelectItem>
+                                <SelectItem value="ready-to-bill">Ready to Bill</SelectItem>
+                                <SelectItem value="to-ar">To A/R</SelectItem>
+                                <SelectItem value="update-cal-freq">Update Cal Freq's</SelectItem>
+                                <SelectItem value="update-po">Update PO #'s</SelectItem>
+                                <SelectItem value="update-tf-status">Update T/F Status</SelectItem>
+                                <SelectItem value="waiting-on-customer">Waiting on Customer</SelectItem>
+                                <SelectItem value="wait-cust-followup">Wait Cust Followup</SelectItem>
+                                <SelectItem value="update-deliver-by-date">Update Deliver By Date</SelectItem>
+                                <SelectItem value="print-wos">Print WOs</SelectItem>
+                                <SelectItem value="print-labels">Print Labels</SelectItem>
+                                <SelectItem value="print-barcodes">Print Barcodes</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Create Unused Items Section */}
+                    {isCreateUnusedItemsExpanded && (
+                      <div id="create-unused-items-section" className="bg-muted/30 p-4 rounded-lg border-2 border-primary/20">
+                        <div className="flex flex-col gap-4">
+                          <div className="flex items-center gap-2">
+                            <PackagePlus className="w-5 h-5 text-primary" />
+                            <h3 className="text-base font-semibold text-foreground">Create Unused Items</h3>
+                          </div>
+                          
+                          <div className="flex items-center gap-4">
+                            <Label htmlFor="numUnusedItems" className="text-sm font-medium whitespace-nowrap">
+                              # of Items:
+                            </Label>
+                            <Input 
+                              id="numUnusedItems"
+                              type="number"
+                              min="1"
+                              value={numUnusedItems}
+                              onChange={(e) => setNumUnusedItems(e.target.value)}
+                              placeholder="0"
+                              className="w-32 border-gray-400"
+                            />
+                            <Button 
+                              size="sm" 
+                              className="bg-primary hover:bg-primary/90 text-primary-foreground"
+                              onClick={() => {
+                                const num = parseInt(numUnusedItems);
+                                if (num > 0) {
+                                  const newItems = Array.from({ length: num }, (_, index) => ({
+                                    id: `unused-${Date.now()}-${index}`,
+                                    itemNumber: "",
+                                    calFreq: "",
+                                    actionCode: "",
+                                    priority: "",
+                                    manufacturer: "",
+                                    model: "",
+                                    description: "",
+                                    mfgSerial: "",
+                                    custId: "",
+                                    custSN: "",
+                                    assetNumber: "",
+                                    iso17025: "",
+                                    estimate: "",
+                                    newEquip: "",
+                                    needByDate: "",
+                                    ccCost: "",
+                                    tf: "",
+                                    capableLocations: ""
+                                  }));
+                                  setReceivingItems([...receivingItems, ...newItems]);
+                                  setNumUnusedItems("");
+                                  setIsCreateUnusedItemsExpanded(false);
+                                  toast({
+                                    title: "Success",
+                                    description: `${num} unused item${num > 1 ? 's' : ''} created successfully`,
+                                    duration: 1500,
+                                  });
+                                  setTimeout(() => document.getElementById('items-table')?.scrollIntoView({ behavior: 'smooth' }), 100);
+                                }
+                              }}
+                            >
+                              Create
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
                     {/* Quick Add Section */}
                     <div id="quick-add-section" className="space-y-4">
                       <div className="flex items-center gap-2">
@@ -2350,659 +2567,6 @@ const AddNewWorkOrder = () => {
                         </Card>
                       </div>
                     </div>
-
-                    {/* Copy From Other WO Section */}
-                    {isCopyFromWOExpanded && (
-                      <div id="copy-from-other-wo" className="bg-muted/30 p-4 rounded-lg border-2 border-primary/20">
-                        <div className="flex flex-col gap-4">
-                          <div className="flex items-center gap-2">
-                            <Copy className="w-5 h-5 text-primary" />
-                            <h3 className="text-base font-semibold text-foreground">Copy From Other Work Order</h3>
-                          </div>
-                          
-                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                          <div className="space-y-2">
-                            <Label htmlFor="copyWorkOrder" className="text-sm font-medium">
-                              Work Order # <span className="text-destructive">*</span>
-                            </Label>
-                            <Input 
-                              id="copyWorkOrder"
-                              value={copyWorkOrder}
-                              onChange={(e) => setCopyWorkOrder(e.target.value)}
-                              placeholder="WO-123456"
-                              disabled={areOtherFieldsDisabled()}
-                              className="h-10"
-                            />
-                          </div>
-                          
-                          <div className="space-y-2">
-                            <Label className="text-sm font-medium">
-                              Item # From <span className="text-destructive">*</span>
-                            </Label>
-                            <Input 
-                              value={copyItemFrom}
-                              onChange={(e) => {
-                                setCopyItemFrom(e.target.value);
-                                // Clear groupable when item from is filled
-                                if (e.target.value && copyGroupable) {
-                                  setCopyGroupable("");
-                                }
-                              }}
-                              placeholder="1"
-                              disabled={areOtherFieldsDisabled() || (copyGroupable !== "")}
-                              className="h-10"
-                              type="number"
-                            />
-                          </div>
-
-                          <div className="space-y-2">
-                            <Label className="text-sm font-medium">Item # To</Label>
-                            <Input 
-                              value={copyItemTo}
-                              onChange={(e) => setCopyItemTo(e.target.value)}
-                              placeholder="10"
-                              disabled={areOtherFieldsDisabled() || (copyGroupable !== "")}
-                              className="h-10"
-                              type="number"
-                            />
-                          </div>
-
-                          <div className="space-y-2">
-                            <Label htmlFor="copyGroupable" className="text-sm font-medium">
-                              Groupable <span className="text-destructive">*</span>
-                            </Label>
-                            <Select 
-                              value={copyGroupable} 
-                              onValueChange={(value) => {
-                                setCopyGroupable(value);
-                                // Clear item range when groupable is selected
-                                if (value && copyItemFrom) {
-                                  setCopyItemFrom("");
-                                  setCopyItemTo("");
-                                }
-                              }}
-                              disabled={areOtherFieldsDisabled() || (copyItemFrom !== "")}
-                            >
-                              <SelectTrigger id="copyGroupable" className="h-10">
-                                <SelectValue placeholder="Select..." />
-                              </SelectTrigger>
-                              <SelectContent className="bg-background border shadow-lg z-50">
-                                <SelectItem value="yes">Yes</SelectItem>
-                                <SelectItem value="no">No</SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </div>
-                        </div>
-
-                        <div className="flex justify-end">
-                          <Button 
-                            onClick={handleCopyFromOtherWO}
-                            className="bg-primary hover:bg-primary/90 flex items-center gap-2 h-10"
-                            disabled={areOtherFieldsDisabled()}
-                          >
-                            <Copy className="w-4 h-4" />
-                            Copy Items
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                    )}
-
-                    {/* Special Action Section */}
-                    {isSpecialActionExpanded && (
-                      <div id="special-action-section" className="bg-muted/30 p-4 rounded-lg overflow-x-auto">
-                        <div className="flex flex-col gap-4">
-                          <div className="flex items-center gap-2">
-                            <Wand2 className="w-5 h-5 text-primary" />
-                            <h3 className="text-base font-semibold text-foreground">Special Action</h3>
-                          </div>
-                        
-                          <div className="flex items-center gap-4 min-w-fit">
-                            <Select
-                              value={selectedSpecialAction}
-                              onValueChange={(value) => {
-                                setSelectedSpecialAction(value);
-                                // Reset form fields when action changes
-                                setSpecialActionComment("");
-                                setSpecialActionCommentType("");
-                                setCalFreqValue("");
-                                setPoNumberValue("");
-                                setTfStatusValue("");
-                                setCurrentEslType("");
-                                setChangeToEslType("");
-                                setClearInvoiceData(false);
-                                setCustomerWaitStatus("");
-                                setDeliverByDate("");
-                              }}
-                            >
-                              <SelectTrigger className="w-48 border-gray-400">
-                                <SelectValue placeholder="Select action..." />
-                              </SelectTrigger>
-                              <SelectContent className="bg-background border shadow-lg z-50 max-h-60 overflow-y-auto">
-                                <SelectItem value="none" className="text-muted-foreground italic">None</SelectItem>
-                                <SelectItem value="add-comments">Add Comments</SelectItem>
-                                <SelectItem value="cancel-items">Cancel Item(s)</SelectItem>
-                                <SelectItem value="change-esl-type">Change ESL Type</SelectItem>
-                                <SelectItem value="cust-reply-received">Cust Reply Received</SelectItem>
-                                <SelectItem value="del-ticket-followup">Del Ticket Followup</SelectItem>
-                                <SelectItem value="ready-to-bill">Ready to Bill</SelectItem>
-                                <SelectItem value="to-ar">To A/R</SelectItem>
-                                <SelectItem value="update-cal-freq">Update Cal Freq's</SelectItem>
-                                <SelectItem value="update-po">Update PO #'s</SelectItem>
-                                <SelectItem value="update-tf-status">Update T/F Status</SelectItem>
-                                <SelectItem value="waiting-on-customer">Waiting on Customer</SelectItem>
-                                <SelectItem value="wait-cust-followup">Wait Cust Followup</SelectItem>
-                                <SelectItem value="update-deliver-by-date">Update Deliver By Date</SelectItem>
-                                <SelectItem value="print-wos">Print WOs</SelectItem>
-                                <SelectItem value="print-labels">Print Labels</SelectItem>
-                                <SelectItem value="print-barcodes">Print Barcodes</SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </div>
-
-                        {/* Special Action Form Fields */}
-                        {selectedSpecialAction && selectedSpecialAction !== "none" && (
-                        <div className="bg-muted/30 border rounded-lg p-4 space-y-3 mt-4">
-                          {/* Add Comments */}
-                          {selectedSpecialAction === "add-comments" && (
-                            <>
-                              <div className="flex items-center gap-4 flex-wrap">
-                                <div className="flex items-center gap-2">
-                                  <Label className="text-sm font-medium whitespace-nowrap">Comment Type</Label>
-                                  <Select value={specialActionCommentType} onValueChange={setSpecialActionCommentType}>
-                                    <SelectTrigger className="w-60 border-gray-400">
-                                      <SelectValue placeholder="Select..." />
-                                    </SelectTrigger>
-                                    <SelectContent className="bg-background border shadow-lg z-50 max-h-80 overflow-y-auto">
-                                      <SelectItem value="sales">Sales</SelectItem>
-                                      <SelectItem value="sales-order">Sales Order</SelectItem>
-                                      <SelectItem value="shipping">Shipping</SelectItem>
-                                      <SelectItem value="delivery">Delivery</SelectItem>
-                                      <SelectItem value="receiving">Receiving</SelectItem>
-                                      <SelectItem value="technical">Technical</SelectItem>
-                                      <SelectItem value="purchasing">Purchasing</SelectItem>
-                                      <SelectItem value="accounting">Accounting</SelectItem>
-                                      <SelectItem value="qa">QA</SelectItem>
-                                      <SelectItem value="rental">Rental</SelectItem>
-                                      <SelectItem value="tf">T/F</SelectItem>
-                                      <SelectItem value="transit">Transit</SelectItem>
-                                      <SelectItem value="other">Other</SelectItem>
-                                      <SelectItem value="onsite">Onsite</SelectItem>
-                                      <SelectItem value="user-status-change">User Status Change</SelectItem>
-                                      <SelectItem value="estimate">Estimate</SelectItem>
-                                      <SelectItem value="hot-list">Hot List</SelectItem>
-                                      <SelectItem value="batch-cert">Batch Cert</SelectItem>
-                                      <SelectItem value="warranty">Warranty</SelectItem>
-                                      <SelectItem value="lost-equip">Lost Equip</SelectItem>
-                                    </SelectContent>
-                                  </Select>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                  <Label className="text-sm font-medium whitespace-nowrap">Enter a comment</Label>
-                                  <Select>
-                                    <SelectTrigger className="w-48 border-gray-400 h-8">
-                                      <SelectValue placeholder="Pre-select Comment Text" />
-                                    </SelectTrigger>
-                                    <SelectContent className="bg-background border shadow-lg z-50">
-                                      <SelectItem value="template1">Template 1</SelectItem>
-                                      <SelectItem value="template2">Template 2</SelectItem>
-                                    </SelectContent>
-                                  </Select>
-                                </div>
-                              </div>
-                              <div className="space-y-2">
-                                <textarea
-                                  className="w-full min-h-[80px] px-3 py-2 text-sm border border-gray-400 rounded-md bg-background"
-                                  placeholder="Enter comment..."
-                                  value={specialActionComment}
-                                  onChange={(e) => setSpecialActionComment(e.target.value)}
-                                />
-                                <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground">
-                                  Set Comments
-                                </Button>
-                              </div>
-                            </>
-                          )}
-
-                          {/* Cancel Item(s) */}
-                          {selectedSpecialAction === "cancel-items" && (
-                            <div className="space-y-2">
-                              <div className="flex items-center gap-2">
-                                <Label className="text-sm font-medium">Enter a comment</Label>
-                                <Select>
-                                  <SelectTrigger className="w-48 border-gray-400 h-8">
-                                    <SelectValue placeholder="Pre-select Comment Text" />
-                                  </SelectTrigger>
-                                  <SelectContent className="bg-background border shadow-lg z-50">
-                                    <SelectItem value="template1">Template 1</SelectItem>
-                                    <SelectItem value="template2">Template 2</SelectItem>
-                                  </SelectContent>
-                                </Select>
-                              </div>
-                              <textarea
-                                className="w-full min-h-[80px] px-3 py-2 text-sm border border-gray-400 rounded-md bg-background"
-                                placeholder="Enter comment..."
-                                value={specialActionComment}
-                                onChange={(e) => setSpecialActionComment(e.target.value)}
-                              />
-                              <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground">
-                                Cancel Item(s)
-                              </Button>
-                            </div>
-                          )}
-
-                          {/* Change ESL Type */}
-                          {selectedSpecialAction === "change-esl-type" && (
-                            <div className="space-y-3">
-                              <div className="flex items-center gap-4 flex-wrap">
-                                <div className="flex items-center gap-2">
-                                  <Label className="text-sm font-medium whitespace-nowrap">Current Item:</Label>
-                                  <Select value={currentEslType} onValueChange={setCurrentEslType}>
-                                    <SelectTrigger className="w-60 border-gray-400">
-                                      <SelectValue placeholder="Select..." />
-                                    </SelectTrigger>
-                                    <SelectContent className="bg-background border shadow-lg z-50">
-                                      <SelectItem value="type1">Type 1</SelectItem>
-                                      <SelectItem value="type2">Type 2</SelectItem>
-                                    </SelectContent>
-                                  </Select>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                  <Label className="text-sm font-medium whitespace-nowrap">Change to:</Label>
-                                  <Select value={changeToEslType} onValueChange={setChangeToEslType}>
-                                    <SelectTrigger className="w-60 border-gray-400">
-                                      <SelectValue placeholder="Select..." />
-                                    </SelectTrigger>
-                                    <SelectContent className="bg-background border shadow-lg z-50">
-                                      <SelectItem value="type1">Type 1</SelectItem>
-                                      <SelectItem value="type2">Type 2</SelectItem>
-                                    </SelectContent>
-                                  </Select>
-                                </div>
-                              </div>
-                              <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground">
-                                Change ESL Type
-                              </Button>
-                            </div>
-                          )}
-
-                          {/* Cust Reply Received */}
-                          {selectedSpecialAction === "cust-reply-received" && (
-                            <div className="space-y-2">
-                              <div className="flex items-center gap-2">
-                                <Label className="text-sm font-medium">Enter a comment</Label>
-                                <Select>
-                                  <SelectTrigger className="w-48 border-gray-400 h-8">
-                                    <SelectValue placeholder="Pre-select Comment Text" />
-                                  </SelectTrigger>
-                                  <SelectContent className="bg-background border shadow-lg z-50">
-                                    <SelectItem value="template1">Template 1</SelectItem>
-                                    <SelectItem value="template2">Template 2</SelectItem>
-                                  </SelectContent>
-                                </Select>
-                              </div>
-                              <textarea
-                                className="w-full min-h-[80px] px-3 py-2 text-sm border border-gray-400 rounded-md bg-background"
-                                placeholder="Enter comment..."
-                                value={specialActionComment}
-                                onChange={(e) => setSpecialActionComment(e.target.value)}
-                              />
-                              <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground">
-                                Set Customer Replied Received
-                              </Button>
-                            </div>
-                          )}
-
-                          {/* Del Ticket Followup */}
-                          {selectedSpecialAction === "del-ticket-followup" && (
-                            <div className="space-y-2">
-                              <div className="flex items-center gap-2">
-                                <Label className="text-sm font-medium">Enter a comment</Label>
-                                <Select>
-                                  <SelectTrigger className="w-48 border-gray-400 h-8">
-                                    <SelectValue placeholder="Pre-select Comment Text" />
-                                  </SelectTrigger>
-                                  <SelectContent className="bg-background border shadow-lg z-50">
-                                    <SelectItem value="template1">Template 1</SelectItem>
-                                    <SelectItem value="template2">Template 2</SelectItem>
-                                  </SelectContent>
-                                </Select>
-                              </div>
-                              <textarea
-                                className="w-full min-h-[80px] px-3 py-2 text-sm border border-gray-400 rounded-md bg-background"
-                                placeholder="Enter comment..."
-                                value={specialActionComment}
-                                onChange={(e) => setSpecialActionComment(e.target.value)}
-                              />
-                              <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground">
-                                Set Del Ticket Followup
-                              </Button>
-                            </div>
-                          )}
-
-                          {/* Ready to Bill */}
-                          {selectedSpecialAction === "ready-to-bill" && (
-                            <div className="space-y-2">
-                              <Label className="text-sm font-medium">Enter a comment</Label>
-                              <textarea
-                                className="w-full min-h-[80px] px-3 py-2 text-sm border border-gray-400 rounded-md bg-background"
-                                placeholder="Enter comment..."
-                                value={specialActionComment}
-                                onChange={(e) => setSpecialActionComment(e.target.value)}
-                              />
-                              <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground">
-                                Set Ready To Bill
-                              </Button>
-                            </div>
-                          )}
-
-                          {/* To A/R */}
-                          {selectedSpecialAction === "to-ar" && (
-                            <>
-                              <div className="flex items-center gap-4 flex-wrap">
-                                <div className="flex items-center gap-2">
-                                  <Label className="text-sm font-medium whitespace-nowrap">Comment Type</Label>
-                                  <Select value={specialActionCommentType} onValueChange={setSpecialActionCommentType}>
-                                    <SelectTrigger className="w-60 border-gray-400">
-                                      <SelectValue placeholder="Select..." />
-                                    </SelectTrigger>
-                                    <SelectContent className="bg-background border shadow-lg z-50">
-                                      <SelectItem value="general">General Comment</SelectItem>
-                                      <SelectItem value="technical">Technical Note</SelectItem>
-                                    </SelectContent>
-                                  </Select>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                  <Checkbox 
-                                    id="clearInvoice"
-                                    checked={clearInvoiceData}
-                                    onCheckedChange={(checked) => setClearInvoiceData(checked as boolean)}
-                                  />
-                                  <Label htmlFor="clearInvoice" className="text-sm font-medium cursor-pointer">
-                                    Clear Invoice Data
-                                  </Label>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                  <Label className="text-sm font-medium whitespace-nowrap">Enter a comment</Label>
-                                  <Select>
-                                    <SelectTrigger className="w-48 border-gray-400 h-8">
-                                      <SelectValue placeholder="Pre-select Comment Text" />
-                                    </SelectTrigger>
-                                    <SelectContent className="bg-background border shadow-lg z-50">
-                                      <SelectItem value="template1">Template 1</SelectItem>
-                                      <SelectItem value="template2">Template 2</SelectItem>
-                                    </SelectContent>
-                                  </Select>
-                                </div>
-                              </div>
-                              <div className="space-y-2">
-                                <textarea
-                                  className="w-full min-h-[80px] px-3 py-2 text-sm border border-gray-400 rounded-md bg-background"
-                                  placeholder="Enter comment..."
-                                  value={specialActionComment}
-                                  onChange={(e) => setSpecialActionComment(e.target.value)}
-                                />
-                                <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground">
-                                  To A/R
-                                </Button>
-                              </div>
-                            </>
-                          )}
-
-                          {/* Update Cal Freq's */}
-                          {selectedSpecialAction === "update-cal-freq" && (
-                            <div className="space-y-2">
-                              <div className="flex items-center gap-4">
-                                <Label className="text-sm font-medium whitespace-nowrap">Cal Freq:</Label>
-                                <Input
-                                  className="w-40 border-gray-400"
-                                  placeholder="Enter frequency"
-                                  value={calFreqValue}
-                                  onChange={(e) => setCalFreqValue(e.target.value)}
-                                />
-                              </div>
-                              <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground">
-                                Update Cal Freq's
-                              </Button>
-                            </div>
-                          )}
-
-                          {/* Update PO #'s */}
-                          {selectedSpecialAction === "update-po" && (
-                            <div className="space-y-2">
-                              <Label className="text-sm font-medium">Enter a PO Number</Label>
-                              <Input
-                                className="w-60 border-gray-400"
-                                placeholder="PO Number"
-                                value={poNumberValue}
-                                onChange={(e) => setPoNumberValue(e.target.value)}
-                              />
-                              <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground">
-                                Update PO #'s
-                              </Button>
-                            </div>
-                          )}
-
-                          {/* Update T/F Status */}
-                          {selectedSpecialAction === "update-tf-status" && (
-                            <div className="space-y-2">
-                              <div className="flex items-center gap-2">
-                                <Label className="text-sm font-medium">Enter a comment</Label>
-                                <Select>
-                                  <SelectTrigger className="w-48 border-gray-400 h-8">
-                                    <SelectValue placeholder="Pre-select Comment Text" />
-                                  </SelectTrigger>
-                                  <SelectContent className="bg-background border shadow-lg z-50">
-                                    <SelectItem value="template1">Template 1</SelectItem>
-                                    <SelectItem value="template2">Template 2</SelectItem>
-                                  </SelectContent>
-                                </Select>
-                              </div>
-                              <textarea
-                                className="w-full min-h-[80px] px-3 py-2 text-sm border border-gray-400 rounded-md bg-background"
-                                placeholder="Enter comment..."
-                                value={specialActionComment}
-                                onChange={(e) => setSpecialActionComment(e.target.value)}
-                              />
-                              <div className="flex items-center gap-4">
-                                <Label className="text-sm font-medium whitespace-nowrap">Enter T/F Status</Label>
-                                <Select value={tfStatusValue} onValueChange={setTfStatusValue}>
-                                  <SelectTrigger className="w-60 border-gray-400">
-                                    <SelectValue placeholder="Select..." />
-                                  </SelectTrigger>
-                                  <SelectContent className="bg-background border shadow-lg z-50">
-                                    <SelectItem value="pass">Pass</SelectItem>
-                                    <SelectItem value="fail">Fail</SelectItem>
-                                    <SelectItem value="pending">Pending</SelectItem>
-                                  </SelectContent>
-                                </Select>
-                              </div>
-                              <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground">
-                                Update T/F Status
-                              </Button>
-                            </div>
-                          )}
-
-                          {/* Wait Cust Followup */}
-                          {selectedSpecialAction === "wait-cust-followup" && (
-                            <div className="space-y-2">
-                              <div className="flex items-center gap-2">
-                                <Label className="text-sm font-medium">Enter a comment</Label>
-                                <Select>
-                                  <SelectTrigger className="w-48 border-gray-400 h-8">
-                                    <SelectValue placeholder="Pre-select Comment Text" />
-                                  </SelectTrigger>
-                                  <SelectContent className="bg-background border shadow-lg z-50">
-                                    <SelectItem value="template1">Template 1</SelectItem>
-                                    <SelectItem value="template2">Template 2</SelectItem>
-                                  </SelectContent>
-                                </Select>
-                              </div>
-                              <textarea
-                                className="w-full min-h-[80px] px-3 py-2 text-sm border border-gray-400 rounded-md bg-background"
-                                placeholder="Enter comment..."
-                                value={specialActionComment}
-                                onChange={(e) => setSpecialActionComment(e.target.value)}
-                              />
-                              <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground">
-                                Wait Cust Followup
-                              </Button>
-                            </div>
-                          )}
-
-                          {/* Waiting on Customer */}
-                          {selectedSpecialAction === "waiting-on-customer" && (
-                            <>
-                              <div className="flex items-center gap-4 flex-wrap">
-                                <div className="flex items-center gap-2">
-                                  <Label className="text-sm font-medium whitespace-nowrap">Customer Wait Status</Label>
-                                  <Select value={customerWaitStatus} onValueChange={setCustomerWaitStatus}>
-                                    <SelectTrigger className="w-60 border-gray-400">
-                                      <SelectValue placeholder="Select..." />
-                                    </SelectTrigger>
-                                    <SelectContent className="bg-background border shadow-lg z-50">
-                                      <SelectItem value="pending-response">Pending Response</SelectItem>
-                                      <SelectItem value="awaiting-approval">Awaiting Approval</SelectItem>
-                                      <SelectItem value="awaiting-parts">Awaiting Parts</SelectItem>
-                                    </SelectContent>
-                                  </Select>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                  <Label className="text-sm font-medium whitespace-nowrap">Enter a comment</Label>
-                                  <Select>
-                                    <SelectTrigger className="w-48 border-gray-400 h-8">
-                                      <SelectValue placeholder="Pre-select Comment Text" />
-                                    </SelectTrigger>
-                                    <SelectContent className="bg-background border shadow-lg z-50">
-                                      <SelectItem value="template1">Template 1</SelectItem>
-                                      <SelectItem value="template2">Template 2</SelectItem>
-                                    </SelectContent>
-                                  </Select>
-                                </div>
-                              </div>
-                              <div className="space-y-2">
-                                <textarea
-                                  className="w-full min-h-[80px] px-3 py-2 text-sm border border-gray-400 rounded-md bg-background"
-                                  placeholder="Enter comment..."
-                                  value={specialActionComment}
-                                  onChange={(e) => setSpecialActionComment(e.target.value)}
-                                />
-                                <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground">
-                                  Set Waiting on Customer
-                                </Button>
-                              </div>
-                            </>
-                          )}
-
-                          {/* Update Deliver By Date */}
-                          {selectedSpecialAction === "update-deliver-by-date" && (
-                            <div className="space-y-2">
-                              <Label className="text-sm font-medium">Enter Deliver By Date</Label>
-                              <Input
-                                type="date"
-                                className="w-60 border-gray-400"
-                                value={deliverByDate}
-                                onChange={(e) => setDeliverByDate(e.target.value)}
-                              />
-                              <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground">
-                                Update Deliver By Date
-                              </Button>
-                            </div>
-                          )}
-
-                          {/* Print WOs */}
-                          {selectedSpecialAction === "print-wos" && (
-                            <Button size="sm" className="bg-muted text-foreground hover:bg-muted/90 border">
-                              Print WOs
-                            </Button>
-                          )}
-
-                          {/* Print Labels */}
-                          {selectedSpecialAction === "print-labels" && (
-                            <Button size="sm" className="bg-muted text-foreground hover:bg-muted/90 border">
-                              Print Label
-                            </Button>
-                          )}
-
-                          {/* Print Barcodes */}
-                          {selectedSpecialAction === "print-barcodes" && (
-                            <Button size="sm" className="bg-muted text-foreground hover:bg-muted/90 border">
-                              Print Barcodes
-                            </Button>
-                          )}
-                        </div>
-                      )}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Create Unused Items Section */}
-                    {isCreateUnusedItemsExpanded && (
-                      <div id="create-unused-items-section" className="bg-muted/30 p-4 rounded-lg border-2 border-primary/20">
-                        <div className="flex flex-col gap-4">
-                          <div className="flex items-center gap-2">
-                            <PackagePlus className="w-5 h-5 text-primary" />
-                            <h3 className="text-base font-semibold text-foreground">Create Unused Items</h3>
-                          </div>
-                          
-                          <div className="flex items-center gap-4">
-                            <Label htmlFor="numUnusedItems" className="text-sm font-medium whitespace-nowrap">
-                              # of Items:
-                            </Label>
-                            <Input 
-                              id="numUnusedItems"
-                              type="number"
-                              min="1"
-                              value={numUnusedItems}
-                              onChange={(e) => setNumUnusedItems(e.target.value)}
-                              placeholder="0"
-                              className="w-32 border-gray-400"
-                            />
-                            <Button 
-                              size="sm" 
-                              className="bg-primary hover:bg-primary/90 text-primary-foreground"
-                              onClick={() => {
-                                const num = parseInt(numUnusedItems);
-                                if (num > 0) {
-                                  const newItems = Array.from({ length: num }, (_, index) => ({
-                                    id: `unused-${Date.now()}-${index}`,
-                                    itemNumber: "",
-                                    calFreq: "",
-                                    actionCode: "",
-                                    priority: "",
-                                    manufacturer: "",
-                                    model: "",
-                                    description: "",
-                                    mfgSerial: "",
-                                    custId: "",
-                                    custSN: "",
-                                    assetNumber: "",
-                                    iso17025: "",
-                                    estimate: "",
-                                    newEquip: "",
-                                    needByDate: "",
-                                    ccCost: "",
-                                    tf: "",
-                                    capableLocations: ""
-                                  }));
-                                  setReceivingItems([...receivingItems, ...newItems]);
-                                  setNumUnusedItems("");
-                                  setIsCreateUnusedItemsExpanded(false);
-                                  toast({
-                                    title: "Success",
-                                    description: `${num} unused item${num > 1 ? 's' : ''} created successfully`,
-                                    duration: 1500,
-                                  });
-                                  setTimeout(() => document.getElementById('items-table')?.scrollIntoView({ behavior: 'smooth' }), 100);
-                                }
-                              }}
-                            >
-                              Create
-                            </Button>
-                          </div>
-                        </div>
-                      </div>
-                    )}
 
                     {/* Conditional View Rendering */}
                     {viewMode === 'receiving' ? (
