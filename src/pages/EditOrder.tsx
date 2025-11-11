@@ -3640,17 +3640,19 @@ const EditOrder = () => {
         </div>
         <div>
           <Label className="text-sm font-medium text-muted-foreground">&nbsp;</Label>
-          <a 
-            href="#"
-            className="text-sm text-primary underline hover:text-primary/80 transition-colors inline-flex items-center gap-1 mt-1"
-            onClick={(e) => {
-              e.preventDefault();
-              console.log('Navigate to Misc Labor Parts and Pricing');
-              // TODO: Add navigation or modal for Misc Labor Parts and Pricing
-            }}
-          >
-            Misc Labor Parts and Pricing
-          </a>
+          <div className="flex items-center mt-1 h-9">
+            <a 
+              href="#"
+              className="text-sm text-foreground underline hover:opacity-80 transition-opacity"
+              onClick={(e) => {
+                e.preventDefault();
+                console.log('Navigate to Misc Labor Parts and Pricing');
+                // TODO: Add navigation or modal for Misc Labor Parts and Pricing
+              }}
+            >
+              Misc Labor Parts and Pricing
+            </a>
+          </div>
         </div>
       </div>
     </div>

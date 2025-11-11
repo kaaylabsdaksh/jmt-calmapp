@@ -811,18 +811,19 @@ const AddNewWorkOrder = () => {
                 </div>
                 <div className="space-y-2">
                   <Label className="text-sm font-medium text-foreground">&nbsp;</Label>
-                  <a 
-                    href="#"
-                    className="text-sm text-primary underline hover:text-primary/80 transition-colors inline-flex items-center gap-1 p-2"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      console.log('Navigate to Misc Labor Parts and Pricing');
-                      // TODO: Add navigation or modal for Misc Labor Parts and Pricing
-                    }}
-                  >
-                    Misc Labor Parts and Pricing
-                    <ExternalLink className="h-3 w-3" />
-                  </a>
+                  <div className="flex items-center h-9 sm:h-10">
+                    <a 
+                      href="#"
+                      className="text-sm text-foreground underline hover:opacity-80 transition-opacity"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        console.log('Navigate to Misc Labor Parts and Pricing');
+                        // TODO: Add navigation or modal for Misc Labor Parts and Pricing
+                      }}
+                    >
+                      Misc Labor Parts and Pricing
+                    </a>
+                  </div>
                 </div>
               </div>
             </CardContent>
