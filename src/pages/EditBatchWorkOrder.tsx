@@ -1199,11 +1199,9 @@ const EditBatchWorkOrder = () => {
                             {/* Arrival Information */}
                             <div className="space-y-1.5">
                               <h4 className="text-xs font-medium text-muted-foreground border-b pb-0.5">Arrival Information</h4>
-                              <div className="space-y-2">
-                                <div className="space-y-1">
-                                  <Label className="text-xs font-medium">
-                                    Date <span className="text-destructive">*</span>
-                                  </Label>
+                              <div className="space-y-1.5">
+                                <div className="flex items-center gap-1.5">
+                                  <Label className="text-xs whitespace-nowrap min-w-[55px]">Date:</Label>
                                   <Popover>
                                     <PopoverTrigger asChild>
                                       <Button
@@ -1228,10 +1226,8 @@ const EditBatchWorkOrder = () => {
                                   </Popover>
                                 </div>
 
-                                <div className="space-y-1">
-                                  <Label className="text-xs font-medium">
-                                    Type <span className="text-destructive">*</span>
-                                  </Label>
+                                <div className="flex items-center gap-1.5">
+                                  <Label className="text-xs whitespace-nowrap min-w-[55px]">Type:</Label>
                                   <Select value={quoteData[selectedQuote].received.arrivalType}>
                                     <SelectTrigger className="h-7 text-xs">
                                       <SelectValue placeholder="Select..." />
@@ -1250,10 +1246,8 @@ const EditBatchWorkOrder = () => {
 
                                 {/* Conditional fields based on arrival type */}
                                 {quoteData[selectedQuote].received.arrivalType === "surplus" && (
-                                  <div className="space-y-1">
-                                    <Label className="text-xs font-medium">
-                                      Location <span className="text-destructive">*</span>
-                                    </Label>
+                                  <div className="flex items-center gap-1.5">
+                                    <Label className="text-xs whitespace-nowrap min-w-[55px]">Location:</Label>
                                     <Input 
                                       placeholder="Enter location"
                                       className="h-7 text-xs"
@@ -1262,10 +1256,8 @@ const EditBatchWorkOrder = () => {
                                 )}
 
                                 {quoteData[selectedQuote].received.arrivalType === "shipped" && (
-                                  <div className="space-y-1">
-                                    <Label className="text-xs font-medium">
-                                      Ship Type <span className="text-destructive">*</span>
-                                    </Label>
+                                  <div className="flex items-center gap-1.5">
+                                    <Label className="text-xs whitespace-nowrap min-w-[55px]">Ship Type:</Label>
                                     <Select>
                                       <SelectTrigger className="h-7 text-xs">
                                         <SelectValue placeholder="Select..." />
@@ -1281,10 +1273,8 @@ const EditBatchWorkOrder = () => {
                                 )}
 
                                 {quoteData[selectedQuote].received.arrivalType === "customer-dropoff" && (
-                                  <div className="space-y-1">
-                                    <Label className="text-xs font-medium">
-                                      Name <span className="text-destructive">*</span>
-                                    </Label>
+                                  <div className="flex items-center gap-1.5">
+                                    <Label className="text-xs whitespace-nowrap min-w-[55px]">Name:</Label>
                                     <Input 
                                       placeholder="Enter name"
                                       className="h-7 text-xs"
@@ -1294,10 +1284,8 @@ const EditBatchWorkOrder = () => {
 
                                 {quoteData[selectedQuote].received.arrivalType === "jm-driver-pickup" && (
                                   <>
-                                    <div className="space-y-1">
-                                      <Label className="text-xs font-medium">
-                                        Driver <span className="text-destructive">*</span>
-                                      </Label>
+                                    <div className="flex items-center gap-1.5">
+                                      <Label className="text-xs whitespace-nowrap min-w-[55px]">Driver:</Label>
                                       <Select>
                                         <SelectTrigger className="h-7 text-xs">
                                           <SelectValue placeholder="Select driver" />
@@ -1309,10 +1297,8 @@ const EditBatchWorkOrder = () => {
                                         </SelectContent>
                                       </Select>
                                     </div>
-                                    <div className="space-y-1">
-                                      <Label className="text-xs font-medium">
-                                        PU Date <span className="text-destructive">*</span>
-                                      </Label>
+                                    <div className="flex items-center gap-1.5">
+                                      <Label className="text-xs whitespace-nowrap min-w-[55px]">PU Date:</Label>
                                       <Popover>
                                         <PopoverTrigger asChild>
                                           <Button
