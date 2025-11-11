@@ -1867,13 +1867,13 @@ const AddNewWorkOrder = () => {
                       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                         {/* GENERAL INFORMATION Card */}
                         <Card>
-                          <CardHeader className="pb-4">
-                            <h4 className="text-sm font-semibold text-muted-foreground uppercase">General Information</h4>
+                          <CardHeader className="p-3 pb-2">
+                            <h4 className="text-xs font-semibold text-muted-foreground uppercase">General Information</h4>
                           </CardHeader>
-                          <CardContent>
-                            <div className="space-y-4">
-                              <div className="space-y-2">
-                                <Label htmlFor="qa-type" className="text-sm font-medium">Type</Label>
+                          <CardContent className="p-3 pt-2">
+                            <div className="space-y-3">
+                              <div className="space-y-1">
+                                <Label htmlFor="qa-type" className="text-xs font-medium">Type</Label>
                                 <Select 
                                   value={quickAddData.type} 
                                   onValueChange={(value) => setQuickAddData({...quickAddData, type: value})}
@@ -1890,8 +1890,8 @@ const AddNewWorkOrder = () => {
                                 </Select>
                               </div>
 
-                              <div className="space-y-2">
-                                <Label htmlFor="qa-calFreq" className="text-sm font-medium">
+                              <div className="space-y-1">
+                                <Label htmlFor="qa-calFreq" className="text-xs font-medium">
                                   Cal Freq <span className="text-destructive">*</span>
                                 </Label>
                                 <Input 
@@ -1903,8 +1903,8 @@ const AddNewWorkOrder = () => {
                                 />
                               </div>
 
-                              <div className="space-y-2">
-                                <Label htmlFor="qa-priority" className="text-sm font-medium">Priority</Label>
+                              <div className="space-y-1">
+                                <Label htmlFor="qa-priority" className="text-xs font-medium">Priority</Label>
                                 <Select 
                                   value={quickAddData.priority} 
                                   onValueChange={(value) => setQuickAddData({...quickAddData, priority: value})}
@@ -1921,8 +1921,8 @@ const AddNewWorkOrder = () => {
                                 </Select>
                               </div>
 
-                              <div className="space-y-2">
-                                <Label htmlFor="qa-location" className="text-sm font-medium">
+                              <div className="space-y-1">
+                                <Label htmlFor="qa-location" className="text-xs font-medium">
                                   Location <span className="text-destructive">*</span>
                                 </Label>
                                 <Select 
@@ -1941,8 +1941,8 @@ const AddNewWorkOrder = () => {
                                 </Select>
                               </div>
 
-                              <div className="space-y-2">
-                                <Label htmlFor="qa-division" className="text-sm font-medium">
+                              <div className="space-y-1">
+                                <Label htmlFor="qa-division" className="text-xs font-medium">
                                   Division <span className="text-destructive">*</span>
                                 </Label>
                                 <Select 
@@ -1961,8 +1961,8 @@ const AddNewWorkOrder = () => {
                                 </Select>
                               </div>
 
-                              <div className="space-y-2">
-                                <Label htmlFor="qa-actionCode" className="text-sm font-medium">
+                              <div className="space-y-1">
+                                <Label htmlFor="qa-actionCode" className="text-xs font-medium">
                                   Action Code <span className="text-destructive">*</span>
                                 </Label>
                                 <Select 
@@ -1986,13 +1986,13 @@ const AddNewWorkOrder = () => {
 
                         {/* ARRIVAL INFORMATION Card */}
                         <Card>
-                          <CardHeader className="pb-4">
-                            <h4 className="text-sm font-semibold text-muted-foreground uppercase">Arrival Information</h4>
+                          <CardHeader className="p-3 pb-2">
+                            <h4 className="text-xs font-semibold text-muted-foreground uppercase">Arrival Information</h4>
                           </CardHeader>
-                          <CardContent>
-                            <div className="space-y-4">
-                              <div className="space-y-2">
-                                <Label htmlFor="qa-arrivalDate" className="text-sm font-medium">
+                          <CardContent className="p-3 pt-2">
+                            <div className="space-y-3">
+                              <div className="space-y-1">
+                                <Label htmlFor="qa-arrivalDate" className="text-xs font-medium">
                                   Date <span className="text-destructive">*</span>
                                 </Label>
                                 <Input 
@@ -2005,8 +2005,8 @@ const AddNewWorkOrder = () => {
                                 />
                               </div>
 
-                              <div className="space-y-2">
-                                <Label htmlFor="qa-arrivalType" className="text-sm font-medium">
+                              <div className="space-y-1">
+                                <Label htmlFor="qa-arrivalType" className="text-xs font-medium">
                                   Type <span className="text-destructive">*</span>
                                 </Label>
                                 <Select 
@@ -2031,8 +2031,8 @@ const AddNewWorkOrder = () => {
 
                               {/* Conditional fields based on arrival type */}
                               {quickAddData.arrivalType === "surplus" && (
-                                <div className="space-y-2">
-                                  <Label htmlFor="qa-arrivalLocation" className="text-sm font-medium">
+                                <div className="space-y-1">
+                                  <Label htmlFor="qa-arrivalLocation" className="text-xs font-medium">
                                     Location <span className="text-destructive">*</span>
                                   </Label>
                                   <Input 
@@ -2046,8 +2046,8 @@ const AddNewWorkOrder = () => {
                               )}
 
                               {quickAddData.arrivalType === "shipped" && (
-                                <div className="space-y-2">
-                                  <Label htmlFor="qa-shipType" className="text-sm font-medium">
+                                <div className="space-y-1">
+                                  <Label htmlFor="qa-shipType" className="text-xs font-medium">
                                     Ship Type <span className="text-destructive">*</span>
                                   </Label>
                                   <Select 
@@ -2069,8 +2069,8 @@ const AddNewWorkOrder = () => {
                               )}
 
                               {quickAddData.arrivalType === "customer-dropoff" && (
-                                <div className="space-y-2">
-                                  <Label htmlFor="qa-customerName" className="text-sm font-medium">
+                                <div className="space-y-1">
+                                  <Label htmlFor="qa-customerName" className="text-xs font-medium">
                                     Name <span className="text-destructive">*</span>
                                   </Label>
                                   <Input 
@@ -2085,8 +2085,8 @@ const AddNewWorkOrder = () => {
 
                               {quickAddData.arrivalType === "jm-driver-pickup" && (
                                 <>
-                                  <div className="space-y-2">
-                                    <Label htmlFor="qa-driver" className="text-sm font-medium">
+                                  <div className="space-y-1">
+                                    <Label htmlFor="qa-driver" className="text-xs font-medium">
                                       Driver <span className="text-destructive">*</span>
                                     </Label>
                                     <Select 
@@ -2104,8 +2104,8 @@ const AddNewWorkOrder = () => {
                                       </SelectContent>
                                     </Select>
                                   </div>
-                                  <div className="space-y-2">
-                                    <Label htmlFor="qa-puDate" className="text-sm font-medium">
+                                  <div className="space-y-1">
+                                    <Label htmlFor="qa-puDate" className="text-xs font-medium">
                                       PU Date <span className="text-destructive">*</span>
                                     </Label>
                                     <Input 
@@ -2124,13 +2124,13 @@ const AddNewWorkOrder = () => {
 
                         {/* OTHER INFORMATION Card */}
                         <Card>
-                          <CardHeader className="pb-4">
-                            <h4 className="text-sm font-semibold text-muted-foreground uppercase">Other Information</h4>
+                          <CardHeader className="p-3 pb-2">
+                            <h4 className="text-xs font-semibold text-muted-foreground uppercase">Other Information</h4>
                           </CardHeader>
-                          <CardContent className="space-y-6">
-                            <div className="space-y-4">
-                              <div className="space-y-2">
-                                <Label htmlFor="qa-poNumber" className="text-sm font-medium">
+                          <CardContent className="p-3 pt-2 space-y-4">
+                            <div className="space-y-3">
+                              <div className="space-y-1">
+                                <Label htmlFor="qa-poNumber" className="text-xs font-medium">
                                   PO Number <span className="text-destructive">*</span>
                                 </Label>
                                 <Input 
@@ -2142,8 +2142,8 @@ const AddNewWorkOrder = () => {
                                 />
                               </div>
 
-                              <div className="space-y-2">
-                                <Label htmlFor="qa-needByDate" className="text-sm font-medium">
+                              <div className="space-y-1">
+                                <Label htmlFor="qa-needByDate" className="text-xs font-medium">
                                   Need by date <span className="text-destructive">*</span>
                                 </Label>
                                 <Input 
@@ -2156,8 +2156,8 @@ const AddNewWorkOrder = () => {
                                 />
                               </div>
 
-                              <div className="space-y-2">
-                                <Label htmlFor="qa-deliverBy" className="text-sm font-medium">
+                              <div className="space-y-1">
+                                <Label htmlFor="qa-deliverBy" className="text-xs font-medium">
                                   Deliver By Date
                                 </Label>
                                 <Input 
@@ -2170,8 +2170,8 @@ const AddNewWorkOrder = () => {
                                 />
                               </div>
 
-                              <div className="space-y-2">
-                                <Label htmlFor="qa-soNumber" className="text-sm font-medium">SO Number</Label>
+                              <div className="space-y-1">
+                                <Label htmlFor="qa-soNumber" className="text-xs font-medium">SO Number</Label>
                                 <Input 
                                   id="qa-soNumber"
                                   value={quickAddData.soNumber}
@@ -2183,7 +2183,7 @@ const AddNewWorkOrder = () => {
                             </div>
 
                             {/* Checkboxes */}
-                            <div className="flex flex-wrap gap-4">
+                            <div className="flex flex-wrap gap-3">
                             <div className="flex items-center space-x-2">
                               <Checkbox 
                                 id="qa-newEquip"
@@ -2191,7 +2191,7 @@ const AddNewWorkOrder = () => {
                                 onCheckedChange={(checked) => setQuickAddData({...quickAddData, newEquip: checked as boolean})}
                                 disabled={areOtherFieldsDisabled()}
                               />
-                              <Label htmlFor="qa-newEquip" className="text-sm font-normal cursor-pointer">New Equip</Label>
+                              <Label htmlFor="qa-newEquip" className="text-xs font-normal cursor-pointer">New Equip</Label>
                             </div>
 
                             <div className="flex items-center space-x-2">
@@ -2201,7 +2201,7 @@ const AddNewWorkOrder = () => {
                                 onCheckedChange={(checked) => setQuickAddData({...quickAddData, iso17025: checked as boolean})}
                                 disabled={areOtherFieldsDisabled()}
                               />
-                              <Label htmlFor="qa-iso17025" className="text-sm font-normal cursor-pointer">17025</Label>
+                              <Label htmlFor="qa-iso17025" className="text-xs font-normal cursor-pointer">17025</Label>
                             </div>
 
                             <div className="flex items-center space-x-2">
@@ -2211,7 +2211,7 @@ const AddNewWorkOrder = () => {
                                 onCheckedChange={(checked) => setQuickAddData({...quickAddData, multiParts: checked as boolean})}
                                 disabled={areOtherFieldsDisabled()}
                               />
-                              <Label htmlFor="qa-multiParts" className="text-sm font-normal cursor-pointer">Multi Parts</Label>
+                              <Label htmlFor="qa-multiParts" className="text-xs font-normal cursor-pointer">Multi Parts</Label>
                             </div>
 
                             <div className="flex items-center space-x-2">
@@ -2221,7 +2221,7 @@ const AddNewWorkOrder = () => {
                                 onCheckedChange={(checked) => setQuickAddData({...quickAddData, estimate: checked as boolean})}
                                 disabled={areOtherFieldsDisabled()}
                               />
-                              <Label htmlFor="qa-estimate" className="text-sm font-normal cursor-pointer">Estimate</Label>
+                              <Label htmlFor="qa-estimate" className="text-xs font-normal cursor-pointer">Estimate</Label>
                             </div>
 
                             <div className="flex items-center space-x-2">
@@ -2231,7 +2231,7 @@ const AddNewWorkOrder = () => {
                                 onCheckedChange={(checked) => setQuickAddData({...quickAddData, usedSurplus: checked as boolean})}
                                 disabled={areOtherFieldsDisabled()}
                               />
-                              <Label htmlFor="qa-usedSurplus" className="text-sm font-normal cursor-pointer">Used/Surplus</Label>
+                              <Label htmlFor="qa-usedSurplus" className="text-xs font-normal cursor-pointer">Used/Surplus</Label>
                             </div>
                           </div>
 
