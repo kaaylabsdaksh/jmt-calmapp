@@ -1868,7 +1868,7 @@ const AddNewWorkOrder = () => {
                           {/* GENERAL INFORMATION Section */}
                           <div className="space-y-4">
                             <h4 className="text-sm font-semibold text-muted-foreground uppercase">General Information</h4>
-                            <div className="space-y-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
                               <div className="space-y-2">
                                 <Label htmlFor="qa-type" className="text-sm font-medium">Type</Label>
                                 <Select 
@@ -1983,7 +1983,7 @@ const AddNewWorkOrder = () => {
                           {/* ARRIVAL INFORMATION Section */}
                           <div className="space-y-4">
                             <h4 className="text-sm font-semibold text-muted-foreground uppercase">Arrival Information</h4>
-                            <div className="space-y-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                               <div className="space-y-2">
                                 <Label htmlFor="qa-arrivalDate" className="text-sm font-medium">
                                   Date <span className="text-destructive">*</span>
@@ -2117,7 +2117,7 @@ const AddNewWorkOrder = () => {
                           {/* OTHER INFORMATION Section */}
                           <div className="space-y-4">
                             <h4 className="text-sm font-semibold text-muted-foreground uppercase">Other Information</h4>
-                            <div className="space-y-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                               <div className="space-y-2">
                                 <Label htmlFor="qa-poNumber" className="text-sm font-medium">
                                   PO Number <span className="text-destructive">*</span>
