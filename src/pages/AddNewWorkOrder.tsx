@@ -1178,24 +1178,144 @@ const AddNewWorkOrder = () => {
                             {/* Arrival Information */}
                             <div className="space-y-1.5">
                               <h4 className="text-xs font-medium text-muted-foreground border-b pb-0.5">Arrival Information</h4>
-                              <div className="space-y-1.5">
-                                <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[55px]">Date:</Label>
-                                  <Input type="date" value={quoteData[selectedQuote].received.arrivalDate} className="h-7 text-xs" readOnly />
+                              <div className="grid grid-cols-2 gap-2">
+                                <div className="space-y-1">
+                                  <Label className="text-xs font-medium">
+                                    Date <span className="text-destructive">*</span>
+                                  </Label>
+                                  <Popover>
+                                    <PopoverTrigger asChild>
+                                      <Button
+                                        variant="outline"
+                                        className={cn(
+                                          "w-full justify-start text-left font-normal h-7 text-xs",
+                                          !quoteData[selectedQuote].received.arrivalDate && "text-muted-foreground"
+                                        )}
+                                      >
+                                        <CalendarIcon className="mr-1.5 h-3 w-3" />
+                                        {quoteData[selectedQuote].received.arrivalDate ? format(new Date(quoteData[selectedQuote].received.arrivalDate), "PPP") : <span>Pick a date</span>}
+                                      </Button>
+                                    </PopoverTrigger>
+                                    <PopoverContent className="w-auto p-0" align="start">
+                                      <Calendar
+                                        mode="single"
+                                        selected={quoteData[selectedQuote].received.arrivalDate ? new Date(quoteData[selectedQuote].received.arrivalDate) : undefined}
+                                        initialFocus
+                                        className={cn("p-3 pointer-events-auto")}
+                                      />
+                                    </PopoverContent>
+                                  </Popover>
                                 </div>
-                                <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[55px]">Type:</Label>
+
+                                <div className="space-y-1">
+                                  <Label className="text-xs font-medium">
+                                    Type <span className="text-destructive">*</span>
+                                  </Label>
                                   <Select value={quoteData[selectedQuote].received.arrivalType}>
                                     <SelectTrigger className="h-7 text-xs">
-                                      <SelectValue />
+                                      <SelectValue placeholder="Select..." />
                                     </SelectTrigger>
-                                    <SelectContent className="bg-popover border shadow-lg z-50">
+                                    <SelectContent className="bg-background border shadow-lg z-50">
+                                      <SelectItem value="jm-driver-pickup">JM Driver Pickup</SelectItem>
+                                      <SelectItem value="customer-dropoff">Customer Dropoff</SelectItem>
+                                      <SelectItem value="shipped">Shipped</SelectItem>
                                       <SelectItem value="onsite">Onsite</SelectItem>
-                                      <SelectItem value="pickup">Pickup</SelectItem>
-                                      <SelectItem value="delivery">Delivery</SelectItem>
+                                      <SelectItem value="purchasing-dept">Purchasing Dept.</SelectItem>
+                                      <SelectItem value="lab-standard">Lab Standard</SelectItem>
+                                      <SelectItem value="surplus">Surplus</SelectItem>
                                     </SelectContent>
                                   </Select>
                                 </div>
+
+                                {/* Conditional fields based on arrival type */}
+                                {quoteData[selectedQuote].received.arrivalType === "surplus" && (
+                                  <div className="space-y-1 col-span-2">
+                                    <Label className="text-xs font-medium">
+                                      Location <span className="text-destructive">*</span>
+                                    </Label>
+                                    <Input 
+                                      placeholder="Enter location"
+                                      className="h-7 text-xs"
+                                    />
+                                  </div>
+                                )}
+
+                                {quoteData[selectedQuote].received.arrivalType === "shipped" && (
+                                  <div className="space-y-1 col-span-2">
+                                    <Label className="text-xs font-medium">
+                                      Ship Type <span className="text-destructive">*</span>
+                                    </Label>
+                                    <Select>
+                                      <SelectTrigger className="h-7 text-xs">
+                                        <SelectValue placeholder="Select..." />
+                                      </SelectTrigger>
+                                      <SelectContent className="bg-background border shadow-lg z-50">
+                                        <SelectItem value="dhl">DHL</SelectItem>
+                                        <SelectItem value="fedex">FedEx</SelectItem>
+                                        <SelectItem value="ups">UPS</SelectItem>
+                                        <SelectItem value="usps">USPS</SelectItem>
+                                      </SelectContent>
+                                    </Select>
+                                  </div>
+                                )}
+
+                                {quoteData[selectedQuote].received.arrivalType === "customer-dropoff" && (
+                                  <div className="space-y-1 col-span-2">
+                                    <Label className="text-xs font-medium">
+                                      Name <span className="text-destructive">*</span>
+                                    </Label>
+                                    <Input 
+                                      placeholder="Enter name"
+                                      className="h-7 text-xs"
+                                    />
+                                  </div>
+                                )}
+
+                                {quoteData[selectedQuote].received.arrivalType === "jm-driver-pickup" && (
+                                  <>
+                                    <div className="space-y-1">
+                                      <Label className="text-xs font-medium">
+                                        Driver <span className="text-destructive">*</span>
+                                      </Label>
+                                      <Select>
+                                        <SelectTrigger className="h-7 text-xs">
+                                          <SelectValue placeholder="Select driver" />
+                                        </SelectTrigger>
+                                        <SelectContent className="bg-background border shadow-lg z-50">
+                                          <SelectItem value="driver1">Driver 1</SelectItem>
+                                          <SelectItem value="driver2">Driver 2</SelectItem>
+                                          <SelectItem value="driver3">Driver 3</SelectItem>
+                                        </SelectContent>
+                                      </Select>
+                                    </div>
+                                    <div className="space-y-1">
+                                      <Label className="text-xs font-medium">
+                                        PU Date <span className="text-destructive">*</span>
+                                      </Label>
+                                      <Popover>
+                                        <PopoverTrigger asChild>
+                                          <Button
+                                            variant="outline"
+                                            className={cn(
+                                              "w-full justify-start text-left font-normal h-7 text-xs",
+                                              "text-muted-foreground"
+                                            )}
+                                          >
+                                            <CalendarIcon className="mr-1.5 h-3 w-3" />
+                                            <span>Pick a date</span>
+                                          </Button>
+                                        </PopoverTrigger>
+                                        <PopoverContent className="w-auto p-0" align="start">
+                                          <Calendar
+                                            mode="single"
+                                            initialFocus
+                                            className={cn("p-3 pointer-events-auto")}
+                                          />
+                                        </PopoverContent>
+                                      </Popover>
+                                    </div>
+                                  </>
+                                )}
                               </div>
                             </div>
 
