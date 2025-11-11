@@ -2352,7 +2352,8 @@ const AddNewWorkOrder = () => {
                       </div>
                     )}
 
-                    {/* Quick Add Section */}
+                    {/* Quick Add Section - Only in Receiving View */}
+                    {viewMode === 'receiving' && (
                     <div id="quick-add-section" className="space-y-4">
                       <div className="flex items-center gap-2">
                         <Plus className="w-5 h-5 text-primary" />
@@ -2848,6 +2849,7 @@ const AddNewWorkOrder = () => {
                         </Card>
                       </div>
                     </div>
+                    )}
 
                     {/* Conditional View Rendering */}
                     {viewMode === 'receiving' ? (
