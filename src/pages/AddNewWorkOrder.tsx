@@ -1178,7 +1178,7 @@ const AddNewWorkOrder = () => {
                             {/* Arrival Information */}
                             <div className="space-y-1.5">
                               <h4 className="text-xs font-medium text-muted-foreground border-b pb-0.5">Arrival Information</h4>
-                              <div className="grid grid-cols-2 gap-2">
+                              <div className="space-y-2">
                                 <div className="space-y-1">
                                   <Label className="text-xs font-medium">
                                     Date <span className="text-destructive">*</span>
@@ -1229,7 +1229,7 @@ const AddNewWorkOrder = () => {
 
                                 {/* Conditional fields based on arrival type */}
                                 {quoteData[selectedQuote].received.arrivalType === "surplus" && (
-                                  <div className="space-y-1 col-span-2">
+                                  <div className="space-y-1">
                                     <Label className="text-xs font-medium">
                                       Location <span className="text-destructive">*</span>
                                     </Label>
@@ -1241,7 +1241,7 @@ const AddNewWorkOrder = () => {
                                 )}
 
                                 {quoteData[selectedQuote].received.arrivalType === "shipped" && (
-                                  <div className="space-y-1 col-span-2">
+                                  <div className="space-y-1">
                                     <Label className="text-xs font-medium">
                                       Ship Type <span className="text-destructive">*</span>
                                     </Label>
@@ -1260,7 +1260,7 @@ const AddNewWorkOrder = () => {
                                 )}
 
                                 {quoteData[selectedQuote].received.arrivalType === "customer-dropoff" && (
-                                  <div className="space-y-1 col-span-2">
+                                  <div className="space-y-1">
                                     <Label className="text-xs font-medium">
                                       Name <span className="text-destructive">*</span>
                                     </Label>
