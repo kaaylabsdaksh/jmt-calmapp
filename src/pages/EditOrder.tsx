@@ -3602,7 +3602,7 @@ const EditOrder = () => {
   // Render work order header
   const renderWorkOrderHeader = () => (
     <div className="bg-card border border-border rounded-lg p-4 sm:p-6 mb-4 sm:mb-6 mt-6">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-min">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 auto-rows-min">
         <div>
           <Label className="text-sm font-medium text-muted-foreground">Work Order #</Label>
           <Input
@@ -3637,6 +3637,20 @@ const EditOrder = () => {
             placeholder="Contact information"
             className="mt-1"
           />
+        </div>
+        <div>
+          <Label className="text-sm font-medium text-muted-foreground">&nbsp;</Label>
+          <a 
+            href="#"
+            className="text-sm text-primary underline hover:text-primary/80 transition-colors inline-flex items-center gap-1 mt-1"
+            onClick={(e) => {
+              e.preventDefault();
+              console.log('Navigate to Misc Labor Parts and Pricing');
+              // TODO: Add navigation or modal for Misc Labor Parts and Pricing
+            }}
+          >
+            Misc Labor Parts and Pricing
+          </a>
         </div>
       </div>
     </div>
