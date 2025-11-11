@@ -1999,6 +1999,288 @@ const AddNewWorkOrder = () => {
                               </SelectContent>
                             </Select>
                           </div>
+
+                        {/* Special Action Form Fields */}
+                        {selectedSpecialAction && selectedSpecialAction !== "none" && (
+                        <div className="bg-muted/30 border rounded-lg p-4 space-y-3 mt-4">
+                          {/* Add Comments */}
+                          {selectedSpecialAction === "add-comments" && (
+                            <>
+                              <div className="flex items-center gap-4 flex-wrap">
+                                <div className="flex items-center gap-2">
+                                  <Label className="text-sm font-medium whitespace-nowrap">Comment Type</Label>
+                                  <Select value={specialActionCommentType} onValueChange={setSpecialActionCommentType}>
+                                    <SelectTrigger className="w-60 border-gray-400">
+                                      <SelectValue placeholder="Select..." />
+                                    </SelectTrigger>
+                                    <SelectContent className="bg-background border shadow-lg z-50 max-h-80 overflow-y-auto">
+                                      <SelectItem value="sales">Sales</SelectItem>
+                                      <SelectItem value="sales-order">Sales Order</SelectItem>
+                                      <SelectItem value="shipping">Shipping</SelectItem>
+                                      <SelectItem value="delivery">Delivery</SelectItem>
+                                      <SelectItem value="receiving">Receiving</SelectItem>
+                                      <SelectItem value="technical">Technical</SelectItem>
+                                      <SelectItem value="purchasing">Purchasing</SelectItem>
+                                      <SelectItem value="accounting">Accounting</SelectItem>
+                                      <SelectItem value="qa">QA</SelectItem>
+                                      <SelectItem value="rental">Rental</SelectItem>
+                                      <SelectItem value="tf">T/F</SelectItem>
+                                      <SelectItem value="transit">Transit</SelectItem>
+                                      <SelectItem value="other">Other</SelectItem>
+                                      <SelectItem value="onsite">Onsite</SelectItem>
+                                      <SelectItem value="user-status-change">User Status Change</SelectItem>
+                                      <SelectItem value="estimate">Estimate</SelectItem>
+                                      <SelectItem value="hot-list">Hot List</SelectItem>
+                                      <SelectItem value="batch-cert">Batch Cert</SelectItem>
+                                      <SelectItem value="warranty">Warranty</SelectItem>
+                                      <SelectItem value="lost-equip">Lost Equip</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <Label className="text-sm font-medium whitespace-nowrap">Enter a comment</Label>
+                                  <Select>
+                                    <SelectTrigger className="w-48 border-gray-400 h-8">
+                                      <SelectValue placeholder="Pre-select Comment Text" />
+                                    </SelectTrigger>
+                                    <SelectContent className="bg-background border shadow-lg z-50">
+                                      <SelectItem value="template1">Template 1</SelectItem>
+                                      <SelectItem value="template2">Template 2</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+                              </div>
+                              <div className="space-y-2">
+                                <textarea
+                                  className="w-full min-h-[80px] px-3 py-2 text-sm border border-gray-400 rounded-md bg-background"
+                                  placeholder="Enter comment..."
+                                  value={specialActionComment}
+                                  onChange={(e) => setSpecialActionComment(e.target.value)}
+                                />
+                                <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                                  Set Comments
+                                </Button>
+                              </div>
+                            </>
+                          )}
+
+                          {/* Cancel Item(s) */}
+                          {selectedSpecialAction === "cancel-items" && (
+                            <div className="space-y-2">
+                              <div className="flex items-center gap-2">
+                                <Label className="text-sm font-medium">Enter a comment</Label>
+                                <Select>
+                                  <SelectTrigger className="w-48 border-gray-400 h-8">
+                                    <SelectValue placeholder="Pre-select Comment Text" />
+                                  </SelectTrigger>
+                                  <SelectContent className="bg-background border shadow-lg z-50">
+                                    <SelectItem value="template1">Template 1</SelectItem>
+                                    <SelectItem value="template2">Template 2</SelectItem>
+                                  </SelectContent>
+                                </Select>
+                              </div>
+                              <textarea
+                                className="w-full min-h-[80px] px-3 py-2 text-sm border border-gray-400 rounded-md bg-background"
+                                placeholder="Enter comment..."
+                                value={specialActionComment}
+                                onChange={(e) => setSpecialActionComment(e.target.value)}
+                              />
+                              <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                                Cancel Item(s)
+                              </Button>
+                            </div>
+                          )}
+
+                          {/* Change ESL Type */}
+                          {selectedSpecialAction === "change-esl-type" && (
+                            <div className="space-y-3">
+                              <div className="flex items-center gap-4 flex-wrap">
+                                <div className="flex items-center gap-2">
+                                  <Label className="text-sm font-medium whitespace-nowrap">Current Item:</Label>
+                                  <Select value={currentEslType} onValueChange={setCurrentEslType}>
+                                    <SelectTrigger className="w-60 border-gray-400">
+                                      <SelectValue placeholder="Select..." />
+                                    </SelectTrigger>
+                                    <SelectContent className="bg-background border shadow-lg z-50">
+                                      <SelectItem value="type1">Type 1</SelectItem>
+                                      <SelectItem value="type2">Type 2</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <Label className="text-sm font-medium whitespace-nowrap">Change to:</Label>
+                                  <Select value={changeToEslType} onValueChange={setChangeToEslType}>
+                                    <SelectTrigger className="w-60 border-gray-400">
+                                      <SelectValue placeholder="Select..." />
+                                    </SelectTrigger>
+                                    <SelectContent className="bg-background border shadow-lg z-50">
+                                      <SelectItem value="type1">Type 1</SelectItem>
+                                      <SelectItem value="type2">Type 2</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+                              </div>
+                              <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                                Change ESL Type
+                              </Button>
+                            </div>
+                          )}
+
+                          {/* Cust Reply Received */}
+                          {selectedSpecialAction === "cust-reply-received" && (
+                            <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                              Cust Reply Received
+                            </Button>
+                          )}
+
+                          {/* Del Ticket Followup */}
+                          {selectedSpecialAction === "del-ticket-followup" && (
+                            <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                              Del Ticket Followup
+                            </Button>
+                          )}
+
+                          {/* Ready to Bill */}
+                          {selectedSpecialAction === "ready-to-bill" && (
+                            <div className="flex items-center gap-4">
+                              <div className="flex items-center gap-2">
+                                <Checkbox 
+                                  id="clearInvoiceData"
+                                  checked={clearInvoiceData}
+                                  onCheckedChange={(checked) => setClearInvoiceData(checked as boolean)}
+                                />
+                                <Label htmlFor="clearInvoiceData" className="text-sm font-medium cursor-pointer">
+                                  Clear Invoice Data
+                                </Label>
+                              </div>
+                              <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                                Ready to Bill
+                              </Button>
+                            </div>
+                          )}
+
+                          {/* To A/R */}
+                          {selectedSpecialAction === "to-ar" && (
+                            <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                              To A/R
+                            </Button>
+                          )}
+
+                          {/* Update Cal Freq's */}
+                          {selectedSpecialAction === "update-cal-freq" && (
+                            <div className="flex items-center gap-4">
+                              <Label className="text-sm font-medium">Enter Cal Freq</Label>
+                              <Input
+                                className="w-60 border-gray-400"
+                                value={calFreqValue}
+                                onChange={(e) => setCalFreqValue(e.target.value)}
+                                placeholder="Enter value"
+                              />
+                              <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                                Update Cal Freq
+                              </Button>
+                            </div>
+                          )}
+
+                          {/* Update PO #'s */}
+                          {selectedSpecialAction === "update-po" && (
+                            <div className="flex items-center gap-4">
+                              <Label className="text-sm font-medium">Enter PO Number</Label>
+                              <Input
+                                className="w-60 border-gray-400"
+                                value={poNumberValue}
+                                onChange={(e) => setPoNumberValue(e.target.value)}
+                                placeholder="Enter PO number"
+                              />
+                              <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                                Update PO #
+                              </Button>
+                            </div>
+                          )}
+
+                          {/* Update T/F Status */}
+                          {selectedSpecialAction === "update-tf-status" && (
+                            <div className="flex items-center gap-4">
+                              <Label className="text-sm font-medium">T/F Status</Label>
+                              <Select value={tfStatusValue} onValueChange={setTfStatusValue}>
+                                <SelectTrigger className="w-60 border-gray-400">
+                                  <SelectValue placeholder="Select..." />
+                                </SelectTrigger>
+                                <SelectContent className="bg-background border shadow-lg z-50">
+                                  <SelectItem value="status1">Status 1</SelectItem>
+                                  <SelectItem value="status2">Status 2</SelectItem>
+                                </SelectContent>
+                              </Select>
+                              <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                                Update T/F Status
+                              </Button>
+                            </div>
+                          )}
+
+                          {/* Waiting on Customer */}
+                          {selectedSpecialAction === "waiting-on-customer" && (
+                            <div className="flex items-center gap-4">
+                              <Label className="text-sm font-medium">Wait Status</Label>
+                              <Select value={customerWaitStatus} onValueChange={setCustomerWaitStatus}>
+                                <SelectTrigger className="w-60 border-gray-400">
+                                  <SelectValue placeholder="Select..." />
+                                </SelectTrigger>
+                                <SelectContent className="bg-background border shadow-lg z-50">
+                                  <SelectItem value="pending">Pending</SelectItem>
+                                  <SelectItem value="in-progress">In Progress</SelectItem>
+                                </SelectContent>
+                              </Select>
+                              <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                                Waiting on Customer
+                              </Button>
+                            </div>
+                          )}
+
+                          {/* Wait Cust Followup */}
+                          {selectedSpecialAction === "wait-cust-followup" && (
+                            <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                              Wait Cust Followup
+                            </Button>
+                          )}
+
+                          {/* Update Deliver By Date */}
+                          {selectedSpecialAction === "update-deliver-by-date" && (
+                            <div className="flex items-center gap-4">
+                              <Label className="text-sm font-medium">Enter Deliver By Date</Label>
+                              <Input
+                                type="date"
+                                className="w-60 border-gray-400"
+                                value={deliverByDate}
+                                onChange={(e) => setDeliverByDate(e.target.value)}
+                              />
+                              <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                                Update Deliver By Date
+                              </Button>
+                            </div>
+                          )}
+
+                          {/* Print WOs */}
+                          {selectedSpecialAction === "print-wos" && (
+                            <Button size="sm" className="bg-muted text-foreground hover:bg-muted/90 border">
+                              Print WOs
+                            </Button>
+                          )}
+
+                          {/* Print Labels */}
+                          {selectedSpecialAction === "print-labels" && (
+                            <Button size="sm" className="bg-muted text-foreground hover:bg-muted/90 border">
+                              Print Label
+                            </Button>
+                          )}
+
+                          {/* Print Barcodes */}
+                          {selectedSpecialAction === "print-barcodes" && (
+                            <Button size="sm" className="bg-muted text-foreground hover:bg-muted/90 border">
+                              Print Barcodes
+                            </Button>
+                          )}
+                        </div>
+                        )}
                         </div>
                       </div>
                     )}
