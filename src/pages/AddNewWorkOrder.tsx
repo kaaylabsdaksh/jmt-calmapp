@@ -8,7 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { X, Download, Settings, User, CreditCard, Users, Package, FileText, Calculator, AlertCircle, ExternalLink, Award, Shield, BarChart, Save, LayoutGrid, Table, ChevronDown, Plus, PlusCircle, QrCode, Copy, PackagePlus, Menu, Wand2, BookmarkCheck } from "lucide-react";
+import { X, Download, Settings, User, CreditCard, Users, Package, FileText, Calculator, AlertCircle, ExternalLink, Award, Shield, BarChart, Save, LayoutGrid, Table, ChevronDown, Plus, PlusCircle, QrCode, Copy, PackagePlus, Menu, Wand2, BookmarkCheck, CalendarIcon } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { WorkOrderItemsTable } from "@/components/WorkOrderItemsTable";
@@ -22,6 +22,10 @@ import { RFIDDialog } from "@/components/RFIDDialog";
 import { toast } from "@/hooks/use-toast";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
 
 const AddNewWorkOrder = () => {
   const navigate = useNavigate();
@@ -2494,14 +2498,31 @@ const AddNewWorkOrder = () => {
                                 <Label htmlFor="qa-arrivalDate" className="text-xs font-medium">
                                   Date <span className="text-destructive">*</span>
                                 </Label>
-                                <Input 
-                                  id="qa-arrivalDate"
-                                  type="date"
-                                  value={quickAddData.arrivalDate}
-                                  onChange={(e) => setQuickAddData({...quickAddData, arrivalDate: e.target.value})}
-                                  disabled={areOtherFieldsDisabled()}
-                                  placeholder="dd/mm/yyyy"
-                                />
+                                <Popover>
+                                  <PopoverTrigger asChild>
+                                    <Button
+                                      variant="outline"
+                                      disabled={areOtherFieldsDisabled()}
+                                      className={cn(
+                                        "w-full justify-start text-left font-normal h-10",
+                                        !quickAddData.arrivalDate && "text-muted-foreground"
+                                      )}
+                                    >
+                                      <CalendarIcon className="mr-2 h-4 w-4" />
+                                      {quickAddData.arrivalDate ? format(new Date(quickAddData.arrivalDate), "PPP") : <span>Pick a date</span>}
+                                    </Button>
+                                  </PopoverTrigger>
+                                  <PopoverContent className="w-auto p-0" align="start">
+                                    <Calendar
+                                      mode="single"
+                                      selected={quickAddData.arrivalDate ? new Date(quickAddData.arrivalDate) : undefined}
+                                      onSelect={(date) => setQuickAddData({...quickAddData, arrivalDate: date ? format(date, "yyyy-MM-dd") : ""})}
+                                      disabled={areOtherFieldsDisabled()}
+                                      initialFocus
+                                      className={cn("p-3 pointer-events-auto")}
+                                    />
+                                  </PopoverContent>
+                                </Popover>
                               </div>
 
                               <div className="space-y-1">
@@ -2607,13 +2628,31 @@ const AddNewWorkOrder = () => {
                                     <Label htmlFor="qa-puDate" className="text-xs font-medium">
                                       PU Date <span className="text-destructive">*</span>
                                     </Label>
-                                    <Input 
-                                      id="qa-puDate"
-                                      type="date"
-                                      value={quickAddData.puDate}
-                                      onChange={(e) => setQuickAddData({...quickAddData, puDate: e.target.value})}
-                                      disabled={areOtherFieldsDisabled()}
-                                    />
+                                    <Popover>
+                                      <PopoverTrigger asChild>
+                                        <Button
+                                          variant="outline"
+                                          disabled={areOtherFieldsDisabled()}
+                                          className={cn(
+                                            "w-full justify-start text-left font-normal h-10",
+                                            !quickAddData.puDate && "text-muted-foreground"
+                                          )}
+                                        >
+                                          <CalendarIcon className="mr-2 h-4 w-4" />
+                                          {quickAddData.puDate ? format(new Date(quickAddData.puDate), "PPP") : <span>Pick a date</span>}
+                                        </Button>
+                                      </PopoverTrigger>
+                                      <PopoverContent className="w-auto p-0" align="start">
+                                        <Calendar
+                                          mode="single"
+                                          selected={quickAddData.puDate ? new Date(quickAddData.puDate) : undefined}
+                                          onSelect={(date) => setQuickAddData({...quickAddData, puDate: date ? format(date, "yyyy-MM-dd") : ""})}
+                                          disabled={areOtherFieldsDisabled()}
+                                          initialFocus
+                                          className={cn("p-3 pointer-events-auto")}
+                                        />
+                                      </PopoverContent>
+                                    </Popover>
                                   </div>
                                 </>
                               )}
@@ -2645,28 +2684,62 @@ const AddNewWorkOrder = () => {
                                 <Label htmlFor="qa-needByDate" className="text-xs font-medium">
                                   Need by date <span className="text-destructive">*</span>
                                 </Label>
-                                <Input 
-                                  id="qa-needByDate"
-                                  type="date"
-                                  value={quickAddData.needByDate}
-                                  onChange={(e) => setQuickAddData({...quickAddData, needByDate: e.target.value})}
-                                  placeholder="dd/mm/yyyy"
-                                  disabled={areOtherFieldsDisabled()}
-                                />
+                                <Popover>
+                                  <PopoverTrigger asChild>
+                                    <Button
+                                      variant="outline"
+                                      disabled={areOtherFieldsDisabled()}
+                                      className={cn(
+                                        "w-full justify-start text-left font-normal h-10",
+                                        !quickAddData.needByDate && "text-muted-foreground"
+                                      )}
+                                    >
+                                      <CalendarIcon className="mr-2 h-4 w-4" />
+                                      {quickAddData.needByDate ? format(new Date(quickAddData.needByDate), "PPP") : <span>Pick a date</span>}
+                                    </Button>
+                                  </PopoverTrigger>
+                                  <PopoverContent className="w-auto p-0" align="start">
+                                    <Calendar
+                                      mode="single"
+                                      selected={quickAddData.needByDate ? new Date(quickAddData.needByDate) : undefined}
+                                      onSelect={(date) => setQuickAddData({...quickAddData, needByDate: date ? format(date, "yyyy-MM-dd") : ""})}
+                                      disabled={areOtherFieldsDisabled()}
+                                      initialFocus
+                                      className={cn("p-3 pointer-events-auto")}
+                                    />
+                                  </PopoverContent>
+                                </Popover>
                               </div>
 
                               <div className="space-y-1">
                                 <Label htmlFor="qa-deliverBy" className="text-xs font-medium">
                                   Deliver By Date
                                 </Label>
-                                <Input 
-                                  id="qa-deliverBy"
-                                  type="date"
-                                  value={quickAddData.deliverByDate}
-                                  onChange={(e) => setQuickAddData({...quickAddData, deliverByDate: e.target.value})}
-                                  disabled={areOtherFieldsDisabled()}
-                                  placeholder="dd/mm/yyyy"
-                                />
+                                <Popover>
+                                  <PopoverTrigger asChild>
+                                    <Button
+                                      variant="outline"
+                                      disabled={areOtherFieldsDisabled()}
+                                      className={cn(
+                                        "w-full justify-start text-left font-normal h-10",
+                                        !quickAddData.deliverByDate && "text-muted-foreground"
+                                      )}
+                                    >
+                                      <CalendarIcon className="mr-2 h-4 w-4" />
+                                      {quickAddData.deliverByDate ? format(new Date(quickAddData.deliverByDate), "PPP") : <span>Pick a date</span>}
+                                    </Button>
+                                  </PopoverTrigger>
+                                  <PopoverContent className="w-auto p-0" align="start">
+                                    <Calendar
+                                      mode="single"
+                                      selected={quickAddData.deliverByDate ? new Date(quickAddData.deliverByDate) : undefined}
+                                      onSelect={(date) => setQuickAddData({...quickAddData, deliverByDate: date ? format(date, "yyyy-MM-dd") : ""})}
+                                      disabled={areOtherFieldsDisabled()}
+                                      initialFocus
+                                      className={cn("p-3 pointer-events-auto")}
+                                    />
+                                  </PopoverContent>
+                                </Popover>
                               </div>
 
                               <div className="space-y-1">
