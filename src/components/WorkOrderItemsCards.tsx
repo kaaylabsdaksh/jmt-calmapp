@@ -259,12 +259,9 @@ export const WorkOrderItemsCards = ({ templateItems = [] }: WorkOrderItemsCardsP
               <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center gap-2">
                   <Checkbox />
-                  <button
-                    onClick={() => navigate("/edit-order")}
-                    className="text-blue-600 dark:text-blue-400 hover:underline font-semibold"
-                  >
+                  <span className="font-semibold text-foreground">
                     {item.reportNumber ? `Report #${item.reportNumber}` : `Item #${item.reportNumber}`}
-                  </button>
+                  </span>
                 </div>
                 {item.itemStatus && (
                   <Badge className={getStatusColor(item.itemStatus)}>

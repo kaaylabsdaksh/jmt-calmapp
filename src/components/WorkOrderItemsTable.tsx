@@ -130,14 +130,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber }: WorkOrderItemsTablePro
               <td className="p-3">
                 <Checkbox />
               </td>
-              <td className="p-3">
-                <button
-                  onClick={() => navigate("/edit-order")}
-                  className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
-                >
-                  {item.itemNumber}
-                </button>
-              </td>
+              <td className="p-3">{item.itemNumber}</td>
               <td className="p-3">{item.manufacturer}</td>
               <td className="p-3">{item.model}</td>
               <td className="p-3">{item.serialNumber}</td>
