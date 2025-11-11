@@ -962,7 +962,7 @@ const EditBatchWorkOrder = () => {
                     {/* Work Order Status */}
                     <div className="space-y-2">
                       <Label className="text-sm font-medium">Work Order Status</Label>
-                      <Select value={workOrderData.workOrderStatus} onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, workOrderStatus: value }))} disabled={areOtherFieldsDisabled()}>
+                      <Select value={workOrderData.workOrderStatus} onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, workOrderStatus: value }))} disabled={true}>
                         <SelectTrigger className="h-9 sm:h-10">
                           <SelectValue />
                         </SelectTrigger>
@@ -978,7 +978,7 @@ const EditBatchWorkOrder = () => {
                     {/* Work Order Type */}
                     <div className="space-y-2">
                       <Label className="text-sm font-medium">Work Order Type</Label>
-                      <Select value={workOrderData.workOrderType} onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, workOrderType: value }))} disabled={areOtherFieldsDisabled()}>
+                      <Select value={workOrderData.workOrderType} onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, workOrderType: value }))} disabled={true}>
                         <SelectTrigger className="h-9 sm:h-10">
                           <SelectValue />
                         </SelectTrigger>
