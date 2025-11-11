@@ -1855,19 +1855,22 @@ const AddNewWorkOrder = () => {
 
 
                     {/* Quick Add Section */}
-                    <div id="quick-add-section" className="bg-muted/30 p-4 rounded-lg border-2 border-primary/20">
-                        <div className="flex flex-col gap-4">
-                          <div className="flex items-center gap-2">
-                            <Plus className="w-5 h-5 text-primary" />
-                            <h3 className="text-base font-semibold text-foreground">Quick Add New Items</h3>
-                          </div>
-                          <p className="text-sm text-muted-foreground">
-                            Fill in the required fields to update selected items
-                          </p>
+                    <div id="quick-add-section" className="space-y-4">
+                      <div className="flex items-center gap-2">
+                        <Plus className="w-5 h-5 text-primary" />
+                        <h3 className="text-base font-semibold text-foreground">Quick Add New Items</h3>
+                      </div>
+                      <p className="text-sm text-muted-foreground">
+                        Fill in the required fields to update selected items
+                      </p>
 
-                          {/* GENERAL INFORMATION Section */}
-                          <div className="space-y-4">
+                      <div className="flex flex-col gap-4">
+                        {/* GENERAL INFORMATION Card */}
+                        <Card>
+                          <CardHeader className="pb-4">
                             <h4 className="text-sm font-semibold text-muted-foreground uppercase">General Information</h4>
+                          </CardHeader>
+                          <CardContent>
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
                               <div className="space-y-2">
                                 <Label htmlFor="qa-type" className="text-sm font-medium">Type</Label>
@@ -1978,11 +1981,15 @@ const AddNewWorkOrder = () => {
                                 </Select>
                               </div>
                             </div>
-                          </div>
+                          </CardContent>
+                        </Card>
 
-                          {/* ARRIVAL INFORMATION Section */}
-                          <div className="space-y-4">
+                        {/* ARRIVAL INFORMATION Card */}
+                        <Card>
+                          <CardHeader className="pb-4">
                             <h4 className="text-sm font-semibold text-muted-foreground uppercase">Arrival Information</h4>
+                          </CardHeader>
+                          <CardContent>
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                               <div className="space-y-2">
                                 <Label htmlFor="qa-arrivalDate" className="text-sm font-medium">
@@ -2112,11 +2119,15 @@ const AddNewWorkOrder = () => {
                                 </>
                               )}
                             </div>
-                          </div>
+                          </CardContent>
+                        </Card>
 
-                          {/* OTHER INFORMATION Section */}
-                          <div className="space-y-4">
+                        {/* OTHER INFORMATION Card */}
+                        <Card>
+                          <CardHeader className="pb-4">
                             <h4 className="text-sm font-semibold text-muted-foreground uppercase">Other Information</h4>
+                          </CardHeader>
+                          <CardContent className="space-y-6">
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                               <div className="space-y-2">
                                 <Label htmlFor="qa-poNumber" className="text-sm font-medium">
@@ -2170,10 +2181,9 @@ const AddNewWorkOrder = () => {
                                 />
                               </div>
                             </div>
-                          </div>
 
-                          {/* Checkboxes */}
-                          <div className="flex flex-wrap gap-4 pt-2">
+                            {/* Checkboxes */}
+                            <div className="flex flex-wrap gap-4">
                             <div className="flex items-center space-x-2">
                               <Checkbox 
                                 id="qa-newEquip"
@@ -2336,8 +2346,10 @@ const AddNewWorkOrder = () => {
                               Apply/Save WO
                             </Button>
                           </div>
-                        </div>
+                          </CardContent>
+                        </Card>
                       </div>
+                    </div>
 
                     {/* Copy From Other WO Section */}
                     {isCopyFromWOExpanded && (
