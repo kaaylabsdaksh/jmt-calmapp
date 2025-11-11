@@ -771,7 +771,7 @@ const AddNewWorkOrder = () => {
           {/* Header Info Card */}
           <Card>
             <CardContent className="p-4 sm:p-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-6">
                 <div className="space-y-2">
                   <Label className="text-sm font-medium text-foreground">Work Order #</Label>
                   <div className="text-base sm:text-lg font-bold text-foreground">{workOrderData.workOrderNumber}</div>
@@ -808,6 +808,21 @@ const AddNewWorkOrder = () => {
                 <div className="space-y-2">
                   <Label className="text-sm font-medium text-foreground">Contact</Label>
                   <div className="text-sm text-foreground p-2 bg-muted rounded border">{workOrderData.contact || "Not assigned"}</div>
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium text-foreground">&nbsp;</Label>
+                  <a 
+                    href="#"
+                    className="text-sm text-primary underline hover:text-primary/80 transition-colors inline-flex items-center gap-1 p-2"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      console.log('Navigate to Misc Labor Parts and Pricing');
+                      // TODO: Add navigation or modal for Misc Labor Parts and Pricing
+                    }}
+                  >
+                    Misc Labor Parts and Pricing
+                    <ExternalLink className="h-3 w-3" />
+                  </a>
                 </div>
               </div>
             </CardContent>
