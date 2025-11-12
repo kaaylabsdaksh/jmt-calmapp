@@ -714,26 +714,22 @@ const AddNewWorkOrder = () => {
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="srDocument" className="text-sm font-medium text-foreground">SR Doc</Label>
-                  <div className="relative">
-                    <Input
-                      id="srDocument"
-                      placeholder="SR Document"
-                      value={workOrderData.srDocument}
-                      onChange={(e) => setWorkOrderData(prev => ({ ...prev, srDocument: e.target.value }))}
-                      disabled={areOtherFieldsDisabled()}
-                      className={`h-9 sm:h-10 ${workOrderData.srDocument ? 'text-primary underline cursor-pointer' : ''}`}
-                      onClick={(e) => {
-                        if (workOrderData.srDocument) {
+                  <div className="text-sm text-foreground p-2 bg-muted rounded border h-9 sm:h-10 flex items-center">
+                    {workOrderData.srDocument ? (
+                      <a 
+                        href="#"
+                        className="text-foreground underline hover:opacity-80 transition-opacity inline-flex items-center gap-1"
+                        onClick={(e) => {
                           e.preventDefault();
                           console.log('Opening SR Document:', workOrderData.srDocument);
                           // TODO: Navigate to SR document or open in modal
-                        }
-                      }}
-                    />
-                    {workOrderData.srDocument && (
-                      <ExternalLink 
-                        className="absolute right-2 top-1/2 -translate-y-1/2 h-4 w-4 text-primary pointer-events-none"
-                      />
+                        }}
+                      >
+                        {workOrderData.srDocument}
+                        <ExternalLink className="h-3 w-3" />
+                      </a>
+                    ) : (
+                      <span className="text-muted-foreground">-</span>
                     )}
                   </div>
                 </div>
@@ -747,10 +743,10 @@ const AddNewWorkOrder = () => {
                 </div>
                 <div className="space-y-2">
                   <Label className="text-sm font-medium text-foreground">&nbsp;</Label>
-                  <div className="flex items-center h-9 sm:h-10">
+                  <div className="text-sm text-foreground p-2 bg-muted rounded border h-9 sm:h-10 flex items-center">
                     <a 
                       href="#"
-                      className="text-sm text-foreground underline hover:opacity-80 transition-opacity"
+                      className="text-foreground underline hover:opacity-80 transition-opacity"
                       onClick={(e) => {
                         e.preventDefault();
                         console.log('Navigate to Misc Labor Parts and Pricing');
