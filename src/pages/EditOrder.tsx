@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield, MessageSquare, ChevronDown, ChevronUp } from "lucide-react";
+import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield, MessageSquare, ChevronDown, ChevronUp, ExternalLink } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
 import { SidebarTrigger } from "@/components/ui/sidebar";
@@ -3613,12 +3613,24 @@ const EditOrder = () => {
         </div>
         <div>
           <Label className="text-sm font-medium text-muted-foreground">SR Doc</Label>
-          <Input
-            value={formData.srDoc}
-            onChange={(e) => handleInputChange("srDoc", e.target.value)}
-            placeholder="SR Document"
-            className="mt-1"
-          />
+          <div className="text-sm text-foreground p-2 bg-muted rounded border mt-1 h-9 flex items-center">
+            {formData.srDoc ? (
+              <a 
+                href="#"
+                className="text-foreground underline hover:opacity-80 transition-opacity inline-flex items-center gap-1"
+                onClick={(e) => {
+                  e.preventDefault();
+                  console.log('Opening SR Document:', formData.srDoc);
+                  // TODO: Navigate to SR document or open in modal
+                }}
+              >
+                {formData.srDoc}
+                <ExternalLink className="h-3 w-3" />
+              </a>
+            ) : (
+              <span className="text-muted-foreground">-</span>
+            )}
+          </div>
         </div>
         <div>
           <Label className="text-sm font-medium text-muted-foreground">Salesperson</Label>
@@ -3640,10 +3652,10 @@ const EditOrder = () => {
         </div>
         <div>
           <Label className="text-sm font-medium text-muted-foreground">&nbsp;</Label>
-          <div className="flex items-center mt-1 h-9">
+          <div className="text-sm text-foreground p-2 bg-muted rounded border mt-1 h-9 flex items-center">
             <a 
               href="#"
-              className="text-sm text-foreground underline hover:opacity-80 transition-opacity"
+              className="text-foreground underline hover:opacity-80 transition-opacity"
               onClick={(e) => {
                 e.preventDefault();
                 console.log('Navigate to Misc Labor Parts and Pricing');
