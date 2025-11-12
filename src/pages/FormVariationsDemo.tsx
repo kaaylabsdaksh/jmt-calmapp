@@ -3622,11 +3622,11 @@ const FormVariationsDemo = () => {
         </div>
         <div>
           <Label className="text-sm font-medium text-muted-foreground">SR Doc</Label>
-          <div className="text-sm text-foreground p-2 bg-muted rounded border mt-1 h-9 flex items-center">
+          <div className="text-sm p-2 bg-muted rounded border mt-1 h-9 flex items-center">
             {formData.srDoc ? (
               <a 
                 href="#"
-                className="text-foreground underline hover:opacity-80 transition-opacity inline-flex items-center gap-1"
+                className="text-black hover:opacity-70 transition-opacity inline-flex items-center gap-1"
                 onClick={(e) => {
                   e.preventDefault();
                   console.log('Opening SR Document:', formData.srDoc);
@@ -3679,7 +3679,7 @@ const FormVariationsDemo = () => {
             {formData.srDoc ? (
               <a 
                 href="#" 
-                className="text-sm text-foreground underline hover:opacity-80 transition-opacity inline-flex items-center gap-1"
+                className="text-sm text-black hover:opacity-70 transition-opacity inline-flex items-center gap-1"
                 onClick={(e) => {
                   e.preventDefault();
                   console.log('Opening SR Document:', formData.srDoc);
