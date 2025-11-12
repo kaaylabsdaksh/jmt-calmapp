@@ -145,7 +145,7 @@ const AddNewWorkOrder = () => {
   ];
   
   // Mock data for different customer quotes
-  const quoteData = {
+  const [quoteData, setQuoteData] = useState({
     "48020": {
       received: {
         calFreq: "12",
@@ -246,7 +246,7 @@ const AddNewWorkOrder = () => {
         }
       ]
     }
-  };
+  });
   
 
   // Save active tab to localStorage whenever it changes
@@ -1207,7 +1207,21 @@ const AddNewWorkOrder = () => {
 
                                 <div className="flex items-center gap-1.5">
                                   <Label className="text-xs whitespace-nowrap min-w-[55px]">Type:</Label>
-                                  <Select value={quoteData[selectedQuote].received.arrivalType}>
+                                  <Select 
+                                    value={quoteData[selectedQuote].received.arrivalType}
+                                    onValueChange={(value) => {
+                                      setQuoteData(prev => ({
+                                        ...prev,
+                                        [selectedQuote]: {
+                                          ...prev[selectedQuote],
+                                          received: {
+                                            ...prev[selectedQuote].received,
+                                            arrivalType: value
+                                          }
+                                        }
+                                      }));
+                                    }}
+                                  >
                                     <SelectTrigger className="h-7 text-xs">
                                       <SelectValue placeholder="Select..." />
                                     </SelectTrigger>
