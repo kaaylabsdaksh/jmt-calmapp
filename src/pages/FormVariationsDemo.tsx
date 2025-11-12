@@ -10,7 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield, Wrench, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock } from "lucide-react";
+import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield, Wrench, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock, ExternalLink } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
 import { SidebarTrigger } from "@/components/ui/sidebar";
@@ -236,7 +236,7 @@ const FormVariationsDemo = () => {
   const [formData, setFormData] = useState({
     // Work Order Header
     workOrderNumber: "WO-QOAV2I",
-    srDoc: "SR Document",
+    srDoc: "SR2244",
     salesperson: "Not assigned",
     contact: "",
     
@@ -3622,12 +3622,24 @@ const FormVariationsDemo = () => {
         </div>
         <div>
           <Label className="text-sm font-medium text-muted-foreground">SR Doc</Label>
-          <Input
-            value={formData.srDoc}
-            onChange={(e) => handleInputChange("srDoc", e.target.value)}
-            placeholder="SR Document"
-            className="mt-1"
-          />
+          <div className="text-sm text-foreground p-2 bg-muted rounded border mt-1 h-9 flex items-center">
+            {formData.srDoc ? (
+              <a 
+                href="#"
+                className="text-foreground underline hover:opacity-80 transition-opacity inline-flex items-center gap-1"
+                onClick={(e) => {
+                  e.preventDefault();
+                  console.log('Opening SR Document:', formData.srDoc);
+                  // TODO: Navigate to SR document or open in modal
+                }}
+              >
+                {formData.srDoc}
+                <ExternalLink className="h-3 w-3" />
+              </a>
+            ) : (
+              <span className="text-muted-foreground">-</span>
+            )}
+          </div>
         </div>
         <div>
           <Label className="text-sm font-medium text-muted-foreground">Salesperson</Label>
@@ -3664,7 +3676,22 @@ const FormVariationsDemo = () => {
         <div className="space-y-2">
           <span className="text-sm text-muted-foreground">SR Doc</span>
           <div className="bg-card border border-border rounded-lg px-4 py-3 shadow-sm hover:shadow-md transition-shadow">
-            <a href="#" className="text-sm text-foreground hover:underline">{formData.srDoc}</a>
+            {formData.srDoc ? (
+              <a 
+                href="#" 
+                className="text-sm text-foreground underline hover:opacity-80 transition-opacity inline-flex items-center gap-1"
+                onClick={(e) => {
+                  e.preventDefault();
+                  console.log('Opening SR Document:', formData.srDoc);
+                  // TODO: Navigate to SR document or open in modal
+                }}
+              >
+                {formData.srDoc}
+                <ExternalLink className="h-3 w-3" />
+              </a>
+            ) : (
+              <span className="text-sm text-muted-foreground">-</span>
+            )}
           </div>
         </div>
         <div className="space-y-2">
