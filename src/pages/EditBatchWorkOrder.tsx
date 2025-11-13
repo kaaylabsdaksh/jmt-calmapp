@@ -256,7 +256,7 @@ const EditBatchWorkOrder = () => {
   }, [activeTab]);
   const [workOrderData, setWorkOrderData] = useState(() => {
     const savedData = localStorage.getItem('workOrderData');
-    return savedData ? JSON.parse(savedData) : {
+    const data = savedData ? JSON.parse(savedData) : {
       workOrderNumber: "5432",
       srDocument: "",
       workOrderStatus: "Created",
@@ -266,6 +266,13 @@ const EditBatchWorkOrder = () => {
       salesperson: "Not assigned",
       contact: "no-contact"
     };
+    
+    // Update old format work order numbers to new 4-digit format
+    if (data.workOrderNumber && data.workOrderNumber.includes('WO-')) {
+      data.workOrderNumber = "5432";
+    }
+    
+    return data;
   });
 
   const [isSaved, setIsSaved] = useState(false);
