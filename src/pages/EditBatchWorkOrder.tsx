@@ -2166,6 +2166,13 @@ const EditBatchWorkOrder = () => {
                                 <SelectItem value="waiting-on-customer">Waiting on Customer</SelectItem>
                                 <SelectItem value="wait-cust-followup">Wait Cust Followup</SelectItem>
                                 <SelectItem value="update-deliver-by-date">Update Deliver By Date</SelectItem>
+                                {viewMode === 'receiving' && (
+                                  <>
+                                    <SelectItem value="print-wos">Print WOs</SelectItem>
+                                    <SelectItem value="print-labels">Print Labels</SelectItem>
+                                    <SelectItem value="print-barcodes">Print Barcodes</SelectItem>
+                                  </>
+                                )}
                               </SelectContent>
                             </Select>
                           </div>
@@ -2427,6 +2434,27 @@ const EditBatchWorkOrder = () => {
                                 Update Deliver By Date
                               </Button>
                             </div>
+                          )}
+
+                          {/* Print WOs */}
+                          {selectedSpecialAction === "print-wos" && (
+                            <Button size="sm" className="bg-muted text-foreground hover:bg-muted/90 border">
+                              Print WOs
+                            </Button>
+                          )}
+
+                          {/* Print Labels */}
+                          {selectedSpecialAction === "print-labels" && (
+                            <Button size="sm" className="bg-muted text-foreground hover:bg-muted/90 border">
+                              Print Label
+                            </Button>
+                          )}
+
+                          {/* Print Barcodes */}
+                          {selectedSpecialAction === "print-barcodes" && (
+                            <Button size="sm" className="bg-muted text-foreground hover:bg-muted/90 border">
+                              Print Barcodes
+                            </Button>
                           )}
                         </div>
                         )}
