@@ -235,7 +235,7 @@ const FormVariationsDemo = () => {
 
   const [formData, setFormData] = useState({
     // Work Order Header
-    workOrderNumber: "WO-QOAV2I",
+    workOrderNumber: "5432",
     srDoc: "SR2244",
     salesperson: "Not assigned",
     contact: "",

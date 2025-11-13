@@ -257,7 +257,7 @@ const EditBatchWorkOrder = () => {
   const [workOrderData, setWorkOrderData] = useState(() => {
     const savedData = localStorage.getItem('workOrderData');
     return savedData ? JSON.parse(savedData) : {
-      workOrderNumber: "WO-QOAV2I",
+      workOrderNumber: "5432",
       srDocument: "",
       workOrderStatus: "Created",
       workOrderType: "Regular work order",

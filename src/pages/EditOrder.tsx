@@ -212,7 +212,7 @@ const EditOrder = () => {
 
   const [formData, setFormData] = useState({
     // Work Order Header - Auto-fill from workOrderData
-    workOrderNumber: workOrderData?.id || "WO-QOAV2I",
+    workOrderNumber: workOrderData?.id || "5432",
     srDoc: workOrderData?.srDoc || "SR2244",
     salesperson: workOrderData?.salesperson || "Not assigned",
     contact: workOrderData?.contact || "",
