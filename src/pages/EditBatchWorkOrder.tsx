@@ -345,8 +345,8 @@ const EditBatchWorkOrder = () => {
       capableLocations: "Lab A, Lab B",
       created: "2024-01-15",
       departure: "Engineering",
-      itemStatus: "In Progress",
-      itemType: "Calibration",
+      itemStatus: "In Lab",
+      itemType: "SINGLE",
       deliverByDate: "2024-12-15",
       poNumber: "4510114092"
     },
@@ -372,8 +372,8 @@ const EditBatchWorkOrder = () => {
       capableLocations: "Lab C",
       created: "2024-01-18",
       departure: "Lab Services",
-      itemStatus: "Testing",
-      itemType: "Repair",
+      itemStatus: "Awaiting Parts",
+      itemType: "SINGLE",
       deliverByDate: "2024-11-30",
       poNumber: "4510114092"
     },
@@ -399,8 +399,8 @@ const EditBatchWorkOrder = () => {
       capableLocations: "Lab A, Lab D",
       created: "2024-01-20",
       departure: "Quality Control",
-      itemStatus: "Completed",
-      itemType: "ESL",
+      itemStatus: "To Factory",
+      itemType: "SINGLE",
       deliverByDate: "2024-12-10",
       poNumber: "4510114092"
     }
@@ -1625,8 +1625,8 @@ const EditBatchWorkOrder = () => {
                                     capableLocations: "",
                                     created: new Date().toISOString().split('T')[0],
                                     departure: "Engineering",
-                                    itemStatus: "Pending",
-                                    itemType: "Calibration",
+                                    itemStatus: "In Lab",
+                                    itemType: "SINGLE",
                                     deliverByDate: quoteData[selectedQuote].received.needByDate,
                                     poNumber: ""
                                   };
