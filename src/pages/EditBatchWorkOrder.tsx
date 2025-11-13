@@ -316,6 +316,12 @@ const EditBatchWorkOrder = () => {
     ccCost: string;
     tf: string;
     capableLocations: string;
+    created?: string;
+    departure?: string;
+    itemStatus?: string;
+    itemType?: string;
+    deliverByDate?: string;
+    poNumber?: string;
   }>>([
     {
       id: "rec-001",
@@ -336,7 +342,13 @@ const EditBatchWorkOrder = () => {
       needByDate: "2024-12-15",
       ccCost: "$50.00",
       tf: "yes",
-      capableLocations: "Lab A, Lab B"
+      capableLocations: "Lab A, Lab B",
+      created: "2024-01-15",
+      departure: "Engineering",
+      itemStatus: "In Progress",
+      itemType: "Calibration",
+      deliverByDate: "2024-12-15",
+      poNumber: "4510114092"
     },
     {
       id: "rec-002", 
@@ -357,7 +369,13 @@ const EditBatchWorkOrder = () => {
       needByDate: "2024-11-30",
       ccCost: "$75.00",
       tf: "no",
-      capableLocations: "Lab C"
+      capableLocations: "Lab C",
+      created: "2024-01-18",
+      departure: "Lab Services",
+      itemStatus: "Testing",
+      itemType: "Repair",
+      deliverByDate: "2024-11-30",
+      poNumber: "4510114092"
     },
     {
       id: "rec-003",
@@ -378,7 +396,13 @@ const EditBatchWorkOrder = () => {
       needByDate: "2024-12-10",
       ccCost: "$60.00",
       tf: "yes",
-      capableLocations: "Lab A, Lab D"
+      capableLocations: "Lab A, Lab D",
+      created: "2024-01-20",
+      departure: "Quality Control",
+      itemStatus: "Completed",
+      itemType: "ESL",
+      deliverByDate: "2024-12-10",
+      poNumber: "4510114092"
     }
   ]);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -1598,7 +1622,13 @@ const EditBatchWorkOrder = () => {
                                     needByDate: quoteData[selectedQuote].received.needByDate,
                                     ccCost: "",
                                     tf: "no",
-                                    capableLocations: ""
+                                    capableLocations: "",
+                                    created: new Date().toISOString().split('T')[0],
+                                    departure: "Engineering",
+                                    itemStatus: "Pending",
+                                    itemType: "Calibration",
+                                    deliverByDate: quoteData[selectedQuote].received.needByDate,
+                                    poNumber: ""
                                   };
                                 });
                                 
@@ -2475,7 +2505,13 @@ const EditBatchWorkOrder = () => {
                                     needByDate: "",
                                     ccCost: "",
                                     tf: "",
-                                    capableLocations: ""
+                                    capableLocations: "",
+                                    created: "",
+                                    departure: "",
+                                    itemStatus: "",
+                                    itemType: "",
+                                    deliverByDate: "",
+                                    poNumber: ""
                                   }));
                                   setReceivingItems([...receivingItems, ...newItems]);
                                   setNumUnusedItems("");
