@@ -216,7 +216,14 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
       return newErrors;
     });
     
-    setItems([...items, itemToSave]);
+    // Auto-generate item number in 3-digit format if not provided
+    let itemNumber = itemToSave.itemNumber;
+    if (!itemNumber) {
+      const nextNumber = items.length + 1;
+      itemNumber = nextNumber.toString().padStart(3, '0');
+    }
+    
+    setItems([...items, { ...itemToSave, itemNumber }]);
     setNewItems(newItems.filter(item => item.id !== newItemId));
   };
 
