@@ -583,7 +583,7 @@ const AddNewWorkOrder = () => {
     const mockOtherWOItems = [
       {
         id: `copy-${Date.now()}-1`,
-        itemNumber: "TEMP-001",
+        itemNumber: (receivingItems.length + 1).toString().padStart(3, '0'),
         calFreq: "6",
         actionCode: "rc",
         priority: "normal",
@@ -604,7 +604,7 @@ const AddNewWorkOrder = () => {
       },
       {
         id: `copy-${Date.now()}-2`,
-        itemNumber: "TEMP-002",
+        itemNumber: (receivingItems.length + 2).toString().padStart(3, '0'),
         calFreq: "12",
         actionCode: "cc",
         priority: "expedite",
@@ -1516,7 +1516,7 @@ const AddNewWorkOrder = () => {
                                   const item = quoteData[selectedQuote].items[index];
                                   return {
                                     id: `quo-${selectedQuote}-${index}`,
-                                    itemNumber: item.woItem || `NEW-${Date.now()}-${index}`,
+                                    itemNumber: (receivingItems.length + index + 1).toString().padStart(3, '0'),
                                     calFreq: quoteData[selectedQuote].received.calFreq,
                                     actionCode: "rc",
                                     priority: item.priority,

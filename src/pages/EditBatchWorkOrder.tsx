@@ -319,7 +319,7 @@ const EditBatchWorkOrder = () => {
   }>>([
     {
       id: "rec-001",
-      itemNumber: "DMM-001",
+      itemNumber: "001",
       calFreq: "12",
       actionCode: "rc",
       priority: "normal",
@@ -340,7 +340,7 @@ const EditBatchWorkOrder = () => {
     },
     {
       id: "rec-002", 
-      itemNumber: "OSC-002",
+      itemNumber: "002",
       calFreq: "3",
       actionCode: "repair",
       priority: "expedite",
@@ -361,7 +361,7 @@ const EditBatchWorkOrder = () => {
     },
     {
       id: "rec-003",
-      itemNumber: "PSU-003",
+      itemNumber: "003",
       calFreq: "1",
       actionCode: "cc",
       priority: "rush",
@@ -648,7 +648,7 @@ const EditBatchWorkOrder = () => {
     const mockOtherWOItems = [
       {
         id: `copy-${Date.now()}-1`,
-        itemNumber: "TEMP-001",
+        itemNumber: (receivingItems.length + 1).toString().padStart(3, '0'),
         calFreq: "6",
         actionCode: "rc",
         priority: "normal",
@@ -669,7 +669,7 @@ const EditBatchWorkOrder = () => {
       },
       {
         id: `copy-${Date.now()}-2`,
-        itemNumber: "TEMP-002",
+        itemNumber: (receivingItems.length + 2).toString().padStart(3, '0'),
         calFreq: "12",
         actionCode: "cc",
         priority: "expedite",
@@ -1581,7 +1581,7 @@ const EditBatchWorkOrder = () => {
                                   const item = quoteData[selectedQuote].items[index];
                                   return {
                                     id: `quo-${selectedQuote}-${index}`,
-                                    itemNumber: item.woItem || `NEW-${Date.now()}-${index}`,
+                                    itemNumber: (receivingItems.length + index + 1).toString().padStart(3, '0'),
                                     calFreq: quoteData[selectedQuote].received.calFreq,
                                     actionCode: "rc",
                                     priority: item.priority,
