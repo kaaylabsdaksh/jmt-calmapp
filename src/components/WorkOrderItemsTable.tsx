@@ -46,7 +46,7 @@ const mockData: WorkOrderItem[] = [
   },
   {
     id: "3",
-    itemNumber: "003 - Gloves, Hotsticks",
+    itemNumber: "003",
     manufacturer: "Siemens",
     model: "S7-1200",
     serialNumber: "SIE123456",
@@ -72,7 +72,7 @@ const mockData: WorkOrderItem[] = [
   },
   {
     id: "5",
-    itemNumber: "005 - Gloves, Hotsticks",
+    itemNumber: "005",
     manufacturer: "Schneider Electric",
     model: "SEPAM-80",
     serialNumber: "SCH456789",
