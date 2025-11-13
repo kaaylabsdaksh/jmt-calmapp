@@ -3013,6 +3013,7 @@ const AddNewWorkOrder = () => {
                         showMockData={false} 
                         accountNumber={workOrderData.accountNumber}
                         workOrderNumber={workOrderData.workOrderNumber}
+                        items={receivingItems}
                       />
                     ) : (
                       <WorkOrderItemsCards templateItems={receivingItems} showMockData={false} />

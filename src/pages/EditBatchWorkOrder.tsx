@@ -3078,6 +3078,7 @@ const EditBatchWorkOrder = () => {
                         showMockData={true} 
                         accountNumber={workOrderData.accountNumber}
                         workOrderNumber={workOrderData.workOrderNumber}
+                        items={receivingItems}
                       />
                     ) : (
                       <WorkOrderItemsCards templateItems={receivingItems} showMockData={true} />

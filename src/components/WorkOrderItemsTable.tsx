@@ -90,12 +90,26 @@ interface WorkOrderItemsTableProps {
   showMockData?: boolean;
   accountNumber?: string;
   workOrderNumber?: string;
+  items?: Array<{
+    id: string;
+    itemNumber: string;
+    manufacturer: string;
+    model: string;
+    mfgSerial: string;
+    created?: string;
+    departure?: string;
+    itemStatus?: string;
+    itemType?: string;
+    deliverByDate?: string;
+    poNumber?: string;
+  }>;
 }
 
-export const WorkOrderItemsTable = ({ selectedPoNumber, showMockData = true, accountNumber = "15000.00", workOrderNumber = "5432" }: WorkOrderItemsTableProps) => {
+export const WorkOrderItemsTable = ({ selectedPoNumber, showMockData = true, accountNumber = "15000.00", workOrderNumber = "5432", items = [] }: WorkOrderItemsTableProps) => {
   const navigate = useNavigate();
   
-  const displayData = showMockData ? mockData : [];
+  // Use items prop if provided, otherwise fall back to mock data based on showMockData
+  const displayData = items.length > 0 ? items : (showMockData ? mockData : []);
   
   return (
     <div className="border rounded-lg overflow-hidden">
@@ -138,13 +152,13 @@ export const WorkOrderItemsTable = ({ selectedPoNumber, showMockData = true, acc
               <td className="p-3">{accountNumber}-{workOrderNumber}-{item.itemNumber}</td>
               <td className="p-3">{item.manufacturer}</td>
               <td className="p-3">{item.model}</td>
-              <td className="p-3">{item.serialNumber}</td>
-              <td className="p-3">{item.created}</td>
-              <td className="p-3">{item.departure}</td>
-              <td className="p-3">{item.itemStatus}</td>
-              <td className="p-3">{item.itemType}</td>
-              <td className="p-3">{item.deliverByDate}</td>
-              <td className="p-3">{selectedPoNumber || item.poNumber}</td>
+              <td className="p-3">{item.mfgSerial || item.serialNumber}</td>
+              <td className="p-3">{item.created || ""}</td>
+              <td className="p-3">{item.departure || ""}</td>
+              <td className="p-3">{item.itemStatus || ""}</td>
+              <td className="p-3">{item.itemType || ""}</td>
+              <td className="p-3">{item.deliverByDate || ""}</td>
+              <td className="p-3">{selectedPoNumber || item.poNumber || ""}</td>
               <td className="p-3">
                 <Button variant="link" className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto">
                   View
