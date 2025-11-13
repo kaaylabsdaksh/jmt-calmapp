@@ -3001,7 +3001,12 @@ const AddNewWorkOrder = () => {
                         onSelectedItemsIdsChange={setSelectedItemIds}
                       />
                     ) : viewMode === 'table' ? (
-                      <WorkOrderItemsTable selectedPoNumber={selectedCustPO} showMockData={false} />
+                      <WorkOrderItemsTable 
+                        selectedPoNumber={selectedCustPO} 
+                        showMockData={false} 
+                        accountNumber={workOrderData.accountNumber}
+                        workOrderNumber={workOrderData.workOrderNumber}
+                      />
                     ) : (
                       <WorkOrderItemsCards templateItems={receivingItems} showMockData={false} />
                     )}

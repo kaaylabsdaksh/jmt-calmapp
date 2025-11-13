@@ -3066,7 +3066,12 @@ const EditBatchWorkOrder = () => {
                         onSelectedItemsIdsChange={setSelectedItemIds}
                       />
                     ) : viewMode === 'table' ? (
-                      <WorkOrderItemsTable selectedPoNumber={selectedCustPO} showMockData={true} />
+                      <WorkOrderItemsTable 
+                        selectedPoNumber={selectedCustPO} 
+                        showMockData={true} 
+                        accountNumber={workOrderData.accountNumber}
+                        workOrderNumber={workOrderData.workOrderNumber}
+                      />
                     ) : (
                       <WorkOrderItemsCards templateItems={receivingItems} showMockData={true} />
                     )}

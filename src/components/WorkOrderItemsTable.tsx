@@ -88,9 +88,11 @@ const mockData: WorkOrderItem[] = [
 interface WorkOrderItemsTableProps {
   selectedPoNumber?: string;
   showMockData?: boolean;
+  accountNumber?: string;
+  workOrderNumber?: string;
 }
 
-export const WorkOrderItemsTable = ({ selectedPoNumber, showMockData = true }: WorkOrderItemsTableProps) => {
+export const WorkOrderItemsTable = ({ selectedPoNumber, showMockData = true, accountNumber = "15000.00", workOrderNumber = "5432" }: WorkOrderItemsTableProps) => {
   const navigate = useNavigate();
   
   const displayData = showMockData ? mockData : [];
@@ -133,7 +135,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber, showMockData = true }: W
               <td className="p-3">
                 <Checkbox />
               </td>
-              <td className="p-3">{item.itemNumber}</td>
+              <td className="p-3">{accountNumber}-{workOrderNumber}-{item.itemNumber}</td>
               <td className="p-3">{item.manufacturer}</td>
               <td className="p-3">{item.model}</td>
               <td className="p-3">{item.serialNumber}</td>
