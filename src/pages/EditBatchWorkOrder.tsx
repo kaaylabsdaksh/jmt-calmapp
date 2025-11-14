@@ -2464,6 +2464,57 @@ const EditBatchWorkOrder = () => {
                               Print Barcodes
                             </Button>
                           )}
+
+                          {/* Update TF PO */}
+                          {selectedSpecialAction === "update-tf-po" && (
+                            <div className="flex items-center gap-4">
+                              <Label className="text-sm font-medium">Enter a TF PO Number</Label>
+                              <Input
+                                type="text"
+                                className="w-60 border-gray-400"
+                                placeholder="Enter TF PO Number"
+                              />
+                              <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                                Update TF PO's
+                              </Button>
+                            </div>
+                          )}
+
+                          {/* Update Need by date */}
+                          {selectedSpecialAction === "update-need-by-date" && (
+                            <div className="flex items-center gap-4">
+                              <Label className="text-sm font-medium">Enter Need By Date</Label>
+                              <Input
+                                type="date"
+                                className="w-60 border-gray-400"
+                              />
+                              <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                                Update Need By Date
+                              </Button>
+                            </div>
+                          )}
+
+                          {/* QA approve items */}
+                          {selectedSpecialAction === "qa-approve-items" && (
+                            <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                              QA Approve Item(s)
+                            </Button>
+                          )}
+
+                          {/* Update Vendor RMA */}
+                          {selectedSpecialAction === "update-vendor-rma" && (
+                            <div className="flex items-center gap-4">
+                              <Label className="text-sm font-medium">Enter Vendor RMA Number</Label>
+                              <Input
+                                type="text"
+                                className="w-60 border-gray-400"
+                                placeholder="Enter RMA Number"
+                              />
+                              <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                                Update Vendor RMA
+                              </Button>
+                            </div>
+                          )}
                         </div>
                         )}
                         </div>
