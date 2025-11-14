@@ -2071,6 +2071,14 @@ const AddNewWorkOrder = () => {
                                 <SelectItem value="waiting-on-customer">Waiting on Customer</SelectItem>
                                 <SelectItem value="wait-cust-followup">Wait Cust Followup</SelectItem>
                                 <SelectItem value="update-deliver-by-date">Update Deliver By Date</SelectItem>
+                                {viewMode !== 'receiving' && (
+                                  <>
+                                    <SelectItem value="update-tf-po">Update TF PO</SelectItem>
+                                    <SelectItem value="update-need-by-date">Update Need by date</SelectItem>
+                                    <SelectItem value="qa-approve-items">QA approve items</SelectItem>
+                                    <SelectItem value="update-vendor-rma">Update Vendor RMA</SelectItem>
+                                  </>
+                                )}
                                 {viewMode === 'receiving' && (
                                   <>
                                     <SelectItem value="print-wos">Print WOs</SelectItem>
