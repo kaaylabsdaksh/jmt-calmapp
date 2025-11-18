@@ -28,7 +28,7 @@ const FormVariationsDemo = () => {
   const navigate = useNavigate();
   
   // Layout variant state
-  const [layoutVariant, setLayoutVariant] = useState<'default' | 'minimal' | 'minimal2' | 'version3'>('default');
+  const [layoutVariant, setLayoutVariant] = useState<'default' | 'minimal'>('default');
   
   // Main section state
   const [activeSection, setActiveSection] = useState<'work-order-items' | 'estimate' | 'qf3' | 'external-files' | 'cert-files'>('work-order-items');
@@ -56,7 +56,7 @@ const FormVariationsDemo = () => {
 
   // Scroll spy effect
   useEffect(() => {
-    if (layoutVariant !== 'minimal' && layoutVariant !== 'minimal2' && layoutVariant !== 'version3') return;
+    if (layoutVariant !== 'minimal') return;
 
     const viewport = scrollViewportRef.current;
     if (!viewport) return;
@@ -4855,22 +4855,6 @@ const FormVariationsDemo = () => {
             >
               Minimal
             </Button>
-            <Button
-              variant={layoutVariant === 'minimal2' ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => setLayoutVariant('minimal2')}
-              className="text-xs"
-            >
-              Minimal 2
-            </Button>
-            <Button
-              variant={layoutVariant === 'version3' ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => setLayoutVariant('version3')}
-              className="text-xs"
-            >
-              Version 3
-            </Button>
           </div>
         </div>
       </header>
@@ -4881,7 +4865,7 @@ const FormVariationsDemo = () => {
         {layoutVariant === 'default' ? renderWorkOrderHeader() : renderMinimalWorkOrderHeader()}
         
         {/* Main Section Toggles */}
-        {(layoutVariant === 'minimal' || layoutVariant === 'minimal2' || layoutVariant === 'version3') ? (
+        {layoutVariant === 'minimal' ? (
           <div className="flex items-center gap-2 mb-4 sm:mb-6 overflow-x-auto -mx-3 sm:-mx-4 lg:-mx-6 px-3 sm:px-4 lg:px-6 pb-4">
             <button
               onClick={() => setActiveSection('work-order-items')}
@@ -5008,10 +4992,7 @@ const FormVariationsDemo = () => {
         {activeSection === 'work-order-items' && (
           <>
             {/* Interface based on variant */}
-            {layoutVariant === 'default' ? renderTabbedInterface() : 
-             layoutVariant === 'minimal' ? renderMinimalScrollInterface() : 
-             layoutVariant === 'minimal2' ? renderMinimal2Interface() :
-             renderVersion3Interface()}
+            {layoutVariant === 'default' ? renderTabbedInterface() : renderMinimalScrollInterface()}
           </>
         )}
         
