@@ -10,7 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield, Wrench, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock, ExternalLink } from "lucide-react";
+import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield, Wrench, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock, ExternalLink, ArrowUp } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
 import { SidebarTrigger } from "@/components/ui/sidebar";
@@ -32,6 +32,9 @@ const FormVariationsDemo = () => {
   
   // Main section state
   const [activeSection, setActiveSection] = useState<'work-order-items' | 'estimate' | 'qf3' | 'external-files' | 'cert-files'>('work-order-items');
+  
+  // Scroll to top button state
+  const [showScrollTop, setShowScrollTop] = useState(false);
   
   // Scroll section tracking for minimal variant
   const [activeScrollSection, setActiveScrollSection] = useState('general');
@@ -63,6 +66,9 @@ const FormVariationsDemo = () => {
     const handleScroll = () => {
       const scrollPosition = viewport.scrollTop + 150; // Increased offset for better detection
 
+      // Show scroll-to-top button when scrolled down more than 300px
+      setShowScrollTop(viewport.scrollTop > 300);
+
       // Find the section that's currently in view
       let currentSection = sections[0].id;
       
@@ -86,6 +92,27 @@ const FormVariationsDemo = () => {
     viewport.addEventListener('scroll', handleScroll, { passive: true });
     return () => viewport.removeEventListener('scroll', handleScroll);
   }, [layoutVariant, sections]);
+
+  // Scroll detection for default/tabbed layout
+  useEffect(() => {
+    if (layoutVariant === 'minimal') return;
+
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 300);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [layoutVariant]);
+
+  // Scroll to top function
+  const scrollToTop = () => {
+    if (layoutVariant === 'minimal') {
+      scrollViewportRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
 
   const scrollToSection = (sectionId: string) => {
     const element = sectionRefs.current[sectionId];
@@ -5500,6 +5527,18 @@ const FormVariationsDemo = () => {
           open={qf3DialogOpen} 
           onOpenChange={setQf3DialogOpen} 
         />
+
+        {/* Scroll to Top Button */}
+        {showScrollTop && (
+          <Button
+            onClick={scrollToTop}
+            size="icon"
+            className="fixed bottom-24 right-6 z-30 rounded-full shadow-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 animate-in fade-in slide-in-from-bottom-4"
+            aria-label="Scroll to top"
+          >
+            <ArrowUp className="h-5 w-5" />
+          </Button>
+        )}
       </div>
     </div>
   );
