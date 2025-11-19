@@ -3754,10 +3754,11 @@ const FormVariationsDemo = () => {
 
   // Render tabbed interface
   const renderTabbedInterface = () => (
-    <Card className="border-0 shadow-md">
-      <CardContent className="p-6">
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <div className="sticky top-0 z-20 bg-background space-y-2 pb-2 border-b shadow-sm">
+    <Card className="border-0 shadow-md overflow-visible">
+      <Tabs value={activeTab} onValueChange={setActiveTab}>
+        {/* Sticky Tab Navigation - outside CardContent padding */}
+        <div className="sticky top-0 z-20 bg-background pt-4 px-6 pb-2 border-b shadow-sm">
+          <div className="space-y-2">
             <TabsList className="grid grid-cols-5 h-10 sm:h-11 items-center rounded-md bg-muted p-1 text-muted-foreground w-full gap-1">
               {firstRowTabs.map((tab) => {
                 const Icon = tab.icon;
@@ -3804,48 +3805,51 @@ const FormVariationsDemo = () => {
               })}
             </TabsList>
           </div>
+        </div>
 
-          <TabsContent value="general" className="space-y-6 animate-fade-in">
+        {/* Tab Content - scrollable area */}
+        <CardContent className="p-6">
+          <TabsContent value="general" className="mt-0 space-y-6 animate-fade-in">
             {renderGeneralSection()}
           </TabsContent>
 
-          <TabsContent value="product" className="space-y-6 animate-fade-in">
+          <TabsContent value="product" className="mt-0 space-y-6 animate-fade-in">
             {renderProductSection()}
           </TabsContent>
 
-          <TabsContent value="logistics" className="space-y-6 animate-fade-in">
+          <TabsContent value="logistics" className="mt-0 space-y-6 animate-fade-in">
             {renderLogisticsSection()}
           </TabsContent>
 
-          <TabsContent value="product-images" className="space-y-6 animate-fade-in">
+          <TabsContent value="product-images" className="mt-0 space-y-6 animate-fade-in">
             {renderProductImagesSection()}
           </TabsContent>
 
-          <TabsContent value="lab" className="space-y-6 animate-fade-in">
+          <TabsContent value="lab" className="mt-0 space-y-6 animate-fade-in">
             {renderLabSection()}
           </TabsContent>
 
-          <TabsContent value="factory-config" className="space-y-6 animate-fade-in">
+          <TabsContent value="factory-config" className="mt-0 space-y-6 animate-fade-in">
             {renderFactoryConfigSection()}
           </TabsContent>
 
-          <TabsContent value="transit" className="space-y-6 animate-fade-in">
+          <TabsContent value="transit" className="mt-0 space-y-6 animate-fade-in">
             {renderTransitSection()}
           </TabsContent>
 
-          <TabsContent value="accessories" className="space-y-6 animate-fade-in">
+          <TabsContent value="accessories" className="mt-0 space-y-6 animate-fade-in">
             {renderAccessoriesSection()}
           </TabsContent>
 
-          <TabsContent value="parts" className="space-y-6 animate-fade-in">
+          <TabsContent value="parts" className="mt-0 space-y-6 animate-fade-in">
             {renderPartsSection()}
           </TabsContent>
 
-          <TabsContent value="options" className="space-y-6 animate-fade-in">
+          <TabsContent value="options" className="mt-0 space-y-6 animate-fade-in">
             {renderOptionsSection()}
           </TabsContent>
-        </Tabs>
-      </CardContent>
+        </CardContent>
+      </Tabs>
     </Card>
   );
 
