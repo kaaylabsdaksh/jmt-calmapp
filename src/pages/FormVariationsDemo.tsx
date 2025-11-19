@@ -10,7 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield, Wrench, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock, ExternalLink, ArrowUp } from "lucide-react";
+import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, ChevronLeft, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield, Wrench, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock, ExternalLink, ArrowUp } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
 import { SidebarTrigger } from "@/components/ui/sidebar";
@@ -35,6 +35,10 @@ const FormVariationsDemo = () => {
   
   // Scroll to top button state
   const [showScrollTop, setShowScrollTop] = useState(false);
+  
+  // Item navigation state
+  const [currentItemIndex, setCurrentItemIndex] = useState(0);
+  const totalItems = 5; // Mock total items - in real app this would come from data
   
   // Scroll section tracking for minimal variant
   const [activeScrollSection, setActiveScrollSection] = useState('general');
@@ -111,6 +115,23 @@ const FormVariationsDemo = () => {
       scrollViewportRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  // Item navigation functions
+  const handlePreviousItem = () => {
+    if (currentItemIndex > 0) {
+      setCurrentItemIndex(currentItemIndex - 1);
+      // In real app, this would load the previous item's data
+      console.log('Navigate to previous item:', currentItemIndex - 1);
+    }
+  };
+
+  const handleNextItem = () => {
+    if (currentItemIndex < totalItems - 1) {
+      setCurrentItemIndex(currentItemIndex + 1);
+      // In real app, this would load the next item's data
+      console.log('Navigate to next item:', currentItemIndex + 1);
     }
   };
 
@@ -4918,24 +4939,52 @@ const FormVariationsDemo = () => {
             </div>
           </div>
           
-          {/* Variant Toggle */}
-          <div className="flex gap-2">
-            <Button
-              variant={layoutVariant === 'default' ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => setLayoutVariant('default')}
-              className="text-xs"
-            >
-              Default
-            </Button>
-            <Button
-              variant={layoutVariant === 'minimal' ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => setLayoutVariant('minimal')}
-              className="text-xs"
-            >
-              Minimal
-            </Button>
+          {/* Item Navigation and Variant Toggle */}
+          <div className="flex items-center gap-4">
+            {/* Item Navigation */}
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-muted/50 rounded-lg border border-border">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-7 w-7"
+                onClick={handlePreviousItem}
+                disabled={currentItemIndex === 0}
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+              <span className="text-xs font-medium text-foreground px-2 min-w-[60px] text-center">
+                Item {currentItemIndex + 1} / {totalItems}
+              </span>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-7 w-7"
+                onClick={handleNextItem}
+                disabled={currentItemIndex === totalItems - 1}
+              >
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </div>
+
+            {/* Variant Toggle */}
+            <div className="flex gap-2">
+              <Button
+                variant={layoutVariant === 'default' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setLayoutVariant('default')}
+                className="text-xs"
+              >
+                Default
+              </Button>
+              <Button
+                variant={layoutVariant === 'minimal' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setLayoutVariant('minimal')}
+                className="text-xs"
+              >
+                Minimal
+              </Button>
+            </div>
           </div>
         </div>
       </header>
