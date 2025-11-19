@@ -673,11 +673,37 @@ const FormVariationsDemo = () => {
   // Common form sections content
   const renderGeneralSection = () => (
     <div className="space-y-6">
-      {/* Created and Modified Dates */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-4 border-b border-border">
+      {/* Created and Modified Dates with Item Navigation */}
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-4 border-b border-border">
         <div className="text-sm text-muted-foreground">
           <span className="font-medium">Created:</span> 09/09/2025 by Admin User
         </div>
+        
+        {/* Item Navigation */}
+        <div className="flex items-center gap-2 px-3 py-1.5 bg-muted/50 rounded-lg border border-border">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-7 w-7"
+            onClick={handlePreviousItem}
+            disabled={currentItemIndex === 0}
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </Button>
+          <span className="text-xs font-medium text-foreground px-2 min-w-[60px] text-center">
+            Item {currentItemIndex + 1} / {totalItems}
+          </span>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-7 w-7"
+            onClick={handleNextItem}
+            disabled={currentItemIndex === totalItems - 1}
+          >
+            <ChevronRight className="h-4 w-4" />
+          </Button>
+        </div>
+        
         <div className="text-sm text-muted-foreground">
           <span className="font-medium">Modified:</span> 09/09/2025 by Admin User
         </div>
