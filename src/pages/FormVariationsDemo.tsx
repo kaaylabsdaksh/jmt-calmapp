@@ -50,7 +50,6 @@ const FormVariationsDemo = () => {
     { id: 'transit', label: 'Transit', icon: Truck },
     { id: 'accessories', label: 'Accessories', icon: Layers },
     { id: 'parts', label: 'Parts', icon: Wrench },
-    { id: 'comments', label: 'Comments', icon: MessageSquare },
     { id: 'options', label: 'Options', icon: List },
   ];
 
@@ -380,7 +379,6 @@ const FormVariationsDemo = () => {
     { value: 'transit', label: 'Transit', icon: Truck },
     { value: 'accessories', label: 'Accessories', icon: Layers },
     { value: 'parts', label: 'Parts', icon: Settings },
-    { value: 'comments', label: 'Comments', icon: List },
     { value: 'options', label: 'Additional', icon: Settings }
   ];
   
@@ -3781,10 +3779,6 @@ const FormVariationsDemo = () => {
 
           <TabsContent value="parts" className="space-y-6">
             {renderPartsSection()}
-          </TabsContent>
-
-          <TabsContent value="comments" className="space-y-6">
-            {renderCommentsSection()}
           </TabsContent>
 
           <TabsContent value="options" className="space-y-6">
