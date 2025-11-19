@@ -3719,7 +3719,7 @@ const FormVariationsDemo = () => {
                   <TabsTrigger 
                     key={tab.value}
                     value={tab.value}
-                    className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+                    className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
                   >
                     <Icon className="h-4 w-4 sm:mr-2" />
                     <span className="hidden sm:inline">{tab.label}</span>
@@ -3735,7 +3735,7 @@ const FormVariationsDemo = () => {
                   <TabsTrigger 
                     key={tab.value}
                     value={tab.value}
-                    className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+                    className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
                   >
                     <Icon className="h-4 w-4 sm:mr-2" />
                     <span className="hidden sm:inline">{tab.label}</span>
@@ -3745,43 +3745,43 @@ const FormVariationsDemo = () => {
             </TabsList>
           </div>
 
-          <TabsContent value="general" className="space-y-6">
+          <TabsContent value="general" className="space-y-6 animate-fade-in">
             {renderGeneralSection()}
           </TabsContent>
 
-          <TabsContent value="product" className="space-y-6">
+          <TabsContent value="product" className="space-y-6 animate-fade-in">
             {renderProductSection()}
           </TabsContent>
 
-          <TabsContent value="logistics" className="space-y-6">
+          <TabsContent value="logistics" className="space-y-6 animate-fade-in">
             {renderLogisticsSection()}
           </TabsContent>
 
-          <TabsContent value="product-images" className="space-y-6">
+          <TabsContent value="product-images" className="space-y-6 animate-fade-in">
             {renderProductImagesSection()}
           </TabsContent>
 
-          <TabsContent value="lab" className="space-y-6">
+          <TabsContent value="lab" className="space-y-6 animate-fade-in">
             {renderLabSection()}
           </TabsContent>
 
-          <TabsContent value="factory-config" className="space-y-6">
+          <TabsContent value="factory-config" className="space-y-6 animate-fade-in">
             {renderFactoryConfigSection()}
           </TabsContent>
 
-          <TabsContent value="transit" className="space-y-6">
+          <TabsContent value="transit" className="space-y-6 animate-fade-in">
             {renderTransitSection()}
           </TabsContent>
 
-          <TabsContent value="accessories" className="space-y-6">
+          <TabsContent value="accessories" className="space-y-6 animate-fade-in">
             {renderAccessoriesSection()}
           </TabsContent>
 
-          <TabsContent value="parts" className="space-y-6">
+          <TabsContent value="parts" className="space-y-6 animate-fade-in">
             {renderPartsSection()}
           </TabsContent>
 
-          <TabsContent value="options" className="space-y-6">
+          <TabsContent value="options" className="space-y-6 animate-fade-in">
             {renderOptionsSection()}
           </TabsContent>
         </Tabs>
