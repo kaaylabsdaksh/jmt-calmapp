@@ -679,6 +679,10 @@ const FormVariationsDemo = () => {
           <span className="font-medium">Created:</span> 09/09/2025 by Admin User
         </div>
         
+        <div className="text-sm text-muted-foreground">
+          <span className="font-medium">Modified:</span> 09/09/2025 by Admin User
+        </div>
+        
         {/* Item Navigation */}
         <div className="flex items-center gap-2 px-3 py-1.5 bg-muted/50 rounded-lg border border-border">
           <Button
@@ -702,10 +706,6 @@ const FormVariationsDemo = () => {
           >
             <ChevronRight className="h-4 w-4" />
           </Button>
-        </div>
-        
-        <div className="text-sm text-muted-foreground">
-          <span className="font-medium">Modified:</span> 09/09/2025 by Admin User
         </div>
       </div>
 
