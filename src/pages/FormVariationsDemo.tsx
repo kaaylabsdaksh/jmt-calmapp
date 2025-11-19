@@ -383,6 +383,52 @@ const FormVariationsDemo = () => {
   ];
   
   const [activeTab, setActiveTab] = useState('general');
+  
+  // Tab status tracking (completed, error, or null for untouched)
+  const [tabStatus, setTabStatus] = useState<Record<string, 'completed' | 'error' | null>>({
+    'general': null,
+    'product': null,
+    'logistics': null,
+    'product-images': null,
+    'lab': null,
+    'factory-config': null,
+    'transit': null,
+    'accessories': null,
+    'parts': null,
+    'options': null
+  });
+
+  // Validate sections and update tab status
+  useEffect(() => {
+    const newStatus: Record<string, 'completed' | 'error' | null> = { ...tabStatus };
+    
+    // General tab validation
+    if (formData.reportNumber || formData.type || formData.itemStatus) {
+      newStatus['general'] = formData.reportNumber && formData.itemStatus ? 'completed' : 'error';
+    }
+    
+    // Product tab validation
+    if (formData.manufacturer || formData.model || formData.description) {
+      newStatus['product'] = formData.manufacturer && formData.model ? 'completed' : 'error';
+    }
+    
+    // Logistics tab validation
+    if (formData.needBy || formData.arrivalDate) {
+      newStatus['logistics'] = formData.needBy ? 'completed' : 'error';
+    }
+    
+    // Lab tab validation
+    if (formData.technician1 || formData.testDate) {
+      newStatus['lab'] = formData.technician1 && formData.testDate ? 'completed' : 'error';
+    }
+    
+    // Transit tab validation
+    if (formData.originLocation || formData.destinationLocation) {
+      newStatus['transit'] = formData.originLocation && formData.destinationLocation ? 'completed' : 'error';
+    }
+    
+    setTabStatus(newStatus);
+  }, [formData]);
 
   const handleInputChange = (field: string, value: string | boolean) => {
     setFormData(prev => ({
@@ -3715,14 +3761,21 @@ const FormVariationsDemo = () => {
             <TabsList className="grid grid-cols-5 h-10 sm:h-11 items-center rounded-md bg-muted p-1 text-muted-foreground w-full gap-1">
               {firstRowTabs.map((tab) => {
                 const Icon = tab.icon;
+                const status = tabStatus[tab.value];
                 return (
                   <TabsTrigger 
                     key={tab.value}
                     value={tab.value}
-                    className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+                    className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm relative"
                   >
                     <Icon className="h-4 w-4 sm:mr-2" />
                     <span className="hidden sm:inline">{tab.label}</span>
+                    {status === 'completed' && (
+                      <CheckCircle className="h-3 w-3 ml-1 text-green-600 dark:text-green-500" />
+                    )}
+                    {status === 'error' && (
+                      <AlertCircle className="h-3 w-3 ml-1 text-destructive" />
+                    )}
                   </TabsTrigger>
                 );
               })}
@@ -3731,14 +3784,21 @@ const FormVariationsDemo = () => {
             <TabsList className="grid grid-cols-5 h-10 sm:h-11 items-center rounded-md bg-muted p-1 text-muted-foreground w-full gap-1">
               {secondRowTabs.map((tab) => {
                 const Icon = tab.icon;
+                const status = tabStatus[tab.value];
                 return (
                   <TabsTrigger 
                     key={tab.value}
                     value={tab.value}
-                    className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+                    className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm relative"
                   >
                     <Icon className="h-4 w-4 sm:mr-2" />
                     <span className="hidden sm:inline">{tab.label}</span>
+                    {status === 'completed' && (
+                      <CheckCircle className="h-3 w-3 ml-1 text-green-600 dark:text-green-500" />
+                    )}
+                    {status === 'error' && (
+                      <AlertCircle className="h-3 w-3 ml-1 text-destructive" />
+                    )}
                   </TabsTrigger>
                 );
               })}
