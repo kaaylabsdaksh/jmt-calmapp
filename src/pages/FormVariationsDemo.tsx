@@ -774,27 +774,28 @@ const FormVariationsDemo = () => {
             {/* General Information Tab */}
             <TabsContent value="general-info">
               <Card className="border-0 shadow-md">
-                <CardContent className="p-6 space-y-4">
-                  <div className="space-y-2">
-                    <Label className="text-sm font-medium">Report #</Label>
-                    <div className="flex items-center gap-2">
-                      <Input 
-                        value={formData.reportNumber} 
-                        readOnly 
-                        className="h-11 bg-muted/50 cursor-not-allowed"
-                      />
-                      <Button variant="outline" size="sm" className="shrink-0">Prev</Button>
-                      <Button variant="outline" size="sm" className="shrink-0">Next</Button>
+                <CardContent className="p-4 space-y-3">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div className="space-y-1">
+                      <Label className="text-sm font-medium">Report #</Label>
+                      <div className="flex items-center gap-2">
+                        <Input 
+                          value={formData.reportNumber} 
+                          readOnly 
+                          className="h-9 bg-muted/50 cursor-not-allowed text-sm"
+                        />
+                        <Button variant="outline" size="sm" className="shrink-0 h-9">Prev</Button>
+                        <Button variant="outline" size="sm" className="shrink-0 h-9">Next</Button>
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="itemStatus" className="text-sm font-medium">Item Status</Label>
-                    <div className="flex items-center gap-2">
-                      <Select value={formData.itemStatus} onValueChange={handleStatusChangeAttempt}>
-                        <SelectTrigger className="h-11">
-                          <SelectValue placeholder="Select status" />
-                        </SelectTrigger>
+                    <div className="space-y-1">
+                      <Label htmlFor="itemStatus" className="text-sm font-medium">Item Status</Label>
+                      <div className="flex items-center gap-2">
+                        <Select value={formData.itemStatus} onValueChange={handleStatusChangeAttempt}>
+                          <SelectTrigger className="h-9">
+                            <SelectValue placeholder="Select status" />
+                          </SelectTrigger>
                         <SelectContent className="bg-popover border z-50 max-h-48 overflow-y-auto">
                           <SelectItem value="in-lab">In Lab</SelectItem>
                           <SelectItem value="lab-management">Lab Management</SelectItem>
@@ -802,17 +803,18 @@ const FormVariationsDemo = () => {
                           <SelectItem value="in-transit">In Transit</SelectItem>
                         </SelectContent>
                       </Select>
-                      <Button variant="outline" size="sm" className="shrink-0 bg-yellow-500 hover:bg-yellow-600 text-white">
+                      <Button variant="outline" size="sm" className="shrink-0 h-9 bg-yellow-500 hover:bg-yellow-600 text-white">
                         change
                       </Button>
                     </div>
+                    </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <div className="space-y-1">
                       <Label htmlFor="assignedTo" className="text-sm font-medium">Assigned To</Label>
                       <Select value={formData.assignedTo} onValueChange={(value) => handleInputChange("assignedTo", value)}>
-                        <SelectTrigger className="h-11">
+                        <SelectTrigger className="h-9">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent className="bg-popover border z-50">
@@ -823,20 +825,20 @@ const FormVariationsDemo = () => {
                       </Select>
                     </div>
 
-                    <div className="space-y-2">
+                    <div className="space-y-1">
                       <Label htmlFor="testFreq" className="text-sm font-medium">Test Freq</Label>
                       <Input
                         id="testFreq"
                         value={formData.calFreq}
                         onChange={(e) => handleInputChange("calFreq", e.target.value)}
-                        className="h-11"
+                        className="h-9"
                       />
                     </div>
 
-                    <div className="space-y-2">
+                    <div className="space-y-1">
                       <Label htmlFor="priority" className="text-sm font-medium">Priority</Label>
                       <Select value={formData.priority} onValueChange={(value) => handleInputChange("priority", value)}>
-                        <SelectTrigger className="h-11">
+                        <SelectTrigger className="h-9">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent className="bg-popover border z-50">
@@ -848,10 +850,10 @@ const FormVariationsDemo = () => {
                       </Select>
                     </div>
 
-                    <div className="space-y-2">
+                    <div className="space-y-1">
                       <Label htmlFor="location" className="text-sm font-medium">Location</Label>
                       <Select value={formData.location} onValueChange={(value) => handleInputChange("location", value)}>
-                        <SelectTrigger className="h-11">
+                        <SelectTrigger className="h-9">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent className="bg-popover border z-50 max-h-48 overflow-y-auto">
@@ -862,10 +864,10 @@ const FormVariationsDemo = () => {
                       </Select>
                     </div>
 
-                    <div className="space-y-2">
+                    <div className="space-y-1">
                       <Label htmlFor="division" className="text-sm font-medium">Division</Label>
                       <Select value={formData.division} onValueChange={(value) => handleInputChange("division", value)}>
-                        <SelectTrigger className="h-11">
+                        <SelectTrigger className="h-9">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent className="bg-popover border z-50">
@@ -876,10 +878,10 @@ const FormVariationsDemo = () => {
                       </Select>
                     </div>
 
-                    <div className="space-y-2">
+                    <div className="space-y-1">
                       <Label htmlFor="actionCode" className="text-sm font-medium">Action Code</Label>
                       <Select value={formData.actionCode} onValueChange={(value) => handleInputChange("actionCode", value)}>
-                        <SelectTrigger className="h-11">
+                        <SelectTrigger className="h-9">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent className="bg-popover border z-50">
@@ -892,43 +894,43 @@ const FormVariationsDemo = () => {
                   </div>
 
                   {/* Cost Information */}
-                  <div className="pt-4 border-t border-border">
-                    <h4 className="text-sm font-semibold mb-3">Cost Information</h4>
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between text-sm">
+                  <div className="pt-3 border-t border-border">
+                    <h4 className="text-sm font-semibold mb-2">Cost Information</h4>
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-2 text-sm">
+                      <div className="flex items-center justify-between">
                         <span className="text-muted-foreground">Testing:</span>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-1">
                           <span className="font-medium">0</span>
-                          <span className="text-muted-foreground">0.00</span>
+                          <span className="text-muted-foreground text-xs">0.00</span>
                         </div>
                       </div>
-                      <div className="flex items-center justify-between text-sm">
+                      <div className="flex items-center justify-between">
                         <span className="text-muted-foreground">Expedite:</span>
-                        <span className="text-muted-foreground">0.00</span>
+                        <span className="text-muted-foreground text-xs">0.00</span>
                       </div>
-                      <div className="flex items-center justify-between text-sm">
+                      <div className="flex items-center justify-between">
                         <span className="text-muted-foreground">Emergency:</span>
-                        <span className="text-muted-foreground">0.00</span>
+                        <span className="text-muted-foreground text-xs">0.00</span>
                       </div>
-                      <div className="flex items-center justify-between text-sm">
+                      <div className="flex items-center justify-between">
                         <span className="text-muted-foreground">Replacement:</span>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-1">
                           <span className="font-medium">0</span>
-                          <span className="text-muted-foreground">0.00</span>
+                          <span className="text-muted-foreground text-xs">0.00</span>
                         </div>
                       </div>
-                      <div className="flex items-center justify-between text-sm">
+                      <div className="flex items-center justify-between">
                         <span className="text-muted-foreground">New Sales:</span>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-1">
                           <span className="font-medium">0</span>
-                          <span className="text-muted-foreground">0.00</span>
+                          <span className="text-muted-foreground text-xs">0.00</span>
                         </div>
                       </div>
-                      <div className="flex items-center justify-between text-sm font-semibold pt-2 border-t border-border">
+                      <div className="flex items-center justify-between font-semibold pt-2 border-t border-border col-span-2 md:col-span-1">
                         <span>Total:</span>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-1">
                           <span>0</span>
-                          <span>0.00</span>
+                          <span className="text-xs">0.00</span>
                         </div>
                       </div>
                     </div>
