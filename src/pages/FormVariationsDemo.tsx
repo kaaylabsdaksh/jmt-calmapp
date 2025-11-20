@@ -4768,7 +4768,7 @@ const FormVariationsDemo = () => {
         </div>
 
         {/* Tab Content - scrollable area */}
-        <CardContent className="p-6">
+        <CardContent className={cn("p-6", isESLType && "pb-24")}>
           <TabsContent value="general" className="mt-0 space-y-6 animate-fade-in">
             {renderGeneralSection()}
           </TabsContent>
