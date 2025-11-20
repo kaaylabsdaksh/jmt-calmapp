@@ -483,11 +483,23 @@ const FormVariationsDemo = () => {
       const updates: any = { [field]: value };
       
       // Auto-populate report number when type is selected
-      if (field === 'type' && value) {
+      if (field === 'type' && value && typeof value === 'string') {
         const accountNumber = "0152.01";
         const workOrderNumber = formData.workOrderNumber || "802930";
         const itemNumber = "001";
-        updates.reportNumber = `${accountNumber}-${workOrderNumber}-${itemNumber}`;
+        
+        if (value === 'single') {
+          // SINGLE type: accountNumber-workOrderNumber-itemNumber
+          updates.reportNumber = `${accountNumber}-${workOrderNumber}-${itemNumber}`;
+        } else if (value.startsWith('esl-')) {
+          // ESL type: accountNumber-workOrderNumber-(ESL type)
+          const eslType = value.replace('esl-', '');
+          updates.reportNumber = `${accountNumber}-${workOrderNumber}-${eslType}`;
+        } else if (value.startsWith('itl-')) {
+          // ITL type: accountNumber-workOrderNumber-(ITL type)
+          const itlType = value.replace('itl-', '');
+          updates.reportNumber = `${accountNumber}-${workOrderNumber}-${itlType}`;
+        }
       }
       
       return {
