@@ -6511,7 +6511,7 @@ const FormVariationsDemo = () => {
 
       {/* Fixed Action Footer - Custom for ESL types */}
       {isESLType && activeSection === 'work-order-items' ? (
-        <div className="fixed bottom-0 left-[256px] right-0 bg-background border-t border-border shadow-lg -z-10 py-3 px-6">
+        <div className="fixed bottom-0 left-[256px] right-0 bg-background border-t border-border shadow-lg z-10 py-3 px-6">
           <div className="flex items-center justify-between gap-4 max-w-[1400px] mx-auto">
             {/* Left side buttons */}
             <div className="flex items-center gap-2">
