@@ -3835,7 +3835,7 @@ const FormVariationsDemo = () => {
       </div>
 
       {/* Tabs - only visible when type is selected */}
-      {formData.type && (
+      {formData.type ? (
         <Tabs value={activeTab} onValueChange={setActiveTab}>
         {/* Sticky Tab Navigation - outside CardContent padding */}
         <div className="sticky top-0 z-20 bg-background pt-4 px-6 pb-2 border-b shadow-sm">
@@ -3931,6 +3931,18 @@ const FormVariationsDemo = () => {
           </TabsContent>
         </CardContent>
       </Tabs>
+      ) : (
+        <div className="p-12 flex flex-col items-center justify-center text-center space-y-4">
+          <div className="rounded-full bg-muted p-4">
+            <Package className="h-8 w-8 text-muted-foreground" />
+          </div>
+          <div className="space-y-2">
+            <h3 className="text-lg font-semibold">Select a Type to Continue</h3>
+            <p className="text-sm text-muted-foreground max-w-md">
+              Please select an item type from the dropdown above to view and fill out the detailed form sections.
+            </p>
+          </div>
+        </div>
       )}
     </Card>
   );
