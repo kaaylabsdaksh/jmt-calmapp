@@ -387,6 +387,7 @@ const FormVariationsDemo = () => {
     deliverTo: "",
     deliveryType: "",
     transitNotes: "",
+    transitQty: "",
     
     // Lab Information (for BUILD NEW action code)
     conditionIn: "",
@@ -414,21 +415,33 @@ const FormVariationsDemo = () => {
     procedureUsed: "",
   });
 
-  const firstRowTabs = [
-    { value: 'general', label: 'General', icon: Info },
-    { value: 'product', label: 'Product', icon: Package },
-    { value: 'logistics', label: 'Logistics', icon: Truck },
-    { value: 'product-images', label: 'Images', icon: Package },
-    { value: 'lab', label: 'Lab', icon: Settings }
-  ];
+  // Dynamic tabs based on type selection
+  const isESLType = formData.type && (formData.type.startsWith('esl-') || formData.type.startsWith('itl-'));
+  
+  const firstRowTabs = isESLType 
+    ? [
+        { value: 'general', label: 'General', icon: Info },
+        { value: 'details', label: 'Details', icon: FileText },
+        { value: 'testing', label: 'Testing', icon: Settings },
+        { value: 'work-status', label: 'Work Status', icon: Clock }
+      ]
+    : [
+        { value: 'general', label: 'General', icon: Info },
+        { value: 'product', label: 'Product', icon: Package },
+        { value: 'logistics', label: 'Logistics', icon: Truck },
+        { value: 'product-images', label: 'Images', icon: Package },
+        { value: 'lab', label: 'Lab', icon: Settings }
+      ];
 
-  const secondRowTabs = [
-    { value: 'factory-config', label: 'Factory', icon: Settings },
-    { value: 'transit', label: 'Transit', icon: Truck },
-    { value: 'accessories', label: 'Accessories', icon: Layers },
-    { value: 'parts', label: 'Parts', icon: Settings },
-    { value: 'options', label: 'Additional', icon: Settings }
-  ];
+  const secondRowTabs = isESLType 
+    ? [] // No second row for ESL types
+    : [
+        { value: 'factory-config', label: 'Factory', icon: Settings },
+        { value: 'transit', label: 'Transit', icon: Truck },
+        { value: 'accessories', label: 'Accessories', icon: Layers },
+        { value: 'parts', label: 'Parts', icon: Settings },
+        { value: 'options', label: 'Additional', icon: Settings }
+      ];
   
   const [activeTab, setActiveTab] = useState('general');
   
@@ -477,6 +490,13 @@ const FormVariationsDemo = () => {
     
     setTabStatus(newStatus);
   }, [formData]);
+
+  // Reset active tab to 'general' when type changes between ESL and SINGLE
+  useEffect(() => {
+    if (formData.type) {
+      setActiveTab('general');
+    }
+  }, [formData.type]);
 
   const handleInputChange = (field: string, value: string | boolean) => {
     setFormData(prev => {
@@ -1504,6 +1524,319 @@ const FormVariationsDemo = () => {
                 </div>
               ))}
             </div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+
+  // ESL-specific sections
+  const renderDetailsSection = () => (
+    <div className="space-y-6">
+      <Card className="border-0 shadow-md w-full">
+        <CardContent className="p-4 sm:p-6 space-y-4">
+          <div className="flex items-center gap-3 pb-4 border-b border-border">
+            <div className="p-2 bg-primary/10 rounded-lg">
+              <FileText className="h-5 w-5 text-primary" />
+            </div>
+            <h3 className="text-lg font-semibold">Details</h3>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="arrivalDate" className="text-sm font-medium">Date</Label>
+              <Input
+                id="arrivalDate"
+                type="date"
+                value={formData.arrivalDate}
+                onChange={(e) => handleInputChange("arrivalDate", e.target.value)}
+                className="h-11"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="arrivalType" className="text-sm font-medium">Type</Label>
+              <Select value={formData.arrivalType} onValueChange={(value) => handleInputChange("arrivalType", value)}>
+                <SelectTrigger className="h-11">
+                  <SelectValue placeholder="Select type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="jm-driver-pickup">JM Driver Pickup</SelectItem>
+                  <SelectItem value="customer-dropoff">Customer Drop Off</SelectItem>
+                  <SelectItem value="shipped">Shipped</SelectItem>
+                  <SelectItem value="onsite">OnSite</SelectItem>
+                  <SelectItem value="purchasing-dept">Purchasing Dept</SelectItem>
+                  <SelectItem value="lab-standard">Lab Standard</SelectItem>
+                  <SelectItem value="surplus">Surplus</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="invNumber" className="text-sm font-medium">Inv #</Label>
+              <Input
+                id="invNumber"
+                value={formData.invNumber}
+                onChange={(e) => handleInputChange("invNumber", e.target.value)}
+                placeholder="Inv #"
+                className="h-11"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="dtNumber" className="text-sm font-medium">DT #</Label>
+              <Input
+                id="dtNumber"
+                value={formData.dtNumber}
+                onChange={(e) => handleInputChange("dtNumber", e.target.value)}
+                placeholder="DT #"
+                className="h-11"
+              />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="deliveryStatus" className="text-sm font-medium">Delivery Status</Label>
+            <Textarea
+              id="deliveryStatus"
+              value={formData.deliveryStatus}
+              onChange={(e) => handleInputChange("deliveryStatus", e.target.value)}
+              placeholder="Enter delivery status..."
+              rows={4}
+            />
+          </div>
+
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-foreground border-b pb-2">Other Information</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="poNumber" className="text-sm font-medium">PO Number</Label>
+                <Input
+                  id="poNumber"
+                  value={formData.poNumber}
+                  onChange={(e) => handleInputChange("poNumber", e.target.value)}
+                  placeholder="W/OPO"
+                  className="h-11"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="jmPartsPoNumber" className="text-sm font-medium">JM Parts PO #</Label>
+                <Input
+                  id="jmPartsPoNumber"
+                  value={formData.jmPartsPoNumber}
+                  onChange={(e) => handleInputChange("jmPartsPoNumber", e.target.value)}
+                  placeholder="JM Parts PO #"
+                  className="h-11"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="soNumber" className="text-sm font-medium">SO Number</Label>
+                <Input
+                  id="soNumber"
+                  value={formData.soNumber}
+                  onChange={(e) => handleInputChange("soNumber", e.target.value)}
+                  placeholder="SO Number"
+                  className="h-11"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="needBy" className="text-sm font-medium">Need By</Label>
+                <Input
+                  id="needBy"
+                  type="date"
+                  value={formData.needBy}
+                  onChange={(e) => handleInputChange("needBy", e.target.value)}
+                  className="h-11"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="deliverByDate" className="text-sm font-medium">Deliver By Date</Label>
+                <Input
+                  id="deliverByDate"
+                  type="date"
+                  value={formData.deliverByDate}
+                  onChange={(e) => handleInputChange("deliverByDate", e.target.value)}
+                  className="h-11"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="testDate" className="text-sm font-medium">Date Tested</Label>
+                <Input
+                  id="testDate"
+                  type="date"
+                  value={formData.testDate}
+                  onChange={(e) => handleInputChange("testDate", e.target.value)}
+                  className="h-11"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="transitQty" className="text-sm font-medium">Transit Qty</Label>
+                <Input
+                  id="transitQty"
+                  value={formData.transitQty}
+                  onChange={(e) => handleInputChange("transitQty", e.target.value)}
+                  placeholder="Transit Qty"
+                  className="h-11"
+                />
+              </div>
+            </div>
+
+            <div className="flex items-center gap-4">
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="new"
+                  checked={formData.newEquip}
+                  onCheckedChange={(checked) => handleInputChange("newEquip", checked)}
+                />
+                <Label htmlFor="new" className="text-sm font-medium cursor-pointer">New</Label>
+              </div>
+
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="hotList"
+                  checked={formData.hotList}
+                  onCheckedChange={(checked) => handleInputChange("hotList", checked)}
+                />
+                <Label htmlFor="hotList" className="text-sm font-medium cursor-pointer">Hot List</Label>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+
+  const renderTestingSection = () => (
+    <div className="space-y-6">
+      <Card className="border-0 shadow-md w-full">
+        <CardContent className="p-4 sm:p-6 space-y-4">
+          <div className="flex items-center gap-3 pb-4 border-b border-border">
+            <div className="p-2 bg-primary/10 rounded-lg">
+              <Settings className="h-5 w-5 text-primary" />
+            </div>
+            <h3 className="text-lg font-semibold">Testing</h3>
+          </div>
+
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-foreground">Cost Information</h3>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">Testing</Label>
+                <div className="flex items-center gap-2">
+                  <Label className="text-sm text-muted-foreground">Qty</Label>
+                  <Input
+                    value="0"
+                    readOnly
+                    className="h-11 w-20"
+                  />
+                  <Label className="text-sm text-muted-foreground">Cost</Label>
+                  <Input
+                    value="0.00"
+                    readOnly
+                    className="h-11"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">Expedite</Label>
+                <Input
+                  value="0.00"
+                  readOnly
+                  className="h-11"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">Emergency</Label>
+                <Input
+                  value="0.00"
+                  readOnly
+                  className="h-11"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">Replacement</Label>
+                <div className="flex items-center gap-2">
+                  <Label className="text-sm text-muted-foreground">Qty</Label>
+                  <Input
+                    value="0"
+                    readOnly
+                    className="h-11 w-20"
+                  />
+                  <Label className="text-sm text-muted-foreground">Cost</Label>
+                  <Input
+                    value="0.00"
+                    readOnly
+                    className="h-11"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">New Sales</Label>
+                <div className="flex items-center gap-2">
+                  <Label className="text-sm text-muted-foreground">Qty</Label>
+                  <Input
+                    value="0"
+                    readOnly
+                    className="h-11 w-20"
+                  />
+                  <Label className="text-sm text-muted-foreground">Cost</Label>
+                  <Input
+                    value="0.00"
+                    readOnly
+                    className="h-11"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">Total</Label>
+                <div className="flex items-center gap-2">
+                  <Label className="text-sm text-muted-foreground">Qty</Label>
+                  <Input
+                    value="0"
+                    readOnly
+                    className="h-11 w-20"
+                  />
+                  <Label className="text-sm text-muted-foreground font-semibold">Cost</Label>
+                  <Input
+                    value="0.00"
+                    readOnly
+                    className="h-11 font-semibold"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+
+  const renderWorkStatusSection = () => (
+    <div className="space-y-6">
+      <Card className="border-0 shadow-md w-full">
+        <CardContent className="p-4 sm:p-6 space-y-4">
+          <div className="flex items-center gap-3 pb-4 border-b border-border">
+            <div className="p-2 bg-primary/10 rounded-lg">
+              <Clock className="h-5 w-5 text-primary" />
+            </div>
+            <h3 className="text-lg font-semibold">Work Status</h3>
+          </div>
+
+          <div className="space-y-4">
+            <p className="text-sm text-muted-foreground">
+              Work status information will be displayed here.
+            </p>
           </div>
         </CardContent>
       </Card>
@@ -3864,7 +4197,10 @@ const FormVariationsDemo = () => {
         {/* Sticky Tab Navigation - outside CardContent padding */}
         <div className="sticky top-0 z-20 bg-background pt-4 px-6 pb-2 border-b shadow-sm">
           <div className="space-y-2">
-            <TabsList className="grid grid-cols-5 h-10 sm:h-11 items-center rounded-md bg-muted p-1 text-muted-foreground w-full gap-1">
+            <TabsList className={cn(
+              "grid h-10 sm:h-11 items-center rounded-md bg-muted p-1 text-muted-foreground w-full gap-1",
+              isESLType ? "grid-cols-4" : "grid-cols-5"
+            )}>
               {firstRowTabs.map((tab) => {
                 const Icon = tab.icon;
                 const status = tabStatus[tab.value];
@@ -3887,28 +4223,30 @@ const FormVariationsDemo = () => {
               })}
             </TabsList>
             
-            <TabsList className="grid grid-cols-5 h-10 sm:h-11 items-center rounded-md bg-muted p-1 text-muted-foreground w-full gap-1">
-              {secondRowTabs.map((tab) => {
-                const Icon = tab.icon;
-                const status = tabStatus[tab.value];
-                return (
-                  <TabsTrigger 
-                    key={tab.value}
-                    value={tab.value}
-                    className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm relative"
-                  >
-                    <Icon className="h-4 w-4 sm:mr-2" />
-                    <span className="hidden sm:inline">{tab.label}</span>
-                    {status === 'completed' && (
-                      <CheckCircle className="h-3 w-3 ml-1 text-green-600 dark:text-green-500" />
-                    )}
-                    {status === 'error' && (
-                      <AlertCircle className="h-3 w-3 ml-1 text-destructive" />
-                    )}
-                  </TabsTrigger>
-                );
-              })}
-            </TabsList>
+            {!isESLType && secondRowTabs.length > 0 && (
+              <TabsList className="grid grid-cols-5 h-10 sm:h-11 items-center rounded-md bg-muted p-1 text-muted-foreground w-full gap-1">
+                {secondRowTabs.map((tab) => {
+                  const Icon = tab.icon;
+                  const status = tabStatus[tab.value];
+                  return (
+                    <TabsTrigger 
+                      key={tab.value}
+                      value={tab.value}
+                      className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm relative"
+                    >
+                      <Icon className="h-4 w-4 sm:mr-2" />
+                      <span className="hidden sm:inline">{tab.label}</span>
+                      {status === 'completed' && (
+                        <CheckCircle className="h-3 w-3 ml-1 text-green-600 dark:text-green-500" />
+                      )}
+                      {status === 'error' && (
+                        <AlertCircle className="h-3 w-3 ml-1 text-destructive" />
+                      )}
+                    </TabsTrigger>
+                  );
+                })}
+              </TabsList>
+            )}
           </div>
         </div>
 
@@ -3918,41 +4256,61 @@ const FormVariationsDemo = () => {
             {renderGeneralSection()}
           </TabsContent>
 
-          <TabsContent value="product" className="mt-0 space-y-6 animate-fade-in">
-            {renderProductSection()}
-          </TabsContent>
+          {isESLType ? (
+            <>
+              {/* ESL-specific tabs */}
+              <TabsContent value="details" className="mt-0 space-y-6 animate-fade-in">
+                {renderDetailsSection()}
+              </TabsContent>
 
-          <TabsContent value="logistics" className="mt-0 space-y-6 animate-fade-in">
-            {renderLogisticsSection()}
-          </TabsContent>
+              <TabsContent value="testing" className="mt-0 space-y-6 animate-fade-in">
+                {renderTestingSection()}
+              </TabsContent>
 
-          <TabsContent value="product-images" className="mt-0 space-y-6 animate-fade-in">
-            {renderProductImagesSection()}
-          </TabsContent>
+              <TabsContent value="work-status" className="mt-0 space-y-6 animate-fade-in">
+                {renderWorkStatusSection()}
+              </TabsContent>
+            </>
+          ) : (
+            <>
+              {/* SINGLE type tabs */}
+              <TabsContent value="product" className="mt-0 space-y-6 animate-fade-in">
+                {renderProductSection()}
+              </TabsContent>
 
-          <TabsContent value="lab" className="mt-0 space-y-6 animate-fade-in">
-            {renderLabSection()}
-          </TabsContent>
+              <TabsContent value="logistics" className="mt-0 space-y-6 animate-fade-in">
+                {renderLogisticsSection()}
+              </TabsContent>
 
-          <TabsContent value="factory-config" className="mt-0 space-y-6 animate-fade-in">
-            {renderFactoryConfigSection()}
-          </TabsContent>
+              <TabsContent value="product-images" className="mt-0 space-y-6 animate-fade-in">
+                {renderProductImagesSection()}
+              </TabsContent>
 
-          <TabsContent value="transit" className="mt-0 space-y-6 animate-fade-in">
-            {renderTransitSection()}
-          </TabsContent>
+              <TabsContent value="lab" className="mt-0 space-y-6 animate-fade-in">
+                {renderLabSection()}
+              </TabsContent>
 
-          <TabsContent value="accessories" className="mt-0 space-y-6 animate-fade-in">
-            {renderAccessoriesSection()}
-          </TabsContent>
+              <TabsContent value="factory-config" className="mt-0 space-y-6 animate-fade-in">
+                {renderFactoryConfigSection()}
+              </TabsContent>
 
-          <TabsContent value="parts" className="mt-0 space-y-6 animate-fade-in">
-            {renderPartsSection()}
-          </TabsContent>
+              <TabsContent value="transit" className="mt-0 space-y-6 animate-fade-in">
+                {renderTransitSection()}
+              </TabsContent>
 
-          <TabsContent value="options" className="mt-0 space-y-6 animate-fade-in">
-            {renderOptionsSection()}
-          </TabsContent>
+              <TabsContent value="accessories" className="mt-0 space-y-6 animate-fade-in">
+                {renderAccessoriesSection()}
+              </TabsContent>
+
+              <TabsContent value="parts" className="mt-0 space-y-6 animate-fade-in">
+                {renderPartsSection()}
+              </TabsContent>
+
+              <TabsContent value="options" className="mt-0 space-y-6 animate-fade-in">
+                {renderOptionsSection()}
+              </TabsContent>
+            </>
+          )}
         </CardContent>
       </Tabs>
       ) : (
