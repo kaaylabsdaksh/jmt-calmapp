@@ -6507,91 +6507,92 @@ const FormVariationsDemo = () => {
           </DialogContent>
         </Dialog>
         
-        {/* Fixed Action Footer - Custom for ESL types */}
-        {isESLType && activeSection === 'work-order-items' ? (
-          <div className="fixed bottom-0 left-0 right-0 bg-background border-t border-border shadow-lg z-40 py-3 px-6 md:left-[280px]">
-            <div className="flex items-center justify-between gap-4 max-w-[1400px] mx-auto">
-              {/* Left side buttons */}
-              <div className="flex items-center gap-2">
-                <Button 
-                  variant="outline" 
-                  className="bg-[#9CA300] hover:bg-[#8a9200] text-black border-[#9CA300] font-medium h-9 px-4"
-                >
-                  Rotation
-                </Button>
-                <Button 
-                  variant="outline" 
-                  className="bg-[#9CA300] hover:bg-[#8a9200] text-black border-[#9CA300] font-medium h-9 px-4"
-                >
-                  Schedule
-                </Button>
-                <Button 
-                  variant="outline" 
-                  className="bg-[#9CA300] hover:bg-[#8a9200] text-black border-[#9CA300] font-medium h-9 px-4"
-                >
-                  Waiting on Customer
-                </Button>
-              </div>
+      </div>
 
-              {/* Right side buttons */}
-              <div className="flex items-center gap-2">
-                <Button 
-                  variant="outline" 
-                  onClick={handleCancel}
-                  className="bg-[#9CA300] hover:bg-[#8a9200] text-black border-[#9CA300] font-medium h-9 px-4"
-                >
-                  Cancel WO
-                </Button>
-                <Button 
-                  variant="outline" 
-                  className="bg-[#9CA300] hover:bg-[#8a9200] text-black border-[#9CA300] font-medium h-9 px-4"
-                >
-                  Print WO
-                </Button>
-                <Button 
-                  variant="outline" 
-                  onClick={handleCancel}
-                  className="bg-[#9CA300] hover:bg-[#8a9200] text-black border-[#9CA300] font-medium h-9 px-4"
-                >
-                  Back
-                </Button>
-                <Button 
-                  onClick={handleSave}
-                  className="bg-[#9CA300] hover:bg-[#8a9200] text-black border-[#9CA300] font-medium h-9 px-4"
-                >
-                  Save
-                </Button>
-              </div>
+      {/* Fixed Action Footer - Custom for ESL types */}
+      {isESLType && activeSection === 'work-order-items' ? (
+        <div className="fixed bottom-0 left-0 right-0 bg-background border-t border-border shadow-lg z-40 py-3 px-6 md:left-[280px]">
+          <div className="flex items-center justify-between gap-4 max-w-[1400px] mx-auto">
+            {/* Left side buttons */}
+            <div className="flex items-center gap-2">
+              <Button 
+                variant="outline" 
+                className="bg-[#9CA300] hover:bg-[#8a9200] text-black border-[#9CA300] font-medium h-9 px-4"
+              >
+                Rotation
+              </Button>
+              <Button 
+                variant="outline" 
+                className="bg-[#9CA300] hover:bg-[#8a9200] text-black border-[#9CA300] font-medium h-9 px-4"
+              >
+                Schedule
+              </Button>
+              <Button 
+                variant="outline" 
+                className="bg-[#9CA300] hover:bg-[#8a9200] text-black border-[#9CA300] font-medium h-9 px-4"
+              >
+                Waiting on Customer
+              </Button>
+            </div>
+
+            {/* Right side buttons */}
+            <div className="flex items-center gap-2">
+              <Button 
+                variant="outline" 
+                onClick={handleCancel}
+                className="bg-[#9CA300] hover:bg-[#8a9200] text-black border-[#9CA300] font-medium h-9 px-4"
+              >
+                Cancel WO
+              </Button>
+              <Button 
+                variant="outline" 
+                className="bg-[#9CA300] hover:bg-[#8a9200] text-black border-[#9CA300] font-medium h-9 px-4"
+              >
+                Print WO
+              </Button>
+              <Button 
+                variant="outline" 
+                onClick={handleCancel}
+                className="bg-[#9CA300] hover:bg-[#8a9200] text-black border-[#9CA300] font-medium h-9 px-4"
+              >
+                Back
+              </Button>
+              <Button 
+                onClick={handleSave}
+                className="bg-[#9CA300] hover:bg-[#8a9200] text-black border-[#9CA300] font-medium h-9 px-4"
+              >
+                Save
+              </Button>
             </div>
           </div>
-        ) : (
-          <FixedActionFooter 
-            onCancel={handleCancel}
-            onSave={handleSave}
-            currentSection={activeSection}
-            userRole={userRole}
-            onUserRoleChange={setUserRole}
-          />
-        )}
-
-        {/* QF3 Dialog */}
-        <QF3Dialog 
-          open={qf3DialogOpen} 
-          onOpenChange={setQf3DialogOpen} 
+        </div>
+      ) : (
+        <FixedActionFooter 
+          onCancel={handleCancel}
+          onSave={handleSave}
+          currentSection={activeSection}
+          userRole={userRole}
+          onUserRoleChange={setUserRole}
         />
+      )}
 
-        {/* Scroll to Top Button */}
-        {showScrollTop && (
-          <Button
-            onClick={scrollToTop}
-            size="icon"
-            className="fixed bottom-24 right-6 z-30 rounded-full shadow-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 animate-in fade-in slide-in-from-bottom-4"
-            aria-label="Scroll to top"
-          >
-            <ArrowUp className="h-5 w-5" />
-          </Button>
-        )}
-      </div>
+      {/* QF3 Dialog */}
+      <QF3Dialog 
+        open={qf3DialogOpen} 
+        onOpenChange={setQf3DialogOpen} 
+      />
+
+      {/* Scroll to Top Button */}
+      {showScrollTop && (
+        <Button
+          onClick={scrollToTop}
+          size="icon"
+          className="fixed bottom-24 right-6 z-30 rounded-full shadow-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 animate-in fade-in slide-in-from-bottom-4"
+          aria-label="Scroll to top"
+        >
+          <ArrowUp className="h-5 w-5" />
+        </Button>
+      )}
     </div>
   );
 };
