@@ -4665,7 +4665,7 @@ const FormVariationsDemo = () => {
 
   // Render tabbed interface
   const renderTabbedInterface = () => (
-    <Card className="border-0 shadow-md overflow-visible">
+    <Card className={cn("border-0 shadow-md overflow-visible", isESLType && "mb-24")}>
       {/* Type and Report Number fields - always visible */}
       <div className="p-6 pb-0">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
