@@ -753,15 +753,11 @@ const FormVariationsDemo = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div className="space-y-1">
                       <Label className="text-sm font-medium">Report #</Label>
-                      <div className="flex items-center gap-2">
-                        <Input 
-                          value={formData.reportNumber} 
-                          readOnly 
-                          className="h-9 bg-muted/50 cursor-not-allowed text-sm"
-                        />
-                        <Button variant="outline" size="sm" className="shrink-0 h-9">Prev</Button>
-                        <Button variant="outline" size="sm" className="shrink-0 h-9">Next</Button>
-                      </div>
+                      <Input 
+                        value={formData.reportNumber} 
+                        readOnly 
+                        className="h-9 bg-muted/50 cursor-not-allowed text-sm"
+                      />
                     </div>
 
                     <div className="space-y-1">
