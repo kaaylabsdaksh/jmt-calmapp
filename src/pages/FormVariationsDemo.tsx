@@ -479,10 +479,22 @@ const FormVariationsDemo = () => {
   }, [formData]);
 
   const handleInputChange = (field: string, value: string | boolean) => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: value
-    }));
+    setFormData(prev => {
+      const updates: any = { [field]: value };
+      
+      // Auto-populate report number when type is selected
+      if (field === 'type' && value) {
+        const accountNumber = "0152.01";
+        const workOrderNumber = formData.workOrderNumber || "802930";
+        const itemNumber = "001";
+        updates.reportNumber = `${accountNumber}-${workOrderNumber}-${itemNumber}`;
+      }
+      
+      return {
+        ...prev,
+        ...updates
+      };
+    });
   };
 
   const handleSave = () => {
