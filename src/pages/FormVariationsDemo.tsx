@@ -711,43 +711,6 @@ const FormVariationsDemo = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 auto-rows-min">
         <div className="space-y-2">
-          <Label htmlFor="type" className="text-sm font-medium">Type *</Label>
-          <Select value={formData.type} onValueChange={(value) => handleInputChange("type", value)}>
-            <SelectTrigger className="h-11">
-              <SelectValue placeholder="Select type" />
-            </SelectTrigger>
-            <SelectContent className="max-h-48 overflow-y-auto">
-              <SelectItem value="single">Single</SelectItem>
-              <SelectItem value="esl-blankets">ESL - Blankets</SelectItem>
-              <SelectItem value="esl-coverups">ESL - CoverUps</SelectItem>
-              <SelectItem value="esl-footwear">ESL - Footwear</SelectItem>
-              <SelectItem value="esl-gloves">ESL - Gloves</SelectItem>
-              <SelectItem value="esl-grounds">ESL - Grounds</SelectItem>
-              <SelectItem value="esl-hotsticks">ESL - Hotsticks</SelectItem>
-              <SelectItem value="esl-insulated-tools">ESL - Insulated Tools</SelectItem>
-              <SelectItem value="esl-jumpers">ESL - Jumpers</SelectItem>
-              <SelectItem value="esl-line-hoses">ESL - Line Hoses</SelectItem>
-              <SelectItem value="esl-matting">ESL - Matting</SelectItem>
-              <SelectItem value="esl-roll-blankets">ESL - Roll Blankets</SelectItem>
-              <SelectItem value="esl-sleeves">ESL - Sleeves</SelectItem>
-              <SelectItem value="itl-gauges">ITL - Gauges</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="reportNumber" className="text-sm font-medium">Report Number *</Label>
-          <Input
-            id="reportNumber"
-            value={formData.reportNumber}
-            onChange={(e) => handleInputChange("reportNumber", e.target.value)}
-            placeholder="0152.01-802930-001"
-            className="h-11"
-            readOnly
-          />
-        </div>
-
-        <div className="space-y-2">
           <Label htmlFor="itemStatus" className="text-sm font-medium">Item Status</Label>
           <Select value={formData.itemStatus} onValueChange={handleStatusChangeAttempt}>
             <SelectTrigger className="h-11">
@@ -3829,7 +3792,51 @@ const FormVariationsDemo = () => {
   // Render tabbed interface
   const renderTabbedInterface = () => (
     <Card className="border-0 shadow-md overflow-visible">
-      <Tabs value={activeTab} onValueChange={setActiveTab}>
+      {/* Type and Report Number fields - always visible */}
+      <div className="p-6 pb-0">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          <div className="space-y-2">
+            <Label htmlFor="type" className="text-sm font-medium">Type *</Label>
+            <Select value={formData.type} onValueChange={(value) => handleInputChange("type", value)}>
+              <SelectTrigger className="h-11">
+                <SelectValue placeholder="Select type" />
+              </SelectTrigger>
+              <SelectContent className="max-h-48 overflow-y-auto">
+                <SelectItem value="single">Single</SelectItem>
+                <SelectItem value="esl-blankets">ESL - Blankets</SelectItem>
+                <SelectItem value="esl-coverups">ESL - CoverUps</SelectItem>
+                <SelectItem value="esl-footwear">ESL - Footwear</SelectItem>
+                <SelectItem value="esl-gloves">ESL - Gloves</SelectItem>
+                <SelectItem value="esl-grounds">ESL - Grounds</SelectItem>
+                <SelectItem value="esl-hotsticks">ESL - Hotsticks</SelectItem>
+                <SelectItem value="esl-insulated-tools">ESL - Insulated Tools</SelectItem>
+                <SelectItem value="esl-jumpers">ESL - Jumpers</SelectItem>
+                <SelectItem value="esl-line-hoses">ESL - Line Hoses</SelectItem>
+                <SelectItem value="esl-matting">ESL - Matting</SelectItem>
+                <SelectItem value="esl-roll-blankets">ESL - Roll Blankets</SelectItem>
+                <SelectItem value="esl-sleeves">ESL - Sleeves</SelectItem>
+                <SelectItem value="itl-gauges">ITL - Gauges</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="reportNumber" className="text-sm font-medium">Report Number *</Label>
+            <Input
+              id="reportNumber"
+              value={formData.reportNumber}
+              onChange={(e) => handleInputChange("reportNumber", e.target.value)}
+              placeholder="0152.01-802930-001"
+              className="h-11"
+              readOnly
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Tabs - only visible when type is selected */}
+      {formData.type && (
+        <Tabs value={activeTab} onValueChange={setActiveTab}>
         {/* Sticky Tab Navigation - outside CardContent padding */}
         <div className="sticky top-0 z-20 bg-background pt-4 px-6 pb-2 border-b shadow-sm">
           <div className="space-y-2">
@@ -3924,6 +3931,7 @@ const FormVariationsDemo = () => {
           </TabsContent>
         </CardContent>
       </Tabs>
+      )}
     </Card>
   );
 
