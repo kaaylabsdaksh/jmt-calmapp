@@ -885,17 +885,21 @@ const FormVariationsDemo = () => {
                       </div>
                       <div className="flex items-center justify-between">
                         <span className="text-muted-foreground">Replacement:</span>
-                        <div className="flex items-center gap-1">
-                          <span className="font-medium">0</span>
-                          <span className="text-muted-foreground text-xs">0.00</span>
-                        </div>
+                        <Input 
+                          type="number"
+                          defaultValue="0"
+                          className="h-7 w-20 text-right text-sm"
+                          step="0.01"
+                        />
                       </div>
                       <div className="flex items-center justify-between">
                         <span className="text-muted-foreground">New Sales:</span>
-                        <div className="flex items-center gap-1">
-                          <span className="font-medium">0</span>
-                          <span className="text-muted-foreground text-xs">0.00</span>
-                        </div>
+                        <Input 
+                          type="number"
+                          defaultValue="0"
+                          className="h-7 w-20 text-right text-sm"
+                          step="0.01"
+                        />
                       </div>
                       <div className="flex items-center justify-between font-semibold pt-2 border-t border-border col-span-2 md:col-span-1">
                         <span>Total:</span>
