@@ -6507,14 +6507,72 @@ const FormVariationsDemo = () => {
           </DialogContent>
         </Dialog>
         
-        {/* Fixed Action Footer */}
-        <FixedActionFooter 
-          onCancel={handleCancel}
-          onSave={handleSave}
-          currentSection={activeSection}
-          userRole={userRole}
-          onUserRoleChange={setUserRole}
-        />
+        {/* Fixed Action Footer - Custom for ESL types */}
+        {isESLType && activeSection === 'work-order-items' ? (
+          <div className="fixed bottom-0 left-0 right-0 bg-background border-t border-border shadow-lg z-40 py-3 px-6">
+            <div className="flex items-center justify-between gap-4 max-w-[1400px] mx-auto">
+              {/* Left side buttons */}
+              <div className="flex items-center gap-2">
+                <Button 
+                  variant="outline" 
+                  className="bg-[#9CA300] hover:bg-[#8a9200] text-black border-[#9CA300] font-medium h-9 px-4"
+                >
+                  Rotation
+                </Button>
+                <Button 
+                  variant="outline" 
+                  className="bg-[#9CA300] hover:bg-[#8a9200] text-black border-[#9CA300] font-medium h-9 px-4"
+                >
+                  Schedule
+                </Button>
+                <Button 
+                  variant="outline" 
+                  className="bg-[#9CA300] hover:bg-[#8a9200] text-black border-[#9CA300] font-medium h-9 px-4"
+                >
+                  Waiting on Customer
+                </Button>
+              </div>
+
+              {/* Right side buttons */}
+              <div className="flex items-center gap-2">
+                <Button 
+                  variant="outline" 
+                  onClick={handleCancel}
+                  className="bg-[#9CA300] hover:bg-[#8a9200] text-black border-[#9CA300] font-medium h-9 px-4"
+                >
+                  Cancel WO
+                </Button>
+                <Button 
+                  variant="outline" 
+                  className="bg-[#9CA300] hover:bg-[#8a9200] text-black border-[#9CA300] font-medium h-9 px-4"
+                >
+                  Print WO
+                </Button>
+                <Button 
+                  variant="outline" 
+                  onClick={handleCancel}
+                  className="bg-[#9CA300] hover:bg-[#8a9200] text-black border-[#9CA300] font-medium h-9 px-4"
+                >
+                  Back
+                </Button>
+                <Button 
+                  onClick={handleSave}
+                  className="bg-[#9CA300] hover:bg-[#8a9200] text-black border-[#9CA300] font-medium h-9 px-4"
+                >
+                  Save
+                </Button>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <FixedActionFooter 
+            onCancel={handleCancel}
+            onSave={handleSave}
+            currentSection={activeSection}
+            userRole={userRole}
+            onUserRoleChange={setUserRole}
+          />
+        )}
 
         {/* QF3 Dialog */}
         <QF3Dialog 
