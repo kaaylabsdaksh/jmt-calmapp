@@ -413,6 +413,11 @@ const FormVariationsDemo = () => {
     testDate: "",
     retestDate: "",
     procedureUsed: "",
+    // ESL-specific fields
+    departureType: "",
+    dateTested: "",
+    leadTechnician: "",
+    miscInformation: "",
   });
 
   // Dynamic tabs based on type selection
@@ -715,7 +720,550 @@ const FormVariationsDemo = () => {
   };
 
   // Common form sections content
-  const renderGeneralSection = () => (
+  const renderGeneralSection = () => {
+    // ESL-specific layout
+    if (isESLType) {
+      return (
+        <div className="space-y-6">
+          {/* Created and Modified Dates with Item Navigation */}
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-4 border-b border-border">
+            <div className="text-sm text-muted-foreground">
+              <span className="font-medium">Created:</span> 11/20/2025 by Admin User
+            </div>
+            
+            <div className="text-sm text-muted-foreground">
+              <span className="font-medium">Modified:</span> 11/20/2025 by Admin User
+            </div>
+            
+            {/* Item Navigation */}
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-muted/50 rounded-lg border border-border">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-7 w-7"
+                onClick={handlePreviousItem}
+                disabled={currentItemIndex === 0}
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+              <span className="text-xs font-medium text-foreground px-2 min-w-[60px] text-center">
+                Item {currentItemIndex + 1} / {totalItems}
+              </span>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-7 w-7"
+                onClick={handleNextItem}
+                disabled={currentItemIndex === totalItems - 1}
+              >
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+
+          {/* Three Column Layout for ESL */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Left Column: General Information */}
+            <Card className="border-0 shadow-md">
+              <CardContent className="p-4 space-y-4">
+                <div className="flex items-center gap-3 pb-3 border-b border-border">
+                  <div className="p-2 bg-primary/10 rounded-lg">
+                    <Info className="h-5 w-5 text-primary" />
+                  </div>
+                  <h3 className="text-lg font-semibold">General Information</h3>
+                </div>
+
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium">Report #</Label>
+                  <div className="flex items-center gap-2">
+                    <Input 
+                      value={formData.reportNumber} 
+                      readOnly 
+                      className="h-11 bg-muted/50 cursor-not-allowed"
+                    />
+                    <Button variant="outline" size="sm" className="shrink-0">Prev</Button>
+                    <Button variant="outline" size="sm" className="shrink-0">Next</Button>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="itemStatus" className="text-sm font-medium">Item Status</Label>
+                  <div className="flex items-center gap-2">
+                    <Select value={formData.itemStatus} onValueChange={handleStatusChangeAttempt}>
+                      <SelectTrigger className="h-11">
+                        <SelectValue placeholder="Select status" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-popover border z-50 max-h-48 overflow-y-auto">
+                        <SelectItem value="in-lab">In Lab</SelectItem>
+                        <SelectItem value="lab-management">Lab Management</SelectItem>
+                        <SelectItem value="assigned-to-tech">Assigned to Tech</SelectItem>
+                        <SelectItem value="in-transit">In Transit</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <Button variant="outline" size="sm" className="shrink-0 bg-yellow-500 hover:bg-yellow-600 text-white">
+                      change
+                    </Button>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="assignedTo" className="text-sm font-medium">Assigned To</Label>
+                  <Select value={formData.assignedTo} onValueChange={(value) => handleInputChange("assignedTo", value)}>
+                    <SelectTrigger className="h-11">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-popover border z-50">
+                      <SelectItem value="tech1">Technician 1</SelectItem>
+                      <SelectItem value="tech2">Technician 2</SelectItem>
+                      <SelectItem value="tech3">Technician 3</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="testFreq" className="text-sm font-medium">Test Freq</Label>
+                  <Input
+                    id="testFreq"
+                    value={formData.calFreq}
+                    onChange={(e) => handleInputChange("calFreq", e.target.value)}
+                    className="h-11"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="priority" className="text-sm font-medium">Priority</Label>
+                  <Select value={formData.priority} onValueChange={(value) => handleInputChange("priority", value)}>
+                    <SelectTrigger className="h-11">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-popover border z-50">
+                      <SelectItem value="normal">Normal</SelectItem>
+                      <SelectItem value="rush">Rush</SelectItem>
+                      <SelectItem value="expedite">Expedite</SelectItem>
+                      <SelectItem value="emergency">Emergency</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="location" className="text-sm font-medium">Location</Label>
+                  <Select value={formData.location} onValueChange={(value) => handleInputChange("location", value)}>
+                    <SelectTrigger className="h-11">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-popover border z-50 max-h-48 overflow-y-auto">
+                      <SelectItem value="baton-rouge">Baton Rouge</SelectItem>
+                      <SelectItem value="alexandria">Alexandria</SelectItem>
+                      <SelectItem value="odessa">Odessa</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="division" className="text-sm font-medium">Division</Label>
+                  <Select value={formData.division} onValueChange={(value) => handleInputChange("division", value)}>
+                    <SelectTrigger className="h-11">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-popover border z-50">
+                      <SelectItem value="esl">ESL</SelectItem>
+                      <SelectItem value="onsite">OnSite</SelectItem>
+                      <SelectItem value="lab">Lab</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="actionCode" className="text-sm font-medium">Action Code</Label>
+                  <Select value={formData.actionCode} onValueChange={(value) => handleInputChange("actionCode", value)}>
+                    <SelectTrigger className="h-11">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-popover border z-50">
+                      <SelectItem value="test">TEST</SelectItem>
+                      <SelectItem value="repair">REPAIR</SelectItem>
+                      <SelectItem value="build-new">BUILD NEW</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Cost Information */}
+                <div className="pt-4 border-t border-border">
+                  <h4 className="text-sm font-semibold mb-3">Cost Information</h4>
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-muted-foreground">Testing:</span>
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium">0</span>
+                        <span className="text-muted-foreground">0.00</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-muted-foreground">Expedite:</span>
+                      <span className="text-muted-foreground">0.00</span>
+                    </div>
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-muted-foreground">Emergency:</span>
+                      <span className="text-muted-foreground">0.00</span>
+                    </div>
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-muted-foreground">Replacement:</span>
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium">0</span>
+                        <span className="text-muted-foreground">0.00</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-muted-foreground">New Sales:</span>
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium">0</span>
+                        <span className="text-muted-foreground">0.00</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between text-sm font-semibold pt-2 border-t border-border">
+                      <span>Total:</span>
+                      <div className="flex items-center gap-2">
+                        <span>0</span>
+                        <span>0.00</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Middle Column: Arrival Information */}
+            <Card className="border-0 shadow-md">
+              <CardContent className="p-4 space-y-4">
+                <div className="flex items-center gap-3 pb-3 border-b border-border">
+                  <div className="p-2 bg-primary/10 rounded-lg">
+                    <Truck className="h-5 w-5 text-primary" />
+                  </div>
+                  <h3 className="text-lg font-semibold">Arrival Information</h3>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="arrivalDate" className="text-sm font-medium">Date</Label>
+                  <Input
+                    id="arrivalDate"
+                    type="date"
+                    value={formData.arrivalDate}
+                    onChange={(e) => handleInputChange("arrivalDate", e.target.value)}
+                    className="h-11"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="arrivalType" className="text-sm font-medium">Type</Label>
+                  <Select value={formData.arrivalType} onValueChange={(value) => handleInputChange("arrivalType", value)}>
+                    <SelectTrigger className="h-11">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-popover border z-50">
+                      <SelectItem value="jm-driver-pickup">JM Driver Pickup</SelectItem>
+                      <SelectItem value="customer-dropoff">Customer Drop Off</SelectItem>
+                      <SelectItem value="shipped">Shipped</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Departure Information */}
+                <div className="pt-4 border-t border-border">
+                  <h4 className="text-sm font-semibold mb-3">Departure Information</h4>
+                  <div className="space-y-3">
+                    <div className="space-y-2">
+                      <Label className="text-sm font-medium">Type</Label>
+                      <Select value={formData.departureType} onValueChange={(value) => handleInputChange("departureType", value)}>
+                        <SelectTrigger className="h-11">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent className="bg-popover border z-50">
+                          <SelectItem value="pickup">Pickup</SelectItem>
+                          <SelectItem value="delivery">Delivery</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2">
+                      <div className="space-y-2">
+                        <Label className="text-sm font-medium">Inv #</Label>
+                        <Input value={formData.invNumber} onChange={(e) => handleInputChange("invNumber", e.target.value)} className="h-11" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label className="text-sm font-medium">DT #</Label>
+                        <Input value={formData.dtNumber} onChange={(e) => handleInputChange("dtNumber", e.target.value)} className="h-11" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Delivery Status */}
+                <div className="pt-4 border-t border-border">
+                  <h4 className="text-sm font-semibold mb-3">Delivery Status</h4>
+                  <Textarea
+                    value={formData.deliveryStatus}
+                    onChange={(e) => handleInputChange("deliveryStatus", e.target.value)}
+                    placeholder="Enter delivery status..."
+                    className="min-h-[80px]"
+                  />
+                </div>
+
+                {/* Other Information */}
+                <div className="pt-4 border-t border-border">
+                  <h4 className="text-sm font-semibold mb-3">Other Information</h4>
+                  <div className="space-y-3">
+                    <div className="space-y-2">
+                      <Label className="text-sm font-medium">PO Number</Label>
+                      <Input value={formData.poNumber} onChange={(e) => handleInputChange("poNumber", e.target.value)} className="h-11" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-sm font-medium">JM Parts PO #</Label>
+                      <Input value={formData.jmPartsPoNumber} onChange={(e) => handleInputChange("jmPartsPoNumber", e.target.value)} className="h-11" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-sm font-medium">SO Number</Label>
+                      <Input value={formData.soNumber} onChange={(e) => handleInputChange("soNumber", e.target.value)} className="h-11" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-sm font-medium">Need By</Label>
+                      <Input
+                        type="date"
+                        value={formData.needBy}
+                        onChange={(e) => handleInputChange("needBy", e.target.value)}
+                        className="h-11"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-sm font-medium">Deliver By Date</Label>
+                      <Input
+                        type="date"
+                        value={formData.deliverByDate}
+                        onChange={(e) => handleInputChange("deliverByDate", e.target.value)}
+                        className="h-11"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-sm font-medium">Date Tested</Label>
+                      <Input
+                        type="date"
+                        value={formData.dateTested}
+                        onChange={(e) => handleInputChange("dateTested", e.target.value)}
+                        className="h-11"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-sm font-medium">Transit Qty</Label>
+                      <Input value={formData.transitQty} onChange={(e) => handleInputChange("transitQty", e.target.value)} className="h-11" />
+                    </div>
+
+                    {/* Checkboxes */}
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2">
+                        <Checkbox id="newEquip" checked={formData.newEquip as boolean} onCheckedChange={(checked) => handleInputChange("newEquip", checked)} />
+                        <Label htmlFor="newEquip" className="text-sm cursor-pointer">New</Label>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Checkbox id="hotList" checked={formData.hotList as boolean} onCheckedChange={(checked) => handleInputChange("hotList", checked)} />
+                        <Label htmlFor="hotList" className="text-sm cursor-pointer">Hot List</Label>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Checkbox id="toShipping" checked={formData.toShipping as boolean} onCheckedChange={(checked) => handleInputChange("toShipping", checked)} />
+                        <Label htmlFor="toShipping" className="text-sm cursor-pointer">To Shipping</Label>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Checkbox id="readyToBill" checked={formData.readyToBill as boolean} onCheckedChange={(checked) => handleInputChange("readyToBill", checked)} />
+                        <Label htmlFor="readyToBill" className="text-sm cursor-pointer">Ready to Bill</Label>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label className="text-sm font-medium">Lead Technician</Label>
+                      <Select value={formData.leadTechnician} onValueChange={(value) => handleInputChange("leadTechnician", value)}>
+                        <SelectTrigger className="h-11">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent className="bg-popover border z-50">
+                          <SelectItem value="tech1">Technician 1</SelectItem>
+                          <SelectItem value="tech2">Technician 2</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <Checkbox id="lostEquipment" checked={formData.lostEquipment as boolean} onCheckedChange={(checked) => handleInputChange("lostEquipment", checked)} />
+                      <Label htmlFor="lostEquipment" className="text-sm cursor-pointer">Lost Equipment</Label>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Right Column: Misc. Information */}
+            <Card className="border-0 shadow-md">
+              <CardContent className="p-4 space-y-4">
+                <div className="flex items-center gap-3 pb-3 border-b border-border">
+                  <div className="p-2 bg-primary/10 rounded-lg">
+                    <Settings className="h-5 w-5 text-primary" />
+                  </div>
+                  <h3 className="text-lg font-semibold">Misc. Information</h3>
+                </div>
+
+                <Textarea
+                  value={formData.miscInformation}
+                  onChange={(e) => handleInputChange("miscInformation", e.target.value)}
+                  placeholder="Enter miscellaneous information..."
+                  className="min-h-[200px]"
+                />
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Accessories Section */}
+          <Card className="border-0 shadow-md">
+            <CardContent className="p-4 space-y-4">
+              <div className="flex items-center gap-3 pb-3 border-b border-border">
+                <div className="p-2 bg-primary/10 rounded-lg">
+                  <Layers className="h-5 w-5 text-primary" />
+                </div>
+                <h3 className="text-lg font-semibold">Accessories</h3>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium">Type</Label>
+                  <Select>
+                    <SelectTrigger className="h-11">
+                      <SelectValue placeholder="Containers" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-popover border z-50">
+                      <SelectItem value="containers">Containers</SelectItem>
+                      <SelectItem value="bags">Bags</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium">Accessory</Label>
+                  <Select>
+                    <SelectTrigger className="h-11">
+                      <SelectValue placeholder="Bag" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-popover border z-50">
+                      <SelectItem value="bag">Bag</SelectItem>
+                      <SelectItem value="case">Case</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium">Material</Label>
+                  <Select>
+                    <SelectTrigger className="h-11">
+                      <SelectValue placeholder="Plastic" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-popover border z-50">
+                      <SelectItem value="plastic">Plastic</SelectItem>
+                      <SelectItem value="metal">Metal</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium">Qty</Label>
+                  <div className="flex items-center gap-2">
+                    <Input placeholder="2" className="h-11" />
+                    <Button className="bg-yellow-500 hover:bg-yellow-600 text-white h-11">Add</Button>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2 pt-2">
+                <Checkbox id="includeInCreateNewGroup" />
+                <Label htmlFor="includeInCreateNewGroup" className="text-sm cursor-pointer">Include in Create New Group</Label>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Comments Section */}
+          <Card className="border-0 shadow-md">
+            <CardContent className="p-4 space-y-4">
+              <div className="flex items-center gap-3 pb-3 border-b border-border">
+                <div className="p-2 bg-primary/10 rounded-lg">
+                  <MessageSquare className="h-5 w-5 text-primary" />
+                </div>
+                <h3 className="text-lg font-semibold">Comments</h3>
+              </div>
+
+              <div className="space-y-3">
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium">Type</Label>
+                  <Select>
+                    <SelectTrigger className="h-11">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-popover border z-50">
+                      <SelectItem value="general">General</SelectItem>
+                      <SelectItem value="technical">Technical</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <Textarea
+                  placeholder="Enter comment..."
+                  className="min-h-[80px]"
+                />
+
+                <div className="flex items-center justify-between">
+                  <Checkbox id="includeInCreateNewGroupComments" />
+                  <Label htmlFor="includeInCreateNewGroupComments" className="text-sm cursor-pointer">Include in Create New Group</Label>
+                  <Button className="bg-yellow-500 hover:bg-yellow-600 text-white">Add</Button>
+                </div>
+              </div>
+
+              {/* Comments Table */}
+              <div className="border rounded-lg overflow-hidden">
+                <div className="bg-muted/50 grid grid-cols-4 p-2 text-sm font-medium">
+                  <div>Type</div>
+                  <div>User</div>
+                  <div>Date Entered</div>
+                  <div>Comment</div>
+                </div>
+                <div className="divide-y">
+                  <div className="grid grid-cols-4 p-2 text-sm">
+                    <div>Other</div>
+                    <div>Admin User</div>
+                    <div>11/20/2025 05:35 AM</div>
+                    <div>Status set to ASSIGNED TO TECH</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between text-sm text-muted-foreground">
+                <div className="flex items-center gap-2">
+                  <span>Page 1 of 1 (1 items)</span>
+                  <Button variant="outline" size="sm" disabled>&lt;</Button>
+                  <span className="px-2 py-1 bg-muted rounded">[1]</span>
+                  <Button variant="outline" size="sm" disabled>&gt;</Button>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span>Page size:</span>
+                  <Select defaultValue="10">
+                    <SelectTrigger className="h-8 w-16">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-popover border z-50">
+                      <SelectItem value="10">10</SelectItem>
+                      <SelectItem value="25">25</SelectItem>
+                      <SelectItem value="50">50</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      );
+    }
+
+    // Original SINGLE type layout
+    return (
     <div className="space-y-6">
       {/* Created and Modified Dates with Item Navigation */}
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-4 border-b border-border">
@@ -877,90 +1425,70 @@ const FormVariationsDemo = () => {
               <SelectItem value="build-new">BUILD NEW</SelectItem>
               <SelectItem value="cc">C/C</SelectItem>
               <SelectItem value="rc">R/C</SelectItem>
-              <SelectItem value="rcc">R/C/C</SelectItem>
-              <SelectItem value="repair">REPAIR</SelectItem>
               <SelectItem value="test">TEST</SelectItem>
+              <SelectItem value="verify">VERIFY</SelectItem>
+              <SelectItem value="insure">INSURE</SelectItem>
+              <SelectItem value="cc-d">C/C-D</SelectItem>
+              <SelectItem value="cc-r">C/C-R</SelectItem>
+              <SelectItem value="misc">MISC</SelectItem>
             </SelectContent>
           </Select>
         </div>
 
-
         <div className="space-y-2">
           <Label htmlFor="assignedTo" className="text-sm font-medium">Assigned To</Label>
-          <div className="relative">
-            <Input
-              id="assignedTo"
-              value={assigneeSearchValue || formData.assignedTo}
-              onChange={(e) => {
-                setAssigneeSearchValue(e.target.value);
-                handleInputChange("assignedTo", e.target.value);
-              }}
-              placeholder="Type to search assignees..."
-              className="h-11 pr-10"
-            />
-            
-            <Popover open={assigneeDropdownOpen} onOpenChange={setAssigneeDropdownOpen}>
-              <PopoverTrigger asChild>
-                <Button
-                  type="button"
-                  variant="ghost"
-                  className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 p-0 hover:bg-accent"
-                  aria-label="Show all assignees"
-                >
-                  <ChevronsUpDown className="h-4 w-4" />
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-80 p-0" align="end">
-                <Command>
-                  <CommandList>
-                    <CommandGroup heading="All Assignees">
-                      {assignees.map((assignee) => (
+          <Popover open={assigneeDropdownOpen} onOpenChange={setAssigneeDropdownOpen}>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                role="combobox"
+                aria-expanded={assigneeDropdownOpen}
+                className="w-full h-11 justify-between"
+              >
+                {formData.assignedTo || "Select assignee"}
+                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-[--radix-popover-trigger-width] p-0" align="start">
+              <Command>
+                <CommandInput 
+                  placeholder="Search assignee..." 
+                  value={assigneeSearchValue}
+                  onValueChange={setAssigneeSearchValue}
+                />
+                <CommandList>
+                  <CommandEmpty>No assignee found.</CommandEmpty>
+                  <CommandGroup>
+                    {['John Doe', 'Jane Smith', 'Bob Johnson', 'Alice Williams', 'Charlie Brown', 'Diana Prince']
+                      .filter(name => name.toLowerCase().includes(assigneeSearchValue.toLowerCase()))
+                      .map((assignee) => (
                         <CommandItem
-                          key={assignee.value}
-                          value={assignee.value}
-                          onSelect={() => {
-                            handleInputChange("assignedTo", assignee.value);
-                            setAssigneeSearchValue("");
+                          key={assignee}
+                          value={assignee}
+                          onSelect={(currentValue) => {
+                            handleInputChange("assignedTo", currentValue === formData.assignedTo ? "" : currentValue);
                             setAssigneeDropdownOpen(false);
                           }}
                         >
                           <Check
-                            className={`mr-2 h-4 w-4 ${
-                              formData.assignedTo === assignee.value ? "opacity-100" : "opacity-0"
-                            }`}
+                            className={cn(
+                              "mr-2 h-4 w-4",
+                              formData.assignedTo === assignee ? "opacity-100" : "opacity-0"
+                            )}
                           />
-                          {assignee.label}
+                          {assignee}
                         </CommandItem>
                       ))}
-                    </CommandGroup>
-                  </CommandList>
-                </Command>
-              </PopoverContent>
-            </Popover>
-
-            {/* Auto-suggestion dropdown */}
-            {assigneeSearchValue && filteredAssignees.length > 0 && (
-              <div className="absolute top-full left-0 right-0 z-50 mt-1 bg-popover border rounded-md shadow-lg max-h-48 overflow-y-auto">
-                {filteredAssignees.map((assignee) => (
-                  <button
-                    key={assignee.value}
-                    type="button"
-                    className="w-full text-left px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground flex items-center"
-                    onClick={() => {
-                      handleInputChange("assignedTo", assignee.value);
-                      setAssigneeSearchValue("");
-                    }}
-                  >
-                    {assignee.label}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
+                  </CommandGroup>
+                </CommandList>
+              </Command>
+            </PopoverContent>
+          </Popover>
         </div>
       </div>
     </div>
-  );
+    );
+  };
 
   const renderProductSection = () => (
     <div className="space-y-6">
@@ -5990,14 +6518,48 @@ const FormVariationsDemo = () => {
           </DialogContent>
         </Dialog>
         
-        {/* Fixed Action Footer */}
-        <FixedActionFooter 
-          onCancel={handleCancel}
-          onSave={handleSave}
-          currentSection={activeSection}
-          userRole={userRole}
-          onUserRoleChange={setUserRole}
-        />
+        {/* Fixed Action Footer for ESL types with custom CTAs */}
+        {isESLType && activeSection === 'work-order-items' ? (
+          <div className="fixed bottom-0 left-0 right-0 bg-background border-t border-border shadow-lg z-40 py-3 px-4">
+            <div className="flex flex-wrap items-center justify-end gap-2 max-w-[1400px] mx-auto">
+              <Button variant="outline" className="bg-yellow-500 hover:bg-yellow-600 text-white border-none">
+                Rotation
+              </Button>
+              <Button variant="outline" className="bg-yellow-500 hover:bg-yellow-600 text-white border-none">
+                Schedule
+              </Button>
+              <Button variant="outline" className="bg-yellow-500 hover:bg-yellow-600 text-white border-none">
+                Waiting on Customer
+              </Button>
+              <Button variant="outline" onClick={handleCancel}>
+                Cancel WO
+              </Button>
+              <Button variant="outline" className="bg-yellow-500 hover:bg-yellow-600 text-white border-none">
+                Print WO
+              </Button>
+              <Button variant="outline" onClick={handleCancel}>
+                Back
+              </Button>
+              <Button onClick={handleSave} className="bg-primary text-primary-foreground hover:bg-primary/90">
+                <Save className="h-4 w-4 mr-2" />
+                Save
+              </Button>
+            </div>
+            <div className="flex justify-start mt-2 max-w-[1400px] mx-auto">
+              <Button variant="outline" className="bg-yellow-500 hover:bg-yellow-600 text-white border-none">
+                Set In Transit
+              </Button>
+            </div>
+          </div>
+        ) : (
+          <FixedActionFooter 
+            onCancel={handleCancel}
+            onSave={handleSave}
+            currentSection={activeSection}
+            userRole={userRole}
+            onUserRoleChange={setUserRole}
+          />
+        )}
 
         {/* QF3 Dialog */}
         <QF3Dialog 
