@@ -6507,48 +6507,14 @@ const FormVariationsDemo = () => {
           </DialogContent>
         </Dialog>
         
-        {/* Fixed Action Footer for ESL types with custom CTAs */}
-        {isESLType && activeSection === 'work-order-items' ? (
-          <div className="fixed bottom-0 left-0 right-0 bg-background border-t border-border shadow-lg z-40 py-3 px-4">
-            <div className="flex flex-wrap items-center justify-end gap-2 max-w-[1400px] mx-auto">
-              <Button variant="outline" className="bg-yellow-500 hover:bg-yellow-600 text-white border-none">
-                Rotation
-              </Button>
-              <Button variant="outline" className="bg-yellow-500 hover:bg-yellow-600 text-white border-none">
-                Schedule
-              </Button>
-              <Button variant="outline" className="bg-yellow-500 hover:bg-yellow-600 text-white border-none">
-                Waiting on Customer
-              </Button>
-              <Button variant="outline" onClick={handleCancel}>
-                Cancel WO
-              </Button>
-              <Button variant="outline" className="bg-yellow-500 hover:bg-yellow-600 text-white border-none">
-                Print WO
-              </Button>
-              <Button variant="outline" onClick={handleCancel}>
-                Back
-              </Button>
-              <Button onClick={handleSave} className="bg-primary text-primary-foreground hover:bg-primary/90">
-                <Save className="h-4 w-4 mr-2" />
-                Save
-              </Button>
-            </div>
-            <div className="flex justify-start mt-2 max-w-[1400px] mx-auto">
-              <Button variant="outline" className="bg-yellow-500 hover:bg-yellow-600 text-white border-none">
-                Set In Transit
-              </Button>
-            </div>
-          </div>
-        ) : (
-          <FixedActionFooter 
-            onCancel={handleCancel}
-            onSave={handleSave}
-            currentSection={activeSection}
-            userRole={userRole}
-            onUserRoleChange={setUserRole}
-          />
-        )}
+        {/* Fixed Action Footer */}
+        <FixedActionFooter 
+          onCancel={handleCancel}
+          onSave={handleSave}
+          currentSection={activeSection}
+          userRole={userRole}
+          onUserRoleChange={setUserRole}
+        />
 
         {/* QF3 Dialog */}
         <QF3Dialog 
