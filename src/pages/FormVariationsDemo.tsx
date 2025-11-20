@@ -520,6 +520,11 @@ const FormVariationsDemo = () => {
           // ESL type: accountNumber-workOrderNumber-(ESL type)
           const eslType = value.replace('esl-', '');
           updates.reportNumber = `${accountNumber}-${workOrderNumber}-${eslType}`;
+          // Set default values for ESL types
+          updates.priority = 'normal';
+          updates.location = 'baton-rouge';
+          updates.division = 'esl';
+          updates.actionCode = 'test';
         } else if (value.startsWith('itl-')) {
           // ITL type: accountNumber-workOrderNumber-(ITL type)
           const itlType = value.replace('itl-', '');
