@@ -1606,9 +1606,17 @@ const FormVariationsDemo = () => {
                   variant="outline" 
                   size="sm"
                   onClick={() => setShowModelDialog(true)}
-                  className="px-3"
+                  className="px-3 whitespace-nowrap"
                 >
-                  +
+                  Add PR
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => setShowModelDialog(true)}
+                  className="px-3 whitespace-nowrap"
+                >
+                  Add Model
                 </Button>
               </div>
             </div>
