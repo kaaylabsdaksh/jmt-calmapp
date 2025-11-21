@@ -601,6 +601,11 @@ const FormVariationsDemo = () => {
       newStatus['transit'] = formData.originLocation && formData.destinationLocation ? 'completed' : 'error';
     }
     
+    // Additional/Options tab validation
+    if (formData.needBy || formData.poNumber) {
+      newStatus['options'] = formData.needBy && formData.poNumber ? 'completed' : 'error';
+    }
+    
     setTabStatus(newStatus);
   }, [formData]);
 
@@ -2207,7 +2212,7 @@ const FormVariationsDemo = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="needBy" className="text-sm font-medium">Need By</Label>
+                <Label htmlFor="needBy" className="text-sm font-medium">Need By <span className="text-destructive">*</span></Label>
                 <Input
                   id="needBy"
                   type="date"
@@ -2236,7 +2241,7 @@ const FormVariationsDemo = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="poNumber" className="text-sm font-medium">PO Number</Label>
+                <Label htmlFor="poNumber" className="text-sm font-medium">PO Number <span className="text-destructive">*</span></Label>
                 <Input
                   id="poNumber"
                   value={formData.poNumber}
