@@ -293,6 +293,80 @@ const FormVariationsDemo = () => {
     assignee.label.toLowerCase().includes(assigneeSearchValue.toLowerCase())
   );
 
+  // Lab code options
+  const labCodes = [
+    { value: "a-mechanical-wm-gages", label: "A - Mechanical W&M Gages" },
+    { value: "b-mech-pressure", label: "B - Mech Pressure" },
+    { value: "c-dimensional", label: "C - Dimensional" },
+    { value: "d-hydraulic-dweights", label: "D - Hydraulic Dweights" },
+    { value: "e-pneumatic-dweights", label: "E - Pneumatic Dweights" },
+    { value: "es-electrical-safety", label: "ES - Electrical Safety" },
+    { value: "f-digital-pressure", label: "F - Digital Pressure" },
+    { value: "g-electronics", label: "G - Electronics" },
+    { value: "h-analytical-other", label: "H - Analytical/Other" },
+    { value: "i-gravit-moist-analyz", label: "I - Gravit/Moist Analyz" },
+    { value: "j-torque-force", label: "J - Torque/Force" },
+    { value: "k-wt-chart-recorders", label: "K - W&T/Chart Recorders" },
+    { value: "l-gas-detection", label: "L - Gas Detection" },
+    { value: "lmo-lab-management-off", label: "LMO - Lab Management Off." },
+    { value: "m-multimeters-meters", label: "M - Multimeters/Meters" },
+    { value: "ml-main-lab", label: "ML - Main Lab" },
+    { value: "n-electrical-test-gear", label: "N - Electrical Test Gear" },
+    { value: "p-temperature", label: "P - Temperature" },
+    { value: "q-low-frequency-ac", label: "Q - Low Frequency A/C" },
+    { value: "r-oxygen-svce-gages", label: "R - Oxygen Svce Gages" },
+    { value: "s-microwave-power", label: "S - Microwave/Power" },
+    { value: "t-aircraft-support", label: "T - Aircraft Support" },
+    { value: "u-optics", label: "U - Optics" },
+    { value: "v-communications", label: "V - Communications" },
+    { value: "z-fiber-optics", label: "Z - Fiber Optics" },
+  ];
+
+  // Function to determine lab code based on manufacturer and model
+  const getLabCodeForManufacturerModel = (manufacturer: string, model: string): string => {
+    // Mapping logic based on manufacturer and model
+    const manufacturerLower = manufacturer.toLowerCase();
+    const modelLower = model.toLowerCase();
+    
+    // Fluke products - mostly digital pressure and multimeters
+    if (manufacturerLower.includes('fluke')) {
+      if (modelLower.includes('1594') || modelLower.includes('temp')) {
+        return 'p-temperature';
+      }
+      if (modelLower.includes('8845') || modelLower.includes('8846') || modelLower.includes('multimeter')) {
+        return 'm-multimeters-meters';
+      }
+      return 'f-digital-pressure';
+    }
+    
+    // Keysight - electronics and communications
+    if (manufacturerLower.includes('keysight') || manufacturerLower.includes('agilent')) {
+      if (modelLower.includes('n4010') || modelLower.includes('network')) {
+        return 'v-communications';
+      }
+      return 'g-electronics';
+    }
+    
+    // Tektronix - typically electronics
+    if (manufacturerLower.includes('tektronix')) {
+      return 'g-electronics';
+    }
+    
+    // Default mappings by model type
+    if (modelLower.includes('pressure') || modelLower.includes('dpi')) {
+      return 'f-digital-pressure';
+    }
+    if (modelLower.includes('temp') || modelLower.includes('temperature')) {
+      return 'p-temperature';
+    }
+    if (modelLower.includes('dmm') || modelLower.includes('multimeter')) {
+      return 'm-multimeters-meters';
+    }
+    
+    // Default to main lab if no specific match
+    return 'ml-main-lab';
+  };
+
   // State for accessories list
   const [accessoriesList, setAccessoriesList] = useState<Array<{
     id: string;
@@ -536,6 +610,17 @@ const FormVariationsDemo = () => {
       setActiveTab('general');
     }
   }, [formData.type]);
+
+  // Auto-populate lab code when manufacturer and model are selected
+  useEffect(() => {
+    if (formData.manufacturer && formData.model && !formData.labCode) {
+      const labCode = getLabCodeForManufacturerModel(formData.manufacturer, formData.model);
+      setFormData(prev => ({
+        ...prev,
+        labCode
+      }));
+    }
+  }, [formData.manufacturer, formData.model]);
 
   const handleInputChange = (field: string, value: string | boolean) => {
     setFormData(prev => {
@@ -1750,13 +1835,18 @@ const FormVariationsDemo = () => {
               <Label htmlFor="labCode" className="text-sm font-medium">
                 Lab Code {formData.type === "single" && <span className="text-destructive">*</span>}
               </Label>
-              <Input
-                id="labCode"
-                value={formData.labCode}
-                onChange={(e) => handleInputChange("labCode", e.target.value)}
-                placeholder="Lab code"
-                className="h-11"
-              />
+              <Select value={formData.labCode} onValueChange={(value) => handleInputChange("labCode", value)}>
+                <SelectTrigger className="h-11">
+                  <SelectValue placeholder="Select lab code" />
+                </SelectTrigger>
+                <SelectContent className="bg-popover border z-50 max-h-60 overflow-y-auto">
+                  {labCodes.map((labCode) => (
+                    <SelectItem key={labCode.value} value={labCode.value}>
+                      {labCode.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
             <div className="space-y-2">
