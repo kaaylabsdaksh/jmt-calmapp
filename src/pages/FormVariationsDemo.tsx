@@ -56,6 +56,7 @@ const FormVariationsDemo = () => {
     { id: 'product', label: 'Product', icon: Package },
     { id: 'logistics', label: 'Logistics', icon: Truck },
     { id: 'product-images', label: 'Images', icon: Camera },
+    { id: 'cost', label: 'Cost', icon: DollarSign },
     { id: 'lab', label: 'Lab', icon: Settings },
     { id: 'factory-config', label: 'Factory', icon: Settings },
     { id: 'transit', label: 'Transit', icon: Truck },
@@ -530,6 +531,24 @@ const FormVariationsDemo = () => {
     dateTested: "",
     leadTechnician: "",
     miscInformation: "",
+    
+    // Cost Information
+    ccCost: "0.00",
+    cost17025: "0.00",
+    expediteCost: "0.00",
+    emergencyCost: "0.00",
+    evalFeeCost: "0.00",
+    repairCostTotal: "0.00",
+    eslTestCost: "0.00",
+    partsCostTotal: "24.00",
+    tfCost: "0.00",
+    tech1Hours: "0.00",
+    tech2Hours: "0.00",
+    tech3Hours: "0.00",
+    calCertTotal: "0.00",
+    repairTotal: "24.00",
+    allTotal: "24.00",
+    showCostDetails: true,
   });
 
   // Dynamic tabs based on type selection
@@ -553,10 +572,11 @@ const FormVariationsDemo = () => {
   const secondRowTabs = isESLType 
     ? [] // No second row for ESL types
     : [
+        { value: 'product-images', label: 'Images', icon: Camera },
+        { value: 'cost', label: 'Cost', icon: DollarSign },
         { value: 'factory-config', label: 'Factory', icon: Settings },
         { value: 'transit', label: 'Transit', icon: Truck },
-        { value: 'parts', label: 'Parts', icon: Settings },
-        { value: 'product-images', label: 'Images', icon: Package }
+        { value: 'parts', label: 'Parts', icon: Settings }
       ];
   
   const [activeTab, setActiveTab] = useState('general');
@@ -567,6 +587,7 @@ const FormVariationsDemo = () => {
     'product': null,
     'logistics': null,
     'product-images': null,
+    'cost': null,
     'lab': null,
     'factory-config': null,
     'transit': null,
@@ -3193,15 +3214,15 @@ const FormVariationsDemo = () => {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-4 bg-muted/20 rounded-lg">
                 <div className="text-center">
                   <div className="text-xs text-muted-foreground mb-1">Cal/Cert Cost</div>
-                  <div className="text-lg font-semibold">${formData.calCertCost.toFixed(2)}</div>
+                  <div className="text-lg font-semibold">${Number(formData.calCertCost).toFixed(2)}</div>
                 </div>
                 <div className="text-center">
                   <div className="text-xs text-muted-foreground mb-1">Repair Cost</div>
-                  <div className="text-lg font-semibold">${formData.repairCost.toFixed(2)}</div>
+                  <div className="text-lg font-semibold">${Number(formData.repairCost).toFixed(2)}</div>
                 </div>
                 <div className="text-center">
                   <div className="text-xs text-muted-foreground mb-1">Total Cost</div>
-                  <div className="text-xl font-bold text-primary">${formData.totalCost.toFixed(2)}</div>
+                  <div className="text-xl font-bold text-primary">${Number(formData.totalCost).toFixed(2)}</div>
                 </div>
               </div>
             </div>
@@ -3372,13 +3393,13 @@ const FormVariationsDemo = () => {
             {/* Cost Summary */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-4 bg-muted/20 rounded-lg">
               <div className="text-left">
-                <div className="text-sm font-medium mb-1">CAL/CERT: ${formData.calCertCost.toFixed(2)}</div>
+                <div className="text-sm font-medium mb-1">CAL/CERT: ${Number(formData.calCertCost).toFixed(2)}</div>
               </div>
               <div className="text-left">
-                <div className="text-sm font-medium mb-1">REPAIR: ${formData.repairCost.toFixed(2)}</div>
+                <div className="text-sm font-medium mb-1">REPAIR: ${Number(formData.repairCost).toFixed(2)}</div>
               </div>
               <div className="text-left">
-                <div className="text-sm font-medium mb-1">ALL: ${formData.totalCost.toFixed(2)}</div>
+                <div className="text-sm font-medium mb-1">ALL: ${Number(formData.totalCost).toFixed(2)}</div>
               </div>
             </div>
           </div>
@@ -3638,9 +3659,9 @@ const FormVariationsDemo = () => {
             {/* Cost Summary */}
             <div className="bg-muted/50 rounded-lg p-4">
               <div className="flex justify-between items-center text-sm">
-                <div className="text-sm font-medium mb-1">CAL/CERT: ${formData.calCertCost.toFixed(2)}</div>
-                <div className="text-sm font-medium mb-1">REPAIR: ${formData.repairCost.toFixed(2)}</div>
-                <div className="text-sm font-medium mb-1">ALL: ${formData.totalCost.toFixed(2)}</div>
+                <div className="text-sm font-medium mb-1">CAL/CERT: ${Number(formData.calCertCost).toFixed(2)}</div>
+                <div className="text-sm font-medium mb-1">REPAIR: ${Number(formData.repairCost).toFixed(2)}</div>
+                <div className="text-sm font-medium mb-1">ALL: ${Number(formData.totalCost).toFixed(2)}</div>
               </div>
             </div>
           </div>
@@ -3909,13 +3930,13 @@ const FormVariationsDemo = () => {
             {/* Cost Summary */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-4 bg-muted/20 rounded-lg">
               <div className="text-left">
-                <div className="text-sm font-medium mb-1">CAL/CERT: ${formData.calCertCost.toFixed(2)}</div>
+                <div className="text-sm font-medium mb-1">CAL/CERT: ${Number(formData.calCertCost).toFixed(2)}</div>
               </div>
               <div className="text-left">
-                <div className="text-sm font-medium mb-1">REPAIR: ${formData.repairCost.toFixed(2)}</div>
+                <div className="text-sm font-medium mb-1">REPAIR: ${Number(formData.repairCost).toFixed(2)}</div>
               </div>
               <div className="text-left">
-                <div className="text-sm font-medium mb-1">ALL: ${formData.totalCost.toFixed(2)}</div>
+                <div className="text-sm font-medium mb-1">ALL: ${Number(formData.totalCost).toFixed(2)}</div>
               </div>
             </div>
           </div>
@@ -4084,13 +4105,13 @@ const FormVariationsDemo = () => {
             {/* Cost Summary */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-4 bg-muted/20 rounded-lg">
               <div className="text-left">
-                <div className="text-sm font-medium mb-1">CAL/CERT: ${formData.calCertCost.toFixed(2)}</div>
+                <div className="text-sm font-medium mb-1">CAL/CERT: ${Number(formData.calCertCost).toFixed(2)}</div>
               </div>
               <div className="text-left">
-                <div className="text-sm font-medium mb-1">REPAIR: ${formData.repairCost.toFixed(2)}</div>
+                <div className="text-sm font-medium mb-1">REPAIR: ${Number(formData.repairCost).toFixed(2)}</div>
               </div>
               <div className="text-left">
-                <div className="text-sm font-medium mb-1">ALL: ${formData.totalCost.toFixed(2)}</div>
+                <div className="text-sm font-medium mb-1">ALL: ${Number(formData.totalCost).toFixed(2)}</div>
               </div>
             </div>
           </div>
@@ -4362,13 +4383,13 @@ const FormVariationsDemo = () => {
             {/* Cost Summary */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-4 bg-muted/20 rounded-lg">
               <div className="text-left">
-                <div className="text-sm font-medium mb-1">CAL/CERT: ${formData.calCertCost.toFixed(2)}</div>
+                <div className="text-sm font-medium mb-1">CAL/CERT: ${Number(formData.calCertCost).toFixed(2)}</div>
               </div>
               <div className="text-left">
-                <div className="text-sm font-medium mb-1">REPAIR: ${formData.repairCost.toFixed(2)}</div>
+                <div className="text-sm font-medium mb-1">REPAIR: ${Number(formData.repairCost).toFixed(2)}</div>
               </div>
               <div className="text-left">
-                <div className="text-sm font-medium mb-1">ALL: ${formData.totalCost.toFixed(2)}</div>
+                <div className="text-sm font-medium mb-1">ALL: ${Number(formData.totalCost).toFixed(2)}</div>
               </div>
             </div>
           </div>
@@ -4426,6 +4447,195 @@ const FormVariationsDemo = () => {
             </div>
           </TabsContent>
         </Tabs>
+      </CardContent>
+    </Card>
+  );
+
+  // Render cost section
+  const renderCostSection = () => (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-3">
+          <DollarSign className="h-5 w-5 text-primary" />
+          Cost Information
+        </CardTitle>
+        <CardDescription>Detailed cost breakdown and labor hours</CardDescription>
+      </CardHeader>
+      <CardContent>
+        {/* Summary Totals */}
+        <div className="grid grid-cols-3 gap-4 mb-6 p-4 bg-muted/30 rounded-lg border">
+          <div>
+            <Label className="text-sm font-semibold">CAL/CERT: ${formData.calCertTotal}</Label>
+          </div>
+          <div>
+            <Label className="text-sm font-semibold">REPAIR: ${formData.repairTotal}</Label>
+          </div>
+          <div>
+            <Label className="text-sm font-semibold">ALL: ${formData.allTotal}</Label>
+          </div>
+        </div>
+
+        {/* Tech Hours */}
+        <div className="grid grid-cols-3 gap-4 mb-6">
+          <div className="space-y-2">
+            <Label htmlFor="tech1Hours" className="text-sm">Tech 1 Hrs</Label>
+            <Input
+              id="tech1Hours"
+              type="number"
+              step="0.01"
+              value={formData.tech1Hours}
+              onChange={(e) => handleInputChange("tech1Hours", e.target.value)}
+              className="h-10"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="tech2Hours" className="text-sm">Tech 2 Hrs</Label>
+            <Input
+              id="tech2Hours"
+              type="number"
+              step="0.01"
+              value={formData.tech2Hours}
+              onChange={(e) => handleInputChange("tech2Hours", e.target.value)}
+              className="h-10"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="tech3Hours" className="text-sm">Tech 3 Hrs</Label>
+            <Input
+              id="tech3Hours"
+              type="number"
+              step="0.01"
+              value={formData.tech3Hours}
+              onChange={(e) => handleInputChange("tech3Hours", e.target.value)}
+              className="h-10"
+            />
+          </div>
+        </div>
+
+        {/* Cost Details - toggleable */}
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => handleInputChange("showCostDetails", !formData.showCostDetails)}
+          className="mb-4"
+        >
+          {formData.showCostDetails ? "Hide" : "Show"} Cost Details
+        </Button>
+
+        {formData.showCostDetails && (
+          <div className="space-y-4">
+            {/* Left Column Costs */}
+            <div className="grid grid-cols-1 gap-3">
+              <div className="space-y-2">
+                <Label htmlFor="ccCost" className="text-sm font-medium">C/C Cost:</Label>
+                <Input
+                  id="ccCost"
+                  type="number"
+                  step="0.01"
+                  value={formData.ccCost}
+                  onChange={(e) => handleInputChange("ccCost", e.target.value)}
+                  className="h-10"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="cost17025" className="text-sm font-medium">17025:</Label>
+                <Input
+                  id="cost17025"
+                  type="number"
+                  step="0.01"
+                  value={formData.cost17025}
+                  onChange={(e) => handleInputChange("cost17025", e.target.value)}
+                  className="h-10"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="expediteCost" className="text-sm font-medium">Expedite:</Label>
+                <Input
+                  id="expediteCost"
+                  type="number"
+                  step="0.01"
+                  value={formData.expediteCost}
+                  onChange={(e) => handleInputChange("expediteCost", e.target.value)}
+                  className="h-10"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="emergencyCost" className="text-sm font-medium">Emergency:</Label>
+                <Input
+                  id="emergencyCost"
+                  type="number"
+                  step="0.01"
+                  value={formData.emergencyCost}
+                  onChange={(e) => handleInputChange("emergencyCost", e.target.value)}
+                  className="h-10"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="evalFeeCost" className="text-sm font-medium">Eval Fee:</Label>
+                <Input
+                  id="evalFeeCost"
+                  type="number"
+                  step="0.01"
+                  value={formData.evalFeeCost}
+                  onChange={(e) => handleInputChange("evalFeeCost", e.target.value)}
+                  className="h-10"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="repairCostTotal" className="text-sm font-medium">Repair Cost:</Label>
+                <Input
+                  id="repairCostTotal"
+                  type="number"
+                  step="0.01"
+                  value={formData.repairCostTotal}
+                  onChange={(e) => handleInputChange("repairCostTotal", e.target.value)}
+                  className="h-10"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="eslTestCost" className="text-sm font-medium">ESL Test Cost:</Label>
+                <Input
+                  id="eslTestCost"
+                  type="number"
+                  step="0.01"
+                  value={formData.eslTestCost}
+                  onChange={(e) => handleInputChange("eslTestCost", e.target.value)}
+                  className="h-10"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="partsCostTotal" className="text-sm font-medium">Parts Cost:</Label>
+                <Input
+                  id="partsCostTotal"
+                  type="number"
+                  step="0.01"
+                  value={formData.partsCostTotal}
+                  onChange={(e) => handleInputChange("partsCostTotal", e.target.value)}
+                  className="h-10"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="tfCost" className="text-sm font-medium">T/F Cost:</Label>
+                <Input
+                  id="tfCost"
+                  type="number"
+                  step="0.01"
+                  value={formData.tfCost}
+                  onChange={(e) => handleInputChange("tfCost", e.target.value)}
+                  className="h-10"
+                />
+              </div>
+            </div>
+          </div>
+        )}
       </CardContent>
     </Card>
   );
@@ -5161,6 +5371,10 @@ const FormVariationsDemo = () => {
                 {renderProductImagesSection()}
               </TabsContent>
 
+              <TabsContent value="cost" className="mt-0 space-y-6 animate-fade-in">
+                {renderCostSection()}
+              </TabsContent>
+
               <TabsContent value="lab" className="mt-0 space-y-6 animate-fade-in">
                 {renderLabSection()}
               </TabsContent>
@@ -5531,6 +5745,18 @@ const FormVariationsDemo = () => {
                   <h3 className="font-semibold text-lg">Product Images</h3>
                 </div>
                 {renderProductImagesSection()}
+              </div>
+
+              {/* Cost Section */}
+              <div 
+                ref={(el) => (sectionRefs.current['cost'] = el)}
+                className="space-y-4 scroll-mt-32"
+              >
+                <div className="flex items-center gap-3 pb-3 border-b border-border">
+                  <DollarSign className="h-5 w-5 text-primary" />
+                  <h3 className="font-semibold text-lg">Cost Information</h3>
+                </div>
+                {renderCostSection()}
               </div>
 
               {/* Lab Section */}
