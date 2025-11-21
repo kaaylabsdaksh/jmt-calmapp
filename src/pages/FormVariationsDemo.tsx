@@ -1640,15 +1640,58 @@ const FormVariationsDemo = () => {
               />
             </div>
 
-            <div className="space-y-2 md:col-span-2 xl:col-span-1">
+            <div className="space-y-2">
               <Label htmlFor="description" className="text-sm font-medium">Description</Label>
-              <Textarea
+              <Input
                 id="description"
                 value={formData.description}
-                onChange={(e) => handleInputChange("description", e.target.value)}
+                disabled
                 placeholder="Product description"
-                className="min-h-[44px] resize-none"
-                rows={1}
+                className="h-11 bg-muted"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="capableLoc" className="text-sm font-medium">Capable Loc.</Label>
+              <Input
+                id="capableLoc"
+                value=""
+                disabled
+                placeholder="Capable location"
+                className="h-11 bg-muted"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="accuracy" className="text-sm font-medium">Accuracy</Label>
+              <Input
+                id="accuracy"
+                value=""
+                disabled
+                placeholder="Accuracy"
+                className="h-11 bg-muted"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="ranges" className="text-sm font-medium">Range(s)</Label>
+              <Input
+                id="ranges"
+                value=""
+                disabled
+                placeholder="Range(s)"
+                className="h-11 bg-muted"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="options" className="text-sm font-medium">Option(s)</Label>
+              <Input
+                id="options"
+                value=""
+                disabled
+                placeholder="Option(s)"
+                className="h-11 bg-muted"
               />
             </div>
           </div>
