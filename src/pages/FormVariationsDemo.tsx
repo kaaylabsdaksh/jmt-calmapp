@@ -542,6 +542,7 @@ const FormVariationsDemo = () => {
         { value: 'general', label: 'General', icon: Info },
         { value: 'product', label: 'Product', icon: Package },
         { value: 'logistics', label: 'Logistics', icon: Truck },
+        { value: 'options', label: 'Additional Information', icon: FileText },
         { value: 'product-images', label: 'Images', icon: Package },
         { value: 'lab', label: 'Lab', icon: Settings }
       ];
@@ -552,8 +553,7 @@ const FormVariationsDemo = () => {
         { value: 'factory-config', label: 'Factory', icon: Settings },
         { value: 'transit', label: 'Transit', icon: Truck },
         { value: 'accessories', label: 'Accessories', icon: Layers },
-        { value: 'parts', label: 'Parts', icon: Settings },
-        { value: 'options', label: 'Additional', icon: Settings }
+        { value: 'parts', label: 'Parts', icon: Settings }
       ];
   
   const [activeTab, setActiveTab] = useState('general');
@@ -4996,7 +4996,7 @@ const FormVariationsDemo = () => {
           <div className="space-y-2">
             <TabsList className={cn(
               "grid h-10 sm:h-11 items-center rounded-md bg-muted p-1 text-muted-foreground w-full gap-1",
-              isESLType ? "grid-cols-4" : "grid-cols-5"
+              isESLType ? "grid-cols-4" : "grid-cols-6"
             )}>
               {firstRowTabs.map((tab) => {
                 const Icon = tab.icon;
@@ -5021,7 +5021,7 @@ const FormVariationsDemo = () => {
             </TabsList>
             
             {!isESLType && secondRowTabs.length > 0 && (
-              <TabsList className="grid grid-cols-5 h-10 sm:h-11 items-center rounded-md bg-muted p-1 text-muted-foreground w-full gap-1">
+              <TabsList className="grid grid-cols-4 h-10 sm:h-11 items-center rounded-md bg-muted p-1 text-muted-foreground w-full gap-1">
                 {secondRowTabs.map((tab) => {
                   const Icon = tab.icon;
                   const status = tabStatus[tab.value];
@@ -5079,6 +5079,10 @@ const FormVariationsDemo = () => {
                 {renderLogisticsSection()}
               </TabsContent>
 
+              <TabsContent value="options" className="mt-0 space-y-6 animate-fade-in">
+                {renderOptionsSection()}
+              </TabsContent>
+
               <TabsContent value="product-images" className="mt-0 space-y-6 animate-fade-in">
                 {renderProductImagesSection()}
               </TabsContent>
@@ -5101,10 +5105,6 @@ const FormVariationsDemo = () => {
 
               <TabsContent value="parts" className="mt-0 space-y-6 animate-fade-in">
                 {renderPartsSection()}
-              </TabsContent>
-
-              <TabsContent value="options" className="mt-0 space-y-6 animate-fade-in">
-                {renderOptionsSection()}
               </TabsContent>
             </>
           )}
