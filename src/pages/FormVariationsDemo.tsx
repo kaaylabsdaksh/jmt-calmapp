@@ -551,7 +551,6 @@ const FormVariationsDemo = () => {
     : [
         { value: 'factory-config', label: 'Factory', icon: Settings },
         { value: 'transit', label: 'Transit', icon: Truck },
-        { value: 'accessories', label: 'Accessories', icon: Layers },
         { value: 'parts', label: 'Parts', icon: Settings },
         { value: 'product-images', label: 'Images', icon: Package }
       ];
