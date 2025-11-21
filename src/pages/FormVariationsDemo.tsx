@@ -2294,9 +2294,7 @@ const FormVariationsDemo = () => {
 
       {/* Status Options Section */}
       <Card className="border-0 shadow-md w-full">
-        <CardContent className="p-4 sm:p-6 space-y-4">
-          <h3 className="text-lg font-semibold text-foreground">Status Options</h3>
-          
+        <CardContent className="p-4 sm:p-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {[
                 { key: 'warranty', label: 'Warranty', icon: '🛡️' },
