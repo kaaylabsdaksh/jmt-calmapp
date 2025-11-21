@@ -161,6 +161,10 @@ const FormVariationsDemo = () => {
   const [manufacturerDropdownOpen, setManufacturerDropdownOpen] = useState(false);
   const [manufacturerSearchValue, setManufacturerSearchValue] = useState("");
   
+  // Model dropdown state
+  const [modelDropdownOpen, setModelDropdownOpen] = useState(false);
+  const [modelSearchValue, setModelSearchValue] = useState("");
+  
   // PR dialog state
   const [showPRDialog, setShowPRDialog] = useState(false);
   const [newPRData, setNewPRData] = useState({
@@ -224,6 +228,27 @@ const FormVariationsDemo = () => {
     { value: "yokogawa", label: "YOKOGAWA" },
   ];
 
+  const models = [
+    { value: "1000", label: "1000" },
+    { value: "2000", label: "2000" },
+    { value: "2700", label: "2700" },
+    { value: "5520a", label: "5520A" },
+    { value: "5560a", label: "5560A" },
+    { value: "5730a", label: "5730A" },
+    { value: "8846a", label: "8846A" },
+    { value: "dmm7510", label: "DMM7510" },
+    { value: "dpi-620", label: "DPI-620" },
+    { value: "fluke-1594a", label: "FLUKE 1594A" },
+    { value: "fluke-8845a", label: "FLUKE 8845A" },
+    { value: "fluke-8846a", label: "FLUKE 8846A" },
+    { value: "mfm-4000", label: "MFM-4000" },
+    { value: "ms2090a", label: "MS2090A" },
+    { value: "n4010a", label: "N4010A" },
+    { value: "ppc4", label: "PPC4" },
+    { value: "rpm4", label: "RPM4" },
+    { value: "sdn-414", label: "SDN-414" },
+  ];
+
   const assignees = [
     { value: "aaron-l-briles", label: "Aaron L Briles" },
     { value: "aaron-w-sibley", label: "Aaron W Sibley" },
@@ -258,6 +283,10 @@ const FormVariationsDemo = () => {
 
   const filteredManufacturers = manufacturers.filter(manufacturer =>
     manufacturer.label.toLowerCase().includes(manufacturerSearchValue.toLowerCase())
+  );
+
+  const filteredModels = models.filter(model =>
+    model.label.toLowerCase().includes(modelSearchValue.toLowerCase())
   );
 
   const filteredAssignees = assignees.filter(assignee =>
@@ -1654,13 +1683,58 @@ const FormVariationsDemo = () => {
                 Model {formData.type === "single" && <span className="text-destructive">*</span>}
               </Label>
               <div className="flex gap-2">
-                <Input
-                  id="model"
-                  value={formData.model}
-                  onChange={(e) => handleInputChange("model", e.target.value)}
-                  placeholder="Enter model"
-                  className="h-11"
-                />
+                <Popover open={modelDropdownOpen} onOpenChange={setModelDropdownOpen}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      role="combobox"
+                      aria-expanded={modelDropdownOpen}
+                      className="h-11 justify-between flex-1"
+                    >
+                      {formData.model
+                        ? models.find((model) => model.value === formData.model)?.label
+                        : "Select model..."}
+                      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-full p-0" align="start">
+                    <Command>
+                      <CommandInput 
+                        placeholder="Search model..." 
+                        value={modelSearchValue}
+                        onValueChange={setModelSearchValue}
+                      />
+                      <CommandList>
+                        <CommandEmpty>
+                          <div className="p-2 text-center">
+                            <p className="text-sm text-muted-foreground">No model found.</p>
+                          </div>
+                        </CommandEmpty>
+                        <CommandGroup>
+                          {filteredModels.map((model) => (
+                            <CommandItem
+                              key={model.value}
+                              value={model.value}
+                              onSelect={(currentValue) => {
+                                handleInputChange("model", currentValue === formData.model ? "" : currentValue);
+                                setModelDropdownOpen(false);
+                                setModelSearchValue("");
+                              }}
+                            >
+                              <Check
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  formData.model === model.value ? "opacity-100" : "opacity-0"
+                                )}
+                              />
+                              {model.label}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </CommandList>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
                 <Button 
                   variant="outline" 
                   size="sm"
