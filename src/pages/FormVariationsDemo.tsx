@@ -2205,9 +2205,10 @@ const FormVariationsDemo = () => {
 
   const renderOptionsSection = () => (
     <div className="space-y-6">
-      <Card className="border-0 shadow-md w-full">
-        <CardContent className="p-4 sm:p-6 space-y-6">
-          <div className="space-y-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Additional Information Section */}
+        <Card className="border-0 shadow-md">
+          <CardContent className="p-4 sm:p-6 space-y-4">
             <h3 className="text-lg font-semibold text-foreground">Additional Information</h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -2234,9 +2235,12 @@ const FormVariationsDemo = () => {
                 />
               </div>
             </div>
-          </div>
+          </CardContent>
+        </Card>
 
-          <div className="space-y-4">
+        {/* Purchase Order Information Section */}
+        <Card className="border-0 shadow-md">
+          <CardContent className="p-4 sm:p-6 space-y-4">
             <h3 className="text-lg font-semibold text-foreground">Purchase Order Information</h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -2284,12 +2288,16 @@ const FormVariationsDemo = () => {
                 />
               </div>
             </div>
-          </div>
+          </CardContent>
+        </Card>
+      </div>
 
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-foreground">Status Options</h3>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* Status Options Section */}
+      <Card className="border-0 shadow-md w-full">
+        <CardContent className="p-4 sm:p-6 space-y-4">
+          <h3 className="text-lg font-semibold text-foreground">Status Options</h3>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {[
                 { key: 'warranty', label: 'Warranty', icon: '🛡️' },
                 { key: 'estimate', label: 'Estimate', icon: '💰' },
@@ -2326,7 +2334,6 @@ const FormVariationsDemo = () => {
                 </div>
               ))}
             </div>
-          </div>
         </CardContent>
       </Card>
     </div>
