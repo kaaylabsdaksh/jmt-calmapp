@@ -1989,7 +1989,9 @@ const FormVariationsDemo = () => {
           
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="arrivalDate" className="text-sm font-medium">Arrival Date</Label>
+              <Label htmlFor="arrivalDate" className="text-sm font-medium">
+                Date <span className="text-destructive">*</span>
+              </Label>
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
@@ -2016,49 +2018,129 @@ const FormVariationsDemo = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="arrivalType" className="text-sm font-medium">Arrival Type</Label>
+              <Label htmlFor="arrivalType" className="text-sm font-medium">
+                Type <span className="text-destructive">*</span>
+              </Label>
               <Select value={formData.arrivalType} onValueChange={(value) => handleInputChange("arrivalType", value)}>
                 <SelectTrigger className="h-11">
-                  <SelectValue placeholder="Select arrival type" />
+                  <SelectValue placeholder="Select type" />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="delivery">Delivery</SelectItem>
-                  <SelectItem value="pickup">Pickup</SelectItem>
-                  <SelectItem value="mail">Mail</SelectItem>
-                  <SelectItem value="courier">Courier</SelectItem>
+                <SelectContent className="bg-popover border z-50">
+                  <SelectItem value="surplus">Surplus</SelectItem>
+                  <SelectItem value="lab-standard">Lab Standard</SelectItem>
+                  <SelectItem value="purchasing-dept">Purchasing Dept.</SelectItem>
+                  <SelectItem value="onsite">Onsite</SelectItem>
+                  <SelectItem value="shipped">Shipped</SelectItem>
+                  <SelectItem value="customer-dropoff">Customer Dropoff</SelectItem>
+                  <SelectItem value="jm-driver-pickup">JM Driver Pickup</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="arrivalLocation" className="text-sm font-medium">Arrival Location</Label>
-              <Select value={formData.arrivalLocation} onValueChange={(value) => handleInputChange("arrivalLocation", value)}>
-                <SelectTrigger className="h-11">
-                  <SelectValue placeholder="Select arrival location" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="main-office">Main Office</SelectItem>
-                  <SelectItem value="warehouse">Warehouse</SelectItem>
-                  <SelectItem value="loading-dock">Loading Dock</SelectItem>
-                  <SelectItem value="reception">Reception</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+            {/* Conditional fields based on arrival type */}
+            {formData.arrivalType === 'surplus' && (
+              <div className="space-y-2">
+                <Label htmlFor="arrivalLocation" className="text-sm font-medium">
+                  Location <span className="text-destructive">*</span>
+                </Label>
+                <Select value={formData.arrivalLocation} onValueChange={(value) => handleInputChange("arrivalLocation", value)}>
+                  <SelectTrigger className="h-11">
+                    <SelectValue placeholder="Select location" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-popover border z-50">
+                    <SelectItem value="main-office">Main Office</SelectItem>
+                    <SelectItem value="warehouse">Warehouse</SelectItem>
+                    <SelectItem value="loading-dock">Loading Dock</SelectItem>
+                    <SelectItem value="reception">Reception</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
 
-            <div className="space-y-2">
-              <Label htmlFor="driver" className="text-sm font-medium">Driver</Label>
-              <Select value={formData.driver} onValueChange={(value) => handleInputChange("driver", value)}>
-                <SelectTrigger className="h-11">
-                  <SelectValue placeholder="Select driver" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="john-doe">John Doe</SelectItem>
-                  <SelectItem value="jane-smith">Jane Smith</SelectItem>
-                  <SelectItem value="mike-johnson">Mike Johnson</SelectItem>
-                  <SelectItem value="sarah-wilson">Sarah Wilson</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+            {formData.arrivalType === 'shipped' && (
+              <div className="space-y-2">
+                <Label htmlFor="shipType" className="text-sm font-medium">
+                  Ship Type <span className="text-destructive">*</span>
+                </Label>
+                <Select value={formData.shipType} onValueChange={(value) => handleInputChange("shipType", value)}>
+                  <SelectTrigger className="h-11">
+                    <SelectValue placeholder="Select ship type" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-popover border z-50">
+                    <SelectItem value="dhl">DHL</SelectItem>
+                    <SelectItem value="fedex">FedEx</SelectItem>
+                    <SelectItem value="ups">UPS</SelectItem>
+                    <SelectItem value="usps">USPS</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
+
+            {formData.arrivalType === 'customer-dropoff' && (
+              <div className="space-y-2">
+                <Label htmlFor="name" className="text-sm font-medium">
+                  Name <span className="text-destructive">*</span>
+                </Label>
+                <Input
+                  id="name"
+                  value={formData.name}
+                  onChange={(e) => handleInputChange("name", e.target.value)}
+                  placeholder="Enter name"
+                  className="h-11"
+                />
+              </div>
+            )}
+
+            {formData.arrivalType === 'jm-driver-pickup' && (
+              <>
+                <div className="space-y-2">
+                  <Label htmlFor="driver" className="text-sm font-medium">
+                    Driver <span className="text-destructive">*</span>
+                  </Label>
+                  <Select value={formData.driver} onValueChange={(value) => handleInputChange("driver", value)}>
+                    <SelectTrigger className="h-11">
+                      <SelectValue placeholder="Select driver" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-popover border z-50">
+                      {assignees.map((assignee) => (
+                        <SelectItem key={assignee.value} value={assignee.value}>
+                          {assignee.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="puDate" className="text-sm font-medium">
+                    PU Date <span className="text-destructive">*</span>
+                  </Label>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className={cn(
+                          "w-full justify-start text-left font-normal h-11",
+                          !formData.puDate && "text-muted-foreground"
+                        )}
+                      >
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {formData.puDate ? formData.puDate : "dd/mm/yyyy"}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={formData.puDate ? new Date(formData.puDate) : undefined}
+                        onSelect={(date) => handleInputChange("puDate", date ? date.toISOString().split('T')[0] : "")}
+                        initialFocus
+                        className="p-3 pointer-events-auto"
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
+              </>
+            )}
           </div>
         </CardContent>
       </Card>
