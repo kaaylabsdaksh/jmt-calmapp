@@ -4453,191 +4453,182 @@ const FormVariationsDemo = () => {
 
   // Render cost section
   const renderCostSection = () => (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-3">
-          <DollarSign className="h-5 w-5 text-primary" />
-          Cost Information
-        </CardTitle>
-        <CardDescription>Detailed cost breakdown and labor hours</CardDescription>
-      </CardHeader>
-      <CardContent>
-        {/* Summary Totals */}
-        <div className="grid grid-cols-3 gap-4 mb-6 p-4 bg-muted/30 rounded-lg border">
-          <div>
-            <Label className="text-sm font-semibold">CAL/CERT: ${formData.calCertTotal}</Label>
+    <div className="space-y-6">
+      {/* Summary Header */}
+      <div className="grid grid-cols-3 gap-6 pb-4 border-b">
+        <div>
+          <span className="text-sm font-medium">CAL/CERT: ${formData.calCertTotal}</span>
+        </div>
+        <div>
+          <span className="text-sm font-medium">REPAIR: ${formData.repairTotal}</span>
+        </div>
+        <div>
+          <span className="text-sm font-medium">ALL: ${formData.allTotal}</span>
+        </div>
+      </div>
+
+      {/* Main Grid Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-8">
+        {/* Left Column - Cost Fields */}
+        <div className="space-y-3">
+          <div className="grid grid-cols-[120px_1fr] items-center gap-4">
+            <Label htmlFor="ccCost" className="text-sm text-right">C/C Cost:</Label>
+            <Input
+              id="ccCost"
+              type="number"
+              step="0.01"
+              value={formData.ccCost}
+              onChange={(e) => handleInputChange("ccCost", e.target.value)}
+              className="h-9 max-w-[200px]"
+            />
           </div>
-          <div>
-            <Label className="text-sm font-semibold">REPAIR: ${formData.repairTotal}</Label>
+
+          <div className="grid grid-cols-[120px_1fr] items-center gap-4">
+            <Label htmlFor="cost17025" className="text-sm text-right">17025:</Label>
+            <Input
+              id="cost17025"
+              type="number"
+              step="0.01"
+              value={formData.cost17025}
+              onChange={(e) => handleInputChange("cost17025", e.target.value)}
+              className="h-9 max-w-[200px]"
+            />
           </div>
-          <div>
-            <Label className="text-sm font-semibold">ALL: ${formData.allTotal}</Label>
+
+          <div className="grid grid-cols-[120px_1fr] items-center gap-4">
+            <Label htmlFor="expediteCost" className="text-sm text-right">Expedite:</Label>
+            <Input
+              id="expediteCost"
+              type="number"
+              step="0.01"
+              value={formData.expediteCost}
+              onChange={(e) => handleInputChange("expediteCost", e.target.value)}
+              className="h-9 max-w-[200px]"
+            />
           </div>
+
+          <div className="grid grid-cols-[120px_1fr] items-center gap-4">
+            <Label htmlFor="emergencyCost" className="text-sm text-right">Emergency:</Label>
+            <Input
+              id="emergencyCost"
+              type="number"
+              step="0.01"
+              value={formData.emergencyCost}
+              onChange={(e) => handleInputChange("emergencyCost", e.target.value)}
+              className="h-9 max-w-[200px]"
+            />
+          </div>
+
+          <div className="grid grid-cols-[120px_1fr] items-center gap-4">
+            <Label htmlFor="evalFeeCost" className="text-sm text-right">Eval Fee:</Label>
+            <Input
+              id="evalFeeCost"
+              type="number"
+              step="0.01"
+              value={formData.evalFeeCost}
+              onChange={(e) => handleInputChange("evalFeeCost", e.target.value)}
+              className="h-9 max-w-[200px]"
+            />
+          </div>
+
+          <div className="grid grid-cols-[120px_1fr] items-center gap-4">
+            <Label htmlFor="repairCostTotal" className="text-sm text-right">Repair Cost:</Label>
+            <Input
+              id="repairCostTotal"
+              type="number"
+              step="0.01"
+              value={formData.repairCostTotal}
+              onChange={(e) => handleInputChange("repairCostTotal", e.target.value)}
+              className="h-9 max-w-[200px]"
+            />
+          </div>
+
+          <div className="grid grid-cols-[120px_1fr] items-center gap-4">
+            <Label htmlFor="eslTestCost" className="text-sm text-right">ESL Test Cost:</Label>
+            <Input
+              id="eslTestCost"
+              type="number"
+              step="0.01"
+              value={formData.eslTestCost}
+              onChange={(e) => handleInputChange("eslTestCost", e.target.value)}
+              className="h-9 max-w-[200px]"
+            />
+          </div>
+
+          <div className="grid grid-cols-[120px_1fr] items-center gap-4">
+            <Label htmlFor="partsCostTotal" className="text-sm text-right">Parts Cost:</Label>
+            <Input
+              id="partsCostTotal"
+              type="number"
+              step="0.01"
+              value={formData.partsCostTotal}
+              onChange={(e) => handleInputChange("partsCostTotal", e.target.value)}
+              className="h-9 max-w-[200px]"
+            />
+          </div>
+
+          <div className="grid grid-cols-[120px_1fr] items-center gap-4">
+            <Label htmlFor="tfCost" className="text-sm text-right">T/F Cost:</Label>
+            <Input
+              id="tfCost"
+              type="number"
+              step="0.01"
+              value={formData.tfCost}
+              onChange={(e) => handleInputChange("tfCost", e.target.value)}
+              className="h-9 max-w-[200px]"
+            />
+          </div>
+
+          <Button
+            variant="outline"
+            size="sm"
+            className="mt-4"
+            onClick={() => handleInputChange("showCostDetails", !formData.showCostDetails)}
+          >
+            {formData.showCostDetails ? "Hide" : "Show"}
+          </Button>
         </div>
 
-        {/* Tech Hours */}
-        <div className="grid grid-cols-3 gap-4 mb-6">
-          <div className="space-y-2">
-            <Label htmlFor="tech1Hours" className="text-sm">Tech 1 Hrs</Label>
+        {/* Right Column - Tech Hours */}
+        <div className="space-y-4 lg:border-l lg:pl-8">
+          <div className="grid grid-cols-[100px_1fr] items-center gap-3">
+            <Label htmlFor="tech1Hours" className="text-sm text-right whitespace-nowrap">Tech 1 Hrs</Label>
             <Input
               id="tech1Hours"
               type="number"
               step="0.01"
               value={formData.tech1Hours}
               onChange={(e) => handleInputChange("tech1Hours", e.target.value)}
-              className="h-10"
+              className="h-9 w-24"
             />
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="tech2Hours" className="text-sm">Tech 2 Hrs</Label>
+
+          <div className="grid grid-cols-[100px_1fr] items-center gap-3">
+            <Label htmlFor="tech2Hours" className="text-sm text-right whitespace-nowrap">Tech 2 Hrs</Label>
             <Input
               id="tech2Hours"
               type="number"
               step="0.01"
               value={formData.tech2Hours}
               onChange={(e) => handleInputChange("tech2Hours", e.target.value)}
-              className="h-10"
+              className="h-9 w-24"
             />
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="tech3Hours" className="text-sm">Tech 3 Hrs</Label>
+
+          <div className="grid grid-cols-[100px_1fr] items-center gap-3">
+            <Label htmlFor="tech3Hours" className="text-sm text-right whitespace-nowrap">Tech 3 Hrs</Label>
             <Input
               id="tech3Hours"
               type="number"
               step="0.01"
               value={formData.tech3Hours}
               onChange={(e) => handleInputChange("tech3Hours", e.target.value)}
-              className="h-10"
+              className="h-9 w-24"
             />
           </div>
         </div>
-
-        {/* Cost Details - toggleable */}
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => handleInputChange("showCostDetails", !formData.showCostDetails)}
-          className="mb-4"
-        >
-          {formData.showCostDetails ? "Hide" : "Show"} Cost Details
-        </Button>
-
-        {formData.showCostDetails && (
-          <div className="space-y-4">
-            {/* Left Column Costs */}
-            <div className="grid grid-cols-1 gap-3">
-              <div className="space-y-2">
-                <Label htmlFor="ccCost" className="text-sm font-medium">C/C Cost:</Label>
-                <Input
-                  id="ccCost"
-                  type="number"
-                  step="0.01"
-                  value={formData.ccCost}
-                  onChange={(e) => handleInputChange("ccCost", e.target.value)}
-                  className="h-10"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="cost17025" className="text-sm font-medium">17025:</Label>
-                <Input
-                  id="cost17025"
-                  type="number"
-                  step="0.01"
-                  value={formData.cost17025}
-                  onChange={(e) => handleInputChange("cost17025", e.target.value)}
-                  className="h-10"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="expediteCost" className="text-sm font-medium">Expedite:</Label>
-                <Input
-                  id="expediteCost"
-                  type="number"
-                  step="0.01"
-                  value={formData.expediteCost}
-                  onChange={(e) => handleInputChange("expediteCost", e.target.value)}
-                  className="h-10"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="emergencyCost" className="text-sm font-medium">Emergency:</Label>
-                <Input
-                  id="emergencyCost"
-                  type="number"
-                  step="0.01"
-                  value={formData.emergencyCost}
-                  onChange={(e) => handleInputChange("emergencyCost", e.target.value)}
-                  className="h-10"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="evalFeeCost" className="text-sm font-medium">Eval Fee:</Label>
-                <Input
-                  id="evalFeeCost"
-                  type="number"
-                  step="0.01"
-                  value={formData.evalFeeCost}
-                  onChange={(e) => handleInputChange("evalFeeCost", e.target.value)}
-                  className="h-10"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="repairCostTotal" className="text-sm font-medium">Repair Cost:</Label>
-                <Input
-                  id="repairCostTotal"
-                  type="number"
-                  step="0.01"
-                  value={formData.repairCostTotal}
-                  onChange={(e) => handleInputChange("repairCostTotal", e.target.value)}
-                  className="h-10"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="eslTestCost" className="text-sm font-medium">ESL Test Cost:</Label>
-                <Input
-                  id="eslTestCost"
-                  type="number"
-                  step="0.01"
-                  value={formData.eslTestCost}
-                  onChange={(e) => handleInputChange("eslTestCost", e.target.value)}
-                  className="h-10"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="partsCostTotal" className="text-sm font-medium">Parts Cost:</Label>
-                <Input
-                  id="partsCostTotal"
-                  type="number"
-                  step="0.01"
-                  value={formData.partsCostTotal}
-                  onChange={(e) => handleInputChange("partsCostTotal", e.target.value)}
-                  className="h-10"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="tfCost" className="text-sm font-medium">T/F Cost:</Label>
-                <Input
-                  id="tfCost"
-                  type="number"
-                  step="0.01"
-                  value={formData.tfCost}
-                  onChange={(e) => handleInputChange("tfCost", e.target.value)}
-                  className="h-10"
-                />
-              </div>
-            </div>
-          </div>
-        )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 
   // Render accessories section
