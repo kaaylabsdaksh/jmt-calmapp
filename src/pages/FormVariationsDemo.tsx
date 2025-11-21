@@ -398,6 +398,7 @@ const FormVariationsDemo = () => {
     type: "",
     reportNumber: "",
     itemStatus: "in-lab",
+    rotationSubStatus: "",
     tfStatus: "",
     tfClerk: "",
     tfFollowup: "",
@@ -1496,6 +1497,24 @@ const FormVariationsDemo = () => {
             </SelectContent>
           </Select>
         </div>
+
+        {/* Conditional Rotation Sub Status field when status is "Rotation" */}
+        {formData.itemStatus === "rotation" && (
+          <div className="space-y-2">
+            <Label htmlFor="rotationSubStatus" className="text-sm font-medium">Rotation Sub Status</Label>
+            <Select value={formData.rotationSubStatus} onValueChange={(value) => handleInputChange("rotationSubStatus", value)}>
+              <SelectTrigger className="h-11">
+                <SelectValue placeholder="Select rotation sub status" />
+              </SelectTrigger>
+              <SelectContent className="bg-popover border z-50 max-h-48 overflow-y-auto">
+                <SelectItem value="awaiting-rotation">Awaiting Rotation</SelectItem>
+                <SelectItem value="rotation-in-progress">Rotation In Progress</SelectItem>
+                <SelectItem value="rotation-complete">Rotation Complete</SelectItem>
+                <SelectItem value="rotation-on-hold">Rotation On Hold</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        )}
 
         {/* Conditional T/F fields when status is "To Factory" */}
         {formData.itemStatus === "to-factory" && (
