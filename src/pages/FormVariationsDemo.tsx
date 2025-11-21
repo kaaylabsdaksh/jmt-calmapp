@@ -430,8 +430,8 @@ const FormVariationsDemo = () => {
     deliverByDate: "",
     
     // Departure Information
-    invNumber: "",
-    dtNumber: "",
+    invNumber: "INV-2025-001234",
+    dtNumber: "DT-802930-001",
     deliveryStatus: "",
     
     // Options
@@ -2164,9 +2164,9 @@ const FormVariationsDemo = () => {
               <Input
                 id="invNumber"
                 value={formData.invNumber}
-                onChange={(e) => handleInputChange("invNumber", e.target.value)}
-                placeholder="Enter invoice number"
-                className="h-11"
+                readOnly
+                placeholder="Invoice number"
+                className="h-11 bg-muted cursor-not-allowed"
               />
             </div>
 
@@ -2175,25 +2175,22 @@ const FormVariationsDemo = () => {
               <Input
                 id="dtNumber"
                 value={formData.dtNumber}
-                onChange={(e) => handleInputChange("dtNumber", e.target.value)}
-                placeholder="Enter DT number"
-                className="h-11"
+                readOnly
+                placeholder="DT number"
+                className="h-11 bg-muted cursor-not-allowed"
               />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="deliveryStatus" className="text-sm font-medium">Delivery Status</Label>
-              <Select value={formData.deliveryStatus} onValueChange={(value) => handleInputChange("deliveryStatus", value)}>
-                <SelectTrigger className="h-11">
-                  <SelectValue placeholder="Select delivery status" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="pending">Pending</SelectItem>
-                  <SelectItem value="in-transit">In Transit</SelectItem>
-                  <SelectItem value="delivered">Delivered</SelectItem>
-                  <SelectItem value="returned">Returned</SelectItem>
-                </SelectContent>
-              </Select>
+              <Textarea
+                id="deliveryStatus"
+                value={formData.deliveryStatus}
+                onChange={(e) => handleInputChange("deliveryStatus", e.target.value)}
+                placeholder="Enter delivery status comments"
+                rows={4}
+                className="resize-none"
+              />
             </div>
           </div>
         </CardContent>
@@ -5816,25 +5813,32 @@ const FormVariationsDemo = () => {
           <div className="grid grid-cols-3 gap-4">
             <div className="space-y-2">
               <Label htmlFor="v3-inv-number">Invoice #</Label>
-              <Input id="v3-inv-number" value={formData.invNumber} onChange={(e) => handleInputChange("invNumber", e.target.value)} />
+              <Input 
+                id="v3-inv-number" 
+                value={formData.invNumber} 
+                readOnly 
+                className="bg-muted cursor-not-allowed"
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="v3-dt-number">DT #</Label>
-              <Input id="v3-dt-number" value={formData.dtNumber} onChange={(e) => handleInputChange("dtNumber", e.target.value)} />
+              <Input 
+                id="v3-dt-number" 
+                value={formData.dtNumber} 
+                readOnly 
+                className="bg-muted cursor-not-allowed"
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="v3-delivery-status">Delivery Status</Label>
-              <Select value={formData.deliveryStatus} onValueChange={(value) => handleInputChange("deliveryStatus", value)}>
-                <SelectTrigger id="v3-delivery-status">
-                  <SelectValue placeholder="Select status" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="pending">Pending</SelectItem>
-                  <SelectItem value="in-transit">In Transit</SelectItem>
-                  <SelectItem value="delivered">Delivered</SelectItem>
-                  <SelectItem value="returned">Returned</SelectItem>
-                </SelectContent>
-              </Select>
+              <Textarea
+                id="v3-delivery-status"
+                value={formData.deliveryStatus}
+                onChange={(e) => handleInputChange("deliveryStatus", e.target.value)}
+                placeholder="Enter delivery status comments"
+                rows={3}
+                className="resize-none"
+              />
             </div>
           </div>
         </CardContent>
