@@ -398,6 +398,9 @@ const FormVariationsDemo = () => {
     type: "",
     reportNumber: "",
     itemStatus: "in-lab",
+    tfStatus: "",
+    tfClerk: "",
+    tfFollowup: "",
     assignedTo: "",
     priority: "normal",
     location: "baton-rouge",
@@ -1493,6 +1496,53 @@ const FormVariationsDemo = () => {
             </SelectContent>
           </Select>
         </div>
+
+        {/* Conditional T/F fields when status is "To Factory" */}
+        {formData.itemStatus === "to-factory" && (
+          <>
+            <div className="space-y-2">
+              <Label htmlFor="tfStatus" className="text-sm font-medium">T/F Status</Label>
+              <Select value={formData.tfStatus} onValueChange={(value) => handleInputChange("tfStatus", value)}>
+                <SelectTrigger className="h-11">
+                  <SelectValue placeholder="Select T/F status" />
+                </SelectTrigger>
+                <SelectContent className="bg-popover border z-50 max-h-48 overflow-y-auto">
+                  <SelectItem value="await-cust-approval-est-fee">Await Cust Approval Est. Fee</SelectItem>
+                  <SelectItem value="awaiting-customer-approval">Awaiting Customer Approval</SelectItem>
+                  <SelectItem value="awaiting-factory">Awaiting Factory</SelectItem>
+                  <SelectItem value="sent-to-factory">Sent to Factory</SelectItem>
+                  <SelectItem value="back-from-factory">Back from Factory</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="tfClerk" className="text-sm font-medium">T/F Clerk</Label>
+              <Select value={formData.tfClerk} onValueChange={(value) => handleInputChange("tfClerk", value)}>
+                <SelectTrigger className="h-11">
+                  <SelectValue placeholder="Select clerk" />
+                </SelectTrigger>
+                <SelectContent className="bg-popover border z-50 max-h-48 overflow-y-auto">
+                  <SelectItem value="admin-user">Admin User</SelectItem>
+                  <SelectItem value="john-doe">John Doe</SelectItem>
+                  <SelectItem value="jane-smith">Jane Smith</SelectItem>
+                  <SelectItem value="mike-johnson">Mike Johnson</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="tfFollowup" className="text-sm font-medium">T/F Follow-up</Label>
+              <Input
+                id="tfFollowup"
+                value={formData.tfFollowup}
+                onChange={(e) => handleInputChange("tfFollowup", e.target.value)}
+                placeholder="Enter follow-up notes"
+                className="h-11"
+              />
+            </div>
+          </>
+        )}
 
         <div className="space-y-2">
           <Label htmlFor="priority" className="text-sm font-medium">
