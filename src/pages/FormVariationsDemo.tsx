@@ -617,20 +617,32 @@ const FormVariationsDemo = () => {
 
   // PR dialog handlers
   const handleAddNewPR = () => {
-    if (newPRData.model.trim()) {
-      // In real app, this would save the PR to database
-      console.log('Adding new PR:', newPRData);
-      setNewPRData({
-        manufacturer: "",
-        model: "",
-        range: "",
-        option: "",
-        accuracy: "",
-        description: "",
-        labCode: ""
+    // Validate mandatory fields
+    if (!newPRData.model.trim() || !newPRData.description.trim() || !newPRData.labCode) {
+      toast({
+        title: "Validation Error",
+        description: "Please fill in all mandatory fields: Model, Description, and Lab Code.",
+        variant: "destructive",
       });
-      setShowPRDialog(false);
+      return;
     }
+    
+    // In real app, this would save the PR to database
+    console.log('Adding new PR:', newPRData);
+    toast({
+      title: "PR Added",
+      description: `Successfully added PR for ${newPRData.manufacturer}`,
+    });
+    setNewPRData({
+      manufacturer: "",
+      model: "",
+      range: "",
+      option: "",
+      accuracy: "",
+      description: "",
+      labCode: ""
+    });
+    setShowPRDialog(false);
   };
 
   const handleCancelPR = () => {
@@ -6550,7 +6562,9 @@ const FormVariationsDemo = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="prDialogModel" className="text-sm font-medium">Model</Label>
+                  <Label htmlFor="prDialogModel" className="text-sm font-medium">
+                    Model <span className="text-destructive">*</span>
+                  </Label>
                   <Input
                     id="prDialogModel"
                     value={newPRData.model}
@@ -6618,7 +6632,9 @@ const FormVariationsDemo = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="prDialogDescription" className="text-sm font-medium">Description</Label>
+                <Label htmlFor="prDialogDescription" className="text-sm font-medium">
+                  Description <span className="text-destructive">*</span>
+                </Label>
                 <Textarea
                   id="prDialogDescription"
                   value={newPRData.description}
@@ -6629,7 +6645,9 @@ const FormVariationsDemo = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="prDialogLabCode" className="text-sm font-medium">Lab Code</Label>
+                <Label htmlFor="prDialogLabCode" className="text-sm font-medium">
+                  Lab Code <span className="text-destructive">*</span>
+                </Label>
                 <Select 
                   value={newPRData.labCode} 
                   onValueChange={(value) => handlePRDataChange("labCode", value)}
