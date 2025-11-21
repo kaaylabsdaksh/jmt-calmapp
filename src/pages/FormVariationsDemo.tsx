@@ -1288,7 +1288,9 @@ const FormVariationsDemo = () => {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="priority" className="text-sm font-medium">Priority</Label>
+          <Label htmlFor="priority" className="text-sm font-medium">
+            Priority {formData.type === "single" && <span className="text-destructive">*</span>}
+          </Label>
           <Select value={formData.priority} onValueChange={(value) => handleInputChange("priority", value)}>
             <SelectTrigger className="h-11">
               <SelectValue />
@@ -1304,7 +1306,9 @@ const FormVariationsDemo = () => {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="location" className="text-sm font-medium">Location</Label>
+          <Label htmlFor="location" className="text-sm font-medium">
+            Location {formData.type === "single" && <span className="text-destructive">*</span>}
+          </Label>
           <Select value={formData.location} onValueChange={(value) => handleInputChange("location", value)}>
             <SelectTrigger className="h-11">
               <SelectValue placeholder="Select location" />
@@ -1331,7 +1335,9 @@ const FormVariationsDemo = () => {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="division" className="text-sm font-medium">Division</Label>
+          <Label htmlFor="division" className="text-sm font-medium">
+            Division {formData.type === "single" && <span className="text-destructive">*</span>}
+          </Label>
           <Select value={formData.division} onValueChange={(value) => handleInputChange("division", value)}>
             <SelectTrigger className="h-11">
               <SelectValue placeholder="Select division" />
@@ -1351,7 +1357,9 @@ const FormVariationsDemo = () => {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="calFreq" className="text-sm font-medium">Cal Freq</Label>
+          <Label htmlFor="calFreq" className="text-sm font-medium">
+            Cal Freq {formData.type === "single" && <span className="text-destructive">*</span>}
+          </Label>
           <Input
             id="calFreq"
             value={formData.calFreq}
@@ -1362,7 +1370,9 @@ const FormVariationsDemo = () => {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="actionCode" className="text-sm font-medium">Action Code</Label>
+          <Label htmlFor="actionCode" className="text-sm font-medium">
+            Action Code {formData.type === "single" && <span className="text-destructive">*</span>}
+          </Label>
           <Select value={formData.actionCode} onValueChange={(value) => handleInputChange("actionCode", value)}>
             <SelectTrigger className="h-11">
               <SelectValue placeholder="Select action code" />
