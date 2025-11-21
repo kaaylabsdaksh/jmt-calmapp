@@ -1787,13 +1787,13 @@ const FormVariationsDemo = () => {
 
             <div className="space-y-2">
               <Label htmlFor="costSerial" className="text-sm font-medium">
-                Cost Serial {formData.type === "single" && <span className="text-destructive">*</span>}
+                Cust Serial {formData.type === "single" && <span className="text-destructive">*</span>}
               </Label>
               <Input
                 id="costSerial"
                 value={formData.costSerial}
                 onChange={(e) => handleInputChange("costSerial", e.target.value)}
-                placeholder="Cost serial"
+                placeholder="Customer serial"
                 className="h-11"
               />
             </div>
@@ -5645,8 +5645,8 @@ const FormVariationsDemo = () => {
               <Input id="v3-cost-id" value={formData.costId} onChange={(e) => handleInputChange("costId", e.target.value)} placeholder="Cost identifier" />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="v3-cost-serial">Cost Serial</Label>
-              <Input id="v3-cost-serial" value={formData.costSerial} onChange={(e) => handleInputChange("costSerial", e.target.value)} placeholder="Cost serial" />
+              <Label htmlFor="v3-cost-serial">Cust Serial</Label>
+              <Input id="v3-cost-serial" value={formData.costSerial} onChange={(e) => handleInputChange("costSerial", e.target.value)} placeholder="Customer serial" />
             </div>
           </div>
           <div className="grid grid-cols-3 gap-4">
