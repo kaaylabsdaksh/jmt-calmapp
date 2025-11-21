@@ -1835,8 +1835,8 @@ const FormVariationsDemo = () => {
               <Label htmlFor="labCode" className="text-sm font-medium">
                 Lab Code {formData.type === "single" && <span className="text-destructive">*</span>}
               </Label>
-              <Select value={formData.labCode} onValueChange={(value) => handleInputChange("labCode", value)}>
-                <SelectTrigger className="h-11">
+              <Select value={formData.labCode} disabled>
+                <SelectTrigger className="h-11 bg-muted cursor-not-allowed">
                   <SelectValue placeholder="Select lab code" />
                 </SelectTrigger>
                 <SelectContent className="bg-popover border z-50 max-h-60 overflow-y-auto">
