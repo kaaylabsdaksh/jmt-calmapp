@@ -305,7 +305,7 @@ const FormVariationsDemo = () => {
     // General Information
     type: "",
     reportNumber: "",
-    itemStatus: "",
+    itemStatus: "in-lab",
     assignedTo: "",
     priority: "Normal",
     location: "",
