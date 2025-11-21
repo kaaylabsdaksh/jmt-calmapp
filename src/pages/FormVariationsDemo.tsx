@@ -542,7 +542,7 @@ const FormVariationsDemo = () => {
         { value: 'general', label: 'General', icon: Info },
         { value: 'product', label: 'Product', icon: Package },
         { value: 'logistics', label: 'Logistics', icon: Truck },
-        { value: 'product-images', label: 'Images', icon: Package },
+        { value: 'options', label: 'Additional', icon: Settings },
         { value: 'lab', label: 'Lab', icon: Settings }
       ];
 
@@ -553,7 +553,7 @@ const FormVariationsDemo = () => {
         { value: 'transit', label: 'Transit', icon: Truck },
         { value: 'accessories', label: 'Accessories', icon: Layers },
         { value: 'parts', label: 'Parts', icon: Settings },
-        { value: 'options', label: 'Additional', icon: Settings }
+        { value: 'product-images', label: 'Images', icon: Package }
       ];
   
   const [activeTab, setActiveTab] = useState('general');
