@@ -1462,7 +1462,9 @@ const FormVariationsDemo = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="manufacturer" className="text-sm font-medium">Manufacturer *</Label>
+              <Label htmlFor="manufacturer" className="text-sm font-medium">
+                Manufacturer {formData.type === "single" && <span className="text-destructive">*</span>}
+              </Label>
               <div className="flex gap-2">
                 <Popover open={manufacturerDropdownOpen} onOpenChange={setManufacturerDropdownOpen}>
                   <PopoverTrigger asChild>
@@ -1539,7 +1541,9 @@ const FormVariationsDemo = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="model" className="text-sm font-medium">Model *</Label>
+              <Label htmlFor="model" className="text-sm font-medium">
+                Model {formData.type === "single" && <span className="text-destructive">*</span>}
+              </Label>
               <div className="flex gap-2">
                 <Input
                   id="model"
@@ -1560,7 +1564,9 @@ const FormVariationsDemo = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="labCode" className="text-sm font-medium">Lab Code</Label>
+              <Label htmlFor="labCode" className="text-sm font-medium">
+                Lab Code {formData.type === "single" && <span className="text-destructive">*</span>}
+              </Label>
               <Input
                 id="labCode"
                 value={formData.labCode}
@@ -1571,7 +1577,9 @@ const FormVariationsDemo = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="mfgSerial" className="text-sm font-medium">MFG Serial</Label>
+              <Label htmlFor="mfgSerial" className="text-sm font-medium">
+                MFG Serial {formData.type === "single" && <span className="text-destructive">*</span>}
+              </Label>
               <Input
                 id="mfgSerial"
                 value={formData.mfgSerial}
@@ -1582,7 +1590,9 @@ const FormVariationsDemo = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="costId" className="text-sm font-medium">Cost ID</Label>
+              <Label htmlFor="costId" className="text-sm font-medium">
+                Cost ID {formData.type === "single" && <span className="text-destructive">*</span>}
+              </Label>
               <Input
                 id="costId"
                 value={formData.costId}
@@ -1593,7 +1603,9 @@ const FormVariationsDemo = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="costSerial" className="text-sm font-medium">Cost Serial</Label>
+              <Label htmlFor="costSerial" className="text-sm font-medium">
+                Cost Serial {formData.type === "single" && <span className="text-destructive">*</span>}
+              </Label>
               <Input
                 id="costSerial"
                 value={formData.costSerial}
@@ -1615,7 +1627,9 @@ const FormVariationsDemo = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="quantity" className="text-sm font-medium">Quantity</Label>
+              <Label htmlFor="quantity" className="text-sm font-medium">
+                Quantity {formData.type === "single" && <span className="text-destructive">*</span>}
+              </Label>
               <Input
                 id="quantity"
                 type="number"
