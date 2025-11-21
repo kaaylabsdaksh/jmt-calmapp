@@ -2207,7 +2207,7 @@ const FormVariationsDemo = () => {
     <div className="space-y-6">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Additional Information Section */}
-        <Card className="border-0 shadow-md">
+        <Card className="border-0">
           <CardContent className="p-4 sm:p-6 space-y-4">
             <h3 className="text-lg font-semibold text-foreground">Additional Information</h3>
             
@@ -2239,7 +2239,7 @@ const FormVariationsDemo = () => {
         </Card>
 
         {/* Purchase Order Information Section */}
-        <Card className="border-0 shadow-md">
+        <Card className="border-0">
           <CardContent className="p-4 sm:p-6 space-y-4">
             <h3 className="text-lg font-semibold text-foreground">Purchase Order Information</h3>
             
