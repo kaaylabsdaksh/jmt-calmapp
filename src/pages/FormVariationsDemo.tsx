@@ -4361,128 +4361,6 @@ const FormVariationsDemo = () => {
     </Card>
   );
 
-  // Render accessories section
-  const renderAccessoriesSection = () => (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-3">
-          <Layers className="h-5 w-5 text-primary" />
-          Accessories
-        </CardTitle>
-        <CardDescription>Manage product accessories and components</CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3 items-end">
-          <div className="space-y-1">
-            <Label htmlFor="accessoryType" className="text-xs">Type</Label>
-            <Select value={formData.accessoryType} onValueChange={(value) => handleInputChange("accessoryType", value)}>
-              <SelectTrigger className="h-9">
-                <SelectValue placeholder="Type" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="containers">Containers</SelectItem>
-                <SelectItem value="cables">Cables</SelectItem>
-                <SelectItem value="adapters">Adapters</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="space-y-1">
-            <Label htmlFor="accessory" className="text-xs">Item</Label>
-            <Select value={formData.accessory} onValueChange={(value) => handleInputChange("accessory", value)}>
-              <SelectTrigger className="h-9">
-                <SelectValue placeholder="Item" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="case">Case</SelectItem>
-                <SelectItem value="manual">Manual</SelectItem>
-                <SelectItem value="cable">Cable</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="space-y-1">
-            <Label htmlFor="accessoryMaterial" className="text-xs">Material</Label>
-            <Input
-              id="accessoryMaterial"
-              value={formData.accessoryMaterial}
-              onChange={(e) => handleInputChange("accessoryMaterial", e.target.value)}
-              placeholder="Material"
-              className="h-9"
-            />
-          </div>
-
-          <div className="space-y-1">
-            <Label htmlFor="accessoryColor" className="text-xs">Color</Label>
-            <Select value={formData.accessoryColor} onValueChange={(value) => handleInputChange("accessoryColor", value)}>
-              <SelectTrigger className="h-9">
-                <SelectValue placeholder="Color" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="black">Black</SelectItem>
-                <SelectItem value="white">White</SelectItem>
-                <SelectItem value="gray">Gray</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="space-y-1">
-            <Label htmlFor="accessoryQty" className="text-xs">Qty</Label>
-            <Input
-              id="accessoryQty"
-              type="number"
-              value={formData.accessoryQty}
-              onChange={(e) => handleInputChange("accessoryQty", e.target.value)}
-              placeholder="1"
-              className="h-9"
-            />
-          </div>
-
-          <div className="col-span-2 md:col-span-1">
-            <Button size="sm" className="h-9 w-full" onClick={handleAddAccessory}>Add</Button>
-          </div>
-        </div>
-
-        <div className="border rounded-lg overflow-x-auto">
-          <div className="bg-muted grid grid-cols-6 gap-4 p-2 text-xs font-medium min-w-[600px]">
-            <div>Type</div>
-            <div>Accessory</div>
-            <div>Material</div>
-            <div>Color</div>
-            <div>Qty</div>
-            <div>Actions</div>
-          </div>
-          {accessoriesList.length > 0 ? (
-            <div className="divide-y">
-              {accessoriesList.map((accessory) => (
-                <div key={accessory.id} className="grid grid-cols-6 gap-4 p-3 text-sm min-w-[600px]">
-                  <div className="capitalize">{accessory.type}</div>
-                  <div className="capitalize">{accessory.accessory}</div>
-                  <div>{accessory.material || '-'}</div>
-                  <div className="capitalize">{accessory.color || '-'}</div>
-                  <div>{accessory.qty}</div>
-                  <div>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleRemoveAccessory(accessory.id)}
-                      className="h-8 w-8 p-0 text-destructive hover:text-destructive"
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="p-6 text-center text-muted-foreground text-sm">
-              No accessories added
-            </div>
-          )}
-        </div>
-      </CardContent>
-    </Card>
-  );
 
   // Render parts section
   const renderPartsSection = () => (
@@ -5104,10 +4982,6 @@ const FormVariationsDemo = () => {
                 {renderTransitSection()}
               </TabsContent>
 
-              <TabsContent value="accessories" className="mt-0 space-y-6 animate-fade-in">
-                {renderAccessoriesSection()}
-              </TabsContent>
-
               <TabsContent value="parts" className="mt-0 space-y-6 animate-fade-in">
                 {renderPartsSection()}
               </TabsContent>
@@ -5498,18 +5372,6 @@ const FormVariationsDemo = () => {
                   <h3 className="font-semibold text-lg">Transit Information</h3>
                 </div>
                 {renderTransitSection()}
-              </div>
-
-              {/* Accessories Section */}
-              <div 
-                ref={(el) => (sectionRefs.current['accessories'] = el)}
-                className="space-y-4 scroll-mt-32"
-              >
-                <div className="flex items-center gap-3 pb-3 border-b border-border">
-                  <Layers className="h-5 w-5 text-primary" />
-                  <h3 className="font-semibold text-lg">Product Accessories</h3>
-                </div>
-                {renderAccessoriesSection()}
               </div>
 
               {/* Parts Section */}
