@@ -13,6 +13,7 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbP
 import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, ChevronLeft, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield, Wrench, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock, ExternalLink, ArrowUp } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
@@ -310,6 +311,7 @@ const FormVariationsDemo = () => {
     priority: "Normal",
     location: "",
     division: "",
+    calFreqInterval: "monthly",
     calFreq: "",
     actionCode: "",
     
@@ -1490,6 +1492,26 @@ const FormVariationsDemo = () => {
               <SelectItem value="gmfg">GMFG</SelectItem>
             </SelectContent>
           </Select>
+        </div>
+
+        <div className="space-y-2">
+          <Label className="text-sm font-medium">
+            Cal Freq Interval {formData.type === "single" && <span className="text-destructive">*</span>}
+          </Label>
+          <RadioGroup
+            value={formData.calFreqInterval}
+            onValueChange={(value) => handleInputChange("calFreqInterval", value)}
+            className="flex gap-4"
+          >
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="monthly" id="monthly" />
+              <Label htmlFor="monthly" className="font-normal cursor-pointer">Monthly</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="weekly" id="weekly" />
+              <Label htmlFor="weekly" className="font-normal cursor-pointer">Weekly</Label>
+            </div>
+          </RadioGroup>
         </div>
 
         <div className="space-y-2">
