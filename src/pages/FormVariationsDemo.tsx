@@ -23,9 +23,12 @@ import { FixedActionFooter } from "@/components/FixedActionFooter";
 import { EstimateDetails } from "@/components/EstimateDetails";
 import { QF3Dialog } from "@/components/QF3Dialog";
 import { cn } from "@/lib/utils";
+import { useToast } from "@/hooks/use-toast";
+import { Toaster } from "@/components/ui/toaster";
 
 const FormVariationsDemo = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
   
   // Layout variant state
   const [layoutVariant, setLayoutVariant] = useState<'default' | 'minimal'>('default');
@@ -160,6 +163,18 @@ const FormVariationsDemo = () => {
   // Model dialog state
   const [showModelDialog, setShowModelDialog] = useState(false);
   const [newModelData, setNewModelData] = useState({
+    manufacturer: "",
+    model: "",
+    range: "",
+    option: "",
+    accuracy: "",
+    description: "",
+    labCode: ""
+  });
+
+  // PR dialog state
+  const [showPRDialog, setShowPRDialog] = useState(false);
+  const [newPRData, setNewPRData] = useState({
     manufacturer: "",
     model: "",
     range: "",
@@ -598,6 +613,65 @@ const FormVariationsDemo = () => {
       ...prev,
       [field]: value
     }));
+  };
+
+  // PR dialog handlers
+  const handleAddNewPR = () => {
+    if (newPRData.model.trim()) {
+      // In real app, this would save the PR to database
+      console.log('Adding new PR:', newPRData);
+      setNewPRData({
+        manufacturer: "",
+        model: "",
+        range: "",
+        option: "",
+        accuracy: "",
+        description: "",
+        labCode: ""
+      });
+      setShowPRDialog(false);
+    }
+  };
+
+  const handleCancelPR = () => {
+    setNewPRData({
+      manufacturer: "",
+      model: "",
+      range: "",
+      option: "",
+      accuracy: "",
+      description: "",
+      labCode: ""
+    });
+    setShowPRDialog(false);
+  };
+
+  const handlePRDataChange = (field: string, value: string) => {
+    setNewPRData(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const handleOpenPRDialog = () => {
+    if (!formData.manufacturer) {
+      toast({
+        title: "Manufacturer Required",
+        description: "Please select a manufacturer before adding a PR.",
+        variant: "destructive",
+      });
+      return;
+    }
+    setNewPRData({
+      manufacturer: formData.manufacturer,
+      model: "",
+      range: "",
+      option: "",
+      accuracy: "",
+      description: "",
+      labCode: ""
+    });
+    setShowPRDialog(true);
   };
 
   // Status change handlers
@@ -1605,7 +1679,7 @@ const FormVariationsDemo = () => {
                 <Button 
                   variant="outline" 
                   size="sm"
-                  onClick={() => setShowModelDialog(true)}
+                  onClick={handleOpenPRDialog}
                   className="px-3 whitespace-nowrap"
                 >
                   Add PR
@@ -6457,6 +6531,135 @@ const FormVariationsDemo = () => {
           </DialogContent>
         </Dialog>
 
+        {/* Add New PR Dialog */}
+        <Dialog open={showPRDialog} onOpenChange={setShowPRDialog}>
+          <DialogContent className="sm:max-w-lg">
+            <DialogHeader>
+              <DialogTitle>Add New PR</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4 py-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="prDialogManufacturer" className="text-sm font-medium">Manufacturer</Label>
+                  <Input
+                    id="prDialogManufacturer"
+                    value={newPRData.manufacturer}
+                    disabled
+                    className="h-11 bg-muted"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="prDialogModel" className="text-sm font-medium">Model</Label>
+                  <Input
+                    id="prDialogModel"
+                    value={newPRData.model}
+                    onChange={(e) => handlePRDataChange("model", e.target.value)}
+                    placeholder="Enter model"
+                    className="h-11"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="prDialogRange" className="text-sm font-medium">Range</Label>
+                  <Select 
+                    value={newPRData.range} 
+                    onValueChange={(value) => handlePRDataChange("range", value)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select range" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="WC/PSI">WC/PSI</SelectItem>
+                      <SelectItem value="+-1°F">+-1°F</SelectItem>
+                      <SelectItem value="+/- 25&quot; H2O">+/- 25&quot; H2O</SelectItem>
+                      <SelectItem value="+/-0.125&quot; H2O">+/-0.125&quot; H2O</SelectItem>
+                      <SelectItem value="+/-5&quot; H2O">+/-5&quot; H2O</SelectItem>
+                      <SelectItem value="-1 BAR">-1 BAR</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="prDialogOption" className="text-sm font-medium">Option</Label>
+                  <Select 
+                    value={newPRData.option} 
+                    onValueChange={(value) => handlePRDataChange("option", value)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select option" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="676">676</SelectItem>
+                      <SelectItem value="absolute pressure">absolute pressure</SelectItem>
+                      <SelectItem value="ASTM 6">ASTM 6</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="prDialogAccuracy" className="text-sm font-medium">Accuracy</Label>
+                  <Select 
+                    value={newPRData.accuracy} 
+                    onValueChange={(value) => handlePRDataChange("accuracy", value)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select accuracy" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="±.0015&quot;">±.0015&quot;</SelectItem>
+                      <SelectItem value="±0.05%">±0.05%</SelectItem>
+                      <SelectItem value="±0.1%">±0.1%</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="prDialogDescription" className="text-sm font-medium">Description</Label>
+                <Textarea
+                  id="prDialogDescription"
+                  value={newPRData.description}
+                  onChange={(e) => handlePRDataChange("description", e.target.value)}
+                  placeholder="Enter description"
+                  rows={3}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="prDialogLabCode" className="text-sm font-medium">Lab Code</Label>
+                <Select 
+                  value={newPRData.labCode} 
+                  onValueChange={(value) => handlePRDataChange("labCode", value)}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select lab code" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="A - Mechanical W&M Gages">A - Mechanical W&M Gages</SelectItem>
+                    <SelectItem value="F - Digital Pressure">F - Digital Pressure</SelectItem>
+                    <SelectItem value="P - Temperature">P - Temperature</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <DialogFooter className="flex gap-2">
+              <Button variant="outline" onClick={handleCancelPR}>
+                Cancel
+              </Button>
+              <Button
+                onClick={handleAddNewPR}
+                disabled={!newPRData.model.trim()}
+                className="bg-primary text-primary-foreground hover:bg-primary/90"
+              >
+                Ok
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
         {/* Status Change Confirmation Dialog */}
         <Dialog open={showStatusChangeDialog} onOpenChange={setShowStatusChangeDialog}>
           <DialogContent className="sm:max-w-md">
@@ -6649,6 +6852,7 @@ const FormVariationsDemo = () => {
           <ArrowUp className="h-5 w-5" />
         </Button>
       )}
+      <Toaster />
     </div>
   );
 };
