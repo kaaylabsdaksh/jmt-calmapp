@@ -122,7 +122,7 @@ export const QF3Dialog = ({ open, onOpenChange }: QF3DialogProps) => {
 
         <div className="space-y-6 py-2">
           {/* Equipment Information */}
-          <div className="bg-amber-50 dark:bg-amber-950/20 rounded border border-amber-200 dark:border-amber-800 p-3">
+          <div className="bg-primary/5 border-l-4 border-primary rounded p-3">
             <h3 className="text-xs font-semibold mb-3">Equipment Information</h3>
             
             <div className="space-y-3">
