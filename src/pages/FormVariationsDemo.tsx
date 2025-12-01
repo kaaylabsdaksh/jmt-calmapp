@@ -5086,7 +5086,7 @@ const FormVariationsDemo = () => {
             />
           </div>
 
-          <Button onClick={handleSetInTransit} className="w-full">
+          <Button onClick={handleSetInTransit} size="sm" className="w-auto">
             Set In Transit
           </Button>
         </CardContent>
