@@ -879,25 +879,32 @@ const FormVariationsDemo = () => {
 
   // Parts handlers
   const handleAddPart = () => {
-    if (formData.partsCategory && formData.partsNumber && formData.partsDescription && formData.partsQty) {
-      const newPart = {
-        id: Date.now().toString(),
-        category: formData.partsCategory,
-        partNumber: formData.partsNumber,
-        description: formData.partsDescription,
-        cost: formData.partsCost || "0.00",
-        qty: formData.partsQty,
-      };
-      
-      setPartsList(prev => [...prev, newPart]);
-      
-      // Clear form fields after adding
-      handleInputChange("partsCategory", "");
-      handleInputChange("partsNumber", "");
-      handleInputChange("partsDescription", "");
-      handleInputChange("partsCost", "");
-      handleInputChange("partsQty", "");
+    if (!formData.partsCategory || !formData.partsNumber || !formData.partsQty) {
+      toast({
+        title: "Missing required fields",
+        description: "Please fill in Category, Part Number, and Quantity",
+        variant: "destructive",
+      });
+      return;
     }
+
+    const newPart = {
+      id: Date.now().toString(),
+      category: formData.partsCategory,
+      partNumber: formData.partsNumber,
+      description: formData.partsDescription,
+      cost: formData.partsCost || "0.00",
+      qty: formData.partsQty,
+    };
+    
+    setPartsList(prev => [...prev, newPart]);
+    
+    // Clear form fields after adding
+    handleInputChange("partsCategory", "");
+    handleInputChange("partsNumber", "");
+    handleInputChange("partsDescription", "");
+    handleInputChange("partsCost", "");
+    handleInputChange("partsQty", "");
   };
 
   const handleRemovePart = (id: string) => {
@@ -4811,8 +4818,10 @@ const FormVariationsDemo = () => {
       <CardContent className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-6 gap-3 items-end">
           <div className="space-y-1">
-            <Label htmlFor="partsCategory" className="text-xs">Category</Label>
-            <Select value={formData.partsCategory} onValueChange={(value) => handleInputChange("partsCategory", value)}>
+            <Label htmlFor="partsCategory" className="text-xs">
+              Category <span className="text-destructive">*</span>
+            </Label>
+            <Select value={formData.partsCategory} onValueChange={(value) => handleInputChange("partsCategory", value)} required>
               <SelectTrigger className="h-9">
                 <SelectValue placeholder="Category" />
               </SelectTrigger>
@@ -4825,13 +4834,16 @@ const FormVariationsDemo = () => {
           </div>
 
           <div className="space-y-1">
-            <Label htmlFor="partsNumber" className="text-xs">Part Number</Label>
+            <Label htmlFor="partsNumber" className="text-xs">
+              Part Number <span className="text-destructive">*</span>
+            </Label>
             <Input
               id="partsNumber"
               value={formData.partsNumber}
               onChange={(e) => handleInputChange("partsNumber", e.target.value)}
               placeholder="Part number"
               className="h-9"
+              required
             />
           </div>
 
@@ -4859,7 +4871,9 @@ const FormVariationsDemo = () => {
           </div>
 
           <div className="space-y-1">
-            <Label htmlFor="partsQty" className="text-xs">Qty</Label>
+            <Label htmlFor="partsQty" className="text-xs">
+              Qty <span className="text-destructive">*</span>
+            </Label>
             <Input
               id="partsQty"
               type="number"
@@ -4867,6 +4881,7 @@ const FormVariationsDemo = () => {
               onChange={(e) => handleInputChange("partsQty", e.target.value)}
               placeholder="1"
               className="h-9"
+              required
             />
           </div>
 
