@@ -556,6 +556,9 @@ const FormVariationsDemo = () => {
   const [activityLogType, setActivityLogType] = useState("");
   const [activityLogComment, setActivityLogComment] = useState("");
   const [includeInCopyAsNew, setIncludeInCopyAsNew] = useState(false);
+  const [filterActivityType, setFilterActivityType] = useState("all");
+  const [filterActivityUser, setFilterActivityUser] = useState("all");
+  const [filterActivityDate, setFilterActivityDate] = useState("all");
   const [showActivityLog, setShowActivityLog] = useState(true);
   const [activityHistory, setActivityHistory] = useState([
     {
@@ -5173,6 +5176,18 @@ const FormVariationsDemo = () => {
     });
   };
 
+  // Get unique values for filters and filtered activity history
+  const uniqueActivityTypes = Array.from(new Set(activityHistory.map(a => a.type)));
+  const uniqueActivityUsers = Array.from(new Set(activityHistory.map(a => a.user)));
+  const uniqueActivityDates = Array.from(new Set(activityHistory.map(a => a.date)));
+
+  const filteredActivityHistory = activityHistory.filter(activity => {
+    const typeMatch = filterActivityType === "all" || activity.type === filterActivityType;
+    const userMatch = filterActivityUser === "all" || activity.user === filterActivityUser;
+    const dateMatch = filterActivityDate === "all" || activity.date === filterActivityDate;
+    return typeMatch && userMatch && dateMatch;
+  });
+
   // Render Activity Log section
   const renderActivityLog = () => (
     <div className="mt-8 mb-24">
@@ -5257,6 +5272,70 @@ const FormVariationsDemo = () => {
                 </Badge>
               </div>
 
+              {/* Quick Search Filters */}
+              {activityHistory.length > 0 && (
+                <div className="bg-muted/20 border border-border rounded-lg p-3">
+                  <div className="flex items-center gap-3">
+                    <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground shrink-0">
+                      Quick Search:
+                    </span>
+                    
+                    <div className="flex items-center gap-2 flex-1 flex-wrap">
+                      <Select value={filterActivityType} onValueChange={setFilterActivityType}>
+                        <SelectTrigger className="h-8 w-[140px] bg-background text-xs">
+                          <SelectValue placeholder="All Types" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="all">All Types</SelectItem>
+                          {uniqueActivityTypes.map(type => (
+                            <SelectItem key={type} value={type}>{type}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+
+                      <Select value={filterActivityUser} onValueChange={setFilterActivityUser}>
+                        <SelectTrigger className="h-8 w-[140px] bg-background text-xs">
+                          <SelectValue placeholder="All Users" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="all">All Users</SelectItem>
+                          {uniqueActivityUsers.map(user => (
+                            <SelectItem key={user} value={user}>{user}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+
+                      <Select value={filterActivityDate} onValueChange={setFilterActivityDate}>
+                        <SelectTrigger className="h-8 w-[140px] bg-background text-xs">
+                          <SelectValue placeholder="All Dates" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="all">All Dates</SelectItem>
+                          {uniqueActivityDates.map(date => (
+                            <SelectItem key={date} value={date}>{date}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+
+                      {(filterActivityType !== "all" || filterActivityUser !== "all" || filterActivityDate !== "all") && (
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          onClick={() => {
+                            setFilterActivityType("all");
+                            setFilterActivityUser("all");
+                            setFilterActivityDate("all");
+                          }}
+                          className="h-8 text-xs px-3"
+                        >
+                          Clear Filters
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+
               <div className="border rounded-lg overflow-hidden">
                 <div className="bg-muted/50 grid grid-cols-12 gap-4 px-4 py-2.5 text-xs font-medium text-muted-foreground border-b">
                   <div className="col-span-2">TYPE</div>
@@ -5266,8 +5345,8 @@ const FormVariationsDemo = () => {
                 </div>
 
                 <div className="divide-y">
-                  {activityHistory.length > 0 ? (
-                    activityHistory.map((activity, index) => (
+                  {filteredActivityHistory.length > 0 ? (
+                    filteredActivityHistory.map((activity, index) => (
                       <div key={index} className="grid grid-cols-12 gap-4 px-4 py-3 text-sm hover:bg-muted/30 transition-colors">
                         <div className="col-span-2">
                           <Badge 
@@ -5284,7 +5363,7 @@ const FormVariationsDemo = () => {
                     ))
                   ) : (
                     <div className="px-4 py-8 text-center text-sm text-muted-foreground">
-                      No activity recorded yet
+                      {activityHistory.length === 0 ? 'No activity recorded yet' : 'No matching activities found'}
                     </div>
                   )}
                 </div>
