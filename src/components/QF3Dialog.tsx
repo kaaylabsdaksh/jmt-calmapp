@@ -122,54 +122,57 @@ export const QF3Dialog = ({ open, onOpenChange }: QF3DialogProps) => {
 
         <div className="space-y-6 py-2">
           {/* Equipment Information */}
-          <Card className="border-2 border-primary/20 bg-gradient-to-br from-amber-50 to-amber-100/50 dark:from-amber-950/20 dark:to-amber-900/10">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-base font-semibold flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-primary"></span>
-                Equipment Information
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-3 text-sm">
-                <div className="flex flex-col">
-                  <span className="text-xs text-muted-foreground uppercase tracking-wide">MFG</span>
-                  <span className="font-medium mt-0.5">{qf3Data.mfg}</span>
+          <div className="bg-amber-50 dark:bg-amber-950/20 rounded-lg border border-amber-200 dark:border-amber-800 p-6">
+            <h3 className="text-sm font-semibold mb-6">Equipment Information</h3>
+            
+            <div className="space-y-5">
+              {/* First Row */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-x-12 gap-y-5">
+                <div className="space-y-1">
+                  <div className="text-xs text-muted-foreground uppercase tracking-wide font-medium">MFG</div>
+                  <div className="text-base font-bold text-foreground">{qf3Data.mfg}</div>
                 </div>
-                <div className="flex flex-col">
-                  <span className="text-xs text-muted-foreground uppercase tracking-wide">Date</span>
-                  <span className="font-medium mt-0.5">{qf3Data.date}</span>
+                <div className="space-y-1">
+                  <div className="text-xs text-muted-foreground uppercase tracking-wide font-medium">DATE</div>
+                  <div className="text-base font-bold text-foreground">{qf3Data.date}</div>
                 </div>
-                <div className="flex flex-col">
-                  <span className="text-xs text-muted-foreground uppercase tracking-wide">Tech</span>
-                  <span className="font-medium mt-0.5">{qf3Data.tech}</span>
+                <div className="space-y-1">
+                  <div className="text-xs text-muted-foreground uppercase tracking-wide font-medium">TECH</div>
+                  <div className="text-base font-bold text-foreground">{qf3Data.tech}</div>
                 </div>
-                <div className="flex flex-col">
-                  <span className="text-xs text-muted-foreground uppercase tracking-wide">Code</span>
-                  <span className="font-medium mt-0.5">{qf3Data.code}</span>
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-xs text-muted-foreground uppercase tracking-wide">MDL</span>
-                  <span className="font-medium mt-0.5">{qf3Data.mdl}</span>
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-xs text-muted-foreground uppercase tracking-wide">S/N</span>
-                  <span className="font-medium mt-0.5">{qf3Data.sn}</span>
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-xs text-muted-foreground uppercase tracking-wide">W/O #</span>
-                  <span className="font-medium mt-0.5">{qf3Data.wo}</span>
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-xs text-muted-foreground uppercase tracking-wide">ID #</span>
-                  <span className="font-medium mt-0.5">{qf3Data.id}</span>
-                </div>
-                <div className="col-span-2 md:col-span-4 flex flex-col">
-                  <span className="text-xs text-muted-foreground uppercase tracking-wide">Description</span>
-                  <span className="font-medium mt-0.5">{qf3Data.desc}</span>
+                <div className="space-y-1">
+                  <div className="text-xs text-muted-foreground uppercase tracking-wide font-medium">CODE</div>
+                  <div className="text-base font-bold text-foreground">{qf3Data.code}</div>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+
+              {/* Second Row */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-x-12 gap-y-5">
+                <div className="space-y-1">
+                  <div className="text-xs text-muted-foreground uppercase tracking-wide font-medium">MDL</div>
+                  <div className="text-base font-bold text-foreground">{qf3Data.mdl}</div>
+                </div>
+                <div className="space-y-1">
+                  <div className="text-xs text-muted-foreground uppercase tracking-wide font-medium">S/N</div>
+                  <div className="text-base font-bold text-foreground">{qf3Data.sn}</div>
+                </div>
+                <div className="space-y-1">
+                  <div className="text-xs text-muted-foreground uppercase tracking-wide font-medium">W/O #</div>
+                  <div className="text-base font-bold text-foreground">{qf3Data.wo}</div>
+                </div>
+                <div className="space-y-1">
+                  <div className="text-xs text-muted-foreground uppercase tracking-wide font-medium">ID #</div>
+                  <div className="text-base font-bold text-foreground">{qf3Data.id}</div>
+                </div>
+              </div>
+
+              {/* Description Row */}
+              <div className="pt-2 space-y-1">
+                <div className="text-xs text-muted-foreground uppercase tracking-wide font-medium">DESCRIPTION</div>
+                <div className="text-base font-bold text-foreground">{qf3Data.desc}</div>
+              </div>
+            </div>
+          </div>
 
           {/* Vendor Information */}
           <Card className="border-2">
