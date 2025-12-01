@@ -28,6 +28,11 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
   const [commentType, setCommentType] = useState<string>("");
   const [commentText, setCommentText] = useState<string>("");
   const [includeInCopy, setIncludeInCopy] = useState<boolean>(false);
+  
+  // Filter states
+  const [filterType, setFilterType] = useState<string>("all");
+  const [filterUser, setFilterUser] = useState<string>("all");
+  const [filterDate, setFilterDate] = useState<string>("all");
   const [comments, setComments] = useState<Comment[]>([
     {
       id: "1",
@@ -114,6 +119,19 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
     }
   };
 
+  // Get unique filter options
+  const uniqueTypes = Array.from(new Set(comments.map(c => c.type)));
+  const uniqueUsers = Array.from(new Set(comments.map(c => c.user)));
+  const uniqueDates = Array.from(new Set(comments.map(c => format(c.dateEntered, "MM/dd/yyyy"))));
+
+  // Filter comments
+  const filteredComments = comments.filter(comment => {
+    const matchesType = filterType === "all" || comment.type === filterType;
+    const matchesUser = filterUser === "all" || comment.user === filterUser;
+    const matchesDate = filterDate === "all" || format(comment.dateEntered, "MM/dd/yyyy") === filterDate;
+    return matchesType && matchesUser && matchesDate;
+  });
+
   return (
     <Card className="rounded-t-none border-t-0">
       <CardContent className="p-6 space-y-6">
@@ -199,6 +217,68 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
             </div>
           ) : (
             <div className="border border-border rounded-lg overflow-hidden bg-background">
+              {/* Quick Search Filters */}
+              <div className="bg-muted/20 border-b border-border p-3">
+                <div className="flex items-center gap-3">
+                  <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground shrink-0">
+                    Quick Search:
+                  </span>
+                  
+                  <div className="flex items-center gap-2 flex-1">
+                    <Select value={filterType} onValueChange={setFilterType}>
+                      <SelectTrigger className="h-8 w-[140px] bg-background text-xs">
+                        <SelectValue placeholder="All Types" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All Types</SelectItem>
+                        {uniqueTypes.map(type => (
+                          <SelectItem key={type} value={type}>{type}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+
+                    <Select value={filterUser} onValueChange={setFilterUser}>
+                      <SelectTrigger className="h-8 w-[140px] bg-background text-xs">
+                        <SelectValue placeholder="All Users" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All Users</SelectItem>
+                        {uniqueUsers.map(user => (
+                          <SelectItem key={user} value={user}>{user}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+
+                    <Select value={filterDate} onValueChange={setFilterDate}>
+                      <SelectTrigger className="h-8 w-[140px] bg-background text-xs">
+                        <SelectValue placeholder="All Dates" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All Dates</SelectItem>
+                        {uniqueDates.map(date => (
+                          <SelectItem key={date} value={date}>{date}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+
+                    {(filterType !== "all" || filterUser !== "all" || filterDate !== "all") && (
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        onClick={() => {
+                          setFilterType("all");
+                          setFilterUser("all");
+                          setFilterDate("all");
+                        }}
+                        className="h-8 text-xs"
+                      >
+                        Clear Filters
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              </div>
+
               {/* Desktop Table View */}
               <div className="hidden md:block overflow-x-auto">
                 <table className="w-full">
@@ -219,7 +299,7 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
                     </tr>
                   </thead>
                   <tbody>
-                    {comments.map((comment, index) => (
+                    {filteredComments.map((comment, index) => (
                       <tr
                         key={comment.id}
                         className="border-b border-border last:border-b-0 hover:bg-muted/20 transition-colors"
@@ -251,7 +331,7 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
 
               {/* Mobile Card View */}
               <div className="md:hidden divide-y divide-border">
-                {comments.map((comment, index) => (
+                {filteredComments.map((comment, index) => (
                   <div 
                     key={comment.id} 
                     className="p-4 space-y-2 hover:bg-muted/20 transition-colors"
