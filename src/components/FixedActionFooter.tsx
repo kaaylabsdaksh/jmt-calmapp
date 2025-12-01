@@ -4,9 +4,10 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Label } from '@/components/ui/label';
 import { Card } from '@/components/ui/card';
-import { X, Save, Copy, Printer, Tag, QrCode, ArrowLeft, FileText, Package, Mail, Send, CheckCircle, XCircle, Clock, Pause, User, Shield } from 'lucide-react';
+import { X, Save, Copy, Printer, Tag, QrCode, ArrowLeft, FileText, Package, Mail, Send, CheckCircle, XCircle, Clock, Pause, User, Shield, MoreHorizontal } from 'lucide-react';
 
 interface FixedActionFooterProps {
   onCancel: () => void;
@@ -246,6 +247,39 @@ export const FixedActionFooter = ({
           ) : (
             // Default Work Order Items Footer
             <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
+              {/* Left Actions */}
+              <div className="flex items-center gap-2">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button size="sm" variant="outline">
+                      <MoreHorizontal className="h-3 w-3 mr-1" />
+                      More Actions
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start">
+                    <DropdownMenuItem>
+                      <CheckCircle className="h-3 w-3 mr-2" />
+                      QA Approve
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Pause className="h-3 w-3 mr-2" />
+                      QA Hold
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <XCircle className="h-3 w-3 mr-2" />
+                      QA Disapprove
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Clock className="h-3 w-3 mr-2" />
+                      Waiting on Customer
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Package className="h-3 w-3 mr-2" />
+                      To Factory
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
               
               {/* Center Actions */}
               <div className="flex items-center gap-1 mx-auto">
