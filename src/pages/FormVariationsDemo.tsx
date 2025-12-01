@@ -4537,6 +4537,28 @@ const FormVariationsDemo = () => {
         </Card>
       </div>
 
+      {/* Toggle Button */}
+      <div className="flex justify-end">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => handleInputChange("showCostDetails", !formData.showCostDetails)}
+          className="gap-2"
+        >
+          {formData.showCostDetails ? (
+            <>
+              <ChevronLeft className="h-4 w-4" />
+              Hide Details
+            </>
+          ) : (
+            <>
+              <ChevronRight className="h-4 w-4" />
+              Show Details
+            </>
+          )}
+        </Button>
+      </div>
+
       {/* Collapsible Cost Details */}
       {formData.showCostDetails && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -4727,28 +4749,6 @@ const FormVariationsDemo = () => {
           </Card>
         </div>
       )}
-
-      {/* Toggle Button */}
-      <div className="flex justify-center">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => handleInputChange("showCostDetails", !formData.showCostDetails)}
-          className="gap-2"
-        >
-          {formData.showCostDetails ? (
-            <>
-              <ChevronLeft className="h-4 w-4" />
-              Hide Details
-            </>
-          ) : (
-            <>
-              <ChevronRight className="h-4 w-4" />
-              Show Details
-            </>
-          )}
-        </Button>
-      </div>
     </div>
   );
 
