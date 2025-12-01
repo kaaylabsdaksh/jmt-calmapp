@@ -5343,10 +5343,10 @@ const FormVariationsDemo = () => {
                   </div>
                 )}
 
-                <div className="divide-y">
+                <div className="divide-y divide-border">
                   {filteredActivityHistory.length > 0 ? (
                     filteredActivityHistory.map((activity, index) => (
-                      <div key={index} className="grid grid-cols-12 gap-4 px-4 py-3 text-sm hover:bg-muted/30 transition-colors">
+                      <div key={index} className="grid grid-cols-12 gap-4 px-4 py-3 text-sm hover:bg-muted/30 transition-colors border-b border-border last:border-b-0">
                         <div className="col-span-2">
                           <Badge 
                             variant={activity.type === "Estimate" ? "default" : "secondary"}
