@@ -181,7 +181,7 @@ export const QF3Dialog = ({ open, onOpenChange }: QF3DialogProps) => {
               <span className="text-[10px] font-medium text-destructive">* All fields required</span>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
+            <div className="grid grid-cols-5 gap-3">
               <div className="space-y-1">
                 <Label className="text-[10px] font-semibold flex items-center gap-1">
                   Sub ID <span className="text-destructive">*</span>
