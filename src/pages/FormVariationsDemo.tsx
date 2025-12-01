@@ -551,6 +551,50 @@ const FormVariationsDemo = () => {
     showCostDetails: true,
   });
 
+  // Activity Log state
+  const [activityLogType, setActivityLogType] = useState("");
+  const [activityLogComment, setActivityLogComment] = useState("");
+  const [includeInCopyAsNew, setIncludeInCopyAsNew] = useState(false);
+  const [showActivityLog, setShowActivityLog] = useState(true);
+  const [activityHistory, setActivityHistory] = useState([
+    {
+      type: "Estimate",
+      user: "Admin User",
+      date: "10/22/2025 07:19 AM",
+      details: "Estimate status set to 'Sent to Customer'. Emailed to JonathanAtkinson@thenewtronggroup.com."
+    },
+    {
+      type: "Estimate",
+      user: "Admin User",
+      date: "10/22/2025 07:19 AM",
+      details: "Estimate status set to 'Sent to AR'. Email was sent to TammyPatt@jmtest.com"
+    },
+    {
+      type: "Estimate",
+      user: "Admin User",
+      date: "10/22/2025 07:19 AM",
+      details: "Estimate status set to 'Awaiting Estimate'. Email was sent to tomcovers@jmtest.com;tracymincin@jmtest.com"
+    },
+    {
+      type: "Other",
+      user: "Admin User",
+      date: "10/22/2025 07:18 AM",
+      details: "C/C Cost updated."
+    },
+    {
+      type: "Other",
+      user: "Admin User",
+      date: "10/22/2025 07:18 AM",
+      details: "CHANGES: * Manufacturer/Model changed from '/' to '3D INSTRUMENTS/-30\"Hg-0-60 PSI' * Mfg Serial changed from '' to '312' * Cust ID changed from '' to '123' * Cust Serial changed from '' to '1234'"
+    },
+    {
+      type: "Other",
+      user: "Admin User",
+      date: "10/22/2025 07:18 AM",
+      details: "Need By Date changed to 10/23/2025"
+    }
+  ]);
+
   // Dynamic tabs based on type selection
   const isESLType = formData.type && (formData.type.startsWith('esl-') || formData.type.startsWith('itl-'));
   
@@ -5100,6 +5144,165 @@ const FormVariationsDemo = () => {
     </div>
   );
 
+  // Handle add activity log
+  const handleAddActivityLog = () => {
+    if (!activityLogType || !activityLogComment.trim()) {
+      toast({
+        title: "Missing Information",
+        description: "Please select a type and enter a comment.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    const newActivity = {
+      type: activityLogType,
+      user: "Admin User", // In real app, this would be current user
+      date: new Date().toLocaleString('en-US', { 
+        month: '2-digit', 
+        day: '2-digit', 
+        year: 'numeric', 
+        hour: '2-digit', 
+        minute: '2-digit',
+        hour12: true 
+      }),
+      details: activityLogComment
+    };
+
+    setActivityHistory([newActivity, ...activityHistory]);
+    setActivityLogComment("");
+    setActivityLogType("");
+    setIncludeInCopyAsNew(false);
+    
+    toast({
+      title: "Activity Added",
+      description: "Activity log entry has been added successfully."
+    });
+  };
+
+  // Render Activity Log section
+  const renderActivityLog = () => (
+    <div className="mb-24">
+      <Card className="border shadow-sm">
+        <div className="p-4 border-b bg-muted/30">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-accent/20 rounded">
+                <MessageSquare className="h-4 w-4 text-accent" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-base">Activity Log</h3>
+                <p className="text-xs text-muted-foreground">Track all changes and updates</p>
+              </div>
+            </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setShowActivityLog(!showActivityLog)}
+              className="text-muted-foreground hover:text-foreground"
+            >
+              {showActivityLog ? 'Hide' : 'Show'}
+            </Button>
+          </div>
+        </div>
+
+        {showActivityLog && (
+          <CardContent className="p-6 space-y-6">
+            {/* Add New Activity */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+              <div className="lg:col-span-2">
+                <Label className="text-xs font-medium text-muted-foreground mb-2 block">TYPE</Label>
+                <Select value={activityLogType} onValueChange={setActivityLogType}>
+                  <SelectTrigger className="h-9">
+                    <SelectValue placeholder="Select type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Estimate">Estimate</SelectItem>
+                    <SelectItem value="Status Update">Status Update</SelectItem>
+                    <SelectItem value="Lab Work">Lab Work</SelectItem>
+                    <SelectItem value="Customer Contact">Customer Contact</SelectItem>
+                    <SelectItem value="Other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="lg:col-span-10">
+                <Label className="text-xs font-medium text-muted-foreground mb-2 block">COMMENT</Label>
+                <div className="flex gap-2">
+                  <Textarea
+                    placeholder="Enter your comment..."
+                    value={activityLogComment}
+                    onChange={(e) => setActivityLogComment(e.target.value)}
+                    className="min-h-[36px] h-9 resize-none flex-1"
+                  />
+                  <Button 
+                    onClick={handleAddActivityLog}
+                    className="bg-accent hover:bg-accent/90 text-accent-foreground h-9 px-4 whitespace-nowrap"
+                  >
+                    <span className="mr-1">+</span> Add
+                  </Button>
+                </div>
+                <div className="flex items-center gap-2 mt-2">
+                  <Checkbox
+                    id="activityCopyAsNew"
+                    checked={includeInCopyAsNew}
+                    onCheckedChange={(checked) => setIncludeInCopyAsNew(checked as boolean)}
+                  />
+                  <Label htmlFor="activityCopyAsNew" className="text-xs text-muted-foreground cursor-pointer">
+                    Include in Copy as New
+                  </Label>
+                </div>
+              </div>
+            </div>
+
+            {/* Activity History */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <h4 className="font-semibold text-sm">Activity History</h4>
+                <Badge variant="secondary" className="text-xs">
+                  {activityHistory.length}
+                </Badge>
+              </div>
+
+              <div className="border rounded-lg overflow-hidden">
+                <div className="bg-muted/50 grid grid-cols-12 gap-4 px-4 py-2.5 text-xs font-medium text-muted-foreground border-b">
+                  <div className="col-span-2">TYPE</div>
+                  <div className="col-span-2">USER</div>
+                  <div className="col-span-2">DATE</div>
+                  <div className="col-span-6">DETAILS</div>
+                </div>
+
+                <div className="divide-y">
+                  {activityHistory.length > 0 ? (
+                    activityHistory.map((activity, index) => (
+                      <div key={index} className="grid grid-cols-12 gap-4 px-4 py-3 text-sm hover:bg-muted/30 transition-colors">
+                        <div className="col-span-2">
+                          <Badge 
+                            variant={activity.type === "Estimate" ? "default" : "secondary"}
+                            className="text-xs"
+                          >
+                            {activity.type}
+                          </Badge>
+                        </div>
+                        <div className="col-span-2 text-sm">{activity.user}</div>
+                        <div className="col-span-2 text-xs text-muted-foreground">{activity.date}</div>
+                        <div className="col-span-6 text-sm">{activity.details}</div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="px-4 py-8 text-center text-sm text-muted-foreground">
+                      No activity recorded yet
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        )}
+      </Card>
+    </div>
+  );
+
   // Render QF3 Data section
   const renderQF3DataSection = () => (
     <div className="space-y-6">
@@ -6645,6 +6848,9 @@ const FormVariationsDemo = () => {
             </CardContent>
           </Card>
         )}
+
+        {/* Activity Log - shown when type is selected */}
+        {activeSection === 'work-order-items' && formData.type && renderActivityLog()}
 
         {/* Add New Manufacturer Dialog */}
         <Dialog open={showManufacturerDialog} onOpenChange={setShowManufacturerDialog}>
