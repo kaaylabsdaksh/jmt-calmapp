@@ -122,54 +122,54 @@ export const QF3Dialog = ({ open, onOpenChange }: QF3DialogProps) => {
 
         <div className="space-y-6 py-2">
           {/* Equipment Information */}
-          <div className="bg-amber-50 dark:bg-amber-950/20 rounded-lg border border-amber-200 dark:border-amber-800 p-6">
-            <h3 className="text-sm font-semibold mb-6">Equipment Information</h3>
+          <div className="bg-amber-50 dark:bg-amber-950/20 rounded border border-amber-200 dark:border-amber-800 p-3">
+            <h3 className="text-xs font-semibold mb-3">Equipment Information</h3>
             
-            <div className="space-y-5">
+            <div className="space-y-3">
               {/* First Row */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-x-12 gap-y-5">
-                <div className="space-y-1">
-                  <div className="text-xs text-muted-foreground uppercase tracking-wide font-medium">MFG</div>
-                  <div className="text-base font-bold text-foreground">{qf3Data.mfg}</div>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-2">
+                <div>
+                  <div className="text-[10px] text-muted-foreground uppercase tracking-wide font-medium">MFG</div>
+                  <div className="text-sm font-bold text-foreground">{qf3Data.mfg}</div>
                 </div>
-                <div className="space-y-1">
-                  <div className="text-xs text-muted-foreground uppercase tracking-wide font-medium">DATE</div>
-                  <div className="text-base font-bold text-foreground">{qf3Data.date}</div>
+                <div>
+                  <div className="text-[10px] text-muted-foreground uppercase tracking-wide font-medium">DATE</div>
+                  <div className="text-sm font-bold text-foreground">{qf3Data.date}</div>
                 </div>
-                <div className="space-y-1">
-                  <div className="text-xs text-muted-foreground uppercase tracking-wide font-medium">TECH</div>
-                  <div className="text-base font-bold text-foreground">{qf3Data.tech}</div>
+                <div>
+                  <div className="text-[10px] text-muted-foreground uppercase tracking-wide font-medium">TECH</div>
+                  <div className="text-sm font-bold text-foreground">{qf3Data.tech}</div>
                 </div>
-                <div className="space-y-1">
-                  <div className="text-xs text-muted-foreground uppercase tracking-wide font-medium">CODE</div>
-                  <div className="text-base font-bold text-foreground">{qf3Data.code}</div>
+                <div>
+                  <div className="text-[10px] text-muted-foreground uppercase tracking-wide font-medium">CODE</div>
+                  <div className="text-sm font-bold text-foreground">{qf3Data.code}</div>
                 </div>
               </div>
 
               {/* Second Row */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-x-12 gap-y-5">
-                <div className="space-y-1">
-                  <div className="text-xs text-muted-foreground uppercase tracking-wide font-medium">MDL</div>
-                  <div className="text-base font-bold text-foreground">{qf3Data.mdl}</div>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-2">
+                <div>
+                  <div className="text-[10px] text-muted-foreground uppercase tracking-wide font-medium">MDL</div>
+                  <div className="text-sm font-bold text-foreground">{qf3Data.mdl}</div>
                 </div>
-                <div className="space-y-1">
-                  <div className="text-xs text-muted-foreground uppercase tracking-wide font-medium">S/N</div>
-                  <div className="text-base font-bold text-foreground">{qf3Data.sn}</div>
+                <div>
+                  <div className="text-[10px] text-muted-foreground uppercase tracking-wide font-medium">S/N</div>
+                  <div className="text-sm font-bold text-foreground">{qf3Data.sn}</div>
                 </div>
-                <div className="space-y-1">
-                  <div className="text-xs text-muted-foreground uppercase tracking-wide font-medium">W/O #</div>
-                  <div className="text-base font-bold text-foreground">{qf3Data.wo}</div>
+                <div>
+                  <div className="text-[10px] text-muted-foreground uppercase tracking-wide font-medium">W/O #</div>
+                  <div className="text-sm font-bold text-foreground">{qf3Data.wo}</div>
                 </div>
-                <div className="space-y-1">
-                  <div className="text-xs text-muted-foreground uppercase tracking-wide font-medium">ID #</div>
-                  <div className="text-base font-bold text-foreground">{qf3Data.id}</div>
+                <div>
+                  <div className="text-[10px] text-muted-foreground uppercase tracking-wide font-medium">ID #</div>
+                  <div className="text-sm font-bold text-foreground">{qf3Data.id}</div>
                 </div>
               </div>
 
               {/* Description Row */}
-              <div className="pt-2 space-y-1">
-                <div className="text-xs text-muted-foreground uppercase tracking-wide font-medium">DESCRIPTION</div>
-                <div className="text-base font-bold text-foreground">{qf3Data.desc}</div>
+              <div className="pt-1">
+                <div className="text-[10px] text-muted-foreground uppercase tracking-wide font-medium">DESCRIPTION</div>
+                <div className="text-sm font-bold text-foreground">{qf3Data.desc}</div>
               </div>
             </div>
           </div>
