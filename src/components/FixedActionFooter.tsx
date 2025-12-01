@@ -245,10 +245,10 @@ export const FixedActionFooter = ({
             </div>
           ) : (
             // Default Work Order Items Footer
-            <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
+            <div className="flex flex-wrap items-center justify-center gap-1 text-xs">
               
-              {/* Left Actions */}
-              <div className="flex items-center gap-2">
+              {/* All Actions - Center Aligned */}
+              <div className="flex items-center gap-1">
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button size="sm" variant="outline" onClick={handleCopyAsNew}>
@@ -292,10 +292,7 @@ export const FixedActionFooter = ({
                     <p>Print Sticker</p>
                   </TooltipContent>
                 </Tooltip>
-              </div>
-
-              {/* Center Actions */}
-              <div className="flex items-center gap-2">
+                
                 <Card className="flex items-center gap-1 px-2 py-1 bg-card">
                   <Tooltip>
                     <TooltipTrigger asChild>
@@ -363,8 +360,8 @@ export const FixedActionFooter = ({
                 </Tooltip>
               </div>
 
-              {/* Right Actions */}
-              <div className="flex items-center gap-2">
+              {/* Right Actions - Separate Save/Cancel */}
+              <div className="flex items-center gap-1 ml-4">
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button 
