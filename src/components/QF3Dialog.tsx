@@ -60,16 +60,10 @@ export const QF3Dialog = ({ open, onOpenChange }: QF3DialogProps) => {
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
 
-    // Validate vendor information
-    if (!qf3Data.vendorId.trim()) newErrors.vendorId = "Sub ID is required";
-    if (!qf3Data.vendorName.trim()) newErrors.vendorName = "Vendor Name is required";
-    if (!qf3Data.address.trim()) newErrors.address = "Address is required";
-    if (!qf3Data.vendorEmail.trim()) {
-      newErrors.vendorEmail = "Vendor Email is required";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(qf3Data.vendorEmail)) {
+    // Validate email format if provided
+    if (qf3Data.vendorEmail.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(qf3Data.vendorEmail)) {
       newErrors.vendorEmail = "Invalid email format";
     }
-    if (!qf3Data.vendorPhone.trim()) newErrors.vendorPhone = "Vendor Phone is required";
 
     // Validate required dropdowns
     if (!qf3Data.reasonForReturn) newErrors.reasonForReturn = "Reason for Factory Return is required";
@@ -178,100 +172,69 @@ export const QF3Dialog = ({ open, onOpenChange }: QF3DialogProps) => {
           <div className="border rounded p-3">
             <div className="flex items-center justify-between mb-3">
               <h3 className="text-xs font-semibold">Vendor Information</h3>
-              <span className="text-[10px] font-medium text-destructive">* All fields required</span>
             </div>
             
             <div className="grid grid-cols-5 gap-3">
               <div className="space-y-1">
                 <Label className="text-[10px] font-semibold flex items-center gap-1">
-                  Sub ID <span className="text-destructive">*</span>
+                  Sub ID
                 </Label>
                 <Input 
                   value={qf3Data.vendorId}
                   onChange={(e) => handleInputChange('vendorId', e.target.value)}
                   placeholder="Enter Sub ID"
-                  className={`h-8 text-sm ${errors.vendorId ? "border-destructive focus-visible:ring-destructive" : ""}`}
+                  className="h-8 text-sm"
                 />
-                {errors.vendorId && (
-                  <p className="text-[10px] text-destructive flex items-center gap-1">
-                    <AlertCircle className="h-3 w-3" />
-                    {errors.vendorId}
-                  </p>
-                )}
               </div>
               
               <div className="space-y-1">
                 <Label className="text-[10px] font-semibold flex items-center gap-2">
-                  Vendor Name <span className="text-destructive">*</span>
+                  Vendor Name
                   <Button variant="link" className="p-0 h-auto text-[10px] text-primary ml-auto">Find</Button>
                 </Label>
                 <Input 
                   value={qf3Data.vendorName}
                   onChange={(e) => handleInputChange('vendorName', e.target.value)}
                   placeholder="Enter vendor name"
-                  className={`h-8 text-sm ${errors.vendorName ? "border-destructive focus-visible:ring-destructive" : ""}`}
+                  className="h-8 text-sm"
                 />
-                {errors.vendorName && (
-                  <p className="text-[10px] text-destructive flex items-center gap-1">
-                    <AlertCircle className="h-3 w-3" />
-                    {errors.vendorName}
-                  </p>
-                )}
               </div>
               
               <div className="space-y-1">
                 <Label className="text-[10px] font-semibold flex items-center gap-1">
-                  Address <span className="text-destructive">*</span>
+                  Address
                 </Label>
                 <Input 
                   value={qf3Data.address}
                   onChange={(e) => handleInputChange('address', e.target.value)}
                   placeholder="Enter address"
-                  className={`h-8 text-sm ${errors.address ? "border-destructive focus-visible:ring-destructive" : ""}`}
+                  className="h-8 text-sm"
                 />
-                {errors.address && (
-                  <p className="text-[10px] text-destructive flex items-center gap-1">
-                    <AlertCircle className="h-3 w-3" />
-                    {errors.address}
-                  </p>
-                )}
               </div>
               
               <div className="space-y-1">
                 <Label className="text-[10px] font-semibold flex items-center gap-1">
-                  Vendor Email <span className="text-destructive">*</span>
+                  Vendor Email
                 </Label>
                 <Input 
                   type="email"
                   value={qf3Data.vendorEmail}
                   onChange={(e) => handleInputChange('vendorEmail', e.target.value)}
                   placeholder="vendor@example.com"
-                  className={`h-8 text-sm ${errors.vendorEmail ? "border-destructive focus-visible:ring-destructive" : ""}`}
+                  className="h-8 text-sm"
                 />
-                {errors.vendorEmail && (
-                  <p className="text-[10px] text-destructive flex items-center gap-1">
-                    <AlertCircle className="h-3 w-3" />
-                    {errors.vendorEmail}
-                  </p>
-                )}
               </div>
               
               <div className="space-y-1">
                 <Label className="text-[10px] font-semibold flex items-center gap-1">
-                  Vendor Phone <span className="text-destructive">*</span>
+                  Vendor Phone
                 </Label>
                 <Input 
                   value={qf3Data.vendorPhone}
                   onChange={(e) => handleInputChange('vendorPhone', e.target.value)}
                   placeholder="(123) 456-7890"
-                  className={`h-8 text-sm ${errors.vendorPhone ? "border-destructive focus-visible:ring-destructive" : ""}`}
+                  className="h-8 text-sm"
                 />
-                {errors.vendorPhone && (
-                  <p className="text-[10px] text-destructive flex items-center gap-1">
-                    <AlertCircle className="h-3 w-3" />
-                    {errors.vendorPhone}
-                  </p>
-                )}
               </div>
             </div>
           </div>
