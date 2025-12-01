@@ -113,8 +113,8 @@ export const QF3Dialog = ({ open, onOpenChange }: QF3DialogProps) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader className="pb-4">
-          <DialogTitle className="text-xl font-semibold">QF3 Factory Return Form</DialogTitle>
+        <DialogHeader className="space-y-3 pb-4 border-b">
+          <DialogTitle className="text-2xl font-bold">QF3 Factory Return Form</DialogTitle>
           <p className="text-sm text-muted-foreground">
             Complete all required fields to submit equipment for factory return service
           </p>
@@ -122,111 +122,123 @@ export const QF3Dialog = ({ open, onOpenChange }: QF3DialogProps) => {
 
         <div className="space-y-6 py-2">
           {/* Equipment Information */}
-          <div className="bg-primary/5 border-l-4 border-primary p-4 rounded">
-            <h3 className="text-sm font-semibold mb-3 text-primary">Equipment Information</h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-3 text-sm">
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-muted-foreground w-16">MFG:</span>
-                <span className="font-medium">{qf3Data.mfg}</span>
+          <Card className="border-2 border-primary/20 bg-gradient-to-br from-amber-50 to-amber-100/50 dark:from-amber-950/20 dark:to-amber-900/10">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-base font-semibold flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-primary"></span>
+                Equipment Information
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-3 text-sm">
+                <div className="flex flex-col">
+                  <span className="text-xs text-muted-foreground uppercase tracking-wide">MFG</span>
+                  <span className="font-medium mt-0.5">{qf3Data.mfg}</span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-xs text-muted-foreground uppercase tracking-wide">Date</span>
+                  <span className="font-medium mt-0.5">{qf3Data.date}</span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-xs text-muted-foreground uppercase tracking-wide">Tech</span>
+                  <span className="font-medium mt-0.5">{qf3Data.tech}</span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-xs text-muted-foreground uppercase tracking-wide">Code</span>
+                  <span className="font-medium mt-0.5">{qf3Data.code}</span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-xs text-muted-foreground uppercase tracking-wide">MDL</span>
+                  <span className="font-medium mt-0.5">{qf3Data.mdl}</span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-xs text-muted-foreground uppercase tracking-wide">S/N</span>
+                  <span className="font-medium mt-0.5">{qf3Data.sn}</span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-xs text-muted-foreground uppercase tracking-wide">W/O #</span>
+                  <span className="font-medium mt-0.5">{qf3Data.wo}</span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-xs text-muted-foreground uppercase tracking-wide">ID #</span>
+                  <span className="font-medium mt-0.5">{qf3Data.id}</span>
+                </div>
+                <div className="col-span-2 md:col-span-4 flex flex-col">
+                  <span className="text-xs text-muted-foreground uppercase tracking-wide">Description</span>
+                  <span className="font-medium mt-0.5">{qf3Data.desc}</span>
+                </div>
               </div>
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-muted-foreground w-16">Date:</span>
-                <span className="font-medium">{qf3Data.date}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-muted-foreground w-16">Tech:</span>
-                <span className="font-medium">{qf3Data.tech}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-muted-foreground w-16">Code:</span>
-                <span className="font-medium">{qf3Data.code}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-muted-foreground w-16">MDL:</span>
-                <span className="font-medium">{qf3Data.mdl}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-muted-foreground w-16">S/N:</span>
-                <span className="font-medium">{qf3Data.sn}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-muted-foreground w-16">W/O #:</span>
-                <span className="font-medium">{qf3Data.wo}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-muted-foreground w-16">ID #:</span>
-                <span className="font-medium">{qf3Data.id}</span>
-              </div>
-              <div className="col-span-2 md:col-span-4 flex items-center gap-2">
-                <span className="text-xs text-muted-foreground w-16">Desc:</span>
-                <span className="font-medium">{qf3Data.desc}</span>
-              </div>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
 
           {/* Vendor Information */}
-          <div className="border-l-4 border-primary p-4 rounded bg-background">
-            <h3 className="text-sm font-semibold mb-4 text-primary">
-              Vendor Information <span className="text-xs font-normal text-destructive ml-2">* All fields required</span>
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-              <div className="space-y-1.5">
-                <Label className="text-xs font-medium">
+          <Card className="border-2">
+            <CardHeader className="pb-4">
+              <CardTitle className="text-base font-semibold flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-primary"></span>
+                Vendor Information
+                <span className="ml-2 text-xs font-normal text-destructive">* All fields required</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+              <div className="space-y-2">
+                <Label className="text-sm font-semibold flex items-center gap-1">
                   Sub ID <span className="text-destructive">*</span>
                 </Label>
                 <Input 
                   value={qf3Data.vendorId}
                   onChange={(e) => handleInputChange('vendorId', e.target.value)}
                   placeholder="Enter Sub ID"
-                  className={errors.vendorId ? "border-destructive" : ""}
+                  className={errors.vendorId ? "border-destructive focus-visible:ring-destructive" : ""}
                 />
                 {errors.vendorId && (
-                  <p className="text-xs text-destructive flex items-center gap-1">
+                  <p className="text-xs text-destructive flex items-center gap-1 mt-1">
                     <AlertCircle className="h-3 w-3" />
                     {errors.vendorId}
                   </p>
                 )}
               </div>
               
-              <div className="space-y-1.5">
-                <Label className="text-xs font-medium flex items-center justify-between">
-                  <span>Vendor Name <span className="text-destructive">*</span></span>
-                  <Button variant="link" className="p-0 h-auto text-xs">Find</Button>
+              <div className="space-y-2">
+                <Label className="text-sm font-semibold flex items-center gap-2">
+                  Vendor Name <span className="text-destructive">*</span>
+                  <Button variant="link" className="p-0 h-auto text-xs text-primary ml-auto">Find</Button>
                 </Label>
                 <Input 
                   value={qf3Data.vendorName}
                   onChange={(e) => handleInputChange('vendorName', e.target.value)}
                   placeholder="Enter vendor name"
-                  className={errors.vendorName ? "border-destructive" : ""}
+                  className={errors.vendorName ? "border-destructive focus-visible:ring-destructive" : ""}
                 />
                 {errors.vendorName && (
-                  <p className="text-xs text-destructive flex items-center gap-1">
+                  <p className="text-xs text-destructive flex items-center gap-1 mt-1">
                     <AlertCircle className="h-3 w-3" />
                     {errors.vendorName}
                   </p>
                 )}
               </div>
               
-              <div className="space-y-1.5">
-                <Label className="text-xs font-medium">
+              <div className="space-y-2">
+                <Label className="text-sm font-semibold flex items-center gap-1">
                   Address <span className="text-destructive">*</span>
                 </Label>
                 <Input 
                   value={qf3Data.address}
                   onChange={(e) => handleInputChange('address', e.target.value)}
                   placeholder="Enter address"
-                  className={errors.address ? "border-destructive" : ""}
+                  className={errors.address ? "border-destructive focus-visible:ring-destructive" : ""}
                 />
                 {errors.address && (
-                  <p className="text-xs text-destructive flex items-center gap-1">
+                  <p className="text-xs text-destructive flex items-center gap-1 mt-1">
                     <AlertCircle className="h-3 w-3" />
                     {errors.address}
                   </p>
                 )}
               </div>
               
-              <div className="space-y-1.5">
-                <Label className="text-xs font-medium">
+              <div className="space-y-2">
+                <Label className="text-sm font-semibold flex items-center gap-1">
                   Vendor Email <span className="text-destructive">*</span>
                 </Label>
                 <Input 
@@ -234,52 +246,57 @@ export const QF3Dialog = ({ open, onOpenChange }: QF3DialogProps) => {
                   value={qf3Data.vendorEmail}
                   onChange={(e) => handleInputChange('vendorEmail', e.target.value)}
                   placeholder="vendor@example.com"
-                  className={errors.vendorEmail ? "border-destructive" : ""}
+                  className={errors.vendorEmail ? "border-destructive focus-visible:ring-destructive" : ""}
                 />
                 {errors.vendorEmail && (
-                  <p className="text-xs text-destructive flex items-center gap-1">
+                  <p className="text-xs text-destructive flex items-center gap-1 mt-1">
                     <AlertCircle className="h-3 w-3" />
                     {errors.vendorEmail}
                   </p>
                 )}
               </div>
               
-              <div className="space-y-1.5">
-                <Label className="text-xs font-medium">
+              <div className="space-y-2">
+                <Label className="text-sm font-semibold flex items-center gap-1">
                   Vendor Phone <span className="text-destructive">*</span>
                 </Label>
                 <Input 
                   value={qf3Data.vendorPhone}
                   onChange={(e) => handleInputChange('vendorPhone', e.target.value)}
                   placeholder="(123) 456-7890"
-                  className={errors.vendorPhone ? "border-destructive" : ""}
+                  className={errors.vendorPhone ? "border-destructive focus-visible:ring-destructive" : ""}
                 />
                 {errors.vendorPhone && (
-                  <p className="text-xs text-destructive flex items-center gap-1">
+                  <p className="text-xs text-destructive flex items-center gap-1 mt-1">
                     <AlertCircle className="h-3 w-3" />
                     {errors.vendorPhone}
                   </p>
                 )}
               </div>
             </div>
-          </div>
+          </CardContent>
+        </Card>
 
           {/* Return Details */}
-          <div className="border-l-4 border-primary p-4 rounded bg-background">
-            <h3 className="text-sm font-semibold mb-4 text-primary">
-              Return Details <span className="text-xs font-normal text-destructive ml-2">* All fields required</span>
-            </h3>
-            <div className="space-y-4">
+          <Card className="border-2">
+            <CardHeader className="pb-4">
+              <CardTitle className="text-base font-semibold flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-primary"></span>
+                Return Details
+                <span className="ml-2 text-xs font-normal text-destructive">* All fields required</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-5">
               {/* Reason for Factory Return */}
-              <div className="space-y-1.5">
-                <Label className="text-xs font-medium">
+              <div className="space-y-2">
+                <Label className="text-sm font-semibold flex items-center gap-1">
                   Reason for Factory Return <span className="text-destructive">*</span>
                 </Label>
                 <Select 
                   value={qf3Data.reasonForReturn} 
                   onValueChange={(value) => handleInputChange('reasonForReturn', value)}
                 >
-                  <SelectTrigger className={errors.reasonForReturn ? "border-destructive" : ""}>
+                  <SelectTrigger className={errors.reasonForReturn ? "border-destructive focus-visible:ring-destructive" : ""}>
                     <SelectValue placeholder="Select reason for return" />
                   </SelectTrigger>
                   <SelectContent>
@@ -290,7 +307,7 @@ export const QF3Dialog = ({ open, onOpenChange }: QF3DialogProps) => {
                   </SelectContent>
                 </Select>
                 {errors.reasonForReturn && (
-                  <p className="text-xs text-destructive flex items-center gap-1">
+                  <p className="text-xs text-destructive flex items-center gap-1 mt-1">
                     <AlertCircle className="h-3 w-3" />
                     {errors.reasonForReturn}
                   </p>
@@ -298,15 +315,15 @@ export const QF3Dialog = ({ open, onOpenChange }: QF3DialogProps) => {
               </div>
 
               {/* Vendor to Perform */}
-              <div className="space-y-1.5">
-                <Label className="text-xs font-medium">
+              <div className="space-y-2">
+                <Label className="text-sm font-semibold flex items-center gap-1">
                   Vendor to Perform <span className="text-destructive">*</span>
                 </Label>
                 <Select 
                   value={qf3Data.vendorToPerform} 
                   onValueChange={(value) => handleInputChange('vendorToPerform', value)}
                 >
-                  <SelectTrigger className={errors.vendorToPerform ? "border-destructive" : ""}>
+                  <SelectTrigger className={errors.vendorToPerform ? "border-destructive focus-visible:ring-destructive" : ""}>
                     <SelectValue placeholder="Select service type" />
                   </SelectTrigger>
                   <SelectContent>
@@ -317,7 +334,7 @@ export const QF3Dialog = ({ open, onOpenChange }: QF3DialogProps) => {
                   </SelectContent>
                 </Select>
                 {errors.vendorToPerform && (
-                  <p className="text-xs text-destructive flex items-center gap-1">
+                  <p className="text-xs text-destructive flex items-center gap-1 mt-1">
                     <AlertCircle className="h-3 w-3" />
                     {errors.vendorToPerform}
                   </p>
@@ -325,144 +342,151 @@ export const QF3Dialog = ({ open, onOpenChange }: QF3DialogProps) => {
               </div>
 
               {/* Describe Malfunctions */}
-              <div className="space-y-1.5">
-                <Label className="text-xs font-medium">
+              <div className="space-y-2">
+                <Label className="text-sm font-semibold flex items-center gap-1">
                   Describe Malfunctions or Special Instructions <span className="text-destructive">*</span>
                 </Label>
                 <Textarea
                   value={qf3Data.malfunctionDescription}
                   onChange={(e) => handleInputChange('malfunctionDescription', e.target.value)}
                   placeholder="Provide detailed description of malfunctions or any special instructions for the vendor..."
-                  className={`min-h-[100px] ${errors.malfunctionDescription ? "border-destructive" : ""}`}
+                  className={`min-h-[120px] ${errors.malfunctionDescription ? "border-destructive focus-visible:ring-destructive" : ""}`}
                 />
                 {errors.malfunctionDescription && (
-                  <p className="text-xs text-destructive flex items-center gap-1">
+                  <p className="text-xs text-destructive flex items-center gap-1 mt-1">
                     <AlertCircle className="h-3 w-3" />
                     {errors.malfunctionDescription}
                   </p>
                 )}
               </div>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
 
           {/* Management Section */}
-          <div className="bg-accent/10 border-l-4 border-accent p-4 rounded">
-            <h3 className="text-sm font-semibold mb-4 text-accent-foreground">
-              Management Use Only - Customer Charges
-            </h3>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="space-y-4">
-                <div className="space-y-1.5">
-                  <Label className="text-xs font-medium text-muted-foreground">
-                    JM Parts Total
-                  </Label>
-                  <Input 
-                    value={qf3Data.jmPartsTotal}
-                    readOnly
-                    className="bg-muted/50"
-                  />
-                </div>
-                
-                <div className="space-y-1.5">
-                  <Label className="text-xs font-medium">
-                    Special Pricing <span className="text-destructive">*</span>
-                  </Label>
-                  <Select 
-                    value={qf3Data.specialPricing} 
-                    onValueChange={(value) => handleInputChange('specialPricing', value)}
-                  >
-                    <SelectTrigger className={errors.specialPricing ? "border-destructive" : ""}>
-                      <SelectValue placeholder="Select pricing option" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="standard">Standard</SelectItem>
-                      <SelectItem value="discount">Discount</SelectItem>
-                      <SelectItem value="premium">Premium</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  {errors.specialPricing && (
-                    <p className="text-xs text-destructive flex items-center gap-1">
-                      <AlertCircle className="h-3 w-3" />
-                      {errors.specialPricing}
-                    </p>
-                  )}
+          <Card className="border-2 border-orange-500/30 bg-gradient-to-br from-orange-50 to-amber-50 dark:from-orange-950/20 dark:to-amber-900/10">
+            <CardHeader className="pb-4 bg-orange-100/50 dark:bg-orange-900/20 border-b-2 border-orange-200">
+              <CardTitle className="text-sm font-bold text-center text-orange-900 dark:text-orange-100 uppercase tracking-wide">
+                Management Use Only - Customer Charges
+              </CardTitle>
+              <p className="text-xs text-center text-muted-foreground mt-1">
+                Management approval required for all pricing decisions
+              </p>
+            </CardHeader>
+            <CardContent className="pt-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div className="space-y-5">
+                  <div className="space-y-2">
+                    <Label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                      JM Parts Total
+                    </Label>
+                    <Input 
+                      value={qf3Data.jmPartsTotal}
+                      readOnly
+                      className="bg-muted/50 font-mono text-base font-semibold"
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label className="text-sm font-semibold flex items-center gap-1">
+                      Special Pricing <span className="text-destructive">*</span>
+                    </Label>
+                    <Select 
+                      value={qf3Data.specialPricing} 
+                      onValueChange={(value) => handleInputChange('specialPricing', value)}
+                    >
+                      <SelectTrigger className={errors.specialPricing ? "border-destructive focus-visible:ring-destructive" : ""}>
+                        <SelectValue placeholder="Select pricing option" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="standard">Standard Pricing</SelectItem>
+                        <SelectItem value="discount">Discounted Rate</SelectItem>
+                        <SelectItem value="premium">Premium Service</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    {errors.specialPricing && (
+                      <p className="text-xs text-destructive flex items-center gap-1 mt-1">
+                        <AlertCircle className="h-3 w-3" />
+                        {errors.specialPricing}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="flex items-center space-x-3 p-3 rounded-lg bg-background/50 border">
+                    <Checkbox 
+                      id="allSectionsComplete"
+                      checked={qf3Data.allSectionsComplete}
+                      onCheckedChange={(checked) => handleInputChange('allSectionsComplete', checked as boolean)}
+                    />
+                    <Label htmlFor="allSectionsComplete" className="text-sm font-semibold cursor-pointer">
+                      All Sections Complete
+                    </Label>
+                  </div>
                 </div>
 
-                <div className="flex items-center space-x-2 pt-2">
-                  <Checkbox 
-                    id="allSectionsComplete"
-                    checked={qf3Data.allSectionsComplete}
-                    onCheckedChange={(checked) => handleInputChange('allSectionsComplete', checked as boolean)}
-                  />
-                  <Label htmlFor="allSectionsComplete" className="text-xs font-medium cursor-pointer">
-                    All Sections Complete
-                  </Label>
+                <div className="space-y-5">
+                  <div className="space-y-2">
+                    <Label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                      JM Labor Total
+                    </Label>
+                    <Input 
+                      value={qf3Data.jmLaborTotal}
+                      readOnly
+                      className="bg-muted/50 font-mono text-base font-semibold"
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label className="text-sm font-semibold flex items-center gap-1">
+                      Readings Attached <span className="text-destructive">*</span>
+                    </Label>
+                    <Select 
+                      value={qf3Data.readingsAttached} 
+                      onValueChange={(value) => handleInputChange('readingsAttached', value)}
+                    >
+                      <SelectTrigger className={errors.readingsAttached ? "border-destructive focus-visible:ring-destructive" : ""}>
+                        <SelectValue placeholder="Select option" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="yes">Yes - Readings Attached</SelectItem>
+                        <SelectItem value="no">No - No Readings</SelectItem>
+                        <SelectItem value="not_applicable">Not Applicable</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    {errors.readingsAttached && (
+                      <p className="text-xs text-destructive flex items-center gap-1 mt-1">
+                        <AlertCircle className="h-3 w-3" />
+                        {errors.readingsAttached}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="flex items-center space-x-3 p-3 rounded-lg bg-background/50 border">
+                    <Checkbox 
+                      id="labTechMgrApproved"
+                      checked={qf3Data.labTechMgrApproved}
+                      onCheckedChange={(checked) => handleInputChange('labTechMgrApproved', checked as boolean)}
+                    />
+                    <Label htmlFor="labTechMgrApproved" className="text-sm font-semibold cursor-pointer">
+                      Lab/Tech Manager Approved
+                    </Label>
+                  </div>
                 </div>
               </div>
-
-              <div className="space-y-4">
-                <div className="space-y-1.5">
-                  <Label className="text-xs font-medium text-muted-foreground">
-                    JM Labor Total
-                  </Label>
-                  <Input 
-                    value={qf3Data.jmLaborTotal}
-                    readOnly
-                    className="bg-muted/50"
-                  />
-                </div>
-                
-                <div className="space-y-1.5">
-                  <Label className="text-xs font-medium">
-                    Readings Attached <span className="text-destructive">*</span>
-                  </Label>
-                  <Select 
-                    value={qf3Data.readingsAttached} 
-                    onValueChange={(value) => handleInputChange('readingsAttached', value)}
-                  >
-                    <SelectTrigger className={errors.readingsAttached ? "border-destructive" : ""}>
-                      <SelectValue placeholder="Select option" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="yes">Yes</SelectItem>
-                      <SelectItem value="no">No</SelectItem>
-                      <SelectItem value="not_applicable">Not Applicable</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  {errors.readingsAttached && (
-                    <p className="text-xs text-destructive flex items-center gap-1">
-                      <AlertCircle className="h-3 w-3" />
-                      {errors.readingsAttached}
-                    </p>
-                  )}
-                </div>
-
-                <div className="flex items-center space-x-2 pt-2">
-                  <Checkbox 
-                    id="labTechMgrApproved"
-                    checked={qf3Data.labTechMgrApproved}
-                    onCheckedChange={(checked) => handleInputChange('labTechMgrApproved', checked as boolean)}
-                  />
-                  <Label htmlFor="labTechMgrApproved" className="text-xs font-medium cursor-pointer">
-                    Lab/Tech Manager Approved
-                  </Label>
-                </div>
-              </div>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
 
           {/* Action Buttons */}
-          <div className="flex justify-between items-center pt-4 border-t">
+          <div className="flex justify-between items-center pt-6 border-t-2">
             <div className="flex gap-2">
-              <Button variant="outline" onClick={handleClose}>
+              <Button variant="outline" size="lg" onClick={handleClose}>
                 Close
               </Button>
-              <Button variant="outline" onClick={() => console.log("Cancel QF3")}>
+              <Button variant="destructive" size="lg" onClick={() => console.log("Cancel QF3")}>
                 Cancel QF3
               </Button>
             </div>
-            <Button onClick={handleSubmit}>
-              Save
+            <Button size="lg" onClick={handleSubmit} className="min-w-32">
+              Save QF3 Data
             </Button>
           </div>
         </div>
