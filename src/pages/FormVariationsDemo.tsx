@@ -23,6 +23,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { FixedActionFooter } from "@/components/FixedActionFooter";
 import { EstimateDetails } from "@/components/EstimateDetails";
 import { QF3Dialog } from "@/components/QF3Dialog";
+import { WorkOrderItemComments } from "@/components/WorkOrderItemComments";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import { Toaster } from "@/components/ui/toaster";
@@ -5096,67 +5097,7 @@ const FormVariationsDemo = () => {
 
   // Render comments section
   const renderCommentsSection = () => (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-3">
-          <List className="h-5 w-5 text-primary" />
-          Comments
-        </CardTitle>
-        <CardDescription>Factory communication and documentation</CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 items-end">
-          <div className="space-y-1">
-            <Label htmlFor="commentType" className="text-xs">Type</Label>
-            <Select value={formData.commentType} onValueChange={(value) => handleInputChange("commentType", value)}>
-              <SelectTrigger className="h-9">
-                <SelectValue placeholder="Type" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="general">General</SelectItem>
-                <SelectItem value="technical">Technical</SelectItem>
-                <SelectItem value="quality">Quality</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="lg:col-span-2 space-y-1">
-            <Label htmlFor="comment" className="text-xs">Comment</Label>
-            <Textarea
-              id="comment"
-              value={formData.comment}
-              onChange={(e) => handleInputChange("comment", e.target.value)}
-              placeholder="Enter comment..."
-              className="h-9 resize-none"
-            />
-          </div>
-
-          <div className="space-y-1">
-            <div className="flex items-center space-x-2 mb-1">
-              <Checkbox
-                id="includeInCopyAsNew"
-                checked={formData.includeInCopyAsNew}
-                onCheckedChange={(checked) => handleInputChange("includeInCopyAsNew", checked)}
-              />
-              <Label htmlFor="includeInCopyAsNew" className="text-xs">Copy Forward</Label>
-            </div>
-            <Button size="sm" className="w-full h-9">Add</Button>
-          </div>
-        </div>
-
-        <div className="border rounded-lg overflow-hidden">
-          <div className="bg-muted grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 p-2 text-xs font-medium">
-            <div>Type</div>
-            <div>User</div>
-            <div className="hidden sm:block">Date</div>
-            <div>Comment</div>
-          </div>
-          <div className="p-6 text-center text-muted-foreground text-sm">
-            No comments added
-          </div>
-        </div>
-      </CardContent>
-    </Card>
+    <WorkOrderItemComments workOrderItemId={formData.workOrderNumber} />
   );
 
   // Render Work Order Items section
