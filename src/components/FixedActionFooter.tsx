@@ -245,10 +245,10 @@ export const FixedActionFooter = ({
             </div>
           ) : (
             // Default Work Order Items Footer
-            <div className="flex flex-wrap items-center justify-center gap-1 text-xs">
+            <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
               
-              {/* All Actions - Center Aligned */}
-              <div className="flex items-center gap-1">
+              {/* Center Actions */}
+              <div className="flex items-center gap-1 mx-auto">
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button size="sm" variant="outline" onClick={handleCopyAsNew}>
@@ -360,8 +360,8 @@ export const FixedActionFooter = ({
                 </Tooltip>
               </div>
 
-              {/* Right Actions - Separate Save/Cancel */}
-              <div className="flex items-center gap-1 ml-4">
+              {/* Right Actions */}
+              <div className="flex items-center gap-2">
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button 
