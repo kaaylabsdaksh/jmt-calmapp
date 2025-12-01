@@ -5272,70 +5272,6 @@ const FormVariationsDemo = () => {
                 </Badge>
               </div>
 
-              {/* Quick Search Filters */}
-              {activityHistory.length > 0 && (
-                <div className="bg-muted/20 border border-border rounded-lg p-3">
-                  <div className="flex items-center gap-3">
-                    <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground shrink-0">
-                      Quick Search:
-                    </span>
-                    
-                    <div className="flex items-center gap-2 flex-1 flex-wrap">
-                      <Select value={filterActivityType} onValueChange={setFilterActivityType}>
-                        <SelectTrigger className="h-8 w-[140px] bg-background text-xs">
-                          <SelectValue placeholder="All Types" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="all">All Types</SelectItem>
-                          {uniqueActivityTypes.map(type => (
-                            <SelectItem key={type} value={type}>{type}</SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-
-                      <Select value={filterActivityUser} onValueChange={setFilterActivityUser}>
-                        <SelectTrigger className="h-8 w-[140px] bg-background text-xs">
-                          <SelectValue placeholder="All Users" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="all">All Users</SelectItem>
-                          {uniqueActivityUsers.map(user => (
-                            <SelectItem key={user} value={user}>{user}</SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-
-                      <Select value={filterActivityDate} onValueChange={setFilterActivityDate}>
-                        <SelectTrigger className="h-8 w-[140px] bg-background text-xs">
-                          <SelectValue placeholder="All Dates" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="all">All Dates</SelectItem>
-                          {uniqueActivityDates.map(date => (
-                            <SelectItem key={date} value={date}>{date}</SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-
-                      {(filterActivityType !== "all" || filterActivityUser !== "all" || filterActivityDate !== "all") && (
-                        <Button 
-                          variant="ghost" 
-                          size="sm" 
-                          onClick={() => {
-                            setFilterActivityType("all");
-                            setFilterActivityUser("all");
-                            setFilterActivityDate("all");
-                          }}
-                          className="h-8 text-xs px-3"
-                        >
-                          Clear Filters
-                        </Button>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              )}
-
               <div className="border rounded-lg overflow-hidden">
                 <div className="bg-muted/50 grid grid-cols-12 gap-4 px-4 py-2.5 text-xs font-medium text-muted-foreground border-b">
                   <div className="col-span-2">TYPE</div>
@@ -5343,6 +5279,69 @@ const FormVariationsDemo = () => {
                   <div className="col-span-2">DATE</div>
                   <div className="col-span-6">DETAILS</div>
                 </div>
+
+                {/* Quick Search Filters Row */}
+                {activityHistory.length > 0 && (
+                  <div className="bg-background border-b border-border">
+                    <div className="grid grid-cols-12 gap-4 px-4 py-3">
+                      <div className="col-span-2">
+                        <Select value={filterActivityType} onValueChange={setFilterActivityType}>
+                          <SelectTrigger className="h-8 bg-background text-xs border-border">
+                            <SelectValue placeholder="All Types" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-popover z-50">
+                            <SelectItem value="all">All Types</SelectItem>
+                            {uniqueActivityTypes.map(type => (
+                              <SelectItem key={type} value={type}>{type}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="col-span-2">
+                        <Select value={filterActivityUser} onValueChange={setFilterActivityUser}>
+                          <SelectTrigger className="h-8 bg-background text-xs border-border">
+                            <SelectValue placeholder="All Users" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-popover z-50">
+                            <SelectItem value="all">All Users</SelectItem>
+                            {uniqueActivityUsers.map(user => (
+                              <SelectItem key={user} value={user}>{user}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="col-span-2">
+                        <Select value={filterActivityDate} onValueChange={setFilterActivityDate}>
+                          <SelectTrigger className="h-8 bg-background text-xs border-border">
+                            <SelectValue placeholder="All Dates" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-popover z-50">
+                            <SelectItem value="all">All Dates</SelectItem>
+                            {uniqueActivityDates.map(date => (
+                              <SelectItem key={date} value={date}>{date}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="col-span-6 flex items-center">
+                        {(filterActivityType !== "all" || filterActivityUser !== "all" || filterActivityDate !== "all") && (
+                          <Button 
+                            variant="ghost" 
+                            size="sm" 
+                            onClick={() => {
+                              setFilterActivityType("all");
+                              setFilterActivityUser("all");
+                              setFilterActivityDate("all");
+                            }}
+                            className="h-8 text-xs px-3"
+                          >
+                            Clear Filters
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                )}
 
                 <div className="divide-y">
                   {filteredActivityHistory.length > 0 ? (
