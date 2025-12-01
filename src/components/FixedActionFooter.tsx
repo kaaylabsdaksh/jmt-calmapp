@@ -5,6 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
+import { Card } from '@/components/ui/card';
 import { X, Save, Copy, Printer, Tag, QrCode, ArrowLeft, FileText, Package, Mail, Send, CheckCircle, XCircle, Clock, Pause, User, Shield } from 'lucide-react';
 
 interface FixedActionFooterProps {
@@ -295,12 +296,12 @@ export const FixedActionFooter = ({
 
               {/* Center Actions */}
               <div className="flex items-center gap-2">
-                <div className="flex items-center gap-1">
+                <Card className="flex items-center gap-1 px-2 py-1 bg-card">
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <div>
                         <Select value={numTags} onValueChange={setNumTags}>
-                          <SelectTrigger className="w-12 h-7 text-xs">
+                          <SelectTrigger className="w-12 h-7 text-xs border-0 bg-transparent">
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent>
@@ -318,7 +319,7 @@ export const FixedActionFooter = ({
                   
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <Button size="sm" variant="outline" onClick={handlePrintTags}>
+                      <Button size="sm" variant="ghost" onClick={handlePrintTags} className="h-7">
                         Tags
                       </Button>
                     </TooltipTrigger>
@@ -326,7 +327,7 @@ export const FixedActionFooter = ({
                       <p>Print Tags</p>
                     </TooltipContent>
                   </Tooltip>
-                </div>
+                </Card>
                 
                 <Tooltip>
                   <TooltipTrigger asChild>
