@@ -5224,8 +5224,8 @@ const FormVariationsDemo = () => {
         <div className="p-4 border-b bg-muted/30">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-accent/20 rounded">
-                <Activity className="h-4 w-4 text-accent" />
+              <div className="p-2 bg-primary/10 rounded">
+                <Activity className="h-5 w-5 text-primary" />
               </div>
               <div>
                 <h3 className="font-semibold text-base">Activity Log</h3>
