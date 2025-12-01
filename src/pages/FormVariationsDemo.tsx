@@ -5197,7 +5197,7 @@ const FormVariationsDemo = () => {
 
   // Render Activity Log section
   const renderActivityLog = () => (
-    <div className="mb-24">
+    <div className="mt-8 mb-24">
       <Card className="border shadow-sm">
         <div className="p-4 border-b bg-muted/30">
           <div className="flex items-center justify-between">
