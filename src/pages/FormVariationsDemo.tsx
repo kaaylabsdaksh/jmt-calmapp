@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -558,7 +559,10 @@ const FormVariationsDemo = () => {
   const [includeInCopyAsNew, setIncludeInCopyAsNew] = useState(false);
   const [filterActivityType, setFilterActivityType] = useState("all");
   const [filterActivityUser, setFilterActivityUser] = useState("all");
-  const [filterActivityDate, setFilterActivityDate] = useState("all");
+  const [dateRange, setDateRange] = useState<{ from: Date | undefined; to: Date | undefined }>({
+    from: undefined,
+    to: undefined,
+  });
   const [showActivityLog, setShowActivityLog] = useState(true);
   const [activityHistory, setActivityHistory] = useState([
     {
@@ -5179,12 +5183,37 @@ const FormVariationsDemo = () => {
   // Get unique values for filters and filtered activity history
   const uniqueActivityTypes = Array.from(new Set(activityHistory.map(a => a.type)));
   const uniqueActivityUsers = Array.from(new Set(activityHistory.map(a => a.user)));
-  const uniqueActivityDates = Array.from(new Set(activityHistory.map(a => a.date)));
 
   const filteredActivityHistory = activityHistory.filter(activity => {
     const typeMatch = filterActivityType === "all" || activity.type === filterActivityType;
     const userMatch = filterActivityUser === "all" || activity.user === filterActivityUser;
-    const dateMatch = filterActivityDate === "all" || activity.date === filterActivityDate;
+    
+    // Date range filter
+    let dateMatch = true;
+    if (dateRange.from || dateRange.to) {
+      // Parse the activity date string (format: "MM/DD/YYYY, HH:MM AM/PM")
+      const activityDateStr = activity.date.split(',')[0]; // Get just the date part
+      const [month, day, year] = activityDateStr.split('/').map(Number);
+      const activityDate = new Date(year, month - 1, day);
+      activityDate.setHours(0, 0, 0, 0); // Reset time for comparison
+      
+      if (dateRange.from && dateRange.to) {
+        const fromDate = new Date(dateRange.from);
+        fromDate.setHours(0, 0, 0, 0);
+        const toDate = new Date(dateRange.to);
+        toDate.setHours(23, 59, 59, 999);
+        dateMatch = activityDate >= fromDate && activityDate <= toDate;
+      } else if (dateRange.from) {
+        const fromDate = new Date(dateRange.from);
+        fromDate.setHours(0, 0, 0, 0);
+        dateMatch = activityDate >= fromDate;
+      } else if (dateRange.to) {
+        const toDate = new Date(dateRange.to);
+        toDate.setHours(23, 59, 59, 999);
+        dateMatch = activityDate <= toDate;
+      }
+    }
+    
     return typeMatch && userMatch && dateMatch;
   });
 
@@ -5311,27 +5340,49 @@ const FormVariationsDemo = () => {
                         </Select>
                       </div>
                       <div className="col-span-2">
-                        <Select value={filterActivityDate} onValueChange={setFilterActivityDate}>
-                          <SelectTrigger className="h-8 bg-background text-xs border-border">
-                            <SelectValue placeholder="All Dates" />
-                          </SelectTrigger>
-                          <SelectContent className="bg-popover z-50">
-                            <SelectItem value="all">All Dates</SelectItem>
-                            {uniqueActivityDates.map(date => (
-                              <SelectItem key={date} value={date}>{date}</SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <Button
+                              variant="outline"
+                              className={cn(
+                                "h-8 w-full justify-start text-left font-normal text-xs border-border",
+                                !dateRange.from && !dateRange.to && "text-muted-foreground"
+                              )}
+                            >
+                              <CalendarIcon className="mr-2 h-3 w-3" />
+                              {dateRange.from ? (
+                                dateRange.to ? (
+                                  <>
+                                    {format(dateRange.from, "MM/dd/yy")} - {format(dateRange.to, "MM/dd/yy")}
+                                  </>
+                                ) : (
+                                  format(dateRange.from, "MM/dd/yy")
+                                )
+                              ) : (
+                                <span>All Dates</span>
+                              )}
+                            </Button>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-auto p-0 bg-popover z-50" align="start">
+                            <Calendar
+                              mode="range"
+                              selected={{ from: dateRange.from, to: dateRange.to }}
+                              onSelect={(range) => setDateRange({ from: range?.from, to: range?.to })}
+                              numberOfMonths={2}
+                              className={cn("p-3 pointer-events-auto")}
+                            />
+                          </PopoverContent>
+                        </Popover>
                       </div>
                       <div className="col-span-6 flex items-center">
-                        {(filterActivityType !== "all" || filterActivityUser !== "all" || filterActivityDate !== "all") && (
+                        {(filterActivityType !== "all" || filterActivityUser !== "all" || dateRange.from || dateRange.to) && (
                           <Button 
                             variant="ghost" 
                             size="sm" 
                             onClick={() => {
                               setFilterActivityType("all");
                               setFilterActivityUser("all");
-                              setFilterActivityDate("all");
+                              setDateRange({ from: undefined, to: undefined });
                             }}
                             className="h-8 text-xs px-3"
                           >
