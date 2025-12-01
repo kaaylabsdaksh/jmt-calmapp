@@ -3,10 +3,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { Card } from '@/components/ui/card';
-import { X, Save, Copy, Printer, Tag, QrCode, ArrowLeft, FileText, Package, Mail, Send, CheckCircle, XCircle, Clock, Pause, User, Shield } from 'lucide-react';
+import { X, Save, Copy, Printer, Tag, QrCode, ArrowLeft, FileText, Package, Mail, Send, CheckCircle, XCircle, Clock, Pause, User, Shield, MoreHorizontal, StickyNote, Tags as TagsIcon } from 'lucide-react';
 
 interface FixedActionFooterProps {
   onCancel: () => void;
@@ -260,104 +261,99 @@ export const FixedActionFooter = ({
                   </TooltipContent>
                 </Tooltip>
                 
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button size="sm" variant="outline" onClick={handlePrintWO}>
-                      <Printer className="h-3 w-3" />
+                {/* Print Actions Dropdown */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button size="sm" variant="outline">
+                      <Printer className="h-3 w-3 mr-1" />
+                      Print
                     </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Print Work Order</p>
-                  </TooltipContent>
-                </Tooltip>
-                
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button size="sm" variant="outline" onClick={handleLabel}>
-                      <Tag className="h-3 w-3" />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Print Label</p>
-                  </TooltipContent>
-                </Tooltip>
-                
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button size="sm" variant="outline" onClick={handleSticker}>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="center" className="w-48">
+                    <DropdownMenuLabel>Print Options</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={handlePrintWO}>
+                      <Printer className="h-3 w-3 mr-2" />
+                      Work Order
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={handleLabel}>
+                      <Tag className="h-3 w-3 mr-2" />
+                      Label
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={handleSticker}>
+                      <StickyNote className="h-3 w-3 mr-2" />
                       Sticker
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Print Sticker</p>
-                  </TooltipContent>
-                </Tooltip>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={handlePrintQRSheet}>
+                      <QrCode className="h-3 w-3 mr-2" />
+                      QR Code Sheet
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
                 
+                {/* Tags Card */}
                 <Card className="flex items-center gap-1 px-2 py-1 bg-card">
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <div>
-                        <Select value={numTags} onValueChange={setNumTags}>
-                          <SelectTrigger className="w-12 h-7 text-xs border-0 bg-transparent">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {[1,2,3,4,5].map(num => (
-                              <SelectItem key={num} value={num.toString()}>{num}</SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Number of Tags to Print</p>
-                    </TooltipContent>
-                  </Tooltip>
-                  
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button size="sm" variant="ghost" onClick={handlePrintTags} className="h-7">
-                        Tags
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Print Tags</p>
-                    </TooltipContent>
-                  </Tooltip>
+                  <Select value={numTags} onValueChange={setNumTags}>
+                    <SelectTrigger className="w-12 h-7 text-xs border-0 bg-transparent">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {[1,2,3,4,5].map(num => (
+                        <SelectItem key={num} value={num.toString()}>{num}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <Button size="sm" variant="ghost" onClick={handlePrintTags} className="h-7">
+                    Tags
+                  </Button>
                 </Card>
                 
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button size="sm" variant="outline" onClick={handlePrintQRSheet}>
-                      <QrCode className="h-3 w-3" />
+                {/* Move Actions Dropdown */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button size="sm" variant="outline">
+                      <Package className="h-3 w-3 mr-1" />
+                      Move
                     </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Print QR Code Sheet</p>
-                  </TooltipContent>
-                </Tooltip>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="center" className="w-56">
+                    <DropdownMenuLabel>Move Item To</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={handleMoveToNewWO}>
+                      <FileText className="h-3 w-3 mr-2" />
+                      New Work Order
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={handleMoveToExistingWO}>
+                      <Package className="h-3 w-3 mr-2" />
+                      Existing Work Order
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
                 
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button size="sm" variant="outline" onClick={handleMoveToNewWO}>
-                      <FileText className="h-3 w-3" />
+                {/* More Actions Dropdown - For additional CTAs */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button size="sm" variant="outline">
+                      <MoreHorizontal className="h-3 w-3" />
                     </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Move to New Work Order</p>
-                  </TooltipContent>
-                </Tooltip>
-                
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button size="sm" variant="outline" onClick={handleMoveToExistingWO}>
-                      <Package className="h-3 w-3" />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Move to Existing Work Order</p>
-                  </TooltipContent>
-                </Tooltip>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="center" className="w-48">
+                    <DropdownMenuLabel>More Actions</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={handleCancelled}>
+                      <XCircle className="h-3 w-3 mr-2" />
+                      Mark as Cancelled
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Mail className="h-3 w-3 mr-2" />
+                      Email Customer
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Clock className="h-3 w-3 mr-2" />
+                      View History
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
 
               {/* Right Actions */}
