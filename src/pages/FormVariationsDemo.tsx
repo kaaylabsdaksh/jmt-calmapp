@@ -7115,7 +7115,7 @@ const FormVariationsDemo = () => {
                       <Label className="text-sm font-medium">Item(s)</Label>
                       <button
                         type="button"
-                        className="text-xs font-medium text-amber-500 hover:text-amber-600 transition-colors disabled:opacity-50"
+                        className="text-xs font-medium text-primary hover:text-primary/80 transition-colors disabled:opacity-50"
                         onClick={() => {
                           const items = ["001", "002", "003", "004", "005"];
                           if (externalFilesSelectedItems.length === items.length) {
@@ -7145,7 +7145,7 @@ const FormVariationsDemo = () => {
                             className={cn(
                               "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border bg-background",
                               isSelected 
-                                ? "border-amber-400 text-amber-500" 
+                                ? "border-primary text-primary" 
                                 : "border-muted-foreground/30 text-muted-foreground hover:border-muted-foreground/50"
                             )}
                           >
@@ -7181,7 +7181,7 @@ const FormVariationsDemo = () => {
                             className={cn(
                               "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border bg-background",
                               isSelected 
-                                ? "border-amber-400 text-amber-500" 
+                                ? "border-primary text-primary" 
                                 : "border-muted-foreground/30 text-muted-foreground hover:border-muted-foreground/50"
                             )}
                           >
