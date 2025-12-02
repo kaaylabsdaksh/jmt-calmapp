@@ -7143,10 +7143,10 @@ const FormVariationsDemo = () => {
                             }}
                             disabled={!externalFilesDocType}
                             className={cn(
-                              "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border bg-background",
+                              "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border",
                               isSelected 
-                                ? "border-primary text-foreground" 
-                                : "border-muted-foreground/30 text-muted-foreground hover:border-muted-foreground/50"
+                                ? "border-primary bg-primary/20 text-foreground" 
+                                : "bg-background border-muted-foreground/30 text-muted-foreground hover:border-muted-foreground/50"
                             )}
                           >
                             {isSelected && <Check className="inline-block w-3.5 h-3.5 mr-1.5 -ml-0.5" />}
@@ -7179,10 +7179,10 @@ const FormVariationsDemo = () => {
                             }}
                             disabled={!externalFilesDocType}
                             className={cn(
-                              "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border bg-background",
+                              "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border",
                               isSelected 
-                                ? "border-primary text-foreground" 
-                                : "border-muted-foreground/30 text-muted-foreground hover:border-muted-foreground/50"
+                                ? "border-primary bg-primary/20 text-foreground" 
+                                : "bg-background border-muted-foreground/30 text-muted-foreground hover:border-muted-foreground/50"
                             )}
                           >
                             {isSelected && <Check className="inline-block w-3 h-3 mr-1 -ml-0.5" />}
