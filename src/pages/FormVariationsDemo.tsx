@@ -7145,7 +7145,7 @@ const FormVariationsDemo = () => {
                             className={cn(
                               "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border bg-background",
                               isSelected 
-                                ? "border-primary text-primary" 
+                                ? "border-primary text-foreground" 
                                 : "border-muted-foreground/30 text-muted-foreground hover:border-muted-foreground/50"
                             )}
                           >
@@ -7181,7 +7181,7 @@ const FormVariationsDemo = () => {
                             className={cn(
                               "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border bg-background",
                               isSelected 
-                                ? "border-primary text-primary" 
+                                ? "border-primary text-foreground" 
                                 : "border-muted-foreground/30 text-muted-foreground hover:border-muted-foreground/50"
                             )}
                           >
