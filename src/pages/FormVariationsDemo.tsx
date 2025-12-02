@@ -7115,7 +7115,7 @@ const FormVariationsDemo = () => {
                       <Label className="text-sm font-medium">Item(s)</Label>
                       <button
                         type="button"
-                        className="text-xs font-medium text-primary hover:text-primary/80 transition-colors disabled:opacity-50"
+                        className="text-xs font-medium text-amber-500 hover:text-amber-600 transition-colors disabled:opacity-50"
                         onClick={() => {
                           const items = ["001", "002", "003", "004", "005"];
                           if (externalFilesSelectedItems.length === items.length) {
@@ -7143,10 +7143,10 @@ const FormVariationsDemo = () => {
                             }}
                             disabled={!externalFilesDocType}
                             className={cn(
-                              "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border-2",
+                              "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border bg-background",
                               isSelected 
-                                ? "bg-primary text-primary-foreground border-primary shadow-sm" 
-                                : "bg-background text-foreground border-border hover:border-primary/50 hover:bg-accent"
+                                ? "border-amber-400 text-amber-500" 
+                                : "border-muted-foreground/30 text-muted-foreground hover:border-muted-foreground/50"
                             )}
                           >
                             {isSelected && <Check className="inline-block w-3.5 h-3.5 mr-1.5 -ml-0.5" />}
@@ -7179,10 +7179,10 @@ const FormVariationsDemo = () => {
                             }}
                             disabled={!externalFilesDocType}
                             className={cn(
-                              "px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 border",
+                              "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border bg-background",
                               isSelected 
-                                ? "bg-primary/10 text-primary border-primary/30" 
-                                : "bg-muted/50 text-muted-foreground border-transparent hover:bg-muted hover:text-foreground"
+                                ? "border-amber-400 text-amber-500" 
+                                : "border-muted-foreground/30 text-muted-foreground hover:border-muted-foreground/50"
                             )}
                           >
                             {isSelected && <Check className="inline-block w-3 h-3 mr-1 -ml-0.5" />}
