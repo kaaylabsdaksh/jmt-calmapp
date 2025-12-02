@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
@@ -7068,6 +7069,7 @@ const FormVariationsDemo = () => {
         {activeSection === 'external-files' && (
           <Card className="border-0 shadow-md">
             <CardContent className="p-6">
+              {/* Header */}
               <div className="flex items-center gap-3 pb-4 border-b border-border mb-6">
                 <div className="p-2 bg-primary/10 rounded-lg">
                   <FileText className="h-5 w-5 text-primary" />
@@ -7077,108 +7079,116 @@ const FormVariationsDemo = () => {
                   <p className="text-sm text-muted-foreground">Manage external documents and files</p>
                 </div>
               </div>
-              
-              <div className="space-y-4">
-                {/* Upload Section */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  {/* Doc Type & Items */}
-                  <div className="space-y-3">
-                    <div className="space-y-1.5">
-                      <Label className="text-xs font-medium flex items-center gap-1">
-                        Doc Type <span className="text-destructive">*</span>
-                      </Label>
-                      <Select value={externalFilesDocType} onValueChange={setExternalFilesDocType}>
-                        <SelectTrigger className="h-9 text-sm">
-                          <SelectValue placeholder="Select doc type..." />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {["Certificate", "Report", "Invoice", "Purchase Order", "Calibration Data", "Test Results"].map(type => (
-                            <SelectItem key={type} value={type}>{type}</SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
 
-                    <div className={cn("space-y-1.5", !externalFilesDocType && "opacity-50")}>
-                      <div className="flex items-center justify-between">
-                        <Label className="text-xs font-medium">Item(s)</Label>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-6 text-xs px-2"
-                          onClick={() => {
-                            const items = ["001", "002", "003", "004", "005", "006"];
-                            if (externalFilesSelectedItems.length === items.length) {
-                              setExternalFilesSelectedItems([]);
-                            } else {
-                              setExternalFilesSelectedItems([...items]);
-                            }
-                          }}
-                          disabled={!externalFilesDocType}
-                        >
-                          {externalFilesSelectedItems.length === 6 ? "Deselect All" : "Select All"}
-                        </Button>
-                      </div>
-                      <ScrollArea className="h-28 border rounded-md bg-background p-2">
-                        <div className="space-y-1">
-                          {["001", "002", "003", "004", "005", "006"].map(item => (
-                            <div key={item} className="flex items-center gap-2">
-                              <Checkbox
-                                id={`ef-item-${item}`}
-                                checked={externalFilesSelectedItems.includes(item)}
-                                onCheckedChange={() => {
-                                  setExternalFilesSelectedItems(prev =>
-                                    prev.includes(item) ? prev.filter(i => i !== item) : [...prev, item]
-                                  );
-                                }}
-                                disabled={!externalFilesDocType}
-                              />
-                              <label htmlFor={`ef-item-${item}`} className="text-xs cursor-pointer">
-                                {item}
-                              </label>
-                            </div>
-                          ))}
-                        </div>
-                      </ScrollArea>
-                      <p className="text-[10px] text-muted-foreground">
-                        For Batch level, DO NOT select any items.
-                      </p>
-                    </div>
-                  </div>
+              {/* Validation Message */}
+              {!externalFilesDocType && (
+                <div className="flex items-center gap-2 text-sm text-amber-700 bg-amber-50 border border-amber-200 p-3 rounded-lg mb-6">
+                  <AlertCircle className="h-4 w-4" />
+                  <span>Select a document type to enable file upload options</span>
+                </div>
+              )}
 
-                  {/* Doc Tags */}
-                  <div className={cn("space-y-1.5", !externalFilesDocType && "opacity-50")}>
-                    <Label className="text-xs font-medium">Doc Tag(s)</Label>
-                    <ScrollArea className="h-40 border rounded-md bg-background p-2">
-                      <div className="space-y-1">
-                        {["Customer Approval", "Customer ID List", "Customer Notes", "Emails", "Equipment Submission Form", "Equipment Tag", "Safety Data Sheet", "Work Instructions"].map(tag => (
-                          <div key={tag} className="flex items-center gap-2">
-                            <Checkbox
-                              id={`ef-tag-${tag}`}
-                              checked={externalFilesSelectedTags.includes(tag)}
-                              onCheckedChange={() => {
-                                setExternalFilesSelectedTags(prev =>
-                                  prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
-                                );
-                              }}
-                              disabled={!externalFilesDocType}
-                            />
-                            <label htmlFor={`ef-tag-${tag}`} className="text-xs cursor-pointer">
-                              {tag}
-                            </label>
-                          </div>
+              {/* Main Upload Form */}
+              <div className="grid grid-cols-12 gap-6">
+                {/* Left Column - Doc Type & Items */}
+                <div className="col-span-12 md:col-span-3 space-y-4">
+                  {/* Doc Type */}
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium flex items-center gap-1">
+                      Doc Type <span className="text-destructive">*</span>
+                    </Label>
+                    <Select value={externalFilesDocType} onValueChange={setExternalFilesDocType}>
+                      <SelectTrigger className="h-10">
+                        <SelectValue placeholder="Select type..." />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {["Certificate", "Report", "Invoice", "Purchase Order", "Calibration Data", "Test Results"].map(type => (
+                          <SelectItem key={type} value={type}>{type}</SelectItem>
                         ))}
-                      </div>
-                    </ScrollArea>
+                      </SelectContent>
+                    </Select>
                   </div>
 
-                  {/* File Upload */}
-                  <div className={cn("space-y-1.5", !externalFilesDocType && "opacity-50")}>
-                    <Label className="text-xs font-medium">Upload Files</Label>
+                  {/* Items Selection */}
+                  <div className={cn("space-y-2 transition-opacity", !externalFilesDocType && "opacity-40 pointer-events-none")}>
+                    <div className="flex items-center justify-between">
+                      <Label className="text-sm font-medium">Item(s)</Label>
+                      <Button
+                        variant="link"
+                        size="sm"
+                        className="h-auto p-0 text-xs text-primary"
+                        onClick={() => {
+                          const items = ["001", "002", "003", "004", "005"];
+                          if (externalFilesSelectedItems.length === items.length) {
+                            setExternalFilesSelectedItems([]);
+                          } else {
+                            setExternalFilesSelectedItems([...items]);
+                          }
+                        }}
+                        disabled={!externalFilesDocType}
+                      >
+                        {externalFilesSelectedItems.length === 5 ? "Deselect All" : "Select All"}
+                      </Button>
+                    </div>
+                    <div className="border rounded-lg bg-muted/30 p-3 space-y-2">
+                      {["001", "002", "003", "004", "005"].map(item => (
+                        <div key={item} className="flex items-center gap-2">
+                          <Checkbox
+                            id={`ef-item-${item}`}
+                            checked={externalFilesSelectedItems.includes(item)}
+                            onCheckedChange={() => {
+                              setExternalFilesSelectedItems(prev =>
+                                prev.includes(item) ? prev.filter(i => i !== item) : [...prev, item]
+                              );
+                            }}
+                            disabled={!externalFilesDocType}
+                          />
+                          <label htmlFor={`ef-item-${item}`} className="text-sm cursor-pointer">
+                            {item}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                    <p className="text-xs text-muted-foreground italic">
+                      For Batch level, DO NOT select any items.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Middle Column - Doc Tags */}
+                <div className={cn("col-span-12 md:col-span-4 transition-opacity", !externalFilesDocType && "opacity-40 pointer-events-none")}>
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium">Doc Tag(s)</Label>
+                    <div className="border rounded-lg bg-muted/30 p-3 grid grid-cols-1 gap-2">
+                      {["Customer Approval", "Customer ID List", "Customer Notes", "Emails", "Equipment Submission Form", "Equipment Tag", "Safety Data Sheet", "Work Instructions"].map(tag => (
+                        <div key={tag} className="flex items-center gap-2">
+                          <Checkbox
+                            id={`ef-tag-${tag}`}
+                            checked={externalFilesSelectedTags.includes(tag)}
+                            onCheckedChange={() => {
+                              setExternalFilesSelectedTags(prev =>
+                                prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
+                              );
+                            }}
+                            disabled={!externalFilesDocType}
+                          />
+                          <label htmlFor={`ef-tag-${tag}`} className="text-sm cursor-pointer">
+                            {tag}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right Column - Upload Area */}
+                <div className={cn("col-span-12 md:col-span-5 transition-opacity", !externalFilesDocType && "opacity-40 pointer-events-none")}>
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium">Upload Files</Label>
                     <div
                       className={cn(
-                        "border-2 border-dashed rounded-md h-40 flex flex-col items-center justify-center gap-2 transition-colors",
-                        externalFilesDragging && externalFilesDocType ? "border-primary bg-primary/5" : "border-muted-foreground/25",
+                        "border-2 border-dashed rounded-lg p-8 flex flex-col items-center justify-center gap-3 transition-all min-h-[200px]",
+                        externalFilesDragging && externalFilesDocType ? "border-primary bg-primary/5" : "border-border bg-muted/20 hover:bg-muted/40 hover:border-muted-foreground/50",
                         !externalFilesDocType && "cursor-not-allowed"
                       )}
                       onDragOver={(e) => {
@@ -7202,15 +7212,18 @@ const FormVariationsDemo = () => {
                         setExternalFilesUploaded(prev => [...prev, ...newFiles]);
                       }}
                     >
-                      <Upload className="h-8 w-8 text-muted-foreground" />
-                      <p className="text-xs text-muted-foreground text-center">
-                        Drag file(s) here
-                      </p>
-                      <span className="text-xs text-muted-foreground">or</span>
+                      <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                        <Upload className="h-6 w-6 text-primary" />
+                      </div>
+                      <div className="text-center">
+                        <p className="text-sm text-muted-foreground">
+                          Drag file(s) here
+                        </p>
+                        <span className="text-xs text-muted-foreground">or</span>
+                      </div>
                       <Button
                         variant="outline"
                         size="sm"
-                        className="h-7 text-xs"
                         disabled={!externalFilesDocType}
                         onClick={() => document.getElementById("ef-file-upload")?.click()}
                       >
@@ -7239,67 +7252,82 @@ const FormVariationsDemo = () => {
                     </div>
                   </div>
                 </div>
+              </div>
 
-                {/* Validation Message */}
-                {!externalFilesDocType && (
-                  <div className="flex items-center gap-2 text-xs text-muted-foreground bg-muted/50 p-2 rounded-md">
-                    <AlertCircle className="h-4 w-4" />
-                    <span>Please select a Doc Type to enable file upload</span>
-                  </div>
-                )}
-
-                {/* Files Table */}
-                <div className="border rounded-md">
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr className="bg-muted/50 border-b">
-                        <th className="text-xs font-medium text-left p-2 w-12">Item</th>
-                        <th className="text-xs font-medium text-left p-2">External File</th>
-                        <th className="text-xs font-medium text-left p-2 w-24">Type</th>
-                        <th className="text-xs font-medium text-left p-2">Tag(s)</th>
-                        <th className="text-xs font-medium text-left p-2 w-20">Item(s)</th>
-                        <th className="text-xs font-medium text-left p-2 w-24">Uploaded By</th>
-                        <th className="text-xs font-medium text-left p-2 w-28">Uploaded Date</th>
-                        <th className="text-xs font-medium text-left p-2 w-10"></th>
-                      </tr>
-                    </thead>
-                    <tbody>
+              {/* Uploaded Files Table */}
+              <div className="mt-8">
+                <div className="flex items-center justify-between mb-3">
+                  <h4 className="text-sm font-semibold text-foreground">Uploaded Files</h4>
+                  {externalFilesUploaded.length > 0 && (
+                    <span className="text-xs text-muted-foreground">{externalFilesUploaded.length} file(s)</span>
+                  )}
+                </div>
+                <div className="border rounded-lg overflow-hidden">
+                  <Table>
+                    <TableHeader>
+                      <TableRow className="bg-muted/50">
+                        <TableHead className="text-xs font-medium w-12">#</TableHead>
+                        <TableHead className="text-xs font-medium">External File</TableHead>
+                        <TableHead className="text-xs font-medium w-28">Type</TableHead>
+                        <TableHead className="text-xs font-medium">Tag(s)</TableHead>
+                        <TableHead className="text-xs font-medium w-24">Item(s)</TableHead>
+                        <TableHead className="text-xs font-medium w-28">Uploaded By</TableHead>
+                        <TableHead className="text-xs font-medium w-28">Uploaded Date</TableHead>
+                        <TableHead className="text-xs font-medium w-10"></TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
                       {externalFilesUploaded.length === 0 ? (
-                        <tr>
-                          <td colSpan={8} className="text-center text-xs text-muted-foreground py-8">
-                            <FileText className="h-8 w-8 mx-auto mb-2 text-muted-foreground/50" />
-                            No files uploaded
-                          </td>
-                        </tr>
+                        <TableRow>
+                          <TableCell colSpan={8} className="text-center py-12">
+                            <div className="flex flex-col items-center gap-2">
+                              <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center">
+                                <FileText className="h-6 w-6 text-muted-foreground/50" />
+                              </div>
+                              <p className="text-sm text-muted-foreground">No files uploaded</p>
+                            </div>
+                          </TableCell>
+                        </TableRow>
                       ) : (
                         externalFilesUploaded.map((file, index) => (
-                          <tr key={file.id} className="border-b last:border-0">
-                            <td className="text-xs p-2">{index + 1}</td>
-                            <td className="text-xs p-2 font-medium">{file.name}</td>
-                            <td className="text-xs p-2">{file.type}</td>
-                            <td className="text-xs p-2">
-                              {file.tags.length > 0 ? file.tags.join(", ") : "-"}
-                            </td>
-                            <td className="text-xs p-2">
-                              {file.items.length > 0 ? file.items.join(", ") : "Batch"}
-                            </td>
-                            <td className="text-xs p-2">{file.uploadedBy}</td>
-                            <td className="text-xs p-2">{file.uploadedDate}</td>
-                            <td className="p-2">
+                          <TableRow key={file.id}>
+                            <TableCell className="text-sm font-medium">{index + 1}</TableCell>
+                            <TableCell className="text-sm font-medium text-primary">{file.name}</TableCell>
+                            <TableCell className="text-sm">{file.type}</TableCell>
+                            <TableCell className="text-sm">
+                              {file.tags.length > 0 ? (
+                                <div className="flex flex-wrap gap-1">
+                                  {file.tags.slice(0, 2).map(tag => (
+                                    <span key={tag} className="inline-flex px-2 py-0.5 rounded-full bg-primary/10 text-primary text-xs">
+                                      {tag}
+                                    </span>
+                                  ))}
+                                  {file.tags.length > 2 && (
+                                    <span className="text-xs text-muted-foreground">+{file.tags.length - 2}</span>
+                                  )}
+                                </div>
+                              ) : "-"}
+                            </TableCell>
+                            <TableCell className="text-sm">
+                              {file.items.length > 0 ? file.items.join(", ") : <span className="text-muted-foreground">Batch</span>}
+                            </TableCell>
+                            <TableCell className="text-sm">{file.uploadedBy}</TableCell>
+                            <TableCell className="text-sm">{file.uploadedDate}</TableCell>
+                            <TableCell>
                               <Button
                                 variant="ghost"
-                                size="sm"
-                                className="h-6 w-6 p-0"
+                                size="icon"
+                                className="h-7 w-7 text-muted-foreground hover:text-destructive"
                                 onClick={() => setExternalFilesUploaded(prev => prev.filter(f => f.id !== file.id))}
                               >
-                                <X className="h-3 w-3" />
+                                <X className="h-4 w-4" />
                               </Button>
-                            </td>
-                          </tr>
+                            </TableCell>
+                          </TableRow>
                         ))
                       )}
-                    </tbody>
-                  </table>
+                    </TableBody>
+                  </Table>
                 </div>
               </div>
             </CardContent>
