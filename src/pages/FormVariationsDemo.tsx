@@ -7113,10 +7113,9 @@ const FormVariationsDemo = () => {
                   <div className={cn("space-y-2 transition-opacity", !externalFilesDocType && "opacity-40 pointer-events-none")}>
                     <div className="flex items-center justify-between">
                       <Label className="text-sm font-medium">Item(s)</Label>
-                      <Button
-                        variant="link"
-                        size="sm"
-                        className="h-auto p-0 text-xs text-primary"
+                      <button
+                        type="button"
+                        className="text-sm font-medium text-amber-500 hover:text-amber-600 transition-colors disabled:opacity-50"
                         onClick={() => {
                           const items = ["001", "002", "003", "004", "005"];
                           if (externalFilesSelectedItems.length === items.length) {
@@ -7128,13 +7127,14 @@ const FormVariationsDemo = () => {
                         disabled={!externalFilesDocType}
                       >
                         {externalFilesSelectedItems.length === 5 ? "Deselect All" : "Select All"}
-                      </Button>
+                      </button>
                     </div>
-                    <div className="border rounded-lg bg-muted/30 p-3 space-y-2">
+                    <div className="border rounded-lg bg-background p-4 space-y-4">
                       {["001", "002", "003", "004", "005"].map(item => (
-                        <div key={item} className="flex items-center gap-2">
+                        <div key={item} className="flex items-center gap-3">
                           <Checkbox
                             id={`ef-item-${item}`}
+                            className="h-5 w-5 rounded border-2"
                             checked={externalFilesSelectedItems.includes(item)}
                             onCheckedChange={() => {
                               setExternalFilesSelectedItems(prev =>
@@ -7143,13 +7143,13 @@ const FormVariationsDemo = () => {
                             }}
                             disabled={!externalFilesDocType}
                           />
-                          <label htmlFor={`ef-item-${item}`} className="text-sm cursor-pointer">
+                          <label htmlFor={`ef-item-${item}`} className="text-base cursor-pointer select-none">
                             {item}
                           </label>
                         </div>
                       ))}
                     </div>
-                    <p className="text-xs text-muted-foreground italic">
+                    <p className="text-sm text-muted-foreground italic">
                       For Batch level, DO NOT select any items.
                     </p>
                   </div>
@@ -7159,11 +7159,12 @@ const FormVariationsDemo = () => {
                 <div className={cn("col-span-12 md:col-span-4 transition-opacity", !externalFilesDocType && "opacity-40 pointer-events-none")}>
                   <div className="space-y-2">
                     <Label className="text-sm font-medium">Doc Tag(s)</Label>
-                    <div className="border rounded-lg bg-muted/30 p-3 grid grid-cols-1 gap-2">
+                    <div className="border rounded-lg bg-background p-4 space-y-4">
                       {["Customer Approval", "Customer ID List", "Customer Notes", "Emails", "Equipment Submission Form", "Equipment Tag", "Safety Data Sheet", "Work Instructions"].map(tag => (
-                        <div key={tag} className="flex items-center gap-2">
+                        <div key={tag} className="flex items-center gap-3">
                           <Checkbox
                             id={`ef-tag-${tag}`}
+                            className="h-5 w-5 rounded border-2"
                             checked={externalFilesSelectedTags.includes(tag)}
                             onCheckedChange={() => {
                               setExternalFilesSelectedTags(prev =>
@@ -7172,7 +7173,7 @@ const FormVariationsDemo = () => {
                             }}
                             disabled={!externalFilesDocType}
                           />
-                          <label htmlFor={`ef-tag-${tag}`} className="text-sm cursor-pointer">
+                          <label htmlFor={`ef-tag-${tag}`} className="text-base cursor-pointer select-none">
                             {tag}
                           </label>
                         </div>
