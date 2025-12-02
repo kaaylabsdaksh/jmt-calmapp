@@ -544,9 +544,16 @@ const FormVariationsDemo = () => {
     eslTestCost: "0.00",
     partsCostTotal: "24.00",
     tfCost: "0.00",
-    tech1Hours: "0.00",
-    tech2Hours: "0.00",
-    tech3Hours: "0.00",
+    // Labor Hours (9 fields: 3 techs × 3 cost categories)
+    tech1CcHours: "0.00",
+    tech1RepairHours: "0.00",
+    tech1EslTestHours: "0.00",
+    tech2CcHours: "0.00",
+    tech2RepairHours: "0.00",
+    tech2EslTestHours: "0.00",
+    tech3CcHours: "0.00",
+    tech3RepairHours: "0.00",
+    tech3EslTestHours: "0.00",
     calCertTotal: "0.00",
     repairTotal: "24.00",
     allTotal: "24.00",
@@ -4701,49 +4708,97 @@ const FormVariationsDemo = () => {
 
           {/* Labor Hours Card */}
           <Card>
-            <CardHeader className="pb-4">
+            <CardHeader className="pb-3">
               <CardTitle className="text-base flex items-center gap-2">
                 <User className="h-4 w-4" />
                 Labor Hours
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-3">
-                <div className="flex items-center justify-between gap-4 p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors">
-                  <Label htmlFor="tech1Hours" className="text-sm font-medium">Tech 1 Hours</Label>
-                  <Input
-                    id="tech1Hours"
-                    type="number"
-                    step="0.01"
-                    value={formData.tech1Hours}
-                    onChange={(e) => handleInputChange("tech1Hours", e.target.value)}
-                    className="h-9 w-32"
-                  />
-                </div>
+            <CardContent>
+              {/* Header Row */}
+              <div className="grid grid-cols-4 gap-3 mb-2">
+                <div className="text-xs font-medium text-muted-foreground"></div>
+                <div className="text-xs font-medium text-muted-foreground text-center">C/C Cost</div>
+                <div className="text-xs font-medium text-muted-foreground text-center">Repair Cost</div>
+                <div className="text-xs font-medium text-muted-foreground text-center">ESL Test Cost</div>
+              </div>
+              
+              {/* Tech 1 Row */}
+              <div className="grid grid-cols-4 gap-3 items-center p-2 rounded-lg bg-muted/30 mb-2">
+                <Label className="text-sm font-medium">Tech 1</Label>
+                <Input
+                  type="number"
+                  step="0.01"
+                  value={formData.tech1CcHours}
+                  onChange={(e) => handleInputChange("tech1CcHours", e.target.value)}
+                  className="h-8 text-center"
+                />
+                <Input
+                  type="number"
+                  step="0.01"
+                  value={formData.tech1RepairHours}
+                  onChange={(e) => handleInputChange("tech1RepairHours", e.target.value)}
+                  className="h-8 text-center"
+                />
+                <Input
+                  type="number"
+                  step="0.01"
+                  value={formData.tech1EslTestHours}
+                  onChange={(e) => handleInputChange("tech1EslTestHours", e.target.value)}
+                  className="h-8 text-center"
+                />
+              </div>
 
-                <div className="flex items-center justify-between gap-4 p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors">
-                  <Label htmlFor="tech2Hours" className="text-sm font-medium">Tech 2 Hours</Label>
-                  <Input
-                    id="tech2Hours"
-                    type="number"
-                    step="0.01"
-                    value={formData.tech2Hours}
-                    onChange={(e) => handleInputChange("tech2Hours", e.target.value)}
-                    className="h-9 w-32"
-                  />
-                </div>
+              {/* Tech 2 Row */}
+              <div className="grid grid-cols-4 gap-3 items-center p-2 rounded-lg bg-muted/30 mb-2">
+                <Label className="text-sm font-medium">Tech 2</Label>
+                <Input
+                  type="number"
+                  step="0.01"
+                  value={formData.tech2CcHours}
+                  onChange={(e) => handleInputChange("tech2CcHours", e.target.value)}
+                  className="h-8 text-center"
+                />
+                <Input
+                  type="number"
+                  step="0.01"
+                  value={formData.tech2RepairHours}
+                  onChange={(e) => handleInputChange("tech2RepairHours", e.target.value)}
+                  className="h-8 text-center"
+                />
+                <Input
+                  type="number"
+                  step="0.01"
+                  value={formData.tech2EslTestHours}
+                  onChange={(e) => handleInputChange("tech2EslTestHours", e.target.value)}
+                  className="h-8 text-center"
+                />
+              </div>
 
-                <div className="flex items-center justify-between gap-4 p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors">
-                  <Label htmlFor="tech3Hours" className="text-sm font-medium">Tech 3 Hours</Label>
-                  <Input
-                    id="tech3Hours"
-                    type="number"
-                    step="0.01"
-                    value={formData.tech3Hours}
-                    onChange={(e) => handleInputChange("tech3Hours", e.target.value)}
-                    className="h-9 w-32"
-                  />
-                </div>
+              {/* Tech 3 Row */}
+              <div className="grid grid-cols-4 gap-3 items-center p-2 rounded-lg bg-muted/30">
+                <Label className="text-sm font-medium">Tech 3</Label>
+                <Input
+                  type="number"
+                  step="0.01"
+                  value={formData.tech3CcHours}
+                  onChange={(e) => handleInputChange("tech3CcHours", e.target.value)}
+                  className="h-8 text-center"
+                />
+                <Input
+                  type="number"
+                  step="0.01"
+                  value={formData.tech3RepairHours}
+                  onChange={(e) => handleInputChange("tech3RepairHours", e.target.value)}
+                  className="h-8 text-center"
+                />
+                <Input
+                  type="number"
+                  step="0.01"
+                  value={formData.tech3EslTestHours}
+                  onChange={(e) => handleInputChange("tech3EslTestHours", e.target.value)}
+                  className="h-8 text-center"
+                />
               </div>
             </CardContent>
           </Card>
