@@ -7149,7 +7149,6 @@ const FormVariationsDemo = () => {
                                 : "bg-background border-muted-foreground/30 text-muted-foreground hover:border-muted-foreground/50"
                             )}
                           >
-                            {isSelected && <Check className="inline-block w-3.5 h-3.5 mr-1.5 -ml-0.5" />}
                             {item}
                           </button>
                         );
@@ -7185,7 +7184,6 @@ const FormVariationsDemo = () => {
                                 : "bg-background border-muted-foreground/30 text-muted-foreground hover:border-muted-foreground/50"
                             )}
                           >
-                            {isSelected && <Check className="inline-block w-3 h-3 mr-1 -ml-0.5" />}
                             {tag}
                           </button>
                         );
