@@ -7110,12 +7110,12 @@ const FormVariationsDemo = () => {
                   </div>
 
                   {/* Items Selection */}
-                  <div className={cn("space-y-2 transition-opacity", !externalFilesDocType && "opacity-40 pointer-events-none")}>
+                  <div className={cn("space-y-3 transition-opacity", !externalFilesDocType && "opacity-40 pointer-events-none")}>
                     <div className="flex items-center justify-between">
                       <Label className="text-sm font-medium">Item(s)</Label>
                       <button
                         type="button"
-                        className="text-sm font-medium text-amber-500 hover:text-amber-600 transition-colors disabled:opacity-50"
+                        className="text-xs font-medium text-primary hover:text-primary/80 transition-colors disabled:opacity-50"
                         onClick={() => {
                           const items = ["001", "002", "003", "004", "005"];
                           if (externalFilesSelectedItems.length === items.length) {
@@ -7126,58 +7126,70 @@ const FormVariationsDemo = () => {
                         }}
                         disabled={!externalFilesDocType}
                       >
-                        {externalFilesSelectedItems.length === 5 ? "Deselect All" : "Select All"}
+                        {externalFilesSelectedItems.length === 5 ? "Clear All" : "Select All"}
                       </button>
                     </div>
-                    <div className="border rounded-lg bg-background p-4 space-y-4">
-                      {["001", "002", "003", "004", "005"].map(item => (
-                        <div key={item} className="flex items-center gap-3">
-                          <Checkbox
-                            id={`ef-item-${item}`}
-                            className="h-5 w-5 rounded border-2"
-                            checked={externalFilesSelectedItems.includes(item)}
-                            onCheckedChange={() => {
+                    <div className="flex flex-wrap gap-2">
+                      {["001", "002", "003", "004", "005"].map(item => {
+                        const isSelected = externalFilesSelectedItems.includes(item);
+                        return (
+                          <button
+                            key={item}
+                            type="button"
+                            onClick={() => {
                               setExternalFilesSelectedItems(prev =>
                                 prev.includes(item) ? prev.filter(i => i !== item) : [...prev, item]
                               );
                             }}
                             disabled={!externalFilesDocType}
-                          />
-                          <label htmlFor={`ef-item-${item}`} className="text-base cursor-pointer select-none">
+                            className={cn(
+                              "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border-2",
+                              isSelected 
+                                ? "bg-primary text-primary-foreground border-primary shadow-sm" 
+                                : "bg-background text-foreground border-border hover:border-primary/50 hover:bg-accent"
+                            )}
+                          >
+                            {isSelected && <Check className="inline-block w-3.5 h-3.5 mr-1.5 -ml-0.5" />}
                             {item}
-                          </label>
-                        </div>
-                      ))}
+                          </button>
+                        );
+                      })}
                     </div>
-                    <p className="text-sm text-muted-foreground italic">
-                      For Batch level, DO NOT select any items.
+                    <p className="text-xs text-muted-foreground">
+                      For Batch level, do not select any items.
                     </p>
                   </div>
                 </div>
 
                 {/* Middle Column - Doc Tags */}
                 <div className={cn("col-span-12 md:col-span-4 transition-opacity", !externalFilesDocType && "opacity-40 pointer-events-none")}>
-                  <div className="space-y-2">
+                  <div className="space-y-3">
                     <Label className="text-sm font-medium">Doc Tag(s)</Label>
-                    <div className="border rounded-lg bg-background p-4 space-y-4">
-                      {["Customer Approval", "Customer ID List", "Customer Notes", "Emails", "Equipment Submission Form", "Equipment Tag", "Safety Data Sheet", "Work Instructions"].map(tag => (
-                        <div key={tag} className="flex items-center gap-3">
-                          <Checkbox
-                            id={`ef-tag-${tag}`}
-                            className="h-5 w-5 rounded border-2"
-                            checked={externalFilesSelectedTags.includes(tag)}
-                            onCheckedChange={() => {
+                    <div className="flex flex-wrap gap-2">
+                      {["Customer Approval", "Customer ID List", "Customer Notes", "Emails", "Equipment Submission Form", "Equipment Tag", "Safety Data Sheet"].map(tag => {
+                        const isSelected = externalFilesSelectedTags.includes(tag);
+                        return (
+                          <button
+                            key={tag}
+                            type="button"
+                            onClick={() => {
                               setExternalFilesSelectedTags(prev =>
                                 prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
                               );
                             }}
                             disabled={!externalFilesDocType}
-                          />
-                          <label htmlFor={`ef-tag-${tag}`} className="text-base cursor-pointer select-none">
+                            className={cn(
+                              "px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 border",
+                              isSelected 
+                                ? "bg-primary/10 text-primary border-primary/30" 
+                                : "bg-muted/50 text-muted-foreground border-transparent hover:bg-muted hover:text-foreground"
+                            )}
+                          >
+                            {isSelected && <Check className="inline-block w-3 h-3 mr-1 -ml-0.5" />}
                             {tag}
-                          </label>
-                        </div>
-                      ))}
+                          </button>
+                        );
+                      })}
                     </div>
                   </div>
                 </div>
