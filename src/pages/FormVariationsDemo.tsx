@@ -7115,7 +7115,7 @@ const FormVariationsDemo = () => {
                       <Label className="text-sm font-medium">Item(s)</Label>
                       <button
                         type="button"
-                        className="text-xs font-medium text-primary hover:text-primary/80 transition-colors disabled:opacity-50"
+                        className="text-xs font-medium text-foreground hover:text-foreground/70 transition-colors disabled:opacity-50"
                         onClick={() => {
                           const items = ["001", "002", "003", "004", "005"];
                           if (externalFilesSelectedItems.length === items.length) {
