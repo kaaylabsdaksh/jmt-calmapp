@@ -7346,7 +7346,7 @@ const FormVariationsDemo = () => {
                                 <Button
                                   variant="ghost"
                                   size="icon"
-                                  className="h-7 w-7 text-muted-foreground hover:text-primary"
+                                  className="h-7 w-7 text-muted-foreground hover:text-blue-600 hover:bg-blue-50"
                                   onClick={() => {
                                     setEditingFileId(file.id);
                                     setEditingFileData({
@@ -7361,7 +7361,7 @@ const FormVariationsDemo = () => {
                                 <Button
                                   variant="ghost"
                                   size="icon"
-                                  className="h-7 w-7 text-muted-foreground hover:text-destructive"
+                                  className="h-7 w-7 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
                                   onClick={() => setDeletingFile({ id: file.id, name: file.name })}
                                 >
                                   <X className="h-4 w-4" />
