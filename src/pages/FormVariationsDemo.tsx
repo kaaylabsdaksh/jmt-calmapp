@@ -7163,7 +7163,7 @@ const FormVariationsDemo = () => {
                 {/* Middle Column - Doc Tags */}
                 <div className={cn("col-span-12 md:col-span-4 transition-opacity", !externalFilesDocType && "opacity-40 pointer-events-none")}>
                   <div className="space-y-3">
-                    <Label className="text-sm font-medium">Doc Tag(s)</Label>
+                    <Label className="text-sm font-medium text-foreground">Doc Tag(s)</Label>
                     <div className="flex flex-wrap gap-2">
                       {["Customer Approval", "Customer ID List", "Customer Notes", "Emails", "Equipment Submission Form", "Equipment Tag", "Safety Data Sheet"].map(tag => {
                         const isSelected = externalFilesSelectedTags.includes(tag);
