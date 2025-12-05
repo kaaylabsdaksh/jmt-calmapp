@@ -18,6 +18,7 @@ import { Switch } from "@/components/ui/switch";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Badge } from "@/components/ui/badge";
@@ -212,6 +213,7 @@ const FormVariationsDemo = () => {
     tags: string[];
     items: string[];
   } | null>(null);
+  const [deletingFile, setDeletingFile] = useState<{ id: string; name: string } | null>(null);
 
   const manufacturers = [
     { value: "1m-working-stand", label: "1M WORKING STAND." },
@@ -7351,7 +7353,7 @@ const FormVariationsDemo = () => {
                                   variant="ghost"
                                   size="icon"
                                   className="h-7 w-7 text-muted-foreground hover:text-destructive"
-                                  onClick={() => setExternalFilesUploaded(prev => prev.filter(f => f.id !== file.id))}
+                                  onClick={() => setDeletingFile({ id: file.id, name: file.name })}
                                 >
                                   <X className="h-4 w-4" />
                                 </Button>
@@ -7486,6 +7488,33 @@ const FormVariationsDemo = () => {
                   </DialogFooter>
                 </DialogContent>
               </Dialog>
+
+              {/* Delete Confirmation Dialog */}
+              <AlertDialog open={!!deletingFile} onOpenChange={(open) => !open && setDeletingFile(null)}>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Delete File</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Are you sure you want to delete "{deletingFile?.name}"? This action cannot be undone.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction
+                      className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                      onClick={() => {
+                        if (deletingFile) {
+                          setExternalFilesUploaded(prev => prev.filter(f => f.id !== deletingFile.id));
+                          toast({ title: "File deleted", description: `${deletingFile.name} has been removed.` });
+                          setDeletingFile(null);
+                        }
+                      }}
+                    >
+                      Delete
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </CardContent>
           </Card>
         )}
