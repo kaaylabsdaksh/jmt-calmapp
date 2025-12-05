@@ -7301,7 +7301,7 @@ const FormVariationsDemo = () => {
                         </TableRow>
                       ) : (
                         externalFilesUploaded.map((file, index) => (
-                          <TableRow key={file.id}>
+                          <TableRow key={file.id} className="hover:bg-muted/50 transition-colors duration-200">
                             <TableCell className="text-sm font-medium">{index + 1}</TableCell>
                             <TableCell className="text-sm font-medium text-foreground">{file.name}</TableCell>
                             <TableCell className="text-sm">{file.type}</TableCell>
