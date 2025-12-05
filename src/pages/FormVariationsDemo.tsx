@@ -7309,7 +7309,7 @@ const FormVariationsDemo = () => {
                               {file.tags.length > 0 ? (
                                 <div className="flex flex-wrap gap-1">
                                   {file.tags.slice(0, 2).map(tag => (
-                                    <span key={tag} className="inline-flex px-2 py-0.5 rounded-full bg-primary/10 text-primary text-xs">
+                                    <span key={tag} className="inline-flex px-2 py-0.5 rounded-full bg-muted text-foreground text-xs">
                                       {tag}
                                     </span>
                                   ))}
