@@ -12,7 +12,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, ChevronLeft, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield, Wrench, Activity, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock, ExternalLink, ArrowUp } from "lucide-react";
+import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, ChevronLeft, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield, Wrench, Activity, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock, ExternalLink, ArrowUp, Pencil } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -206,6 +206,12 @@ const FormVariationsDemo = () => {
     uploadedBy: string;
     uploadedDate: string;
   }[]>([]);
+  const [editingFileId, setEditingFileId] = useState<string | null>(null);
+  const [editingFileData, setEditingFileData] = useState<{
+    type: string;
+    tags: string[];
+    items: string[];
+  } | null>(null);
 
   const manufacturers = [
     { value: "1m-working-stand", label: "1M WORKING STAND." },
@@ -7325,14 +7331,31 @@ const FormVariationsDemo = () => {
                             <TableCell className="text-sm">{file.uploadedBy}</TableCell>
                             <TableCell className="text-sm">{file.uploadedDate}</TableCell>
                             <TableCell>
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                className="h-7 w-7 text-muted-foreground hover:text-destructive"
-                                onClick={() => setExternalFilesUploaded(prev => prev.filter(f => f.id !== file.id))}
-                              >
-                                <X className="h-4 w-4" />
-                              </Button>
+                              <div className="flex items-center gap-1">
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  className="h-7 w-7 text-muted-foreground hover:text-primary"
+                                  onClick={() => {
+                                    setEditingFileId(file.id);
+                                    setEditingFileData({
+                                      type: file.type,
+                                      tags: [...file.tags],
+                                      items: [...file.items]
+                                    });
+                                  }}
+                                >
+                                  <Pencil className="h-4 w-4" />
+                                </Button>
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  className="h-7 w-7 text-muted-foreground hover:text-destructive"
+                                  onClick={() => setExternalFilesUploaded(prev => prev.filter(f => f.id !== file.id))}
+                                >
+                                  <X className="h-4 w-4" />
+                                </Button>
+                              </div>
                             </TableCell>
                           </TableRow>
                         ))
@@ -7341,6 +7364,128 @@ const FormVariationsDemo = () => {
                   </Table>
                 </div>
               </div>
+
+              {/* Edit File Dialog */}
+              <Dialog open={!!editingFileId} onOpenChange={(open) => {
+                if (!open) {
+                  setEditingFileId(null);
+                  setEditingFileData(null);
+                }
+              }}>
+                <DialogContent className="sm:max-w-[500px]">
+                  <DialogHeader>
+                    <DialogTitle>Edit File Details</DialogTitle>
+                  </DialogHeader>
+                  <div className="space-y-4 py-4">
+                    <div className="space-y-2">
+                      <Label className="text-sm font-medium">Document Type</Label>
+                      <Select 
+                        value={editingFileData?.type || ''} 
+                        onValueChange={(value) => setEditingFileData(prev => prev ? {...prev, type: value} : null)}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Certificate">Certificate</SelectItem>
+                          <SelectItem value="Quote">Quote</SelectItem>
+                          <SelectItem value="Invoice">Invoice</SelectItem>
+                          <SelectItem value="Report">Report</SelectItem>
+                          <SelectItem value="Other">Other</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-sm font-medium">Tags</Label>
+                      <div className="flex flex-wrap gap-2">
+                        {["Customer Approval", "Customer ID List", "Customer Notes", "Emails", "Equipment Submission Form", "Equipment Tag", "Safety Data Sheet"].map(tag => {
+                          const isSelected = editingFileData?.tags.includes(tag) || false;
+                          return (
+                            <button
+                              key={tag}
+                              type="button"
+                              onClick={() => {
+                                setEditingFileData(prev => {
+                                  if (!prev) return null;
+                                  return {
+                                    ...prev,
+                                    tags: prev.tags.includes(tag) 
+                                      ? prev.tags.filter(t => t !== tag) 
+                                      : [...prev.tags, tag]
+                                  };
+                                });
+                              }}
+                              className={cn(
+                                "px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 border",
+                                isSelected 
+                                  ? "border-primary bg-primary/20 text-foreground" 
+                                  : "bg-background border-muted-foreground/30 text-muted-foreground hover:border-muted-foreground/50"
+                              )}
+                            >
+                              {tag}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-sm font-medium">Items</Label>
+                      <div className="flex flex-wrap gap-2">
+                        {["001", "002", "003", "004", "005"].map(item => {
+                          const isSelected = editingFileData?.items.includes(item) || false;
+                          return (
+                            <button
+                              key={item}
+                              type="button"
+                              onClick={() => {
+                                setEditingFileData(prev => {
+                                  if (!prev) return null;
+                                  return {
+                                    ...prev,
+                                    items: prev.items.includes(item) 
+                                      ? prev.items.filter(i => i !== item) 
+                                      : [...prev.items, item]
+                                  };
+                                });
+                              }}
+                              className={cn(
+                                "px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 border",
+                                isSelected 
+                                  ? "border-primary bg-primary/20 text-foreground" 
+                                  : "bg-background border-muted-foreground/30 text-muted-foreground hover:border-muted-foreground/50"
+                              )}
+                            >
+                              {item}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                  <DialogFooter>
+                    <Button variant="outline" onClick={() => {
+                      setEditingFileId(null);
+                      setEditingFileData(null);
+                    }}>
+                      Cancel
+                    </Button>
+                    <Button onClick={() => {
+                      if (editingFileId && editingFileData) {
+                        setExternalFilesUploaded(prev => prev.map(f => 
+                          f.id === editingFileId 
+                            ? { ...f, type: editingFileData.type, tags: editingFileData.tags, items: editingFileData.items }
+                            : f
+                        ));
+                        setEditingFileId(null);
+                        setEditingFileData(null);
+                        toast({ title: "File updated", description: "File details have been saved." });
+                      }
+                    }}>
+                      Save Changes
+                    </Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
             </CardContent>
           </Card>
         )}
