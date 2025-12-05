@@ -7303,7 +7303,7 @@ const FormVariationsDemo = () => {
                         externalFilesUploaded.map((file, index) => (
                           <TableRow key={file.id}>
                             <TableCell className="text-sm font-medium">{index + 1}</TableCell>
-                            <TableCell className="text-sm font-medium text-primary">{file.name}</TableCell>
+                            <TableCell className="text-sm font-medium text-foreground">{file.name}</TableCell>
                             <TableCell className="text-sm">{file.type}</TableCell>
                             <TableCell className="text-sm">
                               {file.tags.length > 0 ? (
