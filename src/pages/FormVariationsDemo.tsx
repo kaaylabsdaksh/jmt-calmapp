@@ -7102,9 +7102,24 @@ const FormVariationsDemo = () => {
                 <div className="col-span-12 md:col-span-3 space-y-4">
                   {/* Doc Type */}
                   <div className="space-y-2">
-                    <Label className="text-sm font-medium flex items-center gap-1">
-                      Doc Type <span className="text-destructive">*</span>
-                    </Label>
+                    <div className="flex items-center justify-between">
+                      <Label className="text-sm font-medium flex items-center gap-1">
+                        Doc Type <span className="text-destructive">*</span>
+                      </Label>
+                      {externalFilesDocType && (
+                        <button
+                          type="button"
+                          className="text-xs font-medium text-primary hover:text-primary/70 transition-colors"
+                          onClick={() => {
+                            setExternalFilesDocType("");
+                            setExternalFilesSelectedItems([]);
+                            setExternalFilesSelectedTags([]);
+                          }}
+                        >
+                          Start New
+                        </button>
+                      )}
+                    </div>
                     <Select value={externalFilesDocType} onValueChange={setExternalFilesDocType}>
                       <SelectTrigger className="h-10">
                         <SelectValue placeholder="Select type..." />
