@@ -654,6 +654,28 @@ const FormVariationsDemo = () => {
       ];
   
   const [activeTab, setActiveTab] = useState('general');
+
+  // Keyboard navigation for tabs
+  const handleTabKeyDown = (e: React.KeyboardEvent) => {
+    const tabs = firstRowTabs.map(t => t.value);
+    const currentIndex = tabs.indexOf(activeTab);
+    
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      const nextIndex = (currentIndex + 1) % tabs.length;
+      setActiveTab(tabs[nextIndex]);
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      const prevIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+      setActiveTab(tabs[prevIndex]);
+    } else if (e.key === 'Home') {
+      e.preventDefault();
+      setActiveTab(tabs[0]);
+    } else if (e.key === 'End') {
+      e.preventDefault();
+      setActiveTab(tabs[tabs.length - 1]);
+    }
+  };
   
   // Tab status tracking (completed, error, or null for untouched)
   const [tabStatus, setTabStatus] = useState<Record<string, 'completed' | 'error' | null>>({
@@ -5729,10 +5751,13 @@ const FormVariationsDemo = () => {
         <Tabs value={activeTab} onValueChange={setActiveTab}>
         {/* Sticky Tab Navigation - outside CardContent padding */}
         <div className="sticky top-0 z-20 bg-background pt-4 px-6 pb-2 border-b shadow-sm">
-          <TabsList className={cn(
-            "grid h-10 sm:h-11 items-center rounded-md bg-muted p-1 text-muted-foreground w-full gap-1",
-            isESLType ? "grid-cols-4" : "grid-cols-6"
-          )}>
+          <TabsList 
+            className={cn(
+              "grid h-10 sm:h-11 items-center rounded-md bg-muted p-1 text-muted-foreground w-full gap-1",
+              isESLType ? "grid-cols-4" : "grid-cols-6"
+            )}
+            onKeyDown={handleTabKeyDown}
+          >
             {firstRowTabs.map((tab) => {
               const Icon = tab.icon;
               const status = tabStatus[tab.value];
