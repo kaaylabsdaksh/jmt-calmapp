@@ -653,7 +653,6 @@ const FormVariationsDemo = () => {
   const secondRowTabs = isESLType 
     ? [] // No second row for ESL types
     : [
-        { value: 'product-images', label: 'Images', icon: Camera },
         { value: 'cost', label: 'Cost', icon: DollarSign },
         { value: 'factory-config', label: 'Factory', icon: Settings },
         { value: 'transit', label: 'Transit', icon: Truck },
@@ -5821,9 +5820,6 @@ const FormVariationsDemo = () => {
             <>
               {/* SINGLE type tabs */}
 
-              <TabsContent value="product-images" className="mt-0 space-y-6 animate-fade-in">
-                {renderProductImagesSection()}
-              </TabsContent>
 
               <TabsContent value="cost" className="mt-0 space-y-6 animate-fade-in">
                 {renderCostSection()}
@@ -5851,6 +5847,7 @@ const FormVariationsDemo = () => {
 
               <TabsContent value="options" className="mt-0 space-y-6 animate-fade-in">
                 {renderOptionsSection()}
+                {renderProductImagesSection()}
               </TabsContent>
             </>
           )}
