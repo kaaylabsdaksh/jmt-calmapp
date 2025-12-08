@@ -646,16 +646,11 @@ const FormVariationsDemo = () => {
       ]
     : [
         { value: 'general', label: 'General', icon: Info },
-        { value: 'options', label: 'Additional', icon: Settings },
-        { value: 'cost', label: 'Cost', icon: DollarSign }
-      ];
-
-  const secondRowTabs = isESLType 
-    ? [] // No second row for ESL types
-    : [
+        { value: 'cost', label: 'Cost', icon: DollarSign },
         { value: 'factory-config', label: 'Factory', icon: Settings },
         { value: 'transit', label: 'Transit', icon: Truck },
-        { value: 'parts', label: 'Parts', icon: Settings }
+        { value: 'parts', label: 'Parts', icon: Settings },
+        { value: 'options', label: 'Additional', icon: Settings }
       ];
   
   const [activeTab, setActiveTab] = useState('general');
@@ -5734,58 +5729,31 @@ const FormVariationsDemo = () => {
         <Tabs value={activeTab} onValueChange={setActiveTab}>
         {/* Sticky Tab Navigation - outside CardContent padding */}
         <div className="sticky top-0 z-20 bg-background pt-4 px-6 pb-2 border-b shadow-sm">
-          <div className="space-y-2">
           <TabsList className={cn(
-              "grid h-10 sm:h-11 items-center rounded-md bg-muted p-1 text-muted-foreground w-full gap-1",
-              isESLType ? "grid-cols-4" : "grid-cols-3"
-            )}>
-              {firstRowTabs.map((tab) => {
-                const Icon = tab.icon;
-                const status = tabStatus[tab.value];
-                return (
-                  <TabsTrigger 
-                    key={tab.value}
-                    value={tab.value}
-                    className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm relative"
-                  >
-                    <Icon className="h-4 w-4 sm:mr-2" />
-                    <span className="hidden sm:inline">{tab.label}</span>
-                    {status === 'completed' && (
-                      <CheckCircle className="h-3 w-3 ml-1 text-green-600 dark:text-green-500" />
-                    )}
-                    {status === 'error' && (
-                      <AlertCircle className="h-3 w-3 ml-1 text-destructive" />
-                    )}
-                  </TabsTrigger>
-                );
-              })}
-            </TabsList>
-            
-            {!isESLType && secondRowTabs.length > 0 && (
-              <TabsList className="grid grid-cols-5 h-10 sm:h-11 items-center rounded-md bg-muted p-1 text-muted-foreground w-full gap-1">
-                {secondRowTabs.map((tab) => {
-                  const Icon = tab.icon;
-                  const status = tabStatus[tab.value];
-                  return (
-                    <TabsTrigger 
-                      key={tab.value}
-                      value={tab.value}
-                      className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm relative"
-                    >
-                      <Icon className="h-4 w-4 sm:mr-2" />
-                      <span className="hidden sm:inline">{tab.label}</span>
-                      {status === 'completed' && (
-                        <CheckCircle className="h-3 w-3 ml-1 text-green-600 dark:text-green-500" />
-                      )}
-                      {status === 'error' && (
-                        <AlertCircle className="h-3 w-3 ml-1 text-destructive" />
-                      )}
-                    </TabsTrigger>
-                  );
-                })}
-              </TabsList>
-            )}
-          </div>
+            "grid h-10 sm:h-11 items-center rounded-md bg-muted p-1 text-muted-foreground w-full gap-1",
+            isESLType ? "grid-cols-4" : "grid-cols-6"
+          )}>
+            {firstRowTabs.map((tab) => {
+              const Icon = tab.icon;
+              const status = tabStatus[tab.value];
+              return (
+                <TabsTrigger 
+                  key={tab.value}
+                  value={tab.value}
+                  className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-2 sm:px-3 py-2 text-xs sm:text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm relative"
+                >
+                  <Icon className="h-4 w-4 sm:mr-1.5" />
+                  <span className="hidden sm:inline text-xs">{tab.label}</span>
+                  {status === 'completed' && (
+                    <CheckCircle className="h-3 w-3 ml-1 text-green-600 dark:text-green-500" />
+                  )}
+                  {status === 'error' && (
+                    <AlertCircle className="h-3 w-3 ml-1 text-destructive" />
+                  )}
+                </TabsTrigger>
+              );
+            })}
+          </TabsList>
         </div>
 
         {/* Tab Content - scrollable area */}
