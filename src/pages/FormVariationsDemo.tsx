@@ -646,8 +646,6 @@ const FormVariationsDemo = () => {
       ]
     : [
         { value: 'general', label: 'General', icon: Info },
-        { value: 'product', label: 'Product', icon: Package },
-        { value: 'logistics', label: 'Logistics', icon: Truck },
         { value: 'options', label: 'Additional', icon: Settings },
         { value: 'lab', label: 'Lab', icon: Settings }
       ];
@@ -5739,9 +5737,9 @@ const FormVariationsDemo = () => {
         {/* Sticky Tab Navigation - outside CardContent padding */}
         <div className="sticky top-0 z-20 bg-background pt-4 px-6 pb-2 border-b shadow-sm">
           <div className="space-y-2">
-            <TabsList className={cn(
+          <TabsList className={cn(
               "grid h-10 sm:h-11 items-center rounded-md bg-muted p-1 text-muted-foreground w-full gap-1",
-              isESLType ? "grid-cols-4" : "grid-cols-5"
+              isESLType ? "grid-cols-4" : "grid-cols-3"
             )}>
               {firstRowTabs.map((tab) => {
                 const Icon = tab.icon;
@@ -5796,6 +5794,12 @@ const FormVariationsDemo = () => {
         <CardContent className={cn("p-6", isESLType && "pb-24")}>
           <TabsContent value="general" className="mt-0 space-y-6 animate-fade-in">
             {renderGeneralSection()}
+            {!isESLType && (
+              <>
+                {renderProductSection()}
+                {renderLogisticsSection()}
+              </>
+            )}
           </TabsContent>
 
           {isESLType ? (
@@ -5816,13 +5820,6 @@ const FormVariationsDemo = () => {
           ) : (
             <>
               {/* SINGLE type tabs */}
-              <TabsContent value="product" className="mt-0 space-y-6 animate-fade-in">
-                {renderProductSection()}
-              </TabsContent>
-
-              <TabsContent value="logistics" className="mt-0 space-y-6 animate-fade-in">
-                {renderLogisticsSection()}
-              </TabsContent>
 
               <TabsContent value="product-images" className="mt-0 space-y-6 animate-fade-in">
                 {renderProductImagesSection()}
