@@ -647,13 +647,12 @@ const FormVariationsDemo = () => {
     : [
         { value: 'general', label: 'General', icon: Info },
         { value: 'options', label: 'Additional', icon: Settings },
-        { value: 'lab', label: 'Lab', icon: Settings }
+        { value: 'cost', label: 'Cost', icon: DollarSign }
       ];
 
   const secondRowTabs = isESLType 
     ? [] // No second row for ESL types
     : [
-        { value: 'cost', label: 'Cost', icon: DollarSign },
         { value: 'factory-config', label: 'Factory', icon: Settings },
         { value: 'transit', label: 'Transit', icon: Truck },
         { value: 'parts', label: 'Parts', icon: Settings }
@@ -5822,11 +5821,8 @@ const FormVariationsDemo = () => {
 
 
               <TabsContent value="cost" className="mt-0 space-y-6 animate-fade-in">
-                {renderCostSection()}
-              </TabsContent>
-
-              <TabsContent value="lab" className="mt-0 space-y-6 animate-fade-in">
                 {renderLabSection()}
+                {renderCostSection()}
               </TabsContent>
 
               <TabsContent value="factory-config" className="mt-0 space-y-6 animate-fade-in">
