@@ -5682,7 +5682,7 @@ const FormVariationsDemo = () => {
 
   // Render tabbed interface
   const renderTabbedInterface = () => (
-    <div className={cn(isESLType && "mb-24")}>
+    <Tabs value={activeTab} onValueChange={setActiveTab} className={cn(isESLType && "mb-24")}>
       {/* Sticky section containing Type/Report Number and Tabs */}
       <div className="sticky top-[133px] z-40 bg-background shadow-sm">
         {/* Type and Report Number fields */}
@@ -5792,73 +5792,70 @@ const FormVariationsDemo = () => {
 
       {/* Tab Content */}
       {formData.type ? (
-        <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <Card className="border-0 shadow-md rounded-t-none">
-            <CardContent className={cn("p-6", isESLType && "pb-24")}>
-          <TabsContent value="general" className="mt-0 space-y-6 animate-fade-in">
-            {renderGeneralSection()}
-            {!isESLType && (
+        <Card className="border-0 shadow-md rounded-t-none">
+          <CardContent className={cn("p-6", isESLType && "pb-24")}>
+            <TabsContent value="general" className="mt-0 space-y-6 animate-fade-in">
+              {renderGeneralSection()}
+              {!isESLType && (
+                <>
+                  {renderProductSection()}
+                  {renderLogisticsSection()}
+                </>
+              )}
+            </TabsContent>
+
+            {isESLType ? (
               <>
-                {renderProductSection()}
-                {renderLogisticsSection()}
+                {/* ESL-specific tabs */}
+                <TabsContent value="details" className="mt-0 space-y-6 animate-fade-in">
+                  {renderDetailsSection()}
+                </TabsContent>
+
+                <TabsContent value="testing" className="mt-0 space-y-6 animate-fade-in">
+                  {renderTestingSection()}
+                </TabsContent>
+
+                <TabsContent value="work-status" className="mt-0 space-y-6 animate-fade-in">
+                  {renderWorkStatusSection()}
+                </TabsContent>
+              </>
+            ) : (
+              <>
+                {/* SINGLE type tabs */}
+
+                <TabsContent value="cost" className="mt-0 space-y-6 animate-fade-in">
+                  {renderLabSection()}
+                  {renderCostSection()}
+                </TabsContent>
+
+                <TabsContent value="factory-config" className="mt-0 space-y-6 animate-fade-in">
+                  {renderFactoryConfigSection()}
+                </TabsContent>
+
+                <TabsContent value="transit" className="mt-0 space-y-6 animate-fade-in">
+                  {renderTransitSection()}
+                </TabsContent>
+
+                <TabsContent value="accessories" className="mt-0 space-y-6 animate-fade-in">
+                  {renderAccessoriesSection()}
+                </TabsContent>
+
+                <TabsContent value="parts" className="mt-0 space-y-6 animate-fade-in">
+                  {renderPartsSection()}
+                </TabsContent>
+
+                <TabsContent value="options" className="mt-0 space-y-6 animate-fade-in">
+                  {renderOptionsSection()}
+                  {renderProductImagesSection()}
+                </TabsContent>
+
+                <TabsContent value="activity-log" className="mt-0 space-y-6 animate-fade-in">
+                  {renderActivityLog()}
+                </TabsContent>
               </>
             )}
-          </TabsContent>
-
-          {isESLType ? (
-            <>
-              {/* ESL-specific tabs */}
-              <TabsContent value="details" className="mt-0 space-y-6 animate-fade-in">
-                {renderDetailsSection()}
-              </TabsContent>
-
-              <TabsContent value="testing" className="mt-0 space-y-6 animate-fade-in">
-                {renderTestingSection()}
-              </TabsContent>
-
-              <TabsContent value="work-status" className="mt-0 space-y-6 animate-fade-in">
-                {renderWorkStatusSection()}
-              </TabsContent>
-            </>
-          ) : (
-            <>
-              {/* SINGLE type tabs */}
-
-
-              <TabsContent value="cost" className="mt-0 space-y-6 animate-fade-in">
-                {renderLabSection()}
-                {renderCostSection()}
-              </TabsContent>
-
-              <TabsContent value="factory-config" className="mt-0 space-y-6 animate-fade-in">
-                {renderFactoryConfigSection()}
-              </TabsContent>
-
-              <TabsContent value="transit" className="mt-0 space-y-6 animate-fade-in">
-                {renderTransitSection()}
-              </TabsContent>
-
-              <TabsContent value="accessories" className="mt-0 space-y-6 animate-fade-in">
-                {renderAccessoriesSection()}
-              </TabsContent>
-
-              <TabsContent value="parts" className="mt-0 space-y-6 animate-fade-in">
-                {renderPartsSection()}
-              </TabsContent>
-
-              <TabsContent value="options" className="mt-0 space-y-6 animate-fade-in">
-                {renderOptionsSection()}
-                {renderProductImagesSection()}
-              </TabsContent>
-
-              <TabsContent value="activity-log" className="mt-0 space-y-6 animate-fade-in">
-                {renderActivityLog()}
-              </TabsContent>
-            </>
-          )}
-            </CardContent>
-          </Card>
-        </Tabs>
+          </CardContent>
+        </Card>
       ) : (
         <Card className="border-0 shadow-md rounded-t-none">
           <div className="p-12 flex flex-col items-center justify-center text-center space-y-4">
@@ -5874,7 +5871,7 @@ const FormVariationsDemo = () => {
           </div>
         </Card>
       )}
-    </div>
+    </Tabs>
   );
 
   // Render accordion interface
