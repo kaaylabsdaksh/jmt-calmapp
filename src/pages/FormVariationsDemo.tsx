@@ -5683,9 +5683,10 @@ const FormVariationsDemo = () => {
   // Render tabbed interface
   const renderTabbedInterface = () => (
     <div className={cn(isESLType && "mb-24")}>
-      {/* Type and Report Number fields Card */}
-      <Card className="border-0 shadow-md mb-0 rounded-b-none">
-        <div className="p-6">
+      {/* Sticky section containing Type/Report Number and Tabs */}
+      <div className="sticky top-[133px] z-40 bg-background shadow-sm">
+        {/* Type and Report Number fields */}
+        <div className="bg-card px-6 py-4 border-b">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="type" className="text-sm font-medium">Type *</Label>
@@ -5693,7 +5694,7 @@ const FormVariationsDemo = () => {
                 <SelectTrigger className="h-11">
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
-                <SelectContent className="max-h-48 overflow-y-auto">
+                <SelectContent className="max-h-48 overflow-y-auto z-50">
                   <SelectItem value="single">Single</SelectItem>
                   <SelectItem value="esl-blankets">ESL - Blankets</SelectItem>
                   <SelectItem value="esl-coverups">ESL - CoverUps</SelectItem>
@@ -5725,13 +5726,10 @@ const FormVariationsDemo = () => {
             </div>
           </div>
         </div>
-      </Card>
 
-      {/* Tabs - only visible when type is selected */}
-      {formData.type ? (
-        <Tabs value={activeTab} onValueChange={setActiveTab}>
-          {/* Sticky Tab Navigation - OUTSIDE Card for proper sticky behavior */}
-          <div className="sticky top-[73px] z-40 bg-card px-6 py-3 border-b shadow-sm">
+        {/* Tabs - only visible when type is selected */}
+        {formData.type && (
+          <div className="bg-card px-6 py-3 border-b">
             <TabsList 
               className={cn(
                 "grid h-10 sm:h-11 items-center rounded-md bg-muted p-1 text-muted-foreground w-full gap-1",
@@ -5789,8 +5787,12 @@ const FormVariationsDemo = () => {
               </TabsList>
             )}
           </div>
+        )}
+      </div>
 
-          {/* Tab Content Card */}
+      {/* Tab Content */}
+      {formData.type ? (
+        <Tabs value={activeTab} onValueChange={setActiveTab}>
           <Card className="border-0 shadow-md rounded-t-none">
             <CardContent className={cn("p-6", isESLType && "pb-24")}>
           <TabsContent value="general" className="mt-0 space-y-6 animate-fade-in">
@@ -6983,67 +6985,69 @@ const FormVariationsDemo = () => {
             </button>
           </div>
         ) : (
-          <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-3 mb-4 sm:mb-6 overflow-x-auto pb-2">
-            <Button
-              variant="ghost"
-              onClick={() => setActiveSection('work-order-items')}
-              className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all border ${
-                activeSection === 'work-order-items'
-                  ? 'bg-primary text-primary-foreground shadow-sm border-primary'
-                  : 'bg-background text-muted-foreground hover:text-foreground border-border hover:border-border/80'
-              }`}
-            >
-              <Package className="h-4 w-4" />
-              Work Order Items
-            </Button>
-            <Button
-              variant="ghost"
-              onClick={() => setActiveSection('estimate')}
-              className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all border ${
-                activeSection === 'estimate'
-                  ? 'bg-primary text-primary-foreground shadow-sm border-primary'
-                  : 'bg-background text-muted-foreground hover:text-foreground border-border hover:border-border/80'
-              }`}
-            >
-              <Info className="h-4 w-4" />
-              Estimate
-            </Button>
-            <Button
-              variant="ghost"
-              onClick={() => setActiveSection('qf3')}
-              className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all border ${
-                activeSection === 'qf3'
-                  ? 'bg-primary text-primary-foreground shadow-sm border-primary'
-                  : 'bg-background text-muted-foreground hover:text-foreground border-border hover:border-border/80'
-              }`}
-            >
-              <Settings className="h-4 w-4" />
-              QF3
-            </Button>
-            <Button
-              variant="ghost"
-              onClick={() => setActiveSection('external-files')}
-              className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all border ${
-                activeSection === 'external-files'
-                  ? 'bg-primary text-primary-foreground shadow-sm border-primary'
-                  : 'bg-background text-muted-foreground hover:text-foreground border-border hover:border-border/80'
-              }`}
-            >
-              <FileText className="h-4 w-4" />
-              External Files
-            </Button>
-            <Button
-              variant="ghost"
-              onClick={() => setActiveSection('cert-files')}
-              className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all border ${
-                activeSection === 'cert-files'
-                  ? 'bg-primary text-primary-foreground shadow-sm border-primary'
-                  : 'bg-background text-muted-foreground hover:text-foreground border-border hover:border-border/80'
-              }`}
-            >
-              <Shield className="h-4 w-4" />
-              Cert Files
-            </Button>
+          <div className="sticky top-[73px] z-30 bg-background py-3 -mx-3 sm:-mx-4 lg:-mx-6 px-3 sm:px-4 lg:px-6 border-b shadow-sm">
+            <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-3 overflow-x-auto">
+              <Button
+                variant="ghost"
+                onClick={() => setActiveSection('work-order-items')}
+                className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all border ${
+                  activeSection === 'work-order-items'
+                    ? 'bg-primary text-primary-foreground shadow-sm border-primary'
+                    : 'bg-background text-muted-foreground hover:text-foreground border-border hover:border-border/80'
+                }`}
+              >
+                <Package className="h-4 w-4" />
+                Work Order Items
+              </Button>
+              <Button
+                variant="ghost"
+                onClick={() => setActiveSection('estimate')}
+                className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all border ${
+                  activeSection === 'estimate'
+                    ? 'bg-primary text-primary-foreground shadow-sm border-primary'
+                    : 'bg-background text-muted-foreground hover:text-foreground border-border hover:border-border/80'
+                }`}
+              >
+                <Info className="h-4 w-4" />
+                Estimate
+              </Button>
+              <Button
+                variant="ghost"
+                onClick={() => setActiveSection('qf3')}
+                className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all border ${
+                  activeSection === 'qf3'
+                    ? 'bg-primary text-primary-foreground shadow-sm border-primary'
+                    : 'bg-background text-muted-foreground hover:text-foreground border-border hover:border-border/80'
+                }`}
+              >
+                <Settings className="h-4 w-4" />
+                QF3
+              </Button>
+              <Button
+                variant="ghost"
+                onClick={() => setActiveSection('external-files')}
+                className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all border ${
+                  activeSection === 'external-files'
+                    ? 'bg-primary text-primary-foreground shadow-sm border-primary'
+                    : 'bg-background text-muted-foreground hover:text-foreground border-border hover:border-border/80'
+                }`}
+              >
+                <FileText className="h-4 w-4" />
+                External Files
+              </Button>
+              <Button
+                variant="ghost"
+                onClick={() => setActiveSection('cert-files')}
+                className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all border ${
+                  activeSection === 'cert-files'
+                    ? 'bg-primary text-primary-foreground shadow-sm border-primary'
+                    : 'bg-background text-muted-foreground hover:text-foreground border-border hover:border-border/80'
+                }`}
+              >
+                <Shield className="h-4 w-4" />
+                Cert Files
+              </Button>
+            </div>
           </div>
         )}
         
