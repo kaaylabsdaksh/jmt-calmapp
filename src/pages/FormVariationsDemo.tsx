@@ -5682,88 +5682,64 @@ const FormVariationsDemo = () => {
 
   // Render tabbed interface
   const renderTabbedInterface = () => (
-    <Card className={cn("border-0 shadow-md overflow-visible", isESLType && "mb-24")}>
-      {/* Type and Report Number fields - always visible */}
-      <div className="p-6 pb-0">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-          <div className="space-y-2">
-            <Label htmlFor="type" className="text-sm font-medium">Type *</Label>
-            <Select value={formData.type} onValueChange={(value) => handleInputChange("type", value)}>
-              <SelectTrigger className="h-11">
-                <SelectValue placeholder="Select type" />
-              </SelectTrigger>
-              <SelectContent className="max-h-48 overflow-y-auto">
-                <SelectItem value="single">Single</SelectItem>
-                <SelectItem value="esl-blankets">ESL - Blankets</SelectItem>
-                <SelectItem value="esl-coverups">ESL - CoverUps</SelectItem>
-                <SelectItem value="esl-footwear">ESL - Footwear</SelectItem>
-                <SelectItem value="esl-gloves">ESL - Gloves</SelectItem>
-                <SelectItem value="esl-grounds">ESL - Grounds</SelectItem>
-                <SelectItem value="esl-hotsticks">ESL - Hotsticks</SelectItem>
-                <SelectItem value="esl-insulated-tools">ESL - Insulated Tools</SelectItem>
-                <SelectItem value="esl-jumpers">ESL - Jumpers</SelectItem>
-                <SelectItem value="esl-line-hoses">ESL - Line Hoses</SelectItem>
-                <SelectItem value="esl-matting">ESL - Matting</SelectItem>
-                <SelectItem value="esl-roll-blankets">ESL - Roll Blankets</SelectItem>
-                <SelectItem value="esl-sleeves">ESL - Sleeves</SelectItem>
-                <SelectItem value="itl-gauges">ITL - Gauges</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+    <div className={cn(isESLType && "mb-24")}>
+      {/* Type and Report Number fields Card */}
+      <Card className="border-0 shadow-md mb-0 rounded-b-none">
+        <div className="p-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="type" className="text-sm font-medium">Type *</Label>
+              <Select value={formData.type} onValueChange={(value) => handleInputChange("type", value)}>
+                <SelectTrigger className="h-11">
+                  <SelectValue placeholder="Select type" />
+                </SelectTrigger>
+                <SelectContent className="max-h-48 overflow-y-auto">
+                  <SelectItem value="single">Single</SelectItem>
+                  <SelectItem value="esl-blankets">ESL - Blankets</SelectItem>
+                  <SelectItem value="esl-coverups">ESL - CoverUps</SelectItem>
+                  <SelectItem value="esl-footwear">ESL - Footwear</SelectItem>
+                  <SelectItem value="esl-gloves">ESL - Gloves</SelectItem>
+                  <SelectItem value="esl-grounds">ESL - Grounds</SelectItem>
+                  <SelectItem value="esl-hotsticks">ESL - Hotsticks</SelectItem>
+                  <SelectItem value="esl-insulated-tools">ESL - Insulated Tools</SelectItem>
+                  <SelectItem value="esl-jumpers">ESL - Jumpers</SelectItem>
+                  <SelectItem value="esl-line-hoses">ESL - Line Hoses</SelectItem>
+                  <SelectItem value="esl-matting">ESL - Matting</SelectItem>
+                  <SelectItem value="esl-roll-blankets">ESL - Roll Blankets</SelectItem>
+                  <SelectItem value="esl-sleeves">ESL - Sleeves</SelectItem>
+                  <SelectItem value="itl-gauges">ITL - Gauges</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="reportNumber" className="text-sm font-medium">Report Number *</Label>
-            <Input
-              id="reportNumber"
-              value={formData.reportNumber}
-              onChange={(e) => handleInputChange("reportNumber", e.target.value)}
-              placeholder="0152.01-802930-001"
-              className="h-11"
-              readOnly
-            />
+            <div className="space-y-2">
+              <Label htmlFor="reportNumber" className="text-sm font-medium">Report Number *</Label>
+              <Input
+                id="reportNumber"
+                value={formData.reportNumber}
+                onChange={(e) => handleInputChange("reportNumber", e.target.value)}
+                placeholder="0152.01-802930-001"
+                className="h-11"
+                readOnly
+              />
+            </div>
           </div>
         </div>
-      </div>
+      </Card>
 
       {/* Tabs - only visible when type is selected */}
       {formData.type ? (
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-        {/* Sticky Tab Navigation - outside CardContent padding */}
-        <div className="sticky top-[73px] z-40 bg-card pt-4 px-6 pb-2 border-b shadow-sm space-y-2">
-          <TabsList 
-            className={cn(
-              "grid h-10 sm:h-11 items-center rounded-md bg-muted p-1 text-muted-foreground w-full gap-1",
-              isESLType ? "grid-cols-4" : "grid-cols-7"
-            )}
-            onKeyDown={handleTabKeyDown}
-          >
-            {firstRowTabs.map((tab) => {
-              const Icon = tab.icon;
-              const status = tabStatus[tab.value];
-              
-              return (
-                <TabsTrigger 
-                  key={tab.value}
-                  value={tab.value}
-                  className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-2 sm:px-3 py-2 text-xs sm:text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm relative"
-                >
-                  <Icon className="h-4 w-4 sm:mr-1.5" />
-                  <span className="hidden sm:inline text-xs">{tab.label}</span>
-                  {status === 'completed' && (
-                    <CheckCircle className="h-3 w-3 ml-1 text-green-600 dark:text-green-500" />
-                  )}
-                  {status === 'error' && (
-                    <AlertCircle className="h-3 w-3 ml-1 text-destructive" />
-                  )}
-                </TabsTrigger>
-              );
-            })}
-          </TabsList>
-          
-          {/* Second Row - Activity Log */}
-          {secondRowTabs.length > 0 && (
-            <TabsList className="inline-flex h-9 items-center rounded-md bg-muted p-1 text-muted-foreground">
-              {secondRowTabs.map((tab) => {
+          {/* Sticky Tab Navigation - OUTSIDE Card for proper sticky behavior */}
+          <div className="sticky top-[73px] z-40 bg-card px-6 py-3 border-b shadow-sm">
+            <TabsList 
+              className={cn(
+                "grid h-10 sm:h-11 items-center rounded-md bg-muted p-1 text-muted-foreground w-full gap-1",
+                isESLType ? "grid-cols-4" : "grid-cols-7"
+              )}
+              onKeyDown={handleTabKeyDown}
+            >
+              {firstRowTabs.map((tab) => {
                 const Icon = tab.icon;
                 const status = tabStatus[tab.value];
                 
@@ -5771,7 +5747,7 @@ const FormVariationsDemo = () => {
                   <TabsTrigger 
                     key={tab.value}
                     value={tab.value}
-                    className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-xs sm:text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm relative"
+                    className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-2 sm:px-3 py-2 text-xs sm:text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm relative"
                   >
                     <Icon className="h-4 w-4 sm:mr-1.5" />
                     <span className="hidden sm:inline text-xs">{tab.label}</span>
@@ -5785,11 +5761,38 @@ const FormVariationsDemo = () => {
                 );
               })}
             </TabsList>
-          )}
-        </div>
+            
+            {/* Second Row - Activity Log */}
+            {secondRowTabs.length > 0 && (
+              <TabsList className="inline-flex h-9 items-center rounded-md bg-muted p-1 text-muted-foreground mt-2">
+                {secondRowTabs.map((tab) => {
+                  const Icon = tab.icon;
+                  const status = tabStatus[tab.value];
+                  
+                  return (
+                    <TabsTrigger 
+                      key={tab.value}
+                      value={tab.value}
+                      className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-xs sm:text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm relative"
+                    >
+                      <Icon className="h-4 w-4 sm:mr-1.5" />
+                      <span className="hidden sm:inline text-xs">{tab.label}</span>
+                      {status === 'completed' && (
+                        <CheckCircle className="h-3 w-3 ml-1 text-green-600 dark:text-green-500" />
+                      )}
+                      {status === 'error' && (
+                        <AlertCircle className="h-3 w-3 ml-1 text-destructive" />
+                      )}
+                    </TabsTrigger>
+                  );
+                })}
+              </TabsList>
+            )}
+          </div>
 
-        {/* Tab Content - scrollable area */}
-        <CardContent className={cn("p-6", isESLType && "pb-24")}>
+          {/* Tab Content Card */}
+          <Card className="border-0 shadow-md rounded-t-none">
+            <CardContent className={cn("p-6", isESLType && "pb-24")}>
           <TabsContent value="general" className="mt-0 space-y-6 animate-fade-in">
             {renderGeneralSection()}
             {!isESLType && (
@@ -5851,22 +5854,25 @@ const FormVariationsDemo = () => {
               </TabsContent>
             </>
           )}
-        </CardContent>
-      </Tabs>
+            </CardContent>
+          </Card>
+        </Tabs>
       ) : (
-        <div className="p-12 flex flex-col items-center justify-center text-center space-y-4">
-          <div className="rounded-full bg-muted p-4">
-            <Package className="h-8 w-8 text-muted-foreground" />
+        <Card className="border-0 shadow-md rounded-t-none">
+          <div className="p-12 flex flex-col items-center justify-center text-center space-y-4">
+            <div className="rounded-full bg-muted p-4">
+              <Package className="h-8 w-8 text-muted-foreground" />
+            </div>
+            <div className="space-y-2">
+              <h3 className="text-lg font-semibold">Select a Type to Continue</h3>
+              <p className="text-sm text-muted-foreground max-w-md">
+                Please select an item type from the dropdown above to view and fill out the detailed form sections.
+              </p>
+            </div>
           </div>
-          <div className="space-y-2">
-            <h3 className="text-lg font-semibold">Select a Type to Continue</h3>
-            <p className="text-sm text-muted-foreground max-w-md">
-              Please select an item type from the dropdown above to view and fill out the detailed form sections.
-            </p>
-          </div>
-        </div>
+        </Card>
       )}
-    </Card>
+    </div>
   );
 
   // Render accordion interface
