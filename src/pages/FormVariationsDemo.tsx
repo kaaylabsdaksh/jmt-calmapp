@@ -6995,27 +6995,6 @@ const FormVariationsDemo = () => {
             </div>
           </div>
           
-          {/* Variant Toggle */}
-          <div className="flex items-center gap-4">
-            <div className="flex gap-2">
-              <Button
-                variant={layoutVariant === 'default' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setLayoutVariant('default')}
-                className="text-xs"
-              >
-                Default
-              </Button>
-              <Button
-                variant={layoutVariant === 'minimal' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setLayoutVariant('minimal')}
-                className="text-xs"
-              >
-                Minimal
-              </Button>
-            </div>
-          </div>
         </div>
       </header>
 
