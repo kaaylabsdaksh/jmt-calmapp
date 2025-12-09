@@ -761,27 +761,35 @@ const FormVariationsDemo = () => {
 
       const scrollPosition = window.scrollY + window.innerHeight;
       const documentHeight = document.documentElement.scrollHeight;
-      const scrollThreshold = 100; // pixels from bottom to trigger
+      const scrollThreshold = 100;
 
-      // Check if user is near bottom of page
       if (documentHeight - scrollPosition < scrollThreshold) {
         const currentTab = activeTabRef.current;
         const currentTabIndex = tabOrder.indexOf(currentTab);
         const nextTab = tabOrder[currentTabIndex + 1];
         
-        console.log('Auto-scroll debug:', { currentTab, currentTabIndex, nextTab, tabOrder });
-        
         if (nextTab && currentTabIndex !== -1) {
           isScrollingRef.current = true;
-          console.log('Switching from', currentTab, 'to', nextTab);
-          setActiveTab(nextTab);
-          // Smooth scroll to top of the tab content area
+          
+          // Add fade-out effect to current content
+          const contentArea = document.querySelector('[data-tab-content]');
+          if (contentArea) {
+            contentArea.classList.add('opacity-0', 'transition-opacity', 'duration-200');
+          }
+          
           setTimeout(() => {
+            setActiveTab(nextTab);
+            // Smooth scroll to top
             window.scrollTo({ top: 250, behavior: 'smooth' });
+            
+            // Fade content back in
             setTimeout(() => {
+              if (contentArea) {
+                contentArea.classList.remove('opacity-0');
+              }
               isScrollingRef.current = false;
-            }, 800);
-          }, 100);
+            }, 300);
+          }, 200);
         }
       }
     };
@@ -5844,7 +5852,10 @@ const FormVariationsDemo = () => {
       {/* Tab Content */}
       {formData.type ? (
         <Card className="border-0 shadow-md rounded-t-none">
-          <CardContent className={cn("p-6", isESLType && "pb-24")}>
+          <CardContent 
+            data-tab-content 
+            className={cn("p-6 transition-opacity duration-200", isESLType && "pb-24")}
+          >
             <TabsContent value="general" className="mt-0 space-y-6 animate-fade-in">
               {renderGeneralSection()}
               {!isESLType && (
