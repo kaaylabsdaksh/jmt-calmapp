@@ -12,7 +12,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, ChevronLeft, ChevronDown, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield, Wrench, Activity, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock, ExternalLink, ArrowUp, Pencil } from "lucide-react";
+import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, ChevronLeft, ChevronDown, ChevronUp, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield, Wrench, Activity, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock, ExternalLink, ArrowUp, Pencil } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -748,8 +748,9 @@ const FormVariationsDemo = () => {
     activeTabRef.current = activeTab;
   }, [activeTab]);
 
-  // State for next tab indicator
+  // State for tab navigation indicators
   const [nextTabIndicator, setNextTabIndicator] = useState<string | null>(null);
+  const [prevTabIndicator, setPrevTabIndicator] = useState<string | null>(null);
 
   useEffect(() => {
     if (layoutVariant === 'minimal' || !formData.type) return;
@@ -769,20 +770,29 @@ const FormVariationsDemo = () => {
       const scrollPosition = window.scrollY + window.innerHeight;
       const documentHeight = document.documentElement.scrollHeight;
       const scrollThreshold = 100;
-      const indicatorThreshold = 300; // Show indicator earlier
+      const indicatorThreshold = 300;
+      const topThreshold = 280; // Threshold for detecting top of tab content
 
       const currentTab = activeTabRef.current;
       const currentTabIndex = tabOrder.indexOf(currentTab);
       const nextTab = tabOrder[currentTabIndex + 1];
+      const prevTab = tabOrder[currentTabIndex - 1];
 
-      // Show/hide next tab indicator
+      // Show/hide next tab indicator (near bottom)
       if (nextTab && documentHeight - scrollPosition < indicatorThreshold) {
         setNextTabIndicator(tabLabels[nextTab]);
+        setPrevTabIndicator(null);
+      } 
+      // Show/hide previous tab indicator (near top, not on first tab)
+      else if (prevTab && window.scrollY < topThreshold && currentTabIndex > 0) {
+        setPrevTabIndicator(tabLabels[prevTab]);
+        setNextTabIndicator(null);
       } else {
         setNextTabIndicator(null);
+        setPrevTabIndicator(null);
       }
 
-      // Auto-switch tab when at bottom
+      // Auto-switch to next tab when at bottom
       if (documentHeight - scrollPosition < scrollThreshold) {
         if (nextTab && currentTabIndex !== -1) {
           isScrollingRef.current = true;
@@ -805,6 +815,31 @@ const FormVariationsDemo = () => {
             }, 300);
           }, 200);
         }
+      }
+
+      // Auto-switch to previous tab when at top (scrollY near 0)
+      if (window.scrollY < 50 && prevTab && currentTabIndex > 0) {
+        isScrollingRef.current = true;
+        setPrevTabIndicator(null);
+        
+        const contentArea = document.querySelector('[data-tab-content]');
+        if (contentArea) {
+          contentArea.classList.add('opacity-0', 'transition-opacity', 'duration-200');
+        }
+        
+        setTimeout(() => {
+          setActiveTab(prevTab);
+          // Scroll to bottom of previous tab
+          setTimeout(() => {
+            window.scrollTo({ top: document.documentElement.scrollHeight - window.innerHeight - 150, behavior: 'smooth' });
+            setTimeout(() => {
+              if (contentArea) {
+                contentArea.classList.remove('opacity-0');
+              }
+              isScrollingRef.current = false;
+            }, 300);
+          }, 100);
+        }, 200);
       }
     };
 
@@ -7991,6 +8026,16 @@ const FormVariationsDemo = () => {
         >
           <ArrowUp className="h-5 w-5" />
         </Button>
+      )}
+
+      {/* Previous Tab Indicator */}
+      {prevTabIndicator && (
+        <div className="fixed top-36 left-1/2 -translate-x-1/2 z-30 animate-in fade-in slide-in-from-top-2 duration-300">
+          <div className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-full shadow-lg">
+            <ChevronUp className="h-4 w-4 animate-bounce" />
+            <span className="text-sm font-medium">Previous: {prevTabIndicator}</span>
+          </div>
+        </div>
       )}
 
       {/* Next Tab Indicator */}
