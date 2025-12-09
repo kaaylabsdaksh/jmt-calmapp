@@ -5729,7 +5729,7 @@ const FormVariationsDemo = () => {
       {formData.type ? (
         <Tabs value={activeTab} onValueChange={setActiveTab}>
         {/* Sticky Tab Navigation - outside CardContent padding */}
-        <div className="sticky top-0 z-20 bg-background pt-4 px-6 pb-2 border-b shadow-sm space-y-2">
+        <div className="sticky top-0 z-40 bg-card pt-4 px-6 pb-2 border-b shadow-sm space-y-2">
           <TabsList 
             className={cn(
               "grid h-10 sm:h-11 items-center rounded-md bg-muted p-1 text-muted-foreground w-full gap-1",
