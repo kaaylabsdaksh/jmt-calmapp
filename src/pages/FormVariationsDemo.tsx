@@ -650,12 +650,11 @@ const FormVariationsDemo = () => {
         { value: 'factory-config', label: 'Factory', icon: Settings },
         { value: 'transit', label: 'Transit', icon: Truck },
         { value: 'parts', label: 'Parts', icon: Settings },
-        { value: 'options', label: 'Additional', icon: Settings }
+        { value: 'options', label: 'Additional', icon: Settings },
+        { value: 'activity-log', label: 'Activity Log', icon: Activity }
       ];
 
-  const secondRowTabs = isESLType ? [] : [
-    { value: 'activity-log', label: 'Activity Log', icon: Activity }
-  ];
+  const secondRowTabs: { value: string; label: string; icon: React.ComponentType<{ className?: string }> }[] = [];
   
   const [activeTab, setActiveTab] = useState('general');
 
