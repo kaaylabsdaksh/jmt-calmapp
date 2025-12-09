@@ -5376,33 +5376,10 @@ const FormVariationsDemo = () => {
 
   // Render Activity Log section
   const renderActivityLog = () => (
-    <div className="mt-8 mb-24">
+    <div className="mb-24">
       <Card className="border shadow-sm">
-        <div className="p-4 border-b bg-muted/30">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-primary/10 rounded">
-                <Activity className="h-5 w-5 text-primary" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-base">Activity Log</h3>
-                <p className="text-xs text-muted-foreground">Track all changes and updates</p>
-              </div>
-            </div>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setShowActivityLog(!showActivityLog)}
-              className="text-muted-foreground hover:text-foreground"
-            >
-              {showActivityLog ? 'Hide' : 'Show'}
-            </Button>
-          </div>
-        </div>
-
-        {showActivityLog && (
-          <CardContent className="p-6 space-y-6">
-            {/* Add New Activity */}
+        <CardContent className="p-6 space-y-6">
+          {/* Add New Activity */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
               <div className="lg:col-span-2">
                 <Label className="text-xs font-medium text-muted-foreground mb-2 block">TYPE</Label>
@@ -5577,7 +5554,6 @@ const FormVariationsDemo = () => {
               </div>
             </div>
           </CardContent>
-        )}
       </Card>
     </div>
   );
