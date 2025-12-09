@@ -740,37 +740,44 @@ const FormVariationsDemo = () => {
   }, [formData.type]);
 
   // Auto-scroll to next tab when reaching bottom of current tab content
+  const isScrollingRef = useRef(false);
+  const activeTabRef = useRef(activeTab);
+  
+  // Keep ref in sync with state
+  useEffect(() => {
+    activeTabRef.current = activeTab;
+  }, [activeTab]);
+
   useEffect(() => {
     if (layoutVariant === 'minimal' || !formData.type) return;
 
-    // Use the actual firstRowTabs array to get tab order
-    const tabOrder = firstRowTabs.map(tab => tab.value);
-
-    let isScrolling = false;
+    // Define explicit tab order for non-ESL types
+    const tabOrder = isESLType 
+      ? ['general', 'details', 'testing', 'work-status']
+      : ['general', 'cost', 'factory-config', 'transit', 'parts', 'options', 'activity-log'];
 
     const handleAutoTabScroll = () => {
-      if (isScrolling) return;
+      if (isScrollingRef.current) return;
 
       const scrollPosition = window.scrollY + window.innerHeight;
       const documentHeight = document.documentElement.scrollHeight;
-      const scrollThreshold = 150; // pixels from bottom to trigger
+      const scrollThreshold = 100; // pixels from bottom to trigger
 
       // Check if user is near bottom of page
       if (documentHeight - scrollPosition < scrollThreshold) {
-        const currentTabIndex = tabOrder.indexOf(activeTab);
+        const currentTab = activeTabRef.current;
+        const currentTabIndex = tabOrder.indexOf(currentTab);
         const nextTab = tabOrder[currentTabIndex + 1];
         
-        console.log('Auto-scroll debug:', { activeTab, currentTabIndex, nextTab, tabOrder });
-        
         if (nextTab) {
-          isScrolling = true;
+          isScrollingRef.current = true;
           setActiveTab(nextTab);
           // Smooth scroll to top of the tab content area
           setTimeout(() => {
             window.scrollTo({ top: 250, behavior: 'smooth' });
             setTimeout(() => {
-              isScrolling = false;
-            }, 500);
+              isScrollingRef.current = false;
+            }, 800);
           }, 100);
         }
       }
@@ -778,7 +785,7 @@ const FormVariationsDemo = () => {
 
     window.addEventListener('scroll', handleAutoTabScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleAutoTabScroll);
-  }, [layoutVariant, activeTab, formData.type, firstRowTabs]);
+  }, [layoutVariant, formData.type, isESLType]);
 
   // Auto-populate lab code when manufacturer and model are selected
   useEffect(() => {
