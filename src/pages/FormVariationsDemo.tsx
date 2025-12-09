@@ -753,7 +753,8 @@ const FormVariationsDemo = () => {
   const [prevTabIndicator, setPrevTabIndicator] = useState<string | null>(null);
 
   useEffect(() => {
-    if (layoutVariant === 'minimal' || !formData.type) return;
+    // Disable auto-scroll for non-work-order-items sections
+    if (layoutVariant === 'minimal' || !formData.type || activeSection !== 'work-order-items') return;
 
     // Define explicit tab order for non-ESL types
     const tabOrder = isESLType 
@@ -835,7 +836,7 @@ const FormVariationsDemo = () => {
 
     window.addEventListener('scroll', handleAutoTabScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleAutoTabScroll);
-  }, [layoutVariant, formData.type, isESLType]);
+  }, [layoutVariant, formData.type, isESLType, activeSection]);
 
   // Auto-populate lab code when manufacturer and model are selected
   useEffect(() => {
