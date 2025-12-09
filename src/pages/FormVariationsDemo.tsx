@@ -7063,7 +7063,7 @@ const FormVariationsDemo = () => {
             </button>
           </div>
         ) : (
-          <div className="sticky top-0 z-40 bg-background py-3 -mx-3 sm:-mx-4 lg:-mx-6 px-3 sm:px-4 lg:px-6 border-b shadow-sm">
+          <div className="sticky top-0 z-40 bg-background py-3 -mx-3 sm:-mx-4 lg:-mx-6 px-3 sm:px-4 lg:px-6">
             <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-3 overflow-x-auto">
               <Button
                 variant="ghost"
