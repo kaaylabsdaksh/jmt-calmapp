@@ -5728,8 +5728,8 @@ const FormVariationsDemo = () => {
       {/* Tabs - only visible when type is selected */}
       {formData.type ? (
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-        {/* Sticky Tab Navigation - outside CardContent padding */}
-        <div className="sticky top-0 z-20 bg-background pt-4 px-6 pb-2 border-b shadow-sm space-y-2">
+        {/* Sticky Tab Navigation - fixed to viewport top */}
+        <div className="sticky top-16 z-30 bg-card pt-4 px-6 pb-2 border-b shadow-sm space-y-2 -mx-6 md:-mx-6">
           <TabsList 
             className={cn(
               "grid h-10 sm:h-11 items-center rounded-md bg-muted p-1 text-muted-foreground w-full gap-1",
