@@ -778,19 +778,9 @@ const FormVariationsDemo = () => {
       const nextTab = tabOrder[currentTabIndex + 1];
       const prevTab = tabOrder[currentTabIndex - 1];
 
-      // Show/hide next tab indicator (near bottom)
-      if (nextTab && documentHeight - scrollPosition < indicatorThreshold) {
-        setNextTabIndicator(tabLabels[nextTab]);
-        setPrevTabIndicator(null);
-      } 
-      // Show/hide previous tab indicator (near top, not on first tab)
-      else if (prevTab && window.scrollY < topThreshold && currentTabIndex > 0) {
-        setPrevTabIndicator(tabLabels[prevTab]);
-        setNextTabIndicator(null);
-      } else {
-        setNextTabIndicator(null);
-        setPrevTabIndicator(null);
-      }
+      // Indicators disabled - keeping auto-tab switching only
+      setNextTabIndicator(null);
+      setPrevTabIndicator(null);
 
       // Auto-switch to next tab when at bottom
       if (documentHeight - scrollPosition < scrollThreshold) {
