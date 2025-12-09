@@ -211,43 +211,6 @@ export const EstimateDetails = () => {
         </CardContent>
       </Card>
 
-      {/* Action Buttons */}
-      <Card>
-        <CardContent className="p-4">
-          <div className="flex flex-wrap gap-2 justify-center">
-            <Button variant="default" size="sm">
-              Save
-            </Button>
-            <Button variant="outline" size="sm">
-              Print
-            </Button>
-            <Button variant="outline" size="sm">
-              Send to Est Tray
-            </Button>
-            <Button variant="outline" size="sm">
-              Email to AR
-            </Button>
-            <Button variant="outline" size="sm">
-              Send to Cost
-            </Button>
-            <Button variant="outline" size="sm">
-              Approve
-            </Button>
-            <Button variant="outline" size="sm">
-              Decline: Dispose
-            </Button>
-            <Button variant="outline" size="sm">
-              Decline: Send Back
-            </Button>
-            <Button variant="outline" size="sm">
-              Hold
-            </Button>
-            <Button variant="secondary" size="sm">
-              Back
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
     </div>
   );
 };
