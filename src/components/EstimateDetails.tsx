@@ -63,8 +63,8 @@ export const EstimateDetails = ({ userRole = 'technician', onUserRoleChange }: E
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          {/* Row 1: Estimate Date, Status, Item # */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {/* All fields in one row */}
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
             <div className="space-y-2">
               <Label>Estimate Date</Label>
               <Popover>
@@ -118,10 +118,7 @@ export const EstimateDetails = ({ userRole = 'technician', onUserRoleChange }: E
                 placeholder="Item number"
               />
             </div>
-          </div>
 
-          {/* Row 2: Line Item, Item sent in for */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label>Line Item</Label>
               <Input
