@@ -191,25 +191,26 @@ export const EstimateDetails = ({ userRole = 'technician', onUserRoleChange }: E
             </div>
           </div>
 
-          {/* Replacement Cost Info */}  
-          <div className="space-y-2">
-            <Label>Replacement cost info</Label>
-            <Textarea
-              value={estimateData.replacementCostInfo}
-              onChange={(e) => handleInputChange('replacementCostInfo', e.target.value)}
-              placeholder="Replacement cost details..."
-              className="min-h-[60px]"
-            />
-          </div>
+          {/* Replacement Cost Info & Est turnaround time - side by side */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label>Replacement cost info</Label>
+              <Textarea
+                value={estimateData.replacementCostInfo}
+                onChange={(e) => handleInputChange('replacementCostInfo', e.target.value)}
+                placeholder="Replacement cost details..."
+                className="min-h-[60px]"
+              />
+            </div>
 
-          {/* Est turnaround time */}
-          <div className="space-y-2">
-            <Label>Est turnaround time</Label>
-            <Input
-              value={estimateData.estTurnaroundTime}
-              onChange={(e) => handleInputChange('estTurnaroundTime', e.target.value)}
-              placeholder="Estimated turnaround time"
-            />
+            <div className="space-y-2">
+              <Label>Est turnaround time</Label>
+              <Input
+                value={estimateData.estTurnaroundTime}
+                onChange={(e) => handleInputChange('estTurnaroundTime', e.target.value)}
+                placeholder="Estimated turnaround time"
+              />
+            </div>
           </div>
         </CardContent>
       </Card>
