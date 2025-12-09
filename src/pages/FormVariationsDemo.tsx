@@ -743,9 +743,8 @@ const FormVariationsDemo = () => {
   useEffect(() => {
     if (layoutVariant === 'minimal' || !formData.type) return;
 
-    const tabOrder = isESLType 
-      ? ['general', 'details', 'testing', 'work-status']
-      : ['general', 'cost', 'factory-config', 'transit', 'parts', 'options', 'activity-log'];
+    // Use the actual firstRowTabs array to get tab order
+    const tabOrder = firstRowTabs.map(tab => tab.value);
 
     let isScrolling = false;
 
@@ -760,6 +759,8 @@ const FormVariationsDemo = () => {
       if (documentHeight - scrollPosition < scrollThreshold) {
         const currentTabIndex = tabOrder.indexOf(activeTab);
         const nextTab = tabOrder[currentTabIndex + 1];
+        
+        console.log('Auto-scroll debug:', { activeTab, currentTabIndex, nextTab, tabOrder });
         
         if (nextTab) {
           isScrolling = true;
@@ -777,7 +778,7 @@ const FormVariationsDemo = () => {
 
     window.addEventListener('scroll', handleAutoTabScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleAutoTabScroll);
-  }, [layoutVariant, activeTab, isESLType, formData.type]);
+  }, [layoutVariant, activeTab, formData.type, firstRowTabs]);
 
   // Auto-populate lab code when manufacturer and model are selected
   useEffect(() => {
