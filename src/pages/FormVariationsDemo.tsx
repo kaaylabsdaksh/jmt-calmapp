@@ -5684,7 +5684,7 @@ const FormVariationsDemo = () => {
   const renderTabbedInterface = () => (
     <Tabs value={activeTab} onValueChange={setActiveTab} className={cn(isESLType && "mb-24")}>
       {/* Sticky section containing Type/Report Number and Tabs */}
-      <div className="sticky top-[133px] z-40 bg-background shadow-sm">
+      <div className="sticky top-[133px] z-30 bg-background shadow-sm">
         {/* Type and Report Number fields */}
         <div className="bg-card px-6 py-4 border-b">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -6857,7 +6857,7 @@ const FormVariationsDemo = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="bg-background py-4 border-b border-border sticky top-0 z-10 backdrop-blur-sm bg-background/80 px-3 sm:px-4 lg:px-6">
+      <header className="bg-background py-4 border-b border-border sticky top-0 z-50 backdrop-blur-sm bg-background/95 px-3 sm:px-4 lg:px-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between w-full gap-4">
           <div className="flex items-center gap-3">
             <SidebarTrigger className="p-2 rounded-lg hover:bg-muted hover:text-foreground transition-all duration-300" />
@@ -6982,7 +6982,7 @@ const FormVariationsDemo = () => {
             </button>
           </div>
         ) : (
-          <div className="sticky top-[73px] z-30 bg-background py-3 -mx-3 sm:-mx-4 lg:-mx-6 px-3 sm:px-4 lg:px-6 border-b shadow-sm">
+          <div className="sticky top-[73px] z-40 bg-background py-3 -mx-3 sm:-mx-4 lg:-mx-6 px-3 sm:px-4 lg:px-6 border-b shadow-sm">
             <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-3 overflow-x-auto">
               <Button
                 variant="ghost"
