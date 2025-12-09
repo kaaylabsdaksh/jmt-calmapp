@@ -150,26 +150,27 @@ export const EstimateDetails = ({ userRole = 'technician', onUserRoleChange }: E
             </div>
           </div>
 
-          {/* Problem */}
-          <div className="space-y-2">
-            <Label>Problem</Label>
-            <Textarea
-              value={estimateData.problem}
-              onChange={(e) => handleInputChange('problem', e.target.value)}
-              placeholder="Describe the problem..."
-              className="min-h-[80px]"
-            />
-          </div>
+          {/* Problem and Recommendation side by side */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label>Problem</Label>
+              <Textarea
+                value={estimateData.problem}
+                onChange={(e) => handleInputChange('problem', e.target.value)}
+                placeholder="Describe the problem..."
+                className="min-h-[80px]"
+              />
+            </div>
 
-          {/* Recommendation */}
-          <div className="space-y-2">
-            <Label>Recommendation</Label>
-            <Textarea
-              value={estimateData.recommendation}
-              onChange={(e) => handleInputChange('recommendation', e.target.value)}
-              placeholder="Enter recommendation..."
-              className="min-h-[80px]"
-            />
+            <div className="space-y-2">
+              <Label>Recommendation</Label>
+              <Textarea
+                value={estimateData.recommendation}
+                onChange={(e) => handleInputChange('recommendation', e.target.value)}
+                placeholder="Enter recommendation..."
+                className="min-h-[80px]"
+              />
+            </div>
           </div>
 
           {/* Cost Info and Tax */}
