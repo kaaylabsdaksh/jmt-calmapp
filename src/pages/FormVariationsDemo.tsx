@@ -7562,8 +7562,6 @@ const FormVariationsDemo = () => {
           </Card>
         )}
 
-        {/* Activity Log - shown when type is selected */}
-        {activeSection === 'work-order-items' && formData.type && renderActivityLog()}
 
         {/* Add New Manufacturer Dialog */}
         <Dialog open={showManufacturerDialog} onOpenChange={setShowManufacturerDialog}>
