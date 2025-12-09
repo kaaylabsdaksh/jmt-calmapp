@@ -5396,7 +5396,7 @@ const FormVariationsDemo = () => {
         </div>
       </div>
       
-      <EstimateDetails />
+      <EstimateDetails userRole={userRole} onUserRoleChange={setUserRole} />
     </div>
   );
 

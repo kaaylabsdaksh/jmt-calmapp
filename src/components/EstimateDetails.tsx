@@ -7,11 +7,16 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, User, Shield } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 
-export const EstimateDetails = () => {
+interface EstimateDetailsProps {
+  userRole?: 'admin' | 'technician';
+  onUserRoleChange?: (role: 'admin' | 'technician') => void;
+}
+
+export const EstimateDetails = ({ userRole = 'technician', onUserRoleChange }: EstimateDetailsProps) => {
   const [estimateDate, setEstimateDate] = useState<Date>();
   const [estimateData, setEstimateData] = useState({
     estimateStatus: "In Progress",
@@ -34,8 +39,28 @@ export const EstimateDetails = () => {
     <div className="space-y-6">
       {/* Main Form */}
       <Card>
-        <CardHeader>
+        <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle className="text-lg font-semibold">Estimate Information</CardTitle>
+          <div className="flex items-center gap-1 p-1 bg-muted rounded-lg">
+            <Button
+              variant={userRole === 'technician' ? 'default' : 'ghost'}
+              size="sm"
+              onClick={() => onUserRoleChange?.('technician')}
+              className="flex items-center gap-1 h-7 text-xs px-2 sm:px-3"
+            >
+              <User className="h-3 w-3" />
+              <span>Technician</span>
+            </Button>
+            <Button
+              variant={userRole === 'admin' ? 'default' : 'ghost'}
+              size="sm"
+              onClick={() => onUserRoleChange?.('admin')}
+              className="flex items-center gap-1 h-7 text-xs px-2 sm:px-3"
+            >
+              <Shield className="h-3 w-3" />
+              <span>Admin</span>
+            </Button>
+          </div>
         </CardHeader>
         <CardContent className="space-y-4">
           {/* Row 1: Estimate Date, Status, Item # */}
