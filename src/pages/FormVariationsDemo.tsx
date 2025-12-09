@@ -5870,6 +5870,10 @@ const FormVariationsDemo = () => {
                 {renderOptionsSection()}
                 {renderProductImagesSection()}
               </TabsContent>
+
+              <TabsContent value="activity-log" className="mt-0 space-y-6 animate-fade-in">
+                {renderActivityLog()}
+              </TabsContent>
             </>
           )}
         </CardContent>
