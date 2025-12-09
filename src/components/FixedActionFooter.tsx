@@ -235,11 +235,6 @@ export const FixedActionFooter = ({
                       <XCircle className="h-3 w-3 mr-1" />
                       Decline: Send Back
                     </Button>
-                    
-                    <Button size="sm" variant="outline" onClick={handleBack}>
-                      <ArrowLeft className="h-3 w-3 mr-1" />
-                      Back
-                    </Button>
                   </>
                 )}
               </div>
