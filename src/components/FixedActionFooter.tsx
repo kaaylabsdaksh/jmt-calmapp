@@ -157,30 +157,6 @@ export const FixedActionFooter = ({
           {currentSection === 'estimate' ? (
             // Estimate Footer - Conditional based on user role
             <div className="space-y-2">
-              {/* Role Toggle in Footer */}
-              <div className="flex justify-center">
-                <div className="flex items-center gap-1 p-1 bg-muted rounded-lg">
-                  <Button
-                    variant={userRole === 'technician' ? 'default' : 'ghost'}
-                    size="sm"
-                    onClick={() => onUserRoleChange?.('technician')}
-                    className="flex items-center gap-1 h-7 text-xs px-2 sm:px-3"
-                  >
-                    <User className="h-3 w-3" />
-                    <span>Technician</span>
-                  </Button>
-                  <Button
-                    variant={userRole === 'admin' ? 'default' : 'ghost'}
-                    size="sm"
-                    onClick={() => onUserRoleChange?.('admin')}
-                    className="flex items-center gap-1 h-7 text-xs px-2 sm:px-3"
-                  >
-                    <Shield className="h-3 w-3" />
-                    <span>Admin</span>
-                  </Button>
-                </div>
-              </div>
-              
               {/* Action Buttons */}
               <div className="flex flex-wrap items-center justify-center gap-2 text-xs">
                 {/* Common buttons for both roles */}
