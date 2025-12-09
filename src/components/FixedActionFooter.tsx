@@ -169,12 +169,7 @@ export const FixedActionFooter = ({
                   Email to AR
                 </Button>
                 
-                <Button size="sm" variant="outline" onClick={handleHold} className="text-orange-600 hover:text-orange-700">
-                  <Pause className="h-3 w-3 mr-1" />
-                  Hold
-                </Button>
-                
-                {/* Admin-only buttons */}
+                {/* Admin-only left buttons */}
                 {userRole === 'admin' && (
                   <>
                     <Button size="sm" variant="outline" onClick={handleSendToEstTray}>
@@ -185,7 +180,19 @@ export const FixedActionFooter = ({
                       <Send className="h-3 w-3 mr-1" />
                       Send to Cost
                     </Button>
-                    
+                  </>
+                )}
+              </div>
+              
+              {/* Center buttons - Hold, Approve, Decline actions */}
+              <div className="flex flex-wrap items-center gap-2">
+                <Button size="sm" variant="outline" onClick={handleHold} className="text-orange-600 hover:text-orange-700">
+                  <Pause className="h-3 w-3 mr-1" />
+                  Hold
+                </Button>
+                
+                {userRole === 'admin' && (
+                  <>
                     <Button size="sm" variant="outline" onClick={handleApprove} className="text-green-600 hover:text-green-700">
                       <CheckCircle className="h-3 w-3 mr-1" />
                       Approve
