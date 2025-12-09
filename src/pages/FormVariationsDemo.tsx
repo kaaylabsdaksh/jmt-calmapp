@@ -769,8 +769,11 @@ const FormVariationsDemo = () => {
         const currentTabIndex = tabOrder.indexOf(currentTab);
         const nextTab = tabOrder[currentTabIndex + 1];
         
-        if (nextTab) {
+        console.log('Auto-scroll debug:', { currentTab, currentTabIndex, nextTab, tabOrder });
+        
+        if (nextTab && currentTabIndex !== -1) {
           isScrollingRef.current = true;
+          console.log('Switching from', currentTab, 'to', nextTab);
           setActiveTab(nextTab);
           // Smooth scroll to top of the tab content area
           setTimeout(() => {
