@@ -12,7 +12,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, ChevronLeft, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield, Wrench, Activity, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock, ExternalLink, ArrowUp, Pencil } from "lucide-react";
+import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, ChevronLeft, ChevronDown, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield, Wrench, Activity, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock, ExternalLink, ArrowUp, Pencil } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -748,6 +748,9 @@ const FormVariationsDemo = () => {
     activeTabRef.current = activeTab;
   }, [activeTab]);
 
+  // State for next tab indicator
+  const [nextTabIndicator, setNextTabIndicator] = useState<string | null>(null);
+
   useEffect(() => {
     if (layoutVariant === 'minimal' || !formData.type) return;
 
@@ -756,22 +759,35 @@ const FormVariationsDemo = () => {
       ? ['general', 'details', 'testing', 'work-status']
       : ['general', 'cost', 'factory-config', 'transit', 'parts', 'options', 'activity-log'];
 
+    const tabLabels: Record<string, string> = isESLType
+      ? { 'general': 'General', 'details': 'Details', 'testing': 'Testing', 'work-status': 'Work Status' }
+      : { 'general': 'General', 'cost': 'Cost', 'factory-config': 'Factory', 'transit': 'Transit', 'parts': 'Parts', 'options': 'Additional', 'activity-log': 'Activity Log' };
+
     const handleAutoTabScroll = () => {
       if (isScrollingRef.current) return;
 
       const scrollPosition = window.scrollY + window.innerHeight;
       const documentHeight = document.documentElement.scrollHeight;
       const scrollThreshold = 100;
+      const indicatorThreshold = 300; // Show indicator earlier
 
+      const currentTab = activeTabRef.current;
+      const currentTabIndex = tabOrder.indexOf(currentTab);
+      const nextTab = tabOrder[currentTabIndex + 1];
+
+      // Show/hide next tab indicator
+      if (nextTab && documentHeight - scrollPosition < indicatorThreshold) {
+        setNextTabIndicator(tabLabels[nextTab]);
+      } else {
+        setNextTabIndicator(null);
+      }
+
+      // Auto-switch tab when at bottom
       if (documentHeight - scrollPosition < scrollThreshold) {
-        const currentTab = activeTabRef.current;
-        const currentTabIndex = tabOrder.indexOf(currentTab);
-        const nextTab = tabOrder[currentTabIndex + 1];
-        
         if (nextTab && currentTabIndex !== -1) {
           isScrollingRef.current = true;
+          setNextTabIndicator(null);
           
-          // Add fade-out effect to current content
           const contentArea = document.querySelector('[data-tab-content]');
           if (contentArea) {
             contentArea.classList.add('opacity-0', 'transition-opacity', 'duration-200');
@@ -779,10 +795,8 @@ const FormVariationsDemo = () => {
           
           setTimeout(() => {
             setActiveTab(nextTab);
-            // Smooth scroll to top
             window.scrollTo({ top: 250, behavior: 'smooth' });
             
-            // Fade content back in
             setTimeout(() => {
               if (contentArea) {
                 contentArea.classList.remove('opacity-0');
@@ -7977,6 +7991,16 @@ const FormVariationsDemo = () => {
         >
           <ArrowUp className="h-5 w-5" />
         </Button>
+      )}
+
+      {/* Next Tab Indicator */}
+      {nextTabIndicator && (
+        <div className="fixed bottom-32 left-1/2 -translate-x-1/2 z-30 animate-in fade-in slide-in-from-bottom-2 duration-300">
+          <div className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-full shadow-lg">
+            <span className="text-sm font-medium">Next: {nextTabIndicator}</span>
+            <ChevronDown className="h-4 w-4 animate-bounce" />
+          </div>
+        </div>
       )}
       <Toaster />
     </div>
