@@ -739,6 +739,46 @@ const FormVariationsDemo = () => {
     }
   }, [formData.type]);
 
+  // Auto-scroll to next tab when reaching bottom of current tab content
+  useEffect(() => {
+    if (layoutVariant === 'minimal' || !formData.type) return;
+
+    const tabOrder = isESLType 
+      ? ['general', 'details', 'testing', 'work-status']
+      : ['general', 'cost', 'factory-config', 'transit', 'parts', 'options', 'activity-log'];
+
+    let isScrolling = false;
+
+    const handleAutoTabScroll = () => {
+      if (isScrolling) return;
+
+      const scrollPosition = window.scrollY + window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      const scrollThreshold = 150; // pixels from bottom to trigger
+
+      // Check if user is near bottom of page
+      if (documentHeight - scrollPosition < scrollThreshold) {
+        const currentTabIndex = tabOrder.indexOf(activeTab);
+        const nextTab = tabOrder[currentTabIndex + 1];
+        
+        if (nextTab) {
+          isScrolling = true;
+          setActiveTab(nextTab);
+          // Smooth scroll to top of the tab content area
+          setTimeout(() => {
+            window.scrollTo({ top: 250, behavior: 'smooth' });
+            setTimeout(() => {
+              isScrolling = false;
+            }, 500);
+          }, 100);
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleAutoTabScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleAutoTabScroll);
+  }, [layoutVariant, activeTab, isESLType, formData.type]);
+
   // Auto-populate lab code when manufacturer and model are selected
   useEffect(() => {
     if (formData.manufacturer && formData.model && !formData.labCode) {
