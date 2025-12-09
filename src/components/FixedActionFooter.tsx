@@ -156,20 +156,9 @@ export const FixedActionFooter = ({
           {/* Conditional Footer based on current section */}
           {currentSection === 'estimate' ? (
             // Estimate Footer - Conditional based on user role
-            <div className="space-y-2">
-              {/* Action Buttons */}
-              <div className="flex flex-wrap items-center justify-center gap-2 text-xs">
-                {/* Common buttons for both roles */}
-                <Button 
-                  size="sm"
-                  onClick={onSave}
-                  disabled={isLoading}
-                  className="bg-primary text-primary-foreground hover:bg-primary/90"
-                >
-                  <Save className="h-3 w-3 mr-1" />
-                  Save
-                </Button>
-                
+            <div className="flex items-center justify-between gap-2 text-xs">
+              {/* Left side buttons */}
+              <div className="flex flex-wrap items-center gap-2">
                 <Button size="sm" variant="outline" onClick={handlePrint}>
                   <Printer className="h-3 w-3 mr-1" />
                   Print
@@ -213,6 +202,22 @@ export const FixedActionFooter = ({
                     </Button>
                   </>
                 )}
+              </div>
+              
+              {/* Right side buttons */}
+              <div className="flex items-center gap-2">
+                <Button size="sm" variant="outline" onClick={onCancel}>
+                  Cancel
+                </Button>
+                <Button 
+                  size="sm"
+                  onClick={onSave}
+                  disabled={isLoading}
+                  className="bg-primary text-primary-foreground hover:bg-primary/90"
+                >
+                  <Save className="h-3 w-3 mr-1" />
+                  Save
+                </Button>
               </div>
             </div>
           ) : (
