@@ -650,8 +650,7 @@ const FormVariationsDemo = () => {
         { value: 'factory-config', label: 'Factory', icon: Settings },
         { value: 'transit', label: 'Transit', icon: Truck },
         { value: 'parts', label: 'Parts', icon: Settings },
-        { value: 'options', label: 'Additional', icon: Settings },
-        { value: 'activity-log', label: 'Activity Log', icon: Activity }
+        { value: 'options', label: 'Additional', icon: Settings }
       ];
   
   const [activeTab, setActiveTab] = useState('general');
@@ -5755,7 +5754,7 @@ const FormVariationsDemo = () => {
           <TabsList 
             className={cn(
               "grid h-10 sm:h-11 items-center rounded-md bg-muted p-1 text-muted-foreground w-full gap-1",
-              isESLType ? "grid-cols-4" : "grid-cols-7"
+              isESLType ? "grid-cols-4" : "grid-cols-6"
             )}
             onKeyDown={handleTabKeyDown}
           >
