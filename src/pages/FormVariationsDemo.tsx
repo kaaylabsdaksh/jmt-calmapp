@@ -2888,15 +2888,7 @@ const FormVariationsDemo = () => {
 
   // Render factory configuration section
   const renderFactoryConfigSection = () => (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-3">
-          <Settings className="h-5 w-5 text-primary" />
-          Factory Configuration
-        </CardTitle>
-        <CardDescription>Set up factory processing parameters</CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-4">
+    <div className="space-y-4">
         <div className="flex items-center space-x-2 mb-4">
           <Checkbox
             id="toFactory"
@@ -3023,8 +3015,7 @@ const FormVariationsDemo = () => {
             )}
           </div>
         </div>
-      </CardContent>
-    </Card>
+    </div>
   );
 
   // Render lab section
