@@ -153,6 +153,9 @@ const FormVariationsDemo = () => {
       viewport.scrollTo({ top: elementTop - 20, behavior: 'smooth' });
     }
   };
+
+  // General section version state (v1 = flat layout, v2 = accordion layout)
+  const [generalSectionVersion, setGeneralSectionVersion] = useState<'v1' | 'v2'>('v1');
   
   // User role state for testing different footers
   const [userRole, setUserRole] = useState<'admin' | 'technician'>('technician');
@@ -1965,6 +1968,278 @@ const FormVariationsDemo = () => {
         </div>
       </div>
     </div>
+    );
+  };
+
+  // Version 2: Accordion-based General Section
+  const renderGeneralSectionV2 = () => {
+    // ESL type uses the same layout as V1
+    if (isESLType) {
+      return renderGeneralSection();
+    }
+
+    return (
+      <div className="space-y-4">
+        {/* Created and Modified Dates */}
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-4 border-b border-border">
+          <div className="text-sm text-muted-foreground">
+            <span className="font-medium">Created:</span> 09/09/2025 by Admin User
+          </div>
+          
+          <div className="text-sm text-muted-foreground">
+            <span className="font-medium">Modified:</span> 09/09/2025 by Admin User
+          </div>
+
+          {/* Item Navigation */}
+          <div className="flex items-center gap-2 px-3 py-1.5 bg-muted/50 rounded-lg border border-border">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-7 w-7"
+              onClick={handlePreviousItem}
+              disabled={currentItemIndex === 0}
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+            <span className="text-xs font-medium text-foreground px-2 min-w-[60px] text-center">
+              Item {currentItemIndex + 1} / {totalItems}
+            </span>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-7 w-7"
+              onClick={handleNextItem}
+              disabled={currentItemIndex === totalItems - 1}
+            >
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+
+        {/* Accordion-based sections */}
+        <Accordion type="multiple" defaultValue={["status-info", "calibration-info", "assignment-info"]} className="space-y-3">
+          {/* Status & Priority Section */}
+          <AccordionItem value="status-info" className="border border-border rounded-lg px-4 bg-card">
+            <AccordionTrigger className="hover:no-underline py-3">
+              <div className="flex items-center gap-2">
+                <Info className="h-4 w-4 text-primary" />
+                <span className="font-medium text-sm">Status & Priority</span>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="pb-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="itemStatus" className="text-sm font-medium">Item Status</Label>
+                  <Select value={formData.itemStatus} onValueChange={handleStatusChangeAttempt}>
+                    <SelectTrigger className="h-11">
+                      <SelectValue placeholder="Select status" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-popover border z-50 max-h-48 overflow-y-auto">
+                      <SelectItem value="in-lab">In Lab</SelectItem>
+                      <SelectItem value="lab-management">Lab Management</SelectItem>
+                      <SelectItem value="assigned-to-tech">Assigned to Tech</SelectItem>
+                      <SelectItem value="in-transit">In Transit</SelectItem>
+                      <SelectItem value="in-metrology">In Metrology</SelectItem>
+                      <SelectItem value="repair-department">Repair Department</SelectItem>
+                      <SelectItem value="rotation">Rotation</SelectItem>
+                      <SelectItem value="estimate">Estimate</SelectItem>
+                      <SelectItem value="awaiting-parts">Awaiting Parts</SelectItem>
+                      <SelectItem value="to-factory">To Factory</SelectItem>
+                      <SelectItem value="waiting-on-customer">Waiting on Customer</SelectItem>
+                      <SelectItem value="ready-for-departure">Ready for Departure</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="priority" className="text-sm font-medium">
+                    Priority {formData.type === "single" && <span className="text-destructive">*</span>}
+                  </Label>
+                  <Select value={formData.priority} onValueChange={(value) => handleInputChange("priority", value)}>
+                    <SelectTrigger className="h-11">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-popover border z-50">
+                      <SelectItem value="normal">Normal</SelectItem>
+                      <SelectItem value="rush">Rush</SelectItem>
+                      <SelectItem value="expedite">Expedite</SelectItem>
+                      <SelectItem value="emergency">Emergency</SelectItem>
+                      <SelectItem value="damaged">Damaged</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="location" className="text-sm font-medium">
+                    Location {formData.type === "single" && <span className="text-destructive">*</span>}
+                  </Label>
+                  <Select value={formData.location} onValueChange={(value) => handleInputChange("location", value)}>
+                    <SelectTrigger className="h-11">
+                      <SelectValue placeholder="Select location" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-popover border z-50 max-h-48 overflow-y-auto">
+                      <SelectItem value="baton-rouge">Baton Rouge</SelectItem>
+                      <SelectItem value="alexandria">Alexandria</SelectItem>
+                      <SelectItem value="odessa">Odessa</SelectItem>
+                      <SelectItem value="clute">Clute</SelectItem>
+                      <SelectItem value="mattoon">Mattoon</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+
+          {/* Division & Calibration Section */}
+          <AccordionItem value="calibration-info" className="border border-border rounded-lg px-4 bg-card">
+            <AccordionTrigger className="hover:no-underline py-3">
+              <div className="flex items-center gap-2">
+                <Settings className="h-4 w-4 text-primary" />
+                <span className="font-medium text-sm">Division & Calibration</span>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="pb-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="division" className="text-sm font-medium">
+                    Division {formData.type === "single" && <span className="text-destructive">*</span>}
+                  </Label>
+                  <Select value={formData.division} onValueChange={(value) => handleInputChange("division", value)}>
+                    <SelectTrigger className="h-11">
+                      <SelectValue placeholder="Select division" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-popover border z-50">
+                      <SelectItem value="esl">ESL</SelectItem>
+                      <SelectItem value="onsite">OnSite</SelectItem>
+                      <SelectItem value="mfg">MFG</SelectItem>
+                      <SelectItem value="rental">Rental</SelectItem>
+                      <SelectItem value="lab">Lab</SelectItem>
+                      <SelectItem value="surplus">Surplus</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium">
+                    Cal Freq Interval {formData.type === "single" && <span className="text-destructive">*</span>}
+                  </Label>
+                  <RadioGroup
+                    value={formData.calFreqInterval}
+                    onValueChange={(value) => handleInputChange("calFreqInterval", value)}
+                    className="flex gap-4 h-11 items-center"
+                  >
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="monthly" id="monthly-v2" />
+                      <Label htmlFor="monthly-v2" className="font-normal cursor-pointer">Monthly</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="weekly" id="weekly-v2" />
+                      <Label htmlFor="weekly-v2" className="font-normal cursor-pointer">Weekly</Label>
+                    </div>
+                  </RadioGroup>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="calFreq" className="text-sm font-medium">
+                    Cal Freq {formData.type === "single" && <span className="text-destructive">*</span>}
+                  </Label>
+                  <Input
+                    id="calFreq-v2"
+                    value={formData.calFreq}
+                    onChange={(e) => handleInputChange("calFreq", e.target.value)}
+                    placeholder="Enter calibration frequency"
+                    className="h-11"
+                  />
+                </div>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+
+          {/* Action & Assignment Section */}
+          <AccordionItem value="assignment-info" className="border border-border rounded-lg px-4 bg-card">
+            <AccordionTrigger className="hover:no-underline py-3">
+              <div className="flex items-center gap-2">
+                <User className="h-4 w-4 text-primary" />
+                <span className="font-medium text-sm">Action & Assignment</span>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="pb-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="actionCode" className="text-sm font-medium">
+                    Action Code {formData.type === "single" && <span className="text-destructive">*</span>}
+                  </Label>
+                  <Select value={formData.actionCode} onValueChange={(value) => handleInputChange("actionCode", value)}>
+                    <SelectTrigger className="h-11">
+                      <SelectValue placeholder="Select action code" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-popover border z-50">
+                      <SelectItem value="build-new">BUILD NEW</SelectItem>
+                      <SelectItem value="cc">C/C</SelectItem>
+                      <SelectItem value="rc">R/C</SelectItem>
+                      <SelectItem value="test">TEST</SelectItem>
+                      <SelectItem value="verify">VERIFY</SelectItem>
+                      <SelectItem value="insure">INSURE</SelectItem>
+                      <SelectItem value="misc">MISC</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="assignedTo" className="text-sm font-medium">Assigned To</Label>
+                  <Popover open={assigneeDropdownOpen} onOpenChange={setAssigneeDropdownOpen}>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        role="combobox"
+                        aria-expanded={assigneeDropdownOpen}
+                        className="w-full h-11 justify-between"
+                      >
+                        {formData.assignedTo || "Select assignee"}
+                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-[--radix-popover-trigger-width] p-0" align="start">
+                      <Command>
+                        <CommandInput 
+                          placeholder="Search assignee..." 
+                          value={assigneeSearchValue}
+                          onValueChange={setAssigneeSearchValue}
+                        />
+                        <CommandList>
+                          <CommandEmpty>No assignee found.</CommandEmpty>
+                          <CommandGroup>
+                            {['John Doe', 'Jane Smith', 'Bob Johnson', 'Alice Williams', 'Charlie Brown', 'Diana Prince']
+                              .filter(name => name.toLowerCase().includes(assigneeSearchValue.toLowerCase()))
+                              .map((assignee) => (
+                                <CommandItem
+                                  key={assignee}
+                                  value={assignee}
+                                  onSelect={(currentValue) => {
+                                    handleInputChange("assignedTo", currentValue === formData.assignedTo ? "" : currentValue);
+                                    setAssigneeDropdownOpen(false);
+                                  }}
+                                >
+                                  <Check
+                                    className={cn(
+                                      "mr-2 h-4 w-4",
+                                      formData.assignedTo === assignee ? "opacity-100" : "opacity-0"
+                                    )}
+                                  />
+                                  {assignee}
+                                </CommandItem>
+                              ))}
+                          </CommandGroup>
+                        </CommandList>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+                </div>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      </div>
     );
   };
 
@@ -5897,7 +6172,31 @@ const FormVariationsDemo = () => {
             className={cn("p-6 transition-opacity duration-200", isESLType && "pb-24")}
           >
             <TabsContent value="general" className="mt-0 space-y-6 animate-fade-in">
-              {renderGeneralSection()}
+              {/* Version Toggle for General Section */}
+              {!isESLType && (
+                <div className="flex items-center justify-end gap-2 pb-2">
+                  <span className="text-xs text-muted-foreground">Layout:</span>
+                  <div className="flex items-center gap-1 bg-muted rounded-md p-1">
+                    <Button
+                      variant={generalSectionVersion === 'v1' ? 'default' : 'ghost'}
+                      size="sm"
+                      className="h-7 px-3 text-xs"
+                      onClick={() => setGeneralSectionVersion('v1')}
+                    >
+                      Flat
+                    </Button>
+                    <Button
+                      variant={generalSectionVersion === 'v2' ? 'default' : 'ghost'}
+                      size="sm"
+                      className="h-7 px-3 text-xs"
+                      onClick={() => setGeneralSectionVersion('v2')}
+                    >
+                      Accordion
+                    </Button>
+                  </div>
+                </div>
+              )}
+              {generalSectionVersion === 'v2' && !isESLType ? renderGeneralSectionV2() : renderGeneralSection()}
               {!isESLType && (
                 <>
                   {renderProductSection()}
