@@ -12,7 +12,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, ChevronLeft, ChevronDown, ChevronUp, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield, Wrench, Activity, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock, ExternalLink, ArrowUp, Pencil } from "lucide-react";
+import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, ChevronLeft, ChevronDown, ChevronUp, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield, Wrench, Activity, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock, ExternalLink, ArrowUp, Pencil, ImageIcon } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -6168,7 +6168,7 @@ const FormVariationsDemo = () => {
                 </AccordionItem>
               </Accordion>
             ) : (
-              // SINGLE Type Accordion (matches the tab structure)
+              // SINGLE Type Accordion (expanded sections)
               <Accordion type="multiple" defaultValue={["general"]} className="space-y-3">
                 <AccordionItem value="general" className="border border-border rounded-lg px-4">
                   <AccordionTrigger className="hover:no-underline py-4">
@@ -6176,7 +6176,7 @@ const FormVariationsDemo = () => {
                       <Info className="h-5 w-5 text-primary" />
                       <div className="text-left">
                         <h3 className="font-semibold">General</h3>
-                        <p className="text-sm text-muted-foreground">General, product, and logistics information</p>
+                        <p className="text-sm text-muted-foreground">Basic information and settings</p>
                       </div>
                       {tabStatus['general'] === 'completed' && (
                         <CheckCircle className="h-4 w-4 ml-auto mr-2 text-green-600" />
@@ -6186,19 +6186,59 @@ const FormVariationsDemo = () => {
                       )}
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="pb-4 space-y-6">
+                  <AccordionContent className="pb-4">
                     {renderGeneralSection()}
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="product" className="border border-border rounded-lg px-4">
+                  <AccordionTrigger className="hover:no-underline py-4">
+                    <div className="flex items-center gap-3">
+                      <Package className="h-5 w-5 text-primary" />
+                      <div className="text-left">
+                        <h3 className="font-semibold">Product</h3>
+                        <p className="text-sm text-muted-foreground">Technical specifications and details</p>
+                      </div>
+                      {tabStatus['product'] === 'completed' && (
+                        <CheckCircle className="h-4 w-4 ml-auto mr-2 text-green-600" />
+                      )}
+                      {tabStatus['product'] === 'error' && (
+                        <AlertCircle className="h-4 w-4 ml-auto mr-2 text-destructive" />
+                      )}
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="pb-4">
                     {renderProductSection()}
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="logistics" className="border border-border rounded-lg px-4">
+                  <AccordionTrigger className="hover:no-underline py-4">
+                    <div className="flex items-center gap-3">
+                      <Truck className="h-5 w-5 text-primary" />
+                      <div className="text-left">
+                        <h3 className="font-semibold">Logistics</h3>
+                        <p className="text-sm text-muted-foreground">Shipping and arrival details</p>
+                      </div>
+                      {tabStatus['logistics'] === 'completed' && (
+                        <CheckCircle className="h-4 w-4 ml-auto mr-2 text-green-600" />
+                      )}
+                      {tabStatus['logistics'] === 'error' && (
+                        <AlertCircle className="h-4 w-4 ml-auto mr-2 text-destructive" />
+                      )}
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="pb-4">
                     {renderLogisticsSection()}
                   </AccordionContent>
                 </AccordionItem>
 
-                <AccordionItem value="cost" className="border border-border rounded-lg px-4">
+                <AccordionItem value="lab-cost" className="border border-border rounded-lg px-4">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
                       <DollarSign className="h-5 w-5 text-primary" />
                       <div className="text-left">
-                        <h3 className="font-semibold">Cost</h3>
+                        <h3 className="font-semibold">Lab + Cost</h3>
                         <p className="text-sm text-muted-foreground">Lab and cost information</p>
                       </div>
                       {tabStatus['cost'] === 'completed' && (
@@ -6278,13 +6318,28 @@ const FormVariationsDemo = () => {
                   </AccordionContent>
                 </AccordionItem>
 
+                <AccordionItem value="images" className="border border-border rounded-lg px-4">
+                  <AccordionTrigger className="hover:no-underline py-4">
+                    <div className="flex items-center gap-3">
+                      <ImageIcon className="h-5 w-5 text-primary" />
+                      <div className="text-left">
+                        <h3 className="font-semibold">Images</h3>
+                        <p className="text-sm text-muted-foreground">Product images and photos</p>
+                      </div>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="pb-4">
+                    {renderProductImagesSection()}
+                  </AccordionContent>
+                </AccordionItem>
+
                 <AccordionItem value="additional" className="border border-border rounded-lg px-4">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
                       <List className="h-5 w-5 text-primary" />
                       <div className="text-left">
                         <h3 className="font-semibold">Additional</h3>
-                        <p className="text-sm text-muted-foreground">Additional options and images</p>
+                        <p className="text-sm text-muted-foreground">Additional options and settings</p>
                       </div>
                       {tabStatus['options'] === 'completed' && (
                         <CheckCircle className="h-4 w-4 ml-auto mr-2 text-green-600" />
@@ -6294,9 +6349,8 @@ const FormVariationsDemo = () => {
                       )}
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="pb-4 space-y-6">
+                  <AccordionContent className="pb-4">
                     {renderOptionsSection()}
-                    {renderProductImagesSection()}
                   </AccordionContent>
                 </AccordionItem>
 
