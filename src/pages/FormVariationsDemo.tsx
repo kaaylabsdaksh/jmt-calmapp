@@ -4611,50 +4611,58 @@ const FormVariationsDemo = () => {
   };
 
   // Render product images section
-  const renderProductImagesSection = () => (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-3">
-          <Package className="h-5 w-5 text-primary" />
-          Product Images
-        </CardTitle>
-        <CardDescription>Manage product media assets</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <Tabs defaultValue="images">
-          <div className="flex items-center justify-between">
-            <TabsList>
-              <TabsTrigger value="images">Images</TabsTrigger>
-              <TabsTrigger value="dateEntered">Date Entered</TabsTrigger>
-              <TabsTrigger value="actions">Actions</TabsTrigger>
-            </TabsList>
-            <Button variant="default" size="sm" className="gap-2">
-              <Camera className="h-4 w-4" />
-              Capture
-            </Button>
+  const renderProductImagesSection = (noCard = false) => {
+    const content = (
+      <Tabs defaultValue="images">
+        <div className="flex items-center justify-between">
+          <TabsList>
+            <TabsTrigger value="images">Images</TabsTrigger>
+            <TabsTrigger value="dateEntered">Date Entered</TabsTrigger>
+            <TabsTrigger value="actions">Actions</TabsTrigger>
+          </TabsList>
+          <Button variant="default" size="sm" className="gap-2">
+            <Camera className="h-4 w-4" />
+            Capture
+          </Button>
+        </div>
+        
+        <TabsContent value="images" className="mt-4">
+          <div className="border-2 border-dashed rounded-lg p-6 text-center">
+            <p className="text-muted-foreground">No images uploaded</p>
           </div>
-          
-          <TabsContent value="images" className="mt-4">
-            <div className="border-2 border-dashed rounded-lg p-6 text-center">
-              <p className="text-muted-foreground">No images uploaded</p>
-            </div>
-          </TabsContent>
-          
-          <TabsContent value="dateEntered" className="mt-4">
-            <div className="border rounded-lg p-6 text-center">
-              <p className="text-muted-foreground">No history available</p>
-            </div>
-          </TabsContent>
-          
-          <TabsContent value="actions" className="mt-4">
-            <div className="border rounded-lg p-6 text-center">
-              <p className="text-muted-foreground">No actions recorded</p>
-            </div>
-          </TabsContent>
-        </Tabs>
-      </CardContent>
-    </Card>
-  );
+        </TabsContent>
+        
+        <TabsContent value="dateEntered" className="mt-4">
+          <div className="border rounded-lg p-6 text-center">
+            <p className="text-muted-foreground">No history available</p>
+          </div>
+        </TabsContent>
+        
+        <TabsContent value="actions" className="mt-4">
+          <div className="border rounded-lg p-6 text-center">
+            <p className="text-muted-foreground">No actions recorded</p>
+          </div>
+        </TabsContent>
+      </Tabs>
+    );
+
+    if (noCard) return content;
+
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-3">
+            <Package className="h-5 w-5 text-primary" />
+            Product Images
+          </CardTitle>
+          <CardDescription>Manage product media assets</CardDescription>
+        </CardHeader>
+        <CardContent>
+          {content}
+        </CardContent>
+      </Card>
+    );
+  };
 
   // Render cost section
   const renderCostSection = () => (
@@ -5070,16 +5078,18 @@ const FormVariationsDemo = () => {
   );
 
   // Render parts section
-  const renderPartsSection = () => (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-3">
-          <Settings className="h-5 w-5 text-primary" />
-          Parts
-        </CardTitle>
-        <CardDescription>Manage replacement parts and components</CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-4">
+  const renderPartsSection = (noCard = false) => {
+    const content = (
+      <div className={noCard ? "space-y-4" : ""}>
+        {!noCard && (
+          <div className="flex items-center gap-3 mb-4">
+            <Settings className="h-5 w-5 text-primary" />
+            <div>
+              <h3 className="font-semibold">Parts</h3>
+              <p className="text-sm text-muted-foreground">Manage replacement parts and components</p>
+            </div>
+          </div>
+        )}
         <div className="grid grid-cols-1 md:grid-cols-6 gap-3 items-end">
           <div className="space-y-1">
             <Label htmlFor="partsCategory" className="text-xs">
@@ -5199,12 +5209,29 @@ const FormVariationsDemo = () => {
             </div>
           )}
         </div>
-      </CardContent>
-    </Card>
-  );
+      </div>
+    );
+
+    if (noCard) return content;
+
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-3">
+            <Settings className="h-5 w-5 text-primary" />
+            Parts
+          </CardTitle>
+          <CardDescription>Manage replacement parts and components</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {content}
+        </CardContent>
+      </Card>
+    );
+  };
 
   // Render transit section
-  const renderTransitSection = () => {
+  const renderTransitSection = (noCard = false) => {
     const handleSetInTransit = () => {
       // Validate required fields (all except Notes)
       if (!formData.originLocation || !formData.destinationLocation || !formData.huQty || 
@@ -5223,6 +5250,133 @@ const FormVariationsDemo = () => {
       });
     };
 
+    const content = (
+      <div className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <Label htmlFor="originLocation" className="text-sm font-medium">
+              Origin Location <span className="text-destructive">*</span>
+            </Label>
+            <Select value={formData.originLocation} onValueChange={(value) => handleInputChange("originLocation", value)} required>
+              <SelectTrigger className="h-11">
+                <SelectValue placeholder="Select origin location" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="warehouse-a">Warehouse A</SelectItem>
+                <SelectItem value="warehouse-b">Warehouse B</SelectItem>
+                <SelectItem value="facility-1">Facility 1</SelectItem>
+                <SelectItem value="facility-2">Facility 2</SelectItem>
+                <SelectItem value="depot-main">Main Depot</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="destinationLocation" className="text-sm font-medium">
+              Destination Location <span className="text-destructive">*</span>
+            </Label>
+            <Select value={formData.destinationLocation} onValueChange={(value) => handleInputChange("destinationLocation", value)} required>
+              <SelectTrigger className="h-11">
+                <SelectValue placeholder="Select destination location" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="customer-site-1">Customer Site 1</SelectItem>
+                <SelectItem value="customer-site-2">Customer Site 2</SelectItem>
+                <SelectItem value="branch-office">Branch Office</SelectItem>
+                <SelectItem value="service-center">Service Center</SelectItem>
+                <SelectItem value="field-location">Field Location</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="huQty" className="text-sm font-medium">
+              HU Qty <span className="text-destructive">*</span>
+            </Label>
+            <Input
+              id="huQty"
+              value={formData.huQty}
+              onChange={(e) => handleInputChange("huQty", e.target.value)}
+              placeholder="Enter quantity"
+              className="h-11"
+              required
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="huType" className="text-sm font-medium">
+              HU Type <span className="text-destructive">*</span>
+            </Label>
+            <Select value={formData.huType} onValueChange={(value) => handleInputChange("huType", value)} required>
+              <SelectTrigger className="h-11">
+                <SelectValue placeholder="Select HU type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="box">Box</SelectItem>
+                <SelectItem value="pallet">Pallet</SelectItem>
+                <SelectItem value="container">Container</SelectItem>
+                <SelectItem value="crate">Crate</SelectItem>
+                <SelectItem value="case">Case</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="deliverTo" className="text-sm font-medium">
+              Deliver To <span className="text-destructive">*</span>
+            </Label>
+            <Select value={formData.deliverTo} onValueChange={(value) => handleInputChange("deliverTo", value)} required>
+              <SelectTrigger className="h-11">
+                <SelectValue placeholder="Select delivery recipient" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="customer">Customer</SelectItem>
+                <SelectItem value="technician">Field Technician</SelectItem>
+                <SelectItem value="supervisor">Site Supervisor</SelectItem>
+                <SelectItem value="manager">Facility Manager</SelectItem>
+                <SelectItem value="coordinator">Logistics Coordinator</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="deliveryType" className="text-sm font-medium">
+              Delivery Type <span className="text-destructive">*</span>
+            </Label>
+            <Select value={formData.deliveryType} onValueChange={(value) => handleInputChange("deliveryType", value)} required>
+              <SelectTrigger className="h-11">
+                <SelectValue placeholder="Select delivery type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="shuttle">Shuttle</SelectItem>
+                <SelectItem value="courier">Courier</SelectItem>
+                <SelectItem value="freight">Freight</SelectItem>
+                <SelectItem value="express">Express</SelectItem>
+                <SelectItem value="standard">Standard</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="transitNotes" className="text-sm font-medium">Notes</Label>
+          <Textarea
+            id="transitNotes"
+            value={formData.transitNotes}
+            onChange={(e) => handleInputChange("transitNotes", e.target.value)}
+            placeholder="Enter transit notes and special instructions..."
+            className="min-h-[120px] resize-none"
+          />
+        </div>
+
+        <Button onClick={handleSetInTransit} size="sm" className="w-auto">
+          Set In Transit
+        </Button>
+      </div>
+    );
+
+    if (noCard) return content;
+
     return (
       <Card>
         <CardHeader>
@@ -5232,127 +5386,8 @@ const FormVariationsDemo = () => {
           </CardTitle>
           <CardDescription>Configure transit logistics and delivery details</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="originLocation" className="text-sm font-medium">
-                Origin Location <span className="text-destructive">*</span>
-              </Label>
-              <Select value={formData.originLocation} onValueChange={(value) => handleInputChange("originLocation", value)} required>
-                <SelectTrigger className="h-11">
-                  <SelectValue placeholder="Select origin location" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="warehouse-a">Warehouse A</SelectItem>
-                  <SelectItem value="warehouse-b">Warehouse B</SelectItem>
-                  <SelectItem value="facility-1">Facility 1</SelectItem>
-                  <SelectItem value="facility-2">Facility 2</SelectItem>
-                  <SelectItem value="depot-main">Main Depot</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="destinationLocation" className="text-sm font-medium">
-                Destination Location <span className="text-destructive">*</span>
-              </Label>
-              <Select value={formData.destinationLocation} onValueChange={(value) => handleInputChange("destinationLocation", value)} required>
-                <SelectTrigger className="h-11">
-                  <SelectValue placeholder="Select destination location" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="customer-site-1">Customer Site 1</SelectItem>
-                  <SelectItem value="customer-site-2">Customer Site 2</SelectItem>
-                  <SelectItem value="branch-office">Branch Office</SelectItem>
-                  <SelectItem value="service-center">Service Center</SelectItem>
-                  <SelectItem value="field-location">Field Location</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="huQty" className="text-sm font-medium">
-                HU Qty <span className="text-destructive">*</span>
-              </Label>
-              <Input
-                id="huQty"
-                value={formData.huQty}
-                onChange={(e) => handleInputChange("huQty", e.target.value)}
-                placeholder="Enter quantity"
-                className="h-11"
-                required
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="huType" className="text-sm font-medium">
-                HU Type <span className="text-destructive">*</span>
-              </Label>
-              <Select value={formData.huType} onValueChange={(value) => handleInputChange("huType", value)} required>
-                <SelectTrigger className="h-11">
-                  <SelectValue placeholder="Select HU type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="box">Box</SelectItem>
-                  <SelectItem value="pallet">Pallet</SelectItem>
-                  <SelectItem value="container">Container</SelectItem>
-                  <SelectItem value="crate">Crate</SelectItem>
-                  <SelectItem value="case">Case</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="deliverTo" className="text-sm font-medium">
-                Deliver To <span className="text-destructive">*</span>
-              </Label>
-              <Select value={formData.deliverTo} onValueChange={(value) => handleInputChange("deliverTo", value)} required>
-                <SelectTrigger className="h-11">
-                  <SelectValue placeholder="Select delivery recipient" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="customer">Customer</SelectItem>
-                  <SelectItem value="technician">Field Technician</SelectItem>
-                  <SelectItem value="supervisor">Site Supervisor</SelectItem>
-                  <SelectItem value="manager">Facility Manager</SelectItem>
-                  <SelectItem value="coordinator">Logistics Coordinator</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="deliveryType" className="text-sm font-medium">
-                Delivery Type <span className="text-destructive">*</span>
-              </Label>
-              <Select value={formData.deliveryType} onValueChange={(value) => handleInputChange("deliveryType", value)} required>
-                <SelectTrigger className="h-11">
-                  <SelectValue placeholder="Select delivery type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="shuttle">Shuttle</SelectItem>
-                  <SelectItem value="courier">Courier</SelectItem>
-                  <SelectItem value="freight">Freight</SelectItem>
-                  <SelectItem value="express">Express</SelectItem>
-                  <SelectItem value="standard">Standard</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="transitNotes" className="text-sm font-medium">Notes</Label>
-            <Textarea
-              id="transitNotes"
-              value={formData.transitNotes}
-              onChange={(e) => handleInputChange("transitNotes", e.target.value)}
-              placeholder="Enter transit notes and special instructions..."
-              className="min-h-[120px] resize-none"
-            />
-          </div>
-
-          <Button onClick={handleSetInTransit} size="sm" className="w-auto">
-            Set In Transit
-          </Button>
+        <CardContent>
+          {content}
         </CardContent>
       </Card>
     );
@@ -6293,7 +6328,7 @@ const FormVariationsDemo = () => {
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pb-4">
-                    {renderTransitSection()}
+                    {renderTransitSection(true)}
                   </AccordionContent>
                 </AccordionItem>
 
@@ -6314,7 +6349,7 @@ const FormVariationsDemo = () => {
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pb-4">
-                    {renderPartsSection()}
+                    {renderPartsSection(true)}
                   </AccordionContent>
                 </AccordionItem>
 
@@ -6329,7 +6364,7 @@ const FormVariationsDemo = () => {
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pb-4">
-                    {renderProductImagesSection()}
+                    {renderProductImagesSection(true)}
                   </AccordionContent>
                 </AccordionItem>
 
