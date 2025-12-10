@@ -753,8 +753,8 @@ const FormVariationsDemo = () => {
   const [prevTabIndicator, setPrevTabIndicator] = useState<string | null>(null);
 
   useEffect(() => {
-    // Disable auto-scroll for non-work-order-items sections
-    if (layoutVariant === 'minimal' || !formData.type || activeSection !== 'work-order-items') return;
+    // Disable auto-scroll for non-work-order-items sections and accordion mode
+    if (layoutVariant === 'minimal' || layoutVariant === 'accordion' || !formData.type || activeSection !== 'work-order-items') return;
 
     // Define explicit tab order for non-ESL types
     const tabOrder = isESLType 
