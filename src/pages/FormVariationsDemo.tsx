@@ -2219,13 +2219,8 @@ const FormVariationsDemo = () => {
       {/* Arrival Information */}
       <Card className="border-0 shadow-md">
         <CardContent className="p-4 sm:p-6 space-y-4">
-          <div className="flex items-center gap-3 pb-4 border-b border-border">
-            <div className="p-2 bg-primary/10 rounded-lg">
-              <Truck className="h-5 w-5 text-primary" />
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold text-foreground">Arrival Information</h3>
-            </div>
+          <div className="pb-4 border-b border-border">
+            <h3 className="text-lg font-semibold text-foreground">Arrival Information</h3>
           </div>
           
           <div className="space-y-4">
@@ -2389,14 +2384,9 @@ const FormVariationsDemo = () => {
         {/* Departure Information */}
         <Card className="border-0 shadow-md">
         <CardContent className="p-4 sm:p-6 space-y-4">
-          <div className="flex items-center gap-3 pb-4 border-b border-border">
-            <div className="p-2 bg-primary/10 rounded-lg">
-              <Truck className="h-5 w-5 text-primary" />
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold text-foreground">Departure Information</h3>
-              <p className="text-sm text-muted-foreground">Delivery and departure details</p>
-            </div>
+          <div className="pb-4 border-b border-border">
+            <h3 className="text-lg font-semibold text-foreground">Departure Information</h3>
+            <p className="text-sm text-muted-foreground">Delivery and departure details</p>
           </div>
           
           <div className="space-y-4">
