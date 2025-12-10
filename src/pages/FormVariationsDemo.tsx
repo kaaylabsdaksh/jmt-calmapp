@@ -6063,7 +6063,7 @@ const FormVariationsDemo = () => {
 
             {isESLType ? (
               // ESL Type Accordion
-              <Accordion type="multiple" defaultValue={["general"]} className="space-y-0">
+              <Accordion type="single" defaultValue="general" collapsible className="space-y-0">
                 <AccordionItem value="general" className="border-b">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
@@ -6120,7 +6120,7 @@ const FormVariationsDemo = () => {
               </Accordion>
             ) : (
               // SINGLE Type Accordion (expanded sections)
-              <Accordion type="multiple" defaultValue={["general"]} className="space-y-0">
+              <Accordion type="single" defaultValue="general" collapsible className="space-y-0">
                 <AccordionItem value="general" className="border-b">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
@@ -6314,7 +6314,7 @@ const FormVariationsDemo = () => {
   const renderAccordionInterface = () => (
     <Card className="border-0 shadow-md">
       <CardContent className="p-6">
-        <Accordion type="multiple" defaultValue={["general"]} className="space-y-4">
+        <Accordion type="single" defaultValue="general" collapsible className="space-y-4">
           <AccordionItem value="general" className="border border-border rounded-lg px-4">
             <AccordionTrigger className="hover:no-underline py-4">
               <div className="flex items-center gap-3">
