@@ -6100,8 +6100,8 @@ const FormVariationsDemo = () => {
 
             {isESLType ? (
               // ESL Type Accordion
-              <Accordion type="multiple" defaultValue={["general"]} className="space-y-3">
-                <AccordionItem value="general" className="border border-border rounded-lg px-4">
+              <Accordion type="multiple" defaultValue={["general"]} className="space-y-0">
+                <AccordionItem value="general" className="border-b">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
                       <Info className="h-5 w-5 text-primary" />
@@ -6122,7 +6122,7 @@ const FormVariationsDemo = () => {
                   </AccordionContent>
                 </AccordionItem>
 
-                <AccordionItem value="details" className="border border-border rounded-lg px-4">
+                <AccordionItem value="details" className="border-b">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
                       <FileText className="h-5 w-5 text-primary" />
@@ -6137,7 +6137,7 @@ const FormVariationsDemo = () => {
                   </AccordionContent>
                 </AccordionItem>
 
-                <AccordionItem value="testing" className="border border-border rounded-lg px-4">
+                <AccordionItem value="testing" className="border-b">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
                       <Settings className="h-5 w-5 text-primary" />
@@ -6152,7 +6152,7 @@ const FormVariationsDemo = () => {
                   </AccordionContent>
                 </AccordionItem>
 
-                <AccordionItem value="work-status" className="border border-border rounded-lg px-4">
+                <AccordionItem value="work-status" className="border-b">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
                       <Clock className="h-5 w-5 text-primary" />
@@ -6169,8 +6169,8 @@ const FormVariationsDemo = () => {
               </Accordion>
             ) : (
               // SINGLE Type Accordion (expanded sections)
-              <Accordion type="multiple" defaultValue={["general"]} className="space-y-3">
-                <AccordionItem value="general" className="border border-border rounded-lg px-4">
+              <Accordion type="multiple" defaultValue={["general"]} className="space-y-0">
+                <AccordionItem value="general" className="border-b">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
                       <Info className="h-5 w-5 text-primary" />
@@ -6191,7 +6191,7 @@ const FormVariationsDemo = () => {
                   </AccordionContent>
                 </AccordionItem>
 
-                <AccordionItem value="product" className="border border-border rounded-lg px-4">
+                <AccordionItem value="product" className="border-b">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
                       <Package className="h-5 w-5 text-primary" />
@@ -6212,7 +6212,7 @@ const FormVariationsDemo = () => {
                   </AccordionContent>
                 </AccordionItem>
 
-                <AccordionItem value="logistics" className="border border-border rounded-lg px-4">
+                <AccordionItem value="logistics" className="border-b">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
                       <Truck className="h-5 w-5 text-primary" />
@@ -6233,7 +6233,7 @@ const FormVariationsDemo = () => {
                   </AccordionContent>
                 </AccordionItem>
 
-                <AccordionItem value="lab-cost" className="border border-border rounded-lg px-4">
+                <AccordionItem value="lab-cost" className="border-b">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
                       <DollarSign className="h-5 w-5 text-primary" />
@@ -6255,7 +6255,7 @@ const FormVariationsDemo = () => {
                   </AccordionContent>
                 </AccordionItem>
 
-                <AccordionItem value="factory" className="border border-border rounded-lg px-4">
+                <AccordionItem value="factory" className="border-b">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
                       <Settings className="h-5 w-5 text-primary" />
@@ -6276,7 +6276,7 @@ const FormVariationsDemo = () => {
                   </AccordionContent>
                 </AccordionItem>
 
-                <AccordionItem value="transit" className="border border-border rounded-lg px-4">
+                <AccordionItem value="transit" className="border-b">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
                       <Truck className="h-5 w-5 text-primary" />
@@ -6297,7 +6297,7 @@ const FormVariationsDemo = () => {
                   </AccordionContent>
                 </AccordionItem>
 
-                <AccordionItem value="parts" className="border border-border rounded-lg px-4">
+                <AccordionItem value="parts" className="border-b">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
                       <Wrench className="h-5 w-5 text-primary" />
@@ -6318,7 +6318,7 @@ const FormVariationsDemo = () => {
                   </AccordionContent>
                 </AccordionItem>
 
-                <AccordionItem value="images" className="border border-border rounded-lg px-4">
+                <AccordionItem value="images" className="border-b">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
                       <ImageIcon className="h-5 w-5 text-primary" />
@@ -6333,7 +6333,7 @@ const FormVariationsDemo = () => {
                   </AccordionContent>
                 </AccordionItem>
 
-                <AccordionItem value="additional" className="border border-border rounded-lg px-4">
+                <AccordionItem value="additional" className="border-b">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
                       <List className="h-5 w-5 text-primary" />
@@ -6354,7 +6354,7 @@ const FormVariationsDemo = () => {
                   </AccordionContent>
                 </AccordionItem>
 
-                <AccordionItem value="activity-log" className="border border-border rounded-lg px-4">
+                <AccordionItem value="activity-log" className="border-b">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
                       <Activity className="h-5 w-5 text-primary" />
