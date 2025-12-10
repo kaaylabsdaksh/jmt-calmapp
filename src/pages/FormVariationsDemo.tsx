@@ -2452,7 +2452,7 @@ const FormVariationsDemo = () => {
     </div>
   );
 
-  const renderOptionsSection = () => (
+  const renderOptionsSection = (isAccordion = false) => (
     <div className="space-y-6">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Additional Information Section */}
@@ -6301,7 +6301,7 @@ const FormVariationsDemo = () => {
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pb-4">
-                    {renderOptionsSection()}
+                    {renderOptionsSection(true)}
                   </AccordionContent>
                 </AccordionItem>
 
@@ -6410,7 +6410,7 @@ const FormVariationsDemo = () => {
               </div>
             </AccordionTrigger>
             <AccordionContent className="pb-4">
-              {renderOptionsSection()}
+              {renderOptionsSection(true)}
             </AccordionContent>
           </AccordionItem>
         </Accordion>
