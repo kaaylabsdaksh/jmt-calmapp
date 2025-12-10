@@ -5680,53 +5680,87 @@ const FormVariationsDemo = () => {
   // Render work order header (default style)
   const renderWorkOrderHeader = () => (
     <div className="bg-card border border-border rounded-lg p-4 sm:p-6 mb-4 sm:mb-6 mt-4 sm:mt-6">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-min">
-        <div>
-          <Label className="text-sm font-medium text-muted-foreground">Work Order #</Label>
-          <Input
-            value={formData.workOrderNumber}
-            onChange={(e) => handleInputChange("workOrderNumber", e.target.value)}
-            className="mt-1 font-semibold text-lg"
-          />
-        </div>
-        <div>
-          <Label className="text-sm font-medium text-muted-foreground">SR Doc</Label>
-          <div className="text-sm p-2 bg-muted rounded border mt-1 h-9 flex items-center">
-            {formData.srDoc ? (
-              <a 
-                href="#"
-                className="text-black hover:opacity-70 transition-opacity inline-flex items-center gap-1"
-                onClick={(e) => {
-                  e.preventDefault();
-                  console.log('Opening SR Document:', formData.srDoc);
-                  // TODO: Navigate to SR document or open in modal
-                }}
-              >
-                {formData.srDoc}
-                <ExternalLink className="h-3 w-3" />
-              </a>
-            ) : (
-              <span className="text-muted-foreground">-</span>
-            )}
+      <div className="flex flex-col gap-4">
+        {/* Layout Toggle */}
+        <div className="flex items-center justify-end gap-2">
+          <span className="text-xs text-muted-foreground mr-2">View:</span>
+          <div className="inline-flex items-center rounded-lg border border-border p-1 bg-muted/50">
+            <button
+              onClick={() => setLayoutVariant('default')}
+              className={cn(
+                "inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md transition-all",
+                layoutVariant === 'default'
+                  ? "bg-background text-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              <Layers className="h-3.5 w-3.5" />
+              Tabs
+            </button>
+            <button
+              onClick={() => setLayoutVariant('accordion')}
+              className={cn(
+                "inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md transition-all",
+                layoutVariant === 'accordion'
+                  ? "bg-background text-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              <ChevronDown className="h-3.5 w-3.5" />
+              Accordion
+            </button>
           </div>
         </div>
-        <div>
-          <Label className="text-sm font-medium text-muted-foreground">Salesperson</Label>
-          <Input
-            value={formData.salesperson}
-            onChange={(e) => handleInputChange("salesperson", e.target.value)}
-            placeholder="Not assigned"
-            className="mt-1"
-          />
-        </div>
-        <div>
-          <Label className="text-sm font-medium text-muted-foreground">Contact</Label>
-          <Input
-            value={formData.contact}
-            onChange={(e) => handleInputChange("contact", e.target.value)}
-            placeholder="Contact information"
-            className="mt-1"
-          />
+        
+        {/* Header Fields */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-min">
+          <div>
+            <Label className="text-sm font-medium text-muted-foreground">Work Order #</Label>
+            <Input
+              value={formData.workOrderNumber}
+              onChange={(e) => handleInputChange("workOrderNumber", e.target.value)}
+              className="mt-1 font-semibold text-lg"
+            />
+          </div>
+          <div>
+            <Label className="text-sm font-medium text-muted-foreground">SR Doc</Label>
+            <div className="text-sm p-2 bg-muted rounded border mt-1 h-9 flex items-center">
+              {formData.srDoc ? (
+                <a 
+                  href="#"
+                  className="text-black hover:opacity-70 transition-opacity inline-flex items-center gap-1"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    console.log('Opening SR Document:', formData.srDoc);
+                    // TODO: Navigate to SR document or open in modal
+                  }}
+                >
+                  {formData.srDoc}
+                  <ExternalLink className="h-3 w-3" />
+                </a>
+              ) : (
+                <span className="text-muted-foreground">-</span>
+              )}
+            </div>
+          </div>
+          <div>
+            <Label className="text-sm font-medium text-muted-foreground">Salesperson</Label>
+            <Input
+              value={formData.salesperson}
+              onChange={(e) => handleInputChange("salesperson", e.target.value)}
+              placeholder="Not assigned"
+              className="mt-1"
+            />
+          </div>
+          <div>
+            <Label className="text-sm font-medium text-muted-foreground">Contact</Label>
+            <Input
+              value={formData.contact}
+              onChange={(e) => handleInputChange("contact", e.target.value)}
+              placeholder="Contact information"
+              className="mt-1"
+            />
+          </div>
         </div>
       </div>
     </div>
