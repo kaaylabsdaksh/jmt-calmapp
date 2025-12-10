@@ -36,7 +36,7 @@ const FormVariationsDemo = () => {
   const { toast } = useToast();
   
   // Layout variant state
-  const [layoutVariant, setLayoutVariant] = useState<'default' | 'minimal'>('default');
+  const [layoutVariant, setLayoutVariant] = useState<'default' | 'minimal' | 'accordion'>('accordion');
   
   // Main section state
   const [activeSection, setActiveSection] = useState<'work-order-items' | 'estimate' | 'qf3' | 'external-files' | 'cert-files'>('work-order-items');
@@ -5976,7 +5976,332 @@ const FormVariationsDemo = () => {
     </Tabs>
   );
 
-  // Render accordion interface
+  // Render accordion-based tabs interface (new version with tabs as accordions)
+  const renderAccordionTabsInterface = () => (
+    <div className="space-y-4">
+      {/* Sticky section containing Type/Report Number */}
+      <div className="sticky top-[57px] z-30 bg-background shadow-sm">
+        {/* Type and Report Number fields */}
+        <div className="bg-card px-6 py-4 border-b rounded-t-lg">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="type" className="text-sm font-medium">Type *</Label>
+              <Select value={formData.type} onValueChange={(value) => handleInputChange("type", value)}>
+                <SelectTrigger className="h-11">
+                  <SelectValue placeholder="Select type" />
+                </SelectTrigger>
+                <SelectContent className="max-h-48 overflow-y-auto z-50">
+                  <SelectItem value="single">Single</SelectItem>
+                  <SelectItem value="esl-blankets">ESL - Blankets</SelectItem>
+                  <SelectItem value="esl-coverups">ESL - CoverUps</SelectItem>
+                  <SelectItem value="esl-footwear">ESL - Footwear</SelectItem>
+                  <SelectItem value="esl-gloves">ESL - Gloves</SelectItem>
+                  <SelectItem value="esl-grounds">ESL - Grounds</SelectItem>
+                  <SelectItem value="esl-hotsticks">ESL - Hotsticks</SelectItem>
+                  <SelectItem value="esl-insulated-tools">ESL - Insulated Tools</SelectItem>
+                  <SelectItem value="esl-jumpers">ESL - Jumpers</SelectItem>
+                  <SelectItem value="esl-line-hoses">ESL - Line Hoses</SelectItem>
+                  <SelectItem value="esl-matting">ESL - Matting</SelectItem>
+                  <SelectItem value="esl-roll-blankets">ESL - Roll Blankets</SelectItem>
+                  <SelectItem value="esl-sleeves">ESL - Sleeves</SelectItem>
+                  <SelectItem value="itl-gauges">ITL - Gauges</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="reportNumber" className="text-sm font-medium">Report Number *</Label>
+              <Input
+                id="reportNumber"
+                value={formData.reportNumber}
+                onChange={(e) => handleInputChange("reportNumber", e.target.value)}
+                placeholder="0152.01-802930-001"
+                className="h-11"
+                readOnly
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Accordion Content - only visible when type is selected */}
+      {formData.type ? (
+        <Card className="border-0 shadow-md">
+          <CardContent className="p-6">
+            {/* Created and Modified Dates */}
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-4 border-b border-border mb-6">
+              <div className="text-sm text-muted-foreground">
+                <span className="font-medium">Created:</span> 09/09/2025 by Admin User
+              </div>
+              
+              <div className="text-sm text-muted-foreground">
+                <span className="font-medium">Modified:</span> 09/09/2025 by Admin User
+              </div>
+
+              {/* Item Navigation */}
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-muted/50 rounded-lg border border-border">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-7 w-7"
+                  onClick={handlePreviousItem}
+                  disabled={currentItemIndex === 0}
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                </Button>
+                <span className="text-xs font-medium text-foreground px-2 min-w-[60px] text-center">
+                  Item {currentItemIndex + 1} / {totalItems}
+                </span>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-7 w-7"
+                  onClick={handleNextItem}
+                  disabled={currentItemIndex === totalItems - 1}
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+
+            {isESLType ? (
+              // ESL Type Accordion
+              <Accordion type="multiple" defaultValue={["general"]} className="space-y-3">
+                <AccordionItem value="general" className="border border-border rounded-lg px-4">
+                  <AccordionTrigger className="hover:no-underline py-4">
+                    <div className="flex items-center gap-3">
+                      <Info className="h-5 w-5 text-primary" />
+                      <div className="text-left">
+                        <h3 className="font-semibold">General</h3>
+                        <p className="text-sm text-muted-foreground">Basic information and settings</p>
+                      </div>
+                      {tabStatus['general'] === 'completed' && (
+                        <CheckCircle className="h-4 w-4 ml-auto mr-2 text-green-600" />
+                      )}
+                      {tabStatus['general'] === 'error' && (
+                        <AlertCircle className="h-4 w-4 ml-auto mr-2 text-destructive" />
+                      )}
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="pb-4">
+                    {renderGeneralSection()}
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="details" className="border border-border rounded-lg px-4">
+                  <AccordionTrigger className="hover:no-underline py-4">
+                    <div className="flex items-center gap-3">
+                      <FileText className="h-5 w-5 text-primary" />
+                      <div className="text-left">
+                        <h3 className="font-semibold">Details</h3>
+                        <p className="text-sm text-muted-foreground">ESL item details</p>
+                      </div>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="pb-4">
+                    {renderDetailsSection()}
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="testing" className="border border-border rounded-lg px-4">
+                  <AccordionTrigger className="hover:no-underline py-4">
+                    <div className="flex items-center gap-3">
+                      <Settings className="h-5 w-5 text-primary" />
+                      <div className="text-left">
+                        <h3 className="font-semibold">Testing</h3>
+                        <p className="text-sm text-muted-foreground">Testing information</p>
+                      </div>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="pb-4">
+                    {renderTestingSection()}
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="work-status" className="border border-border rounded-lg px-4">
+                  <AccordionTrigger className="hover:no-underline py-4">
+                    <div className="flex items-center gap-3">
+                      <Clock className="h-5 w-5 text-primary" />
+                      <div className="text-left">
+                        <h3 className="font-semibold">Work Status</h3>
+                        <p className="text-sm text-muted-foreground">Current work status</p>
+                      </div>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="pb-4">
+                    {renderWorkStatusSection()}
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            ) : (
+              // SINGLE Type Accordion (matches the tab structure)
+              <Accordion type="multiple" defaultValue={["general"]} className="space-y-3">
+                <AccordionItem value="general" className="border border-border rounded-lg px-4">
+                  <AccordionTrigger className="hover:no-underline py-4">
+                    <div className="flex items-center gap-3">
+                      <Info className="h-5 w-5 text-primary" />
+                      <div className="text-left">
+                        <h3 className="font-semibold">General</h3>
+                        <p className="text-sm text-muted-foreground">General, product, and logistics information</p>
+                      </div>
+                      {tabStatus['general'] === 'completed' && (
+                        <CheckCircle className="h-4 w-4 ml-auto mr-2 text-green-600" />
+                      )}
+                      {tabStatus['general'] === 'error' && (
+                        <AlertCircle className="h-4 w-4 ml-auto mr-2 text-destructive" />
+                      )}
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="pb-4 space-y-6">
+                    {renderGeneralSection()}
+                    {renderProductSection()}
+                    {renderLogisticsSection()}
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="cost" className="border border-border rounded-lg px-4">
+                  <AccordionTrigger className="hover:no-underline py-4">
+                    <div className="flex items-center gap-3">
+                      <DollarSign className="h-5 w-5 text-primary" />
+                      <div className="text-left">
+                        <h3 className="font-semibold">Cost</h3>
+                        <p className="text-sm text-muted-foreground">Lab and cost information</p>
+                      </div>
+                      {tabStatus['cost'] === 'completed' && (
+                        <CheckCircle className="h-4 w-4 ml-auto mr-2 text-green-600" />
+                      )}
+                      {tabStatus['cost'] === 'error' && (
+                        <AlertCircle className="h-4 w-4 ml-auto mr-2 text-destructive" />
+                      )}
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="pb-4 space-y-6">
+                    {renderLabSection()}
+                    {renderCostSection()}
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="factory" className="border border-border rounded-lg px-4">
+                  <AccordionTrigger className="hover:no-underline py-4">
+                    <div className="flex items-center gap-3">
+                      <Settings className="h-5 w-5 text-primary" />
+                      <div className="text-left">
+                        <h3 className="font-semibold">Factory</h3>
+                        <p className="text-sm text-muted-foreground">Factory configuration settings</p>
+                      </div>
+                      {tabStatus['factory-config'] === 'completed' && (
+                        <CheckCircle className="h-4 w-4 ml-auto mr-2 text-green-600" />
+                      )}
+                      {tabStatus['factory-config'] === 'error' && (
+                        <AlertCircle className="h-4 w-4 ml-auto mr-2 text-destructive" />
+                      )}
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="pb-4">
+                    {renderFactoryConfigSection()}
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="transit" className="border border-border rounded-lg px-4">
+                  <AccordionTrigger className="hover:no-underline py-4">
+                    <div className="flex items-center gap-3">
+                      <Truck className="h-5 w-5 text-primary" />
+                      <div className="text-left">
+                        <h3 className="font-semibold">Transit</h3>
+                        <p className="text-sm text-muted-foreground">Transit and shipping details</p>
+                      </div>
+                      {tabStatus['transit'] === 'completed' && (
+                        <CheckCircle className="h-4 w-4 ml-auto mr-2 text-green-600" />
+                      )}
+                      {tabStatus['transit'] === 'error' && (
+                        <AlertCircle className="h-4 w-4 ml-auto mr-2 text-destructive" />
+                      )}
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="pb-4">
+                    {renderTransitSection()}
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="parts" className="border border-border rounded-lg px-4">
+                  <AccordionTrigger className="hover:no-underline py-4">
+                    <div className="flex items-center gap-3">
+                      <Wrench className="h-5 w-5 text-primary" />
+                      <div className="text-left">
+                        <h3 className="font-semibold">Parts</h3>
+                        <p className="text-sm text-muted-foreground">Parts and components</p>
+                      </div>
+                      {tabStatus['parts'] === 'completed' && (
+                        <CheckCircle className="h-4 w-4 ml-auto mr-2 text-green-600" />
+                      )}
+                      {tabStatus['parts'] === 'error' && (
+                        <AlertCircle className="h-4 w-4 ml-auto mr-2 text-destructive" />
+                      )}
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="pb-4">
+                    {renderPartsSection()}
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="additional" className="border border-border rounded-lg px-4">
+                  <AccordionTrigger className="hover:no-underline py-4">
+                    <div className="flex items-center gap-3">
+                      <List className="h-5 w-5 text-primary" />
+                      <div className="text-left">
+                        <h3 className="font-semibold">Additional</h3>
+                        <p className="text-sm text-muted-foreground">Additional options and images</p>
+                      </div>
+                      {tabStatus['options'] === 'completed' && (
+                        <CheckCircle className="h-4 w-4 ml-auto mr-2 text-green-600" />
+                      )}
+                      {tabStatus['options'] === 'error' && (
+                        <AlertCircle className="h-4 w-4 ml-auto mr-2 text-destructive" />
+                      )}
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="pb-4 space-y-6">
+                    {renderOptionsSection()}
+                    {renderProductImagesSection()}
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="activity-log" className="border border-border rounded-lg px-4">
+                  <AccordionTrigger className="hover:no-underline py-4">
+                    <div className="flex items-center gap-3">
+                      <Activity className="h-5 w-5 text-primary" />
+                      <div className="text-left">
+                        <h3 className="font-semibold">Activity Log</h3>
+                        <p className="text-sm text-muted-foreground">Track all changes and updates</p>
+                      </div>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="pb-4">
+                    {renderActivityLog()}
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            )}
+          </CardContent>
+        </Card>
+      ) : (
+        <Card className="border-0 shadow-md">
+          <div className="p-12 flex flex-col items-center justify-center text-center space-y-4">
+            <div className="rounded-full bg-muted p-4">
+              <Package className="h-8 w-8 text-muted-foreground" />
+            </div>
+            <div className="space-y-2">
+              <h3 className="text-lg font-semibold">Select a Type to Continue</h3>
+              <p className="text-sm text-muted-foreground max-w-md">
+                Please select an item type from the dropdown above to view and fill out the detailed form sections.
+              </p>
+            </div>
+          </div>
+        </Card>
+      )}
+    </div>
+  );
+
   const renderAccordionInterface = () => (
     <Card className="border-0 shadow-md">
       <CardContent className="p-6">
@@ -7001,7 +7326,7 @@ const FormVariationsDemo = () => {
       {/* Form Content */}
       <div className="px-3 sm:px-4 lg:px-6">{/* Removed bottom padding - footer component handles spacing */}
         {/* Work Order Header */}
-        {layoutVariant === 'default' ? renderWorkOrderHeader() : renderMinimalWorkOrderHeader()}
+        {(layoutVariant === 'default' || layoutVariant === 'accordion') ? renderWorkOrderHeader() : renderMinimalWorkOrderHeader()}
         
         {/* Main Section Toggles */}
         {layoutVariant === 'minimal' ? (
@@ -7133,7 +7458,9 @@ const FormVariationsDemo = () => {
         {activeSection === 'work-order-items' && (
           <>
             {/* Interface based on variant */}
-            {layoutVariant === 'default' ? renderTabbedInterface() : renderMinimalScrollInterface()}
+            {layoutVariant === 'default' && renderTabbedInterface()}
+            {layoutVariant === 'minimal' && renderMinimalScrollInterface()}
+            {layoutVariant === 'accordion' && renderAccordionTabsInterface()}
           </>
         )}
         
