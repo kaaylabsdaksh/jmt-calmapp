@@ -1924,16 +1924,6 @@ const FormVariationsDemo = () => {
     <div className="space-y-6">
       <Card className="border-0 shadow-md w-full">
         <CardContent className="p-4 sm:p-6 space-y-4">
-          <div className="flex items-center gap-3 pb-4 border-b border-border">
-            <div className="p-2 bg-primary/10 rounded-lg">
-              <Package className="h-5 w-5 text-primary" />
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold">Product Information</h3>
-              <p className="text-sm text-muted-foreground">Detailed product specifications and identifiers</p>
-            </div>
-          </div>
-          
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
             <div className="space-y-2">
               <Label htmlFor="manufacturer" className="text-sm font-medium">
