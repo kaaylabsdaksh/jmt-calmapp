@@ -6067,11 +6067,8 @@ const FormVariationsDemo = () => {
                 <AccordionItem value="general" className="border-b">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
-                      <Info className="h-5 w-5 text-primary" />
-                      <div className="text-left">
-                        <h3 className="font-semibold">General</h3>
-                        <p className="text-sm text-muted-foreground">Basic information and settings</p>
-                      </div>
+                      <Info className="h-5 w-5 text-foreground" />
+                      <h3 className="font-semibold">General</h3>
                       {tabStatus['general'] === 'completed' && (
                         <CheckCircle className="h-4 w-4 ml-auto mr-2 text-green-600" />
                       )}
@@ -6088,11 +6085,8 @@ const FormVariationsDemo = () => {
                 <AccordionItem value="details" className="border-b">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
-                      <FileText className="h-5 w-5 text-primary" />
-                      <div className="text-left">
-                        <h3 className="font-semibold">Details</h3>
-                        <p className="text-sm text-muted-foreground">ESL item details</p>
-                      </div>
+                      <FileText className="h-5 w-5 text-foreground" />
+                      <h3 className="font-semibold">Details</h3>
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pb-4">
@@ -6103,11 +6097,8 @@ const FormVariationsDemo = () => {
                 <AccordionItem value="testing" className="border-b">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
-                      <Settings className="h-5 w-5 text-primary" />
-                      <div className="text-left">
-                        <h3 className="font-semibold">Testing</h3>
-                        <p className="text-sm text-muted-foreground">Testing information</p>
-                      </div>
+                      <Settings className="h-5 w-5 text-foreground" />
+                      <h3 className="font-semibold">Testing</h3>
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pb-4">
@@ -6118,11 +6109,8 @@ const FormVariationsDemo = () => {
                 <AccordionItem value="work-status" className="border-b">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
-                      <Clock className="h-5 w-5 text-primary" />
-                      <div className="text-left">
-                        <h3 className="font-semibold">Work Status</h3>
-                        <p className="text-sm text-muted-foreground">Current work status</p>
-                      </div>
+                      <Clock className="h-5 w-5 text-foreground" />
+                      <h3 className="font-semibold">Work Status</h3>
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pb-4">
@@ -6136,11 +6124,8 @@ const FormVariationsDemo = () => {
                 <AccordionItem value="general" className="border-b">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
-                      <Info className="h-5 w-5 text-primary" />
-                      <div className="text-left">
-                        <h3 className="font-semibold">General</h3>
-                        <p className="text-sm text-muted-foreground">Basic information and settings</p>
-                      </div>
+                      <Info className="h-5 w-5 text-foreground" />
+                      <h3 className="font-semibold">General</h3>
                       {tabStatus['general'] === 'completed' && (
                         <CheckCircle className="h-4 w-4 ml-auto mr-2 text-green-600" />
                       )}
@@ -6157,11 +6142,8 @@ const FormVariationsDemo = () => {
                 <AccordionItem value="product" className="border-b">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
-                      <Package className="h-5 w-5 text-primary" />
-                      <div className="text-left">
-                        <h3 className="font-semibold">Product</h3>
-                        <p className="text-sm text-muted-foreground">Technical specifications and details</p>
-                      </div>
+                      <Package className="h-5 w-5 text-foreground" />
+                      <h3 className="font-semibold">Product</h3>
                       {tabStatus['product'] === 'completed' && (
                         <CheckCircle className="h-4 w-4 ml-auto mr-2 text-green-600" />
                       )}
@@ -6178,11 +6160,8 @@ const FormVariationsDemo = () => {
                 <AccordionItem value="logistics" className="border-b">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
-                      <Truck className="h-5 w-5 text-primary" />
-                      <div className="text-left">
-                        <h3 className="font-semibold">Logistics</h3>
-                        <p className="text-sm text-muted-foreground">Shipping and arrival details</p>
-                      </div>
+                      <Truck className="h-5 w-5 text-foreground" />
+                      <h3 className="font-semibold">Logistics</h3>
                       {tabStatus['logistics'] === 'completed' && (
                         <CheckCircle className="h-4 w-4 ml-auto mr-2 text-green-600" />
                       )}
@@ -6199,11 +6178,8 @@ const FormVariationsDemo = () => {
                 <AccordionItem value="lab-cost" className="border-b">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
-                      <DollarSign className="h-5 w-5 text-primary" />
-                      <div className="text-left">
-                        <h3 className="font-semibold">Lab + Cost</h3>
-                        <p className="text-sm text-muted-foreground">Lab and cost information</p>
-                      </div>
+                      <DollarSign className="h-5 w-5 text-foreground" />
+                      <h3 className="font-semibold">Lab + Cost</h3>
                       {tabStatus['cost'] === 'completed' && (
                         <CheckCircle className="h-4 w-4 ml-auto mr-2 text-green-600" />
                       )}
@@ -6221,11 +6197,8 @@ const FormVariationsDemo = () => {
                 <AccordionItem value="factory" className="border-b">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
-                      <Settings className="h-5 w-5 text-primary" />
-                      <div className="text-left">
-                        <h3 className="font-semibold">Factory</h3>
-                        <p className="text-sm text-muted-foreground">Factory configuration settings</p>
-                      </div>
+                      <Settings className="h-5 w-5 text-foreground" />
+                      <h3 className="font-semibold">Factory</h3>
                       {tabStatus['factory-config'] === 'completed' && (
                         <CheckCircle className="h-4 w-4 ml-auto mr-2 text-green-600" />
                       )}
@@ -6242,11 +6215,8 @@ const FormVariationsDemo = () => {
                 <AccordionItem value="transit" className="border-b">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
-                      <Truck className="h-5 w-5 text-primary" />
-                      <div className="text-left">
-                        <h3 className="font-semibold">Transit</h3>
-                        <p className="text-sm text-muted-foreground">Transit and shipping details</p>
-                      </div>
+                      <Truck className="h-5 w-5 text-foreground" />
+                      <h3 className="font-semibold">Transit</h3>
                       {tabStatus['transit'] === 'completed' && (
                         <CheckCircle className="h-4 w-4 ml-auto mr-2 text-green-600" />
                       )}
@@ -6263,11 +6233,8 @@ const FormVariationsDemo = () => {
                 <AccordionItem value="parts" className="border-b">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
-                      <Wrench className="h-5 w-5 text-primary" />
-                      <div className="text-left">
-                        <h3 className="font-semibold">Parts</h3>
-                        <p className="text-sm text-muted-foreground">Parts and components</p>
-                      </div>
+                      <Wrench className="h-5 w-5 text-foreground" />
+                      <h3 className="font-semibold">Parts</h3>
                       {tabStatus['parts'] === 'completed' && (
                         <CheckCircle className="h-4 w-4 ml-auto mr-2 text-green-600" />
                       )}
@@ -6284,11 +6251,8 @@ const FormVariationsDemo = () => {
                 <AccordionItem value="images" className="border-b">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
-                      <ImageIcon className="h-5 w-5 text-primary" />
-                      <div className="text-left">
-                        <h3 className="font-semibold">Images</h3>
-                        <p className="text-sm text-muted-foreground">Product images and photos</p>
-                      </div>
+                      <ImageIcon className="h-5 w-5 text-foreground" />
+                      <h3 className="font-semibold">Images</h3>
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pb-4">
@@ -6299,11 +6263,8 @@ const FormVariationsDemo = () => {
                 <AccordionItem value="additional" className="border-b">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
-                      <List className="h-5 w-5 text-primary" />
-                      <div className="text-left">
-                        <h3 className="font-semibold">Additional</h3>
-                        <p className="text-sm text-muted-foreground">Additional options and settings</p>
-                      </div>
+                      <List className="h-5 w-5 text-foreground" />
+                      <h3 className="font-semibold">Additional</h3>
                       {tabStatus['options'] === 'completed' && (
                         <CheckCircle className="h-4 w-4 ml-auto mr-2 text-green-600" />
                       )}
@@ -6320,11 +6281,8 @@ const FormVariationsDemo = () => {
                 <AccordionItem value="activity-log" className="border-b">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
-                      <Activity className="h-5 w-5 text-primary" />
-                      <div className="text-left">
-                        <h3 className="font-semibold">Activity Log</h3>
-                        <p className="text-sm text-muted-foreground">Track all changes and updates</p>
-                      </div>
+                      <Activity className="h-5 w-5 text-foreground" />
+                      <h3 className="font-semibold">Activity Log</h3>
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pb-4">
