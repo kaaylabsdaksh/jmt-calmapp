@@ -1112,7 +1112,7 @@ const FormVariationsDemo = () => {
   };
 
   // Common form sections content
-  const renderGeneralSection = () => {
+  const renderGeneralSection = (isAccordion = false) => {
     // ESL-specific layout with sub-tabs
     if (isESLType) {
       return (
@@ -2214,14 +2214,25 @@ const FormVariationsDemo = () => {
     </div>
   );
 
-  const renderLogisticsSection = () => (
+  const renderLogisticsSection = (isAccordion = false) => (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       {/* Arrival Information */}
       <Card className="border-0 shadow-md">
         <CardContent className="p-4 sm:p-6 space-y-4">
-          <div className="pb-4 border-b border-border">
-            <h3 className="text-lg font-semibold text-foreground">Arrival Information</h3>
-          </div>
+          {isAccordion ? (
+            <div className="pb-4 border-b border-border">
+              <h3 className="text-lg font-semibold text-foreground">Arrival Information</h3>
+            </div>
+          ) : (
+            <div className="flex items-center gap-3 pb-4 border-b border-border">
+              <div className="p-2 bg-primary/10 rounded-lg">
+                <Truck className="h-5 w-5 text-primary" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-foreground">Arrival Information</h3>
+              </div>
+            </div>
+          )}
           
           <div className="space-y-4">
             <div className="space-y-2">
@@ -2384,10 +2395,22 @@ const FormVariationsDemo = () => {
         {/* Departure Information */}
         <Card className="border-0 shadow-md">
         <CardContent className="p-4 sm:p-6 space-y-4">
-          <div className="pb-4 border-b border-border">
-            <h3 className="text-lg font-semibold text-foreground">Departure Information</h3>
-            <p className="text-sm text-muted-foreground">Delivery and departure details</p>
-          </div>
+          {isAccordion ? (
+            <div className="pb-4 border-b border-border">
+              <h3 className="text-lg font-semibold text-foreground">Departure Information</h3>
+              <p className="text-sm text-muted-foreground">Delivery and departure details</p>
+            </div>
+          ) : (
+            <div className="flex items-center gap-3 pb-4 border-b border-border">
+              <div className="p-2 bg-primary/10 rounded-lg">
+                <Truck className="h-5 w-5 text-primary" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-foreground">Departure Information</h3>
+                <p className="text-sm text-muted-foreground">Delivery and departure details</p>
+              </div>
+            </div>
+          )}
           
           <div className="space-y-4">
             <div className="space-y-2">
@@ -2519,36 +2542,80 @@ const FormVariationsDemo = () => {
       </div>
 
       {/* Status Options Section */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2">
-        {[
-          { key: 'warranty', label: 'Warranty' },
-          { key: 'estimate', label: 'Estimate' },
-          { key: 'newEquip', label: 'New Equipment' },
-          { key: 'usedSurplus', label: 'Used Surplus' },
-          { key: 'iso17025', label: 'ISO 17025' },
-          { key: 'hotList', label: 'Hot List' },
-          { key: 'readyToBill', label: 'Ready to Bill' },
-          { key: 'inQa', label: 'In QA' },
-          { key: 'toShipping', label: 'To Shipping' },
-          { key: 'multiParts', label: 'Multi Parts' },
-          { key: 'lostEquipment', label: 'Lost Equipment' },
-          { key: 'redTag', label: 'Red Tag' },
-          { key: 'returned', label: 'Returned' },
-          { key: 'coOverride', label: 'C/O Override' },
-          { key: 'dateValidOverride', label: 'Date Valid. Override' },
-          { key: 'coStdCheckOverride', label: 'C/O Std Check Override' },
-        ].map(option => (
-          <div key={option.key} className="flex items-center justify-between gap-2 px-2 py-1.5 border rounded bg-background">
-            <Label htmlFor={option.key} className="text-xs cursor-pointer truncate">{option.label}</Label>
-            <Switch
-              id={option.key}
-              checked={formData[option.key as keyof typeof formData] as boolean}
-              onCheckedChange={(checked) => handleInputChange(option.key, checked)}
-              className="scale-75"
-            />
-          </div>
-        ))}
-      </div>
+      {isAccordion ? (
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2">
+          {[
+            { key: 'warranty', label: 'Warranty' },
+            { key: 'estimate', label: 'Estimate' },
+            { key: 'newEquip', label: 'New Equipment' },
+            { key: 'usedSurplus', label: 'Used Surplus' },
+            { key: 'iso17025', label: 'ISO 17025' },
+            { key: 'hotList', label: 'Hot List' },
+            { key: 'readyToBill', label: 'Ready to Bill' },
+            { key: 'inQa', label: 'In QA' },
+            { key: 'toShipping', label: 'To Shipping' },
+            { key: 'multiParts', label: 'Multi Parts' },
+            { key: 'lostEquipment', label: 'Lost Equipment' },
+            { key: 'redTag', label: 'Red Tag' },
+            { key: 'returned', label: 'Returned' },
+            { key: 'coOverride', label: 'C/O Override' },
+            { key: 'dateValidOverride', label: 'Date Valid. Override' },
+            { key: 'coStdCheckOverride', label: 'C/O Std Check Override' },
+          ].map(option => (
+            <div key={option.key} className="flex items-center justify-between gap-2 px-2 py-1.5 border rounded bg-background">
+              <Label htmlFor={option.key} className="text-xs cursor-pointer truncate">{option.label}</Label>
+              <Switch
+                id={option.key}
+                checked={formData[option.key as keyof typeof formData] as boolean}
+                onCheckedChange={(checked) => handleInputChange(option.key, checked)}
+                className="scale-75"
+              />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <Card className="border-0 shadow-md w-full">
+          <CardContent className="p-4 sm:p-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {[
+                { key: 'warranty', label: 'Warranty', icon: '🛡️' },
+                { key: 'estimate', label: 'Estimate', icon: '💰' },
+                { key: 'newEquip', label: 'New Equipment', icon: '✨' },
+                { key: 'usedSurplus', label: 'Used Surplus', icon: '♻️' },
+                { key: 'iso17025', label: 'ISO 17025', icon: '📋' },
+                { key: 'hotList', label: 'Hot List', icon: '🔥' },
+                { key: 'readyToBill', label: 'Ready to Bill', icon: '💳' },
+                { key: 'inQa', label: 'In QA', icon: '🔍' },
+                { key: 'toShipping', label: 'To Shipping', icon: '📦' },
+                { key: 'multiParts', label: 'Multi Parts', icon: '🔧' },
+                { key: 'lostEquipment', label: 'Lost Equipment', icon: '❓' },
+                { key: 'redTag', label: 'Red Tag', icon: '🏷️' },
+                { key: 'returned', label: 'Returned', icon: '↩️' },
+                { key: 'coOverride', label: 'C/O Override', icon: '⚡' },
+                { key: 'dateValidOverride', label: 'Date Valid. Override', icon: '📅' },
+                { key: 'coStdCheckOverride', label: 'C/O Std Check Override', icon: '✅' },
+              ].map(option => (
+                <div key={option.key} className="flex items-center justify-between p-3 border rounded-lg hover:bg-muted/50 transition-colors">
+                  <div className="flex items-center gap-2">
+                    <span className="text-lg">{option.icon}</span>
+                    <Label 
+                      htmlFor={option.key} 
+                      className="text-sm font-medium cursor-pointer"
+                    >
+                      {option.label}
+                    </Label>
+                  </div>
+                  <Switch
+                    id={option.key}
+                    checked={formData[option.key as keyof typeof formData] as boolean}
+                    onCheckedChange={(checked) => handleInputChange(option.key, checked)}
+                  />
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 
@@ -6038,7 +6105,7 @@ const FormVariationsDemo = () => {
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pb-4">
-                    {renderGeneralSection()}
+                    {renderGeneralSection(true)}
                   </AccordionContent>
                 </AccordionItem>
 
@@ -6095,7 +6162,7 @@ const FormVariationsDemo = () => {
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pb-4">
-                    {renderGeneralSection()}
+                    {renderGeneralSection(true)}
                   </AccordionContent>
                 </AccordionItem>
 
@@ -6131,7 +6198,7 @@ const FormVariationsDemo = () => {
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pb-4">
-                    {renderLogisticsSection()}
+                    {renderLogisticsSection(true)}
                   </AccordionContent>
                 </AccordionItem>
 
@@ -6289,7 +6356,7 @@ const FormVariationsDemo = () => {
               </div>
             </AccordionTrigger>
             <AccordionContent className="pb-4">
-              {renderGeneralSection()}
+              {renderGeneralSection(true)}
             </AccordionContent>
           </AccordionItem>
 
@@ -6325,7 +6392,7 @@ const FormVariationsDemo = () => {
               </div>
             </AccordionTrigger>
             <AccordionContent className="pb-4">
-              {renderLogisticsSection()}
+              {renderLogisticsSection(true)}
             </AccordionContent>
           </AccordionItem>
 
