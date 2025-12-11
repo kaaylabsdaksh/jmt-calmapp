@@ -4664,26 +4664,24 @@ const FormVariationsDemo = () => {
         </div>
       </div>
 
-      {/* Toggle Button */}
+      {/* Toggle Link */}
       <div className="flex justify-end">
-        <Button
-          variant="outline"
-          size="sm"
+        <button
           onClick={() => handleInputChange("showCostDetails", !formData.showCostDetails)}
-          className="gap-2"
+          className="text-sm text-muted-foreground hover:text-foreground flex items-center gap-1 transition-colors"
         >
           {formData.showCostDetails ? (
             <>
-              <ChevronLeft className="h-4 w-4" />
+              <ChevronUp className="h-3 w-3" />
               Hide Details
             </>
           ) : (
             <>
-              <ChevronRight className="h-4 w-4" />
+              <ChevronDown className="h-3 w-3" />
               Show Details
             </>
           )}
-        </Button>
+        </button>
       </div>
 
       {/* Collapsible Cost Details */}
