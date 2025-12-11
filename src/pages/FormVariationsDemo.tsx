@@ -3114,54 +3114,57 @@ const FormVariationsDemo = () => {
   );
 
   // Render factory configuration section
-  const renderFactoryConfigSection = () => (
-    <div className="space-y-4">
-        <div className="flex items-center space-x-2 mb-4">
+  const renderFactoryConfigSection = (isAccordion = false) => (
+    <div className={isAccordion ? "space-y-2" : "space-y-4"}>
+        <div className={`flex items-center ${isAccordion ? 'space-x-1.5 mb-2' : 'space-x-2 mb-4'}`}>
           <Checkbox
             id="toFactory"
             checked={formData.toFactory}
             onCheckedChange={(checked) => handleInputChange("toFactory", checked)}
+            className={isAccordion ? "h-3.5 w-3.5" : ""}
           />
-          <Label htmlFor="toFactory">Send to Factory (T/F)</Label>
+          <Label htmlFor="toFactory" className={isAccordion ? "text-xs" : ""}>Send to Factory (T/F)</Label>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="space-y-2">
-            <Label htmlFor="tfPoNumber">Factory PO Number</Label>
+        <div className={`grid grid-cols-1 md:grid-cols-3 ${isAccordion ? 'gap-2' : 'gap-4'}`}>
+          <div className={isAccordion ? "space-y-1" : "space-y-2"}>
+            <Label htmlFor="tfPoNumber" className={isAccordion ? "text-xs" : ""}>Factory PO Number</Label>
             <Input
               id="tfPoNumber"
               value={formData.tfPoNumber}
               onChange={(e) => handleInputChange("tfPoNumber", e.target.value)}
               placeholder="PO number"
+              className={isAccordion ? "h-7 text-sm" : ""}
             />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="vendorRmaNumber">Vendor RMA Number</Label>
+          <div className={isAccordion ? "space-y-1" : "space-y-2"}>
+            <Label htmlFor="vendorRmaNumber" className={isAccordion ? "text-xs" : ""}>Vendor RMA Number</Label>
             <Input
               id="vendorRmaNumber"
               value={formData.vendorRmaNumber}
               onChange={(e) => handleInputChange("vendorRmaNumber", e.target.value)}
               placeholder="RMA number"
+              className={isAccordion ? "h-7 text-sm" : ""}
             />
           </div>
 
           <div className="flex items-end">
-            <Button variant="outline" size="sm" onClick={() => setQf3DialogOpen(true)}>
+            <Button variant="outline" size="sm" onClick={() => setQf3DialogOpen(true)} className={isAccordion ? "h-7 text-xs" : ""}>
               Generate QF3
             </Button>
           </div>
         </div>
 
-        <div className="pt-6 border-t space-y-6">
+        <div className={`${isAccordion ? 'pt-3' : 'pt-6'} border-t ${isAccordion ? 'space-y-3' : 'space-y-6'}`}>
           {/* Certificate Configuration */}
-          <div className="space-y-4">
-            <div className="flex items-center justify-between p-4 rounded-lg border bg-card">
-              <div className="flex flex-col gap-1">
-                <Label htmlFor="noTfCert" className="text-sm font-medium cursor-pointer">
+          <div className={isAccordion ? "space-y-2" : "space-y-4"}>
+            <div className={`flex items-center justify-between ${isAccordion ? 'p-2' : 'p-4'} rounded-lg border bg-card`}>
+              <div className="flex flex-col gap-0.5">
+                <Label htmlFor="noTfCert" className={`${isAccordion ? 'text-xs' : 'text-sm'} font-medium cursor-pointer`}>
                   Certificate Required
                 </Label>
-                <p className="text-xs text-muted-foreground">
+                <p className={`${isAccordion ? 'text-[10px]' : 'text-xs'} text-muted-foreground`}>
                   Toggle to require certificate upload for this work order
                 </p>
               </div>
@@ -3174,26 +3177,26 @@ const FormVariationsDemo = () => {
 
             {/* Certificate File Upload - Only show when certificate is required */}
             {!formData.noTfCert && (
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-foreground">Certificate File</Label>
+              <div className={isAccordion ? "space-y-2" : "space-y-4"}>
+                <div className={isAccordion ? "space-y-1" : "space-y-2"}>
+                  <Label className={`${isAccordion ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>Certificate File</Label>
                   {/* Always show upload area */}
                   <div className="relative rounded-lg border-2 border-dashed border-muted-foreground/25 hover:border-muted-foreground/50 bg-background transition-colors">
-                    <div className="flex items-center justify-between p-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center">
-                          <Package className="w-5 h-5 text-muted-foreground" />
+                    <div className={`flex items-center justify-between ${isAccordion ? 'p-2' : 'p-4'}`}>
+                      <div className={`flex items-center ${isAccordion ? 'gap-2' : 'gap-3'}`}>
+                        <div className={`${isAccordion ? 'w-7 h-7' : 'w-10 h-10'} rounded-lg bg-muted flex items-center justify-center`}>
+                          <Package className={`${isAccordion ? 'w-3.5 h-3.5' : 'w-5 h-5'} text-muted-foreground`} />
                         </div>
                         <div>
-                          <p className="text-sm font-medium">
+                          <p className={`${isAccordion ? 'text-xs' : 'text-sm'} font-medium`}>
                             Upload certificate file
                           </p>
-                          <p className="text-xs text-muted-foreground">
+                          <p className={`${isAccordion ? 'text-[10px]' : 'text-xs'} text-muted-foreground`}>
                             PDF, DOC, or image files supported
                           </p>
                         </div>
                       </div>
-                      <Button variant="outline" size="sm" className="px-6">
+                      <Button variant="outline" size="sm" className={isAccordion ? "h-6 text-xs px-3" : "px-6"}>
                         Browse
                       </Button>
                     </div>
@@ -3202,37 +3205,37 @@ const FormVariationsDemo = () => {
 
                 {/* Show uploaded certificate file if exists */}
                 {formData.certFile && (
-                  <div className="rounded-lg border bg-card p-4">
+                  <div className={`rounded-lg border bg-card ${isAccordion ? 'p-2' : 'p-4'}`}>
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                          <FileText className="w-5 h-5 text-primary" />
+                      <div className={`flex items-center ${isAccordion ? 'gap-2' : 'gap-3'}`}>
+                        <div className={`${isAccordion ? 'w-7 h-7' : 'w-10 h-10'} rounded-lg bg-primary/10 flex items-center justify-center`}>
+                          <FileText className={`${isAccordion ? 'w-3.5 h-3.5' : 'w-5 h-5'} text-primary`} />
                         </div>
                         <div>
-                          <p className="text-sm font-medium">
+                          <p className={`${isAccordion ? 'text-xs' : 'text-sm'} font-medium`}>
                             {formData.certFile}
                           </p>
-                          <p className="text-xs text-muted-foreground">
+                          <p className={`${isAccordion ? 'text-[10px]' : 'text-xs'} text-muted-foreground`}>
                             PDF Document • 2.4 MB
                           </p>
                         </div>
                       </div>
-                      <div className="flex items-center gap-2">
+                      <div className={`flex items-center ${isAccordion ? 'gap-1' : 'gap-2'}`}>
                         <Button 
                           variant="ghost" 
                           size="sm"
                           onClick={handleViewCertificate}
-                          className="h-8 w-8 p-0"
+                          className={isAccordion ? "h-6 w-6 p-0" : "h-8 w-8 p-0"}
                         >
-                          <Eye className="w-4 h-4" />
+                          <Eye className={isAccordion ? "w-3 h-3" : "w-4 h-4"} />
                         </Button>
                         <Button 
                           variant="ghost" 
                           size="sm"
                           onClick={handleDeleteCertificate}
-                          className="h-8 w-8 p-0 text-destructive hover:text-destructive hover:bg-destructive/10"
+                          className={`${isAccordion ? 'h-6 w-6' : 'h-8 w-8'} p-0 text-destructive hover:text-destructive hover:bg-destructive/10`}
                         >
-                          <Trash2 className="w-4 h-4" />
+                          <Trash2 className={isAccordion ? "w-3 h-3" : "w-4 h-4"} />
                         </Button>
                       </div>
                     </div>
@@ -6162,7 +6165,7 @@ const FormVariationsDemo = () => {
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pb-4">
-                    {renderFactoryConfigSection()}
+                    {renderFactoryConfigSection(true)}
                   </AccordionContent>
                 </AccordionItem>
 
