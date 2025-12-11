@@ -36,7 +36,7 @@ const FormVariationsDemo = () => {
   const { toast } = useToast();
   
   // Layout variant state
-  const [layoutVariant, setLayoutVariant] = useState<'default' | 'minimal' | 'accordion'>('accordion');
+  const [layoutVariant, setLayoutVariant] = useState<'default' | 'minimal' | 'accordion' | 'bento'>('accordion');
   
   // Accordion density state: 'compact' = ultra-compact, 'normal' = standard spacing
   const [accordionDensity, setAccordionDensity] = useState<'compact' | 'normal'>('compact');
@@ -5869,6 +5869,18 @@ const FormVariationsDemo = () => {
                 <ChevronDown className="h-3.5 w-3.5" />
                 Accordion
               </button>
+              <button
+                onClick={() => setLayoutVariant('bento')}
+                className={cn(
+                  "inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md transition-all",
+                  layoutVariant === 'bento'
+                    ? "bg-background text-foreground shadow-sm"
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                <Menu className="h-3.5 w-3.5" />
+                Bento
+              </button>
             </div>
           </div>
         </div>
@@ -6563,6 +6575,255 @@ const FormVariationsDemo = () => {
         </Accordion>
       </CardContent>
     </Card>
+  );
+
+  // Render bento grid interface
+  const renderBentoGridInterface = () => (
+    <div className="grid grid-cols-12 gap-4 mb-24">
+      {/* General - Large tile spanning 8 columns */}
+      <div className="col-span-12 lg:col-span-8">
+        <Card className="h-full border shadow-sm hover:shadow-md transition-shadow">
+          <CardHeader className="pb-3">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-primary/10 rounded-lg">
+                <Info className="h-5 w-5 text-primary" />
+              </div>
+              <div>
+                <CardTitle className="text-base">General Information</CardTitle>
+                <CardDescription className="text-xs">Status, priority, and basic details</CardDescription>
+              </div>
+              {tabStatus['general'] === 'completed' && (
+                <CheckCircle className="h-4 w-4 ml-auto text-green-600" />
+              )}
+            </div>
+          </CardHeader>
+          <CardContent className="pt-0">
+            {renderGeneralSection()}
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Cost - Medium tile spanning 4 columns */}
+      <div className="col-span-12 lg:col-span-4">
+        <Card className="h-full border shadow-sm hover:shadow-md transition-shadow">
+          <CardHeader className="pb-3">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-emerald-500/10 rounded-lg">
+                <DollarSign className="h-5 w-5 text-emerald-600" />
+              </div>
+              <div>
+                <CardTitle className="text-base">Cost</CardTitle>
+                <CardDescription className="text-xs">Pricing and labor hours</CardDescription>
+              </div>
+              {tabStatus['cost'] === 'completed' && (
+                <CheckCircle className="h-4 w-4 ml-auto text-green-600" />
+              )}
+            </div>
+          </CardHeader>
+          <CardContent className="pt-0">
+            {renderCostSection()}
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Product - Large tile spanning 6 columns */}
+      <div className="col-span-12 lg:col-span-6">
+        <Card className="h-full border shadow-sm hover:shadow-md transition-shadow">
+          <CardHeader className="pb-3">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-blue-500/10 rounded-lg">
+                <Package className="h-5 w-5 text-blue-600" />
+              </div>
+              <div>
+                <CardTitle className="text-base">Product</CardTitle>
+                <CardDescription className="text-xs">Manufacturer, model, and specifications</CardDescription>
+              </div>
+              {tabStatus['product'] === 'completed' && (
+                <CheckCircle className="h-4 w-4 ml-auto text-green-600" />
+              )}
+            </div>
+          </CardHeader>
+          <CardContent className="pt-0">
+            {renderProductSection()}
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Logistics - Medium tile spanning 6 columns */}
+      <div className="col-span-12 lg:col-span-6">
+        <Card className="h-full border shadow-sm hover:shadow-md transition-shadow">
+          <CardHeader className="pb-3">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-orange-500/10 rounded-lg">
+                <Truck className="h-5 w-5 text-orange-600" />
+              </div>
+              <div>
+                <CardTitle className="text-base">Logistics</CardTitle>
+                <CardDescription className="text-xs">Arrival and departure information</CardDescription>
+              </div>
+              {tabStatus['logistics'] === 'completed' && (
+                <CheckCircle className="h-4 w-4 ml-auto text-green-600" />
+              )}
+            </div>
+          </CardHeader>
+          <CardContent className="pt-0">
+            {renderLogisticsSection()}
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Lab + Cost - Medium tile spanning 4 columns */}
+      <div className="col-span-12 md:col-span-6 lg:col-span-4">
+        <Card className="h-full border shadow-sm hover:shadow-md transition-shadow">
+          <CardHeader className="pb-3">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-purple-500/10 rounded-lg">
+                <Settings className="h-5 w-5 text-purple-600" />
+              </div>
+              <div>
+                <CardTitle className="text-base">Lab</CardTitle>
+                <CardDescription className="text-xs">Lab configuration and testing</CardDescription>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent className="pt-0">
+            {renderLabSection()}
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Factory - Small tile spanning 4 columns */}
+      <div className="col-span-12 md:col-span-6 lg:col-span-4">
+        <Card className="h-full border shadow-sm hover:shadow-md transition-shadow">
+          <CardHeader className="pb-3">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-slate-500/10 rounded-lg">
+                <Settings className="h-5 w-5 text-slate-600" />
+              </div>
+              <div>
+                <CardTitle className="text-base">Factory</CardTitle>
+                <CardDescription className="text-xs">Factory configuration</CardDescription>
+              </div>
+              {tabStatus['factory'] === 'completed' && (
+                <CheckCircle className="h-4 w-4 ml-auto text-green-600" />
+              )}
+            </div>
+          </CardHeader>
+          <CardContent className="pt-0">
+            {renderFactoryConfigSection()}
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Transit - Small tile spanning 4 columns */}
+      <div className="col-span-12 md:col-span-6 lg:col-span-4">
+        <Card className="h-full border shadow-sm hover:shadow-md transition-shadow">
+          <CardHeader className="pb-3">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-cyan-500/10 rounded-lg">
+                <Truck className="h-5 w-5 text-cyan-600" />
+              </div>
+              <div>
+                <CardTitle className="text-base">Transit</CardTitle>
+                <CardDescription className="text-xs">Shipping and transit details</CardDescription>
+              </div>
+              {tabStatus['transit'] === 'completed' && (
+                <CheckCircle className="h-4 w-4 ml-auto text-green-600" />
+              )}
+            </div>
+          </CardHeader>
+          <CardContent className="pt-0">
+            {renderTransitSection()}
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Parts - Medium tile spanning 6 columns */}
+      <div className="col-span-12 md:col-span-6">
+        <Card className="h-full border shadow-sm hover:shadow-md transition-shadow">
+          <CardHeader className="pb-3">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-red-500/10 rounded-lg">
+                <Wrench className="h-5 w-5 text-red-600" />
+              </div>
+              <div>
+                <CardTitle className="text-base">Parts</CardTitle>
+                <CardDescription className="text-xs">Manage parts and components</CardDescription>
+              </div>
+              {tabStatus['parts'] === 'completed' && (
+                <CheckCircle className="h-4 w-4 ml-auto text-green-600" />
+              )}
+            </div>
+          </CardHeader>
+          <CardContent className="pt-0">
+            {renderPartsSection()}
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Images - Medium tile spanning 6 columns */}
+      <div className="col-span-12 md:col-span-6">
+        <Card className="h-full border shadow-sm hover:shadow-md transition-shadow">
+          <CardHeader className="pb-3">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-pink-500/10 rounded-lg">
+                <Camera className="h-5 w-5 text-pink-600" />
+              </div>
+              <div>
+                <CardTitle className="text-base">Images</CardTitle>
+                <CardDescription className="text-xs">Product photos and documentation</CardDescription>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent className="pt-0">
+            {renderProductImagesSection()}
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Additional - Medium tile spanning 6 columns */}
+      <div className="col-span-12 md:col-span-6">
+        <Card className="h-full border shadow-sm hover:shadow-md transition-shadow">
+          <CardHeader className="pb-3">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-amber-500/10 rounded-lg">
+                <List className="h-5 w-5 text-amber-600" />
+              </div>
+              <div>
+                <CardTitle className="text-base">Additional</CardTitle>
+                <CardDescription className="text-xs">Additional options and settings</CardDescription>
+              </div>
+              {tabStatus['options'] === 'completed' && (
+                <CheckCircle className="h-4 w-4 ml-auto text-green-600" />
+              )}
+            </div>
+          </CardHeader>
+          <CardContent className="pt-0">
+            {renderOptionsSection()}
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Activity Log - Full width spanning 6 columns */}
+      <div className="col-span-12 md:col-span-6">
+        <Card className="h-full border shadow-sm hover:shadow-md transition-shadow">
+          <CardHeader className="pb-3">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-indigo-500/10 rounded-lg">
+                <Activity className="h-5 w-5 text-indigo-600" />
+              </div>
+              <div>
+                <CardTitle className="text-base">Activity Log</CardTitle>
+                <CardDescription className="text-xs">Track all changes and updates</CardDescription>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent className="pt-0">
+            {renderActivityLog()}
+          </CardContent>
+        </Card>
+      </div>
+    </div>
   );
 
   // Render minimal single-scroll interface
@@ -7509,7 +7770,7 @@ const FormVariationsDemo = () => {
       {/* Form Content */}
       <div className="px-3 sm:px-4 lg:px-6">{/* Removed bottom padding - footer component handles spacing */}
         {/* Work Order Header */}
-        {(layoutVariant === 'default' || layoutVariant === 'accordion') ? renderWorkOrderHeader() : renderMinimalWorkOrderHeader()}
+        {(layoutVariant === 'default' || layoutVariant === 'accordion' || layoutVariant === 'bento') ? renderWorkOrderHeader() : renderMinimalWorkOrderHeader()}
         
         {/* Main Section Toggles */}
         {layoutVariant === 'minimal' ? (
@@ -7644,6 +7905,7 @@ const FormVariationsDemo = () => {
             {layoutVariant === 'default' && renderTabbedInterface()}
             {layoutVariant === 'minimal' && renderMinimalScrollInterface()}
             {layoutVariant === 'accordion' && renderAccordionTabsInterface()}
+            {layoutVariant === 'bento' && renderBentoGridInterface()}
           </>
         )}
         
