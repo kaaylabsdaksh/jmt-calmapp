@@ -1623,24 +1623,23 @@ const FormVariationsDemo = () => {
 
     // Original SINGLE type layout
     return (
-    <div className="space-y-6">
+    <div className={isAccordion ? "space-y-3" : "space-y-6"}>
       {/* Created and Modified Dates */}
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-4 border-b border-border">
-        <div className="text-sm text-muted-foreground">
+      <div className={`flex flex-col md:flex-row items-start md:items-center justify-between gap-2 pb-2 border-b border-border ${isAccordion ? "text-xs" : ""}`}>
+        <div className={`${isAccordion ? "text-xs" : "text-sm"} text-muted-foreground`}>
           <span className="font-medium">Created:</span> 09/09/2025 by Admin User
         </div>
         
-        <div className="text-sm text-muted-foreground">
+        <div className={`${isAccordion ? "text-xs" : "text-sm"} text-muted-foreground`}>
           <span className="font-medium">Modified:</span> 09/09/2025 by Admin User
         </div>
-
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 auto-rows-min">
-        <div className="space-y-2">
-          <Label htmlFor="itemStatus" className="text-sm font-medium">Item Status</Label>
+      <div className={`grid ${isAccordion ? "grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-2" : "grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"} auto-rows-min`}>
+        <div className={isAccordion ? "space-y-1" : "space-y-2"}>
+          <Label htmlFor="itemStatus" className={`${isAccordion ? "text-xs" : "text-sm"} font-medium`}>Item Status</Label>
           <Select value={formData.itemStatus} onValueChange={handleStatusChangeAttempt}>
-            <SelectTrigger className="h-11">
+            <SelectTrigger className={isAccordion ? "h-8 text-sm" : "h-11"}>
               <SelectValue placeholder="Select status" />
             </SelectTrigger>
             <SelectContent className="bg-popover border z-50 max-h-48 overflow-y-auto">
@@ -1678,10 +1677,10 @@ const FormVariationsDemo = () => {
 
         {/* Conditional Rotation Sub Status field when status is "Rotation" */}
         {formData.itemStatus === "rotation" && (
-          <div className="space-y-2">
-            <Label htmlFor="rotationSubStatus" className="text-sm font-medium">Rotation Sub Status</Label>
+          <div className={isAccordion ? "space-y-1" : "space-y-2"}>
+            <Label htmlFor="rotationSubStatus" className={`${isAccordion ? "text-xs" : "text-sm"} font-medium`}>Rotation Sub Status</Label>
             <Select value={formData.rotationSubStatus} onValueChange={(value) => handleInputChange("rotationSubStatus", value)}>
-              <SelectTrigger className="h-11">
+              <SelectTrigger className={isAccordion ? "h-8 text-sm" : "h-11"}>
                 <SelectValue placeholder="Select rotation sub status" />
               </SelectTrigger>
               <SelectContent className="bg-popover border z-50 max-h-48 overflow-y-auto">
@@ -1697,10 +1696,10 @@ const FormVariationsDemo = () => {
         {/* Conditional T/F fields when status is "To Factory" */}
         {formData.itemStatus === "to-factory" && (
           <>
-            <div className="space-y-2">
-              <Label htmlFor="tfStatus" className="text-sm font-medium">T/F Status</Label>
+            <div className={isAccordion ? "space-y-1" : "space-y-2"}>
+              <Label htmlFor="tfStatus" className={`${isAccordion ? "text-xs" : "text-sm"} font-medium`}>T/F Status</Label>
               <Select value={formData.tfStatus} onValueChange={(value) => handleInputChange("tfStatus", value)}>
-                <SelectTrigger className="h-11">
+                <SelectTrigger className={isAccordion ? "h-8 text-sm" : "h-11"}>
                   <SelectValue placeholder="Select T/F status" />
                 </SelectTrigger>
                 <SelectContent className="bg-popover border z-50 max-h-48 overflow-y-auto">
@@ -1713,10 +1712,10 @@ const FormVariationsDemo = () => {
               </Select>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="tfClerk" className="text-sm font-medium">T/F Clerk</Label>
+            <div className={isAccordion ? "space-y-1" : "space-y-2"}>
+              <Label htmlFor="tfClerk" className={`${isAccordion ? "text-xs" : "text-sm"} font-medium`}>T/F Clerk</Label>
               <Select value={formData.tfClerk} onValueChange={(value) => handleInputChange("tfClerk", value)}>
-                <SelectTrigger className="h-11">
+                <SelectTrigger className={isAccordion ? "h-8 text-sm" : "h-11"}>
                   <SelectValue placeholder="Select clerk" />
                 </SelectTrigger>
                 <SelectContent className="bg-popover border z-50 max-h-48 overflow-y-auto">
@@ -1728,25 +1727,25 @@ const FormVariationsDemo = () => {
               </Select>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="tfFollowup" className="text-sm font-medium">T/F Follow-up</Label>
+            <div className={isAccordion ? "space-y-1" : "space-y-2"}>
+              <Label htmlFor="tfFollowup" className={`${isAccordion ? "text-xs" : "text-sm"} font-medium`}>T/F Follow-up</Label>
               <Input
                 id="tfFollowup"
                 value={formData.tfFollowup}
                 onChange={(e) => handleInputChange("tfFollowup", e.target.value)}
                 placeholder="Enter follow-up notes"
-                className="h-11"
+                className={isAccordion ? "h-8 text-sm" : "h-11"}
               />
             </div>
           </>
         )}
 
-        <div className="space-y-2">
-          <Label htmlFor="priority" className="text-sm font-medium">
+        <div className={isAccordion ? "space-y-1" : "space-y-2"}>
+          <Label htmlFor="priority" className={`${isAccordion ? "text-xs" : "text-sm"} font-medium`}>
             Priority {formData.type === "single" && <span className="text-destructive">*</span>}
           </Label>
           <Select value={formData.priority} onValueChange={(value) => handleInputChange("priority", value)}>
-            <SelectTrigger className="h-11">
+            <SelectTrigger className={isAccordion ? "h-8 text-sm" : "h-11"}>
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="bg-popover border z-50">
@@ -1759,12 +1758,12 @@ const FormVariationsDemo = () => {
           </Select>
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="location" className="text-sm font-medium">
+        <div className={isAccordion ? "space-y-1" : "space-y-2"}>
+          <Label htmlFor="location" className={`${isAccordion ? "text-xs" : "text-sm"} font-medium`}>
             Location {formData.type === "single" && <span className="text-destructive">*</span>}
           </Label>
           <Select value={formData.location} onValueChange={(value) => handleInputChange("location", value)}>
-            <SelectTrigger className="h-11">
+            <SelectTrigger className={isAccordion ? "h-8 text-sm" : "h-11"}>
               <SelectValue placeholder="Select location" />
             </SelectTrigger>
             <SelectContent className="bg-popover border z-50 max-h-48 overflow-y-auto">
@@ -1788,12 +1787,12 @@ const FormVariationsDemo = () => {
           </Select>
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="division" className="text-sm font-medium">
+        <div className={isAccordion ? "space-y-1" : "space-y-2"}>
+          <Label htmlFor="division" className={`${isAccordion ? "text-xs" : "text-sm"} font-medium`}>
             Division {formData.type === "single" && <span className="text-destructive">*</span>}
           </Label>
           <Select value={formData.division} onValueChange={(value) => handleInputChange("division", value)}>
-            <SelectTrigger className="h-11">
+            <SelectTrigger className={isAccordion ? "h-8 text-sm" : "h-11"}>
               <SelectValue placeholder="Select division" />
             </SelectTrigger>
             <SelectContent className="bg-popover border z-50">
@@ -1810,28 +1809,28 @@ const FormVariationsDemo = () => {
           </Select>
         </div>
 
-        <div className="space-y-2">
-          <Label className="text-sm font-medium">
+        <div className={isAccordion ? "space-y-1" : "space-y-2"}>
+          <Label className={`${isAccordion ? "text-xs" : "text-sm"} font-medium`}>
             Cal Freq Interval {formData.type === "single" && <span className="text-destructive">*</span>}
           </Label>
           <RadioGroup
             value={formData.calFreqInterval}
             onValueChange={(value) => handleInputChange("calFreqInterval", value)}
-            className="flex gap-4"
+            className={`flex gap-3 ${isAccordion ? "pt-1" : ""}`}
           >
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="monthly" id="monthly" />
-              <Label htmlFor="monthly" className="font-normal cursor-pointer">Monthly</Label>
+            <div className="flex items-center space-x-1">
+              <RadioGroupItem value="monthly" id="monthly" className={isAccordion ? "h-3 w-3" : ""} />
+              <Label htmlFor="monthly" className={`font-normal cursor-pointer ${isAccordion ? "text-xs" : ""}`}>Monthly</Label>
             </div>
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="weekly" id="weekly" />
-              <Label htmlFor="weekly" className="font-normal cursor-pointer">Weekly</Label>
+            <div className="flex items-center space-x-1">
+              <RadioGroupItem value="weekly" id="weekly" className={isAccordion ? "h-3 w-3" : ""} />
+              <Label htmlFor="weekly" className={`font-normal cursor-pointer ${isAccordion ? "text-xs" : ""}`}>Weekly</Label>
             </div>
           </RadioGroup>
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="calFreq" className="text-sm font-medium">
+        <div className={isAccordion ? "space-y-1" : "space-y-2"}>
+          <Label htmlFor="calFreq" className={`${isAccordion ? "text-xs" : "text-sm"} font-medium`}>
             Cal Freq {formData.type === "single" && <span className="text-destructive">*</span>}
           </Label>
           <Input
@@ -1839,16 +1838,16 @@ const FormVariationsDemo = () => {
             value={formData.calFreq}
             onChange={(e) => handleInputChange("calFreq", e.target.value)}
             placeholder="Enter calibration frequency"
-            className="h-11"
+            className={isAccordion ? "h-8 text-sm" : "h-11"}
           />
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="actionCode" className="text-sm font-medium">
+        <div className={isAccordion ? "space-y-1" : "space-y-2"}>
+          <Label htmlFor="actionCode" className={`${isAccordion ? "text-xs" : "text-sm"} font-medium`}>
             Action Code {formData.type === "single" && <span className="text-destructive">*</span>}
           </Label>
           <Select value={formData.actionCode} onValueChange={(value) => handleInputChange("actionCode", value)}>
-            <SelectTrigger className="h-11">
+            <SelectTrigger className={isAccordion ? "h-8 text-sm" : "h-11"}>
               <SelectValue placeholder="Select action code" />
             </SelectTrigger>
             <SelectContent className="bg-popover border z-50">
@@ -1865,18 +1864,18 @@ const FormVariationsDemo = () => {
           </Select>
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="assignedTo" className="text-sm font-medium">Assigned To</Label>
+        <div className={isAccordion ? "space-y-1" : "space-y-2"}>
+          <Label htmlFor="assignedTo" className={`${isAccordion ? "text-xs" : "text-sm"} font-medium`}>Assigned To</Label>
           <Popover open={assigneeDropdownOpen} onOpenChange={setAssigneeDropdownOpen}>
             <PopoverTrigger asChild>
               <Button
                 variant="outline"
                 role="combobox"
                 aria-expanded={assigneeDropdownOpen}
-                className="w-full h-11 justify-between"
+                className={`w-full justify-between ${isAccordion ? "h-8 text-sm" : "h-11"}`}
               >
                 {formData.assignedTo || "Select assignee"}
-                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                <ChevronsUpDown className={`ml-2 shrink-0 opacity-50 ${isAccordion ? "h-3 w-3" : "h-4 w-4"}`} />
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-[--radix-popover-trigger-width] p-0" align="start">
@@ -1920,11 +1919,11 @@ const FormVariationsDemo = () => {
     );
   };
 
-  const renderProductSection = () => (
-    <div className="space-y-6">
-      <Card className="border-0 shadow-md w-full">
-        <CardContent className="p-4 sm:p-6 space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+  const renderProductSection = (isAccordion = false) => (
+    <div className={isAccordion ? "space-y-3" : "space-y-6"}>
+      <div className={isAccordion ? "" : "Card border-0 shadow-md w-full"}>
+        <div className={isAccordion ? "space-y-2" : "p-4 sm:p-6 space-y-4"}>
+          <div className={`grid ${isAccordion ? "grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-2" : "grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"}`}>
             <div className="space-y-2">
               <Label htmlFor="manufacturer" className="text-sm font-medium">
                 Manufacturer {formData.type === "single" && <span className="text-destructive">*</span>}
@@ -2209,34 +2208,22 @@ const FormVariationsDemo = () => {
               />
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 
   const renderLogisticsSection = (isAccordion = false) => (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div className={`grid grid-cols-1 lg:grid-cols-2 ${isAccordion ? "gap-4" : "gap-6"}`}>
       {/* Arrival Information */}
-      <Card className="border-0 shadow-md">
-        <CardContent className="p-4 sm:p-6 space-y-4">
-          {isAccordion ? (
-            <div className="pb-4 border-b border-border">
-              <h3 className="text-lg font-semibold text-foreground">Arrival Information</h3>
-            </div>
-          ) : (
-            <div className="flex items-center gap-3 pb-4 border-b border-border">
-              <div className="p-2 bg-primary/10 rounded-lg">
-                <Truck className="h-5 w-5 text-primary" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold text-foreground">Arrival Information</h3>
-              </div>
-            </div>
-          )}
-          
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="arrivalDate" className="text-sm font-medium">
+      {isAccordion ? (
+        <div className="space-y-2">
+          <div className="pb-2 border-b border-border">
+            <h3 className="text-sm font-medium text-foreground">Arrival Information</h3>
+          </div>
+          <div className="grid grid-cols-2 gap-2 mt-2">
+            <div className="space-y-1">
+              <Label htmlFor="arrivalDate" className="text-xs font-medium">
                 Date <span className="text-destructive">*</span>
               </Label>
               <Popover>
@@ -2244,11 +2231,11 @@ const FormVariationsDemo = () => {
                   <Button
                     variant="outline"
                     className={cn(
-                      "w-full justify-start text-left font-normal h-11",
+                      "w-full justify-start text-left font-normal h-8 text-sm",
                       !formData.arrivalDate && "text-muted-foreground"
                     )}
                   >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    <CalendarIcon className="mr-2 h-3 w-3" />
                     {formData.arrivalDate ? formData.arrivalDate : "dd/mm/yyyy"}
                   </Button>
                 </PopoverTrigger>
@@ -2264,12 +2251,12 @@ const FormVariationsDemo = () => {
               </Popover>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="arrivalType" className="text-sm font-medium">
+            <div className="space-y-1">
+              <Label htmlFor="arrivalType" className="text-xs font-medium">
                 Type <span className="text-destructive">*</span>
               </Label>
               <Select value={formData.arrivalType} onValueChange={(value) => handleInputChange("arrivalType", value)}>
-                <SelectTrigger className="h-11">
+                <SelectTrigger className="h-8 text-sm">
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
                 <SelectContent className="bg-popover border z-50">
@@ -2284,14 +2271,13 @@ const FormVariationsDemo = () => {
               </Select>
             </div>
 
-            {/* Conditional fields based on arrival type */}
             {formData.arrivalType === 'surplus' && (
-              <div className="space-y-2">
-                <Label htmlFor="arrivalLocation" className="text-sm font-medium">
+              <div className="space-y-1">
+                <Label htmlFor="arrivalLocation" className="text-xs font-medium">
                   Location <span className="text-destructive">*</span>
                 </Label>
                 <Select value={formData.arrivalLocation} onValueChange={(value) => handleInputChange("arrivalLocation", value)}>
-                  <SelectTrigger className="h-11">
+                  <SelectTrigger className="h-8 text-sm">
                     <SelectValue placeholder="Select location" />
                   </SelectTrigger>
                   <SelectContent className="bg-popover border z-50">
@@ -2305,12 +2291,12 @@ const FormVariationsDemo = () => {
             )}
 
             {formData.arrivalType === 'shipped' && (
-              <div className="space-y-2">
-                <Label htmlFor="shipType" className="text-sm font-medium">
+              <div className="space-y-1">
+                <Label htmlFor="shipType" className="text-xs font-medium">
                   Ship Type <span className="text-destructive">*</span>
                 </Label>
                 <Select value={formData.shipType} onValueChange={(value) => handleInputChange("shipType", value)}>
-                  <SelectTrigger className="h-11">
+                  <SelectTrigger className="h-8 text-sm">
                     <SelectValue placeholder="Select ship type" />
                   </SelectTrigger>
                   <SelectContent className="bg-popover border z-50">
@@ -2324,8 +2310,8 @@ const FormVariationsDemo = () => {
             )}
 
             {formData.arrivalType === 'customer-dropoff' && (
-              <div className="space-y-2">
-                <Label htmlFor="name" className="text-sm font-medium">
+              <div className="space-y-1">
+                <Label htmlFor="name" className="text-xs font-medium">
                   Name <span className="text-destructive">*</span>
                 </Label>
                 <Input
@@ -2333,19 +2319,19 @@ const FormVariationsDemo = () => {
                   value={formData.name}
                   onChange={(e) => handleInputChange("name", e.target.value)}
                   placeholder="Enter name"
-                  className="h-11"
+                  className="h-8 text-sm"
                 />
               </div>
             )}
 
             {formData.arrivalType === 'jm-driver-pickup' && (
               <>
-                <div className="space-y-2">
-                  <Label htmlFor="driver" className="text-sm font-medium">
+                <div className="space-y-1">
+                  <Label htmlFor="driver" className="text-xs font-medium">
                     Driver <span className="text-destructive">*</span>
                   </Label>
                   <Select value={formData.driver} onValueChange={(value) => handleInputChange("driver", value)}>
-                    <SelectTrigger className="h-11">
+                    <SelectTrigger className="h-8 text-sm">
                       <SelectValue placeholder="Select driver" />
                     </SelectTrigger>
                     <SelectContent className="bg-popover border z-50">
@@ -2358,8 +2344,8 @@ const FormVariationsDemo = () => {
                   </Select>
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="puDate" className="text-sm font-medium">
+                <div className="space-y-1">
+                  <Label htmlFor="puDate" className="text-xs font-medium">
                     PU Date <span className="text-destructive">*</span>
                   </Label>
                   <Popover>
@@ -2367,11 +2353,11 @@ const FormVariationsDemo = () => {
                       <Button
                         variant="outline"
                         className={cn(
-                          "w-full justify-start text-left font-normal h-11",
+                          "w-full justify-start text-left font-normal h-8 text-sm",
                           !formData.puDate && "text-muted-foreground"
                         )}
                       >
-                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        <CalendarIcon className="mr-2 h-3 w-3" />
                         {formData.puDate ? formData.puDate : "dd/mm/yyyy"}
                       </Button>
                     </PopoverTrigger>
@@ -2389,18 +2375,222 @@ const FormVariationsDemo = () => {
               </>
             )}
           </div>
-        </CardContent>
-      </Card>
-
-        {/* Departure Information */}
+        </div>
+      ) : (
         <Card className="border-0 shadow-md">
-        <CardContent className="p-4 sm:p-6 space-y-4">
-          {isAccordion ? (
-            <div className="pb-4 border-b border-border">
-              <h3 className="text-lg font-semibold text-foreground">Departure Information</h3>
-              <p className="text-sm text-muted-foreground">Delivery and departure details</p>
+          <CardContent className="p-4 sm:p-6 space-y-4">
+            <div className="flex items-center gap-3 pb-4 border-b border-border">
+              <div className="p-2 bg-primary/10 rounded-lg">
+                <Truck className="h-5 w-5 text-primary" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-foreground">Arrival Information</h3>
+              </div>
             </div>
-          ) : (
+            
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="arrivalDate" className="text-sm font-medium">
+                  Date <span className="text-destructive">*</span>
+                </Label>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className={cn(
+                        "w-full justify-start text-left font-normal h-11",
+                        !formData.arrivalDate && "text-muted-foreground"
+                      )}
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {formData.arrivalDate ? formData.arrivalDate : "dd/mm/yyyy"}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={formData.arrivalDate ? new Date(formData.arrivalDate) : undefined}
+                      onSelect={(date) => handleInputChange("arrivalDate", date ? date.toISOString().split('T')[0] : "")}
+                      initialFocus
+                      className="p-3 pointer-events-auto"
+                    />
+                  </PopoverContent>
+                </Popover>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="arrivalType" className="text-sm font-medium">
+                  Type <span className="text-destructive">*</span>
+                </Label>
+                <Select value={formData.arrivalType} onValueChange={(value) => handleInputChange("arrivalType", value)}>
+                  <SelectTrigger className="h-11">
+                    <SelectValue placeholder="Select type" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-popover border z-50">
+                    <SelectItem value="surplus">Surplus</SelectItem>
+                    <SelectItem value="lab-standard">Lab Standard</SelectItem>
+                    <SelectItem value="purchasing-dept">Purchasing Dept.</SelectItem>
+                    <SelectItem value="onsite">Onsite</SelectItem>
+                    <SelectItem value="shipped">Shipped</SelectItem>
+                    <SelectItem value="customer-dropoff">Customer Dropoff</SelectItem>
+                    <SelectItem value="jm-driver-pickup">JM Driver Pickup</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {formData.arrivalType === 'surplus' && (
+                <div className="space-y-2">
+                  <Label htmlFor="arrivalLocation" className="text-sm font-medium">
+                    Location <span className="text-destructive">*</span>
+                  </Label>
+                  <Select value={formData.arrivalLocation} onValueChange={(value) => handleInputChange("arrivalLocation", value)}>
+                    <SelectTrigger className="h-11">
+                      <SelectValue placeholder="Select location" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-popover border z-50">
+                      <SelectItem value="main-office">Main Office</SelectItem>
+                      <SelectItem value="warehouse">Warehouse</SelectItem>
+                      <SelectItem value="loading-dock">Loading Dock</SelectItem>
+                      <SelectItem value="reception">Reception</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
+
+              {formData.arrivalType === 'shipped' && (
+                <div className="space-y-2">
+                  <Label htmlFor="shipType" className="text-sm font-medium">
+                    Ship Type <span className="text-destructive">*</span>
+                  </Label>
+                  <Select value={formData.shipType} onValueChange={(value) => handleInputChange("shipType", value)}>
+                    <SelectTrigger className="h-11">
+                      <SelectValue placeholder="Select ship type" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-popover border z-50">
+                      <SelectItem value="dhl">DHL</SelectItem>
+                      <SelectItem value="fedex">FedEx</SelectItem>
+                      <SelectItem value="ups">UPS</SelectItem>
+                      <SelectItem value="usps">USPS</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
+
+              {formData.arrivalType === 'customer-dropoff' && (
+                <div className="space-y-2">
+                  <Label htmlFor="name" className="text-sm font-medium">
+                    Name <span className="text-destructive">*</span>
+                  </Label>
+                  <Input
+                    id="name"
+                    value={formData.name}
+                    onChange={(e) => handleInputChange("name", e.target.value)}
+                    placeholder="Enter name"
+                    className="h-11"
+                  />
+                </div>
+              )}
+
+              {formData.arrivalType === 'jm-driver-pickup' && (
+                <>
+                  <div className="space-y-2">
+                    <Label htmlFor="driver" className="text-sm font-medium">
+                      Driver <span className="text-destructive">*</span>
+                    </Label>
+                    <Select value={formData.driver} onValueChange={(value) => handleInputChange("driver", value)}>
+                      <SelectTrigger className="h-11">
+                        <SelectValue placeholder="Select driver" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-popover border z-50">
+                        {assignees.map((assignee) => (
+                          <SelectItem key={assignee.value} value={assignee.value}>
+                            {assignee.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="puDate" className="text-sm font-medium">
+                      PU Date <span className="text-destructive">*</span>
+                    </Label>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className={cn(
+                            "w-full justify-start text-left font-normal h-11",
+                            !formData.puDate && "text-muted-foreground"
+                          )}
+                        >
+                          <CalendarIcon className="mr-2 h-4 w-4" />
+                          {formData.puDate ? formData.puDate : "dd/mm/yyyy"}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={formData.puDate ? new Date(formData.puDate) : undefined}
+                          onSelect={(date) => handleInputChange("puDate", date ? date.toISOString().split('T')[0] : "")}
+                          initialFocus
+                          className="p-3 pointer-events-auto"
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  </div>
+                </>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Departure Information */}
+      {isAccordion ? (
+        <div className="space-y-2">
+          <div className="pb-2 border-b border-border">
+            <h3 className="text-sm font-medium text-foreground">Departure Information</h3>
+          </div>
+          <div className="grid grid-cols-2 gap-2 mt-2">
+            <div className="space-y-1">
+              <Label htmlFor="invNumber" className="text-xs font-medium">Inv #</Label>
+              <Input
+                id="invNumber"
+                value={formData.invNumber}
+                readOnly
+                placeholder="Invoice number"
+                className="h-8 text-sm bg-muted cursor-not-allowed"
+              />
+            </div>
+
+            <div className="space-y-1">
+              <Label htmlFor="dtNumber" className="text-xs font-medium">DT #</Label>
+              <Input
+                id="dtNumber"
+                value={formData.dtNumber}
+                readOnly
+                placeholder="DT number"
+                className="h-8 text-sm bg-muted cursor-not-allowed"
+              />
+            </div>
+
+            <div className="space-y-1 col-span-2">
+              <Label htmlFor="deliveryStatus" className="text-xs font-medium">Delivery Status</Label>
+              <Textarea
+                id="deliveryStatus"
+                value={formData.deliveryStatus}
+                onChange={(e) => handleInputChange("deliveryStatus", e.target.value)}
+                placeholder="Enter delivery status comments"
+                rows={2}
+                className="resize-none"
+              />
+            </div>
+          </div>
+        </div>
+      ) : (
+        <Card className="border-0 shadow-md">
+          <CardContent className="p-4 sm:p-6 space-y-4">
             <div className="flex items-center gap-3 pb-4 border-b border-border">
               <div className="p-2 bg-primary/10 rounded-lg">
                 <Truck className="h-5 w-5 text-primary" />
@@ -2410,45 +2600,45 @@ const FormVariationsDemo = () => {
                 <p className="text-sm text-muted-foreground">Delivery and departure details</p>
               </div>
             </div>
-          )}
-          
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="invNumber" className="text-sm font-medium">Inv #</Label>
-              <Input
-                id="invNumber"
-                value={formData.invNumber}
-                readOnly
-                placeholder="Invoice number"
-                className="h-11 bg-muted cursor-not-allowed"
-              />
-            </div>
+            
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="invNumber" className="text-sm font-medium">Inv #</Label>
+                <Input
+                  id="invNumber"
+                  value={formData.invNumber}
+                  readOnly
+                  placeholder="Invoice number"
+                  className="h-11 bg-muted cursor-not-allowed"
+                />
+              </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="dtNumber" className="text-sm font-medium">DT #</Label>
-              <Input
-                id="dtNumber"
-                value={formData.dtNumber}
-                readOnly
-                placeholder="DT number"
-                className="h-11 bg-muted cursor-not-allowed"
-              />
-            </div>
+              <div className="space-y-2">
+                <Label htmlFor="dtNumber" className="text-sm font-medium">DT #</Label>
+                <Input
+                  id="dtNumber"
+                  value={formData.dtNumber}
+                  readOnly
+                  placeholder="DT number"
+                  className="h-11 bg-muted cursor-not-allowed"
+                />
+              </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="deliveryStatus" className="text-sm font-medium">Delivery Status</Label>
-              <Textarea
-                id="deliveryStatus"
-                value={formData.deliveryStatus}
-                onChange={(e) => handleInputChange("deliveryStatus", e.target.value)}
-                placeholder="Enter delivery status comments"
-                rows={4}
-                className="resize-none"
-              />
+              <div className="space-y-2">
+                <Label htmlFor="deliveryStatus" className="text-sm font-medium">Delivery Status</Label>
+                <Textarea
+                  id="deliveryStatus"
+                  value={formData.deliveryStatus}
+                  onChange={(e) => handleInputChange("deliveryStatus", e.target.value)}
+                  placeholder="Enter delivery status comments"
+                  rows={4}
+                  className="resize-none"
+                />
+              </div>
             </div>
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 
