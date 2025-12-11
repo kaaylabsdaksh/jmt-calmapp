@@ -4689,239 +4689,102 @@ const FormVariationsDemo = () => {
       {/* Collapsible Cost Details */}
       {formData.showCostDetails && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Cost Breakdown Card */}
-          <Card>
-            <CardHeader className="pb-4">
-              <CardTitle className="text-base flex items-center gap-2">
-                <DollarSign className="h-4 w-4" />
-                Cost Breakdown
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {/* Calibration & Certification */}
-              <div className="space-y-3">
-                <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Calibration & Certification</div>
-                <div className="space-y-2 pl-3 border-l-2 border-primary/30">
-                  <div className="flex items-center justify-between gap-4">
-                    <Label htmlFor="ccCost" className="text-sm">C/C Cost</Label>
-                    <Input
-                      id="ccCost"
-                      type="number"
-                      step="0.01"
-                      value={formData.ccCost}
-                      onChange={(e) => handleInputChange("ccCost", e.target.value)}
-                      className="h-9 w-32"
-                    />
-                  </div>
-                  
-                  <div className="flex items-center justify-between gap-4">
-                    <Label htmlFor="cost17025" className="text-sm">17025</Label>
-                    <Input
-                      id="cost17025"
-                      type="number"
-                      step="0.01"
-                      value={formData.cost17025}
-                      onChange={(e) => handleInputChange("cost17025", e.target.value)}
-                      className="h-9 w-32"
-                    />
-                  </div>
+          {/* Cost Breakdown */}
+          <div className="space-y-4">
+            <div className="text-sm font-medium">Cost Breakdown</div>
+            
+            {/* Calibration & Certification */}
+            <div className="space-y-2">
+              <div className="text-xs text-muted-foreground uppercase tracking-wider">Calibration & Certification</div>
+              <div className="space-y-1 pl-3 border-l-2 border-blue-600/40">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm">C/C Cost</span>
+                  <Input type="number" step="0.01" value={formData.ccCost} onChange={(e) => handleInputChange("ccCost", e.target.value)} className="h-8 w-28" />
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm">17025</span>
+                  <Input type="number" step="0.01" value={formData.cost17025} onChange={(e) => handleInputChange("cost17025", e.target.value)} className="h-8 w-28" />
                 </div>
               </div>
+            </div>
 
-              {/* Service Charges */}
-              <div className="space-y-3">
-                <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Service Charges</div>
-                <div className="space-y-2 pl-3 border-l-2 border-orange-500/30">
-                  <div className="flex items-center justify-between gap-4">
-                    <Label htmlFor="expediteCost" className="text-sm">Expedite</Label>
-                    <Input
-                      id="expediteCost"
-                      type="number"
-                      step="0.01"
-                      value={formData.expediteCost}
-                      onChange={(e) => handleInputChange("expediteCost", e.target.value)}
-                      className="h-9 w-32"
-                    />
-                  </div>
-                  
-                  <div className="flex items-center justify-between gap-4">
-                    <Label htmlFor="emergencyCost" className="text-sm">Emergency</Label>
-                    <Input
-                      id="emergencyCost"
-                      type="number"
-                      step="0.01"
-                      value={formData.emergencyCost}
-                      onChange={(e) => handleInputChange("emergencyCost", e.target.value)}
-                      className="h-9 w-32"
-                    />
-                  </div>
-                  
-                  <div className="flex items-center justify-between gap-4">
-                    <Label htmlFor="evalFeeCost" className="text-sm">Eval Fee</Label>
-                    <Input
-                      id="evalFeeCost"
-                      type="number"
-                      step="0.01"
-                      value={formData.evalFeeCost}
-                      onChange={(e) => handleInputChange("evalFeeCost", e.target.value)}
-                      className="h-9 w-32"
-                    />
-                  </div>
+            {/* Service Charges */}
+            <div className="space-y-2">
+              <div className="text-xs text-muted-foreground uppercase tracking-wider">Service Charges</div>
+              <div className="space-y-1 pl-3 border-l-2 border-amber-500/40">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm">Expedite</span>
+                  <Input type="number" step="0.01" value={formData.expediteCost} onChange={(e) => handleInputChange("expediteCost", e.target.value)} className="h-8 w-28" />
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm">Emergency</span>
+                  <Input type="number" step="0.01" value={formData.emergencyCost} onChange={(e) => handleInputChange("emergencyCost", e.target.value)} className="h-8 w-28" />
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm">Eval Fee</span>
+                  <Input type="number" step="0.01" value={formData.evalFeeCost} onChange={(e) => handleInputChange("evalFeeCost", e.target.value)} className="h-8 w-28" />
                 </div>
               </div>
+            </div>
 
-              {/* Repair & Parts */}
-              <div className="space-y-3">
-                <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Repair & Parts</div>
-                <div className="space-y-2 pl-3 border-l-2 border-orange-500/30">
-                  <div className="flex items-center justify-between gap-4">
-                    <Label htmlFor="repairCostTotal" className="text-sm">Repair Cost</Label>
-                    <Input
-                      id="repairCostTotal"
-                      type="number"
-                      step="0.01"
-                      value={formData.repairCostTotal}
-                      onChange={(e) => handleInputChange("repairCostTotal", e.target.value)}
-                      className="h-9 w-32"
-                    />
-                  </div>
-                  
-                  <div className="flex items-center justify-between gap-4">
-                    <Label htmlFor="eslTestCost" className="text-sm">ESL Test Cost</Label>
-                    <Input
-                      id="eslTestCost"
-                      type="number"
-                      step="0.01"
-                      value={formData.eslTestCost}
-                      onChange={(e) => handleInputChange("eslTestCost", e.target.value)}
-                      className="h-9 w-32"
-                    />
-                  </div>
-                  
-                  <div className="flex items-center justify-between gap-4">
-                    <Label htmlFor="partsCostTotal" className="text-sm">Parts Cost</Label>
-                    <Input
-                      id="partsCostTotal"
-                      type="number"
-                      step="0.01"
-                      value={formData.partsCostTotal}
-                      onChange={(e) => handleInputChange("partsCostTotal", e.target.value)}
-                      className="h-9 w-32"
-                    />
-                  </div>
-                  
-                  <div className="flex items-center justify-between gap-4">
-                    <Label htmlFor="tfCost" className="text-sm">T/F Cost</Label>
-                    <Input
-                      id="tfCost"
-                      type="number"
-                      step="0.01"
-                      value={formData.tfCost}
-                      onChange={(e) => handleInputChange("tfCost", e.target.value)}
-                      className="h-9 w-32"
-                    />
-                  </div>
+            {/* Repair & Parts */}
+            <div className="space-y-2">
+              <div className="text-xs text-muted-foreground uppercase tracking-wider">Repair & Parts</div>
+              <div className="space-y-1 pl-3 border-l-2 border-emerald-600/40">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm">Repair Cost</span>
+                  <Input type="number" step="0.01" value={formData.repairCostTotal} onChange={(e) => handleInputChange("repairCostTotal", e.target.value)} className="h-8 w-28" />
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm">ESL Test Cost</span>
+                  <Input type="number" step="0.01" value={formData.eslTestCost} onChange={(e) => handleInputChange("eslTestCost", e.target.value)} className="h-8 w-28" />
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm">Parts Cost</span>
+                  <Input type="number" step="0.01" value={formData.partsCostTotal} onChange={(e) => handleInputChange("partsCostTotal", e.target.value)} className="h-8 w-28" />
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm">T/F Cost</span>
+                  <Input type="number" step="0.01" value={formData.tfCost} onChange={(e) => handleInputChange("tfCost", e.target.value)} className="h-8 w-28" />
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
 
-          {/* Labor Hours Card */}
-          <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-base flex items-center gap-2">
-                <User className="h-4 w-4" />
-                Labor Hours
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              {/* Header Row */}
-              <div className="grid grid-cols-4 gap-3 mb-2">
-                <div className="text-xs font-medium text-muted-foreground"></div>
-                <div className="text-xs font-medium text-muted-foreground text-center">C/C Cost</div>
-                <div className="text-xs font-medium text-muted-foreground text-center">Repair Cost</div>
-                <div className="text-xs font-medium text-muted-foreground text-center">ESL Test Cost</div>
+          {/* Labor Hours */}
+          <div className="space-y-3">
+            <div className="text-sm font-medium">Labor Hours</div>
+            
+            {/* Header Row */}
+            <div className="grid grid-cols-4 gap-2">
+              <div></div>
+              <div className="text-xs text-muted-foreground text-center">C/C Cost</div>
+              <div className="text-xs text-muted-foreground text-center">Repair Cost</div>
+              <div className="text-xs text-muted-foreground text-center">ESL Test Cost</div>
+            </div>
+            
+            {/* Tech Rows */}
+            <div className="space-y-2">
+              <div className="grid grid-cols-4 gap-2 items-center">
+                <span className="text-sm">Tech 1</span>
+                <Input type="number" step="0.01" value={formData.tech1CcHours} onChange={(e) => handleInputChange("tech1CcHours", e.target.value)} className="h-8 text-center" />
+                <Input type="number" step="0.01" value={formData.tech1RepairHours} onChange={(e) => handleInputChange("tech1RepairHours", e.target.value)} className="h-8 text-center" />
+                <Input type="number" step="0.01" value={formData.tech1EslTestHours} onChange={(e) => handleInputChange("tech1EslTestHours", e.target.value)} className="h-8 text-center" />
               </div>
-              
-              {/* Tech 1 Row */}
-              <div className="grid grid-cols-4 gap-3 items-center p-2 rounded-lg bg-muted/30 mb-2">
-                <Label className="text-sm font-medium">Tech 1</Label>
-                <Input
-                  type="number"
-                  step="0.01"
-                  value={formData.tech1CcHours}
-                  onChange={(e) => handleInputChange("tech1CcHours", e.target.value)}
-                  className="h-8 text-center"
-                />
-                <Input
-                  type="number"
-                  step="0.01"
-                  value={formData.tech1RepairHours}
-                  onChange={(e) => handleInputChange("tech1RepairHours", e.target.value)}
-                  className="h-8 text-center"
-                />
-                <Input
-                  type="number"
-                  step="0.01"
-                  value={formData.tech1EslTestHours}
-                  onChange={(e) => handleInputChange("tech1EslTestHours", e.target.value)}
-                  className="h-8 text-center"
-                />
+              <div className="grid grid-cols-4 gap-2 items-center">
+                <span className="text-sm">Tech 2</span>
+                <Input type="number" step="0.01" value={formData.tech2CcHours} onChange={(e) => handleInputChange("tech2CcHours", e.target.value)} className="h-8 text-center" />
+                <Input type="number" step="0.01" value={formData.tech2RepairHours} onChange={(e) => handleInputChange("tech2RepairHours", e.target.value)} className="h-8 text-center" />
+                <Input type="number" step="0.01" value={formData.tech2EslTestHours} onChange={(e) => handleInputChange("tech2EslTestHours", e.target.value)} className="h-8 text-center" />
               </div>
-
-              {/* Tech 2 Row */}
-              <div className="grid grid-cols-4 gap-3 items-center p-2 rounded-lg bg-muted/30 mb-2">
-                <Label className="text-sm font-medium">Tech 2</Label>
-                <Input
-                  type="number"
-                  step="0.01"
-                  value={formData.tech2CcHours}
-                  onChange={(e) => handleInputChange("tech2CcHours", e.target.value)}
-                  className="h-8 text-center"
-                />
-                <Input
-                  type="number"
-                  step="0.01"
-                  value={formData.tech2RepairHours}
-                  onChange={(e) => handleInputChange("tech2RepairHours", e.target.value)}
-                  className="h-8 text-center"
-                />
-                <Input
-                  type="number"
-                  step="0.01"
-                  value={formData.tech2EslTestHours}
-                  onChange={(e) => handleInputChange("tech2EslTestHours", e.target.value)}
-                  className="h-8 text-center"
-                />
+              <div className="grid grid-cols-4 gap-2 items-center">
+                <span className="text-sm">Tech 3</span>
+                <Input type="number" step="0.01" value={formData.tech3CcHours} onChange={(e) => handleInputChange("tech3CcHours", e.target.value)} className="h-8 text-center" />
+                <Input type="number" step="0.01" value={formData.tech3RepairHours} onChange={(e) => handleInputChange("tech3RepairHours", e.target.value)} className="h-8 text-center" />
+                <Input type="number" step="0.01" value={formData.tech3EslTestHours} onChange={(e) => handleInputChange("tech3EslTestHours", e.target.value)} className="h-8 text-center" />
               </div>
-
-              {/* Tech 3 Row */}
-              <div className="grid grid-cols-4 gap-3 items-center p-2 rounded-lg bg-muted/30">
-                <Label className="text-sm font-medium">Tech 3</Label>
-                <Input
-                  type="number"
-                  step="0.01"
-                  value={formData.tech3CcHours}
-                  onChange={(e) => handleInputChange("tech3CcHours", e.target.value)}
-                  className="h-8 text-center"
-                />
-                <Input
-                  type="number"
-                  step="0.01"
-                  value={formData.tech3RepairHours}
-                  onChange={(e) => handleInputChange("tech3RepairHours", e.target.value)}
-                  className="h-8 text-center"
-                />
-                <Input
-                  type="number"
-                  step="0.01"
-                  value={formData.tech3EslTestHours}
-                  onChange={(e) => handleInputChange("tech3EslTestHours", e.target.value)}
-                  className="h-8 text-center"
-                />
-              </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
       )}
     </div>
