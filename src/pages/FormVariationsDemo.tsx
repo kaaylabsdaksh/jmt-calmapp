@@ -4648,26 +4648,20 @@ const FormVariationsDemo = () => {
     <div className="space-y-6">
       {/* Summary Header - Cost Totals */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card className="border-primary/20 bg-primary/5">
-          <CardContent className="pt-6">
-            <div className="text-xs text-muted-foreground uppercase tracking-wider mb-2">Cal/Cert Cost</div>
-            <div className="text-2xl font-bold text-primary">${formData.calCertTotal}</div>
-          </CardContent>
-        </Card>
+        <div className="bg-background border-l-4 border-blue-600 p-4 rounded-r">
+          <div className="text-xs text-muted-foreground uppercase tracking-wider">Cal/Cert Cost</div>
+          <div className="text-xl font-semibold text-blue-600 mt-1">${formData.calCertTotal}</div>
+        </div>
         
-        <Card className="border-orange-500/20 bg-orange-500/5">
-          <CardContent className="pt-6">
-            <div className="text-xs text-muted-foreground uppercase tracking-wider mb-2">Repair Cost</div>
-            <div className="text-2xl font-bold text-orange-600">${formData.repairTotal}</div>
-          </CardContent>
-        </Card>
+        <div className="bg-background border-l-4 border-amber-500 p-4 rounded-r">
+          <div className="text-xs text-muted-foreground uppercase tracking-wider">Repair Cost</div>
+          <div className="text-xl font-semibold text-amber-500 mt-1">${formData.repairTotal}</div>
+        </div>
         
-        <Card className="border-green-500/20 bg-green-500/5">
-          <CardContent className="pt-6">
-            <div className="text-xs text-muted-foreground uppercase tracking-wider mb-2">Total Cost</div>
-            <div className="text-2xl font-bold text-green-600">${formData.allTotal}</div>
-          </CardContent>
-        </Card>
+        <div className="bg-background border-l-4 border-emerald-600 p-4 rounded-r">
+          <div className="text-xs text-muted-foreground uppercase tracking-wider">Total Cost</div>
+          <div className="text-xl font-semibold text-emerald-600 mt-1">${formData.allTotal}</div>
+        </div>
       </div>
 
       {/* Toggle Button */}
