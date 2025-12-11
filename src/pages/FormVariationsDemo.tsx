@@ -6579,7 +6579,8 @@ const FormVariationsDemo = () => {
 
   // Render bento grid interface
   const renderBentoGridInterface = () => (
-    <div className="grid grid-cols-12 gap-4 mb-24">
+    <div className="h-[calc(100vh-280px)] overflow-y-auto pr-2">
+      <div className="grid grid-cols-12 gap-4 pb-8">
       {/* General - Large tile spanning 8 columns */}
       <div className="col-span-12 lg:col-span-8">
         <Card className="h-full border shadow-sm hover:shadow-md transition-shadow">
@@ -6822,6 +6823,7 @@ const FormVariationsDemo = () => {
             {renderActivityLog()}
           </CardContent>
         </Card>
+      </div>
       </div>
     </div>
   );
