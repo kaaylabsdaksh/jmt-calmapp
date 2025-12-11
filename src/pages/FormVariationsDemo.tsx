@@ -3246,7 +3246,7 @@ const FormVariationsDemo = () => {
   );
 
   // Render lab section
-  const renderLabSection = () => {
+  const renderLabSection = (isAccordion = false) => {
     const getActionCodeLabel = () => {
       const actionCodeMap = {
         "build-new": "BUILD NEW",
@@ -3260,12 +3260,12 @@ const FormVariationsDemo = () => {
     };
 
     return (
-      <div className="space-y-8 animate-fade-in">
+      <div className={isAccordion ? "space-y-3 animate-fade-in" : "space-y-8 animate-fade-in"}>
         {/* Action Code Display */}
         {formData.actionCode && (
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-muted-foreground">Action Code:</span>
-            <Badge variant="outline" className="text-xs font-medium">
+          <div className="flex items-center gap-1">
+            <span className={isAccordion ? "text-xs text-muted-foreground" : "text-sm text-muted-foreground"}>Action Code:</span>
+            <Badge variant="outline" className={isAccordion ? "text-[10px] font-medium h-5" : "text-xs font-medium"}>
               {getActionCodeLabel()}
             </Badge>
           </div>
@@ -6142,8 +6142,8 @@ const FormVariationsDemo = () => {
                       )}
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="pb-4 space-y-4">
-                    {renderLabSection()}
+                  <AccordionContent className="pb-2 space-y-2">
+                    {renderLabSection(true)}
                     {renderCostSection(true)}
                   </AccordionContent>
                 </AccordionItem>
