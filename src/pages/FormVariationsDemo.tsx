@@ -6665,7 +6665,7 @@ const FormVariationsDemo = () => {
       {/* Second Row - Cost, Lab, Factory, Transit */}
       
       {/* Cost - spanning 3 columns */}
-      <div className="col-span-12 md:col-span-6 lg:col-span-3">
+      <div className="col-span-12 lg:col-span-6">
         <Card className="h-full border shadow-sm hover:shadow-md transition-shadow">
           <CardHeader className="py-2 px-3">
             <div className="flex items-center gap-2">
@@ -6685,7 +6685,7 @@ const FormVariationsDemo = () => {
       </div>
 
       {/* Lab - spanning 3 columns */}
-      <div className="col-span-12 md:col-span-6 lg:col-span-3">
+      <div className="col-span-12 lg:col-span-6">
         <Card className="h-full border shadow-sm hover:shadow-md transition-shadow">
           <CardHeader className="py-2 px-3">
             <div className="flex items-center gap-2">
@@ -6702,7 +6702,7 @@ const FormVariationsDemo = () => {
       </div>
 
       {/* Factory - spanning 3 columns */}
-      <div className="col-span-12 md:col-span-6 lg:col-span-3">
+      <div className="col-span-12 lg:col-span-6">
         <Card className="h-full border shadow-sm hover:shadow-md transition-shadow">
           <CardHeader className="py-2 px-3">
             <div className="flex items-center gap-2">
@@ -6722,7 +6722,7 @@ const FormVariationsDemo = () => {
       </div>
 
       {/* Transit - spanning 3 columns */}
-      <div className="col-span-12 md:col-span-6 lg:col-span-3">
+      <div className="col-span-12 lg:col-span-6">
         <Card className="h-full border shadow-sm hover:shadow-md transition-shadow">
           <CardHeader className="py-2 px-3">
             <div className="flex items-center gap-2">
