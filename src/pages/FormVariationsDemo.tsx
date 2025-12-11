@@ -6581,8 +6581,10 @@ const FormVariationsDemo = () => {
   const renderBentoGridInterface = () => (
     <div className="h-[calc(100vh-280px)] overflow-y-auto pr-2">
       <div className="grid grid-cols-12 gap-3 pb-8">
-      {/* General - Large tile spanning 8 columns */}
-      <div className="col-span-12 lg:col-span-8">
+      {/* Top Row - 4 cards: General, Product, Arrival Information, Additional Information */}
+      
+      {/* General - spanning 3 columns */}
+      <div className="col-span-12 md:col-span-6 lg:col-span-3">
         <Card className="h-full border shadow-sm hover:shadow-md transition-shadow">
           <CardHeader className="py-2 px-3">
             <div className="flex items-center gap-2">
@@ -6601,28 +6603,8 @@ const FormVariationsDemo = () => {
         </Card>
       </div>
 
-      {/* Cost - Medium tile spanning 4 columns */}
-      <div className="col-span-12 lg:col-span-4">
-        <Card className="h-full border shadow-sm hover:shadow-md transition-shadow">
-          <CardHeader className="py-2 px-3">
-            <div className="flex items-center gap-2">
-              <div className="p-1.5 bg-emerald-500/10 rounded">
-                <DollarSign className="h-4 w-4 text-emerald-600" />
-              </div>
-              <CardTitle className="text-sm">Cost</CardTitle>
-              {tabStatus['cost'] === 'completed' && (
-                <CheckCircle className="h-3.5 w-3.5 ml-auto text-green-600" />
-              )}
-            </div>
-          </CardHeader>
-          <CardContent className="pt-0 px-3 pb-3">
-            {renderCostSection(true)}
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Product - Large tile spanning 6 columns */}
-      <div className="col-span-12 lg:col-span-6">
+      {/* Product - spanning 3 columns */}
+      <div className="col-span-12 md:col-span-6 lg:col-span-3">
         <Card className="h-full border shadow-sm hover:shadow-md transition-shadow">
           <CardHeader className="py-2 px-3">
             <div className="flex items-center gap-2">
@@ -6641,18 +6623,15 @@ const FormVariationsDemo = () => {
         </Card>
       </div>
 
-      {/* Logistics - Medium tile spanning 6 columns */}
-      <div className="col-span-12 lg:col-span-6">
+      {/* Arrival Information - spanning 3 columns */}
+      <div className="col-span-12 md:col-span-6 lg:col-span-3">
         <Card className="h-full border shadow-sm hover:shadow-md transition-shadow">
           <CardHeader className="py-2 px-3">
             <div className="flex items-center gap-2">
               <div className="p-1.5 bg-orange-500/10 rounded">
                 <Truck className="h-4 w-4 text-orange-600" />
               </div>
-              <CardTitle className="text-sm">Logistics</CardTitle>
-              {tabStatus['logistics'] === 'completed' && (
-                <CheckCircle className="h-3.5 w-3.5 ml-auto text-green-600" />
-              )}
+              <CardTitle className="text-sm">Arrival Information</CardTitle>
             </div>
           </CardHeader>
           <CardContent className="pt-0 px-3 pb-3">
@@ -6661,8 +6640,50 @@ const FormVariationsDemo = () => {
         </Card>
       </div>
 
-      {/* Lab - Medium tile spanning 4 columns */}
-      <div className="col-span-12 md:col-span-6 lg:col-span-4">
+      {/* Additional Information - spanning 3 columns */}
+      <div className="col-span-12 md:col-span-6 lg:col-span-3">
+        <Card className="h-full border shadow-sm hover:shadow-md transition-shadow">
+          <CardHeader className="py-2 px-3">
+            <div className="flex items-center gap-2">
+              <div className="p-1.5 bg-amber-500/10 rounded">
+                <List className="h-4 w-4 text-amber-600" />
+              </div>
+              <CardTitle className="text-sm">Additional Information</CardTitle>
+              {tabStatus['options'] === 'completed' && (
+                <CheckCircle className="h-3.5 w-3.5 ml-auto text-green-600" />
+              )}
+            </div>
+          </CardHeader>
+          <CardContent className="pt-0 px-3 pb-3">
+            {renderOptionsSection(true)}
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Second Row - Cost, Lab, Factory, Transit */}
+      
+      {/* Cost - spanning 3 columns */}
+      <div className="col-span-12 md:col-span-6 lg:col-span-3">
+        <Card className="h-full border shadow-sm hover:shadow-md transition-shadow">
+          <CardHeader className="py-2 px-3">
+            <div className="flex items-center gap-2">
+              <div className="p-1.5 bg-emerald-500/10 rounded">
+                <DollarSign className="h-4 w-4 text-emerald-600" />
+              </div>
+              <CardTitle className="text-sm">Cost</CardTitle>
+              {tabStatus['cost'] === 'completed' && (
+                <CheckCircle className="h-3.5 w-3.5 ml-auto text-green-600" />
+              )}
+            </div>
+          </CardHeader>
+          <CardContent className="pt-0 px-3 pb-3">
+            {renderCostSection(true)}
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Lab - spanning 3 columns */}
+      <div className="col-span-12 md:col-span-6 lg:col-span-3">
         <Card className="h-full border shadow-sm hover:shadow-md transition-shadow">
           <CardHeader className="py-2 px-3">
             <div className="flex items-center gap-2">
@@ -6678,8 +6699,8 @@ const FormVariationsDemo = () => {
         </Card>
       </div>
 
-      {/* Factory - Small tile spanning 4 columns */}
-      <div className="col-span-12 md:col-span-6 lg:col-span-4">
+      {/* Factory - spanning 3 columns */}
+      <div className="col-span-12 md:col-span-6 lg:col-span-3">
         <Card className="h-full border shadow-sm hover:shadow-md transition-shadow">
           <CardHeader className="py-2 px-3">
             <div className="flex items-center gap-2">
@@ -6698,8 +6719,8 @@ const FormVariationsDemo = () => {
         </Card>
       </div>
 
-      {/* Transit - Small tile spanning 4 columns */}
-      <div className="col-span-12 md:col-span-6 lg:col-span-4">
+      {/* Transit - spanning 3 columns */}
+      <div className="col-span-12 md:col-span-6 lg:col-span-3">
         <Card className="h-full border shadow-sm hover:shadow-md transition-shadow">
           <CardHeader className="py-2 px-3">
             <div className="flex items-center gap-2">
@@ -6718,7 +6739,9 @@ const FormVariationsDemo = () => {
         </Card>
       </div>
 
-      {/* Parts - Medium tile spanning 6 columns */}
+      {/* Third Row - Parts and Images */}
+      
+      {/* Parts - spanning 6 columns */}
       <div className="col-span-12 md:col-span-6">
         <Card className="h-full border shadow-sm hover:shadow-md transition-shadow">
           <CardHeader className="py-2 px-3">
@@ -6738,7 +6761,7 @@ const FormVariationsDemo = () => {
         </Card>
       </div>
 
-      {/* Images - Medium tile spanning 6 columns */}
+      {/* Images - spanning 6 columns */}
       <div className="col-span-12 md:col-span-6">
         <Card className="h-full border shadow-sm hover:shadow-md transition-shadow">
           <CardHeader className="py-2 px-3">
@@ -6751,26 +6774,6 @@ const FormVariationsDemo = () => {
           </CardHeader>
           <CardContent className="pt-0 px-3 pb-3">
             {renderProductImagesSection(true)}
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Additional - Medium tile spanning 6 columns */}
-      <div className="col-span-12 md:col-span-6">
-        <Card className="h-full border shadow-sm hover:shadow-md transition-shadow">
-          <CardHeader className="py-2 px-3">
-            <div className="flex items-center gap-2">
-              <div className="p-1.5 bg-amber-500/10 rounded">
-                <List className="h-4 w-4 text-amber-600" />
-              </div>
-              <CardTitle className="text-sm">Additional</CardTitle>
-              {tabStatus['options'] === 'completed' && (
-                <CheckCircle className="h-3.5 w-3.5 ml-auto text-green-600" />
-              )}
-            </div>
-          </CardHeader>
-          <CardContent className="pt-0 px-3 pb-3">
-            {renderOptionsSection(true)}
           </CardContent>
         </Card>
       </div>
