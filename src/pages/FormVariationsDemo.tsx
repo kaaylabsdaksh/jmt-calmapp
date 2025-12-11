@@ -6850,7 +6850,7 @@ const FormVariationsDemo = () => {
             </div>
           </CardHeader>
           <CardContent className="pt-0 px-3 pb-3">
-            {renderTransitSection(true)}
+            {renderTransitSection(true, true)}
           </CardContent>
         </Card>
       </div>
@@ -6872,7 +6872,7 @@ const FormVariationsDemo = () => {
             </div>
           </CardHeader>
           <CardContent className="pt-0 px-3 pb-3">
-            {renderPartsSection(true)}
+            {renderPartsSection(true, true)}
           </CardContent>
         </Card>
       </div>
@@ -6889,7 +6889,7 @@ const FormVariationsDemo = () => {
             </div>
           </CardHeader>
           <CardContent className="pt-0 px-3 pb-3">
-            {renderProductImagesSection(true)}
+            {renderProductImagesSection(true, true)}
           </CardContent>
         </Card>
       </div>
