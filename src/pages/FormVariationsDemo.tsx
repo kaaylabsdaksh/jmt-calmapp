@@ -2643,168 +2643,154 @@ const FormVariationsDemo = () => {
   );
 
   const renderOptionsSection = (isAccordion = false) => (
-    <div className="space-y-6">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Additional Information Section */}
-        <Card className="border-0">
-          <CardContent className="p-4 sm:p-6 space-y-4">
-            <h3 className="text-lg font-semibold text-foreground">Additional Information</h3>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="needBy" className="text-sm font-medium">Need By <span className="text-destructive">*</span></Label>
-                <Input
-                  id="needBy"
-                  type="date"
-                  value={formData.needBy}
-                  onChange={(e) => handleInputChange("needBy", e.target.value)}
-                  className="h-11"
-                  placeholder="Enter need by date"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="deliverByDate" className="text-sm font-medium">Deliver By Date</Label>
-                <Input
-                  id="deliverByDate"
-                  type="date"
-                  value={formData.deliverByDate}
-                  onChange={(e) => handleInputChange("deliverByDate", e.target.value)}
-                  className="h-11"
-                />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Purchase Order Information Section */}
-        <Card className="border-0">
-          <CardContent className="p-4 sm:p-6 space-y-4">
-            <h3 className="text-lg font-semibold text-foreground">Purchase Order Information</h3>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="poNumber" className="text-sm font-medium">PO Number <span className="text-destructive">*</span></Label>
-                <Input
-                  id="poNumber"
-                  value={formData.poNumber}
-                  onChange={(e) => handleInputChange("poNumber", e.target.value)}
-                  placeholder="CUST/PO #"
-                  className="h-11"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="poLineNumber" className="text-sm font-medium">PO Line #</Label>
-                <Input
-                  id="poLineNumber"
-                  value={formData.poLineNumber}
-                  onChange={(e) => handleInputChange("poLineNumber", e.target.value)}
-                  placeholder="PO Line #"
-                  className="h-11"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="soNumber" className="text-sm font-medium">SO Number</Label>
-                <Input
-                  id="soNumber"
-                  value={formData.soNumber}
-                  onChange={(e) => handleInputChange("soNumber", e.target.value)}
-                  placeholder="SO Number"
-                  className="h-11"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="jmPartsPoNumber" className="text-sm font-medium">JM Parts PO #</Label>
-                <Input
-                  id="jmPartsPoNumber"
-                  value={formData.jmPartsPoNumber}
-                  onChange={(e) => handleInputChange("jmPartsPoNumber", e.target.value)}
-                  placeholder="JM Parts PO #"
-                  className="h-11"
-                />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Status Options Section */}
+    <div className={isAccordion ? "space-y-3" : "space-y-6"}>
       {isAccordion ? (
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2">
-          {[
-            { key: 'warranty', label: 'Warranty' },
-            { key: 'estimate', label: 'Estimate' },
-            { key: 'newEquip', label: 'New Equipment' },
-            { key: 'usedSurplus', label: 'Used Surplus' },
-            { key: 'iso17025', label: 'ISO 17025' },
-            { key: 'hotList', label: 'Hot List' },
-            { key: 'readyToBill', label: 'Ready to Bill' },
-            { key: 'inQa', label: 'In QA' },
-            { key: 'toShipping', label: 'To Shipping' },
-            { key: 'multiParts', label: 'Multi Parts' },
-            { key: 'lostEquipment', label: 'Lost Equipment' },
-            { key: 'redTag', label: 'Red Tag' },
-            { key: 'returned', label: 'Returned' },
-            { key: 'coOverride', label: 'C/O Override' },
-            { key: 'dateValidOverride', label: 'Date Valid. Override' },
-            { key: 'coStdCheckOverride', label: 'C/O Std Check Override' },
-          ].map(option => (
-            <div key={option.key} className="flex items-center justify-between gap-2 px-2 py-1.5 border rounded bg-background">
-              <Label htmlFor={option.key} className="text-xs cursor-pointer truncate">{option.label}</Label>
-              <Switch
-                id={option.key}
-                checked={formData[option.key as keyof typeof formData] as boolean}
-                onCheckedChange={(checked) => handleInputChange(option.key, checked)}
-                className="scale-75"
-              />
+        <>
+          {/* Additional Information Section - Minimal */}
+          <div className="space-y-2">
+            <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Additional Information</div>
+            <div className="grid grid-cols-2 gap-2">
+              <div className="space-y-1">
+                <Label htmlFor="needBy" className="text-xs">Need By <span className="text-destructive">*</span></Label>
+                <Input id="needBy" type="date" value={formData.needBy} onChange={(e) => handleInputChange("needBy", e.target.value)} className="h-8 text-sm" />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="deliverByDate" className="text-xs">Deliver By Date</Label>
+                <Input id="deliverByDate" type="date" value={formData.deliverByDate} onChange={(e) => handleInputChange("deliverByDate", e.target.value)} className="h-8 text-sm" />
+              </div>
             </div>
-          ))}
-        </div>
+          </div>
+
+          {/* Purchase Order Information Section - Minimal */}
+          <div className="space-y-2">
+            <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Purchase Order Information</div>
+            <div className="grid grid-cols-4 gap-2">
+              <div className="space-y-1">
+                <Label htmlFor="poNumber" className="text-xs">PO Number <span className="text-destructive">*</span></Label>
+                <Input id="poNumber" value={formData.poNumber} onChange={(e) => handleInputChange("poNumber", e.target.value)} placeholder="CUST/PO #" className="h-8 text-sm" />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="poLineNumber" className="text-xs">PO Line #</Label>
+                <Input id="poLineNumber" value={formData.poLineNumber} onChange={(e) => handleInputChange("poLineNumber", e.target.value)} placeholder="PO Line #" className="h-8 text-sm" />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="soNumber" className="text-xs">SO Number</Label>
+                <Input id="soNumber" value={formData.soNumber} onChange={(e) => handleInputChange("soNumber", e.target.value)} placeholder="SO Number" className="h-8 text-sm" />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="jmPartsPoNumber" className="text-xs">JM Parts PO #</Label>
+                <Input id="jmPartsPoNumber" value={formData.jmPartsPoNumber} onChange={(e) => handleInputChange("jmPartsPoNumber", e.target.value)} placeholder="JM Parts PO #" className="h-8 text-sm" />
+              </div>
+            </div>
+          </div>
+
+          {/* Status Options Section - Minimal */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2">
+            {[
+              { key: 'warranty', label: 'Warranty' },
+              { key: 'estimate', label: 'Estimate' },
+              { key: 'newEquip', label: 'New Equipment' },
+              { key: 'usedSurplus', label: 'Used Surplus' },
+              { key: 'iso17025', label: 'ISO 17025' },
+              { key: 'hotList', label: 'Hot List' },
+              { key: 'readyToBill', label: 'Ready to Bill' },
+              { key: 'inQa', label: 'In QA' },
+              { key: 'toShipping', label: 'To Shipping' },
+              { key: 'multiParts', label: 'Multi Parts' },
+              { key: 'lostEquipment', label: 'Lost Equipment' },
+              { key: 'redTag', label: 'Red Tag' },
+              { key: 'returned', label: 'Returned' },
+              { key: 'coOverride', label: 'C/O Override' },
+              { key: 'dateValidOverride', label: 'Date Valid. Override' },
+              { key: 'coStdCheckOverride', label: 'C/O Std Check Override' },
+            ].map(option => (
+              <div key={option.key} className="flex items-center justify-between gap-1 px-2 py-1 border rounded bg-background">
+                <Label htmlFor={option.key} className="text-xs cursor-pointer truncate">{option.label}</Label>
+                <Switch id={option.key} checked={formData[option.key as keyof typeof formData] as boolean} onCheckedChange={(checked) => handleInputChange(option.key, checked)} className="scale-75" />
+              </div>
+            ))}
+          </div>
+        </>
       ) : (
-        <Card className="border-0 shadow-md w-full">
-          <CardContent className="p-4 sm:p-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {[
-                { key: 'warranty', label: 'Warranty', icon: '🛡️' },
-                { key: 'estimate', label: 'Estimate', icon: '💰' },
-                { key: 'newEquip', label: 'New Equipment', icon: '✨' },
-                { key: 'usedSurplus', label: 'Used Surplus', icon: '♻️' },
-                { key: 'iso17025', label: 'ISO 17025', icon: '📋' },
-                { key: 'hotList', label: 'Hot List', icon: '🔥' },
-                { key: 'readyToBill', label: 'Ready to Bill', icon: '💳' },
-                { key: 'inQa', label: 'In QA', icon: '🔍' },
-                { key: 'toShipping', label: 'To Shipping', icon: '📦' },
-                { key: 'multiParts', label: 'Multi Parts', icon: '🔧' },
-                { key: 'lostEquipment', label: 'Lost Equipment', icon: '❓' },
-                { key: 'redTag', label: 'Red Tag', icon: '🏷️' },
-                { key: 'returned', label: 'Returned', icon: '↩️' },
-                { key: 'coOverride', label: 'C/O Override', icon: '⚡' },
-                { key: 'dateValidOverride', label: 'Date Valid. Override', icon: '📅' },
-                { key: 'coStdCheckOverride', label: 'C/O Std Check Override', icon: '✅' },
-              ].map(option => (
-                <div key={option.key} className="flex items-center justify-between p-3 border rounded-lg hover:bg-muted/50 transition-colors">
-                  <div className="flex items-center gap-2">
-                    <span className="text-lg">{option.icon}</span>
-                    <Label 
-                      htmlFor={option.key} 
-                      className="text-sm font-medium cursor-pointer"
-                    >
-                      {option.label}
-                    </Label>
+        <>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Additional Information Section */}
+            <Card className="border-0">
+              <CardContent className="p-4 sm:p-6 space-y-4">
+                <h3 className="text-lg font-semibold text-foreground">Additional Information</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="needBy" className="text-sm font-medium">Need By <span className="text-destructive">*</span></Label>
+                    <Input id="needBy" type="date" value={formData.needBy} onChange={(e) => handleInputChange("needBy", e.target.value)} className="h-11" placeholder="Enter need by date" />
                   </div>
-                  <Switch
-                    id={option.key}
-                    checked={formData[option.key as keyof typeof formData] as boolean}
-                    onCheckedChange={(checked) => handleInputChange(option.key, checked)}
-                  />
+                  <div className="space-y-2">
+                    <Label htmlFor="deliverByDate" className="text-sm font-medium">Deliver By Date</Label>
+                    <Input id="deliverByDate" type="date" value={formData.deliverByDate} onChange={(e) => handleInputChange("deliverByDate", e.target.value)} className="h-11" />
+                  </div>
                 </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+              </CardContent>
+            </Card>
+
+            {/* Purchase Order Information Section */}
+            <Card className="border-0">
+              <CardContent className="p-4 sm:p-6 space-y-4">
+                <h3 className="text-lg font-semibold text-foreground">Purchase Order Information</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="poNumber" className="text-sm font-medium">PO Number <span className="text-destructive">*</span></Label>
+                    <Input id="poNumber" value={formData.poNumber} onChange={(e) => handleInputChange("poNumber", e.target.value)} placeholder="CUST/PO #" className="h-11" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="poLineNumber" className="text-sm font-medium">PO Line #</Label>
+                    <Input id="poLineNumber" value={formData.poLineNumber} onChange={(e) => handleInputChange("poLineNumber", e.target.value)} placeholder="PO Line #" className="h-11" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="soNumber" className="text-sm font-medium">SO Number</Label>
+                    <Input id="soNumber" value={formData.soNumber} onChange={(e) => handleInputChange("soNumber", e.target.value)} placeholder="SO Number" className="h-11" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="jmPartsPoNumber" className="text-sm font-medium">JM Parts PO #</Label>
+                    <Input id="jmPartsPoNumber" value={formData.jmPartsPoNumber} onChange={(e) => handleInputChange("jmPartsPoNumber", e.target.value)} placeholder="JM Parts PO #" className="h-11" />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Status Options Section */}
+          <Card className="border-0 shadow-md w-full">
+            <CardContent className="p-4 sm:p-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {[
+                  { key: 'warranty', label: 'Warranty', icon: '🛡️' },
+                  { key: 'estimate', label: 'Estimate', icon: '💰' },
+                  { key: 'newEquip', label: 'New Equipment', icon: '✨' },
+                  { key: 'usedSurplus', label: 'Used Surplus', icon: '♻️' },
+                  { key: 'iso17025', label: 'ISO 17025', icon: '📋' },
+                  { key: 'hotList', label: 'Hot List', icon: '🔥' },
+                  { key: 'readyToBill', label: 'Ready to Bill', icon: '💳' },
+                  { key: 'inQa', label: 'In QA', icon: '🔍' },
+                  { key: 'toShipping', label: 'To Shipping', icon: '📦' },
+                  { key: 'multiParts', label: 'Multi Parts', icon: '🔧' },
+                  { key: 'lostEquipment', label: 'Lost Equipment', icon: '❓' },
+                  { key: 'redTag', label: 'Red Tag', icon: '🏷️' },
+                  { key: 'returned', label: 'Returned', icon: '↩️' },
+                  { key: 'coOverride', label: 'C/O Override', icon: '⚡' },
+                  { key: 'dateValidOverride', label: 'Date Valid. Override', icon: '📅' },
+                  { key: 'coStdCheckOverride', label: 'C/O Std Check Override', icon: '✅' },
+                ].map(option => (
+                  <div key={option.key} className="flex items-center justify-between p-3 border rounded-lg hover:bg-muted/50 transition-colors">
+                    <div className="flex items-center gap-2">
+                      <span className="text-lg">{option.icon}</span>
+                      <Label htmlFor={option.key} className="text-sm font-medium cursor-pointer">{option.label}</Label>
+                    </div>
+                    <Switch id={option.key} checked={formData[option.key as keyof typeof formData] as boolean} onCheckedChange={(checked) => handleInputChange(option.key, checked)} />
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </>
       )}
     </div>
   );
@@ -4780,36 +4766,36 @@ const FormVariationsDemo = () => {
   };
 
   // Render product images section
-  const renderProductImagesSection = (noCard = false) => {
+  const renderProductImagesSection = (noCard = false, isAccordion = false) => {
     const content = (
       <Tabs defaultValue="images">
         <div className="flex items-center justify-between">
-          <TabsList>
-            <TabsTrigger value="images">Images</TabsTrigger>
-            <TabsTrigger value="dateEntered">Date Entered</TabsTrigger>
-            <TabsTrigger value="actions">Actions</TabsTrigger>
+          <TabsList className={isAccordion ? "h-8" : ""}>
+            <TabsTrigger value="images" className={isAccordion ? "text-xs px-2 py-1" : ""}>Images</TabsTrigger>
+            <TabsTrigger value="dateEntered" className={isAccordion ? "text-xs px-2 py-1" : ""}>Date Entered</TabsTrigger>
+            <TabsTrigger value="actions" className={isAccordion ? "text-xs px-2 py-1" : ""}>Actions</TabsTrigger>
           </TabsList>
-          <Button variant="default" size="sm" className="gap-2">
-            <Camera className="h-4 w-4" />
+          <Button variant="default" size="sm" className={isAccordion ? "gap-1 h-7 text-xs" : "gap-2"}>
+            <Camera className={isAccordion ? "h-3 w-3" : "h-4 w-4"} />
             Capture
           </Button>
         </div>
         
-        <TabsContent value="images" className="mt-4">
-          <div className="border-2 border-dashed rounded-lg p-6 text-center">
-            <p className="text-muted-foreground">No images uploaded</p>
+        <TabsContent value="images" className={isAccordion ? "mt-2" : "mt-4"}>
+          <div className={`border-2 border-dashed rounded-lg ${isAccordion ? 'p-4' : 'p-6'} text-center`}>
+            <p className={`text-muted-foreground ${isAccordion ? 'text-xs' : ''}`}>No images uploaded</p>
           </div>
         </TabsContent>
         
-        <TabsContent value="dateEntered" className="mt-4">
-          <div className="border rounded-lg p-6 text-center">
-            <p className="text-muted-foreground">No history available</p>
+        <TabsContent value="dateEntered" className={isAccordion ? "mt-2" : "mt-4"}>
+          <div className={`border rounded-lg ${isAccordion ? 'p-4' : 'p-6'} text-center`}>
+            <p className={`text-muted-foreground ${isAccordion ? 'text-xs' : ''}`}>No history available</p>
           </div>
         </TabsContent>
         
-        <TabsContent value="actions" className="mt-4">
-          <div className="border rounded-lg p-6 text-center">
-            <p className="text-muted-foreground">No actions recorded</p>
+        <TabsContent value="actions" className={isAccordion ? "mt-2" : "mt-4"}>
+          <div className={`border rounded-lg ${isAccordion ? 'p-4' : 'p-6'} text-center`}>
+            <p className={`text-muted-foreground ${isAccordion ? 'text-xs' : ''}`}>No actions recorded</p>
           </div>
         </TabsContent>
       </Tabs>
@@ -4834,114 +4820,101 @@ const FormVariationsDemo = () => {
   };
 
   // Render cost section
-  const renderCostSection = () => (
-    <div className="space-y-6">
+  const renderCostSection = (isAccordion = false) => (
+    <div className={isAccordion ? "space-y-3" : "space-y-6"}>
       {/* Summary Header - Cost Totals */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-background border-l-4 border-blue-600 p-4 rounded-r">
+      <div className={`grid grid-cols-1 md:grid-cols-3 ${isAccordion ? 'gap-2' : 'gap-4'}`}>
+        <div className={`bg-background border-l-4 border-blue-600 ${isAccordion ? 'p-2' : 'p-4'} rounded-r`}>
           <div className="text-xs text-muted-foreground uppercase tracking-wider">Cal/Cert Cost</div>
-          <div className="text-xl font-semibold text-blue-600 mt-1">${formData.calCertTotal}</div>
+          <div className={`${isAccordion ? 'text-base' : 'text-xl'} font-semibold text-blue-600 mt-1`}>${formData.calCertTotal}</div>
         </div>
         
-        <div className="bg-background border-l-4 border-amber-500 p-4 rounded-r">
+        <div className={`bg-background border-l-4 border-amber-500 ${isAccordion ? 'p-2' : 'p-4'} rounded-r`}>
           <div className="text-xs text-muted-foreground uppercase tracking-wider">Repair Cost</div>
-          <div className="text-xl font-semibold text-amber-500 mt-1">${formData.repairTotal}</div>
+          <div className={`${isAccordion ? 'text-base' : 'text-xl'} font-semibold text-amber-500 mt-1`}>${formData.repairTotal}</div>
         </div>
         
-        <div className="bg-background border-l-4 border-emerald-600 p-4 rounded-r">
+        <div className={`bg-background border-l-4 border-emerald-600 ${isAccordion ? 'p-2' : 'p-4'} rounded-r`}>
           <div className="text-xs text-muted-foreground uppercase tracking-wider">Total Cost</div>
-          <div className="text-xl font-semibold text-emerald-600 mt-1">${formData.allTotal}</div>
+          <div className={`${isAccordion ? 'text-base' : 'text-xl'} font-semibold text-emerald-600 mt-1`}>${formData.allTotal}</div>
         </div>
       </div>
 
       {/* Toggle Link */}
       <div className="flex justify-end">
-        <button
-          onClick={() => handleInputChange("showCostDetails", !formData.showCostDetails)}
-          className="text-sm text-muted-foreground hover:text-foreground flex items-center gap-1 transition-colors"
-        >
-          {formData.showCostDetails ? (
-            <>
-              <ChevronUp className="h-3 w-3" />
-              Hide Details
-            </>
-          ) : (
-            <>
-              <ChevronDown className="h-3 w-3" />
-              Show Details
-            </>
-          )}
+        <button onClick={() => handleInputChange("showCostDetails", !formData.showCostDetails)} className="text-xs text-muted-foreground hover:text-foreground flex items-center gap-1 transition-colors">
+          {formData.showCostDetails ? (<><ChevronUp className="h-3 w-3" />Hide Details</>) : (<><ChevronDown className="h-3 w-3" />Show Details</>)}
         </button>
       </div>
 
       {/* Collapsible Cost Details */}
       {formData.showCostDetails && (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className={`grid grid-cols-1 lg:grid-cols-2 ${isAccordion ? 'gap-3' : 'gap-6'}`}>
           {/* Cost Breakdown */}
-          <div className="space-y-4">
-            <div className="text-sm font-medium">Cost Breakdown</div>
+          <div className={isAccordion ? "space-y-2" : "space-y-4"}>
+            <div className={`${isAccordion ? 'text-xs' : 'text-sm'} font-medium`}>Cost Breakdown</div>
             
             {/* Calibration & Certification */}
-            <div className="space-y-2">
+            <div className="space-y-1">
               <div className="text-xs text-muted-foreground uppercase tracking-wider">Calibration & Certification</div>
-              <div className="space-y-1 pl-3 border-l-2 border-blue-600/40">
+              <div className="space-y-1 pl-2 border-l-2 border-blue-600/40">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm">C/C Cost</span>
-                  <Input type="number" step="0.01" value={formData.ccCost} onChange={(e) => handleInputChange("ccCost", e.target.value)} className="h-8 w-28" />
+                  <span className="text-xs">C/C Cost</span>
+                  <Input type="number" step="0.01" value={formData.ccCost} onChange={(e) => handleInputChange("ccCost", e.target.value)} className={isAccordion ? "h-7 w-24 text-xs" : "h-8 w-28"} />
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm">17025</span>
-                  <Input type="number" step="0.01" value={formData.cost17025} onChange={(e) => handleInputChange("cost17025", e.target.value)} className="h-8 w-28" />
+                  <span className="text-xs">17025</span>
+                  <Input type="number" step="0.01" value={formData.cost17025} onChange={(e) => handleInputChange("cost17025", e.target.value)} className={isAccordion ? "h-7 w-24 text-xs" : "h-8 w-28"} />
                 </div>
               </div>
             </div>
 
             {/* Service Charges */}
-            <div className="space-y-2">
+            <div className="space-y-1">
               <div className="text-xs text-muted-foreground uppercase tracking-wider">Service Charges</div>
-              <div className="space-y-1 pl-3 border-l-2 border-amber-500/40">
+              <div className="space-y-1 pl-2 border-l-2 border-amber-500/40">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm">Expedite</span>
-                  <Input type="number" step="0.01" value={formData.expediteCost} onChange={(e) => handleInputChange("expediteCost", e.target.value)} className="h-8 w-28" />
+                  <span className="text-xs">Expedite</span>
+                  <Input type="number" step="0.01" value={formData.expediteCost} onChange={(e) => handleInputChange("expediteCost", e.target.value)} className={isAccordion ? "h-7 w-24 text-xs" : "h-8 w-28"} />
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm">Emergency</span>
-                  <Input type="number" step="0.01" value={formData.emergencyCost} onChange={(e) => handleInputChange("emergencyCost", e.target.value)} className="h-8 w-28" />
+                  <span className="text-xs">Emergency</span>
+                  <Input type="number" step="0.01" value={formData.emergencyCost} onChange={(e) => handleInputChange("emergencyCost", e.target.value)} className={isAccordion ? "h-7 w-24 text-xs" : "h-8 w-28"} />
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm">Eval Fee</span>
-                  <Input type="number" step="0.01" value={formData.evalFeeCost} onChange={(e) => handleInputChange("evalFeeCost", e.target.value)} className="h-8 w-28" />
+                  <span className="text-xs">Eval Fee</span>
+                  <Input type="number" step="0.01" value={formData.evalFeeCost} onChange={(e) => handleInputChange("evalFeeCost", e.target.value)} className={isAccordion ? "h-7 w-24 text-xs" : "h-8 w-28"} />
                 </div>
               </div>
             </div>
 
             {/* Repair & Parts */}
-            <div className="space-y-2">
+            <div className="space-y-1">
               <div className="text-xs text-muted-foreground uppercase tracking-wider">Repair & Parts</div>
-              <div className="space-y-1 pl-3 border-l-2 border-emerald-600/40">
+              <div className="space-y-1 pl-2 border-l-2 border-emerald-600/40">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm">Repair Cost</span>
-                  <Input type="number" step="0.01" value={formData.repairCostTotal} onChange={(e) => handleInputChange("repairCostTotal", e.target.value)} className="h-8 w-28" />
+                  <span className="text-xs">Repair Cost</span>
+                  <Input type="number" step="0.01" value={formData.repairCostTotal} onChange={(e) => handleInputChange("repairCostTotal", e.target.value)} className={isAccordion ? "h-7 w-24 text-xs" : "h-8 w-28"} />
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm">ESL Test Cost</span>
-                  <Input type="number" step="0.01" value={formData.eslTestCost} onChange={(e) => handleInputChange("eslTestCost", e.target.value)} className="h-8 w-28" />
+                  <span className="text-xs">ESL Test Cost</span>
+                  <Input type="number" step="0.01" value={formData.eslTestCost} onChange={(e) => handleInputChange("eslTestCost", e.target.value)} className={isAccordion ? "h-7 w-24 text-xs" : "h-8 w-28"} />
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm">Parts Cost</span>
-                  <Input type="number" step="0.01" value={formData.partsCostTotal} onChange={(e) => handleInputChange("partsCostTotal", e.target.value)} className="h-8 w-28" />
+                  <span className="text-xs">Parts Cost</span>
+                  <Input type="number" step="0.01" value={formData.partsCostTotal} onChange={(e) => handleInputChange("partsCostTotal", e.target.value)} className={isAccordion ? "h-7 w-24 text-xs" : "h-8 w-28"} />
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm">T/F Cost</span>
-                  <Input type="number" step="0.01" value={formData.tfCost} onChange={(e) => handleInputChange("tfCost", e.target.value)} className="h-8 w-28" />
+                  <span className="text-xs">T/F Cost</span>
+                  <Input type="number" step="0.01" value={formData.tfCost} onChange={(e) => handleInputChange("tfCost", e.target.value)} className={isAccordion ? "h-7 w-24 text-xs" : "h-8 w-28"} />
                 </div>
               </div>
             </div>
           </div>
 
           {/* Labor Hours */}
-          <div className="space-y-3">
-            <div className="text-sm font-medium">Labor Hours</div>
+          <div className={isAccordion ? "space-y-2" : "space-y-3"}>
+            <div className={`${isAccordion ? 'text-xs' : 'text-sm'} font-medium`}>Labor Hours</div>
             
             {/* Header Row */}
             <div className="grid grid-cols-4 gap-2">
@@ -4952,10 +4925,10 @@ const FormVariationsDemo = () => {
             </div>
             
             {/* Tech Rows */}
-            <div className="space-y-2">
+            <div className="space-y-1">
               <div className="grid grid-cols-4 gap-2 items-center">
-                <span className="text-sm">Tech 1</span>
-                <Input type="number" step="0.01" value={formData.tech1CcHours} onChange={(e) => handleInputChange("tech1CcHours", e.target.value)} className="h-8 text-center" />
+                <span className="text-xs">Tech 1</span>
+                <Input type="number" step="0.01" value={formData.tech1CcHours} onChange={(e) => handleInputChange("tech1CcHours", e.target.value)} className={isAccordion ? "h-7 text-xs text-center" : "h-8 text-center"} />
                 <Input type="number" step="0.01" value={formData.tech1RepairHours} onChange={(e) => handleInputChange("tech1RepairHours", e.target.value)} className="h-8 text-center" />
                 <Input type="number" step="0.01" value={formData.tech1EslTestHours} onChange={(e) => handleInputChange("tech1EslTestHours", e.target.value)} className="h-8 text-center" />
               </div>
@@ -5102,9 +5075,9 @@ const FormVariationsDemo = () => {
   );
 
   // Render parts section
-  const renderPartsSection = (noCard = false) => {
+  const renderPartsSection = (noCard = false, isAccordion = false) => {
     const content = (
-      <div className={noCard ? "space-y-4" : ""}>
+      <div className={noCard ? (isAccordion ? "space-y-2" : "space-y-4") : ""}>
         {!noCard && (
           <div className="flex items-center gap-3 mb-4">
             <Settings className="h-5 w-5 text-primary" />
@@ -5114,16 +5087,12 @@ const FormVariationsDemo = () => {
             </div>
           </div>
         )}
-        <div className="grid grid-cols-1 md:grid-cols-6 gap-3 items-end">
+        <div className={`grid grid-cols-1 md:grid-cols-6 ${isAccordion ? 'gap-2' : 'gap-3'} items-end`}>
           <div className="space-y-1">
-            <Label htmlFor="partsCategory" className="text-xs">
-              Category <span className="text-destructive">*</span>
-            </Label>
+            <Label htmlFor="partsCategory" className="text-xs">Category <span className="text-destructive">*</span></Label>
             <Select value={formData.partsCategory} onValueChange={(value) => handleInputChange("partsCategory", value)} required>
-              <SelectTrigger className="h-9">
-                <SelectValue placeholder="Category" />
-              </SelectTrigger>
-              <SelectContent>
+              <SelectTrigger className={isAccordion ? "h-8 text-sm" : "h-9"}><SelectValue placeholder="Category" /></SelectTrigger>
+              <SelectContent className="bg-popover border z-50">
                 <SelectItem value="electronic">Electronic</SelectItem>
                 <SelectItem value="mechanical">Mechanical</SelectItem>
                 <SelectItem value="software">Software</SelectItem>
@@ -5132,64 +5101,32 @@ const FormVariationsDemo = () => {
           </div>
 
           <div className="space-y-1">
-            <Label htmlFor="partsNumber" className="text-xs">
-              Part Number <span className="text-destructive">*</span>
-            </Label>
-            <Input
-              id="partsNumber"
-              value={formData.partsNumber}
-              onChange={(e) => handleInputChange("partsNumber", e.target.value)}
-              placeholder="Part number"
-              className="h-9"
-              required
-            />
+            <Label htmlFor="partsNumber" className="text-xs">Part Number <span className="text-destructive">*</span></Label>
+            <Input id="partsNumber" value={formData.partsNumber} onChange={(e) => handleInputChange("partsNumber", e.target.value)} placeholder="Part number" className={isAccordion ? "h-8 text-sm" : "h-9"} required />
           </div>
 
           <div className="space-y-1">
             <Label htmlFor="partsDescription" className="text-xs">Description</Label>
-            <Input
-              id="partsDescription"
-              value={formData.partsDescription}
-              onChange={(e) => handleInputChange("partsDescription", e.target.value)}
-              placeholder="Description"
-              className="h-9"
-            />
+            <Input id="partsDescription" value={formData.partsDescription} onChange={(e) => handleInputChange("partsDescription", e.target.value)} placeholder="Description" className={isAccordion ? "h-8 text-sm" : "h-9"} />
           </div>
 
           <div className="space-y-1">
             <Label htmlFor="partsCost" className="text-xs">Cost</Label>
-            <Input
-              id="partsCost"
-              type="number"
-              value={formData.partsCost}
-              onChange={(e) => handleInputChange("partsCost", e.target.value)}
-              placeholder="0.00"
-              className="h-9"
-            />
+            <Input id="partsCost" type="number" value={formData.partsCost} onChange={(e) => handleInputChange("partsCost", e.target.value)} placeholder="0.00" className={isAccordion ? "h-8 text-sm" : "h-9"} />
           </div>
 
           <div className="space-y-1">
-            <Label htmlFor="partsQty" className="text-xs">
-              Qty <span className="text-destructive">*</span>
-            </Label>
-            <Input
-              id="partsQty"
-              type="number"
-              value={formData.partsQty}
-              onChange={(e) => handleInputChange("partsQty", e.target.value)}
-              placeholder="1"
-              className="h-9"
-              required
-            />
+            <Label htmlFor="partsQty" className="text-xs">Qty <span className="text-destructive">*</span></Label>
+            <Input id="partsQty" type="number" value={formData.partsQty} onChange={(e) => handleInputChange("partsQty", e.target.value)} placeholder="1" className={isAccordion ? "h-8 text-sm" : "h-9"} required />
           </div>
 
           <div>
-            <Button size="sm" className="h-9 w-full" onClick={handleAddPart}>Add Part</Button>
+            <Button size="sm" className={isAccordion ? "h-8 w-full text-xs" : "h-9 w-full"} onClick={handleAddPart}>Add Part</Button>
           </div>
         </div>
 
         <div className="border rounded-lg overflow-x-auto">
-          <div className="bg-muted grid grid-cols-7 gap-4 p-2 text-xs font-medium min-w-[700px]">
+          <div className={`bg-muted grid grid-cols-7 gap-4 ${isAccordion ? 'p-1.5' : 'p-2'} text-xs font-medium min-w-[700px]`}>
             <div>Category</div>
             <div>Part Number</div>
             <div>Description</div>
@@ -5204,9 +5141,8 @@ const FormVariationsDemo = () => {
                 const cost = parseFloat(part.cost) || 0;
                 const qty = parseInt(part.qty) || 0;
                 const total = (cost * qty).toFixed(2);
-                
                 return (
-                  <div key={part.id} className="grid grid-cols-7 gap-4 p-3 text-sm min-w-[700px]">
+                  <div key={part.id} className={`grid grid-cols-7 gap-4 ${isAccordion ? 'p-2 text-xs' : 'p-3 text-sm'} min-w-[700px]`}>
                     <div className="capitalize">{part.category}</div>
                     <div>{part.partNumber}</div>
                     <div>{part.description}</div>
@@ -5214,13 +5150,8 @@ const FormVariationsDemo = () => {
                     <div>{part.qty}</div>
                     <div>${total}</div>
                     <div>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleRemovePart(part.id)}
-                        className="h-8 w-8 p-0 text-destructive hover:text-destructive"
-                      >
-                        <Trash2 className="h-4 w-4" />
+                      <Button variant="ghost" size="sm" onClick={() => handleRemovePart(part.id)} className={isAccordion ? "h-6 w-6 p-0 text-destructive hover:text-destructive" : "h-8 w-8 p-0 text-destructive hover:text-destructive"}>
+                        <Trash2 className={isAccordion ? "h-3 w-3" : "h-4 w-4"} />
                       </Button>
                     </div>
                   </div>
@@ -5228,9 +5159,7 @@ const FormVariationsDemo = () => {
               })}
             </div>
           ) : (
-            <div className="p-6 text-center text-muted-foreground text-sm">
-              No parts added
-            </div>
+            <div className={`${isAccordion ? 'p-4' : 'p-6'} text-center text-muted-foreground text-sm`}>No parts added</div>
           )}
         </div>
       </div>
@@ -5255,37 +5184,23 @@ const FormVariationsDemo = () => {
   };
 
   // Render transit section
-  const renderTransitSection = (noCard = false) => {
+  const renderTransitSection = (noCard = false, isAccordion = false) => {
     const handleSetInTransit = () => {
-      // Validate required fields (all except Notes)
-      if (!formData.originLocation || !formData.destinationLocation || !formData.huQty || 
-          !formData.huType || !formData.deliverTo || !formData.deliveryType) {
-        toast({
-          title: "Missing Required Fields",
-          description: "Please fill in all required fields (Origin Location, Destination Location, HU Qty, HU Type, Deliver To, and Delivery Type).",
-          variant: "destructive",
-        });
+      if (!formData.originLocation || !formData.destinationLocation || !formData.huQty || !formData.huType || !formData.deliverTo || !formData.deliveryType) {
+        toast({ title: "Missing Required Fields", description: "Please fill in all required fields.", variant: "destructive" });
         return;
       }
-      
-      toast({
-        title: "Transit Set Successfully",
-        description: "Transit configuration has been saved.",
-      });
+      toast({ title: "Transit Set Successfully", description: "Transit configuration has been saved." });
     };
 
     const content = (
-      <div className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label htmlFor="originLocation" className="text-sm font-medium">
-              Origin Location <span className="text-destructive">*</span>
-            </Label>
+      <div className={isAccordion ? "space-y-2" : "space-y-6"}>
+        <div className={`grid grid-cols-1 md:grid-cols-2 ${isAccordion ? 'gap-2' : 'gap-4'}`}>
+          <div className="space-y-1">
+            <Label htmlFor="originLocation" className={`${isAccordion ? 'text-xs' : 'text-sm'} font-medium`}>Origin Location <span className="text-destructive">*</span></Label>
             <Select value={formData.originLocation} onValueChange={(value) => handleInputChange("originLocation", value)} required>
-              <SelectTrigger className="h-11">
-                <SelectValue placeholder="Select origin location" />
-              </SelectTrigger>
-              <SelectContent>
+              <SelectTrigger className={isAccordion ? "h-8 text-sm" : "h-11"}><SelectValue placeholder="Select origin location" /></SelectTrigger>
+              <SelectContent className="bg-popover border z-50">
                 <SelectItem value="warehouse-a">Warehouse A</SelectItem>
                 <SelectItem value="warehouse-b">Warehouse B</SelectItem>
                 <SelectItem value="facility-1">Facility 1</SelectItem>
@@ -5295,15 +5210,11 @@ const FormVariationsDemo = () => {
             </Select>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="destinationLocation" className="text-sm font-medium">
-              Destination Location <span className="text-destructive">*</span>
-            </Label>
+          <div className="space-y-1">
+            <Label htmlFor="destinationLocation" className={`${isAccordion ? 'text-xs' : 'text-sm'} font-medium`}>Destination Location <span className="text-destructive">*</span></Label>
             <Select value={formData.destinationLocation} onValueChange={(value) => handleInputChange("destinationLocation", value)} required>
-              <SelectTrigger className="h-11">
-                <SelectValue placeholder="Select destination location" />
-              </SelectTrigger>
-              <SelectContent>
+              <SelectTrigger className={isAccordion ? "h-8 text-sm" : "h-11"}><SelectValue placeholder="Select destination location" /></SelectTrigger>
+              <SelectContent className="bg-popover border z-50">
                 <SelectItem value="customer-site-1">Customer Site 1</SelectItem>
                 <SelectItem value="customer-site-2">Customer Site 2</SelectItem>
                 <SelectItem value="branch-office">Branch Office</SelectItem>
@@ -5313,29 +5224,16 @@ const FormVariationsDemo = () => {
             </Select>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="huQty" className="text-sm font-medium">
-              HU Qty <span className="text-destructive">*</span>
-            </Label>
-            <Input
-              id="huQty"
-              value={formData.huQty}
-              onChange={(e) => handleInputChange("huQty", e.target.value)}
-              placeholder="Enter quantity"
-              className="h-11"
-              required
-            />
+          <div className="space-y-1">
+            <Label htmlFor="huQty" className={`${isAccordion ? 'text-xs' : 'text-sm'} font-medium`}>HU Qty <span className="text-destructive">*</span></Label>
+            <Input id="huQty" value={formData.huQty} onChange={(e) => handleInputChange("huQty", e.target.value)} placeholder="Enter quantity" className={isAccordion ? "h-8 text-sm" : "h-11"} required />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="huType" className="text-sm font-medium">
-              HU Type <span className="text-destructive">*</span>
-            </Label>
+          <div className="space-y-1">
+            <Label htmlFor="huType" className={`${isAccordion ? 'text-xs' : 'text-sm'} font-medium`}>HU Type <span className="text-destructive">*</span></Label>
             <Select value={formData.huType} onValueChange={(value) => handleInputChange("huType", value)} required>
-              <SelectTrigger className="h-11">
-                <SelectValue placeholder="Select HU type" />
-              </SelectTrigger>
-              <SelectContent>
+              <SelectTrigger className={isAccordion ? "h-8 text-sm" : "h-11"}><SelectValue placeholder="Select HU type" /></SelectTrigger>
+              <SelectContent className="bg-popover border z-50">
                 <SelectItem value="box">Box</SelectItem>
                 <SelectItem value="pallet">Pallet</SelectItem>
                 <SelectItem value="container">Container</SelectItem>
@@ -5345,15 +5243,11 @@ const FormVariationsDemo = () => {
             </Select>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="deliverTo" className="text-sm font-medium">
-              Deliver To <span className="text-destructive">*</span>
-            </Label>
+          <div className="space-y-1">
+            <Label htmlFor="deliverTo" className={`${isAccordion ? 'text-xs' : 'text-sm'} font-medium`}>Deliver To <span className="text-destructive">*</span></Label>
             <Select value={formData.deliverTo} onValueChange={(value) => handleInputChange("deliverTo", value)} required>
-              <SelectTrigger className="h-11">
-                <SelectValue placeholder="Select delivery recipient" />
-              </SelectTrigger>
-              <SelectContent>
+              <SelectTrigger className={isAccordion ? "h-8 text-sm" : "h-11"}><SelectValue placeholder="Select delivery recipient" /></SelectTrigger>
+              <SelectContent className="bg-popover border z-50">
                 <SelectItem value="customer">Customer</SelectItem>
                 <SelectItem value="technician">Field Technician</SelectItem>
                 <SelectItem value="supervisor">Site Supervisor</SelectItem>
@@ -5363,15 +5257,11 @@ const FormVariationsDemo = () => {
             </Select>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="deliveryType" className="text-sm font-medium">
-              Delivery Type <span className="text-destructive">*</span>
-            </Label>
+          <div className="space-y-1">
+            <Label htmlFor="deliveryType" className={`${isAccordion ? 'text-xs' : 'text-sm'} font-medium`}>Delivery Type <span className="text-destructive">*</span></Label>
             <Select value={formData.deliveryType} onValueChange={(value) => handleInputChange("deliveryType", value)} required>
-              <SelectTrigger className="h-11">
-                <SelectValue placeholder="Select delivery type" />
-              </SelectTrigger>
-              <SelectContent>
+              <SelectTrigger className={isAccordion ? "h-8 text-sm" : "h-11"}><SelectValue placeholder="Select delivery type" /></SelectTrigger>
+              <SelectContent className="bg-popover border z-50">
                 <SelectItem value="shuttle">Shuttle</SelectItem>
                 <SelectItem value="courier">Courier</SelectItem>
                 <SelectItem value="freight">Freight</SelectItem>
@@ -5382,20 +5272,12 @@ const FormVariationsDemo = () => {
           </div>
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="transitNotes" className="text-sm font-medium">Notes</Label>
-          <Textarea
-            id="transitNotes"
-            value={formData.transitNotes}
-            onChange={(e) => handleInputChange("transitNotes", e.target.value)}
-            placeholder="Enter transit notes and special instructions..."
-            className="min-h-[120px] resize-none"
-          />
+        <div className="space-y-1">
+          <Label htmlFor="transitNotes" className={`${isAccordion ? 'text-xs' : 'text-sm'} font-medium`}>Notes</Label>
+          <Textarea id="transitNotes" value={formData.transitNotes} onChange={(e) => handleInputChange("transitNotes", e.target.value)} placeholder="Enter transit notes and special instructions..." className={isAccordion ? "min-h-[60px] resize-none text-sm" : "min-h-[120px] resize-none"} />
         </div>
 
-        <Button onClick={handleSetInTransit} size="sm" className="w-auto">
-          Set In Transit
-        </Button>
+        <Button onClick={handleSetInTransit} size="sm" className={isAccordion ? "w-auto h-8 text-xs" : "w-auto"}>Set In Transit</Button>
       </div>
     );
 
@@ -5404,15 +5286,10 @@ const FormVariationsDemo = () => {
     return (
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-3">
-            <Truck className="h-5 w-5 text-primary" />
-            Set In Transit
-          </CardTitle>
+          <CardTitle className="flex items-center gap-3"><Truck className="h-5 w-5 text-primary" />Set In Transit</CardTitle>
           <CardDescription>Configure transit logistics and delivery details</CardDescription>
         </CardHeader>
-        <CardContent>
-          {content}
-        </CardContent>
+        <CardContent>{content}</CardContent>
       </Card>
     );
   };
@@ -6260,9 +6137,9 @@ const FormVariationsDemo = () => {
                       )}
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="pb-4 space-y-6">
+                  <AccordionContent className="pb-4 space-y-4">
                     {renderLabSection()}
-                    {renderCostSection()}
+                    {renderCostSection(true)}
                   </AccordionContent>
                 </AccordionItem>
 
@@ -6298,7 +6175,7 @@ const FormVariationsDemo = () => {
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pb-4">
-                    {renderTransitSection(true)}
+                    {renderTransitSection(true, true)}
                   </AccordionContent>
                 </AccordionItem>
 
@@ -6316,7 +6193,7 @@ const FormVariationsDemo = () => {
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pb-4">
-                    {renderPartsSection(true)}
+                    {renderPartsSection(true, true)}
                   </AccordionContent>
                 </AccordionItem>
 
@@ -6328,7 +6205,7 @@ const FormVariationsDemo = () => {
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pb-4">
-                    {renderProductImagesSection(true)}
+                    {renderProductImagesSection(true, true)}
                   </AccordionContent>
                 </AccordionItem>
 
