@@ -2693,7 +2693,7 @@ const FormVariationsDemo = () => {
           </div>
 
           {/* Status Options Section - Minimal */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2">
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-2">
             {[
               { key: 'warranty', label: 'Warranty' },
               { key: 'estimate', label: 'Estimate' },
