@@ -1926,7 +1926,7 @@ const FormVariationsDemo = () => {
     <div className={isAccordion ? "space-y-2" : "space-y-6"}>
       <div className={isAccordion ? "" : "Card border-0 shadow-md w-full"}>
         <div className={isAccordion ? "space-y-1" : "p-4 sm:p-6 space-y-4"}>
-          <div className={`grid ${isAccordion ? "grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-x-3 gap-y-2" : "grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"}`}>
+          <div className={`grid ${isAccordion ? "grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-2" : "grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"}`}>
             <div className={isAccordion ? "space-y-0.5" : "space-y-2"}>
               <Label htmlFor="manufacturer" className={isAccordion ? "text-xs font-medium" : "text-sm font-medium"}>
                 Manufacturer {formData.type === "single" && <span className="text-destructive">*</span>}
