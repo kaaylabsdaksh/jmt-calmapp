@@ -6585,7 +6585,7 @@ const FormVariationsDemo = () => {
       
       {/* General - spanning 3 columns */}
       <div className="col-span-12 md:col-span-6 lg:col-span-3">
-        <Card className="h-full border shadow-sm hover:shadow-md transition-shadow">
+        <Card className="min-h-[420px] border shadow-sm hover:shadow-md transition-shadow">
           <CardHeader className="py-2 px-3">
             <div className="flex items-center gap-2">
               <div className="p-1.5 bg-primary/10 rounded">
@@ -6597,7 +6597,7 @@ const FormVariationsDemo = () => {
               )}
             </div>
           </CardHeader>
-          <CardContent className="pt-0 px-3 pb-3">
+          <CardContent className="pt-0 px-3 pb-3 overflow-y-auto max-h-[360px]">
             {renderGeneralSection(true)}
           </CardContent>
         </Card>
@@ -6605,7 +6605,7 @@ const FormVariationsDemo = () => {
 
       {/* Product - spanning 3 columns */}
       <div className="col-span-12 md:col-span-6 lg:col-span-3">
-        <Card className="h-full border shadow-sm hover:shadow-md transition-shadow">
+        <Card className="min-h-[420px] border shadow-sm hover:shadow-md transition-shadow">
           <CardHeader className="py-2 px-3">
             <div className="flex items-center gap-2">
               <div className="p-1.5 bg-blue-500/10 rounded">
@@ -6617,7 +6617,7 @@ const FormVariationsDemo = () => {
               )}
             </div>
           </CardHeader>
-          <CardContent className="pt-0 px-3 pb-3">
+          <CardContent className="pt-0 px-3 pb-3 overflow-y-auto max-h-[360px]">
             {renderProductSection(true)}
           </CardContent>
         </Card>
@@ -6625,7 +6625,7 @@ const FormVariationsDemo = () => {
 
       {/* Arrival Information - spanning 3 columns */}
       <div className="col-span-12 md:col-span-6 lg:col-span-3">
-        <Card className="h-full border shadow-sm hover:shadow-md transition-shadow">
+        <Card className="min-h-[420px] border shadow-sm hover:shadow-md transition-shadow">
           <CardHeader className="py-2 px-3">
             <div className="flex items-center gap-2">
               <div className="p-1.5 bg-orange-500/10 rounded">
@@ -6634,7 +6634,7 @@ const FormVariationsDemo = () => {
               <CardTitle className="text-sm">Arrival Information</CardTitle>
             </div>
           </CardHeader>
-          <CardContent className="pt-0 px-3 pb-3">
+          <CardContent className="pt-0 px-3 pb-3 overflow-y-auto max-h-[360px]">
             {renderLogisticsSection(true)}
           </CardContent>
         </Card>
@@ -6642,7 +6642,7 @@ const FormVariationsDemo = () => {
 
       {/* Additional Information - spanning 3 columns */}
       <div className="col-span-12 md:col-span-6 lg:col-span-3">
-        <Card className="h-full border shadow-sm hover:shadow-md transition-shadow">
+        <Card className="min-h-[420px] border shadow-sm hover:shadow-md transition-shadow">
           <CardHeader className="py-2 px-3">
             <div className="flex items-center gap-2">
               <div className="p-1.5 bg-amber-500/10 rounded">
@@ -6654,7 +6654,7 @@ const FormVariationsDemo = () => {
               )}
             </div>
           </CardHeader>
-          <CardContent className="pt-0 px-3 pb-3">
+          <CardContent className="pt-0 px-3 pb-3 overflow-y-auto max-h-[360px]">
             {renderOptionsSection(true)}
           </CardContent>
         </Card>
