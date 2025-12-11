@@ -6775,23 +6775,22 @@ const FormVariationsDemo = () => {
         </Card>
       </div>
 
-      {/* Activity Log - Full width spanning 6 columns */}
-      <div className="col-span-12 md:col-span-6">
-        <Card className="h-full border shadow-sm hover:shadow-md transition-shadow">
-          <CardHeader className="py-2 px-3">
-            <div className="flex items-center gap-2">
-              <div className="p-1.5 bg-indigo-500/10 rounded">
-                <Activity className="h-4 w-4 text-indigo-600" />
-              </div>
-              <CardTitle className="text-sm">Activity Log</CardTitle>
+      </div>
+
+      {/* Activity Log - Full width at bottom */}
+      <Card className="border shadow-sm hover:shadow-md transition-shadow">
+        <CardHeader className="py-2 px-3">
+          <div className="flex items-center gap-2">
+            <div className="p-1.5 bg-indigo-500/10 rounded">
+              <Activity className="h-4 w-4 text-indigo-600" />
             </div>
-          </CardHeader>
-          <CardContent className="pt-0 px-3 pb-3">
-            {renderActivityLog(true)}
-          </CardContent>
-        </Card>
-      </div>
-      </div>
+            <CardTitle className="text-sm">Activity Log</CardTitle>
+          </div>
+        </CardHeader>
+        <CardContent className="pt-0 px-3 pb-3">
+          {renderActivityLog(true)}
+        </CardContent>
+      </Card>
     </div>
   );
 
