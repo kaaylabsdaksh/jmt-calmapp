@@ -2712,9 +2712,9 @@ const FormVariationsDemo = () => {
               { key: 'dateValidOverride', label: 'Date Valid. Override' },
               { key: 'coStdCheckOverride', label: 'C/O Std Check Override' },
             ].map(option => (
-              <div key={option.key} className="flex items-center justify-between gap-1 px-2 py-1 border rounded bg-background">
+              <div key={option.key} className="flex items-center gap-2 px-2 py-1 border rounded bg-background">
+                <Checkbox id={option.key} checked={formData[option.key as keyof typeof formData] as boolean} onCheckedChange={(checked) => handleInputChange(option.key, checked)} className="h-3.5 w-3.5" />
                 <Label htmlFor={option.key} className="text-xs cursor-pointer truncate">{option.label}</Label>
-                <Switch id={option.key} checked={formData[option.key as keyof typeof formData] as boolean} onCheckedChange={(checked) => handleInputChange(option.key, checked)} className="scale-75" />
               </div>
             ))}
           </div>
@@ -2787,12 +2787,12 @@ const FormVariationsDemo = () => {
                   { key: 'dateValidOverride', label: 'Date Valid. Override', icon: '📅' },
                   { key: 'coStdCheckOverride', label: 'C/O Std Check Override', icon: '✅' },
                 ].map(option => (
-                  <div key={option.key} className="flex items-center justify-between p-3 border rounded-lg hover:bg-muted/50 transition-colors">
+                  <div key={option.key} className="flex items-center gap-3 p-3 border rounded-lg hover:bg-muted/50 transition-colors">
+                    <Checkbox id={option.key} checked={formData[option.key as keyof typeof formData] as boolean} onCheckedChange={(checked) => handleInputChange(option.key, checked)} />
                     <div className="flex items-center gap-2">
                       <span className="text-lg">{option.icon}</span>
                       <Label htmlFor={option.key} className="text-sm font-medium cursor-pointer">{option.label}</Label>
                     </div>
-                    <Switch id={option.key} checked={formData[option.key as keyof typeof formData] as boolean} onCheckedChange={(checked) => handleInputChange(option.key, checked)} />
                   </div>
                 ))}
               </div>
