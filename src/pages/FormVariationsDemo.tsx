@@ -1920,27 +1920,27 @@ const FormVariationsDemo = () => {
   };
 
   const renderProductSection = (isAccordion = false) => (
-    <div className={isAccordion ? "space-y-3" : "space-y-6"}>
+    <div className={isAccordion ? "space-y-2" : "space-y-6"}>
       <div className={isAccordion ? "" : "Card border-0 shadow-md w-full"}>
-        <div className={isAccordion ? "space-y-2" : "p-4 sm:p-6 space-y-4"}>
-          <div className={`grid ${isAccordion ? "grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-2" : "grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"}`}>
-            <div className="space-y-2">
-              <Label htmlFor="manufacturer" className="text-sm font-medium">
+        <div className={isAccordion ? "space-y-1" : "p-4 sm:p-6 space-y-4"}>
+          <div className={`grid ${isAccordion ? "grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-x-3 gap-y-2" : "grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"}`}>
+            <div className={isAccordion ? "space-y-0.5" : "space-y-2"}>
+              <Label htmlFor="manufacturer" className={isAccordion ? "text-xs font-medium" : "text-sm font-medium"}>
                 Manufacturer {formData.type === "single" && <span className="text-destructive">*</span>}
               </Label>
-              <div className="flex gap-2">
+              <div className="flex gap-1">
                 <Popover open={manufacturerDropdownOpen} onOpenChange={setManufacturerDropdownOpen}>
                   <PopoverTrigger asChild>
                     <Button
                       variant="outline"
                       role="combobox"
                       aria-expanded={manufacturerDropdownOpen}
-                      className="h-11 justify-between flex-1"
+                      className={isAccordion ? "h-7 text-xs justify-between flex-1" : "h-11 justify-between flex-1"}
                     >
                       {formData.manufacturer
                         ? manufacturers.find((manufacturer) => manufacturer.value === formData.manufacturer)?.label
-                        : "Select manufacturer..."}
-                      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        : "Select..."}
+                      <ChevronsUpDown className={isAccordion ? "ml-1 h-3 w-3 shrink-0 opacity-50" : "ml-2 h-4 w-4 shrink-0 opacity-50"} />
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-full p-0" align="start">
@@ -1949,14 +1949,16 @@ const FormVariationsDemo = () => {
                         placeholder="Search manufacturer..." 
                         value={manufacturerSearchValue}
                         onValueChange={setManufacturerSearchValue}
+                        className={isAccordion ? "h-7 text-xs" : ""}
                       />
-                      <CommandList>
+                      <CommandList className={isAccordion ? "max-h-40" : ""}>
                         <CommandEmpty>
                           <div className="p-2 text-center">
-                            <p className="text-sm text-muted-foreground mb-2">No manufacturer found.</p>
+                            <p className={isAccordion ? "text-xs text-muted-foreground mb-1" : "text-sm text-muted-foreground mb-2"}>No manufacturer found.</p>
                             <Button 
                               variant="outline" 
                               size="sm" 
+                              className={isAccordion ? "h-6 text-xs" : ""}
                               onClick={() => {
                                 setNewManufacturerName(manufacturerSearchValue);
                                 setShowManufacturerDialog(true);
@@ -1972,6 +1974,7 @@ const FormVariationsDemo = () => {
                             <CommandItem
                               key={manufacturer.value}
                               value={manufacturer.value}
+                              className={isAccordion ? "text-xs py-1" : ""}
                               onSelect={(currentValue) => {
                                 handleInputChange("manufacturer", currentValue === formData.manufacturer ? "" : currentValue);
                                 setManufacturerDropdownOpen(false);
@@ -1980,7 +1983,7 @@ const FormVariationsDemo = () => {
                             >
                               <Check
                                 className={cn(
-                                  "mr-2 h-4 w-4",
+                                  isAccordion ? "mr-1 h-3 w-3" : "mr-2 h-4 w-4",
                                   formData.manufacturer === manufacturer.value ? "opacity-100" : "opacity-0"
                                 )}
                               />
@@ -1996,30 +1999,30 @@ const FormVariationsDemo = () => {
                   variant="outline" 
                   size="sm"
                   onClick={() => setShowManufacturerDialog(true)}
-                  className="px-3"
+                  className={isAccordion ? "h-7 px-2 text-xs" : "px-3"}
                 >
                   +
                 </Button>
               </div>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="model" className="text-sm font-medium">
+            <div className={isAccordion ? "space-y-0.5" : "space-y-2"}>
+              <Label htmlFor="model" className={isAccordion ? "text-xs font-medium" : "text-sm font-medium"}>
                 Model {formData.type === "single" && <span className="text-destructive">*</span>}
               </Label>
-              <div className="flex gap-2">
+              <div className="flex gap-1">
                 <Popover open={modelDropdownOpen} onOpenChange={setModelDropdownOpen}>
                   <PopoverTrigger asChild>
                     <Button
                       variant="outline"
                       role="combobox"
                       aria-expanded={modelDropdownOpen}
-                      className="h-11 justify-between flex-1"
+                      className={isAccordion ? "h-7 text-xs justify-between flex-1" : "h-11 justify-between flex-1"}
                     >
                       {formData.model
                         ? models.find((model) => model.value === formData.model)?.label
-                        : "Select model..."}
-                      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        : "Select..."}
+                      <ChevronsUpDown className={isAccordion ? "ml-1 h-3 w-3 shrink-0 opacity-50" : "ml-2 h-4 w-4 shrink-0 opacity-50"} />
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-full p-0" align="start">
@@ -2028,11 +2031,12 @@ const FormVariationsDemo = () => {
                         placeholder="Search model..." 
                         value={modelSearchValue}
                         onValueChange={setModelSearchValue}
+                        className={isAccordion ? "h-7 text-xs" : ""}
                       />
-                      <CommandList>
+                      <CommandList className={isAccordion ? "max-h-40" : ""}>
                         <CommandEmpty>
                           <div className="p-2 text-center">
-                            <p className="text-sm text-muted-foreground">No model found.</p>
+                            <p className={isAccordion ? "text-xs text-muted-foreground" : "text-sm text-muted-foreground"}>No model found.</p>
                           </div>
                         </CommandEmpty>
                         <CommandGroup>
@@ -2040,6 +2044,7 @@ const FormVariationsDemo = () => {
                             <CommandItem
                               key={model.value}
                               value={model.value}
+                              className={isAccordion ? "text-xs py-1" : ""}
                               onSelect={(currentValue) => {
                                 handleInputChange("model", currentValue === formData.model ? "" : currentValue);
                                 setModelDropdownOpen(false);
@@ -2048,7 +2053,7 @@ const FormVariationsDemo = () => {
                             >
                               <Check
                                 className={cn(
-                                  "mr-2 h-4 w-4",
+                                  isAccordion ? "mr-1 h-3 w-3" : "mr-2 h-4 w-4",
                                   formData.model === model.value ? "opacity-100" : "opacity-0"
                                 )}
                               />
@@ -2064,24 +2069,24 @@ const FormVariationsDemo = () => {
                   variant="outline" 
                   size="sm"
                   onClick={handleOpenPRDialog}
-                  className="px-3 whitespace-nowrap"
+                  className={isAccordion ? "h-7 px-2 text-xs whitespace-nowrap" : "px-3 whitespace-nowrap"}
                 >
                   Add PR
                 </Button>
               </div>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="labCode" className="text-sm font-medium">
+            <div className={isAccordion ? "space-y-0.5" : "space-y-2"}>
+              <Label htmlFor="labCode" className={isAccordion ? "text-xs font-medium" : "text-sm font-medium"}>
                 Lab Code {formData.type === "single" && <span className="text-destructive">*</span>}
               </Label>
               <Select value={formData.labCode} disabled>
-                <SelectTrigger className="h-11 bg-muted cursor-not-allowed">
+                <SelectTrigger className={isAccordion ? "h-7 text-xs bg-muted cursor-not-allowed" : "h-11 bg-muted cursor-not-allowed"}>
                   <SelectValue placeholder="Select lab code" />
                 </SelectTrigger>
                 <SelectContent className="bg-popover border z-50 max-h-60 overflow-y-auto">
                   {labCodes.map((labCode) => (
-                    <SelectItem key={labCode.value} value={labCode.value}>
+                    <SelectItem key={labCode.value} value={labCode.value} className={isAccordion ? "text-xs" : ""}>
                       {labCode.label}
                     </SelectItem>
                   ))}
@@ -2089,8 +2094,8 @@ const FormVariationsDemo = () => {
               </Select>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="mfgSerial" className="text-sm font-medium">
+            <div className={isAccordion ? "space-y-0.5" : "space-y-2"}>
+              <Label htmlFor="mfgSerial" className={isAccordion ? "text-xs font-medium" : "text-sm font-medium"}>
                 MFG Serial {formData.type === "single" && <span className="text-destructive">*</span>}
               </Label>
               <Input
@@ -2098,12 +2103,12 @@ const FormVariationsDemo = () => {
                 value={formData.mfgSerial}
                 onChange={(e) => handleInputChange("mfgSerial", e.target.value)}
                 placeholder="Manufacturing serial"
-                className="h-11"
+                className={isAccordion ? "h-7 text-xs" : "h-11"}
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="costId" className="text-sm font-medium">
+            <div className={isAccordion ? "space-y-0.5" : "space-y-2"}>
+              <Label htmlFor="costId" className={isAccordion ? "text-xs font-medium" : "text-sm font-medium"}>
                 Cust ID {formData.type === "single" && <span className="text-destructive">*</span>}
               </Label>
               <Input
@@ -2111,12 +2116,12 @@ const FormVariationsDemo = () => {
                 value={formData.costId}
                 onChange={(e) => handleInputChange("costId", e.target.value)}
                 placeholder="Customer identifier"
-                className="h-11"
+                className={isAccordion ? "h-7 text-xs" : "h-11"}
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="costSerial" className="text-sm font-medium">
+            <div className={isAccordion ? "space-y-0.5" : "space-y-2"}>
+              <Label htmlFor="costSerial" className={isAccordion ? "text-xs font-medium" : "text-sm font-medium"}>
                 Cust Serial {formData.type === "single" && <span className="text-destructive">*</span>}
               </Label>
               <Input
@@ -2124,23 +2129,23 @@ const FormVariationsDemo = () => {
                 value={formData.costSerial}
                 onChange={(e) => handleInputChange("costSerial", e.target.value)}
                 placeholder="Customer serial"
-                className="h-11"
+                className={isAccordion ? "h-7 text-xs" : "h-11"}
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="rfid" className="text-sm font-medium">RFID</Label>
+            <div className={isAccordion ? "space-y-0.5" : "space-y-2"}>
+              <Label htmlFor="rfid" className={isAccordion ? "text-xs font-medium" : "text-sm font-medium"}>RFID</Label>
               <Input
                 id="rfid"
                 value={formData.rfid}
                 onChange={(e) => handleInputChange("rfid", e.target.value)}
                 placeholder="RFID tag"
-                className="h-11"
+                className={isAccordion ? "h-7 text-xs" : "h-11"}
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="quantity" className="text-sm font-medium">
+            <div className={isAccordion ? "space-y-0.5" : "space-y-2"}>
+              <Label htmlFor="quantity" className={isAccordion ? "text-xs font-medium" : "text-sm font-medium"}>
                 Quantity {formData.type === "single" && <span className="text-destructive">*</span>}
               </Label>
               <Input
@@ -2149,62 +2154,62 @@ const FormVariationsDemo = () => {
                 value={formData.quantity}
                 onChange={(e) => handleInputChange("quantity", e.target.value)}
                 placeholder="1"
-                className="h-11"
+                className={isAccordion ? "h-7 text-xs" : "h-11"}
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="description" className="text-sm font-medium">Description</Label>
+            <div className={isAccordion ? "space-y-0.5" : "space-y-2"}>
+              <Label htmlFor="description" className={isAccordion ? "text-xs font-medium" : "text-sm font-medium"}>Description</Label>
               <Input
                 id="description"
                 value={formData.description}
                 disabled
                 placeholder="Product description"
-                className="h-11 bg-muted"
+                className={isAccordion ? "h-7 text-xs bg-muted" : "h-11 bg-muted"}
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="capableLoc" className="text-sm font-medium">Capable Loc.</Label>
+            <div className={isAccordion ? "space-y-0.5" : "space-y-2"}>
+              <Label htmlFor="capableLoc" className={isAccordion ? "text-xs font-medium" : "text-sm font-medium"}>Capable Loc.</Label>
               <Input
                 id="capableLoc"
                 value=""
                 disabled
                 placeholder="Capable location"
-                className="h-11 bg-muted"
+                className={isAccordion ? "h-7 text-xs bg-muted" : "h-11 bg-muted"}
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="accuracy" className="text-sm font-medium">Accuracy</Label>
+            <div className={isAccordion ? "space-y-0.5" : "space-y-2"}>
+              <Label htmlFor="accuracy" className={isAccordion ? "text-xs font-medium" : "text-sm font-medium"}>Accuracy</Label>
               <Input
                 id="accuracy"
                 value=""
                 disabled
                 placeholder="Accuracy"
-                className="h-11 bg-muted"
+                className={isAccordion ? "h-7 text-xs bg-muted" : "h-11 bg-muted"}
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="ranges" className="text-sm font-medium">Range(s)</Label>
+            <div className={isAccordion ? "space-y-0.5" : "space-y-2"}>
+              <Label htmlFor="ranges" className={isAccordion ? "text-xs font-medium" : "text-sm font-medium"}>Range(s)</Label>
               <Input
                 id="ranges"
                 value=""
                 disabled
                 placeholder="Range(s)"
-                className="h-11 bg-muted"
+                className={isAccordion ? "h-7 text-xs bg-muted" : "h-11 bg-muted"}
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="options" className="text-sm font-medium">Option(s)</Label>
+            <div className={isAccordion ? "space-y-0.5" : "space-y-2"}>
+              <Label htmlFor="options" className={isAccordion ? "text-xs font-medium" : "text-sm font-medium"}>Option(s)</Label>
               <Input
                 id="options"
                 value=""
                 disabled
                 placeholder="Option(s)"
-                className="h-11 bg-muted"
+                className={isAccordion ? "h-7 text-xs bg-muted" : "h-11 bg-muted"}
               />
             </div>
           </div>
@@ -6101,8 +6106,8 @@ const FormVariationsDemo = () => {
                       )}
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="pb-4">
-                    {renderProductSection()}
+                  <AccordionContent className="pb-2">
+                    {renderProductSection(true)}
                   </AccordionContent>
                 </AccordionItem>
 
@@ -6295,8 +6300,8 @@ const FormVariationsDemo = () => {
                 )}
               </div>
             </AccordionTrigger>
-            <AccordionContent className="pb-4">
-              {renderProductSection()}
+            <AccordionContent className="pb-2">
+              {renderProductSection(true)}
             </AccordionContent>
           </AccordionItem>
 
