@@ -1638,7 +1638,7 @@ const FormVariationsDemo = () => {
         </div>
       </div>
 
-      <div className={`grid ${isAccordion ? "grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-2" : "grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"} auto-rows-min`}>
+      <div className={`grid ${isAccordion ? "grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2" : "grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"} auto-rows-min`}>
         <div className={isAccordion ? "space-y-1" : "space-y-2"}>
           <Label htmlFor="itemStatus" className={`${isAccordion ? "text-xs" : "text-sm"} font-medium`}>Item Status</Label>
           <Select value={formData.itemStatus} onValueChange={handleStatusChangeAttempt}>
