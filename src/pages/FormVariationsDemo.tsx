@@ -5421,186 +5421,367 @@ const FormVariationsDemo = () => {
   });
 
   // Render Activity Log section
-  const renderActivityLog = () => (
-    <div className="mb-24">
-      <Card className="border shadow-sm">
-        <CardContent className="p-6 space-y-6">
-          {/* Add New Activity */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-              <div className="lg:col-span-2">
-                <Label className="text-xs font-medium text-muted-foreground mb-2 block">TYPE</Label>
-                <Select value={activityLogType} onValueChange={setActivityLogType}>
-                  <SelectTrigger className="h-9">
-                    <SelectValue placeholder="Select type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Estimate">Estimate</SelectItem>
-                    <SelectItem value="Status Update">Status Update</SelectItem>
-                    <SelectItem value="Lab Work">Lab Work</SelectItem>
-                    <SelectItem value="Customer Contact">Customer Contact</SelectItem>
-                    <SelectItem value="Other">Other</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="lg:col-span-10">
-                <Label className="text-xs font-medium text-muted-foreground mb-2 block">COMMENT</Label>
-                <div className="flex gap-2">
-                  <Textarea
-                    placeholder="Enter your comment..."
-                    value={activityLogComment}
-                    onChange={(e) => setActivityLogComment(e.target.value)}
-                    className="min-h-[36px] h-9 resize-none flex-1"
-                  />
-                  <Button 
-                    onClick={handleAddActivityLog}
-                    className="bg-accent hover:bg-accent/90 text-accent-foreground h-9 px-4 whitespace-nowrap"
-                  >
-                    <span className="mr-1">+</span> Add
-                  </Button>
-                </div>
-                <div className="flex items-center gap-2 mt-2">
-                  <Checkbox
-                    id="activityCopyAsNew"
-                    checked={includeInCopyAsNew}
-                    onCheckedChange={(checked) => setIncludeInCopyAsNew(checked as boolean)}
-                  />
-                  <Label htmlFor="activityCopyAsNew" className="text-xs text-muted-foreground cursor-pointer">
-                    Include in Copy as New
-                  </Label>
-                </div>
-              </div>
+  const renderActivityLog = (isAccordion = false) => (
+    <div className={isAccordion ? "" : "mb-24"}>
+      {isAccordion ? (
+        <div className="space-y-3">
+          {/* Add New Activity - Compact */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-2">
+            <div className="lg:col-span-2">
+              <Label className="text-[10px] font-medium text-muted-foreground mb-1 block">TYPE</Label>
+              <Select value={activityLogType} onValueChange={setActivityLogType}>
+                <SelectTrigger className="h-7 text-xs">
+                  <SelectValue placeholder="Select type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Estimate">Estimate</SelectItem>
+                  <SelectItem value="Status Update">Status Update</SelectItem>
+                  <SelectItem value="Lab Work">Lab Work</SelectItem>
+                  <SelectItem value="Customer Contact">Customer Contact</SelectItem>
+                  <SelectItem value="Other">Other</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
-            {/* Activity History */}
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <h4 className="font-semibold text-sm">Activity History</h4>
-                <Badge variant="secondary" className="text-xs">
-                  {activityHistory.length}
-                </Badge>
+            <div className="lg:col-span-10">
+              <Label className="text-[10px] font-medium text-muted-foreground mb-1 block">COMMENT</Label>
+              <div className="flex gap-2">
+                <Textarea
+                  placeholder="Enter your comment..."
+                  value={activityLogComment}
+                  onChange={(e) => setActivityLogComment(e.target.value)}
+                  className="min-h-[28px] h-7 resize-none flex-1 text-xs py-1"
+                />
+                <Button 
+                  onClick={handleAddActivityLog}
+                  className="bg-accent hover:bg-accent/90 text-accent-foreground h-7 px-3 text-xs whitespace-nowrap"
+                  size="sm"
+                >
+                  <span className="mr-1">+</span> Add
+                </Button>
+              </div>
+              <div className="flex items-center gap-2 mt-1">
+                <Checkbox
+                  id="activityCopyAsNewAccordion"
+                  checked={includeInCopyAsNew}
+                  onCheckedChange={(checked) => setIncludeInCopyAsNew(checked as boolean)}
+                  className="h-3 w-3"
+                />
+                <Label htmlFor="activityCopyAsNewAccordion" className="text-[10px] text-muted-foreground cursor-pointer">
+                  Include in Copy as New
+                </Label>
+              </div>
+            </div>
+          </div>
+
+          {/* Activity History - Compact */}
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <h4 className="font-semibold text-xs">Activity History</h4>
+              <Badge variant="secondary" className="text-[10px] h-5">
+                {activityHistory.length}
+              </Badge>
+            </div>
+
+            <div className="border rounded overflow-hidden">
+              <div className="bg-muted/50 grid grid-cols-12 gap-2 px-3 py-1.5 text-[10px] font-medium text-muted-foreground border-b">
+                <div className="col-span-2">TYPE</div>
+                <div className="col-span-2">USER</div>
+                <div className="col-span-2">DATE</div>
+                <div className="col-span-6">DETAILS</div>
               </div>
 
-              <div className="border rounded-lg overflow-hidden">
-                <div className="bg-muted/50 grid grid-cols-12 gap-4 px-4 py-2.5 text-xs font-medium text-muted-foreground border-b">
-                  <div className="col-span-2">TYPE</div>
-                  <div className="col-span-2">USER</div>
-                  <div className="col-span-2">DATE</div>
-                  <div className="col-span-6">DETAILS</div>
-                </div>
-
-                {/* Quick Search Filters Row */}
-                {activityHistory.length > 0 && (
-                  <div className="bg-background border-b border-border">
-                    <div className="grid grid-cols-12 gap-4 px-4 py-3">
-                      <div className="col-span-2">
-                        <Select value={filterActivityType} onValueChange={setFilterActivityType}>
-                          <SelectTrigger className="h-8 bg-background text-xs border-border">
-                            <SelectValue placeholder="All Types" />
-                          </SelectTrigger>
-                          <SelectContent className="bg-popover z-50">
-                            <SelectItem value="all">All Types</SelectItem>
-                            {uniqueActivityTypes.map(type => (
-                              <SelectItem key={type} value={type}>{type}</SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div className="col-span-2">
-                        <Select value={filterActivityUser} onValueChange={setFilterActivityUser}>
-                          <SelectTrigger className="h-8 bg-background text-xs border-border">
-                            <SelectValue placeholder="All Users" />
-                          </SelectTrigger>
-                          <SelectContent className="bg-popover z-50">
-                            <SelectItem value="all">All Users</SelectItem>
-                            {uniqueActivityUsers.map(user => (
-                              <SelectItem key={user} value={user}>{user}</SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div className="col-span-2">
-                        <Popover>
-                          <PopoverTrigger asChild>
-                            <Button
-                              variant="outline"
-                              className={cn(
-                                "h-8 w-full justify-start text-left font-normal text-xs border-border",
-                                !dateRange.from && !dateRange.to && "text-muted-foreground"
-                              )}
-                            >
-                              <CalendarIcon className="mr-2 h-3 w-3" />
-                              {dateRange.from ? (
-                                dateRange.to ? (
-                                  <>
-                                    {format(dateRange.from, "MM/dd/yy")} - {format(dateRange.to, "MM/dd/yy")}
-                                  </>
-                                ) : (
-                                  format(dateRange.from, "MM/dd/yy")
-                                )
-                              ) : (
-                                <span>All Dates</span>
-                              )}
-                            </Button>
-                          </PopoverTrigger>
-                          <PopoverContent className="w-auto p-0 bg-popover z-50" align="start">
-                            <Calendar
-                              mode="range"
-                              selected={{ from: dateRange.from, to: dateRange.to }}
-                              onSelect={(range) => setDateRange({ from: range?.from, to: range?.to })}
-                              numberOfMonths={2}
-                              className={cn("p-3 pointer-events-auto")}
-                            />
-                          </PopoverContent>
-                        </Popover>
-                      </div>
-                      <div className="col-span-6 flex items-center">
-                        {(filterActivityType !== "all" || filterActivityUser !== "all" || dateRange.from || dateRange.to) && (
-                          <Button 
-                            variant="ghost" 
-                            size="sm" 
-                            onClick={() => {
-                              setFilterActivityType("all");
-                              setFilterActivityUser("all");
-                              setDateRange({ from: undefined, to: undefined });
-                            }}
-                            className="h-8 text-xs px-3"
+              {/* Quick Search Filters Row - Compact */}
+              {activityHistory.length > 0 && (
+                <div className="bg-background border-b border-border">
+                  <div className="grid grid-cols-12 gap-2 px-3 py-1.5">
+                    <div className="col-span-2">
+                      <Select value={filterActivityType} onValueChange={setFilterActivityType}>
+                        <SelectTrigger className="h-6 bg-background text-[10px] border-border">
+                          <SelectValue placeholder="All Types" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-popover z-50">
+                          <SelectItem value="all">All Types</SelectItem>
+                          {uniqueActivityTypes.map(type => (
+                            <SelectItem key={type} value={type}>{type}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="col-span-2">
+                      <Select value={filterActivityUser} onValueChange={setFilterActivityUser}>
+                        <SelectTrigger className="h-6 bg-background text-[10px] border-border">
+                          <SelectValue placeholder="All Users" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-popover z-50">
+                          <SelectItem value="all">All Users</SelectItem>
+                          {uniqueActivityUsers.map(user => (
+                            <SelectItem key={user} value={user}>{user}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="col-span-2">
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant="outline"
+                            className={cn(
+                              "h-6 w-full justify-start text-left font-normal text-[10px] border-border px-2",
+                              !dateRange.from && !dateRange.to && "text-muted-foreground"
+                            )}
                           >
-                            Clear Filters
+                            <CalendarIcon className="mr-1 h-2.5 w-2.5" />
+                            {dateRange.from ? (
+                              dateRange.to ? (
+                                <>
+                                  {format(dateRange.from, "MM/dd/yy")} - {format(dateRange.to, "MM/dd/yy")}
+                                </>
+                              ) : (
+                                format(dateRange.from, "MM/dd/yy")
+                              )
+                            ) : (
+                              <span>All Dates</span>
+                            )}
                           </Button>
-                        )}
-                      </div>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0 bg-popover z-50" align="start">
+                          <Calendar
+                            mode="range"
+                            selected={{ from: dateRange.from, to: dateRange.to }}
+                            onSelect={(range) => setDateRange({ from: range?.from, to: range?.to })}
+                            numberOfMonths={2}
+                            className={cn("p-3 pointer-events-auto")}
+                          />
+                        </PopoverContent>
+                      </Popover>
+                    </div>
+                    <div className="col-span-6 flex items-center">
+                      {(filterActivityType !== "all" || filterActivityUser !== "all" || dateRange.from || dateRange.to) && (
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          onClick={() => {
+                            setFilterActivityType("all");
+                            setFilterActivityUser("all");
+                            setDateRange({ from: undefined, to: undefined });
+                          }}
+                          className="h-6 text-[10px] px-2"
+                        >
+                          Clear Filters
+                        </Button>
+                      )}
                     </div>
                   </div>
-                )}
-
-                <div className="divide-y divide-border">
-                  {filteredActivityHistory.length > 0 ? (
-                    filteredActivityHistory.map((activity, index) => (
-                      <div key={index} className="grid grid-cols-12 gap-4 px-4 py-3 text-sm hover:bg-muted/30 transition-colors border-b border-border last:border-b-0">
-                        <div className="col-span-2">
-                          <Badge 
-                            variant={activity.type === "Estimate" ? "default" : "secondary"}
-                            className="text-xs"
-                          >
-                            {activity.type}
-                          </Badge>
-                        </div>
-                        <div className="col-span-2 text-sm">{activity.user}</div>
-                        <div className="col-span-2 text-xs text-muted-foreground">{activity.date}</div>
-                        <div className="col-span-6 text-sm">{activity.details}</div>
-                      </div>
-                    ))
-                  ) : (
-                    <div className="px-4 py-8 text-center text-sm text-muted-foreground">
-                      {activityHistory.length === 0 ? 'No activity recorded yet' : 'No matching activities found'}
-                    </div>
-                  )}
                 </div>
+              )}
+
+              <div className="divide-y divide-border">
+                {filteredActivityHistory.length > 0 ? (
+                  filteredActivityHistory.map((activity, index) => (
+                    <div key={index} className="grid grid-cols-12 gap-2 px-3 py-1.5 text-xs hover:bg-muted/30 transition-colors border-b border-border last:border-b-0">
+                      <div className="col-span-2">
+                        <Badge 
+                          variant={activity.type === "Estimate" ? "default" : "secondary"}
+                          className="text-[10px] h-5"
+                        >
+                          {activity.type}
+                        </Badge>
+                      </div>
+                      <div className="col-span-2 text-xs">{activity.user}</div>
+                      <div className="col-span-2 text-[10px] text-muted-foreground">{activity.date}</div>
+                      <div className="col-span-6 text-xs">{activity.details}</div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="px-3 py-4 text-center text-xs text-muted-foreground">
+                    {activityHistory.length === 0 ? 'No activity recorded yet' : 'No matching activities found'}
+                  </div>
+                )}
               </div>
             </div>
-          </CardContent>
-      </Card>
+          </div>
+        </div>
+      ) : (
+        <Card className="border shadow-sm">
+          <CardContent className="p-6 space-y-6">
+            {/* Add New Activity */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+                <div className="lg:col-span-2">
+                  <Label className="text-xs font-medium text-muted-foreground mb-2 block">TYPE</Label>
+                  <Select value={activityLogType} onValueChange={setActivityLogType}>
+                    <SelectTrigger className="h-9">
+                      <SelectValue placeholder="Select type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Estimate">Estimate</SelectItem>
+                      <SelectItem value="Status Update">Status Update</SelectItem>
+                      <SelectItem value="Lab Work">Lab Work</SelectItem>
+                      <SelectItem value="Customer Contact">Customer Contact</SelectItem>
+                      <SelectItem value="Other">Other</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="lg:col-span-10">
+                  <Label className="text-xs font-medium text-muted-foreground mb-2 block">COMMENT</Label>
+                  <div className="flex gap-2">
+                    <Textarea
+                      placeholder="Enter your comment..."
+                      value={activityLogComment}
+                      onChange={(e) => setActivityLogComment(e.target.value)}
+                      className="min-h-[36px] h-9 resize-none flex-1"
+                    />
+                    <Button 
+                      onClick={handleAddActivityLog}
+                      className="bg-accent hover:bg-accent/90 text-accent-foreground h-9 px-4 whitespace-nowrap"
+                    >
+                      <span className="mr-1">+</span> Add
+                    </Button>
+                  </div>
+                  <div className="flex items-center gap-2 mt-2">
+                    <Checkbox
+                      id="activityCopyAsNew"
+                      checked={includeInCopyAsNew}
+                      onCheckedChange={(checked) => setIncludeInCopyAsNew(checked as boolean)}
+                    />
+                    <Label htmlFor="activityCopyAsNew" className="text-xs text-muted-foreground cursor-pointer">
+                      Include in Copy as New
+                    </Label>
+                  </div>
+                </div>
+              </div>
+
+              {/* Activity History */}
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <h4 className="font-semibold text-sm">Activity History</h4>
+                  <Badge variant="secondary" className="text-xs">
+                    {activityHistory.length}
+                  </Badge>
+                </div>
+
+                <div className="border rounded-lg overflow-hidden">
+                  <div className="bg-muted/50 grid grid-cols-12 gap-4 px-4 py-2.5 text-xs font-medium text-muted-foreground border-b">
+                    <div className="col-span-2">TYPE</div>
+                    <div className="col-span-2">USER</div>
+                    <div className="col-span-2">DATE</div>
+                    <div className="col-span-6">DETAILS</div>
+                  </div>
+
+                  {/* Quick Search Filters Row */}
+                  {activityHistory.length > 0 && (
+                    <div className="bg-background border-b border-border">
+                      <div className="grid grid-cols-12 gap-4 px-4 py-3">
+                        <div className="col-span-2">
+                          <Select value={filterActivityType} onValueChange={setFilterActivityType}>
+                            <SelectTrigger className="h-8 bg-background text-xs border-border">
+                              <SelectValue placeholder="All Types" />
+                            </SelectTrigger>
+                            <SelectContent className="bg-popover z-50">
+                              <SelectItem value="all">All Types</SelectItem>
+                              {uniqueActivityTypes.map(type => (
+                                <SelectItem key={type} value={type}>{type}</SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <div className="col-span-2">
+                          <Select value={filterActivityUser} onValueChange={setFilterActivityUser}>
+                            <SelectTrigger className="h-8 bg-background text-xs border-border">
+                              <SelectValue placeholder="All Users" />
+                            </SelectTrigger>
+                            <SelectContent className="bg-popover z-50">
+                              <SelectItem value="all">All Users</SelectItem>
+                              {uniqueActivityUsers.map(user => (
+                                <SelectItem key={user} value={user}>{user}</SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <div className="col-span-2">
+                          <Popover>
+                            <PopoverTrigger asChild>
+                              <Button
+                                variant="outline"
+                                className={cn(
+                                  "h-8 w-full justify-start text-left font-normal text-xs border-border",
+                                  !dateRange.from && !dateRange.to && "text-muted-foreground"
+                                )}
+                              >
+                                <CalendarIcon className="mr-2 h-3 w-3" />
+                                {dateRange.from ? (
+                                  dateRange.to ? (
+                                    <>
+                                      {format(dateRange.from, "MM/dd/yy")} - {format(dateRange.to, "MM/dd/yy")}
+                                    </>
+                                  ) : (
+                                    format(dateRange.from, "MM/dd/yy")
+                                  )
+                                ) : (
+                                  <span>All Dates</span>
+                                )}
+                              </Button>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-auto p-0 bg-popover z-50" align="start">
+                              <Calendar
+                                mode="range"
+                                selected={{ from: dateRange.from, to: dateRange.to }}
+                                onSelect={(range) => setDateRange({ from: range?.from, to: range?.to })}
+                                numberOfMonths={2}
+                                className={cn("p-3 pointer-events-auto")}
+                              />
+                            </PopoverContent>
+                          </Popover>
+                        </div>
+                        <div className="col-span-6 flex items-center">
+                          {(filterActivityType !== "all" || filterActivityUser !== "all" || dateRange.from || dateRange.to) && (
+                            <Button 
+                              variant="ghost" 
+                              size="sm" 
+                              onClick={() => {
+                                setFilterActivityType("all");
+                                setFilterActivityUser("all");
+                                setDateRange({ from: undefined, to: undefined });
+                              }}
+                              className="h-8 text-xs px-3"
+                            >
+                              Clear Filters
+                            </Button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="divide-y divide-border">
+                    {filteredActivityHistory.length > 0 ? (
+                      filteredActivityHistory.map((activity, index) => (
+                        <div key={index} className="grid grid-cols-12 gap-4 px-4 py-3 text-sm hover:bg-muted/30 transition-colors border-b border-border last:border-b-0">
+                          <div className="col-span-2">
+                            <Badge 
+                              variant={activity.type === "Estimate" ? "default" : "secondary"}
+                              className="text-xs"
+                            >
+                              {activity.type}
+                            </Badge>
+                          </div>
+                          <div className="col-span-2 text-sm">{activity.user}</div>
+                          <div className="col-span-2 text-xs text-muted-foreground">{activity.date}</div>
+                          <div className="col-span-6 text-sm">{activity.details}</div>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="px-4 py-8 text-center text-sm text-muted-foreground">
+                        {activityHistory.length === 0 ? 'No activity recorded yet' : 'No matching activities found'}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+        </Card>
+      )}
     </div>
   );
 
@@ -6279,7 +6460,7 @@ const FormVariationsDemo = () => {
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pb-4">
-                    {renderActivityLog()}
+                    {renderActivityLog(accordionDensity === 'compact')}
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
