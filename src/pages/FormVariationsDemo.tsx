@@ -38,6 +38,9 @@ const FormVariationsDemo = () => {
   // Layout variant state
   const [layoutVariant, setLayoutVariant] = useState<'default' | 'minimal' | 'accordion'>('accordion');
   
+  // Accordion density state: 'compact' = ultra-compact, 'normal' = standard spacing
+  const [accordionDensity, setAccordionDensity] = useState<'compact' | 'normal'>('compact');
+  
   // Main section state
   const [activeSection, setActiveSection] = useState<'work-order-items' | 'estimate' | 'qf3' | 'external-files' | 'cert-files'>('work-order-items');
   
@@ -5626,33 +5629,66 @@ const FormVariationsDemo = () => {
     <div className="bg-card border border-border rounded-lg p-4 sm:p-6 mb-4 sm:mb-6 mt-4 sm:mt-6">
       <div className="flex flex-col gap-4">
         {/* Layout Toggle */}
-        <div className="flex items-center justify-end gap-2">
-          <span className="text-xs text-muted-foreground mr-2">View:</span>
-          <div className="inline-flex items-center rounded-lg border border-border p-1 bg-muted/50">
-            <button
-              onClick={() => setLayoutVariant('default')}
-              className={cn(
-                "inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md transition-all",
-                layoutVariant === 'default'
-                  ? "bg-background text-foreground shadow-sm"
-                  : "text-muted-foreground hover:text-foreground"
-              )}
-            >
-              <Layers className="h-3.5 w-3.5" />
-              Tabs
-            </button>
-            <button
-              onClick={() => setLayoutVariant('accordion')}
-              className={cn(
-                "inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md transition-all",
-                layoutVariant === 'accordion'
-                  ? "bg-background text-foreground shadow-sm"
-                  : "text-muted-foreground hover:text-foreground"
-              )}
-            >
-              <ChevronDown className="h-3.5 w-3.5" />
-              Accordion
-            </button>
+        <div className="flex items-center justify-end gap-4">
+          {/* Density Toggle - Only show when accordion is active */}
+          {layoutVariant === 'accordion' && (
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-muted-foreground">Density:</span>
+              <div className="inline-flex items-center rounded-lg border border-border p-1 bg-muted/50">
+                <button
+                  onClick={() => setAccordionDensity('compact')}
+                  className={cn(
+                    "inline-flex items-center gap-1 px-2 py-1 text-xs font-medium rounded-md transition-all",
+                    accordionDensity === 'compact'
+                      ? "bg-background text-foreground shadow-sm"
+                      : "text-muted-foreground hover:text-foreground"
+                  )}
+                >
+                  Compact
+                </button>
+                <button
+                  onClick={() => setAccordionDensity('normal')}
+                  className={cn(
+                    "inline-flex items-center gap-1 px-2 py-1 text-xs font-medium rounded-md transition-all",
+                    accordionDensity === 'normal'
+                      ? "bg-background text-foreground shadow-sm"
+                      : "text-muted-foreground hover:text-foreground"
+                  )}
+                >
+                  Normal
+                </button>
+              </div>
+            </div>
+          )}
+          
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-muted-foreground">View:</span>
+            <div className="inline-flex items-center rounded-lg border border-border p-1 bg-muted/50">
+              <button
+                onClick={() => setLayoutVariant('default')}
+                className={cn(
+                  "inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md transition-all",
+                  layoutVariant === 'default'
+                    ? "bg-background text-foreground shadow-sm"
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                <Layers className="h-3.5 w-3.5" />
+                Tabs
+              </button>
+              <button
+                onClick={() => setLayoutVariant('accordion')}
+                className={cn(
+                  "inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md transition-all",
+                  layoutVariant === 'accordion'
+                    ? "bg-background text-foreground shadow-sm"
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                <ChevronDown className="h-3.5 w-3.5" />
+                Accordion
+              </button>
+            </div>
           </div>
         </div>
         
@@ -6035,7 +6071,7 @@ const FormVariationsDemo = () => {
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pb-4">
-                    {renderGeneralSection(true)}
+                    {renderGeneralSection(accordionDensity === 'compact')}
                   </AccordionContent>
                 </AccordionItem>
 
@@ -6092,7 +6128,7 @@ const FormVariationsDemo = () => {
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pb-4">
-                    {renderGeneralSection(true)}
+                    {renderGeneralSection(accordionDensity === 'compact')}
                   </AccordionContent>
                 </AccordionItem>
 
@@ -6110,7 +6146,7 @@ const FormVariationsDemo = () => {
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pb-2">
-                    {renderProductSection(true)}
+                    {renderProductSection(accordionDensity === 'compact')}
                   </AccordionContent>
                 </AccordionItem>
 
@@ -6128,7 +6164,7 @@ const FormVariationsDemo = () => {
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pb-4">
-                    {renderLogisticsSection(true)}
+                    {renderLogisticsSection(accordionDensity === 'compact')}
                   </AccordionContent>
                 </AccordionItem>
 
@@ -6146,8 +6182,8 @@ const FormVariationsDemo = () => {
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pb-2 space-y-2">
-                    {renderLabSection(true)}
-                    {renderCostSection(true)}
+                    {renderLabSection(accordionDensity === 'compact')}
+                    {renderCostSection(accordionDensity === 'compact')}
                   </AccordionContent>
                 </AccordionItem>
 
@@ -6165,7 +6201,7 @@ const FormVariationsDemo = () => {
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pb-4">
-                    {renderFactoryConfigSection(true)}
+                    {renderFactoryConfigSection(accordionDensity === 'compact')}
                   </AccordionContent>
                 </AccordionItem>
 
@@ -6183,7 +6219,7 @@ const FormVariationsDemo = () => {
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pb-4">
-                    {renderTransitSection(true, true)}
+                    {renderTransitSection(true, accordionDensity === 'compact')}
                   </AccordionContent>
                 </AccordionItem>
 
@@ -6201,7 +6237,7 @@ const FormVariationsDemo = () => {
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pb-4">
-                    {renderPartsSection(true, true)}
+                    {renderPartsSection(true, accordionDensity === 'compact')}
                   </AccordionContent>
                 </AccordionItem>
 
@@ -6213,7 +6249,7 @@ const FormVariationsDemo = () => {
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pb-4">
-                    {renderProductImagesSection(true, true)}
+                    {renderProductImagesSection(true, accordionDensity === 'compact')}
                   </AccordionContent>
                 </AccordionItem>
 
@@ -6231,7 +6267,7 @@ const FormVariationsDemo = () => {
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pb-4">
-                    {renderOptionsSection(true)}
+                    {renderOptionsSection(accordionDensity === 'compact')}
                   </AccordionContent>
                 </AccordionItem>
 
@@ -6286,7 +6322,7 @@ const FormVariationsDemo = () => {
               </div>
             </AccordionTrigger>
             <AccordionContent className="pb-4">
-              {renderGeneralSection(true)}
+              {renderGeneralSection(accordionDensity === 'compact')}
             </AccordionContent>
           </AccordionItem>
 
@@ -6304,7 +6340,7 @@ const FormVariationsDemo = () => {
               </div>
             </AccordionTrigger>
             <AccordionContent className="pb-2">
-              {renderProductSection(true)}
+              {renderProductSection(accordionDensity === 'compact')}
             </AccordionContent>
           </AccordionItem>
 
@@ -6322,7 +6358,7 @@ const FormVariationsDemo = () => {
               </div>
             </AccordionTrigger>
             <AccordionContent className="pb-4">
-              {renderLogisticsSection(true)}
+              {renderLogisticsSection(accordionDensity === 'compact')}
             </AccordionContent>
           </AccordionItem>
 
@@ -6340,7 +6376,7 @@ const FormVariationsDemo = () => {
               </div>
             </AccordionTrigger>
             <AccordionContent className="pb-4">
-              {renderOptionsSection(true)}
+              {renderOptionsSection(accordionDensity === 'compact')}
             </AccordionContent>
           </AccordionItem>
         </Accordion>
