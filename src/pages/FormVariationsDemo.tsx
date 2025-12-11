@@ -6581,10 +6581,11 @@ const FormVariationsDemo = () => {
   const renderBentoGridInterface = () => (
     <div className="h-[calc(100vh-280px)] overflow-y-auto pr-2">
       <div className="grid grid-cols-12 gap-3 pb-8">
-      {/* Top Row - 4 cards: General, Product, Arrival Information, Additional Information */}
+      {/* Top 4 cards in 2x2 layout */}
       
-      {/* General - spanning 3 columns */}
-      <div className="col-span-12 md:col-span-6 lg:col-span-3">
+      {/* Row 1 - General and Product */}
+      {/* General - spanning 6 columns */}
+      <div className="col-span-12 lg:col-span-6">
         <Card className="border shadow-sm hover:shadow-md transition-shadow">
           <CardHeader className="py-2 px-3">
             <div className="flex items-center gap-2">
@@ -6603,8 +6604,8 @@ const FormVariationsDemo = () => {
         </Card>
       </div>
 
-      {/* Product - spanning 3 columns */}
-      <div className="col-span-12 md:col-span-6 lg:col-span-3">
+      {/* Product - spanning 6 columns */}
+      <div className="col-span-12 lg:col-span-6">
         <Card className="border shadow-sm hover:shadow-md transition-shadow">
           <CardHeader className="py-2 px-3">
             <div className="flex items-center gap-2">
@@ -6623,8 +6624,9 @@ const FormVariationsDemo = () => {
         </Card>
       </div>
 
-      {/* Arrival Information - spanning 3 columns */}
-      <div className="col-span-12 md:col-span-6 lg:col-span-3">
+      {/* Row 2 - Arrival Information and Additional Information */}
+      {/* Arrival Information - spanning 6 columns */}
+      <div className="col-span-12 lg:col-span-6">
         <Card className="border shadow-sm hover:shadow-md transition-shadow">
           <CardHeader className="py-2 px-3">
             <div className="flex items-center gap-2">
@@ -6640,8 +6642,8 @@ const FormVariationsDemo = () => {
         </Card>
       </div>
 
-      {/* Additional Information - spanning 3 columns */}
-      <div className="col-span-12 md:col-span-6 lg:col-span-3">
+      {/* Additional Information - spanning 6 columns */}
+      <div className="col-span-12 lg:col-span-6">
         <Card className="border shadow-sm hover:shadow-md transition-shadow">
           <CardHeader className="py-2 px-3">
             <div className="flex items-center gap-2">
