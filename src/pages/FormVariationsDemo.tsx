@@ -6693,10 +6693,7 @@ const FormVariationsDemo = () => {
 
   // Render bento grid interface
   const renderBentoGridInterface = () => (
-    <div className="h-[calc(100vh-180px)] overflow-y-auto pr-2">
-      {/* Work Order Header inside scrollable container for bento */}
-      {renderWorkOrderHeader()}
-      
+    <div className="h-[calc(100vh-280px)] overflow-y-auto pr-2">
       <div className="grid grid-cols-12 gap-3 pb-8">
       {/* Top 4 cards in 2x2 layout */}
       
@@ -7859,8 +7856,8 @@ const FormVariationsDemo = () => {
 
       {/* Form Content */}
       <div className="px-3 sm:px-4 lg:px-6">{/* Removed bottom padding - footer component handles spacing */}
-        {/* Work Order Header - not rendered here for bento, it's inside the bento grid */}
-        {layoutVariant === 'bento' ? null : (layoutVariant === 'default' || layoutVariant === 'accordion') ? renderWorkOrderHeader() : renderMinimalWorkOrderHeader()}
+        {/* Work Order Header */}
+        {(layoutVariant === 'default' || layoutVariant === 'accordion' || layoutVariant === 'bento') ? renderWorkOrderHeader() : renderMinimalWorkOrderHeader()}
         
         {/* Main Section Toggles */}
         {layoutVariant === 'minimal' ? (
