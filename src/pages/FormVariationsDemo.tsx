@@ -7851,6 +7851,48 @@ const FormVariationsDemo = () => {
             </div>
           </div>
           
+          {/* View Toggle */}
+          <div className="flex items-center gap-3">
+            <span className="text-sm text-muted-foreground">View:</span>
+            <div className="flex items-center bg-muted/50 rounded-lg p-1 border border-border">
+              <button
+                onClick={() => setLayoutVariant('default')}
+                className={cn(
+                  "flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all",
+                  layoutVariant === 'default'
+                    ? "bg-background text-foreground shadow-sm"
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                <Layers className="h-4 w-4" />
+                Tabs
+              </button>
+              <button
+                onClick={() => setLayoutVariant('accordion')}
+                className={cn(
+                  "flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all",
+                  layoutVariant === 'accordion'
+                    ? "bg-background text-foreground shadow-sm"
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                <ChevronDown className="h-4 w-4" />
+                Accordion
+              </button>
+              <button
+                onClick={() => setLayoutVariant('bento')}
+                className={cn(
+                  "flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all",
+                  layoutVariant === 'bento'
+                    ? "bg-background text-foreground shadow-sm"
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                <Menu className="h-4 w-4" />
+                Bento
+              </button>
+            </div>
+          </div>
         </div>
       </header>
 
