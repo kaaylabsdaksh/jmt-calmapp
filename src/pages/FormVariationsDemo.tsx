@@ -5039,6 +5039,8 @@ const FormVariationsDemo = () => {
 
           {/* Labor Hours */}
           <div className={isAccordion ? "space-y-2" : "space-y-4"}>
+            <div className={`${isAccordion ? 'text-xs' : 'text-sm'} font-medium`}>Labor Hours</div>
+            
             {/* Header Row with Tech columns - aligned with "Calibration & Certification" header */}
             <div className="space-y-1">
               <div className="grid grid-cols-4 gap-2">
