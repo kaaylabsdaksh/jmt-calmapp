@@ -6032,12 +6032,9 @@ const FormVariationsDemo = () => {
           </div>
           <div>
             <Label className="text-sm font-medium text-muted-foreground">Salesperson</Label>
-            <Input
-              value={formData.salesperson}
-              onChange={(e) => handleInputChange("salesperson", e.target.value)}
-              placeholder="Not assigned"
-              className="mt-1"
-            />
+            <div className="text-sm p-2 bg-muted rounded border mt-1 h-9 flex items-center">
+              {formData.salesperson || <span className="text-muted-foreground">Not assigned</span>}
+            </div>
           </div>
           <div>
             <Label className="text-sm font-medium text-muted-foreground">Contact</Label>
