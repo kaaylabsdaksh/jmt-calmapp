@@ -5041,33 +5041,36 @@ const FormVariationsDemo = () => {
           <div className={isAccordion ? "space-y-2" : "space-y-3"}>
             <div className={`${isAccordion ? 'text-xs' : 'text-sm'} font-medium`}>Labor Hours</div>
             
-            {/* Header Row */}
+            {/* Header Row with Tech columns */}
             <div className="grid grid-cols-4 gap-2">
               <div></div>
-              <div className="text-xs text-muted-foreground text-center">C/C Cost</div>
-              <div className="text-xs text-muted-foreground text-center">Repair Cost</div>
-              <div className="text-xs text-muted-foreground text-center">ESL Test Cost</div>
+              <div className="text-xs text-muted-foreground text-center">Tech 1</div>
+              <div className="text-xs text-muted-foreground text-center">Tech 2</div>
+              <div className="text-xs text-muted-foreground text-center">Tech 3</div>
             </div>
             
-            {/* Tech Rows */}
+            {/* Cost Category Rows */}
             <div className="space-y-1">
+              {/* C/C Cost row - aligns with Calibration & Certification */}
               <div className="grid grid-cols-4 gap-2 items-center">
-                <span className="text-xs">Tech 1</span>
+                <span className="text-xs">C/C Cost</span>
                 <Input type="number" step="0.01" value={formData.tech1CcHours} onChange={(e) => handleInputChange("tech1CcHours", e.target.value)} className={isAccordion ? "h-7 text-xs text-center" : "h-8 text-center"} />
-                <Input type="number" step="0.01" value={formData.tech1RepairHours} onChange={(e) => handleInputChange("tech1RepairHours", e.target.value)} className="h-8 text-center" />
-                <Input type="number" step="0.01" value={formData.tech1EslTestHours} onChange={(e) => handleInputChange("tech1EslTestHours", e.target.value)} className="h-8 text-center" />
+                <Input type="number" step="0.01" value={formData.tech2CcHours} onChange={(e) => handleInputChange("tech2CcHours", e.target.value)} className={isAccordion ? "h-7 text-xs text-center" : "h-8 text-center"} />
+                <Input type="number" step="0.01" value={formData.tech3CcHours} onChange={(e) => handleInputChange("tech3CcHours", e.target.value)} className={isAccordion ? "h-7 text-xs text-center" : "h-8 text-center"} />
               </div>
+              {/* Repair Cost row - aligns with Repair & Parts */}
               <div className="grid grid-cols-4 gap-2 items-center">
-                <span className="text-sm">Tech 2</span>
-                <Input type="number" step="0.01" value={formData.tech2CcHours} onChange={(e) => handleInputChange("tech2CcHours", e.target.value)} className="h-8 text-center" />
-                <Input type="number" step="0.01" value={formData.tech2RepairHours} onChange={(e) => handleInputChange("tech2RepairHours", e.target.value)} className="h-8 text-center" />
-                <Input type="number" step="0.01" value={formData.tech2EslTestHours} onChange={(e) => handleInputChange("tech2EslTestHours", e.target.value)} className="h-8 text-center" />
+                <span className="text-xs">Repair Cost</span>
+                <Input type="number" step="0.01" value={formData.tech1RepairHours} onChange={(e) => handleInputChange("tech1RepairHours", e.target.value)} className={isAccordion ? "h-7 text-xs text-center" : "h-8 text-center"} />
+                <Input type="number" step="0.01" value={formData.tech2RepairHours} onChange={(e) => handleInputChange("tech2RepairHours", e.target.value)} className={isAccordion ? "h-7 text-xs text-center" : "h-8 text-center"} />
+                <Input type="number" step="0.01" value={formData.tech3RepairHours} onChange={(e) => handleInputChange("tech3RepairHours", e.target.value)} className={isAccordion ? "h-7 text-xs text-center" : "h-8 text-center"} />
               </div>
+              {/* ESL Test Cost row - aligns with ESL Test Cost */}
               <div className="grid grid-cols-4 gap-2 items-center">
-                <span className="text-sm">Tech 3</span>
-                <Input type="number" step="0.01" value={formData.tech3CcHours} onChange={(e) => handleInputChange("tech3CcHours", e.target.value)} className="h-8 text-center" />
-                <Input type="number" step="0.01" value={formData.tech3RepairHours} onChange={(e) => handleInputChange("tech3RepairHours", e.target.value)} className="h-8 text-center" />
-                <Input type="number" step="0.01" value={formData.tech3EslTestHours} onChange={(e) => handleInputChange("tech3EslTestHours", e.target.value)} className="h-8 text-center" />
+                <span className="text-xs">ESL Test Cost</span>
+                <Input type="number" step="0.01" value={formData.tech1EslTestHours} onChange={(e) => handleInputChange("tech1EslTestHours", e.target.value)} className={isAccordion ? "h-7 text-xs text-center" : "h-8 text-center"} />
+                <Input type="number" step="0.01" value={formData.tech2EslTestHours} onChange={(e) => handleInputChange("tech2EslTestHours", e.target.value)} className={isAccordion ? "h-7 text-xs text-center" : "h-8 text-center"} />
+                <Input type="number" step="0.01" value={formData.tech3EslTestHours} onChange={(e) => handleInputChange("tech3EslTestHours", e.target.value)} className={isAccordion ? "h-7 text-xs text-center" : "h-8 text-center"} />
               </div>
             </div>
           </div>
