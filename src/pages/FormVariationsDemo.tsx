@@ -6616,6 +6616,48 @@ const FormVariationsDemo = () => {
   // Render bento grid interface
   const renderBentoGridInterface = () => (
     <div className="h-[calc(100vh-280px)] overflow-y-auto pr-2">
+      {/* Type and Report Number fields */}
+      <div className="bg-card px-4 py-3 border rounded-lg mb-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <Label htmlFor="bento-type" className="text-sm font-medium">Type *</Label>
+            <Select value={formData.type} onValueChange={(value) => handleInputChange("type", value)}>
+              <SelectTrigger className="h-10">
+                <SelectValue placeholder="Select type" />
+              </SelectTrigger>
+              <SelectContent className="max-h-48 overflow-y-auto z-50 bg-popover">
+                <SelectItem value="single">Single</SelectItem>
+                <SelectItem value="esl-blankets">ESL - Blankets</SelectItem>
+                <SelectItem value="esl-coverups">ESL - CoverUps</SelectItem>
+                <SelectItem value="esl-footwear">ESL - Footwear</SelectItem>
+                <SelectItem value="esl-gloves">ESL - Gloves</SelectItem>
+                <SelectItem value="esl-grounds">ESL - Grounds</SelectItem>
+                <SelectItem value="esl-hotsticks">ESL - Hotsticks</SelectItem>
+                <SelectItem value="esl-insulated-tools">ESL - Insulated Tools</SelectItem>
+                <SelectItem value="esl-jumpers">ESL - Jumpers</SelectItem>
+                <SelectItem value="esl-line-hoses">ESL - Line Hoses</SelectItem>
+                <SelectItem value="esl-matting">ESL - Matting</SelectItem>
+                <SelectItem value="esl-roll-blankets">ESL - Roll Blankets</SelectItem>
+                <SelectItem value="esl-sleeves">ESL - Sleeves</SelectItem>
+                <SelectItem value="itl-gauges">ITL - Gauges</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="bento-reportNumber" className="text-sm font-medium">Report Number *</Label>
+            <Input
+              id="bento-reportNumber"
+              value={formData.reportNumber}
+              readOnly
+              disabled
+              placeholder={formData.type ? "Auto-generated" : "Select a type first"}
+              className="h-10 bg-muted cursor-not-allowed"
+            />
+          </div>
+        </div>
+      </div>
+
       <div className="grid grid-cols-12 gap-3 pb-8">
       {/* Top 4 cards in 2x2 layout */}
       
