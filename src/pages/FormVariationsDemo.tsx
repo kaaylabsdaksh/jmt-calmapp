@@ -163,6 +163,86 @@ const FormVariationsDemo = () => {
   // QF3 Dialog state
   const [qf3DialogOpen, setQf3DialogOpen] = useState(false);
   
+  // QF3 Section state
+  const [qf3Data, setQf3Data] = useState({
+    // Equipment Info (read-only)
+    itemStatus: "To Factory",
+    tfStatus: "Assigned to Clerk",
+    manufacturer: "FLYGT",
+    model: "READY 8",
+    labCode: "ES-Electrical Safety",
+    mfgSerial: "112",
+    custId: "1212",
+    description: "SUBMERSIBLE PUMP",
+    // Return Details
+    reasonForReturn: "",
+    vendorToPerform: "",
+    malfunctionInstructions: "",
+    technician1: "",
+    repairComments: "",
+    // Vendor Info
+    vendorId: "5336",
+    vendorSub: "",
+    vendorName: "Troxler Electronic Labs",
+    vendorEmail: "Luis Burruel sales@trulok.com",
+    vendorPhone: "310-640-6123",
+    vendorAddress: "3008 Cornwallis Road\nResearch Triangle Pk, NC 27709",
+    vendorLastModified: "Blair Brewer\n08/19/2024 10:11 AM",
+    // Vendor Details
+    flatRateRepair: "N",
+    eval: "N",
+    evalFee: "0.00",
+    originalApprDate: "",
+    criticality: "",
+    iso9001Registered: "N",
+    qf133Issued: "N",
+    oem: "Y",
+    qf131OnFile: "N",
+    qualBasedOn: "OEM",
+    z540Accred: "N",
+    vendorStatus: "Active",
+    approvalExpires: "11/01/2024",
+    // Additional Info
+    rma: "N",
+    vendorForm: "N",
+    portal: "N",
+    // Cost Section
+    jmCostEstEval: "",
+    custCostEstEval: "",
+    jmCostOther: "",
+    custCostOther: "",
+    jmCostFreight: "",
+    custCostFreight: "",
+    // File Upload
+    qf3DocType: "",
+    qf3DocTags: [] as string[],
+  });
+
+  const handleQf3InputChange = (field: string, value: string | string[]) => {
+    setQf3Data(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleQf3DocTagToggle = (tag: string) => {
+    setQf3Data(prev => ({
+      ...prev,
+      qf3DocTags: prev.qf3DocTags.includes(tag)
+        ? prev.qf3DocTags.filter(t => t !== tag)
+        : [...prev.qf3DocTags, tag]
+    }));
+  };
+
+  const qf3DocTags = [
+    "Customer Approval",
+    "Customer ID List", 
+    "Customer Notes",
+    "Emails",
+    "Equipment Submission Form"
+  ];
+
+  // Calculate QF3 totals
+  const qf3JmTotal = (parseFloat(qf3Data.jmCostEstEval || "0") + parseFloat(qf3Data.jmCostOther || "0") + parseFloat(qf3Data.jmCostFreight || "0")).toFixed(2);
+  const qf3CustTotal = (parseFloat(qf3Data.custCostEstEval || "0") + parseFloat(qf3Data.custCostOther || "0") + parseFloat(qf3Data.custCostFreight || "0")).toFixed(2);
+  
   // Common state for both interfaces
   const [showManufacturerDialog, setShowManufacturerDialog] = useState(false);
   const [newManufacturerName, setNewManufacturerName] = useState("");
@@ -8030,10 +8110,381 @@ const FormVariationsDemo = () => {
         
         {activeSection === 'qf3' && (
           <Card className="border-0 shadow-md">
-            <CardContent className="p-6">
-              <div className="text-center py-12">
-                <h3 className="text-lg font-semibold text-foreground mb-2">QF3 Data Section</h3>
-                <p className="text-muted-foreground">QF3 data content will be displayed here.</p>
+            <CardContent className="p-6 space-y-6">
+              {/* Header */}
+              <div className="flex items-center gap-3 pb-4 border-b border-border">
+                <div className="p-2 bg-primary/10 rounded-lg">
+                  <Settings className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold">QF3 Data</h3>
+                  <p className="text-sm text-muted-foreground">Factory return form data</p>
+                </div>
+              </div>
+
+              {/* Main Content - Two Column Layout */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Left Column - Equipment Information */}
+                <div className="space-y-4">
+                  <div className="bg-muted/30 rounded-lg p-4 space-y-3">
+                    <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-medium text-muted-foreground">Item Status:</span>
+                        <span className="text-sm font-medium">{qf3Data.itemStatus}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-medium text-muted-foreground">T/F Status:</span>
+                        <span className="text-sm font-medium">{qf3Data.tfStatus}</span>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-medium text-muted-foreground">Manufacturer:</span>
+                        <span className="text-sm font-medium">{qf3Data.manufacturer}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-medium text-muted-foreground">Model:</span>
+                        <span className="text-sm font-medium">{qf3Data.model}</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-medium text-muted-foreground">Lab Code:</span>
+                      <span className="text-sm font-medium">{qf3Data.labCode}</span>
+                    </div>
+                    <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-medium text-muted-foreground">Mfg Serial:</span>
+                        <span className="text-sm font-medium">{qf3Data.mfgSerial}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-medium text-muted-foreground">Cust ID:</span>
+                        <span className="text-sm font-medium">{qf3Data.custId}</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-medium text-muted-foreground">Description:</span>
+                      <span className="text-sm font-medium">{qf3Data.description}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right Column - Return Details */}
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label className="text-xs font-medium">Reason for Factory Return:</Label>
+                    <Select value={qf3Data.reasonForReturn} onValueChange={(v) => handleQf3InputChange("reasonForReturn", v)}>
+                      <SelectTrigger className="h-9 text-sm">
+                        <SelectValue placeholder="Select reason..." />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="parts-not-available">Parts and/or service info not available</SelectItem>
+                        <SelectItem value="exceeds-capabilities">Exceeds lab capabilities</SelectItem>
+                        <SelectItem value="manufacturer-required">Manufacturer service required</SelectItem>
+                        <SelectItem value="warranty-repair">Warranty repair</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-xs font-medium">Vendor is to perform the following:</Label>
+                    <Select value={qf3Data.vendorToPerform} onValueChange={(v) => handleQf3InputChange("vendorToPerform", v)}>
+                      <SelectTrigger className="h-9 text-sm">
+                        <SelectValue placeholder="Select action..." />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="ccfa-iso17025-06">CCFA: Provide ISO17025 Accredited Calibration With 06 Month Certification Per Mfr's Specifications. Including As Found, As Left Data With Uncertainties.</SelectItem>
+                        <SelectItem value="ccfa-iso17025-12">CCFA: Provide ISO17025 Accredited Calibration With 12 Month Certification</SelectItem>
+                        <SelectItem value="repair-calibration">Repair and calibration service</SelectItem>
+                        <SelectItem value="calibration-only">Calibration service only</SelectItem>
+                        <SelectItem value="repair-only">Repair service only</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-xs font-medium">Malfunction or special instruction(s):</Label>
+                    <Textarea 
+                      value={qf3Data.malfunctionInstructions}
+                      onChange={(e) => handleQf3InputChange("malfunctionInstructions", e.target.value)}
+                      className="min-h-[60px] text-sm"
+                      placeholder="Enter instructions..."
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label className="text-xs font-medium">Technician 1:</Label>
+                      <Select value={qf3Data.technician1} onValueChange={(v) => handleQf3InputChange("technician1", v)}>
+                        <SelectTrigger className="h-9 text-sm">
+                          <SelectValue placeholder="Select..." />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="john-smith">John Smith</SelectItem>
+                          <SelectItem value="jane-doe">Jane Doe</SelectItem>
+                          <SelectItem value="bob-wilson">Bob Wilson</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-xs font-medium">Repair Comments:</Label>
+                      <Input 
+                        value={qf3Data.repairComments}
+                        onChange={(e) => handleQf3InputChange("repairComments", e.target.value)}
+                        className="h-9 text-sm"
+                        placeholder="Comments..."
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Vendor Information Table */}
+              <div className="border rounded-lg overflow-hidden">
+                <div className="bg-muted/50 px-4 py-2 border-b">
+                  <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Vendor Information</span>
+                </div>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b bg-muted/30">
+                        <th className="text-left px-3 py-2 text-xs font-medium">
+                          Vendor <a href="#" className="text-primary hover:underline ml-1">find</a>
+                        </th>
+                        <th className="text-left px-3 py-2 text-xs font-medium">Sub</th>
+                        <th className="text-left px-3 py-2 text-xs font-medium">Name</th>
+                        <th className="text-left px-3 py-2 text-xs font-medium">Email</th>
+                        <th className="text-left px-3 py-2 text-xs font-medium">Phone</th>
+                        <th className="text-left px-3 py-2 text-xs font-medium">Address</th>
+                        <th className="text-left px-3 py-2 text-xs font-medium">Last Modified</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr className="border-b">
+                        <td className="px-3 py-2">
+                          <span className="text-primary font-medium">{qf3Data.vendorId}</span>
+                        </td>
+                        <td className="px-3 py-2">
+                          <Select value={qf3Data.vendorSub} onValueChange={(v) => handleQf3InputChange("vendorSub", v)}>
+                            <SelectTrigger className="h-7 text-xs w-20">
+                              <SelectValue placeholder="" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="sub1">Sub 1</SelectItem>
+                              <SelectItem value="sub2">Sub 2</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </td>
+                        <td className="px-3 py-2 text-xs">{qf3Data.vendorName}</td>
+                        <td className="px-3 py-2 text-xs">{qf3Data.vendorEmail}</td>
+                        <td className="px-3 py-2 text-xs">{qf3Data.vendorPhone}</td>
+                        <td className="px-3 py-2 text-xs whitespace-pre-line">{qf3Data.vendorAddress}</td>
+                        <td className="px-3 py-2 text-xs whitespace-pre-line">{qf3Data.vendorLastModified}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              {/* Vendor Details Table */}
+              <div className="border rounded-lg overflow-hidden">
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b bg-muted/30">
+                        <th className="text-left px-2 py-2 text-[10px] font-medium">Flat Rate<br/>Repair</th>
+                        <th className="text-left px-2 py-2 text-[10px] font-medium">Eval</th>
+                        <th className="text-left px-2 py-2 text-[10px] font-medium">Eval Fee</th>
+                        <th className="text-left px-2 py-2 text-[10px] font-medium">Original<br/>Appr Date</th>
+                        <th className="text-left px-2 py-2 text-[10px] font-medium">Criticality</th>
+                        <th className="text-left px-2 py-2 text-[10px] font-medium">ISO 9001<br/>Registered</th>
+                        <th className="text-left px-2 py-2 text-[10px] font-medium">QF133<br/>Issued</th>
+                        <th className="text-left px-2 py-2 text-[10px] font-medium">OEM</th>
+                        <th className="text-left px-2 py-2 text-[10px] font-medium">QF131<br/>on File</th>
+                        <th className="text-left px-2 py-2 text-[10px] font-medium">Qual<br/>Based On</th>
+                        <th className="text-left px-2 py-2 text-[10px] font-medium">Z540.1<br/>Accred</th>
+                        <th className="text-left px-2 py-2 text-[10px] font-medium">Status</th>
+                        <th className="text-left px-2 py-2 text-[10px] font-medium">Approval<br/>Expires</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr className="border-b">
+                        <td className="px-2 py-2 text-xs text-center">{qf3Data.flatRateRepair}</td>
+                        <td className="px-2 py-2 text-xs text-center">{qf3Data.eval}</td>
+                        <td className="px-2 py-2 text-xs text-center">{qf3Data.evalFee}</td>
+                        <td className="px-2 py-2 text-xs text-center">{qf3Data.originalApprDate || "-"}</td>
+                        <td className="px-2 py-2 text-xs text-center">{qf3Data.criticality || "-"}</td>
+                        <td className="px-2 py-2 text-xs text-center">{qf3Data.iso9001Registered}</td>
+                        <td className="px-2 py-2 text-xs text-center">{qf3Data.qf133Issued}</td>
+                        <td className="px-2 py-2 text-xs text-center">{qf3Data.oem}</td>
+                        <td className="px-2 py-2 text-xs text-center">{qf3Data.qf131OnFile}</td>
+                        <td className="px-2 py-2 text-xs text-center">{qf3Data.qualBasedOn}</td>
+                        <td className="px-2 py-2 text-xs text-center">{qf3Data.z540Accred}</td>
+                        <td className="px-2 py-2 text-xs text-center text-green-600 font-medium">{qf3Data.vendorStatus}</td>
+                        <td className="px-2 py-2 text-xs text-center">{qf3Data.approvalExpires}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              {/* RMA / Vendor Form / Portal Row */}
+              <div className="grid grid-cols-3 gap-4 border rounded-lg p-4 bg-muted/20">
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-medium text-muted-foreground">RMA:</span>
+                  <span className="text-sm font-medium">{qf3Data.rma}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-medium text-muted-foreground">Vendor Form:</span>
+                  <span className="text-sm font-medium">{qf3Data.vendorForm}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-medium text-muted-foreground">Portal:</span>
+                  <span className="text-sm font-medium">{qf3Data.portal}</span>
+                </div>
+              </div>
+
+              {/* Cost Section and File Upload - Side by Side */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Cost Section */}
+                <div className="border rounded-lg overflow-hidden">
+                  <div className="bg-muted/50 px-4 py-2 border-b">
+                    <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">T/F Cost</span>
+                  </div>
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b bg-muted/30">
+                        <th className="text-left px-4 py-2 text-xs font-medium"></th>
+                        <th className="text-center px-4 py-2 text-xs font-medium">JM Cost</th>
+                        <th className="text-center px-4 py-2 text-xs font-medium">Cust Cost</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr className="border-b">
+                        <td className="px-4 py-2 text-xs font-medium">Est/Eval/Min Fee</td>
+                        <td className="px-4 py-1">
+                          <Input 
+                            type="number" 
+                            value={qf3Data.jmCostEstEval}
+                            onChange={(e) => handleQf3InputChange("jmCostEstEval", e.target.value)}
+                            className="h-7 text-xs text-center"
+                            step="0.01"
+                          />
+                        </td>
+                        <td className="px-4 py-1">
+                          <Input 
+                            type="number"
+                            value={qf3Data.custCostEstEval}
+                            onChange={(e) => handleQf3InputChange("custCostEstEval", e.target.value)}
+                            className="h-7 text-xs text-center"
+                            step="0.01"
+                          />
+                        </td>
+                      </tr>
+                      <tr className="border-b">
+                        <td className="px-4 py-2 text-xs font-medium">Other</td>
+                        <td className="px-4 py-1">
+                          <Input 
+                            type="number"
+                            value={qf3Data.jmCostOther}
+                            onChange={(e) => handleQf3InputChange("jmCostOther", e.target.value)}
+                            className="h-7 text-xs text-center"
+                            step="0.01"
+                          />
+                        </td>
+                        <td className="px-4 py-1">
+                          <Input 
+                            type="number"
+                            value={qf3Data.custCostOther}
+                            onChange={(e) => handleQf3InputChange("custCostOther", e.target.value)}
+                            className="h-7 text-xs text-center"
+                            step="0.01"
+                          />
+                        </td>
+                      </tr>
+                      <tr className="border-b">
+                        <td className="px-4 py-2 text-xs font-medium">Freight</td>
+                        <td className="px-4 py-1">
+                          <Input 
+                            type="number"
+                            value={qf3Data.jmCostFreight}
+                            onChange={(e) => handleQf3InputChange("jmCostFreight", e.target.value)}
+                            className="h-7 text-xs text-center"
+                            step="0.01"
+                          />
+                        </td>
+                        <td className="px-4 py-1">
+                          <Input 
+                            type="number"
+                            value={qf3Data.custCostFreight}
+                            onChange={(e) => handleQf3InputChange("custCostFreight", e.target.value)}
+                            className="h-7 text-xs text-center"
+                            step="0.01"
+                          />
+                        </td>
+                      </tr>
+                      <tr className="bg-muted/30 font-semibold">
+                        <td className="px-4 py-2 text-xs">Total TF Cost</td>
+                        <td className="px-4 py-2 text-xs text-center">${qf3JmTotal}</td>
+                        <td className="px-4 py-2 text-xs text-center">${qf3CustTotal}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                {/* File Upload Section */}
+                <div className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label className="text-xs font-medium">Doc Type:</Label>
+                      <Select value={qf3Data.qf3DocType} onValueChange={(v) => handleQf3InputChange("qf3DocType", v)}>
+                        <SelectTrigger className="h-9 text-sm">
+                          <SelectValue placeholder="Select..." />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="metcal">METCAL</SelectItem>
+                          <SelectItem value="metrology">Metrology.net</SelectItem>
+                          <SelectItem value="external-xlsx">External File (xlsx)</SelectItem>
+                          <SelectItem value="external-pdf">External File (pdf)</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <p className="text-[10px] text-muted-foreground">
+                        METCAL, Metrology.net, External File (xlsx) and External File (pdf) are used to create a Datasheet.
+                        External Test Report is used by Customer Portal.
+                        Other entries are not used by any process.
+                      </p>
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-xs font-medium">Doc Tag(s):</Label>
+                      <div className="space-y-1.5 max-h-32 overflow-y-auto">
+                        {qf3DocTags.map(tag => (
+                          <div key={tag} className="flex items-center gap-2">
+                            <Checkbox
+                              id={`qf3-tag-${tag}`}
+                              checked={qf3Data.qf3DocTags.includes(tag)}
+                              onCheckedChange={() => handleQf3DocTagToggle(tag)}
+                            />
+                            <Label htmlFor={`qf3-tag-${tag}`} className="text-xs cursor-pointer">{tag}</Label>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* File Upload Area */}
+                  <div className="flex gap-4">
+                    <Button variant="outline" size="sm" className="text-xs">
+                      Select file(s)...
+                    </Button>
+                    <div className="flex-1 border-2 border-dashed border-muted-foreground/30 rounded-lg flex items-center justify-center py-4 text-xs text-muted-foreground hover:border-primary/50 transition-colors cursor-pointer">
+                      Drag file(s) here
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Footer Actions */}
+              <div className="flex items-center justify-center gap-3 pt-4 border-t">
+                <Button variant="outline" size="sm">Cancel</Button>
+                <Button variant="outline" size="sm">Save</Button>
+                <Button variant="outline" size="sm">Back</Button>
+                <Button variant="outline" size="sm">T/F View</Button>
               </div>
             </CardContent>
           </Card>
