@@ -8116,40 +8116,34 @@ const FormVariationsDemo = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Left Column - Equipment Information */}
                 <div className="space-y-4">
-                  <div className="bg-muted/30 rounded-lg p-4 space-y-3">
-                    <div className="grid grid-cols-2 gap-x-4 gap-y-2">
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-medium text-muted-foreground">Item Status:</span>
-                        <span className="text-sm font-medium">{qf3Data.itemStatus}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-medium text-muted-foreground">T/F Status:</span>
-                        <span className="text-sm font-medium">{qf3Data.tfStatus}</span>
-                      </div>
+                  <div className="bg-muted/30 rounded-lg p-4 space-y-2">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-medium text-muted-foreground">Item Status:</span>
+                      <span className="text-sm font-medium">{qf3Data.itemStatus}</span>
                     </div>
-                    <div className="grid grid-cols-2 gap-x-4 gap-y-2">
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-medium text-muted-foreground">Manufacturer:</span>
-                        <span className="text-sm font-medium">{qf3Data.manufacturer}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-medium text-muted-foreground">Model:</span>
-                        <span className="text-sm font-medium">{qf3Data.model}</span>
-                      </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-medium text-muted-foreground">T/F Status:</span>
+                      <span className="text-sm font-medium">{qf3Data.tfStatus}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-medium text-muted-foreground">Manufacturer:</span>
+                      <span className="text-sm font-medium">{qf3Data.manufacturer}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-medium text-muted-foreground">Model:</span>
+                      <span className="text-sm font-medium">{qf3Data.model}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-medium text-muted-foreground">Lab Code:</span>
                       <span className="text-sm font-medium">{qf3Data.labCode}</span>
                     </div>
-                    <div className="grid grid-cols-2 gap-x-4 gap-y-2">
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-medium text-muted-foreground">Mfg Serial:</span>
-                        <span className="text-sm font-medium">{qf3Data.mfgSerial}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-medium text-muted-foreground">Cust ID:</span>
-                        <span className="text-sm font-medium">{qf3Data.custId}</span>
-                      </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-medium text-muted-foreground">Mfg Serial:</span>
+                      <span className="text-sm font-medium">{qf3Data.mfgSerial}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-medium text-muted-foreground">Cust ID:</span>
+                      <span className="text-sm font-medium">{qf3Data.custId}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-medium text-muted-foreground">Description:</span>
