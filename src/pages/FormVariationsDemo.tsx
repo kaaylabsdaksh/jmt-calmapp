@@ -8153,11 +8153,11 @@ const FormVariationsDemo = () => {
                 </div>
 
                 {/* Right Column - Return Details */}
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <Label className="text-xs font-medium">Reason for Factory Return:</Label>
+                <div className="space-y-2">
+                  <div className="space-y-1">
+                    <Label className="text-[11px] font-medium">Reason for Factory Return:</Label>
                     <Select value={qf3Data.reasonForReturn} onValueChange={(v) => handleQf3InputChange("reasonForReturn", v)}>
-                      <SelectTrigger className="h-9 text-sm">
+                      <SelectTrigger className="h-7 text-xs">
                         <SelectValue placeholder="Select reason..." />
                       </SelectTrigger>
                       <SelectContent>
@@ -8168,10 +8168,10 @@ const FormVariationsDemo = () => {
                       </SelectContent>
                     </Select>
                   </div>
-                  <div className="space-y-2">
-                    <Label className="text-xs font-medium">Vendor is to perform the following:</Label>
+                  <div className="space-y-1">
+                    <Label className="text-[11px] font-medium">Vendor is to perform the following:</Label>
                     <Select value={qf3Data.vendorToPerform} onValueChange={(v) => handleQf3InputChange("vendorToPerform", v)}>
-                      <SelectTrigger className="h-9 text-sm">
+                      <SelectTrigger className="h-7 text-xs">
                         <SelectValue placeholder="Select action..." />
                       </SelectTrigger>
                       <SelectContent>
@@ -8183,20 +8183,20 @@ const FormVariationsDemo = () => {
                       </SelectContent>
                     </Select>
                   </div>
-                  <div className="space-y-2">
-                    <Label className="text-xs font-medium">Malfunction or special instruction(s):</Label>
+                  <div className="space-y-1">
+                    <Label className="text-[11px] font-medium">Malfunction or special instruction(s):</Label>
                     <Textarea 
                       value={qf3Data.malfunctionInstructions}
                       onChange={(e) => handleQf3InputChange("malfunctionInstructions", e.target.value)}
-                      className="min-h-[60px] text-sm"
+                      className="min-h-[40px] text-xs py-1.5"
                       placeholder="Enter instructions..."
                     />
                   </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label className="text-xs font-medium">Technician 1:</Label>
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="space-y-1">
+                      <Label className="text-[11px] font-medium">Technician 1:</Label>
                       <Select value={qf3Data.technician1} onValueChange={(v) => handleQf3InputChange("technician1", v)}>
-                        <SelectTrigger className="h-9 text-sm">
+                        <SelectTrigger className="h-7 text-xs">
                           <SelectValue placeholder="Select..." />
                         </SelectTrigger>
                         <SelectContent>
@@ -8206,12 +8206,12 @@ const FormVariationsDemo = () => {
                         </SelectContent>
                       </Select>
                     </div>
-                    <div className="space-y-2">
-                      <Label className="text-xs font-medium">Repair Comments:</Label>
+                    <div className="space-y-1">
+                      <Label className="text-[11px] font-medium">Repair Comments:</Label>
                       <Input 
                         value={qf3Data.repairComments}
                         onChange={(e) => handleQf3InputChange("repairComments", e.target.value)}
-                        className="h-9 text-sm"
+                        className="h-7 text-xs"
                         placeholder="Comments..."
                       />
                     </div>
