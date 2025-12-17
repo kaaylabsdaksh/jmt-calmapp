@@ -8154,68 +8154,66 @@ const FormVariationsDemo = () => {
 
                 {/* Right Column - Return Details */}
                 <div className="space-y-4">
-                  <div className="bg-muted/30 rounded-lg p-4 space-y-4">
+                  <div className="space-y-2">
+                    <Label className="text-xs font-medium">Reason for Factory Return:</Label>
+                    <Select value={qf3Data.reasonForReturn} onValueChange={(v) => handleQf3InputChange("reasonForReturn", v)}>
+                      <SelectTrigger className="h-9 text-sm">
+                        <SelectValue placeholder="Select reason..." />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="parts-not-available">Parts and/or service info not available</SelectItem>
+                        <SelectItem value="exceeds-capabilities">Exceeds lab capabilities</SelectItem>
+                        <SelectItem value="manufacturer-required">Manufacturer service required</SelectItem>
+                        <SelectItem value="warranty-repair">Warranty repair</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-xs font-medium">Vendor is to perform the following:</Label>
+                    <Select value={qf3Data.vendorToPerform} onValueChange={(v) => handleQf3InputChange("vendorToPerform", v)}>
+                      <SelectTrigger className="h-9 text-sm">
+                        <SelectValue placeholder="Select action..." />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="ccfa-iso17025-06">CCFA: Provide ISO17025 Accredited Calibration With 06 Month Certification Per Mfr's Specifications. Including As Found, As Left Data With Uncertainties.</SelectItem>
+                        <SelectItem value="ccfa-iso17025-12">CCFA: Provide ISO17025 Accredited Calibration With 12 Month Certification</SelectItem>
+                        <SelectItem value="repair-calibration">Repair and calibration service</SelectItem>
+                        <SelectItem value="calibration-only">Calibration service only</SelectItem>
+                        <SelectItem value="repair-only">Repair service only</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-xs font-medium">Malfunction or special instruction(s):</Label>
+                    <Textarea 
+                      value={qf3Data.malfunctionInstructions}
+                      onChange={(e) => handleQf3InputChange("malfunctionInstructions", e.target.value)}
+                      className="min-h-[60px] text-sm"
+                      placeholder="Enter instructions..."
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label className="text-xs font-medium">Reason for Factory Return:</Label>
-                      <Select value={qf3Data.reasonForReturn} onValueChange={(v) => handleQf3InputChange("reasonForReturn", v)}>
+                      <Label className="text-xs font-medium">Technician 1:</Label>
+                      <Select value={qf3Data.technician1} onValueChange={(v) => handleQf3InputChange("technician1", v)}>
                         <SelectTrigger className="h-9 text-sm">
-                          <SelectValue placeholder="Select reason..." />
+                          <SelectValue placeholder="Select..." />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="parts-not-available">Parts and/or service info not available</SelectItem>
-                          <SelectItem value="exceeds-capabilities">Exceeds lab capabilities</SelectItem>
-                          <SelectItem value="manufacturer-required">Manufacturer service required</SelectItem>
-                          <SelectItem value="warranty-repair">Warranty repair</SelectItem>
+                          <SelectItem value="john-smith">John Smith</SelectItem>
+                          <SelectItem value="jane-doe">Jane Doe</SelectItem>
+                          <SelectItem value="bob-wilson">Bob Wilson</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
                     <div className="space-y-2">
-                      <Label className="text-xs font-medium">Vendor is to perform the following:</Label>
-                      <Select value={qf3Data.vendorToPerform} onValueChange={(v) => handleQf3InputChange("vendorToPerform", v)}>
-                        <SelectTrigger className="h-9 text-sm">
-                          <SelectValue placeholder="Select action..." />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="ccfa-iso17025-06">CCFA: Provide ISO17025 Accredited Calibration With 06 Month Certification Per Mfr's Specifications. Including As Found, As Left Data With Uncertainties.</SelectItem>
-                          <SelectItem value="ccfa-iso17025-12">CCFA: Provide ISO17025 Accredited Calibration With 12 Month Certification</SelectItem>
-                          <SelectItem value="repair-calibration">Repair and calibration service</SelectItem>
-                          <SelectItem value="calibration-only">Calibration service only</SelectItem>
-                          <SelectItem value="repair-only">Repair service only</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div className="space-y-2">
-                      <Label className="text-xs font-medium">Malfunction or special instruction(s):</Label>
-                      <Textarea 
-                        value={qf3Data.malfunctionInstructions}
-                        onChange={(e) => handleQf3InputChange("malfunctionInstructions", e.target.value)}
-                        className="min-h-[60px] text-sm"
-                        placeholder="Enter instructions..."
+                      <Label className="text-xs font-medium">Repair Comments:</Label>
+                      <Input 
+                        value={qf3Data.repairComments}
+                        onChange={(e) => handleQf3InputChange("repairComments", e.target.value)}
+                        className="h-9 text-sm"
+                        placeholder="Comments..."
                       />
-                    </div>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label className="text-xs font-medium">Technician 1:</Label>
-                        <Select value={qf3Data.technician1} onValueChange={(v) => handleQf3InputChange("technician1", v)}>
-                          <SelectTrigger className="h-9 text-sm">
-                            <SelectValue placeholder="Select..." />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="john-smith">John Smith</SelectItem>
-                            <SelectItem value="jane-doe">Jane Doe</SelectItem>
-                            <SelectItem value="bob-wilson">Bob Wilson</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div className="space-y-2">
-                        <Label className="text-xs font-medium">Repair Comments:</Label>
-                        <Input 
-                          value={qf3Data.repairComments}
-                          onChange={(e) => handleQf3InputChange("repairComments", e.target.value)}
-                          className="h-9 text-sm"
-                          placeholder="Comments..."
-                        />
-                      </div>
                     </div>
                   </div>
                 </div>
