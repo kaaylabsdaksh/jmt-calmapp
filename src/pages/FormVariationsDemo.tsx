@@ -8229,7 +8229,7 @@ const FormVariationsDemo = () => {
                     <thead>
                       <tr className="border-b bg-muted/30">
                         <th className="text-left px-3 py-2 text-xs font-medium">
-                          Vendor <a href="#" className="text-primary hover:underline ml-1">find</a>
+                          Vendor <a href="#" className="text-foreground underline ml-1">find</a>
                         </th>
                         <th className="text-left px-3 py-2 text-xs font-medium">Sub</th>
                         <th className="text-left px-3 py-2 text-xs font-medium">Name</th>
@@ -8242,7 +8242,7 @@ const FormVariationsDemo = () => {
                     <tbody>
                       <tr className="border-b">
                         <td className="px-3 py-2">
-                          <span className="text-primary font-medium">{qf3Data.vendorId}</span>
+                          <span className="text-foreground underline font-medium">{qf3Data.vendorId}</span>
                         </td>
                         <td className="px-3 py-2">
                           <Select value={qf3Data.vendorSub} onValueChange={(v) => handleQf3InputChange("vendorSub", v)}>
