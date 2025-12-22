@@ -8941,18 +8941,31 @@ const FormVariationsDemo = () => {
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead>
-                      <tr className="bg-primary/20">
-                        <th className="text-left px-4 py-2.5 text-xs font-semibold border-r border-border">Cert File</th>
-                        <th className="text-left px-4 py-2.5 text-xs font-semibold border-r border-border">File Type</th>
-                        <th className="text-left px-4 py-2.5 text-xs font-semibold border-r border-border">Created By</th>
-                        <th className="text-left px-4 py-2.5 text-xs font-semibold">Created Date</th>
+                      <tr className="bg-primary">
+                        <th className="text-left px-4 py-2.5 text-xs font-semibold text-primary-foreground border-r border-primary-foreground/20">Cert File</th>
+                        <th className="text-left px-4 py-2.5 text-xs font-semibold text-primary-foreground border-r border-primary-foreground/20">File Type</th>
+                        <th className="text-left px-4 py-2.5 text-xs font-semibold text-primary-foreground border-r border-primary-foreground/20">Created By</th>
+                        <th className="text-left px-4 py-2.5 text-xs font-semibold text-primary-foreground">Created Date</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td colSpan={4} className="px-4 py-8 text-center text-muted-foreground italic">
-                          No data to display
-                        </td>
+                      <tr className="border-b border-border hover:bg-muted/30">
+                        <td className="px-4 py-2.5 text-xs">CAL_CERT_2024_001.pdf</td>
+                        <td className="px-4 py-2.5 text-xs">Calibration Certificate</td>
+                        <td className="px-4 py-2.5 text-xs">John Smith</td>
+                        <td className="px-4 py-2.5 text-xs">12/15/2024</td>
+                      </tr>
+                      <tr className="border-b border-border hover:bg-muted/30">
+                        <td className="px-4 py-2.5 text-xs">TRACE_RPT_2024_045.pdf</td>
+                        <td className="px-4 py-2.5 text-xs">Traceability Report</td>
+                        <td className="px-4 py-2.5 text-xs">Jane Doe</td>
+                        <td className="px-4 py-2.5 text-xs">12/10/2024</td>
+                      </tr>
+                      <tr className="border-b border-border hover:bg-muted/30">
+                        <td className="px-4 py-2.5 text-xs">ISO_CERT_JM_2024.pdf</td>
+                        <td className="px-4 py-2.5 text-xs">ISO Certificate</td>
+                        <td className="px-4 py-2.5 text-xs">Admin User</td>
+                        <td className="px-4 py-2.5 text-xs">11/28/2024</td>
                       </tr>
                     </tbody>
                   </table>
@@ -8964,7 +8977,7 @@ const FormVariationsDemo = () => {
                 <Button 
                   variant="outline" 
                   size="sm"
-                  className="bg-primary/20 hover:bg-primary/30 border-border px-8"
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground border-primary px-8"
                 >
                   Back
                 </Button>
