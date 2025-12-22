@@ -456,7 +456,7 @@ const EditBatchWorkOrder = () => {
     { value: "external", label: "External Files", icon: ExternalLink, shortLabel: "Ext" },
     { value: "cert", label: "Cert Files", icon: Award, shortLabel: "Cert" },
     { value: "warranty", label: "Warranty", icon: Shield, shortLabel: "War" },
-    { value: "qfd", label: "QFD Data", icon: BarChart, shortLabel: "QFD" }
+    { value: "qfd", label: "QF3 Data", icon: BarChart, shortLabel: "QF3" }
   ];
 
   const currentTab = tabs.find(tab => tab.value === activeTab);
@@ -3227,7 +3227,7 @@ const EditBatchWorkOrder = () => {
             <TabsContent value="qfd">
               <Card>
                 <CardContent className="p-6">
-                  <p className="text-muted-foreground">QFD Data content coming soon...</p>
+                  <p className="text-muted-foreground">QF3 Data content coming soon...</p>
                 </CardContent>
               </Card>
             </TabsContent>
