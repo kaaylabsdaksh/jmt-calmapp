@@ -8932,7 +8932,7 @@ const FormVariationsDemo = () => {
           <Card className="border-0 shadow-md">
             <CardContent className="p-6 space-y-6">
               {/* Header */}
-              <div className="text-center border-b border-border pb-4">
+              <div className="text-center pb-4">
                 <h3 className="text-lg font-semibold underline">Cert Files</h3>
               </div>
 
