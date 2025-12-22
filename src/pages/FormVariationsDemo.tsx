@@ -8971,17 +8971,6 @@ const FormVariationsDemo = () => {
                   </table>
                 </div>
               </div>
-
-              {/* Footer Actions */}
-              <div className="flex items-center justify-center pt-4">
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  className="bg-primary hover:bg-primary/90 text-primary-foreground border-primary px-8"
-                >
-                  Back
-                </Button>
-              </div>
             </CardContent>
           </Card>
         )}
