@@ -8930,18 +8930,44 @@ const FormVariationsDemo = () => {
         
         {activeSection === 'cert-files' && (
           <Card className="border-0 shadow-md">
-            <CardContent className="p-6">
-              <div className="flex items-center gap-3 pb-4 border-b border-border mb-6">
-                <div className="p-2 bg-primary/10 rounded-lg">
-                  <Shield className="h-5 w-5 text-primary" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold">Certification Files</h3>
-                  <p className="text-sm text-muted-foreground">Manage certification documents</p>
+            <CardContent className="p-6 space-y-6">
+              {/* Header */}
+              <div className="text-center border-b border-border pb-4">
+                <h3 className="text-lg font-semibold underline">Cert Files</h3>
+              </div>
+
+              {/* Cert Files Table */}
+              <div className="border rounded-lg overflow-hidden">
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="bg-primary/20">
+                        <th className="text-left px-4 py-2.5 text-xs font-semibold border-r border-border">Cert File</th>
+                        <th className="text-left px-4 py-2.5 text-xs font-semibold border-r border-border">File Type</th>
+                        <th className="text-left px-4 py-2.5 text-xs font-semibold border-r border-border">Created By</th>
+                        <th className="text-left px-4 py-2.5 text-xs font-semibold">Created Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td colSpan={4} className="px-4 py-8 text-center text-muted-foreground italic">
+                          No data to display
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
-              <div className="text-center py-8 text-muted-foreground">
-                Content will be added here
+
+              {/* Footer Actions */}
+              <div className="flex items-center justify-center pt-4">
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  className="bg-primary/20 hover:bg-primary/30 border-border px-8"
+                >
+                  Back
+                </Button>
               </div>
             </CardContent>
           </Card>
