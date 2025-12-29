@@ -36,47 +36,47 @@ export const EstimateDetails = ({ userRole = 'technician', onUserRoleChange }: E
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* Main Form */}
-      <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle className="text-lg font-semibold">Estimate Information</CardTitle>
-          <div className="flex items-center gap-1 p-1 bg-muted rounded-lg">
+      <Card className="border-border/50">
+        <CardHeader className="flex flex-row items-center justify-between py-3 px-4">
+          <CardTitle className="text-sm font-semibold">Estimate Information</CardTitle>
+          <div className="flex items-center gap-0.5 p-0.5 bg-muted rounded-md">
             <Button
               variant={userRole === 'technician' ? 'default' : 'ghost'}
               size="sm"
               onClick={() => onUserRoleChange?.('technician')}
-              className="flex items-center gap-1 h-7 text-xs px-2 sm:px-3"
+              className="flex items-center gap-1 h-6 text-[10px] px-2"
             >
-              <User className="h-3 w-3" />
+              <User className="h-2.5 w-2.5" />
               <span>Technician</span>
             </Button>
             <Button
               variant={userRole === 'admin' ? 'default' : 'ghost'}
               size="sm"
               onClick={() => onUserRoleChange?.('admin')}
-              className="flex items-center gap-1 h-7 text-xs px-2 sm:px-3"
+              className="flex items-center gap-1 h-6 text-[10px] px-2"
             >
-              <Shield className="h-3 w-3" />
+              <Shield className="h-2.5 w-2.5" />
               <span>Admin</span>
             </Button>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-3 px-4 pb-4 pt-0">
           {/* All fields in one row */}
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-            <div className="space-y-2">
-              <Label>Estimate Date</Label>
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
+            <div className="space-y-1">
+              <Label className="text-xs text-muted-foreground">Estimate Date</Label>
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
                     variant="outline"
                     className={cn(
-                      "w-full justify-start text-left font-normal",
+                      "w-full justify-start text-left font-normal h-8 text-xs",
                       !estimateDate && "text-muted-foreground"
                     )}
                   >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    <CalendarIcon className="mr-1.5 h-3 w-3" />
                     {estimateDate ? format(estimateDate, "MM/dd/yyyy") : "Select date"}
                   </Button>
                 </PopoverTrigger>
@@ -92,13 +92,13 @@ export const EstimateDetails = ({ userRole = 'technician', onUserRoleChange }: E
               </Popover>
             </div>
 
-            <div className="space-y-2">
-              <Label>Estimate Status</Label>
+            <div className="space-y-1">
+              <Label className="text-xs text-muted-foreground">Estimate Status</Label>
               <Select 
                 value={estimateData.estimateStatus} 
                 onValueChange={(value) => handleInputChange('estimateStatus', value)}
               >
-                <SelectTrigger>
+                <SelectTrigger className="h-8 text-xs">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -110,31 +110,33 @@ export const EstimateDetails = ({ userRole = 'technician', onUserRoleChange }: E
               </Select>
             </div>
 
-            <div className="space-y-2">
-              <Label>Item #</Label>
+            <div className="space-y-1">
+              <Label className="text-xs text-muted-foreground">Item #</Label>
               <Input
                 value={estimateData.itemNumber}
                 onChange={(e) => handleInputChange('itemNumber', e.target.value)}
                 placeholder="Item number"
+                className="h-8 text-xs"
               />
             </div>
 
-            <div className="space-y-2">
-              <Label>Line Item</Label>
+            <div className="space-y-1">
+              <Label className="text-xs text-muted-foreground">Line Item</Label>
               <Input
                 value={estimateData.lineItem}
                 onChange={(e) => handleInputChange('lineItem', e.target.value)}
                 placeholder="Line item description"
+                className="h-8 text-xs"
               />
             </div>
 
-            <div className="space-y-2">
-              <Label>Item sent in for</Label>
+            <div className="space-y-1">
+              <Label className="text-xs text-muted-foreground">Item sent in for</Label>
               <Select 
                 value={estimateData.itemSentInFor} 
                 onValueChange={(value) => handleInputChange('itemSentInFor', value)}
               >
-                <SelectTrigger>
+                <SelectTrigger className="h-8 text-xs">
                   <SelectValue placeholder="Select option" />
                 </SelectTrigger>
                 <SelectContent>
@@ -148,67 +150,70 @@ export const EstimateDetails = ({ userRole = 'technician', onUserRoleChange }: E
           </div>
 
           {/* Problem and Recommendation side by side */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label>Problem</Label>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="space-y-1">
+              <Label className="text-xs text-muted-foreground">Problem</Label>
               <Textarea
                 value={estimateData.problem}
                 onChange={(e) => handleInputChange('problem', e.target.value)}
                 placeholder="Describe the problem..."
-                className="min-h-[80px]"
+                className="min-h-[60px] text-xs resize-none"
               />
             </div>
 
-            <div className="space-y-2">
-              <Label>Recommendation</Label>
+            <div className="space-y-1">
+              <Label className="text-xs text-muted-foreground">Recommendation</Label>
               <Textarea
                 value={estimateData.recommendation}
                 onChange={(e) => handleInputChange('recommendation', e.target.value)}
                 placeholder="Enter recommendation..."
-                className="min-h-[80px]"
+                className="min-h-[60px] text-xs resize-none"
               />
             </div>
           </div>
 
           {/* Cost Info and Tax */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label>Cost Info Freight</Label>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="space-y-1">
+              <Label className="text-xs text-muted-foreground">Cost Info Freight</Label>
               <Input
                 value={estimateData.costInfoFreight}
                 onChange={(e) => handleInputChange('costInfoFreight', e.target.value)}
                 placeholder="Freight information"
+                className="h-8 text-xs"
               />
             </div>
 
-            <div className="space-y-2">
-              <Label>Tax</Label>
+            <div className="space-y-1">
+              <Label className="text-xs text-muted-foreground">Tax</Label>
               <Input
                 value={estimateData.tax}
                 onChange={(e) => handleInputChange('tax', e.target.value)}
                 placeholder="Tax amount"
+                className="h-8 text-xs"
               />
             </div>
           </div>
 
           {/* Replacement Cost Info & Est turnaround time - side by side */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label>Replacement cost info</Label>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="space-y-1">
+              <Label className="text-xs text-muted-foreground">Replacement cost info</Label>
               <Textarea
                 value={estimateData.replacementCostInfo}
                 onChange={(e) => handleInputChange('replacementCostInfo', e.target.value)}
                 placeholder="Replacement cost details..."
-                className="min-h-[60px]"
+                className="min-h-[50px] text-xs resize-none"
               />
             </div>
 
-            <div className="space-y-2">
-              <Label>Est turnaround time</Label>
+            <div className="space-y-1">
+              <Label className="text-xs text-muted-foreground">Est turnaround time</Label>
               <Input
                 value={estimateData.estTurnaroundTime}
                 onChange={(e) => handleInputChange('estTurnaroundTime', e.target.value)}
                 placeholder="Estimated turnaround time"
+                className="h-8 text-xs"
               />
             </div>
           </div>
@@ -216,19 +221,19 @@ export const EstimateDetails = ({ userRole = 'technician', onUserRoleChange }: E
       </Card>
 
       {/* Estimate History */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg font-semibold">Estimate History</CardTitle>
+      <Card className="border-border/50">
+        <CardHeader className="py-3 px-4">
+          <CardTitle className="text-sm font-semibold">Estimate History</CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <div className="grid grid-cols-4 gap-2 text-sm font-medium text-muted-foreground border-b pb-2">
+        <CardContent className="px-4 pb-4 pt-0">
+          <div className="space-y-2">
+            <div className="grid grid-cols-4 gap-2 text-[10px] font-medium text-muted-foreground border-b pb-2">
               <div>Est Date</div>
               <div>Est Status</div>
               <div>Report</div>
               <div>Received</div>
             </div>
-            <div className="text-center text-muted-foreground py-8 text-sm">
+            <div className="text-center text-muted-foreground py-4 text-xs">
               No data to display
             </div>
           </div>
