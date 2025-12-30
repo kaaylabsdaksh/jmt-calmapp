@@ -6598,7 +6598,7 @@ const FormVariationsDemo = () => {
                   </AccordionContent>
                 </AccordionItem>
 
-                <AccordionItem value="activity-log" className="border-b">
+                <AccordionItem value="activity-log" className="border-b-0">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
                       <MessageSquare className="h-5 w-5 text-foreground" />
