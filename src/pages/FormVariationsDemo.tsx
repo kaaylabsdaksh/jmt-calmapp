@@ -6381,23 +6381,6 @@ const FormVariationsDemo = () => {
       {formData.type ? (
         <Card className="border-0 shadow-md">
           <CardContent className="p-6">
-            <div className="flex justify-end pb-4 mb-4">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => {
-                  const allValues = isESLType ? eslAccordionValues : singleAccordionValues;
-                  const isAllExpanded = allValues.every(v => openAccordions.includes(v));
-                  setOpenAccordions(isAllExpanded ? [] : allValues);
-                }}
-                className="h-7 text-xs"
-              >
-                {(isESLType ? eslAccordionValues : singleAccordionValues).every(v => openAccordions.includes(v)) 
-                  ? 'Collapse All' 
-                  : 'Expand All'}
-              </Button>
-            </div>
-
             {isESLType ? (
               // ESL Type Accordion
               <Accordion type="multiple" value={openAccordions} onValueChange={setOpenAccordions} className="space-y-0">
