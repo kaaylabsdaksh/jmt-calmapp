@@ -6601,8 +6601,8 @@ const FormVariationsDemo = () => {
                 <AccordionItem value="activity-log" className="border-b">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
-                      <Activity className="h-5 w-5 text-foreground" />
-                      <h3 className="font-semibold">Activity Log</h3>
+                      <MessageSquare className="h-5 w-5 text-foreground" />
+                      <h3 className="font-semibold">Comments</h3>
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pb-4">
@@ -6958,14 +6958,14 @@ const FormVariationsDemo = () => {
 
       </div>
 
-      {/* Activity Log - Full width at bottom */}
+      {/* Comments - Full width at bottom */}
       <Card className="border shadow-sm hover:shadow-md transition-shadow">
         <CardHeader className="py-2 px-3">
           <div className="flex items-center gap-2">
             <div className="p-1.5 bg-indigo-500/10 rounded">
-              <Activity className="h-4 w-4 text-indigo-600" />
+              <MessageSquare className="h-4 w-4 text-indigo-600" />
             </div>
-            <CardTitle className="text-sm">Activity Log</CardTitle>
+            <CardTitle className="text-sm">Comments</CardTitle>
           </div>
         </CardHeader>
         <CardContent className="pt-0 px-3 pb-3">
