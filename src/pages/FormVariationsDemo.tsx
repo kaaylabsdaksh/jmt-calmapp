@@ -734,7 +734,7 @@ const FormVariationsDemo = () => {
         { value: 'transit', label: 'Transit', icon: Truck },
         { value: 'parts', label: 'Parts', icon: Settings },
         { value: 'options', label: 'Additional', icon: Settings },
-        { value: 'activity-log', label: 'Activity Log', icon: Activity }
+        { value: 'activity-log', label: 'Comments', icon: MessageSquare }
       ];
 
   const secondRowTabs: { value: string; label: string; icon: React.ComponentType<{ className?: string }> }[] = [];
@@ -846,7 +846,7 @@ const FormVariationsDemo = () => {
 
     const tabLabels: Record<string, string> = isESLType
       ? { 'general': 'General', 'details': 'Details', 'testing': 'Testing', 'work-status': 'Work Status' }
-      : { 'general': 'General', 'cost': 'Cost', 'factory-config': 'Factory', 'transit': 'Transit', 'parts': 'Parts', 'options': 'Additional', 'activity-log': 'Activity Log' };
+      : { 'general': 'General', 'cost': 'Cost', 'factory-config': 'Factory', 'transit': 'Transit', 'parts': 'Parts', 'options': 'Additional', 'activity-log': 'Comments' };
 
     const handleAutoTabScroll = () => {
       if (isScrollingRef.current) return;
