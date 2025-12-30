@@ -6628,6 +6628,12 @@ const FormVariationsDemo = () => {
                 </AccordionItem>
               </Accordion>
             )}
+            
+            {/* Created and Modified Dates - Bottom */}
+            <div className="flex items-center justify-center gap-4 text-[10px] text-muted-foreground pt-4 mt-4 border-t border-border">
+              <span><span className="font-medium">Created:</span> 09/09/2025 by Admin</span>
+              <span><span className="font-medium">Modified:</span> 09/09/2025 by Admin</span>
+            </div>
           </CardContent>
         </Card>
       ) : (
