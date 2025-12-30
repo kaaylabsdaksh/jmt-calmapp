@@ -6369,7 +6369,7 @@ const FormVariationsDemo = () => {
               </div>
             </div>
             
-            <div className="flex items-center gap-4 text-[10px] text-muted-foreground pb-1">
+            <div className="flex flex-col text-[10px] text-muted-foreground pb-1">
               <span><span className="font-medium">Created:</span> 09/09/2025 by Admin</span>
               <span><span className="font-medium">Modified:</span> 09/09/2025 by Admin</span>
             </div>
@@ -6613,7 +6613,7 @@ const FormVariationsDemo = () => {
             )}
             
             {/* Created and Modified Dates - Bottom */}
-            <div className="flex items-center justify-center gap-4 text-[10px] text-muted-foreground pt-4 mt-4 border-t border-border">
+            <div className="flex flex-col items-center text-[10px] text-muted-foreground pt-4 mt-4 border-t border-border">
               <span><span className="font-medium">Created:</span> 09/09/2025 by Admin</span>
               <span><span className="font-medium">Modified:</span> 09/09/2025 by Admin</span>
             </div>
