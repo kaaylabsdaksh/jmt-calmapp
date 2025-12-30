@@ -6328,12 +6328,12 @@ const FormVariationsDemo = () => {
       {/* Sticky section containing Type/Report Number */}
       <div className="sticky top-[57px] z-30 bg-background shadow-sm">
         {/* Type and Report Number fields */}
-        <div className="bg-card px-6 py-4 border-b rounded-t-lg">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="type" className="text-sm font-medium">Type *</Label>
+        <div className="bg-card px-4 py-2 border-b rounded-t-lg">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="space-y-1">
+              <Label htmlFor="type" className="text-xs font-medium">Type *</Label>
               <Select value={formData.type} onValueChange={(value) => handleInputChange("type", value)}>
-                <SelectTrigger className="h-11">
+                <SelectTrigger className="h-8 text-xs">
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
                 <SelectContent className="max-h-48 overflow-y-auto z-50">
@@ -6355,14 +6355,14 @@ const FormVariationsDemo = () => {
               </Select>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="reportNumber" className="text-sm font-medium">Report Number *</Label>
+            <div className="space-y-1">
+              <Label htmlFor="reportNumber" className="text-xs font-medium">Report Number *</Label>
               <Input
                 id="reportNumber"
                 value={formData.reportNumber}
                 onChange={(e) => handleInputChange("reportNumber", e.target.value)}
                 placeholder="0152.01-802930-001"
-                className="h-11"
+                className="h-8 text-xs"
                 readOnly
               />
             </div>
