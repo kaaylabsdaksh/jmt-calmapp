@@ -6383,7 +6383,7 @@ const FormVariationsDemo = () => {
           <CardContent className="p-6">
             {isESLType ? (
               // ESL Type Accordion
-              <Accordion type="multiple" value={openAccordions} onValueChange={setOpenAccordions} className="space-y-0">
+              <Accordion type="multiple" value={openAccordions} onValueChange={setOpenAccordions} className="space-y-0 accordion-fields">
                 <AccordionItem value="general" className="border-b">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
@@ -6440,7 +6440,7 @@ const FormVariationsDemo = () => {
               </Accordion>
             ) : (
               // SINGLE Type Accordion (expanded sections)
-              <Accordion type="multiple" value={openAccordions} onValueChange={setOpenAccordions} className="space-y-0">
+              <Accordion type="multiple" value={openAccordions} onValueChange={setOpenAccordions} className="space-y-0 accordion-fields">
                 <AccordionItem value="general" className="border-b">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">

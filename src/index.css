@@ -39,8 +39,8 @@
     --info: 217 91% 60%;
     --info-foreground: 0 0% 100%;
 
-    --border: 0 0% 75%;
-    --input: 0 0% 65%;
+    --border: 0 0% 91%;
+    --input: 0 0% 91%;
     --ring: 54 100% 57%;
 
     --radius: 0.5rem;
@@ -110,5 +110,16 @@
 
   body {
     @apply bg-background text-foreground font-sans;
+  }
+}
+
+@layer components {
+  /* Dark borders for accordion form fields */
+  .accordion-fields input,
+  .accordion-fields select,
+  .accordion-fields textarea,
+  .accordion-fields [data-slot="control"],
+  .accordion-fields button[role="combobox"] {
+    @apply border-gray-400;
   }
 }
