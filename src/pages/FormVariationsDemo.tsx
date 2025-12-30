@@ -41,6 +41,11 @@ const FormVariationsDemo = () => {
   // Accordion density state: 'compact' = ultra-compact, 'normal' = standard spacing
   const [accordionDensity, setAccordionDensity] = useState<'compact' | 'normal'>('compact');
   
+  // Accordion expand/collapse state
+  const eslAccordionValues = ['general', 'details', 'testing', 'work-status'];
+  const singleAccordionValues = ['general', 'product', 'logistics', 'lab-cost', 'factory', 'transit', 'parts', 'images', 'additional', 'activity-log'];
+  const [openAccordions, setOpenAccordions] = useState<string[]>(['general']);
+  
   // Main section state
   const [activeSection, setActiveSection] = useState<'work-order-items' | 'estimate' | 'qf3' | 'external-files' | 'cert-files'>('work-order-items');
   
@@ -6371,19 +6376,34 @@ const FormVariationsDemo = () => {
           <CardContent className="p-6">
             {/* Created and Modified Dates */}
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-4 border-b border-border mb-6">
-              <div className="text-sm text-muted-foreground">
-                <span className="font-medium">Created:</span> 09/09/2025 by Admin User
+              <div className="flex items-center gap-4">
+                <div className="text-sm text-muted-foreground">
+                  <span className="font-medium">Created:</span> 09/09/2025 by Admin User
+                </div>
+                <div className="text-sm text-muted-foreground">
+                  <span className="font-medium">Modified:</span> 09/09/2025 by Admin User
+                </div>
               </div>
               
-              <div className="text-sm text-muted-foreground">
-                <span className="font-medium">Modified:</span> 09/09/2025 by Admin User
-              </div>
-
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  const allValues = isESLType ? eslAccordionValues : singleAccordionValues;
+                  const isAllExpanded = allValues.every(v => openAccordions.includes(v));
+                  setOpenAccordions(isAllExpanded ? [] : allValues);
+                }}
+                className="h-8 text-xs"
+              >
+                {(isESLType ? eslAccordionValues : singleAccordionValues).every(v => openAccordions.includes(v)) 
+                  ? 'Collapse All' 
+                  : 'Expand All'}
+              </Button>
             </div>
 
             {isESLType ? (
               // ESL Type Accordion
-              <Accordion type="multiple" defaultValue={["general"]} className="space-y-0">
+              <Accordion type="multiple" value={openAccordions} onValueChange={setOpenAccordions} className="space-y-0">
                 <AccordionItem value="general" className="border-b">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
@@ -6440,7 +6460,7 @@ const FormVariationsDemo = () => {
               </Accordion>
             ) : (
               // SINGLE Type Accordion (expanded sections)
-              <Accordion type="multiple" defaultValue={["general"]} className="space-y-0">
+              <Accordion type="multiple" value={openAccordions} onValueChange={setOpenAccordions} className="space-y-0">
                 <AccordionItem value="general" className="border-b">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
