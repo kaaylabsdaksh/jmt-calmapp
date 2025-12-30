@@ -6329,42 +6329,49 @@ const FormVariationsDemo = () => {
       <div className="sticky top-[57px] z-30 bg-background shadow-sm">
         {/* Type and Report Number fields */}
         <div className="bg-card px-4 py-2 border-b rounded-t-lg">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <div className="space-y-1">
-              <Label htmlFor="type" className="text-xs font-medium">Type *</Label>
-              <Select value={formData.type} onValueChange={(value) => handleInputChange("type", value)}>
-                <SelectTrigger className="h-8 text-xs">
-                  <SelectValue placeholder="Select type" />
-                </SelectTrigger>
-                <SelectContent className="max-h-48 overflow-y-auto z-50">
-                  <SelectItem value="single">Single</SelectItem>
-                  <SelectItem value="esl-blankets">ESL - Blankets</SelectItem>
-                  <SelectItem value="esl-coverups">ESL - CoverUps</SelectItem>
-                  <SelectItem value="esl-footwear">ESL - Footwear</SelectItem>
-                  <SelectItem value="esl-gloves">ESL - Gloves</SelectItem>
-                  <SelectItem value="esl-grounds">ESL - Grounds</SelectItem>
-                  <SelectItem value="esl-hotsticks">ESL - Hotsticks</SelectItem>
-                  <SelectItem value="esl-insulated-tools">ESL - Insulated Tools</SelectItem>
-                  <SelectItem value="esl-jumpers">ESL - Jumpers</SelectItem>
-                  <SelectItem value="esl-line-hoses">ESL - Line Hoses</SelectItem>
-                  <SelectItem value="esl-matting">ESL - Matting</SelectItem>
-                  <SelectItem value="esl-roll-blankets">ESL - Roll Blankets</SelectItem>
-                  <SelectItem value="esl-sleeves">ESL - Sleeves</SelectItem>
-                  <SelectItem value="itl-gauges">ITL - Gauges</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+          <div className="flex flex-col md:flex-row md:items-end gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 flex-1">
+              <div className="space-y-1">
+                <Label htmlFor="type" className="text-xs font-medium">Type *</Label>
+                <Select value={formData.type} onValueChange={(value) => handleInputChange("type", value)}>
+                  <SelectTrigger className="h-8 text-xs">
+                    <SelectValue placeholder="Select type" />
+                  </SelectTrigger>
+                  <SelectContent className="max-h-48 overflow-y-auto z-50">
+                    <SelectItem value="single">Single</SelectItem>
+                    <SelectItem value="esl-blankets">ESL - Blankets</SelectItem>
+                    <SelectItem value="esl-coverups">ESL - CoverUps</SelectItem>
+                    <SelectItem value="esl-footwear">ESL - Footwear</SelectItem>
+                    <SelectItem value="esl-gloves">ESL - Gloves</SelectItem>
+                    <SelectItem value="esl-grounds">ESL - Grounds</SelectItem>
+                    <SelectItem value="esl-hotsticks">ESL - Hotsticks</SelectItem>
+                    <SelectItem value="esl-insulated-tools">ESL - Insulated Tools</SelectItem>
+                    <SelectItem value="esl-jumpers">ESL - Jumpers</SelectItem>
+                    <SelectItem value="esl-line-hoses">ESL - Line Hoses</SelectItem>
+                    <SelectItem value="esl-matting">ESL - Matting</SelectItem>
+                    <SelectItem value="esl-roll-blankets">ESL - Roll Blankets</SelectItem>
+                    <SelectItem value="esl-sleeves">ESL - Sleeves</SelectItem>
+                    <SelectItem value="itl-gauges">ITL - Gauges</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
 
-            <div className="space-y-1">
-              <Label htmlFor="reportNumber" className="text-xs font-medium">Report Number *</Label>
-              <Input
-                id="reportNumber"
-                value={formData.reportNumber}
-                onChange={(e) => handleInputChange("reportNumber", e.target.value)}
-                placeholder="0152.01-802930-001"
-                className="h-8 text-xs"
-                readOnly
-              />
+              <div className="space-y-1">
+                <Label htmlFor="reportNumber" className="text-xs font-medium">Report Number *</Label>
+                <Input
+                  id="reportNumber"
+                  value={formData.reportNumber}
+                  onChange={(e) => handleInputChange("reportNumber", e.target.value)}
+                  placeholder="0152.01-802930-001"
+                  className="h-8 text-xs"
+                  readOnly
+                />
+              </div>
+            </div>
+            
+            <div className="flex items-center gap-4 text-[10px] text-muted-foreground pb-1">
+              <span><span className="font-medium">Created:</span> 09/09/2025 by Admin</span>
+              <span><span className="font-medium">Modified:</span> 09/09/2025 by Admin</span>
             </div>
           </div>
         </div>
@@ -6374,17 +6381,7 @@ const FormVariationsDemo = () => {
       {formData.type ? (
         <Card className="border-0 shadow-md">
           <CardContent className="p-6">
-            {/* Created and Modified Dates */}
-            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-4 border-b border-border mb-6">
-              <div className="flex items-center gap-4">
-                <div className="text-sm text-muted-foreground">
-                  <span className="font-medium">Created:</span> 09/09/2025 by Admin User
-                </div>
-                <div className="text-sm text-muted-foreground">
-                  <span className="font-medium">Modified:</span> 09/09/2025 by Admin User
-                </div>
-              </div>
-              
+            <div className="flex justify-end pb-4 mb-4">
               <Button
                 variant="outline"
                 size="sm"
@@ -6393,7 +6390,7 @@ const FormVariationsDemo = () => {
                   const isAllExpanded = allValues.every(v => openAccordions.includes(v));
                   setOpenAccordions(isAllExpanded ? [] : allValues);
                 }}
-                className="h-8 text-xs"
+                className="h-7 text-xs"
               >
                 {(isESLType ? eslAccordionValues : singleAccordionValues).every(v => openAccordions.includes(v)) 
                   ? 'Collapse All' 
