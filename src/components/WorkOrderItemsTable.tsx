@@ -105,7 +105,7 @@ interface WorkOrderItemsTableProps {
   }>;
 }
 
-export const WorkOrderItemsTable = ({ selectedPoNumber, showMockData = true, accountNumber = "15000.00", workOrderNumber = "5432", items = [] }: WorkOrderItemsTableProps) => {
+export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockData = true, accountNumber = "1500.00", workOrderNumber = "5432", items = [] }: WorkOrderItemsTableProps) => {
   const navigate = useNavigate();
   
   // Use items prop if provided, otherwise fall back to mock data based on showMockData
@@ -134,14 +134,14 @@ export const WorkOrderItemsTable = ({ selectedPoNumber, showMockData = true, acc
           </tr>
         </thead>
         <tbody>
-          {displayData.map((item, index) => (
-            <tr key={item.id} className={`border-t ${index > 0 ? 'hover:bg-muted/50' : ''}`}>
+          {displayData.map((item) => (
+            <tr key={item.id} className="border-t hover:bg-muted/50">
               <td className="p-3">
                 <Button 
                   variant="outline" 
                   size="sm"
                   onClick={() => navigate("/form-variations")}
-                  className="h-8"
+                  className="h-8 bg-primary hover:bg-primary/90 text-primary-foreground border-primary"
                 >
                   <Edit className="w-4 h-4" />
                 </Button>
@@ -158,7 +158,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber, showMockData = true, acc
               <td className="p-3">{item.itemStatus || ""}</td>
               <td className="p-3">{item.itemType || ""}</td>
               <td className="p-3">{item.deliverByDate || ""}</td>
-              <td className="p-3">{selectedPoNumber || item.poNumber || ""}</td>
+              <td className="p-3">{selectedPoNumber}</td>
               <td className="p-3">
                 <Button variant="link" className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto">
                   View
@@ -169,9 +169,11 @@ export const WorkOrderItemsTable = ({ selectedPoNumber, showMockData = true, acc
         </tbody>
       </table>
       
-      <div className="p-8 text-center text-muted-foreground">
-        No data to display
-      </div>
+      {displayData.length === 0 && (
+        <div className="p-8 text-center text-muted-foreground">
+          No data to display
+        </div>
+      )}
     </div>
   );
 };
