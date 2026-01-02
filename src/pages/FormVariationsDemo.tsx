@@ -1727,7 +1727,7 @@ const FormVariationsDemo = () => {
         <div className={isAccordion ? "space-y-1" : "space-y-2"}>
           <Label htmlFor="itemStatus" className={`${isAccordion ? "text-xs" : "text-sm"} font-medium`}>Item Status</Label>
           <Select value={formData.itemStatus} onValueChange={handleStatusChangeAttempt}>
-            <SelectTrigger className={isAccordion ? "h-8 text-sm" : "h-11"}>
+            <SelectTrigger className={isAccordion ? "h-7 text-xs" : "h-11"}>
               <SelectValue placeholder="Select status" />
             </SelectTrigger>
             <SelectContent className="bg-popover border z-50 max-h-48 overflow-y-auto">
@@ -1768,7 +1768,7 @@ const FormVariationsDemo = () => {
           <div className={isAccordion ? "space-y-1" : "space-y-2"}>
             <Label htmlFor="rotationSubStatus" className={`${isAccordion ? "text-xs" : "text-sm"} font-medium`}>Rotation Sub Status</Label>
             <Select value={formData.rotationSubStatus} onValueChange={(value) => handleInputChange("rotationSubStatus", value)}>
-              <SelectTrigger className={isAccordion ? "h-8 text-sm" : "h-11"}>
+              <SelectTrigger className={isAccordion ? "h-7 text-xs" : "h-11"}>
                 <SelectValue placeholder="Select rotation sub status" />
               </SelectTrigger>
               <SelectContent className="bg-popover border z-50 max-h-48 overflow-y-auto">
@@ -1787,8 +1787,8 @@ const FormVariationsDemo = () => {
             <div className={isAccordion ? "space-y-1" : "space-y-2"}>
               <Label htmlFor="tfStatus" className={`${isAccordion ? "text-xs" : "text-sm"} font-medium`}>T/F Status</Label>
               <Select value={formData.tfStatus} onValueChange={(value) => handleInputChange("tfStatus", value)}>
-                <SelectTrigger className={isAccordion ? "h-8 text-sm" : "h-11"}>
-                  <SelectValue placeholder="Select T/F status" />
+              <SelectTrigger className={isAccordion ? "h-7 text-xs" : "h-11"}>
+                <SelectValue placeholder="Select T/F status" />
                 </SelectTrigger>
                 <SelectContent className="bg-popover border z-50 max-h-48 overflow-y-auto">
                   <SelectItem value="await-cust-approval-est-fee">Await Cust Approval Est. Fee</SelectItem>
@@ -1803,8 +1803,8 @@ const FormVariationsDemo = () => {
             <div className={isAccordion ? "space-y-1" : "space-y-2"}>
               <Label htmlFor="tfClerk" className={`${isAccordion ? "text-xs" : "text-sm"} font-medium`}>T/F Clerk</Label>
               <Select value={formData.tfClerk} onValueChange={(value) => handleInputChange("tfClerk", value)}>
-                <SelectTrigger className={isAccordion ? "h-8 text-sm" : "h-11"}>
-                  <SelectValue placeholder="Select clerk" />
+              <SelectTrigger className={isAccordion ? "h-7 text-xs" : "h-11"}>
+                <SelectValue placeholder="Select clerk" />
                 </SelectTrigger>
                 <SelectContent className="bg-popover border z-50 max-h-48 overflow-y-auto">
                   <SelectItem value="admin-user">Admin User</SelectItem>
@@ -1822,7 +1822,7 @@ const FormVariationsDemo = () => {
                 value={formData.tfFollowup}
                 onChange={(e) => handleInputChange("tfFollowup", e.target.value)}
                 placeholder="Enter follow-up notes"
-                className={isAccordion ? "h-8 text-sm" : "h-11"}
+                className={isAccordion ? "h-7 text-xs" : "h-11"}
               />
             </div>
           </>
@@ -1833,7 +1833,7 @@ const FormVariationsDemo = () => {
             Priority {formData.type === "single" && <span className="text-destructive">*</span>}
           </Label>
           <Select value={formData.priority} onValueChange={(value) => handleInputChange("priority", value)}>
-            <SelectTrigger className={isAccordion ? "h-8 text-sm" : "h-11"}>
+            <SelectTrigger className={isAccordion ? "h-7 text-xs" : "h-11"}>
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="bg-popover border z-50">
@@ -1851,7 +1851,7 @@ const FormVariationsDemo = () => {
             Location {formData.type === "single" && <span className="text-destructive">*</span>}
           </Label>
           <Select value={formData.location} onValueChange={(value) => handleInputChange("location", value)}>
-            <SelectTrigger className={isAccordion ? "h-8 text-sm" : "h-11"}>
+            <SelectTrigger className={isAccordion ? "h-7 text-xs" : "h-11"}>
               <SelectValue placeholder="Select location" />
             </SelectTrigger>
             <SelectContent className="bg-popover border z-50 max-h-48 overflow-y-auto">
@@ -1880,7 +1880,7 @@ const FormVariationsDemo = () => {
             Division {formData.type === "single" && <span className="text-destructive">*</span>}
           </Label>
           <Select value={formData.division} onValueChange={(value) => handleInputChange("division", value)}>
-            <SelectTrigger className={isAccordion ? "h-8 text-sm" : "h-11"}>
+            <SelectTrigger className={isAccordion ? "h-7 text-xs" : "h-11"}>
               <SelectValue placeholder="Select division" />
             </SelectTrigger>
             <SelectContent className="bg-popover border z-50">
@@ -1926,7 +1926,7 @@ const FormVariationsDemo = () => {
             value={formData.calFreq}
             onChange={(e) => handleInputChange("calFreq", e.target.value)}
             placeholder="Enter calibration frequency"
-            className={isAccordion ? "h-8 text-sm" : "h-11"}
+            className={isAccordion ? "h-7 text-xs" : "h-11"}
           />
         </div>
 
@@ -1935,7 +1935,7 @@ const FormVariationsDemo = () => {
             Action Code {formData.type === "single" && <span className="text-destructive">*</span>}
           </Label>
           <Select value={formData.actionCode} onValueChange={(value) => handleInputChange("actionCode", value)}>
-            <SelectTrigger className={isAccordion ? "h-8 text-sm" : "h-11"}>
+            <SelectTrigger className={isAccordion ? "h-7 text-xs" : "h-11"}>
               <SelectValue placeholder="Select action code" />
             </SelectTrigger>
             <SelectContent className="bg-popover border z-50">
@@ -1960,7 +1960,7 @@ const FormVariationsDemo = () => {
                 variant="outline"
                 role="combobox"
                 aria-expanded={assigneeDropdownOpen}
-                className={`w-full justify-between ${isAccordion ? "h-8 text-sm" : "h-11"}`}
+                className={`w-full justify-between ${isAccordion ? "h-7 text-xs" : "h-11"}`}
               >
                 {formData.assignedTo || "Select assignee"}
                 <ChevronsUpDown className={`ml-2 shrink-0 opacity-50 ${isAccordion ? "h-3 w-3" : "h-4 w-4"}`} />
@@ -5319,7 +5319,7 @@ const FormVariationsDemo = () => {
           <div className="space-y-1">
             <Label htmlFor="partsCategory" className="text-xs">Category <span className="text-destructive">*</span></Label>
             <Select value={formData.partsCategory} onValueChange={(value) => handleInputChange("partsCategory", value)} required>
-              <SelectTrigger className={isAccordion ? "h-8 text-sm" : "h-9"}><SelectValue placeholder="Category" /></SelectTrigger>
+              <SelectTrigger className={isAccordion ? "h-7 text-xs" : "h-9"}><SelectValue placeholder="Category" /></SelectTrigger>
               <SelectContent className="bg-popover border z-50">
                 <SelectItem value="electronic">Electronic</SelectItem>
                 <SelectItem value="mechanical">Mechanical</SelectItem>
@@ -5330,26 +5330,26 @@ const FormVariationsDemo = () => {
 
           <div className="space-y-1">
             <Label htmlFor="partsNumber" className="text-xs">Part Number <span className="text-destructive">*</span></Label>
-            <Input id="partsNumber" value={formData.partsNumber} onChange={(e) => handleInputChange("partsNumber", e.target.value)} placeholder="Part number" className={isAccordion ? "h-8 text-sm" : "h-9"} required />
+            <Input id="partsNumber" value={formData.partsNumber} onChange={(e) => handleInputChange("partsNumber", e.target.value)} placeholder="Part number" className={isAccordion ? "h-7 text-xs" : "h-9"} required />
           </div>
 
           <div className="space-y-1">
             <Label htmlFor="partsDescription" className="text-xs">Description</Label>
-            <Input id="partsDescription" value={formData.partsDescription} onChange={(e) => handleInputChange("partsDescription", e.target.value)} placeholder="Description" className={isAccordion ? "h-8 text-sm" : "h-9"} />
+            <Input id="partsDescription" value={formData.partsDescription} onChange={(e) => handleInputChange("partsDescription", e.target.value)} placeholder="Description" className={isAccordion ? "h-7 text-xs" : "h-9"} />
           </div>
 
           <div className="space-y-1">
             <Label htmlFor="partsCost" className="text-xs">Cost</Label>
-            <Input id="partsCost" type="number" value={formData.partsCost} onChange={(e) => handleInputChange("partsCost", e.target.value)} placeholder="0.00" className={isAccordion ? "h-8 text-sm" : "h-9"} />
+            <Input id="partsCost" type="number" value={formData.partsCost} onChange={(e) => handleInputChange("partsCost", e.target.value)} placeholder="0.00" className={isAccordion ? "h-7 text-xs" : "h-9"} />
           </div>
 
           <div className="space-y-1">
             <Label htmlFor="partsQty" className="text-xs">Qty <span className="text-destructive">*</span></Label>
-            <Input id="partsQty" type="number" value={formData.partsQty} onChange={(e) => handleInputChange("partsQty", e.target.value)} placeholder="1" className={isAccordion ? "h-8 text-sm" : "h-9"} required />
+            <Input id="partsQty" type="number" value={formData.partsQty} onChange={(e) => handleInputChange("partsQty", e.target.value)} placeholder="1" className={isAccordion ? "h-7 text-xs" : "h-9"} required />
           </div>
 
           <div>
-            <Button size="sm" className={isAccordion ? "h-8 w-full text-xs" : "h-9 w-full"} onClick={handleAddPart}>Add Part</Button>
+            <Button size="sm" className={isAccordion ? "h-7 w-full text-xs" : "h-9 w-full"} onClick={handleAddPart}>Add Part</Button>
           </div>
         </div>
 
@@ -5427,7 +5427,7 @@ const FormVariationsDemo = () => {
           <div className="space-y-1">
             <Label htmlFor="originLocation" className={`${isAccordion ? 'text-xs' : 'text-sm'} font-medium`}>Origin Location <span className="text-destructive">*</span></Label>
             <Select value={formData.originLocation} onValueChange={(value) => handleInputChange("originLocation", value)} required>
-              <SelectTrigger className={isAccordion ? "h-8 text-sm" : "h-11"}><SelectValue placeholder="Select origin location" /></SelectTrigger>
+              <SelectTrigger className={isAccordion ? "h-7 text-xs" : "h-11"}><SelectValue placeholder="Select origin location" /></SelectTrigger>
               <SelectContent className="bg-popover border z-50">
                 <SelectItem value="warehouse-a">Warehouse A</SelectItem>
                 <SelectItem value="warehouse-b">Warehouse B</SelectItem>
@@ -5441,7 +5441,7 @@ const FormVariationsDemo = () => {
           <div className="space-y-1">
             <Label htmlFor="destinationLocation" className={`${isAccordion ? 'text-xs' : 'text-sm'} font-medium`}>Destination Location <span className="text-destructive">*</span></Label>
             <Select value={formData.destinationLocation} onValueChange={(value) => handleInputChange("destinationLocation", value)} required>
-              <SelectTrigger className={isAccordion ? "h-8 text-sm" : "h-11"}><SelectValue placeholder="Select destination location" /></SelectTrigger>
+              <SelectTrigger className={isAccordion ? "h-7 text-xs" : "h-11"}><SelectValue placeholder="Select destination location" /></SelectTrigger>
               <SelectContent className="bg-popover border z-50">
                 <SelectItem value="customer-site-1">Customer Site 1</SelectItem>
                 <SelectItem value="customer-site-2">Customer Site 2</SelectItem>
@@ -5454,13 +5454,13 @@ const FormVariationsDemo = () => {
 
           <div className="space-y-1">
             <Label htmlFor="huQty" className={`${isAccordion ? 'text-xs' : 'text-sm'} font-medium`}>HU Qty <span className="text-destructive">*</span></Label>
-            <Input id="huQty" value={formData.huQty} onChange={(e) => handleInputChange("huQty", e.target.value)} placeholder="Enter quantity" className={isAccordion ? "h-8 text-sm" : "h-11"} required />
+            <Input id="huQty" value={formData.huQty} onChange={(e) => handleInputChange("huQty", e.target.value)} placeholder="Enter quantity" className={isAccordion ? "h-7 text-xs" : "h-11"} required />
           </div>
 
           <div className="space-y-1">
             <Label htmlFor="huType" className={`${isAccordion ? 'text-xs' : 'text-sm'} font-medium`}>HU Type <span className="text-destructive">*</span></Label>
             <Select value={formData.huType} onValueChange={(value) => handleInputChange("huType", value)} required>
-              <SelectTrigger className={isAccordion ? "h-8 text-sm" : "h-11"}><SelectValue placeholder="Select HU type" /></SelectTrigger>
+              <SelectTrigger className={isAccordion ? "h-7 text-xs" : "h-11"}><SelectValue placeholder="Select HU type" /></SelectTrigger>
               <SelectContent className="bg-popover border z-50">
                 <SelectItem value="box">Box</SelectItem>
                 <SelectItem value="pallet">Pallet</SelectItem>
@@ -5474,7 +5474,7 @@ const FormVariationsDemo = () => {
           <div className="space-y-1">
             <Label htmlFor="deliverTo" className={`${isAccordion ? 'text-xs' : 'text-sm'} font-medium`}>Deliver To <span className="text-destructive">*</span></Label>
             <Select value={formData.deliverTo} onValueChange={(value) => handleInputChange("deliverTo", value)} required>
-              <SelectTrigger className={isAccordion ? "h-8 text-sm" : "h-11"}><SelectValue placeholder="Select delivery recipient" /></SelectTrigger>
+              <SelectTrigger className={isAccordion ? "h-7 text-xs" : "h-11"}><SelectValue placeholder="Select delivery recipient" /></SelectTrigger>
               <SelectContent className="bg-popover border z-50">
                 <SelectItem value="customer">Customer</SelectItem>
                 <SelectItem value="technician">Field Technician</SelectItem>
@@ -5488,7 +5488,7 @@ const FormVariationsDemo = () => {
           <div className="space-y-1">
             <Label htmlFor="deliveryType" className={`${isAccordion ? 'text-xs' : 'text-sm'} font-medium`}>Delivery Type <span className="text-destructive">*</span></Label>
             <Select value={formData.deliveryType} onValueChange={(value) => handleInputChange("deliveryType", value)} required>
-              <SelectTrigger className={isAccordion ? "h-8 text-sm" : "h-11"}><SelectValue placeholder="Select delivery type" /></SelectTrigger>
+              <SelectTrigger className={isAccordion ? "h-7 text-xs" : "h-11"}><SelectValue placeholder="Select delivery type" /></SelectTrigger>
               <SelectContent className="bg-popover border z-50">
                 <SelectItem value="shuttle">Shuttle</SelectItem>
                 <SelectItem value="courier">Courier</SelectItem>
@@ -5505,7 +5505,7 @@ const FormVariationsDemo = () => {
           <Textarea id="transitNotes" value={formData.transitNotes} onChange={(e) => handleInputChange("transitNotes", e.target.value)} placeholder="Enter transit notes and special instructions..." className={isAccordion ? "min-h-[60px] resize-none text-sm" : "min-h-[120px] resize-none"} />
         </div>
 
-        <Button onClick={handleSetInTransit} size="sm" className={isAccordion ? "w-auto h-8 text-xs" : "w-auto"}>Set In Transit</Button>
+        <Button onClick={handleSetInTransit} size="sm" className={isAccordion ? "w-auto h-7 text-xs" : "w-auto"}>Set In Transit</Button>
       </div>
     );
 
