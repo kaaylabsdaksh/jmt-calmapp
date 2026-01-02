@@ -62,6 +62,10 @@ const FormVariationsDemo = () => {
   // Refs for each section
   const sectionRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
   const scrollViewportRef = useRef<HTMLDivElement | null>(null);
+  const footerRef = useRef<HTMLDivElement | null>(null);
+  
+  // Dynamic footer height state
+  const [footerHeight, setFooterHeight] = useState(80); // Default fallback
   
   const sections = [
     { id: 'general', label: 'General', icon: Info },
@@ -725,6 +729,28 @@ const FormVariationsDemo = () => {
   // Dynamic tabs based on type selection
   const isESLType = formData.type && (formData.type.startsWith('esl-') || formData.type.startsWith('itl-'));
   
+  // Measure footer height dynamically
+  useEffect(() => {
+    const footer = footerRef.current;
+    if (!footer) return;
+    
+    const updateHeight = () => {
+      const height = footer.getBoundingClientRect().height;
+      if (height > 0) {
+        setFooterHeight(height + 24); // Add extra padding buffer
+      }
+    };
+    
+    // Initial measurement
+    updateHeight();
+    
+    // Use ResizeObserver for dynamic updates
+    const resizeObserver = new ResizeObserver(updateHeight);
+    resizeObserver.observe(footer);
+    
+    return () => resizeObserver.disconnect();
+  }, [activeSection, isESLType]);
+
   const firstRowTabs = isESLType 
     ? [
         { value: 'general', label: 'General', icon: Info },
@@ -6639,7 +6665,7 @@ const FormVariationsDemo = () => {
 
   // Render bento grid interface
   const renderBentoGridInterface = () => (
-    <div className="h-[calc(100vh-280px)] overflow-y-auto pr-2 pb-[260px]">
+    <div className="h-[calc(100vh-280px)] overflow-y-auto pr-2" style={{ paddingBottom: `${footerHeight}px` }}>
       {/* Type and Report Number fields */}
       <div className="bg-card px-4 py-3 border rounded-lg mb-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -6932,7 +6958,7 @@ const FormVariationsDemo = () => {
         </div>
 
         <div className="h-[calc(100vh-320px)] overflow-auto" ref={scrollViewportRef}>
-          <div className="p-6 space-y-8 pb-[260px]">
+          <div className="p-6 space-y-8" style={{ paddingBottom: `${footerHeight}px` }}>
             {/* General Section */}
             <div 
               ref={(el) => (sectionRefs.current['general'] = el)}
@@ -7100,7 +7126,7 @@ const FormVariationsDemo = () => {
 
           {/* Right Content Area */}
           <div className="flex-1 overflow-auto h-[calc(100vh-320px)]" ref={scrollViewportRef}>
-            <div className="p-6 space-y-8 pb-[260px]">
+            <div className="p-6 space-y-8" style={{ paddingBottom: `${footerHeight}px` }}>
               {/* General Section */}
               <div 
                 ref={(el) => (sectionRefs.current['general'] = el)}
@@ -9187,7 +9213,7 @@ const FormVariationsDemo = () => {
 
       {/* Fixed Action Footer - Custom for ESL types */}
       {isESLType && activeSection === 'work-order-items' ? (
-        <div className="fixed bottom-0 left-[256px] right-0 bg-background border-t border-border shadow-lg z-10 py-3 px-6">
+        <div ref={footerRef} className="fixed bottom-0 left-[256px] right-0 bg-background border-t border-border shadow-lg z-10 py-3 px-6">
           <div className="flex items-center justify-between gap-4 max-w-[1400px] mx-auto">
             {/* Left side buttons */}
             <div className="flex items-center gap-2">
@@ -9249,6 +9275,7 @@ const FormVariationsDemo = () => {
           currentSection={activeSection}
           userRole={userRole}
           onUserRoleChange={setUserRole}
+          footerRef={footerRef}
         />
       )}
 
