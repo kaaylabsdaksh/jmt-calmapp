@@ -1512,7 +1512,7 @@ const FormVariationsDemo = () => {
 
                           {/* Conditional fields based on departure type */}
                           {formData.departureType === "shipped" && (
-                            <>
+                            <div className="grid grid-cols-3 gap-2">
                               <div className="space-y-1">
                                 <Label className="text-xs font-medium">Ship Type</Label>
                                 <Select value={formData.shipType} onValueChange={(value) => handleInputChange("shipType", value)}>
@@ -1527,25 +1527,23 @@ const FormVariationsDemo = () => {
                                   </SelectContent>
                                 </Select>
                               </div>
-                              <div className="grid grid-cols-2 gap-2">
-                                <div className="space-y-1">
-                                  <Label className="text-xs font-medium">Coll Acct</Label>
-                                  <Input 
-                                    value={formData.collAcct || ""} 
-                                    onChange={(e) => handleInputChange("collAcct", e.target.value)} 
-                                    className="h-7 text-xs" 
-                                  />
-                                </div>
-                                <div className="space-y-1">
-                                  <Label className="text-xs font-medium">Tracking #</Label>
-                                  <Input 
-                                    value={formData.trackingNumber || ""} 
-                                    onChange={(e) => handleInputChange("trackingNumber", e.target.value)} 
-                                    className="h-7 text-xs" 
-                                  />
-                                </div>
+                              <div className="space-y-1">
+                                <Label className="text-xs font-medium">Coll Acct</Label>
+                                <Input 
+                                  value={formData.collAcct || ""} 
+                                  onChange={(e) => handleInputChange("collAcct", e.target.value)} 
+                                  className="h-7 text-xs" 
+                                />
                               </div>
-                            </>
+                              <div className="space-y-1">
+                                <Label className="text-xs font-medium">Tracking #</Label>
+                                <Input 
+                                  value={formData.trackingNumber || ""} 
+                                  onChange={(e) => handleInputChange("trackingNumber", e.target.value)} 
+                                  className="h-7 text-xs" 
+                                />
+                              </div>
+                            </div>
                           )}
 
                           {formData.departureType === "customer-pickup" && (
