@@ -1714,13 +1714,13 @@ const FormVariationsDemo = () => {
             {/* Accessories Tab */}
             <TabsContent value="accessories">
               <Card className="border-0 shadow-sm">
-                <CardContent className="p-3 space-y-2">
-                  <div className="grid grid-cols-1 md:grid-cols-5 gap-2 items-end">
+                <CardContent className="p-3 space-y-3">
+                  <div className="grid grid-cols-1 md:grid-cols-6 gap-2 items-end">
                     <div className="space-y-1">
                       <Label className="text-xs font-medium">Type</Label>
-                      <Select>
+                      <Select value={formData.accessoryType} onValueChange={(value) => handleInputChange("accessoryType", value)}>
                         <SelectTrigger className="h-7 text-xs">
-                          <SelectValue placeholder="Containers" />
+                          <SelectValue placeholder="Select type" />
                         </SelectTrigger>
                         <SelectContent className="bg-popover border z-50">
                           <SelectItem value="containers">Containers</SelectItem>
@@ -1730,9 +1730,9 @@ const FormVariationsDemo = () => {
                     </div>
                     <div className="space-y-1">
                       <Label className="text-xs font-medium">Accessory</Label>
-                      <Select>
+                      <Select value={formData.accessory} onValueChange={(value) => handleInputChange("accessory", value)}>
                         <SelectTrigger className="h-7 text-xs">
-                          <SelectValue placeholder="Bag" />
+                          <SelectValue placeholder="Select accessory" />
                         </SelectTrigger>
                         <SelectContent className="bg-popover border z-50">
                           <SelectItem value="bag">Bag</SelectItem>
@@ -1742,9 +1742,9 @@ const FormVariationsDemo = () => {
                     </div>
                     <div className="space-y-1">
                       <Label className="text-xs font-medium">Material</Label>
-                      <Select>
+                      <Select value={formData.accessoryMaterial} onValueChange={(value) => handleInputChange("accessoryMaterial", value)}>
                         <SelectTrigger className="h-7 text-xs">
-                          <SelectValue placeholder="Plastic" />
+                          <SelectValue placeholder="Select material" />
                         </SelectTrigger>
                         <SelectContent className="bg-popover border z-50">
                           <SelectItem value="plastic">Plastic</SelectItem>
@@ -1754,7 +1754,7 @@ const FormVariationsDemo = () => {
                     </div>
                     <div className="space-y-1">
                       <Label className="text-xs font-medium">Color</Label>
-                      <Select>
+                      <Select value={formData.accessoryColor} onValueChange={(value) => handleInputChange("accessoryColor", value)}>
                         <SelectTrigger className="h-7 text-xs">
                           <SelectValue placeholder="Select color" />
                         </SelectTrigger>
@@ -1771,17 +1771,63 @@ const FormVariationsDemo = () => {
                     </div>
                     <div className="space-y-1">
                       <Label className="text-xs font-medium">Qty</Label>
-                      <div className="flex items-center gap-2">
-                        <Input placeholder="2" className="h-7 text-xs" />
-                        <Button className="bg-yellow-500 hover:bg-yellow-600 text-white h-7 text-xs px-3">Add</Button>
-                      </div>
+                      <Input 
+                        placeholder="1" 
+                        className="h-7 text-xs" 
+                        value={formData.accessoryQty}
+                        onChange={(e) => handleInputChange("accessoryQty", e.target.value)}
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-xs font-medium invisible">Action</Label>
+                      <Button 
+                        className="bg-yellow-500 hover:bg-yellow-600 text-white h-7 text-xs px-3 w-full"
+                        onClick={handleAddAccessory}
+                      >
+                        Add
+                      </Button>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-1.5 pt-1">
+                  <div className="flex items-center gap-1.5">
                     <Checkbox id="includeInCreateNewGroup" className="h-3 w-3" />
                     <Label htmlFor="includeInCreateNewGroup" className="text-xs cursor-pointer">Include in Create New Group</Label>
                   </div>
+
+                  {/* Accessories Table */}
+                  {accessoriesList.length > 0 && (
+                    <div className="border rounded-lg overflow-hidden mt-3">
+                      <div className="bg-muted/50 grid grid-cols-6 p-2 text-xs font-medium">
+                        <div>Type</div>
+                        <div>Accessory</div>
+                        <div>Material</div>
+                        <div>Color</div>
+                        <div>Qty</div>
+                        <div>Actions</div>
+                      </div>
+                      <div className="divide-y">
+                        {accessoriesList.map((item) => (
+                          <div key={item.id} className="grid grid-cols-6 p-2 text-xs items-center">
+                            <div className="capitalize">{item.type}</div>
+                            <div className="capitalize">{item.accessory}</div>
+                            <div className="capitalize">{item.material || '-'}</div>
+                            <div className="capitalize">{item.color || '-'}</div>
+                            <div>{item.qty}</div>
+                            <div>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-6 w-6 p-0 text-destructive hover:text-destructive"
+                                onClick={() => handleRemoveAccessory(item.id)}
+                              >
+                                <Trash2 className="h-3 w-3" />
+                              </Button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             </TabsContent>
