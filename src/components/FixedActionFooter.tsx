@@ -18,6 +18,7 @@ interface FixedActionFooterProps {
   currentSection?: 'work-order-items' | 'estimate' | 'qf3' | 'external-files' | 'cert-files';
   userRole?: 'admin' | 'technician';
   onUserRoleChange?: (role: 'admin' | 'technician') => void;
+  footerRef?: React.RefObject<HTMLDivElement>;
 }
 
 export const FixedActionFooter = ({ 
@@ -28,7 +29,8 @@ export const FixedActionFooter = ({
   isLoading = false,
   currentSection = 'work-order-items',
   userRole = 'technician',
-  onUserRoleChange
+  onUserRoleChange,
+  footerRef
 }: FixedActionFooterProps) => {
   const [numTags, setNumTags] = useState("1");
   const [acctNum, setAcctNum] = useState("");
@@ -151,7 +153,7 @@ export const FixedActionFooter = ({
       <div className="h-20" />
       
       {/* Fixed Footer */}
-      <div className="fixed bottom-0 left-[256px] right-0 bg-background border-t border-border shadow-lg z-[100]">
+      <div ref={footerRef} className="fixed bottom-0 left-[256px] right-0 bg-background border-t border-border shadow-lg z-[100]">
         <div className="px-4 py-3">
           {/* Conditional Footer based on current section */}
           {currentSection === 'estimate' ? (
