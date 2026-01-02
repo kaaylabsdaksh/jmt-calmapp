@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -120,56 +121,15 @@ const getStatusColor = (status: string) => {
     case 'testing': return 'bg-yellow-100 text-yellow-800';
     case 'pending': return 'bg-orange-100 text-orange-800';
     case 'overdue': return 'bg-red-100 text-red-800';
-    case '[open items]': return 'bg-slate-100 text-slate-800';
-    case '[awaiting cdr]': return 'bg-orange-100 text-orange-800';
-    case '[assign/tech - repair - inlab]': return 'bg-blue-100 text-blue-800';
-    case '[assigned to tech - repair dept]': return 'bg-blue-100 text-blue-800';
-    case '[q/a hold - q/a disapproved]': return 'bg-red-100 text-red-800';
-    case '[q/a insp - q/a hold - q/a fail]': return 'bg-red-100 text-red-800';
-    case '[in lab - assigned to tech]': return 'bg-blue-100 text-blue-800';
-    case '[in lab - q/a disapprove]': return 'bg-red-100 text-red-800';
-    case '[estimate - a/r invoicing]': return 'bg-purple-100 text-purple-800';
-    case '[to factory - awaiting parts]': return 'bg-orange-100 text-orange-800';
-    case '[ar need by status]': return 'bg-yellow-100 text-yellow-800';
-    case 'assigned to tech': return 'bg-blue-100 text-blue-800';
-    case 'in transit': return 'bg-cyan-100 text-cyan-800';
-    case 'lab management': return 'bg-indigo-100 text-indigo-800';
-    case 'repair department': return 'bg-blue-100 text-blue-800';
-    case 'rotation': return 'bg-teal-100 text-teal-800';
-    case 'estimate': return 'bg-purple-100 text-purple-800';
-    case 'awaiting parts': return 'bg-orange-100 text-orange-800';
-    case 'awaiting pr approval': return 'bg-yellow-100 text-yellow-800';
-    case 'in metrology': return 'bg-violet-100 text-violet-800';
-    case 'to factory': return 'bg-amber-100 text-amber-800';
-    case 'to factory - repair by replacement': return 'bg-amber-100 text-amber-800';
-    case 'to factory - warranty': return 'bg-amber-100 text-amber-800';
-    case 'lab hold': return 'bg-yellow-100 text-yellow-800';
-    case 'q/a inspection': return 'bg-blue-100 text-blue-800';
-    case 'q/a inspection - fail correction': return 'bg-red-100 text-red-800';
-    case 'q/a hold': return 'bg-yellow-100 text-yellow-800';
-    case 'q/a disapproved': return 'bg-red-100 text-red-800';
-    case 'q/a fail log': return 'bg-red-100 text-red-800';
-    case 'a/r invoicing': return 'bg-green-100 text-green-800';
-    case 'a/r invoicing/hold': return 'bg-yellow-100 text-yellow-800';
-    case 'admin processing': return 'bg-slate-100 text-slate-800';
-    case 'back to customer': return 'bg-green-100 text-green-800';
-    case 'calibrated on shelf': return 'bg-emerald-100 text-emerald-800';
-    case 'cancelled': return 'bg-gray-100 text-gray-800';
-    case 'item not found on site': return 'bg-red-100 text-red-800';
-    case 'me review': return 'bg-indigo-100 text-indigo-800';
-    case 'not used': return 'bg-gray-100 text-gray-800';
-    case 'onsite': return 'bg-blue-100 text-blue-800';
-    case 'ready for departure': return 'bg-green-100 text-green-800';
-    case 'return to lab for processing': return 'bg-orange-100 text-orange-800';
-    case 'scheduled': return 'bg-blue-100 text-blue-800';
-    case 'surplus stock': return 'bg-teal-100 text-teal-800';
-    case 'waiting on customer': return 'bg-yellow-100 text-yellow-800';
+    case 'expedite': return 'bg-orange-100 text-orange-800';
+    case 'normal': return 'bg-gray-100 text-gray-800';
     default: return 'bg-gray-100 text-gray-800';
   }
 };
 
 export const WorkOrderItemsCards = ({ templateItems = [], showMockData = true }: WorkOrderItemsCardsProps) => {
   const navigate = useNavigate();
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
 
   // Combine template items and mock data
   const allItems = [
@@ -189,9 +149,30 @@ export const WorkOrderItemsCards = ({ templateItems = [], showMockData = true }:
     ...(showMockData ? mockData : [])
   ];
 
+  const handleSelectAll = (checked: boolean) => {
+    if (checked) {
+      setSelectedItems(allItems.map(item => item.id));
+    } else {
+      setSelectedItems([]);
+    }
+  };
+
+  const handleSelectItem = (itemId: string, checked: boolean) => {
+    if (checked) {
+      setSelectedItems(prev => [...prev, itemId]);
+    } else {
+      setSelectedItems(prev => prev.filter(id => id !== itemId));
+    }
+  };
+
+  const handleClearAll = () => {
+    setSelectedItems([]);
+  };
+
+  const isAllSelected = allItems.length > 0 && selectedItems.length === allItems.length;
+  const isSomeSelected = selectedItems.length > 0 && selectedItems.length < allItems.length;
+
   const handleViewDetails = (item: typeof allItems[0]) => {
-    // Map item data to the format expected by EditOrder with comprehensive field mapping
-    // Fill ALL fields based on reference screenshots
     const workOrderData = {
       id: "385737",
       srDoc: "SR Document",
@@ -246,21 +227,41 @@ export const WorkOrderItemsCards = ({ templateItems = [], showMockData = true }:
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-2">
-          <Checkbox />
-          <span className="text-sm text-muted-foreground">Select All</span>
+          <Checkbox 
+            checked={isAllSelected}
+            ref={(el) => {
+              if (el) {
+                (el as any).indeterminate = isSomeSelected;
+              }
+            }}
+            onCheckedChange={handleSelectAll}
+          />
+          <span className="text-sm text-muted-foreground">
+            Select All {selectedItems.length > 0 && `(${selectedItems.length} selected)`}
+          </span>
         </div>
-        <Button variant="link" className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto">
+        <Button 
+          variant="link" 
+          className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto"
+          onClick={handleClearAll}
+        >
           Clear All
         </Button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {allItems.map((item, index) => (
-          <Card key={item.id} className="hover:shadow-md transition-shadow">
+        {allItems.map((item) => (
+          <Card 
+            key={item.id} 
+            className={`hover:shadow-md transition-shadow ${selectedItems.includes(item.id) ? 'ring-2 ring-primary' : ''}`}
+          >
             <CardContent className="p-4">
               <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center gap-2">
-                  <Checkbox />
+                  <Checkbox 
+                    checked={selectedItems.includes(item.id)}
+                    onCheckedChange={(checked) => handleSelectItem(item.id, checked as boolean)}
+                  />
                   <span className="font-semibold text-foreground">
                     {item.reportNumber ? `Report #${item.reportNumber}` : `Item #${item.reportNumber}`}
                   </span>

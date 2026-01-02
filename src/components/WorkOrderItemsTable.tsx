@@ -113,6 +113,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
   const navigate = useNavigate();
   const [sortKey, setSortKey] = useState<SortKey | null>(null);
   const [sortDirection, setSortDirection] = useState<SortDirection>(null);
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
   
   // Use items prop if provided, otherwise fall back to mock data based on showMockData
   const displayData = items.length > 0 ? items : (showMockData ? mockData : []);
@@ -130,6 +131,25 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
       setSortDirection('asc');
     }
   };
+
+  const handleSelectAll = (checked: boolean) => {
+    if (checked) {
+      setSelectedItems(displayData.map(item => item.id));
+    } else {
+      setSelectedItems([]);
+    }
+  };
+
+  const handleSelectItem = (itemId: string, checked: boolean) => {
+    if (checked) {
+      setSelectedItems(prev => [...prev, itemId]);
+    } else {
+      setSelectedItems(prev => prev.filter(id => id !== itemId));
+    }
+  };
+
+  const isAllSelected = displayData.length > 0 && selectedItems.length === displayData.length;
+  const isSomeSelected = selectedItems.length > 0 && selectedItems.length < displayData.length;
 
   const sortedData = useMemo(() => {
     if (!sortKey || !sortDirection) return displayData;
@@ -178,12 +198,35 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
   
   return (
     <div className="border rounded-lg overflow-hidden">
+      {selectedItems.length > 0 && (
+        <div className="bg-muted/50 px-3 py-2 border-b flex items-center justify-between">
+          <span className="text-sm text-muted-foreground">
+            {selectedItems.length} item(s) selected
+          </span>
+          <Button 
+            variant="link" 
+            size="sm" 
+            className="text-blue-600 p-0 h-auto"
+            onClick={() => setSelectedItems([])}
+          >
+            Clear selection
+          </Button>
+        </div>
+      )}
       <table className="w-full text-sm">
         <thead className="bg-muted">
           <tr>
             <th className="text-left p-3 w-12">Actions</th>
             <th className="text-left p-3 w-12">
-              <Checkbox />
+              <Checkbox 
+                checked={isAllSelected}
+                ref={(el) => {
+                  if (el) {
+                    (el as any).indeterminate = isSomeSelected;
+                  }
+                }}
+                onCheckedChange={handleSelectAll}
+              />
             </th>
             <SortableHeader label="Item" sortKeyName="itemNumber" />
             <SortableHeader label="Manufacturer" sortKeyName="manufacturer" />
@@ -200,7 +243,10 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
         </thead>
         <tbody>
           {sortedData.map((item) => (
-            <tr key={item.id} className="border-t hover:bg-muted/50">
+            <tr 
+              key={item.id} 
+              className={`border-t hover:bg-muted/50 ${selectedItems.includes(item.id) ? 'bg-primary/10' : ''}`}
+            >
               <td className="p-3">
                 <Button 
                   variant="outline" 
@@ -212,7 +258,10 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
                 </Button>
               </td>
               <td className="p-3">
-                <Checkbox />
+                <Checkbox 
+                  checked={selectedItems.includes(item.id)}
+                  onCheckedChange={(checked) => handleSelectItem(item.id, checked as boolean)}
+                />
               </td>
               <td className="p-3">{accountNumber}-{workOrderNumber}-{item.itemNumber}</td>
               <td className="p-3">{item.manufacturer}</td>
