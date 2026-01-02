@@ -1124,10 +1124,10 @@ const FormVariationsDemo = () => {
 
   // Accessories handlers
   const handleAddAccessory = () => {
-    if (!formData.accessoryType || !formData.accessory || !formData.accessoryMaterial || !formData.accessoryQty) {
+    if (!formData.accessoryType || !formData.accessory || !formData.accessoryQty) {
       toast({
         title: "Missing required fields",
-        description: "Please fill in Type, Accessory, Material, and Quantity",
+        description: "Please fill in Type, Accessory, and Quantity",
         variant: "destructive",
       });
       return;
@@ -1724,7 +1724,7 @@ const FormVariationsDemo = () => {
                 <CardContent className="p-3 space-y-3">
                   <div className="grid grid-cols-1 md:grid-cols-6 gap-2 items-end">
                     <div className="space-y-1">
-                      <Label className="text-xs font-medium">Type</Label>
+                      <Label className="text-xs font-medium">Type <span className="text-destructive">*</span></Label>
                       <Select value={formData.accessoryType} onValueChange={(value) => handleInputChange("accessoryType", value)}>
                         <SelectTrigger className="h-7 text-xs">
                           <SelectValue placeholder="Select type" />
@@ -1736,7 +1736,7 @@ const FormVariationsDemo = () => {
                       </Select>
                     </div>
                     <div className="space-y-1">
-                      <Label className="text-xs font-medium">Accessory</Label>
+                      <Label className="text-xs font-medium">Accessory <span className="text-destructive">*</span></Label>
                       <Select value={formData.accessory} onValueChange={(value) => handleInputChange("accessory", value)}>
                         <SelectTrigger className="h-7 text-xs">
                           <SelectValue placeholder="Select accessory" />
@@ -1777,7 +1777,7 @@ const FormVariationsDemo = () => {
                       </Select>
                     </div>
                     <div className="space-y-1">
-                      <Label className="text-xs font-medium">Qty</Label>
+                      <Label className="text-xs font-medium">Qty <span className="text-destructive">*</span></Label>
                       <Input 
                         placeholder="1" 
                         className="h-7 text-xs" 
