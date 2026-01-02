@@ -6639,7 +6639,7 @@ const FormVariationsDemo = () => {
 
   // Render bento grid interface
   const renderBentoGridInterface = () => (
-    <div className="h-[calc(100vh-280px)] overflow-y-auto pr-2 pb-48">
+    <div className="h-[calc(100vh-280px)] overflow-y-auto pr-2 pb-[260px]">
       {/* Type and Report Number fields */}
       <div className="bg-card px-4 py-3 border rounded-lg mb-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -6932,7 +6932,7 @@ const FormVariationsDemo = () => {
         </div>
 
         <div className="h-[calc(100vh-320px)] overflow-auto" ref={scrollViewportRef}>
-          <div className="p-6 space-y-8">
+          <div className="p-6 space-y-8 pb-[260px]">
             {/* General Section */}
             <div 
               ref={(el) => (sectionRefs.current['general'] = el)}
@@ -7100,7 +7100,7 @@ const FormVariationsDemo = () => {
 
           {/* Right Content Area */}
           <div className="flex-1 overflow-auto h-[calc(100vh-320px)]" ref={scrollViewportRef}>
-            <div className="p-6 space-y-8 pb-48">
+            <div className="p-6 space-y-8 pb-[260px]">
               {/* General Section */}
               <div 
                 ref={(el) => (sectionRefs.current['general'] = el)}
