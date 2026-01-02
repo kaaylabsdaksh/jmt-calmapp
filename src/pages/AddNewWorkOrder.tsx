@@ -1739,13 +1739,13 @@ const AddNewWorkOrder = () => {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className="bg-background border shadow-lg z-50" align="end">
                           <DropdownMenuItem 
-                            onClick={() => setViewMode('cards')}
+                            onClick={() => navigate('/form-variations')}
                             className={`cursor-pointer ${viewMode === 'cards' || viewMode === 'table' ? 'bg-muted' : ''}`}
                           >
                             Default View
                           </DropdownMenuItem>
                           <DropdownMenuItem 
-                            onClick={() => setViewMode('receiving')}
+                            onClick={() => navigate('/form-variations')}
                             className={`cursor-pointer ${viewMode === 'receiving' ? 'bg-muted' : ''}`}
                           >
                             <Package className="w-4 h-4 mr-2" />
