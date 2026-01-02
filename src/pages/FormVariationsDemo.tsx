@@ -1715,7 +1715,7 @@ const FormVariationsDemo = () => {
             <TabsContent value="accessories">
               <Card className="border-0 shadow-sm">
                 <CardContent className="p-3 space-y-2">
-                  <div className="grid grid-cols-1 md:grid-cols-4 gap-2 items-end">
+                  <div className="grid grid-cols-1 md:grid-cols-5 gap-2 items-end">
                     <div className="space-y-1">
                       <Label className="text-xs font-medium">Type</Label>
                       <Select>
@@ -1749,6 +1749,23 @@ const FormVariationsDemo = () => {
                         <SelectContent className="bg-popover border z-50">
                           <SelectItem value="plastic">Plastic</SelectItem>
                           <SelectItem value="metal">Metal</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-xs font-medium">Color</Label>
+                      <Select>
+                        <SelectTrigger className="h-7 text-xs">
+                          <SelectValue placeholder="Select color" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-popover border z-50">
+                          <SelectItem value="black">Black</SelectItem>
+                          <SelectItem value="blue">Blue</SelectItem>
+                          <SelectItem value="red">Red</SelectItem>
+                          <SelectItem value="green">Green</SelectItem>
+                          <SelectItem value="yellow">Yellow</SelectItem>
+                          <SelectItem value="white">White</SelectItem>
+                          <SelectItem value="gray">Gray</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
