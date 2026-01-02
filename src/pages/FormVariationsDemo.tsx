@@ -1483,7 +1483,7 @@ const FormVariationsDemo = () => {
                       <div>
                         <h4 className="text-xs font-semibold mb-2">Departure Information</h4>
                         <div className="space-y-2">
-                          <div className="grid grid-cols-2 gap-2">
+                          <div className="grid grid-cols-3 gap-2">
                             <div className="space-y-1">
                               <Label className="text-xs font-medium">Date</Label>
                               <Input 
@@ -1507,6 +1507,14 @@ const FormVariationsDemo = () => {
                                   <SelectItem value="scrapped-at-jm">Scrapped at JM</SelectItem>
                                 </SelectContent>
                               </Select>
+                            </div>
+                            <div className="space-y-1">
+                              <Label className="text-xs font-medium">Inv #</Label>
+                              <Input 
+                                value={formData.invNumber || ""} 
+                                readOnly 
+                                className="h-7 text-xs bg-muted" 
+                              />
                             </div>
                           </div>
 
