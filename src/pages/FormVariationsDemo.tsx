@@ -1288,7 +1288,7 @@ const FormVariationsDemo = () => {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+                  <div className="grid grid-cols-2 md:grid-cols-6 gap-2">
                     <div className="space-y-1">
                       <Label htmlFor="assignedTo" className="text-xs font-medium">Assigned To</Label>
                       <Select value={formData.assignedTo} onValueChange={(value) => handleInputChange("assignedTo", value)}>
