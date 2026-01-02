@@ -444,7 +444,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
       </div>
       
       <div className="flex-1 overflow-y-auto">
-        {items.length === 0 ? (
+        {items.length === 0 && newItems.length === 0 ? (
           <div className="p-8 text-center text-muted-foreground">
             No items received yet. Click "Receive Item" to add your first received work order item.
           </div>
