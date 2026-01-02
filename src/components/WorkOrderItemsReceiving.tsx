@@ -1146,7 +1146,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                       ) : (
                         <Link 
                           to="/form-variations-demo"
-                          className="truncate text-primary hover:underline font-medium" 
+                          className="truncate text-foreground hover:underline font-medium" 
                           title={item.itemNumber}
                         >
                           {item.itemNumber || "—"}
@@ -1649,7 +1649,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                        />
                      </td>
                     <td className="p-2 text-xs font-medium">
-                      <Link to="/form-variations-demo" className="text-primary hover:underline">
+                      <Link to="/form-variations-demo" className="text-foreground hover:underline">
                         {item.itemNumber || "—"}
                       </Link>
                     </td>
@@ -1698,7 +1698,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                       checked={selectedItems.includes(item.id)}
                       onCheckedChange={(checked) => handleItemSelect(item.id, checked as boolean)}
                     />
-                    <Link to="/form-variations-demo" className="font-medium text-sm text-primary hover:underline">
+                    <Link to="/form-variations-demo" className="font-medium text-sm text-foreground hover:underline">
                       #{item.itemNumber || "—"}
                     </Link>
                   </div>
