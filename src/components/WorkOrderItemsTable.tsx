@@ -140,7 +140,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber, showMockData = true, acc
                 <Button 
                   variant="outline" 
                   size="sm"
-                  onClick={() => navigate("/edit-order")}
+                  onClick={() => navigate("/form-variations")}
                   className="h-8"
                 >
                   <Edit className="w-4 h-4" />
