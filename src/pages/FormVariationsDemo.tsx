@@ -1245,12 +1245,12 @@ const FormVariationsDemo = () => {
 
           {/* Sub-tabs for ESL General Section */}
           <Tabs defaultValue="general-info" className="w-full">
-            <TabsList className="grid w-full grid-cols-5 mb-3 h-8">
-              <TabsTrigger value="general-info" className="text-xs">General Information</TabsTrigger>
-              <TabsTrigger value="arrival-info" className="text-xs">Arrival Information</TabsTrigger>
-              <TabsTrigger value="misc-info" className="text-xs">Misc. Information</TabsTrigger>
-              <TabsTrigger value="accessories" className="text-xs">Accessories</TabsTrigger>
-              <TabsTrigger value="comments" className="text-xs">Comments</TabsTrigger>
+            <TabsList className="flex w-full mb-3 h-8">
+              <TabsTrigger value="general-info" className="text-xs flex-1">General Information</TabsTrigger>
+              <TabsTrigger value="arrival-info" className="text-xs flex-1">Arrival Information</TabsTrigger>
+              <TabsTrigger value="misc-info" className="text-xs flex-1">Misc. Information</TabsTrigger>
+              <TabsTrigger value="accessories" className="text-xs flex-1">Accessories</TabsTrigger>
+              <TabsTrigger value="comments" className="text-xs flex-1">Comments</TabsTrigger>
             </TabsList>
 
             {/* General Information Tab */}
