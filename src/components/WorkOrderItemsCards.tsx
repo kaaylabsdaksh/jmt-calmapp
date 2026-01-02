@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
+import { Edit } from "lucide-react";
 
 interface WorkOrderItem {
   id: string;
@@ -322,13 +323,22 @@ export const WorkOrderItemsCards = ({ templateItems = [], showMockData = true }:
                 )}
               </div>
 
-              <div className="mt-4 pt-3 border-t flex justify-end">
+              <div className="mt-4 pt-3 border-t flex justify-end gap-2">
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  className="flex items-center gap-1"
+                  onClick={() => navigate("/form-variations")}
+                >
+                  <Edit className="w-3 h-3" />
+                  Edit
+                </Button>
                 <Button 
                   variant="link" 
                   className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto"
-                  onClick={() => index === 0 ? null : handleViewDetails(item)}
+                  onClick={() => handleViewDetails(item)}
                 >
-                  {index === 0 ? 'Clear' : 'View Details'}
+                  View Details
                 </Button>
               </div>
             </CardContent>
