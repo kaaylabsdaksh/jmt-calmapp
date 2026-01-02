@@ -283,7 +283,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
               <th className="text-left p-3 font-medium">Open PO/CO</th>
             </tr>
             <CollapsibleContent asChild>
-              <tr className="bg-accent/30 border-t">
+              <tr className="bg-muted border-t">
                 <td className="p-2"></td>
                 <td className="p-2"></td>
                 <td className="p-2">
