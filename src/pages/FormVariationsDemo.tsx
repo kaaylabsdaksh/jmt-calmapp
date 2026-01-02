@@ -8018,29 +8018,6 @@ const FormVariationsDemo = () => {
         {/* Content based on active section */}
         {activeSection === 'work-order-items' && (
           <>
-            {/* ESL Action Buttons - Above Content */}
-            {isESLType && (
-              <div className="flex items-center gap-2 mb-4">
-                <Button 
-                  variant="outline" 
-                  className="bg-primary hover:bg-primary/90 text-primary-foreground border-primary font-medium h-8 px-3 text-sm"
-                >
-                  Rotation
-                </Button>
-                <Button 
-                  variant="outline" 
-                  className="bg-primary hover:bg-primary/90 text-primary-foreground border-primary font-medium h-8 px-3 text-sm"
-                >
-                  Schedule
-                </Button>
-                <Button 
-                  variant="outline" 
-                  className="bg-primary hover:bg-primary/90 text-primary-foreground border-primary font-medium h-8 px-3 text-sm"
-                >
-                  Waiting on Customer
-                </Button>
-              </div>
-            )}
             {/* Interface based on variant */}
             {layoutVariant === 'default' && renderTabbedInterface()}
             {layoutVariant === 'minimal' && renderMinimalScrollInterface()}
@@ -9211,33 +9188,58 @@ const FormVariationsDemo = () => {
       {/* Fixed Action Footer - Custom for ESL types */}
       {isESLType && activeSection === 'work-order-items' ? (
         <div className="fixed bottom-0 left-[256px] right-0 bg-background border-t border-border shadow-lg z-10 py-3 px-6">
-          <div className="flex items-center justify-end gap-2 max-w-[1400px] mx-auto">
-            <Button 
-              variant="outline" 
-              onClick={handleCancel}
-              className="bg-primary hover:bg-primary/90 text-primary-foreground border-primary font-medium h-9 px-4"
-            >
-              Cancel WO
-            </Button>
-            <Button 
-              variant="outline" 
-              className="bg-primary hover:bg-primary/90 text-primary-foreground border-primary font-medium h-9 px-4"
-            >
-              Print WO
-            </Button>
-            <Button 
-              variant="outline" 
-              onClick={handleCancel}
-              className="bg-primary hover:bg-primary/90 text-primary-foreground border-primary font-medium h-9 px-4"
-            >
-              Back
-            </Button>
-            <Button 
-              onClick={handleSave}
-              className="bg-primary hover:bg-primary/90 text-primary-foreground border-primary font-medium h-9 px-4"
-            >
-              Save
-            </Button>
+          <div className="flex items-center justify-between gap-4 max-w-[1400px] mx-auto">
+            {/* Left side buttons */}
+            <div className="flex items-center gap-2">
+              <Button 
+                variant="outline" 
+                className="bg-primary hover:bg-primary/90 text-primary-foreground border-primary font-medium h-9 px-4"
+              >
+                Rotation
+              </Button>
+              <Button 
+                variant="outline" 
+                className="bg-primary hover:bg-primary/90 text-primary-foreground border-primary font-medium h-9 px-4"
+              >
+                Schedule
+              </Button>
+              <Button 
+                variant="outline" 
+                className="bg-primary hover:bg-primary/90 text-primary-foreground border-primary font-medium h-9 px-4"
+              >
+                Waiting on Customer
+              </Button>
+            </div>
+
+            {/* Right side buttons */}
+            <div className="flex items-center gap-2">
+              <Button 
+                variant="outline" 
+                onClick={handleCancel}
+                className="bg-primary hover:bg-primary/90 text-primary-foreground border-primary font-medium h-9 px-4"
+              >
+                Cancel WO
+              </Button>
+              <Button 
+                variant="outline" 
+                className="bg-primary hover:bg-primary/90 text-primary-foreground border-primary font-medium h-9 px-4"
+              >
+                Print WO
+              </Button>
+              <Button 
+                variant="outline" 
+                onClick={handleCancel}
+                className="bg-primary hover:bg-primary/90 text-primary-foreground border-primary font-medium h-9 px-4"
+              >
+                Back
+              </Button>
+              <Button 
+                onClick={handleSave}
+                className="bg-primary hover:bg-primary/90 text-primary-foreground border-primary font-medium h-9 px-4"
+              >
+                Save
+              </Button>
+            </div>
           </div>
         </div>
       ) : (
