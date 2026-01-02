@@ -1145,8 +1145,8 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                         />
                       ) : (
                         <Link 
-                          to={`/item/${item.id}`}
-                          className="truncate text-black hover:underline font-medium" 
+                          to="/form-variations-demo"
+                          className="truncate text-primary hover:underline font-medium" 
                           title={item.itemNumber}
                         >
                           {item.itemNumber || "—"}
@@ -1648,7 +1648,11 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                          onCheckedChange={(checked) => handleItemSelect(item.id, checked as boolean)}
                        />
                      </td>
-                    <td className="p-2 text-xs font-medium">{item.itemNumber || "—"}</td>
+                    <td className="p-2 text-xs font-medium">
+                      <Link to="/form-variations-demo" className="text-primary hover:underline">
+                        {item.itemNumber || "—"}
+                      </Link>
+                    </td>
                     <td className="p-2 text-xs uppercase">{item.actionCode || "—"}</td>
                     <td className="p-2 text-xs capitalize">{item.priority || "—"}</td>
                     <td className="p-2 text-xs">{item.manufacturer || "—"}</td>
@@ -1694,7 +1698,9 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                       checked={selectedItems.includes(item.id)}
                       onCheckedChange={(checked) => handleItemSelect(item.id, checked as boolean)}
                     />
-                    <div className="font-medium text-sm">#{item.itemNumber || "—"}</div>
+                    <Link to="/form-variations-demo" className="font-medium text-sm text-primary hover:underline">
+                      #{item.itemNumber || "—"}
+                    </Link>
                   </div>
                   <div className="flex items-center gap-1">
                     <Button 
