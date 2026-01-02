@@ -323,7 +323,7 @@ export const WorkOrderItemsCards = ({ templateItems = [], showMockData = true }:
                 )}
               </div>
 
-              <div className="mt-4 pt-3 border-t flex justify-end gap-2">
+              <div className="mt-4 pt-3 border-t flex justify-between items-center">
                 <Button 
                   variant="outline" 
                   size="sm"
