@@ -1257,7 +1257,7 @@ const FormVariationsDemo = () => {
             <TabsContent value="general-info">
               <Card className="border-0 shadow-sm">
                 <CardContent className="p-3 space-y-2">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                     <div className="space-y-1">
                       <Label className="text-xs font-medium">Report #</Label>
                       <Input 
@@ -1305,9 +1305,7 @@ const FormVariationsDemo = () => {
                         </SelectContent>
                       </Select>
                     </div>
-                  </div>
 
-                  <div className="grid grid-cols-2 md:grid-cols-6 gap-2">
                     <div className="space-y-1">
                       <Label htmlFor="assignedTo" className="text-xs font-medium">Assigned To</Label>
                       <Select value={formData.assignedTo} onValueChange={(value) => handleInputChange("assignedTo", value)}>
@@ -1331,6 +1329,9 @@ const FormVariationsDemo = () => {
                         className="h-7 text-xs"
                       />
                     </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
 
                     <div className="space-y-1">
                       <Label htmlFor="priority" className="text-xs font-medium">Priority *</Label>
