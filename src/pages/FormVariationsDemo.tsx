@@ -1124,25 +1124,32 @@ const FormVariationsDemo = () => {
 
   // Accessories handlers
   const handleAddAccessory = () => {
-    if (formData.accessoryType && formData.accessory && formData.accessoryQty) {
-      const newAccessory = {
-        id: Date.now().toString(),
-        type: formData.accessoryType,
-        accessory: formData.accessory,
-        material: formData.accessoryMaterial,
-        color: formData.accessoryColor,
-        qty: formData.accessoryQty,
-      };
-      
-      setAccessoriesList(prev => [...prev, newAccessory]);
-      
-      // Clear form fields after adding
-      handleInputChange("accessoryType", "");
-      handleInputChange("accessory", "");
-      handleInputChange("accessoryMaterial", "");
-      handleInputChange("accessoryColor", "");
-      handleInputChange("accessoryQty", "");
+    if (!formData.accessoryType || !formData.accessory || !formData.accessoryMaterial || !formData.accessoryQty) {
+      toast({
+        title: "Missing required fields",
+        description: "Please fill in Type, Accessory, Material, and Quantity",
+        variant: "destructive",
+      });
+      return;
     }
+    
+    const newAccessory = {
+      id: Date.now().toString(),
+      type: formData.accessoryType,
+      accessory: formData.accessory,
+      material: formData.accessoryMaterial,
+      color: formData.accessoryColor,
+      qty: formData.accessoryQty,
+    };
+    
+    setAccessoriesList(prev => [...prev, newAccessory]);
+    
+    // Clear form fields after adding
+    handleInputChange("accessoryType", "");
+    handleInputChange("accessory", "");
+    handleInputChange("accessoryMaterial", "");
+    handleInputChange("accessoryColor", "");
+    handleInputChange("accessoryQty", "");
   };
 
   const handleRemoveAccessory = (id: string) => {
