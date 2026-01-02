@@ -3073,7 +3073,7 @@ const AddNewWorkOrder = () => {
                     ) : viewMode === 'table' ? (
                       <WorkOrderItemsTable 
                         selectedPoNumber={selectedCustPO} 
-                        showMockData={false} 
+                        showMockData={true} 
                         accountNumber={workOrderData.accountNumber}
                         workOrderNumber={workOrderData.workOrderNumber}
                         items={receivingItems}
