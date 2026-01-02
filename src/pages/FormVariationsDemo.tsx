@@ -1269,22 +1269,41 @@ const FormVariationsDemo = () => {
 
                     <div className="space-y-1">
                       <Label htmlFor="itemStatus" className="text-xs font-medium">Item Status</Label>
-                      <div className="flex items-center gap-2">
-                        <Select value={formData.itemStatus} onValueChange={handleStatusChangeAttempt}>
-                          <SelectTrigger className="h-7 text-xs">
-                            <SelectValue placeholder="Select status" />
-                          </SelectTrigger>
+                      <Select value={formData.itemStatus} onValueChange={handleStatusChangeAttempt}>
+                        <SelectTrigger className="h-7 text-xs">
+                          <SelectValue placeholder="Select status" />
+                        </SelectTrigger>
                         <SelectContent className="bg-popover border z-50 max-h-48 overflow-y-auto">
                           <SelectItem value="in-lab">In Lab</SelectItem>
                           <SelectItem value="lab-management">Lab Management</SelectItem>
                           <SelectItem value="assigned-to-tech">Assigned to Tech</SelectItem>
                           <SelectItem value="in-transit">In Transit</SelectItem>
+                          <SelectItem value="in-metrology">In Metrology</SelectItem>
+                          <SelectItem value="repair-department">Repair Department</SelectItem>
+                          <SelectItem value="rotation">Rotation</SelectItem>
+                          <SelectItem value="estimate">Estimate</SelectItem>
+                          <SelectItem value="awaiting-parts">Awaiting Parts</SelectItem>
+                          <SelectItem value="awaiting-pr-approval">Awaiting PR Approval</SelectItem>
+                          <SelectItem value="to-factory">To Factory</SelectItem>
+                          <SelectItem value="to-factory-warranty">To Factory - Warranty</SelectItem>
+                          <SelectItem value="to-factory-repair-replacement">To Factory - Repair by Replacement</SelectItem>
+                          <SelectItem value="lab-hold">Lab Hold</SelectItem>
+                          <SelectItem value="qa-inspection">Q/A Inspection</SelectItem>
+                          <SelectItem value="qa-inspection-fail-correction">Q/A Inspection - Fail Correction</SelectItem>
+                          <SelectItem value="qa-fail-log">Q/A Fail Log</SelectItem>
+                          <SelectItem value="qa-hold">Q/A Hold</SelectItem>
+                          <SelectItem value="qa-disapproved">Q/A Disapproved</SelectItem>
+                          <SelectItem value="onsite">Onsite</SelectItem>
+                          <SelectItem value="admin-processing">Admin Processing</SelectItem>
+                          <SelectItem value="ar-invoicing-hold">A/R Invoicing/Hold</SelectItem>
+                          <SelectItem value="me-review">ME Review</SelectItem>
+                          <SelectItem value="ar-invoicing">A/R Invoicing</SelectItem>
+                          <SelectItem value="waiting-on-customer">Waiting on Customer</SelectItem>
+                          <SelectItem value="ready-for-departure">Ready for Departure</SelectItem>
+                          <SelectItem value="back-to-customer">Back to Customer</SelectItem>
+                          <SelectItem value="surplus-stock">Surplus Stock</SelectItem>
                         </SelectContent>
                       </Select>
-                      <Button variant="outline" size="sm" className="shrink-0 h-7 text-xs bg-yellow-500 hover:bg-yellow-600 text-white">
-                        change
-                      </Button>
-                    </div>
                     </div>
                   </div>
 
