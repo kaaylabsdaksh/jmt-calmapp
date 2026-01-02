@@ -6276,7 +6276,7 @@ const FormVariationsDemo = () => {
 
   // Render accordion-based tabs interface (new version with tabs as accordions)
   const renderAccordionTabsInterface = () => (
-    <div className="space-y-4">
+    <div className="space-y-4" style={{ paddingBottom: `${footerHeight}px` }}>
       {/* Sticky section containing Type/Report Number */}
       <div className="sticky top-[57px] z-30 bg-background shadow-sm">
         {/* Type and Report Number fields */}
