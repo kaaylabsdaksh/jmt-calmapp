@@ -288,7 +288,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
                 <td className="p-2"></td>
                 <td className="p-2">
                   <Input
-                    placeholder="Filter..."
+                    placeholder="Search"
                     value={columnFilters.itemNumber}
                     onChange={(e) => handleFilterChange('itemNumber', e.target.value)}
                     className="h-7 text-xs"
@@ -296,7 +296,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
                 </td>
                 <td className="p-2">
                   <Input
-                    placeholder="Filter..."
+                    placeholder="Search"
                     value={columnFilters.manufacturer}
                     onChange={(e) => handleFilterChange('manufacturer', e.target.value)}
                     className="h-7 text-xs"
@@ -304,7 +304,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
                 </td>
                 <td className="p-2">
                   <Input
-                    placeholder="Filter..."
+                    placeholder="Search"
                     value={columnFilters.model}
                     onChange={(e) => handleFilterChange('model', e.target.value)}
                     className="h-7 text-xs"
@@ -312,7 +312,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
                 </td>
                 <td className="p-2">
                   <Input
-                    placeholder="Filter..."
+                    placeholder="Search"
                     value={columnFilters.serialNumber}
                     onChange={(e) => handleFilterChange('serialNumber', e.target.value)}
                     className="h-7 text-xs"
@@ -320,7 +320,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
                 </td>
                 <td className="p-2">
                   <Input
-                    placeholder="Filter..."
+                    placeholder="Search"
                     value={columnFilters.created}
                     onChange={(e) => handleFilterChange('created', e.target.value)}
                     className="h-7 text-xs"
@@ -328,7 +328,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
                 </td>
                 <td className="p-2">
                   <Input
-                    placeholder="Filter..."
+                    placeholder="Search"
                     value={columnFilters.departure}
                     onChange={(e) => handleFilterChange('departure', e.target.value)}
                     className="h-7 text-xs"
@@ -336,7 +336,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
                 </td>
                 <td className="p-2">
                   <Input
-                    placeholder="Filter..."
+                    placeholder="Search"
                     value={columnFilters.itemStatus}
                     onChange={(e) => handleFilterChange('itemStatus', e.target.value)}
                     className="h-7 text-xs"
@@ -344,7 +344,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
                 </td>
                 <td className="p-2">
                   <Input
-                    placeholder="Filter..."
+                    placeholder="Search"
                     value={columnFilters.itemType}
                     onChange={(e) => handleFilterChange('itemType', e.target.value)}
                     className="h-7 text-xs"
@@ -352,7 +352,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
                 </td>
                 <td className="p-2">
                   <Input
-                    placeholder="Filter..."
+                    placeholder="Search"
                     value={columnFilters.deliverByDate}
                     onChange={(e) => handleFilterChange('deliverByDate', e.target.value)}
                     className="h-7 text-xs"
@@ -360,7 +360,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
                 </td>
                 <td className="p-2">
                   <Input
-                    placeholder="Filter..."
+                    placeholder="Search"
                     value={columnFilters.poNumber}
                     onChange={(e) => handleFilterChange('poNumber', e.target.value)}
                     className="h-7 text-xs"
