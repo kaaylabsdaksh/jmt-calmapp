@@ -65,27 +65,49 @@ const models = [
   { value: "multi-cal-400", label: "MULTI-CAL-400" },
 ];
 
-const createEmptyItem = (): WorkOrderReceivingItem => ({
-  id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
-  itemNumber: "",
-  calFreq: "",
-  actionCode: "",
-  priority: "",
-  manufacturer: "",
-  model: "",
-  description: "",
-  mfgSerial: "",
-  custId: "",
-  custSN: "",
-  assetNumber: "",
-  iso17025: "",
-  estimate: "",
-  newEquip: "",
-  needByDate: "",
-  ccCost: "",
-  tf: "",
-  capableLocations: "",
-});
+const dummyDescriptions = [
+  "Digital Multimeter with Auto-Ranging",
+  "Oscilloscope 4-Channel 200MHz",
+  "Power Supply Unit 30V/5A",
+  "Signal Generator 10MHz",
+  "Frequency Counter High Precision",
+  "Calibration Weight Set Class F1",
+  "Temperature Probe Type K",
+  "Pressure Gauge 0-100 PSI",
+];
+
+const createEmptyItem = (): WorkOrderReceivingItem => {
+  const randomIndex = Math.floor(Math.random() * manufacturers.length);
+  const randomModelIndex = Math.floor(Math.random() * models.length);
+  const randomDescIndex = Math.floor(Math.random() * dummyDescriptions.length);
+  const randomSerial = `SN-${Math.random().toString(36).substr(2, 8).toUpperCase()}`;
+  const randomAsset = `AST-${Math.floor(Math.random() * 100000)}`;
+  const priorities = ["Normal", "Rush", "Critical"];
+  const calFreqs = ["12 Months", "6 Months", "24 Months", "3 Months"];
+  const actionCodes = ["CAL", "REP", "CERT", "INSP"];
+  
+  return {
+    id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
+    itemNumber: `ITM-${Math.floor(Math.random() * 10000)}`,
+    calFreq: calFreqs[Math.floor(Math.random() * calFreqs.length)],
+    actionCode: actionCodes[Math.floor(Math.random() * actionCodes.length)],
+    priority: priorities[Math.floor(Math.random() * priorities.length)],
+    manufacturer: manufacturers[randomIndex].label,
+    model: models[randomModelIndex].label,
+    description: dummyDescriptions[randomDescIndex],
+    mfgSerial: randomSerial,
+    custId: `CUST-${Math.floor(Math.random() * 1000)}`,
+    custSN: `CSN-${Math.random().toString(36).substr(2, 6).toUpperCase()}`,
+    assetNumber: randomAsset,
+    iso17025: Math.random() > 0.5 ? "Yes" : "No",
+    estimate: Math.random() > 0.7 ? "Yes" : "No",
+    newEquip: Math.random() > 0.8 ? "Yes" : "No",
+    needByDate: new Date(Date.now() + Math.floor(Math.random() * 30) * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+    ccCost: `$${(Math.random() * 500 + 50).toFixed(2)}`,
+    tf: Math.random() > 0.5 ? "T" : "F",
+    capableLocations: "Baton Rouge, Houston",
+  };
+};
 
 // Helper function to truncate description to 2-3 words
 const truncateDescription = (description: string): string => {
