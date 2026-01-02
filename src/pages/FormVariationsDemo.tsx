@@ -1472,45 +1472,50 @@ const FormVariationsDemo = () => {
                     </div>
                   </div>
 
-                  {/* Departure Information */}
+                  {/* Departure Information & Delivery Status - Side by Side */}
                   <div className="pt-2 border-t border-border">
-                    <h4 className="text-xs font-semibold mb-2">Departure Information</h4>
-                    <div className="space-y-2">
-                      <div className="space-y-1">
-                        <Label className="text-xs font-medium">Type</Label>
-                        <Select value={formData.departureType} onValueChange={(value) => handleInputChange("departureType", value)}>
-                          <SelectTrigger className="h-7 text-xs">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent className="bg-popover border z-50">
-                            <SelectItem value="pickup">Pickup</SelectItem>
-                            <SelectItem value="delivery">Delivery</SelectItem>
-                          </SelectContent>
-                        </Select>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {/* Departure Information */}
+                      <div>
+                        <h4 className="text-xs font-semibold mb-2">Departure Information</h4>
+                        <div className="space-y-2">
+                          <div className="space-y-1">
+                            <Label className="text-xs font-medium">Type</Label>
+                            <Select value={formData.departureType} onValueChange={(value) => handleInputChange("departureType", value)}>
+                              <SelectTrigger className="h-7 text-xs">
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent className="bg-popover border z-50">
+                                <SelectItem value="pickup">Pickup</SelectItem>
+                                <SelectItem value="delivery">Delivery</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+
+                          <div className="grid grid-cols-2 gap-2">
+                            <div className="space-y-1">
+                              <Label className="text-xs font-medium">Inv #</Label>
+                              <Input value={formData.invNumber} onChange={(e) => handleInputChange("invNumber", e.target.value)} className="h-7 text-xs" />
+                            </div>
+                            <div className="space-y-1">
+                              <Label className="text-xs font-medium">DT #</Label>
+                              <Input value={formData.dtNumber} onChange={(e) => handleInputChange("dtNumber", e.target.value)} className="h-7 text-xs" />
+                            </div>
+                          </div>
+                        </div>
                       </div>
 
-                      <div className="grid grid-cols-2 gap-2">
-                        <div className="space-y-1">
-                          <Label className="text-xs font-medium">Inv #</Label>
-                          <Input value={formData.invNumber} onChange={(e) => handleInputChange("invNumber", e.target.value)} className="h-7 text-xs" />
-                        </div>
-                        <div className="space-y-1">
-                          <Label className="text-xs font-medium">DT #</Label>
-                          <Input value={formData.dtNumber} onChange={(e) => handleInputChange("dtNumber", e.target.value)} className="h-7 text-xs" />
-                        </div>
+                      {/* Delivery Status */}
+                      <div>
+                        <h4 className="text-xs font-semibold mb-2">Delivery Status</h4>
+                        <Textarea
+                          value={formData.deliveryStatus}
+                          onChange={(e) => handleInputChange("deliveryStatus", e.target.value)}
+                          placeholder="Enter delivery status..."
+                          className="min-h-[90px] text-xs"
+                        />
                       </div>
                     </div>
-                  </div>
-
-                  {/* Delivery Status */}
-                  <div className="pt-2 border-t border-border">
-                    <h4 className="text-xs font-semibold mb-2">Delivery Status</h4>
-                    <Textarea
-                      value={formData.deliveryStatus}
-                      onChange={(e) => handleInputChange("deliveryStatus", e.target.value)}
-                      placeholder="Enter delivery status..."
-                      className="min-h-[50px] text-xs"
-                    />
                   </div>
 
                   {/* Other Information */}
