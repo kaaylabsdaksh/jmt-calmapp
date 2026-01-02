@@ -2890,314 +2890,240 @@ const FormVariationsDemo = () => {
 
   // ESL-specific sections
   const renderDetailsSection = () => (
-    <div className="space-y-6">
-      <Card className="border-0 shadow-md w-full">
-        <CardContent className="p-4 sm:p-6 space-y-4">
-          <div className="flex items-center gap-3 pb-4 border-b border-border">
-            <div className="p-2 bg-primary/10 rounded-lg">
-              <FileText className="h-5 w-5 text-primary" />
-            </div>
-            <h3 className="text-lg font-semibold">Details</h3>
-          </div>
+    <div className="space-y-3">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+        <div className="space-y-1">
+          <Label htmlFor="arrivalDate" className="text-xs">Date</Label>
+          <Input
+            id="arrivalDate"
+            type="date"
+            value={formData.arrivalDate}
+            onChange={(e) => handleInputChange("arrivalDate", e.target.value)}
+            className="h-7 text-xs"
+          />
+        </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="arrivalDate" className="text-sm font-medium">Date</Label>
-              <Input
-                id="arrivalDate"
-                type="date"
-                value={formData.arrivalDate}
-                onChange={(e) => handleInputChange("arrivalDate", e.target.value)}
-                className="h-11"
-              />
-            </div>
+        <div className="space-y-1">
+          <Label htmlFor="arrivalType" className="text-xs">Type</Label>
+          <Select value={formData.arrivalType} onValueChange={(value) => handleInputChange("arrivalType", value)}>
+            <SelectTrigger className="h-7 text-xs">
+              <SelectValue placeholder="Select type" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="jm-driver-pickup">JM Driver Pickup</SelectItem>
+              <SelectItem value="customer-dropoff">Customer Drop Off</SelectItem>
+              <SelectItem value="shipped">Shipped</SelectItem>
+              <SelectItem value="onsite">OnSite</SelectItem>
+              <SelectItem value="purchasing-dept">Purchasing Dept</SelectItem>
+              <SelectItem value="lab-standard">Lab Standard</SelectItem>
+              <SelectItem value="surplus">Surplus</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="arrivalType" className="text-sm font-medium">Type</Label>
-              <Select value={formData.arrivalType} onValueChange={(value) => handleInputChange("arrivalType", value)}>
-                <SelectTrigger className="h-11">
-                  <SelectValue placeholder="Select type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="jm-driver-pickup">JM Driver Pickup</SelectItem>
-                  <SelectItem value="customer-dropoff">Customer Drop Off</SelectItem>
-                  <SelectItem value="shipped">Shipped</SelectItem>
-                  <SelectItem value="onsite">OnSite</SelectItem>
-                  <SelectItem value="purchasing-dept">Purchasing Dept</SelectItem>
-                  <SelectItem value="lab-standard">Lab Standard</SelectItem>
-                  <SelectItem value="surplus">Surplus</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+        <div className="space-y-1">
+          <Label htmlFor="invNumber" className="text-xs">Inv #</Label>
+          <Input
+            id="invNumber"
+            value={formData.invNumber}
+            onChange={(e) => handleInputChange("invNumber", e.target.value)}
+            placeholder="Inv #"
+            className="h-7 text-xs"
+          />
+        </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="invNumber" className="text-sm font-medium">Inv #</Label>
-              <Input
-                id="invNumber"
-                value={formData.invNumber}
-                onChange={(e) => handleInputChange("invNumber", e.target.value)}
-                placeholder="Inv #"
-                className="h-11"
-              />
-            </div>
+        <div className="space-y-1">
+          <Label htmlFor="dtNumber" className="text-xs">DT #</Label>
+          <Input
+            id="dtNumber"
+            value={formData.dtNumber}
+            onChange={(e) => handleInputChange("dtNumber", e.target.value)}
+            placeholder="DT #"
+            className="h-7 text-xs"
+          />
+        </div>
+      </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="dtNumber" className="text-sm font-medium">DT #</Label>
-              <Input
-                id="dtNumber"
-                value={formData.dtNumber}
-                onChange={(e) => handleInputChange("dtNumber", e.target.value)}
-                placeholder="DT #"
-                className="h-11"
-              />
-            </div>
-          </div>
+      <div className="space-y-1">
+        <Label htmlFor="deliveryStatus" className="text-xs">Delivery Status</Label>
+        <Textarea
+          id="deliveryStatus"
+          value={formData.deliveryStatus}
+          onChange={(e) => handleInputChange("deliveryStatus", e.target.value)}
+          placeholder="Enter delivery status..."
+          rows={2}
+          className="text-xs min-h-[50px]"
+        />
+      </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="deliveryStatus" className="text-sm font-medium">Delivery Status</Label>
-            <Textarea
-              id="deliveryStatus"
-              value={formData.deliveryStatus}
-              onChange={(e) => handleInputChange("deliveryStatus", e.target.value)}
-              placeholder="Enter delivery status..."
-              rows={4}
+      <div className="space-y-2 pt-2 border-t">
+        <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Other Information</div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+          <div className="space-y-1">
+            <Label htmlFor="poNumber" className="text-xs">PO Number</Label>
+            <Input
+              id="poNumber"
+              value={formData.poNumber}
+              onChange={(e) => handleInputChange("poNumber", e.target.value)}
+              placeholder="W/OPO"
+              className="h-7 text-xs"
             />
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-foreground border-b pb-2">Other Information</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="poNumber" className="text-sm font-medium">PO Number</Label>
-                <Input
-                  id="poNumber"
-                  value={formData.poNumber}
-                  onChange={(e) => handleInputChange("poNumber", e.target.value)}
-                  placeholder="W/OPO"
-                  className="h-11"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="jmPartsPoNumber" className="text-sm font-medium">JM Parts PO #</Label>
-                <Input
-                  id="jmPartsPoNumber"
-                  value={formData.jmPartsPoNumber}
-                  onChange={(e) => handleInputChange("jmPartsPoNumber", e.target.value)}
-                  placeholder="JM Parts PO #"
-                  className="h-11"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="soNumber" className="text-sm font-medium">SO Number</Label>
-                <Input
-                  id="soNumber"
-                  value={formData.soNumber}
-                  onChange={(e) => handleInputChange("soNumber", e.target.value)}
-                  placeholder="SO Number"
-                  className="h-11"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="needBy" className="text-sm font-medium">Need By</Label>
-                <Input
-                  id="needBy"
-                  type="date"
-                  value={formData.needBy}
-                  onChange={(e) => handleInputChange("needBy", e.target.value)}
-                  className="h-11"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="deliverByDate" className="text-sm font-medium">Deliver By Date</Label>
-                <Input
-                  id="deliverByDate"
-                  type="date"
-                  value={formData.deliverByDate}
-                  onChange={(e) => handleInputChange("deliverByDate", e.target.value)}
-                  className="h-11"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="testDate" className="text-sm font-medium">Date Tested</Label>
-                <Input
-                  id="testDate"
-                  type="date"
-                  value={formData.testDate}
-                  onChange={(e) => handleInputChange("testDate", e.target.value)}
-                  className="h-11"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="transitQty" className="text-sm font-medium">Transit Qty</Label>
-                <Input
-                  id="transitQty"
-                  value={formData.transitQty}
-                  onChange={(e) => handleInputChange("transitQty", e.target.value)}
-                  placeholder="Transit Qty"
-                  className="h-11"
-                />
-              </div>
-            </div>
-
-            <div className="flex items-center gap-4">
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="new"
-                  checked={formData.newEquip}
-                  onCheckedChange={(checked) => handleInputChange("newEquip", checked)}
-                />
-                <Label htmlFor="new" className="text-sm font-medium cursor-pointer">New</Label>
-              </div>
-
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="hotList"
-                  checked={formData.hotList}
-                  onCheckedChange={(checked) => handleInputChange("hotList", checked)}
-                />
-                <Label htmlFor="hotList" className="text-sm font-medium cursor-pointer">Hot List</Label>
-              </div>
-            </div>
+          <div className="space-y-1">
+            <Label htmlFor="jmPartsPoNumber" className="text-xs">JM Parts PO #</Label>
+            <Input
+              id="jmPartsPoNumber"
+              value={formData.jmPartsPoNumber}
+              onChange={(e) => handleInputChange("jmPartsPoNumber", e.target.value)}
+              placeholder="JM Parts PO #"
+              className="h-7 text-xs"
+            />
           </div>
-        </CardContent>
-      </Card>
+
+          <div className="space-y-1">
+            <Label htmlFor="soNumber" className="text-xs">SO Number</Label>
+            <Input
+              id="soNumber"
+              value={formData.soNumber}
+              onChange={(e) => handleInputChange("soNumber", e.target.value)}
+              placeholder="SO Number"
+              className="h-7 text-xs"
+            />
+          </div>
+
+          <div className="space-y-1">
+            <Label htmlFor="needBy" className="text-xs">Need By</Label>
+            <Input
+              id="needBy"
+              type="date"
+              value={formData.needBy}
+              onChange={(e) => handleInputChange("needBy", e.target.value)}
+              className="h-7 text-xs"
+            />
+          </div>
+
+          <div className="space-y-1">
+            <Label htmlFor="deliverByDate" className="text-xs">Deliver By Date</Label>
+            <Input
+              id="deliverByDate"
+              type="date"
+              value={formData.deliverByDate}
+              onChange={(e) => handleInputChange("deliverByDate", e.target.value)}
+              className="h-7 text-xs"
+            />
+          </div>
+
+          <div className="space-y-1">
+            <Label htmlFor="testDate" className="text-xs">Date Tested</Label>
+            <Input
+              id="testDate"
+              type="date"
+              value={formData.testDate}
+              onChange={(e) => handleInputChange("testDate", e.target.value)}
+              className="h-7 text-xs"
+            />
+          </div>
+
+          <div className="space-y-1">
+            <Label htmlFor="transitQty" className="text-xs">Transit Qty</Label>
+            <Input
+              id="transitQty"
+              value={formData.transitQty}
+              onChange={(e) => handleInputChange("transitQty", e.target.value)}
+              placeholder="Transit Qty"
+              className="h-7 text-xs"
+            />
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3 pt-1">
+          <div className="flex items-center space-x-1.5">
+            <Checkbox
+              id="new"
+              checked={formData.newEquip}
+              onCheckedChange={(checked) => handleInputChange("newEquip", checked)}
+              className="h-3.5 w-3.5"
+            />
+            <Label htmlFor="new" className="text-xs cursor-pointer">New</Label>
+          </div>
+
+          <div className="flex items-center space-x-1.5">
+            <Checkbox
+              id="hotList"
+              checked={formData.hotList}
+              onCheckedChange={(checked) => handleInputChange("hotList", checked)}
+              className="h-3.5 w-3.5"
+            />
+            <Label htmlFor="hotList" className="text-xs cursor-pointer">Hot List</Label>
+          </div>
+        </div>
+      </div>
     </div>
   );
 
   const renderTestingSection = () => (
-    <div className="space-y-6">
-      <Card className="border-0 shadow-md w-full">
-        <CardContent className="p-4 sm:p-6 space-y-4">
-          <div className="flex items-center gap-3 pb-4 border-b border-border">
-            <div className="p-2 bg-primary/10 rounded-lg">
-              <Settings className="h-5 w-5 text-primary" />
-            </div>
-            <h3 className="text-lg font-semibold">Testing</h3>
+    <div className="space-y-3">
+      <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Cost Information</div>
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+        <div className="space-y-1">
+          <Label className="text-xs">Testing</Label>
+          <div className="flex items-center gap-1">
+            <Label className="text-[10px] text-muted-foreground">Qty</Label>
+            <Input value="0" readOnly className="h-7 text-xs w-14" />
+            <Label className="text-[10px] text-muted-foreground">Cost</Label>
+            <Input value="0.00" readOnly className="h-7 text-xs" />
           </div>
+        </div>
 
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-foreground">Cost Information</h3>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label className="text-sm font-medium">Testing</Label>
-                <div className="flex items-center gap-2">
-                  <Label className="text-sm text-muted-foreground">Qty</Label>
-                  <Input
-                    value="0"
-                    readOnly
-                    className="h-11 w-20"
-                  />
-                  <Label className="text-sm text-muted-foreground">Cost</Label>
-                  <Input
-                    value="0.00"
-                    readOnly
-                    className="h-11"
-                  />
-                </div>
-              </div>
+        <div className="space-y-1">
+          <Label className="text-xs">Expedite</Label>
+          <Input value="0.00" readOnly className="h-7 text-xs" />
+        </div>
 
-              <div className="space-y-2">
-                <Label className="text-sm font-medium">Expedite</Label>
-                <Input
-                  value="0.00"
-                  readOnly
-                  className="h-11"
-                />
-              </div>
+        <div className="space-y-1">
+          <Label className="text-xs">Emergency</Label>
+          <Input value="0.00" readOnly className="h-7 text-xs" />
+        </div>
 
-              <div className="space-y-2">
-                <Label className="text-sm font-medium">Emergency</Label>
-                <Input
-                  value="0.00"
-                  readOnly
-                  className="h-11"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label className="text-sm font-medium">Replacement</Label>
-                <div className="flex items-center gap-2">
-                  <Label className="text-sm text-muted-foreground">Qty</Label>
-                  <Input
-                    value="0"
-                    readOnly
-                    className="h-11 w-20"
-                  />
-                  <Label className="text-sm text-muted-foreground">Cost</Label>
-                  <Input
-                    value="0.00"
-                    readOnly
-                    className="h-11"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label className="text-sm font-medium">New Sales</Label>
-                <div className="flex items-center gap-2">
-                  <Label className="text-sm text-muted-foreground">Qty</Label>
-                  <Input
-                    value="0"
-                    readOnly
-                    className="h-11 w-20"
-                  />
-                  <Label className="text-sm text-muted-foreground">Cost</Label>
-                  <Input
-                    value="0.00"
-                    readOnly
-                    className="h-11"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label className="text-sm font-medium">Total</Label>
-                <div className="flex items-center gap-2">
-                  <Label className="text-sm text-muted-foreground">Qty</Label>
-                  <Input
-                    value="0"
-                    readOnly
-                    className="h-11 w-20"
-                  />
-                  <Label className="text-sm text-muted-foreground font-semibold">Cost</Label>
-                  <Input
-                    value="0.00"
-                    readOnly
-                    className="h-11 font-semibold"
-                  />
-                </div>
-              </div>
-            </div>
+        <div className="space-y-1">
+          <Label className="text-xs">Replacement</Label>
+          <div className="flex items-center gap-1">
+            <Label className="text-[10px] text-muted-foreground">Qty</Label>
+            <Input value="0" readOnly className="h-7 text-xs w-14" />
+            <Label className="text-[10px] text-muted-foreground">Cost</Label>
+            <Input value="0.00" readOnly className="h-7 text-xs" />
           </div>
-        </CardContent>
-      </Card>
+        </div>
+
+        <div className="space-y-1">
+          <Label className="text-xs">New Sales</Label>
+          <div className="flex items-center gap-1">
+            <Label className="text-[10px] text-muted-foreground">Qty</Label>
+            <Input value="0" readOnly className="h-7 text-xs w-14" />
+            <Label className="text-[10px] text-muted-foreground">Cost</Label>
+            <Input value="0.00" readOnly className="h-7 text-xs" />
+          </div>
+        </div>
+
+        <div className="space-y-1">
+          <Label className="text-xs font-semibold">Total</Label>
+          <div className="flex items-center gap-1">
+            <Label className="text-[10px] text-muted-foreground">Qty</Label>
+            <Input value="0" readOnly className="h-7 text-xs w-14" />
+            <Label className="text-[10px] text-muted-foreground font-semibold">Cost</Label>
+            <Input value="0.00" readOnly className="h-7 text-xs font-semibold" />
+          </div>
+        </div>
+      </div>
     </div>
   );
 
   const renderWorkStatusSection = () => (
-    <div className="space-y-6">
-      <Card className="border-0 shadow-md w-full">
-        <CardContent className="p-4 sm:p-6 space-y-4">
-          <div className="flex items-center gap-3 pb-4 border-b border-border">
-            <div className="p-2 bg-primary/10 rounded-lg">
-              <Clock className="h-5 w-5 text-primary" />
-            </div>
-            <h3 className="text-lg font-semibold">Work Status</h3>
-          </div>
-
-          <div className="space-y-4">
-            <p className="text-sm text-muted-foreground">
-              Work status information will be displayed here.
-            </p>
-          </div>
-        </CardContent>
-      </Card>
+    <div className="space-y-2">
+      <p className="text-xs text-muted-foreground">
+        Work status information will be displayed here.
+      </p>
     </div>
   );
 
