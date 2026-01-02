@@ -1304,7 +1304,7 @@ const FormVariationsDemo = () => {
                     </div>
 
                     <div className="space-y-1">
-                      <Label htmlFor="testFreq" className="text-xs font-medium">Test Freq</Label>
+                      <Label htmlFor="testFreq" className="text-xs font-medium">Test Freq *</Label>
                       <Input
                         id="testFreq"
                         value={formData.calFreq}
@@ -1314,7 +1314,7 @@ const FormVariationsDemo = () => {
                     </div>
 
                     <div className="space-y-1">
-                      <Label htmlFor="priority" className="text-xs font-medium">Priority</Label>
+                      <Label htmlFor="priority" className="text-xs font-medium">Priority *</Label>
                       <Select value={formData.priority} onValueChange={(value) => handleInputChange("priority", value)}>
                         <SelectTrigger className="h-7 text-xs">
                           <SelectValue />
@@ -1329,7 +1329,7 @@ const FormVariationsDemo = () => {
                     </div>
 
                     <div className="space-y-1">
-                      <Label htmlFor="location" className="text-xs font-medium">Location</Label>
+                      <Label htmlFor="location" className="text-xs font-medium">Location *</Label>
                       <Select value={formData.location} onValueChange={(value) => handleInputChange("location", value)}>
                         <SelectTrigger className="h-7 text-xs">
                           <SelectValue />
@@ -1343,7 +1343,7 @@ const FormVariationsDemo = () => {
                     </div>
 
                     <div className="space-y-1">
-                      <Label htmlFor="division" className="text-xs font-medium">Division</Label>
+                      <Label htmlFor="division" className="text-xs font-medium">Division *</Label>
                       <Select value={formData.division} onValueChange={(value) => handleInputChange("division", value)}>
                         <SelectTrigger className="h-7 text-xs">
                           <SelectValue />
@@ -1357,7 +1357,7 @@ const FormVariationsDemo = () => {
                     </div>
 
                     <div className="space-y-1">
-                      <Label htmlFor="actionCode" className="text-xs font-medium">Action Code</Label>
+                      <Label htmlFor="actionCode" className="text-xs font-medium">Action Code *</Label>
                       <Select value={formData.actionCode} onValueChange={(value) => handleInputChange("actionCode", value)}>
                         <SelectTrigger className="h-7 text-xs">
                           <SelectValue />
