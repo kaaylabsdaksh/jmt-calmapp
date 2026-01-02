@@ -7100,7 +7100,7 @@ const FormVariationsDemo = () => {
 
           {/* Right Content Area */}
           <div className="flex-1 overflow-auto h-[calc(100vh-320px)]" ref={scrollViewportRef}>
-            <div className="p-6 space-y-8">
+            <div className="p-6 space-y-8 pb-24">
               {/* General Section */}
               <div 
                 ref={(el) => (sectionRefs.current['general'] = el)}
