@@ -3079,7 +3079,7 @@ const AddNewWorkOrder = () => {
                         items={receivingItems}
                       />
                     ) : (
-                      <WorkOrderItemsCards templateItems={receivingItems} showMockData={false} />
+                      <WorkOrderItemsCards templateItems={receivingItems} showMockData={true} />
                     )}
                   </div>
                 </CardContent>
