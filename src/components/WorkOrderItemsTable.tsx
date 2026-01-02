@@ -1,8 +1,10 @@
 import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
-import { Edit, ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
+import { Edit, ArrowUpDown, ArrowUp, ArrowDown, ChevronDown, ChevronUp } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
 interface WorkOrderItem {
   id: string;
@@ -114,6 +116,19 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
   const [sortKey, setSortKey] = useState<SortKey | null>(null);
   const [sortDirection, setSortDirection] = useState<SortDirection>(null);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const [isSearchBarOpen, setIsSearchBarOpen] = useState(true);
+  const [columnFilters, setColumnFilters] = useState({
+    itemNumber: "",
+    manufacturer: "",
+    model: "",
+    serialNumber: "",
+    created: "",
+    departure: "",
+    itemStatus: "",
+    itemType: "",
+    deliverByDate: "",
+    poNumber: "",
+  });
   
   // Use items prop if provided, otherwise fall back to mock data based on showMockData
   const displayData = items.length > 0 ? items : (showMockData ? mockData : []);
@@ -132,9 +147,13 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
     }
   };
 
+  const handleFilterChange = (column: string, value: string) => {
+    setColumnFilters(prev => ({ ...prev, [column]: value }));
+  };
+
   const handleSelectAll = (checked: boolean) => {
     if (checked) {
-      setSelectedItems(displayData.map(item => item.id));
+      setSelectedItems(filteredAndSortedData.map(item => item.id));
     } else {
       setSelectedItems([]);
     }
@@ -148,13 +167,26 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
     }
   };
 
-  const isAllSelected = displayData.length > 0 && selectedItems.length === displayData.length;
-  const isSomeSelected = selectedItems.length > 0 && selectedItems.length < displayData.length;
+  // Filter data based on column filters
+  const filteredData = useMemo(() => {
+    return displayData.filter(item => {
+      return Object.entries(columnFilters).every(([key, value]) => {
+        if (!value) return true;
+        let itemValue = '';
+        if (key === 'serialNumber') {
+          itemValue = ((item as any).mfgSerial || (item as any).serialNumber || '').toString().toLowerCase();
+        } else {
+          itemValue = ((item as any)[key] || '').toString().toLowerCase();
+        }
+        return itemValue.includes(value.toLowerCase());
+      });
+    });
+  }, [displayData, columnFilters]);
 
-  const sortedData = useMemo(() => {
-    if (!sortKey || !sortDirection) return displayData;
+  const filteredAndSortedData = useMemo(() => {
+    if (!sortKey || !sortDirection) return filteredData;
     
-    return [...displayData].sort((a, b) => {
+    return [...filteredData].sort((a, b) => {
       let aVal = '';
       let bVal = '';
       
@@ -174,7 +206,10 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
         return bVal.localeCompare(aVal);
       }
     });
-  }, [displayData, sortKey, sortDirection]);
+  }, [filteredData, sortKey, sortDirection]);
+
+  const isAllSelected = filteredAndSortedData.length > 0 && selectedItems.length === filteredAndSortedData.length;
+  const isSomeSelected = selectedItems.length > 0 && selectedItems.length < filteredAndSortedData.length;
 
   const SortableHeader = ({ label, sortKeyName }: { label: string; sortKeyName: SortKey }) => (
     <th 
@@ -213,77 +248,172 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
           </Button>
         </div>
       )}
-      <table className="w-full text-sm">
-        <thead className="bg-muted">
-          <tr>
-            <th className="text-left p-3 w-12">Actions</th>
-            <th className="text-left p-3 w-12">
-              <Checkbox 
-                checked={isAllSelected}
-                ref={(el) => {
-                  if (el) {
-                    (el as any).indeterminate = isSomeSelected;
-                  }
-                }}
-                onCheckedChange={handleSelectAll}
-              />
-            </th>
-            <SortableHeader label="Item" sortKeyName="itemNumber" />
-            <SortableHeader label="Manufacturer" sortKeyName="manufacturer" />
-            <SortableHeader label="Model" sortKeyName="model" />
-            <SortableHeader label="Serial #" sortKeyName="serialNumber" />
-            <SortableHeader label="Created" sortKeyName="created" />
-            <SortableHeader label="Departure" sortKeyName="departure" />
-            <SortableHeader label="Item Status" sortKeyName="itemStatus" />
-            <SortableHeader label="Item Type" sortKeyName="itemType" />
-            <SortableHeader label="Deliver By Date" sortKeyName="deliverByDate" />
-            <th className="text-left p-3 font-medium">PO #</th>
-            <th className="text-left p-3 font-medium">Open PO/CO</th>
-          </tr>
-        </thead>
-        <tbody>
-          {sortedData.map((item) => (
-            <tr 
-              key={item.id} 
-              className={`border-t hover:bg-muted/50 ${selectedItems.includes(item.id) ? 'bg-primary/10' : ''}`}
-            >
-              <td className="p-3">
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  onClick={() => navigate("/form-variations")}
-                  className="h-8 bg-primary hover:bg-primary/90 text-primary-foreground border-primary"
-                >
-                  <Edit className="w-4 h-4" />
-                </Button>
-              </td>
-              <td className="p-3">
+      <Collapsible open={isSearchBarOpen} onOpenChange={setIsSearchBarOpen}>
+        <table className="w-full text-sm">
+          <thead className="bg-muted">
+            <tr>
+              <th className="text-left p-3 w-12">
+                <CollapsibleTrigger asChild>
+                  <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
+                    {isSearchBarOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                  </Button>
+                </CollapsibleTrigger>
+              </th>
+              <th className="text-left p-3 w-12">
                 <Checkbox 
-                  checked={selectedItems.includes(item.id)}
-                  onCheckedChange={(checked) => handleSelectItem(item.id, checked as boolean)}
+                  checked={isAllSelected}
+                  ref={(el) => {
+                    if (el) {
+                      (el as any).indeterminate = isSomeSelected;
+                    }
+                  }}
+                  onCheckedChange={handleSelectAll}
                 />
-              </td>
-              <td className="p-3">{accountNumber}-{workOrderNumber}-{item.itemNumber}</td>
-              <td className="p-3">{item.manufacturer}</td>
-              <td className="p-3">{item.model}</td>
-              <td className="p-3">{(item as any).mfgSerial || (item as any).serialNumber}</td>
-              <td className="p-3">{item.created || ""}</td>
-              <td className="p-3">{item.departure || ""}</td>
-              <td className="p-3">{item.itemStatus || ""}</td>
-              <td className="p-3">{item.itemType || ""}</td>
-              <td className="p-3">{item.deliverByDate || ""}</td>
-              <td className="p-3">{selectedPoNumber}</td>
-              <td className="p-3">
-                <Button variant="link" className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto">
-                  View
-                </Button>
-              </td>
+              </th>
+              <SortableHeader label="Item" sortKeyName="itemNumber" />
+              <SortableHeader label="Manufacturer" sortKeyName="manufacturer" />
+              <SortableHeader label="Model" sortKeyName="model" />
+              <SortableHeader label="Serial #" sortKeyName="serialNumber" />
+              <SortableHeader label="Created" sortKeyName="created" />
+              <SortableHeader label="Departure" sortKeyName="departure" />
+              <SortableHeader label="Item Status" sortKeyName="itemStatus" />
+              <SortableHeader label="Item Type" sortKeyName="itemType" />
+              <SortableHeader label="Deliver By Date" sortKeyName="deliverByDate" />
+              <th className="text-left p-3 font-medium">PO #</th>
+              <th className="text-left p-3 font-medium">Open PO/CO</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+            <CollapsibleContent asChild>
+              <tr className="bg-muted/50 border-t">
+                <td className="p-2"></td>
+                <td className="p-2"></td>
+                <td className="p-2">
+                  <Input
+                    placeholder="Filter..."
+                    value={columnFilters.itemNumber}
+                    onChange={(e) => handleFilterChange('itemNumber', e.target.value)}
+                    className="h-7 text-xs"
+                  />
+                </td>
+                <td className="p-2">
+                  <Input
+                    placeholder="Filter..."
+                    value={columnFilters.manufacturer}
+                    onChange={(e) => handleFilterChange('manufacturer', e.target.value)}
+                    className="h-7 text-xs"
+                  />
+                </td>
+                <td className="p-2">
+                  <Input
+                    placeholder="Filter..."
+                    value={columnFilters.model}
+                    onChange={(e) => handleFilterChange('model', e.target.value)}
+                    className="h-7 text-xs"
+                  />
+                </td>
+                <td className="p-2">
+                  <Input
+                    placeholder="Filter..."
+                    value={columnFilters.serialNumber}
+                    onChange={(e) => handleFilterChange('serialNumber', e.target.value)}
+                    className="h-7 text-xs"
+                  />
+                </td>
+                <td className="p-2">
+                  <Input
+                    placeholder="Filter..."
+                    value={columnFilters.created}
+                    onChange={(e) => handleFilterChange('created', e.target.value)}
+                    className="h-7 text-xs"
+                  />
+                </td>
+                <td className="p-2">
+                  <Input
+                    placeholder="Filter..."
+                    value={columnFilters.departure}
+                    onChange={(e) => handleFilterChange('departure', e.target.value)}
+                    className="h-7 text-xs"
+                  />
+                </td>
+                <td className="p-2">
+                  <Input
+                    placeholder="Filter..."
+                    value={columnFilters.itemStatus}
+                    onChange={(e) => handleFilterChange('itemStatus', e.target.value)}
+                    className="h-7 text-xs"
+                  />
+                </td>
+                <td className="p-2">
+                  <Input
+                    placeholder="Filter..."
+                    value={columnFilters.itemType}
+                    onChange={(e) => handleFilterChange('itemType', e.target.value)}
+                    className="h-7 text-xs"
+                  />
+                </td>
+                <td className="p-2">
+                  <Input
+                    placeholder="Filter..."
+                    value={columnFilters.deliverByDate}
+                    onChange={(e) => handleFilterChange('deliverByDate', e.target.value)}
+                    className="h-7 text-xs"
+                  />
+                </td>
+                <td className="p-2">
+                  <Input
+                    placeholder="Filter..."
+                    value={columnFilters.poNumber}
+                    onChange={(e) => handleFilterChange('poNumber', e.target.value)}
+                    className="h-7 text-xs"
+                  />
+                </td>
+                <td className="p-2"></td>
+              </tr>
+            </CollapsibleContent>
+          </thead>
+          <tbody>
+            {filteredAndSortedData.map((item) => (
+              <tr 
+                key={item.id} 
+                className={`border-t hover:bg-muted/50 ${selectedItems.includes(item.id) ? 'bg-primary/10' : ''}`}
+              >
+                <td className="p-3">
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => navigate("/form-variations")}
+                    className="h-8 bg-primary hover:bg-primary/90 text-primary-foreground border-primary"
+                  >
+                    <Edit className="w-4 h-4" />
+                  </Button>
+                </td>
+                <td className="p-3">
+                  <Checkbox 
+                    checked={selectedItems.includes(item.id)}
+                    onCheckedChange={(checked) => handleSelectItem(item.id, checked as boolean)}
+                  />
+                </td>
+                <td className="p-3">{accountNumber}-{workOrderNumber}-{item.itemNumber}</td>
+                <td className="p-3">{item.manufacturer}</td>
+                <td className="p-3">{item.model}</td>
+                <td className="p-3">{(item as any).mfgSerial || (item as any).serialNumber}</td>
+                <td className="p-3">{item.created || ""}</td>
+                <td className="p-3">{item.departure || ""}</td>
+                <td className="p-3">{item.itemStatus || ""}</td>
+                <td className="p-3">{item.itemType || ""}</td>
+                <td className="p-3">{item.deliverByDate || ""}</td>
+                <td className="p-3">{selectedPoNumber}</td>
+                <td className="p-3">
+                  <Button variant="link" className="text-blue-600 hover:text-blue-700 text-sm p-0 h-auto">
+                    View
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </Collapsible>
       
-      {sortedData.length === 0 && (
+      {filteredAndSortedData.length === 0 && (
         <div className="p-8 text-center text-muted-foreground">
           No data to display
         </div>
