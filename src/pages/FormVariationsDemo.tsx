@@ -70,6 +70,14 @@ const FormVariationsDemo = () => {
   // Dynamic footer height state
   const [footerHeight, setFooterHeight] = useState(80); // Default fallback
   
+  // Details tab dialog states
+  const [printLabelDialogOpen, setPrintLabelDialogOpen] = useState(false);
+  const [printBatchSheetDialogOpen, setPrintBatchSheetDialogOpen] = useState(false);
+  const [labelQuantity, setLabelQuantity] = useState("1");
+  const [labelType, setLabelType] = useState("default");
+  const [batchSheetQuantity, setBatchSheetQuantity] = useState("1");
+  const [batchSheetType, setBatchSheetType] = useState("default");
+  
   const sections = [
     { id: 'general', label: 'General', icon: Info },
     { id: 'product', label: 'Product', icon: Package },
@@ -3344,30 +3352,24 @@ const FormVariationsDemo = () => {
                 <Printer className="h-4 w-4 mr-2" />
                 WO
               </Button>
-              <Button variant="outline" size="default" className="h-9 text-sm px-4">
+              <Button 
+                variant="outline" 
+                size="default" 
+                className="h-9 text-sm px-4"
+                onClick={() => setPrintLabelDialogOpen(true)}
+              >
                 <Printer className="h-4 w-4 mr-2" />
                 Label
               </Button>
-              <Input 
-                type="number" 
-                defaultValue="1" 
-                min="1" 
-                className="h-9 w-14 text-sm text-center" 
-                placeholder="Qty"
-              />
-              <Button variant="outline" size="default" className="h-9 text-sm px-4">
+              <Button 
+                variant="outline" 
+                size="default" 
+                className="h-9 text-sm px-4"
+                onClick={() => setPrintBatchSheetDialogOpen(true)}
+              >
                 <Printer className="h-4 w-4 mr-2" />
                 Batch Sheet
               </Button>
-              <Select defaultValue="default">
-                <SelectTrigger className="h-9 w-28 text-sm">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="default">Default</SelectItem>
-                  <SelectItem value="custom">Custom</SelectItem>
-                </SelectContent>
-              </Select>
               <Button variant="outline" size="default" className="h-9 text-sm px-4">
                 Assign by Class
               </Button>
@@ -3397,6 +3399,110 @@ const FormVariationsDemo = () => {
           </div>
         </div>
       </div>
+
+      {/* Print Label Dialog */}
+      <Dialog open={printLabelDialogOpen} onOpenChange={setPrintLabelDialogOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Printer className="h-5 w-5" />
+              Print Label
+            </DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="labelQty">Quantity</Label>
+              <Input 
+                id="labelQty"
+                type="number" 
+                value={labelQuantity}
+                onChange={(e) => setLabelQuantity(e.target.value)}
+                min="1" 
+                className="w-full" 
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="labelType">Label Type</Label>
+              <Select value={labelType} onValueChange={setLabelType}>
+                <SelectTrigger className="w-full">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="default">Default</SelectItem>
+                  <SelectItem value="custom">Custom</SelectItem>
+                  <SelectItem value="small">Small</SelectItem>
+                  <SelectItem value="large">Large</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setPrintLabelDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button onClick={() => {
+              console.log('Printing label:', { quantity: labelQuantity, type: labelType });
+              setPrintLabelDialogOpen(false);
+              toast({ title: "Label sent to printer", description: `Printing ${labelQuantity} label(s)` });
+            }}>
+              <Printer className="h-4 w-4 mr-2" />
+              Print
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Print Batch Sheet Dialog */}
+      <Dialog open={printBatchSheetDialogOpen} onOpenChange={setPrintBatchSheetDialogOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Printer className="h-5 w-5" />
+              Print Batch Sheet
+            </DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="batchQty">Quantity</Label>
+              <Input 
+                id="batchQty"
+                type="number" 
+                value={batchSheetQuantity}
+                onChange={(e) => setBatchSheetQuantity(e.target.value)}
+                min="1" 
+                className="w-full" 
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="batchType">Sheet Type</Label>
+              <Select value={batchSheetType} onValueChange={setBatchSheetType}>
+                <SelectTrigger className="w-full">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="default">Default</SelectItem>
+                  <SelectItem value="custom">Custom</SelectItem>
+                  <SelectItem value="summary">Summary</SelectItem>
+                  <SelectItem value="detailed">Detailed</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setPrintBatchSheetDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button onClick={() => {
+              console.log('Printing batch sheet:', { quantity: batchSheetQuantity, type: batchSheetType });
+              setPrintBatchSheetDialogOpen(false);
+              toast({ title: "Batch sheet sent to printer", description: `Printing ${batchSheetQuantity} batch sheet(s)` });
+            }}>
+              <Printer className="h-4 w-4 mr-2" />
+              Print
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 
