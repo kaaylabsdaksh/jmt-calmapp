@@ -1766,13 +1766,21 @@ const FormVariationsDemo = () => {
                           <SelectValue placeholder="Select color" />
                         </SelectTrigger>
                         <SelectContent className="bg-popover border z-50">
-                          <SelectItem value="black">Black</SelectItem>
-                          <SelectItem value="blue">Blue</SelectItem>
-                          <SelectItem value="red">Red</SelectItem>
-                          <SelectItem value="green">Green</SelectItem>
-                          <SelectItem value="yellow">Yellow</SelectItem>
-                          <SelectItem value="white">White</SelectItem>
-                          <SelectItem value="gray">Gray</SelectItem>
+                          <SelectItem value="bubble-wrap">Bubble wrap</SelectItem>
+                          <SelectItem value="canvas">Canvas</SelectItem>
+                          <SelectItem value="cardboard">Cardboard</SelectItem>
+                          <SelectItem value="foam">Foam</SelectItem>
+                          <SelectItem value="glass">Glass</SelectItem>
+                          <SelectItem value="leather">Leather</SelectItem>
+                          <SelectItem value="leather-fake">Leather, Fake</SelectItem>
+                          <SelectItem value="metal">Metal</SelectItem>
+                          <SelectItem value="nylon">Nylon</SelectItem>
+                          <SelectItem value="paper">Paper</SelectItem>
+                          <SelectItem value="plastic">Plastic</SelectItem>
+                          <SelectItem value="pvc">PVC</SelectItem>
+                          <SelectItem value="rubber">Rubber</SelectItem>
+                          <SelectItem value="vinyl">Vinyl</SelectItem>
+                          <SelectItem value="wood">Wood</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
