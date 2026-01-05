@@ -1242,18 +1242,6 @@ const FormVariationsDemo = () => {
     if (isESLType) {
       return (
         <div className="space-y-3">
-          {/* Created and Modified Dates */}
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-2 pb-2 border-b border-border text-xs">
-            <div className="text-muted-foreground">
-              <span className="font-medium">Created:</span> 11/20/2025 by Admin User
-            </div>
-            
-            <div className="text-muted-foreground">
-              <span className="font-medium">Modified:</span> 11/20/2025 by Admin User
-            </div>
-
-          </div>
-
           {/* Sub-accordions for ESL General Section */}
           <Accordion type="multiple" defaultValue={["general-info"]} className="space-y-0">
             <AccordionItem value="general-info" className="border-b border-border">
