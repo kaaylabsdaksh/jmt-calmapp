@@ -3346,6 +3346,13 @@ const FormVariationsDemo = () => {
               <Printer className="h-3.5 w-3.5 mr-1.5" />
               Print Label
             </Button>
+            <Input 
+              type="number" 
+              defaultValue="1" 
+              min="1" 
+              className="h-7 w-12 text-xs text-center" 
+              placeholder="Qty"
+            />
             <Button variant="outline" size="sm" className="h-7 text-xs px-3">
               <Printer className="h-3.5 w-3.5 mr-1.5" />
               Print Batch Sheet
