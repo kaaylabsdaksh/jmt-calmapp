@@ -6762,6 +6762,10 @@ const FormVariationsDemo = () => {
                     <FileText className="h-4 w-4" />
                     Details
                   </TabsTrigger>
+                  <TabsTrigger value="testing" className="flex-1 gap-2">
+                    <Settings className="h-4 w-4" />
+                    Testing
+                  </TabsTrigger>
                   <TabsTrigger value="work-status" className="flex-1 gap-2">
                     <Clock className="h-4 w-4" />
                     Work Status
@@ -6774,6 +6778,10 @@ const FormVariationsDemo = () => {
 
                 <TabsContent value="details" className="mt-0">
                   {renderDetailsSection()}
+                </TabsContent>
+
+                <TabsContent value="testing" className="mt-0">
+                  {renderTestingSection()}
                 </TabsContent>
 
                 <TabsContent value="work-status" className="mt-0">
