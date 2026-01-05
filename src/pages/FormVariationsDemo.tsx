@@ -3342,11 +3342,11 @@ const FormVariationsDemo = () => {
             <div className="flex flex-wrap items-center gap-1.5">
               <Button variant="outline" size="sm" className="h-7 text-xs px-3">
                 <Printer className="h-3.5 w-3.5 mr-1.5" />
-                Print WO
+                WO
               </Button>
               <Button variant="outline" size="sm" className="h-7 text-xs px-3">
                 <Printer className="h-3.5 w-3.5 mr-1.5" />
-                Print Label
+                Label
               </Button>
               <Input 
                 type="number" 
@@ -3357,7 +3357,7 @@ const FormVariationsDemo = () => {
               />
               <Button variant="outline" size="sm" className="h-7 text-xs px-3">
                 <Printer className="h-3.5 w-3.5 mr-1.5" />
-                Print Batch Sheet
+                Batch Sheet
               </Button>
               <Select defaultValue="default">
                 <SelectTrigger className="h-7 w-24 text-xs">
