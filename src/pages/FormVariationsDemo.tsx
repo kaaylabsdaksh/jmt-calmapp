@@ -3357,12 +3357,6 @@ const FormVariationsDemo = () => {
               <Printer className="h-3.5 w-3.5 mr-1.5" />
               Print Batch Sheet
             </Button>
-            <Input 
-              type="number" 
-              defaultValue="1" 
-              min="1" 
-              className="h-7 w-12 text-xs text-center" 
-            />
             <Select defaultValue="default">
               <SelectTrigger className="h-7 w-24 text-xs">
                 <SelectValue />
