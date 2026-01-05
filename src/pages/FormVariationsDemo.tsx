@@ -9717,11 +9717,7 @@ const FormVariationsDemo = () => {
                     Waiting on Customer
                   </DropdownMenuItem>
                 </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-
-            {/* Right side buttons */}
-            <div className="flex items-center gap-2">
+            </DropdownMenu>
               <div className="flex items-center gap-2">
                 <span className="text-sm text-muted-foreground">Create New Group</span>
                 <Select>
@@ -9749,6 +9745,10 @@ const FormVariationsDemo = () => {
                 <Printer className="h-4 w-4 mr-2" />
                 Print WO
               </Button>
+            </div>
+
+            {/* Right side buttons */}
+            <div className="flex items-center gap-2">
               <Button 
                 variant="outline" 
                 onClick={handleCancel}
