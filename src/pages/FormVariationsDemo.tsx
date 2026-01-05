@@ -653,6 +653,16 @@ const FormVariationsDemo = () => {
     dateTested: "",
     leadTechnician: "",
     miscInformation: "",
+    // Details tab - ESL specific
+    itemClass: "",
+    size: "",
+    color: "",
+    slot: false,
+    eyelets: false,
+    zip: false,
+    eslId: "",
+    custIdDetail: "",
+    tagNumber: "",
     
     // Cost Information
     ccCost: "0.00",
@@ -3069,174 +3079,305 @@ const FormVariationsDemo = () => {
 
   // ESL-specific sections
   const renderDetailsSection = () => (
-    <div className="space-y-3">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-        <div className="space-y-1">
-          <Label htmlFor="arrivalDate" className="text-xs">Date</Label>
-          <Input
-            id="arrivalDate"
-            type="date"
-            value={formData.arrivalDate}
-            onChange={(e) => handleInputChange("arrivalDate", e.target.value)}
-            className="h-7 text-xs"
-          />
+    <div className="space-y-6">
+      {/* Main Content Grid - Three Column Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Left Column - Product Information */}
+        <div className="space-y-4">
+          <div className="bg-muted/30 rounded-lg p-4 space-y-3">
+            <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Product Information</div>
+            
+            <div className="space-y-1">
+              <Label htmlFor="detailsManufacturer" className="text-xs">Manufacturer</Label>
+              <Select value={formData.manufacturer} onValueChange={(value) => handleInputChange("manufacturer", value)}>
+                <SelectTrigger className="h-8 text-xs">
+                  <SelectValue placeholder="Select manufacturer" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="3m">3M</SelectItem>
+                  <SelectItem value="salisbury">Salisbury</SelectItem>
+                  <SelectItem value="chance">Chance</SelectItem>
+                  <SelectItem value="cementex">Cementex</SelectItem>
+                  <SelectItem value="novax">Novax</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-1">
+              <Label htmlFor="detailsClass" className="text-xs">Class</Label>
+              <Select value={formData.itemClass} onValueChange={(value) => handleInputChange("itemClass", value)}>
+                <SelectTrigger className="h-8 text-xs">
+                  <SelectValue placeholder="Select class" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="class-0">Class 0</SelectItem>
+                  <SelectItem value="class-1">Class 1</SelectItem>
+                  <SelectItem value="class-2">Class 2</SelectItem>
+                  <SelectItem value="class-3">Class 3</SelectItem>
+                  <SelectItem value="class-4">Class 4</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-1">
+              <Label htmlFor="detailsSize" className="text-xs">Size</Label>
+              <Select value={formData.size} onValueChange={(value) => handleInputChange("size", value)}>
+                <SelectTrigger className="h-8 text-xs">
+                  <SelectValue placeholder="Select size" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="xs">XS</SelectItem>
+                  <SelectItem value="s">S</SelectItem>
+                  <SelectItem value="m">M</SelectItem>
+                  <SelectItem value="l">L</SelectItem>
+                  <SelectItem value="xl">XL</SelectItem>
+                  <SelectItem value="xxl">XXL</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-1">
+              <Label htmlFor="detailsColor" className="text-xs">Color</Label>
+              <Select value={formData.color} onValueChange={(value) => handleInputChange("color", value)}>
+                <SelectTrigger className="h-8 text-xs">
+                  <SelectValue placeholder="Select color" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="black">Black</SelectItem>
+                  <SelectItem value="red">Red</SelectItem>
+                  <SelectItem value="yellow">Yellow</SelectItem>
+                  <SelectItem value="orange">Orange</SelectItem>
+                  <SelectItem value="green">Green</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Product Options Checkboxes */}
+            <div className="pt-3 border-t space-y-2">
+              <div className="flex items-center space-x-2">
+                <Checkbox id="detailsNew" checked={formData.newEquip} onCheckedChange={(checked) => handleInputChange("newEquip", checked)} className="h-4 w-4" />
+                <Label htmlFor="detailsNew" className="text-xs cursor-pointer">New</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Checkbox id="detailsSlot" checked={formData.slot} onCheckedChange={(checked) => handleInputChange("slot", checked)} className="h-4 w-4" />
+                <Label htmlFor="detailsSlot" className="text-xs cursor-pointer">Slot</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Checkbox id="detailsEyelets" checked={formData.eyelets} onCheckedChange={(checked) => handleInputChange("eyelets", checked)} className="h-4 w-4" />
+                <Label htmlFor="detailsEyelets" className="text-xs cursor-pointer">Eyelets</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Checkbox id="detailsZip" checked={formData.zip} onCheckedChange={(checked) => handleInputChange("zip", checked)} className="h-4 w-4" />
+                <Label htmlFor="detailsZip" className="text-xs cursor-pointer">Zip</Label>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div className="space-y-1">
-          <Label htmlFor="arrivalType" className="text-xs">Type</Label>
-          <Select value={formData.arrivalType} onValueChange={(value) => handleInputChange("arrivalType", value)}>
-            <SelectTrigger className="h-7 text-xs">
-              <SelectValue placeholder="Select type" />
+        {/* Center Column - Prefill & IDs */}
+        <div className="space-y-4">
+          {/* Prefill Section */}
+          <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 space-y-3">
+            <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Quick Prefill</div>
+            
+            <div className="flex items-end gap-2">
+              <div className="flex-1 space-y-1">
+                <Label htmlFor="prefillEslId" className="text-xs">Prefill w/ESL ID:</Label>
+                <Input id="prefillEslId" placeholder="Enter ESL ID" className="h-8 text-xs" />
+              </div>
+              <Button variant="default" size="sm" className="h-8 text-xs px-4">Prefill</Button>
+            </div>
+            
+            <div className="flex items-end gap-2">
+              <div className="flex-1 space-y-1">
+                <Label htmlFor="prefillCustId" className="text-xs">Prefill w/Cust ID:</Label>
+                <Input id="prefillCustId" placeholder="Enter Cust ID" className="h-8 text-xs" />
+              </div>
+              <Button variant="default" size="sm" className="h-8 text-xs px-4">Prefill</Button>
+            </div>
+          </div>
+
+          {/* ID Information */}
+          <div className="bg-muted/30 rounded-lg p-4 space-y-3">
+            <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">ID Information</div>
+            
+            <div className="space-y-1">
+              <Label htmlFor="eslId" className="text-xs">ESL ID:</Label>
+              <Input id="eslId" value={formData.eslId} onChange={(e) => handleInputChange("eslId", e.target.value)} placeholder="ESL ID" className="h-8 text-xs" />
+            </div>
+            
+            <div className="space-y-1">
+              <Label htmlFor="custIdDetail" className="text-xs">Cust ID:</Label>
+              <Input id="custIdDetail" value={formData.custIdDetail} onChange={(e) => handleInputChange("custIdDetail", e.target.value)} placeholder="Cust ID" className="h-8 text-xs" />
+            </div>
+            
+            <div className="space-y-1">
+              <Label htmlFor="tagNumber" className="text-xs">Tag #:</Label>
+              <Input id="tagNumber" value={formData.tagNumber} onChange={(e) => handleInputChange("tagNumber", e.target.value)} placeholder="Tag #" className="h-8 text-xs" />
+            </div>
+          </div>
+
+          {/* Timestamps */}
+          <div className="flex flex-col gap-1 text-xs text-muted-foreground px-1">
+            <span><span className="font-medium">Created:</span> 09/09/2025 by Admin</span>
+            <span><span className="font-medium">Modified:</span> 09/09/2025 by Admin</span>
+          </div>
+        </div>
+
+        {/* Right Column - Accessories */}
+        <div className="space-y-4">
+          <div className="bg-muted/30 rounded-lg p-4 space-y-3">
+            <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Accessories</div>
+            
+            <div className="space-y-2">
+              {[1, 2, 3, 4, 5].map((index) => (
+                <div key={index} className="flex items-center gap-2">
+                  <Select>
+                    <SelectTrigger className="h-8 text-xs flex-1">
+                      <SelectValue placeholder="Select accessory" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="protector">Protector</SelectItem>
+                      <SelectItem value="bag">Bag</SelectItem>
+                      <SelectItem value="case">Case</SelectItem>
+                      <SelectItem value="strap">Strap</SelectItem>
+                      <SelectItem value="clip">Clip</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Input type="number" placeholder="Qty" className="h-8 text-xs w-16 text-center" min="0" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Action Buttons Row */}
+      <div className="flex flex-wrap items-center justify-center gap-2 py-4 border-t border-b">
+        <Button variant="default" size="sm" className="h-8 text-xs px-4">
+          <Check className="h-3.5 w-3.5 mr-1.5" />
+          Add Item
+        </Button>
+        <Button variant="outline" size="sm" className="h-8 text-xs px-4">
+          <X className="h-3.5 w-3.5 mr-1.5" />
+          Cancel
+        </Button>
+        <div className="h-6 w-px bg-border mx-2" />
+        <Button variant="outline" size="sm" className="h-8 text-xs px-4">
+          <Printer className="h-3.5 w-3.5 mr-1.5" />
+          Print WO
+        </Button>
+        <Button variant="outline" size="sm" className="h-8 text-xs px-4">
+          <Printer className="h-3.5 w-3.5 mr-1.5" />
+          Print Label
+        </Button>
+        <div className="flex items-center gap-2">
+          <Button variant="outline" size="sm" className="h-8 text-xs px-4">
+            <Printer className="h-3.5 w-3.5 mr-1.5" />
+            Print Batch Sheet
+          </Button>
+          <Input type="number" placeholder="Qty" className="h-8 text-xs w-14 text-center" min="1" defaultValue="1" />
+          <Select defaultValue="default">
+            <SelectTrigger className="h-8 text-xs w-24">
+              <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="jm-driver-pickup">JM Driver Pickup</SelectItem>
-              <SelectItem value="customer-dropoff">Customer Drop Off</SelectItem>
-              <SelectItem value="shipped">Shipped</SelectItem>
-              <SelectItem value="onsite">OnSite</SelectItem>
-              <SelectItem value="purchasing-dept">Purchasing Dept</SelectItem>
-              <SelectItem value="lab-standard">Lab Standard</SelectItem>
-              <SelectItem value="surplus">Surplus</SelectItem>
+              <SelectItem value="default">Default</SelectItem>
+              <SelectItem value="custom">Custom</SelectItem>
             </SelectContent>
           </Select>
         </div>
+        <div className="h-6 w-px bg-border mx-2" />
+        <Button variant="outline" size="sm" className="h-8 text-xs px-4">Assign by Class</Button>
+        <Button variant="outline" size="sm" className="h-8 text-xs px-4">Assign by Size</Button>
+        <Button variant="outline" size="sm" className="h-8 text-xs px-4">Back</Button>
+        <Button variant="outline" size="sm" className="h-8 text-xs px-4">
+          <Package className="h-3.5 w-3.5 mr-1.5" />
+          Add from Inventory
+        </Button>
+      </div>
 
-        <div className="space-y-1">
-          <Label htmlFor="invNumber" className="text-xs">Inv #</Label>
-          <Input
-            id="invNumber"
-            value={formData.invNumber}
-            onChange={(e) => handleInputChange("invNumber", e.target.value)}
-            placeholder="Inv #"
-            className="h-7 text-xs"
-          />
+      {/* Items Data Table */}
+      <div className="border rounded-lg overflow-hidden">
+        <div className="bg-muted/50 px-4 py-2 border-b">
+          <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Items</span>
         </div>
-
-        <div className="space-y-1">
-          <Label htmlFor="dtNumber" className="text-xs">DT #</Label>
-          <Input
-            id="dtNumber"
-            value={formData.dtNumber}
-            onChange={(e) => handleInputChange("dtNumber", e.target.value)}
-            placeholder="DT #"
-            className="h-7 text-xs"
-          />
+        <div className="overflow-x-auto">
+          <Table>
+            <TableHeader>
+              <TableRow className="bg-muted/30">
+                <TableHead className="w-8 text-center">
+                  <Checkbox className="h-3.5 w-3.5" />
+                </TableHead>
+                <TableHead className="text-xs font-medium">Sort</TableHead>
+                <TableHead className="text-xs font-medium">Manufacturer</TableHead>
+                <TableHead className="text-xs font-medium">Class</TableHead>
+                <TableHead className="text-xs font-medium">Size</TableHead>
+                <TableHead className="text-xs font-medium">Color</TableHead>
+                <TableHead className="text-xs font-medium">Slot</TableHead>
+                <TableHead className="text-xs font-medium">Eyelets</TableHead>
+                <TableHead className="text-xs font-medium">Zip</TableHead>
+                <TableHead className="text-xs font-medium">New</TableHead>
+                <TableHead className="text-xs font-medium">ESL ID</TableHead>
+                <TableHead className="text-xs font-medium">Cust ID</TableHead>
+                <TableHead className="text-xs font-medium">Tag</TableHead>
+                <TableHead className="text-xs font-medium">System Tag</TableHead>
+                <TableHead className="text-xs font-medium">Stage</TableHead>
+                <TableHead className="text-xs font-medium">Clean</TableHead>
+                <TableHead className="text-xs font-medium">Test</TableHead>
+                <TableHead className="text-xs font-medium">VI</TableHead>
+                <TableHead className="text-xs font-medium">Stamp</TableHead>
+                <TableHead className="text-xs font-medium">Stamp Insp</TableHead>
+                <TableHead className="text-xs font-medium">Box Order</TableHead>
+                <TableHead className="text-xs font-medium">Acc</TableHead>
+                <TableHead className="text-xs font-medium">Bin</TableHead>
+                <TableHead className="text-xs font-medium">Status</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {/* Filter Row */}
+              <TableRow className="bg-background">
+                <TableCell></TableCell>
+                <TableCell><Input className="h-6 text-xs w-12" /></TableCell>
+                <TableCell><Input className="h-6 text-xs w-20" /></TableCell>
+                <TableCell><Input className="h-6 text-xs w-12" /></TableCell>
+                <TableCell><Input className="h-6 text-xs w-12" /></TableCell>
+                <TableCell><Input className="h-6 text-xs w-12" /></TableCell>
+                <TableCell><Input className="h-6 text-xs w-10" /></TableCell>
+                <TableCell><Input className="h-6 text-xs w-10" /></TableCell>
+                <TableCell><Input className="h-6 text-xs w-10" /></TableCell>
+                <TableCell><Input className="h-6 text-xs w-10" /></TableCell>
+                <TableCell><Input className="h-6 text-xs w-16" /></TableCell>
+                <TableCell><Input className="h-6 text-xs w-16" /></TableCell>
+                <TableCell><Input className="h-6 text-xs w-12" /></TableCell>
+                <TableCell><Input className="h-6 text-xs w-16" /></TableCell>
+                <TableCell><Input className="h-6 text-xs w-12" /></TableCell>
+                <TableCell><Input className="h-6 text-xs w-12" /></TableCell>
+                <TableCell><Input className="h-6 text-xs w-10" /></TableCell>
+                <TableCell><Input className="h-6 text-xs w-10" /></TableCell>
+                <TableCell><Input className="h-6 text-xs w-12" /></TableCell>
+                <TableCell><Input className="h-6 text-xs w-16" /></TableCell>
+                <TableCell><Input className="h-6 text-xs w-16" /></TableCell>
+                <TableCell><Input className="h-6 text-xs w-10" /></TableCell>
+                <TableCell><Input className="h-6 text-xs w-10" /></TableCell>
+                <TableCell><Input className="h-6 text-xs w-14" /></TableCell>
+              </TableRow>
+              {/* Empty State */}
+              <TableRow>
+                <TableCell colSpan={24} className="text-center py-8 text-sm text-muted-foreground">
+                  No data to display
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
         </div>
       </div>
 
-      <div className="space-y-1">
-        <Label htmlFor="deliveryStatus" className="text-xs">Delivery Status</Label>
-        <Textarea
-          id="deliveryStatus"
-          value={formData.deliveryStatus}
-          onChange={(e) => handleInputChange("deliveryStatus", e.target.value)}
-          placeholder="Enter delivery status..."
-          rows={2}
-          className="text-xs min-h-[50px]"
-        />
-      </div>
-
-      <div className="space-y-2 pt-2 border-t">
-        <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Other Information</div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-          <div className="space-y-1">
-            <Label htmlFor="poNumber" className="text-xs">PO Number</Label>
-            <Input
-              id="poNumber"
-              value={formData.poNumber}
-              onChange={(e) => handleInputChange("poNumber", e.target.value)}
-              placeholder="W/OPO"
-              className="h-7 text-xs"
-            />
-          </div>
-
-          <div className="space-y-1">
-            <Label htmlFor="jmPartsPoNumber" className="text-xs">JM Parts PO #</Label>
-            <Input
-              id="jmPartsPoNumber"
-              value={formData.jmPartsPoNumber}
-              onChange={(e) => handleInputChange("jmPartsPoNumber", e.target.value)}
-              placeholder="JM Parts PO #"
-              className="h-7 text-xs"
-            />
-          </div>
-
-          <div className="space-y-1">
-            <Label htmlFor="soNumber" className="text-xs">SO Number</Label>
-            <Input
-              id="soNumber"
-              value={formData.soNumber}
-              onChange={(e) => handleInputChange("soNumber", e.target.value)}
-              placeholder="SO Number"
-              className="h-7 text-xs"
-            />
-          </div>
-
-          <div className="space-y-1">
-            <Label htmlFor="needBy" className="text-xs">Need By</Label>
-            <Input
-              id="needBy"
-              type="date"
-              value={formData.needBy}
-              onChange={(e) => handleInputChange("needBy", e.target.value)}
-              className="h-7 text-xs"
-            />
-          </div>
-
-          <div className="space-y-1">
-            <Label htmlFor="deliverByDate" className="text-xs">Deliver By Date</Label>
-            <Input
-              id="deliverByDate"
-              type="date"
-              value={formData.deliverByDate}
-              onChange={(e) => handleInputChange("deliverByDate", e.target.value)}
-              className="h-7 text-xs"
-            />
-          </div>
-
-          <div className="space-y-1">
-            <Label htmlFor="testDate" className="text-xs">Date Tested</Label>
-            <Input
-              id="testDate"
-              type="date"
-              value={formData.testDate}
-              onChange={(e) => handleInputChange("testDate", e.target.value)}
-              className="h-7 text-xs"
-            />
-          </div>
-
-          <div className="space-y-1">
-            <Label htmlFor="transitQty" className="text-xs">Transit Qty</Label>
-            <Input
-              id="transitQty"
-              value={formData.transitQty}
-              onChange={(e) => handleInputChange("transitQty", e.target.value)}
-              placeholder="Transit Qty"
-              className="h-7 text-xs"
-            />
-          </div>
-        </div>
-
-        <div className="flex items-center gap-3 pt-1">
-          <div className="flex items-center space-x-1.5">
-            <Checkbox
-              id="new"
-              checked={formData.newEquip}
-              onCheckedChange={(checked) => handleInputChange("newEquip", checked)}
-              className="h-3.5 w-3.5"
-            />
-            <Label htmlFor="new" className="text-xs cursor-pointer">New</Label>
-          </div>
-
-          <div className="flex items-center space-x-1.5">
-            <Checkbox
-              id="hotList"
-              checked={formData.hotList}
-              onCheckedChange={(checked) => handleInputChange("hotList", checked)}
-              className="h-3.5 w-3.5"
-            />
-            <Label htmlFor="hotList" className="text-xs cursor-pointer">Hot List</Label>
-          </div>
-        </div>
+      {/* Bottom Action Buttons */}
+      <div className="flex items-center justify-end gap-2 pt-2">
+        <Button variant="outline" size="sm" className="h-8 text-xs px-4">Preview changes</Button>
+        <Button variant="default" size="sm" className="h-8 text-xs px-4">Save changes</Button>
+        <Button variant="ghost" size="sm" className="h-8 text-xs px-4">Cancel changes</Button>
       </div>
     </div>
   );
