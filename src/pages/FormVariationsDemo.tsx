@@ -3500,63 +3500,122 @@ const FormVariationsDemo = () => {
   );
 
   const renderTestingSection = () => {
-    const costItems = [
-      { label: 'Testing', qty: '0', cost: '0.00', hasQty: true },
-      { label: 'Expedite', qty: null, cost: '0.00', hasQty: false },
-      { label: 'Emergency', qty: null, cost: '0.00', hasQty: false },
-      { label: 'Replacement', qty: '0', cost: '0.00', hasQty: true },
-      { label: 'New Sales', qty: '0', cost: '0.00', hasQty: true },
-    ];
-
     return (
-      <div className="space-y-3 max-w-sm">
-        {/* Header row */}
-        <div className="flex items-center gap-4 text-xs font-medium text-muted-foreground border-b pb-2">
-          <div className="w-24"></div>
-          <div className="w-14 text-center">Qty</div>
-          <div className="w-20 text-center">Cost</div>
-        </div>
+      <div className="space-y-6">
+        {/* Search/Filter Section */}
+        <div className="border border-border rounded-lg p-4 space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {/* Left Column */}
+            <div className="space-y-3">
+              <div className="space-y-1">
+                <Label htmlFor="technician" className="text-xs">Technician:</Label>
+                <Select defaultValue="all">
+                  <SelectTrigger className="h-8 text-xs">
+                    <SelectValue placeholder="Select technician" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-background border-border">
+                    <SelectItem value="all" className="text-xs">All Records</SelectItem>
+                    <SelectItem value="tech1" className="text-xs">John Smith</SelectItem>
+                    <SelectItem value="tech2" className="text-xs">Jane Doe</SelectItem>
+                    <SelectItem value="tech3" className="text-xs">Mike Johnson</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="result" className="text-xs">Result:</Label>
+                <Select>
+                  <SelectTrigger className="h-8 text-xs">
+                    <SelectValue placeholder="Select result" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-background border-border">
+                    <SelectItem value="pass" className="text-xs">Pass</SelectItem>
+                    <SelectItem value="fail" className="text-xs">Fail</SelectItem>
+                    <SelectItem value="pending" className="text-xs">Pending</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <Button size="sm" className="h-8 text-xs px-4">
+                Search
+              </Button>
+            </div>
 
-        {/* Cost items */}
-        <div className="space-y-2">
-          {costItems.map((item) => (
-            <div key={item.label} className="flex items-center gap-4">
-              <div className="w-24">
-                <Label className="text-sm font-medium">{item.label}:</Label>
+            {/* Middle Column */}
+            <div className="space-y-3">
+              <div className="space-y-1">
+                <Label htmlFor="proceduresUsed" className="text-xs">Procedures Used:</Label>
+                <Select>
+                  <SelectTrigger className="h-8 text-xs">
+                    <SelectValue placeholder="Select procedure" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-background border-border">
+                    <SelectItem value="proc1" className="text-xs">Standard Testing</SelectItem>
+                    <SelectItem value="proc2" className="text-xs">Extended Testing</SelectItem>
+                    <SelectItem value="proc3" className="text-xs">Quick Check</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
-              <div className="w-14 flex justify-center">
-                {item.hasQty ? (
-                  <Input 
-                    value={item.qty} 
-                    readOnly 
-                    className="h-7 text-xs text-center w-14 bg-muted/30" 
-                  />
-                ) : (
-                  <span className="text-xs text-muted-foreground">—</span>
-                )}
-              </div>
-              <div className="w-20">
-                <Input 
-                  value={item.cost} 
-                  readOnly 
-                  className="h-7 text-xs text-right w-20 bg-muted/30" 
-                />
+              <div className="space-y-1">
+                <Label htmlFor="testResult" className="text-xs">Test Result:</Label>
+                <Select>
+                  <SelectTrigger className="h-8 text-xs">
+                    <SelectValue placeholder="Select test result" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-background border-border">
+                    <SelectItem value="passed" className="text-xs">Passed</SelectItem>
+                    <SelectItem value="failed" className="text-xs">Failed</SelectItem>
+                    <SelectItem value="inconclusive" className="text-xs">Inconclusive</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
             </div>
-          ))}
+
+            {/* Right Column */}
+            <div className="space-y-3">
+              <div className="space-y-1">
+                <Label htmlFor="standardsUsed" className="text-xs">Standards Used:</Label>
+                <Input id="standardsUsed" placeholder="Enter standards" className="h-8 text-xs" />
+              </div>
+              <div className="pt-5">
+                <Button size="sm" className="h-8 text-xs px-4 bg-primary text-primary-foreground hover:bg-primary/90">
+                  Update
+                </Button>
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* Total row */}
-        <div className="flex items-center gap-4 border-t pt-2 mt-2">
-          <div className="w-24">
-            <Label className="text-sm font-semibold">Total:</Label>
+        {/* Actions Section */}
+        <div className="flex flex-wrap items-center justify-center gap-3 py-4 border-t border-b border-border">
+          <Button variant="outline" size="sm" className="h-8 text-xs px-4">
+            <Printer className="h-3.5 w-3.5 mr-2" />
+            Print Test Report
+          </Button>
+          
+          <div className="flex items-center gap-2">
+            <Label className="text-xs text-muted-foreground">sorted by:</Label>
+            <Select defaultValue="summary">
+              <SelectTrigger className="h-8 w-40 text-xs">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="bg-background border-border">
+                <SelectItem value="summary" className="text-xs">Summary</SelectItem>
+                <SelectItem value="sort" className="text-xs">Detail by Sort #</SelectItem>
+                <SelectItem value="custid" className="text-xs">Detail by Cust ID</SelectItem>
+                <SelectItem value="eslid" className="text-xs">Detail by ESL ID</SelectItem>
+                <SelectItem value="tag" className="text-xs">Detail by Tag #</SelectItem>
+                <SelectItem value="individual" className="text-xs">Individually</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
-          <div className="w-14 text-center">
-            <span className="text-xs font-semibold">0</span>
-          </div>
-          <div className="w-20 text-right pr-2">
-            <span className="text-xs font-semibold">0.00</span>
-          </div>
+
+          <Button variant="outline" size="sm" className="h-8 text-xs px-4">
+            Back
+          </Button>
+        </div>
+
+        {/* Empty Results Area */}
+        <div className="border border-border rounded-lg p-8 text-center">
+          <p className="text-sm text-muted-foreground">No test records to display</p>
         </div>
       </div>
     );
