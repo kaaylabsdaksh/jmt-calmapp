@@ -3336,31 +3336,31 @@ const FormVariationsDemo = () => {
 
       {/* Fixed Footer for Details Tab - respects sidebar */}
       <div className="fixed bottom-0 left-[var(--sidebar-width,16rem)] right-0 z-40 bg-background border-t shadow-sm">
-        <div className="px-4 py-2">
-          <div className="flex items-center justify-between gap-2">
+        <div className="px-4 py-3">
+          <div className="flex items-center justify-between gap-3">
             {/* Left side - Action buttons */}
-            <div className="flex flex-wrap items-center gap-1.5">
-              <Button variant="outline" size="sm" className="h-7 text-xs px-3">
-                <Printer className="h-3.5 w-3.5 mr-1.5" />
+            <div className="flex flex-wrap items-center gap-2">
+              <Button variant="outline" size="default" className="h-9 text-sm px-4">
+                <Printer className="h-4 w-4 mr-2" />
                 WO
               </Button>
-              <Button variant="outline" size="sm" className="h-7 text-xs px-3">
-                <Printer className="h-3.5 w-3.5 mr-1.5" />
+              <Button variant="outline" size="default" className="h-9 text-sm px-4">
+                <Printer className="h-4 w-4 mr-2" />
                 Label
               </Button>
               <Input 
                 type="number" 
                 defaultValue="1" 
                 min="1" 
-                className="h-7 w-12 text-xs text-center" 
+                className="h-9 w-14 text-sm text-center" 
                 placeholder="Qty"
               />
-              <Button variant="outline" size="sm" className="h-7 text-xs px-3">
-                <Printer className="h-3.5 w-3.5 mr-1.5" />
+              <Button variant="outline" size="default" className="h-9 text-sm px-4">
+                <Printer className="h-4 w-4 mr-2" />
                 Batch Sheet
               </Button>
               <Select defaultValue="default">
-                <SelectTrigger className="h-7 w-24 text-xs">
+                <SelectTrigger className="h-9 w-28 text-sm">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -3368,29 +3368,29 @@ const FormVariationsDemo = () => {
                   <SelectItem value="custom">Custom</SelectItem>
                 </SelectContent>
               </Select>
-              <Button variant="outline" size="sm" className="h-7 text-xs px-3">
+              <Button variant="outline" size="default" className="h-9 text-sm px-4">
                 Assign by Class
               </Button>
-              <Button variant="outline" size="sm" className="h-7 text-xs px-3">
+              <Button variant="outline" size="default" className="h-9 text-sm px-4">
                 Assign by Size
               </Button>
-              <Button variant="outline" size="sm" className="h-7 text-xs px-3">
-                <Package className="h-3.5 w-3.5 mr-1.5" />
+              <Button variant="outline" size="default" className="h-9 text-sm px-4">
+                <Package className="h-4 w-4 mr-2" />
                 Add from Inventory
               </Button>
             </div>
 
             {/* Right side - Save and Cancel */}
-            <div className="flex items-center gap-2">
-              <Button variant="outline" size="sm" onClick={handleCancel}>
+            <div className="flex items-center gap-3">
+              <Button variant="outline" size="default" className="h-9 text-sm px-4" onClick={handleCancel}>
                 Cancel
               </Button>
               <Button 
-                size="sm"
+                size="default"
                 onClick={handleSave}
-                className="bg-primary text-primary-foreground hover:bg-primary/90"
+                className="h-9 text-sm px-4 bg-primary text-primary-foreground hover:bg-primary/90"
               >
-                <Save className="h-3.5 w-3.5 mr-1.5" />
+                <Save className="h-4 w-4 mr-2" />
                 Save
               </Button>
             </div>
