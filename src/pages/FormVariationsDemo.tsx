@@ -1253,7 +1253,7 @@ const FormVariationsDemo = () => {
                 <CardContent className="p-3 space-y-2">
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                     <div className="space-y-1">
-                      <Label className="text-xs font-medium">Report #</Label>
+                      <Label className="text-xs font-medium">Report # <span className="text-destructive">*</span></Label>
                       <Input 
                         value={formData.reportNumber} 
                         readOnly 
@@ -1262,7 +1262,7 @@ const FormVariationsDemo = () => {
                     </div>
 
                     <div className="space-y-1">
-                      <Label htmlFor="itemStatus" className="text-xs font-medium">Item Status</Label>
+                      <Label htmlFor="itemStatus" className="text-xs font-medium">Item Status <span className="text-destructive">*</span></Label>
                       <Select value={formData.itemStatus} onValueChange={handleStatusChangeAttempt}>
                         <SelectTrigger className="h-7 text-xs">
                           <SelectValue placeholder="Select status" />
@@ -1315,7 +1315,7 @@ const FormVariationsDemo = () => {
                     </div>
 
                     <div className="space-y-1">
-                      <Label htmlFor="testFreq" className="text-xs font-medium">Test Freq *</Label>
+                      <Label htmlFor="testFreq" className="text-xs font-medium">Test Freq <span className="text-destructive">*</span></Label>
                       <Input
                         id="testFreq"
                         value={formData.calFreq}
@@ -1328,7 +1328,7 @@ const FormVariationsDemo = () => {
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
 
                     <div className="space-y-1">
-                      <Label htmlFor="priority" className="text-xs font-medium">Priority *</Label>
+                      <Label htmlFor="priority" className="text-xs font-medium">Priority <span className="text-destructive">*</span></Label>
                       <Select value={formData.priority} onValueChange={(value) => handleInputChange("priority", value)}>
                         <SelectTrigger className="h-7 text-xs">
                           <SelectValue />
@@ -1343,7 +1343,7 @@ const FormVariationsDemo = () => {
                     </div>
 
                     <div className="space-y-1">
-                      <Label htmlFor="location" className="text-xs font-medium">Location *</Label>
+                      <Label htmlFor="location" className="text-xs font-medium">Location <span className="text-destructive">*</span></Label>
                       <Select value={formData.location} onValueChange={(value) => handleInputChange("location", value)}>
                         <SelectTrigger className="h-7 text-xs">
                           <SelectValue />
@@ -1357,7 +1357,7 @@ const FormVariationsDemo = () => {
                     </div>
 
                     <div className="space-y-1">
-                      <Label htmlFor="division" className="text-xs font-medium">Division *</Label>
+                      <Label htmlFor="division" className="text-xs font-medium">Division <span className="text-destructive">*</span></Label>
                       <Select value={formData.division} onValueChange={(value) => handleInputChange("division", value)}>
                         <SelectTrigger className="h-7 text-xs">
                           <SelectValue />
@@ -1371,7 +1371,7 @@ const FormVariationsDemo = () => {
                     </div>
 
                     <div className="space-y-1">
-                      <Label htmlFor="actionCode" className="text-xs font-medium">Action Code *</Label>
+                      <Label htmlFor="actionCode" className="text-xs font-medium">Action Code <span className="text-destructive">*</span></Label>
                       <Select value={formData.actionCode} onValueChange={(value) => handleInputChange("actionCode", value)}>
                         <SelectTrigger className="h-7 text-xs">
                           <SelectValue />
