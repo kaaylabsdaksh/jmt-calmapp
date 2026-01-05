@@ -3279,37 +3279,37 @@ const FormVariationsDemo = () => {
     ];
 
     return (
-      <div className="space-y-4">
+      <div className="space-y-3 max-w-sm">
         {/* Header row */}
-        <div className="grid grid-cols-12 gap-2 items-center text-xs font-medium text-muted-foreground border-b pb-2">
-          <div className="col-span-4"></div>
-          <div className="col-span-3 text-center">Qty</div>
-          <div className="col-span-5 text-center">Cost</div>
+        <div className="flex items-center gap-4 text-xs font-medium text-muted-foreground border-b pb-2">
+          <div className="w-24"></div>
+          <div className="w-14 text-center">Qty</div>
+          <div className="w-20 text-center">Cost</div>
         </div>
 
         {/* Cost items */}
-        <div className="space-y-3">
+        <div className="space-y-2">
           {costItems.map((item) => (
-            <div key={item.label} className="grid grid-cols-12 gap-2 items-center">
-              <div className="col-span-4">
+            <div key={item.label} className="flex items-center gap-4">
+              <div className="w-24">
                 <Label className="text-sm font-medium">{item.label}:</Label>
               </div>
-              <div className="col-span-3 flex justify-center">
+              <div className="w-14 flex justify-center">
                 {item.hasQty ? (
                   <Input 
                     value={item.qty} 
                     readOnly 
-                    className="h-8 text-sm text-center w-16 bg-muted/30" 
+                    className="h-7 text-xs text-center w-14 bg-muted/30" 
                   />
                 ) : (
-                  <span className="text-sm text-muted-foreground">—</span>
+                  <span className="text-xs text-muted-foreground">—</span>
                 )}
               </div>
-              <div className="col-span-5">
+              <div className="w-20">
                 <Input 
                   value={item.cost} 
                   readOnly 
-                  className="h-8 text-sm text-right bg-muted/30" 
+                  className="h-7 text-xs text-right w-20 bg-muted/30" 
                 />
               </div>
             </div>
@@ -3317,17 +3317,15 @@ const FormVariationsDemo = () => {
         </div>
 
         {/* Total row */}
-        <div className="grid grid-cols-12 gap-2 items-center border-t pt-3 mt-3">
-          <div className="col-span-4">
+        <div className="flex items-center gap-4 border-t pt-2 mt-2">
+          <div className="w-24">
             <Label className="text-sm font-semibold">Total:</Label>
           </div>
-          <div className="col-span-3 flex justify-center">
-            <span className="text-sm font-semibold">0</span>
+          <div className="w-14 text-center">
+            <span className="text-xs font-semibold">0</span>
           </div>
-          <div className="col-span-5">
-            <div className="h-8 flex items-center justify-end pr-3 font-semibold text-sm">
-              0.00
-            </div>
+          <div className="w-20 text-right pr-2">
+            <span className="text-xs font-semibold">0.00</span>
           </div>
         </div>
       </div>
