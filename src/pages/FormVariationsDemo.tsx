@@ -9739,7 +9739,7 @@ const FormVariationsDemo = () => {
                 onClick={handleCancel}
                 className="bg-primary hover:bg-primary/90 text-primary-foreground border-primary font-medium h-9 px-4"
               >
-                Back
+                Cancel
               </Button>
               <Button 
                 onClick={handleSave}
