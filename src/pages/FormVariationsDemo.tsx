@@ -6551,7 +6551,7 @@ const FormVariationsDemo = () => {
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
                       <Settings className="h-5 w-5 text-foreground" />
-                      <h3 className="font-semibold">Testing</h3>
+                      <h3 className="font-semibold">Cost Information</h3>
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pb-4">
