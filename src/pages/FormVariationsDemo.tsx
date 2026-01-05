@@ -1254,19 +1254,13 @@ const FormVariationsDemo = () => {
 
           </div>
 
-          {/* Sub-tabs for ESL General Section */}
-          <Tabs defaultValue="general-info" className="w-full">
-            <TabsList className="flex w-full mb-3 h-8">
-              <TabsTrigger value="general-info" className="text-xs flex-1">General Information</TabsTrigger>
-              <TabsTrigger value="arrival-info" className="text-xs flex-1">Arrival Information</TabsTrigger>
-              <TabsTrigger value="misc-info" className="text-xs flex-1">Misc. Information</TabsTrigger>
-              <TabsTrigger value="cost-info" className="text-xs flex-1">Cost Information</TabsTrigger>
-              <TabsTrigger value="accessories" className="text-xs flex-1">Accessories</TabsTrigger>
-              <TabsTrigger value="comments" className="text-xs flex-1">Comments</TabsTrigger>
-            </TabsList>
-
-            {/* General Information Tab */}
-            <TabsContent value="general-info">
+          {/* Sub-accordions for ESL General Section */}
+          <Accordion type="multiple" defaultValue={["general-info"]} className="space-y-2">
+            <AccordionItem value="general-info" className="border rounded-lg px-3">
+              <AccordionTrigger className="hover:no-underline py-3 text-sm font-medium">
+                General Information
+              </AccordionTrigger>
+              <AccordionContent className="pb-3">
               <Card className="border-0 shadow-sm">
                 <CardContent className="p-3 space-y-2">
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
@@ -1451,10 +1445,14 @@ const FormVariationsDemo = () => {
                   </div>
                 </CardContent>
               </Card>
-            </TabsContent>
+              </AccordionContent>
+            </AccordionItem>
 
-            {/* Arrival Information Tab */}
-            <TabsContent value="arrival-info">
+            <AccordionItem value="arrival-info" className="border rounded-lg px-3">
+              <AccordionTrigger className="hover:no-underline py-3 text-sm font-medium">
+                Arrival Information
+              </AccordionTrigger>
+              <AccordionContent className="pb-3">
               <Card className="border-0 shadow-sm">
                 <CardContent className="p-4 space-y-4">
                   {/* Arrival Date & Type */}
@@ -1693,10 +1691,14 @@ const FormVariationsDemo = () => {
                   </div>
                 </CardContent>
               </Card>
-            </TabsContent>
+              </AccordionContent>
+            </AccordionItem>
 
-            {/* Misc. Information Tab */}
-            <TabsContent value="misc-info">
+            <AccordionItem value="misc-info" className="border rounded-lg px-3">
+              <AccordionTrigger className="hover:no-underline py-3 text-sm font-medium">
+                Misc. Information
+              </AccordionTrigger>
+              <AccordionContent className="pb-3">
               <Card className="border-0 shadow-sm">
                 <CardContent className="p-3">
                   <Textarea
@@ -1707,19 +1709,27 @@ const FormVariationsDemo = () => {
                   />
                 </CardContent>
               </Card>
-            </TabsContent>
+              </AccordionContent>
+            </AccordionItem>
 
-            {/* Cost Information Tab */}
-            <TabsContent value="cost-info">
+            <AccordionItem value="cost-info" className="border rounded-lg px-3">
+              <AccordionTrigger className="hover:no-underline py-3 text-sm font-medium">
+                Cost Information
+              </AccordionTrigger>
+              <AccordionContent className="pb-3">
               <Card className="border-0 shadow-sm">
                 <CardContent className="p-3">
                   {renderTestingSection()}
                 </CardContent>
               </Card>
-            </TabsContent>
+              </AccordionContent>
+            </AccordionItem>
 
-            {/* Accessories Tab */}
-            <TabsContent value="accessories">
+            <AccordionItem value="accessories" className="border rounded-lg px-3">
+              <AccordionTrigger className="hover:no-underline py-3 text-sm font-medium">
+                Accessories
+              </AccordionTrigger>
+              <AccordionContent className="pb-3">
               <Card className="border-0 shadow-sm">
                 <CardContent className="p-3 space-y-3">
                   <div className="grid grid-cols-1 md:grid-cols-6 gap-2 items-end">
@@ -1845,10 +1855,14 @@ const FormVariationsDemo = () => {
                   )}
                 </CardContent>
               </Card>
-            </TabsContent>
+              </AccordionContent>
+            </AccordionItem>
 
-            {/* Comments Tab */}
-            <TabsContent value="comments">
+            <AccordionItem value="comments" className="border rounded-lg px-3">
+              <AccordionTrigger className="hover:no-underline py-3 text-sm font-medium">
+                Comments
+              </AccordionTrigger>
+              <AccordionContent className="pb-3">
               <Card className="border-0 shadow-sm">
                 <CardContent className="p-3 space-y-2">
                   <div className="space-y-2">
@@ -1920,8 +1934,9 @@ const FormVariationsDemo = () => {
                   </div>
                 </CardContent>
               </Card>
-            </TabsContent>
-          </Tabs>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </div>
       );
     }
