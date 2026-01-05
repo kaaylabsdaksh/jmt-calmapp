@@ -1260,6 +1260,7 @@ const FormVariationsDemo = () => {
               <TabsTrigger value="general-info" className="text-xs flex-1">General Information</TabsTrigger>
               <TabsTrigger value="arrival-info" className="text-xs flex-1">Arrival Information</TabsTrigger>
               <TabsTrigger value="misc-info" className="text-xs flex-1">Misc. Information</TabsTrigger>
+              <TabsTrigger value="cost-info" className="text-xs flex-1">Cost Information</TabsTrigger>
               <TabsTrigger value="accessories" className="text-xs flex-1">Accessories</TabsTrigger>
               <TabsTrigger value="comments" className="text-xs flex-1">Comments</TabsTrigger>
             </TabsList>
@@ -1704,6 +1705,15 @@ const FormVariationsDemo = () => {
                     placeholder="Enter miscellaneous information..."
                     className="min-h-[150px] text-xs"
                   />
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            {/* Cost Information Tab */}
+            <TabsContent value="cost-info">
+              <Card className="border-0 shadow-sm">
+                <CardContent className="p-3">
+                  {renderTestingSection()}
                 </CardContent>
               </Card>
             </TabsContent>
@@ -6553,17 +6563,6 @@ const FormVariationsDemo = () => {
                   </AccordionContent>
                 </AccordionItem>
 
-                <AccordionItem value="testing" className="border-b">
-                  <AccordionTrigger className="hover:no-underline py-4">
-                    <div className="flex items-center gap-3">
-                      <Settings className="h-5 w-5 text-foreground" />
-                      <h3 className="font-semibold">Cost Information</h3>
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent className="pb-4">
-                    {renderTestingSection()}
-                  </AccordionContent>
-                </AccordionItem>
 
                 <AccordionItem value="work-status" className="border-b">
                   <AccordionTrigger className="hover:no-underline py-4">
