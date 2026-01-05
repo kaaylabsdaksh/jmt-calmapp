@@ -12,7 +12,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, ChevronLeft, ChevronDown, ChevronUp, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield, Wrench, Activity, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock, ExternalLink, ArrowUp, Pencil, ImageIcon } from "lucide-react";
+import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, ChevronLeft, ChevronDown, ChevronUp, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield, Wrench, Activity, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock, ExternalLink, ArrowUp, Pencil, ImageIcon, Plus } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -500,12 +500,9 @@ const FormVariationsDemo = () => {
   // State for accessories list
   const [accessoriesList, setAccessoriesList] = useState<Array<{
     id: string;
-    type: string;
     accessory: string;
-    material: string;
-    color: string;
     qty: string;
-  }>>([]);
+  }>>([{ id: '1', accessory: '', qty: '' }]);
 
   // State for parts list
   const [partsList, setPartsList] = useState<Array<{
@@ -1145,32 +1142,18 @@ const FormVariationsDemo = () => {
 
   // Accessories handlers
   const handleAddAccessory = () => {
-    if (!formData.accessoryType || !formData.accessory || !formData.accessoryQty) {
-      toast({
-        title: "Missing required fields",
-        description: "Please fill in Type, Accessory, and Quantity",
-        variant: "destructive",
-      });
-      return;
-    }
-    
     const newAccessory = {
       id: Date.now().toString(),
-      type: formData.accessoryType,
-      accessory: formData.accessory,
-      material: formData.accessoryMaterial,
-      color: formData.accessoryColor,
-      qty: formData.accessoryQty,
+      accessory: '',
+      qty: '',
     };
-    
     setAccessoriesList(prev => [...prev, newAccessory]);
-    
-    // Clear form fields after adding
-    handleInputChange("accessoryType", "");
-    handleInputChange("accessory", "");
-    handleInputChange("accessoryMaterial", "");
-    handleInputChange("accessoryColor", "");
-    handleInputChange("accessoryQty", "");
+  };
+
+  const handleAccessoryChange = (id: string, field: 'accessory' | 'qty', value: string) => {
+    setAccessoriesList(prev => prev.map(item => 
+      item.id === id ? { ...item, [field]: value } : item
+    ));
   };
 
   const handleRemoveAccessory = (id: string) => {
@@ -1788,23 +1771,17 @@ const FormVariationsDemo = () => {
                   </div>
 
                   {/* Accessories Table */}
-                  {accessoriesList.length > 0 && (
+                  {accessoriesList.filter(a => a.accessory).length > 0 && (
                     <div className="border rounded-lg overflow-hidden mt-3">
-                      <div className="bg-muted/50 grid grid-cols-6 p-2 text-xs font-medium">
-                        <div>Type</div>
+                      <div className="bg-muted/50 grid grid-cols-3 p-2 text-xs font-medium">
                         <div>Accessory</div>
-                        <div>Material</div>
-                        <div>Color</div>
                         <div>Qty</div>
                         <div>Actions</div>
                       </div>
                       <div className="divide-y">
-                        {accessoriesList.map((item) => (
-                          <div key={item.id} className="grid grid-cols-6 p-2 text-xs items-center">
-                            <div className="capitalize">{item.type}</div>
+                        {accessoriesList.filter(a => a.accessory).map((item) => (
+                          <div key={item.id} className="grid grid-cols-3 p-2 text-xs items-center">
                             <div className="capitalize">{item.accessory}</div>
-                            <div className="capitalize">{item.material || '-'}</div>
-                            <div className="capitalize">{item.color || '-'}</div>
                             <div>{item.qty}</div>
                             <div>
                               <Button
@@ -3238,10 +3215,10 @@ const FormVariationsDemo = () => {
       <div className="border border-border rounded-lg p-4 space-y-3">
         <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Accessories</div>
         
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
-          {[1, 2, 3, 4, 5].map((index) => (
-            <div key={index} className="flex items-center gap-2">
-              <Select>
+        <div className="space-y-2">
+          {accessoriesList.map((item) => (
+            <div key={item.id} className="flex items-center gap-2">
+              <Select value={item.accessory} onValueChange={(value) => handleAccessoryChange(item.id, 'accessory', value)}>
                 <SelectTrigger className="h-8 text-xs flex-1">
                   <SelectValue placeholder="Select accessory" />
                 </SelectTrigger>
@@ -3253,10 +3230,37 @@ const FormVariationsDemo = () => {
                   <SelectItem value="clip">Clip</SelectItem>
                 </SelectContent>
               </Select>
-              <Input type="number" placeholder="Qty" className="h-8 text-xs w-16 text-center" min="0" />
+              <Input 
+                type="number" 
+                placeholder="Qty" 
+                className="h-8 text-xs w-20 text-center" 
+                min="0"
+                value={item.qty}
+                onChange={(e) => handleAccessoryChange(item.id, 'qty', e.target.value)}
+              />
+              {accessoriesList.length > 1 && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-8 w-8 p-0 text-destructive hover:text-destructive"
+                  onClick={() => handleRemoveAccessory(item.id)}
+                >
+                  <Trash2 className="h-4 w-4" />
+                </Button>
+              )}
             </div>
           ))}
         </div>
+
+        <Button
+          variant="ghost"
+          size="sm"
+          className="h-8 text-xs gap-1 text-primary hover:text-primary"
+          onClick={handleAddAccessory}
+        >
+          <Plus className="h-4 w-4" />
+          Add Accessory
+        </Button>
       </div>
 
       {/* Items Data Table */}
@@ -5609,22 +5613,16 @@ const FormVariationsDemo = () => {
         </div>
 
         <div className="border rounded-lg overflow-x-auto">
-          <div className="bg-muted grid grid-cols-6 gap-4 p-2 text-xs font-medium min-w-[600px]">
-            <div>Type</div>
+          <div className="bg-muted grid grid-cols-3 gap-4 p-2 text-xs font-medium">
             <div>Accessory</div>
-            <div>Material</div>
-            <div>Color</div>
             <div>Qty</div>
             <div>Actions</div>
           </div>
-          {accessoriesList.length > 0 ? (
+          {accessoriesList.filter(a => a.accessory).length > 0 ? (
             <div className="divide-y">
-              {accessoriesList.map((accessory) => (
-                <div key={accessory.id} className="grid grid-cols-6 gap-4 p-3 text-sm min-w-[600px]">
-                  <div className="capitalize">{accessory.type}</div>
+              {accessoriesList.filter(a => a.accessory).map((accessory) => (
+                <div key={accessory.id} className="grid grid-cols-3 gap-4 p-3 text-sm">
                   <div className="capitalize">{accessory.accessory}</div>
-                  <div>{accessory.material || '-'}</div>
-                  <div className="capitalize">{accessory.color || '-'}</div>
                   <div>{accessory.qty}</div>
                   <div>
                     <Button
