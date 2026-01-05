@@ -9679,7 +9679,7 @@ const FormVariationsDemo = () => {
                 <DropdownMenuTrigger asChild>
                   <Button 
                     variant="outline" 
-                    className="bg-primary hover:bg-primary/90 text-primary-foreground border-primary font-medium h-9 px-4"
+                    className="border-border bg-background text-foreground hover:bg-muted font-medium h-9 px-4"
                   >
                     <MoreHorizontal className="h-4 w-4 mr-2" />
                     More Actions
@@ -9725,7 +9725,7 @@ const FormVariationsDemo = () => {
               <div className="flex items-center gap-2">
                 <span className="text-sm text-muted-foreground">Create New Group</span>
                 <Select>
-                  <SelectTrigger className="h-9 w-32 text-sm border-border">
+                  <SelectTrigger className="h-9 w-32 text-sm border-border bg-background">
                     <SelectValue placeholder="Select..." />
                   </SelectTrigger>
                   <SelectContent className="bg-background border-border">
@@ -9738,14 +9738,15 @@ const FormVariationsDemo = () => {
               <Button 
                 variant="outline" 
                 onClick={handleCancel}
-                className="bg-primary hover:bg-primary/90 text-primary-foreground border-primary font-medium h-9 px-4"
+                className="border-border bg-background text-foreground hover:bg-muted font-medium h-9 px-4"
               >
                 Cancel WO
               </Button>
               <Button 
                 variant="outline" 
-                className="bg-primary hover:bg-primary/90 text-primary-foreground border-primary font-medium h-9 px-4"
+                className="border-border bg-background text-foreground hover:bg-muted font-medium h-9 px-4"
               >
+                <Printer className="h-4 w-4 mr-2" />
                 Print WO
               </Button>
               <Button 
