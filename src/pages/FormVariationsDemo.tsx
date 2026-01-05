@@ -3092,7 +3092,7 @@ const FormVariationsDemo = () => {
   const renderDetailsSection = () => (
     <div className="space-y-6">
       {/* Quick Prefill Section - Full Width at Top */}
-      <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 space-y-3">
+      <div className="border border-primary/20 rounded-lg p-4 space-y-3">
         <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Quick Prefill</div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -3117,7 +3117,7 @@ const FormVariationsDemo = () => {
       {/* Product Information and ID Information - Two Column Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Product Information */}
-        <div className="bg-muted/30 rounded-lg p-4 space-y-3">
+        <div className="border border-border rounded-lg p-4 space-y-3">
           <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Product Information</div>
           
           <div className="grid grid-cols-2 gap-3">
@@ -3210,7 +3210,7 @@ const FormVariationsDemo = () => {
 
         {/* ID Information */}
         <div className="space-y-4">
-          <div className="bg-muted/30 rounded-lg p-4 space-y-3">
+          <div className="border border-border rounded-lg p-4 space-y-3">
             <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">ID Information</div>
             
             <div className="grid grid-cols-3 gap-3">
@@ -3235,7 +3235,7 @@ const FormVariationsDemo = () => {
       </div>
 
       {/* Accessories Section - Full Width at Bottom */}
-      <div className="bg-muted/30 rounded-lg p-4 space-y-3">
+      <div className="border border-border rounded-lg p-4 space-y-3">
         <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Accessories</div>
         
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
