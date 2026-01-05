@@ -3255,51 +3255,6 @@ const FormVariationsDemo = () => {
         </div>
       </div>
 
-      {/* Action Buttons Row */}
-      <div className="flex flex-wrap items-center justify-center gap-2 py-4 border-t border-b">
-        <Button variant="default" size="sm" className="h-8 text-xs px-4">
-          <Check className="h-3.5 w-3.5 mr-1.5" />
-          Add Item
-        </Button>
-        <Button variant="outline" size="sm" className="h-8 text-xs px-4">
-          <X className="h-3.5 w-3.5 mr-1.5" />
-          Cancel
-        </Button>
-        <div className="h-6 w-px bg-border mx-2" />
-        <Button variant="outline" size="sm" className="h-8 text-xs px-4">
-          <Printer className="h-3.5 w-3.5 mr-1.5" />
-          Print WO
-        </Button>
-        <Button variant="outline" size="sm" className="h-8 text-xs px-4">
-          <Printer className="h-3.5 w-3.5 mr-1.5" />
-          Print Label
-        </Button>
-        <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" className="h-8 text-xs px-4">
-            <Printer className="h-3.5 w-3.5 mr-1.5" />
-            Print Batch Sheet
-          </Button>
-          <Input type="number" placeholder="Qty" className="h-8 text-xs w-14 text-center" min="1" defaultValue="1" />
-          <Select defaultValue="default">
-            <SelectTrigger className="h-8 text-xs w-24">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="default">Default</SelectItem>
-              <SelectItem value="custom">Custom</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-        <div className="h-6 w-px bg-border mx-2" />
-        <Button variant="outline" size="sm" className="h-8 text-xs px-4">Assign by Class</Button>
-        <Button variant="outline" size="sm" className="h-8 text-xs px-4">Assign by Size</Button>
-        <Button variant="outline" size="sm" className="h-8 text-xs px-4">Back</Button>
-        <Button variant="outline" size="sm" className="h-8 text-xs px-4">
-          <Package className="h-3.5 w-3.5 mr-1.5" />
-          Add from Inventory
-        </Button>
-      </div>
-
       {/* Items Data Table */}
       <div className="border rounded-lg overflow-hidden">
         <div className="bg-muted/50 px-4 py-2 border-b">
@@ -3376,11 +3331,56 @@ const FormVariationsDemo = () => {
         </div>
       </div>
 
-      {/* Bottom Action Buttons */}
-      <div className="flex items-center justify-end gap-2 pt-2">
-        <Button variant="outline" size="sm" className="h-8 text-xs px-4">Preview changes</Button>
-        <Button variant="default" size="sm" className="h-8 text-xs px-4">Save changes</Button>
-        <Button variant="ghost" size="sm" className="h-8 text-xs px-4">Cancel changes</Button>
+      {/* Spacer for fixed footer */}
+      <div className="h-20" />
+
+      {/* Fixed Footer for Details Tab */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 bg-background border-t shadow-lg">
+        <div className="container max-w-screen-2xl mx-auto px-4 py-3">
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            {/* First Row */}
+            <Button variant="outline" size="sm" className="h-9 text-sm px-4">
+              <Printer className="h-4 w-4 mr-2" />
+              Print WO
+            </Button>
+            <Button variant="outline" size="sm" className="h-9 text-sm px-4">
+              <Printer className="h-4 w-4 mr-2" />
+              Print Label
+            </Button>
+            <Button variant="outline" size="sm" className="h-9 text-sm px-4">
+              <Printer className="h-4 w-4 mr-2" />
+              Print Batch Sheet
+            </Button>
+            <Input 
+              type="number" 
+              defaultValue="1" 
+              min="1" 
+              className="h-9 w-14 text-sm text-center" 
+            />
+            <Select defaultValue="default">
+              <SelectTrigger className="h-9 w-28 text-sm">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="default">Default</SelectItem>
+                <SelectItem value="custom">Custom</SelectItem>
+              </SelectContent>
+            </Select>
+            <Button variant="outline" size="sm" className="h-9 text-sm px-4">
+              Assign by Class
+            </Button>
+            <Button variant="outline" size="sm" className="h-9 text-sm px-4">
+              Assign by Size
+            </Button>
+            <Button variant="outline" size="sm" className="h-9 text-sm px-4">
+              Back
+            </Button>
+            <Button variant="outline" size="sm" className="h-9 text-sm px-4">
+              <Package className="h-4 w-4 mr-2" />
+              Add from Inventory
+            </Button>
+          </div>
+        </div>
       </div>
     </div>
   );
