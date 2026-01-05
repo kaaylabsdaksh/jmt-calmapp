@@ -3337,45 +3337,63 @@ const FormVariationsDemo = () => {
       {/* Fixed Footer for Details Tab - respects sidebar */}
       <div className="fixed bottom-0 left-[var(--sidebar-width,16rem)] right-0 z-40 bg-background border-t shadow-sm">
         <div className="px-4 py-2">
-          <div className="flex flex-wrap items-center justify-center gap-1.5">
-            <Button variant="outline" size="sm" className="h-7 text-xs px-3">
-              <Printer className="h-3.5 w-3.5 mr-1.5" />
-              Print WO
-            </Button>
-            <Button variant="outline" size="sm" className="h-7 text-xs px-3">
-              <Printer className="h-3.5 w-3.5 mr-1.5" />
-              Print Label
-            </Button>
-            <Input 
-              type="number" 
-              defaultValue="1" 
-              min="1" 
-              className="h-7 w-12 text-xs text-center" 
-              placeholder="Qty"
-            />
-            <Button variant="outline" size="sm" className="h-7 text-xs px-3">
-              <Printer className="h-3.5 w-3.5 mr-1.5" />
-              Print Batch Sheet
-            </Button>
-            <Select defaultValue="default">
-              <SelectTrigger className="h-7 w-24 text-xs">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="default">Default</SelectItem>
-                <SelectItem value="custom">Custom</SelectItem>
-              </SelectContent>
-            </Select>
-            <Button variant="outline" size="sm" className="h-7 text-xs px-3">
-              Assign by Class
-            </Button>
-            <Button variant="outline" size="sm" className="h-7 text-xs px-3">
-              Assign by Size
-            </Button>
-            <Button variant="outline" size="sm" className="h-7 text-xs px-3">
-              <Package className="h-3.5 w-3.5 mr-1.5" />
-              Add from Inventory
-            </Button>
+          <div className="flex items-center justify-between gap-2">
+            {/* Left side - Action buttons */}
+            <div className="flex flex-wrap items-center gap-1.5">
+              <Button variant="outline" size="sm" className="h-7 text-xs px-3">
+                <Printer className="h-3.5 w-3.5 mr-1.5" />
+                Print WO
+              </Button>
+              <Button variant="outline" size="sm" className="h-7 text-xs px-3">
+                <Printer className="h-3.5 w-3.5 mr-1.5" />
+                Print Label
+              </Button>
+              <Input 
+                type="number" 
+                defaultValue="1" 
+                min="1" 
+                className="h-7 w-12 text-xs text-center" 
+                placeholder="Qty"
+              />
+              <Button variant="outline" size="sm" className="h-7 text-xs px-3">
+                <Printer className="h-3.5 w-3.5 mr-1.5" />
+                Print Batch Sheet
+              </Button>
+              <Select defaultValue="default">
+                <SelectTrigger className="h-7 w-24 text-xs">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="default">Default</SelectItem>
+                  <SelectItem value="custom">Custom</SelectItem>
+                </SelectContent>
+              </Select>
+              <Button variant="outline" size="sm" className="h-7 text-xs px-3">
+                Assign by Class
+              </Button>
+              <Button variant="outline" size="sm" className="h-7 text-xs px-3">
+                Assign by Size
+              </Button>
+              <Button variant="outline" size="sm" className="h-7 text-xs px-3">
+                <Package className="h-3.5 w-3.5 mr-1.5" />
+                Add from Inventory
+              </Button>
+            </div>
+
+            {/* Right side - Save and Cancel */}
+            <div className="flex items-center gap-2">
+              <Button variant="outline" size="sm" onClick={handleCancel}>
+                Cancel
+              </Button>
+              <Button 
+                size="sm"
+                onClick={handleSave}
+                className="bg-primary text-primary-foreground hover:bg-primary/90"
+              >
+                <Save className="h-3.5 w-3.5 mr-1.5" />
+                Save
+              </Button>
+            </div>
           </div>
         </div>
       </div>
