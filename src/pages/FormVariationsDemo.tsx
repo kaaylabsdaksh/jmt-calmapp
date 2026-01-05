@@ -1619,7 +1619,7 @@ const FormVariationsDemo = () => {
                     <div className="space-y-2">
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                         <div className="space-y-1">
-                          <Label className="text-xs font-medium">PO Number</Label>
+                          <Label className="text-xs font-medium">PO Number <span className="text-destructive">*</span></Label>
                           <Input value={formData.poNumber} onChange={(e) => handleInputChange("poNumber", e.target.value)} className="h-7 text-xs" />
                         </div>
                         <div className="space-y-1">
@@ -1631,7 +1631,7 @@ const FormVariationsDemo = () => {
                           <Input value={formData.soNumber} onChange={(e) => handleInputChange("soNumber", e.target.value)} className="h-7 text-xs" />
                         </div>
                         <div className="space-y-1">
-                          <Label className="text-xs font-medium">Need By</Label>
+                          <Label className="text-xs font-medium">Need By <span className="text-destructive">*</span></Label>
                           <Input
                             type="date"
                             value={formData.needBy}
