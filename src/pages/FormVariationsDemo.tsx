@@ -1384,53 +1384,6 @@ const FormVariationsDemo = () => {
                       </Select>
                     </div>
                   </div>
-
-                  {/* Cost Information */}
-                  <div className="pt-2 border-t border-border">
-                    <h4 className="text-xs font-semibold mb-2">Cost Information</h4>
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-x-3 gap-y-1.5 text-xs">
-                      <div className="flex items-center justify-between">
-                        <span className="text-muted-foreground">Testing:</span>
-                        <div className="flex items-center gap-1">
-                          <span className="font-medium">0</span>
-                          <span className="text-muted-foreground">0.00</span>
-                        </div>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-muted-foreground">Expedite:</span>
-                        <span className="text-muted-foreground">0.00</span>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-muted-foreground">Emergency:</span>
-                        <span className="text-muted-foreground">0.00</span>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-muted-foreground">Replacement:</span>
-                        <Input 
-                          type="number"
-                          defaultValue="0"
-                          className="h-6 w-16 text-right text-xs"
-                          step="0.01"
-                        />
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-muted-foreground">New Sales:</span>
-                        <Input 
-                          type="number"
-                          defaultValue="0"
-                          className="h-6 w-16 text-right text-xs"
-                          step="0.01"
-                        />
-                      </div>
-                      <div className="flex items-center justify-between font-semibold pt-1.5 border-t border-border col-span-2 md:col-span-1">
-                        <span>Total:</span>
-                        <div className="flex items-center gap-1">
-                          <span>0</span>
-                          <span>0.00</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                 </CardContent>
               </Card>
               </AccordionContent>
