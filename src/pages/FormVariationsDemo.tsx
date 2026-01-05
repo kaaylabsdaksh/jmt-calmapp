@@ -3091,13 +3091,36 @@ const FormVariationsDemo = () => {
   // ESL-specific sections
   const renderDetailsSection = () => (
     <div className="space-y-6">
-      {/* Main Content Grid - Three Column Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Left Column - Product Information */}
-        <div className="space-y-4">
-          <div className="bg-muted/30 rounded-lg p-4 space-y-3">
-            <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Product Information</div>
-            
+      {/* Quick Prefill Section - Full Width at Top */}
+      <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 space-y-3">
+        <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Quick Prefill</div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="flex items-end gap-2">
+            <div className="flex-1 space-y-1">
+              <Label htmlFor="prefillEslId" className="text-xs">Prefill w/ESL ID:</Label>
+              <Input id="prefillEslId" placeholder="Enter ESL ID" className="h-8 text-xs" />
+            </div>
+            <Button variant="default" size="sm" className="h-8 text-xs px-4">Prefill</Button>
+          </div>
+          
+          <div className="flex items-end gap-2">
+            <div className="flex-1 space-y-1">
+              <Label htmlFor="prefillCustId" className="text-xs">Prefill w/Cust ID:</Label>
+              <Input id="prefillCustId" placeholder="Enter Cust ID" className="h-8 text-xs" />
+            </div>
+            <Button variant="default" size="sm" className="h-8 text-xs px-4">Prefill</Button>
+          </div>
+        </div>
+      </div>
+
+      {/* Product Information and ID Information - Two Column Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Product Information */}
+        <div className="bg-muted/30 rounded-lg p-4 space-y-3">
+          <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Product Information</div>
+          
+          <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1">
               <Label htmlFor="detailsManufacturer" className="text-xs">Manufacturer</Label>
               <Select value={formData.manufacturer} onValueChange={(value) => handleInputChange("manufacturer", value)}>
@@ -3162,69 +3185,49 @@ const FormVariationsDemo = () => {
                 </SelectContent>
               </Select>
             </div>
+          </div>
 
-            {/* Product Options Checkboxes */}
-            <div className="pt-3 border-t space-y-2">
-              <div className="flex items-center space-x-2">
-                <Checkbox id="detailsNew" checked={formData.newEquip} onCheckedChange={(checked) => handleInputChange("newEquip", checked)} className="h-4 w-4" />
-                <Label htmlFor="detailsNew" className="text-xs cursor-pointer">New</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Checkbox id="detailsSlot" checked={formData.slot} onCheckedChange={(checked) => handleInputChange("slot", checked)} className="h-4 w-4" />
-                <Label htmlFor="detailsSlot" className="text-xs cursor-pointer">Slot</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Checkbox id="detailsEyelets" checked={formData.eyelets} onCheckedChange={(checked) => handleInputChange("eyelets", checked)} className="h-4 w-4" />
-                <Label htmlFor="detailsEyelets" className="text-xs cursor-pointer">Eyelets</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Checkbox id="detailsZip" checked={formData.zip} onCheckedChange={(checked) => handleInputChange("zip", checked)} className="h-4 w-4" />
-                <Label htmlFor="detailsZip" className="text-xs cursor-pointer">Zip</Label>
-              </div>
+          {/* Product Options Checkboxes */}
+          <div className="pt-3 border-t flex flex-wrap gap-4">
+            <div className="flex items-center space-x-2">
+              <Checkbox id="detailsNew" checked={formData.newEquip} onCheckedChange={(checked) => handleInputChange("newEquip", checked)} className="h-4 w-4" />
+              <Label htmlFor="detailsNew" className="text-xs cursor-pointer">New</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Checkbox id="detailsSlot" checked={formData.slot} onCheckedChange={(checked) => handleInputChange("slot", checked)} className="h-4 w-4" />
+              <Label htmlFor="detailsSlot" className="text-xs cursor-pointer">Slot</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Checkbox id="detailsEyelets" checked={formData.eyelets} onCheckedChange={(checked) => handleInputChange("eyelets", checked)} className="h-4 w-4" />
+              <Label htmlFor="detailsEyelets" className="text-xs cursor-pointer">Eyelets</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Checkbox id="detailsZip" checked={formData.zip} onCheckedChange={(checked) => handleInputChange("zip", checked)} className="h-4 w-4" />
+              <Label htmlFor="detailsZip" className="text-xs cursor-pointer">Zip</Label>
             </div>
           </div>
         </div>
 
-        {/* Center Column - Prefill & IDs */}
+        {/* ID Information */}
         <div className="space-y-4">
-          {/* Prefill Section */}
-          <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 space-y-3">
-            <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Quick Prefill</div>
-            
-            <div className="flex items-end gap-2">
-              <div className="flex-1 space-y-1">
-                <Label htmlFor="prefillEslId" className="text-xs">Prefill w/ESL ID:</Label>
-                <Input id="prefillEslId" placeholder="Enter ESL ID" className="h-8 text-xs" />
-              </div>
-              <Button variant="default" size="sm" className="h-8 text-xs px-4">Prefill</Button>
-            </div>
-            
-            <div className="flex items-end gap-2">
-              <div className="flex-1 space-y-1">
-                <Label htmlFor="prefillCustId" className="text-xs">Prefill w/Cust ID:</Label>
-                <Input id="prefillCustId" placeholder="Enter Cust ID" className="h-8 text-xs" />
-              </div>
-              <Button variant="default" size="sm" className="h-8 text-xs px-4">Prefill</Button>
-            </div>
-          </div>
-
-          {/* ID Information */}
           <div className="bg-muted/30 rounded-lg p-4 space-y-3">
             <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">ID Information</div>
             
-            <div className="space-y-1">
-              <Label htmlFor="eslId" className="text-xs">ESL ID:</Label>
-              <Input id="eslId" value={formData.eslId} onChange={(e) => handleInputChange("eslId", e.target.value)} placeholder="ESL ID" className="h-8 text-xs" />
-            </div>
-            
-            <div className="space-y-1">
-              <Label htmlFor="custIdDetail" className="text-xs">Cust ID:</Label>
-              <Input id="custIdDetail" value={formData.custIdDetail} onChange={(e) => handleInputChange("custIdDetail", e.target.value)} placeholder="Cust ID" className="h-8 text-xs" />
-            </div>
-            
-            <div className="space-y-1">
-              <Label htmlFor="tagNumber" className="text-xs">Tag #:</Label>
-              <Input id="tagNumber" value={formData.tagNumber} onChange={(e) => handleInputChange("tagNumber", e.target.value)} placeholder="Tag #" className="h-8 text-xs" />
+            <div className="grid grid-cols-3 gap-3">
+              <div className="space-y-1">
+                <Label htmlFor="eslId" className="text-xs">ESL ID:</Label>
+                <Input id="eslId" value={formData.eslId} onChange={(e) => handleInputChange("eslId", e.target.value)} placeholder="ESL ID" className="h-8 text-xs" />
+              </div>
+              
+              <div className="space-y-1">
+                <Label htmlFor="custIdDetail" className="text-xs">Cust ID:</Label>
+                <Input id="custIdDetail" value={formData.custIdDetail} onChange={(e) => handleInputChange("custIdDetail", e.target.value)} placeholder="Cust ID" className="h-8 text-xs" />
+              </div>
+              
+              <div className="space-y-1">
+                <Label htmlFor="tagNumber" className="text-xs">Tag #:</Label>
+                <Input id="tagNumber" value={formData.tagNumber} onChange={(e) => handleInputChange("tagNumber", e.target.value)} placeholder="Tag #" className="h-8 text-xs" />
+              </div>
             </div>
           </div>
 
@@ -3234,32 +3237,30 @@ const FormVariationsDemo = () => {
             <span><span className="font-medium">Modified:</span> 09/09/2025 by Admin</span>
           </div>
         </div>
+      </div>
 
-        {/* Right Column - Accessories */}
-        <div className="space-y-4">
-          <div className="bg-muted/30 rounded-lg p-4 space-y-3">
-            <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Accessories</div>
-            
-            <div className="space-y-2">
-              {[1, 2, 3, 4, 5].map((index) => (
-                <div key={index} className="flex items-center gap-2">
-                  <Select>
-                    <SelectTrigger className="h-8 text-xs flex-1">
-                      <SelectValue placeholder="Select accessory" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="protector">Protector</SelectItem>
-                      <SelectItem value="bag">Bag</SelectItem>
-                      <SelectItem value="case">Case</SelectItem>
-                      <SelectItem value="strap">Strap</SelectItem>
-                      <SelectItem value="clip">Clip</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <Input type="number" placeholder="Qty" className="h-8 text-xs w-16 text-center" min="0" />
-                </div>
-              ))}
+      {/* Accessories Section - Full Width at Bottom */}
+      <div className="bg-muted/30 rounded-lg p-4 space-y-3">
+        <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Accessories</div>
+        
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+          {[1, 2, 3, 4, 5].map((index) => (
+            <div key={index} className="flex items-center gap-2">
+              <Select>
+                <SelectTrigger className="h-8 text-xs flex-1">
+                  <SelectValue placeholder="Select accessory" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="protector">Protector</SelectItem>
+                  <SelectItem value="bag">Bag</SelectItem>
+                  <SelectItem value="case">Case</SelectItem>
+                  <SelectItem value="strap">Strap</SelectItem>
+                  <SelectItem value="clip">Clip</SelectItem>
+                </SelectContent>
+              </Select>
+              <Input type="number" placeholder="Qty" className="h-8 text-xs w-16 text-center" min="0" />
             </div>
-          </div>
+          ))}
         </div>
       </div>
 
