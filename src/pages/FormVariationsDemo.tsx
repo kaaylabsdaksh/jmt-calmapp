@@ -6531,51 +6531,41 @@ const FormVariationsDemo = () => {
         <Card className="border-0 shadow-md">
           <CardContent className="p-6">
             {isESLType ? (
-              // ESL Type Accordion
-              <Accordion type="multiple" value={openAccordions} onValueChange={setOpenAccordions} className="space-y-0 accordion-fields">
-                <AccordionItem value="general" className="border-b">
-                  <AccordionTrigger className="hover:no-underline py-4">
-                    <div className="flex items-center gap-3">
-                      <Info className="h-5 w-5 text-foreground" />
-                      <h3 className="font-semibold">General</h3>
-                      {tabStatus['general'] === 'completed' && (
-                        <CheckCircle className="h-4 w-4 ml-auto mr-2 text-green-600" />
-                      )}
-                      {tabStatus['general'] === 'error' && (
-                        <AlertCircle className="h-4 w-4 ml-auto mr-2 text-destructive" />
-                      )}
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent className="pb-4">
-                    {renderGeneralSection(accordionDensity === 'compact')}
-                  </AccordionContent>
-                </AccordionItem>
+              // ESL Type Tabs
+              <Tabs defaultValue="general" className="w-full">
+                <TabsList className="w-full mb-4 h-10">
+                  <TabsTrigger value="general" className="flex-1 gap-2">
+                    <Info className="h-4 w-4" />
+                    General
+                    {tabStatus['general'] === 'completed' && (
+                      <CheckCircle className="h-4 w-4 text-green-600" />
+                    )}
+                    {tabStatus['general'] === 'error' && (
+                      <AlertCircle className="h-4 w-4 text-destructive" />
+                    )}
+                  </TabsTrigger>
+                  <TabsTrigger value="details" className="flex-1 gap-2">
+                    <FileText className="h-4 w-4" />
+                    Details
+                  </TabsTrigger>
+                  <TabsTrigger value="work-status" className="flex-1 gap-2">
+                    <Clock className="h-4 w-4" />
+                    Work Status
+                  </TabsTrigger>
+                </TabsList>
 
-                <AccordionItem value="details" className="border-b">
-                  <AccordionTrigger className="hover:no-underline py-4">
-                    <div className="flex items-center gap-3">
-                      <FileText className="h-5 w-5 text-foreground" />
-                      <h3 className="font-semibold">Details</h3>
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent className="pb-4">
-                    {renderDetailsSection()}
-                  </AccordionContent>
-                </AccordionItem>
+                <TabsContent value="general" className="mt-0">
+                  {renderGeneralSection(accordionDensity === 'compact')}
+                </TabsContent>
 
+                <TabsContent value="details" className="mt-0">
+                  {renderDetailsSection()}
+                </TabsContent>
 
-                <AccordionItem value="work-status" className="border-b">
-                  <AccordionTrigger className="hover:no-underline py-4">
-                    <div className="flex items-center gap-3">
-                      <Clock className="h-5 w-5 text-foreground" />
-                      <h3 className="font-semibold">Work Status</h3>
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent className="pb-4">
-                    {renderWorkStatusSection()}
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
+                <TabsContent value="work-status" className="mt-0">
+                  {renderWorkStatusSection()}
+                </TabsContent>
+              </Tabs>
             ) : (
               // SINGLE Type Accordion (expanded sections)
               <Accordion type="multiple" value={openAccordions} onValueChange={setOpenAccordions} className="space-y-0 accordion-fields">
