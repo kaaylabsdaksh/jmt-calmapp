@@ -9704,20 +9704,20 @@ const FormVariationsDemo = () => {
                   >
                     QA Inspection
                   </DropdownMenuItem>
+                  <DropdownMenuItem 
+                    onClick={() => toast({ title: "Schedule", description: "Schedule action triggered" })}
+                    className="cursor-pointer"
+                  >
+                    Schedule
+                  </DropdownMenuItem>
+                  <DropdownMenuItem 
+                    onClick={() => toast({ title: "Waiting on Customer", description: "Waiting on Customer action triggered" })}
+                    className="cursor-pointer"
+                  >
+                    Waiting on Customer
+                  </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
-              <Button 
-                variant="outline" 
-                className="bg-primary hover:bg-primary/90 text-primary-foreground border-primary font-medium h-9 px-4"
-              >
-                Schedule
-              </Button>
-              <Button 
-                variant="outline" 
-                className="bg-primary hover:bg-primary/90 text-primary-foreground border-primary font-medium h-9 px-4"
-              >
-                Waiting on Customer
-              </Button>
             </div>
 
             {/* Right side buttons */}
