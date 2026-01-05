@@ -3265,23 +3265,8 @@ const FormVariationsDemo = () => {
 
       {/* Items Data Table */}
       <div className="border rounded-lg overflow-hidden">
-        <div className="bg-muted/50 px-4 py-2 border-b flex items-center justify-between">
+        <div className="bg-muted/50 px-4 py-2 border-b">
           <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Items</span>
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-muted-foreground">:</span>
-            <Select defaultValue="10">
-              <SelectTrigger className="h-7 w-16 text-xs border-border">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className="bg-background border-border">
-                <SelectItem value="10" className="text-xs">10</SelectItem>
-                <SelectItem value="25" className="text-xs">25</SelectItem>
-                <SelectItem value="50" className="text-xs">50</SelectItem>
-                <SelectItem value="100" className="text-xs">100</SelectItem>
-                <SelectItem value="250" className="text-xs">250</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
         </div>
         <div className="overflow-x-auto">
           <Table>
@@ -3351,6 +3336,24 @@ const FormVariationsDemo = () => {
               </TableRow>
             </TableBody>
           </Table>
+        </div>
+        {/* Pagination Footer */}
+        <div className="bg-muted/50 px-4 py-2 border-t flex items-center justify-end">
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-muted-foreground">:</span>
+            <Select defaultValue="10">
+              <SelectTrigger className="h-7 w-16 text-xs border-border">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="bg-background border-border">
+                <SelectItem value="10" className="text-xs">10</SelectItem>
+                <SelectItem value="25" className="text-xs">25</SelectItem>
+                <SelectItem value="50" className="text-xs">50</SelectItem>
+                <SelectItem value="100" className="text-xs">100</SelectItem>
+                <SelectItem value="250" className="text-xs">250</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
       </div>
 
