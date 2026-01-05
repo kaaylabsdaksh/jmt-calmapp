@@ -3269,62 +3269,70 @@ const FormVariationsDemo = () => {
     </div>
   );
 
-  const renderTestingSection = () => (
-    <div className="space-y-3">
-      <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Cost Information</div>
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-        <div className="space-y-1">
-          <Label className="text-xs">Testing</Label>
-          <div className="flex items-center gap-1">
-            <Label className="text-[10px] text-muted-foreground">Qty</Label>
-            <Input value="0" readOnly className="h-7 text-xs w-14" />
-            <Label className="text-[10px] text-muted-foreground">Cost</Label>
-            <Input value="0.00" readOnly className="h-7 text-xs" />
+  const renderTestingSection = () => {
+    const costItems = [
+      { label: 'Testing', qty: '0', cost: '0.00', hasQty: true },
+      { label: 'Expedite', qty: null, cost: '0.00', hasQty: false },
+      { label: 'Emergency', qty: null, cost: '0.00', hasQty: false },
+      { label: 'Replacement', qty: '0', cost: '0.00', hasQty: true },
+      { label: 'New Sales', qty: '0', cost: '0.00', hasQty: true },
+    ];
+
+    return (
+      <div className="space-y-4">
+        {/* Header row */}
+        <div className="grid grid-cols-12 gap-2 items-center text-xs font-medium text-muted-foreground border-b pb-2">
+          <div className="col-span-4"></div>
+          <div className="col-span-3 text-center">Qty</div>
+          <div className="col-span-5 text-center">Cost</div>
+        </div>
+
+        {/* Cost items */}
+        <div className="space-y-3">
+          {costItems.map((item) => (
+            <div key={item.label} className="grid grid-cols-12 gap-2 items-center">
+              <div className="col-span-4">
+                <Label className="text-sm font-medium">{item.label}:</Label>
+              </div>
+              <div className="col-span-3 flex justify-center">
+                {item.hasQty ? (
+                  <Input 
+                    value={item.qty} 
+                    readOnly 
+                    className="h-8 text-sm text-center w-16 bg-muted/30" 
+                  />
+                ) : (
+                  <span className="text-sm text-muted-foreground">—</span>
+                )}
+              </div>
+              <div className="col-span-5">
+                <Input 
+                  value={item.cost} 
+                  readOnly 
+                  className="h-8 text-sm text-right bg-muted/30" 
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Total row */}
+        <div className="grid grid-cols-12 gap-2 items-center border-t pt-3 mt-3">
+          <div className="col-span-4">
+            <Label className="text-sm font-semibold">Total:</Label>
           </div>
-        </div>
-
-        <div className="space-y-1">
-          <Label className="text-xs">Expedite</Label>
-          <Input value="0.00" readOnly className="h-7 text-xs" />
-        </div>
-
-        <div className="space-y-1">
-          <Label className="text-xs">Emergency</Label>
-          <Input value="0.00" readOnly className="h-7 text-xs" />
-        </div>
-
-        <div className="space-y-1">
-          <Label className="text-xs">Replacement</Label>
-          <div className="flex items-center gap-1">
-            <Label className="text-[10px] text-muted-foreground">Qty</Label>
-            <Input value="0" readOnly className="h-7 text-xs w-14" />
-            <Label className="text-[10px] text-muted-foreground">Cost</Label>
-            <Input value="0.00" readOnly className="h-7 text-xs" />
+          <div className="col-span-3 flex justify-center">
+            <span className="text-sm font-semibold">0</span>
           </div>
-        </div>
-
-        <div className="space-y-1">
-          <Label className="text-xs">New Sales</Label>
-          <div className="flex items-center gap-1">
-            <Label className="text-[10px] text-muted-foreground">Qty</Label>
-            <Input value="0" readOnly className="h-7 text-xs w-14" />
-            <Label className="text-[10px] text-muted-foreground">Cost</Label>
-            <Input value="0.00" readOnly className="h-7 text-xs" />
-          </div>
-        </div>
-
-        <div className="space-y-1">
-          <Label className="text-xs font-semibold">Total</Label>
-          <div className="flex items-center gap-1">
-            <Label className="text-[10px] text-muted-foreground">Qty</Label>
-            <Input value="0" readOnly className="h-7 text-xs w-14" />
-            <Label className="text-[10px] text-muted-foreground font-semibold">Cost</Label>
-            <Input value="0.00" readOnly className="h-7 text-xs font-semibold" />
+          <div className="col-span-5">
+            <div className="h-8 flex items-center justify-end pr-3 font-semibold text-sm">
+              0.00
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   const renderWorkStatusSection = () => (
     <div className="space-y-2">
