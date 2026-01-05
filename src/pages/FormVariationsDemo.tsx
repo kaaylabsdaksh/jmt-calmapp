@@ -3255,7 +3255,7 @@ const FormVariationsDemo = () => {
         <Button
           variant="ghost"
           size="sm"
-          className="h-8 text-xs gap-1 text-primary hover:text-primary"
+          className="h-8 text-xs gap-1 text-primary hover:text-primary hover:bg-transparent hover:underline"
           onClick={handleAddAccessory}
         >
           <Plus className="h-4 w-4" />
