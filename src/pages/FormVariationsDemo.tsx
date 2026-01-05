@@ -1786,7 +1786,7 @@ const FormVariationsDemo = () => {
                     <div className="space-y-1">
                       <Label className="text-xs font-medium invisible">Action</Label>
                       <Button 
-                        className="bg-yellow-500 hover:bg-yellow-600 text-white h-7 text-xs px-3 w-full"
+                        className="bg-primary hover:bg-primary/90 text-primary-foreground h-7 text-xs px-3 w-full"
                         onClick={handleAddAccessory}
                       >
                         Add
@@ -1865,7 +1865,7 @@ const FormVariationsDemo = () => {
                         <Checkbox id="includeInCreateNewGroupComments" className="h-3 w-3" />
                         <Label htmlFor="includeInCreateNewGroupComments" className="text-xs cursor-pointer">Include in Create New Group</Label>
                       </div>
-                      <Button className="bg-yellow-500 hover:bg-yellow-600 text-white h-7 text-xs px-3">Add</Button>
+                      <Button className="bg-primary hover:bg-primary/90 text-primary-foreground h-7 text-xs px-3">Add</Button>
                     </div>
                   </div>
 
