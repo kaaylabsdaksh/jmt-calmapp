@@ -9726,12 +9726,12 @@ const FormVariationsDemo = () => {
           </div>
         </div>
       ) : (
-        // Hide footer completely when on ESL Details tab
-        !(isESLType && activeEslTab === 'details') && (
+        // Hide footer completely when on ESL Details or Testing tab
+        !(isESLType && (activeEslTab === 'details' || activeEslTab === 'testing')) && (
           <FixedActionFooter 
             onCancel={handleCancel}
             onSave={handleSave}
-            currentSection={activeSection}
+            currentSection={isESLType && activeEslTab === 'general' ? 'general' : activeSection}
             userRole={userRole}
             onUserRoleChange={setUserRole}
             footerRef={footerRef}

@@ -15,7 +15,7 @@ interface FixedActionFooterProps {
   saveText?: string;
   cancelText?: string;
   isLoading?: boolean;
-  currentSection?: 'work-order-items' | 'estimate' | 'qf3' | 'external-files' | 'cert-files';
+  currentSection?: 'work-order-items' | 'estimate' | 'qf3' | 'external-files' | 'cert-files' | 'general';
   userRole?: 'admin' | 'technician';
   onUserRoleChange?: (role: 'admin' | 'technician') => void;
   footerRef?: React.RefObject<HTMLDivElement>;
@@ -156,7 +156,68 @@ export const FixedActionFooter = ({
       <div ref={footerRef} className="fixed bottom-0 left-[256px] right-0 bg-background border-t border-border shadow-lg z-[100]">
         <div className="px-4 py-3">
           {/* Conditional Footer based on current section */}
-          {currentSection === 'estimate' ? (
+          {currentSection === 'general' ? (
+            // General Tab Footer
+            <div className="flex items-center justify-between gap-2 text-xs">
+              {/* Left side buttons */}
+              <div className="flex flex-wrap items-center gap-2">
+                <Button size="sm" variant="outline">
+                  Estimate
+                </Button>
+                <Button size="sm" variant="outline">
+                  Rotation
+                </Button>
+                <Button size="sm" variant="outline">
+                  QA Inspection
+                </Button>
+                <Button size="sm" variant="outline">
+                  Schedule
+                </Button>
+                <Button size="sm" variant="outline">
+                  <Clock className="h-3 w-3 mr-1" />
+                  Waiting on Customer
+                </Button>
+              </div>
+              
+              {/* Right side buttons */}
+              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-muted-foreground">Create New Group</span>
+                  <Select>
+                    <SelectTrigger className="h-8 w-32 text-xs">
+                      <SelectValue placeholder="Select..." />
+                    </SelectTrigger>
+                    <SelectContent className="bg-background border-border">
+                      <SelectItem value="group1" className="text-xs">Group 1</SelectItem>
+                      <SelectItem value="group2" className="text-xs">Group 2</SelectItem>
+                      <SelectItem value="group3" className="text-xs">Group 3</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <Button size="sm" variant="outline" className="text-destructive hover:text-destructive">
+                  <XCircle className="h-3 w-3 mr-1" />
+                  Cancel WO
+                </Button>
+                <Button size="sm" variant="outline" onClick={handlePrintWO}>
+                  <Printer className="h-3 w-3 mr-1" />
+                  Print WO
+                </Button>
+                <Button size="sm" variant="outline" onClick={onCancel}>
+                  <ArrowLeft className="h-3 w-3 mr-1" />
+                  Back
+                </Button>
+                <Button 
+                  size="sm"
+                  onClick={onSave}
+                  disabled={isLoading}
+                  className="bg-primary text-primary-foreground hover:bg-primary/90"
+                >
+                  <Save className="h-3 w-3 mr-1" />
+                  Save
+                </Button>
+              </div>
+            </div>
+          ) : currentSection === 'estimate' ? (
             // Estimate Footer - Conditional based on user role
             <div className="flex items-center justify-between gap-2 text-xs">
               {/* Left side buttons */}
