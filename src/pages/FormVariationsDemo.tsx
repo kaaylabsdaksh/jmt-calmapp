@@ -3231,11 +3231,6 @@ const FormVariationsDemo = () => {
             </div>
           </div>
 
-          {/* Timestamps */}
-          <div className="flex flex-col gap-1 text-xs text-muted-foreground px-1">
-            <span><span className="font-medium">Created:</span> 09/09/2025 by Admin</span>
-            <span><span className="font-medium">Modified:</span> 09/09/2025 by Admin</span>
-          </div>
         </div>
       </div>
 
