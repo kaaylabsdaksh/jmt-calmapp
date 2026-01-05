@@ -12,7 +12,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, ChevronLeft, ChevronDown, ChevronUp, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield, Wrench, Activity, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock, ExternalLink, ArrowUp, Pencil, ImageIcon, Plus } from "lucide-react";
+import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, ChevronLeft, ChevronDown, ChevronUp, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield, Wrench, Activity, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock, ExternalLink, ArrowUp, Pencil, ImageIcon, Plus, MoreHorizontal } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -9674,24 +9675,37 @@ const FormVariationsDemo = () => {
           <div className="flex items-center justify-between gap-4 max-w-[1400px] mx-auto">
             {/* Left side buttons */}
             <div className="flex items-center gap-2">
-              <Button 
-                variant="outline" 
-                className="bg-primary hover:bg-primary/90 text-primary-foreground border-primary font-medium h-9 px-4"
-              >
-                Estimate
-              </Button>
-              <Button 
-                variant="outline" 
-                className="bg-primary hover:bg-primary/90 text-primary-foreground border-primary font-medium h-9 px-4"
-              >
-                Rotation
-              </Button>
-              <Button 
-                variant="outline" 
-                className="bg-primary hover:bg-primary/90 text-primary-foreground border-primary font-medium h-9 px-4"
-              >
-                QA Inspection
-              </Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button 
+                    variant="outline" 
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground border-primary font-medium h-9 px-4"
+                  >
+                    <MoreHorizontal className="h-4 w-4 mr-2" />
+                    More Actions
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="bg-background border-border">
+                  <DropdownMenuItem 
+                    onClick={() => toast({ title: "Estimate", description: "Estimate action triggered" })}
+                    className="cursor-pointer"
+                  >
+                    Estimate
+                  </DropdownMenuItem>
+                  <DropdownMenuItem 
+                    onClick={() => toast({ title: "Rotation", description: "Rotation action triggered" })}
+                    className="cursor-pointer"
+                  >
+                    Rotation
+                  </DropdownMenuItem>
+                  <DropdownMenuItem 
+                    onClick={() => toast({ title: "QA Inspection", description: "QA Inspection action triggered" })}
+                    className="cursor-pointer"
+                  >
+                    QA Inspection
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
               <Button 
                 variant="outline" 
                 className="bg-primary hover:bg-primary/90 text-primary-foreground border-primary font-medium h-9 px-4"
