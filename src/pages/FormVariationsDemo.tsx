@@ -9751,15 +9751,17 @@ const FormVariationsDemo = () => {
               <Button 
                 variant="outline" 
                 onClick={handleCancel}
-                className="bg-primary hover:bg-primary/90 text-primary-foreground border-primary font-medium h-9 px-4"
+                className="border-border bg-background text-foreground hover:bg-muted font-medium h-9 px-4"
               >
+                <X className="h-4 w-4 mr-2" />
                 Cancel
               </Button>
               <Button 
                 onClick={handleSave}
-                className="bg-primary hover:bg-primary/90 text-primary-foreground border-primary font-medium h-9 px-4"
+                className="bg-emerald-500 hover:bg-emerald-600 text-white font-medium h-9 px-4"
               >
-                Save
+                <Save className="h-4 w-4 mr-2" />
+                Save Item
               </Button>
             </div>
           </div>
