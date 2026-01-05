@@ -1455,23 +1455,24 @@ const FormVariationsDemo = () => {
             {/* Arrival Information Tab */}
             <TabsContent value="arrival-info">
               <Card className="border-0 shadow-sm">
-                <CardContent className="p-3 space-y-2">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                    <div className="space-y-1">
+                <CardContent className="p-4 space-y-4">
+                  {/* Arrival Date & Type */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
                       <Label htmlFor="arrivalDate" className="text-xs font-medium">Date</Label>
                       <Input
                         id="arrivalDate"
                         type="date"
                         value={formData.arrivalDate}
                         onChange={(e) => handleInputChange("arrivalDate", e.target.value)}
-                        className="h-7 text-xs"
+                        className="h-8 text-sm"
                       />
                     </div>
 
-                    <div className="space-y-1">
+                    <div className="space-y-1.5">
                       <Label htmlFor="arrivalType" className="text-xs font-medium">Type</Label>
                       <Select value={formData.arrivalType} onValueChange={(value) => handleInputChange("arrivalType", value)}>
-                        <SelectTrigger className="h-7 text-xs">
+                        <SelectTrigger className="h-8 text-sm">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent className="bg-popover border z-50">
@@ -1484,219 +1485,217 @@ const FormVariationsDemo = () => {
                   </div>
 
                   {/* Departure Information & Delivery Status - Side by Side */}
-                  <div className="pt-2 border-t border-border">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {/* Departure Information */}
-                      <div>
-                        <h4 className="text-xs font-semibold mb-2">Departure Information</h4>
-                        <div className="space-y-2">
-                          <div className="grid grid-cols-3 gap-2">
-                            <div className="space-y-1">
-                              <Label className="text-xs font-medium">Date</Label>
-                              <Input 
-                                type="date" 
-                                value={formData.departureDate || ""} 
-                                onChange={(e) => handleInputChange("departureDate", e.target.value)} 
-                                className="h-7 text-xs" 
-                              />
-                            </div>
-                            <div className="space-y-1">
-                              <Label className="text-xs font-medium">Type</Label>
-                              <Select value={formData.departureType} onValueChange={(value) => handleInputChange("departureType", value)}>
-                                <SelectTrigger className="h-7 text-xs">
-                                  <SelectValue placeholder="Select type" />
-                                </SelectTrigger>
-                                <SelectContent className="bg-popover border z-50">
-                                  <SelectItem value="shipped">Shipped</SelectItem>
-                                  <SelectItem value="customer-pickup">Customer Pickup</SelectItem>
-                                  <SelectItem value="customer-surplus">Customer Surplus</SelectItem>
-                                  <SelectItem value="jm-driver-dropoff">JM Driver Dropoff</SelectItem>
-                                  <SelectItem value="scrapped-at-jm">Scrapped at JM</SelectItem>
-                                </SelectContent>
-                              </Select>
-                            </div>
-                            <div className="space-y-1">
-                              <Label className="text-xs font-medium">Inv #</Label>
-                              <Input 
-                                value={formData.invNumber || ""} 
-                                readOnly 
-                                className="h-7 text-xs bg-muted" 
-                              />
-                            </div>
-                          </div>
-
-                          {/* Conditional fields based on departure type */}
-                          {formData.departureType === "shipped" && (
-                            <div className="grid grid-cols-3 gap-2">
-                              <div className="space-y-1">
-                                <Label className="text-xs font-medium">Ship Type</Label>
-                                <Select value={formData.shipType} onValueChange={(value) => handleInputChange("shipType", value)}>
-                                  <SelectTrigger className="h-7 text-xs">
-                                    <SelectValue placeholder="Select ship type" />
-                                  </SelectTrigger>
-                                  <SelectContent className="bg-popover border z-50">
-                                    <SelectItem value="fedex">FedEx</SelectItem>
-                                    <SelectItem value="ups">UPS</SelectItem>
-                                    <SelectItem value="usps">USPS</SelectItem>
-                                    <SelectItem value="freight">Freight</SelectItem>
-                                  </SelectContent>
-                                </Select>
-                              </div>
-                              <div className="space-y-1">
-                                <Label className="text-xs font-medium">Coll Acct</Label>
-                                <Input 
-                                  value={formData.collAcct || ""} 
-                                  onChange={(e) => handleInputChange("collAcct", e.target.value)} 
-                                  className="h-7 text-xs" 
-                                />
-                              </div>
-                              <div className="space-y-1">
-                                <Label className="text-xs font-medium">Tracking #</Label>
-                                <Input 
-                                  value={formData.trackingNumber || ""} 
-                                  onChange={(e) => handleInputChange("trackingNumber", e.target.value)} 
-                                  className="h-7 text-xs" 
-                                />
-                              </div>
-                            </div>
-                          )}
-
-                          {formData.departureType === "customer-pickup" && (
-                            <div className="space-y-1">
-                              <Label className="text-xs font-medium">Name</Label>
-                              <Input 
-                                value={formData.pickupName || ""} 
-                                onChange={(e) => handleInputChange("pickupName", e.target.value)} 
-                                placeholder="Enter name"
-                                className="h-7 text-xs" 
-                              />
-                            </div>
-                          )}
-
-                          {formData.departureType === "jm-driver-dropoff" && (
-                            <div className="space-y-1">
-                              <Label className="text-xs font-medium">Driver</Label>
-                              <Select value={formData.driver} onValueChange={(value) => handleInputChange("driver", value)}>
-                                <SelectTrigger className="h-7 text-xs">
-                                  <SelectValue placeholder="Select driver" />
-                                </SelectTrigger>
-                                <SelectContent className="bg-popover border z-50">
-                                  <SelectItem value="aaron-briles">Aaron L Briles</SelectItem>
-                                  <SelectItem value="john-smith">John Smith</SelectItem>
-                                  <SelectItem value="mike-johnson">Mike Johnson</SelectItem>
-                                </SelectContent>
-                              </Select>
-                            </div>
-                          )}
-
-                          <div className="space-y-1">
-                            <Label className="text-xs font-medium">Inv #</Label>
-                            <Input 
-                              value={formData.invNumber} 
-                              readOnly
-                              className="h-7 text-xs bg-muted/50 cursor-not-allowed" 
-                            />
-                          </div>
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-3 border-t border-border">
+                    {/* Departure Information */}
+                    <div className="space-y-3">
+                      <h4 className="text-sm font-semibold text-foreground">Departure Information</h4>
+                      <div className="grid grid-cols-3 gap-3">
+                        <div className="space-y-1.5">
+                          <Label className="text-xs font-medium">Date</Label>
+                          <Input 
+                            type="date" 
+                            value={formData.departureDate || ""} 
+                            onChange={(e) => handleInputChange("departureDate", e.target.value)} 
+                            className="h-8 text-sm" 
+                          />
+                        </div>
+                        <div className="space-y-1.5">
+                          <Label className="text-xs font-medium">Type</Label>
+                          <Select value={formData.departureType} onValueChange={(value) => handleInputChange("departureType", value)}>
+                            <SelectTrigger className="h-8 text-sm">
+                              <SelectValue placeholder="Select type" />
+                            </SelectTrigger>
+                            <SelectContent className="bg-popover border z-50">
+                              <SelectItem value="shipped">Shipped</SelectItem>
+                              <SelectItem value="customer-pickup">Customer Pickup</SelectItem>
+                              <SelectItem value="customer-surplus">Customer Surplus</SelectItem>
+                              <SelectItem value="jm-driver-dropoff">JM Driver Dropoff</SelectItem>
+                              <SelectItem value="scrapped-at-jm">Scrapped at JM</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <div className="space-y-1.5">
+                          <Label className="text-xs font-medium">Inv #</Label>
+                          <Input 
+                            value={formData.invNumber || ""} 
+                            readOnly 
+                            className="h-8 text-sm bg-muted/50" 
+                          />
                         </div>
                       </div>
 
-                      {/* Delivery Status */}
-                      <div>
-                        <h4 className="text-xs font-semibold mb-2">Delivery Status</h4>
-                        <Textarea
-                          value={formData.deliveryStatus}
-                          onChange={(e) => handleInputChange("deliveryStatus", e.target.value)}
-                          placeholder="Enter delivery status..."
-                          className="min-h-[90px] text-xs"
+                      {/* Conditional fields based on departure type */}
+                      {formData.departureType === "shipped" && (
+                        <div className="grid grid-cols-3 gap-3">
+                          <div className="space-y-1.5">
+                            <Label className="text-xs font-medium">Ship Type</Label>
+                            <Select value={formData.shipType} onValueChange={(value) => handleInputChange("shipType", value)}>
+                              <SelectTrigger className="h-8 text-sm">
+                                <SelectValue placeholder="Select ship type" />
+                              </SelectTrigger>
+                              <SelectContent className="bg-popover border z-50">
+                                <SelectItem value="fedex">FedEx</SelectItem>
+                                <SelectItem value="ups">UPS</SelectItem>
+                                <SelectItem value="usps">USPS</SelectItem>
+                                <SelectItem value="freight">Freight</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                          <div className="space-y-1.5">
+                            <Label className="text-xs font-medium">Coll Acct</Label>
+                            <Input 
+                              value={formData.collAcct || ""} 
+                              onChange={(e) => handleInputChange("collAcct", e.target.value)} 
+                              className="h-8 text-sm" 
+                            />
+                          </div>
+                          <div className="space-y-1.5">
+                            <Label className="text-xs font-medium">Tracking #</Label>
+                            <Input 
+                              value={formData.trackingNumber || ""} 
+                              onChange={(e) => handleInputChange("trackingNumber", e.target.value)} 
+                              className="h-8 text-sm" 
+                            />
+                          </div>
+                        </div>
+                      )}
+
+                      {formData.departureType === "customer-pickup" && (
+                        <div className="space-y-1.5">
+                          <Label className="text-xs font-medium">Name</Label>
+                          <Input 
+                            value={formData.pickupName || ""} 
+                            onChange={(e) => handleInputChange("pickupName", e.target.value)} 
+                            placeholder="Enter name"
+                            className="h-8 text-sm" 
+                          />
+                        </div>
+                      )}
+
+                      {formData.departureType === "jm-driver-dropoff" && (
+                        <div className="space-y-1.5">
+                          <Label className="text-xs font-medium">Driver</Label>
+                          <Select value={formData.driver} onValueChange={(value) => handleInputChange("driver", value)}>
+                            <SelectTrigger className="h-8 text-sm">
+                              <SelectValue placeholder="Select driver" />
+                            </SelectTrigger>
+                            <SelectContent className="bg-popover border z-50">
+                              <SelectItem value="aaron-briles">Aaron L Briles</SelectItem>
+                              <SelectItem value="john-smith">John Smith</SelectItem>
+                              <SelectItem value="mike-johnson">Mike Johnson</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      )}
+
+                      <div className="space-y-1.5">
+                        <Label className="text-xs font-medium">Inv #</Label>
+                        <Input 
+                          value={formData.invNumber} 
+                          readOnly
+                          className="h-8 text-sm bg-muted/50 cursor-not-allowed" 
                         />
                       </div>
+                    </div>
+
+                    {/* Delivery Status */}
+                    <div className="space-y-3">
+                      <h4 className="text-sm font-semibold text-foreground">Delivery Status</h4>
+                      <Textarea
+                        value={formData.deliveryStatus}
+                        onChange={(e) => handleInputChange("deliveryStatus", e.target.value)}
+                        placeholder="Enter delivery status..."
+                        className="min-h-[120px] text-sm resize-none"
+                      />
                     </div>
                   </div>
 
                   {/* Other Information */}
-                  <div className="pt-2 border-t border-border">
-                    <h4 className="text-xs font-semibold mb-2">Other Information</h4>
-                    <div className="space-y-2">
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                        <div className="space-y-1">
-                          <Label className="text-xs font-medium">PO Number <span className="text-destructive">*</span></Label>
-                          <Input value={formData.poNumber} onChange={(e) => handleInputChange("poNumber", e.target.value)} className="h-7 text-xs" />
-                        </div>
-                        <div className="space-y-1">
-                          <Label className="text-xs font-medium">JM Parts PO #</Label>
-                          <Input value={formData.jmPartsPoNumber} onChange={(e) => handleInputChange("jmPartsPoNumber", e.target.value)} className="h-7 text-xs" />
-                        </div>
-                        <div className="space-y-1">
-                          <Label className="text-xs font-medium">SO Number</Label>
-                          <Input value={formData.soNumber} onChange={(e) => handleInputChange("soNumber", e.target.value)} className="h-7 text-xs" />
-                        </div>
-                        <div className="space-y-1">
-                          <Label className="text-xs font-medium">Need By <span className="text-destructive">*</span></Label>
-                          <Input
-                            type="date"
-                            value={formData.needBy}
-                            onChange={(e) => handleInputChange("needBy", e.target.value)}
-                            className="h-7 text-xs"
-                          />
-                        </div>
-                        <div className="space-y-1">
-                          <Label className="text-xs font-medium">Deliver By Date</Label>
-                          <Input
-                            type="date"
-                            value={formData.deliverByDate}
-                            onChange={(e) => handleInputChange("deliverByDate", e.target.value)}
-                            className="h-7 text-xs"
-                          />
-                        </div>
-                        <div className="space-y-1">
-                          <Label className="text-xs font-medium">Date Tested</Label>
-                          <Input
-                            type="date"
-                            value={formData.dateTested}
-                            onChange={(e) => handleInputChange("dateTested", e.target.value)}
-                            className="h-7 text-xs"
-                          />
-                        </div>
-                        <div className="space-y-1">
-                          <Label className="text-xs font-medium">Transit Qty</Label>
-                          <Input value={formData.transitQty} onChange={(e) => handleInputChange("transitQty", e.target.value)} className="h-7 text-xs" />
-                        </div>
-                        <div className="space-y-1">
-                          <Label className="text-xs font-medium">Lead Technician</Label>
-                          <Select value={formData.leadTechnician} onValueChange={(value) => handleInputChange("leadTechnician", value)}>
-                            <SelectTrigger className="h-7 text-xs">
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent className="bg-popover border z-50">
-                              <SelectItem value="tech1">Technician 1</SelectItem>
-                              <SelectItem value="tech2">Technician 2</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </div>
+                  <div className="pt-4 border-t border-border space-y-4">
+                    <h4 className="text-sm font-semibold text-foreground">Other Information</h4>
+                    
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                      <div className="space-y-1.5">
+                        <Label className="text-xs font-medium">PO Number <span className="text-destructive">*</span></Label>
+                        <Input value={formData.poNumber} onChange={(e) => handleInputChange("poNumber", e.target.value)} className="h-8 text-sm" />
                       </div>
+                      <div className="space-y-1.5">
+                        <Label className="text-xs font-medium">JM Parts PO #</Label>
+                        <Input value={formData.jmPartsPoNumber} onChange={(e) => handleInputChange("jmPartsPoNumber", e.target.value)} className="h-8 text-sm" />
+                      </div>
+                      <div className="space-y-1.5">
+                        <Label className="text-xs font-medium">SO Number</Label>
+                        <Input value={formData.soNumber} onChange={(e) => handleInputChange("soNumber", e.target.value)} className="h-8 text-sm" />
+                      </div>
+                      <div className="space-y-1.5">
+                        <Label className="text-xs font-medium">Need By <span className="text-destructive">*</span></Label>
+                        <Input
+                          type="date"
+                          value={formData.needBy}
+                          onChange={(e) => handleInputChange("needBy", e.target.value)}
+                          className="h-8 text-sm"
+                        />
+                      </div>
+                    </div>
 
-                      {/* Checkboxes */}
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-2 pt-1">
-                        <div className="flex items-center gap-1.5">
-                          <Checkbox id="newEquip" checked={formData.newEquip as boolean} onCheckedChange={(checked) => handleInputChange("newEquip", checked)} className="h-3 w-3" />
-                          <Label htmlFor="newEquip" className="text-xs cursor-pointer">New</Label>
-                        </div>
-                        <div className="flex items-center gap-1.5">
-                          <Checkbox id="hotList" checked={formData.hotList as boolean} onCheckedChange={(checked) => handleInputChange("hotList", checked)} className="h-3 w-3" />
-                          <Label htmlFor="hotList" className="text-xs cursor-pointer">Hot List</Label>
-                        </div>
-                        <div className="flex items-center gap-1.5">
-                          <Checkbox id="toShipping" checked={formData.toShipping as boolean} onCheckedChange={(checked) => handleInputChange("toShipping", checked)} className="h-3 w-3" />
-                          <Label htmlFor="toShipping" className="text-xs cursor-pointer">To Shipping</Label>
-                        </div>
-                        <div className="flex items-center gap-1.5">
-                          <Checkbox id="readyToBill" checked={formData.readyToBill as boolean} onCheckedChange={(checked) => handleInputChange("readyToBill", checked)} className="h-3 w-3" />
-                          <Label htmlFor="readyToBill" className="text-xs cursor-pointer">Ready to Bill</Label>
-                        </div>
-                        <div className="flex items-center gap-1.5">
-                          <Checkbox id="lostEquipment" checked={formData.lostEquipment as boolean} onCheckedChange={(checked) => handleInputChange("lostEquipment", checked)} className="h-3 w-3" />
-                          <Label htmlFor="lostEquipment" className="text-xs cursor-pointer">Lost Equipment</Label>
-                        </div>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                      <div className="space-y-1.5">
+                        <Label className="text-xs font-medium">Deliver By Date</Label>
+                        <Input
+                          type="date"
+                          value={formData.deliverByDate}
+                          onChange={(e) => handleInputChange("deliverByDate", e.target.value)}
+                          className="h-8 text-sm"
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <Label className="text-xs font-medium">Date Tested</Label>
+                        <Input
+                          type="date"
+                          value={formData.dateTested}
+                          onChange={(e) => handleInputChange("dateTested", e.target.value)}
+                          className="h-8 text-sm"
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <Label className="text-xs font-medium">Transit Qty</Label>
+                        <Input value={formData.transitQty} onChange={(e) => handleInputChange("transitQty", e.target.value)} className="h-8 text-sm" />
+                      </div>
+                      <div className="space-y-1.5">
+                        <Label className="text-xs font-medium">Lead Technician</Label>
+                        <Select value={formData.leadTechnician} onValueChange={(value) => handleInputChange("leadTechnician", value)}>
+                          <SelectTrigger className="h-8 text-sm">
+                            <SelectValue placeholder="Select technician" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-popover border z-50">
+                            <SelectItem value="tech1">Technician 1</SelectItem>
+                            <SelectItem value="tech2">Technician 2</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+
+                    {/* Checkboxes */}
+                    <div className="grid grid-cols-2 md:grid-cols-5 gap-3 pt-2">
+                      <div className="flex items-center gap-2">
+                        <Checkbox id="newEquip" checked={formData.newEquip as boolean} onCheckedChange={(checked) => handleInputChange("newEquip", checked)} className="h-4 w-4" />
+                        <Label htmlFor="newEquip" className="text-sm cursor-pointer">New</Label>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Checkbox id="hotList" checked={formData.hotList as boolean} onCheckedChange={(checked) => handleInputChange("hotList", checked)} className="h-4 w-4" />
+                        <Label htmlFor="hotList" className="text-sm cursor-pointer">Hot List</Label>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Checkbox id="toShipping" checked={formData.toShipping as boolean} onCheckedChange={(checked) => handleInputChange("toShipping", checked)} className="h-4 w-4" />
+                        <Label htmlFor="toShipping" className="text-sm cursor-pointer">To Shipping</Label>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Checkbox id="readyToBill" checked={formData.readyToBill as boolean} onCheckedChange={(checked) => handleInputChange("readyToBill", checked)} className="h-4 w-4" />
+                        <Label htmlFor="readyToBill" className="text-sm cursor-pointer">Ready to Bill</Label>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Checkbox id="lostEquipment" checked={formData.lostEquipment as boolean} onCheckedChange={(checked) => handleInputChange("lostEquipment", checked)} className="h-4 w-4" />
+                        <Label htmlFor="lostEquipment" className="text-sm cursor-pointer">Lost Equipment</Label>
                       </div>
                     </div>
                   </div>
