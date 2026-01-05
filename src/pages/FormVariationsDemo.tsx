@@ -3400,16 +3400,16 @@ const FormVariationsDemo = () => {
         </div>
       </div>
 
-      {/* Print Label Dialog */}
+      {/* Print Label Dialog - Quantity only */}
       <Dialog open={printLabelDialogOpen} onOpenChange={setPrintLabelDialogOpen}>
-        <DialogContent className="sm:max-w-md">
+        <DialogContent className="sm:max-w-sm">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <Printer className="h-5 w-5" />
               Print Label
             </DialogTitle>
           </DialogHeader>
-          <div className="space-y-4 py-4">
+          <div className="py-4">
             <div className="space-y-2">
               <Label htmlFor="labelQty">Quantity</Label>
               <Input 
@@ -3421,27 +3421,13 @@ const FormVariationsDemo = () => {
                 className="w-full" 
               />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="labelType">Label Type</Label>
-              <Select value={labelType} onValueChange={setLabelType}>
-                <SelectTrigger className="w-full">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="default">Default</SelectItem>
-                  <SelectItem value="custom">Custom</SelectItem>
-                  <SelectItem value="small">Small</SelectItem>
-                  <SelectItem value="large">Large</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setPrintLabelDialogOpen(false)}>
               Cancel
             </Button>
             <Button onClick={() => {
-              console.log('Printing label:', { quantity: labelQuantity, type: labelType });
+              console.log('Printing label:', { quantity: labelQuantity });
               setPrintLabelDialogOpen(false);
               toast({ title: "Label sent to printer", description: `Printing ${labelQuantity} label(s)` });
             }}>
@@ -3452,27 +3438,16 @@ const FormVariationsDemo = () => {
         </DialogContent>
       </Dialog>
 
-      {/* Print Batch Sheet Dialog */}
+      {/* Print Batch Sheet Dialog - Sheet type only */}
       <Dialog open={printBatchSheetDialogOpen} onOpenChange={setPrintBatchSheetDialogOpen}>
-        <DialogContent className="sm:max-w-md">
+        <DialogContent className="sm:max-w-sm">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <Printer className="h-5 w-5" />
               Print Batch Sheet
             </DialogTitle>
           </DialogHeader>
-          <div className="space-y-4 py-4">
-            <div className="space-y-2">
-              <Label htmlFor="batchQty">Quantity</Label>
-              <Input 
-                id="batchQty"
-                type="number" 
-                value={batchSheetQuantity}
-                onChange={(e) => setBatchSheetQuantity(e.target.value)}
-                min="1" 
-                className="w-full" 
-              />
-            </div>
+          <div className="py-4">
             <div className="space-y-2">
               <Label htmlFor="batchType">Sheet Type</Label>
               <Select value={batchSheetType} onValueChange={setBatchSheetType}>
@@ -3493,9 +3468,9 @@ const FormVariationsDemo = () => {
               Cancel
             </Button>
             <Button onClick={() => {
-              console.log('Printing batch sheet:', { quantity: batchSheetQuantity, type: batchSheetType });
+              console.log('Printing batch sheet:', { type: batchSheetType });
               setPrintBatchSheetDialogOpen(false);
-              toast({ title: "Batch sheet sent to printer", description: `Printing ${batchSheetQuantity} batch sheet(s)` });
+              toast({ title: "Batch sheet sent to printer", description: `Printing ${batchSheetType} batch sheet` });
             }}>
               <Printer className="h-4 w-4 mr-2" />
               Print
