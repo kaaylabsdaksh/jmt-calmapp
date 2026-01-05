@@ -3373,9 +3373,6 @@ const FormVariationsDemo = () => {
               Assign by Size
             </Button>
             <Button variant="outline" size="sm" className="h-7 text-xs px-3">
-              Back
-            </Button>
-            <Button variant="outline" size="sm" className="h-7 text-xs px-3">
               <Package className="h-3.5 w-3.5 mr-1.5" />
               Add from Inventory
             </Button>
