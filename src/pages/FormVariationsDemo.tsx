@@ -49,6 +49,9 @@ const FormVariationsDemo = () => {
   // Main section state
   const [activeSection, setActiveSection] = useState<'work-order-items' | 'estimate' | 'qf3' | 'external-files' | 'cert-files'>('work-order-items');
   
+  // ESL Tab state - track which tab is active for footer visibility
+  const [activeEslTab, setActiveEslTab] = useState<string>('general');
+  
   // Scroll to top button state
   const [showScrollTop, setShowScrollTop] = useState(false);
   
@@ -6635,7 +6638,7 @@ const FormVariationsDemo = () => {
           <CardContent className="p-6">
             {isESLType ? (
               // ESL Type Tabs
-              <Tabs defaultValue="general" className="w-full">
+              <Tabs value={activeEslTab} onValueChange={setActiveEslTab} className="w-full">
                 <TabsList className="w-full mb-4 h-10">
                   <TabsTrigger value="general" className="flex-1 gap-2">
                     <Info className="h-4 w-4" />
@@ -9490,8 +9493,8 @@ const FormVariationsDemo = () => {
         
       </div>
 
-      {/* Fixed Action Footer - Custom for ESL types */}
-      {isESLType && activeSection === 'work-order-items' ? (
+      {/* Fixed Action Footer - Custom for ESL types, hidden on Details tab */}
+      {isESLType && activeSection === 'work-order-items' && activeEslTab !== 'details' ? (
         <div ref={footerRef} className="fixed bottom-0 left-[256px] right-0 bg-background border-t border-border shadow-lg z-10 py-3 px-6">
           <div className="flex items-center justify-between gap-4 max-w-[1400px] mx-auto">
             {/* Left side buttons */}
@@ -9548,14 +9551,17 @@ const FormVariationsDemo = () => {
           </div>
         </div>
       ) : (
-        <FixedActionFooter 
-          onCancel={handleCancel}
-          onSave={handleSave}
-          currentSection={activeSection}
-          userRole={userRole}
-          onUserRoleChange={setUserRole}
-          footerRef={footerRef}
-        />
+        // Hide footer completely when on ESL Details tab
+        !(isESLType && activeEslTab === 'details') && (
+          <FixedActionFooter 
+            onCancel={handleCancel}
+            onSave={handleSave}
+            currentSection={activeSection}
+            userRole={userRole}
+            onUserRoleChange={setUserRole}
+            footerRef={footerRef}
+          />
+        )
       )}
 
       {/* QF3 Dialog */}
