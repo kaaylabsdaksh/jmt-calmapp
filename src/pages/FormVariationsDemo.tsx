@@ -1255,8 +1255,8 @@ const FormVariationsDemo = () => {
           </div>
 
           {/* Sub-accordions for ESL General Section */}
-          <Accordion type="multiple" defaultValue={["general-info"]} className="space-y-2">
-            <AccordionItem value="general-info" className="border rounded-lg px-3">
+          <Accordion type="multiple" defaultValue={["general-info"]} className="space-y-0">
+            <AccordionItem value="general-info" className="border-b border-border">
               <AccordionTrigger className="hover:no-underline py-3 text-sm font-medium">
                 General Information
               </AccordionTrigger>
@@ -1448,7 +1448,7 @@ const FormVariationsDemo = () => {
               </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="arrival-info" className="border rounded-lg px-3">
+            <AccordionItem value="arrival-info" className="border-b border-border">
               <AccordionTrigger className="hover:no-underline py-3 text-sm font-medium">
                 Arrival Information
               </AccordionTrigger>
@@ -1694,7 +1694,7 @@ const FormVariationsDemo = () => {
               </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="misc-info" className="border rounded-lg px-3">
+            <AccordionItem value="misc-info" className="border-b border-border">
               <AccordionTrigger className="hover:no-underline py-3 text-sm font-medium">
                 Misc. Information
               </AccordionTrigger>
@@ -1712,7 +1712,7 @@ const FormVariationsDemo = () => {
               </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="cost-info" className="border rounded-lg px-3">
+            <AccordionItem value="cost-info" className="border-b border-border">
               <AccordionTrigger className="hover:no-underline py-3 text-sm font-medium">
                 Cost Information
               </AccordionTrigger>
@@ -1725,7 +1725,7 @@ const FormVariationsDemo = () => {
               </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="accessories" className="border rounded-lg px-3">
+            <AccordionItem value="accessories" className="border-b border-border">
               <AccordionTrigger className="hover:no-underline py-3 text-sm font-medium">
                 Accessories
               </AccordionTrigger>
@@ -1858,7 +1858,7 @@ const FormVariationsDemo = () => {
               </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="comments" className="border rounded-lg px-3">
+            <AccordionItem value="comments" className="border-b border-border last:border-b-0">
               <AccordionTrigger className="hover:no-underline py-3 text-sm font-medium">
                 Comments
               </AccordionTrigger>
