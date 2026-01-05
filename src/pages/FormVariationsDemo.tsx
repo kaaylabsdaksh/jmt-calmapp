@@ -1587,15 +1587,6 @@ const FormVariationsDemo = () => {
                           </Select>
                         </div>
                       )}
-
-                      <div className="space-y-1.5">
-                        <Label className="text-xs font-medium">Inv #</Label>
-                        <Input 
-                          value={formData.invNumber} 
-                          readOnly
-                          className="h-8 text-sm bg-muted/50 cursor-not-allowed" 
-                        />
-                      </div>
                     </div>
 
                     {/* Delivery Status */}
