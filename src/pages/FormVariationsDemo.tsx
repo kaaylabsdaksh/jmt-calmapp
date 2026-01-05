@@ -9668,8 +9668,8 @@ const FormVariationsDemo = () => {
         
       </div>
 
-      {/* Fixed Action Footer - Custom for ESL types, hidden on Details tab */}
-      {isESLType && activeSection === 'work-order-items' && activeEslTab !== 'details' ? (
+      {/* Fixed Action Footer - Custom for ESL types, hidden on Details and Testing tabs */}
+      {isESLType && activeSection === 'work-order-items' && activeEslTab !== 'details' && activeEslTab !== 'testing' ? (
         <div ref={footerRef} className="fixed bottom-0 left-[256px] right-0 bg-background border-t border-border shadow-lg z-10 py-3 px-6">
           <div className="flex items-center justify-between gap-4 max-w-[1400px] mx-auto">
             {/* Left side buttons */}
@@ -9678,7 +9678,19 @@ const FormVariationsDemo = () => {
                 variant="outline" 
                 className="bg-primary hover:bg-primary/90 text-primary-foreground border-primary font-medium h-9 px-4"
               >
+                Estimate
+              </Button>
+              <Button 
+                variant="outline" 
+                className="bg-primary hover:bg-primary/90 text-primary-foreground border-primary font-medium h-9 px-4"
+              >
                 Rotation
+              </Button>
+              <Button 
+                variant="outline" 
+                className="bg-primary hover:bg-primary/90 text-primary-foreground border-primary font-medium h-9 px-4"
+              >
+                QA Inspection
               </Button>
               <Button 
                 variant="outline" 
@@ -9696,6 +9708,19 @@ const FormVariationsDemo = () => {
 
             {/* Right side buttons */}
             <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-muted-foreground">Create New Group</span>
+                <Select>
+                  <SelectTrigger className="h-9 w-32 text-sm border-border">
+                    <SelectValue placeholder="Select..." />
+                  </SelectTrigger>
+                  <SelectContent className="bg-background border-border">
+                    <SelectItem value="group1">Group 1</SelectItem>
+                    <SelectItem value="group2">Group 2</SelectItem>
+                    <SelectItem value="group3">Group 3</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
               <Button 
                 variant="outline" 
                 onClick={handleCancel}
