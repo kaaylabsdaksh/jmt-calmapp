@@ -11,6 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, ChevronLeft, ChevronDown, ChevronUp, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield, Wrench, Activity, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock, ExternalLink, ArrowUp, Pencil, ImageIcon, Plus, MoreHorizontal } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -3505,13 +3506,13 @@ const FormVariationsDemo = () => {
       <div className="space-y-6">
         {/* Search/Filter Section */}
         <div className="border border-border rounded-lg p-4 space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {/* Left Column */}
-            <div className="space-y-3">
+          <div className="flex gap-4">
+            {/* Left Column - Filters */}
+            <div className="space-y-3 flex-shrink-0">
               <div className="space-y-1">
                 <Label htmlFor="technician" className="text-xs">Technician:</Label>
                 <Select defaultValue="all">
-                  <SelectTrigger className="h-8 text-xs">
+                  <SelectTrigger className="h-8 text-xs w-48">
                     <SelectValue placeholder="Select technician" />
                   </SelectTrigger>
                   <SelectContent className="bg-background border-border">
@@ -3525,7 +3526,7 @@ const FormVariationsDemo = () => {
               <div className="space-y-1">
                 <Label htmlFor="result" className="text-xs">Result:</Label>
                 <Select>
-                  <SelectTrigger className="h-8 text-xs">
+                  <SelectTrigger className="h-8 text-xs w-48">
                     <SelectValue placeholder="Select result" />
                   </SelectTrigger>
                   <SelectContent className="bg-background border-border">
@@ -3540,46 +3541,52 @@ const FormVariationsDemo = () => {
               </Button>
             </div>
 
-            {/* Middle Column */}
-            <div className="space-y-3">
-              <div className="space-y-1">
-                <Label htmlFor="proceduresUsed" className="text-xs">Procedures Used:</Label>
-                <Select>
-                  <SelectTrigger className="h-8 text-xs">
-                    <SelectValue placeholder="Select procedure" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-background border-border">
-                    <SelectItem value="proc1" className="text-xs">Standard Testing</SelectItem>
-                    <SelectItem value="proc2" className="text-xs">Extended Testing</SelectItem>
-                    <SelectItem value="proc3" className="text-xs">Quick Check</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-1">
-                <Label htmlFor="testResult" className="text-xs">Test Result:</Label>
-                <Select>
-                  <SelectTrigger className="h-8 text-xs">
-                    <SelectValue placeholder="Select test result" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-background border-border">
-                    <SelectItem value="passed" className="text-xs">Passed</SelectItem>
-                    <SelectItem value="failed" className="text-xs">Failed</SelectItem>
-                    <SelectItem value="inconclusive" className="text-xs">Inconclusive</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
+            {/* Vertical Separator */}
+            <Separator orientation="vertical" className="h-auto" />
 
-            {/* Right Column */}
-            <div className="space-y-3">
-              <div className="space-y-1">
-                <Label htmlFor="standardsUsed" className="text-xs">Standards Used:</Label>
-                <Input id="standardsUsed" placeholder="Enter standards" className="h-8 text-xs" />
+            {/* Right Side - Details */}
+            <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Middle Column */}
+              <div className="space-y-3">
+                <div className="space-y-1">
+                  <Label htmlFor="proceduresUsed" className="text-xs">Procedures Used:</Label>
+                  <Select>
+                    <SelectTrigger className="h-8 text-xs">
+                      <SelectValue placeholder="Select procedure" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-background border-border">
+                      <SelectItem value="proc1" className="text-xs">Standard Testing</SelectItem>
+                      <SelectItem value="proc2" className="text-xs">Extended Testing</SelectItem>
+                      <SelectItem value="proc3" className="text-xs">Quick Check</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-1">
+                  <Label htmlFor="testResult" className="text-xs">Test Result:</Label>
+                  <Select>
+                    <SelectTrigger className="h-8 text-xs">
+                      <SelectValue placeholder="Select test result" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-background border-border">
+                      <SelectItem value="passed" className="text-xs">Passed</SelectItem>
+                      <SelectItem value="failed" className="text-xs">Failed</SelectItem>
+                      <SelectItem value="inconclusive" className="text-xs">Inconclusive</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
-              <div className="pt-5">
-                <Button size="sm" className="h-8 text-xs px-4 bg-primary text-primary-foreground hover:bg-primary/90">
-                  Update
-                </Button>
+
+              {/* Right Column */}
+              <div className="space-y-3">
+                <div className="space-y-1">
+                  <Label htmlFor="standardsUsed" className="text-xs">Standards Used:</Label>
+                  <Input id="standardsUsed" placeholder="Enter standards" className="h-8 text-xs" />
+                </div>
+                <div className="pt-5">
+                  <Button size="sm" className="h-8 text-xs px-4 bg-primary text-primary-foreground hover:bg-primary/90">
+                    Update
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
