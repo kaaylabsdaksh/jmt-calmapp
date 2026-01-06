@@ -3503,17 +3503,17 @@ const FormVariationsDemo = () => {
 
   const renderTestingSection = () => {
     return (
-      <div className="space-y-6">
-        {/* Search/Filter Section */}
-        <div className="border border-border rounded-lg p-4 space-y-4">
-          <div className="flex gap-4">
-            {/* Left Column - Filters */}
-            <div className="space-y-3 flex-shrink-0">
-              <div className="space-y-1">
-                <Label htmlFor="technician" className="text-xs">Technician:</Label>
+      <div className="space-y-4">
+        {/* Compact Filter Row */}
+        <div className="border border-border rounded-lg p-2">
+          <div className="flex flex-wrap items-end gap-2">
+            {/* Left Filters */}
+            <div className="flex items-end gap-2">
+              <div className="space-y-0.5">
+                <Label htmlFor="technician" className="text-[10px] text-muted-foreground">Technician</Label>
                 <Select defaultValue="all">
-                  <SelectTrigger className="h-8 text-xs w-48">
-                    <SelectValue placeholder="Select technician" />
+                  <SelectTrigger className="h-7 text-xs w-32">
+                    <SelectValue placeholder="Select" />
                   </SelectTrigger>
                   <SelectContent className="bg-background border-border">
                     <SelectItem value="all" className="text-xs">All Records</SelectItem>
@@ -3523,11 +3523,11 @@ const FormVariationsDemo = () => {
                   </SelectContent>
                 </Select>
               </div>
-              <div className="space-y-1">
-                <Label htmlFor="result" className="text-xs">Result:</Label>
+              <div className="space-y-0.5">
+                <Label htmlFor="result" className="text-[10px] text-muted-foreground">Result</Label>
                 <Select>
-                  <SelectTrigger className="h-8 text-xs w-48">
-                    <SelectValue placeholder="Select result" />
+                  <SelectTrigger className="h-7 text-xs w-28">
+                    <SelectValue placeholder="Select" />
                   </SelectTrigger>
                   <SelectContent className="bg-background border-border">
                     <SelectItem value="pass" className="text-xs">Pass</SelectItem>
@@ -3536,58 +3536,49 @@ const FormVariationsDemo = () => {
                   </SelectContent>
                 </Select>
               </div>
-              <Button size="sm" className="h-8 text-xs px-4">
+              <Button size="sm" className="h-7 text-xs px-3">
                 Search
               </Button>
             </div>
 
-            {/* Vertical Separator */}
-            <Separator orientation="vertical" className="h-auto" />
+            {/* Separator */}
+            <Separator orientation="vertical" className="h-7 mx-1" />
 
-            {/* Right Side - Details */}
-            <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Middle Column */}
-              <div className="space-y-3">
-                <div className="space-y-1">
-                  <Label htmlFor="proceduresUsed" className="text-xs">Procedures Used:</Label>
-                  <Select>
-                    <SelectTrigger className="h-8 text-xs">
-                      <SelectValue placeholder="Select procedure" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-background border-border">
-                      <SelectItem value="proc1" className="text-xs">Standard Testing</SelectItem>
-                      <SelectItem value="proc2" className="text-xs">Extended Testing</SelectItem>
-                      <SelectItem value="proc3" className="text-xs">Quick Check</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-1">
-                  <Label htmlFor="testResult" className="text-xs">Test Result:</Label>
-                  <Select>
-                    <SelectTrigger className="h-8 text-xs">
-                      <SelectValue placeholder="Select test result" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-background border-border">
-                      <SelectItem value="passed" className="text-xs">Passed</SelectItem>
-                      <SelectItem value="failed" className="text-xs">Failed</SelectItem>
-                      <SelectItem value="inconclusive" className="text-xs">Inconclusive</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+            {/* Right Details */}
+            <div className="flex items-end gap-2 flex-1">
+              <div className="space-y-0.5 flex-1 max-w-48">
+                <Label htmlFor="proceduresUsed" className="text-[10px] text-muted-foreground">Procedures Used</Label>
+                <Select>
+                  <SelectTrigger className="h-7 text-xs">
+                    <SelectValue placeholder="Select procedure" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-background border-border">
+                    <SelectItem value="proc1" className="text-xs">Standard Testing</SelectItem>
+                    <SelectItem value="proc2" className="text-xs">Extended Testing</SelectItem>
+                    <SelectItem value="proc3" className="text-xs">Quick Check</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
-
-              {/* Right Column */}
-              <div className="space-y-3">
-                <div className="space-y-1">
-                  <Label htmlFor="standardsUsed" className="text-xs">Standards Used:</Label>
-                  <Input id="standardsUsed" placeholder="Enter standards" className="h-8 text-xs" />
-                </div>
-                <div className="pt-5">
-                  <Button size="sm" className="h-8 text-xs px-4 bg-primary text-primary-foreground hover:bg-primary/90">
-                    Update
-                  </Button>
-                </div>
+              <div className="space-y-0.5 flex-1 max-w-40">
+                <Label htmlFor="testResult" className="text-[10px] text-muted-foreground">Test Result</Label>
+                <Select>
+                  <SelectTrigger className="h-7 text-xs">
+                    <SelectValue placeholder="Select" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-background border-border">
+                    <SelectItem value="passed" className="text-xs">Passed</SelectItem>
+                    <SelectItem value="failed" className="text-xs">Failed</SelectItem>
+                    <SelectItem value="inconclusive" className="text-xs">Inconclusive</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
+              <div className="space-y-0.5 flex-1 max-w-40">
+                <Label htmlFor="standardsUsed" className="text-[10px] text-muted-foreground">Standards Used</Label>
+                <Input id="standardsUsed" placeholder="Enter standards" className="h-7 text-xs" />
+              </div>
+              <Button size="sm" className="h-7 text-xs px-3 bg-primary text-primary-foreground hover:bg-primary/90">
+                Update
+              </Button>
             </div>
           </div>
         </div>
