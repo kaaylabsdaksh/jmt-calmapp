@@ -13,7 +13,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, ChevronLeft, ChevronDown, ChevronUp, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield, Wrench, Activity, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock, ExternalLink, ArrowUp, Pencil, ImageIcon, Plus, MoreHorizontal } from "lucide-react";
+import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, ChevronLeft, ChevronDown, ChevronUp, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield, Wrench, Activity, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock, ExternalLink, ArrowUp, Pencil, ImageIcon, Plus, MoreHorizontal, Play, Square } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
@@ -3620,13 +3620,276 @@ const FormVariationsDemo = () => {
     );
   };
 
-  const renderWorkStatusSection = () => (
-    <div className="space-y-2">
-      <p className="text-xs text-muted-foreground">
-        Work status information will be displayed here.
-      </p>
-    </div>
-  );
+  const renderWorkStatusSection = () => {
+    const [workStatusData, setWorkStatusData] = React.useState({
+      workType: '',
+      startSort: '',
+      stopSort: '',
+      startDate: '',
+      stopDate: '',
+      startTime: '',
+      stopTime: '',
+      technician: 'lorraine-stepp-jenkins',
+      qty: '',
+      status: 'started',
+      comments: ''
+    });
+
+    const handleWorkStatusChange = (field: string, value: string) => {
+      setWorkStatusData(prev => ({ ...prev, [field]: value }));
+    };
+
+    return (
+      <Card className="border-0 shadow-md">
+        <CardContent className="p-6 space-y-6">
+          {/* Header with Complete Inspection button */}
+          <div className="flex items-center justify-between">
+            <h3 className="text-lg font-semibold">Work Status</h3>
+            <Button 
+              variant="outline" 
+              className="border-amber-500 text-amber-700 hover:bg-amber-50 dark:hover:bg-amber-950 font-medium"
+            >
+              <CheckCircle className="h-4 w-4 mr-2" />
+              Complete Inspection
+            </Button>
+          </div>
+
+          {/* Form Grid */}
+          <div className="space-y-4">
+            {/* Row 1: Work Type, Sort Numbers, Dates */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {/* Work Type */}
+              <div className="space-y-1.5">
+                <Label className="text-xs font-medium text-muted-foreground">Work Type</Label>
+                <Select value={workStatusData.workType} onValueChange={(v) => handleWorkStatusChange('workType', v)}>
+                  <SelectTrigger className="h-9 bg-background border-input">
+                    <SelectValue placeholder="Select type..." />
+                  </SelectTrigger>
+                  <SelectContent className="bg-popover border z-50">
+                    <SelectItem value="calibration">Calibration</SelectItem>
+                    <SelectItem value="repair">Repair</SelectItem>
+                    <SelectItem value="inspection">Inspection</SelectItem>
+                    <SelectItem value="maintenance">Maintenance</SelectItem>
+                    <SelectItem value="adjustment">Adjustment</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Start Sort # */}
+              <div className="space-y-1.5">
+                <Label className="text-xs font-medium text-muted-foreground">Start Sort #</Label>
+                <Input 
+                  className="h-9 bg-background"
+                  value={workStatusData.startSort}
+                  onChange={(e) => handleWorkStatusChange('startSort', e.target.value)}
+                  placeholder="Enter..."
+                />
+              </div>
+
+              {/* Start Date & Time */}
+              <div className="space-y-1.5">
+                <Label className="text-xs font-medium text-muted-foreground">Start Date</Label>
+                <div className="flex gap-2">
+                  <Input 
+                    type="date"
+                    className="h-9 bg-background flex-1"
+                    value={workStatusData.startDate}
+                    onChange={(e) => handleWorkStatusChange('startDate', e.target.value)}
+                  />
+                  <Input 
+                    type="time"
+                    className="h-9 bg-background w-24"
+                    value={workStatusData.startTime}
+                    onChange={(e) => handleWorkStatusChange('startTime', e.target.value)}
+                  />
+                </div>
+              </div>
+
+              {/* Stop Date & Time */}
+              <div className="space-y-1.5">
+                <Label className="text-xs font-medium text-muted-foreground">Stop Date</Label>
+                <div className="flex gap-2">
+                  <Input 
+                    type="date"
+                    className="h-9 bg-background flex-1"
+                    value={workStatusData.stopDate}
+                    onChange={(e) => handleWorkStatusChange('stopDate', e.target.value)}
+                  />
+                  <Input 
+                    type="time"
+                    className="h-9 bg-background w-24"
+                    value={workStatusData.stopTime}
+                    onChange={(e) => handleWorkStatusChange('stopTime', e.target.value)}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Row 2: Technician, Stop Sort, Qty with Start/Stop buttons */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {/* Technician */}
+              <div className="space-y-1.5">
+                <Label className="text-xs font-medium text-muted-foreground">Technician</Label>
+                <Select value={workStatusData.technician} onValueChange={(v) => handleWorkStatusChange('technician', v)}>
+                  <SelectTrigger className="h-9 bg-background border-input">
+                    <SelectValue placeholder="Select technician..." />
+                  </SelectTrigger>
+                  <SelectContent className="bg-popover border z-50">
+                    <SelectItem value="lorraine-stepp-jenkins">Lorraine Stepp-Jenkins</SelectItem>
+                    <SelectItem value="john-smith">John Smith</SelectItem>
+                    <SelectItem value="jane-doe">Jane Doe</SelectItem>
+                    <SelectItem value="mike-wilson">Mike Wilson</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Stop Sort # */}
+              <div className="space-y-1.5">
+                <Label className="text-xs font-medium text-muted-foreground">Stop Sort #</Label>
+                <Input 
+                  className="h-9 bg-background"
+                  value={workStatusData.stopSort}
+                  onChange={(e) => handleWorkStatusChange('stopSort', e.target.value)}
+                  placeholder="Enter..."
+                />
+              </div>
+
+              {/* Qty with Start/Stop */}
+              <div className="space-y-1.5">
+                <Label className="text-xs font-medium text-muted-foreground">Qty</Label>
+                <div className="flex items-center gap-2">
+                  <Input 
+                    className="h-9 bg-background flex-1"
+                    value={workStatusData.qty}
+                    onChange={(e) => handleWorkStatusChange('qty', e.target.value)}
+                    placeholder="0"
+                  />
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    className="h-9 px-3 border-border hover:bg-muted"
+                  >
+                    <Play className="h-3 w-3 mr-1" />
+                    Start
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    className="h-9 px-3 border-border hover:bg-muted"
+                  >
+                    <Square className="h-3 w-3 mr-1" />
+                    Stop
+                  </Button>
+                </div>
+              </div>
+
+              {/* Status */}
+              <div className="space-y-1.5">
+                <Label className="text-xs font-medium text-muted-foreground">Status</Label>
+                <Select value={workStatusData.status} onValueChange={(v) => handleWorkStatusChange('status', v)}>
+                  <SelectTrigger className="h-9 bg-background border-input">
+                    <SelectValue placeholder="Select status..." />
+                  </SelectTrigger>
+                  <SelectContent className="bg-popover border z-50">
+                    <SelectItem value="started">Started</SelectItem>
+                    <SelectItem value="in-progress">In Progress</SelectItem>
+                    <SelectItem value="paused">Paused</SelectItem>
+                    <SelectItem value="completed">Completed</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            {/* Row 3: Comments */}
+            <div className="space-y-1.5">
+              <Label className="text-xs font-medium text-muted-foreground">Comments</Label>
+              <Textarea 
+                className="min-h-[100px] bg-background resize-y"
+                value={workStatusData.comments}
+                onChange={(e) => handleWorkStatusChange('comments', e.target.value)}
+                placeholder="Enter any comments or notes..."
+              />
+            </div>
+
+            {/* Action Buttons Row */}
+            <div className="flex items-center justify-end gap-2 pt-2">
+              <Button 
+                variant="outline"
+                className="border-border hover:bg-muted font-medium"
+              >
+                Add Only
+              </Button>
+              <Button 
+                className="bg-primary text-primary-foreground hover:bg-primary/90 font-medium"
+              >
+                <Plus className="h-4 w-4 mr-1" />
+                Add/Completed
+              </Button>
+            </div>
+          </div>
+
+          {/* Work Status History Table */}
+          <div className="border rounded-lg overflow-hidden mt-6">
+            <div className="bg-muted/30 px-4 py-2 border-b">
+              <h4 className="text-sm font-medium">Work Status History</h4>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="bg-primary">
+                    <th className="text-left px-4 py-2 text-xs font-semibold text-primary-foreground border-r border-primary-foreground/20">Work Type</th>
+                    <th className="text-left px-4 py-2 text-xs font-semibold text-primary-foreground border-r border-primary-foreground/20">Technician</th>
+                    <th className="text-left px-4 py-2 text-xs font-semibold text-primary-foreground border-r border-primary-foreground/20">Start</th>
+                    <th className="text-left px-4 py-2 text-xs font-semibold text-primary-foreground border-r border-primary-foreground/20">Stop</th>
+                    <th className="text-left px-4 py-2 text-xs font-semibold text-primary-foreground border-r border-primary-foreground/20">Duration</th>
+                    <th className="text-left px-4 py-2 text-xs font-semibold text-primary-foreground">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b border-border hover:bg-muted/30">
+                    <td className="px-4 py-2.5 text-xs">Calibration</td>
+                    <td className="px-4 py-2.5 text-xs">Lorraine Stepp-Jenkins</td>
+                    <td className="px-4 py-2.5 text-xs">01/03/2025 09:30</td>
+                    <td className="px-4 py-2.5 text-xs">01/03/2025 11:45</td>
+                    <td className="px-4 py-2.5 text-xs">2h 15m</td>
+                    <td className="px-4 py-2.5">
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400">
+                        Completed
+                      </span>
+                    </td>
+                  </tr>
+                  <tr className="border-b border-border hover:bg-muted/30">
+                    <td className="px-4 py-2.5 text-xs">Inspection</td>
+                    <td className="px-4 py-2.5 text-xs">John Smith</td>
+                    <td className="px-4 py-2.5 text-xs">01/02/2025 14:00</td>
+                    <td className="px-4 py-2.5 text-xs">01/02/2025 15:30</td>
+                    <td className="px-4 py-2.5 text-xs">1h 30m</td>
+                    <td className="px-4 py-2.5">
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400">
+                        Completed
+                      </span>
+                    </td>
+                  </tr>
+                  <tr className="border-b border-border hover:bg-muted/30">
+                    <td className="px-4 py-2.5 text-xs">Repair</td>
+                    <td className="px-4 py-2.5 text-xs">Jane Doe</td>
+                    <td className="px-4 py-2.5 text-xs">01/02/2025 10:00</td>
+                    <td className="px-4 py-2.5 text-xs">—</td>
+                    <td className="px-4 py-2.5 text-xs">—</td>
+                    <td className="px-4 py-2.5">
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400">
+                        In Progress
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  };
 
   // Render factory configuration section
   const renderFactoryConfigSection = (isAccordion = false) => (
