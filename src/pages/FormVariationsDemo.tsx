@@ -9667,86 +9667,12 @@ const FormVariationsDemo = () => {
         
       </div>
 
-      {/* Fixed Action Footer - Custom for ESL types, hidden on Details and Testing tabs */}
-      {isESLType && activeSection === 'work-order-items' && activeEslTab !== 'details' && activeEslTab !== 'testing' ? (
-        <div ref={footerRef} className="fixed bottom-0 left-[256px] right-0 bg-background border-t border-border shadow-lg z-10 py-3 px-6">
-          <div className="flex items-center justify-between gap-4 max-w-[1400px] mx-auto">
-            {/* Left side buttons */}
-            <div className="flex items-center gap-2">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button 
-                    variant="outline" 
-                    className="border-border bg-background text-foreground hover:bg-muted font-medium h-9 px-4"
-                  >
-                    <MoreHorizontal className="h-4 w-4 mr-2" />
-                    More Actions
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="start" className="bg-background border-border">
-                  <DropdownMenuItem 
-                    onClick={() => toast({ title: "Estimate", description: "Estimate action triggered" })}
-                    className="cursor-pointer"
-                  >
-                    Estimate
-                  </DropdownMenuItem>
-                  <DropdownMenuItem 
-                    onClick={() => toast({ title: "Rotation", description: "Rotation action triggered" })}
-                    className="cursor-pointer"
-                  >
-                    Rotation
-                  </DropdownMenuItem>
-                  <DropdownMenuItem 
-                    onClick={() => toast({ title: "QA Inspection", description: "QA Inspection action triggered" })}
-                    className="cursor-pointer"
-                  >
-                    QA Inspection
-                  </DropdownMenuItem>
-                  <DropdownMenuItem 
-                    onClick={() => toast({ title: "Schedule", description: "Schedule action triggered" })}
-                    className="cursor-pointer"
-                  >
-                    Schedule
-                  </DropdownMenuItem>
-                  <DropdownMenuItem 
-                    onClick={() => toast({ title: "Waiting on Customer", description: "Waiting on Customer action triggered" })}
-                    className="cursor-pointer"
-                  >
-                    Waiting on Customer
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-            </DropdownMenu>
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-muted-foreground">Create New Group</span>
-                <Select>
-                  <SelectTrigger className="h-9 w-32 text-sm border-border bg-background">
-                    <SelectValue placeholder="Select..." />
-                  </SelectTrigger>
-                  <SelectContent className="bg-background border-border">
-                    <SelectItem value="group1">Group 1</SelectItem>
-                    <SelectItem value="group2">Group 2</SelectItem>
-                    <SelectItem value="group3">Group 3</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <Button 
-                variant="outline" 
-                onClick={handleCancel}
-                className="border-border bg-background text-foreground hover:bg-muted font-medium h-9 px-4"
-              >
-                Cancel WO
-              </Button>
-              <Button 
-                variant="outline" 
-                className="border-border bg-background text-foreground hover:bg-muted font-medium h-9 px-4"
-              >
-                <Printer className="h-4 w-4 mr-2" />
-                Print WO
-              </Button>
-            </div>
-
-            {/* Right side buttons */}
-            <div className="flex items-center gap-2">
+      {/* Fixed Action Footer - Custom for ESL types, hidden on Details tab only */}
+      {isESLType && activeSection === 'work-order-items' && activeEslTab !== 'details' ? (
+        activeEslTab === 'testing' ? (
+          // Testing tab footer - only Save and Cancel on the right
+          <div ref={footerRef} className="fixed bottom-0 left-[256px] right-0 bg-background border-t border-border shadow-lg z-10 py-3 px-6">
+            <div className="flex items-center justify-end gap-2 max-w-[1400px] mx-auto">
               <Button 
                 variant="outline" 
                 onClick={handleCancel}
@@ -9764,10 +9690,108 @@ const FormVariationsDemo = () => {
               </Button>
             </div>
           </div>
-        </div>
+        ) : (
+          // General tab footer - full buttons
+          <div ref={footerRef} className="fixed bottom-0 left-[256px] right-0 bg-background border-t border-border shadow-lg z-10 py-3 px-6">
+            <div className="flex items-center justify-between gap-4 max-w-[1400px] mx-auto">
+              {/* Left side buttons */}
+              <div className="flex items-center gap-2">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button 
+                      variant="outline" 
+                      className="border-border bg-background text-foreground hover:bg-muted font-medium h-9 px-4"
+                    >
+                      <MoreHorizontal className="h-4 w-4 mr-2" />
+                      More Actions
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start" className="bg-background border-border">
+                    <DropdownMenuItem 
+                      onClick={() => toast({ title: "Estimate", description: "Estimate action triggered" })}
+                      className="cursor-pointer"
+                    >
+                      Estimate
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      onClick={() => toast({ title: "Rotation", description: "Rotation action triggered" })}
+                      className="cursor-pointer"
+                    >
+                      Rotation
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      onClick={() => toast({ title: "QA Inspection", description: "QA Inspection action triggered" })}
+                      className="cursor-pointer"
+                    >
+                      QA Inspection
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      onClick={() => toast({ title: "Schedule", description: "Schedule action triggered" })}
+                      className="cursor-pointer"
+                    >
+                      Schedule
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      onClick={() => toast({ title: "Waiting on Customer", description: "Waiting on Customer action triggered" })}
+                      className="cursor-pointer"
+                    >
+                      Waiting on Customer
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+              </DropdownMenu>
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-muted-foreground">Create New Group</span>
+                  <Select>
+                    <SelectTrigger className="h-9 w-32 text-sm border-border bg-background">
+                      <SelectValue placeholder="Select..." />
+                    </SelectTrigger>
+                    <SelectContent className="bg-background border-border">
+                      <SelectItem value="group1">Group 1</SelectItem>
+                      <SelectItem value="group2">Group 2</SelectItem>
+                      <SelectItem value="group3">Group 3</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <Button 
+                  variant="outline" 
+                  onClick={handleCancel}
+                  className="border-border bg-background text-foreground hover:bg-muted font-medium h-9 px-4"
+                >
+                  Cancel WO
+                </Button>
+                <Button 
+                  variant="outline" 
+                  className="border-border bg-background text-foreground hover:bg-muted font-medium h-9 px-4"
+                >
+                  <Printer className="h-4 w-4 mr-2" />
+                  Print WO
+                </Button>
+              </div>
+
+              {/* Right side buttons */}
+              <div className="flex items-center gap-2">
+                <Button 
+                  variant="outline" 
+                  onClick={handleCancel}
+                  className="border-border bg-background text-foreground hover:bg-muted font-medium h-9 px-4"
+                >
+                  <X className="h-4 w-4 mr-2" />
+                  Cancel
+                </Button>
+                <Button 
+                  onClick={handleSave}
+                  className="bg-emerald-500 hover:bg-emerald-600 text-white font-medium h-9 px-4"
+                >
+                  <Save className="h-4 w-4 mr-2" />
+                  Save Item
+                </Button>
+              </div>
+            </div>
+          </div>
+        )
       ) : (
-        // Hide footer completely when on ESL Details or Testing tab
-        !(isESLType && (activeEslTab === 'details' || activeEslTab === 'testing')) && (
+        // Hide footer completely when on ESL Details tab
+        !(isESLType && activeEslTab === 'details') && (
           <FixedActionFooter 
             onCancel={handleCancel}
             onSave={handleSave}
