@@ -10062,7 +10062,7 @@ const FormVariationsDemo = () => {
               <div className="flex items-center gap-3">
                 <Button 
                   variant="outline" 
-                  className="bg-amber-400 hover:bg-amber-500 text-foreground border-amber-400 font-medium h-9 px-4"
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground border-primary font-medium h-9 px-4"
                 >
                   <Printer className="h-4 w-4 mr-2" />
                   Print Test Report
