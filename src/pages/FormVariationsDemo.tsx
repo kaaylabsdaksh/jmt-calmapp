@@ -3614,34 +3614,6 @@ const FormVariationsDemo = () => {
           </div>
         </div>
 
-        {/* Actions Section */}
-        <div className="flex flex-wrap items-center justify-center gap-3 py-4 border-t border-b border-border">
-          <Button variant="outline" size="sm" className="h-8 text-xs px-4">
-            <Printer className="h-3.5 w-3.5 mr-2" />
-            Print Test Report
-          </Button>
-          
-          <div className="flex items-center gap-2">
-            <Label className="text-xs text-muted-foreground">sorted by:</Label>
-            <Select defaultValue="summary">
-              <SelectTrigger className="h-8 w-40 text-xs">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className="bg-background border-border">
-                <SelectItem value="summary" className="text-xs">Summary</SelectItem>
-                <SelectItem value="sort" className="text-xs">Detail by Sort #</SelectItem>
-                <SelectItem value="custid" className="text-xs">Detail by Cust ID</SelectItem>
-                <SelectItem value="eslid" className="text-xs">Detail by ESL ID</SelectItem>
-                <SelectItem value="tag" className="text-xs">Detail by Tag #</SelectItem>
-                <SelectItem value="individual" className="text-xs">Individually</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <Button variant="outline" size="sm" className="h-8 text-xs px-4">
-            Back
-          </Button>
-        </div>
 
         {/* Empty Results Area */}
         <div className="border border-border rounded-lg p-8 text-center">
