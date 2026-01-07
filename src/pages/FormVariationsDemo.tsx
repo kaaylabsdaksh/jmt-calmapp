@@ -3659,21 +3659,51 @@ const FormVariationsDemo = () => {
           <div className="space-y-4">
             {/* Row 1: Work Type, Sort Numbers, Dates */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {/* Work Type */}
-              <div className="space-y-1.5">
-                <Label className="text-xs font-medium text-muted-foreground">Work Type</Label>
-                <Select value={workStatusData.workType} onValueChange={(v) => handleWorkStatusChange('workType', v)}>
-                  <SelectTrigger className="h-9 bg-background border-input">
-                    <SelectValue placeholder="Select type..." />
-                  </SelectTrigger>
-                  <SelectContent className="bg-popover border z-50">
-                    <SelectItem value="calibration">Calibration</SelectItem>
-                    <SelectItem value="repair">Repair</SelectItem>
-                    <SelectItem value="inspection">Inspection</SelectItem>
-                    <SelectItem value="maintenance">Maintenance</SelectItem>
-                    <SelectItem value="adjustment">Adjustment</SelectItem>
-                  </SelectContent>
-                </Select>
+              {/* Work Type, Technician & Status stacked vertically */}
+              <div className="space-y-2">
+                <div className="space-y-1.5">
+                  <Label className="text-xs font-medium text-muted-foreground">Work Type</Label>
+                  <Select value={workStatusData.workType} onValueChange={(v) => handleWorkStatusChange('workType', v)}>
+                    <SelectTrigger className="h-9 bg-background border-input">
+                      <SelectValue placeholder="Select type..." />
+                    </SelectTrigger>
+                    <SelectContent className="bg-popover border z-50">
+                      <SelectItem value="calibration">Calibration</SelectItem>
+                      <SelectItem value="repair">Repair</SelectItem>
+                      <SelectItem value="inspection">Inspection</SelectItem>
+                      <SelectItem value="maintenance">Maintenance</SelectItem>
+                      <SelectItem value="adjustment">Adjustment</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-1.5">
+                  <Label className="text-xs font-medium text-muted-foreground">Technician</Label>
+                  <Select value={workStatusData.technician} onValueChange={(v) => handleWorkStatusChange('technician', v)}>
+                    <SelectTrigger className="h-9 bg-background border-input">
+                      <SelectValue placeholder="Select technician..." />
+                    </SelectTrigger>
+                    <SelectContent className="bg-popover border z-50">
+                      <SelectItem value="lorraine-stepp-jenkins">Lorraine Stepp-Jenkins</SelectItem>
+                      <SelectItem value="john-smith">John Smith</SelectItem>
+                      <SelectItem value="jane-doe">Jane Doe</SelectItem>
+                      <SelectItem value="mike-wilson">Mike Wilson</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-1.5">
+                  <Label className="text-xs font-medium text-muted-foreground">Status</Label>
+                  <Select value={workStatusData.status} onValueChange={(v) => handleWorkStatusChange('status', v)}>
+                    <SelectTrigger className="h-9 bg-background border-input">
+                      <SelectValue placeholder="Select status..." />
+                    </SelectTrigger>
+                    <SelectContent className="bg-popover border z-50">
+                      <SelectItem value="started">Started</SelectItem>
+                      <SelectItem value="in-progress">In Progress</SelectItem>
+                      <SelectItem value="paused">Paused</SelectItem>
+                      <SelectItem value="completed">Completed</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
 
               {/* Start Sort #, Stop Sort #, Qty stacked vertically */}
@@ -3707,7 +3737,7 @@ const FormVariationsDemo = () => {
                 </div>
               </div>
 
-              {/* Start Date & Time with Start Button, Technician & Status below */}
+              {/* Start Date & Time with Start Button */}
               <div className="space-y-2">
                 <div className="space-y-1.5">
                   <Label className="text-xs font-medium text-muted-foreground">Start Date</Label>
@@ -3732,34 +3762,6 @@ const FormVariationsDemo = () => {
                   <Play className="h-3 w-3 mr-1" />
                   Start
                 </Button>
-                <div className="space-y-1.5">
-                  <Label className="text-xs font-medium text-muted-foreground">Technician</Label>
-                  <Select value={workStatusData.technician} onValueChange={(v) => handleWorkStatusChange('technician', v)}>
-                    <SelectTrigger className="h-9 bg-background border-input">
-                      <SelectValue placeholder="Select technician..." />
-                    </SelectTrigger>
-                    <SelectContent className="bg-popover border z-50">
-                      <SelectItem value="lorraine-stepp-jenkins">Lorraine Stepp-Jenkins</SelectItem>
-                      <SelectItem value="john-smith">John Smith</SelectItem>
-                      <SelectItem value="jane-doe">Jane Doe</SelectItem>
-                      <SelectItem value="mike-wilson">Mike Wilson</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-1.5">
-                  <Label className="text-xs font-medium text-muted-foreground">Status</Label>
-                  <Select value={workStatusData.status} onValueChange={(v) => handleWorkStatusChange('status', v)}>
-                    <SelectTrigger className="h-9 bg-background border-input">
-                      <SelectValue placeholder="Select status..." />
-                    </SelectTrigger>
-                    <SelectContent className="bg-popover border z-50">
-                      <SelectItem value="started">Started</SelectItem>
-                      <SelectItem value="in-progress">In Progress</SelectItem>
-                      <SelectItem value="paused">Paused</SelectItem>
-                      <SelectItem value="completed">Completed</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
               </div>
 
               {/* Stop Date & Time with Stop Button */}
