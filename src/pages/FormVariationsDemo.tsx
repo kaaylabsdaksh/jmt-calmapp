@@ -8742,28 +8742,32 @@ const FormVariationsDemo = () => {
               <Package className="h-4 w-4" />
               Work Order Items
             </button>
-            <button
-              onClick={() => setActiveSection('estimate')}
-              className={`flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md transition-all whitespace-nowrap ${
-                activeSection === 'estimate'
-                  ? 'bg-primary text-primary-foreground'
-                  : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
-              }`}
-            >
-              <Info className="h-4 w-4" />
-              Estimate
-            </button>
-            <button
-              onClick={() => setActiveSection('qf3')}
-              className={`flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md transition-all whitespace-nowrap ${
-                activeSection === 'qf3'
-                  ? 'bg-primary text-primary-foreground'
-                  : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
-              }`}
-            >
-              <Settings className="h-4 w-4" />
-              QF3
-            </button>
+            {!isESLType && (
+              <>
+                <button
+                  onClick={() => setActiveSection('estimate')}
+                  className={`flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md transition-all whitespace-nowrap ${
+                    activeSection === 'estimate'
+                      ? 'bg-primary text-primary-foreground'
+                      : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                  }`}
+                >
+                  <Info className="h-4 w-4" />
+                  Estimate
+                </button>
+                <button
+                  onClick={() => setActiveSection('qf3')}
+                  className={`flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md transition-all whitespace-nowrap ${
+                    activeSection === 'qf3'
+                      ? 'bg-primary text-primary-foreground'
+                      : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                  }`}
+                >
+                  <Settings className="h-4 w-4" />
+                  QF3
+                </button>
+              </>
+            )}
             <button
               onClick={() => setActiveSection('external-files')}
               className={`flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md transition-all whitespace-nowrap ${
@@ -8775,17 +8779,19 @@ const FormVariationsDemo = () => {
               <FileText className="h-4 w-4" />
               External Files
             </button>
-            <button
-              onClick={() => setActiveSection('cert-files')}
-              className={`flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md transition-all whitespace-nowrap ${
-                activeSection === 'cert-files'
-                  ? 'bg-primary text-primary-foreground'
-                  : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
-              }`}
-            >
-              <Shield className="h-4 w-4" />
-              Cert Files
-            </button>
+            {!isESLType && (
+              <button
+                onClick={() => setActiveSection('cert-files')}
+                className={`flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md transition-all whitespace-nowrap ${
+                  activeSection === 'cert-files'
+                    ? 'bg-primary text-primary-foreground'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                }`}
+              >
+                <Shield className="h-4 w-4" />
+                Cert Files
+              </button>
+            )}
           </div>
         ) : (
           <div className="sticky top-0 z-40 bg-background py-3 -mx-3 sm:-mx-4 lg:-mx-6 px-3 sm:px-4 lg:px-6">
@@ -8802,30 +8808,34 @@ const FormVariationsDemo = () => {
                 <Package className="h-4 w-4" />
                 Work Order Items
               </Button>
-              <Button
-                variant="ghost"
-                onClick={() => setActiveSection('estimate')}
-                className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all border ${
-                  activeSection === 'estimate'
-                    ? 'bg-primary text-primary-foreground shadow-sm border-primary'
-                    : 'bg-background text-muted-foreground hover:text-foreground border-border hover:border-border/80'
-                }`}
-              >
-                <Info className="h-4 w-4" />
-                Estimate
-              </Button>
-              <Button
-                variant="ghost"
-                onClick={() => setActiveSection('qf3')}
-                className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all border ${
-                  activeSection === 'qf3'
-                    ? 'bg-primary text-primary-foreground shadow-sm border-primary'
-                    : 'bg-background text-muted-foreground hover:text-foreground border-border hover:border-border/80'
-                }`}
-              >
-                <Settings className="h-4 w-4" />
-                QF3
-              </Button>
+              {!isESLType && (
+                <>
+                  <Button
+                    variant="ghost"
+                    onClick={() => setActiveSection('estimate')}
+                    className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all border ${
+                      activeSection === 'estimate'
+                        ? 'bg-primary text-primary-foreground shadow-sm border-primary'
+                        : 'bg-background text-muted-foreground hover:text-foreground border-border hover:border-border/80'
+                    }`}
+                  >
+                    <Info className="h-4 w-4" />
+                    Estimate
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    onClick={() => setActiveSection('qf3')}
+                    className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all border ${
+                      activeSection === 'qf3'
+                        ? 'bg-primary text-primary-foreground shadow-sm border-primary'
+                        : 'bg-background text-muted-foreground hover:text-foreground border-border hover:border-border/80'
+                    }`}
+                  >
+                    <Settings className="h-4 w-4" />
+                    QF3
+                  </Button>
+                </>
+              )}
               <Button
                 variant="ghost"
                 onClick={() => setActiveSection('external-files')}
@@ -8838,18 +8848,20 @@ const FormVariationsDemo = () => {
                 <FileText className="h-4 w-4" />
                 External Files
               </Button>
-              <Button
-                variant="ghost"
-                onClick={() => setActiveSection('cert-files')}
-                className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all border ${
-                  activeSection === 'cert-files'
-                    ? 'bg-primary text-primary-foreground shadow-sm border-primary'
-                    : 'bg-background text-muted-foreground hover:text-foreground border-border hover:border-border/80'
-                }`}
-              >
-                <Shield className="h-4 w-4" />
-                Cert Files
-              </Button>
+              {!isESLType && (
+                <Button
+                  variant="ghost"
+                  onClick={() => setActiveSection('cert-files')}
+                  className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all border ${
+                    activeSection === 'cert-files'
+                      ? 'bg-primary text-primary-foreground shadow-sm border-primary'
+                      : 'bg-background text-muted-foreground hover:text-foreground border-border hover:border-border/80'
+                  }`}
+                >
+                  <Shield className="h-4 w-4" />
+                  Cert Files
+                </Button>
+              )}
             </div>
           </div>
         )}
