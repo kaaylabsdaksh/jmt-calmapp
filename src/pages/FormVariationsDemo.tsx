@@ -3687,46 +3687,62 @@ const FormVariationsDemo = () => {
                 />
               </div>
 
-              {/* Start Date & Time */}
-              <div className="space-y-1.5">
-                <Label className="text-xs font-medium text-muted-foreground">Start Date</Label>
-                <div className="flex gap-2">
+              {/* Start Date & Time with Start Button */}
+              <div className="space-y-2">
+                <div className="space-y-1.5">
+                  <Label className="text-xs font-medium text-muted-foreground">Start Date</Label>
                   <Input 
                     type="date"
-                    className="h-9 bg-background flex-1"
+                    className="h-9 bg-background"
                     value={workStatusData.startDate}
                     onChange={(e) => handleWorkStatusChange('startDate', e.target.value)}
                   />
-                  <Input 
-                    type="time"
-                    className="h-9 bg-background w-24"
-                    value={workStatusData.startTime}
-                    onChange={(e) => handleWorkStatusChange('startTime', e.target.value)}
-                  />
                 </div>
+                <Input 
+                  type="time"
+                  className="h-9 bg-background"
+                  value={workStatusData.startTime}
+                  onChange={(e) => handleWorkStatusChange('startTime', e.target.value)}
+                />
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  className="h-9 w-full border-border hover:bg-muted"
+                >
+                  <Play className="h-3 w-3 mr-1" />
+                  Start
+                </Button>
               </div>
 
-              {/* Stop Date & Time */}
-              <div className="space-y-1.5">
-                <Label className="text-xs font-medium text-muted-foreground">Stop Date</Label>
-                <div className="flex gap-2">
+              {/* Stop Date & Time with Stop Button */}
+              <div className="space-y-2">
+                <div className="space-y-1.5">
+                  <Label className="text-xs font-medium text-muted-foreground">Stop Date</Label>
                   <Input 
                     type="date"
-                    className="h-9 bg-background flex-1"
+                    className="h-9 bg-background"
                     value={workStatusData.stopDate}
                     onChange={(e) => handleWorkStatusChange('stopDate', e.target.value)}
                   />
-                  <Input 
-                    type="time"
-                    className="h-9 bg-background w-24"
-                    value={workStatusData.stopTime}
-                    onChange={(e) => handleWorkStatusChange('stopTime', e.target.value)}
-                  />
                 </div>
+                <Input 
+                  type="time"
+                  className="h-9 bg-background"
+                  value={workStatusData.stopTime}
+                  onChange={(e) => handleWorkStatusChange('stopTime', e.target.value)}
+                />
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  className="h-9 w-full border-border hover:bg-muted"
+                >
+                  <Square className="h-3 w-3 mr-1" />
+                  Stop
+                </Button>
               </div>
             </div>
 
-            {/* Row 2: Technician, Stop Sort, Qty with Start/Stop buttons */}
+            {/* Row 2: Technician, Stop Sort, Qty, Status */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {/* Technician */}
               <div className="space-y-1.5">
@@ -3755,33 +3771,15 @@ const FormVariationsDemo = () => {
                 />
               </div>
 
-              {/* Qty with Start/Stop */}
+              {/* Qty */}
               <div className="space-y-1.5">
                 <Label className="text-xs font-medium text-muted-foreground">Qty</Label>
-                <div className="flex items-center gap-2">
-                  <Input 
-                    className="h-9 bg-background flex-1"
-                    value={workStatusData.qty}
-                    onChange={(e) => handleWorkStatusChange('qty', e.target.value)}
-                    placeholder="0"
-                  />
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    className="h-9 px-3 border-border hover:bg-muted"
-                  >
-                    <Play className="h-3 w-3 mr-1" />
-                    Start
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    className="h-9 px-3 border-border hover:bg-muted"
-                  >
-                    <Square className="h-3 w-3 mr-1" />
-                    Stop
-                  </Button>
-                </div>
+                <Input 
+                  className="h-9 bg-background"
+                  value={workStatusData.qty}
+                  onChange={(e) => handleWorkStatusChange('qty', e.target.value)}
+                  placeholder="0"
+                />
               </div>
 
               {/* Status */}
