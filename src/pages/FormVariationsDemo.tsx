@@ -3676,18 +3676,38 @@ const FormVariationsDemo = () => {
                 </Select>
               </div>
 
-              {/* Start Sort # */}
-              <div className="space-y-1.5">
-                <Label className="text-xs font-medium text-muted-foreground">Start Sort #</Label>
-                <Input 
-                  className="h-9 bg-background"
-                  value={workStatusData.startSort}
-                  onChange={(e) => handleWorkStatusChange('startSort', e.target.value)}
-                  placeholder="Enter..."
-                />
+              {/* Start Sort #, Stop Sort #, Qty stacked vertically */}
+              <div className="space-y-2">
+                <div className="space-y-1.5">
+                  <Label className="text-xs font-medium text-muted-foreground">Start Sort #</Label>
+                  <Input 
+                    className="h-9 bg-background"
+                    value={workStatusData.startSort}
+                    onChange={(e) => handleWorkStatusChange('startSort', e.target.value)}
+                    placeholder="Enter..."
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label className="text-xs font-medium text-muted-foreground">Stop Sort #</Label>
+                  <Input 
+                    className="h-9 bg-background"
+                    value={workStatusData.stopSort}
+                    onChange={(e) => handleWorkStatusChange('stopSort', e.target.value)}
+                    placeholder="Enter..."
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label className="text-xs font-medium text-muted-foreground">Qty</Label>
+                  <Input 
+                    className="h-9 bg-background"
+                    value={workStatusData.qty}
+                    onChange={(e) => handleWorkStatusChange('qty', e.target.value)}
+                    placeholder="0"
+                  />
+                </div>
               </div>
 
-              {/* Start Date & Time with Start Button */}
+              {/* Start Date & Time with Start Button, Technician & Status below */}
               <div className="space-y-2">
                 <div className="space-y-1.5">
                   <Label className="text-xs font-medium text-muted-foreground">Start Date</Label>
@@ -3712,6 +3732,34 @@ const FormVariationsDemo = () => {
                   <Play className="h-3 w-3 mr-1" />
                   Start
                 </Button>
+                <div className="space-y-1.5">
+                  <Label className="text-xs font-medium text-muted-foreground">Technician</Label>
+                  <Select value={workStatusData.technician} onValueChange={(v) => handleWorkStatusChange('technician', v)}>
+                    <SelectTrigger className="h-9 bg-background border-input">
+                      <SelectValue placeholder="Select technician..." />
+                    </SelectTrigger>
+                    <SelectContent className="bg-popover border z-50">
+                      <SelectItem value="lorraine-stepp-jenkins">Lorraine Stepp-Jenkins</SelectItem>
+                      <SelectItem value="john-smith">John Smith</SelectItem>
+                      <SelectItem value="jane-doe">Jane Doe</SelectItem>
+                      <SelectItem value="mike-wilson">Mike Wilson</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-1.5">
+                  <Label className="text-xs font-medium text-muted-foreground">Status</Label>
+                  <Select value={workStatusData.status} onValueChange={(v) => handleWorkStatusChange('status', v)}>
+                    <SelectTrigger className="h-9 bg-background border-input">
+                      <SelectValue placeholder="Select status..." />
+                    </SelectTrigger>
+                    <SelectContent className="bg-popover border z-50">
+                      <SelectItem value="started">Started</SelectItem>
+                      <SelectItem value="in-progress">In Progress</SelectItem>
+                      <SelectItem value="paused">Paused</SelectItem>
+                      <SelectItem value="completed">Completed</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
 
               {/* Stop Date & Time with Stop Button */}
@@ -3739,71 +3787,6 @@ const FormVariationsDemo = () => {
                   <Square className="h-3 w-3 mr-1" />
                   Stop
                 </Button>
-              </div>
-            </div>
-
-            {/* Row 2: Technician with Status below, Stop Sort with Qty below */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {/* Empty space for alignment with Work Type */}
-              <div></div>
-
-              {/* Empty space for alignment with Start Sort */}
-              <div></div>
-
-              {/* Technician with Status below - aligned with Start Time */}
-              <div className="space-y-2">
-                <div className="space-y-1.5">
-                  <Label className="text-xs font-medium text-muted-foreground">Technician</Label>
-                  <Select value={workStatusData.technician} onValueChange={(v) => handleWorkStatusChange('technician', v)}>
-                    <SelectTrigger className="h-9 bg-background border-input">
-                      <SelectValue placeholder="Select technician..." />
-                    </SelectTrigger>
-                    <SelectContent className="bg-popover border z-50">
-                      <SelectItem value="lorraine-stepp-jenkins">Lorraine Stepp-Jenkins</SelectItem>
-                      <SelectItem value="john-smith">John Smith</SelectItem>
-                      <SelectItem value="jane-doe">Jane Doe</SelectItem>
-                      <SelectItem value="mike-wilson">Mike Wilson</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                {/* Status below Technician */}
-                <div className="space-y-1.5">
-                  <Label className="text-xs font-medium text-muted-foreground">Status</Label>
-                  <Select value={workStatusData.status} onValueChange={(v) => handleWorkStatusChange('status', v)}>
-                    <SelectTrigger className="h-9 bg-background border-input">
-                      <SelectValue placeholder="Select status..." />
-                    </SelectTrigger>
-                    <SelectContent className="bg-popover border z-50">
-                      <SelectItem value="started">Started</SelectItem>
-                      <SelectItem value="in-progress">In Progress</SelectItem>
-                      <SelectItem value="paused">Paused</SelectItem>
-                      <SelectItem value="completed">Completed</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
-              {/* Stop Sort # with Qty below - aligned with Stop Time */}
-              <div className="space-y-2">
-                <div className="space-y-1.5">
-                  <Label className="text-xs font-medium text-muted-foreground">Stop Sort #</Label>
-                  <Input 
-                    className="h-9 bg-background"
-                    value={workStatusData.stopSort}
-                    onChange={(e) => handleWorkStatusChange('stopSort', e.target.value)}
-                    placeholder="Enter..."
-                  />
-                </div>
-                {/* Qty below Stop Sort */}
-                <div className="space-y-1.5">
-                  <Label className="text-xs font-medium text-muted-foreground">Qty</Label>
-                  <Input 
-                    className="h-9 bg-background"
-                    value={workStatusData.qty}
-                    onChange={(e) => handleWorkStatusChange('qty', e.target.value)}
-                    placeholder="0"
-                  />
-                </div>
               </div>
             </div>
 
