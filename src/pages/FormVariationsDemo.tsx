@@ -80,6 +80,51 @@ const FormVariationsDemo = () => {
   const [batchSheetQuantity, setBatchSheetQuantity] = useState("1");
   const [batchSheetType, setBatchSheetType] = useState("default");
   
+  // Testing edit dialog state
+  const [testingEditDialogOpen, setTestingEditDialogOpen] = useState(false);
+  const [selectedTestingRow, setSelectedTestingRow] = useState<{
+    id: string;
+    sort: number;
+    manufacturer: string;
+    class: string;
+    size: number;
+    eslId: string;
+    custId: string;
+    tag: string;
+  } | null>(null);
+  const [testingFormData, setTestingFormData] = useState({
+    leftFail: false,
+    leftElectricalBreakdown: false,
+    leftCut: false,
+    leftChemicalAttack: false,
+    leftScratch: false,
+    leftImbeddedMaterial: false,
+    leftTear: false,
+    leftThinning: false,
+    leftTracking: false,
+    leftPitting: false,
+    leftLabel: false,
+    leftOzoneUVCracking: false,
+    rightFail: false,
+    rightElectricalBreakdown: false,
+    rightCut: false,
+    rightChemicalAttack: false,
+    rightScratch: false,
+    rightImbeddedMaterial: false,
+    rightTear: false,
+    rightThinning: false,
+    rightTracking: false,
+    rightPitting: false,
+    rightLabel: false,
+    rightOzoneUVCracking: false,
+    replacement: '',
+  });
+
+  const handleOpenTestingEdit = (row: typeof selectedTestingRow) => {
+    setSelectedTestingRow(row);
+    setTestingEditDialogOpen(true);
+  };
+
   // Work Status tab state
   const [workStatusData, setWorkStatusData] = useState<{
     workType: string;
@@ -3812,7 +3857,12 @@ const FormVariationsDemo = () => {
                     <td className="px-1.5 py-0.5 text-[10px]">{row.procs}</td>
                     <td className="px-1.5 py-0.5 text-[10px]">{row.stds}</td>
                     <td className="px-1.5 py-0.5 text-[10px]">
-                      <Button variant="link" size="sm" className="h-5 px-1 text-[10px] text-foreground hover:text-foreground/80">
+                      <Button 
+                        variant="link" 
+                        size="sm" 
+                        className="h-5 px-1 text-[10px] text-foreground hover:text-foreground/80"
+                        onClick={() => handleOpenTestingEdit(row)}
+                      >
                         Edit
                       </Button>
                     </td>
@@ -3822,6 +3872,165 @@ const FormVariationsDemo = () => {
             </table>
           </div>
         </div>
+
+        {/* Testing Edit Dialog */}
+        <Dialog open={testingEditDialogOpen} onOpenChange={setTestingEditDialogOpen}>
+          <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+            {selectedTestingRow && (
+              <>
+                {/* Header with item info */}
+                <div className="bg-muted/50 -mx-6 -mt-6 px-4 py-3 border-b border-border mb-4">
+                  <p className="text-sm font-medium text-center">
+                    Sort: {selectedTestingRow.sort} - Manu: {selectedTestingRow.manufacturer} - Class: {selectedTestingRow.class} - Size: {selectedTestingRow.size} - ESL ID: {selectedTestingRow.eslId || 'N/A'} - Cust ID: {selectedTestingRow.custId} - Tag: {selectedTestingRow.tag || 'N/A'}
+                  </p>
+                </div>
+
+                {/* LEFT and RIGHT columns */}
+                <div className="grid grid-cols-2 gap-4">
+                  {/* LEFT Column */}
+                  <div className="border border-border rounded-lg p-4 space-y-4">
+                    <h3 className="text-center font-semibold underline">LEFT</h3>
+                    
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2">
+                        <Checkbox 
+                          id="leftFail"
+                          checked={testingFormData.leftFail}
+                          onCheckedChange={(checked) => setTestingFormData(prev => ({ ...prev, leftFail: !!checked }))}
+                        />
+                        <Label htmlFor="leftFail" className="text-xs">Fail (required to save fail data)</Label>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Checkbox 
+                          id="leftEB"
+                          checked={testingFormData.leftElectricalBreakdown}
+                          onCheckedChange={(checked) => setTestingFormData(prev => ({ ...prev, leftElectricalBreakdown: !!checked }))}
+                        />
+                        <Label htmlFor="leftEB" className="text-xs">Electrical Breakdown (EB)</Label>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <p className="text-xs font-medium text-center">Visual Inspection (VI)</p>
+                      <div className="border border-border rounded p-2">
+                        <div className="grid grid-cols-2 gap-1">
+                          {[
+                            { key: 'leftCut', label: '01 Cut' },
+                            { key: 'leftChemicalAttack', label: '06 Chemical Attack' },
+                            { key: 'leftScratch', label: '02 Scratch' },
+                            { key: 'leftImbeddedMaterial', label: '07 Imbedded Material' },
+                            { key: 'leftTear', label: '03 Tear' },
+                            { key: 'leftThinning', label: '08 Thinning' },
+                            { key: 'leftTracking', label: '04 Tracking' },
+                            { key: 'leftPitting', label: '09 Pitting' },
+                            { key: 'leftLabel', label: '05 Label' },
+                            { key: 'leftOzoneUVCracking', label: '10 Ozone UV Cracking' },
+                          ].map((item) => (
+                            <div key={item.key} className="flex items-center gap-1.5">
+                              <Checkbox 
+                                id={item.key}
+                                checked={testingFormData[item.key as keyof typeof testingFormData] as boolean}
+                                onCheckedChange={(checked) => setTestingFormData(prev => ({ ...prev, [item.key]: !!checked }))}
+                                className="h-3 w-3"
+                              />
+                              <Label htmlFor={item.key} className="text-[10px]">{item.label}</Label>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* RIGHT Column */}
+                  <div className="border border-border rounded-lg p-4 space-y-4">
+                    <h3 className="text-center font-semibold underline">RIGHT</h3>
+                    
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2">
+                        <Checkbox 
+                          id="rightFail"
+                          checked={testingFormData.rightFail}
+                          onCheckedChange={(checked) => setTestingFormData(prev => ({ ...prev, rightFail: !!checked }))}
+                        />
+                        <Label htmlFor="rightFail" className="text-xs">Fail (required to save fail data)</Label>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Checkbox 
+                          id="rightEB"
+                          checked={testingFormData.rightElectricalBreakdown}
+                          onCheckedChange={(checked) => setTestingFormData(prev => ({ ...prev, rightElectricalBreakdown: !!checked }))}
+                        />
+                        <Label htmlFor="rightEB" className="text-xs">Electrical Breakdown (EB)</Label>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <p className="text-xs font-medium text-center">Visual Inspection (VI)</p>
+                      <div className="border border-border rounded p-2">
+                        <div className="grid grid-cols-2 gap-1">
+                          {[
+                            { key: 'rightCut', label: '01 Cut' },
+                            { key: 'rightChemicalAttack', label: '06 Chemical Attack' },
+                            { key: 'rightScratch', label: '02 Scratch' },
+                            { key: 'rightImbeddedMaterial', label: '07 Imbedded Material' },
+                            { key: 'rightTear', label: '03 Tear' },
+                            { key: 'rightThinning', label: '08 Thinning' },
+                            { key: 'rightTracking', label: '04 Tracking' },
+                            { key: 'rightPitting', label: '09 Pitting' },
+                            { key: 'rightLabel', label: '05 Label' },
+                            { key: 'rightOzoneUVCracking', label: '10 Ozone UV Cracking' },
+                          ].map((item) => (
+                            <div key={item.key} className="flex items-center gap-1.5">
+                              <Checkbox 
+                                id={item.key}
+                                checked={testingFormData[item.key as keyof typeof testingFormData] as boolean}
+                                onCheckedChange={(checked) => setTestingFormData(prev => ({ ...prev, [item.key]: !!checked }))}
+                                className="h-3 w-3"
+                              />
+                              <Label htmlFor={item.key} className="text-[10px]">{item.label}</Label>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Replacement dropdown */}
+                <div className="flex items-center justify-center gap-2 py-3 border-t border-border mt-4">
+                  <Label htmlFor="replacement" className="text-sm font-medium">Replacement:</Label>
+                  <Select value={testingFormData.replacement} onValueChange={(value) => setTestingFormData(prev => ({ ...prev, replacement: value }))}>
+                    <SelectTrigger className="w-48 h-8">
+                      <SelectValue placeholder="Select..." />
+                    </SelectTrigger>
+                    <SelectContent className="bg-background border-border">
+                      <SelectItem value="none">None</SelectItem>
+                      <SelectItem value="replace-left">Replace Left</SelectItem>
+                      <SelectItem value="replace-right">Replace Right</SelectItem>
+                      <SelectItem value="replace-both">Replace Both</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Footer buttons */}
+                <div className="flex items-center justify-center gap-2 pt-2">
+                  <Button variant="outline" size="sm" disabled className="text-xs">
+                    Prev Fail
+                  </Button>
+                  <Button variant="outline" size="sm" disabled className="text-xs">
+                    Next Fail
+                  </Button>
+                  <Button size="sm" className="text-xs bg-primary text-primary-foreground">
+                    Save
+                  </Button>
+                  <Button variant="outline" size="sm" className="text-xs" onClick={() => setTestingEditDialogOpen(false)}>
+                    Close
+                  </Button>
+                </div>
+              </>
+            )}
+          </DialogContent>
+        </Dialog>
       </div>
     );
   };
