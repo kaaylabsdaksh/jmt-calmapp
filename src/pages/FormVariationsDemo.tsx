@@ -3662,7 +3662,7 @@ const FormVariationsDemo = () => {
               {/* Work Type, Technician & Status stacked vertically */}
               <div className="space-y-2">
                 <div className="space-y-1.5">
-                  <Label className="text-xs font-medium text-muted-foreground">Work Type</Label>
+                  <Label className="text-xs font-medium text-muted-foreground">Work Type <span className="text-destructive">*</span></Label>
                   <Select value={workStatusData.workType} onValueChange={(v) => handleWorkStatusChange('workType', v)}>
                     <SelectTrigger className="h-9 bg-background border-input">
                       <SelectValue placeholder="Select type..." />
@@ -3677,7 +3677,7 @@ const FormVariationsDemo = () => {
                   </Select>
                 </div>
                 <div className="space-y-1.5">
-                  <Label className="text-xs font-medium text-muted-foreground">Technician</Label>
+                  <Label className="text-xs font-medium text-muted-foreground">Technician <span className="text-destructive">*</span></Label>
                   <Select value={workStatusData.technician} onValueChange={(v) => handleWorkStatusChange('technician', v)}>
                     <SelectTrigger className="h-9 bg-background border-input">
                       <SelectValue placeholder="Select technician..." />
@@ -3691,7 +3691,7 @@ const FormVariationsDemo = () => {
                   </Select>
                 </div>
                 <div className="space-y-1.5">
-                  <Label className="text-xs font-medium text-muted-foreground">Status</Label>
+                  <Label className="text-xs font-medium text-muted-foreground">Status <span className="text-destructive">*</span></Label>
                   <Select value={workStatusData.status} onValueChange={(v) => handleWorkStatusChange('status', v)}>
                     <SelectTrigger className="h-9 bg-background border-input">
                       <SelectValue placeholder="Select status..." />
@@ -3709,30 +3709,33 @@ const FormVariationsDemo = () => {
               {/* Start Sort #, Stop Sort #, Qty stacked vertically */}
               <div className="space-y-2">
                 <div className="space-y-1.5">
-                  <Label className="text-xs font-medium text-muted-foreground">Start Sort #</Label>
+                  <Label className="text-xs font-medium text-muted-foreground">Start Sort # <span className="text-destructive">*</span></Label>
                   <Input 
                     className="h-9 bg-background"
                     value={workStatusData.startSort}
                     onChange={(e) => handleWorkStatusChange('startSort', e.target.value)}
                     placeholder="Enter..."
+                    required
                   />
                 </div>
                 <div className="space-y-1.5">
-                  <Label className="text-xs font-medium text-muted-foreground">Stop Sort #</Label>
+                  <Label className="text-xs font-medium text-muted-foreground">Stop Sort # <span className="text-destructive">*</span></Label>
                   <Input 
                     className="h-9 bg-background"
                     value={workStatusData.stopSort}
                     onChange={(e) => handleWorkStatusChange('stopSort', e.target.value)}
                     placeholder="Enter..."
+                    required
                   />
                 </div>
                 <div className="space-y-1.5">
-                  <Label className="text-xs font-medium text-muted-foreground">Qty</Label>
+                  <Label className="text-xs font-medium text-muted-foreground">Qty <span className="text-destructive">*</span></Label>
                   <Input 
                     className="h-9 bg-background"
                     value={workStatusData.qty}
                     onChange={(e) => handleWorkStatusChange('qty', e.target.value)}
                     placeholder="0"
+                    required
                   />
                 </div>
               </div>
@@ -3740,12 +3743,13 @@ const FormVariationsDemo = () => {
               {/* Start Date & Time with Start Button */}
               <div className="space-y-2">
                 <div className="space-y-1.5">
-                  <Label className="text-xs font-medium text-muted-foreground">Start Date</Label>
+                  <Label className="text-xs font-medium text-muted-foreground">Start Date <span className="text-destructive">*</span></Label>
                   <Input 
                     type="date"
                     className="h-9 bg-background"
                     value={workStatusData.startDate}
                     onChange={(e) => handleWorkStatusChange('startDate', e.target.value)}
+                    required
                   />
                 </div>
                 <Input 
@@ -3753,6 +3757,7 @@ const FormVariationsDemo = () => {
                   className="h-9 bg-background"
                   value={workStatusData.startTime}
                   onChange={(e) => handleWorkStatusChange('startTime', e.target.value)}
+                  required
                 />
                 <Button 
                   variant="outline" 
@@ -3767,12 +3772,13 @@ const FormVariationsDemo = () => {
               {/* Stop Date & Time with Stop Button */}
               <div className="space-y-2">
                 <div className="space-y-1.5">
-                  <Label className="text-xs font-medium text-muted-foreground">Stop Date</Label>
+                  <Label className="text-xs font-medium text-muted-foreground">Stop Date <span className="text-destructive">*</span></Label>
                   <Input 
                     type="date"
                     className="h-9 bg-background"
                     value={workStatusData.stopDate}
                     onChange={(e) => handleWorkStatusChange('stopDate', e.target.value)}
+                    required
                   />
                 </div>
                 <Input 
@@ -3780,6 +3786,7 @@ const FormVariationsDemo = () => {
                   className="h-9 bg-background"
                   value={workStatusData.stopTime}
                   onChange={(e) => handleWorkStatusChange('stopTime', e.target.value)}
+                  required
                 />
                 <Button 
                   variant="outline" 
