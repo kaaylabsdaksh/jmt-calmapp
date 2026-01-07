@@ -3298,199 +3298,199 @@ const FormVariationsDemo = () => {
 
       {/* Items Data Table */}
       <div className="border rounded-lg overflow-hidden">
-        <div className="bg-muted/50 px-4 py-2 border-b">
-          <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Items</span>
+        <div className="bg-muted/50 px-3 py-1.5 border-b">
+          <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wide">Items</span>
         </div>
         <div className="overflow-x-auto">
-          <Table>
+          <Table className="text-[11px]">
             <TableHeader>
-              <TableRow className="bg-muted/30">
-                <TableHead className="w-8 text-center">
-                  <Checkbox className="h-3.5 w-3.5" />
+              <TableRow className="bg-muted/30 h-7">
+                <TableHead className="w-6 text-center px-1 py-1 h-7">
+                  <Checkbox className="h-3 w-3" />
                 </TableHead>
-                <TableHead className="text-xs font-medium">Sort</TableHead>
-                <TableHead className="text-xs font-medium">Manufacturer</TableHead>
-                <TableHead className="text-xs font-medium">Class</TableHead>
-                <TableHead className="text-xs font-medium">Size</TableHead>
-                <TableHead className="text-xs font-medium">Color</TableHead>
-                <TableHead className="text-xs font-medium">Slot</TableHead>
-                <TableHead className="text-xs font-medium">Eyelets</TableHead>
-                <TableHead className="text-xs font-medium">Zip</TableHead>
-                <TableHead className="text-xs font-medium">New</TableHead>
-                <TableHead className="text-xs font-medium">ESL ID</TableHead>
-                <TableHead className="text-xs font-medium">Cust ID</TableHead>
-                <TableHead className="text-xs font-medium">Tag</TableHead>
-                <TableHead className="text-xs font-medium">System Tag</TableHead>
-                <TableHead className="text-xs font-medium">Stage</TableHead>
-                <TableHead className="text-xs font-medium">Clean</TableHead>
-                <TableHead className="text-xs font-medium">Test</TableHead>
-                <TableHead className="text-xs font-medium">VI</TableHead>
-                <TableHead className="text-xs font-medium">Stamp</TableHead>
-                <TableHead className="text-xs font-medium">Stamp Insp</TableHead>
-                <TableHead className="text-xs font-medium">Box Order</TableHead>
-                <TableHead className="text-xs font-medium">Acc</TableHead>
-                <TableHead className="text-xs font-medium">Bin</TableHead>
-                <TableHead className="text-xs font-medium">Status</TableHead>
+                <TableHead className="text-[10px] font-medium px-1.5 py-1 h-7">Sort</TableHead>
+                <TableHead className="text-[10px] font-medium px-1.5 py-1 h-7">Manufacturer</TableHead>
+                <TableHead className="text-[10px] font-medium px-1.5 py-1 h-7">Class</TableHead>
+                <TableHead className="text-[10px] font-medium px-1.5 py-1 h-7">Size</TableHead>
+                <TableHead className="text-[10px] font-medium px-1.5 py-1 h-7">Color</TableHead>
+                <TableHead className="text-[10px] font-medium px-1.5 py-1 h-7">Slot</TableHead>
+                <TableHead className="text-[10px] font-medium px-1.5 py-1 h-7">Eyelets</TableHead>
+                <TableHead className="text-[10px] font-medium px-1.5 py-1 h-7">Zip</TableHead>
+                <TableHead className="text-[10px] font-medium px-1.5 py-1 h-7">New</TableHead>
+                <TableHead className="text-[10px] font-medium px-1.5 py-1 h-7">ESL ID</TableHead>
+                <TableHead className="text-[10px] font-medium px-1.5 py-1 h-7">Cust ID</TableHead>
+                <TableHead className="text-[10px] font-medium px-1.5 py-1 h-7">Tag</TableHead>
+                <TableHead className="text-[10px] font-medium px-1.5 py-1 h-7">System Tag</TableHead>
+                <TableHead className="text-[10px] font-medium px-1.5 py-1 h-7">Stage</TableHead>
+                <TableHead className="text-[10px] font-medium px-1.5 py-1 h-7">Clean</TableHead>
+                <TableHead className="text-[10px] font-medium px-1.5 py-1 h-7">Test</TableHead>
+                <TableHead className="text-[10px] font-medium px-1.5 py-1 h-7">VI</TableHead>
+                <TableHead className="text-[10px] font-medium px-1.5 py-1 h-7">Stamp</TableHead>
+                <TableHead className="text-[10px] font-medium px-1.5 py-1 h-7">Stamp Insp</TableHead>
+                <TableHead className="text-[10px] font-medium px-1.5 py-1 h-7">Box Order</TableHead>
+                <TableHead className="text-[10px] font-medium px-1.5 py-1 h-7">Acc</TableHead>
+                <TableHead className="text-[10px] font-medium px-1.5 py-1 h-7">Bin</TableHead>
+                <TableHead className="text-[10px] font-medium px-1.5 py-1 h-7">Status</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {/* Filter Row */}
-              <TableRow className="bg-background">
-                <TableCell></TableCell>
-                <TableCell><Input className="h-6 text-xs w-12" /></TableCell>
-                <TableCell><Input className="h-6 text-xs w-20" /></TableCell>
-                <TableCell><Input className="h-6 text-xs w-12" /></TableCell>
-                <TableCell><Input className="h-6 text-xs w-12" /></TableCell>
-                <TableCell><Input className="h-6 text-xs w-12" /></TableCell>
-                <TableCell><Input className="h-6 text-xs w-10" /></TableCell>
-                <TableCell><Input className="h-6 text-xs w-10" /></TableCell>
-                <TableCell><Input className="h-6 text-xs w-10" /></TableCell>
-                <TableCell><Input className="h-6 text-xs w-10" /></TableCell>
-                <TableCell><Input className="h-6 text-xs w-16" /></TableCell>
-                <TableCell><Input className="h-6 text-xs w-16" /></TableCell>
-                <TableCell><Input className="h-6 text-xs w-12" /></TableCell>
-                <TableCell><Input className="h-6 text-xs w-16" /></TableCell>
-                <TableCell><Input className="h-6 text-xs w-12" /></TableCell>
-                <TableCell><Input className="h-6 text-xs w-12" /></TableCell>
-                <TableCell><Input className="h-6 text-xs w-10" /></TableCell>
-                <TableCell><Input className="h-6 text-xs w-10" /></TableCell>
-                <TableCell><Input className="h-6 text-xs w-12" /></TableCell>
-                <TableCell><Input className="h-6 text-xs w-16" /></TableCell>
-                <TableCell><Input className="h-6 text-xs w-16" /></TableCell>
-                <TableCell><Input className="h-6 text-xs w-10" /></TableCell>
-                <TableCell><Input className="h-6 text-xs w-10" /></TableCell>
-                <TableCell><Input className="h-6 text-xs w-14" /></TableCell>
+              <TableRow className="bg-background h-6">
+                <TableCell className="px-1 py-0.5"></TableCell>
+                <TableCell className="px-1 py-0.5"><Input className="h-5 text-[10px] w-10" /></TableCell>
+                <TableCell className="px-1 py-0.5"><Input className="h-5 text-[10px] w-16" /></TableCell>
+                <TableCell className="px-1 py-0.5"><Input className="h-5 text-[10px] w-10" /></TableCell>
+                <TableCell className="px-1 py-0.5"><Input className="h-5 text-[10px] w-10" /></TableCell>
+                <TableCell className="px-1 py-0.5"><Input className="h-5 text-[10px] w-10" /></TableCell>
+                <TableCell className="px-1 py-0.5"><Input className="h-5 text-[10px] w-8" /></TableCell>
+                <TableCell className="px-1 py-0.5"><Input className="h-5 text-[10px] w-8" /></TableCell>
+                <TableCell className="px-1 py-0.5"><Input className="h-5 text-[10px] w-8" /></TableCell>
+                <TableCell className="px-1 py-0.5"><Input className="h-5 text-[10px] w-8" /></TableCell>
+                <TableCell className="px-1 py-0.5"><Input className="h-5 text-[10px] w-14" /></TableCell>
+                <TableCell className="px-1 py-0.5"><Input className="h-5 text-[10px] w-14" /></TableCell>
+                <TableCell className="px-1 py-0.5"><Input className="h-5 text-[10px] w-10" /></TableCell>
+                <TableCell className="px-1 py-0.5"><Input className="h-5 text-[10px] w-14" /></TableCell>
+                <TableCell className="px-1 py-0.5"><Input className="h-5 text-[10px] w-10" /></TableCell>
+                <TableCell className="px-1 py-0.5"><Input className="h-5 text-[10px] w-10" /></TableCell>
+                <TableCell className="px-1 py-0.5"><Input className="h-5 text-[10px] w-8" /></TableCell>
+                <TableCell className="px-1 py-0.5"><Input className="h-5 text-[10px] w-8" /></TableCell>
+                <TableCell className="px-1 py-0.5"><Input className="h-5 text-[10px] w-10" /></TableCell>
+                <TableCell className="px-1 py-0.5"><Input className="h-5 text-[10px] w-14" /></TableCell>
+                <TableCell className="px-1 py-0.5"><Input className="h-5 text-[10px] w-14" /></TableCell>
+                <TableCell className="px-1 py-0.5"><Input className="h-5 text-[10px] w-8" /></TableCell>
+                <TableCell className="px-1 py-0.5"><Input className="h-5 text-[10px] w-8" /></TableCell>
+                <TableCell className="px-1 py-0.5"><Input className="h-5 text-[10px] w-12" /></TableCell>
               </TableRow>
               {/* Data Rows */}
-              <TableRow className="hover:bg-muted/30">
-                <TableCell className="text-center"><Checkbox className="h-3.5 w-3.5" /></TableCell>
-                <TableCell className="text-xs">1</TableCell>
-                <TableCell className="text-xs">MSA Safety</TableCell>
-                <TableCell className="text-xs">I</TableCell>
-                <TableCell className="text-xs">M</TableCell>
-                <TableCell className="text-xs">Black</TableCell>
-                <TableCell className="text-xs">A2</TableCell>
-                <TableCell className="text-xs">6</TableCell>
-                <TableCell className="text-xs">Yes</TableCell>
-                <TableCell className="text-xs">No</TableCell>
-                <TableCell className="text-xs">ESL-001234</TableCell>
-                <TableCell className="text-xs">C-789456</TableCell>
-                <TableCell className="text-xs">T-001</TableCell>
-                <TableCell className="text-xs">SYS-4521</TableCell>
-                <TableCell className="text-xs">Clean</TableCell>
-                <TableCell className="text-xs">Done</TableCell>
-                <TableCell className="text-xs">Pass</TableCell>
-                <TableCell className="text-xs">OK</TableCell>
-                <TableCell className="text-xs">Applied</TableCell>
-                <TableCell className="text-xs">Verified</TableCell>
-                <TableCell className="text-xs">B-101</TableCell>
-                <TableCell className="text-xs">3</TableCell>
-                <TableCell className="text-xs">A-12</TableCell>
-                <TableCell className="text-xs text-green-600 font-medium">Complete</TableCell>
+              <TableRow className="hover:bg-muted/30 h-6">
+                <TableCell className="text-center px-1 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">1</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">MSA Safety</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">I</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">M</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">Black</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">A2</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">6</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">Yes</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">No</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">ESL-001234</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">C-789456</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">T-001</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">SYS-4521</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">Clean</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">Done</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">Pass</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">OK</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">Applied</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">Verified</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">B-101</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">3</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">A-12</TableCell>
+                <TableCell className="text-[10px] text-green-600 font-medium px-1.5 py-0.5">Complete</TableCell>
               </TableRow>
-              <TableRow className="hover:bg-muted/30">
-                <TableCell className="text-center"><Checkbox className="h-3.5 w-3.5" /></TableCell>
-                <TableCell className="text-xs">2</TableCell>
-                <TableCell className="text-xs">3M Scott</TableCell>
-                <TableCell className="text-xs">II</TableCell>
-                <TableCell className="text-xs">L</TableCell>
-                <TableCell className="text-xs">Yellow</TableCell>
-                <TableCell className="text-xs">B1</TableCell>
-                <TableCell className="text-xs">8</TableCell>
-                <TableCell className="text-xs">Yes</TableCell>
-                <TableCell className="text-xs">Yes</TableCell>
-                <TableCell className="text-xs">ESL-001235</TableCell>
-                <TableCell className="text-xs">C-789457</TableCell>
-                <TableCell className="text-xs">T-002</TableCell>
-                <TableCell className="text-xs">SYS-4522</TableCell>
-                <TableCell className="text-xs">Test</TableCell>
-                <TableCell className="text-xs">Pending</TableCell>
-                <TableCell className="text-xs">-</TableCell>
-                <TableCell className="text-xs">-</TableCell>
-                <TableCell className="text-xs">-</TableCell>
-                <TableCell className="text-xs">-</TableCell>
-                <TableCell className="text-xs">B-102</TableCell>
-                <TableCell className="text-xs">2</TableCell>
-                <TableCell className="text-xs">A-15</TableCell>
-                <TableCell className="text-xs text-yellow-600 font-medium">In Progress</TableCell>
+              <TableRow className="hover:bg-muted/30 h-6">
+                <TableCell className="text-center px-1 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">2</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">3M Scott</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">II</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">L</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">Yellow</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">B1</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">8</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">Yes</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">Yes</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">ESL-001235</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">C-789457</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">T-002</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">SYS-4522</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">Test</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">Pending</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">-</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">-</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">-</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">-</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">B-102</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">2</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">A-15</TableCell>
+                <TableCell className="text-[10px] text-yellow-600 font-medium px-1.5 py-0.5">In Progress</TableCell>
               </TableRow>
-              <TableRow className="hover:bg-muted/30">
-                <TableCell className="text-center"><Checkbox className="h-3.5 w-3.5" /></TableCell>
-                <TableCell className="text-xs">3</TableCell>
-                <TableCell className="text-xs">Honeywell</TableCell>
-                <TableCell className="text-xs">I</TableCell>
-                <TableCell className="text-xs">S</TableCell>
-                <TableCell className="text-xs">Red</TableCell>
-                <TableCell className="text-xs">C3</TableCell>
-                <TableCell className="text-xs">4</TableCell>
-                <TableCell className="text-xs">No</TableCell>
-                <TableCell className="text-xs">No</TableCell>
-                <TableCell className="text-xs">ESL-001236</TableCell>
-                <TableCell className="text-xs">C-789458</TableCell>
-                <TableCell className="text-xs">T-003</TableCell>
-                <TableCell className="text-xs">SYS-4523</TableCell>
-                <TableCell className="text-xs">Inspect</TableCell>
-                <TableCell className="text-xs">Done</TableCell>
-                <TableCell className="text-xs">Pass</TableCell>
-                <TableCell className="text-xs">OK</TableCell>
-                <TableCell className="text-xs">Applied</TableCell>
-                <TableCell className="text-xs">Verified</TableCell>
-                <TableCell className="text-xs">B-103</TableCell>
-                <TableCell className="text-xs">1</TableCell>
-                <TableCell className="text-xs">B-22</TableCell>
-                <TableCell className="text-xs text-green-600 font-medium">Complete</TableCell>
+              <TableRow className="hover:bg-muted/30 h-6">
+                <TableCell className="text-center px-1 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">3</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">Honeywell</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">I</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">S</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">Red</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">C3</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">4</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">No</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">No</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">ESL-001236</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">C-789458</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">T-003</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">SYS-4523</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">Inspect</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">Done</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">Pass</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">OK</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">Applied</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">Verified</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">B-103</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">1</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">B-22</TableCell>
+                <TableCell className="text-[10px] text-green-600 font-medium px-1.5 py-0.5">Complete</TableCell>
               </TableRow>
-              <TableRow className="hover:bg-muted/30">
-                <TableCell className="text-center"><Checkbox className="h-3.5 w-3.5" /></TableCell>
-                <TableCell className="text-xs">4</TableCell>
-                <TableCell className="text-xs">Draeger</TableCell>
-                <TableCell className="text-xs">III</TableCell>
-                <TableCell className="text-xs">XL</TableCell>
-                <TableCell className="text-xs">Blue</TableCell>
-                <TableCell className="text-xs">A1</TableCell>
-                <TableCell className="text-xs">6</TableCell>
-                <TableCell className="text-xs">Yes</TableCell>
-                <TableCell className="text-xs">No</TableCell>
-                <TableCell className="text-xs">ESL-001237</TableCell>
-                <TableCell className="text-xs">C-789459</TableCell>
-                <TableCell className="text-xs">T-004</TableCell>
-                <TableCell className="text-xs">SYS-4524</TableCell>
-                <TableCell className="text-xs">Receive</TableCell>
-                <TableCell className="text-xs">-</TableCell>
-                <TableCell className="text-xs">-</TableCell>
-                <TableCell className="text-xs">-</TableCell>
-                <TableCell className="text-xs">-</TableCell>
-                <TableCell className="text-xs">-</TableCell>
-                <TableCell className="text-xs">B-104</TableCell>
-                <TableCell className="text-xs">5</TableCell>
-                <TableCell className="text-xs">C-08</TableCell>
-                <TableCell className="text-xs text-blue-600 font-medium">New</TableCell>
+              <TableRow className="hover:bg-muted/30 h-6">
+                <TableCell className="text-center px-1 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">4</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">Draeger</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">III</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">XL</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">Blue</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">A1</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">6</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">Yes</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">No</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">ESL-001237</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">C-789459</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">T-004</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">SYS-4524</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">Receive</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">-</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">-</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">-</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">-</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">-</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">B-104</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">5</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">C-08</TableCell>
+                <TableCell className="text-[10px] text-blue-600 font-medium px-1.5 py-0.5">New</TableCell>
               </TableRow>
-              <TableRow className="hover:bg-muted/30">
-                <TableCell className="text-center"><Checkbox className="h-3.5 w-3.5" /></TableCell>
-                <TableCell className="text-xs">5</TableCell>
-                <TableCell className="text-xs">MSA Safety</TableCell>
-                <TableCell className="text-xs">II</TableCell>
-                <TableCell className="text-xs">M</TableCell>
-                <TableCell className="text-xs">Black</TableCell>
-                <TableCell className="text-xs">D2</TableCell>
-                <TableCell className="text-xs">6</TableCell>
-                <TableCell className="text-xs">Yes</TableCell>
-                <TableCell className="text-xs">No</TableCell>
-                <TableCell className="text-xs">ESL-001238</TableCell>
-                <TableCell className="text-xs">C-789460</TableCell>
-                <TableCell className="text-xs">T-005</TableCell>
-                <TableCell className="text-xs">SYS-4525</TableCell>
-                <TableCell className="text-xs">Ship</TableCell>
-                <TableCell className="text-xs">Done</TableCell>
-                <TableCell className="text-xs">Pass</TableCell>
-                <TableCell className="text-xs">OK</TableCell>
-                <TableCell className="text-xs">Applied</TableCell>
-                <TableCell className="text-xs">Verified</TableCell>
-                <TableCell className="text-xs">B-105</TableCell>
-                <TableCell className="text-xs">4</TableCell>
-                <TableCell className="text-xs">A-30</TableCell>
-                <TableCell className="text-xs text-green-600 font-medium">Complete</TableCell>
+              <TableRow className="hover:bg-muted/30 h-6">
+                <TableCell className="text-center px-1 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">5</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">MSA Safety</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">II</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">M</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">Black</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">D2</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">6</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">Yes</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">No</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">ESL-001238</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">C-789460</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">T-005</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">SYS-4525</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">Ship</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">Done</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">Pass</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">OK</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">Applied</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">Verified</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">B-105</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">4</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">A-30</TableCell>
+                <TableCell className="text-[10px] text-green-600 font-medium px-1.5 py-0.5">Complete</TableCell>
               </TableRow>
             </TableBody>
           </Table>
