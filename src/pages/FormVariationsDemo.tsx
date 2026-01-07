@@ -3780,13 +3780,57 @@ const FormVariationsDemo = () => {
                     </PopoverContent>
                   </Popover>
                 </div>
-                <Input 
-                  type="time"
-                  className="h-9 bg-background"
-                  value={workStatusData.startTime}
-                  onChange={(e) => handleWorkStatusChange('startTime', e.target.value)}
-                  required
-                />
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className={cn(
+                        "h-9 w-full justify-start text-left font-normal bg-background",
+                        !workStatusData.startTime && "text-muted-foreground"
+                      )}
+                    >
+                      <Clock className="mr-2 h-4 w-4" />
+                      {workStatusData.startTime || <span>--:-- --</span>}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-3 bg-popover border z-50" align="start">
+                    <div className="flex gap-2">
+                      <Select 
+                        value={workStatusData.startTime.split(':')[0] || ''} 
+                        onValueChange={(hour) => {
+                          const mins = workStatusData.startTime.split(':')[1] || '00';
+                          handleWorkStatusChange('startTime', `${hour}:${mins}`);
+                        }}
+                      >
+                        <SelectTrigger className="w-20 h-9">
+                          <SelectValue placeholder="HH" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-popover border z-50 max-h-48">
+                          {Array.from({ length: 24 }, (_, i) => i.toString().padStart(2, '0')).map((hour) => (
+                            <SelectItem key={hour} value={hour}>{hour}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <span className="flex items-center text-lg">:</span>
+                      <Select 
+                        value={workStatusData.startTime.split(':')[1] || ''} 
+                        onValueChange={(mins) => {
+                          const hour = workStatusData.startTime.split(':')[0] || '00';
+                          handleWorkStatusChange('startTime', `${hour}:${mins}`);
+                        }}
+                      >
+                        <SelectTrigger className="w-20 h-9">
+                          <SelectValue placeholder="MM" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-popover border z-50 max-h-48">
+                          {Array.from({ length: 60 }, (_, i) => i.toString().padStart(2, '0')).map((min) => (
+                            <SelectItem key={min} value={min}>{min}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </PopoverContent>
+                </Popover>
                 <Button 
                   variant="outline" 
                   size="sm"
@@ -3825,13 +3869,57 @@ const FormVariationsDemo = () => {
                     </PopoverContent>
                   </Popover>
                 </div>
-                <Input 
-                  type="time"
-                  className="h-9 bg-background"
-                  value={workStatusData.stopTime}
-                  onChange={(e) => handleWorkStatusChange('stopTime', e.target.value)}
-                  required
-                />
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className={cn(
+                        "h-9 w-full justify-start text-left font-normal bg-background",
+                        !workStatusData.stopTime && "text-muted-foreground"
+                      )}
+                    >
+                      <Clock className="mr-2 h-4 w-4" />
+                      {workStatusData.stopTime || <span>--:-- --</span>}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-3 bg-popover border z-50" align="start">
+                    <div className="flex gap-2">
+                      <Select 
+                        value={workStatusData.stopTime.split(':')[0] || ''} 
+                        onValueChange={(hour) => {
+                          const mins = workStatusData.stopTime.split(':')[1] || '00';
+                          handleWorkStatusChange('stopTime', `${hour}:${mins}`);
+                        }}
+                      >
+                        <SelectTrigger className="w-20 h-9">
+                          <SelectValue placeholder="HH" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-popover border z-50 max-h-48">
+                          {Array.from({ length: 24 }, (_, i) => i.toString().padStart(2, '0')).map((hour) => (
+                            <SelectItem key={hour} value={hour}>{hour}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <span className="flex items-center text-lg">:</span>
+                      <Select 
+                        value={workStatusData.stopTime.split(':')[1] || ''} 
+                        onValueChange={(mins) => {
+                          const hour = workStatusData.stopTime.split(':')[0] || '00';
+                          handleWorkStatusChange('stopTime', `${hour}:${mins}`);
+                        }}
+                      >
+                        <SelectTrigger className="w-20 h-9">
+                          <SelectValue placeholder="MM" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-popover border z-50 max-h-48">
+                          {Array.from({ length: 60 }, (_, i) => i.toString().padStart(2, '0')).map((min) => (
+                            <SelectItem key={min} value={min}>{min}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </PopoverContent>
+                </Popover>
                 <Button 
                   variant="outline" 
                   size="sm"
