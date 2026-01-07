@@ -10223,18 +10223,35 @@ const FormVariationsDemo = () => {
             </div>
           </div>
         )
+      ) : isESLType && activeEslTab === 'details' ? (
+        // Details tab footer - Cancel and Save Item buttons centered
+        <div ref={footerRef} className="fixed bottom-0 left-[256px] right-0 bg-background border-t border-border shadow-lg z-10 py-3 px-6">
+          <div className="flex items-center justify-center gap-0 max-w-[1400px] mx-auto">
+            <Button 
+              variant="outline" 
+              onClick={handleCancel}
+              className="h-10 px-6 rounded-r-none border-r-0"
+            >
+              <X className="h-4 w-4 mr-2" />
+              Cancel
+            </Button>
+            <Button 
+              className="h-10 px-6 rounded-l-none bg-emerald-500 hover:bg-emerald-600 text-white border-emerald-500"
+            >
+              <Save className="h-4 w-4 mr-2" />
+              Save Item
+            </Button>
+          </div>
+        </div>
       ) : (
-        // Hide footer completely when on ESL Details tab
-        !(isESLType && activeEslTab === 'details') && (
-          <FixedActionFooter 
-            onCancel={handleCancel}
-            onSave={handleSave}
-            currentSection={isESLType && activeEslTab === 'general' ? 'general' : activeSection}
-            userRole={userRole}
-            onUserRoleChange={setUserRole}
-            footerRef={footerRef}
-          />
-        )
+        <FixedActionFooter 
+          onCancel={handleCancel}
+          onSave={handleSave}
+          currentSection={isESLType && activeEslTab === 'general' ? 'general' : activeSection}
+          userRole={userRole}
+          onUserRoleChange={setUserRole}
+          footerRef={footerRef}
+        />
       )}
 
       {/* QF3 Dialog */}
