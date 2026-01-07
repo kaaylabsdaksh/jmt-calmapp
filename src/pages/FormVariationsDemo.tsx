@@ -3786,7 +3786,7 @@ const FormVariationsDemo = () => {
                   { id: '650988', sort: 12, manufacturer: 'SALISBURY', class: 'CLASS 0', size: 9, length: 11, inside: 'Black', outside: 'Black', cuff: 'Straight', odd: 'N', new: 'No', mit: 'No', custId: 'N/A', eslId: '158426', tag: '', result: '', procs: '', stds: '' },
                 ].map((row, index) => (
                   <tr key={row.id} className={`border-b border-border hover:bg-muted/30 h-6 ${index % 2 === 0 ? 'bg-background' : 'bg-muted/10'}`}>
-                    <td className="px-1.5 py-0.5 text-[10px] font-medium text-primary">{row.id}</td>
+                    <td className="px-1.5 py-0.5 text-[10px] font-medium text-foreground">{row.id}</td>
                     <td className="px-1.5 py-0.5 text-center">
                       <Checkbox className="h-3 w-3" />
                     </td>
@@ -3812,7 +3812,7 @@ const FormVariationsDemo = () => {
                     <td className="px-1.5 py-0.5 text-[10px]">{row.procs}</td>
                     <td className="px-1.5 py-0.5 text-[10px]">{row.stds}</td>
                     <td className="px-1.5 py-0.5 text-[10px]">
-                      <Button variant="link" size="sm" className="h-5 px-1 text-[10px] text-primary">
+                      <Button variant="link" size="sm" className="h-5 px-1 text-[10px] text-foreground hover:text-foreground/80">
                         Edit
                       </Button>
                     </td>
