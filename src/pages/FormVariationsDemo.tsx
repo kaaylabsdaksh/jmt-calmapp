@@ -10055,28 +10055,7 @@ const FormVariationsDemo = () => {
       {/* Fixed Action Footer - Custom for ESL types, hidden on Details tab only */}
       {isESLType && activeSection === 'work-order-items' && activeEslTab !== 'details' ? (
         activeEslTab === 'testing' ? (
-          // Testing tab footer - only Save and Cancel on the right
-          <div ref={footerRef} className="fixed bottom-0 left-[256px] right-0 bg-background border-t border-border shadow-lg z-10 py-3 px-6">
-            <div className="flex items-center justify-end gap-2 max-w-[1400px] mx-auto">
-              <Button 
-                variant="outline" 
-                onClick={handleCancel}
-                className="border-border bg-background text-foreground hover:bg-muted font-medium h-9 px-4"
-              >
-                <X className="h-4 w-4 mr-2" />
-                Cancel
-              </Button>
-              <Button 
-                onClick={handleSave}
-                className="bg-emerald-500 hover:bg-emerald-600 text-white font-medium h-9 px-4"
-              >
-                <Save className="h-4 w-4 mr-2" />
-                Save Item
-              </Button>
-            </div>
-          </div>
-        ) : activeEslTab === 'work-status' ? (
-          // Work Status tab footer - Print Test Report and sorted by on left, Save/Cancel on right
+          // Testing tab footer - Print Test Report and sorted by on left, Save/Cancel on right
           <div ref={footerRef} className="fixed bottom-0 left-[256px] right-0 bg-background border-t border-border shadow-lg z-10 py-3 px-6">
             <div className="flex items-center justify-between gap-4 max-w-[1400px] mx-auto">
               {/* Left side - Print Test Report and sorted by */}
@@ -10122,6 +10101,27 @@ const FormVariationsDemo = () => {
                   Save Item
                 </Button>
               </div>
+            </div>
+          </div>
+        ) : activeEslTab === 'work-status' ? (
+          // Work Status tab footer - only Save and Cancel on the right
+          <div ref={footerRef} className="fixed bottom-0 left-[256px] right-0 bg-background border-t border-border shadow-lg z-10 py-3 px-6">
+            <div className="flex items-center justify-end gap-2 max-w-[1400px] mx-auto">
+              <Button 
+                variant="outline" 
+                onClick={handleCancel}
+                className="border-border bg-background text-foreground hover:bg-muted font-medium h-9 px-4"
+              >
+                <X className="h-4 w-4 mr-2" />
+                Cancel
+              </Button>
+              <Button 
+                onClick={handleSave}
+                className="bg-emerald-500 hover:bg-emerald-600 text-white font-medium h-9 px-4"
+              >
+                <Save className="h-4 w-4 mr-2" />
+                Save Item
+              </Button>
             </div>
           </div>
         ) : (
