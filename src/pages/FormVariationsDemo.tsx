@@ -3361,11 +3361,136 @@ const FormVariationsDemo = () => {
                 <TableCell><Input className="h-6 text-xs w-10" /></TableCell>
                 <TableCell><Input className="h-6 text-xs w-14" /></TableCell>
               </TableRow>
-              {/* Empty State */}
-              <TableRow>
-                <TableCell colSpan={24} className="text-center py-8 text-sm text-muted-foreground">
-                  No data to display
-                </TableCell>
+              {/* Data Rows */}
+              <TableRow className="hover:bg-muted/30">
+                <TableCell className="text-center"><Checkbox className="h-3.5 w-3.5" /></TableCell>
+                <TableCell className="text-xs">1</TableCell>
+                <TableCell className="text-xs">MSA Safety</TableCell>
+                <TableCell className="text-xs">I</TableCell>
+                <TableCell className="text-xs">M</TableCell>
+                <TableCell className="text-xs">Black</TableCell>
+                <TableCell className="text-xs">A2</TableCell>
+                <TableCell className="text-xs">6</TableCell>
+                <TableCell className="text-xs">Yes</TableCell>
+                <TableCell className="text-xs">No</TableCell>
+                <TableCell className="text-xs">ESL-001234</TableCell>
+                <TableCell className="text-xs">C-789456</TableCell>
+                <TableCell className="text-xs">T-001</TableCell>
+                <TableCell className="text-xs">SYS-4521</TableCell>
+                <TableCell className="text-xs">Clean</TableCell>
+                <TableCell className="text-xs">Done</TableCell>
+                <TableCell className="text-xs">Pass</TableCell>
+                <TableCell className="text-xs">OK</TableCell>
+                <TableCell className="text-xs">Applied</TableCell>
+                <TableCell className="text-xs">Verified</TableCell>
+                <TableCell className="text-xs">B-101</TableCell>
+                <TableCell className="text-xs">3</TableCell>
+                <TableCell className="text-xs">A-12</TableCell>
+                <TableCell className="text-xs text-green-600 font-medium">Complete</TableCell>
+              </TableRow>
+              <TableRow className="hover:bg-muted/30">
+                <TableCell className="text-center"><Checkbox className="h-3.5 w-3.5" /></TableCell>
+                <TableCell className="text-xs">2</TableCell>
+                <TableCell className="text-xs">3M Scott</TableCell>
+                <TableCell className="text-xs">II</TableCell>
+                <TableCell className="text-xs">L</TableCell>
+                <TableCell className="text-xs">Yellow</TableCell>
+                <TableCell className="text-xs">B1</TableCell>
+                <TableCell className="text-xs">8</TableCell>
+                <TableCell className="text-xs">Yes</TableCell>
+                <TableCell className="text-xs">Yes</TableCell>
+                <TableCell className="text-xs">ESL-001235</TableCell>
+                <TableCell className="text-xs">C-789457</TableCell>
+                <TableCell className="text-xs">T-002</TableCell>
+                <TableCell className="text-xs">SYS-4522</TableCell>
+                <TableCell className="text-xs">Test</TableCell>
+                <TableCell className="text-xs">Pending</TableCell>
+                <TableCell className="text-xs">-</TableCell>
+                <TableCell className="text-xs">-</TableCell>
+                <TableCell className="text-xs">-</TableCell>
+                <TableCell className="text-xs">-</TableCell>
+                <TableCell className="text-xs">B-102</TableCell>
+                <TableCell className="text-xs">2</TableCell>
+                <TableCell className="text-xs">A-15</TableCell>
+                <TableCell className="text-xs text-yellow-600 font-medium">In Progress</TableCell>
+              </TableRow>
+              <TableRow className="hover:bg-muted/30">
+                <TableCell className="text-center"><Checkbox className="h-3.5 w-3.5" /></TableCell>
+                <TableCell className="text-xs">3</TableCell>
+                <TableCell className="text-xs">Honeywell</TableCell>
+                <TableCell className="text-xs">I</TableCell>
+                <TableCell className="text-xs">S</TableCell>
+                <TableCell className="text-xs">Red</TableCell>
+                <TableCell className="text-xs">C3</TableCell>
+                <TableCell className="text-xs">4</TableCell>
+                <TableCell className="text-xs">No</TableCell>
+                <TableCell className="text-xs">No</TableCell>
+                <TableCell className="text-xs">ESL-001236</TableCell>
+                <TableCell className="text-xs">C-789458</TableCell>
+                <TableCell className="text-xs">T-003</TableCell>
+                <TableCell className="text-xs">SYS-4523</TableCell>
+                <TableCell className="text-xs">Inspect</TableCell>
+                <TableCell className="text-xs">Done</TableCell>
+                <TableCell className="text-xs">Pass</TableCell>
+                <TableCell className="text-xs">OK</TableCell>
+                <TableCell className="text-xs">Applied</TableCell>
+                <TableCell className="text-xs">Verified</TableCell>
+                <TableCell className="text-xs">B-103</TableCell>
+                <TableCell className="text-xs">1</TableCell>
+                <TableCell className="text-xs">B-22</TableCell>
+                <TableCell className="text-xs text-green-600 font-medium">Complete</TableCell>
+              </TableRow>
+              <TableRow className="hover:bg-muted/30">
+                <TableCell className="text-center"><Checkbox className="h-3.5 w-3.5" /></TableCell>
+                <TableCell className="text-xs">4</TableCell>
+                <TableCell className="text-xs">Draeger</TableCell>
+                <TableCell className="text-xs">III</TableCell>
+                <TableCell className="text-xs">XL</TableCell>
+                <TableCell className="text-xs">Blue</TableCell>
+                <TableCell className="text-xs">A1</TableCell>
+                <TableCell className="text-xs">6</TableCell>
+                <TableCell className="text-xs">Yes</TableCell>
+                <TableCell className="text-xs">No</TableCell>
+                <TableCell className="text-xs">ESL-001237</TableCell>
+                <TableCell className="text-xs">C-789459</TableCell>
+                <TableCell className="text-xs">T-004</TableCell>
+                <TableCell className="text-xs">SYS-4524</TableCell>
+                <TableCell className="text-xs">Receive</TableCell>
+                <TableCell className="text-xs">-</TableCell>
+                <TableCell className="text-xs">-</TableCell>
+                <TableCell className="text-xs">-</TableCell>
+                <TableCell className="text-xs">-</TableCell>
+                <TableCell className="text-xs">-</TableCell>
+                <TableCell className="text-xs">B-104</TableCell>
+                <TableCell className="text-xs">5</TableCell>
+                <TableCell className="text-xs">C-08</TableCell>
+                <TableCell className="text-xs text-blue-600 font-medium">New</TableCell>
+              </TableRow>
+              <TableRow className="hover:bg-muted/30">
+                <TableCell className="text-center"><Checkbox className="h-3.5 w-3.5" /></TableCell>
+                <TableCell className="text-xs">5</TableCell>
+                <TableCell className="text-xs">MSA Safety</TableCell>
+                <TableCell className="text-xs">II</TableCell>
+                <TableCell className="text-xs">M</TableCell>
+                <TableCell className="text-xs">Black</TableCell>
+                <TableCell className="text-xs">D2</TableCell>
+                <TableCell className="text-xs">6</TableCell>
+                <TableCell className="text-xs">Yes</TableCell>
+                <TableCell className="text-xs">No</TableCell>
+                <TableCell className="text-xs">ESL-001238</TableCell>
+                <TableCell className="text-xs">C-789460</TableCell>
+                <TableCell className="text-xs">T-005</TableCell>
+                <TableCell className="text-xs">SYS-4525</TableCell>
+                <TableCell className="text-xs">Ship</TableCell>
+                <TableCell className="text-xs">Done</TableCell>
+                <TableCell className="text-xs">Pass</TableCell>
+                <TableCell className="text-xs">OK</TableCell>
+                <TableCell className="text-xs">Applied</TableCell>
+                <TableCell className="text-xs">Verified</TableCell>
+                <TableCell className="text-xs">B-105</TableCell>
+                <TableCell className="text-xs">4</TableCell>
+                <TableCell className="text-xs">A-30</TableCell>
+                <TableCell className="text-xs text-green-600 font-medium">Complete</TableCell>
               </TableRow>
             </TableBody>
           </Table>
