@@ -10075,6 +10075,55 @@ const FormVariationsDemo = () => {
               </Button>
             </div>
           </div>
+        ) : activeEslTab === 'work-status' ? (
+          // Work Status tab footer - Print Test Report and sorted by on left, Save/Cancel on right
+          <div ref={footerRef} className="fixed bottom-0 left-[256px] right-0 bg-background border-t border-border shadow-lg z-10 py-3 px-6">
+            <div className="flex items-center justify-between gap-4 max-w-[1400px] mx-auto">
+              {/* Left side - Print Test Report and sorted by */}
+              <div className="flex items-center gap-3">
+                <Button 
+                  variant="outline" 
+                  className="bg-amber-400 hover:bg-amber-500 text-foreground border-amber-400 font-medium h-9 px-4"
+                >
+                  <Printer className="h-4 w-4 mr-2" />
+                  Print Test Report
+                </Button>
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-muted-foreground">sorted by:</span>
+                  <Select defaultValue="summary">
+                    <SelectTrigger className="h-9 w-32 text-sm border-border bg-background">
+                      <SelectValue placeholder="Select..." />
+                    </SelectTrigger>
+                    <SelectContent className="bg-background border-border">
+                      <SelectItem value="summary">Summary</SelectItem>
+                      <SelectItem value="date">Date</SelectItem>
+                      <SelectItem value="technician">Technician</SelectItem>
+                      <SelectItem value="status">Status</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              {/* Right side buttons */}
+              <div className="flex items-center gap-2">
+                <Button 
+                  variant="outline" 
+                  onClick={handleCancel}
+                  className="border-border bg-background text-foreground hover:bg-muted font-medium h-9 px-4"
+                >
+                  <X className="h-4 w-4 mr-2" />
+                  Cancel
+                </Button>
+                <Button 
+                  onClick={handleSave}
+                  className="bg-emerald-500 hover:bg-emerald-600 text-white font-medium h-9 px-4"
+                >
+                  <Save className="h-4 w-4 mr-2" />
+                  Save Item
+                </Button>
+              </div>
+            </div>
+          </div>
         ) : (
           // General tab footer - full buttons
           <div ref={footerRef} className="fixed bottom-0 left-[256px] right-0 bg-background border-t border-border shadow-lg z-10 py-3 px-6">
