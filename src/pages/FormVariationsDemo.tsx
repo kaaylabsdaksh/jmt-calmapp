@@ -13,7 +13,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, ChevronLeft, ChevronDown, ChevronUp, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield, Wrench, Activity, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock, ExternalLink, ArrowUp, Pencil, ImageIcon, Plus, MoreHorizontal, Play, Square } from "lucide-react";
+import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, ChevronLeft, ChevronDown, ChevronUp, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield, Wrench, Activity, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock, ExternalLink, ArrowUp, Pencil, ImageIcon, Plus, MoreHorizontal, Play, Square, RefreshCw } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
@@ -3875,159 +3875,223 @@ const FormVariationsDemo = () => {
 
         {/* Testing Edit Dialog */}
         <Dialog open={testingEditDialogOpen} onOpenChange={setTestingEditDialogOpen}>
-          <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto p-0">
             {selectedTestingRow && (
-              <>
-                {/* Header with item info */}
-                <div className="bg-muted/50 -mx-6 -mt-6 px-4 py-3 border-b border-border mb-4">
-                  <p className="text-sm font-medium text-center">
-                    Sort: {selectedTestingRow.sort} - Manu: {selectedTestingRow.manufacturer} - Class: {selectedTestingRow.class} - Size: {selectedTestingRow.size} - ESL ID: {selectedTestingRow.eslId || 'N/A'} - Cust ID: {selectedTestingRow.custId} - Tag: {selectedTestingRow.tag || 'N/A'}
-                  </p>
+              <div className="flex flex-col">
+                {/* Header */}
+                <div className="bg-primary/10 px-6 py-4 border-b border-border">
+                  <h2 className="text-lg font-semibold text-foreground mb-2">Edit Testing Record</h2>
+                  <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-muted-foreground">
+                    <span><strong className="text-foreground">Sort:</strong> {selectedTestingRow.sort}</span>
+                    <span><strong className="text-foreground">Manu:</strong> {selectedTestingRow.manufacturer}</span>
+                    <span><strong className="text-foreground">Class:</strong> {selectedTestingRow.class}</span>
+                    <span><strong className="text-foreground">Size:</strong> {selectedTestingRow.size}</span>
+                    <span><strong className="text-foreground">ESL ID:</strong> {selectedTestingRow.eslId || 'N/A'}</span>
+                    <span><strong className="text-foreground">Cust ID:</strong> {selectedTestingRow.custId}</span>
+                    <span><strong className="text-foreground">Tag:</strong> {selectedTestingRow.tag || 'N/A'}</span>
+                  </div>
                 </div>
 
-                {/* LEFT and RIGHT columns */}
-                <div className="grid grid-cols-2 gap-4">
-                  {/* LEFT Column */}
-                  <div className="border border-border rounded-lg p-4 space-y-4">
-                    <h3 className="text-center font-semibold underline">LEFT</h3>
-                    
-                    <div className="space-y-2">
+                {/* Main Content */}
+                <div className="p-6 space-y-6">
+                  {/* LEFT and RIGHT columns */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* LEFT Column */}
+                    <div className="bg-muted/30 rounded-xl p-5 space-y-5">
                       <div className="flex items-center gap-2">
-                        <Checkbox 
-                          id="leftFail"
-                          checked={testingFormData.leftFail}
-                          onCheckedChange={(checked) => setTestingFormData(prev => ({ ...prev, leftFail: !!checked }))}
-                        />
-                        <Label htmlFor="leftFail" className="text-xs">Fail (required to save fail data)</Label>
+                        <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
+                          <span className="text-sm font-bold text-primary">L</span>
+                        </div>
+                        <h3 className="text-base font-semibold">Left Side</h3>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <Checkbox 
-                          id="leftEB"
-                          checked={testingFormData.leftElectricalBreakdown}
-                          onCheckedChange={(checked) => setTestingFormData(prev => ({ ...prev, leftElectricalBreakdown: !!checked }))}
-                        />
-                        <Label htmlFor="leftEB" className="text-xs">Electrical Breakdown (EB)</Label>
+                      
+                      {/* Fail Status */}
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-3 p-3 bg-background rounded-lg border border-border hover:border-primary/50 transition-colors">
+                          <Checkbox 
+                            id="leftFail"
+                            checked={testingFormData.leftFail}
+                            onCheckedChange={(checked) => setTestingFormData(prev => ({ ...prev, leftFail: !!checked }))}
+                            className="h-5 w-5"
+                          />
+                          <div>
+                            <Label htmlFor="leftFail" className="text-sm font-medium cursor-pointer">Fail</Label>
+                            <p className="text-xs text-muted-foreground">Required to save fail data</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-3 p-3 bg-background rounded-lg border border-border hover:border-primary/50 transition-colors">
+                          <Checkbox 
+                            id="leftEB"
+                            checked={testingFormData.leftElectricalBreakdown}
+                            onCheckedChange={(checked) => setTestingFormData(prev => ({ ...prev, leftElectricalBreakdown: !!checked }))}
+                            className="h-5 w-5"
+                          />
+                          <div>
+                            <Label htmlFor="leftEB" className="text-sm font-medium cursor-pointer">Electrical Breakdown</Label>
+                            <p className="text-xs text-muted-foreground">EB failure detected</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Visual Inspection */}
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-2">
+                          <Eye className="h-4 w-4 text-muted-foreground" />
+                          <span className="text-sm font-medium">Visual Inspection (VI)</span>
+                        </div>
+                        <div className="bg-background rounded-lg border border-border p-4">
+                          <div className="grid grid-cols-2 gap-3">
+                            {[
+                              { key: 'leftCut', label: 'Cut', code: '01' },
+                              { key: 'leftChemicalAttack', label: 'Chemical Attack', code: '06' },
+                              { key: 'leftScratch', label: 'Scratch', code: '02' },
+                              { key: 'leftImbeddedMaterial', label: 'Imbedded Material', code: '07' },
+                              { key: 'leftTear', label: 'Tear', code: '03' },
+                              { key: 'leftThinning', label: 'Thinning', code: '08' },
+                              { key: 'leftTracking', label: 'Tracking', code: '04' },
+                              { key: 'leftPitting', label: 'Pitting', code: '09' },
+                              { key: 'leftLabel', label: 'Label', code: '05' },
+                              { key: 'leftOzoneUVCracking', label: 'Ozone/UV Cracking', code: '10' },
+                            ].map((item) => (
+                              <div key={item.key} className="flex items-center gap-2 p-2 rounded hover:bg-muted/50 transition-colors">
+                                <Checkbox 
+                                  id={item.key}
+                                  checked={testingFormData[item.key as keyof typeof testingFormData] as boolean}
+                                  onCheckedChange={(checked) => setTestingFormData(prev => ({ ...prev, [item.key]: !!checked }))}
+                                  className="h-4 w-4"
+                                />
+                                <Label htmlFor={item.key} className="text-xs cursor-pointer flex items-center gap-1.5">
+                                  <span className="text-muted-foreground font-mono">{item.code}</span>
+                                  <span>{item.label}</span>
+                                </Label>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
                       </div>
                     </div>
 
-                    <div className="space-y-2">
-                      <p className="text-xs font-medium text-center">Visual Inspection (VI)</p>
-                      <div className="border border-border rounded p-2">
-                        <div className="grid grid-cols-2 gap-1">
-                          {[
-                            { key: 'leftCut', label: '01 Cut' },
-                            { key: 'leftChemicalAttack', label: '06 Chemical Attack' },
-                            { key: 'leftScratch', label: '02 Scratch' },
-                            { key: 'leftImbeddedMaterial', label: '07 Imbedded Material' },
-                            { key: 'leftTear', label: '03 Tear' },
-                            { key: 'leftThinning', label: '08 Thinning' },
-                            { key: 'leftTracking', label: '04 Tracking' },
-                            { key: 'leftPitting', label: '09 Pitting' },
-                            { key: 'leftLabel', label: '05 Label' },
-                            { key: 'leftOzoneUVCracking', label: '10 Ozone UV Cracking' },
-                          ].map((item) => (
-                            <div key={item.key} className="flex items-center gap-1.5">
-                              <Checkbox 
-                                id={item.key}
-                                checked={testingFormData[item.key as keyof typeof testingFormData] as boolean}
-                                onCheckedChange={(checked) => setTestingFormData(prev => ({ ...prev, [item.key]: !!checked }))}
-                                className="h-3 w-3"
-                              />
-                              <Label htmlFor={item.key} className="text-[10px]">{item.label}</Label>
-                            </div>
-                          ))}
+                    {/* RIGHT Column */}
+                    <div className="bg-muted/30 rounded-xl p-5 space-y-5">
+                      <div className="flex items-center gap-2">
+                        <div className="w-8 h-8 rounded-full bg-secondary/50 flex items-center justify-center">
+                          <span className="text-sm font-bold text-secondary-foreground">R</span>
+                        </div>
+                        <h3 className="text-base font-semibold">Right Side</h3>
+                      </div>
+                      
+                      {/* Fail Status */}
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-3 p-3 bg-background rounded-lg border border-border hover:border-primary/50 transition-colors">
+                          <Checkbox 
+                            id="rightFail"
+                            checked={testingFormData.rightFail}
+                            onCheckedChange={(checked) => setTestingFormData(prev => ({ ...prev, rightFail: !!checked }))}
+                            className="h-5 w-5"
+                          />
+                          <div>
+                            <Label htmlFor="rightFail" className="text-sm font-medium cursor-pointer">Fail</Label>
+                            <p className="text-xs text-muted-foreground">Required to save fail data</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-3 p-3 bg-background rounded-lg border border-border hover:border-primary/50 transition-colors">
+                          <Checkbox 
+                            id="rightEB"
+                            checked={testingFormData.rightElectricalBreakdown}
+                            onCheckedChange={(checked) => setTestingFormData(prev => ({ ...prev, rightElectricalBreakdown: !!checked }))}
+                            className="h-5 w-5"
+                          />
+                          <div>
+                            <Label htmlFor="rightEB" className="text-sm font-medium cursor-pointer">Electrical Breakdown</Label>
+                            <p className="text-xs text-muted-foreground">EB failure detected</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Visual Inspection */}
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-2">
+                          <Eye className="h-4 w-4 text-muted-foreground" />
+                          <span className="text-sm font-medium">Visual Inspection (VI)</span>
+                        </div>
+                        <div className="bg-background rounded-lg border border-border p-4">
+                          <div className="grid grid-cols-2 gap-3">
+                            {[
+                              { key: 'rightCut', label: 'Cut', code: '01' },
+                              { key: 'rightChemicalAttack', label: 'Chemical Attack', code: '06' },
+                              { key: 'rightScratch', label: 'Scratch', code: '02' },
+                              { key: 'rightImbeddedMaterial', label: 'Imbedded Material', code: '07' },
+                              { key: 'rightTear', label: 'Tear', code: '03' },
+                              { key: 'rightThinning', label: 'Thinning', code: '08' },
+                              { key: 'rightTracking', label: 'Tracking', code: '04' },
+                              { key: 'rightPitting', label: 'Pitting', code: '09' },
+                              { key: 'rightLabel', label: 'Label', code: '05' },
+                              { key: 'rightOzoneUVCracking', label: 'Ozone/UV Cracking', code: '10' },
+                            ].map((item) => (
+                              <div key={item.key} className="flex items-center gap-2 p-2 rounded hover:bg-muted/50 transition-colors">
+                                <Checkbox 
+                                  id={item.key}
+                                  checked={testingFormData[item.key as keyof typeof testingFormData] as boolean}
+                                  onCheckedChange={(checked) => setTestingFormData(prev => ({ ...prev, [item.key]: !!checked }))}
+                                  className="h-4 w-4"
+                                />
+                                <Label htmlFor={item.key} className="text-xs cursor-pointer flex items-center gap-1.5">
+                                  <span className="text-muted-foreground font-mono">{item.code}</span>
+                                  <span>{item.label}</span>
+                                </Label>
+                              </div>
+                            ))}
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  {/* RIGHT Column */}
-                  <div className="border border-border rounded-lg p-4 space-y-4">
-                    <h3 className="text-center font-semibold underline">RIGHT</h3>
-                    
-                    <div className="space-y-2">
+                  {/* Replacement Section */}
+                  <div className="bg-muted/30 rounded-xl p-5">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-4">
                       <div className="flex items-center gap-2">
-                        <Checkbox 
-                          id="rightFail"
-                          checked={testingFormData.rightFail}
-                          onCheckedChange={(checked) => setTestingFormData(prev => ({ ...prev, rightFail: !!checked }))}
-                        />
-                        <Label htmlFor="rightFail" className="text-xs">Fail (required to save fail data)</Label>
+                        <RefreshCw className="h-4 w-4 text-muted-foreground" />
+                        <Label htmlFor="replacement" className="text-sm font-medium">Replacement Action</Label>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <Checkbox 
-                          id="rightEB"
-                          checked={testingFormData.rightElectricalBreakdown}
-                          onCheckedChange={(checked) => setTestingFormData(prev => ({ ...prev, rightElectricalBreakdown: !!checked }))}
-                        />
-                        <Label htmlFor="rightEB" className="text-xs">Electrical Breakdown (EB)</Label>
-                      </div>
-                    </div>
-
-                    <div className="space-y-2">
-                      <p className="text-xs font-medium text-center">Visual Inspection (VI)</p>
-                      <div className="border border-border rounded p-2">
-                        <div className="grid grid-cols-2 gap-1">
-                          {[
-                            { key: 'rightCut', label: '01 Cut' },
-                            { key: 'rightChemicalAttack', label: '06 Chemical Attack' },
-                            { key: 'rightScratch', label: '02 Scratch' },
-                            { key: 'rightImbeddedMaterial', label: '07 Imbedded Material' },
-                            { key: 'rightTear', label: '03 Tear' },
-                            { key: 'rightThinning', label: '08 Thinning' },
-                            { key: 'rightTracking', label: '04 Tracking' },
-                            { key: 'rightPitting', label: '09 Pitting' },
-                            { key: 'rightLabel', label: '05 Label' },
-                            { key: 'rightOzoneUVCracking', label: '10 Ozone UV Cracking' },
-                          ].map((item) => (
-                            <div key={item.key} className="flex items-center gap-1.5">
-                              <Checkbox 
-                                id={item.key}
-                                checked={testingFormData[item.key as keyof typeof testingFormData] as boolean}
-                                onCheckedChange={(checked) => setTestingFormData(prev => ({ ...prev, [item.key]: !!checked }))}
-                                className="h-3 w-3"
-                              />
-                              <Label htmlFor={item.key} className="text-[10px]">{item.label}</Label>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
+                      <Select value={testingFormData.replacement} onValueChange={(value) => setTestingFormData(prev => ({ ...prev, replacement: value }))}>
+                        <SelectTrigger className="w-full sm:w-64 h-10 bg-background">
+                          <SelectValue placeholder="Select replacement option..." />
+                        </SelectTrigger>
+                        <SelectContent className="bg-background border-border">
+                          <SelectItem value="none">No Replacement Needed</SelectItem>
+                          <SelectItem value="replace-left">Replace Left Side</SelectItem>
+                          <SelectItem value="replace-right">Replace Right Side</SelectItem>
+                          <SelectItem value="replace-both">Replace Both Sides</SelectItem>
+                        </SelectContent>
+                      </Select>
                     </div>
                   </div>
                 </div>
 
-                {/* Replacement dropdown */}
-                <div className="flex items-center justify-center gap-2 py-3 border-t border-border mt-4">
-                  <Label htmlFor="replacement" className="text-sm font-medium">Replacement:</Label>
-                  <Select value={testingFormData.replacement} onValueChange={(value) => setTestingFormData(prev => ({ ...prev, replacement: value }))}>
-                    <SelectTrigger className="w-48 h-8">
-                      <SelectValue placeholder="Select..." />
-                    </SelectTrigger>
-                    <SelectContent className="bg-background border-border">
-                      <SelectItem value="none">None</SelectItem>
-                      <SelectItem value="replace-left">Replace Left</SelectItem>
-                      <SelectItem value="replace-right">Replace Right</SelectItem>
-                      <SelectItem value="replace-both">Replace Both</SelectItem>
-                    </SelectContent>
-                  </Select>
+                {/* Footer */}
+                <div className="px-6 py-4 bg-muted/20 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4">
+                  <div className="flex items-center gap-2">
+                    <Button variant="ghost" size="sm" disabled className="text-muted-foreground">
+                      <ChevronLeft className="h-4 w-4 mr-1" />
+                      Prev Fail
+                    </Button>
+                    <Button variant="ghost" size="sm" disabled className="text-muted-foreground">
+                      Next Fail
+                      <ChevronRight className="h-4 w-4 ml-1" />
+                    </Button>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Button variant="outline" onClick={() => setTestingEditDialogOpen(false)}>
+                      Cancel
+                    </Button>
+                    <Button className="bg-primary text-primary-foreground hover:bg-primary/90 min-w-[100px]">
+                      <Save className="h-4 w-4 mr-2" />
+                      Save
+                    </Button>
+                  </div>
                 </div>
-
-                {/* Footer buttons */}
-                <div className="flex items-center justify-center gap-2 pt-2">
-                  <Button variant="outline" size="sm" disabled className="text-xs">
-                    Prev Fail
-                  </Button>
-                  <Button variant="outline" size="sm" disabled className="text-xs">
-                    Next Fail
-                  </Button>
-                  <Button size="sm" className="text-xs bg-primary text-primary-foreground">
-                    Save
-                  </Button>
-                  <Button variant="outline" size="sm" className="text-xs" onClick={() => setTestingEditDialogOpen(false)}>
-                    Close
-                  </Button>
-                </div>
-              </>
+              </div>
             )}
           </DialogContent>
         </Dialog>
