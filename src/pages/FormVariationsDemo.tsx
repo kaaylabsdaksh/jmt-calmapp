@@ -81,12 +81,24 @@ const FormVariationsDemo = () => {
   const [batchSheetType, setBatchSheetType] = useState("default");
   
   // Work Status tab state
-  const [workStatusData, setWorkStatusData] = useState({
+  const [workStatusData, setWorkStatusData] = useState<{
+    workType: string;
+    startSort: string;
+    stopSort: string;
+    startDate: Date | undefined;
+    stopDate: Date | undefined;
+    startTime: string;
+    stopTime: string;
+    technician: string;
+    qty: string;
+    status: string;
+    comments: string;
+  }>({
     workType: '',
     startSort: '',
     stopSort: '',
-    startDate: '',
-    stopDate: '',
+    startDate: undefined,
+    stopDate: undefined,
     startTime: '',
     stopTime: '',
     technician: 'lorraine-stepp-jenkins',
@@ -95,7 +107,7 @@ const FormVariationsDemo = () => {
     comments: ''
   });
   
-  const handleWorkStatusChange = (field: string, value: string) => {
+  const handleWorkStatusChange = (field: string, value: string | Date | undefined) => {
     setWorkStatusData(prev => ({ ...prev, [field]: value }));
   };
   
@@ -3744,13 +3756,29 @@ const FormVariationsDemo = () => {
               <div className="space-y-2">
                 <div className="space-y-1.5">
                   <Label className="text-xs font-medium text-muted-foreground">Start Date <span className="text-destructive">*</span></Label>
-                  <Input 
-                    type="date"
-                    className="h-9 bg-background"
-                    value={workStatusData.startDate}
-                    onChange={(e) => handleWorkStatusChange('startDate', e.target.value)}
-                    required
-                  />
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className={cn(
+                          "h-9 w-full justify-start text-left font-normal bg-background",
+                          !workStatusData.startDate && "text-muted-foreground"
+                        )}
+                      >
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {workStatusData.startDate ? format(workStatusData.startDate, "dd/MM/yyyy") : <span>dd/mm/yyyy</span>}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0 bg-popover border z-50" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={workStatusData.startDate}
+                        onSelect={(date) => handleWorkStatusChange('startDate', date)}
+                        initialFocus
+                        className="p-3 pointer-events-auto"
+                      />
+                    </PopoverContent>
+                  </Popover>
                 </div>
                 <Input 
                   type="time"
@@ -3773,13 +3801,29 @@ const FormVariationsDemo = () => {
               <div className="space-y-2">
                 <div className="space-y-1.5">
                   <Label className="text-xs font-medium text-muted-foreground">Stop Date <span className="text-destructive">*</span></Label>
-                  <Input 
-                    type="date"
-                    className="h-9 bg-background"
-                    value={workStatusData.stopDate}
-                    onChange={(e) => handleWorkStatusChange('stopDate', e.target.value)}
-                    required
-                  />
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className={cn(
+                          "h-9 w-full justify-start text-left font-normal bg-background",
+                          !workStatusData.stopDate && "text-muted-foreground"
+                        )}
+                      >
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {workStatusData.stopDate ? format(workStatusData.stopDate, "dd/MM/yyyy") : <span>dd/mm/yyyy</span>}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0 bg-popover border z-50" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={workStatusData.stopDate}
+                        onSelect={(date) => handleWorkStatusChange('stopDate', date)}
+                        initialFocus
+                        className="p-3 pointer-events-auto"
+                      />
+                    </PopoverContent>
+                  </Popover>
                 </div>
                 <Input 
                   type="time"
