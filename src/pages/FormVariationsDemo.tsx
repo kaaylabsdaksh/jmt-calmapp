@@ -3740,9 +3740,87 @@ const FormVariationsDemo = () => {
         </div>
 
 
-        {/* Empty Results Area */}
-        <div className="border border-border rounded-lg p-8 text-center">
-          <p className="text-sm text-muted-foreground">No test records to display</p>
+        {/* Testing Results Table */}
+        <div className="border border-border rounded-lg overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full text-[10px]">
+              <thead>
+                <tr className="bg-muted/50 border-b border-border">
+                  <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-12">ID</th>
+                  <th className="px-1.5 py-1 text-center font-medium text-muted-foreground w-8">
+                    <Checkbox className="h-3 w-3" />
+                  </th>
+                  <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-8">Sort</th>
+                  <th className="px-1.5 py-1 text-left font-medium text-muted-foreground">Manufacturer</th>
+                  <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-14">Class</th>
+                  <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-10">Size</th>
+                  <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-12">Length</th>
+                  <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-14">Inside</th>
+                  <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-14">Outside</th>
+                  <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-20">Cuff</th>
+                  <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-8">Odd</th>
+                  <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-8">New</th>
+                  <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-8">Mit</th>
+                  <th className="px-1.5 py-1 text-left font-medium text-muted-foreground">Cust ID</th>
+                  <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-14">ESL ID</th>
+                  <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-10">Tag</th>
+                  <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-12">Result</th>
+                  <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-10">Procs</th>
+                  <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-10">Stds</th>
+                  <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-10"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  { id: '21645', sort: 1, manufacturer: 'SALISBURY', class: 'CLASS 1', size: 10.5, length: 16, inside: 'Black', outside: 'Black', cuff: 'Straight', odd: 'N', new: 'No', mit: 'No', custId: 'WEST END / B / MARCELO TREVINO', eslId: '626864', tag: '', result: 'PASS', procs: 'F496', stds: '632' },
+                  { id: '21643', sort: 2, manufacturer: 'SALISBURY', class: 'CLASS 1', size: 10.5, length: 16, inside: 'Black', outside: 'Black', cuff: 'Straight', odd: 'N', new: 'No', mit: 'No', custId: 'N/A', eslId: '626862', tag: '', result: 'PASS', procs: 'F496', stds: '632' },
+                  { id: '21644', sort: 3, manufacturer: 'SALISBURY', class: 'CLASS 1', size: 10.5, length: 16, inside: 'Black', outside: 'Black', cuff: 'Straight', odd: 'N', new: 'No', mit: 'No', custId: 'N/A', eslId: '626863', tag: '', result: 'PASS', procs: 'F496', stds: '632' },
+                  { id: '21646', sort: 4, manufacturer: 'SALISBURY', class: 'CLASS 2', size: 10.5, length: 16, inside: 'Yellow', outside: 'Black', cuff: 'Straight', odd: 'N', new: 'No', mit: 'No', custId: 'N/A', eslId: '626865', tag: '', result: 'PASS', procs: 'F496', stds: '632' },
+                  { id: '650981', sort: 5, manufacturer: 'CHANCE', class: 'CLASS 2', size: 9, length: 16, inside: 'Orange', outside: 'Orange', cuff: 'Contour/Bellcuff', odd: 'N', new: 'No', mit: 'No', custId: 'N/A', eslId: '', tag: 'N/A', result: '', procs: '', stds: '' },
+                  { id: '650982', sort: 6, manufacturer: 'CHANCE', class: 'CLASS 2', size: 9, length: 16, inside: 'Orange', outside: 'Orange', cuff: 'Contour/Bellcuff', odd: 'N', new: 'No', mit: 'No', custId: 'N/A', eslId: '932277', tag: '', result: '', procs: '', stds: '' },
+                  { id: '650983', sort: 7, manufacturer: 'CHANCE', class: 'CLASS 2', size: 9, length: 16, inside: 'Orange', outside: 'Orange', cuff: 'Contour/Bellcuff', odd: 'N', new: 'No', mit: 'No', custId: 'N/A', eslId: '932278', tag: '', result: '', procs: '', stds: '' },
+                  { id: '650984', sort: 8, manufacturer: 'NORTH', class: 'CLASS 3', size: 11.5, length: 14, inside: 'Orange', outside: 'Orange', cuff: 'Contour/Bellcuff', odd: 'N', new: 'No', mit: 'No', custId: 'N/A', eslId: '', tag: 'N/A', result: '', procs: '', stds: '' },
+                  { id: '650985', sort: 9, manufacturer: 'ELECTROSOFT', class: 'CLASS 0', size: 10.5, length: 14, inside: 'Red', outside: 'Yellow', cuff: 'Contour/Bellcuff', odd: 'N', new: 'No', mit: 'No', custId: 'N/A', eslId: '', tag: 'N/A', result: '', procs: '', stds: '' },
+                  { id: '650986', sort: 10, manufacturer: 'ELECTROSOFT', class: 'CLASS 0', size: 10.5, length: 14, inside: 'Red', outside: 'Yellow', cuff: 'Contour/Bellcuff', odd: 'N', new: 'No', mit: 'No', custId: 'N/A', eslId: '932279', tag: '', result: '', procs: '', stds: '' },
+                  { id: '650987', sort: 11, manufacturer: 'ELECTROSOFT', class: 'CLASS 0', size: 10.5, length: 14, inside: 'Red', outside: 'Yellow', cuff: 'Contour/Bellcuff', odd: 'N', new: 'No', mit: 'No', custId: 'N/A', eslId: '932280', tag: '', result: '', procs: '', stds: '' },
+                  { id: '650988', sort: 12, manufacturer: 'SALISBURY', class: 'CLASS 0', size: 9, length: 11, inside: 'Black', outside: 'Black', cuff: 'Straight', odd: 'N', new: 'No', mit: 'No', custId: 'N/A', eslId: '158426', tag: '', result: '', procs: '', stds: '' },
+                ].map((row, index) => (
+                  <tr key={row.id} className={`border-b border-border hover:bg-muted/30 h-6 ${index % 2 === 0 ? 'bg-background' : 'bg-muted/10'}`}>
+                    <td className="px-1.5 py-0.5 text-[10px] font-medium text-primary">{row.id}</td>
+                    <td className="px-1.5 py-0.5 text-center">
+                      <Checkbox className="h-3 w-3" />
+                    </td>
+                    <td className="px-1.5 py-0.5 text-[10px]">{row.sort}</td>
+                    <td className="px-1.5 py-0.5 text-[10px]">{row.manufacturer}</td>
+                    <td className="px-1.5 py-0.5 text-[10px]">{row.class}</td>
+                    <td className="px-1.5 py-0.5 text-[10px]">{row.size}</td>
+                    <td className="px-1.5 py-0.5 text-[10px]">{row.length}</td>
+                    <td className="px-1.5 py-0.5 text-[10px]">{row.inside}</td>
+                    <td className="px-1.5 py-0.5 text-[10px]">{row.outside}</td>
+                    <td className="px-1.5 py-0.5 text-[10px]">{row.cuff}</td>
+                    <td className="px-1.5 py-0.5 text-[10px]">{row.odd}</td>
+                    <td className="px-1.5 py-0.5 text-[10px]">{row.new}</td>
+                    <td className="px-1.5 py-0.5 text-[10px]">{row.mit}</td>
+                    <td className="px-1.5 py-0.5 text-[10px] truncate max-w-[150px]" title={row.custId}>{row.custId}</td>
+                    <td className="px-1.5 py-0.5 text-[10px]">{row.eslId}</td>
+                    <td className="px-1.5 py-0.5 text-[10px]">{row.tag || ''}</td>
+                    <td className="px-1.5 py-0.5 text-[10px]">
+                      {row.result && (
+                        <span className="text-green-600 font-medium">{row.result}</span>
+                      )}
+                    </td>
+                    <td className="px-1.5 py-0.5 text-[10px]">{row.procs}</td>
+                    <td className="px-1.5 py-0.5 text-[10px]">{row.stds}</td>
+                    <td className="px-1.5 py-0.5 text-[10px]">
+                      <Button variant="link" size="sm" className="h-5 px-1 text-[10px] text-primary">
+                        Edit
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     );
