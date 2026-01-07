@@ -80,6 +80,25 @@ const FormVariationsDemo = () => {
   const [batchSheetQuantity, setBatchSheetQuantity] = useState("1");
   const [batchSheetType, setBatchSheetType] = useState("default");
   
+  // Work Status tab state
+  const [workStatusData, setWorkStatusData] = useState({
+    workType: '',
+    startSort: '',
+    stopSort: '',
+    startDate: '',
+    stopDate: '',
+    startTime: '',
+    stopTime: '',
+    technician: 'lorraine-stepp-jenkins',
+    qty: '',
+    status: 'started',
+    comments: ''
+  });
+  
+  const handleWorkStatusChange = (field: string, value: string) => {
+    setWorkStatusData(prev => ({ ...prev, [field]: value }));
+  };
+  
   const sections = [
     { id: 'general', label: 'General', icon: Info },
     { id: 'product', label: 'Product', icon: Package },
@@ -3621,24 +3640,6 @@ const FormVariationsDemo = () => {
   };
 
   const renderWorkStatusSection = () => {
-    const [workStatusData, setWorkStatusData] = React.useState({
-      workType: '',
-      startSort: '',
-      stopSort: '',
-      startDate: '',
-      stopDate: '',
-      startTime: '',
-      stopTime: '',
-      technician: 'lorraine-stepp-jenkins',
-      qty: '',
-      status: 'started',
-      comments: ''
-    });
-
-    const handleWorkStatusChange = (field: string, value: string) => {
-      setWorkStatusData(prev => ({ ...prev, [field]: value }));
-    };
-
     return (
       <Card className="border-0 shadow-md">
         <CardContent className="p-6 space-y-6">
