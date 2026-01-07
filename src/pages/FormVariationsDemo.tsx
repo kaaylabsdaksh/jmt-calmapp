@@ -3760,26 +3760,27 @@ const FormVariationsDemo = () => {
                 </Select>
               </div>
 
-              {/* Stop Sort # */}
-              <div className="space-y-1.5">
-                <Label className="text-xs font-medium text-muted-foreground">Stop Sort #</Label>
-                <Input 
-                  className="h-9 bg-background"
-                  value={workStatusData.stopSort}
-                  onChange={(e) => handleWorkStatusChange('stopSort', e.target.value)}
-                  placeholder="Enter..."
-                />
-              </div>
-
-              {/* Qty */}
-              <div className="space-y-1.5">
-                <Label className="text-xs font-medium text-muted-foreground">Qty</Label>
-                <Input 
-                  className="h-9 bg-background"
-                  value={workStatusData.qty}
-                  onChange={(e) => handleWorkStatusChange('qty', e.target.value)}
-                  placeholder="0"
-                />
+              {/* Stop Sort # - aligned with Start Time */}
+              <div className="space-y-2">
+                <div className="space-y-1.5">
+                  <Label className="text-xs font-medium text-muted-foreground">Stop Sort #</Label>
+                  <Input 
+                    className="h-9 bg-background"
+                    value={workStatusData.stopSort}
+                    onChange={(e) => handleWorkStatusChange('stopSort', e.target.value)}
+                    placeholder="Enter..."
+                  />
+                </div>
+                {/* Qty below Stop Sort */}
+                <div className="space-y-1.5">
+                  <Label className="text-xs font-medium text-muted-foreground">Qty</Label>
+                  <Input 
+                    className="h-9 bg-background"
+                    value={workStatusData.qty}
+                    onChange={(e) => handleWorkStatusChange('qty', e.target.value)}
+                    placeholder="0"
+                  />
+                </div>
               </div>
 
               {/* Status */}
