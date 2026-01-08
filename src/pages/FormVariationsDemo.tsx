@@ -4408,81 +4408,49 @@ const FormVariationsDemo = () => {
           </div>
 
           {/* Work Status History Table */}
-          <div className="border border-border overflow-hidden mt-6">
+          <div className="border border-border rounded-lg overflow-hidden mt-6">
+            <div className="bg-muted/50 px-4 py-3 border-b border-border">
+              <h4 className="text-sm font-semibold text-foreground">Work Status History</h4>
+            </div>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="bg-primary border-b border-primary">
-                    <th className="text-left px-3 py-2 text-xs font-semibold text-primary-foreground underline">Qty</th>
-                    <th className="text-left px-3 py-2 text-xs font-semibold text-primary-foreground underline">Type</th>
-                    <th className="text-left px-3 py-2 text-xs font-semibold text-primary-foreground underline">Status</th>
-                    <th className="text-left px-3 py-2 text-xs font-semibold text-primary-foreground underline">Technician</th>
-                    <th className="text-left px-3 py-2 text-xs font-semibold text-primary-foreground underline">Start</th>
-                    <th className="text-left px-3 py-2 text-xs font-semibold text-primary-foreground underline">Stop</th>
-                    <th className="text-left px-3 py-2 text-xs font-semibold text-primary-foreground underline min-w-[300px]">Comments</th>
-                    <th className="text-right px-3 py-2 text-xs font-semibold text-primary-foreground underline">Total</th>
+                  <tr className="bg-muted/30 border-b border-border">
+                    <th className="text-left px-4 py-3 text-xs font-semibold text-foreground"></th>
+                    <th className="text-left px-4 py-3 text-xs font-semibold text-foreground">Start</th>
+                    <th className="text-left px-4 py-3 text-xs font-semibold text-foreground">Stop</th>
+                    <th className="text-left px-4 py-3 text-xs font-semibold text-foreground">Qty</th>
+                    <th className="text-left px-4 py-3 text-xs font-semibold text-foreground">Type</th>
+                    <th className="text-left px-4 py-3 text-xs font-semibold text-foreground">Status</th>
+                    <th className="text-left px-4 py-3 text-xs font-semibold text-foreground">Technician</th>
+                    <th className="text-left px-4 py-3 text-xs font-semibold text-foreground">Start</th>
+                    <th className="text-left px-4 py-3 text-xs font-semibold text-foreground">Stop</th>
+                    <th className="text-left px-4 py-3 text-xs font-semibold text-foreground">Comments</th>
+                    <th className="text-left px-4 py-3 text-xs font-semibold text-foreground">Total</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="border-b border-border bg-blue-50 dark:bg-blue-950/20">
-                    <td className="px-3 py-1.5 text-xs text-foreground">4</td>
-                    <td className="px-3 py-1.5 text-xs text-foreground">Boxed Order</td>
-                    <td className="px-3 py-1.5 text-xs text-foreground">Completed</td>
-                    <td className="px-3 py-1.5 text-xs text-foreground">Kim M. Arnaud</td>
-                    <td className="px-3 py-1.5 text-xs text-foreground">04/12/2016 07:30 AM</td>
-                    <td className="px-3 py-1.5 text-xs text-foreground">04/12/2016 07:35 AM</td>
-                    <td className="px-3 py-1.5 text-xs text-muted-foreground"></td>
-                    <td className="px-3 py-1.5 text-xs text-right text-foreground">00:05</td>
-                  </tr>
-                  <tr className="border-b border-border bg-background">
-                    <td className="px-3 py-1.5 text-xs text-foreground">4</td>
-                    <td className="px-3 py-1.5 text-xs text-foreground">Stamp Inspection</td>
-                    <td className="px-3 py-1.5 text-xs text-foreground">Completed</td>
-                    <td className="px-3 py-1.5 text-xs text-foreground">Christopher P DaPolito</td>
-                    <td className="px-3 py-1.5 text-xs text-foreground">04/12/2016 07:01 AM</td>
-                    <td className="px-3 py-1.5 text-xs text-foreground">04/12/2016 07:02 AM</td>
-                    <td className="px-3 py-1.5 text-xs text-muted-foreground"></td>
-                    <td className="px-3 py-1.5 text-xs text-right text-foreground">00:01</td>
-                  </tr>
-                  <tr className="border-b border-border bg-blue-50 dark:bg-blue-950/20">
-                    <td className="px-3 py-1.5 text-xs text-foreground">4</td>
-                    <td className="px-3 py-1.5 text-xs text-foreground">Stamped</td>
-                    <td className="px-3 py-1.5 text-xs text-foreground">Completed</td>
-                    <td className="px-3 py-1.5 text-xs text-foreground">Kim M. Arnaud</td>
-                    <td className="px-3 py-1.5 text-xs text-foreground">04/11/2016 04:00 PM</td>
-                    <td className="px-3 py-1.5 text-xs text-foreground">04/11/2016 04:05 PM</td>
-                    <td className="px-3 py-1.5 text-xs text-muted-foreground"></td>
-                    <td className="px-3 py-1.5 text-xs text-right text-foreground">00:05</td>
-                  </tr>
-                  <tr className="border-b border-border bg-background">
-                    <td className="px-3 py-1.5 text-xs text-foreground">4</td>
-                    <td className="px-3 py-1.5 text-xs text-foreground">Visual Inspection</td>
-                    <td className="px-3 py-1.5 text-xs text-foreground">Completed</td>
-                    <td className="px-3 py-1.5 text-xs text-foreground">Kim M. Arnaud</td>
-                    <td className="px-3 py-1.5 text-xs text-foreground">04/11/2016 03:45 PM</td>
-                    <td className="px-3 py-1.5 text-xs text-foreground">04/11/2016 04:00 PM</td>
-                    <td className="px-3 py-1.5 text-xs text-muted-foreground"></td>
-                    <td className="px-3 py-1.5 text-xs text-right text-foreground">00:15</td>
-                  </tr>
-                  <tr className="border-b border-border bg-blue-50 dark:bg-blue-950/20">
-                    <td className="px-3 py-1.5 text-xs text-foreground">4</td>
-                    <td className="px-3 py-1.5 text-xs text-foreground">Tested</td>
-                    <td className="px-3 py-1.5 text-xs text-foreground">Completed</td>
-                    <td className="px-3 py-1.5 text-xs text-foreground">Stephen D. Johnson</td>
-                    <td className="px-3 py-1.5 text-xs text-foreground">04/11/2016 12:35 PM</td>
-                    <td className="px-3 py-1.5 text-xs text-foreground">04/11/2016 01:32 PM</td>
-                    <td className="px-3 py-1.5 text-xs text-muted-foreground"></td>
-                    <td className="px-3 py-1.5 text-xs text-right text-foreground">00:57</td>
-                  </tr>
-                  <tr className="border-b border-border bg-background">
-                    <td className="px-3 py-1.5 text-xs text-foreground">4</td>
-                    <td className="px-3 py-1.5 text-xs text-foreground">Cleaned</td>
-                    <td className="px-3 py-1.5 text-xs text-foreground">Completed</td>
-                    <td className="px-3 py-1.5 text-xs text-foreground">Christopher P DaPolito</td>
-                    <td className="px-3 py-1.5 text-xs text-foreground">04/11/2016 07:10 AM</td>
-                    <td className="px-3 py-1.5 text-xs text-foreground">04/11/2016 07:53 AM</td>
-                    <td className="px-3 py-1.5 text-xs text-muted-foreground"></td>
-                    <td className="px-3 py-1.5 text-xs text-right text-foreground">00:43</td>
+                  <tr className="border-b border-border hover:bg-muted/20 bg-background">
+                    <td className="px-4 py-3 text-xs">
+                      <Button variant="ghost" size="sm" className="h-7 px-2 text-xs text-foreground hover:bg-muted">
+                        <Pencil className="h-3 w-3 mr-1" />
+                        Edit
+                      </Button>
+                    </td>
+                    <td className="px-4 py-3 text-xs text-foreground">1</td>
+                    <td className="px-4 py-3 text-xs text-foreground">11</td>
+                    <td className="px-4 py-3 text-xs text-foreground">1</td>
+                    <td className="px-4 py-3 text-xs text-foreground">Boxed Order</td>
+                    <td className="px-4 py-3 text-xs">
+                      <Badge variant="secondary" className="bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400 font-medium">
+                        In Process
+                      </Badge>
+                    </td>
+                    <td className="px-4 py-3 text-xs text-foreground">Lorraine Stepp-Jenkins</td>
+                    <td className="px-4 py-3 text-xs text-foreground">01/07/2026 05:00 AM</td>
+                    <td className="px-4 py-3 text-xs text-foreground">01/13/2026 03:00 AM</td>
+                    <td className="px-4 py-3 text-xs text-muted-foreground">—</td>
+                    <td className="px-4 py-3 text-xs font-medium text-foreground">142:00</td>
                   </tr>
                 </tbody>
               </table>
