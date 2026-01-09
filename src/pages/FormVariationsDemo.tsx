@@ -7681,7 +7681,29 @@ const FormVariationsDemo = () => {
               </Tabs>
             ) : (
               // SINGLE Type Accordion (expanded sections)
-              <Accordion type="multiple" value={openAccordions} onValueChange={setOpenAccordions} className="space-y-0 accordion-fields">
+              <>
+                {/* Expand/Collapse All buttons */}
+                <div className="flex justify-end gap-2 mb-3">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="text-xs text-muted-foreground hover:text-foreground"
+                    onClick={() => setOpenAccordions(singleAccordionValues)}
+                  >
+                    <ChevronsUpDown className="h-3.5 w-3.5 mr-1" />
+                    Expand All
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="text-xs text-muted-foreground hover:text-foreground"
+                    onClick={() => setOpenAccordions([])}
+                  >
+                    <ChevronsUpDown className="h-3.5 w-3.5 mr-1" />
+                    Collapse All
+                  </Button>
+                </div>
+                <Accordion type="multiple" value={openAccordions} onValueChange={setOpenAccordions} className="space-y-0 accordion-fields">
                 <AccordionItem value="general" className="border-b">
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-3">
@@ -7851,6 +7873,7 @@ const FormVariationsDemo = () => {
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
+              </>
             )}
           </CardContent>
         </Card>
