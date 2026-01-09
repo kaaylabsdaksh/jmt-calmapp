@@ -7690,7 +7690,7 @@ const FormVariationsDemo = () => {
                     className="text-xs text-muted-foreground hover:text-foreground"
                     onClick={() => setOpenAccordions(singleAccordionValues)}
                   >
-                    <ChevronsUpDown className="h-3.5 w-3.5 mr-1" />
+                    <ChevronDown className="h-3.5 w-3.5 mr-1" />
                     Expand All
                   </Button>
                   <Button
@@ -7699,7 +7699,7 @@ const FormVariationsDemo = () => {
                     className="text-xs text-muted-foreground hover:text-foreground"
                     onClick={() => setOpenAccordions([])}
                   >
-                    <ChevronsUpDown className="h-3.5 w-3.5 mr-1" />
+                    <ChevronUp className="h-3.5 w-3.5 mr-1" />
                     Collapse All
                   </Button>
                 </div>
