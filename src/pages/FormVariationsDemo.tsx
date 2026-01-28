@@ -10402,9 +10402,9 @@ const FormVariationsDemo = () => {
                     {/* Selected Descriptions */}
                     <div className="flex-1">
                       <Label className="text-sm font-medium mb-3 block text-foreground">Fails to Add</Label>
-                      <div className="border rounded-lg overflow-hidden bg-background border-primary/30">
-                        <div className="bg-primary/10 px-3 py-2 border-b border-primary/20">
-                          <span className="text-xs font-medium text-primary">Selected</span>
+                      <div className="border rounded-lg overflow-hidden bg-background border-emerald-500/40">
+                        <div className="bg-emerald-500/15 px-3 py-2 border-b border-emerald-500/20">
+                          <span className="text-xs font-medium text-emerald-700">Selected</span>
                         </div>
                         <ScrollArea className="h-[200px]">
                           <div className="p-2 space-y-1">
@@ -10416,7 +10416,7 @@ const FormVariationsDemo = () => {
                                   setSelectedFailDescriptions(prev => prev.filter(d => d !== desc));
                                   setAvailableFailDescriptions(prev => [...prev, desc]);
                                 }}
-                                className="w-full text-left px-3 py-2 text-sm rounded-md bg-primary/5 hover:bg-primary/10 transition-colors border border-primary/20"
+                                className="w-full text-left px-3 py-2 text-sm rounded-md bg-emerald-50 hover:bg-emerald-100 transition-colors border border-emerald-200"
                               >
                                 {desc}
                               </button>
