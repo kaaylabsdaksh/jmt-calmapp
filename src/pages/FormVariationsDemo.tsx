@@ -10349,17 +10349,23 @@ const FormVariationsDemo = () => {
                         <ScrollArea className="h-[200px]">
                           <div className="p-2 space-y-1">
                             {availableFailDescriptions.map((desc) => (
-                              <button
+                              <div
                                 key={desc}
-                                type="button"
-                                onClick={() => {
-                                  setAvailableFailDescriptions(prev => prev.filter(d => d !== desc));
-                                  setSelectedFailDescriptions(prev => [...prev, desc]);
-                                }}
-                                className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted transition-colors"
+                                className="flex items-center justify-between gap-2 px-3 py-2 text-sm rounded-md hover:bg-muted transition-colors group"
                               >
-                                {desc}
-                              </button>
+                                <span>{desc}</span>
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  className="h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity text-muted-foreground hover:text-emerald-600 hover:bg-emerald-50"
+                                  onClick={() => {
+                                    setAvailableFailDescriptions(prev => prev.filter(d => d !== desc));
+                                    setSelectedFailDescriptions(prev => [...prev, desc]);
+                                  }}
+                                >
+                                  <Plus className="h-4 w-4" />
+                                </Button>
+                              </div>
                             ))}
                             {availableFailDescriptions.length === 0 && (
                               <p className="text-xs text-muted-foreground text-center py-4">No items available</p>
