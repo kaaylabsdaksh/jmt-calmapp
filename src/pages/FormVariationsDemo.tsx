@@ -10338,37 +10338,39 @@ const FormVariationsDemo = () => {
 
                 {/* Middle Column - Dual List Box */}
                 <div className="col-span-12 lg:col-span-6">
-                  <Label className="text-sm font-medium mb-3 block">Fail Description</Label>
                   <div className="flex gap-3 items-stretch">
                     {/* Available Descriptions */}
-                    <div className="flex-1 border rounded-lg overflow-hidden bg-background">
-                      <div className="bg-muted/50 px-3 py-2 border-b">
-                        <span className="text-xs font-medium text-muted-foreground">Available</span>
-                      </div>
-                      <ScrollArea className="h-[200px]">
-                        <div className="p-2 space-y-1">
-                          {availableFailDescriptions.map((desc) => (
-                            <button
-                              key={desc}
-                              type="button"
-                              onClick={() => {
-                                setAvailableFailDescriptions(prev => prev.filter(d => d !== desc));
-                                setSelectedFailDescriptions(prev => [...prev, desc]);
-                              }}
-                              className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted transition-colors"
-                            >
-                              {desc}
-                            </button>
-                          ))}
-                          {availableFailDescriptions.length === 0 && (
-                            <p className="text-xs text-muted-foreground text-center py-4">No items available</p>
-                          )}
+                    <div className="flex-1">
+                      <Label className="text-sm font-medium mb-3 block">Fail Description</Label>
+                      <div className="border rounded-lg overflow-hidden bg-background">
+                        <div className="bg-muted/50 px-3 py-2 border-b">
+                          <span className="text-xs font-medium text-muted-foreground">Available</span>
                         </div>
-                      </ScrollArea>
+                        <ScrollArea className="h-[200px]">
+                          <div className="p-2 space-y-1">
+                            {availableFailDescriptions.map((desc) => (
+                              <button
+                                key={desc}
+                                type="button"
+                                onClick={() => {
+                                  setAvailableFailDescriptions(prev => prev.filter(d => d !== desc));
+                                  setSelectedFailDescriptions(prev => [...prev, desc]);
+                                }}
+                                className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted transition-colors"
+                              >
+                                {desc}
+                              </button>
+                            ))}
+                            {availableFailDescriptions.length === 0 && (
+                              <p className="text-xs text-muted-foreground text-center py-4">No items available</p>
+                            )}
+                          </div>
+                        </ScrollArea>
+                      </div>
                     </div>
 
                     {/* Transfer Buttons */}
-                    <div className="flex flex-col justify-center gap-2">
+                    <div className="flex flex-col justify-center gap-2 pt-8">
                       <Button
                         variant="outline"
                         size="icon"
@@ -10398,30 +10400,33 @@ const FormVariationsDemo = () => {
                     </div>
 
                     {/* Selected Descriptions */}
-                    <div className="flex-1 border rounded-lg overflow-hidden bg-background border-primary/30">
-                      <div className="bg-primary/10 px-3 py-2 border-b border-primary/20">
-                        <span className="text-xs font-medium text-primary">Fails to Add</span>
-                      </div>
-                      <ScrollArea className="h-[200px]">
-                        <div className="p-2 space-y-1">
-                          {selectedFailDescriptions.map((desc) => (
-                            <button
-                              key={desc}
-                              type="button"
-                              onClick={() => {
-                                setSelectedFailDescriptions(prev => prev.filter(d => d !== desc));
-                                setAvailableFailDescriptions(prev => [...prev, desc]);
-                              }}
-                              className="w-full text-left px-3 py-2 text-sm rounded-md bg-primary/5 hover:bg-primary/10 transition-colors border border-primary/20"
-                            >
-                              {desc}
-                            </button>
-                          ))}
-                          {selectedFailDescriptions.length === 0 && (
-                            <p className="text-xs text-muted-foreground text-center py-4">No items selected</p>
-                          )}
+                    <div className="flex-1">
+                      <Label className="text-sm font-medium mb-3 block text-primary">Fails to Add</Label>
+                      <div className="border rounded-lg overflow-hidden bg-background border-primary/30">
+                        <div className="bg-primary/10 px-3 py-2 border-b border-primary/20">
+                          <span className="text-xs font-medium text-primary">Selected</span>
                         </div>
-                      </ScrollArea>
+                        <ScrollArea className="h-[200px]">
+                          <div className="p-2 space-y-1">
+                            {selectedFailDescriptions.map((desc) => (
+                              <button
+                                key={desc}
+                                type="button"
+                                onClick={() => {
+                                  setSelectedFailDescriptions(prev => prev.filter(d => d !== desc));
+                                  setAvailableFailDescriptions(prev => [...prev, desc]);
+                                }}
+                                className="w-full text-left px-3 py-2 text-sm rounded-md bg-primary/5 hover:bg-primary/10 transition-colors border border-primary/20"
+                              >
+                                {desc}
+                              </button>
+                            ))}
+                            {selectedFailDescriptions.length === 0 && (
+                              <p className="text-xs text-muted-foreground text-center py-4">No items selected</p>
+                            )}
+                          </div>
+                        </ScrollArea>
+                      </div>
                     </div>
                   </div>
                 </div>
