@@ -7523,7 +7523,7 @@ const FormVariationsDemo = () => {
                 </TabsContent>
 
                 <TabsContent value="transit" className="mt-0 space-y-6 animate-fade-in">
-                  {renderTransitSection()}
+                  {renderTransitSection(true, true)}
                 </TabsContent>
               </>
             ) : (
@@ -7689,7 +7689,7 @@ const FormVariationsDemo = () => {
                 </TabsContent>
 
                 <TabsContent value="transit" className="mt-0">
-                  {renderTransitSection()}
+                  {renderTransitSection(true, true)}
                 </TabsContent>
               </Tabs>
             ) : (
