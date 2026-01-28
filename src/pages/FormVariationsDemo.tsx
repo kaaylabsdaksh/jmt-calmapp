@@ -10401,7 +10401,7 @@ const FormVariationsDemo = () => {
 
                     {/* Selected Descriptions */}
                     <div className="flex-1">
-                      <Label className="text-sm font-medium mb-3 block text-primary">Fails to Add</Label>
+                      <Label className="text-sm font-medium mb-3 block text-foreground">Fails to Add</Label>
                       <div className="border rounded-lg overflow-hidden bg-background border-primary/30">
                         <div className="bg-primary/10 px-3 py-2 border-b border-primary/20">
                           <span className="text-xs font-medium text-primary">Selected</span>
