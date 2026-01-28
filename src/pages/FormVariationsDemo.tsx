@@ -44,7 +44,7 @@ const FormVariationsDemo = () => {
   const [accordionDensity, setAccordionDensity] = useState<'compact' | 'normal'>('compact');
   
   // Accordion expand/collapse state
-  const eslAccordionValues = ['general', 'details', 'testing', 'work-status'];
+  const eslAccordionValues = ['general', 'details', 'testing', 'work-status', 'transit'];
   const singleAccordionValues = ['general', 'product', 'logistics', 'lab-cost', 'factory', 'transit', 'parts', 'images', 'additional', 'activity-log'];
   const [openAccordions, setOpenAccordions] = useState<string[]>(['general']);
   
@@ -856,7 +856,8 @@ const FormVariationsDemo = () => {
         { value: 'general', label: 'General', icon: Info },
         { value: 'details', label: 'Details', icon: FileText },
         { value: 'testing', label: 'Testing', icon: Settings },
-        { value: 'work-status', label: 'Work Status', icon: Clock }
+        { value: 'work-status', label: 'Work Status', icon: Clock },
+        { value: 'transit', label: 'Transit', icon: Truck }
       ]
     : [
         { value: 'general', label: 'General', icon: Info },
@@ -972,11 +973,11 @@ const FormVariationsDemo = () => {
 
     // Define explicit tab order for non-ESL types
     const tabOrder = isESLType 
-      ? ['general', 'details', 'testing', 'work-status']
+      ? ['general', 'details', 'testing', 'work-status', 'transit']
       : ['general', 'cost', 'factory-config', 'transit', 'parts', 'options', 'activity-log'];
 
     const tabLabels: Record<string, string> = isESLType
-      ? { 'general': 'General', 'details': 'Details', 'testing': 'Testing', 'work-status': 'Work Status' }
+      ? { 'general': 'General', 'details': 'Details', 'testing': 'Testing', 'work-status': 'Work Status', 'transit': 'Transit' }
       : { 'general': 'General', 'cost': 'Cost', 'factory-config': 'Factory', 'transit': 'Transit', 'parts': 'Parts', 'options': 'Additional', 'activity-log': 'Comments' };
 
     const handleAutoTabScroll = () => {
@@ -7520,6 +7521,10 @@ const FormVariationsDemo = () => {
                 <TabsContent value="work-status" className="mt-0 space-y-6 animate-fade-in">
                   {renderWorkStatusSection()}
                 </TabsContent>
+
+                <TabsContent value="transit" className="mt-0 space-y-6 animate-fade-in">
+                  {renderTransitSection()}
+                </TabsContent>
               </>
             ) : (
               <>
@@ -7661,6 +7666,10 @@ const FormVariationsDemo = () => {
                     <Clock className="h-4 w-4" />
                     Work Status
                   </TabsTrigger>
+                  <TabsTrigger value="transit" className="flex-1 gap-2">
+                    <Truck className="h-4 w-4" />
+                    Transit
+                  </TabsTrigger>
                 </TabsList>
 
                 <TabsContent value="general" className="mt-0">
@@ -7677,6 +7686,10 @@ const FormVariationsDemo = () => {
 
                 <TabsContent value="work-status" className="mt-0">
                   {renderWorkStatusSection()}
+                </TabsContent>
+
+                <TabsContent value="transit" className="mt-0">
+                  {renderTransitSection()}
                 </TabsContent>
               </Tabs>
             ) : (
