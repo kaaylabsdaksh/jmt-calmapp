@@ -49,7 +49,33 @@ const FormVariationsDemo = () => {
   const [openAccordions, setOpenAccordions] = useState<string[]>(['general']);
   
   // Main section state
-  const [activeSection, setActiveSection] = useState<'work-order-items' | 'estimate' | 'qf3' | 'external-files' | 'cert-files'>('work-order-items');
+  const [activeSection, setActiveSection] = useState<'work-order-items' | 'estimate' | 'qf3' | 'external-files' | 'fail-log' | 'cert-files'>('work-order-items');
+  
+  // Fail Log state
+  const [failLogLocation, setFailLogLocation] = useState("");
+  const [failLogEmployee, setFailLogEmployee] = useState("");
+  const [failLogFailType, setFailLogFailType] = useState("");
+  const [failLogQuantity, setFailLogQuantity] = useState("1");
+  const [availableFailDescriptions, setAvailableFailDescriptions] = useState<string[]>([
+    "Incorrect PO",
+    "SO does not match",
+    "SO not attached",
+    "SR form not attached",
+    "Missing documentation",
+    "Incomplete form",
+    "Wrong serial number",
+    "Calibration overdue"
+  ]);
+  const [selectedFailDescriptions, setSelectedFailDescriptions] = useState<string[]>([]);
+  const [failLogEntries, setFailLogEntries] = useState<Array<{
+    id: string;
+    failType: string;
+    failDescription: string;
+    quantity: number;
+    employee: string;
+    location: string;
+    date: string;
+  }>>([]);
   
   // ESL Tab state - track which tab is active for footer visibility
   const [activeEslTab, setActiveEslTab] = useState<string>('general');
@@ -9291,6 +9317,17 @@ const FormVariationsDemo = () => {
               <FileText className="h-4 w-4" />
               External Files
             </button>
+            <button
+              onClick={() => setActiveSection('fail-log')}
+              className={`flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md transition-all whitespace-nowrap ${
+                activeSection === 'fail-log'
+                  ? 'bg-primary text-primary-foreground'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+              }`}
+            >
+              <AlertCircle className="h-4 w-4" />
+              Fail Log
+            </button>
             {!isESLType && (
               <button
                 onClick={() => setActiveSection('cert-files')}
@@ -9359,6 +9396,18 @@ const FormVariationsDemo = () => {
               >
                 <FileText className="h-4 w-4" />
                 External Files
+              </Button>
+              <Button
+                variant="ghost"
+                onClick={() => setActiveSection('fail-log')}
+                className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all border ${
+                  activeSection === 'fail-log'
+                    ? 'bg-primary text-primary-foreground shadow-sm border-primary'
+                    : 'bg-background text-muted-foreground hover:text-foreground border-border hover:border-border/80'
+                }`}
+              >
+                <AlertCircle className="h-4 w-4" />
+                Fail Log
               </Button>
               {!isESLType && (
                 <Button
@@ -10213,6 +10262,306 @@ const FormVariationsDemo = () => {
                   </AlertDialogFooter>
                 </AlertDialogContent>
               </AlertDialog>
+            </CardContent>
+          </Card>
+        )}
+        
+        {activeSection === 'fail-log' && (
+          <Card className="border-0 shadow-md">
+            <CardContent className="p-6">
+              {/* Header */}
+              <div className="flex items-center gap-3 pb-4 border-b border-border mb-6">
+                <div className="p-2 bg-destructive/10 rounded-lg">
+                  <AlertCircle className="h-5 w-5 text-destructive" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold">Fail Log</h3>
+                  <p className="text-sm text-muted-foreground">Track and manage employee failures and issues</p>
+                </div>
+              </div>
+
+              {/* Main Form */}
+              <div className="grid grid-cols-12 gap-6">
+                {/* Left Column - Selection Fields */}
+                <div className="col-span-12 lg:col-span-3 space-y-4">
+                  {/* Location */}
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium">Location</Label>
+                    <Select value={failLogLocation} onValueChange={setFailLogLocation}>
+                      <SelectTrigger className="h-9">
+                        <SelectValue placeholder="Select location..." />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="alexandria">Alexandria</SelectItem>
+                        <SelectItem value="baton-rouge">Baton Rouge</SelectItem>
+                        <SelectItem value="houston">Houston</SelectItem>
+                        <SelectItem value="lafayette">Lafayette</SelectItem>
+                        <SelectItem value="new-orleans">New Orleans</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  {/* Employee */}
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium">Employee</Label>
+                    <Select value={failLogEmployee} onValueChange={setFailLogEmployee}>
+                      <SelectTrigger className="h-9">
+                        <SelectValue placeholder="Select employee..." />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="amanda-phillips">Amanda R. Phillips (T)</SelectItem>
+                        <SelectItem value="john-smith">John Smith (T)</SelectItem>
+                        <SelectItem value="sarah-johnson">Sarah Johnson (S)</SelectItem>
+                        <SelectItem value="michael-brown">Michael Brown (T)</SelectItem>
+                        <SelectItem value="emily-davis">Emily Davis (L)</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  {/* Fail Type */}
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium">Fail Type</Label>
+                    <Select value={failLogFailType} onValueChange={setFailLogFailType}>
+                      <SelectTrigger className="h-9">
+                        <SelectValue placeholder="Select type..." />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="attached-form">Attached Form</SelectItem>
+                        <SelectItem value="documentation">Documentation</SelectItem>
+                        <SelectItem value="calibration">Calibration</SelectItem>
+                        <SelectItem value="process">Process</SelectItem>
+                        <SelectItem value="quality">Quality</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                {/* Middle Column - Dual List Box */}
+                <div className="col-span-12 lg:col-span-6">
+                  <Label className="text-sm font-medium mb-3 block">Fail Description</Label>
+                  <div className="flex gap-3 items-stretch">
+                    {/* Available Descriptions */}
+                    <div className="flex-1 border rounded-lg overflow-hidden bg-background">
+                      <div className="bg-muted/50 px-3 py-2 border-b">
+                        <span className="text-xs font-medium text-muted-foreground">Available</span>
+                      </div>
+                      <ScrollArea className="h-[200px]">
+                        <div className="p-2 space-y-1">
+                          {availableFailDescriptions.map((desc) => (
+                            <button
+                              key={desc}
+                              type="button"
+                              onClick={() => {
+                                setAvailableFailDescriptions(prev => prev.filter(d => d !== desc));
+                                setSelectedFailDescriptions(prev => [...prev, desc]);
+                              }}
+                              className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted transition-colors"
+                            >
+                              {desc}
+                            </button>
+                          ))}
+                          {availableFailDescriptions.length === 0 && (
+                            <p className="text-xs text-muted-foreground text-center py-4">No items available</p>
+                          )}
+                        </div>
+                      </ScrollArea>
+                    </div>
+
+                    {/* Transfer Buttons */}
+                    <div className="flex flex-col justify-center gap-2">
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        className="h-9 w-9"
+                        onClick={() => {
+                          setSelectedFailDescriptions(prev => [...prev, ...availableFailDescriptions]);
+                          setAvailableFailDescriptions([]);
+                        }}
+                        disabled={availableFailDescriptions.length === 0}
+                      >
+                        <ChevronRight className="h-4 w-4" />
+                        <ChevronRight className="h-4 w-4 -ml-2" />
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        className="h-9 w-9"
+                        onClick={() => {
+                          setAvailableFailDescriptions(prev => [...prev, ...selectedFailDescriptions]);
+                          setSelectedFailDescriptions([]);
+                        }}
+                        disabled={selectedFailDescriptions.length === 0}
+                      >
+                        <ChevronLeft className="h-4 w-4" />
+                        <ChevronLeft className="h-4 w-4 -ml-2" />
+                      </Button>
+                    </div>
+
+                    {/* Selected Descriptions */}
+                    <div className="flex-1 border rounded-lg overflow-hidden bg-background border-primary/30">
+                      <div className="bg-primary/10 px-3 py-2 border-b border-primary/20">
+                        <span className="text-xs font-medium text-primary">Fails to Add</span>
+                      </div>
+                      <ScrollArea className="h-[200px]">
+                        <div className="p-2 space-y-1">
+                          {selectedFailDescriptions.map((desc) => (
+                            <button
+                              key={desc}
+                              type="button"
+                              onClick={() => {
+                                setSelectedFailDescriptions(prev => prev.filter(d => d !== desc));
+                                setAvailableFailDescriptions(prev => [...prev, desc]);
+                              }}
+                              className="w-full text-left px-3 py-2 text-sm rounded-md bg-primary/5 hover:bg-primary/10 transition-colors border border-primary/20"
+                            >
+                              {desc}
+                            </button>
+                          ))}
+                          {selectedFailDescriptions.length === 0 && (
+                            <p className="text-xs text-muted-foreground text-center py-4">No items selected</p>
+                          )}
+                        </div>
+                      </ScrollArea>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right Column - Actions */}
+                <div className="col-span-12 lg:col-span-3 space-y-4">
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium">Quantity</Label>
+                    <Input
+                      type="number"
+                      min="1"
+                      value={failLogQuantity}
+                      onChange={(e) => setFailLogQuantity(e.target.value)}
+                      className="h-9"
+                    />
+                  </div>
+                  
+                  <div className="flex flex-col gap-2 pt-4">
+                    <Button
+                      onClick={() => {
+                        if (failLogEmployee && failLogFailType && selectedFailDescriptions.length > 0) {
+                          const newEntries = selectedFailDescriptions.map(desc => ({
+                            id: `${Date.now()}-${Math.random()}`,
+                            failType: failLogFailType,
+                            failDescription: desc,
+                            quantity: parseInt(failLogQuantity) || 1,
+                            employee: failLogEmployee,
+                            location: failLogLocation,
+                            date: new Date().toLocaleDateString()
+                          }));
+                          setFailLogEntries(prev => [...prev, ...newEntries]);
+                          // Reset selections
+                          setSelectedFailDescriptions([]);
+                          setFailLogQuantity("1");
+                          toast({ title: "Fail entries added", description: `${newEntries.length} fail log entries have been added.` });
+                        } else {
+                          toast({ title: "Missing information", description: "Please select an employee, fail type, and at least one fail description.", variant: "destructive" });
+                        }
+                      }}
+                      className="bg-primary text-primary-foreground hover:bg-primary/90"
+                      disabled={!failLogEmployee || !failLogFailType || selectedFailDescriptions.length === 0}
+                    >
+                      Add Fail to Employee
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        setSelectedFailDescriptions([]);
+                        setFailLogQuantity("1");
+                      }}
+                    >
+                      Cancel
+                    </Button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Fail Log Table */}
+              <div className="mt-8">
+                <div className="flex items-center justify-between mb-3">
+                  <h4 className="text-sm font-semibold text-foreground">Fail Log Entries</h4>
+                  {failLogEntries.length > 0 && (
+                    <span className="text-xs text-muted-foreground">{failLogEntries.length} entry(s)</span>
+                  )}
+                </div>
+                <div className="border rounded-lg overflow-hidden">
+                  <Table>
+                    <TableHeader>
+                      <TableRow className="bg-primary/5">
+                        <TableHead className="text-xs font-medium w-12"></TableHead>
+                        <TableHead className="text-xs font-medium">Fail Type</TableHead>
+                        <TableHead className="text-xs font-medium">Fail Description</TableHead>
+                        <TableHead className="text-xs font-medium w-24 text-right">Quantity</TableHead>
+                        <TableHead className="text-xs font-medium">Employee</TableHead>
+                        <TableHead className="text-xs font-medium">Date</TableHead>
+                        <TableHead className="text-xs font-medium w-16"></TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {failLogEntries.length === 0 ? (
+                        <TableRow>
+                          <TableCell colSpan={7} className="text-center py-12">
+                            <div className="flex flex-col items-center gap-2">
+                              <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center">
+                                <AlertCircle className="h-6 w-6 text-muted-foreground/50" />
+                              </div>
+                              <p className="text-sm text-muted-foreground">No data to display</p>
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      ) : (
+                        failLogEntries.map((entry, index) => (
+                          <TableRow key={entry.id} className="hover:bg-muted/50 transition-colors duration-200">
+                            <TableCell className="text-sm font-medium">{index + 1}</TableCell>
+                            <TableCell className="text-sm">
+                              <Badge variant="outline" className="font-normal">
+                                {entry.failType === 'attached-form' ? 'Attached Form' : 
+                                 entry.failType === 'documentation' ? 'Documentation' :
+                                 entry.failType === 'calibration' ? 'Calibration' :
+                                 entry.failType === 'process' ? 'Process' :
+                                 entry.failType === 'quality' ? 'Quality' : entry.failType}
+                              </Badge>
+                            </TableCell>
+                            <TableCell className="text-sm">{entry.failDescription}</TableCell>
+                            <TableCell className="text-sm text-right font-medium">{entry.quantity}</TableCell>
+                            <TableCell className="text-sm">
+                              {entry.employee === 'amanda-phillips' ? 'Amanda R. Phillips (T)' :
+                               entry.employee === 'john-smith' ? 'John Smith (T)' :
+                               entry.employee === 'sarah-johnson' ? 'Sarah Johnson (S)' :
+                               entry.employee === 'michael-brown' ? 'Michael Brown (T)' :
+                               entry.employee === 'emily-davis' ? 'Emily Davis (L)' : entry.employee}
+                            </TableCell>
+                            <TableCell className="text-sm">{entry.date}</TableCell>
+                            <TableCell>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-7 w-7 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                                onClick={() => {
+                                  setFailLogEntries(prev => prev.filter(e => e.id !== entry.id));
+                                  toast({ title: "Entry removed", description: "Fail log entry has been deleted." });
+                                }}
+                              >
+                                <X className="h-4 w-4" />
+                              </Button>
+                            </TableCell>
+                          </TableRow>
+                        ))
+                      )}
+                    </TableBody>
+                  </Table>
+                </div>
+              </div>
+
+              {/* Footer Actions */}
+              <div className="flex justify-center pt-6 border-t mt-6">
+                <Button variant="outline" onClick={() => setActiveSection('work-order-items')}>
+                  Back
+                </Button>
+              </div>
             </CardContent>
           </Card>
         )}
