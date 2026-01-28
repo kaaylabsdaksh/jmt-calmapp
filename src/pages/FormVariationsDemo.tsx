@@ -13,7 +13,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, ChevronLeft, ChevronDown, ChevronUp, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield, Wrench, Activity, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock, ExternalLink, ArrowUp, Pencil, ImageIcon, Plus, MoreHorizontal, Play, Square, RefreshCw, Minimize2, Maximize2 } from "lucide-react";
+import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, ChevronLeft, ChevronDown, ChevronUp, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield, Wrench, Activity, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock, ExternalLink, ArrowUp, Pencil, ImageIcon, Plus, Minus, MoreHorizontal, Play, Square, RefreshCw, Minimize2, Maximize2 } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
@@ -10415,17 +10415,24 @@ const FormVariationsDemo = () => {
                         <ScrollArea className="h-[200px]">
                           <div className="p-2 space-y-1">
                             {selectedFailDescriptions.map((desc) => (
-                              <button
+                              <div
                                 key={desc}
-                                type="button"
-                                onClick={() => {
-                                  setSelectedFailDescriptions(prev => prev.filter(d => d !== desc));
-                                  setAvailableFailDescriptions(prev => [...prev, desc]);
-                                }}
-                                className="w-full text-left px-3 py-2 text-sm rounded-md bg-emerald-50 hover:bg-emerald-100 transition-colors border border-emerald-200"
+                                className="group flex items-center gap-2 w-full px-3 py-2 text-sm rounded-md bg-emerald-50 hover:bg-emerald-100 transition-colors border border-emerald-200"
                               >
-                                {desc}
-                              </button>
+                                <span className="flex-1 text-left">{desc}</span>
+                                <Button
+                                  type="button"
+                                  variant="ghost"
+                                  size="icon"
+                                  className="h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity text-destructive hover:text-destructive hover:bg-destructive/10"
+                                  onClick={() => {
+                                    setSelectedFailDescriptions(prev => prev.filter(d => d !== desc));
+                                    setAvailableFailDescriptions(prev => [...prev, desc]);
+                                  }}
+                                >
+                                  <Minus className="h-4 w-4" />
+                                </Button>
+                              </div>
                             ))}
                             {selectedFailDescriptions.length === 0 && (
                               <p className="text-xs text-muted-foreground text-center py-4">No items selected</p>
