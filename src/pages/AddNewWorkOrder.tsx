@@ -26,6 +26,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
+import { Command, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem } from "@/components/ui/command";
+import { Check, ChevronsUpDown } from "lucide-react";
 
 const AddNewWorkOrder = () => {
   const navigate = useNavigate();
@@ -126,10 +128,14 @@ const AddNewWorkOrder = () => {
   // Customer Quote Selection
   const [selectedQuote, setSelectedQuote] = useState("");
   const [selectedQuoteItems, setSelectedQuoteItems] = useState<number[]>([]);
+  const [quoteSearchOpen, setQuoteSearchOpen] = useState(false);
+  const [quoteSearchTerm, setQuoteSearchTerm] = useState("");
   
   // RMA Selection
   const [selectedRMA, setSelectedRMA] = useState("");
   const [selectedRMAItems, setSelectedRMAItems] = useState<number[]>([]);
+  const [rmaSearchOpen, setRmaSearchOpen] = useState(false);
+  const [rmaSearchTerm, setRmaSearchTerm] = useState("");
   const [rmaData] = useState({
     "RMA-001": {
       type: "Repair",
@@ -1203,16 +1209,34 @@ const AddNewWorkOrder = () => {
                           {/* Dropdown */}
                           <div className="flex items-center gap-2">
                             <Label className="text-xs font-medium whitespace-nowrap">Cust Quote #:</Label>
-                            <Select value={selectedQuote} onValueChange={setSelectedQuote}>
-                              <SelectTrigger className="h-7 w-40 text-xs">
-                                <SelectValue />
-                              </SelectTrigger>
-                              <SelectContent className="bg-popover border shadow-lg z-50">
-                                <SelectItem value="none">None</SelectItem>
-                                <SelectItem value="48020">48020</SelectItem>
-                                <SelectItem value="48034">48034</SelectItem>
-                              </SelectContent>
-                            </Select>
+                            <Popover open={quoteSearchOpen} onOpenChange={setQuoteSearchOpen}>
+                              <PopoverTrigger asChild>
+                                <Button variant="outline" role="combobox" aria-expanded={quoteSearchOpen} className="h-7 w-40 text-xs justify-between font-normal">
+                                  {selectedQuote && selectedQuote !== "none" ? selectedQuote : "Select..."}
+                                  <ChevronsUpDown className="ml-1 h-3 w-3 shrink-0 opacity-50" />
+                                </Button>
+                              </PopoverTrigger>
+                              <PopoverContent className="w-40 p-0 z-50">
+                                <Command>
+                                  <CommandInput placeholder="Search quote..." className="h-8 text-xs" value={quoteSearchTerm} onValueChange={setQuoteSearchTerm} />
+                                  <CommandList>
+                                    <CommandEmpty className="py-2 text-xs text-center">No quote found.</CommandEmpty>
+                                    <CommandGroup>
+                                      <CommandItem value="none" onSelect={() => { setSelectedQuote("none"); setQuoteSearchOpen(false); setQuoteSearchTerm(""); }} className="text-xs">
+                                        <Check className={cn("mr-1 h-3 w-3", selectedQuote === "none" ? "opacity-100" : "opacity-0")} />
+                                        None
+                                      </CommandItem>
+                                      {["48020", "48034"].map((q) => (
+                                        <CommandItem key={q} value={q} onSelect={() => { setSelectedQuote(q); setQuoteSearchOpen(false); setQuoteSearchTerm(""); }} className="text-xs">
+                                          <Check className={cn("mr-1 h-3 w-3", selectedQuote === q ? "opacity-100" : "opacity-0")} />
+                                          {q}
+                                        </CommandItem>
+                                      ))}
+                                    </CommandGroup>
+                                  </CommandList>
+                                </Command>
+                              </PopoverContent>
+                            </Popover>
                           </div>
 
                           {/* Tables Side by Side */}
@@ -1721,17 +1745,34 @@ const AddNewWorkOrder = () => {
                         {/* RMA Dropdown */}
                         <div className="flex items-center gap-2">
                           <Label className="text-sm font-medium whitespace-nowrap">RMA #:</Label>
-                          <Select value={selectedRMA} onValueChange={setSelectedRMA}>
-                            <SelectTrigger className="h-7 w-40 text-xs">
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent className="bg-popover border shadow-lg z-50">
-                              <SelectItem value="none">None</SelectItem>
-                              {Object.keys(rmaData).map((rmaId) => (
-                                <SelectItem key={rmaId} value={rmaId}>{rmaId}</SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
+                          <Popover open={rmaSearchOpen} onOpenChange={setRmaSearchOpen}>
+                            <PopoverTrigger asChild>
+                              <Button variant="outline" role="combobox" aria-expanded={rmaSearchOpen} className="h-7 w-40 text-xs justify-between font-normal">
+                                {selectedRMA && selectedRMA !== "none" ? selectedRMA : "Select..."}
+                                <ChevronsUpDown className="ml-1 h-3 w-3 shrink-0 opacity-50" />
+                              </Button>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-40 p-0 z-50">
+                              <Command>
+                                <CommandInput placeholder="Search RMA..." className="h-8 text-xs" value={rmaSearchTerm} onValueChange={setRmaSearchTerm} />
+                                <CommandList>
+                                  <CommandEmpty className="py-2 text-xs text-center">No RMA found.</CommandEmpty>
+                                  <CommandGroup>
+                                    <CommandItem value="none" onSelect={() => { setSelectedRMA("none"); setRmaSearchOpen(false); setRmaSearchTerm(""); }} className="text-xs">
+                                      <Check className={cn("mr-1 h-3 w-3", selectedRMA === "none" ? "opacity-100" : "opacity-0")} />
+                                      None
+                                    </CommandItem>
+                                    {Object.keys(rmaData).map((rmaId) => (
+                                      <CommandItem key={rmaId} value={rmaId} onSelect={() => { setSelectedRMA(rmaId); setRmaSearchOpen(false); setRmaSearchTerm(""); }} className="text-xs">
+                                        <Check className={cn("mr-1 h-3 w-3", selectedRMA === rmaId ? "opacity-100" : "opacity-0")} />
+                                        {rmaId}
+                                      </CommandItem>
+                                    ))}
+                                  </CommandGroup>
+                                </CommandList>
+                              </Command>
+                            </PopoverContent>
+                          </Popover>
                         </div>
 
                         {/* RMA List Table */}
