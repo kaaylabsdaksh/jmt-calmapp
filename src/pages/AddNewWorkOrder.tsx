@@ -2072,205 +2072,45 @@ const AddNewWorkOrder = () => {
                           </div>
                         </div>
 
-                        {/* Include Special Instructions */}
-                        <div className="flex items-start gap-2">
-                          <Checkbox id="rma-special-instructions" />
-                          <div className="grid gap-1.5 leading-none">
-                            <label
-                              htmlFor="rma-special-instructions"
-                              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                            >
-                              Include Special Instructions
-                            </label>
-                            <p className="text-sm text-muted-foreground">
-                              Return Address: 2020 Alberta Way, Baton Rouge, LA 70822
-                            </p>
-                          </div>
-                        </div>
-
                         {/* Items Table */}
                         <div className="space-y-3">
                           <div className="flex justify-between items-center">
-                            <a 
-                              href="#" 
-                              className="text-sm text-foreground font-medium hover:text-primary hover:underline"
-                              onClick={(e) => {
-                                e.preventDefault();
-                                if (selectedRMAItems.length === rmaData[selectedRMA].items.length) {
-                                  setSelectedRMAItems([]);
-                                } else {
-                                  setSelectedRMAItems(rmaData[selectedRMA].items.map((_, idx) => idx));
-                                }
-                              }}
-                            >
-                              {selectedRMAItems.length === rmaData[selectedRMA].items.length ? "Deselect All" : "Select All"}
-                            </a>
+                            <a href="#" className="text-xs font-semibold text-primary hover:underline">Items</a>
                           </div>
-                          
-                          <div className="border rounded-lg overflow-x-auto">
-                            <table className="w-full text-sm">
-                              <thead className="bg-muted">
+                          <div className="border rounded-lg overflow-hidden">
+                            <table className="w-full text-xs">
+                              <thead className="bg-muted/50">
                                 <tr>
-                                  <th className="text-left p-2 font-medium">Rcv</th>
-                                  <th className="text-left p-2 font-medium">Manufacturer</th>
-                                  <th className="text-left p-2 font-medium">Model</th>
-                                  <th className="text-left p-2 font-medium">Item Description</th>
-                                  <th className="text-left p-2 font-medium">Qty</th>
-                                  <th className="text-left p-2 font-medium">Prev WO #</th>
-                                  <th className="text-left p-2 font-medium">WO Item</th>
-                                  <th className="text-left p-2 font-medium">Serial Number</th>
-                                  <th className="text-left p-2 font-medium">Cust ID</th>
-                                  <th className="text-left p-2 font-medium">Cust Serial</th>
-                                  <th className="text-left p-2 font-medium">Priority</th>
-                                  <th className="text-left p-2 font-medium">Repair</th>
-                                  <th className="text-left p-2 font-medium">17025</th>
+                                  <th className="p-2 w-8"><Checkbox /></th>
+                                  <th className="text-left p-2 font-medium text-foreground">Item</th>
+                                  <th className="text-left p-2 font-medium text-foreground">Description</th>
+                                  <th className="text-left p-2 font-medium text-foreground">Qty</th>
+                                  <th className="text-left p-2 font-medium text-foreground">Serial #</th>
                                 </tr>
                               </thead>
                               <tbody className="bg-card">
-                                {rmaData[selectedRMA].items.map((item, index) => {
-                                  const itemId = `rma-${selectedRMA}-${index}`;
-                                  const isItemAdded = receivingItems.some(ri => ri.id === itemId);
-                                  
-                                  return (
-                                    <tr 
-                                      key={index} 
-                                      className={`border-t ${item.highlighted ? 'bg-muted/30' : ''} ${isItemAdded ? 'opacity-50' : ''}`}
-                                    >
-                                      <td className="p-2">
-                                        <Checkbox 
-                                          checked={selectedRMAItems.includes(index)}
-                                          disabled={isItemAdded}
-                                          onCheckedChange={(checked) => {
-                                            if (checked) {
-                                              setSelectedRMAItems([...selectedRMAItems, index]);
-                                            } else {
-                                              setSelectedRMAItems(selectedRMAItems.filter(i => i !== index));
-                                            }
-                                          }}
-                                        />
-                                      </td>
-                                      <td className="p-2 text-foreground">{item.manufacturer}</td>
-                                      <td className="p-2 text-foreground">{item.model}</td>
-                                      <td className="p-2 font-medium text-foreground">{item.description}</td>
-                                      <td className="p-2">
-                                        <Input type="number" defaultValue={item.qty} className="h-8 w-16" />
-                                      </td>
-                                      <td className="p-2">
-                                        <Input defaultValue={item.prevWO} className="h-8 w-20" />
-                                      </td>
-                                      <td className="p-2">
-                                        {item.woItem ? (
-                                          <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">{item.woItem}</a>
-                                        ) : null}
-                                      </td>
-                                      <td className="p-2">
-                                        <Input placeholder={item.serialNumber || "N/A"} defaultValue={item.serialNumber} className="h-8 w-24" />
-                                      </td>
-                                      <td className="p-2">
-                                        <Input placeholder="" defaultValue={item.custId} className="h-8 w-24" />
-                                      </td>
-                                      <td className="p-2">
-                                        <Input placeholder={item.custSerial || "N/A"} defaultValue={item.custSerial} className="h-8 w-24" />
-                                      </td>
-                                      <td className="p-2">
-                                        <Select defaultValue={item.priority}>
-                                          <SelectTrigger className="h-8 w-24">
-                                            <SelectValue />
-                                          </SelectTrigger>
-                                          <SelectContent className="bg-popover border shadow-lg z-50">
-                                            <SelectItem value="normal">Normal</SelectItem>
-                                            <SelectItem value="expedite">Expedite</SelectItem>
-                                            <SelectItem value="rush">Rush</SelectItem>
-                                          </SelectContent>
-                                        </Select>
-                                      </td>
-                                      <td className="p-2">
-                                        <Checkbox defaultChecked={item.repair} disabled={isItemAdded} />
-                                      </td>
-                                      <td className="p-2">
-                                        <Checkbox defaultChecked={item.iso17025} disabled={isItemAdded} />
-                                      </td>
-                                    </tr>
-                                  );
-                                })}
+                                {rmaData[selectedRMA]?.items?.map((item: any, index: number) => (
+                                  <tr key={index} className="border-t">
+                                    <td className="p-2"><Checkbox checked={selectedRMAItems.includes(index)} onCheckedChange={(checked) => { if (checked) { setSelectedRMAItems(prev => [...prev, index]); } else { setSelectedRMAItems(prev => prev.filter(i => i !== index)); } }} /></td>
+                                    <td className="p-2 text-foreground">{item.item}</td>
+                                    <td className="p-2 text-foreground">{item.description}</td>
+                                    <td className="p-2"><Input value={item.qty} className="h-7 w-16 text-xs" readOnly /></td>
+                                    <td className="p-2"><Input value={item.serial} className="h-7 text-xs" readOnly /></td>
+                                  </tr>
+                                ))}
                               </tbody>
                             </table>
                           </div>
-
-                          {/* Pagination and Action Button */}
-                          <div className="flex flex-col sm:flex-row justify-between items-center gap-3">
-                            <div className="flex items-center gap-2 text-sm text-foreground">
-                              <span>Page 1 of 1 ({rmaData[selectedRMA].items.length} items)</span>
-                              <div className="flex items-center gap-1">
-                                <Button variant="outline" size="sm" className="h-7 w-7 p-0">
-                                  <span>&lt;</span>
-                                </Button>
-                                <Button variant="outline" size="sm" className="h-7 w-7 p-0 bg-primary text-primary-foreground">
-                                  1
-                                </Button>
-                                <Button variant="outline" size="sm" className="h-7 w-7 p-0">
-                                  <span>&gt;</span>
-                                </Button>
-                              </div>
-                            </div>
-                            
-                            <div className="flex items-center gap-2">
-                              <Label className="text-sm whitespace-nowrap">Page size:</Label>
-                              <Select defaultValue="10">
-                                <SelectTrigger className="h-8 w-16">
-                                  <SelectValue />
-                                </SelectTrigger>
-                                <SelectContent className="bg-background border shadow-lg z-50">
-                                  <SelectItem value="5">5</SelectItem>
-                                  <SelectItem value="10">10</SelectItem>
-                                  <SelectItem value="20">20</SelectItem>
-                                  <SelectItem value="50">50</SelectItem>
-                                </SelectContent>
-                              </Select>
-                            </div>
-                          </div>
-
-                          <div className="flex justify-center">
-                            <Button 
-                              className="bg-primary hover:bg-primary/90"
-                              disabled={selectedRMAItems.length === 0}
-                              onClick={() => {
-                                const selectedItems = selectedRMAItems.map(index => {
-                                  const item = rmaData[selectedRMA].items[index];
-                                  return {
-                                    id: `rma-${selectedRMA}-${index}`,
-                                    itemNumber: (receivingItems.length + index + 1).toString().padStart(3, '0'),
-                                    calFreq: rmaData[selectedRMA].received.calFreq,
-                                    actionCode: "rc",
-                                    priority: item.priority,
-                                    manufacturer: item.manufacturer,
-                                    model: item.model,
-                                    description: item.description,
-                                    mfgSerial: item.serialNumber,
-                                    custId: item.custId,
-                                    custSN: item.custSerial,
-                                    assetNumber: "",
-                                    iso17025: item.iso17025 ? "yes" : "no",
-                                    estimate: "",
-                                    newEquip: "no",
-                                    needByDate: rmaData[selectedRMA].received.needByDate,
-                                    ccCost: "",
-                                    tf: "no",
-                                    capableLocations: ""
-                                  };
-                                });
-                                
-                                setReceivingItems([...receivingItems, ...selectedItems]);
-                                setSelectedRMAItems([]);
-                                
-                                toast({
-                                  variant: "success",
-                                  title: "RMA Items Added",
-                                  description: `${selectedItems.length} RMA item(s) added to work order`,
-                                  duration: 2000,
-                                });
-                              }}
-                            >
+                          <div className="flex justify-end">
+                            <Button size="sm" className="h-8 text-xs" onClick={() => {
+                              const selectedItems = selectedRMAItems.map(index => rmaData[selectedRMA].items[index]);
+                              toast({
+                                title: "RMA Items Added",
+                                description: `${selectedItems.length} item(s) have been added to the work order.`,
+                                duration: 2000,
+                              });
+                              setSelectedRMAItems([]);
+                            }}>
                               Receive and Add RMA Items {selectedRMAItems.length > 0 && `(${selectedRMAItems.length})`}
                             </Button>
                           </div>
@@ -2288,7 +2128,6 @@ const AddNewWorkOrder = () => {
               <Card>
                 <CardContent className="p-4 sm:p-6">
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-                    {/* Left Column */}
                     <div className="space-y-2 text-sm">
                       <div><span className="font-medium">Status:</span> <span className="text-green-600 font-medium">ACTIVE</span></div>
                       <div><span className="font-medium">Customer Name:</span> Entergy Inventory</div>
@@ -2296,10 +2135,7 @@ const AddNewWorkOrder = () => {
                       <div><span className="font-medium">City/State/Zip:</span> Baton Rouge, LA 70806</div>
                       <div><span className="font-medium">Main Contact:</span> USE TAG/PAPERWORK</div>
                       <div><span className="font-medium">Remarks:</span> ESL (Y) CONTRACT site id must match account</div>
-                      <div><span className="font-medium">Comments:</span> -</div>
                     </div>
-
-                    {/* Right Column */}
                     <div className="space-y-2 text-sm">
                       <div><span className="font-medium">Acct #:</span> 15000.00</div>
                       <div><span className="font-medium">SR Number:</span> SR2244</div>
@@ -2307,66 +2143,39 @@ const AddNewWorkOrder = () => {
                       <div><span className="font-medium">Salesperson Code:</span> ZZEN - House - Entergy</div>
                       <div><span className="font-medium">Terms:</span> Net 30</div>
                       <div><span className="font-medium">P.O. Number:</span> CONTRACT# 10629042</div>
-                      <div><span className="font-medium">Biller Code:</span> 18</div>
-                      <div><span className="font-medium">Industry Code:</span> DM02 - Power Co's - Utility Distribution</div>
-                      <div><span className="font-medium">Contract Pricing:</span> Yes</div>
                     </div>
                   </div>
 
-                  {/* Customer Contacts Table */}
                   <div className="mt-6 sm:mt-8">
                     <h3 className="text-base sm:text-lg font-semibold text-foreground mb-3 sm:mb-4">Customer Contacts</h3>
-                    <div className="space-y-3 sm:space-y-0">
-                      {/* Mobile Card View */}
-                      <div className="sm:hidden space-y-3">
-                        <div className="border rounded-lg p-3 bg-card">
-                          <div className="font-medium text-sm mb-2">Netasha Gray</div>
-                          <div className="space-y-1 text-xs text-muted-foreground">
-                            <div>netasha.gray@entergy.com</div>
-                            <div>(225) 382-4878</div>
-                            <div>Senior Buyer • Primary</div>
-                          </div>
-                        </div>
-                        <div className="border rounded-lg p-3 bg-card">
-                          <div className="font-medium text-sm mb-2">Barry White</div>
-                          <div className="space-y-1 text-xs text-muted-foreground">
-                            <div>barry.white@entergy.com</div>
-                            <div>(225) 382-4879</div>
-                            <div>Procurement Manager • Secondary</div>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      {/* Desktop Table View */}
-                      <div className="hidden sm:block border rounded-lg overflow-hidden">
-                        <table className="w-full text-sm">
-                          <thead className="bg-muted">
-                            <tr>
-                              <th className="text-left p-3 font-medium">Name</th>
-                              <th className="text-left p-3 font-medium">Email</th>
-                              <th className="text-left p-3 font-medium">Phone</th>
-                              <th className="text-left p-3 font-medium">Title</th>
-                              <th className="text-left p-3 font-medium">Type</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr className="border-t">
-                              <td className="p-3">Netasha Gray</td>
-                              <td className="p-3">netasha.gray@entergy.com</td>
-                              <td className="p-3">(225) 382-4878</td>
-                              <td className="p-3">Senior Buyer</td>
-                              <td className="p-3">Primary</td>
-                            </tr>
-                            <tr className="border-t">
-                              <td className="p-3">Barry White</td>
-                              <td className="p-3">barry.white@entergy.com</td>
-                              <td className="p-3">(225) 382-4879</td>
-                              <td className="p-3">Procurement Manager</td>
-                              <td className="p-3">Secondary</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
+                    <div className="hidden sm:block border rounded-lg overflow-hidden">
+                      <table className="w-full text-sm">
+                        <thead className="bg-muted">
+                          <tr>
+                            <th className="text-left p-3 font-medium">Name</th>
+                            <th className="text-left p-3 font-medium">Email</th>
+                            <th className="text-left p-3 font-medium">Phone</th>
+                            <th className="text-left p-3 font-medium">Title</th>
+                            <th className="text-left p-3 font-medium">Type</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr className="border-t">
+                            <td className="p-3">Netasha Gray</td>
+                            <td className="p-3">netasha.gray@entergy.com</td>
+                            <td className="p-3">(225) 382-4878</td>
+                            <td className="p-3">Senior Buyer</td>
+                            <td className="p-3">Primary</td>
+                          </tr>
+                          <tr className="border-t">
+                            <td className="p-3">Barry White</td>
+                            <td className="p-3">barry.white@entergy.com</td>
+                            <td className="p-3">(225) 382-4879</td>
+                            <td className="p-3">Procurement Manager</td>
+                            <td className="p-3">Secondary</td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
                   </div>
                 </CardContent>
@@ -2387,9 +2196,7 @@ const AddNewWorkOrder = () => {
                         Add Contact
                       </Button>
                     </div>
-                    
                     <div className="space-y-4">
-                      {/* Required Contact */}
                       <div className="space-y-2">
                         <Select defaultValue="barry-white">
                           <SelectTrigger className="w-64">
@@ -2402,8 +2209,6 @@ const AddNewWorkOrder = () => {
                         </Select>
                         <p className="text-sm text-muted-foreground">(required)</p>
                       </div>
-
-                      {/* Additional Contact 1 */}
                       <div>
                         <Select>
                           <SelectTrigger className="w-64">
@@ -2415,8 +2220,6 @@ const AddNewWorkOrder = () => {
                           </SelectContent>
                         </Select>
                       </div>
-
-                      {/* Additional Contact 2 */}
                       <div>
                         <Select>
                           <SelectTrigger className="w-64">
@@ -2428,8 +2231,6 @@ const AddNewWorkOrder = () => {
                           </SelectContent>
                         </Select>
                       </div>
-
-                      {/* Additional Contact 3 */}
                       <div>
                         <Select>
                           <SelectTrigger className="w-64">
@@ -2449,212 +2250,8 @@ const AddNewWorkOrder = () => {
 
             <TabsContent value="items">
               <Card>
-                <CardHeader className="pb-3 sm:pb-4">
-                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
-                    <h2 className="text-lg sm:text-xl font-semibold text-foreground">Work Order Items</h2>
-                    <div className="flex items-center gap-2 w-full sm:w-auto flex-wrap">
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button variant="outline" className="flex items-center gap-2 bg-background text-sm">
-                            {viewMode === 'receiving' ? 'Receiving View' : 'Default View'}
-                            <ChevronDown className="w-4 h-4" />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent className="bg-background border shadow-lg z-50" align="end">
-                          <DropdownMenuItem 
-                            onClick={() => setViewMode('cards')}
-                            className={`cursor-pointer ${viewMode === 'cards' || viewMode === 'table' ? 'bg-muted' : ''}`}
-                          >
-                            Default View
-                          </DropdownMenuItem>
-                          <DropdownMenuItem 
-                            onClick={() => setViewMode('receiving')}
-                            className={`cursor-pointer ${viewMode === 'receiving' ? 'bg-muted' : ''}`}
-                          >
-                            <Package className="w-4 h-4 mr-2" />
-                            Receiving View
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-
-                      <TooltipProvider>
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => {
-                                localStorage.setItem('workOrderViewMode', viewMode);
-                                toast({
-                                  title: "View Preference Saved",
-                                  description: `${viewMode === 'receiving' ? 'Receiving View' : viewMode === 'table' ? 'Table View' : 'Cards View'} will be your default view.`,
-                                  duration: 1500,
-                                });
-                              }}
-                              className="h-8 w-8 p-0"
-                            >
-                              <BookmarkCheck className="w-4 h-4" />
-                            </Button>
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p>Set as default view</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
-
-                      {(viewMode === 'table' || viewMode === 'cards') && (
-                        <div className="flex items-center gap-1 bg-muted rounded-lg p-1">
-                          <Button
-                            variant={viewMode === 'table' ? 'default' : 'ghost'}
-                            size="sm"
-                            onClick={() => setViewMode('table')}
-                            className="flex items-center gap-1.5 h-8 px-3"
-                          >
-                            <Table className="w-4 h-4" />
-                            <span className="hidden sm:inline">Table</span>
-                          </Button>
-                          <Button
-                            variant={viewMode === 'cards' ? 'default' : 'ghost'}
-                            size="sm"
-                            onClick={() => setViewMode('cards')}
-                            className="flex items-center gap-1.5 h-8 px-3"
-                          >
-                            <LayoutGrid className="w-4 h-4" />
-                            <span className="hidden sm:inline">Grid</span>
-                          </Button>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent className="p-4 sm:p-6 pt-0">
+                <CardContent className="p-4 sm:p-6">
                   <div className="space-y-4 sm:space-y-6">
-                     {/* Action Buttons */}
-                     {viewMode === 'receiving' ? (
-                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
-                        <Button className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm">
-                          <QrCode className="w-3 h-3 sm:w-4 sm:h-4" />
-                          <span className="hidden sm:inline">Print QR Sheet</span>
-                          <span className="sm:hidden">QR Sheet</span>
-                        </Button>
-                        <Button 
-                          onClick={() => {
-                            const newState = !isCreateUnusedItemsExpanded;
-                            setIsCreateUnusedItemsExpanded(newState);
-                            if (newState) {
-                              setIsCopyFromWOExpanded(false);
-                              setIsSpecialActionExpanded(false);
-                              setTimeout(() => document.getElementById('create-unused-items-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
-                            }
-                          }}
-                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
-                        >
-                          <PackagePlus className="w-3 h-3 sm:w-4 sm:h-4" />
-                          <span className="hidden sm:inline">Create Unused Items</span>
-                          <span className="sm:hidden">Unused Items</span>
-                        </Button>
-                        <Button 
-                          onClick={() => {
-                            const newState = !isCopyFromWOExpanded;
-                            setIsCopyFromWOExpanded(newState);
-                            if (newState) {
-                              setIsSpecialActionExpanded(false);
-                              setIsCreateUnusedItemsExpanded(false);
-                              setTimeout(() => document.getElementById('copy-from-other-wo')?.scrollIntoView({ behavior: 'smooth' }), 100);
-                            }
-                          }}
-                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
-                        >
-                          <Copy className="w-3 h-3 sm:w-4 sm:h-4" />
-                          <span className="hidden sm:inline">Copy From Other Work Order</span>
-                          <span className="sm:hidden">Copy WO</span>
-                        </Button>
-                        <Button 
-                          onClick={() => {
-                            const newState = !isSpecialActionExpanded;
-                            setIsSpecialActionExpanded(newState);
-                            if (newState) {
-                              setIsCopyFromWOExpanded(false);
-                              setIsCreateUnusedItemsExpanded(false);
-                              setTimeout(() => document.getElementById('special-action-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
-                            }
-                          }}
-                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
-                        >
-                          <Wand2 className="w-3 h-3 sm:w-4 sm:h-4" />
-                          <span className="hidden sm:inline">Special Action</span>
-                          <span className="sm:hidden">Action</span>
-                        </Button>
-                      </div>
-                     ) : (
-                       <div className="flex gap-2 sm:gap-3 flex-nowrap overflow-x-auto">
-                         <Button
-                           onClick={() => navigate("/form-variations")}
-                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm flex-1 min-w-fit"
-                         >
-                          <Plus className="w-3 h-3 sm:w-4 sm:h-4" />
-                          <span>Add New Item</span>
-                        </Button>
-                        <Button 
-                          onClick={() => setIsRFIDDialogOpen(true)}
-                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm flex-1 min-w-fit"
-                        >
-                          <PlusCircle className="w-3 h-3 sm:w-4 sm:h-4" />
-                          <span>Add New Item w/RFID</span>
-                        </Button>
-                        <Button className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm flex-1 min-w-fit">
-                          <QrCode className="w-3 h-3 sm:w-4 sm:h-4" />
-                          <span>Print QR Sheet</span>
-                        </Button>
-                        <Button
-                          onClick={() => {
-                            const newState = !isCreateUnusedItemsExpanded;
-                            setIsCreateUnusedItemsExpanded(newState);
-                            if (newState) {
-                              setIsCopyFromWOExpanded(false);
-                              setIsSpecialActionExpanded(false);
-                              setTimeout(() => document.getElementById('create-unused-items-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
-                            }
-                          }}
-                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm flex-1 min-w-fit"
-                        >
-                          <PackagePlus className="w-3 h-3 sm:w-4 sm:h-4" />
-                          <span>Create Unused Items</span>
-                        </Button>
-                        <Button 
-                          onClick={() => {
-                            const newState = !isCopyFromWOExpanded;
-                            setIsCopyFromWOExpanded(newState);
-                            if (newState) {
-                              setIsSpecialActionExpanded(false);
-                              setIsCreateUnusedItemsExpanded(false);
-                              setTimeout(() => document.getElementById('copy-from-other-wo')?.scrollIntoView({ behavior: 'smooth' }), 100);
-                            }
-                          }}
-                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm flex-1 min-w-fit"
-                        >
-                          <Copy className="w-3 h-3 sm:w-4 sm:h-4" />
-                          <span>Copy From Other Work Order</span>
-                        </Button>
-                        <Button 
-                          onClick={() => {
-                            const newState = !isSpecialActionExpanded;
-                            setIsSpecialActionExpanded(newState);
-                            if (newState) {
-                              setIsCopyFromWOExpanded(false);
-                              setIsCreateUnusedItemsExpanded(false);
-                              setTimeout(() => document.getElementById('special-action-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
-                            }
-                          }}
-                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm flex-1 min-w-fit"
-                        >
-                          <Wand2 className="w-3 h-3 sm:w-4 sm:h-4" />
-                          <span>Special Action</span>
-                        </Button>
-                      </div>
-                    )}
-
-
                     {/* Copy From Other WO Section */}
                     {isCopyFromWOExpanded && (
                       <div id="copy-from-other-wo" className="bg-muted/30 p-4 rounded-lg border-2 border-primary/20">
