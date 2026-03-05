@@ -1939,7 +1939,7 @@ const AddNewWorkOrder = () => {
                                   
                                   return (
                                     <tr key={index} className={`border-t ${isItemAdded ? 'opacity-50' : ''}`}>
-                                      <td className="p-2">
+                                      <td className="px-1.5 py-1">
                                         <Checkbox 
                                           checked={selectedRMAItems.includes(index)}
                                           disabled={isItemAdded}
@@ -1952,25 +1952,25 @@ const AddNewWorkOrder = () => {
                                           }}
                                         />
                                       </td>
-                                      <td className="p-2 text-foreground">{item.manufacturer}</td>
-                                      <td className="p-2 text-foreground">{item.model}</td>
-                                      <td className="p-2 font-medium text-foreground">{item.description}</td>
-                                      <td className="p-2">
-                                        <Input type="number" defaultValue={item.qty} className="h-8 w-16" />
+                                      <td className="px-1.5 py-1 text-foreground">{item.manufacturer}</td>
+                                      <td className="px-1.5 py-1 text-foreground">{item.model}</td>
+                                      <td className="px-1.5 py-1 font-medium text-foreground">{item.description}</td>
+                                      <td className="px-1.5 py-1">
+                                        <Input type="number" defaultValue={item.qty} className="h-6 w-14 text-[11px]" />
                                       </td>
-                                      <td className="p-2">
-                                        <Input defaultValue={item.calFreq} className="h-8 w-16" />
+                                      <td className="px-1.5 py-1">
+                                        <Input defaultValue={item.calFreq} className="h-6 w-14 text-[11px]" />
                                       </td>
-                                      <td className="p-2">
+                                      <td className="px-1.5 py-1">
                                         {item.woItem ? (
                                           <a href="#" className="text-foreground hover:underline font-medium">{item.woItem}</a>
                                         ) : null}
                                       </td>
-                                      <td className="p-2 text-foreground">{item.serialNumber}</td>
-                                      <td className="p-2">
-                                        <Input defaultValue={item.custId} className="h-8 w-28" />
+                                      <td className="px-1.5 py-1 text-foreground">{item.serialNumber}</td>
+                                      <td className="px-1.5 py-1">
+                                        <Input defaultValue={item.custId} className="h-6 w-20 text-[11px]" />
                                       </td>
-                                      <td className="p-2 text-foreground">{item.custSerial}</td>
+                                      <td className="px-1.5 py-1 text-foreground">{item.custSerial}</td>
                                       <td className="p-2">
                                         <Select defaultValue={item.priority}>
                                           <SelectTrigger className="h-8 w-24">
