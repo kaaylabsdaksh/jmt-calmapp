@@ -1870,9 +1870,9 @@ const AddNewWorkOrder = () => {
                             </div>
 
                             {/* Override Fields */}
-                            <div className="space-y-1.5">
-                              <h4 className="text-xs font-medium text-muted-foreground border-b pb-0.5">Override Fields</h4>
-                              <div className="space-y-1.5">
+                            <div className="space-y-1">
+                              <h4 className="text-[11px] font-medium text-muted-foreground border-b pb-0.5">Override Fields</h4>
+                              <div className="space-y-1">
                                 <div className="flex items-center gap-1.5">
                                   <Label className="text-xs whitespace-nowrap min-w-[60px]">Priority:</Label>
                                   <Select value={rmaData[selectedRMA as keyof typeof rmaData].received.priority}>
