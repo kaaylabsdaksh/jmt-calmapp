@@ -2990,14 +2990,15 @@ const AddNewWorkOrder = () => {
                                 </Popover>
                               </div>
 
-                              <div className="space-y-1">
-                                <Label htmlFor="qa-soNumber" className="text-xs font-medium">SO Number</Label>
+                              <div className="space-y-0.5">
+                                <Label htmlFor="qa-soNumber" className="text-[11px] font-medium">SO Number</Label>
                                 <Input 
                                   id="qa-soNumber"
                                   value={quickAddData.soNumber}
                                   onChange={(e) => setQuickAddData({...quickAddData, soNumber: e.target.value})}
                                   placeholder="Enter value"
                                   disabled={areOtherFieldsDisabled()}
+                                  className="h-7 text-xs"
                                 />
                               </div>
                             </div>
