@@ -2812,8 +2812,8 @@ const AddNewWorkOrder = () => {
                               )}
 
                               {quickAddData.arrivalType === "shipped" && (
-                                <div className="space-y-1">
-                                  <Label htmlFor="qa-shipType" className="text-xs font-medium">
+                                <div className="space-y-0.5">
+                                  <Label htmlFor="qa-shipType" className="text-[11px] font-medium">
                                     Ship Type <span className="text-destructive">*</span>
                                   </Label>
                                   <Select 
