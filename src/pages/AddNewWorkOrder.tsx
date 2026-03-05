@@ -1745,17 +1745,34 @@ const AddNewWorkOrder = () => {
                         {/* RMA Dropdown */}
                         <div className="flex items-center gap-2">
                           <Label className="text-sm font-medium whitespace-nowrap">RMA #:</Label>
-                          <Select value={selectedRMA} onValueChange={setSelectedRMA}>
-                            <SelectTrigger className="h-7 w-40 text-xs">
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent className="bg-popover border shadow-lg z-50">
-                              <SelectItem value="none">None</SelectItem>
-                              {Object.keys(rmaData).map((rmaId) => (
-                                <SelectItem key={rmaId} value={rmaId}>{rmaId}</SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
+                          <Popover open={rmaSearchOpen} onOpenChange={setRmaSearchOpen}>
+                            <PopoverTrigger asChild>
+                              <Button variant="outline" role="combobox" aria-expanded={rmaSearchOpen} className="h-7 w-40 text-xs justify-between font-normal">
+                                {selectedRMA && selectedRMA !== "none" ? selectedRMA : "Select..."}
+                                <ChevronsUpDown className="ml-1 h-3 w-3 shrink-0 opacity-50" />
+                              </Button>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-40 p-0 z-50">
+                              <Command>
+                                <CommandInput placeholder="Search RMA..." className="h-8 text-xs" value={rmaSearchTerm} onValueChange={setRmaSearchTerm} />
+                                <CommandList>
+                                  <CommandEmpty className="py-2 text-xs text-center">No RMA found.</CommandEmpty>
+                                  <CommandGroup>
+                                    <CommandItem value="none" onSelect={() => { setSelectedRMA("none"); setRmaSearchOpen(false); setRmaSearchTerm(""); }} className="text-xs">
+                                      <Check className={cn("mr-1 h-3 w-3", selectedRMA === "none" ? "opacity-100" : "opacity-0")} />
+                                      None
+                                    </CommandItem>
+                                    {Object.keys(rmaData).map((rmaId) => (
+                                      <CommandItem key={rmaId} value={rmaId} onSelect={() => { setSelectedRMA(rmaId); setRmaSearchOpen(false); setRmaSearchTerm(""); }} className="text-xs">
+                                        <Check className={cn("mr-1 h-3 w-3", selectedRMA === rmaId ? "opacity-100" : "opacity-0")} />
+                                        {rmaId}
+                                      </CommandItem>
+                                    ))}
+                                  </CommandGroup>
+                                </CommandList>
+                              </Command>
+                            </PopoverContent>
+                          </Popover>
                         </div>
 
                         {/* RMA List Table */}
