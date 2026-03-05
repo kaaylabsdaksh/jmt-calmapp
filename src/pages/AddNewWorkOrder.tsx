@@ -2845,6 +2845,7 @@ const AddNewWorkOrder = () => {
                                     onChange={(e) => setQuickAddData({...quickAddData, customerName: e.target.value})}
                                     placeholder="Enter name"
                                     disabled={areOtherFieldsDisabled()}
+                                    className="h-7 text-xs"
                                   />
                                 </div>
                               )}
