@@ -128,6 +128,85 @@ const EditBatchWorkOrder = () => {
   const [selectedQuote, setSelectedQuote] = useState("48020");
   const [selectedQuoteItems, setSelectedQuoteItems] = useState<number[]>([]);
   
+  // RMA Selection
+  const [selectedRMA, setSelectedRMA] = useState("RMA-001");
+  const [selectedRMAItems, setSelectedRMAItems] = useState<number[]>([]);
+  
+  // Mock data for RMA
+  const [rmaData, setRmaData] = useState({
+    "RMA-001": {
+      received: {
+        calFreq: "12",
+        location: "baton-rouge",
+        division: "lab",
+        poNumber: "RMA-PO-001",
+        arrivalDate: "2024-02-15",
+        arrivalType: "shipped",
+        priority: "expedite",
+        needByDate: "2024-03-01"
+      },
+      items: [
+        {
+          manufacturer: "Fluke",
+          model: "87V",
+          description: "DIGITAL MULTIMETER",
+          qty: "1",
+          prevWO: "801234",
+          woItem: "801234-001",
+          serialNumber: "FL12345",
+          custId: "CUST-RMA-001",
+          custSerial: "CS-001",
+          priority: "expedite",
+          repair: true,
+          iso17025: false
+        },
+        {
+          manufacturer: "Keysight",
+          model: "34465A",
+          description: "BENCH MULTIMETER 6.5 DIGIT",
+          qty: "1",
+          prevWO: "-",
+          woItem: "",
+          serialNumber: "KS98765",
+          custId: "CUST-RMA-002",
+          custSerial: "CS-002",
+          priority: "rush",
+          repair: true,
+          iso17025: true,
+          highlighted: true
+        }
+      ]
+    },
+    "RMA-002": {
+      received: {
+        calFreq: "6",
+        location: "houston",
+        division: "field",
+        poNumber: "RMA-PO-002",
+        arrivalDate: "2024-03-10",
+        arrivalType: "customer-dropoff",
+        priority: "normal",
+        needByDate: "2024-04-01"
+      },
+      items: [
+        {
+          manufacturer: "Tektronix",
+          model: "TDS2024C",
+          description: "DIGITAL OSCILLOSCOPE 200MHZ",
+          qty: "1",
+          prevWO: "802500",
+          woItem: "802500-002",
+          serialNumber: "TEK54321",
+          custId: "CUST-RMA-003",
+          custSerial: "CS-003",
+          priority: "normal",
+          repair: true,
+          iso17025: false
+        }
+      ]
+    }
+  });
+
   // Customer PO Selection
   const [selectedCustPO, setSelectedCustPO] = useState("4510114092");
   const [custPOPageSize, setCustPOPageSize] = useState(5);
