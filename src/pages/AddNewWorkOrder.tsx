@@ -1196,14 +1196,14 @@ const AddNewWorkOrder = () => {
                       <span className="text-sm font-semibold">Customer Quote</span>
                     </AccordionTrigger>
                     <AccordionContent>
-                      <CardContent className="p-4 sm:p-6 pt-0 space-y-4">
+                      <CardContent className="p-3 sm:p-4 pt-0 space-y-3">
                         {/* Customer Quote Section with integrated tables */}
-                        <div className="space-y-3">
+                        <div className="space-y-2">
                           {/* Dropdown */}
                           <div className="flex items-center gap-2">
-                            <Label className="text-sm font-medium whitespace-nowrap">Cust Quote #:</Label>
+                            <Label className="text-xs font-medium whitespace-nowrap">Cust Quote #:</Label>
                             <Select value={selectedQuote} onValueChange={setSelectedQuote}>
-                              <SelectTrigger className="h-9 w-40">
+                              <SelectTrigger className="h-7 w-40 text-xs">
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent className="bg-popover border shadow-lg z-50">
@@ -1214,28 +1214,28 @@ const AddNewWorkOrder = () => {
                           </div>
 
                           {/* Tables Side by Side */}
-                          <div className="grid grid-cols-2 gap-3">
+                          <div className="grid grid-cols-2 gap-2">
                             {/* Customer Quotes Table */}
                             <div className="border rounded-lg overflow-hidden">
                               <table className="w-full text-xs">
                                 <thead className="bg-muted/50">
                                   <tr>
-                                    <th className="text-left p-2 font-medium text-foreground">Customer Quotes</th>
-                                    <th className="text-left p-2 font-medium text-foreground">Type</th>
+                                    <th className="text-left px-2 py-1 font-medium text-foreground text-xs">Customer Quotes</th>
+                                    <th className="text-left px-2 py-1 font-medium text-foreground text-xs">Type</th>
                                   </tr>
                                 </thead>
                                 <tbody className="bg-card">
                                   <tr className="border-t">
-                                    <td className="p-2">
-                                      <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">48020</a>
+                                    <td className="px-2 py-1">
+                                      <a href="#" className="text-foreground hover:underline font-medium text-xs">48020</a>
                                     </td>
-                                    <td className="p-2 text-foreground">Regular</td>
+                                    <td className="px-2 py-1 text-foreground text-xs">Regular</td>
                                   </tr>
                                   <tr className="border-t">
-                                    <td className="p-2">
-                                      <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">48034</a>
+                                    <td className="px-2 py-1">
+                                      <a href="#" className="text-foreground hover:underline font-medium text-xs">48034</a>
                                     </td>
-                                    <td className="p-2 text-foreground">ESL Onsite</td>
+                                    <td className="px-2 py-1 text-foreground text-xs">ESL Onsite</td>
                                   </tr>
                                 </tbody>
                               </table>
@@ -1246,21 +1246,21 @@ const AddNewWorkOrder = () => {
                               <table className="w-full text-xs">
                                 <thead className="bg-muted/50">
                                   <tr>
-                                    <th colSpan={3} className="text-left p-2 font-medium text-foreground">Other WO's & Quotes</th>
+                                    <th colSpan={3} className="text-left px-2 py-1 font-medium text-foreground text-xs">Other WO's & Quotes</th>
                                   </tr>
                                   <tr className="border-t">
-                                    <th className="text-left p-2 font-medium text-muted-foreground">Open</th>
-                                    <th className="text-left p-2 font-medium text-muted-foreground">Closed</th>
-                                    <th className="text-left p-2 font-medium text-muted-foreground">Quotes</th>
+                                    <th className="text-left px-2 py-1 font-medium text-muted-foreground text-xs">Open</th>
+                                    <th className="text-left px-2 py-1 font-medium text-muted-foreground text-xs">Closed</th>
+                                    <th className="text-left px-2 py-1 font-medium text-muted-foreground text-xs">Quotes</th>
                                   </tr>
                                 </thead>
                                 <tbody className="bg-card">
                                   <tr className="border-t">
-                                    <td className="p-2">
-                                      <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">802614</a>
+                                    <td className="px-2 py-1">
+                                      <a href="#" className="text-foreground hover:underline font-medium text-xs">802614</a>
                                     </td>
-                                    <td className="p-2 text-foreground">-</td>
-                                    <td className="p-2 text-foreground">-</td>
+                                    <td className="px-2 py-1 text-foreground text-xs">-</td>
+                                    <td className="px-2 py-1 text-foreground text-xs">-</td>
                                   </tr>
                                 </tbody>
                               </table>
@@ -1269,8 +1269,8 @@ const AddNewWorkOrder = () => {
                         </div>
 
                         {/* Remarks Section */}
-                        <div className="border-2 border-destructive bg-destructive/5 rounded-lg p-3">
-                          <p className="text-sm">
+                        <div className="border-2 border-destructive bg-destructive/5 rounded-lg p-2">
+                          <p className="text-xs">
                             <span className="font-semibold text-destructive">Remarks:</span>{" "}
                             <span className="font-medium">ESL TIER 2 USE TAG NO# AS ID#!</span>
                           </p>
@@ -1510,11 +1510,11 @@ const AddNewWorkOrder = () => {
                         </div>
 
                         {/* Items Table */}
-                        <div className="space-y-3">
+                        <div className="space-y-2">
                           <div className="flex justify-between items-center">
                             <a 
                               href="#" 
-                              className="text-sm text-foreground font-medium hover:text-primary hover:underline"
+                              className="text-xs text-foreground font-medium hover:text-primary hover:underline"
                               onClick={(e) => {
                                 e.preventDefault();
                                 if (selectedQuoteItems.length === quoteData[selectedQuote].items.length) {
@@ -1529,22 +1529,22 @@ const AddNewWorkOrder = () => {
                           </div>
                           
                           <div className="border rounded-lg overflow-x-auto">
-                            <table className="w-full text-sm">
+                            <table className="w-full text-xs">
                               <thead className="bg-muted">
                                 <tr>
-                                  <th className="text-left p-2 font-medium">Rcv</th>
-                                  <th className="text-left p-2 font-medium">Manufacturer</th>
-                                  <th className="text-left p-2 font-medium">Model</th>
-                                  <th className="text-left p-2 font-medium">Item Description</th>
-                                  <th className="text-left p-2 font-medium">Qty</th>
-                                  <th className="text-left p-2 font-medium">Prev WO #</th>
-                                  <th className="text-left p-2 font-medium">WO Item</th>
-                                  <th className="text-left p-2 font-medium">Serial Number</th>
-                                  <th className="text-left p-2 font-medium">Cust ID</th>
-                                  <th className="text-left p-2 font-medium">Cust Serial</th>
-                                  <th className="text-left p-2 font-medium">Priority</th>
-                                  <th className="text-left p-2 font-medium">Repair</th>
-                                  <th className="text-left p-2 font-medium">17025</th>
+                                  <th className="text-left px-2 py-1.5 font-medium">Rcv</th>
+                                  <th className="text-left px-2 py-1.5 font-medium">Manufacturer</th>
+                                  <th className="text-left px-2 py-1.5 font-medium">Model</th>
+                                  <th className="text-left px-2 py-1.5 font-medium">Item Description</th>
+                                  <th className="text-left px-2 py-1.5 font-medium">Qty</th>
+                                  <th className="text-left px-2 py-1.5 font-medium">Prev WO #</th>
+                                  <th className="text-left px-2 py-1.5 font-medium">WO Item</th>
+                                  <th className="text-left px-2 py-1.5 font-medium">Serial Number</th>
+                                  <th className="text-left px-2 py-1.5 font-medium">Cust ID</th>
+                                  <th className="text-left px-2 py-1.5 font-medium">Cust Serial</th>
+                                  <th className="text-left px-2 py-1.5 font-medium">Priority</th>
+                                  <th className="text-left px-2 py-1.5 font-medium">Repair</th>
+                                  <th className="text-left px-2 py-1.5 font-medium">17025</th>
                                 </tr>
                               </thead>
                               <tbody className="bg-card">
@@ -1558,7 +1558,7 @@ const AddNewWorkOrder = () => {
                                       key={index} 
                                       className={`border-t ${item.highlighted ? 'bg-muted/30' : ''} ${isItemAdded ? 'opacity-50' : ''}`}
                                     >
-                                      <td className="p-2">
+                                      <td className="px-2 py-1.5">
                                         <Checkbox 
                                           checked={selectedQuoteItems.includes(index)}
                                           disabled={isItemAdded}
@@ -1571,32 +1571,32 @@ const AddNewWorkOrder = () => {
                                           }}
                                         />
                                       </td>
-                                      <td className="p-2 text-foreground">{item.manufacturer}</td>
-                                      <td className="p-2 text-foreground">{item.model}</td>
-                                      <td className="p-2 font-medium text-foreground">{item.description}</td>
-                                    <td className="p-2">
-                                      <Input type="number" defaultValue={item.qty} className="h-8 w-16" />
+                                      <td className="px-2 py-1.5 text-foreground">{item.manufacturer}</td>
+                                      <td className="px-2 py-1.5 text-foreground">{item.model}</td>
+                                      <td className="px-2 py-1.5 font-medium text-foreground">{item.description}</td>
+                                    <td className="px-2 py-1.5">
+                                      <Input type="number" defaultValue={item.qty} className="h-7 w-14 text-xs" />
                                     </td>
-                                    <td className="p-2">
-                                      <Input defaultValue={item.prevWO} className="h-8 w-20" />
+                                    <td className="px-2 py-1.5">
+                                      <Input defaultValue={item.prevWO} className="h-7 w-16 text-xs" />
                                     </td>
-                                    <td className="p-2">
+                                    <td className="px-2 py-1.5">
                                       {item.woItem ? (
-                                        <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">{item.woItem}</a>
+                                        <a href="#" className="text-foreground hover:underline font-medium">{item.woItem}</a>
                                       ) : null}
                                     </td>
-                                    <td className="p-2">
-                                      <Input placeholder={item.serialNumber || "N/A"} defaultValue={item.serialNumber} className="h-8 w-24" />
+                                    <td className="px-2 py-1.5">
+                                      <Input placeholder={item.serialNumber || "N/A"} defaultValue={item.serialNumber} className="h-7 w-20 text-xs" />
                                     </td>
-                                    <td className="p-2">
-                                      <Input placeholder="" defaultValue={item.custId} className="h-8 w-24" />
+                                    <td className="px-2 py-1.5">
+                                      <Input placeholder="" defaultValue={item.custId} className="h-7 w-20 text-xs" />
                                     </td>
-                                    <td className="p-2">
-                                      <Input placeholder={item.custSerial || "N/A"} defaultValue={item.custSerial} className="h-8 w-24" />
+                                    <td className="px-2 py-1.5">
+                                      <Input placeholder={item.custSerial || "N/A"} defaultValue={item.custSerial} className="h-7 w-20 text-xs" />
                                     </td>
-                                    <td className="p-2">
+                                    <td className="px-2 py-1.5">
                                       <Select defaultValue={item.priority}>
-                                        <SelectTrigger className="h-8 w-24">
+                                        <SelectTrigger className="h-7 w-20 text-xs">
                                           <SelectValue />
                                         </SelectTrigger>
                                         <SelectContent className="bg-popover border shadow-lg z-50">
@@ -1606,10 +1606,10 @@ const AddNewWorkOrder = () => {
                                         </SelectContent>
                                       </Select>
                                     </td>
-                                      <td className="p-2">
+                                      <td className="px-2 py-1.5">
                                         <Checkbox defaultChecked={item.repair} disabled={isItemAdded} />
                                       </td>
-                                      <td className="p-2">
+                                      <td className="px-2 py-1.5">
                                         <Checkbox defaultChecked={item.iso17025} disabled={isItemAdded} />
                                       </td>
                                     </tr>
@@ -1620,8 +1620,8 @@ const AddNewWorkOrder = () => {
                           </div>
 
                           {/* Pagination and Action Button */}
-                          <div className="flex flex-col sm:flex-row justify-between items-center gap-3">
-                            <div className="flex items-center gap-2 text-sm text-foreground">
+                          <div className="flex flex-col sm:flex-row justify-between items-center gap-2">
+                            <div className="flex items-center gap-2 text-xs text-foreground">
                               <span>Page 1 of 1 ({quoteData[selectedQuote].items.length} items)</span>
                               <div className="flex items-center gap-1">
                                 <Button variant="outline" size="sm" className="h-7 w-7 p-0">
@@ -1637,9 +1637,9 @@ const AddNewWorkOrder = () => {
                             </div>
                             
                             <div className="flex items-center gap-2">
-                              <Label className="text-sm whitespace-nowrap">Page size:</Label>
+                              <Label className="text-xs whitespace-nowrap">Page size:</Label>
                               <Select defaultValue="10">
-                                <SelectTrigger className="h-8 w-16">
+                                <SelectTrigger className="h-7 w-14 text-xs">
                                   <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent className="bg-background border shadow-lg z-50">
