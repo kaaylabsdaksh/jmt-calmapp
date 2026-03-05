@@ -1246,12 +1246,12 @@ const AddNewWorkOrder = () => {
                               <table className="w-full text-xs">
                                 <thead className="bg-muted/50">
                                   <tr>
-                                    <th colSpan={3} className="text-left p-2 font-medium text-foreground">Other WO's & Quotes</th>
+                                    <th colSpan={3} className="text-left px-2 py-1 font-medium text-foreground text-xs">Other WO's & Quotes</th>
                                   </tr>
                                   <tr className="border-t">
-                                    <th className="text-left p-2 font-medium text-muted-foreground">Open</th>
-                                    <th className="text-left p-2 font-medium text-muted-foreground">Closed</th>
-                                    <th className="text-left p-2 font-medium text-muted-foreground">Quotes</th>
+                                    <th className="text-left px-2 py-1 font-medium text-muted-foreground text-xs">Open</th>
+                                    <th className="text-left px-2 py-1 font-medium text-muted-foreground text-xs">Closed</th>
+                                    <th className="text-left px-2 py-1 font-medium text-muted-foreground text-xs">Quotes</th>
                                   </tr>
                                 </thead>
                                 <tbody className="bg-card">
