@@ -993,6 +993,7 @@ const AddNewWorkOrder = () => {
                           onChange={handleAccountNumberChange}
                           onKeyDown={handleKeyDown}
                           maxLength={7}
+                          disabled={isSaved}
                           className={`h-9 sm:h-10 ${!workOrderData.accountNumber ? "border-destructive" : ""}`}
                         />
                         {!workOrderData.accountNumber && (
