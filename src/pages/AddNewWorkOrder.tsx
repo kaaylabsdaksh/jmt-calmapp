@@ -2651,14 +2651,14 @@ const AddNewWorkOrder = () => {
                                 />
                               </div>
 
-                              <div className="space-y-1">
-                                <Label htmlFor="qa-priority" className="text-xs font-medium">Priority</Label>
+                              <div className="space-y-0.5">
+                                <Label htmlFor="qa-priority" className="text-[11px] font-medium">Priority</Label>
                                 <Select 
                                   value={quickAddData.priority} 
                                   onValueChange={(value) => setQuickAddData({...quickAddData, priority: value})}
                                   disabled={areOtherFieldsDisabled()}
                                 >
-                                  <SelectTrigger id="qa-priority">
+                                  <SelectTrigger id="qa-priority" className="h-7 text-xs">
                                     <SelectValue />
                                   </SelectTrigger>
                                   <SelectContent className="bg-background border shadow-lg z-50">
