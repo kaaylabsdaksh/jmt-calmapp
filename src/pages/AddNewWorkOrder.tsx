@@ -161,7 +161,7 @@ const AddNewWorkOrder = () => {
         needByDate: "2024-03-15",
       },
       items: [
-        { manufacturer: "Tektronix", model: "TBS1052B", description: "OSCILLOSCOPE 50MHZ", qty: "1", calFreq: "24", woItem: "", serialNumber: "TEK44321", { manufacturer: "Tektronix", model: "TBS1052B", description: "OSCILLOSCOPE 50MHZ", qty: "1", calFreq: "24", woItem: "", serialNumber: "TEK44321", custId: "", custSerial: "", priority: "Normal", repair: false, iso17025: true },, priority: "Normal", repair: false, iso17025: true },
+        { manufacturer: "Tektronix", model: "TBS1052B", description: "OSCILLOSCOPE 50MHZ", qty: "1", calFreq: "24", woItem: "", serialNumber: "TEK44321", custId: "", custSerial: "", priority: "Normal", repair: false, iso17025: true },
       ]
     }
   });
