@@ -124,7 +124,7 @@ const AddNewWorkOrder = () => {
   const [deliverByDate, setDeliverByDate] = useState("");
   
   // Customer Quote Selection
-  const [selectedQuote, setSelectedQuote] = useState("48020");
+  const [selectedQuote, setSelectedQuote] = useState("");
   const [selectedQuoteItems, setSelectedQuoteItems] = useState<number[]>([]);
   
   // RMA Selection
