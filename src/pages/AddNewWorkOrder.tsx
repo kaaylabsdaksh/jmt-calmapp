@@ -1351,8 +1351,8 @@ const AddNewWorkOrder = () => {
                         </div>
 
                         {/* Remarks Section */}
-                        <div className="border-2 border-destructive bg-destructive/5 rounded-lg p-3">
-                          <p className="text-sm">
+                        <div className="border-2 border-destructive bg-destructive/5 rounded-lg p-2">
+                          <p className="text-xs">
                             <span className="font-semibold text-destructive">Remarks:</span>{" "}
                             <span className="font-medium">ESL TIER 2 USE TAG NO# AS ID#!</span>
                           </p>
