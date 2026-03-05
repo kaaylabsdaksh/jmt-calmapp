@@ -2871,8 +2871,8 @@ const AddNewWorkOrder = () => {
                                       </SelectContent>
                                     </Select>
                                   </div>
-                                  <div className="space-y-1">
-                                    <Label htmlFor="qa-puDate" className="text-xs font-medium">
+                                  <div className="space-y-0.5">
+                                    <Label htmlFor="qa-puDate" className="text-[11px] font-medium">
                                       PU Date <span className="text-destructive">*</span>
                                     </Label>
                                     <Popover>
