@@ -1777,10 +1777,10 @@ const AddNewWorkOrder = () => {
                                   <Label className="text-[11px] whitespace-nowrap min-w-[60px]"><span className="text-destructive">*</span> Cal Freq:</Label>
                                   <Input value={rmaData[selectedRMA as keyof typeof rmaData].received.calFreq} className="h-6 text-[11px]" readOnly />
                                 </div>
-                                <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[70px]"><span className="text-destructive">*</span> Location:</Label>
+                                <div className="flex items-center gap-1">
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]"><span className="text-destructive">*</span> Location:</Label>
                                   <Select value={rmaData[selectedRMA as keyof typeof rmaData].received.location}>
-                                    <SelectTrigger className="h-7 text-xs">
+                                    <SelectTrigger className="h-6 text-[11px]">
                                       <SelectValue />
                                     </SelectTrigger>
                                     <SelectContent className="bg-popover border shadow-lg z-50">
