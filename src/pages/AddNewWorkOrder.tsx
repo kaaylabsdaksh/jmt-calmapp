@@ -262,8 +262,8 @@ const AddNewWorkOrder = () => {
           prevWO: "-",
           woItem: "",
           serialNumber: "MY54321",
-          custId: "KEY-002",
-          custSerial: "SN002",
+          custId: "",
+          custSerial: "",
           priority: "rush",
           repair: false,
           iso17025: true
