@@ -1372,7 +1372,7 @@ const AddNewWorkOrder = () => {
                                       }));
                                     }}
                                   >
-                                    <SelectTrigger className="h-7 text-xs">
+                                    <SelectTrigger className="h-6 text-[11px]">
                                       <SelectValue placeholder="Select..." />
                                     </SelectTrigger>
                                     <SelectContent className="bg-background border shadow-lg z-50">
