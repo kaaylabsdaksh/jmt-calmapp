@@ -2739,8 +2739,8 @@ const AddNewWorkOrder = () => {
                           </CardHeader>
                           <CardContent className="px-2.5 py-1.5 pt-0">
                             <div className="grid grid-cols-2 gap-2">
-                              <div className="space-y-1">
-                                <Label htmlFor="qa-arrivalDate" className="text-xs font-medium">
+                              <div className="space-y-0.5">
+                                <Label htmlFor="qa-arrivalDate" className="text-[11px] font-medium">
                                   Date <span className="text-destructive">*</span>
                                 </Label>
                                 <Popover>
@@ -2749,11 +2749,11 @@ const AddNewWorkOrder = () => {
                                       variant="outline"
                                       disabled={areOtherFieldsDisabled()}
                                       className={cn(
-                                        "w-full justify-start text-left font-normal h-10",
+                                        "w-full justify-start text-left font-normal h-7 text-xs",
                                         !quickAddData.arrivalDate && "text-muted-foreground"
                                       )}
                                     >
-                                      <CalendarIcon className="mr-2 h-4 w-4" />
+                                      <CalendarIcon className="mr-1.5 h-3 w-3" />
                                       {quickAddData.arrivalDate ? format(new Date(quickAddData.arrivalDate), "PPP") : <span>Pick a date</span>}
                                     </Button>
                                   </PopoverTrigger>
