@@ -2075,7 +2075,7 @@ const AddNewWorkOrder = () => {
                         {/* Items Table */}
                         <div className="space-y-3">
                           <div className="flex justify-between items-center">
-                            <a href="#" className="text-xs font-semibold text-primary hover:underline">Items</a>
+                            <span className="text-xs font-semibold text-foreground cursor-pointer hover:underline" onClick={() => setSelectedRMAItems(rmaData[selectedRMA]?.items?.map((_: any, i: number) => i) || [])}>Select All</span>
                           </div>
                           <div className="border rounded-lg overflow-hidden">
                             <table className="w-full text-xs">

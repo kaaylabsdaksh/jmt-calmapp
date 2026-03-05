@@ -1847,7 +1847,7 @@ const EditBatchWorkOrder = () => {
                         {/* Items Table */}
                         <div className="space-y-3">
                           <div className="flex justify-between items-center">
-                            <h4 className="text-xs font-semibold">Items</h4>
+                            <span className="text-xs font-semibold text-foreground cursor-pointer hover:underline" onClick={() => setSelectedRMAItems(rmaData[selectedRMA]?.items?.map((_: any, i: number) => i) || [])}>Select All</span>
                           </div>
                           <div className="border rounded-lg overflow-hidden">
                             <table className="w-full text-xs">
