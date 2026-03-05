@@ -128,10 +128,14 @@ const AddNewWorkOrder = () => {
   // Customer Quote Selection
   const [selectedQuote, setSelectedQuote] = useState("");
   const [selectedQuoteItems, setSelectedQuoteItems] = useState<number[]>([]);
+  const [quoteSearchOpen, setQuoteSearchOpen] = useState(false);
+  const [quoteSearchTerm, setQuoteSearchTerm] = useState("");
   
   // RMA Selection
   const [selectedRMA, setSelectedRMA] = useState("");
   const [selectedRMAItems, setSelectedRMAItems] = useState<number[]>([]);
+  const [rmaSearchOpen, setRmaSearchOpen] = useState(false);
+  const [rmaSearchTerm, setRmaSearchTerm] = useState("");
   const [rmaData] = useState({
     "RMA-001": {
       type: "Repair",
