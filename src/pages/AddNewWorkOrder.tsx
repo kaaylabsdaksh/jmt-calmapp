@@ -128,7 +128,7 @@ const AddNewWorkOrder = () => {
   const [selectedQuoteItems, setSelectedQuoteItems] = useState<number[]>([]);
   
   // RMA Selection
-  const [selectedRMA, setSelectedRMA] = useState("RMA-001");
+  const [selectedRMA, setSelectedRMA] = useState("");
   const [selectedRMAItems, setSelectedRMAItems] = useState<number[]>([]);
   const [rmaData] = useState({
     "RMA-001": {
