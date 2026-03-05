@@ -1886,8 +1886,68 @@ const EditBatchWorkOrder = () => {
                 </Accordion>
               </Card>
               )}
+            </TabsContent>
 
+            <TabsContent value="account-info">
+              <Card>
+                <CardContent className="p-4 sm:p-6">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+                    <div className="space-y-2 text-sm">
+                      <div><span className="font-medium">Status:</span> <span className="text-green-600 font-medium">ACTIVE</span></div>
+                      <div><span className="font-medium">Customer Name:</span> Entergy Inventory</div>
+                      <div><span className="font-medium">Ship To:</span> 7223 Tom Drive, Bldg 527</div>
+                      <div><span className="font-medium">City/State/Zip:</span> Baton Rouge, LA 70806</div>
+                      <div><span className="font-medium">Main Contact:</span> USE TAG/PAPERWORK</div>
+                    </div>
+                    <div className="space-y-2 text-sm">
+                      <div><span className="font-medium">Acct #:</span> 15000.00</div>
+                      <div><span className="font-medium">SR Number:</span> SR2244</div>
+                      <div><span className="font-medium">Phone Number:</span> (225) 382-4878</div>
+                      <div><span className="font-medium">Salesperson Code:</span> ZZEN - House - Entergy</div>
+                      <div><span className="font-medium">Terms:</span> Net 30</div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
 
+            <TabsContent value="contacts">
+              <Card>
+                <CardContent className="p-6">
+                  <div className="space-y-6">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-lg font-medium text-foreground">Account's Contact(s) for this Work Order:</h3>
+                      <Button 
+                        variant="default" 
+                        className="bg-primary text-primary-foreground hover:bg-primary/90"
+                        onClick={() => setShowContactForm(true)}
+                      >
+                        Add Contact
+                      </Button>
+                    </div>
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <Select defaultValue="barry-white">
+                          <SelectTrigger className="w-64">
+                            <SelectValue placeholder="Select contact..." />
+                          </SelectTrigger>
+                          <SelectContent className="bg-background border shadow-lg z-50">
+                            <SelectItem value="barry-white">Barry White</SelectItem>
+                            <SelectItem value="netasha-gray">Netasha Gray</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <p className="text-sm text-muted-foreground">(required)</p>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="items">
+              <Card>
+                <CardContent className="p-4 sm:p-6">
+                  <div className="space-y-4 sm:space-y-6">
                     {/* Copy From Other WO Section */}
                     {isCopyFromWOExpanded && (
                       <div id="copy-from-other-wo" className="bg-muted/30 p-4 rounded-lg border-2 border-primary/20">
