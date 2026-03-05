@@ -127,6 +127,45 @@ const AddNewWorkOrder = () => {
   const [selectedQuote, setSelectedQuote] = useState("48020");
   const [selectedQuoteItems, setSelectedQuoteItems] = useState<number[]>([]);
   
+  // RMA Selection
+  const [selectedRMA, setSelectedRMA] = useState("RMA-001");
+  const [selectedRMAItems, setSelectedRMAItems] = useState<number[]>([]);
+  const [rmaData] = useState({
+    "RMA-001": {
+      type: "Repair",
+      received: {
+        calFreq: "12",
+        location: "Baton Rouge",
+        division: "Lab",
+        poNumber: "RMA-PO-001",
+        arrivalDate: "2024-02-15",
+        arrivalType: "shipped",
+        priority: "Expedite",
+        needByDate: "2024-01-03",
+      },
+      items: [
+        { manufacturer: "Fluke", model: "87V", description: "DIGITAL MULTIMETER", qty: "1", calFreq: "12", woItem: "801234-001", serialNumber: "FL12345", custId: "CUST-RMA-001", custSerial: "CS-001", priority: "Expedite", repair: true, iso17025: false },
+        { manufacturer: "Keysight", model: "34465A", description: "BENCH MULTIMETER 6.5 DIGIT", qty: "1", calFreq: "6", woItem: "", serialNumber: "KS98765", custId: "CUST-RMA-002", custSerial: "CS-002", priority: "Rush", repair: true, iso17025: true },
+      ]
+    },
+    "RMA-002": {
+      type: "Warranty Return",
+      received: {
+        calFreq: "6",
+        location: "Houston",
+        division: "Field",
+        poNumber: "RMA-PO-002",
+        arrivalDate: "2024-03-01",
+        arrivalType: "onsite",
+        priority: "Normal",
+        needByDate: "2024-03-15",
+      },
+      items: [
+        { manufacturer: "Tektronix", model: "TBS1052B", description: "OSCILLOSCOPE 50MHZ", qty: "1", calFreq: "24", woItem: "", serialNumber: "TEK44321", custId: "CUST-RMA-003", custSerial: "CS-003", priority: "Normal", repair: false, iso17025: true },
+      ]
+    }
+  });
+
   // Customer PO Selection
   const [selectedCustPO, setSelectedCustPO] = useState("4510114092");
   const [custPOPageSize, setCustPOPageSize] = useState(5);
