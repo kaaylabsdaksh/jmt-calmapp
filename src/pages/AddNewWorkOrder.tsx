@@ -2835,8 +2835,8 @@ const AddNewWorkOrder = () => {
                               )}
 
                               {quickAddData.arrivalType === "customer-dropoff" && (
-                                <div className="space-y-1">
-                                  <Label htmlFor="qa-customerName" className="text-xs font-medium">
+                                <div className="space-y-0.5">
+                                  <Label htmlFor="qa-customerName" className="text-[11px] font-medium">
                                     Name <span className="text-destructive">*</span>
                                   </Label>
                                   <Input 
