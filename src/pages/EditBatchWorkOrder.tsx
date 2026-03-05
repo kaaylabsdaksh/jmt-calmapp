@@ -1109,7 +1109,7 @@ const EditBatchWorkOrder = () => {
                         placeholder="Customer address"
                         value={workOrderData.address || ""}
                         onChange={(e) => setWorkOrderData(prev => ({ ...prev, address: e.target.value }))}
-                        disabled={areOtherFieldsDisabled()}
+                        disabled={areTopSectionFieldsDisabled()}
                         className="h-9 sm:h-10"
                       />
                     </div>
