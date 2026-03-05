@@ -1574,29 +1574,29 @@ const AddNewWorkOrder = () => {
                                       <td className="px-2 py-1.5 text-foreground">{item.manufacturer}</td>
                                       <td className="px-2 py-1.5 text-foreground">{item.model}</td>
                                       <td className="px-2 py-1.5 font-medium text-foreground">{item.description}</td>
-                                    <td className="p-2">
-                                      <Input type="number" defaultValue={item.qty} className="h-8 w-16" />
+                                    <td className="px-2 py-1.5">
+                                      <Input type="number" defaultValue={item.qty} className="h-7 w-14 text-xs" />
                                     </td>
-                                    <td className="p-2">
-                                      <Input defaultValue={item.prevWO} className="h-8 w-20" />
+                                    <td className="px-2 py-1.5">
+                                      <Input defaultValue={item.prevWO} className="h-7 w-16 text-xs" />
                                     </td>
-                                    <td className="p-2">
+                                    <td className="px-2 py-1.5">
                                       {item.woItem ? (
-                                        <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">{item.woItem}</a>
+                                        <a href="#" className="text-foreground hover:underline font-medium">{item.woItem}</a>
                                       ) : null}
                                     </td>
-                                    <td className="p-2">
-                                      <Input placeholder={item.serialNumber || "N/A"} defaultValue={item.serialNumber} className="h-8 w-24" />
+                                    <td className="px-2 py-1.5">
+                                      <Input placeholder={item.serialNumber || "N/A"} defaultValue={item.serialNumber} className="h-7 w-20 text-xs" />
                                     </td>
-                                    <td className="p-2">
-                                      <Input placeholder="" defaultValue={item.custId} className="h-8 w-24" />
+                                    <td className="px-2 py-1.5">
+                                      <Input placeholder="" defaultValue={item.custId} className="h-7 w-20 text-xs" />
                                     </td>
-                                    <td className="p-2">
-                                      <Input placeholder={item.custSerial || "N/A"} defaultValue={item.custSerial} className="h-8 w-24" />
+                                    <td className="px-2 py-1.5">
+                                      <Input placeholder={item.custSerial || "N/A"} defaultValue={item.custSerial} className="h-7 w-20 text-xs" />
                                     </td>
-                                    <td className="p-2">
+                                    <td className="px-2 py-1.5">
                                       <Select defaultValue={item.priority}>
-                                        <SelectTrigger className="h-8 w-24">
+                                        <SelectTrigger className="h-7 w-20 text-xs">
                                           <SelectValue />
                                         </SelectTrigger>
                                         <SelectContent className="bg-popover border shadow-lg z-50">
@@ -1606,10 +1606,10 @@ const AddNewWorkOrder = () => {
                                         </SelectContent>
                                       </Select>
                                     </td>
-                                      <td className="p-2">
+                                      <td className="px-2 py-1.5">
                                         <Checkbox defaultChecked={item.repair} disabled={isItemAdded} />
                                       </td>
-                                      <td className="p-2">
+                                      <td className="px-2 py-1.5">
                                         <Checkbox defaultChecked={item.iso17025} disabled={isItemAdded} />
                                       </td>
                                     </tr>
