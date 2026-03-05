@@ -1562,11 +1562,11 @@ const EditBatchWorkOrder = () => {
                           <div className="grid gap-1.5 leading-none">
                             <label
                               htmlFor="special-instructions"
-                              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              className="text-xs font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                             >
                               Include Special Instructions
                             </label>
-                            <p className="text-sm text-muted-foreground">
+                            <p className="text-xs text-muted-foreground">
                               Return Address: 2020 Alberta Way, Baton Rouge, LA 70822
                             </p>
                           </div>
