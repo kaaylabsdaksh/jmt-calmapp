@@ -2914,8 +2914,8 @@ const AddNewWorkOrder = () => {
                           </CardHeader>
                           <CardContent className="px-2.5 py-1.5 pt-0 space-y-2">
                             <div className="grid grid-cols-2 gap-2">
-                              <div className="space-y-1">
-                                <Label htmlFor="qa-poNumber" className="text-xs font-medium">
+                              <div className="space-y-0.5">
+                                <Label htmlFor="qa-poNumber" className="text-[11px] font-medium">
                                   PO Number <span className="text-destructive">*</span>
                                 </Label>
                                 <Input 
@@ -2924,6 +2924,7 @@ const AddNewWorkOrder = () => {
                                   onChange={(e) => setQuickAddData({...quickAddData, poNumber: e.target.value})}
                                   placeholder="Enter value"
                                   disabled={areOtherFieldsDisabled()}
+                                  className="h-7 text-xs"
                                 />
                               </div>
 
