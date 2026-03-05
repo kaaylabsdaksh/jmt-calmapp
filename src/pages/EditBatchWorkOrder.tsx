@@ -1391,7 +1391,7 @@ const EditBatchWorkOrder = () => {
                               <h4 className="text-xs font-medium text-muted-foreground border-b pb-0.5">Arrival Information</h4>
                               <div className="space-y-1.5">
                                 <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[55px]">Date:</Label>
+                                  <Label className="text-xs whitespace-nowrap min-w-[55px]"><span className="text-destructive">*</span> Date:</Label>
                                   <Popover>
                                     <PopoverTrigger asChild>
                                       <Button
