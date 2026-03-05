@@ -1389,11 +1389,11 @@ const AddNewWorkOrder = () => {
 
                                 {/* Conditional fields based on arrival type */}
                                 {quoteData[selectedQuote].received.arrivalType === "surplus" && (
-                                  <div className="flex items-center gap-1.5">
-                                    <Label className="text-xs whitespace-nowrap min-w-[55px]">Location:</Label>
+                                  <div className="flex items-center gap-1">
+                                    <Label className="text-[11px] whitespace-nowrap min-w-[50px]">Location:</Label>
                                     <Input 
                                       placeholder="Enter location"
-                                      className="h-7 text-xs"
+                                      className="h-6 text-[11px]"
                                     />
                                   </div>
                                 )}
