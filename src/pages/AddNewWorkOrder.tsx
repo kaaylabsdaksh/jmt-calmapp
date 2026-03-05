@@ -1283,9 +1283,9 @@ const AddNewWorkOrder = () => {
                         <div className="space-y-3">
                           {/* Dropdown */}
                           <div className="flex items-center gap-2">
-                            <Label className="text-sm font-medium whitespace-nowrap">Cust Quote #:</Label>
+                            <Label className="text-xs font-medium whitespace-nowrap">Cust Quote #:</Label>
                             <Select value={selectedQuote} onValueChange={setSelectedQuote}>
-                              <SelectTrigger className="h-9 w-40">
+                              <SelectTrigger className="h-7 text-xs w-40">
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent className="bg-popover border shadow-lg z-50">
@@ -1351,8 +1351,8 @@ const AddNewWorkOrder = () => {
                         </div>
 
                         {/* Remarks Section */}
-                        <div className="border-2 border-destructive bg-destructive/5 rounded-lg p-3">
-                          <p className="text-sm">
+                        <div className="border-2 border-destructive bg-destructive/5 rounded-lg p-2">
+                          <p className="text-xs">
                             <span className="font-semibold text-destructive">Remarks:</span>{" "}
                             <span className="font-medium">ESL TIER 2 USE TAG NO# AS ID#!</span>
                           </p>
@@ -1581,11 +1581,11 @@ const AddNewWorkOrder = () => {
                           <div className="grid gap-1.5 leading-none">
                             <label
                               htmlFor="special-instructions"
-                              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              className="text-xs font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                             >
                               Include Special Instructions
                             </label>
-                            <p className="text-sm text-muted-foreground">
+                            <p className="text-xs text-muted-foreground">
                               Return Address: 2020 Alberta Way, Baton Rouge, LA 70822
                             </p>
                           </div>
@@ -1596,7 +1596,7 @@ const AddNewWorkOrder = () => {
                           <div className="flex justify-between items-center">
                             <a 
                               href="#" 
-                              className="text-sm text-foreground font-medium hover:text-primary hover:underline"
+                              className="text-xs text-foreground font-medium hover:text-primary hover:underline"
                               onClick={(e) => {
                                 e.preventDefault();
                                 if (selectedQuoteItems.length === quoteData[selectedQuote].items.length) {
@@ -1611,8 +1611,8 @@ const AddNewWorkOrder = () => {
                           </div>
                           
                           <div className="border rounded-lg overflow-x-auto">
-                            <table className="w-full text-sm">
-                              <thead className="bg-muted">
+                            <table className="w-full text-xs">
+                              <thead className="bg-muted/50">
                                 <tr>
                                   <th className="text-left p-2 font-medium">Rcv</th>
                                   <th className="text-left p-2 font-medium">Manufacturer</th>
@@ -1657,10 +1657,10 @@ const AddNewWorkOrder = () => {
                                       <td className="p-2 text-foreground">{item.model}</td>
                                       <td className="p-2 font-medium text-foreground">{item.description}</td>
                                     <td className="p-2">
-                                      <Input type="number" defaultValue={item.qty} className="h-8 w-16" />
+                                      <Input type="number" defaultValue={item.qty} className="h-7 w-16 text-xs" />
                                     </td>
                                     <td className="p-2">
-                                      <Input defaultValue={item.prevWO} className="h-8 w-20" />
+                                      <Input defaultValue={item.prevWO} className="h-7 w-20 text-xs" />
                                     </td>
                                     <td className="p-2">
                                       {item.woItem ? (
@@ -1668,17 +1668,17 @@ const AddNewWorkOrder = () => {
                                       ) : null}
                                     </td>
                                     <td className="p-2">
-                                      <Input placeholder={item.serialNumber || "N/A"} defaultValue={item.serialNumber} className="h-8 w-24" />
+                                      <Input placeholder={item.serialNumber || "N/A"} defaultValue={item.serialNumber} className="h-7 w-24 text-xs" />
                                     </td>
                                     <td className="p-2">
-                                      <Input placeholder="" defaultValue={item.custId} className="h-8 w-24" />
+                                      <Input placeholder="" defaultValue={item.custId} className="h-7 w-24 text-xs" />
                                     </td>
                                     <td className="p-2">
-                                      <Input placeholder={item.custSerial || "N/A"} defaultValue={item.custSerial} className="h-8 w-24" />
+                                      <Input placeholder={item.custSerial || "N/A"} defaultValue={item.custSerial} className="h-7 w-24 text-xs" />
                                     </td>
                                     <td className="p-2">
                                       <Select defaultValue={item.priority}>
-                                        <SelectTrigger className="h-8 w-24">
+                                        <SelectTrigger className="h-7 text-xs w-24">
                                           <SelectValue />
                                         </SelectTrigger>
                                         <SelectContent className="bg-popover border shadow-lg z-50">
@@ -1703,7 +1703,7 @@ const AddNewWorkOrder = () => {
 
                           {/* Pagination and Action Button */}
                           <div className="flex flex-col sm:flex-row justify-between items-center gap-3">
-                            <div className="flex items-center gap-2 text-sm text-foreground">
+                            <div className="flex items-center gap-2 text-xs text-foreground">
                               <span>Page 1 of 1 ({quoteData[selectedQuote].items.length} items)</span>
                               <div className="flex items-center gap-1">
                                 <Button variant="outline" size="sm" className="h-7 w-7 p-0">
@@ -1719,7 +1719,7 @@ const AddNewWorkOrder = () => {
                             </div>
                             
                             <div className="flex items-center gap-2">
-                              <Label className="text-sm whitespace-nowrap">Page size:</Label>
+                              <Label className="text-xs whitespace-nowrap">Page size:</Label>
                               <Select defaultValue="10">
                                 <SelectTrigger className="h-8 w-16">
                                   <SelectValue />
