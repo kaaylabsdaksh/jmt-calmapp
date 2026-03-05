@@ -151,7 +151,7 @@ const AddNewWorkOrder = () => {
           model: "87V",
           description: "DIGITAL MULTIMETER",
           qty: "1",
-          prevWO: "801234",
+          calFreq: "12",
           woItem: "801234-001",
           serialNumber: "FL12345",
           custId: "CUST-RMA-001",
@@ -165,7 +165,7 @@ const AddNewWorkOrder = () => {
           model: "34465A",
           description: "BENCH MULTIMETER 6.5 DIGIT",
           qty: "1",
-          prevWO: "-",
+          calFreq: "6",
           woItem: "",
           serialNumber: "KS98765",
           custId: "CUST-RMA-002",
@@ -2086,7 +2086,7 @@ const AddNewWorkOrder = () => {
                                   <th className="text-left p-2 font-medium text-foreground">Model</th>
                                   <th className="text-left p-2 font-medium text-foreground">Item Description</th>
                                   <th className="text-left p-2 font-medium text-foreground">Qty</th>
-                                  <th className="text-left p-2 font-medium text-foreground">Prev WO #</th>
+                                  <th className="text-left p-2 font-medium text-foreground">Cal Freq</th>
                                   <th className="text-left p-2 font-medium text-foreground">WO Item</th>
                                   <th className="text-left p-2 font-medium text-foreground">Serial Number</th>
                                   <th className="text-left p-2 font-medium text-foreground">Cust ID</th>
@@ -2104,7 +2104,7 @@ const AddNewWorkOrder = () => {
                                     <td className="p-2 text-foreground">{item.model}</td>
                                     <td className="p-2 text-foreground">{item.description}</td>
                                     <td className="p-2"><Input value={item.qty} className="h-7 w-16 text-xs" readOnly /></td>
-                                    <td className="p-2 text-foreground">{item.prevWO || "-"}</td>
+                                    <td className="p-2"><Input value={item.calFreq || ""} className="h-7 w-16 text-xs" readOnly /></td>
                                     <td className="p-2">{item.woItem ? <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline">{item.woItem}</a> : ""}</td>
                                     <td className="p-2 text-foreground">{item.serialNumber || "N/A"}</td>
                                     <td className="p-2"><Input value={item.custId || ""} className="h-7 text-xs" readOnly /></td>
