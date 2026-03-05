@@ -1698,7 +1698,7 @@ const AddNewWorkOrder = () => {
                               Receive and Add WO Items {selectedQuoteItems.length > 0 && `(${selectedQuoteItems.length})`}
                             </Button>
                           </div>
-                        </div>
+                        </>)}
                       </CardContent>
                     </AccordionContent>
                   </AccordionItem>
