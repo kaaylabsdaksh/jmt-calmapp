@@ -1678,7 +1678,7 @@ const AddNewWorkOrder = () => {
                                     </td>
                                     <td className="p-2">
                                       <Select defaultValue={item.priority}>
-                                        <SelectTrigger className="h-8 w-24">
+                                        <SelectTrigger className="h-7 text-xs w-24">
                                           <SelectValue />
                                         </SelectTrigger>
                                         <SelectContent className="bg-popover border shadow-lg z-50">
