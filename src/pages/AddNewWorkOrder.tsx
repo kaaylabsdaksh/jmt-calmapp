@@ -1256,11 +1256,11 @@ const AddNewWorkOrder = () => {
                                 </thead>
                                 <tbody className="bg-card">
                                   <tr className="border-t">
-                                    <td className="p-2">
-                                      <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">802614</a>
+                                    <td className="px-2 py-1">
+                                      <a href="#" className="text-foreground hover:underline font-medium text-xs">802614</a>
                                     </td>
-                                    <td className="p-2 text-foreground">-</td>
-                                    <td className="p-2 text-foreground">-</td>
+                                    <td className="px-2 py-1 text-foreground text-xs">-</td>
+                                    <td className="px-2 py-1 text-foreground text-xs">-</td>
                                   </tr>
                                 </tbody>
                               </table>
