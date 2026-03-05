@@ -2861,7 +2861,7 @@ const AddNewWorkOrder = () => {
                                       onValueChange={(value) => setQuickAddData({...quickAddData, driver: value})}
                                       disabled={areOtherFieldsDisabled()}
                                     >
-                                      <SelectTrigger id="qa-driver">
+                                      <SelectTrigger id="qa-driver" className="h-7 text-xs">
                                         <SelectValue placeholder="Select driver" />
                                       </SelectTrigger>
                                       <SelectContent className="bg-background border shadow-lg z-50">
