@@ -2104,7 +2104,7 @@ const AddNewWorkOrder = () => {
                                     <td className="p-2 text-foreground">{item.model}</td>
                                     <td className="p-2 text-foreground">{item.description}</td>
                                     <td className="p-2"><Input value={item.qty} className="h-7 w-16 text-xs" readOnly /></td>
-                                    <td className="p-2 text-foreground">{item.prevWO || "-"}</td>
+                                    <td className="p-2"><Input value={item.calFreq || ""} className="h-7 w-16 text-xs" readOnly /></td>
                                     <td className="p-2">{item.woItem ? <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline">{item.woItem}</a> : ""}</td>
                                     <td className="p-2 text-foreground">{item.serialNumber || "N/A"}</td>
                                     <td className="p-2"><Input value={item.custId || ""} className="h-7 text-xs" readOnly /></td>
