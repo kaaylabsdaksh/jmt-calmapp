@@ -528,6 +528,25 @@ const EditBatchWorkOrder = () => {
     return !hasContact;
   };
 
+  // Function to check if the top section fields (WO#, Status, Type, Customer, Address) should be disabled
+  const areTopSectionFieldsDisabled = () => {
+    const isValidFormat = /^\d{4}\.\d{2}$/.test(workOrderData.accountNumber);
+    return isValidFormat && workOrderData.accountNumber.length > 0;
+  };
+
+  // Function to check if contact field should be disabled
+  const isContactDisabled = () => {
+    const isValidFormat = /^\d{4}\.\d{2}$/.test(workOrderData.accountNumber);
+    if (!isValidFormat || !workOrderData.accountNumber) return true;
+    if (isSaved) return true;
+    return false;
+  };
+
+  // Function to check if account number should be disabled (after save)
+  const isAccountDisabled = () => {
+    return isSaved;
+  };
+
   // Handle account number input change
   const handleAccountNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value.replace(/\D/g, ''); // Remove non-digits
