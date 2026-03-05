@@ -1074,6 +1074,19 @@ const EditBatchWorkOrder = () => {
                         className="h-9 sm:h-10"
                       />
                     </div>
+
+                    {/* Address */}
+                    <div className="space-y-2">
+                      <Label htmlFor="address" className="text-sm font-medium">Address</Label>
+                      <Input
+                        id="address"
+                        placeholder="Customer address"
+                        value={workOrderData.address || ""}
+                        onChange={(e) => setWorkOrderData(prev => ({ ...prev, address: e.target.value }))}
+                        disabled={areOtherFieldsDisabled()}
+                        className="h-9 sm:h-10"
+                      />
+                    </div>
                   </div>
                 </CardContent>
               </Card>
