@@ -165,7 +165,7 @@ const AddNewWorkOrder = () => {
           model: "34465A",
           description: "BENCH MULTIMETER 6.5 DIGIT",
           qty: "1",
-          prevWO: "-",
+          calFreq: "6",
           woItem: "",
           serialNumber: "KS98765",
           custId: "CUST-RMA-002",
