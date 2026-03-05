@@ -152,7 +152,7 @@ const EditBatchWorkOrder = () => {
           model: "87V",
           description: "DIGITAL MULTIMETER",
           qty: "1",
-          prevWO: "801234",
+          calFreq: "12",
           woItem: "801234-001",
           serialNumber: "FL12345",
           custId: "CUST-RMA-001",
