@@ -128,7 +128,7 @@ const AddNewWorkOrder = () => {
   const [selectedQuoteItems, setSelectedQuoteItems] = useState<number[]>([]);
   
   // RMA Selection
-  const [selectedRMA, setSelectedRMA] = useState("RMA-001");
+  const [selectedRMA, setSelectedRMA] = useState("");
   const [selectedRMAItems, setSelectedRMAItems] = useState<number[]>([]);
   const [rmaData] = useState({
     "RMA-001": {
@@ -1757,6 +1757,7 @@ const AddNewWorkOrder = () => {
                           </table>
                         </div>
 
+                        {selectedRMA && (<>
                         {/* RECEIVED Section */}
                         <div className="border rounded-lg">
                           <div className="bg-muted border-b px-3 py-1">
@@ -2037,6 +2038,7 @@ const AddNewWorkOrder = () => {
                             </Button>
                           </div>
                         </div>
+                        </>)}
                       </CardContent>
                     </AccordionContent>
                   </AccordionItem>
