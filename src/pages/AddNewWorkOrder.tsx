@@ -2908,12 +2908,12 @@ const AddNewWorkOrder = () => {
                         </Card>
 
                         {/* OTHER INFORMATION Card */}
-                        <Card>
-                          <CardHeader className="p-3 pb-2">
-                            <h4 className="text-xs font-semibold text-muted-foreground uppercase">Other Information</h4>
+                        <Card className="shadow-none">
+                          <CardHeader className="px-2.5 py-1.5 pb-1">
+                            <h4 className="text-[10px] font-semibold text-muted-foreground uppercase">Other Information</h4>
                           </CardHeader>
-                          <CardContent className="p-3 pt-2 space-y-4">
-                            <div className="grid grid-cols-2 gap-3">
+                          <CardContent className="px-2.5 py-1.5 pt-0 space-y-2">
+                            <div className="grid grid-cols-2 gap-2">
                               <div className="space-y-1">
                                 <Label htmlFor="qa-poNumber" className="text-xs font-medium">
                                   PO Number <span className="text-destructive">*</span>
