@@ -1264,9 +1264,9 @@ const EditBatchWorkOrder = () => {
                         <div className="space-y-3">
                           {/* Dropdown */}
                           <div className="flex items-center gap-2">
-                            <Label className="text-sm font-medium whitespace-nowrap">Cust Quote #:</Label>
+                            <Label className="text-xs font-medium whitespace-nowrap">Cust Quote #:</Label>
                             <Select value={selectedQuote} onValueChange={setSelectedQuote}>
-                              <SelectTrigger className="h-9 w-40">
+                              <SelectTrigger className="h-7 text-xs w-40">
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent className="bg-popover border shadow-lg z-50">
