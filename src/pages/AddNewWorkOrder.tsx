@@ -145,7 +145,7 @@ const AddNewWorkOrder = () => {
       },
       items: [
         { manufacturer: "Fluke", model: "87V", description: "DIGITAL MULTIMETER", qty: "1", calFreq: "12", woItem: "801234-001", serialNumber: "FL12345", { manufacturer: "Fluke", model: "87V", description: "DIGITAL MULTIMETER", qty: "1", calFreq: "12", woItem: "801234-001", serialNumber: "FL12345", custId: "", custSerial: "", priority: "Expedite", repair: true, iso17025: false },, priority: "Expedite", repair: true, iso17025: false },
-        { manufacturer: "Keysight", model: "34465A", description: "BENCH MULTIMETER 6.5 DIGIT", qty: "1", calFreq: "6", woItem: "", serialNumber: "KS98765", custId: "CUST-RMA-002", custSerial: "CS-002", priority: "Rush", repair: true, iso17025: true },
+        { manufacturer: "Keysight", model: "34465A", description: "BENCH MULTIMETER 6.5 DIGIT", qty: "1", calFreq: "6", woItem: "", serialNumber: "KS98765", { manufacturer: "Keysight", model: "34465A", description: "BENCH MULTIMETER 6.5 DIGIT", qty: "1", calFreq: "6", woItem: "", serialNumber: "KS98765", custId: "", custSerial: "", priority: "Rush", repair: true, iso17025: true },, priority: "Rush", repair: true, iso17025: true },
       ]
     },
     "RMA-002": {
