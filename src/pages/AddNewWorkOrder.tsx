@@ -3090,6 +3090,7 @@ const AddNewWorkOrder = () => {
                               Cancel
                             </Button>
                             <Button 
+                              size="sm"
                               onClick={() => {
                                 if (!quickAddData.calFreq || !quickAddData.actionCode || !quickAddData.location || !quickAddData.division || !quickAddData.arrivalDate || !quickAddData.arrivalType || !quickAddData.poNumber || !quickAddData.needByDate) {
                                   toast({
