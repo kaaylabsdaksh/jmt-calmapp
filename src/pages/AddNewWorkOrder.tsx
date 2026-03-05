@@ -1473,10 +1473,10 @@ const AddNewWorkOrder = () => {
                             <div className="space-y-1">
                               <h4 className="text-[11px] font-medium text-muted-foreground border-b pb-0.5">Override Fields</h4>
                               <div className="space-y-1">
-                                <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[60px]">Priority:</Label>
+                                <div className="flex items-center gap-1">
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[50px]">Priority:</Label>
                                   <Select value={quoteData[selectedQuote].received.priority}>
-                                    <SelectTrigger className="h-7 text-xs">
+                                    <SelectTrigger className="h-6 text-[11px]">
                                       <SelectValue />
                                     </SelectTrigger>
                                     <SelectContent className="bg-popover border shadow-lg z-50">
