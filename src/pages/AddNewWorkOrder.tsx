@@ -1510,11 +1510,11 @@ const AddNewWorkOrder = () => {
                         </div>
 
                         {/* Items Table */}
-                        <div className="space-y-3">
+                        <div className="space-y-2">
                           <div className="flex justify-between items-center">
                             <a 
                               href="#" 
-                              className="text-sm text-foreground font-medium hover:text-primary hover:underline"
+                              className="text-xs text-foreground font-medium hover:text-primary hover:underline"
                               onClick={(e) => {
                                 e.preventDefault();
                                 if (selectedQuoteItems.length === quoteData[selectedQuote].items.length) {
