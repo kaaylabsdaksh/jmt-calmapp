@@ -1859,13 +1859,7 @@ const AddNewWorkOrder = () => {
                           </div>
                         </div>
 
-                        {/* Remarks Section */}
-                        <div className="border-2 border-destructive bg-destructive/5 rounded-lg p-3">
-                          <p className="text-sm">
-                            <span className="font-semibold text-destructive">Remarks:</span>{" "}
-                            <span className="font-medium">RMA RETURN - HANDLE WITH CARE</span>
-                          </p>
-                        </div>
+
 
                         {/* RECEIVED Section */}
                         <div className="border rounded-lg">
