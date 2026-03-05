@@ -1355,8 +1355,8 @@ const AddNewWorkOrder = () => {
                                   </Popover>
                                 </div>
 
-                                <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[55px]"><span className="text-destructive">*</span> Type:</Label>
+                                <div className="flex items-center gap-1">
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[50px]"><span className="text-destructive">*</span> Type:</Label>
                                   <Select 
                                     value={quoteData[selectedQuote].received.arrivalType}
                                     onValueChange={(value) => {
