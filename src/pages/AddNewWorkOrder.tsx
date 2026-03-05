@@ -2796,8 +2796,8 @@ const AddNewWorkOrder = () => {
 
                               {/* Conditional fields based on arrival type */}
                               {quickAddData.arrivalType === "surplus" && (
-                                <div className="space-y-1">
-                                  <Label htmlFor="qa-arrivalLocation" className="text-xs font-medium">
+                                <div className="space-y-0.5">
+                                  <Label htmlFor="qa-arrivalLocation" className="text-[11px] font-medium">
                                     Location <span className="text-destructive">*</span>
                                   </Label>
                                   <Input 
