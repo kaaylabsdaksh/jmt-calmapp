@@ -1084,7 +1084,7 @@ const AddNewWorkOrder = () => {
                         id="workOrderNumber"
                         value={workOrderData.workOrderNumber}
                         onChange={(e) => setWorkOrderData(prev => ({ ...prev, workOrderNumber: e.target.value }))}
-                        disabled={areOtherFieldsDisabled()}
+                        disabled={isSaved}
                         className="h-9 sm:h-10"
                       />
                     </div>
@@ -1092,7 +1092,7 @@ const AddNewWorkOrder = () => {
                     {/* Work Order Status */}
                     <div className="space-y-2">
                       <Label className="text-sm font-medium">Work Order Status</Label>
-                      <Select value={workOrderData.workOrderStatus} onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, workOrderStatus: value }))} disabled={areOtherFieldsDisabled()}>
+                      <Select value={workOrderData.workOrderStatus} onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, workOrderStatus: value }))} disabled={isSaved}>
                         <SelectTrigger className="h-9 sm:h-10">
                           <SelectValue />
                         </SelectTrigger>
@@ -1108,7 +1108,7 @@ const AddNewWorkOrder = () => {
                     {/* Work Order Type */}
                     <div className="space-y-2">
                       <Label className="text-sm font-medium">Work Order Type</Label>
-                      <Select value={workOrderData.workOrderType} onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, workOrderType: value }))} disabled={areOtherFieldsDisabled()}>
+                      <Select value={workOrderData.workOrderType} onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, workOrderType: value }))} disabled={isSaved}>
                         <SelectTrigger className="h-9 sm:h-10">
                           <SelectValue />
                         </SelectTrigger>
@@ -1127,7 +1127,7 @@ const AddNewWorkOrder = () => {
                         placeholder="Customer name"
                         value={workOrderData.customer}
                         onChange={(e) => setWorkOrderData(prev => ({ ...prev, customer: e.target.value }))}
-                        disabled={areOtherFieldsDisabled()}
+                        disabled={isSaved}
                         className="h-9 sm:h-10"
                       />
                     </div>
