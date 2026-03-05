@@ -8,7 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { X, Download, Settings, User, CreditCard, Users, Package, FileText, Calculator, AlertCircle, ExternalLink, Award, Shield, BarChart, Save, LayoutGrid, Table, ChevronDown, Plus, PlusCircle, QrCode, Copy, PackagePlus, Menu, Wand2, BookmarkCheck, CalendarIcon } from "lucide-react";
+import { X, Download, Settings, User, CreditCard, Users, Package, FileText, Calculator, AlertCircle, ExternalLink, Award, Shield, BarChart, Save, LayoutGrid, Table, ChevronDown, Plus, PlusCircle, QrCode, Copy, PackagePlus, Menu, Wand2, BookmarkCheck, CalendarIcon, Check } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { WorkOrderItemsTable } from "@/components/WorkOrderItemsTable";
@@ -26,6 +26,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 
 
 const EditBatchWorkOrder = () => {
@@ -1785,15 +1786,35 @@ const EditBatchWorkOrder = () => {
                         <div className="space-y-3">
                           <div className="flex items-center gap-2">
                             <Label className="text-sm font-medium whitespace-nowrap">RMA #:</Label>
-                            <Select value={selectedRMA} onValueChange={setSelectedRMA}>
-                              <SelectTrigger className="h-9 w-40">
-                                <SelectValue />
-                              </SelectTrigger>
-                              <SelectContent className="bg-popover border shadow-lg z-50">
-                                <SelectItem value="RMA-001">RMA-001</SelectItem>
-                                <SelectItem value="RMA-002">RMA-002</SelectItem>
-                              </SelectContent>
-                            </Select>
+                            <Popover>
+                              <PopoverTrigger asChild>
+                                <Button variant="outline" role="combobox" className="h-9 w-56 justify-between text-sm font-normal">
+                                  {selectedRMA || "Select RMA..."}
+                                  <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                </Button>
+                              </PopoverTrigger>
+                              <PopoverContent className="w-56 p-0" align="start">
+                                <Command>
+                                  <CommandInput placeholder="Search RMA..." className="h-9" />
+                                  <CommandList>
+                                    <CommandEmpty>No RMA found.</CommandEmpty>
+                                    <CommandGroup>
+                                      {Object.keys(rmaData).map((rmaKey) => (
+                                        <CommandItem
+                                          key={rmaKey}
+                                          value={rmaKey}
+                                          onSelect={(value) => setSelectedRMA(value.toUpperCase())}
+                                          className="cursor-pointer"
+                                        >
+                                          <Check className={cn("mr-2 h-4 w-4", selectedRMA === rmaKey ? "opacity-100" : "opacity-0")} />
+                                          {rmaKey}
+                                        </CommandItem>
+                                      ))}
+                                    </CommandGroup>
+                                  </CommandList>
+                                </Command>
+                              </PopoverContent>
+                            </Popover>
                           </div>
 
                           <div className="grid grid-cols-2 gap-3">
