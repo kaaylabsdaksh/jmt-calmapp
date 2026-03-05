@@ -1596,7 +1596,7 @@ const AddNewWorkOrder = () => {
                           <div className="flex justify-between items-center">
                             <a 
                               href="#" 
-                              className="text-sm text-foreground font-medium hover:text-primary hover:underline"
+                              className="text-xs text-foreground font-medium hover:text-primary hover:underline"
                               onClick={(e) => {
                                 e.preventDefault();
                                 if (selectedQuoteItems.length === quoteData[selectedQuote].items.length) {
