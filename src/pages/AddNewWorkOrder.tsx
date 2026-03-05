@@ -1899,7 +1899,7 @@ const AddNewWorkOrder = () => {
                         <div className="space-y-2">
                           <a 
                             href="#" 
-                            className="text-sm text-foreground font-medium hover:text-primary hover:underline"
+                            className="text-xs text-foreground font-medium hover:text-primary hover:underline"
                             onClick={(e) => {
                               e.preventDefault();
                               const currentItems = rmaData[selectedRMA as keyof typeof rmaData].items;
