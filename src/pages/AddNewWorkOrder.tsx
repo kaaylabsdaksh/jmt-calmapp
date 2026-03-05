@@ -2806,6 +2806,7 @@ const AddNewWorkOrder = () => {
                                     onChange={(e) => setQuickAddData({...quickAddData, arrivalLocation: e.target.value})}
                                     placeholder="Enter location"
                                     disabled={areOtherFieldsDisabled()}
+                                    className="h-7 text-xs"
                                   />
                                 </div>
                               )}
