@@ -3056,9 +3056,10 @@ const AddNewWorkOrder = () => {
                             </div>
                           </div>
 
-                          <div className="flex justify-end gap-2">
+                          <div className="flex justify-end gap-2 pt-1">
                             <Button 
                               variant="outline"
+                              size="sm"
                               onClick={() => {
                                 setQuickAddData({
                                   type: "SINGLE",
