@@ -2619,14 +2619,14 @@ const AddNewWorkOrder = () => {
                           </CardHeader>
                           <CardContent className="px-2.5 py-1.5 pt-0">
                             <div className="grid grid-cols-2 gap-2">
-                              <div className="space-y-1">
-                                <Label htmlFor="qa-type" className="text-xs font-medium">Type</Label>
+                              <div className="space-y-0.5">
+                                <Label htmlFor="qa-type" className="text-[11px] font-medium">Type</Label>
                                 <Select 
                                   value={quickAddData.type} 
                                   onValueChange={(value) => setQuickAddData({...quickAddData, type: value})}
                                   disabled={areOtherFieldsDisabled()}
                                 >
-                                  <SelectTrigger id="qa-type">
+                                  <SelectTrigger id="qa-type" className="h-7 text-xs">
                                     <SelectValue />
                                   </SelectTrigger>
                                   <SelectContent className="bg-background border shadow-lg z-50">
