@@ -2072,7 +2072,186 @@ const AddNewWorkOrder = () => {
                           </div>
                         </div>
 
+                        {/* Items Table */}
+                        <div className="space-y-3">
+                          <div className="flex justify-between items-center">
+                            <a href="#" className="text-xs font-semibold text-primary hover:underline">Items</a>
+                          </div>
+                          <div className="border rounded-lg overflow-hidden">
+                            <table className="w-full text-xs">
+                              <thead className="bg-muted/50">
+                                <tr>
+                                  <th className="p-2 w-8"><Checkbox /></th>
+                                  <th className="text-left p-2 font-medium text-foreground">Item</th>
+                                  <th className="text-left p-2 font-medium text-foreground">Description</th>
+                                  <th className="text-left p-2 font-medium text-foreground">Qty</th>
+                                  <th className="text-left p-2 font-medium text-foreground">Serial #</th>
+                                </tr>
+                              </thead>
+                              <tbody className="bg-card">
+                                {rmaData[selectedRMA]?.items?.map((item: any, index: number) => (
+                                  <tr key={index} className="border-t">
+                                    <td className="p-2"><Checkbox checked={selectedRMAItems.includes(index)} onCheckedChange={(checked) => { if (checked) { setSelectedRMAItems(prev => [...prev, index]); } else { setSelectedRMAItems(prev => prev.filter(i => i !== index)); } }} /></td>
+                                    <td className="p-2 text-foreground">{item.item}</td>
+                                    <td className="p-2 text-foreground">{item.description}</td>
+                                    <td className="p-2"><Input value={item.qty} className="h-7 w-16 text-xs" readOnly /></td>
+                                    <td className="p-2"><Input value={item.serial} className="h-7 text-xs" readOnly /></td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+                          <div className="flex justify-end">
+                            <Button size="sm" className="h-8 text-xs" onClick={() => {
+                              const selectedItems = selectedRMAItems.map(index => rmaData[selectedRMA].items[index]);
+                              toast({
+                                title: "RMA Items Added",
+                                description: `${selectedItems.length} item(s) have been added to the work order.`,
+                                duration: 2000,
+                              });
+                              setSelectedRMAItems([]);
+                            }}>
+                              Receive and Add RMA Items {selectedRMAItems.length > 0 && `(${selectedRMAItems.length})`}
+                            </Button>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </Card>
+              )}
+            </TabsContent>
 
+            {/* Placeholder content for other tabs */}
+            <TabsContent value="account-info">
+              <Card>
+                <CardContent className="p-4 sm:p-6">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+                    <div className="space-y-2 text-sm">
+                      <div><span className="font-medium">Status:</span> <span className="text-green-600 font-medium">ACTIVE</span></div>
+                      <div><span className="font-medium">Customer Name:</span> Entergy Inventory</div>
+                      <div><span className="font-medium">Ship To:</span> 7223 Tom Drive, Bldg 527</div>
+                      <div><span className="font-medium">City/State/Zip:</span> Baton Rouge, LA 70806</div>
+                      <div><span className="font-medium">Main Contact:</span> USE TAG/PAPERWORK</div>
+                      <div><span className="font-medium">Remarks:</span> ESL (Y) CONTRACT site id must match account</div>
+                    </div>
+                    <div className="space-y-2 text-sm">
+                      <div><span className="font-medium">Acct #:</span> 15000.00</div>
+                      <div><span className="font-medium">SR Number:</span> SR2244</div>
+                      <div><span className="font-medium">Phone Number:</span> (225) 382-4878</div>
+                      <div><span className="font-medium">Salesperson Code:</span> ZZEN - House - Entergy</div>
+                      <div><span className="font-medium">Terms:</span> Net 30</div>
+                      <div><span className="font-medium">P.O. Number:</span> CONTRACT# 10629042</div>
+                    </div>
+                  </div>
+
+                  <div className="mt-6 sm:mt-8">
+                    <h3 className="text-base sm:text-lg font-semibold text-foreground mb-3 sm:mb-4">Customer Contacts</h3>
+                    <div className="hidden sm:block border rounded-lg overflow-hidden">
+                      <table className="w-full text-sm">
+                        <thead className="bg-muted">
+                          <tr>
+                            <th className="text-left p-3 font-medium">Name</th>
+                            <th className="text-left p-3 font-medium">Email</th>
+                            <th className="text-left p-3 font-medium">Phone</th>
+                            <th className="text-left p-3 font-medium">Title</th>
+                            <th className="text-left p-3 font-medium">Type</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr className="border-t">
+                            <td className="p-3">Netasha Gray</td>
+                            <td className="p-3">netasha.gray@entergy.com</td>
+                            <td className="p-3">(225) 382-4878</td>
+                            <td className="p-3">Senior Buyer</td>
+                            <td className="p-3">Primary</td>
+                          </tr>
+                          <tr className="border-t">
+                            <td className="p-3">Barry White</td>
+                            <td className="p-3">barry.white@entergy.com</td>
+                            <td className="p-3">(225) 382-4879</td>
+                            <td className="p-3">Procurement Manager</td>
+                            <td className="p-3">Secondary</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="contacts">
+              <Card>
+                <CardContent className="p-6">
+                  <div className="space-y-6">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-lg font-medium text-foreground">Account's Contact(s) for this Work Order:</h3>
+                      <Button 
+                        variant="default" 
+                        className="bg-primary text-primary-foreground hover:bg-primary/90"
+                        onClick={() => setShowContactForm(true)}
+                      >
+                        Add Contact
+                      </Button>
+                    </div>
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <Select defaultValue="barry-white">
+                          <SelectTrigger className="w-64">
+                            <SelectValue placeholder="Select contact..." />
+                          </SelectTrigger>
+                          <SelectContent className="bg-background border shadow-lg z-50">
+                            <SelectItem value="barry-white">Barry White</SelectItem>
+                            <SelectItem value="netasha-gray">Netasha Gray</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <p className="text-sm text-muted-foreground">(required)</p>
+                      </div>
+                      <div>
+                        <Select>
+                          <SelectTrigger className="w-64">
+                            <SelectValue placeholder="Select additional contact..." />
+                          </SelectTrigger>
+                          <SelectContent className="bg-background border shadow-lg z-50">
+                            <SelectItem value="barry-white">Barry White</SelectItem>
+                            <SelectItem value="netasha-gray">Netasha Gray</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div>
+                        <Select>
+                          <SelectTrigger className="w-64">
+                            <SelectValue placeholder="Select additional contact..." />
+                          </SelectTrigger>
+                          <SelectContent className="bg-background border shadow-lg z-50">
+                            <SelectItem value="barry-white">Barry White</SelectItem>
+                            <SelectItem value="netasha-gray">Netasha Gray</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div>
+                        <Select>
+                          <SelectTrigger className="w-64">
+                            <SelectValue placeholder="Select additional contact..." />
+                          </SelectTrigger>
+                          <SelectContent className="bg-background border shadow-lg z-50">
+                            <SelectItem value="barry-white">Barry White</SelectItem>
+                            <SelectItem value="netasha-gray">Netasha Gray</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="items">
+              <Card>
+                <CardContent className="p-4 sm:p-6">
+                  <div className="space-y-4 sm:space-y-6">
                     {/* Copy From Other WO Section */}
                     {isCopyFromWOExpanded && (
                       <div id="copy-from-other-wo" className="bg-muted/30 p-4 rounded-lg border-2 border-primary/20">
