@@ -1773,9 +1773,9 @@ const AddNewWorkOrder = () => {
                             <div className="space-y-1">
                               <h4 className="text-[11px] font-medium text-muted-foreground border-b pb-0.5">General Information</h4>
                               <div className="space-y-1">
-                                <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[70px]"><span className="text-destructive">*</span> Cal Freq:</Label>
-                                  <Input value={rmaData[selectedRMA as keyof typeof rmaData].received.calFreq} className="h-7 text-xs" readOnly />
+                                <div className="flex items-center gap-1">
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]"><span className="text-destructive">*</span> Cal Freq:</Label>
+                                  <Input value={rmaData[selectedRMA as keyof typeof rmaData].received.calFreq} className="h-6 text-[11px]" readOnly />
                                 </div>
                                 <div className="flex items-center gap-1.5">
                                   <Label className="text-xs whitespace-nowrap min-w-[70px]"><span className="text-destructive">*</span> Location:</Label>
