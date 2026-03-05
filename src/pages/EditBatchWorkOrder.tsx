@@ -1847,27 +1847,54 @@ const EditBatchWorkOrder = () => {
                         {/* Items Table */}
                         <div className="space-y-3">
                           <div className="flex justify-between items-center">
-                            <h4 className="text-xs font-semibold">Items</h4>
+                            <span className="text-xs font-semibold text-foreground cursor-pointer hover:underline" onClick={() => setSelectedRMAItems(rmaData[selectedRMA]?.items?.map((_: any, i: number) => i) || [])}>Select All</span>
                           </div>
                           <div className="border rounded-lg overflow-hidden">
                             <table className="w-full text-xs">
                               <thead className="bg-muted/50">
                                 <tr>
-                                  <th className="p-2 w-8"><Checkbox /></th>
-                                  <th className="text-left p-2 font-medium text-foreground">Item</th>
-                                  <th className="text-left p-2 font-medium text-foreground">Description</th>
+                                  <th className="p-2 w-8 font-medium text-foreground">Rcv</th>
+                                  <th className="text-left p-2 font-medium text-foreground">Manufacturer</th>
+                                  <th className="text-left p-2 font-medium text-foreground">Model</th>
+                                  <th className="text-left p-2 font-medium text-foreground">Item Description</th>
                                   <th className="text-left p-2 font-medium text-foreground">Qty</th>
-                                  <th className="text-left p-2 font-medium text-foreground">Serial #</th>
+                                  <th className="text-left p-2 font-medium text-foreground">Prev WO #</th>
+                                  <th className="text-left p-2 font-medium text-foreground">WO Item</th>
+                                  <th className="text-left p-2 font-medium text-foreground">Serial Number</th>
+                                  <th className="text-left p-2 font-medium text-foreground">Cust ID</th>
+                                  <th className="text-left p-2 font-medium text-foreground">Cust Serial</th>
+                                  <th className="text-left p-2 font-medium text-foreground">Priority</th>
+                                  <th className="text-left p-2 font-medium text-foreground">Repair</th>
+                                  <th className="text-left p-2 font-medium text-foreground">17025</th>
                                 </tr>
                               </thead>
                               <tbody className="bg-card">
                                 {rmaData[selectedRMA]?.items?.map((item: any, index: number) => (
                                   <tr key={index} className="border-t">
                                     <td className="p-2"><Checkbox checked={selectedRMAItems.includes(index)} onCheckedChange={(checked) => { if (checked) { setSelectedRMAItems(prev => [...prev, index]); } else { setSelectedRMAItems(prev => prev.filter(i => i !== index)); } }} /></td>
-                                    <td className="p-2 text-foreground">{item.item}</td>
+                                    <td className="p-2 text-foreground">{item.manufacturer}</td>
+                                    <td className="p-2 text-foreground">{item.model}</td>
                                     <td className="p-2 text-foreground">{item.description}</td>
                                     <td className="p-2"><Input value={item.qty} className="h-7 w-16 text-xs" readOnly /></td>
-                                    <td className="p-2"><Input value={item.serial} className="h-7 text-xs" readOnly /></td>
+                                    <td className="p-2 text-foreground">{item.prevWO || "-"}</td>
+                                    <td className="p-2">{item.woItem ? <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline">{item.woItem}</a> : ""}</td>
+                                    <td className="p-2 text-foreground">{item.serialNumber || "N/A"}</td>
+                                    <td className="p-2"><Input value={item.custId || ""} className="h-7 text-xs" readOnly /></td>
+                                    <td className="p-2 text-foreground">{item.custSerial || "N/A"}</td>
+                                    <td className="p-2">
+                                      <Select value={item.priority || "normal"}>
+                                        <SelectTrigger className="h-7 text-xs w-24">
+                                          <SelectValue />
+                                        </SelectTrigger>
+                                        <SelectContent className="bg-popover border shadow-lg z-50">
+                                          <SelectItem value="normal">Normal</SelectItem>
+                                          <SelectItem value="expedite">Expedite</SelectItem>
+                                          <SelectItem value="rush">Rush</SelectItem>
+                                        </SelectContent>
+                                      </Select>
+                                    </td>
+                                    <td className="p-2"><Checkbox checked={item.repair || false} /></td>
+                                    <td className="p-2"><Checkbox checked={item.iso17025 || false} /></td>
                                   </tr>
                                 ))}
                               </tbody>
