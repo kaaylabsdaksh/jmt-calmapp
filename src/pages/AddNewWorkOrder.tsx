@@ -2602,31 +2602,31 @@ const AddNewWorkOrder = () => {
 
                     {/* Quick Add Section - Only in Receiving View */}
                     {viewMode === 'receiving' && (
-                    <div id="quick-add-section" className="space-y-4">
-                      <div className="flex items-center gap-2">
-                        <Plus className="w-5 h-5 text-primary" />
-                        <h3 className="text-base font-semibold text-foreground">Quick Add New Items</h3>
+                    <div id="quick-add-section" className="space-y-2">
+                      <div className="flex items-center gap-1.5">
+                        <Plus className="w-4 h-4 text-primary" />
+                        <h3 className="text-xs font-semibold text-foreground">Quick Add New Items</h3>
                       </div>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-[11px] text-muted-foreground">
                         Fill in the required fields to update selected items
                       </p>
 
-                      <div className="grid grid-cols-1 lg:grid-cols-[2fr_1.5fr_1.5fr] gap-4">
+                      <div className="grid grid-cols-1 lg:grid-cols-[2fr_1.5fr_1.5fr] gap-2">
                         {/* GENERAL INFORMATION Card */}
-                        <Card>
-                          <CardHeader className="p-3 pb-2">
-                            <h4 className="text-xs font-semibold text-muted-foreground uppercase">General Information</h4>
+                        <Card className="shadow-none">
+                          <CardHeader className="px-2.5 py-1.5 pb-1">
+                            <h4 className="text-[10px] font-semibold text-muted-foreground uppercase">General Information</h4>
                           </CardHeader>
-                          <CardContent className="p-3 pt-2">
-                            <div className="grid grid-cols-2 gap-3">
-                              <div className="space-y-1">
-                                <Label htmlFor="qa-type" className="text-xs font-medium">Type</Label>
+                          <CardContent className="px-2.5 py-1.5 pt-0">
+                            <div className="grid grid-cols-2 gap-2">
+                              <div className="space-y-0.5">
+                                <Label htmlFor="qa-type" className="text-[11px] font-medium">Type</Label>
                                 <Select 
                                   value={quickAddData.type} 
                                   onValueChange={(value) => setQuickAddData({...quickAddData, type: value})}
                                   disabled={areOtherFieldsDisabled()}
                                 >
-                                  <SelectTrigger id="qa-type">
+                                  <SelectTrigger id="qa-type" className="h-7 text-xs">
                                     <SelectValue />
                                   </SelectTrigger>
                                   <SelectContent className="bg-background border shadow-lg z-50">
@@ -2637,8 +2637,8 @@ const AddNewWorkOrder = () => {
                                 </Select>
                               </div>
 
-                              <div className="space-y-1">
-                                <Label htmlFor="qa-calFreq" className="text-xs font-medium">
+                              <div className="space-y-0.5">
+                                <Label htmlFor="qa-calFreq" className="text-[11px] font-medium">
                                   Cal Freq <span className="text-destructive">*</span>
                                 </Label>
                                 <Input 
@@ -2647,17 +2647,18 @@ const AddNewWorkOrder = () => {
                                   onChange={(e) => setQuickAddData({...quickAddData, calFreq: e.target.value})}
                                   placeholder="Enter value"
                                   disabled={areOtherFieldsDisabled()}
+                                  className="h-7 text-xs"
                                 />
                               </div>
 
-                              <div className="space-y-1">
-                                <Label htmlFor="qa-priority" className="text-xs font-medium">Priority</Label>
+                              <div className="space-y-0.5">
+                                <Label htmlFor="qa-priority" className="text-[11px] font-medium">Priority</Label>
                                 <Select 
                                   value={quickAddData.priority} 
                                   onValueChange={(value) => setQuickAddData({...quickAddData, priority: value})}
                                   disabled={areOtherFieldsDisabled()}
                                 >
-                                  <SelectTrigger id="qa-priority">
+                                  <SelectTrigger id="qa-priority" className="h-7 text-xs">
                                     <SelectValue />
                                   </SelectTrigger>
                                   <SelectContent className="bg-background border shadow-lg z-50">
@@ -2668,8 +2669,8 @@ const AddNewWorkOrder = () => {
                                 </Select>
                               </div>
 
-                              <div className="space-y-1">
-                                <Label htmlFor="qa-location" className="text-xs font-medium">
+                              <div className="space-y-0.5">
+                                <Label htmlFor="qa-location" className="text-[11px] font-medium">
                                   Location <span className="text-destructive">*</span>
                                 </Label>
                                 <Select 
@@ -2677,7 +2678,7 @@ const AddNewWorkOrder = () => {
                                   onValueChange={(value) => setQuickAddData({...quickAddData, location: value})}
                                   disabled={areOtherFieldsDisabled()}
                                 >
-                                  <SelectTrigger id="qa-location">
+                                  <SelectTrigger id="qa-location" className="h-7 text-xs">
                                     <SelectValue />
                                   </SelectTrigger>
                                   <SelectContent className="bg-background border shadow-lg z-50">
@@ -2688,8 +2689,8 @@ const AddNewWorkOrder = () => {
                                 </Select>
                               </div>
 
-                              <div className="space-y-1">
-                                <Label htmlFor="qa-division" className="text-xs font-medium">
+                              <div className="space-y-0.5">
+                                <Label htmlFor="qa-division" className="text-[11px] font-medium">
                                   Division <span className="text-destructive">*</span>
                                 </Label>
                                 <Select 
@@ -2697,7 +2698,7 @@ const AddNewWorkOrder = () => {
                                   onValueChange={(value) => setQuickAddData({...quickAddData, division: value})}
                                   disabled={areOtherFieldsDisabled()}
                                 >
-                                  <SelectTrigger id="qa-division">
+                                  <SelectTrigger id="qa-division" className="h-7 text-xs">
                                     <SelectValue />
                                   </SelectTrigger>
                                   <SelectContent className="bg-background border shadow-lg z-50">
@@ -2708,8 +2709,8 @@ const AddNewWorkOrder = () => {
                                 </Select>
                               </div>
 
-                              <div className="space-y-1">
-                                <Label htmlFor="qa-actionCode" className="text-xs font-medium">
+                              <div className="space-y-0.5">
+                                <Label htmlFor="qa-actionCode" className="text-[11px] font-medium">
                                   Action Code <span className="text-destructive">*</span>
                                 </Label>
                                 <Select 
@@ -2717,7 +2718,7 @@ const AddNewWorkOrder = () => {
                                   onValueChange={(value) => setQuickAddData({...quickAddData, actionCode: value})}
                                   disabled={areOtherFieldsDisabled()}
                                 >
-                                  <SelectTrigger id="qa-actionCode">
+                                  <SelectTrigger id="qa-actionCode" className="h-7 text-xs">
                                     <SelectValue placeholder="Select..." />
                                   </SelectTrigger>
                                   <SelectContent className="bg-background border shadow-lg z-50">
@@ -2732,14 +2733,14 @@ const AddNewWorkOrder = () => {
                         </Card>
 
                         {/* ARRIVAL INFORMATION Card */}
-                        <Card>
-                          <CardHeader className="p-3 pb-2">
-                            <h4 className="text-xs font-semibold text-muted-foreground uppercase">Arrival Information</h4>
+                        <Card className="shadow-none">
+                          <CardHeader className="px-2.5 py-1.5 pb-1">
+                            <h4 className="text-[10px] font-semibold text-muted-foreground uppercase">Arrival Information</h4>
                           </CardHeader>
-                          <CardContent className="p-3 pt-2">
-                            <div className="grid grid-cols-2 gap-3">
-                              <div className="space-y-1">
-                                <Label htmlFor="qa-arrivalDate" className="text-xs font-medium">
+                          <CardContent className="px-2.5 py-1.5 pt-0">
+                            <div className="grid grid-cols-2 gap-2">
+                              <div className="space-y-0.5">
+                                <Label htmlFor="qa-arrivalDate" className="text-[11px] font-medium">
                                   Date <span className="text-destructive">*</span>
                                 </Label>
                                 <Popover>
@@ -2748,11 +2749,11 @@ const AddNewWorkOrder = () => {
                                       variant="outline"
                                       disabled={areOtherFieldsDisabled()}
                                       className={cn(
-                                        "w-full justify-start text-left font-normal h-10",
+                                        "w-full justify-start text-left font-normal h-7 text-xs",
                                         !quickAddData.arrivalDate && "text-muted-foreground"
                                       )}
                                     >
-                                      <CalendarIcon className="mr-2 h-4 w-4" />
+                                      <CalendarIcon className="mr-1.5 h-3 w-3" />
                                       {quickAddData.arrivalDate ? format(new Date(quickAddData.arrivalDate), "PPP") : <span>Pick a date</span>}
                                     </Button>
                                   </PopoverTrigger>
@@ -2769,8 +2770,8 @@ const AddNewWorkOrder = () => {
                                 </Popover>
                               </div>
 
-                              <div className="space-y-1">
-                                <Label htmlFor="qa-arrivalType" className="text-xs font-medium">
+                              <div className="space-y-0.5">
+                                <Label htmlFor="qa-arrivalType" className="text-[11px] font-medium">
                                   Type <span className="text-destructive">*</span>
                                 </Label>
                                 <Select 
@@ -2778,7 +2779,7 @@ const AddNewWorkOrder = () => {
                                   onValueChange={(value) => setQuickAddData({...quickAddData, arrivalType: value})}
                                   disabled={areOtherFieldsDisabled()}
                                 >
-                                  <SelectTrigger id="qa-arrivalType">
+                                  <SelectTrigger id="qa-arrivalType" className="h-7 text-xs">
                                     <SelectValue placeholder="Select..." />
                                   </SelectTrigger>
                                   <SelectContent className="bg-background border shadow-lg z-50">
@@ -2795,8 +2796,8 @@ const AddNewWorkOrder = () => {
 
                               {/* Conditional fields based on arrival type */}
                               {quickAddData.arrivalType === "surplus" && (
-                                <div className="space-y-1">
-                                  <Label htmlFor="qa-arrivalLocation" className="text-xs font-medium">
+                                <div className="space-y-0.5">
+                                  <Label htmlFor="qa-arrivalLocation" className="text-[11px] font-medium">
                                     Location <span className="text-destructive">*</span>
                                   </Label>
                                   <Input 
@@ -2805,13 +2806,14 @@ const AddNewWorkOrder = () => {
                                     onChange={(e) => setQuickAddData({...quickAddData, arrivalLocation: e.target.value})}
                                     placeholder="Enter location"
                                     disabled={areOtherFieldsDisabled()}
+                                    className="h-7 text-xs"
                                   />
                                 </div>
                               )}
 
                               {quickAddData.arrivalType === "shipped" && (
-                                <div className="space-y-1">
-                                  <Label htmlFor="qa-shipType" className="text-xs font-medium">
+                                <div className="space-y-0.5">
+                                  <Label htmlFor="qa-shipType" className="text-[11px] font-medium">
                                     Ship Type <span className="text-destructive">*</span>
                                   </Label>
                                   <Select 
@@ -2819,7 +2821,7 @@ const AddNewWorkOrder = () => {
                                     onValueChange={(value) => setQuickAddData({...quickAddData, shipType: value})}
                                     disabled={areOtherFieldsDisabled()}
                                   >
-                                    <SelectTrigger id="qa-shipType">
+                                    <SelectTrigger id="qa-shipType" className="h-7 text-xs">
                                       <SelectValue placeholder="Select..." />
                                     </SelectTrigger>
                                     <SelectContent className="bg-background border shadow-lg z-50">
@@ -2833,8 +2835,8 @@ const AddNewWorkOrder = () => {
                               )}
 
                               {quickAddData.arrivalType === "customer-dropoff" && (
-                                <div className="space-y-1">
-                                  <Label htmlFor="qa-customerName" className="text-xs font-medium">
+                                <div className="space-y-0.5">
+                                  <Label htmlFor="qa-customerName" className="text-[11px] font-medium">
                                     Name <span className="text-destructive">*</span>
                                   </Label>
                                   <Input 
@@ -2843,14 +2845,15 @@ const AddNewWorkOrder = () => {
                                     onChange={(e) => setQuickAddData({...quickAddData, customerName: e.target.value})}
                                     placeholder="Enter name"
                                     disabled={areOtherFieldsDisabled()}
+                                    className="h-7 text-xs"
                                   />
                                 </div>
                               )}
 
                               {quickAddData.arrivalType === "jm-driver-pickup" && (
                                 <>
-                                  <div className="space-y-1">
-                                    <Label htmlFor="qa-driver" className="text-xs font-medium">
+                                  <div className="space-y-0.5">
+                                    <Label htmlFor="qa-driver" className="text-[11px] font-medium">
                                       Driver <span className="text-destructive">*</span>
                                     </Label>
                                     <Select 
@@ -2858,7 +2861,7 @@ const AddNewWorkOrder = () => {
                                       onValueChange={(value) => setQuickAddData({...quickAddData, driver: value})}
                                       disabled={areOtherFieldsDisabled()}
                                     >
-                                      <SelectTrigger id="qa-driver">
+                                      <SelectTrigger id="qa-driver" className="h-7 text-xs">
                                         <SelectValue placeholder="Select driver" />
                                       </SelectTrigger>
                                       <SelectContent className="bg-background border shadow-lg z-50">
@@ -2868,8 +2871,8 @@ const AddNewWorkOrder = () => {
                                       </SelectContent>
                                     </Select>
                                   </div>
-                                  <div className="space-y-1">
-                                    <Label htmlFor="qa-puDate" className="text-xs font-medium">
+                                  <div className="space-y-0.5">
+                                    <Label htmlFor="qa-puDate" className="text-[11px] font-medium">
                                       PU Date <span className="text-destructive">*</span>
                                     </Label>
                                     <Popover>
@@ -2877,12 +2880,12 @@ const AddNewWorkOrder = () => {
                                         <Button
                                           variant="outline"
                                           disabled={areOtherFieldsDisabled()}
-                                          className={cn(
-                                            "w-full justify-start text-left font-normal h-10",
-                                            !quickAddData.puDate && "text-muted-foreground"
-                                          )}
-                                        >
-                                          <CalendarIcon className="mr-2 h-4 w-4" />
+                                      className={cn(
+                                        "w-full justify-start text-left font-normal h-7 text-xs",
+                                        !quickAddData.puDate && "text-muted-foreground"
+                                      )}
+                                    >
+                                      <CalendarIcon className="mr-1.5 h-3 w-3" />
                                           {quickAddData.puDate ? format(new Date(quickAddData.puDate), "PPP") : <span>Pick a date</span>}
                                         </Button>
                                       </PopoverTrigger>
@@ -2905,14 +2908,14 @@ const AddNewWorkOrder = () => {
                         </Card>
 
                         {/* OTHER INFORMATION Card */}
-                        <Card>
-                          <CardHeader className="p-3 pb-2">
-                            <h4 className="text-xs font-semibold text-muted-foreground uppercase">Other Information</h4>
+                        <Card className="shadow-none">
+                          <CardHeader className="px-2.5 py-1.5 pb-1">
+                            <h4 className="text-[10px] font-semibold text-muted-foreground uppercase">Other Information</h4>
                           </CardHeader>
-                          <CardContent className="p-3 pt-2 space-y-4">
-                            <div className="grid grid-cols-2 gap-3">
-                              <div className="space-y-1">
-                                <Label htmlFor="qa-poNumber" className="text-xs font-medium">
+                          <CardContent className="px-2.5 py-1.5 pt-0 space-y-2">
+                            <div className="grid grid-cols-2 gap-2">
+                              <div className="space-y-0.5">
+                                <Label htmlFor="qa-poNumber" className="text-[11px] font-medium">
                                   PO Number <span className="text-destructive">*</span>
                                 </Label>
                                 <Input 
@@ -2921,11 +2924,12 @@ const AddNewWorkOrder = () => {
                                   onChange={(e) => setQuickAddData({...quickAddData, poNumber: e.target.value})}
                                   placeholder="Enter value"
                                   disabled={areOtherFieldsDisabled()}
+                                  className="h-7 text-xs"
                                 />
                               </div>
 
-                              <div className="space-y-1">
-                                <Label htmlFor="qa-needByDate" className="text-xs font-medium">
+                              <div className="space-y-0.5">
+                                <Label htmlFor="qa-needByDate" className="text-[11px] font-medium">
                                   Need by date <span className="text-destructive">*</span>
                                 </Label>
                                 <Popover>
@@ -2934,11 +2938,11 @@ const AddNewWorkOrder = () => {
                                       variant="outline"
                                       disabled={areOtherFieldsDisabled()}
                                       className={cn(
-                                        "w-full justify-start text-left font-normal h-10",
+                                        "w-full justify-start text-left font-normal h-7 text-xs",
                                         !quickAddData.needByDate && "text-muted-foreground"
                                       )}
                                     >
-                                      <CalendarIcon className="mr-2 h-4 w-4" />
+                                      <CalendarIcon className="mr-1.5 h-3 w-3" />
                                       {quickAddData.needByDate ? format(new Date(quickAddData.needByDate), "PPP") : <span>Pick a date</span>}
                                     </Button>
                                   </PopoverTrigger>
@@ -2955,8 +2959,8 @@ const AddNewWorkOrder = () => {
                                 </Popover>
                               </div>
 
-                              <div className="space-y-1">
-                                <Label htmlFor="qa-deliverBy" className="text-xs font-medium">
+                              <div className="space-y-0.5">
+                                <Label htmlFor="qa-deliverBy" className="text-[11px] font-medium">
                                   Deliver By Date
                                 </Label>
                                 <Popover>
@@ -2965,11 +2969,11 @@ const AddNewWorkOrder = () => {
                                       variant="outline"
                                       disabled={areOtherFieldsDisabled()}
                                       className={cn(
-                                        "w-full justify-start text-left font-normal h-10",
+                                        "w-full justify-start text-left font-normal h-7 text-xs",
                                         !quickAddData.deliverByDate && "text-muted-foreground"
                                       )}
                                     >
-                                      <CalendarIcon className="mr-2 h-4 w-4" />
+                                      <CalendarIcon className="mr-1.5 h-3 w-3" />
                                       {quickAddData.deliverByDate ? format(new Date(quickAddData.deliverByDate), "PPP") : <span>Pick a date</span>}
                                     </Button>
                                   </PopoverTrigger>
@@ -2986,20 +2990,21 @@ const AddNewWorkOrder = () => {
                                 </Popover>
                               </div>
 
-                              <div className="space-y-1">
-                                <Label htmlFor="qa-soNumber" className="text-xs font-medium">SO Number</Label>
+                              <div className="space-y-0.5">
+                                <Label htmlFor="qa-soNumber" className="text-[11px] font-medium">SO Number</Label>
                                 <Input 
                                   id="qa-soNumber"
                                   value={quickAddData.soNumber}
                                   onChange={(e) => setQuickAddData({...quickAddData, soNumber: e.target.value})}
                                   placeholder="Enter value"
                                   disabled={areOtherFieldsDisabled()}
+                                  className="h-7 text-xs"
                                 />
                               </div>
                             </div>
 
                             {/* Checkboxes */}
-                            <div className="flex flex-wrap gap-3">
+                            <div className="flex flex-wrap gap-2.5">
                             <div className="flex items-center space-x-2">
                               <Checkbox 
                                 id="qa-newEquip"
@@ -3051,9 +3056,10 @@ const AddNewWorkOrder = () => {
                             </div>
                           </div>
 
-                          <div className="flex justify-end gap-2">
+                          <div className="flex justify-end gap-2 pt-1">
                             <Button 
                               variant="outline"
+                              size="sm"
                               onClick={() => {
                                 setQuickAddData({
                                   type: "SINGLE",
@@ -3084,6 +3090,7 @@ const AddNewWorkOrder = () => {
                               Cancel
                             </Button>
                             <Button 
+                              size="sm"
                               onClick={() => {
                                 if (!quickAddData.calFreq || !quickAddData.actionCode || !quickAddData.location || !quickAddData.division || !quickAddData.arrivalDate || !quickAddData.arrivalType || !quickAddData.poNumber || !quickAddData.needByDate) {
                                   toast({
