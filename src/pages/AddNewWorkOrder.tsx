@@ -1529,22 +1529,22 @@ const AddNewWorkOrder = () => {
                           </div>
                           
                           <div className="border rounded-lg overflow-x-auto">
-                            <table className="w-full text-sm">
+                            <table className="w-full text-xs">
                               <thead className="bg-muted">
                                 <tr>
-                                  <th className="text-left p-2 font-medium">Rcv</th>
-                                  <th className="text-left p-2 font-medium">Manufacturer</th>
-                                  <th className="text-left p-2 font-medium">Model</th>
-                                  <th className="text-left p-2 font-medium">Item Description</th>
-                                  <th className="text-left p-2 font-medium">Qty</th>
-                                  <th className="text-left p-2 font-medium">Prev WO #</th>
-                                  <th className="text-left p-2 font-medium">WO Item</th>
-                                  <th className="text-left p-2 font-medium">Serial Number</th>
-                                  <th className="text-left p-2 font-medium">Cust ID</th>
-                                  <th className="text-left p-2 font-medium">Cust Serial</th>
-                                  <th className="text-left p-2 font-medium">Priority</th>
-                                  <th className="text-left p-2 font-medium">Repair</th>
-                                  <th className="text-left p-2 font-medium">17025</th>
+                                  <th className="text-left px-2 py-1.5 font-medium">Rcv</th>
+                                  <th className="text-left px-2 py-1.5 font-medium">Manufacturer</th>
+                                  <th className="text-left px-2 py-1.5 font-medium">Model</th>
+                                  <th className="text-left px-2 py-1.5 font-medium">Item Description</th>
+                                  <th className="text-left px-2 py-1.5 font-medium">Qty</th>
+                                  <th className="text-left px-2 py-1.5 font-medium">Prev WO #</th>
+                                  <th className="text-left px-2 py-1.5 font-medium">WO Item</th>
+                                  <th className="text-left px-2 py-1.5 font-medium">Serial Number</th>
+                                  <th className="text-left px-2 py-1.5 font-medium">Cust ID</th>
+                                  <th className="text-left px-2 py-1.5 font-medium">Cust Serial</th>
+                                  <th className="text-left px-2 py-1.5 font-medium">Priority</th>
+                                  <th className="text-left px-2 py-1.5 font-medium">Repair</th>
+                                  <th className="text-left px-2 py-1.5 font-medium">17025</th>
                                 </tr>
                               </thead>
                               <tbody className="bg-card">
