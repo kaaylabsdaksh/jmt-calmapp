@@ -1722,6 +1722,7 @@ const AddNewWorkOrder = () => {
                               <SelectValue />
                             </SelectTrigger>
                             <SelectContent className="bg-popover border shadow-lg z-50">
+                              <SelectItem value="none">None</SelectItem>
                               {Object.keys(rmaData).map((rmaId) => (
                                 <SelectItem key={rmaId} value={rmaId}>{rmaId}</SelectItem>
                               ))}
@@ -1757,7 +1758,7 @@ const AddNewWorkOrder = () => {
                           </table>
                         </div>
 
-                        {selectedRMA && (<>
+                        {selectedRMA && selectedRMA !== "none" && (<>
                         {/* RECEIVED Section */}
                         <div className="border rounded-lg">
                           <div className="bg-muted border-b px-3 py-1">
