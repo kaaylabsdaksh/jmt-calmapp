@@ -1127,7 +1127,7 @@ const AddNewWorkOrder = () => {
                         placeholder="Customer name"
                         value={workOrderData.customer}
                         onChange={(e) => setWorkOrderData(prev => ({ ...prev, customer: e.target.value }))}
-                        disabled={areOtherFieldsDisabled()}
+                        disabled={isSaved}
                         className="h-9 sm:h-10"
                       />
                     </div>
