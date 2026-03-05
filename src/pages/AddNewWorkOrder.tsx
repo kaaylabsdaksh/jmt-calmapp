@@ -1214,7 +1214,7 @@ const AddNewWorkOrder = () => {
                           </div>
 
                           {/* Tables Side by Side */}
-                          <div className="grid grid-cols-2 gap-3">
+                          <div className="grid grid-cols-2 gap-2">
                             {/* Customer Quotes Table */}
                             <div className="border rounded-lg overflow-hidden">
                               <table className="w-full text-xs">
