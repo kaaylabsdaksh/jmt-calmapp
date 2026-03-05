@@ -1637,9 +1637,9 @@ const AddNewWorkOrder = () => {
                             </div>
                             
                             <div className="flex items-center gap-2">
-                              <Label className="text-sm whitespace-nowrap">Page size:</Label>
+                              <Label className="text-xs whitespace-nowrap">Page size:</Label>
                               <Select defaultValue="10">
-                                <SelectTrigger className="h-8 w-16">
+                                <SelectTrigger className="h-7 w-14 text-xs">
                                   <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent className="bg-background border shadow-lg z-50">
