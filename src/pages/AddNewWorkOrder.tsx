@@ -248,8 +248,8 @@ const AddNewWorkOrder = () => {
           prevWO: "801500",
           woItem: "801500-001",
           serialNumber: "12345678",
-          custId: "FLUKE-001",
-          custSerial: "SN001",
+          custId: "",
+          custSerial: "",
           priority: "expedite",
           repair: true,
           iso17025: true
