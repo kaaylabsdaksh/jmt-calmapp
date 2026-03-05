@@ -1370,7 +1370,7 @@ const AddNewWorkOrder = () => {
                               <h4 className="text-xs font-medium text-muted-foreground border-b pb-0.5">General Information</h4>
                               <div className="space-y-1.5">
                                 <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[70px]">Cal Freq:</Label>
+                                  <Label className="text-xs whitespace-nowrap min-w-[70px]"><span className="text-destructive">*</span> Cal Freq:</Label>
                                   <Input type="number" value={quoteData[selectedQuote].received.calFreq} className="h-7 text-xs" readOnly />
                                 </div>
                                 <div className="flex items-center gap-1.5">
