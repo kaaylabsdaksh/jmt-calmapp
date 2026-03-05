@@ -1284,7 +1284,7 @@ const AddNewWorkOrder = () => {
                             <h3 className="text-xs font-semibold text-center">RECEIVED</h3>
                           </div>
                           
-                          <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 p-2">
+                          <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 p-1.5">
                             {/* General Information */}
                             <div className="space-y-1.5">
                               <h4 className="text-xs font-medium text-muted-foreground border-b pb-0.5">General Information</h4>
