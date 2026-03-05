@@ -541,8 +541,13 @@ const AddNewWorkOrder = () => {
   };
 
   // Function to check if other fields (non-contact) should be disabled
-  // These fields are disabled once an account is selected (they're auto-populated)
   const areOtherFieldsDisabled = () => {
+    return !hasContact;
+  };
+
+  // Function to check if the top section fields (WO#, Status, Type, Customer, Address) should be disabled
+  // These are disabled as soon as an account is selected (auto-populated), and remain disabled after save
+  const areTopSectionFieldsDisabled = () => {
     const isValidFormat = /^\d{4}\.\d{2}$/.test(workOrderData.accountNumber);
     return isValidFormat && workOrderData.accountNumber.length > 0;
   };
@@ -551,8 +556,8 @@ const AddNewWorkOrder = () => {
   // Contact is enabled after account selection, disabled after save
   const isContactDisabled = () => {
     const isValidFormat = /^\d{4}\.\d{2}$/.test(workOrderData.accountNumber);
-    if (!isValidFormat || !workOrderData.accountNumber) return true; // No account yet
-    if (isSaved) return true; // Already saved
+    if (!isValidFormat || !workOrderData.accountNumber) return true;
+    if (isSaved) return true;
     return false;
   };
 
