@@ -2038,6 +2038,7 @@ const AddNewWorkOrder = () => {
                             </Button>
                           </div>
                         </div>
+                        </>)}
                       </CardContent>
                     </AccordionContent>
                   </AccordionItem>
