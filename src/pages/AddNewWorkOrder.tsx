@@ -1722,6 +1722,7 @@ const AddNewWorkOrder = () => {
                               <SelectValue />
                             </SelectTrigger>
                             <SelectContent className="bg-popover border shadow-lg z-50">
+                              <SelectItem value="none">None</SelectItem>
                               {Object.keys(rmaData).map((rmaId) => (
                                 <SelectItem key={rmaId} value={rmaId}>{rmaId}</SelectItem>
                               ))}
