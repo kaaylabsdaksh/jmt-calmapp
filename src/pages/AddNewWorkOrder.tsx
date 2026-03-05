@@ -1939,7 +1939,7 @@ const AddNewWorkOrder = () => {
                                 </div>
 
                                 <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[55px]">Type:</Label>
+                                  <Label className="text-xs whitespace-nowrap min-w-[55px]"><span className="text-destructive">*</span> Type:</Label>
                                   <Select 
                                     value={rmaData[selectedRMA].received.arrivalType}
                                     onValueChange={(value) => {
