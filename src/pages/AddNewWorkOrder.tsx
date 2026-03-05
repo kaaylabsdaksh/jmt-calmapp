@@ -1560,7 +1560,7 @@ const AddNewWorkOrder = () => {
                                       key={index} 
                                       className={`border-t ${item.highlighted ? 'bg-muted/30' : ''} ${isItemAdded ? 'opacity-50' : ''}`}
                                     >
-                                      <td className="px-2 py-1.5">
+                                      <td className="px-1.5 py-1">
                                         <Checkbox 
                                           checked={selectedQuoteItems.includes(index)}
                                           disabled={isItemAdded}
@@ -1573,9 +1573,9 @@ const AddNewWorkOrder = () => {
                                           }}
                                         />
                                       </td>
-                                      <td className="px-2 py-1.5 text-foreground">{item.manufacturer}</td>
-                                      <td className="px-2 py-1.5 text-foreground">{item.model}</td>
-                                      <td className="px-2 py-1.5 font-medium text-foreground">{item.description}</td>
+                                      <td className="px-1.5 py-1 text-foreground">{item.manufacturer}</td>
+                                      <td className="px-1.5 py-1 text-foreground">{item.model}</td>
+                                      <td className="px-1.5 py-1 font-medium text-foreground">{item.description}</td>
                                     <td className="px-2 py-1.5">
                                       <Input type="number" defaultValue={item.qty} className="h-7 w-14 text-xs" />
                                     </td>
