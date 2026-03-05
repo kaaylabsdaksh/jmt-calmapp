@@ -1996,6 +1996,39 @@ const AddNewWorkOrder = () => {
                             </table>
                           </div>
 
+                          {/* Pagination */}
+                          <div className="flex flex-col sm:flex-row justify-between items-center gap-2">
+                            <div className="flex items-center gap-2 text-xs text-foreground">
+                              <span>Page 1 of 1 ({rmaData[selectedRMA as keyof typeof rmaData].items.length} items)</span>
+                              <div className="flex items-center gap-1">
+                                <Button variant="outline" size="sm" className="h-7 w-7 p-0">
+                                  <span>&lt;</span>
+                                </Button>
+                                <Button variant="outline" size="sm" className="h-7 w-7 p-0 bg-primary text-primary-foreground">
+                                  1
+                                </Button>
+                                <Button variant="outline" size="sm" className="h-7 w-7 p-0">
+                                  <span>&gt;</span>
+                                </Button>
+                              </div>
+                            </div>
+                            
+                            <div className="flex items-center gap-2">
+                              <Label className="text-xs whitespace-nowrap">Page size:</Label>
+                              <Select defaultValue="10">
+                                <SelectTrigger className="h-7 w-14 text-xs">
+                                  <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent className="bg-background border shadow-lg z-50">
+                                  <SelectItem value="5">5</SelectItem>
+                                  <SelectItem value="10">10</SelectItem>
+                                  <SelectItem value="20">20</SelectItem>
+                                  <SelectItem value="50">50</SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </div>
+                          </div>
+
                           <div className="flex justify-end">
                             <Button 
                               className="bg-primary hover:bg-primary/90"
