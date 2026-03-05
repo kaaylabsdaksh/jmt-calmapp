@@ -2733,12 +2733,12 @@ const AddNewWorkOrder = () => {
                         </Card>
 
                         {/* ARRIVAL INFORMATION Card */}
-                        <Card>
-                          <CardHeader className="p-3 pb-2">
-                            <h4 className="text-xs font-semibold text-muted-foreground uppercase">Arrival Information</h4>
+                        <Card className="shadow-none">
+                          <CardHeader className="px-2.5 py-1.5 pb-1">
+                            <h4 className="text-[10px] font-semibold text-muted-foreground uppercase">Arrival Information</h4>
                           </CardHeader>
-                          <CardContent className="p-3 pt-2">
-                            <div className="grid grid-cols-2 gap-3">
+                          <CardContent className="px-2.5 py-1.5 pt-0">
+                            <div className="grid grid-cols-2 gap-2">
                               <div className="space-y-1">
                                 <Label htmlFor="qa-arrivalDate" className="text-xs font-medium">
                                   Date <span className="text-destructive">*</span>
