@@ -1641,7 +1641,7 @@ const EditBatchWorkOrder = () => {
                                       <Input type="number" defaultValue={item.qty} className="h-7 w-16 text-xs" />
                                     </td>
                                     <td className="p-2">
-                                      <Input defaultValue={item.prevWO} className="h-8 w-20" />
+                                      <Input defaultValue={item.prevWO} className="h-7 w-20 text-xs" />
                                     </td>
                                     <td className="p-2">
                                       {item.woItem ? (
