@@ -2864,6 +2864,79 @@ const AddNewWorkOrder = () => {
                       </div>
                     </div>
 
+                    {/* Action Buttons Bar */}
+                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="bg-yellow-200 hover:bg-yellow-300 text-black border-yellow-400 h-9 text-xs font-medium"
+                        onClick={() => {
+                          setIsQuickAddExpanded(true);
+                          setViewMode('receiving');
+                          setTimeout(() => document.getElementById('quick-add-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
+                        }}
+                      >
+                        <Plus className="w-3.5 h-3.5 mr-1" />
+                        Add New Item
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="bg-yellow-200 hover:bg-yellow-300 text-black border-yellow-400 h-9 text-xs font-medium"
+                        onClick={() => setIsRFIDDialogOpen(true)}
+                      >
+                        <PlusCircle className="w-3.5 h-3.5 mr-1" />
+                        Add New Item w/RFID
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="bg-yellow-200 hover:bg-yellow-300 text-black border-yellow-400 h-9 text-xs font-medium"
+                        onClick={() => {
+                          toast({ title: "Print QR Sheet", description: "QR Sheet generation initiated", duration: 1500 });
+                        }}
+                      >
+                        <QrCode className="w-3.5 h-3.5 mr-1" />
+                        Print QR Sheet
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="bg-yellow-200 hover:bg-yellow-300 text-black border-yellow-400 h-9 text-xs font-medium"
+                        onClick={() => {
+                          setIsCreateUnusedItemsExpanded(!isCreateUnusedItemsExpanded);
+                          setTimeout(() => document.getElementById('create-unused-items-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
+                        }}
+                      >
+                        <PackagePlus className="w-3.5 h-3.5 mr-1" />
+                        Create Unused Items
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="bg-yellow-200 hover:bg-yellow-300 text-black border-yellow-400 h-9 text-xs font-medium"
+                        onClick={() => {
+                          setIsCopyFromWOExpanded(!isCopyFromWOExpanded);
+                          setTimeout(() => document.getElementById('copy-from-other-wo')?.scrollIntoView({ behavior: 'smooth' }), 100);
+                        }}
+                      >
+                        <Copy className="w-3.5 h-3.5 mr-1" />
+                        Copy From Other Work Order
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="bg-yellow-200 hover:bg-yellow-300 text-black border-yellow-400 h-9 text-xs font-medium"
+                        onClick={() => {
+                          setIsSpecialActionExpanded(!isSpecialActionExpanded);
+                          setTimeout(() => document.getElementById('special-action-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
+                        }}
+                      >
+                        <Wand2 className="w-3.5 h-3.5 mr-1" />
+                        Special Action
+                      </Button>
+                    </div>
+
                     {/* Quick Add Section - Only in Receiving View */}
                     {viewMode === 'receiving' && (
                     <div id="quick-add-section" className="space-y-4">
