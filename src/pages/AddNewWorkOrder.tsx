@@ -1220,8 +1220,8 @@ const AddNewWorkOrder = () => {
                               <table className="w-full text-xs">
                                 <thead className="bg-muted/50">
                                   <tr>
-                                    <th className="text-left p-2 font-medium text-foreground">Customer Quotes</th>
-                                    <th className="text-left p-2 font-medium text-foreground">Type</th>
+                                    <th className="text-left px-2 py-1 font-medium text-foreground text-xs">Customer Quotes</th>
+                                    <th className="text-left px-2 py-1 font-medium text-foreground text-xs">Type</th>
                                   </tr>
                                 </thead>
                                 <tbody className="bg-card">
