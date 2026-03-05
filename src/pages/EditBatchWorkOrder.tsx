@@ -1817,55 +1817,30 @@ const EditBatchWorkOrder = () => {
                             </Popover>
                           </div>
 
-                          <div className="grid grid-cols-2 gap-3">
-                            <div className="border rounded-lg overflow-hidden">
-                              <table className="w-full text-xs">
-                                <thead className="bg-muted/50">
-                                  <tr>
-                                    <th className="text-left p-2 font-medium text-foreground">RMA #</th>
-                                    <th className="text-left p-2 font-medium text-foreground">Type</th>
-                                  </tr>
-                                </thead>
-                                <tbody className="bg-card">
-                                  <tr className="border-t">
-                                    <td className="p-2">
-                                      <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">RMA-001</a>
-                                    </td>
-                                    <td className="p-2 text-foreground">Repair</td>
-                                  </tr>
-                                  <tr className="border-t">
-                                    <td className="p-2">
-                                      <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">RMA-002</a>
-                                    </td>
-                                    <td className="p-2 text-foreground">Warranty Return</td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </div>
-
-                            <div className="border rounded-lg overflow-hidden">
-                              <table className="w-full text-xs">
-                                <thead className="bg-muted/50">
-                                  <tr>
-                                    <th colSpan={3} className="text-left p-2 font-medium text-foreground">Other WO's & RMAs</th>
-                                  </tr>
-                                  <tr className="border-t">
-                                    <th className="text-left p-2 font-medium text-muted-foreground">Open</th>
-                                    <th className="text-left p-2 font-medium text-muted-foreground">Closed</th>
-                                    <th className="text-left p-2 font-medium text-muted-foreground">RMAs</th>
-                                  </tr>
-                                </thead>
-                                <tbody className="bg-card">
-                                  <tr className="border-t">
-                                    <td className="p-2">
-                                      <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">803115</a>
-                                    </td>
-                                    <td className="p-2 text-foreground">-</td>
-                                    <td className="p-2 text-foreground">-</td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </div>
+                          {/* RMA Table */}
+                          <div className="border rounded-lg overflow-hidden">
+                            <table className="w-full text-xs">
+                              <thead className="bg-muted/50">
+                                <tr>
+                                  <th className="text-left p-2 font-medium text-foreground">RMA #</th>
+                                  <th className="text-left p-2 font-medium text-foreground">Type</th>
+                                </tr>
+                              </thead>
+                              <tbody className="bg-card">
+                                <tr className="border-t">
+                                  <td className="p-2">
+                                    <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">RMA-001</a>
+                                  </td>
+                                  <td className="p-2 text-foreground">Repair</td>
+                                </tr>
+                                <tr className="border-t">
+                                  <td className="p-2">
+                                    <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">RMA-002</a>
+                                  </td>
+                                  <td className="p-2 text-foreground">Warranty Return</td>
+                                </tr>
+                              </tbody>
+                            </table>
                           </div>
                         </div>
 
