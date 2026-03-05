@@ -1370,11 +1370,11 @@ const AddNewWorkOrder = () => {
                               <h4 className="text-xs font-medium text-muted-foreground border-b pb-0.5">General Information</h4>
                               <div className="space-y-1.5">
                                 <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[70px]">Cal Freq:</Label>
+                                  <Label className="text-xs whitespace-nowrap min-w-[70px]"><span className="text-destructive">*</span> Cal Freq:</Label>
                                   <Input type="number" value={quoteData[selectedQuote].received.calFreq} className="h-7 text-xs" readOnly />
                                 </div>
                                 <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[70px]">Location:</Label>
+                                  <Label className="text-xs whitespace-nowrap min-w-[70px]"><span className="text-destructive">*</span> Location:</Label>
                                   <Select value={quoteData[selectedQuote].received.location}>
                                     <SelectTrigger className="h-7 text-xs">
                                       <SelectValue />
@@ -1387,7 +1387,7 @@ const AddNewWorkOrder = () => {
                                   </Select>
                                 </div>
                                 <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[70px]">Division:</Label>
+                                  <Label className="text-xs whitespace-nowrap min-w-[70px]"><span className="text-destructive">*</span> Division:</Label>
                                   <Select value={quoteData[selectedQuote].received.division}>
                                     <SelectTrigger className="h-7 text-xs">
                                       <SelectValue />
@@ -1399,7 +1399,7 @@ const AddNewWorkOrder = () => {
                                   </Select>
                                 </div>
                                 <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[70px]">PO #:</Label>
+                                  <Label className="text-xs whitespace-nowrap min-w-[70px]"><span className="text-destructive">*</span> PO #:</Label>
                                   <Input value={quoteData[selectedQuote].received.poNumber} className="h-7 text-xs" readOnly />
                                 </div>
                               </div>
@@ -1410,7 +1410,7 @@ const AddNewWorkOrder = () => {
                               <h4 className="text-xs font-medium text-muted-foreground border-b pb-0.5">Arrival Information</h4>
                               <div className="space-y-1.5">
                                 <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[55px]">Date:</Label>
+                                  <Label className="text-xs whitespace-nowrap min-w-[55px]"><span className="text-destructive">*</span> Date:</Label>
                                   <Popover>
                                     <PopoverTrigger asChild>
                                       <Button
@@ -1436,7 +1436,7 @@ const AddNewWorkOrder = () => {
                                 </div>
 
                                 <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[55px]">Type:</Label>
+                                  <Label className="text-xs whitespace-nowrap min-w-[55px]"><span className="text-destructive">*</span> Type:</Label>
                                   <Select 
                                     value={quoteData[selectedQuote].received.arrivalType}
                                     onValueChange={(value) => {
@@ -1873,11 +1873,11 @@ const AddNewWorkOrder = () => {
                               <h4 className="text-xs font-medium text-muted-foreground border-b pb-0.5">General Information</h4>
                               <div className="space-y-1.5">
                                 <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[70px]">Cal Freq:</Label>
+                                  <Label className="text-xs whitespace-nowrap min-w-[70px]"><span className="text-destructive">*</span> Cal Freq:</Label>
                                   <Input type="number" value={rmaData[selectedRMA].received.calFreq} className="h-7 text-xs" readOnly />
                                 </div>
                                 <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[70px]">Location:</Label>
+                                  <Label className="text-xs whitespace-nowrap min-w-[70px]"><span className="text-destructive">*</span> Location:</Label>
                                   <Select value={rmaData[selectedRMA].received.location}>
                                     <SelectTrigger className="h-7 text-xs">
                                       <SelectValue />
@@ -1890,7 +1890,7 @@ const AddNewWorkOrder = () => {
                                   </Select>
                                 </div>
                                 <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[70px]">Division:</Label>
+                                  <Label className="text-xs whitespace-nowrap min-w-[70px]"><span className="text-destructive">*</span> Division:</Label>
                                   <Select value={rmaData[selectedRMA].received.division}>
                                     <SelectTrigger className="h-7 text-xs">
                                       <SelectValue />
@@ -1902,7 +1902,7 @@ const AddNewWorkOrder = () => {
                                   </Select>
                                 </div>
                                 <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[70px]">PO #:</Label>
+                                  <Label className="text-xs whitespace-nowrap min-w-[70px]"><span className="text-destructive">*</span> PO #:</Label>
                                   <Input value={rmaData[selectedRMA].received.poNumber} className="h-7 text-xs" readOnly />
                                 </div>
                               </div>
@@ -1913,7 +1913,7 @@ const AddNewWorkOrder = () => {
                               <h4 className="text-xs font-medium text-muted-foreground border-b pb-0.5">Arrival Information</h4>
                               <div className="space-y-1.5">
                                 <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[55px]">Date:</Label>
+                                  <Label className="text-xs whitespace-nowrap min-w-[55px]"><span className="text-destructive">*</span> Date:</Label>
                                   <Popover>
                                     <PopoverTrigger asChild>
                                       <Button
@@ -1939,7 +1939,7 @@ const AddNewWorkOrder = () => {
                                 </div>
 
                                 <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[55px]">Type:</Label>
+                                  <Label className="text-xs whitespace-nowrap min-w-[55px]"><span className="text-destructive">*</span> Type:</Label>
                                   <Select 
                                     value={rmaData[selectedRMA].received.arrivalType}
                                     onValueChange={(value) => {
