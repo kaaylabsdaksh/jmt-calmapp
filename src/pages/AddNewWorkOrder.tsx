@@ -1971,7 +1971,9 @@ const AddNewWorkOrder = () => {
                                       <td className="px-1.5 py-1">
                                         <Input defaultValue={item.custId} className="h-6 w-20 text-[11px]" />
                                       </td>
-                                      <td className="px-1.5 py-1 text-foreground">{item.custSerial}</td>
+                                      <td className="px-1.5 py-1">
+                                        <Input placeholder="" defaultValue={item.custSerial} className="h-6 w-20 text-[11px]" />
+                                      </td>
                                       <td className="px-1.5 py-1">
                                         <Select defaultValue={item.priority}>
                                           <SelectTrigger className="h-6 w-20 text-[11px]">
