@@ -1858,7 +1858,7 @@ const EditBatchWorkOrder = () => {
                                   <th className="text-left p-2 font-medium text-foreground">Model</th>
                                   <th className="text-left p-2 font-medium text-foreground">Item Description</th>
                                   <th className="text-left p-2 font-medium text-foreground">Qty</th>
-                                  <th className="text-left p-2 font-medium text-foreground">Prev WO #</th>
+                                  <th className="text-left p-2 font-medium text-foreground">Cal Freq</th>
                                   <th className="text-left p-2 font-medium text-foreground">WO Item</th>
                                   <th className="text-left p-2 font-medium text-foreground">Serial Number</th>
                                   <th className="text-left p-2 font-medium text-foreground">Cust ID</th>
