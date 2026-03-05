@@ -1844,6 +1844,48 @@ const EditBatchWorkOrder = () => {
                           </div>
                         </div>
 
+                        {/* Items Table */}
+                        <div className="space-y-3">
+                          <div className="flex justify-between items-center">
+                            <h4 className="text-xs font-semibold">Items</h4>
+                          </div>
+                          <div className="border rounded-lg overflow-hidden">
+                            <table className="w-full text-xs">
+                              <thead className="bg-muted/50">
+                                <tr>
+                                  <th className="p-2 w-8"><Checkbox /></th>
+                                  <th className="text-left p-2 font-medium text-foreground">Item</th>
+                                  <th className="text-left p-2 font-medium text-foreground">Description</th>
+                                  <th className="text-left p-2 font-medium text-foreground">Qty</th>
+                                  <th className="text-left p-2 font-medium text-foreground">Serial #</th>
+                                </tr>
+                              </thead>
+                              <tbody className="bg-card">
+                                {rmaData[selectedRMA]?.items?.map((item: any, index: number) => (
+                                  <tr key={index} className="border-t">
+                                    <td className="p-2"><Checkbox checked={selectedRMAItems.includes(index)} onCheckedChange={(checked) => { if (checked) { setSelectedRMAItems(prev => [...prev, index]); } else { setSelectedRMAItems(prev => prev.filter(i => i !== index)); } }} /></td>
+                                    <td className="p-2 text-foreground">{item.item}</td>
+                                    <td className="p-2 text-foreground">{item.description}</td>
+                                    <td className="p-2"><Input value={item.qty} className="h-7 w-16 text-xs" readOnly /></td>
+                                    <td className="p-2"><Input value={item.serial} className="h-7 text-xs" readOnly /></td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+                          <div className="flex justify-end">
+                            <Button size="sm" className="h-8 text-xs" onClick={() => { const selectedItems = selectedRMAItems.map(index => rmaData[selectedRMA].items[index]); toast({ title: "RMA Items Added", description: `${selectedItems.length} item(s) added to work order` }); setSelectedRMAItems([]); }}>
+                              Receive and Add RMA Items
+                            </Button>
+                          </div>
+                        </div>
+
+                      </CardContent>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </Card>
+              )}
 
 
                         <div className="border rounded-lg">
