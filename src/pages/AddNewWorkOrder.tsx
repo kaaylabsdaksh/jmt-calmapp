@@ -599,7 +599,8 @@ const AddNewWorkOrder = () => {
       customer: account.customerName,
       srDocument: account.srDocument,
       salesperson: account.salesperson,
-      contact: account.contact
+      contact: account.contact,
+      address: account.address
     }));
     setShowSuggestions(false);
     setAccountSuggestions([]);
