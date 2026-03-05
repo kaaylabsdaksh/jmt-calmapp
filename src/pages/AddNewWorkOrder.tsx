@@ -2770,8 +2770,8 @@ const AddNewWorkOrder = () => {
                                 </Popover>
                               </div>
 
-                              <div className="space-y-1">
-                                <Label htmlFor="qa-arrivalType" className="text-xs font-medium">
+                              <div className="space-y-0.5">
+                                <Label htmlFor="qa-arrivalType" className="text-[11px] font-medium">
                                   Type <span className="text-destructive">*</span>
                                 </Label>
                                 <Select 
@@ -2779,7 +2779,7 @@ const AddNewWorkOrder = () => {
                                   onValueChange={(value) => setQuickAddData({...quickAddData, arrivalType: value})}
                                   disabled={areOtherFieldsDisabled()}
                                 >
-                                  <SelectTrigger id="qa-arrivalType">
+                                  <SelectTrigger id="qa-arrivalType" className="h-7 text-xs">
                                     <SelectValue placeholder="Select..." />
                                   </SelectTrigger>
                                   <SelectContent className="bg-background border shadow-lg z-50">
