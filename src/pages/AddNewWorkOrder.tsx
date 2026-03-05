@@ -8,7 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { X, Download, Settings, User, CreditCard, Users, Package, FileText, Calculator, AlertCircle, ExternalLink, Award, Shield, BarChart, Save, LayoutGrid, Table, ChevronDown, Plus, PlusCircle, QrCode, Copy, PackagePlus, Menu, Wand2, BookmarkCheck, CalendarIcon, Check } from "lucide-react";
+import { X, Download, Settings, User, CreditCard, Users, Package, FileText, Calculator, AlertCircle, ExternalLink, Award, Shield, BarChart, Save, LayoutGrid, Table, ChevronDown, Plus, PlusCircle, QrCode, Copy, PackagePlus, Menu, Wand2, BookmarkCheck, CalendarIcon } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { WorkOrderItemsTable } from "@/components/WorkOrderItemsTable";
@@ -26,7 +26,6 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 
 const AddNewWorkOrder = () => {
   const navigate = useNavigate();
@@ -128,85 +127,6 @@ const AddNewWorkOrder = () => {
   const [selectedQuote, setSelectedQuote] = useState("48020");
   const [selectedQuoteItems, setSelectedQuoteItems] = useState<number[]>([]);
   
-  // RMA Selection
-  const [selectedRMA, setSelectedRMA] = useState("RMA-001");
-  const [selectedRMAItems, setSelectedRMAItems] = useState<number[]>([]);
-  
-  // Mock data for RMA
-  const [rmaData, setRmaData] = useState({
-    "RMA-001": {
-      received: {
-        calFreq: "12",
-        location: "baton-rouge",
-        division: "lab",
-        poNumber: "RMA-PO-001",
-        arrivalDate: "2024-02-15",
-        arrivalType: "shipped",
-        priority: "expedite",
-        needByDate: "2024-03-01"
-      },
-      items: [
-        {
-          manufacturer: "Fluke",
-          model: "87V",
-          description: "DIGITAL MULTIMETER",
-          qty: "1",
-          calFreq: "12",
-          woItem: "801234-001",
-          serialNumber: "FL12345",
-          custId: "CUST-RMA-001",
-          custSerial: "CS-001",
-          priority: "expedite",
-          repair: true,
-          iso17025: false
-        },
-        {
-          manufacturer: "Keysight",
-          model: "34465A",
-          description: "BENCH MULTIMETER 6.5 DIGIT",
-          qty: "1",
-          calFreq: "6",
-          woItem: "",
-          serialNumber: "KS98765",
-          custId: "CUST-RMA-002",
-          custSerial: "CS-002",
-          priority: "rush",
-          repair: true,
-          iso17025: true,
-          highlighted: true
-        }
-      ]
-    },
-    "RMA-002": {
-      received: {
-        calFreq: "6",
-        location: "houston",
-        division: "field",
-        poNumber: "RMA-PO-002",
-        arrivalDate: "2024-03-10",
-        arrivalType: "customer-dropoff",
-        priority: "normal",
-        needByDate: "2024-04-01"
-      },
-      items: [
-        {
-          manufacturer: "Tektronix",
-          model: "TDS2024C",
-          description: "DIGITAL OSCILLOSCOPE 200MHZ",
-          qty: "1",
-          prevWO: "802500",
-          woItem: "802500-002",
-          serialNumber: "TEK54321",
-          custId: "CUST-RMA-003",
-          custSerial: "CS-003",
-          priority: "normal",
-          repair: true,
-          iso17025: false
-        }
-      ]
-    }
-  });
-
   // Customer PO Selection
   const [selectedCustPO, setSelectedCustPO] = useState("4510114092");
   const [custPOPageSize, setCustPOPageSize] = useState(5);
@@ -372,7 +292,7 @@ const AddNewWorkOrder = () => {
     localStorage.setItem('workOrderViewMode', viewMode);
   }, [viewMode]);
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const [accountSuggestions, setAccountSuggestions] = useState<Array<{accountNumber: string, customerName: string, srDocument: string, salesperson: string, contact: string, address: string}>>([]);
+  const [accountSuggestions, setAccountSuggestions] = useState<Array<{accountNumber: string, customerName: string, srDocument: string, salesperson: string, contact: string}>>([]);
   const [highlightedSuggestion, setHighlightedSuggestion] = useState(-1);
   const [showContactForm, setShowContactForm] = useState(false);
   const [receivingItems, setReceivingItems] = useState<Array<{
@@ -511,40 +431,35 @@ const AddNewWorkOrder = () => {
       customerName: "Entergy Inventory",
       srDocument: "SR2244",
       salesperson: "ZZEN - House - Entergy", 
-      contact: "Brad Morrison",
-      address: "639 Loyola Ave, New Orleans, LA 70113"
+      contact: "Brad Morrison"
     },
     {
       accountNumber: "1500.01",
       customerName: "Gulf Power Company",
       srDocument: "SR3345",
       salesperson: "John Smith - Gulf Power Rep",
-      contact: "Mike Johnson",
-      address: "1 Energy Place, Pensacola, FL 32520"
+      contact: "Mike Johnson"
     },
     {
       accountNumber: "0152.01", 
       customerName: "Florida Power & Light",
       srDocument: "SR4456",
       salesperson: "Sarah Wilson - FPL Account Manager",
-      contact: "Lisa Anderson",
-      address: "700 Universe Blvd, Juno Beach, FL 33408"
+      contact: "Lisa Anderson"
     },
     {
       accountNumber: "1500.03",
       customerName: "Duke Energy Corporation",
       srDocument: "SR5567",
       salesperson: "Robert Davis - Duke Energy Sales",
-      contact: "Jennifer Martinez",
-      address: "550 S Tryon St, Charlotte, NC 28202"
+      contact: "Jennifer Martinez"
     },
     {
       accountNumber: "1500.04",
       customerName: "Southern Company Services",
       srDocument: "SR6678",
       salesperson: "Amanda Brown - Southern Rep",
-      contact: "David Thompson",
-      address: "30 Ivan Allen Jr Blvd NW, Atlanta, GA 30308"
+      contact: "David Thompson"
     }
   ];
 
@@ -625,27 +540,6 @@ const AddNewWorkOrder = () => {
     return !hasContact;
   };
 
-  // Function to check if the top section fields (WO#, Status, Type, Customer, Address) should be disabled
-  // These are disabled as soon as an account is selected (auto-populated), and remain disabled after save
-  const areTopSectionFieldsDisabled = () => {
-    const isValidFormat = /^\d{4}\.\d{2}$/.test(workOrderData.accountNumber);
-    return isValidFormat && workOrderData.accountNumber.length > 0;
-  };
-
-  // Function to check if contact field should be disabled
-  // Contact is enabled after account selection, disabled after save
-  const isContactDisabled = () => {
-    const isValidFormat = /^\d{4}\.\d{2}$/.test(workOrderData.accountNumber);
-    if (!isValidFormat || !workOrderData.accountNumber) return true;
-    if (isSaved) return true;
-    return false;
-  };
-
-  // Function to check if account number should be disabled (after save)
-  const isAccountDisabled = () => {
-    return isSaved;
-  };
-
   // Handle account number input change
   const handleAccountNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value.replace(/\D/g, ''); // Remove non-digits
@@ -700,8 +594,7 @@ const AddNewWorkOrder = () => {
       customer: account.customerName,
       srDocument: account.srDocument,
       salesperson: account.salesperson,
-      contact: account.contact,
-      address: account.address
+      contact: account.contact
     }));
     setShowSuggestions(false);
     setAccountSuggestions([]);
@@ -1062,7 +955,6 @@ const AddNewWorkOrder = () => {
                           onKeyDown={handleKeyDown}
                           maxLength={7}
                           className={`h-9 sm:h-10 ${!workOrderData.accountNumber ? "border-destructive" : ""}`}
-                          disabled={isAccountDisabled()}
                         />
                         {!workOrderData.accountNumber && (
                           <div className="absolute right-3 top-1/2 -translate-y-1/2 w-2 h-2 bg-destructive rounded-full"></div>
@@ -1105,7 +997,7 @@ const AddNewWorkOrder = () => {
                       <Select 
                         value={workOrderData.contact || "no-contact"} 
                         onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, contact: value === "no-contact" ? "" : value }))}
-                        disabled={isContactDisabled()}
+                        disabled={!isSaved}
                       >
                         <SelectTrigger className="h-9 sm:h-10">
                           <SelectValue placeholder="Select contact" />
@@ -1152,7 +1044,7 @@ const AddNewWorkOrder = () => {
                         id="workOrderNumber"
                         value={workOrderData.workOrderNumber}
                         onChange={(e) => setWorkOrderData(prev => ({ ...prev, workOrderNumber: e.target.value }))}
-                        disabled={areTopSectionFieldsDisabled()}
+                        disabled={areOtherFieldsDisabled()}
                         className="h-9 sm:h-10"
                       />
                     </div>
@@ -1160,7 +1052,7 @@ const AddNewWorkOrder = () => {
                     {/* Work Order Status */}
                     <div className="space-y-2">
                       <Label className="text-sm font-medium">Work Order Status</Label>
-                      <Select value={workOrderData.workOrderStatus} onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, workOrderStatus: value }))} disabled={areTopSectionFieldsDisabled()}>
+                      <Select value={workOrderData.workOrderStatus} onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, workOrderStatus: value }))} disabled={areOtherFieldsDisabled()}>
                         <SelectTrigger className="h-9 sm:h-10">
                           <SelectValue />
                         </SelectTrigger>
@@ -1176,7 +1068,7 @@ const AddNewWorkOrder = () => {
                     {/* Work Order Type */}
                     <div className="space-y-2">
                       <Label className="text-sm font-medium">Work Order Type</Label>
-                      <Select value={workOrderData.workOrderType} onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, workOrderType: value }))} disabled={areTopSectionFieldsDisabled()}>
+                      <Select value={workOrderData.workOrderType} onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, workOrderType: value }))} disabled={areOtherFieldsDisabled()}>
                         <SelectTrigger className="h-9 sm:h-10">
                           <SelectValue />
                         </SelectTrigger>
@@ -1195,20 +1087,7 @@ const AddNewWorkOrder = () => {
                         placeholder="Customer name"
                         value={workOrderData.customer}
                         onChange={(e) => setWorkOrderData(prev => ({ ...prev, customer: e.target.value }))}
-                        disabled={areTopSectionFieldsDisabled()}
-                        className="h-9 sm:h-10"
-                      />
-                    </div>
-
-                    {/* Address */}
-                    <div className="space-y-2">
-                      <Label htmlFor="address" className="text-sm font-medium">Address</Label>
-                      <Input
-                        id="address"
-                        placeholder="Customer address"
-                        value={workOrderData.address || ""}
-                        onChange={(e) => setWorkOrderData(prev => ({ ...prev, address: e.target.value }))}
-                        disabled={areTopSectionFieldsDisabled()}
+                        disabled={areOtherFieldsDisabled()}
                         className="h-9 sm:h-10"
                       />
                     </div>
@@ -1283,9 +1162,9 @@ const AddNewWorkOrder = () => {
                         <div className="space-y-3">
                           {/* Dropdown */}
                           <div className="flex items-center gap-2">
-                            <Label className="text-xs font-medium whitespace-nowrap">Cust Quote #:</Label>
+                            <Label className="text-sm font-medium whitespace-nowrap">Cust Quote #:</Label>
                             <Select value={selectedQuote} onValueChange={setSelectedQuote}>
-                              <SelectTrigger className="h-7 text-xs w-40">
+                              <SelectTrigger className="h-9 w-40">
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent className="bg-popover border shadow-lg z-50">
@@ -1351,8 +1230,8 @@ const AddNewWorkOrder = () => {
                         </div>
 
                         {/* Remarks Section */}
-                        <div className="border-2 border-destructive bg-destructive/5 rounded-lg p-2">
-                          <p className="text-xs">
+                        <div className="border-2 border-destructive bg-destructive/5 rounded-lg p-3">
+                          <p className="text-sm">
                             <span className="font-semibold text-destructive">Remarks:</span>{" "}
                             <span className="font-medium">ESL TIER 2 USE TAG NO# AS ID#!</span>
                           </p>
@@ -1370,11 +1249,11 @@ const AddNewWorkOrder = () => {
                               <h4 className="text-xs font-medium text-muted-foreground border-b pb-0.5">General Information</h4>
                               <div className="space-y-1.5">
                                 <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[70px]"><span className="text-destructive">*</span> Cal Freq:</Label>
+                                  <Label className="text-xs whitespace-nowrap min-w-[70px]">Cal Freq:</Label>
                                   <Input type="number" value={quoteData[selectedQuote].received.calFreq} className="h-7 text-xs" readOnly />
                                 </div>
                                 <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[70px]"><span className="text-destructive">*</span> Location:</Label>
+                                  <Label className="text-xs whitespace-nowrap min-w-[70px]">Location:</Label>
                                   <Select value={quoteData[selectedQuote].received.location}>
                                     <SelectTrigger className="h-7 text-xs">
                                       <SelectValue />
@@ -1387,7 +1266,7 @@ const AddNewWorkOrder = () => {
                                   </Select>
                                 </div>
                                 <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[70px]"><span className="text-destructive">*</span> Division:</Label>
+                                  <Label className="text-xs whitespace-nowrap min-w-[70px]">Division:</Label>
                                   <Select value={quoteData[selectedQuote].received.division}>
                                     <SelectTrigger className="h-7 text-xs">
                                       <SelectValue />
@@ -1399,7 +1278,7 @@ const AddNewWorkOrder = () => {
                                   </Select>
                                 </div>
                                 <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[70px]"><span className="text-destructive">*</span> PO #:</Label>
+                                  <Label className="text-xs whitespace-nowrap min-w-[70px]">PO #:</Label>
                                   <Input value={quoteData[selectedQuote].received.poNumber} className="h-7 text-xs" readOnly />
                                 </div>
                               </div>
@@ -1410,7 +1289,7 @@ const AddNewWorkOrder = () => {
                               <h4 className="text-xs font-medium text-muted-foreground border-b pb-0.5">Arrival Information</h4>
                               <div className="space-y-1.5">
                                 <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[55px]"><span className="text-destructive">*</span> Date:</Label>
+                                  <Label className="text-xs whitespace-nowrap min-w-[55px]">Date:</Label>
                                   <Popover>
                                     <PopoverTrigger asChild>
                                       <Button
@@ -1436,7 +1315,7 @@ const AddNewWorkOrder = () => {
                                 </div>
 
                                 <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[55px]"><span className="text-destructive">*</span> Type:</Label>
+                                  <Label className="text-xs whitespace-nowrap min-w-[55px]">Type:</Label>
                                   <Select 
                                     value={quoteData[selectedQuote].received.arrivalType}
                                     onValueChange={(value) => {
@@ -1581,11 +1460,11 @@ const AddNewWorkOrder = () => {
                           <div className="grid gap-1.5 leading-none">
                             <label
                               htmlFor="special-instructions"
-                              className="text-xs font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                             >
                               Include Special Instructions
                             </label>
-                            <p className="text-xs text-muted-foreground">
+                            <p className="text-sm text-muted-foreground">
                               Return Address: 2020 Alberta Way, Baton Rouge, LA 70822
                             </p>
                           </div>
@@ -1596,7 +1475,7 @@ const AddNewWorkOrder = () => {
                           <div className="flex justify-between items-center">
                             <a 
                               href="#" 
-                              className="text-xs text-foreground font-medium hover:text-primary hover:underline"
+                              className="text-sm text-foreground font-medium hover:text-primary hover:underline"
                               onClick={(e) => {
                                 e.preventDefault();
                                 if (selectedQuoteItems.length === quoteData[selectedQuote].items.length) {
@@ -1611,8 +1490,8 @@ const AddNewWorkOrder = () => {
                           </div>
                           
                           <div className="border rounded-lg overflow-x-auto">
-                            <table className="w-full text-xs">
-                              <thead className="bg-muted/50">
+                            <table className="w-full text-sm">
+                              <thead className="bg-muted">
                                 <tr>
                                   <th className="text-left p-2 font-medium">Rcv</th>
                                   <th className="text-left p-2 font-medium">Manufacturer</th>
@@ -1657,10 +1536,10 @@ const AddNewWorkOrder = () => {
                                       <td className="p-2 text-foreground">{item.model}</td>
                                       <td className="p-2 font-medium text-foreground">{item.description}</td>
                                     <td className="p-2">
-                                      <Input type="number" defaultValue={item.qty} className="h-7 w-16 text-xs" />
+                                      <Input type="number" defaultValue={item.qty} className="h-8 w-16" />
                                     </td>
                                     <td className="p-2">
-                                      <Input defaultValue={item.prevWO} className="h-7 w-20 text-xs" />
+                                      <Input defaultValue={item.prevWO} className="h-8 w-20" />
                                     </td>
                                     <td className="p-2">
                                       {item.woItem ? (
@@ -1668,17 +1547,17 @@ const AddNewWorkOrder = () => {
                                       ) : null}
                                     </td>
                                     <td className="p-2">
-                                      <Input placeholder={item.serialNumber || "N/A"} defaultValue={item.serialNumber} className="h-7 w-24 text-xs" />
+                                      <Input placeholder={item.serialNumber || "N/A"} defaultValue={item.serialNumber} className="h-8 w-24" />
                                     </td>
                                     <td className="p-2">
-                                      <Input placeholder="" defaultValue={item.custId} className="h-7 w-24 text-xs" />
+                                      <Input placeholder="" defaultValue={item.custId} className="h-8 w-24" />
                                     </td>
                                     <td className="p-2">
-                                      <Input placeholder={item.custSerial || "N/A"} defaultValue={item.custSerial} className="h-7 w-24 text-xs" />
+                                      <Input placeholder={item.custSerial || "N/A"} defaultValue={item.custSerial} className="h-8 w-24" />
                                     </td>
                                     <td className="p-2">
                                       <Select defaultValue={item.priority}>
-                                        <SelectTrigger className="h-7 text-xs w-24">
+                                        <SelectTrigger className="h-8 w-24">
                                           <SelectValue />
                                         </SelectTrigger>
                                         <SelectContent className="bg-popover border shadow-lg z-50">
@@ -1703,7 +1582,7 @@ const AddNewWorkOrder = () => {
 
                           {/* Pagination and Action Button */}
                           <div className="flex flex-col sm:flex-row justify-between items-center gap-3">
-                            <div className="flex items-center gap-2 text-xs text-foreground">
+                            <div className="flex items-center gap-2 text-sm text-foreground">
                               <span>Page 1 of 1 ({quoteData[selectedQuote].items.length} items)</span>
                               <div className="flex items-center gap-1">
                                 <Button variant="outline" size="sm" className="h-7 w-7 p-0">
@@ -1719,7 +1598,7 @@ const AddNewWorkOrder = () => {
                             </div>
                             
                             <div className="flex items-center gap-2">
-                              <Label className="text-xs whitespace-nowrap">Page size:</Label>
+                              <Label className="text-sm whitespace-nowrap">Page size:</Label>
                               <Select defaultValue="10">
                                 <SelectTrigger className="h-8 w-16">
                                   <SelectValue />
@@ -1785,369 +1664,6 @@ const AddNewWorkOrder = () => {
                 </Accordion>
               </Card>
               )}
-
-              {/* RMA Section - Only show after account is saved */}
-              {isSaved && workOrderData.accountNumber && (
-              <Card>
-                <Accordion type="single" collapsible defaultValue="rma">
-                  <AccordionItem value="rma" className="border-0">
-                    <AccordionTrigger className="px-4 sm:px-6 py-3 hover:no-underline">
-                      <span className="text-sm font-semibold">RMA</span>
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <CardContent className="p-4 sm:p-6 pt-0 space-y-4">
-                        {/* RMA Section with integrated tables */}
-                        <div className="space-y-3">
-                          {/* Searchable Dropdown */}
-                          <div className="flex items-center gap-2">
-                            <Label className="text-sm font-medium whitespace-nowrap">RMA #:</Label>
-                            <Popover>
-                              <PopoverTrigger asChild>
-                                <Button variant="outline" role="combobox" className="h-9 w-56 justify-between text-sm font-normal">
-                                  {selectedRMA || "Select RMA..."}
-                                  <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                                </Button>
-                              </PopoverTrigger>
-                              <PopoverContent className="w-56 p-0" align="start">
-                                <Command>
-                                  <CommandInput placeholder="Search RMA..." className="h-9" />
-                                  <CommandList>
-                                    <CommandEmpty>No RMA found.</CommandEmpty>
-                                    <CommandGroup>
-                                      {Object.keys(rmaData).map((rmaKey) => (
-                                        <CommandItem
-                                          key={rmaKey}
-                                          value={rmaKey}
-                                          onSelect={(value) => setSelectedRMA(value.toUpperCase())}
-                                          className="cursor-pointer"
-                                        >
-                                          <Check className={cn("mr-2 h-4 w-4", selectedRMA === rmaKey ? "opacity-100" : "opacity-0")} />
-                                          {rmaKey}
-                                        </CommandItem>
-                                      ))}
-                                    </CommandGroup>
-                                  </CommandList>
-                                </Command>
-                              </PopoverContent>
-                            </Popover>
-                          </div>
-
-                          {/* RMA Table */}
-                          <div className="border rounded-lg overflow-hidden">
-                            <table className="w-full text-xs">
-                              <thead className="bg-muted/50">
-                                <tr>
-                                  <th className="text-left p-2 font-medium text-foreground">RMA #</th>
-                                  <th className="text-left p-2 font-medium text-foreground">Type</th>
-                                </tr>
-                              </thead>
-                              <tbody className="bg-card">
-                                <tr className="border-t">
-                                  <td className="p-2">
-                                    <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">RMA-001</a>
-                                  </td>
-                                  <td className="p-2 text-foreground">Repair</td>
-                                </tr>
-                                <tr className="border-t">
-                                  <td className="p-2">
-                                    <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">RMA-002</a>
-                                  </td>
-                                  <td className="p-2 text-foreground">Warranty Return</td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                        </div>
-
-
-
-                        {/* RECEIVED Section */}
-                        <div className="border rounded-lg">
-                          <div className="bg-muted border-b px-3 py-1">
-                            <h3 className="text-xs font-semibold text-center">RECEIVED</h3>
-                          </div>
-                          
-                          <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 p-2">
-                            {/* General Information */}
-                            <div className="space-y-1.5">
-                              <h4 className="text-xs font-medium text-muted-foreground border-b pb-0.5">General Information</h4>
-                              <div className="space-y-1.5">
-                                <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[70px]"><span className="text-destructive">*</span> Cal Freq:</Label>
-                                  <Input type="number" value={rmaData[selectedRMA].received.calFreq} className="h-7 text-xs" readOnly />
-                                </div>
-                                <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[70px]"><span className="text-destructive">*</span> Location:</Label>
-                                  <Select value={rmaData[selectedRMA].received.location}>
-                                    <SelectTrigger className="h-7 text-xs">
-                                      <SelectValue />
-                                    </SelectTrigger>
-                                    <SelectContent className="bg-popover border shadow-lg z-50">
-                                      <SelectItem value="alexandria">Alexandria</SelectItem>
-                                      <SelectItem value="baton-rouge">Baton Rouge</SelectItem>
-                                      <SelectItem value="houston">Houston</SelectItem>
-                                    </SelectContent>
-                                  </Select>
-                                </div>
-                                <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[70px]"><span className="text-destructive">*</span> Division:</Label>
-                                  <Select value={rmaData[selectedRMA].received.division}>
-                                    <SelectTrigger className="h-7 text-xs">
-                                      <SelectValue />
-                                    </SelectTrigger>
-                                    <SelectContent className="bg-popover border shadow-lg z-50">
-                                      <SelectItem value="lab">Lab</SelectItem>
-                                      <SelectItem value="field">Field</SelectItem>
-                                    </SelectContent>
-                                  </Select>
-                                </div>
-                                <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[70px]"><span className="text-destructive">*</span> PO #:</Label>
-                                  <Input value={rmaData[selectedRMA].received.poNumber} className="h-7 text-xs" readOnly />
-                                </div>
-                              </div>
-                            </div>
-
-                            {/* Arrival Information */}
-                            <div className="space-y-1.5">
-                              <h4 className="text-xs font-medium text-muted-foreground border-b pb-0.5">Arrival Information</h4>
-                              <div className="space-y-1.5">
-                                <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[55px]"><span className="text-destructive">*</span> Date:</Label>
-                                  <Popover>
-                                    <PopoverTrigger asChild>
-                                      <Button
-                                        variant="outline"
-                                        className={cn(
-                                          "w-full justify-start text-left font-normal h-7 text-xs",
-                                          !rmaData[selectedRMA].received.arrivalDate && "text-muted-foreground"
-                                        )}
-                                      >
-                                        <CalendarIcon className="mr-1.5 h-3 w-3" />
-                                        {rmaData[selectedRMA].received.arrivalDate ? format(new Date(rmaData[selectedRMA].received.arrivalDate), "PPP") : <span>Pick a date</span>}
-                                      </Button>
-                                    </PopoverTrigger>
-                                    <PopoverContent className="w-auto p-0" align="start">
-                                      <Calendar
-                                        mode="single"
-                                        selected={rmaData[selectedRMA].received.arrivalDate ? new Date(rmaData[selectedRMA].received.arrivalDate) : undefined}
-                                        initialFocus
-                                        className={cn("p-3 pointer-events-auto")}
-                                      />
-                                    </PopoverContent>
-                                  </Popover>
-                                </div>
-
-                                <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[55px]"><span className="text-destructive">*</span> Type:</Label>
-                                  <Select 
-                                    value={rmaData[selectedRMA].received.arrivalType}
-                                    onValueChange={(value) => {
-                                      setRmaData(prev => ({
-                                        ...prev,
-                                        [selectedRMA]: {
-                                          ...prev[selectedRMA],
-                                          received: {
-                                            ...prev[selectedRMA].received,
-                                            arrivalType: value
-                                          }
-                                        }
-                                      }));
-                                    }}
-                                  >
-                                    <SelectTrigger className="h-7 text-xs">
-                                      <SelectValue placeholder="Select..." />
-                                    </SelectTrigger>
-                                    <SelectContent className="bg-background border shadow-lg z-50">
-                                      <SelectItem value="jm-driver-pickup">JM Driver Pickup</SelectItem>
-                                      <SelectItem value="customer-dropoff">Customer Dropoff</SelectItem>
-                                      <SelectItem value="shipped">Shipped</SelectItem>
-                                      <SelectItem value="onsite">Onsite</SelectItem>
-                                      <SelectItem value="purchasing-dept">Purchasing Dept.</SelectItem>
-                                      <SelectItem value="lab-standard">Lab Standard</SelectItem>
-                                      <SelectItem value="surplus">Surplus</SelectItem>
-                                    </SelectContent>
-                                  </Select>
-                                </div>
-
-                                {/* Conditional fields based on arrival type */}
-                                {rmaData[selectedRMA].received.arrivalType === "surplus" && (
-                                  <div className="flex items-center gap-1.5">
-                                    <Label className="text-xs whitespace-nowrap min-w-[55px]">Location:</Label>
-                                    <Input placeholder="Enter location" className="h-7 text-xs" />
-                                  </div>
-                                )}
-
-                                {rmaData[selectedRMA].received.arrivalType === "shipped" && (
-                                  <div className="flex items-center gap-1.5">
-                                    <Label className="text-xs whitespace-nowrap min-w-[55px]">Ship Type:</Label>
-                                    <Select>
-                                      <SelectTrigger className="h-7 text-xs">
-                                        <SelectValue placeholder="Select..." />
-                                      </SelectTrigger>
-                                      <SelectContent className="bg-background border shadow-lg z-50">
-                                        <SelectItem value="dhl">DHL</SelectItem>
-                                        <SelectItem value="fedex">FedEx</SelectItem>
-                                        <SelectItem value="ups">UPS</SelectItem>
-                                        <SelectItem value="usps">USPS</SelectItem>
-                                      </SelectContent>
-                                    </Select>
-                                  </div>
-                                )}
-
-                                {rmaData[selectedRMA].received.arrivalType === "customer-dropoff" && (
-                                  <div className="flex items-center gap-1.5">
-                                    <Label className="text-xs whitespace-nowrap min-w-[55px]">Name:</Label>
-                                    <Input placeholder="Enter name" className="h-7 text-xs" />
-                                  </div>
-                                )}
-
-                                {rmaData[selectedRMA].received.arrivalType === "jm-driver-pickup" && (
-                                  <>
-                                    <div className="flex items-center gap-1.5">
-                                      <Label className="text-xs whitespace-nowrap min-w-[55px]">Driver:</Label>
-                                      <Select>
-                                        <SelectTrigger className="h-7 text-xs">
-                                          <SelectValue placeholder="Select driver" />
-                                        </SelectTrigger>
-                                        <SelectContent className="bg-background border shadow-lg z-50">
-                                          <SelectItem value="driver1">Driver 1</SelectItem>
-                                          <SelectItem value="driver2">Driver 2</SelectItem>
-                                          <SelectItem value="driver3">Driver 3</SelectItem>
-                                        </SelectContent>
-                                      </Select>
-                                    </div>
-                                    <div className="flex items-center gap-1.5">
-                                      <Label className="text-xs whitespace-nowrap min-w-[55px]">PU Date:</Label>
-                                      <Popover>
-                                        <PopoverTrigger asChild>
-                                          <Button
-                                            variant="outline"
-                                            className={cn(
-                                              "w-full justify-start text-left font-normal h-7 text-xs",
-                                              "text-muted-foreground"
-                                            )}
-                                          >
-                                            <CalendarIcon className="mr-1.5 h-3 w-3" />
-                                            <span>Pick a date</span>
-                                          </Button>
-                                        </PopoverTrigger>
-                                        <PopoverContent className="w-auto p-0" align="start">
-                                          <Calendar
-                                            mode="single"
-                                            initialFocus
-                                            className={cn("p-3 pointer-events-auto")}
-                                          />
-                                        </PopoverContent>
-                                      </Popover>
-                                    </div>
-                                  </>
-                                )}
-                              </div>
-                            </div>
-
-                            {/* Override Fields */}
-                            <div className="space-y-1.5">
-                              <h4 className="text-xs font-medium text-muted-foreground border-b pb-0.5">Override Fields</h4>
-                              <div className="space-y-1.5">
-                                <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[60px]">Priority:</Label>
-                                  <Select value={rmaData[selectedRMA].received.priority}>
-                                    <SelectTrigger className="h-7 text-xs">
-                                      <SelectValue />
-                                    </SelectTrigger>
-                                    <SelectContent className="bg-popover border shadow-lg z-50">
-                                      <SelectItem value="normal">Normal</SelectItem>
-                                      <SelectItem value="expedite">Expedite</SelectItem>
-                                      <SelectItem value="rush">Rush</SelectItem>
-                                    </SelectContent>
-                                  </Select>
-                                </div>
-                                <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[60px]">Need By:</Label>
-                                  <Input type="date" value={rmaData[selectedRMA].received.needByDate} className="h-7 text-xs" readOnly />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Items Table */}
-                        <div className="space-y-3">
-                          <div className="flex justify-between items-center">
-                            <span className="text-xs font-semibold text-foreground cursor-pointer hover:underline" onClick={() => setSelectedRMAItems(rmaData[selectedRMA]?.items?.map((_: any, i: number) => i) || [])}>Select All</span>
-                          </div>
-                          <div className="border rounded-lg overflow-hidden">
-                            <table className="w-full text-xs">
-                              <thead className="bg-muted/50">
-                                <tr>
-                                  <th className="p-2 w-8 font-medium text-foreground">Rcv</th>
-                                  <th className="text-left p-2 font-medium text-foreground">Manufacturer</th>
-                                  <th className="text-left p-2 font-medium text-foreground">Model</th>
-                                  <th className="text-left p-2 font-medium text-foreground">Item Description</th>
-                                  <th className="text-left p-2 font-medium text-foreground">Qty</th>
-                                  <th className="text-left p-2 font-medium text-foreground">Cal Freq</th>
-                                  <th className="text-left p-2 font-medium text-foreground">WO Item</th>
-                                  <th className="text-left p-2 font-medium text-foreground">Serial Number</th>
-                                  <th className="text-left p-2 font-medium text-foreground">Cust ID</th>
-                                  <th className="text-left p-2 font-medium text-foreground">Cust Serial</th>
-                                  <th className="text-left p-2 font-medium text-foreground">Priority</th>
-                                  <th className="text-left p-2 font-medium text-foreground">Repair</th>
-                                  <th className="text-left p-2 font-medium text-foreground">17025</th>
-                                </tr>
-                              </thead>
-                              <tbody className="bg-card">
-                                {rmaData[selectedRMA]?.items?.map((item: any, index: number) => (
-                                  <tr key={index} className="border-t">
-                                    <td className="p-2"><Checkbox checked={selectedRMAItems.includes(index)} onCheckedChange={(checked) => { if (checked) { setSelectedRMAItems(prev => [...prev, index]); } else { setSelectedRMAItems(prev => prev.filter(i => i !== index)); } }} /></td>
-                                    <td className="p-2 text-foreground">{item.manufacturer}</td>
-                                    <td className="p-2 text-foreground">{item.model}</td>
-                                    <td className="p-2 text-foreground">{item.description}</td>
-                                    <td className="p-2"><Input value={item.qty} className="h-7 w-16 text-xs" readOnly /></td>
-                                    <td className="p-2"><Input value={item.calFreq || ""} className="h-7 w-16 text-xs" readOnly /></td>
-                                    <td className="p-2">{item.woItem ? <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline">{item.woItem}</a> : ""}</td>
-                                    <td className="p-2 text-foreground">{item.serialNumber || "N/A"}</td>
-                                    <td className="p-2"><Input value={item.custId || ""} className="h-7 text-xs" readOnly /></td>
-                                    <td className="p-2 text-foreground">{item.custSerial || "N/A"}</td>
-                                    <td className="p-2">
-                                      <Select value={item.priority || "normal"}>
-                                        <SelectTrigger className="h-7 text-xs w-24">
-                                          <SelectValue />
-                                        </SelectTrigger>
-                                        <SelectContent className="bg-popover border shadow-lg z-50">
-                                          <SelectItem value="normal">Normal</SelectItem>
-                                          <SelectItem value="expedite">Expedite</SelectItem>
-                                          <SelectItem value="rush">Rush</SelectItem>
-                                        </SelectContent>
-                                      </Select>
-                                    </td>
-                                    <td className="p-2"><Checkbox checked={item.repair || false} /></td>
-                                    <td className="p-2"><Checkbox checked={item.iso17025 || false} /></td>
-                                  </tr>
-                                ))}
-                              </tbody>
-                            </table>
-                          </div>
-                          <div className="flex justify-end">
-                            <Button size="sm" className="h-8 text-xs" onClick={() => {
-                              const selectedItems = selectedRMAItems.map(index => rmaData[selectedRMA].items[index]);
-                              toast({
-                                title: "RMA Items Added",
-                                description: `${selectedItems.length} item(s) have been added to the work order.`,
-                                duration: 2000,
-                              });
-                              setSelectedRMAItems([]);
-                            }}>
-                              Receive and Add RMA Items {selectedRMAItems.length > 0 && `(${selectedRMAItems.length})`}
-                            </Button>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-              </Card>
-              )}
             </TabsContent>
 
             {/* Placeholder content for other tabs */}
@@ -2155,6 +1671,7 @@ const AddNewWorkOrder = () => {
               <Card>
                 <CardContent className="p-4 sm:p-6">
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+                    {/* Left Column */}
                     <div className="space-y-2 text-sm">
                       <div><span className="font-medium">Status:</span> <span className="text-green-600 font-medium">ACTIVE</span></div>
                       <div><span className="font-medium">Customer Name:</span> Entergy Inventory</div>
@@ -2162,7 +1679,10 @@ const AddNewWorkOrder = () => {
                       <div><span className="font-medium">City/State/Zip:</span> Baton Rouge, LA 70806</div>
                       <div><span className="font-medium">Main Contact:</span> USE TAG/PAPERWORK</div>
                       <div><span className="font-medium">Remarks:</span> ESL (Y) CONTRACT site id must match account</div>
+                      <div><span className="font-medium">Comments:</span> -</div>
                     </div>
+
+                    {/* Right Column */}
                     <div className="space-y-2 text-sm">
                       <div><span className="font-medium">Acct #:</span> 15000.00</div>
                       <div><span className="font-medium">SR Number:</span> SR2244</div>
@@ -2170,39 +1690,66 @@ const AddNewWorkOrder = () => {
                       <div><span className="font-medium">Salesperson Code:</span> ZZEN - House - Entergy</div>
                       <div><span className="font-medium">Terms:</span> Net 30</div>
                       <div><span className="font-medium">P.O. Number:</span> CONTRACT# 10629042</div>
+                      <div><span className="font-medium">Biller Code:</span> 18</div>
+                      <div><span className="font-medium">Industry Code:</span> DM02 - Power Co's - Utility Distribution</div>
+                      <div><span className="font-medium">Contract Pricing:</span> Yes</div>
                     </div>
                   </div>
 
+                  {/* Customer Contacts Table */}
                   <div className="mt-6 sm:mt-8">
                     <h3 className="text-base sm:text-lg font-semibold text-foreground mb-3 sm:mb-4">Customer Contacts</h3>
-                    <div className="hidden sm:block border rounded-lg overflow-hidden">
-                      <table className="w-full text-sm">
-                        <thead className="bg-muted">
-                          <tr>
-                            <th className="text-left p-3 font-medium">Name</th>
-                            <th className="text-left p-3 font-medium">Email</th>
-                            <th className="text-left p-3 font-medium">Phone</th>
-                            <th className="text-left p-3 font-medium">Title</th>
-                            <th className="text-left p-3 font-medium">Type</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr className="border-t">
-                            <td className="p-3">Netasha Gray</td>
-                            <td className="p-3">netasha.gray@entergy.com</td>
-                            <td className="p-3">(225) 382-4878</td>
-                            <td className="p-3">Senior Buyer</td>
-                            <td className="p-3">Primary</td>
-                          </tr>
-                          <tr className="border-t">
-                            <td className="p-3">Barry White</td>
-                            <td className="p-3">barry.white@entergy.com</td>
-                            <td className="p-3">(225) 382-4879</td>
-                            <td className="p-3">Procurement Manager</td>
-                            <td className="p-3">Secondary</td>
-                          </tr>
-                        </tbody>
-                      </table>
+                    <div className="space-y-3 sm:space-y-0">
+                      {/* Mobile Card View */}
+                      <div className="sm:hidden space-y-3">
+                        <div className="border rounded-lg p-3 bg-card">
+                          <div className="font-medium text-sm mb-2">Netasha Gray</div>
+                          <div className="space-y-1 text-xs text-muted-foreground">
+                            <div>netasha.gray@entergy.com</div>
+                            <div>(225) 382-4878</div>
+                            <div>Senior Buyer • Primary</div>
+                          </div>
+                        </div>
+                        <div className="border rounded-lg p-3 bg-card">
+                          <div className="font-medium text-sm mb-2">Barry White</div>
+                          <div className="space-y-1 text-xs text-muted-foreground">
+                            <div>barry.white@entergy.com</div>
+                            <div>(225) 382-4879</div>
+                            <div>Procurement Manager • Secondary</div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Desktop Table View */}
+                      <div className="hidden sm:block border rounded-lg overflow-hidden">
+                        <table className="w-full text-sm">
+                          <thead className="bg-muted">
+                            <tr>
+                              <th className="text-left p-3 font-medium">Name</th>
+                              <th className="text-left p-3 font-medium">Email</th>
+                              <th className="text-left p-3 font-medium">Phone</th>
+                              <th className="text-left p-3 font-medium">Title</th>
+                              <th className="text-left p-3 font-medium">Type</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr className="border-t">
+                              <td className="p-3">Netasha Gray</td>
+                              <td className="p-3">netasha.gray@entergy.com</td>
+                              <td className="p-3">(225) 382-4878</td>
+                              <td className="p-3">Senior Buyer</td>
+                              <td className="p-3">Primary</td>
+                            </tr>
+                            <tr className="border-t">
+                              <td className="p-3">Barry White</td>
+                              <td className="p-3">barry.white@entergy.com</td>
+                              <td className="p-3">(225) 382-4879</td>
+                              <td className="p-3">Procurement Manager</td>
+                              <td className="p-3">Secondary</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
                   </div>
                 </CardContent>
@@ -2223,7 +1770,9 @@ const AddNewWorkOrder = () => {
                         Add Contact
                       </Button>
                     </div>
+                    
                     <div className="space-y-4">
+                      {/* Required Contact */}
                       <div className="space-y-2">
                         <Select defaultValue="barry-white">
                           <SelectTrigger className="w-64">
@@ -2236,6 +1785,8 @@ const AddNewWorkOrder = () => {
                         </Select>
                         <p className="text-sm text-muted-foreground">(required)</p>
                       </div>
+
+                      {/* Additional Contact 1 */}
                       <div>
                         <Select>
                           <SelectTrigger className="w-64">
@@ -2247,6 +1798,8 @@ const AddNewWorkOrder = () => {
                           </SelectContent>
                         </Select>
                       </div>
+
+                      {/* Additional Contact 2 */}
                       <div>
                         <Select>
                           <SelectTrigger className="w-64">
@@ -2258,6 +1811,8 @@ const AddNewWorkOrder = () => {
                           </SelectContent>
                         </Select>
                       </div>
+
+                      {/* Additional Contact 3 */}
                       <div>
                         <Select>
                           <SelectTrigger className="w-64">
@@ -2277,8 +1832,212 @@ const AddNewWorkOrder = () => {
 
             <TabsContent value="items">
               <Card>
-                <CardContent className="p-4 sm:p-6">
+                <CardHeader className="pb-3 sm:pb-4">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
+                    <h2 className="text-lg sm:text-xl font-semibold text-foreground">Work Order Items</h2>
+                    <div className="flex items-center gap-2 w-full sm:w-auto flex-wrap">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="outline" className="flex items-center gap-2 bg-background text-sm">
+                            {viewMode === 'receiving' ? 'Receiving View' : 'Default View'}
+                            <ChevronDown className="w-4 h-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent className="bg-background border shadow-lg z-50" align="end">
+                          <DropdownMenuItem 
+                            onClick={() => setViewMode('cards')}
+                            className={`cursor-pointer ${viewMode === 'cards' || viewMode === 'table' ? 'bg-muted' : ''}`}
+                          >
+                            Default View
+                          </DropdownMenuItem>
+                          <DropdownMenuItem 
+                            onClick={() => setViewMode('receiving')}
+                            className={`cursor-pointer ${viewMode === 'receiving' ? 'bg-muted' : ''}`}
+                          >
+                            <Package className="w-4 h-4 mr-2" />
+                            Receiving View
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => {
+                                localStorage.setItem('workOrderViewMode', viewMode);
+                                toast({
+                                  title: "View Preference Saved",
+                                  description: `${viewMode === 'receiving' ? 'Receiving View' : viewMode === 'table' ? 'Table View' : 'Cards View'} will be your default view.`,
+                                  duration: 1500,
+                                });
+                              }}
+                              className="h-8 w-8 p-0"
+                            >
+                              <BookmarkCheck className="w-4 h-4" />
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Set as default view</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+
+                      {(viewMode === 'table' || viewMode === 'cards') && (
+                        <div className="flex items-center gap-1 bg-muted rounded-lg p-1">
+                          <Button
+                            variant={viewMode === 'table' ? 'default' : 'ghost'}
+                            size="sm"
+                            onClick={() => setViewMode('table')}
+                            className="flex items-center gap-1.5 h-8 px-3"
+                          >
+                            <Table className="w-4 h-4" />
+                            <span className="hidden sm:inline">Table</span>
+                          </Button>
+                          <Button
+                            variant={viewMode === 'cards' ? 'default' : 'ghost'}
+                            size="sm"
+                            onClick={() => setViewMode('cards')}
+                            className="flex items-center gap-1.5 h-8 px-3"
+                          >
+                            <LayoutGrid className="w-4 h-4" />
+                            <span className="hidden sm:inline">Grid</span>
+                          </Button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent className="p-4 sm:p-6 pt-0">
                   <div className="space-y-4 sm:space-y-6">
+                     {/* Action Buttons */}
+                     {viewMode === 'receiving' ? (
+                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
+                        <Button className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm">
+                          <QrCode className="w-3 h-3 sm:w-4 sm:h-4" />
+                          <span className="hidden sm:inline">Print QR Sheet</span>
+                          <span className="sm:hidden">QR Sheet</span>
+                        </Button>
+                        <Button 
+                          onClick={() => {
+                            const newState = !isCreateUnusedItemsExpanded;
+                            setIsCreateUnusedItemsExpanded(newState);
+                            if (newState) {
+                              setIsCopyFromWOExpanded(false);
+                              setIsSpecialActionExpanded(false);
+                              setTimeout(() => document.getElementById('create-unused-items-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
+                            }
+                          }}
+                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
+                        >
+                          <PackagePlus className="w-3 h-3 sm:w-4 sm:h-4" />
+                          <span className="hidden sm:inline">Create Unused Items</span>
+                          <span className="sm:hidden">Unused Items</span>
+                        </Button>
+                        <Button 
+                          onClick={() => {
+                            const newState = !isCopyFromWOExpanded;
+                            setIsCopyFromWOExpanded(newState);
+                            if (newState) {
+                              setIsSpecialActionExpanded(false);
+                              setIsCreateUnusedItemsExpanded(false);
+                              setTimeout(() => document.getElementById('copy-from-other-wo')?.scrollIntoView({ behavior: 'smooth' }), 100);
+                            }
+                          }}
+                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
+                        >
+                          <Copy className="w-3 h-3 sm:w-4 sm:h-4" />
+                          <span className="hidden sm:inline">Copy From Other Work Order</span>
+                          <span className="sm:hidden">Copy WO</span>
+                        </Button>
+                        <Button 
+                          onClick={() => {
+                            const newState = !isSpecialActionExpanded;
+                            setIsSpecialActionExpanded(newState);
+                            if (newState) {
+                              setIsCopyFromWOExpanded(false);
+                              setIsCreateUnusedItemsExpanded(false);
+                              setTimeout(() => document.getElementById('special-action-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
+                            }
+                          }}
+                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
+                        >
+                          <Wand2 className="w-3 h-3 sm:w-4 sm:h-4" />
+                          <span className="hidden sm:inline">Special Action</span>
+                          <span className="sm:hidden">Action</span>
+                        </Button>
+                      </div>
+                     ) : (
+                       <div className="flex gap-2 sm:gap-3 flex-nowrap overflow-x-auto">
+                         <Button
+                           onClick={() => navigate("/form-variations")}
+                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm flex-1 min-w-fit"
+                         >
+                          <Plus className="w-3 h-3 sm:w-4 sm:h-4" />
+                          <span>Add New Item</span>
+                        </Button>
+                        <Button 
+                          onClick={() => setIsRFIDDialogOpen(true)}
+                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm flex-1 min-w-fit"
+                        >
+                          <PlusCircle className="w-3 h-3 sm:w-4 sm:h-4" />
+                          <span>Add New Item w/RFID</span>
+                        </Button>
+                        <Button className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm flex-1 min-w-fit">
+                          <QrCode className="w-3 h-3 sm:w-4 sm:h-4" />
+                          <span>Print QR Sheet</span>
+                        </Button>
+                        <Button
+                          onClick={() => {
+                            const newState = !isCreateUnusedItemsExpanded;
+                            setIsCreateUnusedItemsExpanded(newState);
+                            if (newState) {
+                              setIsCopyFromWOExpanded(false);
+                              setIsSpecialActionExpanded(false);
+                              setTimeout(() => document.getElementById('create-unused-items-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
+                            }
+                          }}
+                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm flex-1 min-w-fit"
+                        >
+                          <PackagePlus className="w-3 h-3 sm:w-4 sm:h-4" />
+                          <span>Create Unused Items</span>
+                        </Button>
+                        <Button 
+                          onClick={() => {
+                            const newState = !isCopyFromWOExpanded;
+                            setIsCopyFromWOExpanded(newState);
+                            if (newState) {
+                              setIsSpecialActionExpanded(false);
+                              setIsCreateUnusedItemsExpanded(false);
+                              setTimeout(() => document.getElementById('copy-from-other-wo')?.scrollIntoView({ behavior: 'smooth' }), 100);
+                            }
+                          }}
+                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm flex-1 min-w-fit"
+                        >
+                          <Copy className="w-3 h-3 sm:w-4 sm:h-4" />
+                          <span>Copy From Other Work Order</span>
+                        </Button>
+                        <Button 
+                          onClick={() => {
+                            const newState = !isSpecialActionExpanded;
+                            setIsSpecialActionExpanded(newState);
+                            if (newState) {
+                              setIsCopyFromWOExpanded(false);
+                              setIsCreateUnusedItemsExpanded(false);
+                              setTimeout(() => document.getElementById('special-action-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
+                            }
+                          }}
+                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm flex-1 min-w-fit"
+                        >
+                          <Wand2 className="w-3 h-3 sm:w-4 sm:h-4" />
+                          <span>Special Action</span>
+                        </Button>
+                      </div>
+                    )}
+
+
                     {/* Copy From Other WO Section */}
                     {isCopyFromWOExpanded && (
                       <div id="copy-from-other-wo" className="bg-muted/30 p-4 rounded-lg border-2 border-primary/20">
@@ -2840,102 +2599,6 @@ const AddNewWorkOrder = () => {
                         </div>
                       </div>
                     )}
-
-                    {/* View Mode Toggle */}
-                    <div className="flex items-center gap-2">
-                      <Label className="text-xs font-medium">View:</Label>
-                      <div className="flex gap-1">
-                        <Button
-                          variant={viewMode === 'receiving' ? 'default' : 'outline'}
-                          size="sm"
-                          className="h-7 text-xs px-3"
-                          onClick={() => setViewMode('receiving')}
-                        >
-                          Receiving View
-                        </Button>
-                        <Button
-                          variant={viewMode === 'table' ? 'default' : 'outline'}
-                          size="sm"
-                          className="h-7 text-xs px-3"
-                          onClick={() => setViewMode('table')}
-                        >
-                          Default View
-                        </Button>
-                      </div>
-                    </div>
-
-                    {/* Action Buttons Bar */}
-                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="bg-yellow-200 hover:bg-yellow-300 text-black border-yellow-400 h-9 text-xs font-medium"
-                        onClick={() => {
-                          setIsQuickAddExpanded(true);
-                          setViewMode('receiving');
-                          setTimeout(() => document.getElementById('quick-add-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
-                        }}
-                      >
-                        <Plus className="w-3.5 h-3.5 mr-1" />
-                        Add New Item
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="bg-yellow-200 hover:bg-yellow-300 text-black border-yellow-400 h-9 text-xs font-medium"
-                        onClick={() => setIsRFIDDialogOpen(true)}
-                      >
-                        <PlusCircle className="w-3.5 h-3.5 mr-1" />
-                        Add New Item w/RFID
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="bg-yellow-200 hover:bg-yellow-300 text-black border-yellow-400 h-9 text-xs font-medium"
-                        onClick={() => {
-                          toast({ title: "Print QR Sheet", description: "QR Sheet generation initiated", duration: 1500 });
-                        }}
-                      >
-                        <QrCode className="w-3.5 h-3.5 mr-1" />
-                        Print QR Sheet
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="bg-yellow-200 hover:bg-yellow-300 text-black border-yellow-400 h-9 text-xs font-medium"
-                        onClick={() => {
-                          setIsCreateUnusedItemsExpanded(!isCreateUnusedItemsExpanded);
-                          setTimeout(() => document.getElementById('create-unused-items-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
-                        }}
-                      >
-                        <PackagePlus className="w-3.5 h-3.5 mr-1" />
-                        Create Unused Items
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="bg-yellow-200 hover:bg-yellow-300 text-black border-yellow-400 h-9 text-xs font-medium"
-                        onClick={() => {
-                          setIsCopyFromWOExpanded(!isCopyFromWOExpanded);
-                          setTimeout(() => document.getElementById('copy-from-other-wo')?.scrollIntoView({ behavior: 'smooth' }), 100);
-                        }}
-                      >
-                        <Copy className="w-3.5 h-3.5 mr-1" />
-                        Copy From Other Work Order
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="bg-yellow-200 hover:bg-yellow-300 text-black border-yellow-400 h-9 text-xs font-medium"
-                        onClick={() => {
-                          setIsSpecialActionExpanded(!isSpecialActionExpanded);
-                          setTimeout(() => document.getElementById('special-action-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
-                        }}
-                      >
-                        <Wand2 className="w-3.5 h-3.5 mr-1" />
-                        Special Action
-                      </Button>
-                    </div>
 
                     {/* Quick Add Section - Only in Receiving View */}
                     {viewMode === 'receiving' && (
