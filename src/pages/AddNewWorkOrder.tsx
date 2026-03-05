@@ -1486,9 +1486,9 @@ const AddNewWorkOrder = () => {
                                     </SelectContent>
                                   </Select>
                                 </div>
-                                <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[60px]">Need By:</Label>
-                                  <Input type="date" value={quoteData[selectedQuote].received.needByDate} className="h-7 text-xs" readOnly />
+                                <div className="flex items-center gap-1">
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[50px]">Need By:</Label>
+                                  <Input type="date" value={quoteData[selectedQuote].received.needByDate} className="h-6 text-[11px]" readOnly />
                                 </div>
                               </div>
                             </div>
