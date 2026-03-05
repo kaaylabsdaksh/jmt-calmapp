@@ -1284,19 +1284,19 @@ const AddNewWorkOrder = () => {
                             <h3 className="text-xs font-semibold text-center">RECEIVED</h3>
                           </div>
                           
-                          <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 p-2">
+                          <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 p-1.5">
                             {/* General Information */}
-                            <div className="space-y-1.5">
-                              <h4 className="text-xs font-medium text-muted-foreground border-b pb-0.5">General Information</h4>
-                              <div className="space-y-1.5">
-                                <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[70px]"><span className="text-destructive">*</span> Cal Freq:</Label>
-                                  <Input type="number" value={quoteData[selectedQuote].received.calFreq} className="h-7 text-xs" readOnly />
+                            <div className="space-y-1">
+                              <h4 className="text-[11px] font-medium text-muted-foreground border-b pb-0.5">General Information</h4>
+                              <div className="space-y-1">
+                                <div className="flex items-center gap-1">
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]"><span className="text-destructive">*</span> Cal Freq:</Label>
+                                  <Input type="number" value={quoteData[selectedQuote].received.calFreq} className="h-6 text-[11px]" readOnly />
                                 </div>
-                                <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[70px]"><span className="text-destructive">*</span> Location:</Label>
+                                <div className="flex items-center gap-1">
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]"><span className="text-destructive">*</span> Location:</Label>
                                   <Select value={quoteData[selectedQuote].received.location}>
-                                    <SelectTrigger className="h-7 text-xs">
+                                    <SelectTrigger className="h-6 text-[11px]">
                                       <SelectValue />
                                     </SelectTrigger>
                                     <SelectContent className="bg-popover border shadow-lg z-50">
@@ -1306,10 +1306,10 @@ const AddNewWorkOrder = () => {
                                     </SelectContent>
                                   </Select>
                                 </div>
-                                <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[70px]"><span className="text-destructive">*</span> Division:</Label>
+                                <div className="flex items-center gap-1">
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]"><span className="text-destructive">*</span> Division:</Label>
                                   <Select value={quoteData[selectedQuote].received.division}>
-                                    <SelectTrigger className="h-7 text-xs">
+                                    <SelectTrigger className="h-6 text-[11px]">
                                       <SelectValue />
                                     </SelectTrigger>
                                     <SelectContent className="bg-popover border shadow-lg z-50">
@@ -1318,25 +1318,25 @@ const AddNewWorkOrder = () => {
                                     </SelectContent>
                                   </Select>
                                 </div>
-                                <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[70px]"><span className="text-destructive">*</span> PO #:</Label>
-                                  <Input value={quoteData[selectedQuote].received.poNumber} className="h-7 text-xs" readOnly />
+                                <div className="flex items-center gap-1">
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]"><span className="text-destructive">*</span> PO #:</Label>
+                                  <Input value={quoteData[selectedQuote].received.poNumber} className="h-6 text-[11px]" readOnly />
                                 </div>
                               </div>
                             </div>
 
                             {/* Arrival Information */}
-                            <div className="space-y-1.5">
-                              <h4 className="text-xs font-medium text-muted-foreground border-b pb-0.5">Arrival Information</h4>
-                              <div className="space-y-1.5">
-                                <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[55px]"><span className="text-destructive">*</span> Date:</Label>
+                            <div className="space-y-1">
+                              <h4 className="text-[11px] font-medium text-muted-foreground border-b pb-0.5">Arrival Information</h4>
+                              <div className="space-y-1">
+                                <div className="flex items-center gap-1">
+                                   <Label className="text-[11px] whitespace-nowrap min-w-[50px]"><span className="text-destructive">*</span> Date:</Label>
                                   <Popover>
                                     <PopoverTrigger asChild>
                                       <Button
                                         variant="outline"
                                         className={cn(
-                                          "w-full justify-start text-left font-normal h-7 text-xs",
+                                          "w-full justify-start text-left font-normal h-6 text-[11px]",
                                           !quoteData[selectedQuote].received.arrivalDate && "text-muted-foreground"
                                         )}
                                       >
@@ -1355,8 +1355,8 @@ const AddNewWorkOrder = () => {
                                   </Popover>
                                 </div>
 
-                                <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[55px]"><span className="text-destructive">*</span> Type:</Label>
+                                <div className="flex items-center gap-1">
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[50px]"><span className="text-destructive">*</span> Type:</Label>
                                   <Select 
                                     value={quoteData[selectedQuote].received.arrivalType}
                                     onValueChange={(value) => {
@@ -1372,7 +1372,7 @@ const AddNewWorkOrder = () => {
                                       }));
                                     }}
                                   >
-                                    <SelectTrigger className="h-7 text-xs">
+                                    <SelectTrigger className="h-6 text-[11px]">
                                       <SelectValue placeholder="Select..." />
                                     </SelectTrigger>
                                     <SelectContent className="bg-background border shadow-lg z-50">
@@ -1389,20 +1389,20 @@ const AddNewWorkOrder = () => {
 
                                 {/* Conditional fields based on arrival type */}
                                 {quoteData[selectedQuote].received.arrivalType === "surplus" && (
-                                  <div className="flex items-center gap-1.5">
-                                    <Label className="text-xs whitespace-nowrap min-w-[55px]">Location:</Label>
+                                  <div className="flex items-center gap-1">
+                                    <Label className="text-[11px] whitespace-nowrap min-w-[50px]">Location:</Label>
                                     <Input 
                                       placeholder="Enter location"
-                                      className="h-7 text-xs"
+                                      className="h-6 text-[11px]"
                                     />
                                   </div>
                                 )}
 
                                 {quoteData[selectedQuote].received.arrivalType === "shipped" && (
-                                  <div className="flex items-center gap-1.5">
-                                    <Label className="text-xs whitespace-nowrap min-w-[55px]">Ship Type:</Label>
+                                  <div className="flex items-center gap-1">
+                                    <Label className="text-[11px] whitespace-nowrap min-w-[50px]">Ship Type:</Label>
                                     <Select>
-                                      <SelectTrigger className="h-7 text-xs">
+                                      <SelectTrigger className="h-6 text-[11px]">
                                         <SelectValue placeholder="Select..." />
                                       </SelectTrigger>
                                       <SelectContent className="bg-background border shadow-lg z-50">
@@ -1416,21 +1416,21 @@ const AddNewWorkOrder = () => {
                                 )}
 
                                 {quoteData[selectedQuote].received.arrivalType === "customer-dropoff" && (
-                                  <div className="flex items-center gap-1.5">
-                                    <Label className="text-xs whitespace-nowrap min-w-[55px]">Name:</Label>
+                                  <div className="flex items-center gap-1">
+                                    <Label className="text-[11px] whitespace-nowrap min-w-[50px]">Name:</Label>
                                     <Input 
                                       placeholder="Enter name"
-                                      className="h-7 text-xs"
+                                      className="h-6 text-[11px]"
                                     />
                                   </div>
                                 )}
 
                                 {quoteData[selectedQuote].received.arrivalType === "jm-driver-pickup" && (
                                   <>
-                                    <div className="flex items-center gap-1.5">
-                                      <Label className="text-xs whitespace-nowrap min-w-[55px]">Driver:</Label>
+                                    <div className="flex items-center gap-1">
+                                      <Label className="text-[11px] whitespace-nowrap min-w-[50px]">Driver:</Label>
                                       <Select>
-                                        <SelectTrigger className="h-7 text-xs">
+                                        <SelectTrigger className="h-6 text-[11px]">
                                           <SelectValue placeholder="Select driver" />
                                         </SelectTrigger>
                                         <SelectContent className="bg-background border shadow-lg z-50">
@@ -1440,14 +1440,14 @@ const AddNewWorkOrder = () => {
                                         </SelectContent>
                                       </Select>
                                     </div>
-                                    <div className="flex items-center gap-1.5">
-                                      <Label className="text-xs whitespace-nowrap min-w-[55px]">PU Date:</Label>
+                                    <div className="flex items-center gap-1">
+                                      <Label className="text-[11px] whitespace-nowrap min-w-[50px]">PU Date:</Label>
                                       <Popover>
                                         <PopoverTrigger asChild>
                                           <Button
                                             variant="outline"
                                             className={cn(
-                                              "w-full justify-start text-left font-normal h-7 text-xs",
+                                              "w-full justify-start text-left font-normal h-6 text-[11px]",
                                               "text-muted-foreground"
                                             )}
                                           >
@@ -1470,13 +1470,13 @@ const AddNewWorkOrder = () => {
                             </div>
 
                             {/* Override Fields */}
-                            <div className="space-y-1.5">
-                              <h4 className="text-xs font-medium text-muted-foreground border-b pb-0.5">Override Fields</h4>
-                              <div className="space-y-1.5">
-                                <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[60px]">Priority:</Label>
+                            <div className="space-y-1">
+                              <h4 className="text-[11px] font-medium text-muted-foreground border-b pb-0.5">Override Fields</h4>
+                              <div className="space-y-1">
+                                <div className="flex items-center gap-1">
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[50px]">Priority:</Label>
                                   <Select value={quoteData[selectedQuote].received.priority}>
-                                    <SelectTrigger className="h-7 text-xs">
+                                    <SelectTrigger className="h-6 text-[11px]">
                                       <SelectValue />
                                     </SelectTrigger>
                                     <SelectContent className="bg-popover border shadow-lg z-50">
@@ -1486,9 +1486,9 @@ const AddNewWorkOrder = () => {
                                     </SelectContent>
                                   </Select>
                                 </div>
-                                <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[60px]">Need By:</Label>
-                                  <Input type="date" value={quoteData[selectedQuote].received.needByDate} className="h-7 text-xs" readOnly />
+                                <div className="flex items-center gap-1">
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[50px]">Need By:</Label>
+                                  <Input type="date" value={quoteData[selectedQuote].received.needByDate} className="h-6 text-[11px]" readOnly />
                                 </div>
                               </div>
                             </div>
@@ -1531,22 +1531,22 @@ const AddNewWorkOrder = () => {
                           </div>
                           
                           <div className="border rounded-lg overflow-x-auto">
-                            <table className="w-full text-xs">
+                            <table className="w-full text-[11px]">
                               <thead className="bg-muted">
                                 <tr>
-                                  <th className="text-left px-2 py-1.5 font-medium">Rcv</th>
-                                  <th className="text-left px-2 py-1.5 font-medium">Manufacturer</th>
-                                  <th className="text-left px-2 py-1.5 font-medium">Model</th>
-                                  <th className="text-left px-2 py-1.5 font-medium">Item Description</th>
-                                  <th className="text-left px-2 py-1.5 font-medium">Qty</th>
-                                  <th className="text-left px-2 py-1.5 font-medium">Prev WO #</th>
-                                  <th className="text-left px-2 py-1.5 font-medium">WO Item</th>
-                                  <th className="text-left px-2 py-1.5 font-medium">Serial Number</th>
-                                  <th className="text-left px-2 py-1.5 font-medium">Cust ID</th>
-                                  <th className="text-left px-2 py-1.5 font-medium">Cust Serial</th>
-                                  <th className="text-left px-2 py-1.5 font-medium">Priority</th>
-                                  <th className="text-left px-2 py-1.5 font-medium">Repair</th>
-                                  <th className="text-left px-2 py-1.5 font-medium">17025</th>
+                                  <th className="text-left px-1.5 py-1 font-medium">Rcv</th>
+                                  <th className="text-left px-1.5 py-1 font-medium">Manufacturer</th>
+                                  <th className="text-left px-1.5 py-1 font-medium">Model</th>
+                                  <th className="text-left px-1.5 py-1 font-medium">Item Description</th>
+                                  <th className="text-left px-1.5 py-1 font-medium">Qty</th>
+                                  <th className="text-left px-1.5 py-1 font-medium">Prev WO #</th>
+                                  <th className="text-left px-1.5 py-1 font-medium">WO Item</th>
+                                  <th className="text-left px-1.5 py-1 font-medium">Serial Number</th>
+                                  <th className="text-left px-1.5 py-1 font-medium">Cust ID</th>
+                                  <th className="text-left px-1.5 py-1 font-medium">Cust Serial</th>
+                                  <th className="text-left px-1.5 py-1 font-medium">Priority</th>
+                                  <th className="text-left px-1.5 py-1 font-medium">Repair</th>
+                                  <th className="text-left px-1.5 py-1 font-medium">17025</th>
                                 </tr>
                               </thead>
                               <tbody className="bg-card">
@@ -1560,7 +1560,7 @@ const AddNewWorkOrder = () => {
                                       key={index} 
                                       className={`border-t ${item.highlighted ? 'bg-muted/30' : ''} ${isItemAdded ? 'opacity-50' : ''}`}
                                     >
-                                      <td className="px-2 py-1.5">
+                                      <td className="px-1.5 py-1">
                                         <Checkbox 
                                           checked={selectedQuoteItems.includes(index)}
                                           disabled={isItemAdded}
@@ -1573,32 +1573,32 @@ const AddNewWorkOrder = () => {
                                           }}
                                         />
                                       </td>
-                                      <td className="px-2 py-1.5 text-foreground">{item.manufacturer}</td>
-                                      <td className="px-2 py-1.5 text-foreground">{item.model}</td>
-                                      <td className="px-2 py-1.5 font-medium text-foreground">{item.description}</td>
-                                    <td className="px-2 py-1.5">
-                                      <Input type="number" defaultValue={item.qty} className="h-7 w-14 text-xs" />
+                                      <td className="px-1.5 py-1 text-foreground">{item.manufacturer}</td>
+                                      <td className="px-1.5 py-1 text-foreground">{item.model}</td>
+                                      <td className="px-1.5 py-1 font-medium text-foreground">{item.description}</td>
+                                    <td className="px-1.5 py-1">
+                                      <Input type="number" defaultValue={item.qty} className="h-6 w-14 text-[11px]" />
                                     </td>
-                                    <td className="px-2 py-1.5">
-                                      <Input defaultValue={item.prevWO} className="h-7 w-16 text-xs" />
+                                    <td className="px-1.5 py-1">
+                                      <Input defaultValue={item.prevWO} className="h-6 w-14 text-[11px]" />
                                     </td>
-                                    <td className="px-2 py-1.5">
+                                    <td className="px-1.5 py-1">
                                       {item.woItem ? (
                                         <a href="#" className="text-foreground hover:underline font-medium">{item.woItem}</a>
                                       ) : null}
                                     </td>
-                                    <td className="px-2 py-1.5">
-                                      <Input placeholder={item.serialNumber || "N/A"} defaultValue={item.serialNumber} className="h-7 w-20 text-xs" />
+                                    <td className="px-1.5 py-1">
+                                      <Input placeholder={item.serialNumber || "N/A"} defaultValue={item.serialNumber} className="h-6 w-20 text-[11px]" />
                                     </td>
-                                    <td className="px-2 py-1.5">
-                                      <Input placeholder="" defaultValue={item.custId} className="h-7 w-20 text-xs" />
+                                    <td className="px-1.5 py-1">
+                                      <Input placeholder="" defaultValue={item.custId} className="h-6 w-20 text-[11px]" />
                                     </td>
-                                    <td className="px-2 py-1.5">
-                                      <Input placeholder={item.custSerial || "N/A"} defaultValue={item.custSerial} className="h-7 w-20 text-xs" />
+                                    <td className="px-1.5 py-1">
+                                      <Input placeholder={item.custSerial || "N/A"} defaultValue={item.custSerial} className="h-6 w-20 text-[11px]" />
                                     </td>
-                                    <td className="px-2 py-1.5">
+                                    <td className="px-1.5 py-1">
                                       <Select defaultValue={item.priority}>
-                                        <SelectTrigger className="h-7 w-20 text-xs">
+                                        <SelectTrigger className="h-6 w-20 text-[11px]">
                                           <SelectValue />
                                         </SelectTrigger>
                                         <SelectContent className="bg-popover border shadow-lg z-50">
@@ -1608,10 +1608,10 @@ const AddNewWorkOrder = () => {
                                         </SelectContent>
                                       </Select>
                                     </td>
-                                      <td className="px-2 py-1.5">
+                                      <td className="px-1.5 py-1">
                                         <Checkbox defaultChecked={item.repair} disabled={isItemAdded} />
                                       </td>
-                                      <td className="px-2 py-1.5">
+                                      <td className="px-1.5 py-1">
                                         <Checkbox defaultChecked={item.iso17025} disabled={isItemAdded} />
                                       </td>
                                     </tr>
@@ -1768,19 +1768,19 @@ const AddNewWorkOrder = () => {
                             <h3 className="text-xs font-semibold text-center">RECEIVED</h3>
                           </div>
                           
-                          <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 p-2">
+                          <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 p-1.5">
                             {/* General Information */}
-                            <div className="space-y-1.5">
-                              <h4 className="text-xs font-medium text-muted-foreground border-b pb-0.5">General Information</h4>
-                              <div className="space-y-1.5">
-                                <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[70px]"><span className="text-destructive">*</span> Cal Freq:</Label>
-                                  <Input value={rmaData[selectedRMA as keyof typeof rmaData].received.calFreq} className="h-7 text-xs" readOnly />
+                            <div className="space-y-1">
+                              <h4 className="text-[11px] font-medium text-muted-foreground border-b pb-0.5">General Information</h4>
+                              <div className="space-y-1">
+                                <div className="flex items-center gap-1">
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]"><span className="text-destructive">*</span> Cal Freq:</Label>
+                                  <Input value={rmaData[selectedRMA as keyof typeof rmaData].received.calFreq} className="h-6 text-[11px]" readOnly />
                                 </div>
-                                <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[70px]"><span className="text-destructive">*</span> Location:</Label>
+                                <div className="flex items-center gap-1">
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]"><span className="text-destructive">*</span> Location:</Label>
                                   <Select value={rmaData[selectedRMA as keyof typeof rmaData].received.location}>
-                                    <SelectTrigger className="h-7 text-xs">
+                                    <SelectTrigger className="h-6 text-[11px]">
                                       <SelectValue />
                                     </SelectTrigger>
                                     <SelectContent className="bg-popover border shadow-lg z-50">
@@ -1790,10 +1790,10 @@ const AddNewWorkOrder = () => {
                                     </SelectContent>
                                   </Select>
                                 </div>
-                                <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[70px]"><span className="text-destructive">*</span> Division:</Label>
+                                <div className="flex items-center gap-1">
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]"><span className="text-destructive">*</span> Division:</Label>
                                   <Select value={rmaData[selectedRMA as keyof typeof rmaData].received.division}>
-                                    <SelectTrigger className="h-7 text-xs">
+                                    <SelectTrigger className="h-6 text-[11px]">
                                       <SelectValue />
                                     </SelectTrigger>
                                     <SelectContent className="bg-popover border shadow-lg z-50">
@@ -1802,25 +1802,25 @@ const AddNewWorkOrder = () => {
                                     </SelectContent>
                                   </Select>
                                 </div>
-                                <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[70px]"><span className="text-destructive">*</span> PO #:</Label>
-                                  <Input value={rmaData[selectedRMA as keyof typeof rmaData].received.poNumber} className="h-7 text-xs" readOnly />
+                                <div className="flex items-center gap-1">
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]"><span className="text-destructive">*</span> PO #:</Label>
+                                  <Input value={rmaData[selectedRMA as keyof typeof rmaData].received.poNumber} className="h-6 text-[11px]" readOnly />
                                 </div>
                               </div>
                             </div>
 
                             {/* Arrival Information */}
-                            <div className="space-y-1.5">
-                              <h4 className="text-xs font-medium text-muted-foreground border-b pb-0.5">Arrival Information</h4>
-                              <div className="space-y-1.5">
-                                <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[55px]"><span className="text-destructive">*</span> Date:</Label>
+                            <div className="space-y-1">
+                              <h4 className="text-[11px] font-medium text-muted-foreground border-b pb-0.5">Arrival Information</h4>
+                              <div className="space-y-1">
+                                <div className="flex items-center gap-1">
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[50px]"><span className="text-destructive">*</span> Date:</Label>
                                   <Popover>
                                     <PopoverTrigger asChild>
                                       <Button
                                         variant="outline"
                                         className={cn(
-                                          "w-full justify-start text-left font-normal h-7 text-xs",
+                                          "w-full justify-start text-left font-normal h-6 text-[11px]",
                                           !rmaData[selectedRMA as keyof typeof rmaData].received.arrivalDate && "text-muted-foreground"
                                         )}
                                       >
@@ -1833,10 +1833,10 @@ const AddNewWorkOrder = () => {
                                     </PopoverContent>
                                   </Popover>
                                 </div>
-                                <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[55px]"><span className="text-destructive">*</span> Type:</Label>
+                                <div className="flex items-center gap-1">
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[50px]"><span className="text-destructive">*</span> Type:</Label>
                                   <Select value={rmaData[selectedRMA as keyof typeof rmaData].received.arrivalType}>
-                                    <SelectTrigger className="h-7 text-xs">
+                                    <SelectTrigger className="h-6 text-[11px]">
                                       <SelectValue />
                                     </SelectTrigger>
                                     <SelectContent className="bg-popover border shadow-lg z-50">
@@ -1851,10 +1851,10 @@ const AddNewWorkOrder = () => {
                                   </Select>
                                 </div>
                                 {rmaData[selectedRMA as keyof typeof rmaData].received.arrivalType === "shipped" && (
-                                  <div className="flex items-center gap-1.5">
-                                    <Label className="text-xs whitespace-nowrap min-w-[55px]">Ship Type:</Label>
+                                  <div className="flex items-center gap-1">
+                                    <Label className="text-[11px] whitespace-nowrap min-w-[50px]">Ship Type:</Label>
                                     <Select>
-                                      <SelectTrigger className="h-7 text-xs">
+                                      <SelectTrigger className="h-6 text-[11px]">
                                         <SelectValue placeholder="Select..." />
                                       </SelectTrigger>
                                       <SelectContent className="bg-popover border shadow-lg z-50">
@@ -1870,13 +1870,13 @@ const AddNewWorkOrder = () => {
                             </div>
 
                             {/* Override Fields */}
-                            <div className="space-y-1.5">
-                              <h4 className="text-xs font-medium text-muted-foreground border-b pb-0.5">Override Fields</h4>
-                              <div className="space-y-1.5">
-                                <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[60px]">Priority:</Label>
+                            <div className="space-y-1">
+                              <h4 className="text-[11px] font-medium text-muted-foreground border-b pb-0.5">Override Fields</h4>
+                              <div className="space-y-1">
+                                <div className="flex items-center gap-1">
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[50px]">Priority:</Label>
                                   <Select value={rmaData[selectedRMA as keyof typeof rmaData].received.priority}>
-                                    <SelectTrigger className="h-7 text-xs">
+                                    <SelectTrigger className="h-6 text-[11px]">
                                       <SelectValue />
                                     </SelectTrigger>
                                     <SelectContent className="bg-popover border shadow-lg z-50">
@@ -1886,9 +1886,9 @@ const AddNewWorkOrder = () => {
                                     </SelectContent>
                                   </Select>
                                 </div>
-                                <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[60px]">Need By:</Label>
-                                  <Input value={rmaData[selectedRMA as keyof typeof rmaData].received.needByDate} className="h-7 text-xs" readOnly />
+                                <div className="flex items-center gap-1">
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[50px]">Need By:</Label>
+                                  <Input value={rmaData[selectedRMA as keyof typeof rmaData].received.needByDate} className="h-6 text-[11px]" readOnly />
                                 </div>
                               </div>
                             </div>
@@ -1896,10 +1896,10 @@ const AddNewWorkOrder = () => {
                         </div>
 
                         {/* Items Table */}
-                        <div className="space-y-3">
+                        <div className="space-y-2">
                           <a 
                             href="#" 
-                            className="text-sm text-foreground font-medium hover:text-primary hover:underline"
+                            className="text-xs text-foreground font-medium hover:text-primary hover:underline"
                             onClick={(e) => {
                               e.preventDefault();
                               const currentItems = rmaData[selectedRMA as keyof typeof rmaData].items;
@@ -1914,22 +1914,22 @@ const AddNewWorkOrder = () => {
                           </a>
                           
                           <div className="border rounded-lg overflow-x-auto">
-                            <table className="w-full text-sm">
+                            <table className="w-full text-[11px]">
                               <thead className="bg-muted">
                                 <tr>
-                                  <th className="text-left p-2 font-medium">Rcv</th>
-                                  <th className="text-left p-2 font-medium">Manufacturer</th>
-                                  <th className="text-left p-2 font-medium">Model</th>
-                                  <th className="text-left p-2 font-medium">Item Description</th>
-                                  <th className="text-left p-2 font-medium">Qty</th>
-                                  <th className="text-left p-2 font-medium">Cal Freq</th>
-                                  <th className="text-left p-2 font-medium">WO Item</th>
-                                  <th className="text-left p-2 font-medium">Serial Number</th>
-                                  <th className="text-left p-2 font-medium">Cust ID</th>
-                                  <th className="text-left p-2 font-medium">Cust Serial</th>
-                                  <th className="text-left p-2 font-medium">Priority</th>
-                                  <th className="text-left p-2 font-medium">Repair</th>
-                                  <th className="text-left p-2 font-medium">17025</th>
+                                  <th className="text-left px-1.5 py-1 font-medium">Rcv</th>
+                                  <th className="text-left px-1.5 py-1 font-medium">Manufacturer</th>
+                                  <th className="text-left px-1.5 py-1 font-medium">Model</th>
+                                  <th className="text-left px-1.5 py-1 font-medium">Item Description</th>
+                                  <th className="text-left px-1.5 py-1 font-medium">Qty</th>
+                                  <th className="text-left px-1.5 py-1 font-medium">Cal Freq</th>
+                                  <th className="text-left px-1.5 py-1 font-medium">WO Item</th>
+                                  <th className="text-left px-1.5 py-1 font-medium">Serial Number</th>
+                                  <th className="text-left px-1.5 py-1 font-medium">Cust ID</th>
+                                  <th className="text-left px-1.5 py-1 font-medium">Cust Serial</th>
+                                  <th className="text-left px-1.5 py-1 font-medium">Priority</th>
+                                  <th className="text-left px-1.5 py-1 font-medium">Repair</th>
+                                  <th className="text-left px-1.5 py-1 font-medium">17025</th>
                                 </tr>
                               </thead>
                               <tbody className="bg-card">
@@ -1939,7 +1939,7 @@ const AddNewWorkOrder = () => {
                                   
                                   return (
                                     <tr key={index} className={`border-t ${isItemAdded ? 'opacity-50' : ''}`}>
-                                      <td className="p-2">
+                                      <td className="px-1.5 py-1">
                                         <Checkbox 
                                           checked={selectedRMAItems.includes(index)}
                                           disabled={isItemAdded}
@@ -1952,28 +1952,28 @@ const AddNewWorkOrder = () => {
                                           }}
                                         />
                                       </td>
-                                      <td className="p-2 text-foreground">{item.manufacturer}</td>
-                                      <td className="p-2 text-foreground">{item.model}</td>
-                                      <td className="p-2 font-medium text-foreground">{item.description}</td>
-                                      <td className="p-2">
-                                        <Input type="number" defaultValue={item.qty} className="h-8 w-16" />
+                                      <td className="px-1.5 py-1 text-foreground">{item.manufacturer}</td>
+                                      <td className="px-1.5 py-1 text-foreground">{item.model}</td>
+                                      <td className="px-1.5 py-1 font-medium text-foreground">{item.description}</td>
+                                      <td className="px-1.5 py-1">
+                                        <Input type="number" defaultValue={item.qty} className="h-6 w-14 text-[11px]" />
                                       </td>
-                                      <td className="p-2">
-                                        <Input defaultValue={item.calFreq} className="h-8 w-16" />
+                                      <td className="px-1.5 py-1">
+                                        <Input defaultValue={item.calFreq} className="h-6 w-14 text-[11px]" />
                                       </td>
-                                      <td className="p-2">
+                                      <td className="px-1.5 py-1">
                                         {item.woItem ? (
                                           <a href="#" className="text-foreground hover:underline font-medium">{item.woItem}</a>
                                         ) : null}
                                       </td>
-                                      <td className="p-2 text-foreground">{item.serialNumber}</td>
-                                      <td className="p-2">
-                                        <Input defaultValue={item.custId} className="h-8 w-28" />
+                                      <td className="px-1.5 py-1 text-foreground">{item.serialNumber}</td>
+                                      <td className="px-1.5 py-1">
+                                        <Input defaultValue={item.custId} className="h-6 w-20 text-[11px]" />
                                       </td>
-                                      <td className="p-2 text-foreground">{item.custSerial}</td>
-                                      <td className="p-2">
+                                      <td className="px-1.5 py-1 text-foreground">{item.custSerial}</td>
+                                      <td className="px-1.5 py-1">
                                         <Select defaultValue={item.priority}>
-                                          <SelectTrigger className="h-8 w-24">
+                                          <SelectTrigger className="h-6 w-20 text-[11px]">
                                             <SelectValue />
                                           </SelectTrigger>
                                           <SelectContent className="bg-popover border shadow-lg z-50">
@@ -1983,10 +1983,10 @@ const AddNewWorkOrder = () => {
                                           </SelectContent>
                                         </Select>
                                       </td>
-                                      <td className="p-2">
+                                      <td className="px-1.5 py-1">
                                         <Checkbox defaultChecked={item.repair} disabled={isItemAdded} />
                                       </td>
-                                      <td className="p-2">
+                                      <td className="px-1.5 py-1">
                                         <Checkbox defaultChecked={item.iso17025} disabled={isItemAdded} />
                                       </td>
                                     </tr>
