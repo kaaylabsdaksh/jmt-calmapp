@@ -2602,12 +2602,12 @@ const AddNewWorkOrder = () => {
 
                     {/* Quick Add Section - Only in Receiving View */}
                     {viewMode === 'receiving' && (
-                    <div id="quick-add-section" className="space-y-4">
-                      <div className="flex items-center gap-2">
-                        <Plus className="w-5 h-5 text-primary" />
-                        <h3 className="text-base font-semibold text-foreground">Quick Add New Items</h3>
+                    <div id="quick-add-section" className="space-y-2">
+                      <div className="flex items-center gap-1.5">
+                        <Plus className="w-4 h-4 text-primary" />
+                        <h3 className="text-xs font-semibold text-foreground">Quick Add New Items</h3>
                       </div>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-[11px] text-muted-foreground">
                         Fill in the required fields to update selected items
                       </p>
 
