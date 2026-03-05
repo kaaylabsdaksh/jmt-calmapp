@@ -1657,7 +1657,7 @@ const AddNewWorkOrder = () => {
                                       <td className="p-2 text-foreground">{item.model}</td>
                                       <td className="p-2 font-medium text-foreground">{item.description}</td>
                                     <td className="p-2">
-                                      <Input type="number" defaultValue={item.qty} className="h-8 w-16" />
+                                      <Input type="number" defaultValue={item.qty} className="h-7 w-16 text-xs" />
                                     </td>
                                     <td className="p-2">
                                       <Input defaultValue={item.prevWO} className="h-8 w-20" />
