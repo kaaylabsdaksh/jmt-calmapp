@@ -3004,7 +3004,7 @@ const AddNewWorkOrder = () => {
                             </div>
 
                             {/* Checkboxes */}
-                            <div className="flex flex-wrap gap-3">
+                            <div className="flex flex-wrap gap-2.5">
                             <div className="flex items-center space-x-2">
                               <Checkbox 
                                 id="qa-newEquip"
