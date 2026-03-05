@@ -414,35 +414,40 @@ const EditBatchWorkOrder = () => {
       customerName: "Entergy Inventory",
       srDocument: "SR2244",
       salesperson: "ZZEN - House - Entergy", 
-      contact: "Brad Morrison"
+      contact: "Brad Morrison",
+      address: "639 Loyola Ave, New Orleans, LA 70113"
     },
     {
       accountNumber: "1500.01",
       customerName: "Gulf Power Company",
       srDocument: "SR3345",
       salesperson: "John Smith - Gulf Power Rep",
-      contact: "Mike Johnson"
+      contact: "Mike Johnson",
+      address: "1 Energy Place, Pensacola, FL 32520"
     },
     {
       accountNumber: "0152.01", 
       customerName: "Florida Power & Light",
       srDocument: "SR4456",
       salesperson: "Sarah Wilson - FPL Account Manager",
-      contact: "Lisa Anderson"
+      contact: "Lisa Anderson",
+      address: "700 Universe Blvd, Juno Beach, FL 33408"
     },
     {
       accountNumber: "1500.03",
       customerName: "Duke Energy Corporation",
       srDocument: "SR5567",
       salesperson: "Robert Davis - Duke Energy Sales",
-      contact: "Jennifer Martinez"
+      contact: "Jennifer Martinez",
+      address: "550 S Tryon St, Charlotte, NC 28202"
     },
     {
       accountNumber: "1500.04",
       customerName: "Southern Company Services",
       srDocument: "SR6678",
       salesperson: "Amanda Brown - Southern Rep",
-      contact: "David Thompson"
+      contact: "David Thompson",
+      address: "30 Ivan Allen Jr Blvd NW, Atlanta, GA 30308"
     }
   ];
 
