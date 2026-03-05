@@ -1877,7 +1877,7 @@ const AddNewWorkOrder = () => {
                                   <Input type="number" value={rmaData[selectedRMA].received.calFreq} className="h-7 text-xs" readOnly />
                                 </div>
                                 <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[70px]">Location:</Label>
+                                  <Label className="text-xs whitespace-nowrap min-w-[70px]"><span className="text-destructive">*</span> Location:</Label>
                                   <Select value={rmaData[selectedRMA].received.location}>
                                     <SelectTrigger className="h-7 text-xs">
                                       <SelectValue />
