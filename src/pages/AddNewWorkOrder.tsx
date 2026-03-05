@@ -1399,10 +1399,10 @@ const AddNewWorkOrder = () => {
                                 )}
 
                                 {quoteData[selectedQuote].received.arrivalType === "shipped" && (
-                                  <div className="flex items-center gap-1.5">
-                                    <Label className="text-xs whitespace-nowrap min-w-[55px]">Ship Type:</Label>
+                                  <div className="flex items-center gap-1">
+                                    <Label className="text-[11px] whitespace-nowrap min-w-[50px]">Ship Type:</Label>
                                     <Select>
-                                      <SelectTrigger className="h-7 text-xs">
+                                      <SelectTrigger className="h-6 text-[11px]">
                                         <SelectValue placeholder="Select..." />
                                       </SelectTrigger>
                                       <SelectContent className="bg-background border shadow-lg z-50">
