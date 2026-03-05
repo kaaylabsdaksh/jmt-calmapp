@@ -1890,7 +1890,7 @@ const AddNewWorkOrder = () => {
                                   </Select>
                                 </div>
                                 <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[70px]">Division:</Label>
+                                  <Label className="text-xs whitespace-nowrap min-w-[70px]"><span className="text-destructive">*</span> Division:</Label>
                                   <Select value={rmaData[selectedRMA].received.division}>
                                     <SelectTrigger className="h-7 text-xs">
                                       <SelectValue />
