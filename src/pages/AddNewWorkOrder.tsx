@@ -1703,6 +1703,346 @@ const AddNewWorkOrder = () => {
                 </Accordion>
               </Card>
               )}
+
+              {/* RMA Section - Only show after account is saved */}
+              {isSaved && workOrderData.accountNumber && (
+              <Card>
+                <Accordion type="single" collapsible>
+                  <AccordionItem value="rma" className="border-0">
+                    <AccordionTrigger className="px-4 sm:px-6 py-3 hover:no-underline">
+                      <span className="text-sm font-semibold">RMA</span>
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <CardContent className="p-4 sm:p-6 pt-0 space-y-4">
+                        {/* RMA Dropdown */}
+                        <div className="flex items-center gap-2">
+                          <Label className="text-sm font-medium whitespace-nowrap">RMA #:</Label>
+                          <Select value={selectedRMA} onValueChange={setSelectedRMA}>
+                            <SelectTrigger className="h-7 w-40 text-xs">
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent className="bg-popover border shadow-lg z-50">
+                              {Object.keys(rmaData).map((rmaId) => (
+                                <SelectItem key={rmaId} value={rmaId}>{rmaId}</SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+
+                        {/* RMA List Table */}
+                        <div className="border rounded-lg overflow-hidden">
+                          <table className="w-full text-xs">
+                            <thead className="bg-muted/50">
+                              <tr>
+                                <th className="text-left p-2 font-medium text-foreground">RMA #</th>
+                                <th className="text-left p-2 font-medium text-foreground">Type</th>
+                              </tr>
+                            </thead>
+                            <tbody className="bg-card">
+                              {Object.entries(rmaData).map(([rmaId, data]) => (
+                                <tr key={rmaId} className="border-t">
+                                  <td className="p-2">
+                                    <a 
+                                      href="#" 
+                                      className="text-primary hover:underline font-medium"
+                                      onClick={(e) => { e.preventDefault(); setSelectedRMA(rmaId); }}
+                                    >
+                                      {rmaId}
+                                    </a>
+                                  </td>
+                                  <td className="p-2 text-foreground">{data.type}</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+
+                        {/* RECEIVED Section */}
+                        <div className="border rounded-lg">
+                          <div className="bg-muted border-b px-3 py-1">
+                            <h3 className="text-xs font-semibold text-center">RECEIVED</h3>
+                          </div>
+                          
+                          <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 p-2">
+                            {/* General Information */}
+                            <div className="space-y-1.5">
+                              <h4 className="text-xs font-medium text-muted-foreground border-b pb-0.5">General Information</h4>
+                              <div className="space-y-1.5">
+                                <div className="flex items-center gap-1.5">
+                                  <Label className="text-xs whitespace-nowrap min-w-[70px]"><span className="text-destructive">*</span> Cal Freq:</Label>
+                                  <Input value={rmaData[selectedRMA as keyof typeof rmaData].received.calFreq} className="h-7 text-xs" readOnly />
+                                </div>
+                                <div className="flex items-center gap-1.5">
+                                  <Label className="text-xs whitespace-nowrap min-w-[70px]"><span className="text-destructive">*</span> Location:</Label>
+                                  <Select value={rmaData[selectedRMA as keyof typeof rmaData].received.location}>
+                                    <SelectTrigger className="h-7 text-xs">
+                                      <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent className="bg-popover border shadow-lg z-50">
+                                      <SelectItem value="Baton Rouge">Baton Rouge</SelectItem>
+                                      <SelectItem value="Houston">Houston</SelectItem>
+                                      <SelectItem value="Dallas">Dallas</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+                                <div className="flex items-center gap-1.5">
+                                  <Label className="text-xs whitespace-nowrap min-w-[70px]"><span className="text-destructive">*</span> Division:</Label>
+                                  <Select value={rmaData[selectedRMA as keyof typeof rmaData].received.division}>
+                                    <SelectTrigger className="h-7 text-xs">
+                                      <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent className="bg-popover border shadow-lg z-50">
+                                      <SelectItem value="Lab">Lab</SelectItem>
+                                      <SelectItem value="Field">Field</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+                                <div className="flex items-center gap-1.5">
+                                  <Label className="text-xs whitespace-nowrap min-w-[70px]"><span className="text-destructive">*</span> PO #:</Label>
+                                  <Input value={rmaData[selectedRMA as keyof typeof rmaData].received.poNumber} className="h-7 text-xs" readOnly />
+                                </div>
+                              </div>
+                            </div>
+
+                            {/* Arrival Information */}
+                            <div className="space-y-1.5">
+                              <h4 className="text-xs font-medium text-muted-foreground border-b pb-0.5">Arrival Information</h4>
+                              <div className="space-y-1.5">
+                                <div className="flex items-center gap-1.5">
+                                  <Label className="text-xs whitespace-nowrap min-w-[55px]"><span className="text-destructive">*</span> Date:</Label>
+                                  <Popover>
+                                    <PopoverTrigger asChild>
+                                      <Button
+                                        variant="outline"
+                                        className={cn(
+                                          "w-full justify-start text-left font-normal h-7 text-xs",
+                                          !rmaData[selectedRMA as keyof typeof rmaData].received.arrivalDate && "text-muted-foreground"
+                                        )}
+                                      >
+                                        <CalendarIcon className="mr-1.5 h-3 w-3" />
+                                        {rmaData[selectedRMA as keyof typeof rmaData].received.arrivalDate ? format(new Date(rmaData[selectedRMA as keyof typeof rmaData].received.arrivalDate), "MMMM do, yyyy") : <span>Pick a date</span>}
+                                      </Button>
+                                    </PopoverTrigger>
+                                    <PopoverContent className="w-auto p-0" align="start">
+                                      <Calendar mode="single" selected={new Date(rmaData[selectedRMA as keyof typeof rmaData].received.arrivalDate)} initialFocus className={cn("p-3 pointer-events-auto")} />
+                                    </PopoverContent>
+                                  </Popover>
+                                </div>
+                                <div className="flex items-center gap-1.5">
+                                  <Label className="text-xs whitespace-nowrap min-w-[55px]"><span className="text-destructive">*</span> Type:</Label>
+                                  <Select value={rmaData[selectedRMA as keyof typeof rmaData].received.arrivalType}>
+                                    <SelectTrigger className="h-7 text-xs">
+                                      <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent className="bg-popover border shadow-lg z-50">
+                                      <SelectItem value="jm-driver-pickup">JM Driver Pickup</SelectItem>
+                                      <SelectItem value="customer-dropoff">Customer Dropoff</SelectItem>
+                                      <SelectItem value="shipped">Shipped</SelectItem>
+                                      <SelectItem value="onsite">Onsite</SelectItem>
+                                      <SelectItem value="purchasing-dept">Purchasing Dept.</SelectItem>
+                                      <SelectItem value="lab-standard">Lab Standard</SelectItem>
+                                      <SelectItem value="surplus">Surplus</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+                                {rmaData[selectedRMA as keyof typeof rmaData].received.arrivalType === "shipped" && (
+                                  <div className="flex items-center gap-1.5">
+                                    <Label className="text-xs whitespace-nowrap min-w-[55px]">Ship Type:</Label>
+                                    <Select>
+                                      <SelectTrigger className="h-7 text-xs">
+                                        <SelectValue placeholder="Select..." />
+                                      </SelectTrigger>
+                                      <SelectContent className="bg-popover border shadow-lg z-50">
+                                        <SelectItem value="dhl">DHL</SelectItem>
+                                        <SelectItem value="fedex">FedEx</SelectItem>
+                                        <SelectItem value="ups">UPS</SelectItem>
+                                        <SelectItem value="usps">USPS</SelectItem>
+                                      </SelectContent>
+                                    </Select>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+
+                            {/* Override Fields */}
+                            <div className="space-y-1.5">
+                              <h4 className="text-xs font-medium text-muted-foreground border-b pb-0.5">Override Fields</h4>
+                              <div className="space-y-1.5">
+                                <div className="flex items-center gap-1.5">
+                                  <Label className="text-xs whitespace-nowrap min-w-[60px]">Priority:</Label>
+                                  <Select value={rmaData[selectedRMA as keyof typeof rmaData].received.priority}>
+                                    <SelectTrigger className="h-7 text-xs">
+                                      <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent className="bg-popover border shadow-lg z-50">
+                                      <SelectItem value="Normal">Normal</SelectItem>
+                                      <SelectItem value="Expedite">Expedite</SelectItem>
+                                      <SelectItem value="Rush">Rush</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+                                <div className="flex items-center gap-1.5">
+                                  <Label className="text-xs whitespace-nowrap min-w-[60px]">Need By:</Label>
+                                  <Input value={rmaData[selectedRMA as keyof typeof rmaData].received.needByDate} className="h-7 text-xs" readOnly />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Items Table */}
+                        <div className="space-y-3">
+                          <a 
+                            href="#" 
+                            className="text-sm text-foreground font-medium hover:text-primary hover:underline"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              const currentItems = rmaData[selectedRMA as keyof typeof rmaData].items;
+                              if (selectedRMAItems.length === currentItems.length) {
+                                setSelectedRMAItems([]);
+                              } else {
+                                setSelectedRMAItems(currentItems.map((_, idx) => idx));
+                              }
+                            }}
+                          >
+                            {selectedRMAItems.length === rmaData[selectedRMA as keyof typeof rmaData].items.length ? "Deselect All" : "Select All"}
+                          </a>
+                          
+                          <div className="border rounded-lg overflow-x-auto">
+                            <table className="w-full text-sm">
+                              <thead className="bg-muted">
+                                <tr>
+                                  <th className="text-left p-2 font-medium">Rcv</th>
+                                  <th className="text-left p-2 font-medium">Manufacturer</th>
+                                  <th className="text-left p-2 font-medium">Model</th>
+                                  <th className="text-left p-2 font-medium">Item Description</th>
+                                  <th className="text-left p-2 font-medium">Qty</th>
+                                  <th className="text-left p-2 font-medium">Cal Freq</th>
+                                  <th className="text-left p-2 font-medium">WO Item</th>
+                                  <th className="text-left p-2 font-medium">Serial Number</th>
+                                  <th className="text-left p-2 font-medium">Cust ID</th>
+                                  <th className="text-left p-2 font-medium">Cust Serial</th>
+                                  <th className="text-left p-2 font-medium">Priority</th>
+                                  <th className="text-left p-2 font-medium">Repair</th>
+                                  <th className="text-left p-2 font-medium">17025</th>
+                                </tr>
+                              </thead>
+                              <tbody className="bg-card">
+                                {rmaData[selectedRMA as keyof typeof rmaData].items.map((item, index) => {
+                                  const itemId = `rma-${selectedRMA}-${index}`;
+                                  const isItemAdded = receivingItems.some(ri => ri.id === itemId);
+                                  
+                                  return (
+                                    <tr key={index} className={`border-t ${isItemAdded ? 'opacity-50' : ''}`}>
+                                      <td className="p-2">
+                                        <Checkbox 
+                                          checked={selectedRMAItems.includes(index)}
+                                          disabled={isItemAdded}
+                                          onCheckedChange={(checked) => {
+                                            if (checked) {
+                                              setSelectedRMAItems([...selectedRMAItems, index]);
+                                            } else {
+                                              setSelectedRMAItems(selectedRMAItems.filter(i => i !== index));
+                                            }
+                                          }}
+                                        />
+                                      </td>
+                                      <td className="p-2 text-foreground">{item.manufacturer}</td>
+                                      <td className="p-2 text-foreground">{item.model}</td>
+                                      <td className="p-2 font-medium text-foreground">{item.description}</td>
+                                      <td className="p-2">
+                                        <Input type="number" defaultValue={item.qty} className="h-8 w-16" />
+                                      </td>
+                                      <td className="p-2">
+                                        <Input defaultValue={item.calFreq} className="h-8 w-16" />
+                                      </td>
+                                      <td className="p-2">
+                                        {item.woItem ? (
+                                          <a href="#" className="text-primary hover:underline font-medium">{item.woItem}</a>
+                                        ) : null}
+                                      </td>
+                                      <td className="p-2 text-foreground">{item.serialNumber}</td>
+                                      <td className="p-2">
+                                        <Input defaultValue={item.custId} className="h-8 w-28" />
+                                      </td>
+                                      <td className="p-2 text-foreground">{item.custSerial}</td>
+                                      <td className="p-2">
+                                        <Select defaultValue={item.priority}>
+                                          <SelectTrigger className="h-8 w-24">
+                                            <SelectValue />
+                                          </SelectTrigger>
+                                          <SelectContent className="bg-popover border shadow-lg z-50">
+                                            <SelectItem value="Normal">Normal</SelectItem>
+                                            <SelectItem value="Expedite">Expedite</SelectItem>
+                                            <SelectItem value="Rush">Rush</SelectItem>
+                                          </SelectContent>
+                                        </Select>
+                                      </td>
+                                      <td className="p-2">
+                                        <Checkbox defaultChecked={item.repair} disabled={isItemAdded} />
+                                      </td>
+                                      <td className="p-2">
+                                        <Checkbox defaultChecked={item.iso17025} disabled={isItemAdded} />
+                                      </td>
+                                    </tr>
+                                  );
+                                })}
+                              </tbody>
+                            </table>
+                          </div>
+
+                          <div className="flex justify-end">
+                            <Button 
+                              className="bg-primary hover:bg-primary/90"
+                              disabled={selectedRMAItems.length === 0}
+                              onClick={() => {
+                                const currentRmaItems = rmaData[selectedRMA as keyof typeof rmaData];
+                                const selectedItems = selectedRMAItems.map(index => {
+                                  const item = currentRmaItems.items[index];
+                                  return {
+                                    id: `rma-${selectedRMA}-${index}`,
+                                    itemNumber: (receivingItems.length + index + 1).toString().padStart(3, '0'),
+                                    calFreq: item.calFreq,
+                                    actionCode: "rc",
+                                    priority: item.priority,
+                                    manufacturer: item.manufacturer,
+                                    model: item.model,
+                                    description: item.description,
+                                    mfgSerial: item.serialNumber,
+                                    custId: item.custId,
+                                    custSN: item.custSerial,
+                                    assetNumber: "",
+                                    iso17025: item.iso17025 ? "yes" : "no",
+                                    estimate: "",
+                                    newEquip: "no",
+                                    needByDate: currentRmaItems.received.needByDate,
+                                    ccCost: "",
+                                    tf: "no",
+                                    capableLocations: ""
+                                  };
+                                });
+                                
+                                setReceivingItems([...receivingItems, ...selectedItems]);
+                                setSelectedRMAItems([]);
+                                
+                                toast({
+                                  variant: "success",
+                                  title: "RMA Items Added",
+                                  description: `${selectedItems.length} RMA item(s) added to work order`,
+                                  duration: 2000,
+                                });
+                              }}
+                            >
+                              Receive and Add RMA Items {selectedRMAItems.length > 0 && `(${selectedRMAItems.length})`}
+                            </Button>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </Card>
+              )}
             </TabsContent>
 
             {/* Placeholder content for other tabs */}
