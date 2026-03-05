@@ -1207,6 +1207,7 @@ const AddNewWorkOrder = () => {
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent className="bg-popover border shadow-lg z-50">
+                                <SelectItem value="none">None</SelectItem>
                                 <SelectItem value="48020">48020</SelectItem>
                                 <SelectItem value="48034">48034</SelectItem>
                               </SelectContent>
