@@ -1757,6 +1757,7 @@ const AddNewWorkOrder = () => {
                           </table>
                         </div>
 
+                        {selectedRMA && (<>
                         {/* RECEIVED Section */}
                         <div className="border rounded-lg">
                           <div className="bg-muted border-b px-3 py-1">
