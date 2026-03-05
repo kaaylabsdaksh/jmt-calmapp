@@ -2928,8 +2928,8 @@ const AddNewWorkOrder = () => {
                                 />
                               </div>
 
-                              <div className="space-y-1">
-                                <Label htmlFor="qa-needByDate" className="text-xs font-medium">
+                              <div className="space-y-0.5">
+                                <Label htmlFor="qa-needByDate" className="text-[11px] font-medium">
                                   Need by date <span className="text-destructive">*</span>
                                 </Label>
                                 <Popover>
@@ -2938,11 +2938,11 @@ const AddNewWorkOrder = () => {
                                       variant="outline"
                                       disabled={areOtherFieldsDisabled()}
                                       className={cn(
-                                        "w-full justify-start text-left font-normal h-10",
+                                        "w-full justify-start text-left font-normal h-7 text-xs",
                                         !quickAddData.needByDate && "text-muted-foreground"
                                       )}
                                     >
-                                      <CalendarIcon className="mr-2 h-4 w-4" />
+                                      <CalendarIcon className="mr-1.5 h-3 w-3" />
                                       {quickAddData.needByDate ? format(new Date(quickAddData.needByDate), "PPP") : <span>Pick a date</span>}
                                     </Button>
                                   </PopoverTrigger>
