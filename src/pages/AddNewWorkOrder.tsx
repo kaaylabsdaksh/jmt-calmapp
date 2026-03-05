@@ -1983,10 +1983,10 @@ const AddNewWorkOrder = () => {
                                           </SelectContent>
                                         </Select>
                                       </td>
-                                      <td className="p-2">
+                                      <td className="px-1.5 py-1">
                                         <Checkbox defaultChecked={item.repair} disabled={isItemAdded} />
                                       </td>
-                                      <td className="p-2">
+                                      <td className="px-1.5 py-1">
                                         <Checkbox defaultChecked={item.iso17025} disabled={isItemAdded} />
                                       </td>
                                     </tr>
