@@ -2821,7 +2821,7 @@ const AddNewWorkOrder = () => {
                                     onValueChange={(value) => setQuickAddData({...quickAddData, shipType: value})}
                                     disabled={areOtherFieldsDisabled()}
                                   >
-                                    <SelectTrigger id="qa-shipType">
+                                    <SelectTrigger id="qa-shipType" className="h-7 text-xs">
                                       <SelectValue placeholder="Select..." />
                                     </SelectTrigger>
                                     <SelectContent className="bg-background border shadow-lg z-50">
