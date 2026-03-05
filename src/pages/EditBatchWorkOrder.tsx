@@ -293,7 +293,7 @@ const EditBatchWorkOrder = () => {
     localStorage.setItem('workOrderViewMode', viewMode);
   }, [viewMode]);
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const [accountSuggestions, setAccountSuggestions] = useState<Array<{accountNumber: string, customerName: string, srDocument: string, salesperson: string, contact: string}>>([]);
+  const [accountSuggestions, setAccountSuggestions] = useState<Array<{accountNumber: string, customerName: string, srDocument: string, salesperson: string, contact: string, address: string}>>([]);
   const [highlightedSuggestion, setHighlightedSuggestion] = useState(-1);
   const [showContactForm, setShowContactForm] = useState(false);
   const [receivingItems, setReceivingItems] = useState<Array<{
