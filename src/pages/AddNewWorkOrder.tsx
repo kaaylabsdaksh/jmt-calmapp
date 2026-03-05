@@ -1336,7 +1336,7 @@ const AddNewWorkOrder = () => {
                                       <Button
                                         variant="outline"
                                         className={cn(
-                                          "w-full justify-start text-left font-normal h-7 text-xs",
+                                          "w-full justify-start text-left font-normal h-6 text-[11px]",
                                           !quoteData[selectedQuote].received.arrivalDate && "text-muted-foreground"
                                         )}
                                       >
