@@ -124,7 +124,7 @@ const AddNewWorkOrder = () => {
   const [deliverByDate, setDeliverByDate] = useState("");
   
   // Customer Quote Selection
-  const [selectedQuote, setSelectedQuote] = useState("48020");
+  const [selectedQuote, setSelectedQuote] = useState("");
   const [selectedQuoteItems, setSelectedQuoteItems] = useState<number[]>([]);
   
   // RMA Selection
@@ -1207,6 +1207,7 @@ const AddNewWorkOrder = () => {
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent className="bg-popover border shadow-lg z-50">
+                                <SelectItem value="none">None</SelectItem>
                                 <SelectItem value="48020">48020</SelectItem>
                                 <SelectItem value="48034">48034</SelectItem>
                               </SelectContent>
@@ -1276,6 +1277,7 @@ const AddNewWorkOrder = () => {
                           </p>
                         </div>
 
+                        {selectedQuote && selectedQuote !== "none" && (<>
                         {/* RECEIVED Section */}
                         <div className="border rounded-lg">
                           <div className="bg-muted border-b px-3 py-1">
@@ -1697,6 +1699,7 @@ const AddNewWorkOrder = () => {
                             </Button>
                           </div>
                         </div>
+                        </>)}
                       </CardContent>
                     </AccordionContent>
                   </AccordionItem>
