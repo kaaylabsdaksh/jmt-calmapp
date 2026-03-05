@@ -545,6 +545,27 @@ const AddNewWorkOrder = () => {
     return !hasContact;
   };
 
+  // Function to check if the top section fields (WO#, Status, Type, Customer, Address) should be disabled
+  // These are disabled as soon as an account is selected (auto-populated), and remain disabled after save
+  const areTopSectionFieldsDisabled = () => {
+    const isValidFormat = /^\d{4}\.\d{2}$/.test(workOrderData.accountNumber);
+    return isValidFormat && workOrderData.accountNumber.length > 0;
+  };
+
+  // Function to check if contact field should be disabled
+  // Contact is enabled after account selection, disabled after save
+  const isContactDisabled = () => {
+    const isValidFormat = /^\d{4}\.\d{2}$/.test(workOrderData.accountNumber);
+    if (!isValidFormat || !workOrderData.accountNumber) return true;
+    if (isSaved) return true;
+    return false;
+  };
+
+  // Function to check if account number should be disabled (after save)
+  const isAccountDisabled = () => {
+    return isSaved;
+  };
+
   // Handle account number input change
   const handleAccountNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value.replace(/\D/g, ''); // Remove non-digits
@@ -961,6 +982,7 @@ const AddNewWorkOrder = () => {
                           onKeyDown={handleKeyDown}
                           maxLength={7}
                           className={`h-9 sm:h-10 ${!workOrderData.accountNumber ? "border-destructive" : ""}`}
+                          disabled={isAccountDisabled()}
                         />
                         {!workOrderData.accountNumber && (
                           <div className="absolute right-3 top-1/2 -translate-y-1/2 w-2 h-2 bg-destructive rounded-full"></div>
@@ -1003,7 +1025,7 @@ const AddNewWorkOrder = () => {
                       <Select 
                         value={workOrderData.contact || "no-contact"} 
                         onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, contact: value === "no-contact" ? "" : value }))}
-                        disabled={!isSaved}
+                        disabled={isContactDisabled()}
                       >
                         <SelectTrigger className="h-9 sm:h-10">
                           <SelectValue placeholder="Select contact" />
@@ -1050,7 +1072,7 @@ const AddNewWorkOrder = () => {
                         id="workOrderNumber"
                         value={workOrderData.workOrderNumber}
                         onChange={(e) => setWorkOrderData(prev => ({ ...prev, workOrderNumber: e.target.value }))}
-                        disabled={areOtherFieldsDisabled()}
+                        disabled={areTopSectionFieldsDisabled()}
                         className="h-9 sm:h-10"
                       />
                     </div>
@@ -1058,7 +1080,7 @@ const AddNewWorkOrder = () => {
                     {/* Work Order Status */}
                     <div className="space-y-2">
                       <Label className="text-sm font-medium">Work Order Status</Label>
-                      <Select value={workOrderData.workOrderStatus} onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, workOrderStatus: value }))} disabled={areOtherFieldsDisabled()}>
+                      <Select value={workOrderData.workOrderStatus} onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, workOrderStatus: value }))} disabled={areTopSectionFieldsDisabled()}>
                         <SelectTrigger className="h-9 sm:h-10">
                           <SelectValue />
                         </SelectTrigger>
@@ -1074,7 +1096,7 @@ const AddNewWorkOrder = () => {
                     {/* Work Order Type */}
                     <div className="space-y-2">
                       <Label className="text-sm font-medium">Work Order Type</Label>
-                      <Select value={workOrderData.workOrderType} onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, workOrderType: value }))} disabled={areOtherFieldsDisabled()}>
+                      <Select value={workOrderData.workOrderType} onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, workOrderType: value }))} disabled={areTopSectionFieldsDisabled()}>
                         <SelectTrigger className="h-9 sm:h-10">
                           <SelectValue />
                         </SelectTrigger>
@@ -1093,7 +1115,7 @@ const AddNewWorkOrder = () => {
                         placeholder="Customer name"
                         value={workOrderData.customer}
                         onChange={(e) => setWorkOrderData(prev => ({ ...prev, customer: e.target.value }))}
-                        disabled={areOtherFieldsDisabled()}
+                        disabled={areTopSectionFieldsDisabled()}
                         className="h-9 sm:h-10"
                       />
                     </div>
@@ -1106,7 +1128,7 @@ const AddNewWorkOrder = () => {
                         placeholder="Customer address"
                         value={workOrderData.address || ""}
                         onChange={(e) => setWorkOrderData(prev => ({ ...prev, address: e.target.value }))}
-                        disabled={areOtherFieldsDisabled()}
+                        disabled={areTopSectionFieldsDisabled()}
                         className="h-9 sm:h-10"
                       />
                     </div>
