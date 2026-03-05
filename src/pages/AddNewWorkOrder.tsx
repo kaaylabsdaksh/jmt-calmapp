@@ -1416,11 +1416,11 @@ const AddNewWorkOrder = () => {
                                 )}
 
                                 {quoteData[selectedQuote].received.arrivalType === "customer-dropoff" && (
-                                  <div className="flex items-center gap-1.5">
-                                    <Label className="text-xs whitespace-nowrap min-w-[55px]">Name:</Label>
+                                  <div className="flex items-center gap-1">
+                                    <Label className="text-[11px] whitespace-nowrap min-w-[50px]">Name:</Label>
                                     <Input 
                                       placeholder="Enter name"
-                                      className="h-7 text-xs"
+                                      className="h-6 text-[11px]"
                                     />
                                   </div>
                                 )}
