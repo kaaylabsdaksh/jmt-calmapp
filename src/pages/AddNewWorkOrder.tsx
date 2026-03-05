@@ -2709,8 +2709,8 @@ const AddNewWorkOrder = () => {
                                 </Select>
                               </div>
 
-                              <div className="space-y-1">
-                                <Label htmlFor="qa-actionCode" className="text-xs font-medium">
+                              <div className="space-y-0.5">
+                                <Label htmlFor="qa-actionCode" className="text-[11px] font-medium">
                                   Action Code <span className="text-destructive">*</span>
                                 </Label>
                                 <Select 
@@ -2718,7 +2718,7 @@ const AddNewWorkOrder = () => {
                                   onValueChange={(value) => setQuickAddData({...quickAddData, actionCode: value})}
                                   disabled={areOtherFieldsDisabled()}
                                 >
-                                  <SelectTrigger id="qa-actionCode">
+                                  <SelectTrigger id="qa-actionCode" className="h-7 text-xs">
                                     <SelectValue placeholder="Select..." />
                                   </SelectTrigger>
                                   <SelectContent className="bg-background border shadow-lg z-50">
