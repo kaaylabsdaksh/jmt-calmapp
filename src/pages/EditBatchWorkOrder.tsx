@@ -1652,7 +1652,7 @@ const EditBatchWorkOrder = () => {
                                       <Input placeholder={item.serialNumber || "N/A"} defaultValue={item.serialNumber} className="h-7 w-24 text-xs" />
                                     </td>
                                     <td className="p-2">
-                                      <Input placeholder="" defaultValue={item.custId} className="h-8 w-24" />
+                                      <Input placeholder="" defaultValue={item.custId} className="h-7 w-24 text-xs" />
                                     </td>
                                     <td className="p-2">
                                       <Input placeholder={item.custSerial || "N/A"} defaultValue={item.custSerial} className="h-8 w-24" />
