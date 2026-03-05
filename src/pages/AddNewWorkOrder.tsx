@@ -1319,7 +1319,7 @@ const AddNewWorkOrder = () => {
                                   </Select>
                                 </div>
                                 <div className="flex items-center gap-1.5">
-                                  <Label className="text-xs whitespace-nowrap min-w-[70px]">PO #:</Label>
+                                  <Label className="text-xs whitespace-nowrap min-w-[70px]"><span className="text-destructive">*</span> PO #:</Label>
                                   <Input value={quoteData[selectedQuote].received.poNumber} className="h-7 text-xs" readOnly />
                                 </div>
                               </div>
