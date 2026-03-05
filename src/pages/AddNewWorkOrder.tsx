@@ -1744,7 +1744,7 @@ const AddNewWorkOrder = () => {
                                   <td className="p-2">
                                     <a 
                                       href="#" 
-                                      className="text-primary hover:underline font-medium"
+                                      className="text-foreground hover:underline font-medium"
                                       onClick={(e) => { e.preventDefault(); setSelectedRMA(rmaId); }}
                                     >
                                       {rmaId}
@@ -1958,7 +1958,7 @@ const AddNewWorkOrder = () => {
                                       </td>
                                       <td className="p-2">
                                         {item.woItem ? (
-                                          <a href="#" className="text-primary hover:underline font-medium">{item.woItem}</a>
+                                          <a href="#" className="text-foreground hover:underline font-medium">{item.woItem}</a>
                                         ) : null}
                                       </td>
                                       <td className="p-2 text-foreground">{item.serialNumber}</td>
