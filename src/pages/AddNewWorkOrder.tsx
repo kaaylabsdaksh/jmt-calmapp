@@ -2852,8 +2852,8 @@ const AddNewWorkOrder = () => {
 
                               {quickAddData.arrivalType === "jm-driver-pickup" && (
                                 <>
-                                  <div className="space-y-1">
-                                    <Label htmlFor="qa-driver" className="text-xs font-medium">
+                                  <div className="space-y-0.5">
+                                    <Label htmlFor="qa-driver" className="text-[11px] font-medium">
                                       Driver <span className="text-destructive">*</span>
                                     </Label>
                                     <Select 
