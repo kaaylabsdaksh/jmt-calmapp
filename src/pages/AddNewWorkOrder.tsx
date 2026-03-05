@@ -2841,6 +2841,29 @@ const AddNewWorkOrder = () => {
                       </div>
                     )}
 
+                    {/* View Mode Toggle */}
+                    <div className="flex items-center gap-2">
+                      <Label className="text-xs font-medium">View:</Label>
+                      <div className="flex gap-1">
+                        <Button
+                          variant={viewMode === 'receiving' ? 'default' : 'outline'}
+                          size="sm"
+                          className="h-7 text-xs px-3"
+                          onClick={() => setViewMode('receiving')}
+                        >
+                          Receiving View
+                        </Button>
+                        <Button
+                          variant={viewMode === 'table' ? 'default' : 'outline'}
+                          size="sm"
+                          className="h-7 text-xs px-3"
+                          onClick={() => setViewMode('table')}
+                        >
+                          Default View
+                        </Button>
+                      </div>
+                    </div>
+
                     {/* Quick Add Section - Only in Receiving View */}
                     {viewMode === 'receiving' && (
                     <div id="quick-add-section" className="space-y-4">
