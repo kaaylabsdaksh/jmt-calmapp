@@ -2035,7 +2035,7 @@ const AddNewWorkOrder = () => {
                                         <Input type="number" defaultValue={item.qty} className="h-6 w-14 text-[11px]" />
                                       </td>
                                       <td className="px-1.5 py-1">
-                                        <Input defaultValue={item.calFreq} className="h-6 w-14 text-[11px]" />
+                                        <Input key={`calfreq-${index}-${item.calFreq}`} defaultValue={item.calFreq} className="h-6 w-14 text-[11px]" />
                                       </td>
                                       <td className="px-1.5 py-1">
                                         {item.woItem ? (
