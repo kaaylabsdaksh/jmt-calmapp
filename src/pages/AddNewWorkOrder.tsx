@@ -1466,7 +1466,7 @@ const AddNewWorkOrder = () => {
                                       </Select>
                                     </div>
                                     <div className="flex items-center gap-1">
-                                      <Label className="text-[11px] whitespace-nowrap min-w-[50px]">PU Date:</Label>
+                                      <Label className="text-[11px] whitespace-nowrap min-w-[60px]">PU Date:</Label>
                                       <Popover>
                                         <PopoverTrigger asChild>
                                           <Button
