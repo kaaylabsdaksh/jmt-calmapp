@@ -1453,7 +1453,7 @@ const AddNewWorkOrder = () => {
                                 {quoteData[selectedQuote].received.arrivalType === "jm-driver-pickup" && (
                                   <>
                                     <div className="flex items-center gap-1">
-                                      <Label className="text-[11px] whitespace-nowrap min-w-[50px]">Driver:</Label>
+                                      <Label className="text-[11px] whitespace-nowrap min-w-[60px]">Driver:</Label>
                                       <Select>
                                         <SelectTrigger className="h-6 text-[11px]">
                                           <SelectValue placeholder="Select driver" />
