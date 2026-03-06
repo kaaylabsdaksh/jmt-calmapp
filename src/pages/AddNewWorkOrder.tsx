@@ -1943,7 +1943,7 @@ const AddNewWorkOrder = () => {
                                   </Select>
                                 </div>
                                 <div className="flex items-center gap-1">
-                                  <Label className="text-[11px] whitespace-nowrap min-w-[50px]">Need By:</Label>
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]">Need By:</Label>
                                   <Popover>
                                     <div className="relative w-full">
                                       <Input
