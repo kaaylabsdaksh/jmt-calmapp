@@ -1944,7 +1944,36 @@ const AddNewWorkOrder = () => {
                                 </div>
                                 <div className="flex items-center gap-1">
                                   <Label className="text-[11px] whitespace-nowrap min-w-[50px]">Need By:</Label>
-                                  <Input value={rmaData[selectedRMA as keyof typeof rmaData].received.needByDate} onChange={(e) => setRmaData(prev => ({ ...prev, [selectedRMA]: { ...prev[selectedRMA as keyof typeof prev], received: { ...prev[selectedRMA as keyof typeof prev].received, needByDate: e.target.value } } }))} className="h-6 text-[11px]" />
+                                  <Popover>
+                                    <div className="relative w-full">
+                                      <Input
+                                        placeholder="MM/DD/YYYY"
+                                        value={rmaData[selectedRMA as keyof typeof rmaData].received.needByDate ? format(new Date(rmaData[selectedRMA as keyof typeof rmaData].received.needByDate), "MM/dd/yyyy") : ""}
+                                        onChange={(e) => {
+                                          const val = e.target.value;
+                                          const match = val.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+                                          if (match) {
+                                            const parsed = new Date(`${match[3]}-${match[1]}-${match[2]}`);
+                                            if (!isNaN(parsed.getTime())) {
+                                              setRmaData(prev => ({ ...prev, [selectedRMA]: { ...prev[selectedRMA as keyof typeof prev], received: { ...prev[selectedRMA as keyof typeof prev].received, needByDate: format(parsed, "yyyy-MM-dd") } } }));
+                                            }
+                                          }
+                                          if (!val) {
+                                            setRmaData(prev => ({ ...prev, [selectedRMA]: { ...prev[selectedRMA as keyof typeof prev], received: { ...prev[selectedRMA as keyof typeof prev].received, needByDate: "" } } }));
+                                          }
+                                        }}
+                                        className="h-6 text-[11px] pr-7"
+                                      />
+                                      <PopoverTrigger asChild>
+                                        <Button variant="ghost" size="sm" className="absolute right-0 top-0 h-6 w-6 p-0">
+                                          <CalendarIcon className="h-3 w-3" />
+                                        </Button>
+                                      </PopoverTrigger>
+                                    </div>
+                                    <PopoverContent className="w-auto p-0" align="start">
+                                      <Calendar mode="single" selected={rmaData[selectedRMA as keyof typeof rmaData].received.needByDate ? new Date(rmaData[selectedRMA as keyof typeof rmaData].received.needByDate) : undefined} onSelect={(date) => { if (date) setRmaData(prev => ({ ...prev, [selectedRMA]: { ...prev[selectedRMA as keyof typeof prev], received: { ...prev[selectedRMA as keyof typeof prev].received, needByDate: format(date, "yyyy-MM-dd") } } })); }} initialFocus className={cn("p-3 pointer-events-auto")} />
+                                    </PopoverContent>
+                                  </Popover>
                                 </div>
                               </div>
                             </div>
