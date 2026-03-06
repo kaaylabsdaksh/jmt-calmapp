@@ -1895,14 +1895,14 @@ const AddNewWorkOrder = () => {
                                     <SelectTrigger className="h-6 text-[11px]">
                                       <SelectValue />
                                     </SelectTrigger>
-                                    <SelectContent className="bg-popover border shadow-lg z-50">
-                                      <SelectItem value="jm-driver-pickup">JM Driver Pickup</SelectItem>
-                                      <SelectItem value="customer-dropoff">Customer Dropoff</SelectItem>
-                                      <SelectItem value="shipped">Shipped</SelectItem>
-                                      <SelectItem value="onsite">Onsite</SelectItem>
-                                      <SelectItem value="purchasing-dept">Purchasing Dept.</SelectItem>
-                                      <SelectItem value="lab-standard">Lab Standard</SelectItem>
-                                      <SelectItem value="surplus">Surplus</SelectItem>
+                                    <SelectContent className="bg-popover border shadow-lg z-50 text-[11px]">
+                                      <SelectItem value="jm-driver-pickup" className="text-[11px] py-1 pl-6">JM Driver Pickup</SelectItem>
+                                      <SelectItem value="customer-dropoff" className="text-[11px] py-1 pl-6">Customer Dropoff</SelectItem>
+                                      <SelectItem value="shipped" className="text-[11px] py-1 pl-6">Shipped</SelectItem>
+                                      <SelectItem value="onsite" className="text-[11px] py-1 pl-6">Onsite</SelectItem>
+                                      <SelectItem value="purchasing-dept" className="text-[11px] py-1 pl-6">Purchasing Dept.</SelectItem>
+                                      <SelectItem value="lab-standard" className="text-[11px] py-1 pl-6">Lab Standard</SelectItem>
+                                      <SelectItem value="surplus" className="text-[11px] py-1 pl-6">Surplus</SelectItem>
                                     </SelectContent>
                                   </Select>
                                 </div>
