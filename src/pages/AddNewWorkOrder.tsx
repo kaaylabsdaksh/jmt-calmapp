@@ -1036,8 +1036,8 @@ const AddNewWorkOrder = () => {
                     </div>
 
                     {/* Contact Selection */}
-                    <div className="space-y-2">
-                      <Label htmlFor="contact" className="text-sm font-medium">
+                    <div className="space-y-1">
+                      <Label htmlFor="contact" className="text-xs font-medium">
                         Contact <span className="text-destructive">*</span>
                       </Label>
                       <Select 
