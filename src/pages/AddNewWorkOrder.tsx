@@ -1958,8 +1958,9 @@ const AddNewWorkOrder = () => {
                                   };
                                   // Note: since rmaData is a const, we need state for this
                                   // For now, show a toast confirmation
-                                  import("sonner").then(({ toast }) => {
-                                    toast.success(`Applied received details to ${selectedRMAItems.length} selected item(s)`);
+                                  toast({
+                                    title: "Applied",
+                                    description: `Applied received details to ${selectedRMAItems.length} selected item(s)`,
                                   });
                                 }}
                               >
