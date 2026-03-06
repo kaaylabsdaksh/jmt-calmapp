@@ -1845,7 +1845,7 @@ const AddNewWorkOrder = () => {
                                   </Select>
                                 </div>
                                 <div className="flex items-center gap-1">
-                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]"><span className="text-destructive">*</span> PO #:</Label>
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]">PO #: <span className="text-destructive">*</span></Label>
                                   <Input value={rmaData[selectedRMA as keyof typeof rmaData].received.poNumber} onChange={(e) => setRmaData(prev => ({ ...prev, [selectedRMA]: { ...prev[selectedRMA as keyof typeof prev], received: { ...prev[selectedRMA as keyof typeof prev].received, poNumber: e.target.value } } }))} className="h-6 text-[11px]" />
                                 </div>
                               </div>
