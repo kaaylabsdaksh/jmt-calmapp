@@ -1913,11 +1913,11 @@ const AddNewWorkOrder = () => {
                                       <SelectTrigger className="h-6 text-[11px]">
                                         <SelectValue placeholder="Select..." />
                                       </SelectTrigger>
-                                      <SelectContent className="bg-popover border shadow-lg z-50">
-                                        <SelectItem value="dhl">DHL</SelectItem>
-                                        <SelectItem value="fedex">FedEx</SelectItem>
-                                        <SelectItem value="ups">UPS</SelectItem>
-                                        <SelectItem value="usps">USPS</SelectItem>
+                                      <SelectContent className="bg-popover border shadow-lg z-50 text-[11px]">
+                                        <SelectItem value="dhl" className="text-[11px] py-1 pl-6">DHL</SelectItem>
+                                        <SelectItem value="fedex" className="text-[11px] py-1 pl-6">FedEx</SelectItem>
+                                        <SelectItem value="ups" className="text-[11px] py-1 pl-6">UPS</SelectItem>
+                                        <SelectItem value="usps" className="text-[11px] py-1 pl-6">USPS</SelectItem>
                                       </SelectContent>
                                     </Select>
                                   </div>
