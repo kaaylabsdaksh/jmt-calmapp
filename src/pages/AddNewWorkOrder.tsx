@@ -1126,8 +1126,8 @@ const AddNewWorkOrder = () => {
                     </div>
 
                     {/* Customer */}
-                    <div className="space-y-2">
-                      <Label htmlFor="customer" className="text-sm font-medium">Customer</Label>
+                    <div className="space-y-1">
+                      <Label htmlFor="customer" className="text-xs font-medium">Customer</Label>
                       <Input
                         id="customer"
                         placeholder="Customer name"
