@@ -1425,7 +1425,7 @@ const AddNewWorkOrder = () => {
 
                                 {quoteData[selectedQuote].received.arrivalType === "shipped" && (
                                   <div className="flex items-center gap-1">
-                                    <Label className="text-[11px] whitespace-nowrap min-w-[50px]">Ship Type:</Label>
+                                    <Label className="text-[11px] whitespace-nowrap min-w-[60px]">Ship Type:</Label>
                                     <Select>
                                       <SelectTrigger className="h-6 text-[11px]">
                                         <SelectValue placeholder="Select..." />
