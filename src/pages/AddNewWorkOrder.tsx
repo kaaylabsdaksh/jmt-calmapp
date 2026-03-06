@@ -1890,7 +1890,7 @@ const AddNewWorkOrder = () => {
                                   </Popover>
                                 </div>
                                 <div className="flex items-center gap-1">
-                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]"><span className="text-destructive">*</span> Type:</Label>
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]">Type: <span className="text-destructive">*</span></Label>
                                   <Select value={rmaData[selectedRMA as keyof typeof rmaData].received.arrivalType} onValueChange={(val) => setRmaData(prev => ({ ...prev, [selectedRMA]: { ...prev[selectedRMA as keyof typeof prev], received: { ...prev[selectedRMA as keyof typeof prev].received, arrivalType: val } } }))}>
                                     <SelectTrigger className="h-6 text-[11px]">
                                       <SelectValue />
