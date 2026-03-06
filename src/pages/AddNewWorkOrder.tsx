@@ -1940,7 +1940,7 @@ const AddNewWorkOrder = () => {
                               <Button 
                                 size="sm"
                                 className="h-7 text-xs bg-primary hover:bg-primary/90"
-                                disabled={selectedRMAItems.length === 0}
+                                disabled={selectedRMAItems.length === 0 || !rmaData[selectedRMA as keyof typeof rmaData].received.calFreq || !rmaData[selectedRMA as keyof typeof rmaData].received.location || !rmaData[selectedRMA as keyof typeof rmaData].received.division || !rmaData[selectedRMA as keyof typeof rmaData].received.poNumber || !rmaData[selectedRMA as keyof typeof rmaData].received.arrivalDate || !rmaData[selectedRMA as keyof typeof rmaData].received.arrivalType}
                                 onClick={() => {
                                   const currentRma = rmaData[selectedRMA as keyof typeof rmaData];
                                   const updatedItems = [...currentRma.items];
