@@ -1112,8 +1112,8 @@ const AddNewWorkOrder = () => {
                     </div>
 
                     {/* Work Order Type */}
-                    <div className="space-y-2">
-                      <Label className="text-sm font-medium">Work Order Type</Label>
+                    <div className="space-y-1">
+                      <Label className="text-xs font-medium">Work Order Type</Label>
                       <Select value={workOrderData.workOrderType} onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, workOrderType: value }))} disabled={isSaved}>
                         <SelectTrigger className="h-9 sm:h-10">
                           <SelectValue />
