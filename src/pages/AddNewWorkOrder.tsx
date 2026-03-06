@@ -1820,7 +1820,7 @@ const AddNewWorkOrder = () => {
                                   <Input value={rmaData[selectedRMA as keyof typeof rmaData].received.calFreq} onChange={(e) => setRmaData(prev => ({ ...prev, [selectedRMA]: { ...prev[selectedRMA as keyof typeof prev], received: { ...prev[selectedRMA as keyof typeof prev].received, calFreq: e.target.value } } }))} className="h-6 text-[11px]" />
                                 </div>
                                 <div className="flex items-center gap-1">
-                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]"><span className="text-destructive">*</span> Location:</Label>
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]">Location: <span className="text-destructive">*</span></Label>
                                   <Select value={rmaData[selectedRMA as keyof typeof rmaData].received.location} onValueChange={(val) => setRmaData(prev => ({ ...prev, [selectedRMA]: { ...prev[selectedRMA as keyof typeof prev], received: { ...prev[selectedRMA as keyof typeof prev].received, location: val } } }))}>
                                     <SelectTrigger className="h-6 text-[11px]">
                                       <SelectValue />
