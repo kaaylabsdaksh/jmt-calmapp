@@ -1355,7 +1355,7 @@ const AddNewWorkOrder = () => {
                               <h4 className="text-[11px] font-medium text-muted-foreground border-b pb-0.5">Arrival Information</h4>
                               <div className="space-y-1">
                                 <div className="flex items-center gap-1">
-                                   <Label className="text-[11px] whitespace-nowrap min-w-[60px]"><span className="text-destructive">*</span> Date:</Label>
+                                   <Label className="text-[11px] whitespace-nowrap min-w-[60px]">Date: <span className="text-destructive">*</span></Label>
                                   <Popover>
                                     <PopoverTrigger asChild>
                                       <Button
