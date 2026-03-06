@@ -1315,11 +1315,11 @@ const AddNewWorkOrder = () => {
                               <h4 className="text-[11px] font-medium text-muted-foreground border-b pb-0.5">General Information</h4>
                               <div className="space-y-1">
                                 <div className="flex items-center gap-1">
-                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]"><span className="text-destructive">*</span> Cal Freq:</Label>
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]">Cal Freq: <span className="text-destructive">*</span></Label>
                                   <Input type="number" value={quoteData[selectedQuote].received.calFreq} className="h-6 text-[11px]" readOnly />
                                 </div>
                                 <div className="flex items-center gap-1">
-                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]"><span className="text-destructive">*</span> Location:</Label>
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]">Location: <span className="text-destructive">*</span></Label>
                                   <Select value={quoteData[selectedQuote].received.location}>
                                     <SelectTrigger className="h-6 text-[11px]">
                                       <SelectValue />
@@ -1332,7 +1332,7 @@ const AddNewWorkOrder = () => {
                                   </Select>
                                 </div>
                                 <div className="flex items-center gap-1">
-                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]"><span className="text-destructive">*</span> Division:</Label>
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]">Division: <span className="text-destructive">*</span></Label>
                                   <Select value={quoteData[selectedQuote].received.division}>
                                     <SelectTrigger className="h-6 text-[11px]">
                                       <SelectValue />
@@ -1344,7 +1344,7 @@ const AddNewWorkOrder = () => {
                                   </Select>
                                 </div>
                                 <div className="flex items-center gap-1">
-                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]"><span className="text-destructive">*</span> PO #:</Label>
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]">PO #: <span className="text-destructive">*</span></Label>
                                   <Input value={quoteData[selectedQuote].received.poNumber} className="h-6 text-[11px]" readOnly />
                                 </div>
                               </div>
@@ -1355,7 +1355,7 @@ const AddNewWorkOrder = () => {
                               <h4 className="text-[11px] font-medium text-muted-foreground border-b pb-0.5">Arrival Information</h4>
                               <div className="space-y-1">
                                 <div className="flex items-center gap-1">
-                                   <Label className="text-[11px] whitespace-nowrap min-w-[60px]"><span className="text-destructive">*</span> Date:</Label>
+                                   <Label className="text-[11px] whitespace-nowrap min-w-[60px]">Date: <span className="text-destructive">*</span></Label>
                                   <Popover>
                                     <PopoverTrigger asChild>
                                       <Button
@@ -1381,7 +1381,7 @@ const AddNewWorkOrder = () => {
                                 </div>
 
                                 <div className="flex items-center gap-1">
-                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]"><span className="text-destructive">*</span> Type:</Label>
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]">Type: <span className="text-destructive">*</span></Label>
                                   <Select 
                                     value={quoteData[selectedQuote].received.arrivalType}
                                     onValueChange={(value) => {
@@ -1816,11 +1816,11 @@ const AddNewWorkOrder = () => {
                               <h4 className="text-[11px] font-medium text-muted-foreground border-b pb-0.5">General Information</h4>
                               <div className="space-y-1">
                                 <div className="flex items-center gap-1">
-                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]"><span className="text-destructive">*</span> Cal Freq:</Label>
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]">Cal Freq: <span className="text-destructive">*</span></Label>
                                   <Input value={rmaData[selectedRMA as keyof typeof rmaData].received.calFreq} onChange={(e) => setRmaData(prev => ({ ...prev, [selectedRMA]: { ...prev[selectedRMA as keyof typeof prev], received: { ...prev[selectedRMA as keyof typeof prev].received, calFreq: e.target.value } } }))} className="h-6 text-[11px]" />
                                 </div>
                                 <div className="flex items-center gap-1">
-                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]"><span className="text-destructive">*</span> Location:</Label>
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]">Location: <span className="text-destructive">*</span></Label>
                                   <Select value={rmaData[selectedRMA as keyof typeof rmaData].received.location} onValueChange={(val) => setRmaData(prev => ({ ...prev, [selectedRMA]: { ...prev[selectedRMA as keyof typeof prev], received: { ...prev[selectedRMA as keyof typeof prev].received, location: val } } }))}>
                                     <SelectTrigger className="h-6 text-[11px]">
                                       <SelectValue />
@@ -1833,7 +1833,7 @@ const AddNewWorkOrder = () => {
                                   </Select>
                                 </div>
                                 <div className="flex items-center gap-1">
-                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]"><span className="text-destructive">*</span> Division:</Label>
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]">Division: <span className="text-destructive">*</span></Label>
                                   <Select value={rmaData[selectedRMA as keyof typeof rmaData].received.division} onValueChange={(val) => setRmaData(prev => ({ ...prev, [selectedRMA]: { ...prev[selectedRMA as keyof typeof prev], received: { ...prev[selectedRMA as keyof typeof prev].received, division: val } } }))}>
                                     <SelectTrigger className="h-6 text-[11px]">
                                       <SelectValue />
@@ -1845,7 +1845,7 @@ const AddNewWorkOrder = () => {
                                   </Select>
                                 </div>
                                 <div className="flex items-center gap-1">
-                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]"><span className="text-destructive">*</span> PO #:</Label>
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]">PO #: <span className="text-destructive">*</span></Label>
                                   <Input value={rmaData[selectedRMA as keyof typeof rmaData].received.poNumber} onChange={(e) => setRmaData(prev => ({ ...prev, [selectedRMA]: { ...prev[selectedRMA as keyof typeof prev], received: { ...prev[selectedRMA as keyof typeof prev].received, poNumber: e.target.value } } }))} className="h-6 text-[11px]" />
                                 </div>
                               </div>
@@ -1856,7 +1856,7 @@ const AddNewWorkOrder = () => {
                               <h4 className="text-[11px] font-medium text-muted-foreground border-b pb-0.5">Arrival Information</h4>
                               <div className="space-y-1">
                                 <div className="flex items-center gap-1">
-                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]"><span className="text-destructive">*</span> Date:</Label>
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]">Date: <span className="text-destructive">*</span></Label>
                                   <Popover>
                                     <div className="relative w-full">
                                       <Input
@@ -1890,7 +1890,7 @@ const AddNewWorkOrder = () => {
                                   </Popover>
                                 </div>
                                 <div className="flex items-center gap-1">
-                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]"><span className="text-destructive">*</span> Type:</Label>
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]">Type: <span className="text-destructive">*</span></Label>
                                   <Select value={rmaData[selectedRMA as keyof typeof rmaData].received.arrivalType} onValueChange={(val) => setRmaData(prev => ({ ...prev, [selectedRMA]: { ...prev[selectedRMA as keyof typeof prev], received: { ...prev[selectedRMA as keyof typeof prev].received, arrivalType: val } } }))}>
                                     <SelectTrigger className="h-6 text-[11px]">
                                       <SelectValue />
