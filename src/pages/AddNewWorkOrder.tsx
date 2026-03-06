@@ -1355,7 +1355,7 @@ const AddNewWorkOrder = () => {
                               <h4 className="text-[11px] font-medium text-muted-foreground border-b pb-0.5">Arrival Information</h4>
                               <div className="space-y-1">
                                 <div className="flex items-center gap-1">
-                                   <Label className="text-[11px] whitespace-nowrap min-w-[50px]"><span className="text-destructive">*</span> Date:</Label>
+                                   <Label className="text-[11px] whitespace-nowrap min-w-[60px]"><span className="text-destructive">*</span> Date:</Label>
                                   <Popover>
                                     <PopoverTrigger asChild>
                                       <Button
@@ -1381,7 +1381,7 @@ const AddNewWorkOrder = () => {
                                 </div>
 
                                 <div className="flex items-center gap-1">
-                                  <Label className="text-[11px] whitespace-nowrap min-w-[50px]"><span className="text-destructive">*</span> Type:</Label>
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]"><span className="text-destructive">*</span> Type:</Label>
                                   <Select 
                                     value={quoteData[selectedQuote].received.arrivalType}
                                     onValueChange={(value) => {
@@ -1415,7 +1415,7 @@ const AddNewWorkOrder = () => {
                                 {/* Conditional fields based on arrival type */}
                                 {quoteData[selectedQuote].received.arrivalType === "surplus" && (
                                   <div className="flex items-center gap-1">
-                                    <Label className="text-[11px] whitespace-nowrap min-w-[50px]">Location:</Label>
+                                    <Label className="text-[11px] whitespace-nowrap min-w-[60px]">Location:</Label>
                                     <Input 
                                       placeholder="Enter location"
                                       className="h-6 text-[11px]"
@@ -1425,7 +1425,7 @@ const AddNewWorkOrder = () => {
 
                                 {quoteData[selectedQuote].received.arrivalType === "shipped" && (
                                   <div className="flex items-center gap-1">
-                                    <Label className="text-[11px] whitespace-nowrap min-w-[50px]">Ship Type:</Label>
+                                    <Label className="text-[11px] whitespace-nowrap min-w-[60px]">Ship Type:</Label>
                                     <Select>
                                       <SelectTrigger className="h-6 text-[11px]">
                                         <SelectValue placeholder="Select..." />
@@ -1442,7 +1442,7 @@ const AddNewWorkOrder = () => {
 
                                 {quoteData[selectedQuote].received.arrivalType === "customer-dropoff" && (
                                   <div className="flex items-center gap-1">
-                                    <Label className="text-[11px] whitespace-nowrap min-w-[50px]">Name:</Label>
+                                    <Label className="text-[11px] whitespace-nowrap min-w-[60px]">Name:</Label>
                                     <Input 
                                       placeholder="Enter name"
                                       className="h-6 text-[11px]"
@@ -1453,7 +1453,7 @@ const AddNewWorkOrder = () => {
                                 {quoteData[selectedQuote].received.arrivalType === "jm-driver-pickup" && (
                                   <>
                                     <div className="flex items-center gap-1">
-                                      <Label className="text-[11px] whitespace-nowrap min-w-[50px]">Driver:</Label>
+                                      <Label className="text-[11px] whitespace-nowrap min-w-[60px]">Driver:</Label>
                                       <Select>
                                         <SelectTrigger className="h-6 text-[11px]">
                                           <SelectValue placeholder="Select driver" />
@@ -1466,7 +1466,7 @@ const AddNewWorkOrder = () => {
                                       </Select>
                                     </div>
                                     <div className="flex items-center gap-1">
-                                      <Label className="text-[11px] whitespace-nowrap min-w-[50px]">PU Date:</Label>
+                                      <Label className="text-[11px] whitespace-nowrap min-w-[60px]">PU Date:</Label>
                                       <Popover>
                                         <PopoverTrigger asChild>
                                           <Button
@@ -1499,7 +1499,7 @@ const AddNewWorkOrder = () => {
                               <h4 className="text-[11px] font-medium text-muted-foreground border-b pb-0.5">Override Fields</h4>
                               <div className="space-y-1">
                                 <div className="flex items-center gap-1">
-                                  <Label className="text-[11px] whitespace-nowrap min-w-[50px]">Priority:</Label>
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]">Priority:</Label>
                                   <Select value={quoteData[selectedQuote].received.priority}>
                                     <SelectTrigger className="h-6 text-[11px]">
                                       <SelectValue />
@@ -1512,7 +1512,7 @@ const AddNewWorkOrder = () => {
                                   </Select>
                                 </div>
                                 <div className="flex items-center gap-1">
-                                  <Label className="text-[11px] whitespace-nowrap min-w-[50px]">Need By:</Label>
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]">Need By:</Label>
                                   <Input type="date" value={quoteData[selectedQuote].received.needByDate} className="h-6 text-[11px]" readOnly />
                                 </div>
                               </div>
@@ -1856,7 +1856,7 @@ const AddNewWorkOrder = () => {
                               <h4 className="text-[11px] font-medium text-muted-foreground border-b pb-0.5">Arrival Information</h4>
                               <div className="space-y-1">
                                 <div className="flex items-center gap-1">
-                                  <Label className="text-[11px] whitespace-nowrap min-w-[50px]"><span className="text-destructive">*</span> Date:</Label>
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]"><span className="text-destructive">*</span> Date:</Label>
                                   <Popover>
                                     <div className="relative w-full">
                                       <Input
@@ -1890,7 +1890,7 @@ const AddNewWorkOrder = () => {
                                   </Popover>
                                 </div>
                                 <div className="flex items-center gap-1">
-                                  <Label className="text-[11px] whitespace-nowrap min-w-[50px]"><span className="text-destructive">*</span> Type:</Label>
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]"><span className="text-destructive">*</span> Type:</Label>
                                   <Select value={rmaData[selectedRMA as keyof typeof rmaData].received.arrivalType} onValueChange={(val) => setRmaData(prev => ({ ...prev, [selectedRMA]: { ...prev[selectedRMA as keyof typeof prev], received: { ...prev[selectedRMA as keyof typeof prev].received, arrivalType: val } } }))}>
                                     <SelectTrigger className="h-6 text-[11px]">
                                       <SelectValue />
@@ -1908,7 +1908,7 @@ const AddNewWorkOrder = () => {
                                 </div>
                                 {rmaData[selectedRMA as keyof typeof rmaData].received.arrivalType === "shipped" && (
                                   <div className="flex items-center gap-1">
-                                    <Label className="text-[11px] whitespace-nowrap min-w-[50px]">Ship Type:</Label>
+                                    <Label className="text-[11px] whitespace-nowrap min-w-[60px]">Ship Type:</Label>
                                     <Select>
                                       <SelectTrigger className="h-6 text-[11px]">
                                         <SelectValue placeholder="Select..." />
@@ -1930,7 +1930,7 @@ const AddNewWorkOrder = () => {
                               <h4 className="text-[11px] font-medium text-muted-foreground border-b pb-0.5">Override Fields</h4>
                               <div className="space-y-1">
                                 <div className="flex items-center gap-1">
-                                  <Label className="text-[11px] whitespace-nowrap min-w-[50px]">Priority:</Label>
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]">Priority:</Label>
                                   <Select value={rmaData[selectedRMA as keyof typeof rmaData].received.priority} onValueChange={(val) => setRmaData(prev => ({ ...prev, [selectedRMA]: { ...prev[selectedRMA as keyof typeof prev], received: { ...prev[selectedRMA as keyof typeof prev].received, priority: val } } }))}>
                                     <SelectTrigger className="h-6 text-[11px]">
                                       <SelectValue />
@@ -1943,7 +1943,7 @@ const AddNewWorkOrder = () => {
                                   </Select>
                                 </div>
                                 <div className="flex items-center gap-1">
-                                  <Label className="text-[11px] whitespace-nowrap min-w-[50px]">Need By:</Label>
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]">Need By:</Label>
                                   <Popover>
                                     <div className="relative w-full">
                                       <Input
