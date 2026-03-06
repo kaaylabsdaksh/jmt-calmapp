@@ -1935,10 +1935,10 @@ const AddNewWorkOrder = () => {
                                     <SelectTrigger className="h-6 text-[11px]">
                                       <SelectValue />
                                     </SelectTrigger>
-                                    <SelectContent className="bg-popover border shadow-lg z-50">
-                                      <SelectItem value="Normal">Normal</SelectItem>
-                                      <SelectItem value="Expedite">Expedite</SelectItem>
-                                      <SelectItem value="Rush">Rush</SelectItem>
+                                    <SelectContent className="bg-popover border shadow-lg z-50 text-[11px]">
+                                      <SelectItem value="Normal" className="text-[11px] py-1 pl-6">Normal</SelectItem>
+                                      <SelectItem value="Expedite" className="text-[11px] py-1 pl-6">Expedite</SelectItem>
+                                      <SelectItem value="Rush" className="text-[11px] py-1 pl-6">Rush</SelectItem>
                                     </SelectContent>
                                   </Select>
                                 </div>
