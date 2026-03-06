@@ -136,7 +136,7 @@ const AddNewWorkOrder = () => {
   const [selectedRMAItems, setSelectedRMAItems] = useState<number[]>([]);
   const [rmaSearchOpen, setRmaSearchOpen] = useState(false);
   const [rmaSearchTerm, setRmaSearchTerm] = useState("");
-  const [rmaData] = useState({
+  const [rmaData, setRmaData] = useState({
     "RMA-001": {
       type: "Repair",
       received: {
