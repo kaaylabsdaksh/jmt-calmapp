@@ -1825,10 +1825,10 @@ const AddNewWorkOrder = () => {
                                     <SelectTrigger className="h-6 text-[11px]">
                                       <SelectValue />
                                     </SelectTrigger>
-                                    <SelectContent className="bg-popover border shadow-lg z-50">
-                                      <SelectItem value="Baton Rouge">Baton Rouge</SelectItem>
-                                      <SelectItem value="Houston">Houston</SelectItem>
-                                      <SelectItem value="Dallas">Dallas</SelectItem>
+                                    <SelectContent className="bg-popover border shadow-lg z-50 text-[11px]">
+                                      <SelectItem value="Baton Rouge" className="text-[11px] py-1 pl-6">Baton Rouge</SelectItem>
+                                      <SelectItem value="Houston" className="text-[11px] py-1 pl-6">Houston</SelectItem>
+                                      <SelectItem value="Dallas" className="text-[11px] py-1 pl-6">Dallas</SelectItem>
                                     </SelectContent>
                                   </Select>
                                 </div>
@@ -1838,9 +1838,9 @@ const AddNewWorkOrder = () => {
                                     <SelectTrigger className="h-6 text-[11px]">
                                       <SelectValue />
                                     </SelectTrigger>
-                                    <SelectContent className="bg-popover border shadow-lg z-50">
-                                      <SelectItem value="Lab">Lab</SelectItem>
-                                      <SelectItem value="Field">Field</SelectItem>
+                                    <SelectContent className="bg-popover border shadow-lg z-50 text-[11px]">
+                                      <SelectItem value="Lab" className="text-[11px] py-1 pl-6">Lab</SelectItem>
+                                      <SelectItem value="Field" className="text-[11px] py-1 pl-6">Field</SelectItem>
                                     </SelectContent>
                                   </Select>
                                 </div>
@@ -1895,14 +1895,14 @@ const AddNewWorkOrder = () => {
                                     <SelectTrigger className="h-6 text-[11px]">
                                       <SelectValue />
                                     </SelectTrigger>
-                                    <SelectContent className="bg-popover border shadow-lg z-50">
-                                      <SelectItem value="jm-driver-pickup">JM Driver Pickup</SelectItem>
-                                      <SelectItem value="customer-dropoff">Customer Dropoff</SelectItem>
-                                      <SelectItem value="shipped">Shipped</SelectItem>
-                                      <SelectItem value="onsite">Onsite</SelectItem>
-                                      <SelectItem value="purchasing-dept">Purchasing Dept.</SelectItem>
-                                      <SelectItem value="lab-standard">Lab Standard</SelectItem>
-                                      <SelectItem value="surplus">Surplus</SelectItem>
+                                    <SelectContent className="bg-popover border shadow-lg z-50 text-[11px]">
+                                      <SelectItem value="jm-driver-pickup" className="text-[11px] py-1 pl-6">JM Driver Pickup</SelectItem>
+                                      <SelectItem value="customer-dropoff" className="text-[11px] py-1 pl-6">Customer Dropoff</SelectItem>
+                                      <SelectItem value="shipped" className="text-[11px] py-1 pl-6">Shipped</SelectItem>
+                                      <SelectItem value="onsite" className="text-[11px] py-1 pl-6">Onsite</SelectItem>
+                                      <SelectItem value="purchasing-dept" className="text-[11px] py-1 pl-6">Purchasing Dept.</SelectItem>
+                                      <SelectItem value="lab-standard" className="text-[11px] py-1 pl-6">Lab Standard</SelectItem>
+                                      <SelectItem value="surplus" className="text-[11px] py-1 pl-6">Surplus</SelectItem>
                                     </SelectContent>
                                   </Select>
                                 </div>
@@ -1913,11 +1913,11 @@ const AddNewWorkOrder = () => {
                                       <SelectTrigger className="h-6 text-[11px]">
                                         <SelectValue placeholder="Select..." />
                                       </SelectTrigger>
-                                      <SelectContent className="bg-popover border shadow-lg z-50">
-                                        <SelectItem value="dhl">DHL</SelectItem>
-                                        <SelectItem value="fedex">FedEx</SelectItem>
-                                        <SelectItem value="ups">UPS</SelectItem>
-                                        <SelectItem value="usps">USPS</SelectItem>
+                                      <SelectContent className="bg-popover border shadow-lg z-50 text-[11px]">
+                                        <SelectItem value="dhl" className="text-[11px] py-1 pl-6">DHL</SelectItem>
+                                        <SelectItem value="fedex" className="text-[11px] py-1 pl-6">FedEx</SelectItem>
+                                        <SelectItem value="ups" className="text-[11px] py-1 pl-6">UPS</SelectItem>
+                                        <SelectItem value="usps" className="text-[11px] py-1 pl-6">USPS</SelectItem>
                                       </SelectContent>
                                     </Select>
                                   </div>
@@ -1935,10 +1935,10 @@ const AddNewWorkOrder = () => {
                                     <SelectTrigger className="h-6 text-[11px]">
                                       <SelectValue />
                                     </SelectTrigger>
-                                    <SelectContent className="bg-popover border shadow-lg z-50">
-                                      <SelectItem value="Normal">Normal</SelectItem>
-                                      <SelectItem value="Expedite">Expedite</SelectItem>
-                                      <SelectItem value="Rush">Rush</SelectItem>
+                                    <SelectContent className="bg-popover border shadow-lg z-50 text-[11px]">
+                                      <SelectItem value="Normal" className="text-[11px] py-1 pl-6">Normal</SelectItem>
+                                      <SelectItem value="Expedite" className="text-[11px] py-1 pl-6">Expedite</SelectItem>
+                                      <SelectItem value="Rush" className="text-[11px] py-1 pl-6">Rush</SelectItem>
                                     </SelectContent>
                                   </Select>
                                 </div>
