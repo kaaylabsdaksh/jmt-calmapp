@@ -1381,7 +1381,7 @@ const AddNewWorkOrder = () => {
                                 </div>
 
                                 <div className="flex items-center gap-1">
-                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]"><span className="text-destructive">*</span> Type:</Label>
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]">Type: <span className="text-destructive">*</span></Label>
                                   <Select 
                                     value={quoteData[selectedQuote].received.arrivalType}
                                     onValueChange={(value) => {
