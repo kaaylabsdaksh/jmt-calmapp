@@ -987,8 +987,8 @@ const AddNewWorkOrder = () => {
                 <CardContent className="p-3 sm:p-4">
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
                     {/* Account Number */}
-                    <div className="space-y-2 relative" ref={inputRef}>
-                      <Label htmlFor="accountNumber" className="text-sm font-medium">
+                    <div className="space-y-1 relative" ref={inputRef}>
+                      <Label htmlFor="accountNumber" className="text-xs font-medium">
                         Account # <span className="text-destructive">*</span>
                       </Label>
                       <div className="relative">
