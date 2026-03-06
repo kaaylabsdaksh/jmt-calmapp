@@ -1947,6 +1947,7 @@ const AddNewWorkOrder = () => {
                                   selectedRMAItems.forEach(index => {
                                     updatedItems[index] = {
                                       ...updatedItems[index],
+                                      calFreq: currentRma.received.calFreq,
                                       priority: currentRma.received.priority,
                                     };
                                   });
@@ -1957,6 +1958,7 @@ const AddNewWorkOrder = () => {
                                       items: updatedItems,
                                     }
                                   }));
+                                  setSelectedRMAItems([]);
                                   toast({
                                     title: "Applied",
                                     description: `Applied received details to ${selectedRMAItems.length} selected item(s)`,
@@ -2033,7 +2035,7 @@ const AddNewWorkOrder = () => {
                                         <Input type="number" defaultValue={item.qty} className="h-6 w-14 text-[11px]" />
                                       </td>
                                       <td className="px-1.5 py-1">
-                                        <Input defaultValue={item.calFreq} className="h-6 w-14 text-[11px]" />
+                                        <Input key={`calfreq-${index}-${item.calFreq}`} defaultValue={item.calFreq} className="h-6 w-14 text-[11px]" />
                                       </td>
                                       <td className="px-1.5 py-1">
                                         {item.woItem ? (
@@ -2048,7 +2050,7 @@ const AddNewWorkOrder = () => {
                                         <Input placeholder="" defaultValue={item.custSerial} className="h-6 w-20 text-[11px]" />
                                       </td>
                                       <td className="px-1.5 py-1">
-                                        <Select defaultValue={item.priority}>
+                                        <Select key={`priority-${index}-${item.priority}`} defaultValue={item.priority}>
                                           <SelectTrigger className="h-6 w-20 text-[11px]">
                                             <SelectValue />
                                           </SelectTrigger>
