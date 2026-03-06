@@ -982,13 +982,13 @@ const AddNewWorkOrder = () => {
               </TabsList>
             )}
 
-            <TabsContent value="general" className="space-y-4 sm:space-y-6">
+            <TabsContent value="general" className="space-y-3">
               <Card>
-                <CardContent className="p-4 sm:p-6">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                <CardContent className="p-3 sm:p-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
                     {/* Account Number */}
-                    <div className="space-y-2 relative" ref={inputRef}>
-                      <Label htmlFor="accountNumber" className="text-sm font-medium">
+                    <div className="space-y-1 relative" ref={inputRef}>
+                      <Label htmlFor="accountNumber" className="text-xs font-medium">
                         Account # <span className="text-destructive">*</span>
                       </Label>
                       <div className="relative">
@@ -1000,7 +1000,7 @@ const AddNewWorkOrder = () => {
                           onKeyDown={handleKeyDown}
                           maxLength={7}
                           disabled={isSaved}
-                          className={`h-9 sm:h-10 ${!workOrderData.accountNumber ? "border-destructive" : ""}`}
+                          className={`h-8 ${!workOrderData.accountNumber ? "border-destructive" : ""}`}
                         />
                         {!workOrderData.accountNumber && (
                           <div className="absolute right-3 top-1/2 -translate-y-1/2 w-2 h-2 bg-destructive rounded-full"></div>
@@ -1036,8 +1036,8 @@ const AddNewWorkOrder = () => {
                     </div>
 
                     {/* Contact Selection */}
-                    <div className="space-y-2">
-                      <Label htmlFor="contact" className="text-sm font-medium">
+                    <div className="space-y-1">
+                      <Label htmlFor="contact" className="text-xs font-medium">
                         Contact <span className="text-destructive">*</span>
                       </Label>
                       <Select 
@@ -1045,7 +1045,7 @@ const AddNewWorkOrder = () => {
                         onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, contact: value === "no-contact" ? "" : value }))}
                         disabled={isSaved}
                       >
-                        <SelectTrigger className="h-9 sm:h-10">
+                        <SelectTrigger className="h-8">
                           <SelectValue placeholder="Select contact" />
                         </SelectTrigger>
                         <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-[60] max-h-60 overflow-y-auto">
@@ -1082,8 +1082,8 @@ const AddNewWorkOrder = () => {
                     </div>
 
                     {/* Work Order Number */}
-                    <div className="space-y-2">
-                      <Label htmlFor="workOrderNumber" className="text-sm font-medium">
+                    <div className="space-y-1">
+                      <Label htmlFor="workOrderNumber" className="text-xs font-medium">
                         Work Order # <span className="text-destructive">*</span>
                       </Label>
                       <Input
@@ -1091,15 +1091,15 @@ const AddNewWorkOrder = () => {
                         value={workOrderData.workOrderNumber}
                         onChange={(e) => setWorkOrderData(prev => ({ ...prev, workOrderNumber: e.target.value }))}
                         disabled={isSaved}
-                        className="h-9 sm:h-10"
+                        className="h-8"
                       />
                     </div>
 
                     {/* Work Order Status */}
-                    <div className="space-y-2">
-                      <Label className="text-sm font-medium">Work Order Status</Label>
+                    <div className="space-y-1">
+                      <Label className="text-xs font-medium">Work Order Status</Label>
                       <Select value={workOrderData.workOrderStatus} onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, workOrderStatus: value }))} disabled={isSaved}>
-                        <SelectTrigger className="h-9 sm:h-10">
+                        <SelectTrigger className="h-8">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -1112,10 +1112,10 @@ const AddNewWorkOrder = () => {
                     </div>
 
                     {/* Work Order Type */}
-                    <div className="space-y-2">
-                      <Label className="text-sm font-medium">Work Order Type</Label>
+                    <div className="space-y-1">
+                      <Label className="text-xs font-medium">Work Order Type</Label>
                       <Select value={workOrderData.workOrderType} onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, workOrderType: value }))} disabled={isSaved}>
-                        <SelectTrigger className="h-9 sm:h-10">
+                        <SelectTrigger className="h-8">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -1126,15 +1126,15 @@ const AddNewWorkOrder = () => {
                     </div>
 
                     {/* Customer */}
-                    <div className="space-y-2">
-                      <Label htmlFor="customer" className="text-sm font-medium">Customer</Label>
+                    <div className="space-y-1">
+                      <Label htmlFor="customer" className="text-xs font-medium">Customer</Label>
                       <Input
                         id="customer"
                         placeholder="Customer name"
                         value={workOrderData.customer}
                         onChange={(e) => setWorkOrderData(prev => ({ ...prev, customer: e.target.value }))}
                         disabled={isSaved}
-                        className="h-9 sm:h-10"
+                        className="h-8"
                       />
                     </div>
                   </div>
