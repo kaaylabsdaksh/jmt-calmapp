@@ -1045,7 +1045,7 @@ const AddNewWorkOrder = () => {
                         onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, contact: value === "no-contact" ? "" : value }))}
                         disabled={isSaved}
                       >
-                        <SelectTrigger className="h-9 sm:h-10">
+                        <SelectTrigger className="h-8">
                           <SelectValue placeholder="Select contact" />
                         </SelectTrigger>
                         <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-[60] max-h-60 overflow-y-auto">
