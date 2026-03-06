@@ -1816,7 +1816,7 @@ const AddNewWorkOrder = () => {
                               <h4 className="text-[11px] font-medium text-muted-foreground border-b pb-0.5">General Information</h4>
                               <div className="space-y-1">
                                 <div className="flex items-center gap-1">
-                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]"><span className="text-destructive">*</span> Cal Freq:</Label>
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]">Cal Freq: <span className="text-destructive">*</span></Label>
                                   <Input value={rmaData[selectedRMA as keyof typeof rmaData].received.calFreq} onChange={(e) => setRmaData(prev => ({ ...prev, [selectedRMA]: { ...prev[selectedRMA as keyof typeof prev], received: { ...prev[selectedRMA as keyof typeof prev].received, calFreq: e.target.value } } }))} className="h-6 text-[11px]" />
                                 </div>
                                 <div className="flex items-center gap-1">
