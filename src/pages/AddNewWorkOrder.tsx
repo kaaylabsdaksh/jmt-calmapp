@@ -1099,7 +1099,7 @@ const AddNewWorkOrder = () => {
                     <div className="space-y-1">
                       <Label className="text-xs font-medium">Work Order Status</Label>
                       <Select value={workOrderData.workOrderStatus} onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, workOrderStatus: value }))} disabled={isSaved}>
-                        <SelectTrigger className="h-9 sm:h-10">
+                        <SelectTrigger className="h-8">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
