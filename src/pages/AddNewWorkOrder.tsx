@@ -1319,7 +1319,7 @@ const AddNewWorkOrder = () => {
                                   <Input type="number" value={quoteData[selectedQuote].received.calFreq} className="h-6 text-[11px]" readOnly />
                                 </div>
                                 <div className="flex items-center gap-1">
-                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]"><span className="text-destructive">*</span> Location:</Label>
+                                  <Label className="text-[11px] whitespace-nowrap min-w-[60px]">Location: <span className="text-destructive">*</span></Label>
                                   <Select value={quoteData[selectedQuote].received.location}>
                                     <SelectTrigger className="h-6 text-[11px]">
                                       <SelectValue />
