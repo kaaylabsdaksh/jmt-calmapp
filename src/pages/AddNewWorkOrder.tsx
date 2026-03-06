@@ -136,7 +136,7 @@ const AddNewWorkOrder = () => {
   const [selectedRMAItems, setSelectedRMAItems] = useState<number[]>([]);
   const [rmaSearchOpen, setRmaSearchOpen] = useState(false);
   const [rmaSearchTerm, setRmaSearchTerm] = useState("");
-  const [rmaData] = useState({
+  const [rmaData, setRmaData] = useState({
     "RMA-001": {
       type: "Repair",
       received: {
@@ -1817,11 +1817,11 @@ const AddNewWorkOrder = () => {
                               <div className="space-y-1">
                                 <div className="flex items-center gap-1">
                                   <Label className="text-[11px] whitespace-nowrap min-w-[60px]"><span className="text-destructive">*</span> Cal Freq:</Label>
-                                  <Input value={rmaData[selectedRMA as keyof typeof rmaData].received.calFreq} className="h-6 text-[11px]" readOnly />
+                                  <Input value={rmaData[selectedRMA as keyof typeof rmaData].received.calFreq} onChange={(e) => setRmaData(prev => ({ ...prev, [selectedRMA]: { ...prev[selectedRMA as keyof typeof prev], received: { ...prev[selectedRMA as keyof typeof prev].received, calFreq: e.target.value } } }))} className="h-6 text-[11px]" />
                                 </div>
                                 <div className="flex items-center gap-1">
                                   <Label className="text-[11px] whitespace-nowrap min-w-[60px]"><span className="text-destructive">*</span> Location:</Label>
-                                  <Select value={rmaData[selectedRMA as keyof typeof rmaData].received.location}>
+                                  <Select value={rmaData[selectedRMA as keyof typeof rmaData].received.location} onValueChange={(val) => setRmaData(prev => ({ ...prev, [selectedRMA]: { ...prev[selectedRMA as keyof typeof prev], received: { ...prev[selectedRMA as keyof typeof prev].received, location: val } } }))}>
                                     <SelectTrigger className="h-6 text-[11px]">
                                       <SelectValue />
                                     </SelectTrigger>
@@ -1834,7 +1834,7 @@ const AddNewWorkOrder = () => {
                                 </div>
                                 <div className="flex items-center gap-1">
                                   <Label className="text-[11px] whitespace-nowrap min-w-[60px]"><span className="text-destructive">*</span> Division:</Label>
-                                  <Select value={rmaData[selectedRMA as keyof typeof rmaData].received.division}>
+                                  <Select value={rmaData[selectedRMA as keyof typeof rmaData].received.division} onValueChange={(val) => setRmaData(prev => ({ ...prev, [selectedRMA]: { ...prev[selectedRMA as keyof typeof prev], received: { ...prev[selectedRMA as keyof typeof prev].received, division: val } } }))}>
                                     <SelectTrigger className="h-6 text-[11px]">
                                       <SelectValue />
                                     </SelectTrigger>
@@ -1846,7 +1846,7 @@ const AddNewWorkOrder = () => {
                                 </div>
                                 <div className="flex items-center gap-1">
                                   <Label className="text-[11px] whitespace-nowrap min-w-[60px]"><span className="text-destructive">*</span> PO #:</Label>
-                                  <Input value={rmaData[selectedRMA as keyof typeof rmaData].received.poNumber} className="h-6 text-[11px]" readOnly />
+                                  <Input value={rmaData[selectedRMA as keyof typeof rmaData].received.poNumber} onChange={(e) => setRmaData(prev => ({ ...prev, [selectedRMA]: { ...prev[selectedRMA as keyof typeof prev], received: { ...prev[selectedRMA as keyof typeof prev].received, poNumber: e.target.value } } }))} className="h-6 text-[11px]" />
                                 </div>
                               </div>
                             </div>
@@ -1871,13 +1871,13 @@ const AddNewWorkOrder = () => {
                                       </Button>
                                     </PopoverTrigger>
                                     <PopoverContent className="w-auto p-0" align="start">
-                                      <Calendar mode="single" selected={new Date(rmaData[selectedRMA as keyof typeof rmaData].received.arrivalDate)} initialFocus className={cn("p-3 pointer-events-auto")} />
+                                      <Calendar mode="single" selected={new Date(rmaData[selectedRMA as keyof typeof rmaData].received.arrivalDate)} onSelect={(date) => { if (date) setRmaData(prev => ({ ...prev, [selectedRMA]: { ...prev[selectedRMA as keyof typeof prev], received: { ...prev[selectedRMA as keyof typeof prev].received, arrivalDate: format(date, "yyyy-MM-dd") } } })); }} initialFocus className={cn("p-3 pointer-events-auto")} />
                                     </PopoverContent>
                                   </Popover>
                                 </div>
                                 <div className="flex items-center gap-1">
                                   <Label className="text-[11px] whitespace-nowrap min-w-[50px]"><span className="text-destructive">*</span> Type:</Label>
-                                  <Select value={rmaData[selectedRMA as keyof typeof rmaData].received.arrivalType}>
+                                  <Select value={rmaData[selectedRMA as keyof typeof rmaData].received.arrivalType} onValueChange={(val) => setRmaData(prev => ({ ...prev, [selectedRMA]: { ...prev[selectedRMA as keyof typeof prev], received: { ...prev[selectedRMA as keyof typeof prev].received, arrivalType: val } } }))}>
                                     <SelectTrigger className="h-6 text-[11px]">
                                       <SelectValue />
                                     </SelectTrigger>
@@ -1917,7 +1917,7 @@ const AddNewWorkOrder = () => {
                               <div className="space-y-1">
                                 <div className="flex items-center gap-1">
                                   <Label className="text-[11px] whitespace-nowrap min-w-[50px]">Priority:</Label>
-                                  <Select value={rmaData[selectedRMA as keyof typeof rmaData].received.priority}>
+                                  <Select value={rmaData[selectedRMA as keyof typeof rmaData].received.priority} onValueChange={(val) => setRmaData(prev => ({ ...prev, [selectedRMA]: { ...prev[selectedRMA as keyof typeof prev], received: { ...prev[selectedRMA as keyof typeof prev].received, priority: val } } }))}>
                                     <SelectTrigger className="h-6 text-[11px]">
                                       <SelectValue />
                                     </SelectTrigger>
@@ -1930,7 +1930,7 @@ const AddNewWorkOrder = () => {
                                 </div>
                                 <div className="flex items-center gap-1">
                                   <Label className="text-[11px] whitespace-nowrap min-w-[50px]">Need By:</Label>
-                                  <Input value={rmaData[selectedRMA as keyof typeof rmaData].received.needByDate} className="h-6 text-[11px]" readOnly />
+                                  <Input value={rmaData[selectedRMA as keyof typeof rmaData].received.needByDate} onChange={(e) => setRmaData(prev => ({ ...prev, [selectedRMA]: { ...prev[selectedRMA as keyof typeof prev], received: { ...prev[selectedRMA as keyof typeof prev].received, needByDate: e.target.value } } }))} className="h-6 text-[11px]" />
                                 </div>
                               </div>
                             </div>
@@ -1950,14 +1950,13 @@ const AddNewWorkOrder = () => {
                                       priority: currentRma.received.priority,
                                     };
                                   });
-                                  // Update rmaData with applied values
-                                  const updatedRmaData = { ...rmaData };
-                                  (updatedRmaData as any)[selectedRMA] = {
-                                    ...currentRma,
-                                    items: updatedItems,
-                                  };
-                                  // Note: since rmaData is a const, we need state for this
-                                  // For now, show a toast confirmation
+                                  setRmaData(prev => ({
+                                    ...prev,
+                                    [selectedRMA]: {
+                                      ...prev[selectedRMA as keyof typeof prev],
+                                      items: updatedItems,
+                                    }
+                                  }));
                                   toast({
                                     title: "Applied",
                                     description: `Applied received details to ${selectedRMAItems.length} selected item(s)`,
