@@ -2082,7 +2082,7 @@ const AddNewWorkOrder = () => {
                                         <Input key={`calfreq-${index}-${item.calFreq}`} defaultValue={item.calFreq} className="h-6 w-14 text-[11px]" />
                                       </td>
                                       <td className="px-1.5 py-1">
-                                        {item.woItem ? (
+                                        {isItemAdded && item.woItem ? (
                                           <a href="#" className="text-foreground hover:underline font-medium">{item.woItem}</a>
                                         ) : null}
                                       </td>
