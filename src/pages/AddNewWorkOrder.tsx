@@ -1082,8 +1082,8 @@ const AddNewWorkOrder = () => {
                     </div>
 
                     {/* Work Order Number */}
-                    <div className="space-y-2">
-                      <Label htmlFor="workOrderNumber" className="text-sm font-medium">
+                    <div className="space-y-1">
+                      <Label htmlFor="workOrderNumber" className="text-xs font-medium">
                         Work Order # <span className="text-destructive">*</span>
                       </Label>
                       <Input
