@@ -2059,17 +2059,18 @@ const AddNewWorkOrder = () => {
                                   return (
                                     <tr key={index} className={`border-t ${isItemAdded ? 'opacity-50' : ''}`}>
                                       <td className="px-1.5 py-1">
-                                        <Checkbox 
-                                          checked={selectedRMAItems.includes(index)}
-                                          disabled={isItemAdded}
-                                          onCheckedChange={(checked) => {
-                                            if (checked) {
-                                              setSelectedRMAItems([...selectedRMAItems, index]);
-                                            } else {
-                                              setSelectedRMAItems(selectedRMAItems.filter(i => i !== index));
-                                            }
-                                          }}
-                                        />
+                                        {!isItemAdded && (
+                                          <Checkbox 
+                                            checked={selectedRMAItems.includes(index)}
+                                            onCheckedChange={(checked) => {
+                                              if (checked) {
+                                                setSelectedRMAItems([...selectedRMAItems, index]);
+                                              } else {
+                                                setSelectedRMAItems(selectedRMAItems.filter(i => i !== index));
+                                              }
+                                            }}
+                                          />
+                                        )}
                                       </td>
                                       <td className="px-1.5 py-1 text-foreground">{item.manufacturer}</td>
                                       <td className="px-1.5 py-1 text-foreground">{item.model}</td>
