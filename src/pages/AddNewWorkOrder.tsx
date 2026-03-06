@@ -1947,6 +1947,7 @@ const AddNewWorkOrder = () => {
                                   selectedRMAItems.forEach(index => {
                                     updatedItems[index] = {
                                       ...updatedItems[index],
+                                      calFreq: currentRma.received.calFreq,
                                       priority: currentRma.received.priority,
                                     };
                                   });
@@ -1957,6 +1958,7 @@ const AddNewWorkOrder = () => {
                                       items: updatedItems,
                                     }
                                   }));
+                                  setSelectedRMAItems([]);
                                   toast({
                                     title: "Applied",
                                     description: `Applied received details to ${selectedRMAItems.length} selected item(s)`,
