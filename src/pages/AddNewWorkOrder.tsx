@@ -2050,7 +2050,7 @@ const AddNewWorkOrder = () => {
                                         <Input placeholder="" defaultValue={item.custSerial} className="h-6 w-20 text-[11px]" />
                                       </td>
                                       <td className="px-1.5 py-1">
-                                        <Select defaultValue={item.priority}>
+                                        <Select key={`priority-${index}-${item.priority}`} defaultValue={item.priority}>
                                           <SelectTrigger className="h-6 w-20 text-[11px]">
                                             <SelectValue />
                                           </SelectTrigger>
