@@ -1091,7 +1091,7 @@ const AddNewWorkOrder = () => {
                         value={workOrderData.workOrderNumber}
                         onChange={(e) => setWorkOrderData(prev => ({ ...prev, workOrderNumber: e.target.value }))}
                         disabled={isSaved}
-                        className="h-9 sm:h-10"
+                        className="h-8"
                       />
                     </div>
 
