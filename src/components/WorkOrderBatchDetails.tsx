@@ -473,6 +473,7 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
                         <TableCell className="text-[11px] py-1 px-2 font-medium">{item.poNumber}</TableCell>
                       </>
                     )}
+                    {viewMode !== 'csa' && (
                     <TableCell className="w-8 py-1 px-1">
                       <Button
                         variant="ghost"
@@ -487,8 +488,9 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
                         )}
                       </Button>
                     </TableCell>
+                    )}
                   </TableRow>
-                  {expandedItems.has(item.id) && (
+                  {viewMode !== 'csa' && expandedItems.has(item.id) && (
                     <TableRow className="bg-gradient-to-r from-slate-50 to-gray-50">
                       <TableCell colSpan={12} className="p-0">
                         <div className="p-3 animate-fade-in">
