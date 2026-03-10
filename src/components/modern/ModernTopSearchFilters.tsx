@@ -238,37 +238,53 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
     if (e.key === 'Escape') { setShowRecentSearches(false); }
   };
 
+  const fireSearch = (chips: SearchChip[]) => {
+    // Save recent search
+    if (chips.length > 0) {
+      const entry: RecentSearch = {
+        id: `recent-${Date.now()}`, chips: [...chips], timestamp: Date.now(),
+        label: chips.map(c => `${c.label}: ${c.value}`).join(', '),
+      };
+      const updated = [entry, ...recentSearches.filter(r => r.label !== entry.label)].slice(0, MAX_RECENT_SEARCHES);
+      setRecentSearches(updated);
+      saveRecentSearches(updated);
+    }
+    const searchTags = chips.map(chip => `${chip.label}: ${chip.value}`);
+    onSearch({
+      globalSearch: chips.map(chip => chip.value).join(' '), searchTags,
+      status: searchValues.status, assignee: searchValues.assignee, priority: searchValues.priority,
+      manufacturer: searchValues.manufacturer, division: searchValues.division, woType: searchValues.woType,
+      dateFrom, dateTo, dateType,
+      actionCode: searchValues.actionCode, labCode: searchValues.labCode,
+      rotationManagement: searchValues.rotationManagement, invoiceStatus: searchValues.invoiceStatus,
+      departureType: searchValues.departureType, salesperson: searchValues.salesperson,
+      workOrderItemStatus: searchValues.workOrderItemStatus, workOrderItemType: searchValues.workOrderItemType,
+      location: searchValues.location,
+      newEquip: searchValues.newEquip, usedSurplus: searchValues.usedSurplus,
+      warranty: searchValues.warranty, toFactory: searchValues.toFactory,
+      proofOfDelivery: searchValues.proofOfDelivery, only17025: searchValues.only17025,
+      onlyHotList: searchValues.onlyHotList, onlyLostEquip: searchValues.onlyLostEquip,
+      nonJMAccts: searchValues.nonJMAccts, viewTemplate: searchValues.viewTemplate,
+    });
+  };
+
   const handleSearch = () => {
     if (searchInput.trim()) {
-      addSearchChip();
+      const chipValue = searchInput.trim();
+      const selectedOption = searchTypeOptions.find(opt => opt.value === selectedSearchType);
+      if (!selectedOption) return;
+      const newChip: SearchChip = {
+        id: `${selectedSearchType}-${Date.now()}`,
+        type: selectedSearchType,
+        value: chipValue,
+        label: selectedOption.label,
+      };
+      const updatedChips = [...searchChips, newChip];
+      setSearchChips(updatedChips);
+      setSearchInput('');
+      fireSearch(updatedChips);
     } else {
-      // Save recent search
-      if (searchChips.length > 0) {
-        const entry: RecentSearch = {
-          id: `recent-${Date.now()}`, chips: [...searchChips], timestamp: Date.now(),
-          label: searchChips.map(c => `${c.label}: ${c.value}`).join(', '),
-        };
-        const updated = [entry, ...recentSearches.filter(r => r.label !== entry.label)].slice(0, MAX_RECENT_SEARCHES);
-        setRecentSearches(updated);
-        saveRecentSearches(updated);
-      }
-      const searchTags = searchChips.map(chip => `${chip.label}: ${chip.value}`);
-      onSearch({
-        globalSearch: '', searchTags,
-        status: searchValues.status, assignee: searchValues.assignee, priority: searchValues.priority,
-        manufacturer: searchValues.manufacturer, division: searchValues.division, woType: searchValues.woType,
-        dateFrom, dateTo, dateType,
-        actionCode: searchValues.actionCode, labCode: searchValues.labCode,
-        rotationManagement: searchValues.rotationManagement, invoiceStatus: searchValues.invoiceStatus,
-        departureType: searchValues.departureType, salesperson: searchValues.salesperson,
-        workOrderItemStatus: searchValues.workOrderItemStatus, workOrderItemType: searchValues.workOrderItemType,
-        location: searchValues.location,
-        newEquip: searchValues.newEquip, usedSurplus: searchValues.usedSurplus,
-        warranty: searchValues.warranty, toFactory: searchValues.toFactory,
-        proofOfDelivery: searchValues.proofOfDelivery, only17025: searchValues.only17025,
-        onlyHotList: searchValues.onlyHotList, onlyLostEquip: searchValues.onlyLostEquip,
-        nonJMAccts: searchValues.nonJMAccts, viewTemplate: searchValues.viewTemplate,
-      });
+      fireSearch(searchChips);
     }
   };
 
