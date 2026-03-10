@@ -5116,71 +5116,87 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                   paginatedBatches.map((batch) => (
                 <div 
                   key={batch.id} 
-                  className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer"
+                  className={cn(
+                    "rounded-xl transition-all duration-200 cursor-pointer overflow-hidden",
+                    searchViewMode === 'csa'
+                      ? "bg-gradient-to-br from-white to-slate-50 border border-slate-200 hover:shadow-lg hover:border-slate-300 hover:-translate-y-0.5"
+                      : "bg-white border border-gray-200 shadow-sm hover:shadow-md"
+                  )}
                   onClick={() => openBatchDetails(batch)}
                 >
-                  <div className="p-4 border-b border-gray-100">
-                    <div className="flex items-center justify-between">
-                      <span className="font-bold text-blue-600 text-lg">{batch.woBatch}</span>
-                      {searchViewMode === 'csa' && (
-                        <Badge variant={batch.priority === 'Critical' ? 'destructive' : batch.priority === 'High' ? 'default' : 'secondary'} className="text-xs">
-                          {batch.priority}
-                        </Badge>
-                      )}
-                    </div>
-                  </div>
-                  <div className="p-4 space-y-3">
-                    <div><h3 className="font-bold text-gray-900 text-lg mb-1">{batch.customerName}</h3></div>
-                    {searchViewMode === 'csa' ? (
-                      <>
-                        <div className="grid grid-cols-2 gap-3 text-sm">
-                          <div>
-                            <span className="text-gray-500">Account #:</span>
-                            <div className="font-medium text-xs">{batch.acctNumber}</div>
-                          </div>
-                          <div>
-                            <span className="text-gray-500">Location:</span>
-                            <div className="font-medium text-xs">{batch.location}</div>
-                          </div>
-                          <div>
-                            <span className="text-gray-500">Contact:</span>
-                            <div className="font-medium text-xs">{batch.contactName}</div>
-                          </div>
-                          <div>
-                            <span className="text-gray-500">PO Number:</span>
-                            <div className="font-medium text-xs">{batch.poNumber}</div>
-                          </div>
-                          <div>
-                            <span className="text-gray-500">Item Status:</span>
-                            <div className="font-medium text-xs">{batch.itemStatus}</div>
-                          </div>
-                          <div>
-                            <span className="text-gray-500">Item Count:</span>
-                            <div className="font-bold text-xs">{batch.totalCount}</div>
-                          </div>
-                        </div>
-                        <div className="grid grid-cols-3 gap-3 text-sm border-t border-gray-100 pt-3">
-                          <div className="text-center">
-                            <span className="text-gray-500 block text-xs">Follow-up</span>
-                            <div className="font-medium text-xs text-gray-900">{batch.minFollowUpDate || '—'}</div>
-                          </div>
-                          <div className="text-center">
-                            <span className="text-gray-500 block text-xs">Deliver By</span>
-                            <div className="font-medium text-xs text-gray-900">{batch.minDeliverByDate}</div>
-                          </div>
-                          <div className="text-center">
-                            <span className="text-gray-500 block text-xs">Aging</span>
-                            <div className="font-medium text-xs text-gray-900">
-                              {(() => {
-                                const days = getAgingDays(batch);
-                                return days !== null ? `${days}d` : '—';
-                              })()}
+                  {searchViewMode === 'csa' ? (
+                    <>
+                      {/* CSA Card - Modern Design */}
+                      <div className="px-4 pt-4 pb-2">
+                        <div className="flex items-start justify-between mb-2">
+                          <div className="flex items-center gap-2">
+                            <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                              <span className="text-primary font-bold text-xs">#</span>
+                            </div>
+                            <div>
+                              <span className="font-bold text-primary text-sm">{batch.woBatch}</span>
+                              <div className="text-[10px] text-muted-foreground">{batch.acctNumber}</div>
                             </div>
                           </div>
+                          <Badge variant={batch.priority === 'Critical' ? 'destructive' : batch.priority === 'High' ? 'default' : 'secondary'} className="text-[10px] px-2 py-0">
+                            {batch.priority}
+                          </Badge>
                         </div>
-                      </>
-                    ) : (
-                      <>
+                        <h3 className="font-semibold text-foreground text-sm leading-tight">{batch.customerName}</h3>
+                        <div className="flex items-center gap-1.5 mt-1 text-[10px] text-muted-foreground">
+                          <span>{batch.location}</span>
+                          <span>•</span>
+                          <span>{batch.contactName}</span>
+                        </div>
+                      </div>
+                      
+                      <div className="px-4 py-2 space-y-2">
+                        <div className="flex items-center justify-between text-[11px]">
+                          <span className="text-muted-foreground">PO Number</span>
+                          <span className="font-medium text-foreground">{batch.poNumber}</span>
+                        </div>
+                        <div className="flex items-center justify-between text-[11px]">
+                          <span className="text-muted-foreground">Status</span>
+                          <span className="font-medium text-foreground">{batch.itemStatus}</span>
+                        </div>
+                        <div className="flex items-center justify-between text-[11px]">
+                          <span className="text-muted-foreground">Items</span>
+                          <span className="font-bold text-foreground bg-muted px-2 py-0.5 rounded-full text-[10px]">{batch.totalCount}</span>
+                        </div>
+                      </div>
+                      
+                      <div className="mx-4 border-t border-slate-100"></div>
+                      
+                      <div className="px-4 py-3 grid grid-cols-3 gap-2">
+                        <div className="bg-muted/50 rounded-lg px-2 py-1.5 text-center">
+                          <span className="text-[9px] text-muted-foreground uppercase tracking-wider block">Follow-up</span>
+                          <div className="font-medium text-[10px] text-foreground mt-0.5">{batch.minFollowUpDate || '—'}</div>
+                        </div>
+                        <div className="bg-muted/50 rounded-lg px-2 py-1.5 text-center">
+                          <span className="text-[9px] text-muted-foreground uppercase tracking-wider block">Deliver By</span>
+                          <div className="font-medium text-[10px] text-foreground mt-0.5">{batch.minDeliverByDate}</div>
+                        </div>
+                        <div className="bg-primary/5 rounded-lg px-2 py-1.5 text-center border border-primary/10">
+                          <span className="text-[9px] text-primary uppercase tracking-wider block font-medium">Aging</span>
+                          <div className="font-bold text-sm text-primary mt-0.5">
+                            {(() => {
+                              const days = getAgingDays(batch);
+                              return days !== null ? `${days}d` : '—';
+                            })()}
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      {/* Default Card */}
+                      <div className="p-4 border-b border-gray-100">
+                        <div className="flex items-center justify-between">
+                          <span className="font-bold text-blue-600 text-lg">{batch.woBatch}</span>
+                        </div>
+                      </div>
+                      <div className="p-4 space-y-3">
+                        <div><h3 className="font-bold text-gray-900 text-lg mb-1">{batch.customerName}</h3></div>
                         <div className="grid grid-cols-2 gap-3 text-sm">
                           <div>
                             <span className="text-gray-500">Account #:</span>
@@ -5209,9 +5225,9 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                             <div className="font-medium text-lg text-blue-600">{batch.totalArCount}</div>
                           </div>
                         </div>
-                      </>
-                    )}
-                  </div>
+                      </div>
+                    </>
+                  )}
                 </div>
               ))
             ) : (
