@@ -73,6 +73,7 @@ interface SearchFilters {
 
 interface ModernTopSearchFiltersProps {
   onSearch: (filters: SearchFilters) => void;
+  onSearchViewModeChange?: (mode: 'default' | 'csa') => void;
 }
 
 interface RecentSearch {
