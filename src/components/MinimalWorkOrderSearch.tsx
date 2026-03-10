@@ -378,12 +378,7 @@ const MinimalWorkOrderSearch = ({ onSearch }: MinimalWorkOrderSearchProps) => {
         </div>
 
         {/* Action Buttons */}
-        <div className="flex items-center justify-between pt-4 border-t">
-          <Button variant="outline" onClick={clearAllFilters} className="flex items-center gap-2">
-            <RotateCcw className="h-4 w-4" />
-            Clear All
-          </Button>
-          
+        <div className="flex items-center justify-end pt-4 border-t">
           <Button variant="secondary" className="flex items-center gap-2">
             <Plus className="h-4 w-4" />
             Create New Work Order
