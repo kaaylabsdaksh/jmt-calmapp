@@ -26,6 +26,14 @@ interface WorkOrderBatch {
   minNeedByDate: string;
   minFollowUpDate: string;
   minDeliverByDate: string;
+  // CSA view fields
+  location: string;
+  priority: "High" | "Medium" | "Low" | "Critical";
+  contactName: string;
+  poNumber: string;
+  itemStatus: string;
+  arrivalDate: string;
+  puDate: string;
 }
 
 interface WorkOrder {
@@ -2807,244 +2815,132 @@ const mockWorkOrders: WorkOrder[] = [
 
 const mockWorkOrderBatches: WorkOrderBatch[] = [
   {
-    id: "1",
-    woBatch: "383727",
-    acctNumber: "13058.06",
-    srNumber: "SR2455",
-    customerName: "Deutsche Windtechnik Inc",
-    totalLabOpen: 0,
-    totalArCount: 0,
-    totalCount: 1,
-    lastCommentDate: "08/10/2023",
+    id: "1", woBatch: "383727", acctNumber: "13058.06", srNumber: "SR2455", customerName: "Deutsche Windtechnik Inc",
+    totalLabOpen: 0, totalArCount: 0, totalCount: 1, lastCommentDate: "08/10/2023",
     lastComment: "Wait Cust Followup Date changed from 8/9/2023 to 8...",
-    minNeedByDate: "09/24/2021",
-    minFollowUpDate: "08/11/2023",
-    minDeliverByDate: "09/30/2021"
+    minNeedByDate: "09/24/2021", minFollowUpDate: "08/11/2023", minDeliverByDate: "09/30/2021",
+    location: "Lab Building A", priority: "Medium", contactName: "Hans Mueller", poNumber: "PO-DW-2021",
+    itemStatus: "Waiting on Customer", arrivalDate: "09/15/2021", puDate: ""
   },
   {
-    id: "2",
-    woBatch: "390118",
-    acctNumber: "6962.01",
-    srNumber: "SR1820",
-    customerName: "Colonial Pipeline",
-    totalLabOpen: 0,
-    totalArCount: 0,
-    totalCount: 10,
-    lastCommentDate: "08/09/2023",
+    id: "2", woBatch: "390118", acctNumber: "6962.01", srNumber: "SR1820", customerName: "Colonial Pipeline",
+    totalLabOpen: 0, totalArCount: 0, totalCount: 10, lastCommentDate: "08/09/2023",
     lastComment: "PO Change Order 9524 sent to tammypatt@jmtest.com...",
-    minNeedByDate: "12/20/2022",
-    minFollowUpDate: "08/11/2023",
-    minDeliverByDate: "01/05/2023"
+    minNeedByDate: "12/20/2022", minFollowUpDate: "08/11/2023", minDeliverByDate: "01/05/2023",
+    location: "Lab Building B", priority: "High", contactName: "Tammy Patterson", poNumber: "PO-CP-9524",
+    itemStatus: "In Lab", arrivalDate: "12/10/2022", puDate: ""
   },
   {
-    id: "3",
-    woBatch: "452463",
-    acctNumber: "6962.01",
-    srNumber: "SR1820",
-    customerName: "Colonial Pipeline",
-    totalLabOpen: 1,
-    totalArCount: 0,
-    totalCount: 2,
-    lastCommentDate: "08/09/2023",
+    id: "3", woBatch: "452463", acctNumber: "6962.01", srNumber: "SR1820", customerName: "Colonial Pipeline",
+    totalLabOpen: 1, totalArCount: 0, totalCount: 2, lastCommentDate: "08/09/2023",
     lastComment: "PO Change Order 9525 sent to bhavard@colpipe.com...",
-    minNeedByDate: "06/23/2023",
-    minFollowUpDate: "08/11/2023",
-    minDeliverByDate: "07/01/2023"
+    minNeedByDate: "06/23/2023", minFollowUpDate: "08/11/2023", minDeliverByDate: "07/01/2023",
+    location: "Lab Building B", priority: "Medium", contactName: "Brian Havard", poNumber: "PO-CP-9525",
+    itemStatus: "A/R Invoicing", arrivalDate: "06/15/2023", puDate: "06/10/2023"
   },
   {
-    id: "4",
-    woBatch: "393015",
-    acctNumber: "7412.06",
-    srNumber: "",
-    customerName: "Burns & McDonnell",
-    totalLabOpen: 0,
-    totalArCount: 0,
-    totalCount: 6,
-    lastCommentDate: "08/11/2023",
+    id: "4", woBatch: "393015", acctNumber: "7412.06", srNumber: "", customerName: "Burns & McDonnell",
+    totalLabOpen: 0, totalArCount: 0, totalCount: 6, lastCommentDate: "08/11/2023",
     lastComment: "Wait Cust Followup Date changed from 8/10/2022 to...",
-    minNeedByDate: "01/17/2022",
-    minFollowUpDate: "08/14/2023",
-    minDeliverByDate: "02/01/2022"
+    minNeedByDate: "01/17/2022", minFollowUpDate: "08/14/2023", minDeliverByDate: "02/01/2022",
+    location: "Lab Building C", priority: "Low", contactName: "James Burns", poNumber: "PO-BM-4412",
+    itemStatus: "Waiting on Customer", arrivalDate: "01/10/2022", puDate: ""
   },
   {
-    id: "5",
-    woBatch: "441228",
-    acctNumber: "2577.50",
-    srNumber: "SR2425",
-    customerName: "Energy Transfer",
-    totalLabOpen: 1,
-    totalArCount: 0,
-    totalCount: 2,
-    lastCommentDate: "08/10/2023",
+    id: "5", woBatch: "441228", acctNumber: "2577.50", srNumber: "SR2425", customerName: "Energy Transfer",
+    totalLabOpen: 1, totalArCount: 0, totalCount: 2, lastCommentDate: "08/10/2023",
     lastComment: "WAITING ON CUSTOMER: (Awaiting Quote Approval)",
-    minNeedByDate: "03/20/2023",
-    minFollowUpDate: "08/14/2023",
-    minDeliverByDate: "04/01/2023"
+    minNeedByDate: "03/20/2023", minFollowUpDate: "08/14/2023", minDeliverByDate: "04/01/2023",
+    location: "Lab Building A", priority: "High", contactName: "Sandra Lee", poNumber: "PO-ET-7788",
+    itemStatus: "Estimate", arrivalDate: "03/12/2023", puDate: ""
   },
   {
-    id: "6",
-    woBatch: "452817",
-    acctNumber: "6441.05",
-    srNumber: "SR1299",
-    customerName: "Blue Cube Operations LLC",
-    totalLabOpen: 0,
-    totalArCount: 0,
-    totalCount: 3,
-    lastCommentDate: "08/31/2023",
+    id: "6", woBatch: "452817", acctNumber: "6441.05", srNumber: "SR1299", customerName: "Blue Cube Operations LLC",
+    totalLabOpen: 0, totalArCount: 0, totalCount: 3, lastCommentDate: "08/31/2023",
     lastComment: "Wait Cust Followup Date changed from 08/11/2023 to...",
-    minNeedByDate: "06/28/2023",
-    minFollowUpDate: "09/05/2023",
-    minDeliverByDate: "07/15/2023"
+    minNeedByDate: "06/28/2023", minFollowUpDate: "09/05/2023", minDeliverByDate: "07/15/2023",
+    location: "Lab Building D", priority: "Medium", contactName: "Rick Torres", poNumber: "PO-BC-3301",
+    itemStatus: "In Lab", arrivalDate: "06/20/2023", puDate: ""
   },
   {
-    id: "7",
-    woBatch: "411712",
-    acctNumber: "2607.00",
-    srNumber: "SR0248",
-    customerName: "B&B Electrical/Utility",
-    totalLabOpen: 0,
-    totalArCount: 1,
-    totalCount: 3,
-    lastCommentDate: "04/30/2024",
+    id: "7", woBatch: "411712", acctNumber: "2607.00", srNumber: "SR0248", customerName: "B&B Electrical/Utility",
+    totalLabOpen: 0, totalArCount: 1, totalCount: 3, lastCommentDate: "04/30/2024",
     lastComment: "Work Order marked Ready to Bill.",
-    minNeedByDate: "06/26/2022",
-    minFollowUpDate: "09/22/2023",
-    minDeliverByDate: "07/10/2022"
+    minNeedByDate: "06/26/2022", minFollowUpDate: "09/22/2023", minDeliverByDate: "07/10/2022",
+    location: "Lab Building E", priority: "Low", contactName: "Mark Stevens", poNumber: "PO-BB-1122",
+    itemStatus: "A/R Invoicing", arrivalDate: "06/18/2022", puDate: ""
   },
   {
-    id: "8",
-    woBatch: "432330",
-    acctNumber: "6333.14",
-    srNumber: "SR1825",
-    customerName: "Dow Chemical",
-    totalLabOpen: 0,
-    totalArCount: 1,
-    totalCount: 62,
-    lastCommentDate: "03/14/2024",
+    id: "8", woBatch: "432330", acctNumber: "6333.14", srNumber: "SR1825", customerName: "Dow Chemical",
+    totalLabOpen: 0, totalArCount: 1, totalCount: 62, lastCommentDate: "03/14/2024",
     lastComment: "Work Order marked Ready to Bill",
-    minNeedByDate: "06/09/2023",
-    minFollowUpDate: "09/22/2023",
-    minDeliverByDate: "06/25/2023"
+    minNeedByDate: "06/09/2023", minFollowUpDate: "09/22/2023", minDeliverByDate: "06/25/2023",
+    location: "Lab Building A", priority: "Critical", contactName: "Patricia Wu", poNumber: "PO-DC-5567",
+    itemStatus: "Ready for Departure", arrivalDate: "06/01/2023", puDate: ""
   },
   {
-    id: "9",
-    woBatch: "434914",
-    acctNumber: "6437.23",
-    srNumber: "SR0654",
-    customerName: "Exxon/Mobil BPEP",
-    totalLabOpen: 0,
-    totalArCount: 0,
-    totalCount: 1,
-    lastCommentDate: "09/26/2023",
+    id: "9", woBatch: "434914", acctNumber: "6437.23", srNumber: "SR0654", customerName: "Exxon/Mobil BPEP",
+    totalLabOpen: 0, totalArCount: 0, totalCount: 1, lastCommentDate: "09/26/2023",
     lastComment: "Wait Cust Followup Date changed from 9/28/2023 to...",
-    minNeedByDate: "01/30/2023",
-    minFollowUpDate: "10/02/2023",
-    minDeliverByDate: "02/15/2023"
+    minNeedByDate: "01/30/2023", minFollowUpDate: "10/02/2023", minDeliverByDate: "02/15/2023",
+    location: "Lab Building B", priority: "Medium", contactName: "Carlos Reyes", poNumber: "PO-EM-8899",
+    itemStatus: "Waiting on Customer", arrivalDate: "01/22/2023", puDate: ""
   },
   {
-    id: "10",
-    woBatch: "436290",
-    acctNumber: "6121.60",
-    srNumber: "",
-    customerName: "Entergy The Woodlands Tx",
-    totalLabOpen: 0,
-    totalArCount: 0,
-    totalCount: 1,
-    lastCommentDate: "09/28/2023",
+    id: "10", woBatch: "436290", acctNumber: "6121.60", srNumber: "", customerName: "Entergy The Woodlands Tx",
+    totalLabOpen: 0, totalArCount: 0, totalCount: 1, lastCommentDate: "09/28/2023",
     lastComment: "WAITING ON CUSTOMER: (Awaiting Quote Approval)",
-    minNeedByDate: "02/15/2023",
-    minFollowUpDate: "10/02/2023",
-    minDeliverByDate: "03/01/2023"
+    minNeedByDate: "02/15/2023", minFollowUpDate: "10/02/2023", minDeliverByDate: "03/01/2023",
+    location: "Lab Building C", priority: "Low", contactName: "Nancy Hill", poNumber: "PO-EN-2234",
+    itemStatus: "Estimate", arrivalDate: "02/08/2023", puDate: ""
   },
   {
-    id: "11",
-    woBatch: "445885",
-    acctNumber: "15573.00",
-    srNumber: "SR1250",
-    customerName: "HP Technologies LLC",
-    totalLabOpen: 0,
-    totalArCount: 0,
-    totalCount: 1,
-    lastCommentDate: "09/29/2023",
+    id: "11", woBatch: "445885", acctNumber: "15573.00", srNumber: "SR1250", customerName: "HP Technologies LLC",
+    totalLabOpen: 0, totalArCount: 0, totalCount: 1, lastCommentDate: "09/29/2023",
     lastComment: "WAITING ON CUSTOMER: (OTHERtest) test",
-    minNeedByDate: "04/26/2023",
-    minFollowUpDate: "10/02/2023",
-    minDeliverByDate: "05/10/2023"
+    minNeedByDate: "04/26/2023", minFollowUpDate: "10/02/2023", minDeliverByDate: "05/10/2023",
+    location: "Lab Building D", priority: "Medium", contactName: "Kevin Park", poNumber: "PO-HP-4456",
+    itemStatus: "Waiting on Customer", arrivalDate: "04/18/2023", puDate: ""
   },
   {
-    id: "12",
-    woBatch: "451091",
-    acctNumber: "15000.180",
-    srNumber: "SR2244",
-    customerName: "Entergy L-CHOC-STR",
-    totalLabOpen: 0,
-    totalArCount: 0,
-    totalCount: 1,
-    lastCommentDate: "09/28/2023",
+    id: "12", woBatch: "451091", acctNumber: "15000.180", srNumber: "SR2244", customerName: "Entergy L-CHOC-STR",
+    totalLabOpen: 0, totalArCount: 0, totalCount: 1, lastCommentDate: "09/28/2023",
     lastComment: "Status changed from A/R INVOICING to WAITING ON CU...",
-    minNeedByDate: "08/28/2023",
-    minFollowUpDate: "10/02/2023",
-    minDeliverByDate: "09/10/2023"
+    minNeedByDate: "08/28/2023", minFollowUpDate: "10/02/2023", minDeliverByDate: "09/10/2023",
+    location: "Lab Building A", priority: "High", contactName: "Diana Ross", poNumber: "PO-EN-6678",
+    itemStatus: "Waiting on Customer", arrivalDate: "08/20/2023", puDate: ""
   },
   {
-    id: "13",
-    woBatch: "450722",
-    acctNumber: "15000.180",
-    srNumber: "SR2344",
-    customerName: "Entergy L-CHOC-STR",
-    totalLabOpen: 0,
-    totalArCount: 0,
-    totalCount: 2,
-    lastCommentDate: "11/03/2023",
+    id: "13", woBatch: "450722", acctNumber: "15000.180", srNumber: "SR2344", customerName: "Entergy L-CHOC-STR",
+    totalLabOpen: 0, totalArCount: 0, totalCount: 2, lastCommentDate: "11/03/2023",
     lastComment: "External File ConfluenceMigrationPlan.xlsx was DEL...",
-    minNeedByDate: "06/28/2023",
-    minFollowUpDate: "10/02/2023",
-    minDeliverByDate: "07/15/2023"
+    minNeedByDate: "06/28/2023", minFollowUpDate: "10/02/2023", minDeliverByDate: "07/15/2023",
+    location: "Lab Building B", priority: "Medium", contactName: "Tom Garcia", poNumber: "PO-EN-7789",
+    itemStatus: "In Lab", arrivalDate: "06/20/2023", puDate: ""
   },
   {
-    id: "14",
-    woBatch: "452661",
-    acctNumber: "6315.60",
-    srNumber: "SR1358",
-    customerName: "Conoco Phillips",
-    totalLabOpen: 2,
-    totalArCount: 9,
-    totalCount: 11,
-    lastCommentDate: "02/27/2024",
+    id: "14", woBatch: "452661", acctNumber: "6315.60", srNumber: "SR1358", customerName: "Conoco Phillips",
+    totalLabOpen: 2, totalArCount: 9, totalCount: 11, lastCommentDate: "02/27/2024",
     lastComment: "PO Change Order 9525 was approved by Taylor Swift.",
-    minNeedByDate: "06/28/2023",
-    minFollowUpDate: "10/02/2023",
-    minDeliverByDate: "07/15/2023"
+    minNeedByDate: "06/28/2023", minFollowUpDate: "10/02/2023", minDeliverByDate: "07/15/2023",
+    location: "Lab Building C", priority: "High", contactName: "Rachel Adams", poNumber: "PO-CP-3345",
+    itemStatus: "Assigned to Tech", arrivalDate: "06/22/2023", puDate: ""
   },
   {
-    id: "15",
-    woBatch: "439064",
-    acctNumber: "6172.63",
-    srNumber: "",
-    customerName: "Dow Chem Sabine-Machine Shop",
-    totalLabOpen: 0,
-    totalArCount: 223,
-    totalCount: 236,
-    lastCommentDate: "11/19/2024",
+    id: "15", woBatch: "439064", acctNumber: "6172.63", srNumber: "", customerName: "Dow Chem Sabine-Machine Shop",
+    totalLabOpen: 0, totalArCount: 223, totalCount: 236, lastCommentDate: "11/19/2024",
     lastComment: "Delivery Ticket #: DT-406502 Delivery Ticket Date...",
-    minNeedByDate: "03/12/2023",
-    minFollowUpDate: "10/03/2023",
-    minDeliverByDate: "03/28/2023"
+    minNeedByDate: "03/12/2023", minFollowUpDate: "10/03/2023", minDeliverByDate: "03/28/2023",
+    location: "Lab Building E", priority: "Critical", contactName: "Bill Thompson", poNumber: "PO-DC-9901",
+    itemStatus: "Ready for Departure", arrivalDate: "03/05/2023", puDate: "03/01/2023"
   },
   {
-    id: "16",
-    woBatch: "12345",
-    acctNumber: "8821.03",
-    srNumber: "SR3100",
-    customerName: "Gulf Coast Instruments",
-    totalLabOpen: 2,
-    totalArCount: 1,
-    totalCount: 8,
-    lastCommentDate: "02/15/2026",
+    id: "16", woBatch: "12345", acctNumber: "8821.03", srNumber: "SR3100", customerName: "Gulf Coast Instruments",
+    totalLabOpen: 2, totalArCount: 1, totalCount: 8, lastCommentDate: "02/15/2026",
     lastComment: "Calibration scheduled for next week batch processing...",
-    minNeedByDate: "03/01/2026",
-    minFollowUpDate: "03/10/2026",
-    minDeliverByDate: "03/15/2026"
+    minNeedByDate: "03/01/2026", minFollowUpDate: "03/10/2026", minDeliverByDate: "03/15/2026",
+    location: "Lab Building A", priority: "High", contactName: "Amy Chen", poNumber: "PO-GC-1234",
+    itemStatus: "In Lab", arrivalDate: "02/25/2026", puDate: ""
   }
 ];
 
@@ -4068,7 +3964,35 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
   const [sortConfig, setSortConfig] = useState<{ key: string; direction: 'asc' | 'desc' } | null>(null);
   const navigate = useNavigate();
 
-  const sortableColumns = new Set(['totalLabOpen', 'totalArCount', 'totalCount', 'lastCommentDate', 'minNeedByDate', 'minFollowUpDate', 'minDeliverByDate']);
+  const sortableColumns = new Set(['totalLabOpen', 'totalArCount', 'totalCount', 'lastCommentDate', 'minNeedByDate', 'minFollowUpDate', 'minDeliverByDate', 'itemCount', 'followUpDate', 'deliverByDate', 'aging']);
+
+  // Calculate business days between two dates (excludes weekends)
+  const calculateBusinessDays = (startDate: Date, endDate: Date): number => {
+    let count = 0;
+    const current = new Date(startDate);
+    const isForward = endDate >= startDate;
+    while (isForward ? current <= endDate : current >= endDate) {
+      const day = current.getDay();
+      if (day !== 0 && day !== 6) count++;
+      current.setDate(current.getDate() + (isForward ? 1 : -1));
+    }
+    return isForward ? count : -count;
+  };
+
+  const getAgingDays = (batch: WorkOrderBatch): number | null => {
+    const parseD = (d: string) => {
+      if (!d) return null;
+      const [m, day, y] = d.split('/').map(Number);
+      return new Date(y, m - 1, day);
+    };
+    const arrival = parseD(batch.arrivalDate);
+    const pu = parseD(batch.puDate);
+    let effectiveDate = arrival;
+    if (pu && arrival && pu < arrival) effectiveDate = pu;
+    else if (pu && !arrival) effectiveDate = pu;
+    if (!effectiveDate) return null;
+    return calculateBusinessDays(effectiveDate, new Date());
+  };
 
   const handleSort = (key: string) => {
     if (!sortableColumns.has(key)) return;
@@ -4911,16 +4835,16 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                     <>
                       <TableHead className="font-semibold text-gray-900">WO Batch</TableHead>
                       <TableHead className="font-semibold text-gray-900">Acct #</TableHead>
-                      <TableHead className="font-semibold text-gray-900">SR #</TableHead>
                       <TableHead className="font-semibold text-gray-900">Customer Name</TableHead>
-                      <TableHead className="font-semibold text-gray-900">Total Lab Open</TableHead>
-                      <TableHead className="font-semibold text-gray-900">Total AR Count</TableHead>
-                      <TableHead className="font-semibold text-gray-900">Total Count</TableHead>
-                      <TableHead className="font-semibold text-gray-900">Last Comment Date</TableHead>
-                      <TableHead className="font-semibold text-gray-900 min-w-[200px]">Last Comment</TableHead>
-                      <TableHead className="font-semibold text-gray-900">Min Need By Date</TableHead>
-                      <TableHead className="font-semibold text-gray-900">Min Follow Up Date</TableHead>
-                      <TableHead className="font-semibold text-gray-900">Min Deliver By Date</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Location</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Priority</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Item Count</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Contact Name</TableHead>
+                      <TableHead className="font-semibold text-gray-900">PO Number</TableHead>
+                      <TableHead className="font-semibold text-gray-900 min-w-[150px]">Item Status</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Follow-up Date</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Deliver By Date</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Aging</TableHead>
                     </>
                   ) : (
                     <>
@@ -4958,16 +4882,16 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                     {(searchViewMode === 'csa' ? [
                       { key: 'woBatch', placeholder: '' },
                       { key: 'acctNumber', placeholder: '' },
-                      { key: 'srNumber', placeholder: '' },
                       { key: 'customerName', placeholder: '' },
-                      { key: 'totalLabOpen', placeholder: '' },
-                      { key: 'totalArCount', placeholder: '' },
-                      { key: 'totalCount', placeholder: '' },
-                      { key: 'lastCommentDate', placeholder: '' },
-                      { key: 'lastComment', placeholder: '' },
-                      { key: 'minNeedByDate', placeholder: '' },
-                      { key: 'minFollowUpDate', placeholder: '' },
-                      { key: 'minDeliverByDate', placeholder: '' },
+                      { key: 'location', placeholder: '' },
+                      { key: 'priority', placeholder: '' },
+                      { key: 'itemCount', placeholder: '' },
+                      { key: 'contactName', placeholder: '' },
+                      { key: 'poNumber', placeholder: '' },
+                      { key: 'itemStatus', placeholder: '' },
+                      { key: 'followUpDate', placeholder: '' },
+                      { key: 'deliverByDate', placeholder: '' },
+                      { key: 'aging', placeholder: '' },
                     ] : [
                       { key: 'woBatch', placeholder: '' },
                       { key: 'acctNumber', placeholder: '' },
@@ -5070,21 +4994,31 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                   >
                     <TableCell className="font-medium text-blue-600">{batch.woBatch}</TableCell>
                     <TableCell>{batch.acctNumber}</TableCell>
-                    <TableCell className="text-blue-600">{batch.srNumber}</TableCell>
                     <TableCell className="font-medium">{batch.customerName}</TableCell>
                     {searchViewMode === 'csa' ? (
                       <>
-                        <TableCell className="text-center">{batch.totalLabOpen}</TableCell>
-                        <TableCell className="text-center">{batch.totalArCount}</TableCell>
+                        <TableCell>{batch.location}</TableCell>
+                        <TableCell>
+                          <Badge variant={batch.priority === 'Critical' ? 'destructive' : batch.priority === 'High' ? 'default' : 'secondary'} className="text-xs">
+                            {batch.priority}
+                          </Badge>
+                        </TableCell>
                         <TableCell className="text-center font-medium">{batch.totalCount}</TableCell>
-                        <TableCell>{batch.lastCommentDate}</TableCell>
-                        <TableCell className="text-sm text-muted-foreground max-w-[200px] truncate">{batch.lastComment}</TableCell>
-                        <TableCell>{batch.minNeedByDate}</TableCell>
-                        <TableCell>{batch.minFollowUpDate}</TableCell>
-                        <TableCell>{batch.minNeedByDate}</TableCell>
+                        <TableCell>{batch.contactName}</TableCell>
+                        <TableCell>{batch.poNumber}</TableCell>
+                        <TableCell className="text-sm">{batch.itemStatus}</TableCell>
+                        <TableCell>{batch.minFollowUpDate || '—'}</TableCell>
+                        <TableCell>{batch.minDeliverByDate}</TableCell>
+                        <TableCell className="text-center font-medium">
+                          {(() => {
+                            const days = getAgingDays(batch);
+                            return days !== null ? `${days}d` : '—';
+                          })()}
+                        </TableCell>
                       </>
                     ) : (
                       <>
+                        <TableCell className="text-blue-600">{batch.srNumber}</TableCell>
                         <TableCell>{batch.minNeedByDate}</TableCell>
                         <TableCell className="text-center font-medium">{batch.totalCount}</TableCell>
                         <TableCell className="text-center">{batch.totalLabOpen}</TableCell>
