@@ -531,7 +531,6 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
   const applyRecentSearch = (recent: RecentSearch) => {
     setSearchChips(recent.chips);
     setShowRecentSearches(false);
-    setShowSuggestions(false);
   };
 
   const removeRecentSearch = (id: string, e: React.MouseEvent) => {
