@@ -104,6 +104,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
   };
   const [dateFrom, setDateFrom] = useState<Date>();
   const [dateTo, setDateTo] = useState<Date>();
+  const [arrivalToOpen, setArrivalToOpen] = useState(false);
   const [dateType, setDateType] = useState('');
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [globalSearch, setGlobalSearch] = useState('');
@@ -870,14 +871,18 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0 border border-gray-200 shadow-xl rounded-lg z-[70]" align="start">
-                    <Calendar mode="single" selected={dateFrom} onSelect={setDateFrom} initialFocus className="pointer-events-auto rounded-lg p-3" />
+                    <Calendar mode="single" selected={dateFrom} onSelect={(date) => {
+                      setDateFrom(date);
+                      // Auto-open Arrival To after selecting Arrival From
+                      setTimeout(() => setArrivalToOpen(true), 200);
+                    }} initialFocus className="pointer-events-auto rounded-lg p-3" />
                   </PopoverContent>
                 </Popover>
               </div>
 
               <div>
                 <Label className="text-sm font-medium text-muted-foreground mb-1.5 block">Arrival To</Label>
-                <Popover>
+                <Popover open={arrivalToOpen} onOpenChange={setArrivalToOpen}>
                   <PopoverTrigger asChild>
                     <Button
                       variant="outline"
@@ -891,7 +896,10 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0 border border-gray-200 shadow-xl rounded-lg z-[70]" align="start">
-                    <Calendar mode="single" selected={dateTo} onSelect={setDateTo} initialFocus className="pointer-events-auto rounded-lg p-3" />
+                    <Calendar mode="single" selected={dateTo} onSelect={(date) => {
+                      setDateTo(date);
+                      setArrivalToOpen(false);
+                    }} initialFocus className="pointer-events-auto rounded-lg p-3" />
                   </PopoverContent>
                 </Popover>
               </div>
