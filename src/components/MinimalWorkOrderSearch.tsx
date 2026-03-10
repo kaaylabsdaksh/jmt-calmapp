@@ -245,25 +245,16 @@ const MinimalWorkOrderSearch = ({ onSearch }: MinimalWorkOrderSearchProps) => {
   };
 
   const handleInputFocus = () => {
-    if (searchInput.trim()) {
-      setShowSuggestions(true);
-      setShowRecentSearches(false);
-    } else if (recentSearches.length > 0) {
+    if (!searchInput.trim() && recentSearches.length > 0) {
       setShowRecentSearches(true);
-      setShowSuggestions(false);
     }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
     setSearchInput(val);
-    if (val.trim()) {
-      setShowSuggestions(true);
-      setShowRecentSearches(false);
-    } else {
-      setShowSuggestions(false);
-      if (recentSearches.length > 0) setShowRecentSearches(true);
-    }
+    if (!val.trim() && recentSearches.length > 0) setShowRecentSearches(true);
+    else setShowRecentSearches(false);
   };
 
   const formatTimeAgo = (timestamp: number) => {
