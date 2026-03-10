@@ -337,7 +337,7 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
           {/* Live Result Count */}
           {resultCount !== null && (
             <Badge variant="secondary" className="px-2.5 py-1 text-xs font-medium animate-in fade-in-50 slide-in-from-left-2">
-              <Zap className="h-3 w-3 mr-1 text-primary" />
+              <Search className="h-3 w-3 mr-1 text-primary" />
               {resultCount} {resultCount === 1 ? 'result' : 'results'} found
             </Badge>
           )}
