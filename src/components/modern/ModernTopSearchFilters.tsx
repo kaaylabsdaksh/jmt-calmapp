@@ -95,8 +95,13 @@ function saveRecentSearches(searches: RecentSearch[]) {
   catch {}
 }
 
-const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
+const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopSearchFiltersProps) => {
   const [viewMode, setViewMode] = useState<'default' | 'csa'>('default');
+
+  const handleViewModeChange = (val: 'default' | 'csa') => {
+    setViewMode(val);
+    onSearchViewModeChange?.(val);
+  };
   const [dateFrom, setDateFrom] = useState<Date>();
   const [dateTo, setDateTo] = useState<Date>();
   const [dateType, setDateType] = useState('');
