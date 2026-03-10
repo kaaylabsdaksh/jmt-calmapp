@@ -457,104 +457,76 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
   };
 
 
-  const addSearchChip = () => {
-    if (!searchInput.trim()) return;
+  const addSearchChip = (value?: string) => {
+    const chipValue = value || searchInput.trim();
+    if (!chipValue) return;
 
-    const selectedOption = searchTypeOptions.find(opt => opt.value === selectedSearchType);
+    const typeToUse = detectedType || selectedSearchType;
+    const selectedOption = searchTypeOptions.find(opt => opt.value === typeToUse);
     if (!selectedOption) return;
 
+    if (detectedType && detectedType !== selectedSearchType) {
+      setSelectedSearchType(detectedType);
+    }
+
     const newChip: SearchChip = {
-      id: `${selectedSearchType}-${Date.now()}`,
-      type: selectedSearchType,
-      value: searchInput.trim(),
+      id: `${typeToUse}-${Date.now()}`,
+      type: typeToUse,
+      value: chipValue,
       label: selectedOption.label,
     };
 
     setSearchChips(prev => [...prev, newChip]);
     setSearchInput('');
+    setShowSuggestions(false);
     
-    // Trigger search with new chips
     const updatedChips = [...searchChips, newChip];
     const searchTags = updatedChips.map(chip => `${chip.label}: ${chip.value}`);
     onSearch({
       globalSearch: '',
-      searchTags: searchTags,
-      status: searchValues.status,
-      assignee: searchValues.assignee,
-      priority: searchValues.priority,
-      manufacturer: searchValues.manufacturer,
-      division: searchValues.division,
-      woType: searchValues.woType,
-      dateFrom,
-      dateTo,
-      dateType,
-      actionCode: searchValues.actionCode,
-      labCode: searchValues.labCode,
-      rotationManagement: searchValues.rotationManagement,
-      invoiceStatus: searchValues.invoiceStatus,
-      departureType: searchValues.departureType,
-      salesperson: searchValues.salesperson,
-      workOrderItemStatus: searchValues.workOrderItemStatus,
-      workOrderItemType: searchValues.workOrderItemType,
+      searchTags,
+      status: searchValues.status, assignee: searchValues.assignee, priority: searchValues.priority,
+      manufacturer: searchValues.manufacturer, division: searchValues.division, woType: searchValues.woType,
+      dateFrom, dateTo, dateType,
+      actionCode: searchValues.actionCode, labCode: searchValues.labCode,
+      rotationManagement: searchValues.rotationManagement, invoiceStatus: searchValues.invoiceStatus,
+      departureType: searchValues.departureType, salesperson: searchValues.salesperson,
+      workOrderItemStatus: searchValues.workOrderItemStatus, workOrderItemType: searchValues.workOrderItemType,
       location: searchValues.location,
-      newEquip: searchValues.newEquip,
-      usedSurplus: searchValues.usedSurplus,
-      warranty: searchValues.warranty,
-      toFactory: searchValues.toFactory,
-      proofOfDelivery: searchValues.proofOfDelivery,
-      only17025: searchValues.only17025,
-      onlyHotList: searchValues.onlyHotList,
-      onlyLostEquip: searchValues.onlyLostEquip,
-      nonJMAccts: searchValues.nonJMAccts,
-      viewTemplate: searchValues.viewTemplate
+      newEquip: searchValues.newEquip, usedSurplus: searchValues.usedSurplus,
+      warranty: searchValues.warranty, toFactory: searchValues.toFactory,
+      proofOfDelivery: searchValues.proofOfDelivery, only17025: searchValues.only17025,
+      onlyHotList: searchValues.onlyHotList, onlyLostEquip: searchValues.onlyLostEquip,
+      nonJMAccts: searchValues.nonJMAccts, viewTemplate: searchValues.viewTemplate,
     });
   };
 
   const removeSearchChip = (chipId: string) => {
     const updatedChips = searchChips.filter(chip => chip.id !== chipId);
     setSearchChips(updatedChips);
-    
-    // Trigger search with updated chips
     const searchTags = updatedChips.map(chip => `${chip.label}: ${chip.value}`);
     onSearch({
       globalSearch: '',
-      searchTags: searchTags,
-      status: searchValues.status,
-      assignee: searchValues.assignee,
-      priority: searchValues.priority,
-      manufacturer: searchValues.manufacturer,
-      division: searchValues.division,
-      woType: searchValues.woType,
-      dateFrom,
-      dateTo,
-      dateType,
-      actionCode: searchValues.actionCode,
-      labCode: searchValues.labCode,
-      rotationManagement: searchValues.rotationManagement,
-      invoiceStatus: searchValues.invoiceStatus,
-      departureType: searchValues.departureType,
-      salesperson: searchValues.salesperson,
-      workOrderItemStatus: searchValues.workOrderItemStatus,
-      workOrderItemType: searchValues.workOrderItemType,
+      searchTags,
+      status: searchValues.status, assignee: searchValues.assignee, priority: searchValues.priority,
+      manufacturer: searchValues.manufacturer, division: searchValues.division, woType: searchValues.woType,
+      dateFrom, dateTo, dateType,
+      actionCode: searchValues.actionCode, labCode: searchValues.labCode,
+      rotationManagement: searchValues.rotationManagement, invoiceStatus: searchValues.invoiceStatus,
+      departureType: searchValues.departureType, salesperson: searchValues.salesperson,
+      workOrderItemStatus: searchValues.workOrderItemStatus, workOrderItemType: searchValues.workOrderItemType,
       location: searchValues.location,
-      newEquip: searchValues.newEquip,
-      usedSurplus: searchValues.usedSurplus,
-      warranty: searchValues.warranty,
-      toFactory: searchValues.toFactory,
-      proofOfDelivery: searchValues.proofOfDelivery,
-      only17025: searchValues.only17025,
-      onlyHotList: searchValues.onlyHotList,
-      onlyLostEquip: searchValues.onlyLostEquip,
-      nonJMAccts: searchValues.nonJMAccts,
-      viewTemplate: searchValues.viewTemplate
+      newEquip: searchValues.newEquip, usedSurplus: searchValues.usedSurplus,
+      warranty: searchValues.warranty, toFactory: searchValues.toFactory,
+      proofOfDelivery: searchValues.proofOfDelivery, only17025: searchValues.only17025,
+      onlyHotList: searchValues.onlyHotList, onlyLostEquip: searchValues.onlyLostEquip,
+      nonJMAccts: searchValues.nonJMAccts, viewTemplate: searchValues.viewTemplate,
     });
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      addSearchChip();
-    }
+    if (e.key === 'Enter') { e.preventDefault(); addSearchChip(); }
+    if (e.key === 'Escape') { setShowSuggestions(false); setShowRecentSearches(false); }
   };
 
   const handleSearch = () => {
