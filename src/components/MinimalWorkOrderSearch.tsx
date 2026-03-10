@@ -351,6 +351,15 @@ const MinimalWorkOrderSearch = ({ onSearch }: MinimalWorkOrderSearchProps) => {
                     className="h-11 transition-all focus:ring-2 focus:ring-primary/20"
                   />
                 </div>
+                <Button 
+                  onClick={() => addSearchChip()}
+                  variant="secondary"
+                  className="h-11 px-6"
+                >
+                  <Plus className="h-4 w-4 mr-2" />
+                  Add
+                </Button>
+              </div>
 
               {/* Recent Searches Dropdown */}
               {showRecentSearches && recentSearches.length > 0 && !searchInput.trim() && (
