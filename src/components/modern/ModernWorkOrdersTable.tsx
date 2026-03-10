@@ -4994,21 +4994,31 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                   >
                     <TableCell className="font-medium text-blue-600">{batch.woBatch}</TableCell>
                     <TableCell>{batch.acctNumber}</TableCell>
-                    <TableCell className="text-blue-600">{batch.srNumber}</TableCell>
                     <TableCell className="font-medium">{batch.customerName}</TableCell>
                     {searchViewMode === 'csa' ? (
                       <>
-                        <TableCell className="text-center">{batch.totalLabOpen}</TableCell>
-                        <TableCell className="text-center">{batch.totalArCount}</TableCell>
+                        <TableCell>{batch.location}</TableCell>
+                        <TableCell>
+                          <Badge variant={batch.priority === 'Critical' ? 'destructive' : batch.priority === 'High' ? 'default' : 'secondary'} className="text-xs">
+                            {batch.priority}
+                          </Badge>
+                        </TableCell>
                         <TableCell className="text-center font-medium">{batch.totalCount}</TableCell>
-                        <TableCell>{batch.lastCommentDate}</TableCell>
-                        <TableCell className="text-sm text-muted-foreground max-w-[200px] truncate">{batch.lastComment}</TableCell>
-                        <TableCell>{batch.minNeedByDate}</TableCell>
-                        <TableCell>{batch.minFollowUpDate}</TableCell>
-                        <TableCell>{batch.minNeedByDate}</TableCell>
+                        <TableCell>{batch.contactName}</TableCell>
+                        <TableCell>{batch.poNumber}</TableCell>
+                        <TableCell className="text-sm">{batch.itemStatus}</TableCell>
+                        <TableCell>{batch.minFollowUpDate || '—'}</TableCell>
+                        <TableCell>{batch.minDeliverByDate}</TableCell>
+                        <TableCell className="text-center font-medium">
+                          {(() => {
+                            const days = getAgingDays(batch);
+                            return days !== null ? `${days}d` : '—';
+                          })()}
+                        </TableCell>
                       </>
                     ) : (
                       <>
+                        <TableCell className="text-blue-600">{batch.srNumber}</TableCell>
                         <TableCell>{batch.minNeedByDate}</TableCell>
                         <TableCell className="text-center font-medium">{batch.totalCount}</TableCell>
                         <TableCell className="text-center">{batch.totalLabOpen}</TableCell>
