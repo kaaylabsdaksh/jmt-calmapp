@@ -4302,9 +4302,27 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
     return searchMatch && searchTagsMatch;
   });
   
+  // Apply column filters to batches
+  const columnFilteredBatches = filteredWorkOrderBatches.filter(batch => {
+    return Object.entries(columnFilters).every(([key, value]) => {
+      if (!value) return true;
+      const fieldValue = String((batch as any)[key] || '').toLowerCase();
+      return fieldValue.includes(value.toLowerCase());
+    });
+  });
+
+  // Apply column filters to items
+  const columnFilteredItems = filteredWorkOrderItems.filter(item => {
+    return Object.entries(columnFilters).every(([key, value]) => {
+      if (!value) return true;
+      const fieldValue = String((item as any)[key] || '').toLowerCase();
+      return fieldValue.includes(value.toLowerCase());
+    });
+  });
+
   const totalPages = currentView === 'batch' 
-    ? Math.ceil(filteredWorkOrderBatches.length / itemsPerPage)
-    : Math.ceil(filteredWorkOrderItems.length / itemsPerPage);
+    ? Math.ceil(columnFilteredBatches.length / itemsPerPage)
+    : Math.ceil(columnFilteredItems.length / itemsPerPage);
 
   // Get paginated data
   const isShowingAll = itemsPerPage >= 999999;
@@ -4313,11 +4331,11 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
     : [];
     
   const paginatedWorkOrderItems = currentView === 'item' 
-    ? (isShowingAll ? filteredWorkOrderItems : filteredWorkOrderItems.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage))
+    ? (isShowingAll ? columnFilteredItems : columnFilteredItems.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage))
     : [];
 
   const paginatedBatches = currentView === 'batch'
-    ? (isShowingAll ? filteredWorkOrderBatches : filteredWorkOrderBatches.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage))
+    ? (isShowingAll ? columnFilteredBatches : columnFilteredBatches.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage))
     : [];
 
   const openDetails = (order: WorkOrder) => {
