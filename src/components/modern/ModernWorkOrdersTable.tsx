@@ -4047,6 +4047,13 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
   const [activeStatusFilter, setActiveStatusFilter] = useState<string>('all');
   const [currentView, setCurrentView] = useState<'item' | 'batch'>('item');
   const navigate = useNavigate();
+
+  // Force batch view when CSA mode is active
+  React.useEffect(() => {
+    if (searchViewMode === 'csa') {
+      setCurrentView('batch');
+    }
+  }, [searchViewMode]);
   
   // Filter work orders based on search filters from parent and status
   // Helper function to convert status names to filter values
