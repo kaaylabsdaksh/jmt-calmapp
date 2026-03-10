@@ -129,11 +129,13 @@ const mockBatch: WorkOrderBatch = {
 interface WorkOrderBatchDetailsProps {
   batchId?: string;
   onBack?: () => void;
+  viewMode?: 'default' | 'csa';
 }
 
 const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({ 
   batchId, 
-  onBack 
+  onBack,
+  viewMode = 'default'
 }) => {
   const navigate = useNavigate();
   const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
