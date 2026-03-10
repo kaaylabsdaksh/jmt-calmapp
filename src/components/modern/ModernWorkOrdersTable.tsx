@@ -3710,7 +3710,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     itemNumber: "033",
     manufacturer: "NATIONAL INSTRUMENTS",
     model: "PXIe-5663E",
-    serialNumber: "SN123457",
+    serialNumber: "SN987602",
     created: "12/05/2024",
     departure: "01/15/2025",
     itemStatus: "Shipped",
