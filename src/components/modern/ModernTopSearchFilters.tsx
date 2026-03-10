@@ -442,7 +442,6 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
 
     setSearchChips(prev => [...prev, newChip]);
     setSearchInput('');
-    setShowSuggestions(false);
     
     const updatedChips = [...searchChips, newChip];
     const searchTags = updatedChips.map(chip => `${chip.label}: ${chip.value}`);
