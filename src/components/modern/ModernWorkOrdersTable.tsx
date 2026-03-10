@@ -4729,7 +4729,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
               </TableRow>
             </TableHeader>
             <TableBody>
-              {!hasSearched ? (
+              {(!hasSearched && currentView !== 'batch') ? (
                 <TableRow>
                   <TableCell colSpan={currentView === 'batch' ? 8 : 11} className="text-center py-12">
                     <p className="text-muted-foreground text-lg">
