@@ -4068,10 +4068,10 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
     if (!sortableColumns.has(columnKey)) return null;
     if (sortConfig?.key === columnKey) {
       return sortConfig.direction === 'asc' 
-        ? <ArrowUp className="h-3.5 w-3.5 ml-1 inline-block text-blue-600" strokeWidth={2.5} />
-        : <ArrowDown className="h-3.5 w-3.5 ml-1 inline-block text-blue-600" strokeWidth={2.5} />;
+        ? <ArrowUp className="h-3.5 w-3.5 text-blue-600" strokeWidth={2.5} />
+        : <ArrowDown className="h-3.5 w-3.5 text-blue-600" strokeWidth={2.5} />;
     }
-    return <ArrowUpDown className="h-3 w-3 ml-1 inline-block text-gray-400/60" />;
+    return <ArrowUpDown className="h-3 w-3 text-gray-400/60" />;
   };
 
   // Force batch view when CSA mode is active
