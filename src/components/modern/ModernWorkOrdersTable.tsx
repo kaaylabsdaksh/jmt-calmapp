@@ -5130,8 +5130,8 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                       <div className="px-4 pt-4 pb-2">
                         <div className="flex items-start justify-between mb-2">
                           <div className="flex items-center gap-2">
-                            <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                              <span className="text-primary font-bold text-xs">#</span>
+                            <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center">
+                              <span className="text-slate-600 font-bold text-xs">#</span>
                             </div>
                             <div>
                               <span className="font-bold text-primary text-sm">{batch.woBatch}</span>
