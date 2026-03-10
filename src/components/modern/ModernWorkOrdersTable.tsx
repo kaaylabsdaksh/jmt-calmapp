@@ -5167,18 +5167,18 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                       
                       <div className="mx-3 border-t border-slate-100"></div>
                       
-                      <div className="px-4 py-3 grid grid-cols-3 gap-2">
-                        <div className="bg-muted/50 rounded-lg px-2 py-1.5 text-center">
-                          <span className="text-[9px] text-muted-foreground uppercase tracking-wider block">Follow-up</span>
-                          <div className="font-medium text-[10px] text-foreground mt-0.5">{batch.minFollowUpDate || '—'}</div>
+                      <div className="px-3 py-2 grid grid-cols-3 gap-1.5">
+                        <div className="bg-muted/50 rounded px-1.5 py-1 text-center">
+                          <span className="text-[8px] text-muted-foreground uppercase tracking-wider block">Follow-up</span>
+                          <div className="font-medium text-[9px] text-foreground">{batch.minFollowUpDate || '—'}</div>
                         </div>
-                        <div className="bg-muted/50 rounded-lg px-2 py-1.5 text-center">
-                          <span className="text-[9px] text-muted-foreground uppercase tracking-wider block">Deliver By</span>
-                          <div className="font-medium text-[10px] text-foreground mt-0.5">{batch.minDeliverByDate}</div>
+                        <div className="bg-muted/50 rounded px-1.5 py-1 text-center">
+                          <span className="text-[8px] text-muted-foreground uppercase tracking-wider block">Deliver By</span>
+                          <div className="font-medium text-[9px] text-foreground">{batch.minDeliverByDate}</div>
                         </div>
-                        <div className="bg-slate-100 rounded-lg px-2 py-1.5 text-center border border-slate-200">
-                          <span className="text-[9px] text-slate-600 uppercase tracking-wider block font-medium">Aging</span>
-                          <div className="font-medium text-[10px] text-foreground mt-0.5">
+                        <div className="bg-slate-100 rounded px-1.5 py-1 text-center border border-slate-200">
+                          <span className="text-[8px] text-slate-600 uppercase tracking-wider block font-medium">Aging</span>
+                          <div className="font-medium text-[9px] text-foreground">
                             {(() => {
                               const days = getAgingDays(batch);
                               return days !== null ? `${days}d` : '—';
