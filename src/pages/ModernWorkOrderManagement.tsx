@@ -39,7 +39,7 @@ interface SearchFilters {
 const ModernWorkOrderManagement = () => {
   const [viewMode, setViewMode] = useState<'list' | 'grid'>('list');
   const [hasSearched, setHasSearched] = useState(false);
-  
+  const [searchViewMode, setSearchViewMode] = useState<'default' | 'csa'>('default');
   const handleSearch = (filters: SearchFilters) => {
     console.log('Parent received search filters:', filters);
     setSearchFilters(filters);
