@@ -4840,6 +4840,37 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                   </>
                 )}
               </TableRow>
+              {/* Column Filter Row */}
+              <TableRow className="bg-gray-50/50 border-b">
+                {currentView === 'batch' ? (
+                  <>
+                    {['woBatch', 'acctNumber', 'srNumber', 'customerName', 'minNeedByDate', 'totalCount', 'totalLabOpen', 'totalArCount'].map((col) => (
+                      <TableHead key={col} className="py-1 px-2">
+                        <Input
+                          placeholder=""
+                          value={columnFilters[col] || ''}
+                          onChange={(e) => setColumnFilters(prev => ({ ...prev, [col]: e.target.value }))}
+                          className="h-7 text-xs border-gray-200 bg-white rounded px-2"
+                        />
+                      </TableHead>
+                    ))}
+                  </>
+                ) : (
+                  <>
+                    {['workOrderNumber', 'itemNumber', 'itemStatus', 'priority', 'manufacturer', 'model', 'serialNumber', 'itemType', 'customer', 'assignedTo'].map((col) => (
+                      <TableHead key={col} className="py-1 px-2">
+                        <Input
+                          placeholder=""
+                          value={columnFilters[col] || ''}
+                          onChange={(e) => setColumnFilters(prev => ({ ...prev, [col]: e.target.value }))}
+                          className="h-7 text-xs border-gray-200 bg-white rounded px-2"
+                        />
+                      </TableHead>
+                    ))}
+                    <TableHead className="w-12"></TableHead>
+                  </>
+                )}
+              </TableRow>
             </TableHeader>
             <TableBody>
               {!hasSearched ? (
