@@ -95,6 +95,7 @@ function saveRecentSearches(searches: RecentSearch[]) {
 }
 
 const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
+  const [viewMode, setViewMode] = useState<'default' | 'csa'>('default');
   const [dateFrom, setDateFrom] = useState<Date>();
   const [dateTo, setDateTo] = useState<Date>();
   const [dateType, setDateType] = useState('');
@@ -347,7 +348,7 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
   return (
     <div className="bg-card rounded-xl shadow-sm border mb-6">
       {/* Header Row */}
-      <div className="flex items-center justify-between px-5 pt-5 pb-4">
+      <div className="flex items-center justify-between px-5 pt-5 pb-3">
         <div className="flex items-center gap-3">
           <h2 className="text-lg font-semibold text-foreground">Work Order Search</h2>
           {/* Live Result Count */}
@@ -358,7 +359,17 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
             </Badge>
           )}
         </div>
+        <Select value={viewMode} onValueChange={(val: 'default' | 'csa') => setViewMode(val)}>
+          <SelectTrigger className="w-[160px] h-9 text-sm">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent className="bg-popover border shadow-lg z-50">
+            <SelectItem value="default">Default View</SelectItem>
+            <SelectItem value="csa">CSA View</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
+      <div className="mx-5 mb-4 border-b" />
 
       <div className="px-5 pb-5 space-y-4">
         {/* Search Criteria Section */}
