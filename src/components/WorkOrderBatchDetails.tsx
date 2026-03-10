@@ -406,19 +406,36 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
                   </>
                 )}
               </TableRow>
+              {/* Column Filter Row */}
+              <TableRow className="border-b border-gray-100">
+                {(viewMode === 'csa' ? [
+                  'item', 'location', 'itemCreated', 'action', 'itemStatus', 'manufacturer', 'model', 'description', 'serialNumber', 'deliverByDate', 'followUpDate'
+                ] : [
+                  'item', 'division', 'location', 'itemCreated', 'action', 'itemStatus', 'manufacturer', 'model', 'labCode', 'serialNumber', 'poNumber'
+                ]).map((key) => (
+                  <TableHead key={key} className="py-1.5 px-2">
+                    <div className="relative">
+                      <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground/50" />
+                      <Input
+                        placeholder=""
+                        value={columnFilters[key] || ''}
+                        onChange={(e) => setColumnFilters(prev => ({ ...prev, [key]: e.target.value }))}
+                        className="h-7 text-[11px] pl-6 pr-6 border-muted bg-muted/30 rounded-md placeholder:text-muted-foreground/40 focus:bg-background focus:border-primary/30 transition-colors"
+                      />
+                      {columnFilters[key] && (
+                        <button
+                          onClick={() => setColumnFilters(prev => ({ ...prev, [key]: '' }))}
+                          className="absolute right-1.5 top-1/2 -translate-y-1/2 p-0.5 rounded-full hover:bg-muted transition-colors"
+                        >
+                          <X className="h-3 w-3 text-muted-foreground" />
+                        </button>
+                      )}
+                    </div>
+                  </TableHead>
+                ))}
+                <TableHead className="w-12"></TableHead>
+              </TableRow>
             </TableHeader>
-            <TableBody>
-              {filteredItems.map((item) => (
-                <React.Fragment key={item.id}>
-                  <TableRow className="hover:bg-muted/30">
-                    <TableCell className="font-medium">
-                      <button
-                        onClick={(e) => handleItemClick(item, e)}
-                        className="text-blue-600 hover:text-blue-800 hover:underline font-medium transition-colors"
-                      >
-                        {item.item}
-                      </button>
-                    </TableCell>
                     {viewMode === 'csa' ? (
                       <>
                         <TableCell>{item.location}</TableCell>
