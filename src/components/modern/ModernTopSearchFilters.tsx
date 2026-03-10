@@ -530,115 +530,86 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
   };
 
   const handleSearch = () => {
-    // Add chip if there's input
     if (searchInput.trim()) {
       addSearchChip();
     } else {
-      // Even without new chip, send current filter values
+      // Save recent search
+      if (searchChips.length > 0) {
+        const entry: RecentSearch = {
+          id: `recent-${Date.now()}`, chips: [...searchChips], timestamp: Date.now(),
+          label: searchChips.map(c => `${c.label}: ${c.value}`).join(', '),
+        };
+        const updated = [entry, ...recentSearches.filter(r => r.label !== entry.label)].slice(0, MAX_RECENT_SEARCHES);
+        setRecentSearches(updated);
+        saveRecentSearches(updated);
+      }
       const searchTags = searchChips.map(chip => `${chip.label}: ${chip.value}`);
       onSearch({
-        globalSearch: '',
-        searchTags: searchTags,
-        status: searchValues.status,
-        assignee: searchValues.assignee,
-        priority: searchValues.priority,
-        manufacturer: searchValues.manufacturer,
-        division: searchValues.division,
-        woType: searchValues.woType,
-        dateFrom,
-        dateTo,
-        dateType,
-        actionCode: searchValues.actionCode,
-        labCode: searchValues.labCode,
-        rotationManagement: searchValues.rotationManagement,
-        invoiceStatus: searchValues.invoiceStatus,
-        departureType: searchValues.departureType,
-        salesperson: searchValues.salesperson,
-        workOrderItemStatus: searchValues.workOrderItemStatus,
-        workOrderItemType: searchValues.workOrderItemType,
+        globalSearch: '', searchTags,
+        status: searchValues.status, assignee: searchValues.assignee, priority: searchValues.priority,
+        manufacturer: searchValues.manufacturer, division: searchValues.division, woType: searchValues.woType,
+        dateFrom, dateTo, dateType,
+        actionCode: searchValues.actionCode, labCode: searchValues.labCode,
+        rotationManagement: searchValues.rotationManagement, invoiceStatus: searchValues.invoiceStatus,
+        departureType: searchValues.departureType, salesperson: searchValues.salesperson,
+        workOrderItemStatus: searchValues.workOrderItemStatus, workOrderItemType: searchValues.workOrderItemType,
         location: searchValues.location,
-        newEquip: searchValues.newEquip,
-        usedSurplus: searchValues.usedSurplus,
-        warranty: searchValues.warranty,
-        toFactory: searchValues.toFactory,
-        proofOfDelivery: searchValues.proofOfDelivery,
-        only17025: searchValues.only17025,
-        onlyHotList: searchValues.onlyHotList,
-        onlyLostEquip: searchValues.onlyLostEquip,
-        nonJMAccts: searchValues.nonJMAccts,
-        viewTemplate: searchValues.viewTemplate
+        newEquip: searchValues.newEquip, usedSurplus: searchValues.usedSurplus,
+        warranty: searchValues.warranty, toFactory: searchValues.toFactory,
+        proofOfDelivery: searchValues.proofOfDelivery, only17025: searchValues.only17025,
+        onlyHotList: searchValues.onlyHotList, onlyLostEquip: searchValues.onlyLostEquip,
+        nonJMAccts: searchValues.nonJMAccts, viewTemplate: searchValues.viewTemplate,
       });
     }
+  };
+
+  const applyRecentSearch = (recent: RecentSearch) => {
+    setSearchChips(recent.chips);
+    setShowRecentSearches(false);
+    setShowSuggestions(false);
+  };
+
+  const removeRecentSearch = (id: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    const updated = recentSearches.filter(r => r.id !== id);
+    setRecentSearches(updated);
+    saveRecentSearches(updated);
+  };
+
+  const handleInputFocus = () => {
+    if (searchInput.trim()) { setShowSuggestions(true); setShowRecentSearches(false); }
+    else if (recentSearches.length > 0) { setShowRecentSearches(true); setShowSuggestions(false); }
+  };
+
+  const handleInputChange = (val: string) => {
+    setSearchInput(val);
+    if (val.trim()) { setShowSuggestions(true); setShowRecentSearches(false); }
+    else { setShowSuggestions(false); if (recentSearches.length > 0) setShowRecentSearches(true); }
   };
 
   const clearAllFilters = () => {
     setSearchChips([]);
     setSearchInput('');
+    setResultCount(null);
     setSearchValues({
-      woNumber: '',
-      customer: '',
-      status: '',
-      manufacturer: '',
-      priority: [],
-      assignee: '',
-      division: '',
-      woType: '',
-      actionCode: '',
-      labCode: '',
-      rotationManagement: '',
-      invoiceStatus: '',
-      departureType: '',
-      salesperson: '',
-      workOrderItemStatus: '',
-      workOrderItemType: '',
-      location: '',
-      newEquip: false,
-      usedSurplus: false,
-      warranty: false,
-      toFactory: false,
-      proofOfDelivery: false,
-      only17025: false,
-      onlyHotList: false,
-      onlyLostEquip: false,
-      nonJMAccts: false,
-      viewTemplate: false
+      woNumber: '', customer: '', status: '', manufacturer: '', priority: [], assignee: '',
+      division: '', woType: '', actionCode: '', labCode: '', rotationManagement: '',
+      invoiceStatus: '', departureType: '', salesperson: '', workOrderItemStatus: '',
+      workOrderItemType: '', location: '', newEquip: false, usedSurplus: false,
+      warranty: false, toFactory: false, proofOfDelivery: false, only17025: false,
+      onlyHotList: false, onlyLostEquip: false, nonJMAccts: false, viewTemplate: false,
     });
     setDateFrom(undefined);
     setDateTo(undefined);
     setDateType('');
-    
-    // Trigger search with empty filters to show all results
     onSearch({
-      globalSearch: '',
-      searchTags: [],
-      status: '',
-      assignee: '',
-      priority: [],
-      manufacturer: '',
-      division: '',
-      woType: '',
-      dateFrom: undefined,
-      dateTo: undefined,
-      dateType: '',
-      actionCode: '',
-      labCode: '',
-      rotationManagement: '',
-      invoiceStatus: '',
-      departureType: '',
-      salesperson: '',
-      workOrderItemStatus: '',
-      workOrderItemType: '',
-      location: '',
-      newEquip: false,
-      usedSurplus: false,
-      warranty: false,
-      toFactory: false,
-      proofOfDelivery: false,
-      only17025: false,
-      onlyHotList: false,
-      onlyLostEquip: false,
-      nonJMAccts: false,
-      viewTemplate: false
+      globalSearch: '', searchTags: [], status: '', assignee: '', priority: [],
+      manufacturer: '', division: '', woType: '', dateFrom: undefined, dateTo: undefined, dateType: '',
+      actionCode: '', labCode: '', rotationManagement: '', invoiceStatus: '',
+      departureType: '', salesperson: '', workOrderItemStatus: '', workOrderItemType: '',
+      location: '', newEquip: false, usedSurplus: false, warranty: false, toFactory: false,
+      proofOfDelivery: false, only17025: false, onlyHotList: false, onlyLostEquip: false,
+      nonJMAccts: false, viewTemplate: false,
     });
   };
 
