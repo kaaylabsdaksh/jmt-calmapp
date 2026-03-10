@@ -816,9 +816,9 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
         {/* Search & Clear Buttons */}
         <div className="flex justify-end gap-3 pt-2">
           <Button 
-            variant="destructive"
+            variant="outline"
             onClick={clearAllFilters}
-            className="rounded-lg h-10 px-5 font-medium"
+            className="rounded-lg h-10 px-5 font-medium border-destructive text-destructive hover:bg-destructive/10 hover:text-destructive"
           >
             <RotateCcw className="h-4 w-4 mr-2" />
             Clear All
