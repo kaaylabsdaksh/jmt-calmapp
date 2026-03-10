@@ -175,7 +175,6 @@ const MinimalWorkOrderSearch = ({ onSearch }: MinimalWorkOrderSearchProps) => {
 
     setSearchChips(prev => [...prev, newChip]);
     setSearchInput('');
-    setShowSuggestions(false);
     searchInputRef.current?.focus();
   };
 
