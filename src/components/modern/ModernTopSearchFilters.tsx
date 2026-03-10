@@ -73,6 +73,7 @@ interface SearchFilters {
 
 interface ModernTopSearchFiltersProps {
   onSearch: (filters: SearchFilters) => void;
+  onSearchViewModeChange?: (mode: 'default' | 'csa') => void;
 }
 
 interface RecentSearch {
@@ -94,8 +95,13 @@ function saveRecentSearches(searches: RecentSearch[]) {
   catch {}
 }
 
-const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
+const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopSearchFiltersProps) => {
   const [viewMode, setViewMode] = useState<'default' | 'csa'>('default');
+
+  const handleViewModeChange = (val: 'default' | 'csa') => {
+    setViewMode(val);
+    onSearchViewModeChange?.(val);
+  };
   const [dateFrom, setDateFrom] = useState<Date>();
   const [dateTo, setDateTo] = useState<Date>();
   const [dateType, setDateType] = useState('');
@@ -359,7 +365,7 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
             </Badge>
           )}
         </div>
-        <Select value={viewMode} onValueChange={(val: 'default' | 'csa') => setViewMode(val)}>
+        <Select value={viewMode} onValueChange={(val: 'default' | 'csa') => handleViewModeChange(val)}>
           <SelectTrigger className="w-[130px] h-7 text-xs px-2 gap-1">
             <SelectValue />
           </SelectTrigger>

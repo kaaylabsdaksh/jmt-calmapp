@@ -4035,10 +4035,11 @@ interface ModernWorkOrdersTableProps {
     location: string;
   };
   hasSearched: boolean;
+  searchViewMode?: 'default' | 'csa';
 }
 
 // ModernWorkOrdersTable Component - Clean version with only List/Grid toggle icons
-const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasSearched }: ModernWorkOrdersTableProps) => {
+const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasSearched, searchViewMode = 'default' }: ModernWorkOrdersTableProps) => {
   const [selectedWorkOrder, setSelectedWorkOrder] = useState<WorkOrder | null>(null);
   const [selectedBatch, setSelectedBatch] = useState<WorkOrderBatch | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -4046,6 +4047,13 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
   const [activeStatusFilter, setActiveStatusFilter] = useState<string>('all');
   const [currentView, setCurrentView] = useState<'item' | 'batch'>('item');
   const navigate = useNavigate();
+
+  // Force batch view when CSA mode is active
+  React.useEffect(() => {
+    if (searchViewMode === 'csa') {
+      setCurrentView('batch');
+    }
+  }, [searchViewMode]);
   
   // Filter work orders based on search filters from parent and status
   // Helper function to convert status names to filter values
@@ -4650,7 +4658,8 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
           
           {/* Toggle Buttons - Full Width on Mobile */}
           <div className="space-y-3">
-            {/* Item/Batch Toggle */}
+            {/* Item/Batch Toggle - hidden in CSA mode */}
+            {searchViewMode !== 'csa' && (
             <div className="flex items-center justify-center">
               <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-lg w-full max-w-xs">
                 <Button
@@ -4683,6 +4692,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                 </Button>
               </div>
             </div>
+            )}
 
             {/* List/Grid Toggle */}
             <div className="flex items-center justify-center">
@@ -4726,7 +4736,8 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
           
           {/* View Toggle Buttons */}
           <div className="flex items-center gap-3">
-            {/* Item/Batch Toggle */}
+            {/* Item/Batch Toggle - hidden in CSA mode */}
+            {searchViewMode !== 'csa' && (
             <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-lg">
               <Button
                 variant={currentView === 'item' ? 'default' : 'ghost'}
@@ -4755,6 +4766,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                 Batch View
               </Button>
             </div>
+            )}
 
             {/* List/Grid Toggle */}
             <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-lg">
