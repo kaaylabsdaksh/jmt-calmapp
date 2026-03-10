@@ -491,7 +491,7 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') { e.preventDefault(); addSearchChip(); }
-    if (e.key === 'Escape') { setShowSuggestions(false); setShowRecentSearches(false); }
+    if (e.key === 'Escape') { setShowRecentSearches(false); }
   };
 
   const handleSearch = () => {
