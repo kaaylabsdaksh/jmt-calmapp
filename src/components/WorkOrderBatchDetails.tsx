@@ -186,9 +186,33 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
     if (labCodeFilter) {
       items = items.filter(item => item.labCode === labCodeFilter);
     }
+
+    // Apply column filters
+    const colFilterKeys: Record<string, (item: WorkOrderItem) => string> = {
+      item: (i) => i.item,
+      location: (i) => i.location,
+      itemCreated: (i) => i.itemCreated,
+      action: (i) => i.action,
+      itemStatus: (i) => i.itemStatus,
+      manufacturer: (i) => i.manufacturer,
+      model: (i) => i.model,
+      description: (i) => i.description || '',
+      serialNumber: (i) => i.serialNumber,
+      deliverByDate: (i) => i.deliverByDate || '',
+      followUpDate: (i) => i.followUpDate || '',
+      division: (i) => i.division,
+      labCode: (i) => i.labCode,
+      poNumber: (i) => i.poNumber,
+    };
+    Object.entries(columnFilters).forEach(([key, value]) => {
+      if (value && colFilterKeys[key]) {
+        const lower = value.toLowerCase();
+        items = items.filter(item => colFilterKeys[key](item).toLowerCase().includes(lower));
+      }
+    });
     
     return items;
-  }, [searchQuery, statusFilter, labCodeFilter]);
+  }, [searchQuery, statusFilter, labCodeFilter, columnFilters]);
 
   const clearAllFilters = () => {
     setSearchQuery("");
