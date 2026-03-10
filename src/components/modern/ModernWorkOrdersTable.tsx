@@ -4286,13 +4286,37 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
   // Apply sorting to batches — default is aging logic: Deliver By date first, Follow-up as tiebreaker
   const sortedBatches = [...columnFilteredBatches];
   if (sortConfig) {
+    // Map CSA column keys to actual batch data keys
+    const keyMap: Record<string, string> = {
+      itemCount: 'totalCount',
+      followUpDate: 'minFollowUpDate',
+      deliverByDate: 'minDeliverByDate',
+    };
+    const resolvedKey = keyMap[sortConfig.key] || sortConfig.key;
+    
     sortedBatches.sort((a, b) => {
-      const key = sortConfig.key as keyof WorkOrderBatch;
+      const dir = sortConfig.direction === 'asc' ? 1 : -1;
+      
+      // Handle aging as a computed value
+      if (sortConfig.key === 'aging') {
+        const aDays = getAgingDays(a) ?? -1;
+        const bDays = getAgingDays(b) ?? -1;
+        return (aDays - bDays) * dir;
+      }
+      
+      const key = resolvedKey as keyof WorkOrderBatch;
       const aVal = a[key];
       const bVal = b[key];
-      const dir = sortConfig.direction === 'asc' ? 1 : -1;
+      
+      // Handle date sorting
+      if (typeof aVal === 'string' && typeof bVal === 'string' && (resolvedKey.includes('Date') || resolvedKey.includes('date'))) {
+        const aDate = parseDate(String(aVal));
+        const bDate = parseDate(String(bVal));
+        return (aDate - bDate) * dir;
+      }
+      
       if (typeof aVal === 'number' && typeof bVal === 'number') return (aVal - bVal) * dir;
-      return String(aVal).localeCompare(String(bVal)) * dir;
+      return String(aVal || '').localeCompare(String(bVal || '')) * dir;
     });
   } else {
     // Default aging sort: ordered by Deliver By date ascending, with Follow-up as tiebreaker when present
