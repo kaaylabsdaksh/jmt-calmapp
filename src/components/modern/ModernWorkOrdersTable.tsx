@@ -4990,9 +4990,9 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                   <TableRow
                     key={batch.id}
                     className={cn(
-                      "cursor-pointer border-b border-muted/50 transition-colors",
+                      "cursor-pointer border-b border-muted/30 transition-colors",
                       searchViewMode === 'csa' 
-                        ? "hover:bg-slate-50/80 h-10" 
+                        ? "hover:bg-slate-50/80 [&>td]:py-1.5 [&>td]:px-3" 
                         : "hover:bg-gray-50"
                     )}
                     onClick={() => openBatchDetails(batch)}
@@ -5006,13 +5006,13 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                         <TableCell>
                           <Badge 
                             variant={batch.priority === 'Critical' ? 'destructive' : batch.priority === 'High' ? 'default' : 'secondary'} 
-                            className="text-[10px] px-2 py-0 h-5 font-medium"
+                            className="text-[10px] px-2 py-0 h-4 font-medium"
                           >
                             {batch.priority}
                           </Badge>
                         </TableCell>
                         <TableCell className="text-center">
-                          <span className="inline-flex items-center justify-center bg-muted rounded-full w-6 h-6 text-[11px] font-bold text-foreground">{batch.totalCount}</span>
+                          <span className="inline-flex items-center justify-center bg-muted rounded-full w-5 h-5 text-[11px] font-bold text-foreground">{batch.totalCount}</span>
                         </TableCell>
                         <TableCell className="text-[12px] text-muted-foreground">{batch.contactName}</TableCell>
                         <TableCell className="text-[12px] font-mono text-muted-foreground">{batch.poNumber}</TableCell>
@@ -5025,7 +5025,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                             if (days === null) return <span className="text-muted-foreground text-[12px]">—</span>;
                             const agingColor = days > 30 ? 'bg-destructive/10 text-destructive' : days > 14 ? 'bg-orange-100 text-orange-700' : 'bg-emerald-50 text-emerald-700';
                             return (
-                              <span className={cn("inline-flex items-center justify-center rounded-md px-2 py-0.5 text-[11px] font-semibold", agingColor)}>
+                              <span className={cn("inline-flex items-center justify-center rounded-md px-2 py-0 text-[11px] font-semibold", agingColor)}>
                                 {days}d
                               </span>
                             );
