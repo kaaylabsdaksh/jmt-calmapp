@@ -4335,6 +4335,19 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
     });
   });
 
+  // Apply sorting to batches
+  const sortedBatches = [...columnFilteredBatches];
+  if (sortConfig) {
+    sortedBatches.sort((a, b) => {
+      const key = sortConfig.key as keyof WorkOrderBatch;
+      const aVal = a[key];
+      const bVal = b[key];
+      const dir = sortConfig.direction === 'asc' ? 1 : -1;
+      if (typeof aVal === 'number' && typeof bVal === 'number') return (aVal - bVal) * dir;
+      return String(aVal).localeCompare(String(bVal)) * dir;
+    });
+  }
+
   // Apply column filters to items
   const columnFilteredItems = filteredWorkOrderItems.filter(item => {
     return Object.entries(columnFilters).every(([key, value]) => {
