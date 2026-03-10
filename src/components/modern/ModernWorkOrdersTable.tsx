@@ -5150,22 +5150,22 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                         </div>
                       </div>
                       
-                      <div className="px-4 py-2 space-y-2">
-                        <div className="flex items-center justify-between text-[11px]">
-                          <span className="text-muted-foreground">PO Number</span>
-                          <span className="font-medium text-foreground">{batch.poNumber}</span>
+                      <div className="px-3 py-1 space-y-0.5">
+                        <div className="flex items-center justify-between text-[10px]">
+                          <span className="text-muted-foreground">PO</span>
+                          <span className="font-medium text-foreground truncate ml-2">{batch.poNumber}</span>
                         </div>
-                        <div className="flex items-center justify-between text-[11px]">
+                        <div className="flex items-center justify-between text-[10px]">
                           <span className="text-muted-foreground">Status</span>
-                          <span className="font-medium text-foreground">{batch.itemStatus}</span>
+                          <span className="font-medium text-foreground truncate ml-2">{batch.itemStatus}</span>
                         </div>
-                        <div className="flex items-center justify-between text-[11px]">
+                        <div className="flex items-center justify-between text-[10px]">
                           <span className="text-muted-foreground">Items</span>
-                          <span className="font-bold text-foreground bg-muted px-2 py-0.5 rounded-full text-[10px]">{batch.totalCount}</span>
+                          <span className="font-bold text-foreground bg-muted px-1.5 py-0 rounded-full text-[9px]">{batch.totalCount}</span>
                         </div>
                       </div>
                       
-                      <div className="mx-4 border-t border-slate-100"></div>
+                      <div className="mx-3 border-t border-slate-100"></div>
                       
                       <div className="px-4 py-3 grid grid-cols-3 gap-2">
                         <div className="bg-muted/50 rounded-lg px-2 py-1.5 text-center">
