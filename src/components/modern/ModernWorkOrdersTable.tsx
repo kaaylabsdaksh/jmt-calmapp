@@ -2818,7 +2818,8 @@ const mockWorkOrderBatches: WorkOrderBatch[] = [
     lastCommentDate: "08/10/2023",
     lastComment: "Wait Cust Followup Date changed from 8/9/2023 to 8...",
     minNeedByDate: "09/24/2021",
-    minFollowUpDate: "08/11/2023"
+    minFollowUpDate: "08/11/2023",
+    minDeliverByDate: "09/30/2021"
   },
   {
     id: "2",
@@ -2832,7 +2833,8 @@ const mockWorkOrderBatches: WorkOrderBatch[] = [
     lastCommentDate: "08/09/2023",
     lastComment: "PO Change Order 9524 sent to tammypatt@jmtest.com...",
     minNeedByDate: "12/20/2022",
-    minFollowUpDate: "08/11/2023"
+    minFollowUpDate: "08/11/2023",
+    minDeliverByDate: "01/05/2023"
   },
   {
     id: "3",
@@ -2846,7 +2848,8 @@ const mockWorkOrderBatches: WorkOrderBatch[] = [
     lastCommentDate: "08/09/2023",
     lastComment: "PO Change Order 9525 sent to bhavard@colpipe.com...",
     minNeedByDate: "06/23/2023",
-    minFollowUpDate: "08/11/2023"
+    minFollowUpDate: "08/11/2023",
+    minDeliverByDate: "07/01/2023"
   },
   {
     id: "4",
@@ -2860,7 +2863,8 @@ const mockWorkOrderBatches: WorkOrderBatch[] = [
     lastCommentDate: "08/11/2023",
     lastComment: "Wait Cust Followup Date changed from 8/10/2022 to...",
     minNeedByDate: "01/17/2022",
-    minFollowUpDate: "08/14/2023"
+    minFollowUpDate: "08/14/2023",
+    minDeliverByDate: "02/01/2022"
   },
   {
     id: "5",
@@ -2874,7 +2878,8 @@ const mockWorkOrderBatches: WorkOrderBatch[] = [
     lastCommentDate: "08/10/2023",
     lastComment: "WAITING ON CUSTOMER: (Awaiting Quote Approval)",
     minNeedByDate: "03/20/2023",
-    minFollowUpDate: "08/14/2023"
+    minFollowUpDate: "08/14/2023",
+    minDeliverByDate: "04/01/2023"
   },
   {
     id: "6",
@@ -2888,7 +2893,8 @@ const mockWorkOrderBatches: WorkOrderBatch[] = [
     lastCommentDate: "08/31/2023",
     lastComment: "Wait Cust Followup Date changed from 08/11/2023 to...",
     minNeedByDate: "06/28/2023",
-    minFollowUpDate: "09/05/2023"
+    minFollowUpDate: "09/05/2023",
+    minDeliverByDate: "07/15/2023"
   },
   {
     id: "7",
@@ -2902,7 +2908,8 @@ const mockWorkOrderBatches: WorkOrderBatch[] = [
     lastCommentDate: "04/30/2024",
     lastComment: "Work Order marked Ready to Bill.",
     minNeedByDate: "06/26/2022",
-    minFollowUpDate: "09/22/2023"
+    minFollowUpDate: "09/22/2023",
+    minDeliverByDate: "07/10/2022"
   },
   {
     id: "8",
@@ -2916,7 +2923,8 @@ const mockWorkOrderBatches: WorkOrderBatch[] = [
     lastCommentDate: "03/14/2024",
     lastComment: "Work Order marked Ready to Bill",
     minNeedByDate: "06/09/2023",
-    minFollowUpDate: "09/22/2023"
+    minFollowUpDate: "09/22/2023",
+    minDeliverByDate: "06/25/2023"
   },
   {
     id: "9",
@@ -2930,7 +2938,8 @@ const mockWorkOrderBatches: WorkOrderBatch[] = [
     lastCommentDate: "09/26/2023",
     lastComment: "Wait Cust Followup Date changed from 9/28/2023 to...",
     minNeedByDate: "01/30/2023",
-    minFollowUpDate: "10/02/2023"
+    minFollowUpDate: "10/02/2023",
+    minDeliverByDate: "02/15/2023"
   },
   {
     id: "10",
@@ -2944,7 +2953,8 @@ const mockWorkOrderBatches: WorkOrderBatch[] = [
     lastCommentDate: "09/28/2023",
     lastComment: "WAITING ON CUSTOMER: (Awaiting Quote Approval)",
     minNeedByDate: "02/15/2023",
-    minFollowUpDate: "10/02/2023"
+    minFollowUpDate: "10/02/2023",
+    minDeliverByDate: "03/01/2023"
   },
   {
     id: "11",
@@ -2958,7 +2968,8 @@ const mockWorkOrderBatches: WorkOrderBatch[] = [
     lastCommentDate: "09/29/2023",
     lastComment: "WAITING ON CUSTOMER: (OTHERtest) test",
     minNeedByDate: "04/26/2023",
-    minFollowUpDate: "10/02/2023"
+    minFollowUpDate: "10/02/2023",
+    minDeliverByDate: "05/10/2023"
   },
   {
     id: "12",
@@ -2972,7 +2983,8 @@ const mockWorkOrderBatches: WorkOrderBatch[] = [
     lastCommentDate: "09/28/2023",
     lastComment: "Status changed from A/R INVOICING to WAITING ON CU...",
     minNeedByDate: "08/28/2023",
-    minFollowUpDate: "10/02/2023"
+    minFollowUpDate: "10/02/2023",
+    minDeliverByDate: "09/10/2023"
   },
   {
     id: "13",
@@ -2986,7 +2998,8 @@ const mockWorkOrderBatches: WorkOrderBatch[] = [
     lastCommentDate: "11/03/2023",
     lastComment: "External File ConfluenceMigrationPlan.xlsx was DEL...",
     minNeedByDate: "06/28/2023",
-    minFollowUpDate: "10/02/2023"
+    minFollowUpDate: "10/02/2023",
+    minDeliverByDate: "07/15/2023"
   },
   {
     id: "14",
@@ -3000,7 +3013,8 @@ const mockWorkOrderBatches: WorkOrderBatch[] = [
     lastCommentDate: "02/27/2024",
     lastComment: "PO Change Order 9525 was approved by Taylor Swift.",
     minNeedByDate: "06/28/2023",
-    minFollowUpDate: "10/02/2023"
+    minFollowUpDate: "10/02/2023",
+    minDeliverByDate: "07/15/2023"
   },
   {
     id: "15",
@@ -3014,7 +3028,8 @@ const mockWorkOrderBatches: WorkOrderBatch[] = [
     lastCommentDate: "11/19/2024",
     lastComment: "Delivery Ticket #: DT-406502 Delivery Ticket Date...",
     minNeedByDate: "03/12/2023",
-    minFollowUpDate: "10/03/2023"
+    minFollowUpDate: "10/03/2023",
+    minDeliverByDate: "03/28/2023"
   },
   {
     id: "16",
@@ -3028,7 +3043,8 @@ const mockWorkOrderBatches: WorkOrderBatch[] = [
     lastCommentDate: "02/15/2026",
     lastComment: "Calibration scheduled for next week batch processing...",
     minNeedByDate: "03/01/2026",
-    minFollowUpDate: "03/10/2026"
+    minFollowUpDate: "03/10/2026",
+    minDeliverByDate: "03/15/2026"
   }
 ];
 
