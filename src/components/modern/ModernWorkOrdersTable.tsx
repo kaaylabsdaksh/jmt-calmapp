@@ -5130,11 +5130,11 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                       <div className="px-4 pt-4 pb-2">
                         <div className="flex items-start justify-between mb-2">
                           <div className="flex items-center gap-2">
-                            <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                              <span className="text-primary font-bold text-xs">#</span>
+                            <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center">
+                              <span className="text-slate-600 font-bold text-xs">#</span>
                             </div>
                             <div>
-                              <span className="font-bold text-primary text-sm">{batch.woBatch}</span>
+                              <span className="font-bold text-foreground text-sm">{batch.woBatch}</span>
                               <div className="text-[10px] text-muted-foreground">{batch.acctNumber}</div>
                             </div>
                           </div>
@@ -5176,9 +5176,9 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                           <span className="text-[9px] text-muted-foreground uppercase tracking-wider block">Deliver By</span>
                           <div className="font-medium text-[10px] text-foreground mt-0.5">{batch.minDeliverByDate}</div>
                         </div>
-                        <div className="bg-primary/5 rounded-lg px-2 py-1.5 text-center border border-primary/10">
-                          <span className="text-[9px] text-primary uppercase tracking-wider block font-medium">Aging</span>
-                          <div className="font-bold text-sm text-primary mt-0.5">
+                        <div className="bg-slate-100 rounded-lg px-2 py-1.5 text-center border border-slate-200">
+                          <span className="text-[9px] text-slate-600 uppercase tracking-wider block font-medium">Aging</span>
+                          <div className="font-bold text-sm text-foreground mt-0.5">
                             {(() => {
                               const days = getAgingDays(batch);
                               return days !== null ? `${days}d` : '—';
