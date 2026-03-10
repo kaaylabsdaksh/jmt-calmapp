@@ -19,6 +19,8 @@ interface WorkOrderItem {
   labCode: string;
   serialNumber: string;
   poNumber: string;
+  description: string;
+  deliverByDate: string;
   // Additional details for dropdown
   lastComment?: string;
   lastCommentDate?: string;

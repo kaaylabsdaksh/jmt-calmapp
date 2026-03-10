@@ -5462,6 +5462,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
               <WorkOrderBatchDetails 
                 batchId={selectedBatch.id}
                 onBack={() => setSelectedBatch(null)}
+                viewMode={searchViewMode}
               />
             )}
           </div>
