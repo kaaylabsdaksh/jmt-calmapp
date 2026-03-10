@@ -5176,9 +5176,9 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                           <span className="text-[9px] text-muted-foreground uppercase tracking-wider block">Deliver By</span>
                           <div className="font-medium text-[10px] text-foreground mt-0.5">{batch.minDeliverByDate}</div>
                         </div>
-                        <div className="bg-primary/5 rounded-lg px-2 py-1.5 text-center border border-primary/10">
-                          <span className="text-[9px] text-primary uppercase tracking-wider block font-medium">Aging</span>
-                          <div className="font-bold text-sm text-primary mt-0.5">
+                        <div className="bg-slate-100 rounded-lg px-2 py-1.5 text-center border border-slate-200">
+                          <span className="text-[9px] text-slate-600 uppercase tracking-wider block font-medium">Aging</span>
+                          <div className="font-bold text-sm text-foreground mt-0.5">
                             {(() => {
                               const days = getAgingDays(batch);
                               return days !== null ? `${days}d` : '—';
