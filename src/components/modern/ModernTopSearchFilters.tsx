@@ -556,322 +556,154 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
     return value && value !== 'all';
   }) || dateFrom || dateTo || dateType;
 
+  const selectTriggerClass = "bg-white border border-gray-200 rounded-lg h-10 text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all";
+  const selectContentClass = "bg-white border border-gray-200 shadow-xl rounded-lg z-[9999]";
+
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 mb-6">
       {/* Header Row */}
-      <div className="flex items-center justify-between p-4 pb-3 border-b border-gray-100">
+      <div className="flex items-center justify-between px-5 pt-5 pb-4">
         <h2 className="text-lg font-semibold text-gray-900">Work Order Search</h2>
-        
-        <div className="flex items-center gap-3">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setShowAdvanced(!showAdvanced)}
-            className={cn(
-              "rounded-lg transition-all duration-300 transform hover:scale-105",
-              showAdvanced ? "bg-blue-50 text-blue-600 hover:bg-black hover:text-white" : "text-gray-500 hover:bg-black hover:text-white"
-            )}
-          >
-            <Filter className="h-4 w-4 mr-2" />
-            {showAdvanced ? "Hide Filters" : "More Filters"}
-          </Button>
-
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={clearAllFilters}
-            className={cn(
-              "rounded-lg transition-all duration-300 transform hover:scale-105",
-              hasActiveFilters 
-                ? "text-red-600 hover:bg-black hover:text-white" 
-                : "text-gray-400 hover:bg-black hover:text-white"
-            )}
-          >
-            <X className="h-4 w-4 mr-2" />
-            Clear All
-          </Button>
-        </div>
+        <button
+          onClick={clearAllFilters}
+          className="flex items-center gap-1.5 text-sm font-medium text-yellow-600 hover:text-yellow-700 transition-colors"
+        >
+          <X className="h-4 w-4" />
+          Clear All
+        </button>
       </div>
 
-      {/* Global Search */}
-      <div className="p-2 sm:p-4 pb-2 sm:pb-3">
-        {/* Active Search Chips */}
-        {searchChips.length > 0 && (
-          <div className="mb-3 flex flex-wrap gap-2">
-            {searchChips.map((chip) => (
-              <Badge
-                key={chip.id}
-                variant="default"
-                className="px-3 py-1.5 text-sm flex items-center gap-2"
-              >
-                <span className="font-medium">{chip.label}:</span>
-                <span>{chip.value}</span>
-                <button
-                  onClick={() => removeSearchChip(chip.id)}
-                  className="ml-1 hover:bg-primary-foreground/20 rounded-full p-0.5 transition-colors"
-                  aria-label="Remove filter"
-                >
-                  <X className="h-3.5 w-3.5" />
-                </button>
-              </Badge>
-            ))}
+      <div className="px-5 pb-5 space-y-4">
+        {/* Search Criteria Section */}
+        <div>
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm font-medium text-gray-700">Search Criteria</span>
+            <span className="text-xs text-gray-400">Add search criteria by selecting a field and value</span>
           </div>
-        )}
-        
-        {/* Unified Search Bar with Integrated Dropdown */}
-        <div className="flex gap-2 mb-3">
-          <div className="relative flex-1 flex items-center bg-white border border-gray-300 rounded-lg h-10 sm:h-11 shadow-sm focus-within:ring-2 focus-within:ring-blue-500/20 focus-within:border-blue-500 transition-all">
-            <Select value={selectedSearchType} onValueChange={setSelectedSearchType}>
-              <SelectTrigger className="w-[180px] sm:w-[220px] border-0 border-r border-gray-300 rounded-l-lg rounded-r-none h-full text-xs sm:text-sm bg-transparent hover:bg-gray-50 focus:ring-0 focus:ring-offset-0">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-[9999]">
-                {searchTypeOptions.map((option) => (
-                  <SelectItem key={option.value} value={option.value}>
-                    {option.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            
-            <div className="relative flex-1 flex items-center">
-              <Search className="absolute left-3 sm:left-4 h-4 sm:h-5 w-4 sm:w-5 text-gray-400" />
-              <Input
-                placeholder={`Enter ${searchTypeOptions.find(opt => opt.value === selectedSearchType)?.label}...`}
-                value={searchInput}
-                onChange={(e) => setSearchInput(e.target.value)}
-                onKeyDown={handleKeyDown}
-                className="pl-10 sm:pl-12 pr-3 border-0 h-full text-sm placeholder:text-gray-500 focus-visible:ring-0 focus-visible:ring-offset-0 bg-transparent"
-              />
+
+          {/* Active Search Chips */}
+          {searchChips.length > 0 && (
+            <div className="mb-3 flex flex-wrap gap-2">
+              {searchChips.map((chip) => (
+                <Badge
+                  key={chip.id}
+                  variant="default"
+                  className="px-3 py-1 text-xs flex items-center gap-1.5"
+                >
+                  <span className="font-medium">{chip.label}:</span>
+                  <span>{chip.value}</span>
+                  <button
+                    onClick={() => removeSearchChip(chip.id)}
+                    className="ml-1 hover:bg-primary-foreground/20 rounded-full p-0.5 transition-colors"
+                    aria-label="Remove filter"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                </Badge>
+              ))}
             </div>
-          </div>
-          
-          <Button 
-            onClick={addSearchChip}
-            variant="default"
-            size="sm"
-            className="h-10 sm:h-11 px-4 sm:px-6"
-          >
-            <Plus className="h-4 w-4 mr-2" />
-            <span className="hidden sm:inline">Add</span>
-          </Button>
-        </div>
-        
-      </div>
+          )}
 
-      {/* All Filters in One Row */}
-      <div className="px-2 sm:px-4 pb-3">
-        {/* Mobile Layout - Stacked */}
-        <div className="lg:hidden space-y-3">
-          {/* Status and Assignee */}
-          <div className="grid grid-cols-2 gap-3">
-            <Select value={searchValues.status || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, status: value === 'all' ? '' : value }))}>
-              <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
-                <SelectValue placeholder="All Status" />
-              </SelectTrigger>
-              <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
-                <SelectItem value="all">All Status</SelectItem>
-                <SelectItem value="open-items">[Open Items]</SelectItem>
-                <SelectItem value="awaiting-cdr">[Awaiting CDR]</SelectItem>
-                <SelectItem value="assign-tech-repair-inlab">[Assign/Tech - Repair - InLab]</SelectItem>
-                <SelectItem value="assigned-tech-repair-dept">[Assigned To Tech - Repair Dept]</SelectItem>
-                <SelectItem value="qa-hold-disapproved">[Q/A Hold - Q/A Disapproved]</SelectItem>
-                <SelectItem value="qa-insp-hold-fail">[Q/A Insp - Q/A Hold - Q/A Fail]</SelectItem>
-                <SelectItem value="in-lab-assigned-tech">[In Lab - Assigned to Tech]</SelectItem>
-                <SelectItem value="in-lab-qa-disapprove">[In Lab - Q/A Disapprove]</SelectItem>
-                <SelectItem value="estimate-ar-invoicing">[Estimate - A/R Invoicing]</SelectItem>
-                <SelectItem value="to-factory-awaiting-parts">[To Factory - Awaiting Parts]</SelectItem>
-                <SelectItem value="ar-need-by-status">[AR Need By Status]</SelectItem>
-                <SelectItem value="in-lab">In Lab</SelectItem>
-                <SelectItem value="assigned-to-tech">Assigned to Tech</SelectItem>
-                <SelectItem value="in-transit">In Transit</SelectItem>
-                <SelectItem value="lab-management">Lab Management</SelectItem>
-                <SelectItem value="repair-department">Repair Department</SelectItem>
-                <SelectItem value="rotation">Rotation</SelectItem>
-                <SelectItem value="estimate">Estimate</SelectItem>
-                <SelectItem value="awaiting-parts">Awaiting Parts</SelectItem>
-                <SelectItem value="awaiting-pr-approval">Awaiting PR Approval</SelectItem>
-                <SelectItem value="in-metrology">In Metrology</SelectItem>
-                <SelectItem value="to-factory">To Factory</SelectItem>
-                <SelectItem value="to-factory-repair-replacement">To Factory - Repair by Replacement</SelectItem>
-                <SelectItem value="to-factory-warranty">To Factory - Warranty</SelectItem>
-                <SelectItem value="lab-hold">Lab Hold</SelectItem>
-                <SelectItem value="qa-inspection">Q/A Inspection</SelectItem>
-                <SelectItem value="qa-inspection-fail-correction">Q/A Inspection - Fail Correction</SelectItem>
-                <SelectItem value="qa-hold">Q/A Hold</SelectItem>
-                <SelectItem value="qa-disapproved">Q/A Disapproved</SelectItem>
-                <SelectItem value="qa-fail-log">Q/A Fail Log</SelectItem>
-                <SelectItem value="ar-invoicing">A/R Invoicing</SelectItem>
-                <SelectItem value="ar-invoicing-hold">A/R Invoicing/Hold</SelectItem>
-                <SelectItem value="admin-processing">Admin Processing</SelectItem>
-                <SelectItem value="back-to-customer">Back to Customer</SelectItem>
-                <SelectItem value="calibrated-on-shelf">Calibrated on Shelf</SelectItem>
-                <SelectItem value="cancelled">Cancelled</SelectItem>
-                <SelectItem value="item-not-found-on-site">Item Not Found on Site</SelectItem>
-                <SelectItem value="me-review">ME Review</SelectItem>
-                <SelectItem value="not-used">Not Used</SelectItem>
-                <SelectItem value="onsite">Onsite</SelectItem>
-                <SelectItem value="ready-for-departure">Ready for Departure</SelectItem>
-                <SelectItem value="return-to-lab-processing">Return to Lab for Processing</SelectItem>
-                <SelectItem value="scheduled">Scheduled</SelectItem>
-                <SelectItem value="surplus-stock">Surplus Stock</SelectItem>
-                <SelectItem value="waiting-on-customer">Waiting on Customer</SelectItem>
-              </SelectContent>
-            </Select>
-            <Select value={searchValues.assignee || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, assignee: value === 'all' ? '' : value }))}>
-              <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
-                <SelectValue placeholder="All Assignees" />
-              </SelectTrigger>
-              <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
-                <SelectItem value="all">All Assignees</SelectItem>
-                <SelectItem value="john-doe">John Doe</SelectItem>
-                <SelectItem value="jane-smith">Jane Smith</SelectItem>
-                <SelectItem value="mike-johnson">Mike Johnson</SelectItem>
-                <SelectItem value="sarah-wilson">Sarah Wilson</SelectItem>
-                <SelectItem value="unassigned">Unassigned</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          
-          {/* Date Type */}
-          <div>
-            <Select value={dateType} onValueChange={setDateType}>
-              <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
-                <SelectValue placeholder="Select Date Type" />
-              </SelectTrigger>
-              <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-[60]">
-                <SelectItem value="created">Created</SelectItem>
-                <SelectItem value="arrival">Arrival</SelectItem>
-                <SelectItem value="need-by">Need By</SelectItem>
-                <SelectItem value="status-date">Status Date</SelectItem>
-                <SelectItem value="last-comment">Last Comment</SelectItem>
-                <SelectItem value="departure-date">Departure Date</SelectItem>
-                <SelectItem value="samsara-doc-submit">Samsara Doc Submit Date</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* From and To Date */}
-          <div className="grid grid-cols-2 gap-3">
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  disabled={!dateType}
-                  className={cn(
-                    "w-full justify-start text-left font-normal bg-white border border-gray-300 rounded-lg h-11 text-sm hover:bg-gray-50 transition-all shadow-sm",
-                    !dateFrom && "text-gray-500",
-                    !dateType && "opacity-50 cursor-not-allowed bg-gray-50"
-                  )}
-                >
-                  <CalendarIcon className="mr-2 h-4 w-4 text-gray-500 flex-shrink-0" />
-                  <span className="truncate">
-                    {dateFrom ? format(dateFrom, "MMM dd") : "From"}
-                  </span>
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0 border border-gray-200 shadow-xl rounded-lg z-[70]" align="start">
-                <Calendar
-                  mode="single"
-                  selected={dateFrom}
-                  onSelect={setDateFrom}
-                  initialFocus
-                  className="pointer-events-auto rounded-lg p-3"
-                />
-              </PopoverContent>
-            </Popover>
-
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  disabled={!dateType}
-                  className={cn(
-                    "w-full justify-start text-left font-normal bg-white border border-gray-300 rounded-lg h-11 text-sm hover:bg-gray-50 transition-all shadow-sm",
-                    !dateTo && "text-gray-500",
-                    !dateType && "opacity-50 cursor-not-allowed bg-gray-50"
-                  )}
-                >
-                  <CalendarIcon className="mr-2 h-4 w-4 text-gray-500 flex-shrink-0" />
-                  <span className="truncate">
-                    {dateTo ? format(dateTo, "MMM dd") : "To"}
-                  </span>
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0 border border-gray-200 shadow-xl rounded-lg z-[70]" align="start">
-                <Calendar
-                  mode="single"
-                  selected={dateTo}
-                  onSelect={setDateTo}
-                  initialFocus
-                  className="pointer-events-auto rounded-lg p-3"
-                />
-              </PopoverContent>
-            </Popover>
-          </div>
-
-          {/* Work Order Type and Priority */}
-          <div className="grid grid-cols-2 gap-3">
-            <Select value={searchValues.woType || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, woType: value === 'all' ? '' : value }))}>
-              <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
-                <SelectValue placeholder="All WO Types" />
-              </SelectTrigger>
-              <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-[60]">
-                <SelectItem value="all">All Workorder Types</SelectItem>
-                <SelectItem value="regular">Regular Work Order</SelectItem>
-                <SelectItem value="onsite">Onsite Work Order</SelectItem>
-              </SelectContent>
-            </Select>
-
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all shadow-sm justify-start text-left font-normal"
-                >
-                  {searchValues.priority.length > 0 
-                    ? `Priority (${searchValues.priority.length})`
-                    : "All Priority"}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-56 p-2 bg-white border border-gray-200 shadow-xl rounded-lg z-[60]" align="start">
-                <div className="space-y-1">
-                  {['critical', 'high', 'medium', 'low'].map((priority) => (
-                    <button
-                      key={priority}
-                      onClick={() => {
-                        setSearchValues(prev => ({
-                          ...prev,
-                          priority: prev.priority.includes(priority)
-                            ? prev.priority.filter(p => p !== priority)
-                            : [...prev.priority, priority]
-                        }));
-                      }}
-                      className="w-full flex items-center gap-2 text-left px-3 py-2 rounded-md text-sm capitalize transition-colors hover:bg-muted text-foreground"
-                    >
-                      <span className="flex h-4 w-4 items-center justify-center">
-                        {searchValues.priority.includes(priority) && (
-                          <Check className="h-4 w-4 stroke-[3]" />
-                        )}
-                      </span>
-                      {priority}
-                    </button>
+          {/* Search Bar */}
+          <div className="flex gap-2">
+            <div className="relative flex-1 flex items-center bg-white border border-gray-200 rounded-lg h-10 focus-within:ring-2 focus-within:ring-blue-500/20 focus-within:border-blue-500 transition-all">
+              <Select value={selectedSearchType} onValueChange={setSelectedSearchType}>
+                <SelectTrigger className="w-[140px] sm:w-[180px] border-0 border-r border-gray-200 rounded-l-lg rounded-r-none h-full text-xs sm:text-sm bg-transparent hover:bg-gray-50 focus:ring-0 focus:ring-offset-0">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className={selectContentClass}>
+                  {searchTypeOptions.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
                   ))}
-                </div>
-              </PopoverContent>
-            </Popover>
+                </SelectContent>
+              </Select>
+              <div className="relative flex-1 flex items-center">
+                <Search className="absolute left-3 h-4 w-4 text-gray-400" />
+                <Input
+                  placeholder="Enter value and press Enter or click Add..."
+                  value={searchInput}
+                  onChange={(e) => setSearchInput(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  className="pl-9 pr-3 border-0 h-full text-sm placeholder:text-gray-400 focus-visible:ring-0 focus-visible:ring-offset-0 bg-transparent"
+                />
+              </div>
+            </div>
+            <Button 
+              onClick={addSearchChip}
+              variant="outline"
+              size="sm"
+              className="h-10 px-4 border-gray-200"
+            >
+              <Plus className="h-4 w-4 mr-1.5" />
+              Add
+            </Button>
           </div>
         </div>
 
-        {/* Desktop Layout - All in One Row */}
-        <div className="hidden lg:flex gap-2 items-center overflow-x-auto">
-          {/* Status */}
-          <Select value={searchValues.status || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, status: value === 'all' ? '' : value }))}>
-            <SelectTrigger className="w-[160px] bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
-              <SelectValue placeholder="All Status" />
+        {/* Date Row: Date Type + From + To */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <Select value={dateType} onValueChange={setDateType}>
+            <SelectTrigger className={selectTriggerClass}>
+              <SelectValue placeholder="Created" />
             </SelectTrigger>
-            <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
-              <SelectItem value="all">All Status</SelectItem>
+            <SelectContent className={selectContentClass}>
+              <SelectItem value="created">Created</SelectItem>
+              <SelectItem value="arrival">Arrival</SelectItem>
+              <SelectItem value="need-by">Need By</SelectItem>
+              <SelectItem value="status-date">Status Date</SelectItem>
+              <SelectItem value="last-comment">Last Comment</SelectItem>
+              <SelectItem value="departure-date">Departure Date</SelectItem>
+              <SelectItem value="samsara-doc-submit">Samsara Doc Submit Date</SelectItem>
+            </SelectContent>
+          </Select>
+
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                className={cn(
+                  "w-full justify-start text-left font-normal h-10 text-sm border-gray-200 rounded-lg",
+                  !dateFrom && "text-gray-500"
+                )}
+              >
+                <CalendarIcon className="mr-2 h-4 w-4 text-gray-400 flex-shrink-0" />
+                {dateFrom ? format(dateFrom, "MMM dd, yyyy") : "From date"}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0 border border-gray-200 shadow-xl rounded-lg z-[70]" align="start">
+              <Calendar mode="single" selected={dateFrom} onSelect={setDateFrom} initialFocus className="pointer-events-auto rounded-lg p-3" />
+            </PopoverContent>
+          </Popover>
+
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                className={cn(
+                  "w-full justify-start text-left font-normal h-10 text-sm border-gray-200 rounded-lg",
+                  !dateTo && "text-gray-500"
+                )}
+              >
+                <CalendarIcon className="mr-2 h-4 w-4 text-gray-400 flex-shrink-0" />
+                {dateTo ? format(dateTo, "MMM dd, yyyy") : "To date"}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0 border border-gray-200 shadow-xl rounded-lg z-[70]" align="start">
+              <Calendar mode="single" selected={dateTo} onSelect={setDateTo} initialFocus className="pointer-events-auto rounded-lg p-3" />
+            </PopoverContent>
+          </Popover>
+        </div>
+
+        {/* Row: WO Status, WO Type, Assignee */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <Select value={searchValues.status || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, status: value === 'all' ? '' : value }))}>
+            <SelectTrigger className={selectTriggerClass}>
+              <SelectValue placeholder="All WO Status" />
+            </SelectTrigger>
+            <SelectContent className={selectContentClass}>
+              <SelectItem value="all">All WO Status</SelectItem>
               <SelectItem value="open-items">[Open Items]</SelectItem>
               <SelectItem value="awaiting-cdr">[Awaiting CDR]</SelectItem>
               <SelectItem value="assign-tech-repair-inlab">[Assign/Tech - Repair - InLab]</SelectItem>
@@ -919,14 +751,24 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
               <SelectItem value="waiting-on-customer">Waiting on Customer</SelectItem>
             </SelectContent>
           </Select>
-          
-          {/* Assignee */}
-          <Select value={searchValues.assignee || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, assignee: value === 'all' ? '' : value }))}>
-            <SelectTrigger className="w-[160px] bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
-              <SelectValue placeholder="All Assignees" />
+
+          <Select value={searchValues.woType || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, woType: value === 'all' ? '' : value }))}>
+            <SelectTrigger className={selectTriggerClass}>
+              <SelectValue placeholder="All WO Type" />
             </SelectTrigger>
-            <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
-              <SelectItem value="all">All Assignees</SelectItem>
+            <SelectContent className={selectContentClass}>
+              <SelectItem value="all">All WO Type</SelectItem>
+              <SelectItem value="regular">Regular Work Order</SelectItem>
+              <SelectItem value="onsite">Onsite Work Order</SelectItem>
+            </SelectContent>
+          </Select>
+
+          <Select value={searchValues.assignee || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, assignee: value === 'all' ? '' : value }))}>
+            <SelectTrigger className={selectTriggerClass}>
+              <SelectValue placeholder="All Assignee" />
+            </SelectTrigger>
+            <SelectContent className={selectContentClass}>
+              <SelectItem value="all">All Assignee</SelectItem>
               <SelectItem value="john-doe">John Doe</SelectItem>
               <SelectItem value="jane-smith">Jane Smith</SelectItem>
               <SelectItem value="mike-johnson">Mike Johnson</SelectItem>
@@ -934,99 +776,93 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
               <SelectItem value="unassigned">Unassigned</SelectItem>
             </SelectContent>
           </Select>
+        </div>
 
-          {/* Date Type */}
-          <Select value={dateType} onValueChange={setDateType}>
-            <SelectTrigger className="w-[180px] bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
-              <SelectValue placeholder="Select Date Type" />
+        {/* Row: Action Code, Lab Code, Rotation Management, Invoice Status */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <Select value={searchValues.actionCode || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, actionCode: value === 'all' ? '' : value }))}>
+            <SelectTrigger className={selectTriggerClass}>
+              <SelectValue placeholder="All Action Code" />
             </SelectTrigger>
-            <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-[60]">
-              <SelectItem value="created">Created</SelectItem>
-              <SelectItem value="arrival">Arrival</SelectItem>
-              <SelectItem value="need-by">Need By</SelectItem>
-              <SelectItem value="status-date">Status Date</SelectItem>
-              <SelectItem value="last-comment">Last Comment</SelectItem>
-              <SelectItem value="departure-date">Departure Date</SelectItem>
-              <SelectItem value="samsara-doc-submit">Samsara Doc Submit Date</SelectItem>
+            <SelectContent className={selectContentClass}>
+              <SelectItem value="all">All Action Code</SelectItem>
+              <SelectItem value="c/c">C/C</SelectItem>
+              <SelectItem value="r/c/c">R/C/C</SelectItem>
+              <SelectItem value="repair">REPAIR</SelectItem>
+              <SelectItem value="test">TEST</SelectItem>
             </SelectContent>
           </Select>
 
-          {/* From Date */}
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                disabled={!dateType}
-                className={cn(
-                  "w-[140px] justify-start text-left font-normal bg-white border border-gray-300 rounded-lg h-11 text-sm hover:bg-gray-50 transition-all shadow-sm",
-                  !dateFrom && "text-gray-500",
-                  !dateType && "opacity-50 cursor-not-allowed bg-gray-50"
-                )}
-              >
-                <CalendarIcon className="mr-2 h-4 w-4 text-gray-500 flex-shrink-0" />
-                <span className="truncate">
-                  {dateFrom ? format(dateFrom, "MMM dd, yyyy") : "From"}
-                </span>
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0 border border-gray-200 shadow-xl rounded-lg z-[70]" align="start">
-              <Calendar
-                mode="single"
-                selected={dateFrom}
-                onSelect={setDateFrom}
-                initialFocus
-                className="pointer-events-auto rounded-lg p-3"
-              />
-            </PopoverContent>
-          </Popover>
-
-          {/* To Date */}
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                disabled={!dateType}
-                className={cn(
-                  "w-[140px] justify-start text-left font-normal bg-white border border-gray-300 rounded-lg h-11 text-sm hover:bg-gray-50 transition-all shadow-sm",
-                  !dateTo && "text-gray-500",
-                  !dateType && "opacity-50 cursor-not-allowed bg-gray-50"
-                )}
-              >
-                <CalendarIcon className="mr-2 h-4 w-4 text-gray-500 flex-shrink-0" />
-                <span className="truncate">
-                  {dateTo ? format(dateTo, "MMM dd, yyyy") : "To"}
-                </span>
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0 border border-gray-200 shadow-xl rounded-lg z-[70]" align="start">
-              <Calendar
-                mode="single"
-                selected={dateTo}
-                onSelect={setDateTo}
-                initialFocus
-                className="pointer-events-auto rounded-lg p-3"
-              />
-            </PopoverContent>
-          </Popover>
-
-          {/* WO Type */}
-          <Select value={searchValues.woType || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, woType: value === 'all' ? '' : value }))}>
-            <SelectTrigger className="w-[180px] bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
-              <SelectValue placeholder="All WO Types" />
+          <Select value={searchValues.labCode || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, labCode: value === 'all' ? '' : value }))}>
+            <SelectTrigger className={selectTriggerClass}>
+              <SelectValue placeholder="All Lab Code" />
             </SelectTrigger>
-            <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-[60]">
-              <SelectItem value="all">All Workorder Types</SelectItem>
-              <SelectItem value="regular">Regular Work Order</SelectItem>
-              <SelectItem value="onsite">Onsite Work Order</SelectItem>
+            <SelectContent className={selectContentClass}>
+              <SelectItem value="all">All Lab Code</SelectItem>
+              <SelectItem value="lab-001">LAB-001</SelectItem>
+              <SelectItem value="lab-002">LAB-002</SelectItem>
+              <SelectItem value="lab-003">LAB-003</SelectItem>
+              <SelectItem value="lab-004">LAB-004</SelectItem>
+              <SelectItem value="lab-005">LAB-005</SelectItem>
             </SelectContent>
           </Select>
 
-          {/* Priority */}
+          <Select value={searchValues.rotationManagement || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, rotationManagement: value === 'all' ? '' : value }))}>
+            <SelectTrigger className={selectTriggerClass}>
+              <SelectValue placeholder="All Rotation Management" />
+            </SelectTrigger>
+            <SelectContent className={selectContentClass}>
+              <SelectItem value="all">All Rotation Management</SelectItem>
+              <SelectItem value="rotation">Rotation</SelectItem>
+              <SelectItem value="non-rotation">Non-Rotation</SelectItem>
+            </SelectContent>
+          </Select>
+
+          <Select value={searchValues.invoiceStatus || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, invoiceStatus: value === 'all' ? '' : value }))}>
+            <SelectTrigger className={selectTriggerClass}>
+              <SelectValue placeholder="All Invoice Status" />
+            </SelectTrigger>
+            <SelectContent className={selectContentClass}>
+              <SelectItem value="all">All Invoice Status</SelectItem>
+              <SelectItem value="paid">Paid</SelectItem>
+              <SelectItem value="pending">Pending</SelectItem>
+              <SelectItem value="on-hold">On Hold</SelectItem>
+              <SelectItem value="quote-approved">Quote Approved</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Row: Departure Type, Salesperson, Priority, Work Order Item Status */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <Select value={searchValues.departureType || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, departureType: value === 'all' ? '' : value }))}>
+            <SelectTrigger className={selectTriggerClass}>
+              <SelectValue placeholder="All Departure Type" />
+            </SelectTrigger>
+            <SelectContent className={selectContentClass}>
+              <SelectItem value="all">All Departure Type</SelectItem>
+              <SelectItem value="ship">Ship</SelectItem>
+              <SelectItem value="pickup">Pickup</SelectItem>
+              <SelectItem value="courier">Courier</SelectItem>
+            </SelectContent>
+          </Select>
+
+          <Select value={searchValues.salesperson || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, salesperson: value === 'all' ? '' : value }))}>
+            <SelectTrigger className={selectTriggerClass}>
+              <SelectValue placeholder="All Salesperson" />
+            </SelectTrigger>
+            <SelectContent className={selectContentClass}>
+              <SelectItem value="all">All Salesperson</SelectItem>
+              <SelectItem value="john-doe">John Doe</SelectItem>
+              <SelectItem value="jane-smith">Jane Smith</SelectItem>
+              <SelectItem value="mike-johnson">Mike Johnson</SelectItem>
+            </SelectContent>
+          </Select>
+
           <Popover>
             <PopoverTrigger asChild>
               <Button
                 variant="outline"
-                className="w-[140px] bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all shadow-sm justify-start text-left font-normal"
+                className={cn(selectTriggerClass, "w-full justify-start text-left font-normal")}
               >
                 {searchValues.priority.length > 0 
                   ? `Priority (${searchValues.priority.length})`
@@ -1059,334 +895,107 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
               </div>
             </PopoverContent>
           </Popover>
+
+          <Select value={searchValues.workOrderItemStatus || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, workOrderItemStatus: value === 'all' ? '' : value }))}>
+            <SelectTrigger className={selectTriggerClass}>
+              <SelectValue placeholder="All Work Order Item Status" />
+            </SelectTrigger>
+            <SelectContent className={selectContentClass}>
+              <SelectItem value="all">All Work Order Item Status</SelectItem>
+              <SelectItem value="in-lab">In Lab</SelectItem>
+              <SelectItem value="assigned">Assigned</SelectItem>
+              <SelectItem value="completed">Completed</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
-      </div>
 
-      {/* Advanced Filters Row */}
-      {showAdvanced && (
-        <div className="px-4 mt-4 pt-4 border-t border-gray-100">
-            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
-              {/* Division */}
-              <Select value={searchValues.division || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, division: value === 'all' ? '' : value }))}>
-                <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
-                  <SelectValue placeholder="Division" />
-                </SelectTrigger>
-                <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
-                  <SelectItem value="all">All Divisions</SelectItem>
-                  <SelectItem value="lab">Lab</SelectItem>
-                  <SelectItem value="rental">Rental</SelectItem>
-                  <SelectItem value="esl">ESL</SelectItem>
-                  <SelectItem value="esl-onsite">ESL Onsite</SelectItem>
-                </SelectContent>
-              </Select>
+        {/* Row: Work Order Item Type, Division, Location */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <Select value={searchValues.workOrderItemType || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, workOrderItemType: value === 'all' ? '' : value }))}>
+            <SelectTrigger className={selectTriggerClass}>
+              <SelectValue placeholder="All Work Order Item Type" />
+            </SelectTrigger>
+            <SelectContent className={selectContentClass}>
+              <SelectItem value="all">All Work Order Item Type</SelectItem>
+              <SelectItem value="esl-gloves">ESL - Gloves</SelectItem>
+              <SelectItem value="esl-blankets">ESL - Blankets</SelectItem>
+              <SelectItem value="calibration">Calibration</SelectItem>
+              <SelectItem value="repair">Repair</SelectItem>
+            </SelectContent>
+          </Select>
 
-              {/* Action Code */}
-              <Select value={searchValues.actionCode || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, actionCode: value === 'all' ? '' : value }))}>
-                <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
-                  <SelectValue placeholder="Action Code" />
-                </SelectTrigger>
-                <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
-                  <SelectItem value="all">All Action Codes</SelectItem>
-                  <SelectItem value="c/c">C/C</SelectItem>
-                  <SelectItem value="r/c/c">R/C/C</SelectItem>
-                  <SelectItem value="repair">REPAIR</SelectItem>
-                  <SelectItem value="test">TEST</SelectItem>
-                </SelectContent>
-              </Select>
+          <Select value={searchValues.division || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, division: value === 'all' ? '' : value }))}>
+            <SelectTrigger className={selectTriggerClass}>
+              <SelectValue placeholder="All Division" />
+            </SelectTrigger>
+            <SelectContent className={selectContentClass}>
+              <SelectItem value="all">All Division</SelectItem>
+              <SelectItem value="lab">Lab</SelectItem>
+              <SelectItem value="rental">Rental</SelectItem>
+              <SelectItem value="esl">ESL</SelectItem>
+              <SelectItem value="esl-onsite">ESL Onsite</SelectItem>
+            </SelectContent>
+          </Select>
 
-              {/* Lab Code */}
-              <Select value={searchValues.labCode || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, labCode: value === 'all' ? '' : value }))}>
-                <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
-                  <SelectValue placeholder="Lab Code" />
-                </SelectTrigger>
-                <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
-                  <SelectItem value="all">All Lab Codes</SelectItem>
-                  <SelectItem value="lab-001">LAB-001</SelectItem>
-                  <SelectItem value="lab-002">LAB-002</SelectItem>
-                  <SelectItem value="lab-003">LAB-003</SelectItem>
-                  <SelectItem value="lab-004">LAB-004</SelectItem>
-                  <SelectItem value="lab-005">LAB-005</SelectItem>
-                  <SelectItem value="lab-006">LAB-006</SelectItem>
-                  <SelectItem value="lab-007">LAB-007</SelectItem>
-                  <SelectItem value="lab-008">LAB-008</SelectItem>
-                  <SelectItem value="lab-009">LAB-009</SelectItem>
-                  <SelectItem value="lab-010">LAB-010</SelectItem>
-                </SelectContent>
-              </Select>
+          <Select value={searchValues.location || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, location: value === 'all' ? '' : value }))}>
+            <SelectTrigger className={selectTriggerClass}>
+              <SelectValue placeholder="All Location" />
+            </SelectTrigger>
+            <SelectContent className={selectContentClass}>
+              <SelectItem value="all">All Location</SelectItem>
+              <SelectItem value="al">AL - Alabama</SelectItem>
+              <SelectItem value="br">BR - Brazil</SelectItem>
+              <SelectItem value="bi">BI - Biloxi</SelectItem>
+              <SelectItem value="od">OD - Odessa</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
 
-              {/* Rotation Management */}
-              <Select value={searchValues.rotationManagement || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, rotationManagement: value === 'all' ? '' : value }))}>
-                <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
-                  <SelectValue placeholder="Rotation Management" />
-                </SelectTrigger>
-                <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
-                  <SelectItem value="all">All</SelectItem>
-                  <SelectItem value="rotation">Rotation</SelectItem>
-                  <SelectItem value="non-rotation">Non-Rotation</SelectItem>
-                </SelectContent>
-              </Select>
-
-              {/* Invoice Status */}
-              <Select value={searchValues.invoiceStatus || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, invoiceStatus: value === 'all' ? '' : value }))}>
-                <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
-                  <SelectValue placeholder="Invoice Status" />
-                </SelectTrigger>
-                <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
-                  <SelectItem value="all">All Invoice Status</SelectItem>
-                  <SelectItem value="paid">Paid</SelectItem>
-                  <SelectItem value="pending">Pending</SelectItem>
-                  <SelectItem value="on-hold">On Hold</SelectItem>
-                  <SelectItem value="quote-approved">Quote Approved</SelectItem>
-                </SelectContent>
-              </Select>
-
-              {/* Departure Type */}
-              <Select value={searchValues.departureType || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, departureType: value === 'all' ? '' : value }))}>
-                <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
-                  <SelectValue placeholder="Departure Type" />
-                </SelectTrigger>
-                <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
-                  <SelectItem value="all">All Departure Types</SelectItem>
-                  <SelectItem value="ship">Ship</SelectItem>
-                  <SelectItem value="pickup">Pickup</SelectItem>
-                  <SelectItem value="courier">Courier</SelectItem>
-                </SelectContent>
-              </Select>
-
-              {/* Salesperson */}
-              <Select value={searchValues.salesperson || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, salesperson: value === 'all' ? '' : value }))}>
-                <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
-                  <SelectValue placeholder="Salesperson" />
-                </SelectTrigger>
-                <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
-                  <SelectItem value="all">All Salespeople</SelectItem>
-                  <SelectItem value="john-doe">John Doe</SelectItem>
-                  <SelectItem value="jane-smith">Jane Smith</SelectItem>
-                  <SelectItem value="mike-johnson">Mike Johnson</SelectItem>
-                </SelectContent>
-              </Select>
-
-              {/* Work Order Item Type */}
-              <Select value={searchValues.workOrderItemType || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, workOrderItemType: value === 'all' ? '' : value }))}>
-                <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
-                  <SelectValue placeholder="WO Item Type" />
-                </SelectTrigger>
-                <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
-                  <SelectItem value="all">All Item Types</SelectItem>
-                  <SelectItem value="esl-gloves">ESL - Gloves</SelectItem>
-                  <SelectItem value="esl-blankets">ESL - Blankets</SelectItem>
-                  <SelectItem value="calibration">Calibration</SelectItem>
-                  <SelectItem value="repair">Repair</SelectItem>
-                </SelectContent>
-              </Select>
-
-              {/* Location */}
-              <Select value={searchValues.location || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, location: value === 'all' ? '' : value }))}>
-                <SelectTrigger className="bg-white border border-gray-300 rounded-lg h-11 text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
-                  <SelectValue placeholder="Location" />
-                </SelectTrigger>
-                <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-50">
-                  <SelectItem value="all">All Locations</SelectItem>
-                  <SelectItem value="al">AL - Alabama</SelectItem>
-                  <SelectItem value="br">BR - Brazil</SelectItem>
-                  <SelectItem value="bi">BI - Biloxi</SelectItem>
-                  <SelectItem value="od">OD - Odessa</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            {/* Checkbox Filters Section */}
-            <div className="mt-6 pt-6 border-t border-gray-100">
-              <h3 className="text-sm font-semibold text-gray-700 mb-4">Additional Filters</h3>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                {/* New Equip */}
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="newEquip"
-                    checked={searchValues.newEquip}
-                    onCheckedChange={(checked) => 
-                      setSearchValues(prev => ({ ...prev, newEquip: checked as boolean }))
-                    }
-                  />
-                  <Label
-                    htmlFor="newEquip"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
-                  >
-                    New Equip
-                  </Label>
-                </div>
-
-                {/* Used/Surplus */}
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="usedSurplus"
-                    checked={searchValues.usedSurplus}
-                    onCheckedChange={(checked) => 
-                      setSearchValues(prev => ({ ...prev, usedSurplus: checked as boolean }))
-                    }
-                  />
-                  <Label
-                    htmlFor="usedSurplus"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
-                  >
-                    Used/Surplus
-                  </Label>
-                </div>
-
-                {/* Warranty */}
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="warranty"
-                    checked={searchValues.warranty}
-                    onCheckedChange={(checked) => 
-                      setSearchValues(prev => ({ ...prev, warranty: checked as boolean }))
-                    }
-                  />
-                  <Label
-                    htmlFor="warranty"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
-                  >
-                    Warranty
-                  </Label>
-                </div>
-
-                {/* To Factory */}
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="toFactory"
-                    checked={searchValues.toFactory}
-                    onCheckedChange={(checked) => 
-                      setSearchValues(prev => ({ ...prev, toFactory: checked as boolean }))
-                    }
-                  />
-                  <Label
-                    htmlFor="toFactory"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
-                  >
-                    To Factory
-                  </Label>
-                </div>
-
-                {/* Proof of Delivery */}
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="proofOfDelivery"
-                    checked={searchValues.proofOfDelivery}
-                    onCheckedChange={(checked) => 
-                      setSearchValues(prev => ({ ...prev, proofOfDelivery: checked as boolean }))
-                    }
-                  />
-                  <Label
-                    htmlFor="proofOfDelivery"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
-                  >
-                    Proof of Delivery
-                  </Label>
-                </div>
-
-                {/* Only 17025 */}
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="only17025"
-                    checked={searchValues.only17025}
-                    onCheckedChange={(checked) => 
-                      setSearchValues(prev => ({ ...prev, only17025: checked as boolean }))
-                    }
-                  />
-                  <Label
-                    htmlFor="only17025"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
-                  >
-                    Only 17025
-                  </Label>
-                </div>
-
-                {/* Only Hot List */}
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="onlyHotList"
-                    checked={searchValues.onlyHotList}
-                    onCheckedChange={(checked) => 
-                      setSearchValues(prev => ({ ...prev, onlyHotList: checked as boolean }))
-                    }
-                  />
-                  <Label
-                    htmlFor="onlyHotList"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
-                  >
-                    Only Hot List
-                  </Label>
-                </div>
-
-                {/* Only Lost Equip */}
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="onlyLostEquip"
-                    checked={searchValues.onlyLostEquip}
-                    onCheckedChange={(checked) => 
-                      setSearchValues(prev => ({ ...prev, onlyLostEquip: checked as boolean }))
-                    }
-                  />
-                  <Label
-                    htmlFor="onlyLostEquip"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
-                  >
-                    Only Lost Equip
-                  </Label>
-                </div>
-
-                {/* Non JM Accts */}
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="nonJMAccts"
-                    checked={searchValues.nonJMAccts}
-                    onCheckedChange={(checked) => 
-                      setSearchValues(prev => ({ ...prev, nonJMAccts: checked as boolean }))
-                    }
-                  />
-                  <Label
-                    htmlFor="nonJMAccts"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
-                  >
-                    Non JM Accts
-                  </Label>
-                </div>
-
-                {/* View Template */}
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="viewTemplate"
-                    checked={searchValues.viewTemplate}
-                    onCheckedChange={(checked) => 
-                      setSearchValues(prev => ({ ...prev, viewTemplate: checked as boolean }))
-                    }
-                  />
-                  <Label
-                    htmlFor="viewTemplate"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
-                  >
-                    View Template
-                  </Label>
-                </div>
+        {/* Additional Filters - Checkboxes */}
+        <div className="pt-4 border-t border-gray-100">
+          <h3 className="text-sm font-semibold text-gray-700 mb-3">Additional Filters</h3>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-x-6 gap-y-2.5">
+            {[
+              { id: 'newEquip', label: 'New Equip', key: 'newEquip' as const },
+              { id: 'usedSurplus', label: 'Used Surplus', key: 'usedSurplus' as const },
+              { id: 'warranty', label: 'Warranty', key: 'warranty' as const },
+              { id: 'toFactory', label: 'To Factory', key: 'toFactory' as const },
+              { id: 'proofOfDelivery', label: 'Proof of Delivery', key: 'proofOfDelivery' as const },
+              { id: 'only17025', label: 'Only 17025', key: 'only17025' as const },
+              { id: 'onlyHotList', label: 'Only Hot List', key: 'onlyHotList' as const },
+              { id: 'onlyLostEquip', label: 'Only Lost Equip', key: 'onlyLostEquip' as const },
+              { id: 'nonJMAccts', label: 'Non JM Accts', key: 'nonJMAccts' as const },
+              { id: 'viewTemplate', label: 'View Template', key: 'viewTemplate' as const },
+            ].map((filter) => (
+              <div key={filter.id} className="flex items-center space-x-2">
+                <Checkbox
+                  id={filter.id}
+                  checked={searchValues[filter.key]}
+                  onCheckedChange={(checked) => 
+                    setSearchValues(prev => ({ ...prev, [filter.key]: checked as boolean }))
+                  }
+                />
+                <Label
+                  htmlFor={filter.id}
+                  className="text-sm font-normal leading-none cursor-pointer text-gray-700"
+                >
+                  {filter.label}
+                </Label>
               </div>
-            </div>
+            ))}
           </div>
-        )}
+        </div>
 
-      {/* Search Button at Bottom */}
-      <div className="px-4 pb-4 flex justify-end">
-        <Button 
-          onClick={handleSearch}
-          className={cn(
-            "rounded-lg h-11 px-6 font-medium shadow-sm hover:shadow-md transition-all",
-            hasActiveFilters 
-              ? "bg-blue-600 hover:bg-blue-700 text-white" 
-              : "bg-gray-300 hover:bg-gray-400 text-gray-600"
-          )}
-        >
-          <Search className="h-4 w-4 mr-2" />
-          Search
-        </Button>
+        {/* Search Button */}
+        <div className="flex justify-end pt-2">
+          <Button 
+            onClick={handleSearch}
+            className="rounded-lg h-10 px-6 font-medium bg-blue-600 hover:bg-blue-700 text-white shadow-sm"
+          >
+            <Search className="h-4 w-4 mr-2" />
+            Search
+          </Button>
+        </div>
       </div>
     </div>
   );
