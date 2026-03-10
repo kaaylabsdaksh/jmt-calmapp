@@ -3013,6 +3013,20 @@ const mockWorkOrderBatches: WorkOrderBatch[] = [
     lastComment: "Delivery Ticket #: DT-406502 Delivery Ticket Date...",
     minNeedByDate: "03/12/2023",
     minFollowUpDate: "10/03/2023"
+  },
+  {
+    id: "16",
+    woBatch: "12345",
+    acctNumber: "8821.03",
+    srNumber: "SR3100",
+    customerName: "Gulf Coast Instruments",
+    totalLabOpen: 2,
+    totalArCount: 1,
+    totalCount: 8,
+    lastCommentDate: "02/15/2026",
+    lastComment: "Calibration scheduled for next week batch processing...",
+    minNeedByDate: "03/01/2026",
+    minFollowUpDate: "03/10/2026"
   }
 ];
 
