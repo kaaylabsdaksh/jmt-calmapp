@@ -124,22 +124,8 @@ const MinimalWorkOrderSearch = ({ onSearch }: MinimalWorkOrderSearchProps) => {
       setResultCount(null);
       return;
     }
-    // Simulate counting with a slight delay
     const timer = setTimeout(() => {
-      // Mock: filter against our mock data
-      let count = mockWorkOrderBatches.length;
-      searchChips.forEach(chip => {
-        const q = chip.value.toLowerCase();
-        count = mockWorkOrderBatches.filter(wo => {
-          switch (chip.type) {
-            case 'workOrderNumber': return wo.woBatch.includes(q);
-            case 'accountNumber': return wo.acctNumber.includes(q);
-            case 'customerName': return wo.customerName.toLowerCase().includes(q);
-            default: return wo.woBatch.includes(q) || wo.customerName.toLowerCase().includes(q) || wo.acctNumber.includes(q);
-          }
-        }).length;
-      });
-      setResultCount(count);
+      setResultCount(Math.max(1, 10 - searchChips.length * 2));
     }, 300);
     return () => clearTimeout(timer);
   }, [searchChips]);
