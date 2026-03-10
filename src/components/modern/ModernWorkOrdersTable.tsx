@@ -3070,7 +3070,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     itemNumber: "Gloves",
     manufacturer: "ADEULIS",
     model: "PPS-1734",
-    serialNumber: "SN123456",
+    serialNumber: "SN986401",
     created: "10/15/2024",
     departure: "11/25/2024",
     itemStatus: "In Lab",
