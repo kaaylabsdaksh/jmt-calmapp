@@ -272,7 +272,8 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
         </div>
       </div>
 
-      {/* Filters */}
+      {/* Filters - hidden in CSA view */}
+      {viewMode !== 'csa' && (
       <div className="space-y-3">
         <div className="flex flex-wrap items-center gap-3">
           {/* Global Search */}
@@ -339,6 +340,7 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
           </div>
         </div>
       </div>
+      )}
 
       {/* Items Table */}
       <div>
