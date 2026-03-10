@@ -3126,7 +3126,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     itemNumber: "Blankets",
     manufacturer: "ADEULIS",
     model: "PPS-1736",
-    serialNumber: "SN123458",
+    serialNumber: "SN986403",
     created: "10/15/2024",
     departure: "11/27/2024",
     itemStatus: "[Open Items]",
