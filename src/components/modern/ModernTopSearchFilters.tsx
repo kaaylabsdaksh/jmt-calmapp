@@ -154,14 +154,8 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
   useEffect(() => {
     if (searchChips.length === 0) { setResultCount(null); return; }
     const timer = setTimeout(() => {
-      let count = mockWorkOrders.length;
-      searchChips.forEach(chip => {
-        const q = chip.value.toLowerCase();
-        count = mockWorkOrders.filter(wo =>
-          wo.id.includes(q) || wo.customer.toLowerCase().includes(q) || wo.accountNumber.includes(q) || wo.manufacturer.toLowerCase().includes(q)
-        ).length;
-      });
-      setResultCount(count);
+      // Mock count based on number of chips
+      setResultCount(Math.max(1, 10 - searchChips.length * 2));
     }, 300);
     return () => clearTimeout(timer);
   }, [searchChips]);
