@@ -7,7 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { List, Grid3X3, Pencil, Search } from "lucide-react";
+import { List, Grid3X3, Pencil, Search, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import WorkOrderBatchDetails from "@/components/WorkOrderBatchDetails";
@@ -4859,30 +4859,72 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                 )}
               </TableRow>
               {/* Column Filter Row */}
-              <TableRow className="bg-gray-50/50 border-b">
+              <TableRow className="border-b border-gray-100">
                 {currentView === 'batch' ? (
                   <>
-                    {['woBatch', 'acctNumber', 'srNumber', 'customerName', 'minNeedByDate', 'totalCount', 'totalLabOpen', 'totalArCount'].map((col) => (
-                      <TableHead key={col} className="py-1 px-2">
-                        <Input
-                          placeholder=""
-                          value={columnFilters[col] || ''}
-                          onChange={(e) => setColumnFilters(prev => ({ ...prev, [col]: e.target.value }))}
-                          className="h-7 text-xs border-gray-200 bg-white rounded px-2"
-                        />
+                    {[
+                      { key: 'woBatch', placeholder: 'Filter batch...' },
+                      { key: 'acctNumber', placeholder: 'Filter acct...' },
+                      { key: 'srNumber', placeholder: 'Filter SR...' },
+                      { key: 'customerName', placeholder: 'Filter customer...' },
+                      { key: 'minNeedByDate', placeholder: 'Filter date...' },
+                      { key: 'totalCount', placeholder: 'Filter...' },
+                      { key: 'totalLabOpen', placeholder: 'Filter...' },
+                      { key: 'totalArCount', placeholder: 'Filter...' },
+                    ].map((col) => (
+                      <TableHead key={col.key} className="py-1.5 px-2">
+                        <div className="relative">
+                          <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground/50" />
+                          <Input
+                            placeholder={col.placeholder}
+                            value={columnFilters[col.key] || ''}
+                            onChange={(e) => setColumnFilters(prev => ({ ...prev, [col.key]: e.target.value }))}
+                            className="h-7 text-[11px] pl-6 pr-6 border-muted bg-muted/30 rounded-md placeholder:text-muted-foreground/40 focus:bg-background focus:border-primary/30 transition-colors"
+                          />
+                          {columnFilters[col.key] && (
+                            <button
+                              onClick={() => setColumnFilters(prev => ({ ...prev, [col.key]: '' }))}
+                              className="absolute right-1.5 top-1/2 -translate-y-1/2 p-0.5 rounded-full hover:bg-muted transition-colors"
+                            >
+                              <X className="h-3 w-3 text-muted-foreground" />
+                            </button>
+                          )}
+                        </div>
                       </TableHead>
                     ))}
                   </>
                 ) : (
                   <>
-                    {['workOrderNumber', 'itemNumber', 'itemStatus', 'priority', 'manufacturer', 'model', 'serialNumber', 'itemType', 'customer', 'assignedTo'].map((col) => (
-                      <TableHead key={col} className="py-1 px-2">
-                        <Input
-                          placeholder=""
-                          value={columnFilters[col] || ''}
-                          onChange={(e) => setColumnFilters(prev => ({ ...prev, [col]: e.target.value }))}
-                          className="h-7 text-xs border-gray-200 bg-white rounded px-2"
-                        />
+                    {[
+                      { key: 'workOrderNumber', placeholder: 'Filter WO...' },
+                      { key: 'itemNumber', placeholder: 'Filter item...' },
+                      { key: 'itemStatus', placeholder: 'Filter status...' },
+                      { key: 'priority', placeholder: 'Filter...' },
+                      { key: 'manufacturer', placeholder: 'Filter mfg...' },
+                      { key: 'model', placeholder: 'Filter model...' },
+                      { key: 'serialNumber', placeholder: 'Filter SN...' },
+                      { key: 'itemType', placeholder: 'Filter type...' },
+                      { key: 'customer', placeholder: 'Filter customer...' },
+                      { key: 'assignedTo', placeholder: 'Filter...' },
+                    ].map((col) => (
+                      <TableHead key={col.key} className="py-1.5 px-2">
+                        <div className="relative">
+                          <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground/50" />
+                          <Input
+                            placeholder={col.placeholder}
+                            value={columnFilters[col.key] || ''}
+                            onChange={(e) => setColumnFilters(prev => ({ ...prev, [col.key]: e.target.value }))}
+                            className="h-7 text-[11px] pl-6 pr-6 border-muted bg-muted/30 rounded-md placeholder:text-muted-foreground/40 focus:bg-background focus:border-primary/30 transition-colors"
+                          />
+                          {columnFilters[col.key] && (
+                            <button
+                              onClick={() => setColumnFilters(prev => ({ ...prev, [col.key]: '' }))}
+                              className="absolute right-1.5 top-1/2 -translate-y-1/2 p-0.5 rounded-full hover:bg-muted transition-colors"
+                            >
+                              <X className="h-3 w-3 text-muted-foreground" />
+                            </button>
+                          )}
+                        </div>
                       </TableHead>
                     ))}
                     <TableHead className="w-12"></TableHead>
