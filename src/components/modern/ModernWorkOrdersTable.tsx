@@ -4358,7 +4358,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
   });
 
   const totalPages = currentView === 'batch' 
-    ? Math.ceil(columnFilteredBatches.length / itemsPerPage)
+    ? Math.ceil(sortedBatches.length / itemsPerPage)
     : Math.ceil(columnFilteredItems.length / itemsPerPage);
 
   // Get paginated data
