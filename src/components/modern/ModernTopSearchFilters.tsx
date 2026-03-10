@@ -622,10 +622,19 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
   const selectContentClass = "bg-white border border-gray-200 shadow-xl rounded-lg z-[9999]";
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 mb-6">
+    <div className="bg-card rounded-xl shadow-sm border mb-6">
       {/* Header Row */}
       <div className="flex items-center justify-between px-5 pt-5 pb-4">
-        <h2 className="text-lg font-semibold text-gray-900">Work Order Search</h2>
+        <div className="flex items-center gap-3">
+          <h2 className="text-lg font-semibold text-foreground">Work Order Search</h2>
+          {/* Live Result Count */}
+          {resultCount !== null && (
+            <Badge variant="secondary" className="px-2.5 py-1 text-xs font-medium animate-in fade-in-50 slide-in-from-left-2">
+              <Zap className="h-3 w-3 mr-1 text-primary" />
+              {resultCount} {resultCount === 1 ? 'result' : 'results'} found
+            </Badge>
+          )}
+        </div>
         <button
           onClick={clearAllFilters}
           className="flex items-center gap-1.5 text-sm font-medium text-yellow-600 hover:text-yellow-700 transition-colors"
@@ -637,10 +646,10 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
 
       <div className="px-5 pb-5 space-y-4">
         {/* Search Criteria Section */}
-        <div>
+        <div ref={searchContainerRef}>
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm font-medium text-gray-700">Search Criteria</span>
-            <span className="text-xs text-gray-400">Add search criteria by selecting a field and value</span>
+            <span className="text-sm font-medium text-muted-foreground">Search Criteria</span>
+            <span className="text-xs text-muted-foreground/60">Add search criteria by selecting a field and value</span>
           </div>
 
           {/* Active Search Chips */}
@@ -668,35 +677,107 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
 
           {/* Search Bar */}
           <div className="flex gap-2">
-            <div className="relative flex-1 flex items-center bg-white border border-gray-200 rounded-lg h-10 focus-within:ring-2 focus-within:ring-blue-500/20 focus-within:border-blue-500 transition-all">
-              <Select value={selectedSearchType} onValueChange={setSelectedSearchType}>
-                <SelectTrigger className="w-[140px] sm:w-[180px] border-0 border-r border-gray-200 rounded-l-lg rounded-r-none h-full text-xs sm:text-sm bg-transparent hover:bg-gray-50 focus:ring-0 focus:ring-offset-0">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className={selectContentClass}>
-                  {searchTypeOptions.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
-                      {option.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <div className="relative flex-1 flex items-center">
-                <Search className="absolute left-3 h-4 w-4 text-gray-400" />
-                <Input
-                  placeholder="Enter value and press Enter or click Add..."
-                  value={searchInput}
-                  onChange={(e) => setSearchInput(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  className="pl-9 pr-3 border-0 h-full text-sm placeholder:text-gray-400 focus-visible:ring-0 focus-visible:ring-offset-0 bg-transparent"
-                />
+            <div className="relative flex-1">
+              <div className="flex items-center bg-background border rounded-lg h-10 focus-within:ring-2 focus-within:ring-primary/20 focus-within:border-primary transition-all">
+                <Select value={selectedSearchType} onValueChange={setSelectedSearchType}>
+                  <SelectTrigger className="w-[140px] sm:w-[180px] border-0 border-r rounded-l-lg rounded-r-none h-full text-xs sm:text-sm bg-transparent hover:bg-muted focus:ring-0 focus:ring-offset-0">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className={selectContentClass}>
+                    {searchTypeOptions.map((option) => (
+                      <SelectItem key={option.value} value={option.value}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <div className="relative flex-1 flex items-center">
+                  <Search className="absolute left-3 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    placeholder="Enter value and press Enter or click Add..."
+                    value={searchInput}
+                    onChange={(e) => handleInputChange(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    onFocus={handleInputFocus}
+                    className="pl-9 pr-24 border-0 h-full text-sm placeholder:text-muted-foreground focus-visible:ring-0 focus-visible:ring-offset-0 bg-transparent"
+                  />
+                  {/* Auto-detect badge */}
+                  {detectedType && detectedType !== selectedSearchType && searchInput.trim() && (
+                    <button 
+                      onClick={() => setSelectedSearchType(detectedType)}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1 px-2 py-0.5 rounded-md bg-primary/10 text-primary text-xs font-medium hover:bg-primary/20 transition-colors"
+                    >
+                      <Zap className="h-3 w-3" />
+                      {searchTypeOptions.find(o => o.value === detectedType)?.label}
+                    </button>
+                  )}
+                </div>
               </div>
+
+              {/* Auto-Suggest Dropdown */}
+              {showSuggestions && suggestions.length > 0 && (
+                <div className="absolute left-0 right-0 top-[calc(100%+4px)] z-50 bg-popover border rounded-lg shadow-lg overflow-hidden animate-in fade-in-50 slide-in-from-top-2">
+                  <div className="px-3 py-2 border-b bg-muted/30">
+                    <span className="text-xs font-medium text-muted-foreground">Suggestions</span>
+                  </div>
+                  {suggestions.map((suggestion) => (
+                    <button
+                      key={suggestion.id}
+                      onClick={() => addSearchChip(suggestion.value)}
+                      className="w-full flex items-center gap-3 px-3 py-2.5 text-left hover:bg-accent transition-colors border-b border-border/50 last:border-0"
+                    >
+                      <Search className="h-3.5 w-3.5 text-muted-foreground flex-shrink-0" />
+                      <div className="flex-1 min-w-0">
+                        <div className="text-sm font-medium text-foreground truncate">{suggestion.primary}</div>
+                        <div className="text-xs text-muted-foreground truncate">{suggestion.secondary}</div>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              {/* Recent Searches Dropdown */}
+              {showRecentSearches && recentSearches.length > 0 && !searchInput.trim() && (
+                <div className="absolute left-0 right-0 top-[calc(100%+4px)] z-50 bg-popover border rounded-lg shadow-lg overflow-hidden animate-in fade-in-50 slide-in-from-top-2">
+                  <div className="px-3 py-2 border-b bg-muted/30 flex items-center justify-between">
+                    <span className="text-xs font-medium text-muted-foreground flex items-center gap-1.5">
+                      <Clock className="h-3 w-3" />
+                      Recent Searches
+                    </span>
+                    <button 
+                      onClick={() => { setRecentSearches([]); saveRecentSearches([]); }}
+                      className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      Clear all
+                    </button>
+                  </div>
+                  {recentSearches.map((recent) => (
+                    <button
+                      key={recent.id}
+                      onClick={() => applyRecentSearch(recent)}
+                      className="w-full flex items-center gap-3 px-3 py-2.5 text-left hover:bg-accent transition-colors border-b border-border/50 last:border-0 group"
+                    >
+                      <Clock className="h-3.5 w-3.5 text-muted-foreground flex-shrink-0" />
+                      <div className="flex-1 min-w-0">
+                        <div className="text-sm text-foreground truncate">{recent.label}</div>
+                        <div className="text-xs text-muted-foreground">{formatTimeAgo(recent.timestamp)}</div>
+                      </div>
+                      <button
+                        onClick={(e) => removeRecentSearch(recent.id, e)}
+                        className="opacity-0 group-hover:opacity-100 p-1 hover:bg-muted rounded transition-all"
+                      >
+                        <X className="h-3 w-3 text-muted-foreground" />
+                      </button>
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
             <Button 
-              onClick={addSearchChip}
+              onClick={() => addSearchChip()}
               variant="outline"
               size="sm"
-              className="h-10 px-4 border-gray-200"
+              className="h-10 px-4"
             >
               <Plus className="h-4 w-4 mr-1.5" />
               Add
