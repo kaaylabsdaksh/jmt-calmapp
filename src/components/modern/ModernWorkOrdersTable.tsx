@@ -5170,7 +5170,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                           </div>
                           <div className="text-center">
                             <span className="text-gray-500 block text-xs">Aging</span>
-                            <div className="font-bold text-lg text-gray-900">
+                            <div className="font-medium text-xs text-gray-900">
                               {(() => {
                                 const days = getAgingDays(batch);
                                 return days !== null ? `${days}d` : '—';
