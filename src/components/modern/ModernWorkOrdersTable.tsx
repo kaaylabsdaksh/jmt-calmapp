@@ -4046,17 +4046,6 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
   const [activeStatusFilter, setActiveStatusFilter] = useState<string>('all');
   const [currentView, setCurrentView] = useState<'item' | 'batch'>('item');
   const navigate = useNavigate();
-
-  // Auto-switch to batch view when search matches a batch woBatch number
-  const searchTerm = searchFilters.globalSearch?.toLowerCase() || '';
-  const matchesBatch = searchTerm && mockWorkOrderBatches.some(b => b.woBatch.toLowerCase().includes(searchTerm));
-  
-  React.useEffect(() => {
-    if (hasSearched && matchesBatch) {
-      setCurrentView('batch');
-      setCurrentPage(1);
-    }
-  }, [hasSearched, matchesBatch]);
   
   // Filter work orders based on search filters from parent and status
   // Helper function to convert status names to filter values
