@@ -5127,23 +5127,23 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                   {searchViewMode === 'csa' ? (
                     <>
                       {/* CSA Card - Modern Design */}
-                      <div className="px-4 pt-4 pb-2">
-                        <div className="flex items-start justify-between mb-2">
-                          <div className="flex items-center gap-2">
-                            <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center">
-                              <span className="text-slate-600 font-bold text-xs">#</span>
+                      <div className="px-3 pt-3 pb-1.5">
+                        <div className="flex items-start justify-between mb-1">
+                          <div className="flex items-center gap-1.5">
+                            <div className="w-5 h-5 rounded bg-slate-100 flex items-center justify-center">
+                              <span className="text-slate-600 font-bold text-[9px]">#</span>
                             </div>
                             <div>
-                              <span className="font-bold text-foreground text-sm">{batch.woBatch}</span>
-                              <div className="text-[10px] text-muted-foreground">{batch.acctNumber}</div>
+                              <span className="font-bold text-foreground text-[11px]">{batch.woBatch}</span>
+                              <div className="text-[9px] text-muted-foreground">{batch.acctNumber}</div>
                             </div>
                           </div>
-                          <Badge variant={batch.priority === 'Critical' ? 'destructive' : batch.priority === 'High' ? 'default' : 'secondary'} className="text-[10px] px-2 py-0">
+                          <Badge variant={batch.priority === 'Critical' ? 'destructive' : batch.priority === 'High' ? 'default' : 'secondary'} className="text-[8px] px-1.5 py-0 h-4">
                             {batch.priority}
                           </Badge>
                         </div>
-                        <h3 className="font-semibold text-foreground text-sm leading-tight">{batch.customerName}</h3>
-                        <div className="flex items-center gap-1.5 mt-1 text-[10px] text-muted-foreground">
+                        <h3 className="font-semibold text-foreground text-[11px] leading-tight truncate">{batch.customerName}</h3>
+                        <div className="flex items-center gap-1 mt-0.5 text-[9px] text-muted-foreground truncate">
                           <span>{batch.location}</span>
                           <span>•</span>
                           <span>{batch.contactName}</span>
