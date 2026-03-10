@@ -1,25 +1,11 @@
-import { useState, useRef, useEffect, useMemo, useCallback } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Search, Plus, RotateCcw, Filter, X, Clock, Zap, Hash, User, FileText, Package } from "lucide-react";
-
-// Mock work order batch data for suggestions
-const mockWorkOrderBatches = [
-  { id: "1", woBatch: "383727", acctNumber: "13058.06", srNumber: "SR2455", customerName: "Deutsche Windtechnik Inc", minNeedByDate: "09/24/2021" },
-  { id: "2", woBatch: "390118", acctNumber: "6962.01", srNumber: "SR1820", customerName: "Colonial Pipeline", minNeedByDate: "12/20/2022" },
-  { id: "3", woBatch: "452463", acctNumber: "6962.01", srNumber: "SR1820", customerName: "Colonial Pipeline", minNeedByDate: "06/23/2023" },
-  { id: "4", woBatch: "393015", acctNumber: "7412.06", srNumber: "", customerName: "Burns & McDonnell", minNeedByDate: "01/17/2022" },
-  { id: "5", woBatch: "441228", acctNumber: "2577.50", srNumber: "SR2425", customerName: "Energy Transfer", minNeedByDate: "03/20/2023" },
-  { id: "6", woBatch: "438752", acctNumber: "13058.20", srNumber: "SR2458", customerName: "Nuclear Research Institute", minNeedByDate: "12/10/2021" },
-  { id: "7", woBatch: "385737", acctNumber: "9901.01", srNumber: "SR3001", customerName: "ACME Industries", minNeedByDate: "05/15/2023" },
-  { id: "8", woBatch: "390589", acctNumber: "8842.02", srNumber: "SR2890", customerName: "Tech Solutions Ltd", minNeedByDate: "08/22/2023" },
-  { id: "9", woBatch: "400217", acctNumber: "5523.03", srNumber: "SR1456", customerName: "Manufacturing Corp", minNeedByDate: "11/30/2023" },
-  { id: "10", woBatch: "403946", acctNumber: "7710.04", srNumber: "SR3200", customerName: "Quality Systems Inc", minNeedByDate: "02/14/2024" },
-];
+import { Search, Plus, RotateCcw, Filter, X, Clock, Hash, User, FileText, Package } from "lucide-react";
 
 interface SearchChip {
   id: string;
@@ -92,41 +78,6 @@ interface MinimalWorkOrderSearchProps {
   onSearch?: (filters: SearchFilters) => void;
 }
 
-// Auto-detect search type based on input pattern
-function autoDetectSearchType(input: string): string | null {
-  const trimmed = input.trim();
-  if (!trimmed) return null;
-  
-  // Pure numbers 5-6 digits → Work Order Number
-  if (/^\d{5,6}$/.test(trimmed)) return 'workOrderNumber';
-  // Number with dash (e.g., 385737-01) → Work Order Item Number
-  if (/^\d{5,6}-\d{1,3}$/.test(trimmed)) return 'workOrderItemNumber';
-  // Account number pattern (e.g., 13058.06)
-  if (/^\d{3,5}\.\d{1,2}$/.test(trimmed)) return 'accountNumber';
-  // PO pattern
-  if (/^PO[-\s]?\d+/i.test(trimmed)) return 'poNumber';
-  // SR number pattern
-  if (/^SR\d+/i.test(trimmed)) return 'onsiteProjectNumber';
-  // Serial number pattern (SN prefix)
-  if (/^SN\d+/i.test(trimmed)) return 'serialNumber';
-  // MFG serial pattern
-  if (/^MFG[-\s]?\d+/i.test(trimmed)) return 'mfgSerial';
-  // ESL ID pattern
-  if (/^ESL[-\s]?\d+/i.test(trimmed)) return 'eslID';
-  // RFID pattern
-  if (/^RFID[-\s]/i.test(trimmed)) return 'rfid';
-  // RMA pattern
-  if (/^RMA/i.test(trimmed)) return 'vendorRMANumber';
-  // Quote pattern
-  if (/^QT[-\s]?\d+/i.test(trimmed)) return 'quoteNumber';
-  // CUST ID
-  if (/^CUST[-\s]?\d+/i.test(trimmed)) return 'custID';
-  // All letters with spaces → Customer Name
-  if (/^[a-zA-Z\s]{3,}$/.test(trimmed)) return 'customerName';
-  
-  return null;
-}
-
 const RECENT_SEARCHES_KEY = 'wo-recent-searches';
 const MAX_RECENT_SEARCHES = 8;
 
@@ -150,20 +101,16 @@ const MinimalWorkOrderSearch = ({ onSearch }: MinimalWorkOrderSearchProps) => {
   const [selectedSearchType, setSelectedSearchType] = useState('workOrderNumber');
   const [searchInput, setSearchInput] = useState('');
   const [showAdvanced, setShowAdvanced] = useState(false);
-  const [showSuggestions, setShowSuggestions] = useState(false);
   const [showRecentSearches, setShowRecentSearches] = useState(false);
   const [recentSearches, setRecentSearches] = useState<RecentSearch[]>(loadRecentSearches);
-  const [detectedType, setDetectedType] = useState<string | null>(null);
   const [resultCount, setResultCount] = useState<number | null>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
-  const suggestionsRef = useRef<HTMLDivElement>(null);
   const searchContainerRef = useRef<HTMLDivElement>(null);
 
   // Close dropdowns on outside click
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (searchContainerRef.current && !searchContainerRef.current.contains(e.target as Node)) {
-        setShowSuggestions(false);
         setShowRecentSearches(false);
       }
     };
@@ -171,68 +118,14 @@ const MinimalWorkOrderSearch = ({ onSearch }: MinimalWorkOrderSearchProps) => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Auto-detect search type as user types
-  useEffect(() => {
-    const detected = autoDetectSearchType(searchInput);
-    setDetectedType(detected);
-    if (detected && detected !== selectedSearchType) {
-      // Don't auto-switch, just show hint
-    }
-  }, [searchInput, selectedSearchType]);
-
-  // Compute suggestions based on input
-  const suggestions = useMemo(() => {
-    if (!searchInput.trim() || searchInput.length < 1) return [];
-    const q = searchInput.toLowerCase();
-    
-    return mockWorkOrderBatches
-      .filter(wo => {
-        switch (selectedSearchType) {
-          case 'workOrderNumber': return wo.woBatch.toLowerCase().includes(q);
-          case 'accountNumber': return wo.acctNumber.toLowerCase().includes(q);
-          case 'customerName': return wo.customerName.toLowerCase().includes(q);
-          case 'onsiteProjectNumber': return wo.srNumber.toLowerCase().includes(q);
-          default: return wo.woBatch.includes(q) || wo.customerName.toLowerCase().includes(q);
-        }
-      })
-      .slice(0, 6)
-      .map(wo => ({
-        id: wo.id,
-        primary: selectedSearchType === 'customerName' ? wo.customerName : 
-                 selectedSearchType === 'accountNumber' ? wo.acctNumber :
-                 selectedSearchType === 'onsiteProjectNumber' ? wo.srNumber :
-                 wo.woBatch,
-        secondary: selectedSearchType === 'customerName' ? `WO: ${wo.woBatch}` :
-                   `${wo.customerName} • ${wo.acctNumber}`,
-        value: selectedSearchType === 'customerName' ? wo.customerName :
-               selectedSearchType === 'accountNumber' ? wo.acctNumber :
-               selectedSearchType === 'onsiteProjectNumber' ? wo.srNumber :
-               wo.woBatch,
-      }));
-  }, [searchInput, selectedSearchType]);
-
   // Simulate live result count based on active filters
   useEffect(() => {
     if (searchChips.length === 0) {
       setResultCount(null);
       return;
     }
-    // Simulate counting with a slight delay
     const timer = setTimeout(() => {
-      // Mock: filter against our mock data
-      let count = mockWorkOrderBatches.length;
-      searchChips.forEach(chip => {
-        const q = chip.value.toLowerCase();
-        count = mockWorkOrderBatches.filter(wo => {
-          switch (chip.type) {
-            case 'workOrderNumber': return wo.woBatch.includes(q);
-            case 'accountNumber': return wo.acctNumber.includes(q);
-            case 'customerName': return wo.customerName.toLowerCase().includes(q);
-            default: return wo.woBatch.includes(q) || wo.customerName.toLowerCase().includes(q) || wo.acctNumber.includes(q);
-          }
-        }).length;
-      });
-      setResultCount(count);
+      setResultCount(Math.max(1, 10 - searchChips.length * 2));
     }, 300);
     return () => clearTimeout(timer);
   }, [searchChips]);
@@ -241,14 +134,9 @@ const MinimalWorkOrderSearch = ({ onSearch }: MinimalWorkOrderSearchProps) => {
     const chipValue = value || searchInput.trim();
     if (!chipValue) return;
 
-    const typeToUse = detectedType || selectedSearchType;
+    const typeToUse = selectedSearchType;
     const selectedOption = searchTypeOptions.find(opt => opt.value === typeToUse);
     if (!selectedOption) return;
-
-    // Auto-switch type if detected
-    if (detectedType && detectedType !== selectedSearchType) {
-      setSelectedSearchType(detectedType);
-    }
 
     const newChip: SearchChip = {
       id: `${typeToUse}-${Date.now()}`,
@@ -259,7 +147,6 @@ const MinimalWorkOrderSearch = ({ onSearch }: MinimalWorkOrderSearchProps) => {
 
     setSearchChips(prev => [...prev, newChip]);
     setSearchInput('');
-    setShowSuggestions(false);
     searchInputRef.current?.focus();
   };
 
@@ -273,7 +160,6 @@ const MinimalWorkOrderSearch = ({ onSearch }: MinimalWorkOrderSearchProps) => {
       addSearchChip();
     }
     if (e.key === 'Escape') {
-      setShowSuggestions(false);
       setShowRecentSearches(false);
     }
   };
@@ -316,7 +202,6 @@ const MinimalWorkOrderSearch = ({ onSearch }: MinimalWorkOrderSearchProps) => {
   const applyRecentSearch = (recent: RecentSearch) => {
     setSearchChips(recent.chips);
     setShowRecentSearches(false);
-    setShowSuggestions(false);
   };
 
   const removeRecentSearch = (id: string, e: React.MouseEvent) => {
@@ -332,25 +217,16 @@ const MinimalWorkOrderSearch = ({ onSearch }: MinimalWorkOrderSearchProps) => {
   };
 
   const handleInputFocus = () => {
-    if (searchInput.trim()) {
-      setShowSuggestions(true);
-      setShowRecentSearches(false);
-    } else if (recentSearches.length > 0) {
+    if (!searchInput.trim() && recentSearches.length > 0) {
       setShowRecentSearches(true);
-      setShowSuggestions(false);
     }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
     setSearchInput(val);
-    if (val.trim()) {
-      setShowSuggestions(true);
-      setShowRecentSearches(false);
-    } else {
-      setShowSuggestions(false);
-      if (recentSearches.length > 0) setShowRecentSearches(true);
-    }
+    if (!val.trim() && recentSearches.length > 0) setShowRecentSearches(true);
+    else setShowRecentSearches(false);
   };
 
   const formatTimeAgo = (timestamp: number) => {
@@ -376,7 +252,7 @@ const MinimalWorkOrderSearch = ({ onSearch }: MinimalWorkOrderSearchProps) => {
             {/* Live Result Count */}
             {resultCount !== null && (
               <Badge variant="secondary" className="px-2.5 py-1 text-xs font-medium animate-in fade-in-50 slide-in-from-left-2">
-                <Zap className="h-3 w-3 mr-1 text-primary" />
+                <Search className="h-3 w-3 mr-1 text-primary" />
                 {resultCount} {resultCount === 1 ? 'result' : 'results'} found
               </Badge>
             )}
@@ -444,18 +320,8 @@ const MinimalWorkOrderSearch = ({ onSearch }: MinimalWorkOrderSearchProps) => {
                     onChange={handleInputChange}
                     onKeyDown={handleKeyDown}
                     onFocus={handleInputFocus}
-                    className="h-11 transition-all focus:ring-2 focus:ring-primary/20 pr-24"
+                    className="h-11 transition-all focus:ring-2 focus:ring-primary/20"
                   />
-                  {/* Auto-detect badge inside input */}
-                  {detectedType && detectedType !== selectedSearchType && searchInput.trim() && (
-                    <button 
-                      onClick={() => setSelectedSearchType(detectedType)}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1 px-2 py-0.5 rounded-md bg-primary/10 text-primary text-xs font-medium hover:bg-primary/20 transition-colors"
-                    >
-                      <Zap className="h-3 w-3" />
-                      {searchTypeOptions.find(o => o.value === detectedType)?.label}
-                    </button>
-                  )}
                 </div>
                 <Button 
                   onClick={() => addSearchChip()}
@@ -466,31 +332,6 @@ const MinimalWorkOrderSearch = ({ onSearch }: MinimalWorkOrderSearchProps) => {
                   Add
                 </Button>
               </div>
-
-              {/* Auto-Suggest Dropdown */}
-              {showSuggestions && suggestions.length > 0 && (
-                <div 
-                  ref={suggestionsRef}
-                  className="absolute left-0 right-[88px] top-[calc(100%+4px)] z-50 bg-popover border border-border rounded-lg shadow-lg overflow-hidden animate-in fade-in-50 slide-in-from-top-2"
-                >
-                  <div className="px-3 py-2 border-b bg-muted/30">
-                    <span className="text-xs font-medium text-muted-foreground">Suggestions</span>
-                  </div>
-                  {suggestions.map((suggestion) => (
-                    <button
-                      key={suggestion.id}
-                      onClick={() => addSearchChip(suggestion.value)}
-                      className="w-full flex items-center gap-3 px-3 py-2.5 text-left hover:bg-accent transition-colors border-b border-border/50 last:border-0"
-                    >
-                      <Search className="h-3.5 w-3.5 text-muted-foreground flex-shrink-0" />
-                      <div className="flex-1 min-w-0">
-                        <div className="text-sm font-medium text-foreground truncate">{suggestion.primary}</div>
-                        <div className="text-xs text-muted-foreground truncate">{suggestion.secondary}</div>
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              )}
 
               {/* Recent Searches Dropdown */}
               {showRecentSearches && recentSearches.length > 0 && !searchInput.trim() && (

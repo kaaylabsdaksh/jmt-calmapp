@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -7,7 +7,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Calendar as CalendarIcon, Search, X, Filter, Plus, Check, Clock, Zap } from "lucide-react";
+import { Calendar as CalendarIcon, Search, X, Filter, Plus, Check, Clock } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 
@@ -75,250 +75,6 @@ interface ModernTopSearchFiltersProps {
   onSearch: (filters: SearchFilters) => void;
 }
 
-// Mock work orders for suggestions (in a real app, this would come from props or API)
-const mockWorkOrders = [
-  {
-    id: "385737",
-    itemNumber: "385737-01",
-    accountNumber: "ACC-2024-001",
-    customer: "ACME Industries", 
-    assignedTo: "John Smith",
-    division: "Lab",
-    manufacturer: "ADEULIS",
-    modelNumber: "PPS-1734",
-    labCode: "LAB-001",
-    onsiteProjectNumber: "OSP-2024-001",
-    poNumber: "PO-2024-001",
-    toFactoryPO: "FPO-789012",
-    serialNumber: "SN123456",
-    custID: "CUST-001",
-    mfgSerial: "MFG-12345",
-    productDescription: "Precision Positioning System",
-    eslID: "ESL-001",
-    rfid: "RFID-TAG-001",
-    quoteNumber: "QT-2024-001",
-    vendorRMA: "RMA-VENDOR-001"
-  },
-  {
-    id: "390589", 
-    itemNumber: "390589-01",
-    accountNumber: "ACC-2024-002",
-    customer: "Tech Solutions Ltd",
-    assignedTo: "Sarah Johnson", 
-    division: "Rental",
-    manufacturer: "STARRETT",
-    modelNumber: "844-441",
-    labCode: "LAB-002",
-    onsiteProjectNumber: "OSP-2024-002",
-    poNumber: "PO-2024-002",
-    toFactoryPO: "FPO-890123",
-    serialNumber: "SN789012",
-    custID: "CUST-002",
-    mfgSerial: "MFG-23456",
-    productDescription: "Precision Micrometer",
-    eslID: "ESL-002",
-    rfid: "RFID-TAG-002",
-    quoteNumber: "QT-2024-002",
-    vendorRMA: "RMA-VENDOR-002"
-  },
-  {
-    id: "400217",
-    itemNumber: "400217-01",
-    accountNumber: "ACC-2024-003",
-    customer: "Manufacturing Corp",
-    assignedTo: "Mike Davis",
-    division: "ESL Onsite", 
-    manufacturer: "CHARLS LTD",
-    modelNumber: "1000PS",
-    labCode: "LAB-003",
-    onsiteProjectNumber: "OSP-2024-003",
-    poNumber: "PO-2024-003",
-    toFactoryPO: "FPO-901234",
-    serialNumber: "SN345678",
-    custID: "CUST-003",
-    mfgSerial: "MFG-34567",
-    productDescription: "Hydraulic Press System",
-    eslID: "ESL-003",
-    rfid: "RFID-TAG-003",
-    quoteNumber: "QT-2024-003",
-    vendorRMA: "RMA-VENDOR-003"
-  },
-  {
-    id: "403946",
-    itemNumber: "403946-01",
-    accountNumber: "ACC-2024-004",
-    customer: "Quality Systems Inc",
-    assignedTo: "Emily Wilson",
-    division: "ESL",
-    manufacturer: "PRECISION TOOLS", 
-    modelNumber: "CAL-500",
-    labCode: "LAB-004",
-    onsiteProjectNumber: "OSP-2024-004",
-    poNumber: "PO-2024-004",
-    toFactoryPO: "FPO-012345",
-    serialNumber: "SN901234",
-    custID: "CUST-004",
-    mfgSerial: "MFG-45678",
-    productDescription: "Digital Calibrator",
-    eslID: "ESL-004",
-    rfid: "RFID-TAG-004",
-    quoteNumber: "QT-2024-004",
-    vendorRMA: "RMA-VENDOR-004"
-  },
-  {
-    id: "405078",
-    itemNumber: "405078-01",
-    accountNumber: "ACC-2024-005",
-    customer: "Aerospace Dynamics",
-    assignedTo: "Tom Rodriguez",
-    division: "Lab",
-    manufacturer: "SNAP-ON",
-    modelNumber: "TW-PRO-500",
-    labCode: "LAB-005",
-    onsiteProjectNumber: "OSP-2024-005",
-    poNumber: "PO-2024-005",
-    toFactoryPO: "FPO-123456",
-    serialNumber: "SN567890",
-    custID: "CUST-005",
-    mfgSerial: "MFG-56789",
-    productDescription: "Torque Wrench Set",
-    eslID: "ESL-005",
-    rfid: "RFID-TAG-005",
-    quoteNumber: "QT-2024-005",
-    vendorRMA: "RMA-VENDOR-005"
-  },
-  {
-    id: "408881",
-    itemNumber: "408881-01",
-    accountNumber: "ACC-2024-006",
-    customer: "Pharmaceutical Labs Inc",
-    assignedTo: "Dr. Amanda Foster",
-    division: "Rental",
-    manufacturer: "METTLER TOLEDO",
-    modelNumber: "AB-220",
-    labCode: "LAB-006",
-    onsiteProjectNumber: "OSP-2024-006",
-    poNumber: "PO-2024-006",
-    toFactoryPO: "FPO-234567",
-    serialNumber: "SN234567",
-    custID: "CUST-006",
-    mfgSerial: "MFG-67890",
-    productDescription: "Analytical Balance",
-    eslID: "ESL-006",
-    rfid: "RFID-TAG-006",
-    quoteNumber: "QT-2024-006",
-    vendorRMA: "RMA-VENDOR-006"
-  },
-  {
-    id: "412340",
-    itemNumber: "412340-01",
-    accountNumber: "ACC-2024-007",
-    customer: "Energy Solutions Corp",
-    assignedTo: "Alex Thompson",
-    division: "Lab",
-    manufacturer: "FLUKE",
-    modelNumber: "PM-500",
-    labCode: "LAB-007",
-    onsiteProjectNumber: "OSP-2024-007",
-    poNumber: "PO-2024-007",
-    toFactoryPO: "FPO-345678",
-    serialNumber: "SN890123",
-    custID: "CUST-007",
-    mfgSerial: "MFG-78901",
-    productDescription: "Power Meter",
-    eslID: "ESL-007",
-    rfid: "RFID-TAG-007",
-    quoteNumber: "QT-2024-007",
-    vendorRMA: "RMA-VENDOR-007"
-  },
-  {
-    id: "415229",
-    itemNumber: "415229-01",
-    accountNumber: "ACC-2024-008",
-    customer: "Automotive Testing Lab",
-    assignedTo: "James Patterson",
-    division: "ESL Onsite",
-    manufacturer: "BOSCH",
-    modelNumber: "DS-300",
-    labCode: "LAB-008",
-    onsiteProjectNumber: "OSP-2024-008",
-    poNumber: "PO-2024-008",
-    toFactoryPO: "FPO-456789",
-    serialNumber: "SN123789",
-    custID: "CUST-008",
-    mfgSerial: "MFG-89012",
-    productDescription: "Diagnostic Scanner",
-    eslID: "ESL-008",
-    rfid: "RFID-TAG-008",
-    quoteNumber: "QT-2024-008",
-    vendorRMA: "RMA-VENDOR-008"
-  },
-  {
-    id: "418500",
-    itemNumber: "418500-01",
-    accountNumber: "ACC-2024-009",
-    customer: "Construction Materials Corp",
-    assignedTo: "Maria Garcia",
-    division: "Lab",
-    manufacturer: "TEKTRONIX",
-    modelNumber: "OSC-500",
-    labCode: "LAB-009",
-    onsiteProjectNumber: "OSP-2024-009",
-    poNumber: "PO-2024-009",
-    toFactoryPO: "FPO-567890",
-    serialNumber: "SN456123",
-    custID: "CUST-009",
-    mfgSerial: "MFG-90123",
-    productDescription: "Oscilloscope",
-    eslID: "ESL-009",
-    rfid: "RFID-TAG-009",
-    quoteNumber: "QT-2024-009",
-    vendorRMA: "RMA-VENDOR-009"
-  },
-  {
-    id: "421755",
-    itemNumber: "421755-01",
-    accountNumber: "ACC-2024-010",
-    customer: "Industrial Automation Inc",
-    assignedTo: "Robert Lee",
-    division: "ESL",
-    manufacturer: "OMEGA",
-    modelNumber: "TH-100",
-    labCode: "LAB-010",
-    onsiteProjectNumber: "OSP-2024-010",
-    poNumber: "PO-2024-010",
-    toFactoryPO: "FPO-678901",
-    serialNumber: "SN789456",
-    custID: "CUST-010",
-    mfgSerial: "MFG-01234",
-    productDescription: "Temperature Sensor",
-    eslID: "ESL-010",
-    rfid: "RFID-TAG-010",
-    quoteNumber: "QT-2024-010",
-    vendorRMA: "RMA-VENDOR-010"
-  }
-];
-
-// Auto-detect search type based on input pattern
-function autoDetectSearchType(input: string): string | null {
-  const trimmed = input.trim();
-  if (!trimmed) return null;
-  if (/^\d{5,6}$/.test(trimmed)) return 'workOrderNumber';
-  if (/^\d{5,6}-\d{1,3}$/.test(trimmed)) return 'workOrderItemNumber';
-  if (/^\d{3,5}\.\d{1,2}$/.test(trimmed)) return 'accountNumber';
-  if (/^PO[-\s]?\d+/i.test(trimmed)) return 'poNumber';
-  if (/^SR\d+/i.test(trimmed)) return 'onsiteProjectNumber';
-  if (/^SN\d+/i.test(trimmed)) return 'serialNumber';
-  if (/^MFG[-\s]?\d+/i.test(trimmed)) return 'mfgSerial';
-  if (/^ESL[-\s]?\d+/i.test(trimmed)) return 'eslID';
-  if (/^RFID[-\s]/i.test(trimmed)) return 'rfid';
-  if (/^RMA/i.test(trimmed)) return 'vendorRMANumber';
-  if (/^QT[-\s]?\d+/i.test(trimmed)) return 'quoteNumber';
-  if (/^CUST[-\s]?\d+/i.test(trimmed)) return 'custID';
-  if (/^[a-zA-Z\s]{3,}$/.test(trimmed)) return 'customerName';
-  return null;
-}
-
 interface RecentSearch {
   id: string;
   chips: SearchChip[];
@@ -347,10 +103,9 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
   const [searchChips, setSearchChips] = useState<SearchChip[]>([]);
   const [selectedSearchType, setSelectedSearchType] = useState('workOrderNumber');
   const [searchInput, setSearchInput] = useState('');
-  const [showSuggestions, setShowSuggestions] = useState(false);
   const [showRecentSearches, setShowRecentSearches] = useState(false);
   const [recentSearches, setRecentSearches] = useState<RecentSearch[]>(loadRecentSearches);
-  const [detectedType, setDetectedType] = useState<string | null>(null);
+  
   const [resultCount, setResultCount] = useState<number | null>(null);
   const searchContainerRef = useRef<HTMLDivElement>(null);
   const [searchValues, setSearchValues] = useState({
@@ -387,7 +142,6 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (searchContainerRef.current && !searchContainerRef.current.contains(e.target as Node)) {
-        setShowSuggestions(false);
         setShowRecentSearches(false);
       }
     };
@@ -395,53 +149,13 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Auto-detect type
-  useEffect(() => {
-    setDetectedType(autoDetectSearchType(searchInput));
-  }, [searchInput]);
-
-  // Compute suggestions
-  const suggestions = useMemo(() => {
-    if (!searchInput.trim()) return [];
-    const q = searchInput.toLowerCase();
-    return mockWorkOrders
-      .filter(wo => {
-        switch (selectedSearchType) {
-          case 'workOrderNumber': return wo.id.includes(q);
-          case 'accountNumber': return wo.accountNumber.toLowerCase().includes(q);
-          case 'customerName': return wo.customer.toLowerCase().includes(q);
-          case 'serialNumber': return wo.serialNumber.toLowerCase().includes(q);
-          case 'manufacturer': return wo.manufacturer.toLowerCase().includes(q);
-          default: return wo.id.includes(q) || wo.customer.toLowerCase().includes(q);
-        }
-      })
-      .slice(0, 6)
-      .map(wo => ({
-        id: wo.id,
-        primary: selectedSearchType === 'customerName' ? wo.customer :
-                 selectedSearchType === 'accountNumber' ? wo.accountNumber :
-                 selectedSearchType === 'manufacturer' ? wo.manufacturer :
-                 wo.id,
-        secondary: selectedSearchType === 'customerName' ? `WO: ${wo.id}` : `${wo.customer} • ${wo.manufacturer}`,
-        value: selectedSearchType === 'customerName' ? wo.customer :
-               selectedSearchType === 'accountNumber' ? wo.accountNumber :
-               selectedSearchType === 'manufacturer' ? wo.manufacturer :
-               wo.id,
-      }));
-  }, [searchInput, selectedSearchType]);
 
   // Live result count
   useEffect(() => {
     if (searchChips.length === 0) { setResultCount(null); return; }
     const timer = setTimeout(() => {
-      let count = mockWorkOrders.length;
-      searchChips.forEach(chip => {
-        const q = chip.value.toLowerCase();
-        count = mockWorkOrders.filter(wo =>
-          wo.id.includes(q) || wo.customer.toLowerCase().includes(q) || wo.accountNumber.includes(q) || wo.manufacturer.toLowerCase().includes(q)
-        ).length;
-      });
-      setResultCount(count);
+      // Mock count based on number of chips
+      setResultCount(Math.max(1, 10 - searchChips.length * 2));
     }, 300);
     return () => clearTimeout(timer);
   }, [searchChips]);
@@ -461,13 +175,9 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
     const chipValue = value || searchInput.trim();
     if (!chipValue) return;
 
-    const typeToUse = detectedType || selectedSearchType;
+    const typeToUse = selectedSearchType;
     const selectedOption = searchTypeOptions.find(opt => opt.value === typeToUse);
     if (!selectedOption) return;
-
-    if (detectedType && detectedType !== selectedSearchType) {
-      setSelectedSearchType(detectedType);
-    }
 
     const newChip: SearchChip = {
       id: `${typeToUse}-${Date.now()}`,
@@ -478,7 +188,6 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
 
     setSearchChips(prev => [...prev, newChip]);
     setSearchInput('');
-    setShowSuggestions(false);
     
     const updatedChips = [...searchChips, newChip];
     const searchTags = updatedChips.map(chip => `${chip.label}: ${chip.value}`);
@@ -526,7 +235,7 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') { e.preventDefault(); addSearchChip(); }
-    if (e.key === 'Escape') { setShowSuggestions(false); setShowRecentSearches(false); }
+    if (e.key === 'Escape') { setShowRecentSearches(false); }
   };
 
   const handleSearch = () => {
@@ -566,7 +275,6 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
   const applyRecentSearch = (recent: RecentSearch) => {
     setSearchChips(recent.chips);
     setShowRecentSearches(false);
-    setShowSuggestions(false);
   };
 
   const removeRecentSearch = (id: string, e: React.MouseEvent) => {
@@ -577,14 +285,13 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
   };
 
   const handleInputFocus = () => {
-    if (searchInput.trim()) { setShowSuggestions(true); setShowRecentSearches(false); }
-    else if (recentSearches.length > 0) { setShowRecentSearches(true); setShowSuggestions(false); }
+    if (!searchInput.trim() && recentSearches.length > 0) { setShowRecentSearches(true); }
   };
 
   const handleInputChange = (val: string) => {
     setSearchInput(val);
-    if (val.trim()) { setShowSuggestions(true); setShowRecentSearches(false); }
-    else { setShowSuggestions(false); if (recentSearches.length > 0) setShowRecentSearches(true); }
+    if (!val.trim() && recentSearches.length > 0) setShowRecentSearches(true);
+    else setShowRecentSearches(false);
   };
 
   const clearAllFilters = () => {
@@ -630,7 +337,7 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
           {/* Live Result Count */}
           {resultCount !== null && (
             <Badge variant="secondary" className="px-2.5 py-1 text-xs font-medium animate-in fade-in-50 slide-in-from-left-2">
-              <Zap className="h-3 w-3 mr-1 text-primary" />
+              <Search className="h-3 w-3 mr-1 text-primary" />
               {resultCount} {resultCount === 1 ? 'result' : 'results'} found
             </Badge>
           )}
@@ -699,42 +406,10 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
                     onChange={(e) => handleInputChange(e.target.value)}
                     onKeyDown={handleKeyDown}
                     onFocus={handleInputFocus}
-                    className="pl-9 pr-24 border-0 h-full text-sm placeholder:text-muted-foreground focus-visible:ring-0 focus-visible:ring-offset-0 bg-transparent"
+                    className="pl-9 border-0 h-full text-sm placeholder:text-muted-foreground focus-visible:ring-0 focus-visible:ring-offset-0 bg-transparent"
                   />
-                  {/* Auto-detect badge */}
-                  {detectedType && detectedType !== selectedSearchType && searchInput.trim() && (
-                    <button 
-                      onClick={() => setSelectedSearchType(detectedType)}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1 px-2 py-0.5 rounded-md bg-primary/10 text-primary text-xs font-medium hover:bg-primary/20 transition-colors"
-                    >
-                      <Zap className="h-3 w-3" />
-                      {searchTypeOptions.find(o => o.value === detectedType)?.label}
-                    </button>
-                  )}
                 </div>
               </div>
-
-              {/* Auto-Suggest Dropdown */}
-              {showSuggestions && suggestions.length > 0 && (
-                <div className="absolute left-0 right-0 top-[calc(100%+4px)] z-50 bg-popover border rounded-lg shadow-lg overflow-hidden animate-in fade-in-50 slide-in-from-top-2">
-                  <div className="px-3 py-2 border-b bg-muted/30">
-                    <span className="text-xs font-medium text-muted-foreground">Suggestions</span>
-                  </div>
-                  {suggestions.map((suggestion) => (
-                    <button
-                      key={suggestion.id}
-                      onClick={() => addSearchChip(suggestion.value)}
-                      className="w-full flex items-center gap-3 px-3 py-2.5 text-left hover:bg-accent transition-colors border-b border-border/50 last:border-0"
-                    >
-                      <Search className="h-3.5 w-3.5 text-muted-foreground flex-shrink-0" />
-                      <div className="flex-1 min-w-0">
-                        <div className="text-sm font-medium text-foreground truncate">{suggestion.primary}</div>
-                        <div className="text-xs text-muted-foreground truncate">{suggestion.secondary}</div>
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              )}
 
               {/* Recent Searches Dropdown */}
               {showRecentSearches && recentSearches.length > 0 && !searchInput.trim() && (
