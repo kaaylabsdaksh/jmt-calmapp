@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Search, Plus, RotateCcw, Filter, X, Clock, Zap, Hash, User, FileText, Package } from "lucide-react";
+import { Search, Plus, RotateCcw, Filter, X, Clock, Hash, User, FileText, Package } from "lucide-react";
 
 // Mock work order batch data for suggestions
 const mockWorkOrderBatches = [
