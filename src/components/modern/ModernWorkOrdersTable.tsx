@@ -4831,16 +4831,33 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
               <TableRow className="hover:bg-gray-50">
                 {currentView === 'batch' ? (
                   // Batch View Headers
-                  <>
-                    <TableHead className="font-semibold text-gray-900">WO Batch</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Acct #</TableHead>
-                    <TableHead className="font-semibold text-gray-900">SR #</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Customer Name</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Min Need By Date</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Total Count</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Total Lab Open</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Total AR Count</TableHead>
-                  </>
+                  searchViewMode === 'csa' ? (
+                    <>
+                      <TableHead className="font-semibold text-gray-900">WO Batch</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Acct #</TableHead>
+                      <TableHead className="font-semibold text-gray-900">SR #</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Customer Name</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Total Lab Open</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Total AR Count</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Total Count</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Last Comment Date</TableHead>
+                      <TableHead className="font-semibold text-gray-900 min-w-[200px]">Last Comment</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Min Need By Date</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Min Follow Up Date</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Min Deliver By Date</TableHead>
+                    </>
+                  ) : (
+                    <>
+                      <TableHead className="font-semibold text-gray-900">WO Batch</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Acct #</TableHead>
+                      <TableHead className="font-semibold text-gray-900">SR #</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Customer Name</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Min Need By Date</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Total Count</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Total Lab Open</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Total AR Count</TableHead>
+                    </>
+                  )
                 ) : (
                   // Item View Headers
                   <>
