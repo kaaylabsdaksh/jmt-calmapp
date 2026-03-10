@@ -258,6 +258,10 @@ const MinimalWorkOrderSearch = ({ onSearch }: MinimalWorkOrderSearchProps) => {
             )}
           </div>
           <div className="flex items-center gap-2">
+            <Button variant="outline" onClick={clearAllFilters} className="flex items-center gap-2">
+              <RotateCcw className="h-4 w-4" />
+              Clear All
+            </Button>
             <Button onClick={handleSearch} className="flex items-center gap-2">
               <Search className="h-4 w-4" />
               Search
