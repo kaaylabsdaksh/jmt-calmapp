@@ -4352,7 +4352,14 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
     });
   });
 
-  // Apply sorting to batches
+  // Helper to parse MM/DD/YYYY date strings for comparison
+  const parseDate = (dateStr: string): number => {
+    if (!dateStr) return Infinity;
+    const [month, day, year] = dateStr.split('/').map(Number);
+    return new Date(year, month - 1, day).getTime();
+  };
+
+  // Apply sorting to batches — default is aging logic: Deliver By date first, Follow-up as tiebreaker
   const sortedBatches = [...columnFilteredBatches];
   if (sortConfig) {
     sortedBatches.sort((a, b) => {
@@ -4362,6 +4369,21 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
       const dir = sortConfig.direction === 'asc' ? 1 : -1;
       if (typeof aVal === 'number' && typeof bVal === 'number') return (aVal - bVal) * dir;
       return String(aVal).localeCompare(String(bVal)) * dir;
+    });
+  } else {
+    // Default aging sort: ordered by Deliver By date ascending, with Follow-up as tiebreaker when present
+    sortedBatches.sort((a, b) => {
+      const aDeliver = parseDate(a.minDeliverByDate);
+      const bDeliver = parseDate(b.minDeliverByDate);
+      if (aDeliver !== bDeliver) return aDeliver - bDeliver;
+      // Tiebreaker: if both have follow-up dates, use them
+      const aFollowUp = parseDate(a.minFollowUpDate);
+      const bFollowUp = parseDate(b.minFollowUpDate);
+      if (a.minFollowUpDate && b.minFollowUpDate) return aFollowUp - bFollowUp;
+      // Items with follow-up dates come after those without (follow-up = action taken)
+      if (a.minFollowUpDate && !b.minFollowUpDate) return 1;
+      if (!a.minFollowUpDate && b.minFollowUpDate) return -1;
+      return 0;
     });
   }
 
