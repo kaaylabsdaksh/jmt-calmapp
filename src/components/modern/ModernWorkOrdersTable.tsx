@@ -3819,6 +3819,91 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     priority: "High",
     assignedTo: "Nancy Wilson",
     division: "ESL"
+  },
+  // Items for WO-12345
+  {
+    id: "item-12345-1",
+    workOrderId: "12345",
+    workOrderNumber: "12345",
+    itemNumber: "Torque Wrench",
+    manufacturer: "SNAP-ON",
+    model: "TQR-250",
+    serialNumber: "SN-TQ-8801",
+    created: "02/10/2026",
+    departure: "03/15/2026",
+    itemStatus: "In Lab",
+    itemType: "ESL - Tools",
+    deliverByDate: "Mar 15, 2026",
+    poNumber: "PO-2026-100",
+    customer: "Gulf Coast Instruments",
+    priority: "High",
+    assignedTo: "Mike Torres",
+    division: "Lab",
+    lastComment: "Torque calibration in progress - awaiting reference standard.",
+    lastCommentDate: "03/05/2026",
+    needByDate: "03/15/2026",
+    followUpDate: "03/10/2026",
+    labCode: "LAB-012",
+    location: "Lab Building C - Room 101",
+    operationType: "Calibration",
+    estimatedCost: "$450.00",
+    actualCost: "$0.00"
+  },
+  {
+    id: "item-12345-2",
+    workOrderId: "12345",
+    workOrderNumber: "12345",
+    itemNumber: "Pressure Gauge",
+    manufacturer: "FLUKE",
+    model: "PG-700",
+    serialNumber: "SN-PG-4422",
+    created: "02/10/2026",
+    departure: "03/18/2026",
+    itemStatus: "Assigned to Tech",
+    itemType: "ESL - Gauges",
+    deliverByDate: "Mar 18, 2026",
+    poNumber: "PO-2026-100",
+    customer: "Gulf Coast Instruments",
+    priority: "Medium",
+    assignedTo: "Sarah Kim",
+    division: "Lab",
+    lastComment: "Waiting on replacement seal kit before proceeding.",
+    lastCommentDate: "03/08/2026",
+    needByDate: "03/18/2026",
+    followUpDate: "03/12/2026",
+    labCode: "LAB-012",
+    location: "Lab Building C - Room 102",
+    operationType: "Repair",
+    estimatedCost: "$320.00",
+    actualCost: "$0.00"
+  },
+  {
+    id: "item-12345-3",
+    workOrderId: "12345",
+    workOrderNumber: "12345",
+    itemNumber: "Multimeter",
+    manufacturer: "KEYSIGHT",
+    model: "34465A",
+    serialNumber: "SN-MM-7733",
+    created: "02/10/2026",
+    departure: "03/20/2026",
+    itemStatus: "Q/A Inspection",
+    itemType: "ESL - Meters",
+    deliverByDate: "Mar 20, 2026",
+    poNumber: "PO-2026-100",
+    customer: "Gulf Coast Instruments",
+    priority: "Low",
+    assignedTo: "Mike Torres",
+    division: "Lab",
+    lastComment: "Calibration complete - sent to QA for final inspection.",
+    lastCommentDate: "03/09/2026",
+    needByDate: "03/20/2026",
+    followUpDate: "03/14/2026",
+    labCode: "LAB-012",
+    location: "Lab Building C - Room 103",
+    operationType: "Calibration",
+    estimatedCost: "$275.00",
+    actualCost: "$260.00"
   }
 ];
 
@@ -3961,17 +4046,6 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
   const [activeStatusFilter, setActiveStatusFilter] = useState<string>('all');
   const [currentView, setCurrentView] = useState<'item' | 'batch'>('item');
   const navigate = useNavigate();
-
-  // Auto-switch to batch view when search matches a batch woBatch number
-  const searchTerm = searchFilters.globalSearch?.toLowerCase() || '';
-  const matchesBatch = searchTerm && mockWorkOrderBatches.some(b => b.woBatch.toLowerCase().includes(searchTerm));
-  
-  React.useEffect(() => {
-    if (hasSearched && matchesBatch) {
-      setCurrentView('batch');
-      setCurrentPage(1);
-    }
-  }, [hasSearched, matchesBatch]);
   
   // Filter work orders based on search filters from parent and status
   // Helper function to convert status names to filter values
