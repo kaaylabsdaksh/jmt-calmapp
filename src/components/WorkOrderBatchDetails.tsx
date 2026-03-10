@@ -284,125 +284,107 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
     
     navigate('/edit-order', { state: { workOrderData } });
   };
-  return (
-    <div className="space-y-4">
+   return (
+    <div className="space-y-2">
       {/* Header */}
-      <div className="flex items-center justify-between pb-4 border-b">
-        <Button variant="ghost" size="sm" onClick={onBack}>
-          <ArrowLeft className="h-4 w-4 mr-2" />
+      <div className="flex items-center justify-between pb-2 border-b">
+        <Button variant="ghost" size="sm" onClick={onBack} className="h-7 text-xs px-2">
+          <ArrowLeft className="h-3 w-3 mr-1" />
           Back to Batches
         </Button>
-        <div className="flex items-center space-x-2">
-          <Button variant="outline" size="sm">Export</Button>
-        </div>
+        <Button variant="outline" size="sm" className="h-7 text-xs px-3">Export</Button>
       </div>
 
       {/* Filters - hidden in CSA view */}
       {viewMode !== 'csa' && (
-      <div className="space-y-3">
-        <div className="flex flex-wrap items-center gap-3">
-          {/* Global Search */}
-          <div className="relative flex-1 min-w-[300px]">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+      <div className="space-y-1.5">
+        <div className="flex flex-wrap items-center gap-2">
+          <div className="relative flex-1 min-w-[250px]">
+            <Search className="absolute left-2.5 top-1/2 transform -translate-y-1/2 text-muted-foreground h-3 w-3" />
             <Input 
               type="text"
               placeholder="Search across all items..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10"
+              className="pl-8 h-7 text-[11px]"
             />
           </div>
-          
-          {/* Status Filter */}
           <Select value={statusFilter} onValueChange={setStatusFilter}>
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-[140px] h-7 text-[11px]">
               <SelectValue placeholder="Filter by Status" />
             </SelectTrigger>
             <SelectContent>
               {uniqueStatuses.map(status => (
-                <SelectItem key={status} value={status}>{status}</SelectItem>
+                <SelectItem key={status} value={status} className="text-[11px]">{status}</SelectItem>
               ))}
             </SelectContent>
           </Select>
-          
-          {/* Lab Code Filter */}
           <Select value={labCodeFilter} onValueChange={setLabCodeFilter}>
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-[140px] h-7 text-[11px]">
               <SelectValue placeholder="Filter by Lab Code" />
             </SelectTrigger>
             <SelectContent>
               {uniqueLabCodes.map(labCode => (
-                <SelectItem key={labCode} value={labCode}>{labCode}</SelectItem>
+                <SelectItem key={labCode} value={labCode} className="text-[11px]">{labCode}</SelectItem>
               ))}
             </SelectContent>
           </Select>
-          
-          {/* Clear All Button */}
           {(searchQuery || statusFilter || labCodeFilter) && (
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={clearAllFilters}
-              className="flex items-center gap-2"
-            >
-              <X className="h-4 w-4" />
-              Clear All
+            <Button variant="outline" size="sm" onClick={clearAllFilters} className="h-7 text-[11px] px-2">
+              <X className="h-3 w-3 mr-1" />
+              Clear
             </Button>
           )}
         </div>
-        
-        {/* Results Counter */}
-        <div className="flex items-center justify-between">
-          <div className="text-sm text-muted-foreground">
-            Showing {filteredItems.length} of {mockBatch.items.length} items
-            {(searchQuery || statusFilter || labCodeFilter) && (
-              <span className="ml-2 text-primary">
-                {searchQuery && `• Search: "${searchQuery}"`}
-                {statusFilter && ` • Status: ${statusFilter}`}
-                {labCodeFilter && ` • Lab Code: ${labCodeFilter}`}
-              </span>
-            )}
-          </div>
+        <div className="text-[10px] text-muted-foreground">
+          Showing {filteredItems.length} of {mockBatch.items.length} items
+          {(searchQuery || statusFilter || labCodeFilter) && (
+            <span className="ml-1 text-primary">
+              {searchQuery && `• "${searchQuery}"`}
+              {statusFilter && ` • ${statusFilter}`}
+              {labCodeFilter && ` • ${labCodeFilter}`}
+            </span>
+          )}
         </div>
       </div>
       )}
 
       {/* Items Table */}
       <div>
-        <h3 className="text-base font-medium mb-3">Items in Batch ({filteredItems.length})</h3>
-        <div className="border rounded-lg overflow-hidden">
+        <h3 className="text-xs font-semibold mb-1.5">Items in Batch ({filteredItems.length})</h3>
+        <div className="border rounded-md overflow-hidden">
           <Table>
              <TableHeader>
-              <TableRow className="bg-muted/50">
+              <TableRow className="bg-muted/50 h-7">
                 {viewMode === 'csa' ? (
                   <>
-                    <TableHead className="font-semibold">Item</TableHead>
-                    <TableHead className="font-semibold">Location</TableHead>
-                    <TableHead className="font-semibold">Item Created</TableHead>
-                    <TableHead className="font-semibold">Action</TableHead>
-                    <TableHead className="font-semibold">Item Status</TableHead>
-                    <TableHead className="font-semibold">Manufacturer</TableHead>
-                    <TableHead className="font-semibold">Model</TableHead>
-                    <TableHead className="font-semibold">Description</TableHead>
-                    <TableHead className="font-semibold">Serial #</TableHead>
-                    <TableHead className="font-semibold">Deliver By</TableHead>
-                    <TableHead className="font-semibold">Follow Up</TableHead>
-                    <TableHead className="w-12"></TableHead>
+                    <TableHead className="font-semibold text-[10px] py-1 px-2">Item</TableHead>
+                    <TableHead className="font-semibold text-[10px] py-1 px-2">Location</TableHead>
+                    <TableHead className="font-semibold text-[10px] py-1 px-2">Item Created</TableHead>
+                    <TableHead className="font-semibold text-[10px] py-1 px-2">Action</TableHead>
+                    <TableHead className="font-semibold text-[10px] py-1 px-2">Item Status</TableHead>
+                    <TableHead className="font-semibold text-[10px] py-1 px-2">Manufacturer</TableHead>
+                    <TableHead className="font-semibold text-[10px] py-1 px-2">Model</TableHead>
+                    <TableHead className="font-semibold text-[10px] py-1 px-2">Description</TableHead>
+                    <TableHead className="font-semibold text-[10px] py-1 px-2">Serial #</TableHead>
+                    <TableHead className="font-semibold text-[10px] py-1 px-2">Deliver By</TableHead>
+                    <TableHead className="font-semibold text-[10px] py-1 px-2">Follow Up</TableHead>
+                    <TableHead className="w-8"></TableHead>
                   </>
                 ) : (
                   <>
-                    <TableHead className="font-semibold">Item</TableHead>
-                    <TableHead className="font-semibold">Division</TableHead>
-                    <TableHead className="font-semibold">Location</TableHead>
-                    <TableHead className="font-semibold">Item Created</TableHead>
-                    <TableHead className="font-semibold">Action</TableHead>
-                    <TableHead className="font-semibold">Item Status</TableHead>
-                    <TableHead className="font-semibold">Manufacturer</TableHead>
-                    <TableHead className="font-semibold">Model</TableHead>
-                    <TableHead className="font-semibold">Lab Code</TableHead>
-                    <TableHead className="font-semibold">Serial #</TableHead>
-                    <TableHead className="font-semibold">PO #</TableHead>
-                    <TableHead className="w-12"></TableHead>
+                    <TableHead className="font-semibold text-[10px] py-1 px-2">Item</TableHead>
+                    <TableHead className="font-semibold text-[10px] py-1 px-2">Division</TableHead>
+                    <TableHead className="font-semibold text-[10px] py-1 px-2">Location</TableHead>
+                    <TableHead className="font-semibold text-[10px] py-1 px-2">Item Created</TableHead>
+                    <TableHead className="font-semibold text-[10px] py-1 px-2">Action</TableHead>
+                    <TableHead className="font-semibold text-[10px] py-1 px-2">Item Status</TableHead>
+                    <TableHead className="font-semibold text-[10px] py-1 px-2">Manufacturer</TableHead>
+                    <TableHead className="font-semibold text-[10px] py-1 px-2">Model</TableHead>
+                    <TableHead className="font-semibold text-[10px] py-1 px-2">Lab Code</TableHead>
+                    <TableHead className="font-semibold text-[10px] py-1 px-2">Serial #</TableHead>
+                    <TableHead className="font-semibold text-[10px] py-1 px-2">PO #</TableHead>
+                    <TableHead className="w-8"></TableHead>
                   </>
                 )}
               </TableRow>
@@ -413,48 +395,48 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
                 ] : [
                   'item', 'division', 'location', 'itemCreated', 'action', 'itemStatus', 'manufacturer', 'model', 'labCode', 'serialNumber', 'poNumber'
                 ]).map((key) => (
-                  <TableHead key={key} className="py-1.5 px-2">
+                  <TableHead key={key} className="py-1 px-1.5">
                     <div className="relative">
-                      <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground/50" />
+                      <Search className="absolute left-1.5 top-1/2 -translate-y-1/2 h-2.5 w-2.5 text-muted-foreground/50" />
                       <Input
                         placeholder=""
                         value={columnFilters[key] || ''}
                         onChange={(e) => setColumnFilters(prev => ({ ...prev, [key]: e.target.value }))}
-                        className="h-7 text-[11px] pl-6 pr-6 border-muted bg-muted/30 rounded-md placeholder:text-muted-foreground/40 focus:bg-background focus:border-primary/30 transition-colors"
+                        className="h-6 text-[10px] pl-5 pr-5 border-muted bg-muted/30 rounded placeholder:text-muted-foreground/40 focus:bg-background focus:border-primary/30 transition-colors"
                       />
                       {columnFilters[key] && (
                         <button
                           onClick={() => setColumnFilters(prev => ({ ...prev, [key]: '' }))}
-                          className="absolute right-1.5 top-1/2 -translate-y-1/2 p-0.5 rounded-full hover:bg-muted transition-colors"
+                          className="absolute right-1 top-1/2 -translate-y-1/2 p-0.5 rounded-full hover:bg-muted transition-colors"
                         >
-                          <X className="h-3 w-3 text-muted-foreground" />
+                          <X className="h-2.5 w-2.5 text-muted-foreground" />
                         </button>
                       )}
                     </div>
                   </TableHead>
                 ))}
-                <TableHead className="w-12"></TableHead>
+                <TableHead className="w-8"></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {filteredItems.map((item) => (
                 <React.Fragment key={item.id}>
-                  <TableRow className="hover:bg-muted/30">
-                    <TableCell className="font-medium">
+                  <TableRow className="hover:bg-muted/30 h-6">
+                    <TableCell className="font-medium text-[11px] py-1 px-2">
                       <button
                         onClick={(e) => handleItemClick(item, e)}
-                        className="text-blue-600 hover:text-blue-800 hover:underline font-medium transition-colors"
+                        className="text-blue-600 hover:text-blue-800 hover:underline font-medium transition-colors text-[11px]"
                       >
                         {item.item}
                       </button>
                     </TableCell>
                     {viewMode === 'csa' ? (
                       <>
-                        <TableCell>{item.location}</TableCell>
-                        <TableCell>{item.itemCreated}</TableCell>
-                        <TableCell className="font-medium">{item.action}</TableCell>
-                        <TableCell>
-                          <span className={`px-2 py-1 rounded text-xs font-medium ${
+                        <TableCell className="text-[11px] py-1 px-2">{item.location}</TableCell>
+                        <TableCell className="text-[11px] py-1 px-2">{item.itemCreated}</TableCell>
+                        <TableCell className="text-[11px] py-1 px-2 font-medium">{item.action}</TableCell>
+                        <TableCell className="py-1 px-2">
+                          <span className={`px-1.5 py-0.5 rounded text-[10px] font-medium ${
                             item.itemStatus === 'Completed' ? 'bg-green-100 text-green-800' :
                             item.itemStatus === 'In Progress' ? 'bg-blue-100 text-blue-800' :
                             'bg-yellow-100 text-yellow-800'
@@ -462,21 +444,21 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
                             {item.itemStatus}
                           </span>
                         </TableCell>
-                        <TableCell>{item.manufacturer || '-'}</TableCell>
-                        <TableCell>{item.model || '-'}</TableCell>
-                        <TableCell className="text-sm max-w-[150px] truncate">{item.description || '-'}</TableCell>
-                        <TableCell>{item.serialNumber || '-'}</TableCell>
-                        <TableCell>{item.deliverByDate || '-'}</TableCell>
-                        <TableCell>{item.followUpDate || '-'}</TableCell>
+                        <TableCell className="text-[11px] py-1 px-2">{item.manufacturer || '-'}</TableCell>
+                        <TableCell className="text-[11px] py-1 px-2">{item.model || '-'}</TableCell>
+                        <TableCell className="text-[10px] py-1 px-2 max-w-[120px] truncate">{item.description || '-'}</TableCell>
+                        <TableCell className="text-[11px] py-1 px-2">{item.serialNumber || '-'}</TableCell>
+                        <TableCell className="text-[11px] py-1 px-2">{item.deliverByDate || '-'}</TableCell>
+                        <TableCell className="text-[11px] py-1 px-2">{item.followUpDate || '-'}</TableCell>
                       </>
                     ) : (
                       <>
-                        <TableCell>{item.division}</TableCell>
-                        <TableCell>{item.location}</TableCell>
-                        <TableCell>{item.itemCreated}</TableCell>
-                        <TableCell className="font-medium">{item.action}</TableCell>
-                        <TableCell>
-                          <span className={`px-2 py-1 rounded text-xs font-medium ${
+                        <TableCell className="text-[11px] py-1 px-2">{item.division}</TableCell>
+                        <TableCell className="text-[11px] py-1 px-2">{item.location}</TableCell>
+                        <TableCell className="text-[11px] py-1 px-2">{item.itemCreated}</TableCell>
+                        <TableCell className="text-[11px] py-1 px-2 font-medium">{item.action}</TableCell>
+                        <TableCell className="py-1 px-2">
+                          <span className={`px-1.5 py-0.5 rounded text-[10px] font-medium ${
                             item.itemStatus === 'Completed' ? 'bg-green-100 text-green-800' :
                             item.itemStatus === 'In Progress' ? 'bg-blue-100 text-blue-800' :
                             'bg-yellow-100 text-yellow-800'
@@ -484,24 +466,24 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
                             {item.itemStatus}
                           </span>
                         </TableCell>
-                        <TableCell>{item.manufacturer || '-'}</TableCell>
-                        <TableCell>{item.model || '-'}</TableCell>
-                        <TableCell className="font-medium">{item.labCode}</TableCell>
-                        <TableCell>{item.serialNumber || '-'}</TableCell>
-                        <TableCell className="font-medium">{item.poNumber}</TableCell>
+                        <TableCell className="text-[11px] py-1 px-2">{item.manufacturer || '-'}</TableCell>
+                        <TableCell className="text-[11px] py-1 px-2">{item.model || '-'}</TableCell>
+                        <TableCell className="text-[11px] py-1 px-2 font-medium">{item.labCode}</TableCell>
+                        <TableCell className="text-[11px] py-1 px-2">{item.serialNumber || '-'}</TableCell>
+                        <TableCell className="text-[11px] py-1 px-2 font-medium">{item.poNumber}</TableCell>
                       </>
                     )}
-                    <TableCell className="w-12">
+                    <TableCell className="w-8 py-1 px-1">
                       <Button
                         variant="ghost"
                         size="sm"
                         onClick={() => toggleItemExpanded(item.id)}
-                        className="h-8 w-8 p-0"
+                        className="h-5 w-5 p-0"
                       >
                         {expandedItems.has(item.id) ? (
-                          <ChevronUp className="h-4 w-4" />
+                          <ChevronUp className="h-3 w-3" />
                         ) : (
-                          <ChevronDown className="h-4 w-4" />
+                          <ChevronDown className="h-3 w-3" />
                         )}
                       </Button>
                     </TableCell>
@@ -509,79 +491,59 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
                   {expandedItems.has(item.id) && (
                     <TableRow className="bg-gradient-to-r from-slate-50 to-gray-50">
                       <TableCell colSpan={12} className="p-0">
-                        <div className="p-6 animate-fade-in">
-                          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div className="p-3 animate-fade-in">
+                          <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
                             {/* Timeline & Dates Card */}
-                            <div className="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200">
-                              <div className="p-4 border-b border-gray-100">
-                                <div className="flex items-center gap-2">
-                                  <Calendar className="h-4 w-4 text-blue-600" />
-                                  <h4 className="font-semibold text-gray-900 text-sm">Timeline & Dates</h4>
+                            <div className="bg-white rounded-md border border-gray-200 shadow-sm">
+                              <div className="px-3 py-1.5 border-b border-gray-100">
+                                <div className="flex items-center gap-1.5">
+                                  <Calendar className="h-3 w-3 text-blue-600" />
+                                  <h4 className="font-semibold text-gray-900 text-[11px]">Timeline & Dates</h4>
                                 </div>
                               </div>
-                              <div className="p-4">
+                              <div className="px-3 py-2">
                                 <div className="relative">
-                                  {/* Vertical Timeline */}
-                                  <div className="absolute left-4 top-6 bottom-6 w-0.5 bg-gradient-to-b from-blue-200 via-orange-200 via-green-200 to-red-200"></div>
-                                  
-                                  <div className="space-y-6">
-                                    {/* Item Created */}
-                                    <div className="flex items-start gap-4">
-                                      <div className="relative z-10 flex items-center justify-center w-8 h-8 bg-blue-100 border-2 border-blue-300 rounded-full">
-                                        <Calendar className="h-3 w-3 text-blue-600" />
+                                  <div className="absolute left-3 top-4 bottom-4 w-0.5 bg-gradient-to-b from-blue-200 via-orange-200 via-green-200 to-red-200"></div>
+                                  <div className="space-y-3">
+                                    <div className="flex items-start gap-2.5">
+                                      <div className="relative z-10 flex items-center justify-center w-6 h-6 bg-blue-100 border border-blue-300 rounded-full">
+                                        <Calendar className="h-2.5 w-2.5 text-blue-600" />
                                       </div>
-                                      <div className="flex-1 min-w-0 pt-1">
-                                        <div className="flex items-center gap-2 mb-1">
-                                          <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide">Item Created</span>
-                                        </div>
-                                        <p className="text-sm font-medium text-gray-900">{item.itemCreated}</p>
+                                      <div className="flex-1 min-w-0 pt-0.5">
+                                        <span className="text-[9px] font-semibold text-gray-500 uppercase tracking-wide">Item Created</span>
+                                        <p className="text-[11px] font-medium text-gray-900">{item.itemCreated}</p>
                                       </div>
                                     </div>
-
-                                    {/* Follow Up Date */}
                                     {item.followUpDate && (
-                                      <div className="flex items-start gap-4">
-                                        <div className="relative z-10 flex items-center justify-center w-8 h-8 bg-orange-100 border-2 border-orange-300 rounded-full">
-                                          <Clock className="h-3 w-3 text-orange-600" />
+                                      <div className="flex items-start gap-2.5">
+                                        <div className="relative z-10 flex items-center justify-center w-6 h-6 bg-orange-100 border border-orange-300 rounded-full">
+                                          <Clock className="h-2.5 w-2.5 text-orange-600" />
                                         </div>
-                                        <div className="flex-1 min-w-0 pt-1">
-                                          <div className="flex items-center gap-2 mb-1">
-                                            <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide">Follow Up Date</span>
-                                          </div>
-                                          <p className="text-sm font-medium text-gray-900">{item.followUpDate}</p>
+                                        <div className="flex-1 min-w-0 pt-0.5">
+                                          <span className="text-[9px] font-semibold text-gray-500 uppercase tracking-wide">Follow Up</span>
+                                          <p className="text-[11px] font-medium text-gray-900">{item.followUpDate}</p>
                                         </div>
                                       </div>
                                     )}
-
-                                    {/* Departure Date */}
                                     {item.departureDate && (
-                                      <div className="flex items-start gap-4">
-                                        <div className="relative z-10 flex items-center justify-center w-8 h-8 bg-green-100 border-2 border-green-300 rounded-full">
-                                          <Calendar className="h-3 w-3 text-green-600" />
+                                      <div className="flex items-start gap-2.5">
+                                        <div className="relative z-10 flex items-center justify-center w-6 h-6 bg-green-100 border border-green-300 rounded-full">
+                                          <Calendar className="h-2.5 w-2.5 text-green-600" />
                                         </div>
-                                        <div className="flex-1 min-w-0 pt-1">
-                                          <div className="flex items-center gap-2 mb-1">
-                                            <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide">Departure Date</span>
-                                          </div>
-                                          <p className="text-sm font-medium text-gray-900">{item.departureDate}</p>
+                                        <div className="flex-1 min-w-0 pt-0.5">
+                                          <span className="text-[9px] font-semibold text-gray-500 uppercase tracking-wide">Departure</span>
+                                          <p className="text-[11px] font-medium text-gray-900">{item.departureDate}</p>
                                         </div>
                                       </div>
                                     )}
-
-                                    {/* Need By Date */}
                                     {item.needByDate && (
-                                      <div className="flex items-start gap-4">
-                                        <div className="relative z-10 flex items-center justify-center w-8 h-8 bg-red-100 border-2 border-red-300 rounded-full">
-                                          <Clock className="h-3 w-3 text-red-600" />
+                                      <div className="flex items-start gap-2.5">
+                                        <div className="relative z-10 flex items-center justify-center w-6 h-6 bg-red-100 border border-red-300 rounded-full">
+                                          <Clock className="h-2.5 w-2.5 text-red-600" />
                                         </div>
-                                        <div className="flex-1 min-w-0 pt-1">
-                                          <div className="flex items-center gap-2 mb-1">
-                                            <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide">Need By Date</span>
-                                            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                                              Critical
-                                            </span>
-                                          </div>
-                                          <p className="text-sm font-semibold text-red-600">{item.needByDate}</p>
+                                        <div className="flex-1 min-w-0 pt-0.5">
+                                          <span className="text-[9px] font-semibold text-gray-500 uppercase tracking-wide">Need By</span>
+                                          <p className="text-[11px] font-semibold text-red-600">{item.needByDate}</p>
                                         </div>
                                       </div>
                                     )}
@@ -591,93 +553,69 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
                             </div>
                             
                             {/* Assignment & Details Card */}
-                            <div className="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200">
-                              <div className="p-4 border-b border-gray-100">
-                                <div className="flex items-center gap-2">
-                                  <User className="h-4 w-4 text-purple-600" />
-                                  <h4 className="font-semibold text-gray-900 text-sm">Assignment & Details</h4>
+                            <div className="bg-white rounded-md border border-gray-200 shadow-sm">
+                              <div className="px-3 py-1.5 border-b border-gray-100">
+                                <div className="flex items-center gap-1.5">
+                                  <User className="h-3 w-3 text-purple-600" />
+                                  <h4 className="font-semibold text-gray-900 text-[11px]">Assignment & Details</h4>
                                 </div>
                               </div>
-                              <div className="p-4 space-y-4">
+                              <div className="px-3 py-2 space-y-2">
                                 {item.assignedTo && (
-                                  <div className="flex flex-col space-y-1">
-                                    <div className="flex items-center gap-2">
-                                      <User className="h-3 w-3 text-blue-500" />
-                                      <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">Assigned To</span>
-                                    </div>
-                                    <div className="font-semibold text-blue-600 text-sm pl-5">{item.assignedTo}</div>
+                                  <div>
+                                    <span className="text-[9px] font-medium text-gray-500 uppercase tracking-wide">Assigned To</span>
+                                    <div className="font-semibold text-blue-600 text-[11px]">{item.assignedTo}</div>
                                   </div>
                                 )}
                                 {item.operationType && (
-                                  <div className="flex flex-col space-y-1">
-                                    <div className="flex items-center gap-2">
-                                      <Settings className="h-3 w-3 text-purple-500" />
-                                      <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">Operation Type</span>
-                                    </div>
-                                    <div className="font-medium text-gray-900 text-sm pl-5">{item.operationType}</div>
+                                  <div>
+                                    <span className="text-[9px] font-medium text-gray-500 uppercase tracking-wide">Operation Type</span>
+                                    <div className="font-medium text-gray-900 text-[11px]">{item.operationType}</div>
                                   </div>
                                 )}
-                                <div className="flex flex-col space-y-1">
-                                  <div className="flex items-center gap-2">
-                                    <MapPin className="h-3 w-3 text-green-500" />
-                                    <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">Location</span>
-                                  </div>
-                                  <div className="font-medium text-gray-900 text-sm pl-5">{item.location}</div>
+                                <div>
+                                  <span className="text-[9px] font-medium text-gray-500 uppercase tracking-wide">Location</span>
+                                  <div className="font-medium text-gray-900 text-[11px]">{item.location}</div>
                                 </div>
-                                <div className="flex flex-col space-y-1">
-                                  <div className="flex items-center gap-2">
-                                    <Settings className="h-3 w-3 text-gray-500" />
-                                    <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">Lab Code</span>
-                                  </div>
-                                  <div className="font-mono text-sm text-gray-900 pl-5 bg-gray-50 px-2 py-1 rounded">{item.labCode}</div>
+                                <div>
+                                  <span className="text-[9px] font-medium text-gray-500 uppercase tracking-wide">Lab Code</span>
+                                  <div className="font-mono text-[11px] text-gray-900 bg-gray-50 px-1.5 py-0.5 rounded inline-block">{item.labCode}</div>
                                 </div>
                               </div>
                             </div>
                             
                             {/* Cost & Comments Card */}
-                            <div className="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200">
-                              <div className="p-4 border-b border-gray-100">
-                                <div className="flex items-center gap-2">
-                                  <DollarSign className="h-4 w-4 text-green-600" />
-                                  <h4 className="font-semibold text-gray-900 text-sm">Cost & Comments</h4>
+                            <div className="bg-white rounded-md border border-gray-200 shadow-sm">
+                              <div className="px-3 py-1.5 border-b border-gray-100">
+                                <div className="flex items-center gap-1.5">
+                                  <DollarSign className="h-3 w-3 text-green-600" />
+                                  <h4 className="font-semibold text-gray-900 text-[11px]">Cost & Comments</h4>
                                 </div>
                               </div>
-                              <div className="p-4 space-y-4">
+                              <div className="px-3 py-2 space-y-2">
                                 {item.estimatedCost && (
-                                  <div className="flex flex-col space-y-1">
-                                    <div className="flex items-center gap-2">
-                                      <DollarSign className="h-3 w-3 text-green-500" />
-                                      <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">Estimated Cost</span>
-                                    </div>
-                                    <div className="font-semibold text-green-600 text-sm pl-5">{item.estimatedCost}</div>
+                                  <div>
+                                    <span className="text-[9px] font-medium text-gray-500 uppercase tracking-wide">Estimated Cost</span>
+                                    <div className="font-semibold text-green-600 text-[11px]">{item.estimatedCost}</div>
                                   </div>
                                 )}
                                 {item.actualCost && (
-                                  <div className="flex flex-col space-y-1">
-                                    <div className="flex items-center gap-2">
-                                      <DollarSign className="h-3 w-3 text-blue-500" />
-                                      <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">Actual Cost</span>
-                                    </div>
-                                    <div className="font-semibold text-blue-600 text-sm pl-5">{item.actualCost}</div>
+                                  <div>
+                                    <span className="text-[9px] font-medium text-gray-500 uppercase tracking-wide">Actual Cost</span>
+                                    <div className="font-semibold text-blue-600 text-[11px]">{item.actualCost}</div>
                                   </div>
                                 )}
                                 {item.lastCommentDate && (
-                                  <div className="flex flex-col space-y-1">
-                                    <div className="flex items-center gap-2">
-                                      <MessageSquare className="h-3 w-3 text-orange-500" />
-                                      <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">Last Comment Date</span>
-                                    </div>
-                                    <div className="font-medium text-gray-900 text-sm pl-5">{item.lastCommentDate}</div>
+                                  <div>
+                                    <span className="text-[9px] font-medium text-gray-500 uppercase tracking-wide">Last Comment Date</span>
+                                    <div className="font-medium text-gray-900 text-[11px]">{item.lastCommentDate}</div>
                                   </div>
                                 )}
                                 {item.lastComment && (
-                                  <div className="flex flex-col space-y-2">
-                                    <div className="flex items-center gap-2">
-                                      <MessageSquare className="h-3 w-3 text-gray-500" />
-                                      <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">Last Comment</span>
-                                    </div>
-                                    <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-3 ml-5">
-                                      <p className="text-xs text-gray-800 leading-relaxed">{item.lastComment}</p>
+                                  <div>
+                                    <span className="text-[9px] font-medium text-gray-500 uppercase tracking-wide">Last Comment</span>
+                                    <div className="bg-blue-50 border border-blue-100 rounded p-1.5 mt-0.5">
+                                      <p className="text-[10px] text-gray-800 leading-relaxed">{item.lastComment}</p>
                                     </div>
                                   </div>
                                 )}
