@@ -4835,16 +4835,16 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                     <>
                       <TableHead className="font-semibold text-gray-900">WO Batch</TableHead>
                       <TableHead className="font-semibold text-gray-900">Acct #</TableHead>
-                      <TableHead className="font-semibold text-gray-900">SR #</TableHead>
                       <TableHead className="font-semibold text-gray-900">Customer Name</TableHead>
-                      <TableHead className="font-semibold text-gray-900">Total Lab Open</TableHead>
-                      <TableHead className="font-semibold text-gray-900">Total AR Count</TableHead>
-                      <TableHead className="font-semibold text-gray-900">Total Count</TableHead>
-                      <TableHead className="font-semibold text-gray-900">Last Comment Date</TableHead>
-                      <TableHead className="font-semibold text-gray-900 min-w-[200px]">Last Comment</TableHead>
-                      <TableHead className="font-semibold text-gray-900">Min Need By Date</TableHead>
-                      <TableHead className="font-semibold text-gray-900">Min Follow Up Date</TableHead>
-                      <TableHead className="font-semibold text-gray-900">Min Deliver By Date</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Location</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Priority</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Item Count</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Contact Name</TableHead>
+                      <TableHead className="font-semibold text-gray-900">PO Number</TableHead>
+                      <TableHead className="font-semibold text-gray-900 min-w-[150px]">Item Status</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Follow-up Date</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Deliver By Date</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Aging</TableHead>
                     </>
                   ) : (
                     <>
