@@ -148,6 +148,7 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("");
   const [labCodeFilter, setLabCodeFilter] = useState<string>("");
+  const [columnFilters, setColumnFilters] = useState<Record<string, string>>({});
 
   // Get unique values for filters
   const uniqueStatuses = Array.from(new Set(mockBatch.items.map(item => item.itemStatus)));
