@@ -4035,10 +4035,11 @@ interface ModernWorkOrdersTableProps {
     location: string;
   };
   hasSearched: boolean;
+  searchViewMode?: 'default' | 'csa';
 }
 
 // ModernWorkOrdersTable Component - Clean version with only List/Grid toggle icons
-const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasSearched }: ModernWorkOrdersTableProps) => {
+const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasSearched, searchViewMode = 'default' }: ModernWorkOrdersTableProps) => {
   const [selectedWorkOrder, setSelectedWorkOrder] = useState<WorkOrder | null>(null);
   const [selectedBatch, setSelectedBatch] = useState<WorkOrderBatch | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
