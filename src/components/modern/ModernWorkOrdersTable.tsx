@@ -3691,7 +3691,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     itemNumber: "032",
     manufacturer: "NATIONAL INSTRUMENTS",
     model: "PXIe-5171R",
-    serialNumber: "SN123456",
+    serialNumber: "SN987601",
     created: "12/05/2024",
     departure: "01/15/2025",
     itemStatus: "Surplus Stock",
