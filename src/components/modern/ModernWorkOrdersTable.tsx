@@ -4874,14 +4874,14 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                       <TableHead className="font-semibold text-gray-900">Acct #</TableHead>
                       <TableHead className="font-semibold text-gray-900">SR #</TableHead>
                       <TableHead className="font-semibold text-gray-900">Customer Name</TableHead>
-                      <TableHead className="font-semibold text-gray-900 cursor-pointer select-none hover:bg-gray-100 transition-colors" onClick={() => handleSort('totalLabOpen')}>Total Lab Open<SortIcon columnKey="totalLabOpen" /></TableHead>
-                      <TableHead className="font-semibold text-gray-900 cursor-pointer select-none hover:bg-gray-100 transition-colors" onClick={() => handleSort('totalArCount')}>Total AR Count<SortIcon columnKey="totalArCount" /></TableHead>
-                      <TableHead className="font-semibold text-gray-900 cursor-pointer select-none hover:bg-gray-100 transition-colors" onClick={() => handleSort('totalCount')}>Total Count<SortIcon columnKey="totalCount" /></TableHead>
-                      <TableHead className="font-semibold text-gray-900 cursor-pointer select-none hover:bg-gray-100 transition-colors" onClick={() => handleSort('lastCommentDate')}>Last Comment Date<SortIcon columnKey="lastCommentDate" /></TableHead>
+                      <TableHead className="font-semibold text-gray-900">Total Lab Open</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Total AR Count</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Total Count</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Last Comment Date</TableHead>
                       <TableHead className="font-semibold text-gray-900 min-w-[200px]">Last Comment</TableHead>
-                      <TableHead className="font-semibold text-gray-900 cursor-pointer select-none hover:bg-gray-100 transition-colors" onClick={() => handleSort('minNeedByDate')}>Min Need By Date<SortIcon columnKey="minNeedByDate" /></TableHead>
-                      <TableHead className="font-semibold text-gray-900 cursor-pointer select-none hover:bg-gray-100 transition-colors" onClick={() => handleSort('minFollowUpDate')}>Min Follow Up Date<SortIcon columnKey="minFollowUpDate" /></TableHead>
-                      <TableHead className="font-semibold text-gray-900 cursor-pointer select-none hover:bg-gray-100 transition-colors" onClick={() => handleSort('minDeliverByDate')}>Min Deliver By Date<SortIcon columnKey="minDeliverByDate" /></TableHead>
+                      <TableHead className="font-semibold text-gray-900">Min Need By Date</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Min Follow Up Date</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Min Deliver By Date</TableHead>
                     </>
                   ) : (
                     <>
@@ -4889,10 +4889,10 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                       <TableHead className="font-semibold text-gray-900">Acct #</TableHead>
                       <TableHead className="font-semibold text-gray-900">SR #</TableHead>
                       <TableHead className="font-semibold text-gray-900">Customer Name</TableHead>
-                      <TableHead className="font-semibold text-gray-900 cursor-pointer select-none hover:bg-gray-100 transition-colors" onClick={() => handleSort('minNeedByDate')}>Min Need By Date<SortIcon columnKey="minNeedByDate" /></TableHead>
-                      <TableHead className="font-semibold text-gray-900 cursor-pointer select-none hover:bg-gray-100 transition-colors" onClick={() => handleSort('totalCount')}>Total Count<SortIcon columnKey="totalCount" /></TableHead>
-                      <TableHead className="font-semibold text-gray-900 cursor-pointer select-none hover:bg-gray-100 transition-colors" onClick={() => handleSort('totalLabOpen')}>Total Lab Open<SortIcon columnKey="totalLabOpen" /></TableHead>
-                      <TableHead className="font-semibold text-gray-900 cursor-pointer select-none hover:bg-gray-100 transition-colors" onClick={() => handleSort('totalArCount')}>Total AR Count<SortIcon columnKey="totalArCount" /></TableHead>
+                      <TableHead className="font-semibold text-gray-900">Min Need By Date</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Total Count</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Total Lab Open</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Total AR Count</TableHead>
                     </>
                   )
                 ) : (
