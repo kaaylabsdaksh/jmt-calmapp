@@ -4372,7 +4372,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
     : [];
 
   const paginatedBatches = currentView === 'batch'
-    ? (isShowingAll ? columnFilteredBatches : columnFilteredBatches.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage))
+    ? (isShowingAll ? sortedBatches : sortedBatches.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage))
     : [];
 
   const openDetails = (order: WorkOrder) => {
