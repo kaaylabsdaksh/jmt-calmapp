@@ -4658,7 +4658,8 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
           
           {/* Toggle Buttons - Full Width on Mobile */}
           <div className="space-y-3">
-            {/* Item/Batch Toggle */}
+            {/* Item/Batch Toggle - hidden in CSA mode */}
+            {searchViewMode !== 'csa' && (
             <div className="flex items-center justify-center">
               <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-lg w-full max-w-xs">
                 <Button
@@ -4691,6 +4692,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                 </Button>
               </div>
             </div>
+            )}
 
             {/* List/Grid Toggle */}
             <div className="flex items-center justify-center">
