@@ -25,6 +25,7 @@ interface WorkOrderBatch {
   lastComment: string;
   minNeedByDate: string;
   minFollowUpDate: string;
+  minDeliverByDate: string;
 }
 
 interface WorkOrder {
