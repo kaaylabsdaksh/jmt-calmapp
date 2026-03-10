@@ -662,42 +662,10 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
                     onChange={(e) => handleInputChange(e.target.value)}
                     onKeyDown={handleKeyDown}
                     onFocus={handleInputFocus}
-                    className="pl-9 pr-24 border-0 h-full text-sm placeholder:text-muted-foreground focus-visible:ring-0 focus-visible:ring-offset-0 bg-transparent"
+                    className="pl-9 border-0 h-full text-sm placeholder:text-muted-foreground focus-visible:ring-0 focus-visible:ring-offset-0 bg-transparent"
                   />
-                  {/* Auto-detect badge */}
-                  {detectedType && detectedType !== selectedSearchType && searchInput.trim() && (
-                    <button 
-                      onClick={() => setSelectedSearchType(detectedType)}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1 px-2 py-0.5 rounded-md bg-primary/10 text-primary text-xs font-medium hover:bg-primary/20 transition-colors"
-                    >
-                      <Zap className="h-3 w-3" />
-                      {searchTypeOptions.find(o => o.value === detectedType)?.label}
-                    </button>
-                  )}
                 </div>
               </div>
-
-              {/* Auto-Suggest Dropdown */}
-              {showSuggestions && suggestions.length > 0 && (
-                <div className="absolute left-0 right-0 top-[calc(100%+4px)] z-50 bg-popover border rounded-lg shadow-lg overflow-hidden animate-in fade-in-50 slide-in-from-top-2">
-                  <div className="px-3 py-2 border-b bg-muted/30">
-                    <span className="text-xs font-medium text-muted-foreground">Suggestions</span>
-                  </div>
-                  {suggestions.map((suggestion) => (
-                    <button
-                      key={suggestion.id}
-                      onClick={() => addSearchChip(suggestion.value)}
-                      className="w-full flex items-center gap-3 px-3 py-2.5 text-left hover:bg-accent transition-colors border-b border-border/50 last:border-0"
-                    >
-                      <Search className="h-3.5 w-3.5 text-muted-foreground flex-shrink-0" />
-                      <div className="flex-1 min-w-0">
-                        <div className="text-sm font-medium text-foreground truncate">{suggestion.primary}</div>
-                        <div className="text-xs text-muted-foreground truncate">{suggestion.secondary}</div>
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              )}
 
               {/* Recent Searches Dropdown */}
               {showRecentSearches && recentSearches.length > 0 && !searchInput.trim() && (
