@@ -5130,20 +5130,20 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                       <div className="px-3 pt-3 pb-1.5">
                         <div className="flex items-start justify-between mb-1">
                           <div className="flex items-center gap-1.5">
-                            <div className="w-5 h-5 rounded bg-slate-100 flex items-center justify-center">
-                              <span className="text-slate-600 font-bold text-[9px]">#</span>
+                            <div className="w-6 h-6 rounded bg-slate-100 flex items-center justify-center">
+                              <span className="text-slate-600 font-bold text-[11px]">#</span>
                             </div>
                             <div>
-                              <span className="font-bold text-foreground text-[11px]">{batch.woBatch}</span>
-                              <div className="text-[9px] text-muted-foreground">{batch.acctNumber}</div>
+                              <span className="font-bold text-foreground text-[13px]">{batch.woBatch}</span>
+                              <div className="text-[11px] text-muted-foreground">{batch.acctNumber}</div>
                             </div>
                           </div>
-                          <Badge variant={batch.priority === 'Critical' ? 'destructive' : batch.priority === 'High' ? 'default' : 'secondary'} className="text-[8px] px-1.5 py-0 h-4">
+                          <Badge variant={batch.priority === 'Critical' ? 'destructive' : batch.priority === 'High' ? 'default' : 'secondary'} className="text-[10px] px-1.5 py-0 h-4">
                             {batch.priority}
                           </Badge>
                         </div>
-                        <h3 className="font-semibold text-foreground text-[11px] leading-tight truncate">{batch.customerName}</h3>
-                        <div className="flex items-center gap-1 mt-0.5 text-[9px] text-muted-foreground truncate">
+                        <h3 className="font-semibold text-foreground text-[13px] leading-tight truncate">{batch.customerName}</h3>
+                        <div className="flex items-center gap-1 mt-0.5 text-[11px] text-muted-foreground truncate">
                           <span>{batch.location}</span>
                           <span>•</span>
                           <span>{batch.contactName}</span>
@@ -5151,17 +5151,17 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                       </div>
                       
                       <div className="px-3 py-1 space-y-0.5">
-                        <div className="flex items-center justify-between text-[10px]">
+                        <div className="flex items-center justify-between text-[12px]">
                           <span className="text-muted-foreground">PO</span>
                           <span className="font-medium text-foreground truncate ml-2">{batch.poNumber}</span>
                         </div>
-                        <div className="flex items-center justify-between text-[10px]">
+                        <div className="flex items-center justify-between text-[12px]">
                           <span className="text-muted-foreground">Status</span>
                           <span className="font-medium text-foreground truncate ml-2">{batch.itemStatus}</span>
                         </div>
-                        <div className="flex items-center justify-between text-[10px]">
+                        <div className="flex items-center justify-between text-[12px]">
                           <span className="text-muted-foreground">Items</span>
-                          <span className="font-bold text-foreground bg-muted px-1.5 py-0 rounded-full text-[9px]">{batch.totalCount}</span>
+                          <span className="font-bold text-foreground bg-muted px-1.5 py-0 rounded-full text-[11px]">{batch.totalCount}</span>
                         </div>
                       </div>
                       
@@ -5169,16 +5169,16 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                       
                       <div className="px-3 py-2 grid grid-cols-3 gap-1.5">
                         <div className="bg-muted/50 rounded px-1.5 py-1 text-center">
-                          <span className="text-[8px] text-muted-foreground uppercase tracking-wider block">Follow-up</span>
-                          <div className="font-medium text-[9px] text-foreground">{batch.minFollowUpDate || '—'}</div>
+                          <span className="text-[10px] text-muted-foreground uppercase tracking-wider block">Follow-up</span>
+                          <div className="font-medium text-[11px] text-foreground">{batch.minFollowUpDate || '—'}</div>
                         </div>
                         <div className="bg-muted/50 rounded px-1.5 py-1 text-center">
-                          <span className="text-[8px] text-muted-foreground uppercase tracking-wider block">Deliver By</span>
-                          <div className="font-medium text-[9px] text-foreground">{batch.minDeliverByDate}</div>
+                          <span className="text-[10px] text-muted-foreground uppercase tracking-wider block">Deliver By</span>
+                          <div className="font-medium text-[11px] text-foreground">{batch.minDeliverByDate}</div>
                         </div>
                         <div className="bg-slate-100 rounded px-1.5 py-1 text-center border border-slate-200">
-                          <span className="text-[8px] text-slate-600 uppercase tracking-wider block font-medium">Aging</span>
-                          <div className="font-medium text-[9px] text-foreground">
+                          <span className="text-[10px] text-slate-600 uppercase tracking-wider block font-medium">Aging</span>
+                          <div className="font-medium text-[11px] text-foreground">
                             {(() => {
                               const days = getAgingDays(batch);
                               return days !== null ? `${days}d` : '—';
