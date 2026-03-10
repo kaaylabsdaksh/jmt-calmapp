@@ -358,13 +358,6 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
             </Badge>
           )}
         </div>
-        <button
-          onClick={clearAllFilters}
-          className="flex items-center gap-1.5 text-sm font-medium text-yellow-600 hover:text-yellow-700 transition-colors"
-        >
-          <X className="h-4 w-4" />
-          Clear All
-        </button>
       </div>
 
       <div className="px-5 pb-5 space-y-4">
