@@ -162,14 +162,9 @@ const MinimalWorkOrderSearch = ({ onSearch }: MinimalWorkOrderSearchProps) => {
     const chipValue = value || searchInput.trim();
     if (!chipValue) return;
 
-    const typeToUse = detectedType || selectedSearchType;
+    const typeToUse = selectedSearchType;
     const selectedOption = searchTypeOptions.find(opt => opt.value === typeToUse);
     if (!selectedOption) return;
-
-    // Auto-switch type if detected
-    if (detectedType && detectedType !== selectedSearchType) {
-      setSelectedSearchType(detectedType);
-    }
 
     const newChip: SearchChip = {
       id: `${typeToUse}-${Date.now()}`,
