@@ -299,6 +299,45 @@ const mockWorkOrders = [
   }
 ];
 
+// Auto-detect search type based on input pattern
+function autoDetectSearchType(input: string): string | null {
+  const trimmed = input.trim();
+  if (!trimmed) return null;
+  if (/^\d{5,6}$/.test(trimmed)) return 'workOrderNumber';
+  if (/^\d{5,6}-\d{1,3}$/.test(trimmed)) return 'workOrderItemNumber';
+  if (/^\d{3,5}\.\d{1,2}$/.test(trimmed)) return 'accountNumber';
+  if (/^PO[-\s]?\d+/i.test(trimmed)) return 'poNumber';
+  if (/^SR\d+/i.test(trimmed)) return 'onsiteProjectNumber';
+  if (/^SN\d+/i.test(trimmed)) return 'serialNumber';
+  if (/^MFG[-\s]?\d+/i.test(trimmed)) return 'mfgSerial';
+  if (/^ESL[-\s]?\d+/i.test(trimmed)) return 'eslID';
+  if (/^RFID[-\s]/i.test(trimmed)) return 'rfid';
+  if (/^RMA/i.test(trimmed)) return 'vendorRMANumber';
+  if (/^QT[-\s]?\d+/i.test(trimmed)) return 'quoteNumber';
+  if (/^CUST[-\s]?\d+/i.test(trimmed)) return 'custID';
+  if (/^[a-zA-Z\s]{3,}$/.test(trimmed)) return 'customerName';
+  return null;
+}
+
+interface RecentSearch {
+  id: string;
+  chips: SearchChip[];
+  timestamp: number;
+  label: string;
+}
+
+const RECENT_SEARCHES_KEY = 'wo-modern-recent-searches';
+const MAX_RECENT_SEARCHES = 8;
+
+function loadRecentSearches(): RecentSearch[] {
+  try { return JSON.parse(localStorage.getItem(RECENT_SEARCHES_KEY) || '[]'); }
+  catch { return []; }
+}
+function saveRecentSearches(searches: RecentSearch[]) {
+  try { localStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(searches.slice(0, MAX_RECENT_SEARCHES))); }
+  catch {}
+}
+
 const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
   const [dateFrom, setDateFrom] = useState<Date>();
   const [dateTo, setDateTo] = useState<Date>();
@@ -308,6 +347,12 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
   const [searchChips, setSearchChips] = useState<SearchChip[]>([]);
   const [selectedSearchType, setSelectedSearchType] = useState('workOrderNumber');
   const [searchInput, setSearchInput] = useState('');
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [showRecentSearches, setShowRecentSearches] = useState(false);
+  const [recentSearches, setRecentSearches] = useState<RecentSearch[]>(loadRecentSearches);
+  const [detectedType, setDetectedType] = useState<string | null>(null);
+  const [resultCount, setResultCount] = useState<number | null>(null);
+  const searchContainerRef = useRef<HTMLDivElement>(null);
   const [searchValues, setSearchValues] = useState({
     woNumber: '',
     customer: '',
@@ -337,6 +382,80 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
     nonJMAccts: false,
     viewTemplate: false
   });
+
+  // Close dropdowns on outside click
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(e.target as Node)) {
+        setShowSuggestions(false);
+        setShowRecentSearches(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  // Auto-detect type
+  useEffect(() => {
+    setDetectedType(autoDetectSearchType(searchInput));
+  }, [searchInput]);
+
+  // Compute suggestions
+  const suggestions = useMemo(() => {
+    if (!searchInput.trim()) return [];
+    const q = searchInput.toLowerCase();
+    return mockWorkOrders
+      .filter(wo => {
+        switch (selectedSearchType) {
+          case 'workOrderNumber': return wo.id.includes(q);
+          case 'accountNumber': return wo.accountNumber.toLowerCase().includes(q);
+          case 'customerName': return wo.customer.toLowerCase().includes(q);
+          case 'serialNumber': return wo.serialNumber.toLowerCase().includes(q);
+          case 'manufacturer': return wo.manufacturer.toLowerCase().includes(q);
+          default: return wo.id.includes(q) || wo.customer.toLowerCase().includes(q);
+        }
+      })
+      .slice(0, 6)
+      .map(wo => ({
+        id: wo.id,
+        primary: selectedSearchType === 'customerName' ? wo.customer :
+                 selectedSearchType === 'accountNumber' ? wo.accountNumber :
+                 selectedSearchType === 'manufacturer' ? wo.manufacturer :
+                 wo.id,
+        secondary: selectedSearchType === 'customerName' ? `WO: ${wo.id}` : `${wo.customer} • ${wo.manufacturer}`,
+        value: selectedSearchType === 'customerName' ? wo.customer :
+               selectedSearchType === 'accountNumber' ? wo.accountNumber :
+               selectedSearchType === 'manufacturer' ? wo.manufacturer :
+               wo.id,
+      }));
+  }, [searchInput, selectedSearchType]);
+
+  // Live result count
+  useEffect(() => {
+    if (searchChips.length === 0) { setResultCount(null); return; }
+    const timer = setTimeout(() => {
+      let count = mockWorkOrders.length;
+      searchChips.forEach(chip => {
+        const q = chip.value.toLowerCase();
+        count = mockWorkOrders.filter(wo =>
+          wo.id.includes(q) || wo.customer.toLowerCase().includes(q) || wo.accountNumber.includes(q) || wo.manufacturer.toLowerCase().includes(q)
+        ).length;
+      });
+      setResultCount(count);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [searchChips]);
+
+  const formatTimeAgo = (timestamp: number) => {
+    const diff = Date.now() - timestamp;
+    const mins = Math.floor(diff / 60000);
+    if (mins < 1) return 'Just now';
+    if (mins < 60) return `${mins}m ago`;
+    const hrs = Math.floor(mins / 60);
+    if (hrs < 24) return `${hrs}h ago`;
+    return `${Math.floor(hrs / 24)}d ago`;
+  };
+
 
   const addSearchChip = () => {
     if (!searchInput.trim()) return;
