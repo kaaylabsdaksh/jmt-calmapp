@@ -365,7 +365,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
             </Badge>
           )}
         </div>
-        <Select value={viewMode} onValueChange={(val: 'default' | 'csa') => setViewMode(val)}>
+        <Select value={viewMode} onValueChange={(val: 'default' | 'csa') => handleViewModeChange(val)}>
           <SelectTrigger className="w-[130px] h-7 text-xs px-2 gap-1">
             <SelectValue />
           </SelectTrigger>
