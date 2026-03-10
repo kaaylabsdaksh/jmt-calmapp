@@ -7,20 +7,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Search, Plus, RotateCcw, Filter, X, Clock, Hash, User, FileText, Package } from "lucide-react";
 
-// Mock work order batch data for suggestions
-const mockWorkOrderBatches = [
-  { id: "1", woBatch: "383727", acctNumber: "13058.06", srNumber: "SR2455", customerName: "Deutsche Windtechnik Inc", minNeedByDate: "09/24/2021" },
-  { id: "2", woBatch: "390118", acctNumber: "6962.01", srNumber: "SR1820", customerName: "Colonial Pipeline", minNeedByDate: "12/20/2022" },
-  { id: "3", woBatch: "452463", acctNumber: "6962.01", srNumber: "SR1820", customerName: "Colonial Pipeline", minNeedByDate: "06/23/2023" },
-  { id: "4", woBatch: "393015", acctNumber: "7412.06", srNumber: "", customerName: "Burns & McDonnell", minNeedByDate: "01/17/2022" },
-  { id: "5", woBatch: "441228", acctNumber: "2577.50", srNumber: "SR2425", customerName: "Energy Transfer", minNeedByDate: "03/20/2023" },
-  { id: "6", woBatch: "438752", acctNumber: "13058.20", srNumber: "SR2458", customerName: "Nuclear Research Institute", minNeedByDate: "12/10/2021" },
-  { id: "7", woBatch: "385737", acctNumber: "9901.01", srNumber: "SR3001", customerName: "ACME Industries", minNeedByDate: "05/15/2023" },
-  { id: "8", woBatch: "390589", acctNumber: "8842.02", srNumber: "SR2890", customerName: "Tech Solutions Ltd", minNeedByDate: "08/22/2023" },
-  { id: "9", woBatch: "400217", acctNumber: "5523.03", srNumber: "SR1456", customerName: "Manufacturing Corp", minNeedByDate: "11/30/2023" },
-  { id: "10", woBatch: "403946", acctNumber: "7710.04", srNumber: "SR3200", customerName: "Quality Systems Inc", minNeedByDate: "02/14/2024" },
-];
-
 interface SearchChip {
   id: string;
   type: string;
