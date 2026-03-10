@@ -4985,10 +4985,25 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                     <TableCell>{batch.acctNumber}</TableCell>
                     <TableCell className="text-blue-600">{batch.srNumber}</TableCell>
                     <TableCell className="font-medium">{batch.customerName}</TableCell>
-                    <TableCell>{batch.minNeedByDate}</TableCell>
-                    <TableCell className="text-center font-medium">{batch.totalCount}</TableCell>
-                    <TableCell className="text-center">{batch.totalLabOpen}</TableCell>
-                    <TableCell className="text-center">{batch.totalArCount}</TableCell>
+                    {searchViewMode === 'csa' ? (
+                      <>
+                        <TableCell className="text-center">{batch.totalLabOpen}</TableCell>
+                        <TableCell className="text-center">{batch.totalArCount}</TableCell>
+                        <TableCell className="text-center font-medium">{batch.totalCount}</TableCell>
+                        <TableCell>{batch.lastCommentDate}</TableCell>
+                        <TableCell className="text-sm text-muted-foreground max-w-[200px] truncate">{batch.lastComment}</TableCell>
+                        <TableCell>{batch.minNeedByDate}</TableCell>
+                        <TableCell>{batch.minFollowUpDate}</TableCell>
+                        <TableCell>{batch.minNeedByDate}</TableCell>
+                      </>
+                    ) : (
+                      <>
+                        <TableCell>{batch.minNeedByDate}</TableCell>
+                        <TableCell className="text-center font-medium">{batch.totalCount}</TableCell>
+                        <TableCell className="text-center">{batch.totalLabOpen}</TableCell>
+                        <TableCell className="text-center">{batch.totalArCount}</TableCell>
+                      </>
+                    )}
                   </TableRow>
                 ))
               ) : (
