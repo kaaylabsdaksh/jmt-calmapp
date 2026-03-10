@@ -5134,7 +5134,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                               <span className="text-slate-600 font-bold text-xs">#</span>
                             </div>
                             <div>
-                              <span className="font-bold text-primary text-sm">{batch.woBatch}</span>
+                              <span className="font-bold text-foreground text-sm">{batch.woBatch}</span>
                               <div className="text-[10px] text-muted-foreground">{batch.acctNumber}</div>
                             </div>
                           </div>
