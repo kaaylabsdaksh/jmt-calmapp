@@ -7,7 +7,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Calendar as CalendarIcon, Search, X, Filter, Plus, Check, Clock } from "lucide-react";
+import { Calendar as CalendarIcon, Search, X, Filter, Plus, Check, Clock, RotateCcw } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 
@@ -814,14 +814,15 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
         </div>
 
         {/* Search & Clear Buttons */}
-        <div className="flex justify-end gap-2 pt-2">
-          <button
+        <div className="flex justify-end gap-3 pt-2">
+          <Button 
+            variant="destructive"
             onClick={clearAllFilters}
-            className="flex items-center gap-1.5 text-sm font-medium text-yellow-600 hover:text-yellow-700 transition-colors px-4 h-10"
+            className="rounded-lg h-10 px-5 font-medium"
           >
-            <X className="h-4 w-4" />
+            <RotateCcw className="h-4 w-4 mr-2" />
             Clear All
-          </button>
+          </Button>
           <Button 
             onClick={handleSearch}
             className="rounded-lg h-10 px-6 font-medium bg-blue-600 hover:bg-blue-700 text-white shadow-sm"
