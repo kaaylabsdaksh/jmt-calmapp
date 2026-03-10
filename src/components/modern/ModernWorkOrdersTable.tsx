@@ -26,6 +26,14 @@ interface WorkOrderBatch {
   minNeedByDate: string;
   minFollowUpDate: string;
   minDeliverByDate: string;
+  // CSA view fields
+  location: string;
+  priority: "High" | "Medium" | "Low" | "Critical";
+  contactName: string;
+  poNumber: string;
+  itemStatus: string;
+  arrivalDate: string;
+  puDate: string;
 }
 
 interface WorkOrder {
