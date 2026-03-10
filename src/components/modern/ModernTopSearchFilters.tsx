@@ -360,12 +360,12 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
           )}
         </div>
         <Select value={viewMode} onValueChange={(val: 'default' | 'csa') => setViewMode(val)}>
-          <SelectTrigger className="w-[160px] h-9 text-sm">
+          <SelectTrigger className="w-[130px] h-7 text-xs px-2 gap-1">
             <SelectValue />
           </SelectTrigger>
-          <SelectContent className="bg-popover border shadow-lg z-50">
-            <SelectItem value="default">Default View</SelectItem>
-            <SelectItem value="csa">CSA View</SelectItem>
+          <SelectContent className="bg-popover border shadow-lg z-50 min-w-[120px]">
+            <SelectItem value="default" className="text-xs py-1.5">Default View</SelectItem>
+            <SelectItem value="csa" className="text-xs py-1.5">CSA View</SelectItem>
           </SelectContent>
         </Select>
       </div>
