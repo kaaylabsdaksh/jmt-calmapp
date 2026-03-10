@@ -148,6 +148,7 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("");
   const [labCodeFilter, setLabCodeFilter] = useState<string>("");
+  const [columnFilters, setColumnFilters] = useState<Record<string, string>>({});
 
   // Get unique values for filters
   const uniqueStatuses = Array.from(new Set(mockBatch.items.map(item => item.itemStatus)));
@@ -185,9 +186,33 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
     if (labCodeFilter) {
       items = items.filter(item => item.labCode === labCodeFilter);
     }
+
+    // Apply column filters
+    const colFilterKeys: Record<string, (item: WorkOrderItem) => string> = {
+      item: (i) => i.item,
+      location: (i) => i.location,
+      itemCreated: (i) => i.itemCreated,
+      action: (i) => i.action,
+      itemStatus: (i) => i.itemStatus,
+      manufacturer: (i) => i.manufacturer,
+      model: (i) => i.model,
+      description: (i) => i.description || '',
+      serialNumber: (i) => i.serialNumber,
+      deliverByDate: (i) => i.deliverByDate || '',
+      followUpDate: (i) => i.followUpDate || '',
+      division: (i) => i.division,
+      labCode: (i) => i.labCode,
+      poNumber: (i) => i.poNumber,
+    };
+    Object.entries(columnFilters).forEach(([key, value]) => {
+      if (value && colFilterKeys[key]) {
+        const lower = value.toLowerCase();
+        items = items.filter(item => colFilterKeys[key](item).toLowerCase().includes(lower));
+      }
+    });
     
     return items;
-  }, [searchQuery, statusFilter, labCodeFilter]);
+  }, [searchQuery, statusFilter, labCodeFilter, columnFilters]);
 
   const clearAllFilters = () => {
     setSearchQuery("");
@@ -380,6 +405,35 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
                     <TableHead className="w-12"></TableHead>
                   </>
                 )}
+              </TableRow>
+              {/* Column Filter Row */}
+              <TableRow className="border-b border-gray-100">
+                {(viewMode === 'csa' ? [
+                  'item', 'location', 'itemCreated', 'action', 'itemStatus', 'manufacturer', 'model', 'description', 'serialNumber', 'deliverByDate', 'followUpDate'
+                ] : [
+                  'item', 'division', 'location', 'itemCreated', 'action', 'itemStatus', 'manufacturer', 'model', 'labCode', 'serialNumber', 'poNumber'
+                ]).map((key) => (
+                  <TableHead key={key} className="py-1.5 px-2">
+                    <div className="relative">
+                      <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground/50" />
+                      <Input
+                        placeholder=""
+                        value={columnFilters[key] || ''}
+                        onChange={(e) => setColumnFilters(prev => ({ ...prev, [key]: e.target.value }))}
+                        className="h-7 text-[11px] pl-6 pr-6 border-muted bg-muted/30 rounded-md placeholder:text-muted-foreground/40 focus:bg-background focus:border-primary/30 transition-colors"
+                      />
+                      {columnFilters[key] && (
+                        <button
+                          onClick={() => setColumnFilters(prev => ({ ...prev, [key]: '' }))}
+                          className="absolute right-1.5 top-1/2 -translate-y-1/2 p-0.5 rounded-full hover:bg-muted transition-colors"
+                        >
+                          <X className="h-3 w-3 text-muted-foreground" />
+                        </button>
+                      )}
+                    </div>
+                  </TableHead>
+                ))}
+                <TableHead className="w-12"></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
