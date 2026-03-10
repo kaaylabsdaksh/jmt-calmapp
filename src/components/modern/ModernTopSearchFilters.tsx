@@ -813,8 +813,15 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
           </div>
         </div>
 
-        {/* Search Button */}
-        <div className="flex justify-end pt-2">
+        {/* Search & Clear Buttons */}
+        <div className="flex justify-end gap-2 pt-2">
+          <button
+            onClick={clearAllFilters}
+            className="flex items-center gap-1.5 text-sm font-medium text-yellow-600 hover:text-yellow-700 transition-colors px-4 h-10"
+          >
+            <X className="h-4 w-4" />
+            Clear All
+          </button>
           <Button 
             onClick={handleSearch}
             className="rounded-lg h-10 px-6 font-medium bg-blue-600 hover:bg-blue-700 text-white shadow-sm"
