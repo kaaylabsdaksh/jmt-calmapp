@@ -4076,7 +4076,35 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
   const [sortConfig, setSortConfig] = useState<{ key: string; direction: 'asc' | 'desc' } | null>(null);
   const navigate = useNavigate();
 
-  const sortableColumns = new Set(['totalLabOpen', 'totalArCount', 'totalCount', 'lastCommentDate', 'minNeedByDate', 'minFollowUpDate', 'minDeliverByDate']);
+  const sortableColumns = new Set(['totalLabOpen', 'totalArCount', 'totalCount', 'lastCommentDate', 'minNeedByDate', 'minFollowUpDate', 'minDeliverByDate', 'itemCount', 'followUpDate', 'deliverByDate', 'aging']);
+
+  // Calculate business days between two dates (excludes weekends)
+  const calculateBusinessDays = (startDate: Date, endDate: Date): number => {
+    let count = 0;
+    const current = new Date(startDate);
+    const isForward = endDate >= startDate;
+    while (isForward ? current <= endDate : current >= endDate) {
+      const day = current.getDay();
+      if (day !== 0 && day !== 6) count++;
+      current.setDate(current.getDate() + (isForward ? 1 : -1));
+    }
+    return isForward ? count : -count;
+  };
+
+  const getAgingDays = (batch: WorkOrderBatch): number | null => {
+    const parseD = (d: string) => {
+      if (!d) return null;
+      const [m, day, y] = d.split('/').map(Number);
+      return new Date(y, m - 1, day);
+    };
+    const arrival = parseD(batch.arrivalDate);
+    const pu = parseD(batch.puDate);
+    let effectiveDate = arrival;
+    if (pu && arrival && pu < arrival) effectiveDate = pu;
+    else if (pu && !arrival) effectiveDate = pu;
+    if (!effectiveDate) return null;
+    return calculateBusinessDays(effectiveDate, new Date());
+  };
 
   const handleSort = (key: string) => {
     if (!sortableColumns.has(key)) return;
