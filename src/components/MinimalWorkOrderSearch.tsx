@@ -117,10 +117,8 @@ const MinimalWorkOrderSearch = ({ onSearch }: MinimalWorkOrderSearchProps) => {
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [showRecentSearches, setShowRecentSearches] = useState(false);
   const [recentSearches, setRecentSearches] = useState<RecentSearch[]>(loadRecentSearches);
-  const [detectedType, setDetectedType] = useState<string | null>(null);
   const [resultCount, setResultCount] = useState<number | null>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
-  const suggestionsRef = useRef<HTMLDivElement>(null);
   const searchContainerRef = useRef<HTMLDivElement>(null);
 
   // Close dropdowns on outside click
