@@ -5103,7 +5103,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
           </Table>
         ) : (
           // Grid View - Cards
-          <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className={cn("grid gap-3", searchViewMode === 'csa' ? "p-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5" : "p-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6")}>
             {!hasSearched ? (
               <div className="col-span-full text-center py-12">
                 <p className="text-muted-foreground text-lg">
@@ -5127,58 +5127,58 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                   {searchViewMode === 'csa' ? (
                     <>
                       {/* CSA Card - Modern Design */}
-                      <div className="px-4 pt-4 pb-2">
-                        <div className="flex items-start justify-between mb-2">
-                          <div className="flex items-center gap-2">
-                            <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center">
-                              <span className="text-slate-600 font-bold text-xs">#</span>
+                      <div className="px-3 pt-3 pb-1.5">
+                        <div className="flex items-start justify-between mb-1">
+                          <div className="flex items-center gap-1.5">
+                            <div className="w-5 h-5 rounded bg-slate-100 flex items-center justify-center">
+                              <span className="text-slate-600 font-bold text-[9px]">#</span>
                             </div>
                             <div>
-                              <span className="font-bold text-foreground text-sm">{batch.woBatch}</span>
-                              <div className="text-[10px] text-muted-foreground">{batch.acctNumber}</div>
+                              <span className="font-bold text-foreground text-[11px]">{batch.woBatch}</span>
+                              <div className="text-[9px] text-muted-foreground">{batch.acctNumber}</div>
                             </div>
                           </div>
-                          <Badge variant={batch.priority === 'Critical' ? 'destructive' : batch.priority === 'High' ? 'default' : 'secondary'} className="text-[10px] px-2 py-0">
+                          <Badge variant={batch.priority === 'Critical' ? 'destructive' : batch.priority === 'High' ? 'default' : 'secondary'} className="text-[8px] px-1.5 py-0 h-4">
                             {batch.priority}
                           </Badge>
                         </div>
-                        <h3 className="font-semibold text-foreground text-sm leading-tight">{batch.customerName}</h3>
-                        <div className="flex items-center gap-1.5 mt-1 text-[10px] text-muted-foreground">
+                        <h3 className="font-semibold text-foreground text-[11px] leading-tight truncate">{batch.customerName}</h3>
+                        <div className="flex items-center gap-1 mt-0.5 text-[9px] text-muted-foreground truncate">
                           <span>{batch.location}</span>
                           <span>•</span>
                           <span>{batch.contactName}</span>
                         </div>
                       </div>
                       
-                      <div className="px-4 py-2 space-y-2">
-                        <div className="flex items-center justify-between text-[11px]">
-                          <span className="text-muted-foreground">PO Number</span>
-                          <span className="font-medium text-foreground">{batch.poNumber}</span>
+                      <div className="px-3 py-1 space-y-0.5">
+                        <div className="flex items-center justify-between text-[10px]">
+                          <span className="text-muted-foreground">PO</span>
+                          <span className="font-medium text-foreground truncate ml-2">{batch.poNumber}</span>
                         </div>
-                        <div className="flex items-center justify-between text-[11px]">
+                        <div className="flex items-center justify-between text-[10px]">
                           <span className="text-muted-foreground">Status</span>
-                          <span className="font-medium text-foreground">{batch.itemStatus}</span>
+                          <span className="font-medium text-foreground truncate ml-2">{batch.itemStatus}</span>
                         </div>
-                        <div className="flex items-center justify-between text-[11px]">
+                        <div className="flex items-center justify-between text-[10px]">
                           <span className="text-muted-foreground">Items</span>
-                          <span className="font-bold text-foreground bg-muted px-2 py-0.5 rounded-full text-[10px]">{batch.totalCount}</span>
+                          <span className="font-bold text-foreground bg-muted px-1.5 py-0 rounded-full text-[9px]">{batch.totalCount}</span>
                         </div>
                       </div>
                       
-                      <div className="mx-4 border-t border-slate-100"></div>
+                      <div className="mx-3 border-t border-slate-100"></div>
                       
-                      <div className="px-4 py-3 grid grid-cols-3 gap-2">
-                        <div className="bg-muted/50 rounded-lg px-2 py-1.5 text-center">
-                          <span className="text-[9px] text-muted-foreground uppercase tracking-wider block">Follow-up</span>
-                          <div className="font-medium text-[10px] text-foreground mt-0.5">{batch.minFollowUpDate || '—'}</div>
+                      <div className="px-3 py-2 grid grid-cols-3 gap-1.5">
+                        <div className="bg-muted/50 rounded px-1.5 py-1 text-center">
+                          <span className="text-[8px] text-muted-foreground uppercase tracking-wider block">Follow-up</span>
+                          <div className="font-medium text-[9px] text-foreground">{batch.minFollowUpDate || '—'}</div>
                         </div>
-                        <div className="bg-muted/50 rounded-lg px-2 py-1.5 text-center">
-                          <span className="text-[9px] text-muted-foreground uppercase tracking-wider block">Deliver By</span>
-                          <div className="font-medium text-[10px] text-foreground mt-0.5">{batch.minDeliverByDate}</div>
+                        <div className="bg-muted/50 rounded px-1.5 py-1 text-center">
+                          <span className="text-[8px] text-muted-foreground uppercase tracking-wider block">Deliver By</span>
+                          <div className="font-medium text-[9px] text-foreground">{batch.minDeliverByDate}</div>
                         </div>
-                        <div className="bg-slate-100 rounded-lg px-2 py-1.5 text-center border border-slate-200">
-                          <span className="text-[9px] text-slate-600 uppercase tracking-wider block font-medium">Aging</span>
-                          <div className="font-medium text-[10px] text-foreground mt-0.5">
+                        <div className="bg-slate-100 rounded px-1.5 py-1 text-center border border-slate-200">
+                          <span className="text-[8px] text-slate-600 uppercase tracking-wider block font-medium">Aging</span>
+                          <div className="font-medium text-[9px] text-foreground">
                             {(() => {
                               const days = getAgingDays(batch);
                               return days !== null ? `${days}d` : '—';
