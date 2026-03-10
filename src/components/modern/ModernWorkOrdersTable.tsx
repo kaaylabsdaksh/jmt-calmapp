@@ -4046,6 +4046,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [activeStatusFilter, setActiveStatusFilter] = useState<string>('all');
   const [currentView, setCurrentView] = useState<'item' | 'batch'>('item');
+  const [columnFilters, setColumnFilters] = useState<Record<string, string>>({});
   const navigate = useNavigate();
 
   // Force batch view when CSA mode is active
