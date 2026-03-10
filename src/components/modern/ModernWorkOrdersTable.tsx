@@ -4880,27 +4880,27 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                 {currentView === 'batch' ? (
                   <>
                     {(searchViewMode === 'csa' ? [
-                      { key: 'woBatch', placeholder: 'Filter batch...' },
-                      { key: 'acctNumber', placeholder: 'Filter acct...' },
-                      { key: 'srNumber', placeholder: 'Filter SR...' },
-                      { key: 'customerName', placeholder: 'Filter customer...' },
-                      { key: 'totalLabOpen', placeholder: 'Filter...' },
-                      { key: 'totalArCount', placeholder: 'Filter...' },
-                      { key: 'totalCount', placeholder: 'Filter...' },
-                      { key: 'lastCommentDate', placeholder: 'Filter date...' },
-                      { key: 'lastComment', placeholder: 'Filter comment...' },
-                      { key: 'minNeedByDate', placeholder: 'Filter date...' },
-                      { key: 'minFollowUpDate', placeholder: 'Filter date...' },
-                      { key: 'minDeliverByDate', placeholder: 'Filter date...' },
+                      { key: 'woBatch', placeholder: '' },
+                      { key: 'acctNumber', placeholder: '' },
+                      { key: 'srNumber', placeholder: '' },
+                      { key: 'customerName', placeholder: '' },
+                      { key: 'totalLabOpen', placeholder: '' },
+                      { key: 'totalArCount', placeholder: '' },
+                      { key: 'totalCount', placeholder: '' },
+                      { key: 'lastCommentDate', placeholder: '' },
+                      { key: 'lastComment', placeholder: '' },
+                      { key: 'minNeedByDate', placeholder: '' },
+                      { key: 'minFollowUpDate', placeholder: '' },
+                      { key: 'minDeliverByDate', placeholder: '' },
                     ] : [
-                      { key: 'woBatch', placeholder: 'Filter batch...' },
-                      { key: 'acctNumber', placeholder: 'Filter acct...' },
-                      { key: 'srNumber', placeholder: 'Filter SR...' },
-                      { key: 'customerName', placeholder: 'Filter customer...' },
-                      { key: 'minNeedByDate', placeholder: 'Filter date...' },
-                      { key: 'totalCount', placeholder: 'Filter...' },
-                      { key: 'totalLabOpen', placeholder: 'Filter...' },
-                      { key: 'totalArCount', placeholder: 'Filter...' },
+                      { key: 'woBatch', placeholder: '' },
+                      { key: 'acctNumber', placeholder: '' },
+                      { key: 'srNumber', placeholder: '' },
+                      { key: 'customerName', placeholder: '' },
+                      { key: 'minNeedByDate', placeholder: '' },
+                      { key: 'totalCount', placeholder: '' },
+                      { key: 'totalLabOpen', placeholder: '' },
+                      { key: 'totalArCount', placeholder: '' },
                     ]).map((col) => (
                       <TableHead key={col.key} className="py-1.5 px-2">
                         <div className="relative">
@@ -4926,16 +4926,16 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                 ) : (
                   <>
                     {[
-                      { key: 'workOrderNumber', placeholder: 'Filter WO...' },
-                      { key: 'itemNumber', placeholder: 'Filter item...' },
-                      { key: 'itemStatus', placeholder: 'Filter status...' },
-                      { key: 'priority', placeholder: 'Filter...' },
-                      { key: 'manufacturer', placeholder: 'Filter mfg...' },
-                      { key: 'model', placeholder: 'Filter model...' },
-                      { key: 'serialNumber', placeholder: 'Filter SN...' },
-                      { key: 'itemType', placeholder: 'Filter type...' },
-                      { key: 'customer', placeholder: 'Filter customer...' },
-                      { key: 'assignedTo', placeholder: 'Filter...' },
+                      { key: 'workOrderNumber', placeholder: '' },
+                      { key: 'itemNumber', placeholder: '' },
+                      { key: 'itemStatus', placeholder: '' },
+                      { key: 'priority', placeholder: '' },
+                      { key: 'manufacturer', placeholder: '' },
+                      { key: 'model', placeholder: '' },
+                      { key: 'serialNumber', placeholder: '' },
+                      { key: 'itemType', placeholder: '' },
+                      { key: 'customer', placeholder: '' },
+                      { key: 'assignedTo', placeholder: '' },
                     ].map((col) => (
                       <TableHead key={col.key} className="py-1.5 px-2">
                         <div className="relative">
