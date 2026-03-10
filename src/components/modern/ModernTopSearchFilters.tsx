@@ -105,7 +105,7 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
   const [searchInput, setSearchInput] = useState('');
   const [showRecentSearches, setShowRecentSearches] = useState(false);
   const [recentSearches, setRecentSearches] = useState<RecentSearch[]>(loadRecentSearches);
-  const [detectedType, setDetectedType] = useState<string | null>(null);
+  
   const [resultCount, setResultCount] = useState<number | null>(null);
   const searchContainerRef = useRef<HTMLDivElement>(null);
   const [searchValues, setSearchValues] = useState({
