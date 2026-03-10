@@ -4831,16 +4831,33 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
               <TableRow className="hover:bg-gray-50">
                 {currentView === 'batch' ? (
                   // Batch View Headers
-                  <>
-                    <TableHead className="font-semibold text-gray-900">WO Batch</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Acct #</TableHead>
-                    <TableHead className="font-semibold text-gray-900">SR #</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Customer Name</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Min Need By Date</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Total Count</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Total Lab Open</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Total AR Count</TableHead>
-                  </>
+                  searchViewMode === 'csa' ? (
+                    <>
+                      <TableHead className="font-semibold text-gray-900">WO Batch</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Acct #</TableHead>
+                      <TableHead className="font-semibold text-gray-900">SR #</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Customer Name</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Total Lab Open</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Total AR Count</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Total Count</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Last Comment Date</TableHead>
+                      <TableHead className="font-semibold text-gray-900 min-w-[200px]">Last Comment</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Min Need By Date</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Min Follow Up Date</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Min Deliver By Date</TableHead>
+                    </>
+                  ) : (
+                    <>
+                      <TableHead className="font-semibold text-gray-900">WO Batch</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Acct #</TableHead>
+                      <TableHead className="font-semibold text-gray-900">SR #</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Customer Name</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Min Need By Date</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Total Count</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Total Lab Open</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Total AR Count</TableHead>
+                    </>
+                  )
                 ) : (
                   // Item View Headers
                   <>
@@ -4862,7 +4879,20 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
               <TableRow className="border-b border-gray-100">
                 {currentView === 'batch' ? (
                   <>
-                    {[
+                    {(searchViewMode === 'csa' ? [
+                      { key: 'woBatch', placeholder: 'Filter batch...' },
+                      { key: 'acctNumber', placeholder: 'Filter acct...' },
+                      { key: 'srNumber', placeholder: 'Filter SR...' },
+                      { key: 'customerName', placeholder: 'Filter customer...' },
+                      { key: 'totalLabOpen', placeholder: 'Filter...' },
+                      { key: 'totalArCount', placeholder: 'Filter...' },
+                      { key: 'totalCount', placeholder: 'Filter...' },
+                      { key: 'lastCommentDate', placeholder: 'Filter date...' },
+                      { key: 'lastComment', placeholder: 'Filter comment...' },
+                      { key: 'minNeedByDate', placeholder: 'Filter date...' },
+                      { key: 'minFollowUpDate', placeholder: 'Filter date...' },
+                      { key: 'minDeliverByDate', placeholder: 'Filter date...' },
+                    ] : [
                       { key: 'woBatch', placeholder: 'Filter batch...' },
                       { key: 'acctNumber', placeholder: 'Filter acct...' },
                       { key: 'srNumber', placeholder: 'Filter SR...' },
@@ -4871,7 +4901,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                       { key: 'totalCount', placeholder: 'Filter...' },
                       { key: 'totalLabOpen', placeholder: 'Filter...' },
                       { key: 'totalArCount', placeholder: 'Filter...' },
-                    ].map((col) => (
+                    ]).map((col) => (
                       <TableHead key={col.key} className="py-1.5 px-2">
                         <div className="relative">
                           <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground/50" />
@@ -4935,7 +4965,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
             <TableBody>
               {!hasSearched ? (
                 <TableRow>
-                  <TableCell colSpan={currentView === 'batch' ? 8 : 11} className="text-center py-12">
+                  <TableCell colSpan={currentView === 'batch' ? (searchViewMode === 'csa' ? 12 : 8) : 11} className="text-center py-12">
                     <p className="text-muted-foreground text-lg">
                       Please enter search criteria in the Work Order Search above to view results
                     </p>
@@ -4955,10 +4985,25 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                     <TableCell>{batch.acctNumber}</TableCell>
                     <TableCell className="text-blue-600">{batch.srNumber}</TableCell>
                     <TableCell className="font-medium">{batch.customerName}</TableCell>
-                    <TableCell>{batch.minNeedByDate}</TableCell>
-                    <TableCell className="text-center font-medium">{batch.totalCount}</TableCell>
-                    <TableCell className="text-center">{batch.totalLabOpen}</TableCell>
-                    <TableCell className="text-center">{batch.totalArCount}</TableCell>
+                    {searchViewMode === 'csa' ? (
+                      <>
+                        <TableCell className="text-center">{batch.totalLabOpen}</TableCell>
+                        <TableCell className="text-center">{batch.totalArCount}</TableCell>
+                        <TableCell className="text-center font-medium">{batch.totalCount}</TableCell>
+                        <TableCell>{batch.lastCommentDate}</TableCell>
+                        <TableCell className="text-sm text-muted-foreground max-w-[200px] truncate">{batch.lastComment}</TableCell>
+                        <TableCell>{batch.minNeedByDate}</TableCell>
+                        <TableCell>{batch.minFollowUpDate}</TableCell>
+                        <TableCell>{batch.minNeedByDate}</TableCell>
+                      </>
+                    ) : (
+                      <>
+                        <TableCell>{batch.minNeedByDate}</TableCell>
+                        <TableCell className="text-center font-medium">{batch.totalCount}</TableCell>
+                        <TableCell className="text-center">{batch.totalLabOpen}</TableCell>
+                        <TableCell className="text-center">{batch.totalArCount}</TableCell>
+                      </>
+                    )}
                   </TableRow>
                 ))
               ) : (
