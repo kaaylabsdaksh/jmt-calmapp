@@ -4833,18 +4833,18 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                   // Batch View Headers
                   searchViewMode === 'csa' ? (
                     <>
-                      <TableHead className="font-semibold text-gray-900">WO Batch</TableHead>
-                      <TableHead className="font-semibold text-gray-900">Acct #</TableHead>
-                      <TableHead className="font-semibold text-gray-900">Customer Name</TableHead>
-                      <TableHead className="font-semibold text-gray-900">Location</TableHead>
-                      <TableHead className="font-semibold text-gray-900">Priority</TableHead>
-                      <TableHead className="font-semibold text-gray-900">Item Count</TableHead>
-                      <TableHead className="font-semibold text-gray-900">Contact Name</TableHead>
-                      <TableHead className="font-semibold text-gray-900">PO Number</TableHead>
-                      <TableHead className="font-semibold text-gray-900 min-w-[150px]">Item Status</TableHead>
-                      <TableHead className="font-semibold text-gray-900">Follow-up Date</TableHead>
-                      <TableHead className="font-semibold text-gray-900">Deliver By Date</TableHead>
-                      <TableHead className="font-semibold text-gray-900">Aging</TableHead>
+                      <TableHead className="font-semibold text-foreground text-xs bg-slate-100/80 py-2">WO Batch</TableHead>
+                      <TableHead className="font-semibold text-foreground text-xs bg-slate-100/80 py-2">Acct #</TableHead>
+                      <TableHead className="font-semibold text-foreground text-xs bg-slate-100/80 py-2">Customer Name</TableHead>
+                      <TableHead className="font-semibold text-foreground text-xs bg-slate-100/80 py-2">Location</TableHead>
+                      <TableHead className="font-semibold text-foreground text-xs bg-slate-100/80 py-2">Priority</TableHead>
+                      <TableHead className="font-semibold text-foreground text-xs bg-slate-100/80 py-2 text-center">Items</TableHead>
+                      <TableHead className="font-semibold text-foreground text-xs bg-slate-100/80 py-2">Contact</TableHead>
+                      <TableHead className="font-semibold text-foreground text-xs bg-slate-100/80 py-2">PO #</TableHead>
+                      <TableHead className="font-semibold text-foreground text-xs bg-slate-100/80 py-2 min-w-[140px]">Status</TableHead>
+                      <TableHead className="font-semibold text-foreground text-xs bg-slate-100/80 py-2">Follow-up</TableHead>
+                      <TableHead className="font-semibold text-foreground text-xs bg-slate-100/80 py-2">Deliver By</TableHead>
+                      <TableHead className="font-semibold text-foreground text-xs bg-slate-100/80 py-2 text-center">Aging</TableHead>
                     </>
                   ) : (
                     <>
