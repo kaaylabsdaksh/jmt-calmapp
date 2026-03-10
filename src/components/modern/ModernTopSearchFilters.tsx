@@ -838,11 +838,11 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
         ) : (
           /* CSA View - Only Location and Arrival From/To */
           <div className="space-y-4">
-            <div className="flex flex-wrap items-end gap-3">
-              <div className="w-48">
-                <Label className="text-xs font-medium text-muted-foreground mb-1 block">Location</Label>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 items-end">
+              <div>
+                <Label className="text-sm font-medium text-muted-foreground mb-1.5 block">Location</Label>
                 <Select value={searchValues.location || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, location: value === 'all' ? '' : value }))}>
-                  <SelectTrigger className="h-8 text-xs rounded-md">
+                  <SelectTrigger className={selectTriggerClass}>
                     <SelectValue placeholder="All Location" />
                   </SelectTrigger>
                   <SelectContent className={selectContentClass}>
@@ -855,46 +855,47 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                 </Select>
               </div>
 
-              <div className="w-40">
-                <Label className="text-xs font-medium text-muted-foreground mb-1 block">Arrival From</Label>
+              <div>
+                <Label className="text-sm font-medium text-muted-foreground mb-1.5 block">Arrival From</Label>
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button
                       variant="outline"
                       className={cn(
-                        "w-full justify-start text-left font-normal h-8 text-xs rounded-md",
-                        !dateFrom && "text-muted-foreground"
+                        "w-full justify-start text-left font-normal h-10 text-sm border-gray-200 rounded-lg",
+                        !dateFrom && "text-gray-500"
                       )}
                     >
-                      <CalendarIcon className="mr-1.5 h-3.5 w-3.5 opacity-50 flex-shrink-0" />
-                      {dateFrom ? format(dateFrom, "MM/dd/yyyy") : "From date"}
+                      <CalendarIcon className="mr-2 h-4 w-4 text-gray-400 flex-shrink-0" />
+                      {dateFrom ? format(dateFrom, "MMM dd, yyyy") : "From date"}
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0 border shadow-xl rounded-lg z-[70]" align="start">
+                  <PopoverContent className="w-auto p-0 border border-gray-200 shadow-xl rounded-lg z-[70]" align="start">
                     <Calendar mode="single" selected={dateFrom} onSelect={(date) => {
                       setDateFrom(date);
+                      // Auto-open Arrival To after selecting Arrival From
                       setTimeout(() => setArrivalToOpen(true), 200);
                     }} initialFocus className="pointer-events-auto rounded-lg p-3" />
                   </PopoverContent>
                 </Popover>
               </div>
 
-              <div className="w-40">
-                <Label className="text-xs font-medium text-muted-foreground mb-1 block">Arrival To</Label>
+              <div>
+                <Label className="text-sm font-medium text-muted-foreground mb-1.5 block">Arrival To</Label>
                 <Popover open={arrivalToOpen} onOpenChange={setArrivalToOpen}>
                   <PopoverTrigger asChild>
                     <Button
                       variant="outline"
                       className={cn(
-                        "w-full justify-start text-left font-normal h-8 text-xs rounded-md",
-                        !dateTo && "text-muted-foreground"
+                        "w-full justify-start text-left font-normal h-10 text-sm border-gray-200 rounded-lg",
+                        !dateTo && "text-gray-500"
                       )}
                     >
-                      <CalendarIcon className="mr-1.5 h-3.5 w-3.5 opacity-50 flex-shrink-0" />
-                      {dateTo ? format(dateTo, "MM/dd/yyyy") : "To date"}
+                      <CalendarIcon className="mr-2 h-4 w-4 text-gray-400 flex-shrink-0" />
+                      {dateTo ? format(dateTo, "MMM dd, yyyy") : "To date"}
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0 border shadow-xl rounded-lg z-[70]" align="start">
+                  <PopoverContent className="w-auto p-0 border border-gray-200 shadow-xl rounded-lg z-[70]" align="start">
                     <Calendar mode="single" selected={dateTo} onSelect={(date) => {
                       setDateTo(date);
                       setArrivalToOpen(false);
