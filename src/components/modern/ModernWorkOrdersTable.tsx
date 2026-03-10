@@ -4989,30 +4989,46 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                     paginatedBatches.map((batch) => (
                   <TableRow
                     key={batch.id}
-                    className="hover:bg-gray-50 cursor-pointer border-b border-gray-100"
+                    className={cn(
+                      "cursor-pointer border-b border-muted/50 transition-colors",
+                      searchViewMode === 'csa' 
+                        ? "hover:bg-slate-50/80 h-10" 
+                        : "hover:bg-gray-50"
+                    )}
                     onClick={() => openBatchDetails(batch)}
                   >
-                    <TableCell className="font-medium text-blue-600">{batch.woBatch}</TableCell>
-                    <TableCell>{batch.acctNumber}</TableCell>
-                    <TableCell className="font-medium">{batch.customerName}</TableCell>
+                    <TableCell className="font-semibold text-foreground text-[13px]">{batch.woBatch}</TableCell>
+                    <TableCell className="text-muted-foreground text-[12px]">{batch.acctNumber}</TableCell>
+                    <TableCell className="font-medium text-foreground text-[12px]">{batch.customerName}</TableCell>
                     {searchViewMode === 'csa' ? (
                       <>
-                        <TableCell>{batch.location}</TableCell>
+                        <TableCell className="text-[12px] text-muted-foreground">{batch.location}</TableCell>
                         <TableCell>
-                          <Badge variant={batch.priority === 'Critical' ? 'destructive' : batch.priority === 'High' ? 'default' : 'secondary'} className="text-xs">
+                          <Badge 
+                            variant={batch.priority === 'Critical' ? 'destructive' : batch.priority === 'High' ? 'default' : 'secondary'} 
+                            className="text-[10px] px-2 py-0 h-5 font-medium"
+                          >
                             {batch.priority}
                           </Badge>
                         </TableCell>
-                        <TableCell className="text-center font-medium">{batch.totalCount}</TableCell>
-                        <TableCell>{batch.contactName}</TableCell>
-                        <TableCell>{batch.poNumber}</TableCell>
-                        <TableCell className="text-sm">{batch.itemStatus}</TableCell>
-                        <TableCell>{batch.minFollowUpDate || '—'}</TableCell>
-                        <TableCell>{batch.minDeliverByDate}</TableCell>
-                        <TableCell className="text-center font-medium">
+                        <TableCell className="text-center">
+                          <span className="inline-flex items-center justify-center bg-muted rounded-full w-6 h-6 text-[11px] font-bold text-foreground">{batch.totalCount}</span>
+                        </TableCell>
+                        <TableCell className="text-[12px] text-muted-foreground">{batch.contactName}</TableCell>
+                        <TableCell className="text-[12px] font-mono text-muted-foreground">{batch.poNumber}</TableCell>
+                        <TableCell className="text-[12px] text-foreground">{batch.itemStatus}</TableCell>
+                        <TableCell className="text-[12px] text-muted-foreground">{batch.minFollowUpDate || '—'}</TableCell>
+                        <TableCell className="text-[12px] text-muted-foreground">{batch.minDeliverByDate}</TableCell>
+                        <TableCell className="text-center">
                           {(() => {
                             const days = getAgingDays(batch);
-                            return days !== null ? `${days}d` : '—';
+                            if (days === null) return <span className="text-muted-foreground text-[12px]">—</span>;
+                            const agingColor = days > 30 ? 'bg-destructive/10 text-destructive' : days > 14 ? 'bg-orange-100 text-orange-700' : 'bg-emerald-50 text-emerald-700';
+                            return (
+                              <span className={cn("inline-flex items-center justify-center rounded-md px-2 py-0.5 text-[11px] font-semibold", agingColor)}>
+                                {days}d
+                              </span>
+                            );
                           })()}
                         </TableCell>
                       </>
