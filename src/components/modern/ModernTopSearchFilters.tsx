@@ -372,7 +372,8 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
       <div className="mx-5 mb-4 border-b" />
 
       <div className="px-5 pb-5 space-y-4">
-        {/* Search Criteria Section */}
+        {/* Search Criteria Section - Default view only */}
+        {viewMode === 'default' && (
         <div ref={searchContainerRef}>
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm font-medium text-muted-foreground">Search Criteria</span>
@@ -479,6 +480,7 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
             </Button>
           </div>
         </div>
+        )}
 
         {viewMode === 'default' ? (
           <>
