@@ -4068,10 +4068,10 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
     if (!sortableColumns.has(columnKey)) return null;
     if (sortConfig?.key === columnKey) {
       return sortConfig.direction === 'asc' 
-        ? <ArrowUp className="h-3.5 w-3.5 ml-1 inline-block text-blue-600" strokeWidth={2.5} />
-        : <ArrowDown className="h-3.5 w-3.5 ml-1 inline-block text-blue-600" strokeWidth={2.5} />;
+        ? <ArrowUp className="h-3.5 w-3.5 text-blue-600" strokeWidth={2.5} />
+        : <ArrowDown className="h-3.5 w-3.5 text-blue-600" strokeWidth={2.5} />;
     }
-    return <ArrowUpDown className="h-3 w-3 ml-1 inline-block text-gray-400/60" />;
+    return <ArrowUpDown className="h-3 w-3 text-gray-400/60" />;
   };
 
   // Force batch view when CSA mode is active
@@ -4874,14 +4874,14 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                       <TableHead className="font-semibold text-gray-900">Acct #</TableHead>
                       <TableHead className="font-semibold text-gray-900">SR #</TableHead>
                       <TableHead className="font-semibold text-gray-900">Customer Name</TableHead>
-                      <TableHead className="font-semibold text-gray-900 cursor-pointer select-none hover:bg-gray-100 transition-colors" onClick={() => handleSort('totalLabOpen')}>Total Lab Open<SortIcon columnKey="totalLabOpen" /></TableHead>
-                      <TableHead className="font-semibold text-gray-900 cursor-pointer select-none hover:bg-gray-100 transition-colors" onClick={() => handleSort('totalArCount')}>Total AR Count<SortIcon columnKey="totalArCount" /></TableHead>
-                      <TableHead className="font-semibold text-gray-900 cursor-pointer select-none hover:bg-gray-100 transition-colors" onClick={() => handleSort('totalCount')}>Total Count<SortIcon columnKey="totalCount" /></TableHead>
-                      <TableHead className="font-semibold text-gray-900 cursor-pointer select-none hover:bg-gray-100 transition-colors" onClick={() => handleSort('lastCommentDate')}>Last Comment Date<SortIcon columnKey="lastCommentDate" /></TableHead>
+                      <TableHead className="font-semibold text-gray-900">Total Lab Open</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Total AR Count</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Total Count</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Last Comment Date</TableHead>
                       <TableHead className="font-semibold text-gray-900 min-w-[200px]">Last Comment</TableHead>
-                      <TableHead className="font-semibold text-gray-900 cursor-pointer select-none hover:bg-gray-100 transition-colors" onClick={() => handleSort('minNeedByDate')}>Min Need By Date<SortIcon columnKey="minNeedByDate" /></TableHead>
-                      <TableHead className="font-semibold text-gray-900 cursor-pointer select-none hover:bg-gray-100 transition-colors" onClick={() => handleSort('minFollowUpDate')}>Min Follow Up Date<SortIcon columnKey="minFollowUpDate" /></TableHead>
-                      <TableHead className="font-semibold text-gray-900 cursor-pointer select-none hover:bg-gray-100 transition-colors" onClick={() => handleSort('minDeliverByDate')}>Min Deliver By Date<SortIcon columnKey="minDeliverByDate" /></TableHead>
+                      <TableHead className="font-semibold text-gray-900">Min Need By Date</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Min Follow Up Date</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Min Deliver By Date</TableHead>
                     </>
                   ) : (
                     <>
@@ -4889,10 +4889,10 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                       <TableHead className="font-semibold text-gray-900">Acct #</TableHead>
                       <TableHead className="font-semibold text-gray-900">SR #</TableHead>
                       <TableHead className="font-semibold text-gray-900">Customer Name</TableHead>
-                      <TableHead className="font-semibold text-gray-900 cursor-pointer select-none hover:bg-gray-100 transition-colors" onClick={() => handleSort('minNeedByDate')}>Min Need By Date<SortIcon columnKey="minNeedByDate" /></TableHead>
-                      <TableHead className="font-semibold text-gray-900 cursor-pointer select-none hover:bg-gray-100 transition-colors" onClick={() => handleSort('totalCount')}>Total Count<SortIcon columnKey="totalCount" /></TableHead>
-                      <TableHead className="font-semibold text-gray-900 cursor-pointer select-none hover:bg-gray-100 transition-colors" onClick={() => handleSort('totalLabOpen')}>Total Lab Open<SortIcon columnKey="totalLabOpen" /></TableHead>
-                      <TableHead className="font-semibold text-gray-900 cursor-pointer select-none hover:bg-gray-100 transition-colors" onClick={() => handleSort('totalArCount')}>Total AR Count<SortIcon columnKey="totalArCount" /></TableHead>
+                      <TableHead className="font-semibold text-gray-900">Min Need By Date</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Total Count</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Total Lab Open</TableHead>
+                      <TableHead className="font-semibold text-gray-900">Total AR Count</TableHead>
                     </>
                   )
                 ) : (
@@ -4940,20 +4940,31 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                       { key: 'totalArCount', placeholder: '' },
                     ]).map((col) => (
                       <TableHead key={col.key} className="py-1.5 px-2">
-                        <div className="relative">
-                          <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground/50" />
-                          <Input
-                            placeholder={col.placeholder}
-                            value={columnFilters[col.key] || ''}
-                            onChange={(e) => setColumnFilters(prev => ({ ...prev, [col.key]: e.target.value }))}
-                            className="h-7 text-[11px] pl-6 pr-6 border-muted bg-muted/30 rounded-md placeholder:text-muted-foreground/40 focus:bg-background focus:border-primary/30 transition-colors"
-                          />
-                          {columnFilters[col.key] && (
+                        <div className="relative flex items-center gap-1">
+                          <div className="relative flex-1">
+                            <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground/50" />
+                            <Input
+                              placeholder={col.placeholder}
+                              value={columnFilters[col.key] || ''}
+                              onChange={(e) => setColumnFilters(prev => ({ ...prev, [col.key]: e.target.value }))}
+                              className="h-7 text-[11px] pl-6 pr-6 border-muted bg-muted/30 rounded-md placeholder:text-muted-foreground/40 focus:bg-background focus:border-primary/30 transition-colors"
+                            />
+                            {columnFilters[col.key] && (
+                              <button
+                                onClick={() => setColumnFilters(prev => ({ ...prev, [col.key]: '' }))}
+                                className="absolute right-1.5 top-1/2 -translate-y-1/2 p-0.5 rounded-full hover:bg-muted transition-colors"
+                              >
+                                <X className="h-3 w-3 text-muted-foreground" />
+                              </button>
+                            )}
+                          </div>
+                          {sortableColumns.has(col.key) && (
                             <button
-                              onClick={() => setColumnFilters(prev => ({ ...prev, [col.key]: '' }))}
-                              className="absolute right-1.5 top-1/2 -translate-y-1/2 p-0.5 rounded-full hover:bg-muted transition-colors"
+                              onClick={() => handleSort(col.key)}
+                              className="flex-shrink-0 p-1 rounded hover:bg-muted transition-colors"
+                              title="Sort"
                             >
-                              <X className="h-3 w-3 text-muted-foreground" />
+                              <SortIcon columnKey={col.key} />
                             </button>
                           )}
                         </div>
