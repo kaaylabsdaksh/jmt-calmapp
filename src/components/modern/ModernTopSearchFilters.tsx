@@ -541,14 +541,13 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
   };
 
   const handleInputFocus = () => {
-    if (searchInput.trim()) { setShowSuggestions(true); setShowRecentSearches(false); }
-    else if (recentSearches.length > 0) { setShowRecentSearches(true); setShowSuggestions(false); }
+    if (!searchInput.trim() && recentSearches.length > 0) { setShowRecentSearches(true); }
   };
 
   const handleInputChange = (val: string) => {
     setSearchInput(val);
-    if (val.trim()) { setShowSuggestions(true); setShowRecentSearches(false); }
-    else { setShowSuggestions(false); if (recentSearches.length > 0) setShowRecentSearches(true); }
+    if (!val.trim() && recentSearches.length > 0) setShowRecentSearches(true);
+    else setShowRecentSearches(false);
   };
 
   const clearAllFilters = () => {
