@@ -4048,7 +4048,31 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
   const [activeStatusFilter, setActiveStatusFilter] = useState<string>('all');
   const [currentView, setCurrentView] = useState<'item' | 'batch'>('item');
   const [columnFilters, setColumnFilters] = useState<Record<string, string>>({});
+  const [sortConfig, setSortConfig] = useState<{ key: string; direction: 'asc' | 'desc' } | null>(null);
   const navigate = useNavigate();
+
+  const sortableColumns = new Set(['totalLabOpen', 'totalArCount', 'totalCount', 'lastCommentDate', 'minNeedByDate', 'minFollowUpDate', 'minDeliverByDate']);
+
+  const handleSort = (key: string) => {
+    if (!sortableColumns.has(key)) return;
+    setSortConfig(prev => {
+      if (prev?.key === key) {
+        if (prev.direction === 'asc') return { key, direction: 'desc' };
+        return null; // third click clears
+      }
+      return { key, direction: 'asc' };
+    });
+  };
+
+  const SortIcon = ({ columnKey }: { columnKey: string }) => {
+    if (!sortableColumns.has(columnKey)) return null;
+    if (sortConfig?.key === columnKey) {
+      return sortConfig.direction === 'asc' 
+        ? <ArrowUp className="h-3 w-3 ml-1 inline-block text-primary" />
+        : <ArrowDown className="h-3 w-3 ml-1 inline-block text-primary" />;
+    }
+    return <ArrowUpDown className="h-3 w-3 ml-1 inline-block text-muted-foreground/40" />;
+  };
 
   // Force batch view when CSA mode is active
   React.useEffect(() => {
