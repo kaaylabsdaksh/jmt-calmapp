@@ -394,40 +394,6 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Auto-detect type
-  useEffect(() => {
-    setDetectedType(autoDetectSearchType(searchInput));
-  }, [searchInput]);
-
-  // Compute suggestions
-  const suggestions = useMemo(() => {
-    if (!searchInput.trim()) return [];
-    const q = searchInput.toLowerCase();
-    return mockWorkOrders
-      .filter(wo => {
-        switch (selectedSearchType) {
-          case 'workOrderNumber': return wo.id.includes(q);
-          case 'accountNumber': return wo.accountNumber.toLowerCase().includes(q);
-          case 'customerName': return wo.customer.toLowerCase().includes(q);
-          case 'serialNumber': return wo.serialNumber.toLowerCase().includes(q);
-          case 'manufacturer': return wo.manufacturer.toLowerCase().includes(q);
-          default: return wo.id.includes(q) || wo.customer.toLowerCase().includes(q);
-        }
-      })
-      .slice(0, 6)
-      .map(wo => ({
-        id: wo.id,
-        primary: selectedSearchType === 'customerName' ? wo.customer :
-                 selectedSearchType === 'accountNumber' ? wo.accountNumber :
-                 selectedSearchType === 'manufacturer' ? wo.manufacturer :
-                 wo.id,
-        secondary: selectedSearchType === 'customerName' ? `WO: ${wo.id}` : `${wo.customer} • ${wo.manufacturer}`,
-        value: selectedSearchType === 'customerName' ? wo.customer :
-               selectedSearchType === 'accountNumber' ? wo.accountNumber :
-               selectedSearchType === 'manufacturer' ? wo.manufacturer :
-               wo.id,
-      }));
-  }, [searchInput, selectedSearchType]);
 
   // Live result count
   useEffect(() => {
