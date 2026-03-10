@@ -4992,7 +4992,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                     className={cn(
                       "cursor-pointer border-b border-muted/30 transition-colors",
                       searchViewMode === 'csa' 
-                        ? "hover:bg-slate-50/80 [&>td]:py-1.5 [&>td]:px-3" 
+                        ? "hover:bg-slate-50/80 [&>td]:py-2.5 [&>td]:px-3" 
                         : "hover:bg-gray-50"
                     )}
                     onClick={() => openBatchDetails(batch)}
