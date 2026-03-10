@@ -345,20 +345,39 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
         <h3 className="text-base font-medium mb-3">Items in Batch ({filteredItems.length})</h3>
         <div className="border rounded-lg overflow-hidden">
           <Table>
-            <TableHeader>
+             <TableHeader>
               <TableRow className="bg-muted/50">
-                <TableHead className="font-semibold">Item</TableHead>
-                <TableHead className="font-semibold">Division</TableHead>
-                <TableHead className="font-semibold">Location</TableHead>
-                <TableHead className="font-semibold">Item Created</TableHead>
-                <TableHead className="font-semibold">Action</TableHead>
-                <TableHead className="font-semibold">Item Status</TableHead>
-                <TableHead className="font-semibold">Manufacturer</TableHead>
-                <TableHead className="font-semibold">Model</TableHead>
-                <TableHead className="font-semibold">Lab Code</TableHead>
-                <TableHead className="font-semibold">Serial #</TableHead>
-                <TableHead className="font-semibold">PO #</TableHead>
-                <TableHead className="w-12"></TableHead>
+                {viewMode === 'csa' ? (
+                  <>
+                    <TableHead className="font-semibold">Item</TableHead>
+                    <TableHead className="font-semibold">Location</TableHead>
+                    <TableHead className="font-semibold">Item Created</TableHead>
+                    <TableHead className="font-semibold">Action</TableHead>
+                    <TableHead className="font-semibold">Item Status</TableHead>
+                    <TableHead className="font-semibold">Manufacturer</TableHead>
+                    <TableHead className="font-semibold">Model</TableHead>
+                    <TableHead className="font-semibold">Description</TableHead>
+                    <TableHead className="font-semibold">Serial #</TableHead>
+                    <TableHead className="font-semibold">Deliver By</TableHead>
+                    <TableHead className="font-semibold">Follow Up</TableHead>
+                    <TableHead className="w-12"></TableHead>
+                  </>
+                ) : (
+                  <>
+                    <TableHead className="font-semibold">Item</TableHead>
+                    <TableHead className="font-semibold">Division</TableHead>
+                    <TableHead className="font-semibold">Location</TableHead>
+                    <TableHead className="font-semibold">Item Created</TableHead>
+                    <TableHead className="font-semibold">Action</TableHead>
+                    <TableHead className="font-semibold">Item Status</TableHead>
+                    <TableHead className="font-semibold">Manufacturer</TableHead>
+                    <TableHead className="font-semibold">Model</TableHead>
+                    <TableHead className="font-semibold">Lab Code</TableHead>
+                    <TableHead className="font-semibold">Serial #</TableHead>
+                    <TableHead className="font-semibold">PO #</TableHead>
+                    <TableHead className="w-12"></TableHead>
+                  </>
+                )}
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -373,24 +392,49 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
                         {item.item}
                       </button>
                     </TableCell>
-                    <TableCell>{item.division}</TableCell>
-                    <TableCell>{item.location}</TableCell>
-                    <TableCell>{item.itemCreated}</TableCell>
-                    <TableCell className="font-medium">{item.action}</TableCell>
-                    <TableCell>
-                      <span className={`px-2 py-1 rounded text-xs font-medium ${
-                        item.itemStatus === 'Completed' ? 'bg-green-100 text-green-800' :
-                        item.itemStatus === 'In Progress' ? 'bg-blue-100 text-blue-800' :
-                        'bg-yellow-100 text-yellow-800'
-                      }`}>
-                        {item.itemStatus}
-                      </span>
-                    </TableCell>
-                    <TableCell>{item.manufacturer || '-'}</TableCell>
-                    <TableCell>{item.model || '-'}</TableCell>
-                    <TableCell className="font-medium">{item.labCode}</TableCell>
-                    <TableCell>{item.serialNumber || '-'}</TableCell>
-                    <TableCell className="font-medium">{item.poNumber}</TableCell>
+                    {viewMode === 'csa' ? (
+                      <>
+                        <TableCell>{item.location}</TableCell>
+                        <TableCell>{item.itemCreated}</TableCell>
+                        <TableCell className="font-medium">{item.action}</TableCell>
+                        <TableCell>
+                          <span className={`px-2 py-1 rounded text-xs font-medium ${
+                            item.itemStatus === 'Completed' ? 'bg-green-100 text-green-800' :
+                            item.itemStatus === 'In Progress' ? 'bg-blue-100 text-blue-800' :
+                            'bg-yellow-100 text-yellow-800'
+                          }`}>
+                            {item.itemStatus}
+                          </span>
+                        </TableCell>
+                        <TableCell>{item.manufacturer || '-'}</TableCell>
+                        <TableCell>{item.model || '-'}</TableCell>
+                        <TableCell className="text-sm max-w-[150px] truncate">{item.description || '-'}</TableCell>
+                        <TableCell>{item.serialNumber || '-'}</TableCell>
+                        <TableCell>{item.deliverByDate || '-'}</TableCell>
+                        <TableCell>{item.followUpDate || '-'}</TableCell>
+                      </>
+                    ) : (
+                      <>
+                        <TableCell>{item.division}</TableCell>
+                        <TableCell>{item.location}</TableCell>
+                        <TableCell>{item.itemCreated}</TableCell>
+                        <TableCell className="font-medium">{item.action}</TableCell>
+                        <TableCell>
+                          <span className={`px-2 py-1 rounded text-xs font-medium ${
+                            item.itemStatus === 'Completed' ? 'bg-green-100 text-green-800' :
+                            item.itemStatus === 'In Progress' ? 'bg-blue-100 text-blue-800' :
+                            'bg-yellow-100 text-yellow-800'
+                          }`}>
+                            {item.itemStatus}
+                          </span>
+                        </TableCell>
+                        <TableCell>{item.manufacturer || '-'}</TableCell>
+                        <TableCell>{item.model || '-'}</TableCell>
+                        <TableCell className="font-medium">{item.labCode}</TableCell>
+                        <TableCell>{item.serialNumber || '-'}</TableCell>
+                        <TableCell className="font-medium">{item.poNumber}</TableCell>
+                      </>
+                    )}
                     <TableCell className="w-12">
                       <Button
                         variant="ghost"
