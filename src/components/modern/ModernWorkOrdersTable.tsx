@@ -5103,7 +5103,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
           </Table>
         ) : (
           // Grid View - Cards
-          <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className={cn("grid gap-3", searchViewMode === 'csa' ? "p-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5" : "p-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6")}>
             {!hasSearched ? (
               <div className="col-span-full text-center py-12">
                 <p className="text-muted-foreground text-lg">
