@@ -92,41 +92,6 @@ interface MinimalWorkOrderSearchProps {
   onSearch?: (filters: SearchFilters) => void;
 }
 
-// Auto-detect search type based on input pattern
-function autoDetectSearchType(input: string): string | null {
-  const trimmed = input.trim();
-  if (!trimmed) return null;
-  
-  // Pure numbers 5-6 digits → Work Order Number
-  if (/^\d{5,6}$/.test(trimmed)) return 'workOrderNumber';
-  // Number with dash (e.g., 385737-01) → Work Order Item Number
-  if (/^\d{5,6}-\d{1,3}$/.test(trimmed)) return 'workOrderItemNumber';
-  // Account number pattern (e.g., 13058.06)
-  if (/^\d{3,5}\.\d{1,2}$/.test(trimmed)) return 'accountNumber';
-  // PO pattern
-  if (/^PO[-\s]?\d+/i.test(trimmed)) return 'poNumber';
-  // SR number pattern
-  if (/^SR\d+/i.test(trimmed)) return 'onsiteProjectNumber';
-  // Serial number pattern (SN prefix)
-  if (/^SN\d+/i.test(trimmed)) return 'serialNumber';
-  // MFG serial pattern
-  if (/^MFG[-\s]?\d+/i.test(trimmed)) return 'mfgSerial';
-  // ESL ID pattern
-  if (/^ESL[-\s]?\d+/i.test(trimmed)) return 'eslID';
-  // RFID pattern
-  if (/^RFID[-\s]/i.test(trimmed)) return 'rfid';
-  // RMA pattern
-  if (/^RMA/i.test(trimmed)) return 'vendorRMANumber';
-  // Quote pattern
-  if (/^QT[-\s]?\d+/i.test(trimmed)) return 'quoteNumber';
-  // CUST ID
-  if (/^CUST[-\s]?\d+/i.test(trimmed)) return 'custID';
-  // All letters with spaces → Customer Name
-  if (/^[a-zA-Z\s]{3,}$/.test(trimmed)) return 'customerName';
-  
-  return null;
-}
-
 const RECENT_SEARCHES_KEY = 'wo-recent-searches';
 const MAX_RECENT_SEARCHES = 8;
 
