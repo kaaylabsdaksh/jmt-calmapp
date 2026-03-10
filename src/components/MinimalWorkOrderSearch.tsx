@@ -132,46 +132,6 @@ const MinimalWorkOrderSearch = ({ onSearch }: MinimalWorkOrderSearchProps) => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Auto-detect search type as user types
-  useEffect(() => {
-    const detected = autoDetectSearchType(searchInput);
-    setDetectedType(detected);
-    if (detected && detected !== selectedSearchType) {
-      // Don't auto-switch, just show hint
-    }
-  }, [searchInput, selectedSearchType]);
-
-  // Compute suggestions based on input
-  const suggestions = useMemo(() => {
-    if (!searchInput.trim() || searchInput.length < 1) return [];
-    const q = searchInput.toLowerCase();
-    
-    return mockWorkOrderBatches
-      .filter(wo => {
-        switch (selectedSearchType) {
-          case 'workOrderNumber': return wo.woBatch.toLowerCase().includes(q);
-          case 'accountNumber': return wo.acctNumber.toLowerCase().includes(q);
-          case 'customerName': return wo.customerName.toLowerCase().includes(q);
-          case 'onsiteProjectNumber': return wo.srNumber.toLowerCase().includes(q);
-          default: return wo.woBatch.includes(q) || wo.customerName.toLowerCase().includes(q);
-        }
-      })
-      .slice(0, 6)
-      .map(wo => ({
-        id: wo.id,
-        primary: selectedSearchType === 'customerName' ? wo.customerName : 
-                 selectedSearchType === 'accountNumber' ? wo.acctNumber :
-                 selectedSearchType === 'onsiteProjectNumber' ? wo.srNumber :
-                 wo.woBatch,
-        secondary: selectedSearchType === 'customerName' ? `WO: ${wo.woBatch}` :
-                   `${wo.customerName} • ${wo.acctNumber}`,
-        value: selectedSearchType === 'customerName' ? wo.customerName :
-               selectedSearchType === 'accountNumber' ? wo.acctNumber :
-               selectedSearchType === 'onsiteProjectNumber' ? wo.srNumber :
-               wo.woBatch,
-      }));
-  }, [searchInput, selectedSearchType]);
-
   // Simulate live result count based on active filters
   useEffect(() => {
     if (searchChips.length === 0) {
