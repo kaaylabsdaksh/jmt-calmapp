@@ -188,7 +188,6 @@ const MinimalWorkOrderSearch = ({ onSearch }: MinimalWorkOrderSearchProps) => {
       addSearchChip();
     }
     if (e.key === 'Escape') {
-      setShowSuggestions(false);
       setShowRecentSearches(false);
     }
   };
