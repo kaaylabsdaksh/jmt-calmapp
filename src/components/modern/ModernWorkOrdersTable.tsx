@@ -3652,7 +3652,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     itemNumber: "030",
     manufacturer: "YOKOGAWA",
     model: "GS200",
-    serialNumber: "SN012345",
+    serialNumber: "SN087654",
     created: "12/03/2024",
     departure: "01/12/2025",
     itemStatus: "Admin Processing",
