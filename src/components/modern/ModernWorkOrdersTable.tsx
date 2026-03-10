@@ -5121,41 +5121,96 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                 >
                   <div className="p-4 border-b border-gray-100">
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <span className="font-bold text-blue-600 text-lg">{batch.woBatch}</span>
-                      </div>
+                      <span className="font-bold text-blue-600 text-lg">{batch.woBatch}</span>
+                      {searchViewMode === 'csa' && (
+                        <Badge variant={batch.priority === 'Critical' ? 'destructive' : batch.priority === 'High' ? 'default' : 'secondary'} className="text-xs">
+                          {batch.priority}
+                        </Badge>
+                      )}
                     </div>
                   </div>
                   <div className="p-4 space-y-3">
                     <div><h3 className="font-bold text-gray-900 text-lg mb-1">{batch.customerName}</h3></div>
-                    <div className="grid grid-cols-2 gap-3 text-sm">
-                      <div>
-                        <span className="text-gray-500">Account #:</span>
-                        <div className="font-medium text-xs">{batch.acctNumber}</div>
-                      </div>
-                      <div>
-                        <span className="text-gray-500">SR #:</span>
-                        <div className="font-medium text-xs text-blue-600">{batch.srNumber}</div>
-                      </div>
-                    </div>
-                    <div className="text-sm">
-                      <span className="text-gray-500">Min Need By:</span>
-                      <div className="font-medium text-xs">{batch.minNeedByDate}</div>
-                    </div>
-                    <div className="grid grid-cols-3 gap-3 text-sm border-t border-gray-100 pt-3">
-                      <div className="text-center">
-                        <span className="text-gray-500 block text-xs">Total Count</span>
-                        <div className="font-bold text-lg text-gray-900">{batch.totalCount}</div>
-                      </div>
-                      <div className="text-center">
-                        <span className="text-gray-500 block text-xs">Total Lab Open</span>
-                        <div className="font-medium text-lg text-orange-600">{batch.totalLabOpen}</div>
-                      </div>
-                      <div className="text-center">
-                        <span className="text-gray-500 block text-xs">Total AR Count</span>
-                        <div className="font-medium text-lg text-blue-600">{batch.totalArCount}</div>
-                      </div>
-                    </div>
+                    {searchViewMode === 'csa' ? (
+                      <>
+                        <div className="grid grid-cols-2 gap-3 text-sm">
+                          <div>
+                            <span className="text-gray-500">Account #:</span>
+                            <div className="font-medium text-xs">{batch.acctNumber}</div>
+                          </div>
+                          <div>
+                            <span className="text-gray-500">Location:</span>
+                            <div className="font-medium text-xs">{batch.location}</div>
+                          </div>
+                          <div>
+                            <span className="text-gray-500">Contact:</span>
+                            <div className="font-medium text-xs">{batch.contactName}</div>
+                          </div>
+                          <div>
+                            <span className="text-gray-500">PO Number:</span>
+                            <div className="font-medium text-xs">{batch.poNumber}</div>
+                          </div>
+                          <div>
+                            <span className="text-gray-500">Item Status:</span>
+                            <div className="font-medium text-xs">{batch.itemStatus}</div>
+                          </div>
+                          <div>
+                            <span className="text-gray-500">Item Count:</span>
+                            <div className="font-bold text-xs">{batch.totalCount}</div>
+                          </div>
+                        </div>
+                        <div className="grid grid-cols-3 gap-3 text-sm border-t border-gray-100 pt-3">
+                          <div className="text-center">
+                            <span className="text-gray-500 block text-xs">Follow-up</span>
+                            <div className="font-medium text-xs text-gray-900">{batch.minFollowUpDate || '—'}</div>
+                          </div>
+                          <div className="text-center">
+                            <span className="text-gray-500 block text-xs">Deliver By</span>
+                            <div className="font-medium text-xs text-gray-900">{batch.minDeliverByDate}</div>
+                          </div>
+                          <div className="text-center">
+                            <span className="text-gray-500 block text-xs">Aging</span>
+                            <div className="font-bold text-lg text-gray-900">
+                              {(() => {
+                                const days = getAgingDays(batch);
+                                return days !== null ? `${days}d` : '—';
+                              })()}
+                            </div>
+                          </div>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div className="grid grid-cols-2 gap-3 text-sm">
+                          <div>
+                            <span className="text-gray-500">Account #:</span>
+                            <div className="font-medium text-xs">{batch.acctNumber}</div>
+                          </div>
+                          <div>
+                            <span className="text-gray-500">SR #:</span>
+                            <div className="font-medium text-xs text-blue-600">{batch.srNumber}</div>
+                          </div>
+                        </div>
+                        <div className="text-sm">
+                          <span className="text-gray-500">Min Need By:</span>
+                          <div className="font-medium text-xs">{batch.minNeedByDate}</div>
+                        </div>
+                        <div className="grid grid-cols-3 gap-3 text-sm border-t border-gray-100 pt-3">
+                          <div className="text-center">
+                            <span className="text-gray-500 block text-xs">Total Count</span>
+                            <div className="font-bold text-lg text-gray-900">{batch.totalCount}</div>
+                          </div>
+                          <div className="text-center">
+                            <span className="text-gray-500 block text-xs">Total Lab Open</span>
+                            <div className="font-medium text-lg text-orange-600">{batch.totalLabOpen}</div>
+                          </div>
+                          <div className="text-center">
+                            <span className="text-gray-500 block text-xs">Total AR Count</span>
+                            <div className="font-medium text-lg text-blue-600">{batch.totalArCount}</div>
+                          </div>
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
               ))
