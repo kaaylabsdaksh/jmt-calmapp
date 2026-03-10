@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -7,7 +7,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Calendar as CalendarIcon, Search, X, Filter, Plus, Check } from "lucide-react";
+import { Calendar as CalendarIcon, Search, X, Filter, Plus, Check, Clock, Zap } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 
@@ -299,6 +299,45 @@ const mockWorkOrders = [
   }
 ];
 
+// Auto-detect search type based on input pattern
+function autoDetectSearchType(input: string): string | null {
+  const trimmed = input.trim();
+  if (!trimmed) return null;
+  if (/^\d{5,6}$/.test(trimmed)) return 'workOrderNumber';
+  if (/^\d{5,6}-\d{1,3}$/.test(trimmed)) return 'workOrderItemNumber';
+  if (/^\d{3,5}\.\d{1,2}$/.test(trimmed)) return 'accountNumber';
+  if (/^PO[-\s]?\d+/i.test(trimmed)) return 'poNumber';
+  if (/^SR\d+/i.test(trimmed)) return 'onsiteProjectNumber';
+  if (/^SN\d+/i.test(trimmed)) return 'serialNumber';
+  if (/^MFG[-\s]?\d+/i.test(trimmed)) return 'mfgSerial';
+  if (/^ESL[-\s]?\d+/i.test(trimmed)) return 'eslID';
+  if (/^RFID[-\s]/i.test(trimmed)) return 'rfid';
+  if (/^RMA/i.test(trimmed)) return 'vendorRMANumber';
+  if (/^QT[-\s]?\d+/i.test(trimmed)) return 'quoteNumber';
+  if (/^CUST[-\s]?\d+/i.test(trimmed)) return 'custID';
+  if (/^[a-zA-Z\s]{3,}$/.test(trimmed)) return 'customerName';
+  return null;
+}
+
+interface RecentSearch {
+  id: string;
+  chips: SearchChip[];
+  timestamp: number;
+  label: string;
+}
+
+const RECENT_SEARCHES_KEY = 'wo-modern-recent-searches';
+const MAX_RECENT_SEARCHES = 8;
+
+function loadRecentSearches(): RecentSearch[] {
+  try { return JSON.parse(localStorage.getItem(RECENT_SEARCHES_KEY) || '[]'); }
+  catch { return []; }
+}
+function saveRecentSearches(searches: RecentSearch[]) {
+  try { localStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(searches.slice(0, MAX_RECENT_SEARCHES))); }
+  catch {}
+}
+
 const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
   const [dateFrom, setDateFrom] = useState<Date>();
   const [dateTo, setDateTo] = useState<Date>();
@@ -308,6 +347,12 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
   const [searchChips, setSearchChips] = useState<SearchChip[]>([]);
   const [selectedSearchType, setSelectedSearchType] = useState('workOrderNumber');
   const [searchInput, setSearchInput] = useState('');
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [showRecentSearches, setShowRecentSearches] = useState(false);
+  const [recentSearches, setRecentSearches] = useState<RecentSearch[]>(loadRecentSearches);
+  const [detectedType, setDetectedType] = useState<string | null>(null);
+  const [resultCount, setResultCount] = useState<number | null>(null);
+  const searchContainerRef = useRef<HTMLDivElement>(null);
   const [searchValues, setSearchValues] = useState({
     woNumber: '',
     customer: '',
@@ -338,216 +383,233 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
     viewTemplate: false
   });
 
-  const addSearchChip = () => {
-    if (!searchInput.trim()) return;
+  // Close dropdowns on outside click
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(e.target as Node)) {
+        setShowSuggestions(false);
+        setShowRecentSearches(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
-    const selectedOption = searchTypeOptions.find(opt => opt.value === selectedSearchType);
+  // Auto-detect type
+  useEffect(() => {
+    setDetectedType(autoDetectSearchType(searchInput));
+  }, [searchInput]);
+
+  // Compute suggestions
+  const suggestions = useMemo(() => {
+    if (!searchInput.trim()) return [];
+    const q = searchInput.toLowerCase();
+    return mockWorkOrders
+      .filter(wo => {
+        switch (selectedSearchType) {
+          case 'workOrderNumber': return wo.id.includes(q);
+          case 'accountNumber': return wo.accountNumber.toLowerCase().includes(q);
+          case 'customerName': return wo.customer.toLowerCase().includes(q);
+          case 'serialNumber': return wo.serialNumber.toLowerCase().includes(q);
+          case 'manufacturer': return wo.manufacturer.toLowerCase().includes(q);
+          default: return wo.id.includes(q) || wo.customer.toLowerCase().includes(q);
+        }
+      })
+      .slice(0, 6)
+      .map(wo => ({
+        id: wo.id,
+        primary: selectedSearchType === 'customerName' ? wo.customer :
+                 selectedSearchType === 'accountNumber' ? wo.accountNumber :
+                 selectedSearchType === 'manufacturer' ? wo.manufacturer :
+                 wo.id,
+        secondary: selectedSearchType === 'customerName' ? `WO: ${wo.id}` : `${wo.customer} • ${wo.manufacturer}`,
+        value: selectedSearchType === 'customerName' ? wo.customer :
+               selectedSearchType === 'accountNumber' ? wo.accountNumber :
+               selectedSearchType === 'manufacturer' ? wo.manufacturer :
+               wo.id,
+      }));
+  }, [searchInput, selectedSearchType]);
+
+  // Live result count
+  useEffect(() => {
+    if (searchChips.length === 0) { setResultCount(null); return; }
+    const timer = setTimeout(() => {
+      let count = mockWorkOrders.length;
+      searchChips.forEach(chip => {
+        const q = chip.value.toLowerCase();
+        count = mockWorkOrders.filter(wo =>
+          wo.id.includes(q) || wo.customer.toLowerCase().includes(q) || wo.accountNumber.includes(q) || wo.manufacturer.toLowerCase().includes(q)
+        ).length;
+      });
+      setResultCount(count);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [searchChips]);
+
+  const formatTimeAgo = (timestamp: number) => {
+    const diff = Date.now() - timestamp;
+    const mins = Math.floor(diff / 60000);
+    if (mins < 1) return 'Just now';
+    if (mins < 60) return `${mins}m ago`;
+    const hrs = Math.floor(mins / 60);
+    if (hrs < 24) return `${hrs}h ago`;
+    return `${Math.floor(hrs / 24)}d ago`;
+  };
+
+
+  const addSearchChip = (value?: string) => {
+    const chipValue = value || searchInput.trim();
+    if (!chipValue) return;
+
+    const typeToUse = detectedType || selectedSearchType;
+    const selectedOption = searchTypeOptions.find(opt => opt.value === typeToUse);
     if (!selectedOption) return;
 
+    if (detectedType && detectedType !== selectedSearchType) {
+      setSelectedSearchType(detectedType);
+    }
+
     const newChip: SearchChip = {
-      id: `${selectedSearchType}-${Date.now()}`,
-      type: selectedSearchType,
-      value: searchInput.trim(),
+      id: `${typeToUse}-${Date.now()}`,
+      type: typeToUse,
+      value: chipValue,
       label: selectedOption.label,
     };
 
     setSearchChips(prev => [...prev, newChip]);
     setSearchInput('');
+    setShowSuggestions(false);
     
-    // Trigger search with new chips
     const updatedChips = [...searchChips, newChip];
     const searchTags = updatedChips.map(chip => `${chip.label}: ${chip.value}`);
     onSearch({
       globalSearch: '',
-      searchTags: searchTags,
-      status: searchValues.status,
-      assignee: searchValues.assignee,
-      priority: searchValues.priority,
-      manufacturer: searchValues.manufacturer,
-      division: searchValues.division,
-      woType: searchValues.woType,
-      dateFrom,
-      dateTo,
-      dateType,
-      actionCode: searchValues.actionCode,
-      labCode: searchValues.labCode,
-      rotationManagement: searchValues.rotationManagement,
-      invoiceStatus: searchValues.invoiceStatus,
-      departureType: searchValues.departureType,
-      salesperson: searchValues.salesperson,
-      workOrderItemStatus: searchValues.workOrderItemStatus,
-      workOrderItemType: searchValues.workOrderItemType,
+      searchTags,
+      status: searchValues.status, assignee: searchValues.assignee, priority: searchValues.priority,
+      manufacturer: searchValues.manufacturer, division: searchValues.division, woType: searchValues.woType,
+      dateFrom, dateTo, dateType,
+      actionCode: searchValues.actionCode, labCode: searchValues.labCode,
+      rotationManagement: searchValues.rotationManagement, invoiceStatus: searchValues.invoiceStatus,
+      departureType: searchValues.departureType, salesperson: searchValues.salesperson,
+      workOrderItemStatus: searchValues.workOrderItemStatus, workOrderItemType: searchValues.workOrderItemType,
       location: searchValues.location,
-      newEquip: searchValues.newEquip,
-      usedSurplus: searchValues.usedSurplus,
-      warranty: searchValues.warranty,
-      toFactory: searchValues.toFactory,
-      proofOfDelivery: searchValues.proofOfDelivery,
-      only17025: searchValues.only17025,
-      onlyHotList: searchValues.onlyHotList,
-      onlyLostEquip: searchValues.onlyLostEquip,
-      nonJMAccts: searchValues.nonJMAccts,
-      viewTemplate: searchValues.viewTemplate
+      newEquip: searchValues.newEquip, usedSurplus: searchValues.usedSurplus,
+      warranty: searchValues.warranty, toFactory: searchValues.toFactory,
+      proofOfDelivery: searchValues.proofOfDelivery, only17025: searchValues.only17025,
+      onlyHotList: searchValues.onlyHotList, onlyLostEquip: searchValues.onlyLostEquip,
+      nonJMAccts: searchValues.nonJMAccts, viewTemplate: searchValues.viewTemplate,
     });
   };
 
   const removeSearchChip = (chipId: string) => {
     const updatedChips = searchChips.filter(chip => chip.id !== chipId);
     setSearchChips(updatedChips);
-    
-    // Trigger search with updated chips
     const searchTags = updatedChips.map(chip => `${chip.label}: ${chip.value}`);
     onSearch({
       globalSearch: '',
-      searchTags: searchTags,
-      status: searchValues.status,
-      assignee: searchValues.assignee,
-      priority: searchValues.priority,
-      manufacturer: searchValues.manufacturer,
-      division: searchValues.division,
-      woType: searchValues.woType,
-      dateFrom,
-      dateTo,
-      dateType,
-      actionCode: searchValues.actionCode,
-      labCode: searchValues.labCode,
-      rotationManagement: searchValues.rotationManagement,
-      invoiceStatus: searchValues.invoiceStatus,
-      departureType: searchValues.departureType,
-      salesperson: searchValues.salesperson,
-      workOrderItemStatus: searchValues.workOrderItemStatus,
-      workOrderItemType: searchValues.workOrderItemType,
+      searchTags,
+      status: searchValues.status, assignee: searchValues.assignee, priority: searchValues.priority,
+      manufacturer: searchValues.manufacturer, division: searchValues.division, woType: searchValues.woType,
+      dateFrom, dateTo, dateType,
+      actionCode: searchValues.actionCode, labCode: searchValues.labCode,
+      rotationManagement: searchValues.rotationManagement, invoiceStatus: searchValues.invoiceStatus,
+      departureType: searchValues.departureType, salesperson: searchValues.salesperson,
+      workOrderItemStatus: searchValues.workOrderItemStatus, workOrderItemType: searchValues.workOrderItemType,
       location: searchValues.location,
-      newEquip: searchValues.newEquip,
-      usedSurplus: searchValues.usedSurplus,
-      warranty: searchValues.warranty,
-      toFactory: searchValues.toFactory,
-      proofOfDelivery: searchValues.proofOfDelivery,
-      only17025: searchValues.only17025,
-      onlyHotList: searchValues.onlyHotList,
-      onlyLostEquip: searchValues.onlyLostEquip,
-      nonJMAccts: searchValues.nonJMAccts,
-      viewTemplate: searchValues.viewTemplate
+      newEquip: searchValues.newEquip, usedSurplus: searchValues.usedSurplus,
+      warranty: searchValues.warranty, toFactory: searchValues.toFactory,
+      proofOfDelivery: searchValues.proofOfDelivery, only17025: searchValues.only17025,
+      onlyHotList: searchValues.onlyHotList, onlyLostEquip: searchValues.onlyLostEquip,
+      nonJMAccts: searchValues.nonJMAccts, viewTemplate: searchValues.viewTemplate,
     });
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      addSearchChip();
-    }
+    if (e.key === 'Enter') { e.preventDefault(); addSearchChip(); }
+    if (e.key === 'Escape') { setShowSuggestions(false); setShowRecentSearches(false); }
   };
 
   const handleSearch = () => {
-    // Add chip if there's input
     if (searchInput.trim()) {
       addSearchChip();
     } else {
-      // Even without new chip, send current filter values
+      // Save recent search
+      if (searchChips.length > 0) {
+        const entry: RecentSearch = {
+          id: `recent-${Date.now()}`, chips: [...searchChips], timestamp: Date.now(),
+          label: searchChips.map(c => `${c.label}: ${c.value}`).join(', '),
+        };
+        const updated = [entry, ...recentSearches.filter(r => r.label !== entry.label)].slice(0, MAX_RECENT_SEARCHES);
+        setRecentSearches(updated);
+        saveRecentSearches(updated);
+      }
       const searchTags = searchChips.map(chip => `${chip.label}: ${chip.value}`);
       onSearch({
-        globalSearch: '',
-        searchTags: searchTags,
-        status: searchValues.status,
-        assignee: searchValues.assignee,
-        priority: searchValues.priority,
-        manufacturer: searchValues.manufacturer,
-        division: searchValues.division,
-        woType: searchValues.woType,
-        dateFrom,
-        dateTo,
-        dateType,
-        actionCode: searchValues.actionCode,
-        labCode: searchValues.labCode,
-        rotationManagement: searchValues.rotationManagement,
-        invoiceStatus: searchValues.invoiceStatus,
-        departureType: searchValues.departureType,
-        salesperson: searchValues.salesperson,
-        workOrderItemStatus: searchValues.workOrderItemStatus,
-        workOrderItemType: searchValues.workOrderItemType,
+        globalSearch: '', searchTags,
+        status: searchValues.status, assignee: searchValues.assignee, priority: searchValues.priority,
+        manufacturer: searchValues.manufacturer, division: searchValues.division, woType: searchValues.woType,
+        dateFrom, dateTo, dateType,
+        actionCode: searchValues.actionCode, labCode: searchValues.labCode,
+        rotationManagement: searchValues.rotationManagement, invoiceStatus: searchValues.invoiceStatus,
+        departureType: searchValues.departureType, salesperson: searchValues.salesperson,
+        workOrderItemStatus: searchValues.workOrderItemStatus, workOrderItemType: searchValues.workOrderItemType,
         location: searchValues.location,
-        newEquip: searchValues.newEquip,
-        usedSurplus: searchValues.usedSurplus,
-        warranty: searchValues.warranty,
-        toFactory: searchValues.toFactory,
-        proofOfDelivery: searchValues.proofOfDelivery,
-        only17025: searchValues.only17025,
-        onlyHotList: searchValues.onlyHotList,
-        onlyLostEquip: searchValues.onlyLostEquip,
-        nonJMAccts: searchValues.nonJMAccts,
-        viewTemplate: searchValues.viewTemplate
+        newEquip: searchValues.newEquip, usedSurplus: searchValues.usedSurplus,
+        warranty: searchValues.warranty, toFactory: searchValues.toFactory,
+        proofOfDelivery: searchValues.proofOfDelivery, only17025: searchValues.only17025,
+        onlyHotList: searchValues.onlyHotList, onlyLostEquip: searchValues.onlyLostEquip,
+        nonJMAccts: searchValues.nonJMAccts, viewTemplate: searchValues.viewTemplate,
       });
     }
+  };
+
+  const applyRecentSearch = (recent: RecentSearch) => {
+    setSearchChips(recent.chips);
+    setShowRecentSearches(false);
+    setShowSuggestions(false);
+  };
+
+  const removeRecentSearch = (id: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    const updated = recentSearches.filter(r => r.id !== id);
+    setRecentSearches(updated);
+    saveRecentSearches(updated);
+  };
+
+  const handleInputFocus = () => {
+    if (searchInput.trim()) { setShowSuggestions(true); setShowRecentSearches(false); }
+    else if (recentSearches.length > 0) { setShowRecentSearches(true); setShowSuggestions(false); }
+  };
+
+  const handleInputChange = (val: string) => {
+    setSearchInput(val);
+    if (val.trim()) { setShowSuggestions(true); setShowRecentSearches(false); }
+    else { setShowSuggestions(false); if (recentSearches.length > 0) setShowRecentSearches(true); }
   };
 
   const clearAllFilters = () => {
     setSearchChips([]);
     setSearchInput('');
+    setResultCount(null);
     setSearchValues({
-      woNumber: '',
-      customer: '',
-      status: '',
-      manufacturer: '',
-      priority: [],
-      assignee: '',
-      division: '',
-      woType: '',
-      actionCode: '',
-      labCode: '',
-      rotationManagement: '',
-      invoiceStatus: '',
-      departureType: '',
-      salesperson: '',
-      workOrderItemStatus: '',
-      workOrderItemType: '',
-      location: '',
-      newEquip: false,
-      usedSurplus: false,
-      warranty: false,
-      toFactory: false,
-      proofOfDelivery: false,
-      only17025: false,
-      onlyHotList: false,
-      onlyLostEquip: false,
-      nonJMAccts: false,
-      viewTemplate: false
+      woNumber: '', customer: '', status: '', manufacturer: '', priority: [], assignee: '',
+      division: '', woType: '', actionCode: '', labCode: '', rotationManagement: '',
+      invoiceStatus: '', departureType: '', salesperson: '', workOrderItemStatus: '',
+      workOrderItemType: '', location: '', newEquip: false, usedSurplus: false,
+      warranty: false, toFactory: false, proofOfDelivery: false, only17025: false,
+      onlyHotList: false, onlyLostEquip: false, nonJMAccts: false, viewTemplate: false,
     });
     setDateFrom(undefined);
     setDateTo(undefined);
     setDateType('');
-    
-    // Trigger search with empty filters to show all results
     onSearch({
-      globalSearch: '',
-      searchTags: [],
-      status: '',
-      assignee: '',
-      priority: [],
-      manufacturer: '',
-      division: '',
-      woType: '',
-      dateFrom: undefined,
-      dateTo: undefined,
-      dateType: '',
-      actionCode: '',
-      labCode: '',
-      rotationManagement: '',
-      invoiceStatus: '',
-      departureType: '',
-      salesperson: '',
-      workOrderItemStatus: '',
-      workOrderItemType: '',
-      location: '',
-      newEquip: false,
-      usedSurplus: false,
-      warranty: false,
-      toFactory: false,
-      proofOfDelivery: false,
-      only17025: false,
-      onlyHotList: false,
-      onlyLostEquip: false,
-      nonJMAccts: false,
-      viewTemplate: false
+      globalSearch: '', searchTags: [], status: '', assignee: '', priority: [],
+      manufacturer: '', division: '', woType: '', dateFrom: undefined, dateTo: undefined, dateType: '',
+      actionCode: '', labCode: '', rotationManagement: '', invoiceStatus: '',
+      departureType: '', salesperson: '', workOrderItemStatus: '', workOrderItemType: '',
+      location: '', newEquip: false, usedSurplus: false, warranty: false, toFactory: false,
+      proofOfDelivery: false, only17025: false, onlyHotList: false, onlyLostEquip: false,
+      nonJMAccts: false, viewTemplate: false,
     });
   };
 
@@ -560,10 +622,19 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
   const selectContentClass = "bg-white border border-gray-200 shadow-xl rounded-lg z-[9999]";
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 mb-6">
+    <div className="bg-card rounded-xl shadow-sm border mb-6">
       {/* Header Row */}
       <div className="flex items-center justify-between px-5 pt-5 pb-4">
-        <h2 className="text-lg font-semibold text-gray-900">Work Order Search</h2>
+        <div className="flex items-center gap-3">
+          <h2 className="text-lg font-semibold text-foreground">Work Order Search</h2>
+          {/* Live Result Count */}
+          {resultCount !== null && (
+            <Badge variant="secondary" className="px-2.5 py-1 text-xs font-medium animate-in fade-in-50 slide-in-from-left-2">
+              <Zap className="h-3 w-3 mr-1 text-primary" />
+              {resultCount} {resultCount === 1 ? 'result' : 'results'} found
+            </Badge>
+          )}
+        </div>
         <button
           onClick={clearAllFilters}
           className="flex items-center gap-1.5 text-sm font-medium text-yellow-600 hover:text-yellow-700 transition-colors"
@@ -575,10 +646,10 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
 
       <div className="px-5 pb-5 space-y-4">
         {/* Search Criteria Section */}
-        <div>
+        <div ref={searchContainerRef}>
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm font-medium text-gray-700">Search Criteria</span>
-            <span className="text-xs text-gray-400">Add search criteria by selecting a field and value</span>
+            <span className="text-sm font-medium text-muted-foreground">Search Criteria</span>
+            <span className="text-xs text-muted-foreground/60">Add search criteria by selecting a field and value</span>
           </div>
 
           {/* Active Search Chips */}
@@ -606,35 +677,107 @@ const ModernTopSearchFilters = ({ onSearch }: ModernTopSearchFiltersProps) => {
 
           {/* Search Bar */}
           <div className="flex gap-2">
-            <div className="relative flex-1 flex items-center bg-white border border-gray-200 rounded-lg h-10 focus-within:ring-2 focus-within:ring-blue-500/20 focus-within:border-blue-500 transition-all">
-              <Select value={selectedSearchType} onValueChange={setSelectedSearchType}>
-                <SelectTrigger className="w-[140px] sm:w-[180px] border-0 border-r border-gray-200 rounded-l-lg rounded-r-none h-full text-xs sm:text-sm bg-transparent hover:bg-gray-50 focus:ring-0 focus:ring-offset-0">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className={selectContentClass}>
-                  {searchTypeOptions.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
-                      {option.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <div className="relative flex-1 flex items-center">
-                <Search className="absolute left-3 h-4 w-4 text-gray-400" />
-                <Input
-                  placeholder="Enter value and press Enter or click Add..."
-                  value={searchInput}
-                  onChange={(e) => setSearchInput(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  className="pl-9 pr-3 border-0 h-full text-sm placeholder:text-gray-400 focus-visible:ring-0 focus-visible:ring-offset-0 bg-transparent"
-                />
+            <div className="relative flex-1">
+              <div className="flex items-center bg-background border rounded-lg h-10 focus-within:ring-2 focus-within:ring-primary/20 focus-within:border-primary transition-all">
+                <Select value={selectedSearchType} onValueChange={setSelectedSearchType}>
+                  <SelectTrigger className="w-[140px] sm:w-[180px] border-0 border-r rounded-l-lg rounded-r-none h-full text-xs sm:text-sm bg-transparent hover:bg-muted focus:ring-0 focus:ring-offset-0">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className={selectContentClass}>
+                    {searchTypeOptions.map((option) => (
+                      <SelectItem key={option.value} value={option.value}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <div className="relative flex-1 flex items-center">
+                  <Search className="absolute left-3 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    placeholder="Enter value and press Enter or click Add..."
+                    value={searchInput}
+                    onChange={(e) => handleInputChange(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    onFocus={handleInputFocus}
+                    className="pl-9 pr-24 border-0 h-full text-sm placeholder:text-muted-foreground focus-visible:ring-0 focus-visible:ring-offset-0 bg-transparent"
+                  />
+                  {/* Auto-detect badge */}
+                  {detectedType && detectedType !== selectedSearchType && searchInput.trim() && (
+                    <button 
+                      onClick={() => setSelectedSearchType(detectedType)}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1 px-2 py-0.5 rounded-md bg-primary/10 text-primary text-xs font-medium hover:bg-primary/20 transition-colors"
+                    >
+                      <Zap className="h-3 w-3" />
+                      {searchTypeOptions.find(o => o.value === detectedType)?.label}
+                    </button>
+                  )}
+                </div>
               </div>
+
+              {/* Auto-Suggest Dropdown */}
+              {showSuggestions && suggestions.length > 0 && (
+                <div className="absolute left-0 right-0 top-[calc(100%+4px)] z-50 bg-popover border rounded-lg shadow-lg overflow-hidden animate-in fade-in-50 slide-in-from-top-2">
+                  <div className="px-3 py-2 border-b bg-muted/30">
+                    <span className="text-xs font-medium text-muted-foreground">Suggestions</span>
+                  </div>
+                  {suggestions.map((suggestion) => (
+                    <button
+                      key={suggestion.id}
+                      onClick={() => addSearchChip(suggestion.value)}
+                      className="w-full flex items-center gap-3 px-3 py-2.5 text-left hover:bg-accent transition-colors border-b border-border/50 last:border-0"
+                    >
+                      <Search className="h-3.5 w-3.5 text-muted-foreground flex-shrink-0" />
+                      <div className="flex-1 min-w-0">
+                        <div className="text-sm font-medium text-foreground truncate">{suggestion.primary}</div>
+                        <div className="text-xs text-muted-foreground truncate">{suggestion.secondary}</div>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              {/* Recent Searches Dropdown */}
+              {showRecentSearches && recentSearches.length > 0 && !searchInput.trim() && (
+                <div className="absolute left-0 right-0 top-[calc(100%+4px)] z-50 bg-popover border rounded-lg shadow-lg overflow-hidden animate-in fade-in-50 slide-in-from-top-2">
+                  <div className="px-3 py-2 border-b bg-muted/30 flex items-center justify-between">
+                    <span className="text-xs font-medium text-muted-foreground flex items-center gap-1.5">
+                      <Clock className="h-3 w-3" />
+                      Recent Searches
+                    </span>
+                    <button 
+                      onClick={() => { setRecentSearches([]); saveRecentSearches([]); }}
+                      className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      Clear all
+                    </button>
+                  </div>
+                  {recentSearches.map((recent) => (
+                    <button
+                      key={recent.id}
+                      onClick={() => applyRecentSearch(recent)}
+                      className="w-full flex items-center gap-3 px-3 py-2.5 text-left hover:bg-accent transition-colors border-b border-border/50 last:border-0 group"
+                    >
+                      <Clock className="h-3.5 w-3.5 text-muted-foreground flex-shrink-0" />
+                      <div className="flex-1 min-w-0">
+                        <div className="text-sm text-foreground truncate">{recent.label}</div>
+                        <div className="text-xs text-muted-foreground">{formatTimeAgo(recent.timestamp)}</div>
+                      </div>
+                      <button
+                        onClick={(e) => removeRecentSearch(recent.id, e)}
+                        className="opacity-0 group-hover:opacity-100 p-1 hover:bg-muted rounded transition-all"
+                      >
+                        <X className="h-3 w-3 text-muted-foreground" />
+                      </button>
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
             <Button 
-              onClick={addSearchChip}
+              onClick={() => addSearchChip()}
               variant="outline"
               size="sm"
-              className="h-10 px-4 border-gray-200"
+              className="h-10 px-4"
             >
               <Plus className="h-4 w-4 mr-1.5" />
               Add
