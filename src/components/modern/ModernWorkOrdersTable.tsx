@@ -7,7 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { List, Grid3X3, Pencil, Search, X } from "lucide-react";
+import { List, Grid3X3, Pencil, Search, X, ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import WorkOrderBatchDetails from "@/components/WorkOrderBatchDetails";
@@ -4048,7 +4048,31 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
   const [activeStatusFilter, setActiveStatusFilter] = useState<string>('all');
   const [currentView, setCurrentView] = useState<'item' | 'batch'>('item');
   const [columnFilters, setColumnFilters] = useState<Record<string, string>>({});
+  const [sortConfig, setSortConfig] = useState<{ key: string; direction: 'asc' | 'desc' } | null>(null);
   const navigate = useNavigate();
+
+  const sortableColumns = new Set(['totalLabOpen', 'totalArCount', 'totalCount', 'lastCommentDate', 'minNeedByDate', 'minFollowUpDate', 'minDeliverByDate']);
+
+  const handleSort = (key: string) => {
+    if (!sortableColumns.has(key)) return;
+    setSortConfig(prev => {
+      if (prev?.key === key) {
+        if (prev.direction === 'asc') return { key, direction: 'desc' };
+        return null; // third click clears
+      }
+      return { key, direction: 'asc' };
+    });
+  };
+
+  const SortIcon = ({ columnKey }: { columnKey: string }) => {
+    if (!sortableColumns.has(columnKey)) return null;
+    if (sortConfig?.key === columnKey) {
+      return sortConfig.direction === 'asc' 
+        ? <ArrowUp className="h-3 w-3 ml-1 inline-block text-primary" />
+        : <ArrowDown className="h-3 w-3 ml-1 inline-block text-primary" />;
+    }
+    return <ArrowUpDown className="h-3 w-3 ml-1 inline-block text-muted-foreground/40" />;
+  };
 
   // Force batch view when CSA mode is active
   React.useEffect(() => {
@@ -4311,6 +4335,19 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
     });
   });
 
+  // Apply sorting to batches
+  const sortedBatches = [...columnFilteredBatches];
+  if (sortConfig) {
+    sortedBatches.sort((a, b) => {
+      const key = sortConfig.key as keyof WorkOrderBatch;
+      const aVal = a[key];
+      const bVal = b[key];
+      const dir = sortConfig.direction === 'asc' ? 1 : -1;
+      if (typeof aVal === 'number' && typeof bVal === 'number') return (aVal - bVal) * dir;
+      return String(aVal).localeCompare(String(bVal)) * dir;
+    });
+  }
+
   // Apply column filters to items
   const columnFilteredItems = filteredWorkOrderItems.filter(item => {
     return Object.entries(columnFilters).every(([key, value]) => {
@@ -4321,7 +4358,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
   });
 
   const totalPages = currentView === 'batch' 
-    ? Math.ceil(columnFilteredBatches.length / itemsPerPage)
+    ? Math.ceil(sortedBatches.length / itemsPerPage)
     : Math.ceil(columnFilteredItems.length / itemsPerPage);
 
   // Get paginated data
@@ -4335,7 +4372,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
     : [];
 
   const paginatedBatches = currentView === 'batch'
-    ? (isShowingAll ? columnFilteredBatches : columnFilteredBatches.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage))
+    ? (isShowingAll ? sortedBatches : sortedBatches.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage))
     : [];
 
   const openDetails = (order: WorkOrder) => {
@@ -4837,14 +4874,14 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                       <TableHead className="font-semibold text-gray-900">Acct #</TableHead>
                       <TableHead className="font-semibold text-gray-900">SR #</TableHead>
                       <TableHead className="font-semibold text-gray-900">Customer Name</TableHead>
-                      <TableHead className="font-semibold text-gray-900">Total Lab Open</TableHead>
-                      <TableHead className="font-semibold text-gray-900">Total AR Count</TableHead>
-                      <TableHead className="font-semibold text-gray-900">Total Count</TableHead>
-                      <TableHead className="font-semibold text-gray-900">Last Comment Date</TableHead>
+                      <TableHead className="font-semibold text-gray-900 cursor-pointer select-none hover:bg-gray-100 transition-colors" onClick={() => handleSort('totalLabOpen')}>Total Lab Open<SortIcon columnKey="totalLabOpen" /></TableHead>
+                      <TableHead className="font-semibold text-gray-900 cursor-pointer select-none hover:bg-gray-100 transition-colors" onClick={() => handleSort('totalArCount')}>Total AR Count<SortIcon columnKey="totalArCount" /></TableHead>
+                      <TableHead className="font-semibold text-gray-900 cursor-pointer select-none hover:bg-gray-100 transition-colors" onClick={() => handleSort('totalCount')}>Total Count<SortIcon columnKey="totalCount" /></TableHead>
+                      <TableHead className="font-semibold text-gray-900 cursor-pointer select-none hover:bg-gray-100 transition-colors" onClick={() => handleSort('lastCommentDate')}>Last Comment Date<SortIcon columnKey="lastCommentDate" /></TableHead>
                       <TableHead className="font-semibold text-gray-900 min-w-[200px]">Last Comment</TableHead>
-                      <TableHead className="font-semibold text-gray-900">Min Need By Date</TableHead>
-                      <TableHead className="font-semibold text-gray-900">Min Follow Up Date</TableHead>
-                      <TableHead className="font-semibold text-gray-900">Min Deliver By Date</TableHead>
+                      <TableHead className="font-semibold text-gray-900 cursor-pointer select-none hover:bg-gray-100 transition-colors" onClick={() => handleSort('minNeedByDate')}>Min Need By Date<SortIcon columnKey="minNeedByDate" /></TableHead>
+                      <TableHead className="font-semibold text-gray-900 cursor-pointer select-none hover:bg-gray-100 transition-colors" onClick={() => handleSort('minFollowUpDate')}>Min Follow Up Date<SortIcon columnKey="minFollowUpDate" /></TableHead>
+                      <TableHead className="font-semibold text-gray-900 cursor-pointer select-none hover:bg-gray-100 transition-colors" onClick={() => handleSort('minDeliverByDate')}>Min Deliver By Date<SortIcon columnKey="minDeliverByDate" /></TableHead>
                     </>
                   ) : (
                     <>
@@ -4852,10 +4889,10 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                       <TableHead className="font-semibold text-gray-900">Acct #</TableHead>
                       <TableHead className="font-semibold text-gray-900">SR #</TableHead>
                       <TableHead className="font-semibold text-gray-900">Customer Name</TableHead>
-                      <TableHead className="font-semibold text-gray-900">Min Need By Date</TableHead>
-                      <TableHead className="font-semibold text-gray-900">Total Count</TableHead>
-                      <TableHead className="font-semibold text-gray-900">Total Lab Open</TableHead>
-                      <TableHead className="font-semibold text-gray-900">Total AR Count</TableHead>
+                      <TableHead className="font-semibold text-gray-900 cursor-pointer select-none hover:bg-gray-100 transition-colors" onClick={() => handleSort('minNeedByDate')}>Min Need By Date<SortIcon columnKey="minNeedByDate" /></TableHead>
+                      <TableHead className="font-semibold text-gray-900 cursor-pointer select-none hover:bg-gray-100 transition-colors" onClick={() => handleSort('totalCount')}>Total Count<SortIcon columnKey="totalCount" /></TableHead>
+                      <TableHead className="font-semibold text-gray-900 cursor-pointer select-none hover:bg-gray-100 transition-colors" onClick={() => handleSort('totalLabOpen')}>Total Lab Open<SortIcon columnKey="totalLabOpen" /></TableHead>
+                      <TableHead className="font-semibold text-gray-900 cursor-pointer select-none hover:bg-gray-100 transition-colors" onClick={() => handleSort('totalArCount')}>Total AR Count<SortIcon columnKey="totalArCount" /></TableHead>
                     </>
                   )
                 ) : (
@@ -5234,7 +5271,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
         <div className="p-6 border-t border-gray-200 flex justify-between items-center">
           <div className="flex items-center gap-4">
             <span className="text-sm text-gray-600">
-              Showing {((currentPage - 1) * itemsPerPage) + 1}-{Math.min(currentPage * itemsPerPage, currentView === 'batch' ? columnFilteredBatches.length : columnFilteredItems.length)} of {currentView === 'batch' ? columnFilteredBatches.length : columnFilteredItems.length} items
+              Showing {((currentPage - 1) * itemsPerPage) + 1}-{Math.min(currentPage * itemsPerPage, currentView === 'batch' ? sortedBatches.length : columnFilteredItems.length)} of {currentView === 'batch' ? sortedBatches.length : columnFilteredItems.length} items
             </span>
             <div className="flex items-center gap-2">
               <span className="text-sm text-gray-600">Show:</span>
