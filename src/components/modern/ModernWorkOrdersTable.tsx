@@ -4879,7 +4879,20 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
               <TableRow className="border-b border-gray-100">
                 {currentView === 'batch' ? (
                   <>
-                    {[
+                    {(searchViewMode === 'csa' ? [
+                      { key: 'woBatch', placeholder: 'Filter batch...' },
+                      { key: 'acctNumber', placeholder: 'Filter acct...' },
+                      { key: 'srNumber', placeholder: 'Filter SR...' },
+                      { key: 'customerName', placeholder: 'Filter customer...' },
+                      { key: 'totalLabOpen', placeholder: 'Filter...' },
+                      { key: 'totalArCount', placeholder: 'Filter...' },
+                      { key: 'totalCount', placeholder: 'Filter...' },
+                      { key: 'lastCommentDate', placeholder: 'Filter date...' },
+                      { key: 'lastComment', placeholder: 'Filter comment...' },
+                      { key: 'minNeedByDate', placeholder: 'Filter date...' },
+                      { key: 'minFollowUpDate', placeholder: 'Filter date...' },
+                      { key: 'minDeliverByDate', placeholder: 'Filter date...' },
+                    ] : [
                       { key: 'woBatch', placeholder: 'Filter batch...' },
                       { key: 'acctNumber', placeholder: 'Filter acct...' },
                       { key: 'srNumber', placeholder: 'Filter SR...' },
@@ -4888,7 +4901,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                       { key: 'totalCount', placeholder: 'Filter...' },
                       { key: 'totalLabOpen', placeholder: 'Filter...' },
                       { key: 'totalArCount', placeholder: 'Filter...' },
-                    ].map((col) => (
+                    ]).map((col) => (
                       <TableHead key={col.key} className="py-1.5 px-2">
                         <div className="relative">
                           <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground/50" />
