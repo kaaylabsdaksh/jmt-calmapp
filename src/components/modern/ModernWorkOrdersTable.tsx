@@ -7,7 +7,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { List, Grid3X3, Pencil } from "lucide-react";
+import { List, Grid3X3, Pencil, Search } from "lucide-react";
+import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import WorkOrderBatchDetails from "@/components/WorkOrderBatchDetails";
 
@@ -4046,6 +4047,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [activeStatusFilter, setActiveStatusFilter] = useState<string>('all');
   const [currentView, setCurrentView] = useState<'item' | 'batch'>('item');
+  const [columnFilters, setColumnFilters] = useState<Record<string, string>>({});
   const navigate = useNavigate();
 
   // Force batch view when CSA mode is active
@@ -4300,9 +4302,27 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
     return searchMatch && searchTagsMatch;
   });
   
+  // Apply column filters to batches
+  const columnFilteredBatches = filteredWorkOrderBatches.filter(batch => {
+    return Object.entries(columnFilters).every(([key, value]) => {
+      if (!value) return true;
+      const fieldValue = String((batch as any)[key] || '').toLowerCase();
+      return fieldValue.includes(value.toLowerCase());
+    });
+  });
+
+  // Apply column filters to items
+  const columnFilteredItems = filteredWorkOrderItems.filter(item => {
+    return Object.entries(columnFilters).every(([key, value]) => {
+      if (!value) return true;
+      const fieldValue = String((item as any)[key] || '').toLowerCase();
+      return fieldValue.includes(value.toLowerCase());
+    });
+  });
+
   const totalPages = currentView === 'batch' 
-    ? Math.ceil(filteredWorkOrderBatches.length / itemsPerPage)
-    : Math.ceil(filteredWorkOrderItems.length / itemsPerPage);
+    ? Math.ceil(columnFilteredBatches.length / itemsPerPage)
+    : Math.ceil(columnFilteredItems.length / itemsPerPage);
 
   // Get paginated data
   const isShowingAll = itemsPerPage >= 999999;
@@ -4311,11 +4331,11 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
     : [];
     
   const paginatedWorkOrderItems = currentView === 'item' 
-    ? (isShowingAll ? filteredWorkOrderItems : filteredWorkOrderItems.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage))
+    ? (isShowingAll ? columnFilteredItems : columnFilteredItems.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage))
     : [];
 
   const paginatedBatches = currentView === 'batch'
-    ? (isShowingAll ? filteredWorkOrderBatches : filteredWorkOrderBatches.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage))
+    ? (isShowingAll ? columnFilteredBatches : columnFilteredBatches.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage))
     : [];
 
   const openDetails = (order: WorkOrder) => {
@@ -4838,6 +4858,37 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                   </>
                 )}
               </TableRow>
+              {/* Column Filter Row */}
+              <TableRow className="bg-gray-50/50 border-b">
+                {currentView === 'batch' ? (
+                  <>
+                    {['woBatch', 'acctNumber', 'srNumber', 'customerName', 'minNeedByDate', 'totalCount', 'totalLabOpen', 'totalArCount'].map((col) => (
+                      <TableHead key={col} className="py-1 px-2">
+                        <Input
+                          placeholder=""
+                          value={columnFilters[col] || ''}
+                          onChange={(e) => setColumnFilters(prev => ({ ...prev, [col]: e.target.value }))}
+                          className="h-7 text-xs border-gray-200 bg-white rounded px-2"
+                        />
+                      </TableHead>
+                    ))}
+                  </>
+                ) : (
+                  <>
+                    {['workOrderNumber', 'itemNumber', 'itemStatus', 'priority', 'manufacturer', 'model', 'serialNumber', 'itemType', 'customer', 'assignedTo'].map((col) => (
+                      <TableHead key={col} className="py-1 px-2">
+                        <Input
+                          placeholder=""
+                          value={columnFilters[col] || ''}
+                          onChange={(e) => setColumnFilters(prev => ({ ...prev, [col]: e.target.value }))}
+                          className="h-7 text-xs border-gray-200 bg-white rounded px-2"
+                        />
+                      </TableHead>
+                    ))}
+                    <TableHead className="w-12"></TableHead>
+                  </>
+                )}
+              </TableRow>
             </TableHeader>
             <TableBody>
               {!hasSearched ? (
@@ -5096,7 +5147,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
         <div className="p-6 border-t border-gray-200 flex justify-between items-center">
           <div className="flex items-center gap-4">
             <span className="text-sm text-gray-600">
-              Showing {((currentPage - 1) * itemsPerPage) + 1}-{Math.min(currentPage * itemsPerPage, currentView === 'batch' ? filteredWorkOrderBatches.length : filteredWorkOrderItems.length)} of {currentView === 'batch' ? filteredWorkOrderBatches.length : filteredWorkOrderItems.length} items
+              Showing {((currentPage - 1) * itemsPerPage) + 1}-{Math.min(currentPage * itemsPerPage, currentView === 'batch' ? columnFilteredBatches.length : columnFilteredItems.length)} of {currentView === 'batch' ? columnFilteredBatches.length : columnFilteredItems.length} items
             </span>
             <div className="flex items-center gap-2">
               <span className="text-sm text-gray-600">Show:</span>
