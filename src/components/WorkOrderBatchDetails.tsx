@@ -436,6 +436,18 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
                 <TableHead className="w-12"></TableHead>
               </TableRow>
             </TableHeader>
+            <TableBody>
+              {filteredItems.map((item) => (
+                <React.Fragment key={item.id}>
+                  <TableRow className="hover:bg-muted/30">
+                    <TableCell className="font-medium">
+                      <button
+                        onClick={(e) => handleItemClick(item, e)}
+                        className="text-blue-600 hover:text-blue-800 hover:underline font-medium transition-colors"
+                      >
+                        {item.item}
+                      </button>
+                    </TableCell>
                     {viewMode === 'csa' ? (
                       <>
                         <TableCell>{item.location}</TableCell>
