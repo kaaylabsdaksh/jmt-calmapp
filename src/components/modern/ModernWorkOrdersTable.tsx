@@ -4926,16 +4926,16 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                 ) : (
                   <>
                     {[
-                      { key: 'workOrderNumber', placeholder: 'Filter WO...' },
-                      { key: 'itemNumber', placeholder: 'Filter item...' },
-                      { key: 'itemStatus', placeholder: 'Filter status...' },
-                      { key: 'priority', placeholder: 'Filter...' },
-                      { key: 'manufacturer', placeholder: 'Filter mfg...' },
-                      { key: 'model', placeholder: 'Filter model...' },
-                      { key: 'serialNumber', placeholder: 'Filter SN...' },
-                      { key: 'itemType', placeholder: 'Filter type...' },
-                      { key: 'customer', placeholder: 'Filter customer...' },
-                      { key: 'assignedTo', placeholder: 'Filter...' },
+                      { key: 'workOrderNumber', placeholder: '' },
+                      { key: 'itemNumber', placeholder: '' },
+                      { key: 'itemStatus', placeholder: '' },
+                      { key: 'priority', placeholder: '' },
+                      { key: 'manufacturer', placeholder: '' },
+                      { key: 'model', placeholder: '' },
+                      { key: 'serialNumber', placeholder: '' },
+                      { key: 'itemType', placeholder: '' },
+                      { key: 'customer', placeholder: '' },
+                      { key: 'assignedTo', placeholder: '' },
                     ].map((col) => (
                       <TableHead key={col.key} className="py-1.5 px-2">
                         <div className="relative">
