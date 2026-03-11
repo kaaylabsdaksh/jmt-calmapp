@@ -849,43 +849,79 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
         ) : (
           /* CSA View - Only Location and Arrival From/To */
           <div className="space-y-4">
-            <div className="space-y-3">
-              {/* Location inline chips */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 items-end">
               <div>
-                <Label className="text-sm font-medium text-muted-foreground mb-2 block">Location</Label>
-                <div className="flex flex-wrap gap-1.5">
-                  {locationOptions.map((loc) => {
-                    const isSelected = selectedLocations.includes(loc.value);
-                    return (
-                      <button
-                        key={loc.value}
-                        onClick={() => {
-                          setSelectedLocations(prev =>
-                            prev.includes(loc.value)
-                              ? prev.filter(l => l !== loc.value)
-                              : [...prev, loc.value]
-                          );
-                        }}
-                        className={cn(
-                          "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border transition-all",
-                          isSelected
-                            ? "bg-primary text-primary-foreground border-primary"
-                            : "bg-background text-foreground border-border hover:bg-muted"
+                <Label className="text-sm font-medium text-muted-foreground mb-1.5 block">Location</Label>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className={cn(selectTriggerClass, "w-full justify-start text-left font-normal")}
+                    >
+                      {selectedLocations.length > 0
+                        ? `${selectedLocations.length} Location${selectedLocations.length > 1 ? 's' : ''} selected`
+                        : "All Location"}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-64 p-0 bg-popover border shadow-xl rounded-lg z-[60]" align="start">
+                    <div className="p-2 border-b">
+                      <div className="flex items-center bg-muted/50 rounded-md px-2">
+                        <Search className="h-3.5 w-3.5 text-muted-foreground flex-shrink-0" />
+                        <input
+                          type="text"
+                          placeholder="Search locations..."
+                          value={locationSearch}
+                          onChange={(e) => setLocationSearch(e.target.value)}
+                          className="w-full bg-transparent border-0 py-2 px-2 text-sm outline-none placeholder:text-muted-foreground"
+                        />
+                        {locationSearch && (
+                          <button onClick={() => setLocationSearch('')}>
+                            <X className="h-3.5 w-3.5 text-muted-foreground" />
+                          </button>
                         )}
-                      >
-                        {isSelected && <Check className="h-3 w-3" />}
-                        {loc.label}
-                        {isSelected && (
-                          <X className="h-3 w-3 ml-0.5 hover:opacity-70" />
-                        )}
-                      </button>
-                    );
-                  })}
-                </div>
+                      </div>
+                    </div>
+                    <div className="max-h-48 overflow-y-auto p-1">
+                      {locationOptions
+                        .filter(loc => loc.label.toLowerCase().includes(locationSearch.toLowerCase()))
+                        .map((loc) => (
+                        <button
+                          key={loc.value}
+                          onClick={() => {
+                            setSelectedLocations(prev =>
+                              prev.includes(loc.value)
+                                ? prev.filter(l => l !== loc.value)
+                                : [...prev, loc.value]
+                            );
+                          }}
+                          className="w-full flex items-center gap-2 text-left px-3 py-2 rounded-md text-sm transition-colors hover:bg-muted text-foreground"
+                        >
+                          <span className="flex h-4 w-4 items-center justify-center">
+                            {selectedLocations.includes(loc.value) && (
+                              <Check className="h-4 w-4 stroke-[3]" />
+                            )}
+                          </span>
+                          {loc.label}
+                        </button>
+                      ))}
+                      {locationOptions.filter(loc => loc.label.toLowerCase().includes(locationSearch.toLowerCase())).length === 0 && (
+                        <p className="text-xs text-muted-foreground text-center py-3">No locations found</p>
+                      )}
+                    </div>
+                    {selectedLocations.length > 0 && (
+                      <div className="p-2 border-t">
+                        <button
+                          onClick={() => setSelectedLocations([])}
+                          className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+                        >
+                          Clear all
+                        </button>
+                      </div>
+                    )}
+                  </PopoverContent>
+                </Popover>
               </div>
 
-              {/* Date fields row */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <Label className="text-sm font-medium text-muted-foreground mb-1.5 block">Arrival From</Label>
                 <Popover>
@@ -933,7 +969,6 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                   </PopoverContent>
                 </Popover>
               </div>
-            </div>
             </div>
             {/* Selected date badge */}
             {dateFrom && dateTo && (
