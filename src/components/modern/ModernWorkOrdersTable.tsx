@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
@@ -4259,7 +4259,10 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
   const [columnFilters, setColumnFilters] = useState<Record<string, string>>({});
   const [sortConfig, setSortConfig] = useState<{ key: string; direction: 'asc' | 'desc' } | null>(null);
   const [expandedBatches, setExpandedBatches] = useState<Set<string>>(new Set());
+  const [gridVisibleCount, setGridVisibleCount] = useState(12);
+  const gridLoadMoreRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+
 
   const toggleBatchExpanded = (batchId: string) => {
     setExpandedBatches(prev => {
@@ -4722,6 +4725,32 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
   const paginatedBatches = currentView === 'batch'
     ? (isShowingAll ? sortedBatches : sortedBatches.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage))
     : [];
+
+  // Lazy loading for grid view
+  const gridDataSource = currentView === 'batch' ? sortedBatches : columnFilteredItems;
+  const gridVisibleBatches = gridDataSource.slice(0, gridVisibleCount) as typeof sortedBatches;
+  const gridVisibleWorkOrderItems = (currentView === 'item' ? columnFilteredItems : []).slice(0, gridVisibleCount);
+  const hasMoreGridItems = gridVisibleCount < gridDataSource.length;
+
+  useEffect(() => {
+    if (viewMode !== 'grid' || !hasMoreGridItems) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setGridVisibleCount(prev => Math.min(prev + 12, gridDataSource.length));
+        }
+      },
+      { threshold: 0.1 }
+    );
+    const el = gridLoadMoreRef.current;
+    if (el) observer.observe(el);
+    return () => { if (el) observer.unobserve(el); };
+  }, [viewMode, hasMoreGridItems, gridDataSource.length]);
+
+  // Reset grid visible count when switching views or filters change
+  useEffect(() => {
+    setGridVisibleCount(12);
+  }, [viewMode, currentView, columnFilters, sortConfig, activeStatusFilter]);
 
   const openDetails = (order: WorkOrder) => {
     console.log('Opening details for order:', order.id, 'currentView:', currentView);
@@ -5550,7 +5579,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
             ) : (
               <>
                 {currentView === 'batch' ? (
-                  paginatedBatches.map((batch) => (
+                  gridVisibleBatches.map((batch) => (
                 <div 
                   key={batch.id} 
                   className={cn(
@@ -5668,7 +5697,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                 </div>
               ))
             ) : (
-              paginatedWorkOrderItems.map((item) => (
+              gridVisibleWorkOrderItems.map((item) => (
                 <div key={item.id} className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer" onClick={() => openDetailsFromItem(item)}>
                   <div className="p-4 border-b border-gray-100">
                     <div className="flex items-center justify-between">
@@ -5755,11 +5784,22 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
               )}
               </>
             )}
+          {/* Lazy load sentinel for grid view */}
+          {hasMoreGridItems && (
+            <div ref={gridLoadMoreRef} className="col-span-full flex justify-center py-4">
+              <span className="text-sm text-muted-foreground">Loading more...</span>
+            </div>
+          )}
+          {hasSearched && !hasMoreGridItems && gridDataSource.length > 0 && (
+            <div className="col-span-full text-center py-3">
+              <span className="text-xs text-muted-foreground">Showing all {gridDataSource.length} items</span>
+            </div>
+          )}
           </div>
         )}
         
-        {/* Pagination */}
-        {hasSearched && (
+        {/* Pagination - only for list view */}
+        {hasSearched && viewMode !== 'grid' && (
         <div className="p-6 border-t border-gray-200 flex justify-between items-center">
           <div className="flex items-center gap-4">
             <span className="text-sm text-gray-600">
