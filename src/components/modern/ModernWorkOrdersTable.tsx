@@ -4082,7 +4082,7 @@ const BatchItemsInline = ({ items, navigate }: { items: BatchItemData[]; navigat
           ))}
           {sortedItems.length === 0 && (
             <TableRow>
-              <TableCell colSpan={11} className="text-center py-3 text-muted-foreground text-[11px]">No items match filters</TableCell>
+              <TableCell colSpan={12} className="text-center py-3 text-muted-foreground text-[11px]">No items match filters</TableCell>
             </TableRow>
           )}
         </TableBody>
