@@ -4752,7 +4752,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
     setGridVisibleCount(12);
   }, [viewMode, currentView, columnFilters, sortConfig, activeStatusFilter]);
 
-
+  const openDetails = (order: WorkOrder) => {
     console.log('Opening details for order:', order.id, 'currentView:', currentView);
     setSelectedWorkOrder(order);
   };
