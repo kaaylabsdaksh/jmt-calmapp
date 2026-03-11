@@ -105,6 +105,31 @@ const mockBatch: WorkOrderBatch = {
       departureDate: "12/01/2024"
     },
     {
+      id: "004",
+      item: "Voltage Detector",
+      division: "ESL",
+      location: "Baton Rouge",
+      itemCreated: "09/30/2021",
+      action: "TEST",
+      itemStatus: "Back to Customer",
+      manufacturer: "Fluke",
+      model: "FL-200",
+      labCode: "ES",
+      serialNumber: "FL567890",
+      poNumber: "2110026",
+      description: "Non-Contact Voltage Detector",
+      deliverByDate: "10/20/2021",
+      lastComment: "Item returned to customer.",
+      lastCommentDate: "11/18/2024",
+      needByDate: "10/25/2024",
+      followUpDate: "11/20/2024",
+      operationType: "Testing",
+      estimatedCost: "$100.00",
+      actualCost: "$95.00",
+      assignedTo: "Mike Johnson",
+      departureDate: "10/22/2024"
+    },
+    {
       id: "003",
       item: "Pressure Gauge",
       division: "ESL",
@@ -211,7 +236,10 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
       }
     });
     
-    return items;
+    // Push "Back to Customer" items to the bottom
+    const nonBtc = items.filter(i => i.itemStatus !== 'Back to Customer');
+    const btc = items.filter(i => i.itemStatus === 'Back to Customer');
+    return [...nonBtc, ...btc];
   }, [searchQuery, statusFilter, labCodeFilter, columnFilters]);
 
   const clearAllFilters = () => {
@@ -421,11 +449,11 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
             <TableBody>
               {filteredItems.map((item) => (
                 <React.Fragment key={item.id}>
-                  <TableRow className="hover:bg-muted/30 h-6">
+                   <TableRow className={`hover:bg-muted/30 h-6 ${item.itemStatus === 'Back to Customer' ? 'opacity-50' : ''}`}>
                     <TableCell className="font-medium text-[11px] py-1 px-2">
                       <button
                         onClick={(e) => handleItemClick(item, e)}
-                        className="text-blue-600 hover:text-blue-800 hover:underline font-medium transition-colors text-[11px]"
+                        className={`hover:underline font-medium transition-colors text-[11px] ${item.itemStatus === 'Back to Customer' ? 'text-gray-400 hover:text-gray-500' : 'text-blue-600 hover:text-blue-800'}`}
                       >
                         {item.item}
                       </button>
@@ -437,6 +465,7 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
                         <TableCell className="text-[11px] py-1 px-2 font-medium">{item.action}</TableCell>
                         <TableCell className="py-1 px-2">
                           <span className={`px-1.5 py-0.5 rounded text-[10px] font-medium ${
+                            item.itemStatus === 'Back to Customer' ? 'bg-gray-100 text-gray-400 border border-gray-200' :
                             item.itemStatus === 'Completed' ? 'bg-green-100 text-green-800' :
                             item.itemStatus === 'In Progress' ? 'bg-blue-100 text-blue-800' :
                             'bg-yellow-100 text-yellow-800'
