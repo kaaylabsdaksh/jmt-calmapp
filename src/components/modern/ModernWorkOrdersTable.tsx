@@ -5784,11 +5784,22 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
               )}
               </>
             )}
+          {/* Lazy load sentinel for grid view */}
+          {hasMoreGridItems && (
+            <div ref={gridLoadMoreRef} className="col-span-full flex justify-center py-4">
+              <span className="text-sm text-muted-foreground">Loading more...</span>
+            </div>
+          )}
+          {hasSearched && !hasMoreGridItems && gridDataSource.length > 0 && (
+            <div className="col-span-full text-center py-3">
+              <span className="text-xs text-muted-foreground">Showing all {gridDataSource.length} items</span>
+            </div>
+          )}
           </div>
         )}
         
-        {/* Pagination */}
-        {hasSearched && (
+        {/* Pagination - only for list view */}
+        {hasSearched && viewMode !== 'grid' && (
         <div className="p-6 border-t border-gray-200 flex justify-between items-center">
           <div className="flex items-center gap-4">
             <span className="text-sm text-gray-600">
