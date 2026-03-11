@@ -4612,14 +4612,20 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
     return itemDate.getFullYear() === selectedDate.getFullYear() && itemDate.getMonth() === selectedDate.getMonth() && itemDate.getDate() === selectedDate.getDate();
   };
 
+  // Key mapping for CSA column keys to actual batch data keys
+  const batchKeyMap: Record<string, string> = {
+    itemCount: 'totalCount',
+  };
+
   // Apply column filters to batches
   const columnFilteredBatches = filteredWorkOrderBatches.filter(batch => {
     return Object.entries(columnFilters).every(([key, value]) => {
       if (!value) return true;
-      if (mainDateColumns.has(key)) {
-        return matchesDateFilter(String((batch as any)[key] || ''), value);
+      const resolvedKey = batchKeyMap[key] || key;
+      if (mainDateColumns.has(resolvedKey)) {
+        return matchesDateFilter(String((batch as any)[resolvedKey] || ''), value);
       }
-      const fieldValue = String((batch as any)[key] || '').toLowerCase();
+      const fieldValue = String((batch as any)[resolvedKey] || '').toLowerCase();
       return fieldValue.includes(value.toLowerCase());
     });
   });
