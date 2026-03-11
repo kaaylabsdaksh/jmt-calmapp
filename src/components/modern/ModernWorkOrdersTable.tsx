@@ -4006,10 +4006,10 @@ const BatchItemsInline = ({ items, navigate }: { items: BatchItemData[]; navigat
     : filteredItems;
 
   return (
-    <div className="border-l-3 border-slate-400 ml-6 my-1.5 rounded-r-lg bg-slate-50 overflow-hidden">
+    <div className="border-l-3 border-slate-500 ml-6 my-1.5 rounded-r-lg bg-slate-100 overflow-hidden">
       <Table>
         <TableHeader>
-          <TableRow className="bg-slate-100 h-7 border-b border-slate-200">
+          <TableRow className="bg-slate-200 h-7 border-b border-slate-300">
             <TableHead className="font-semibold text-[10px] py-1 px-2 w-4">
               <span className="inline-block w-1.5 h-1.5 rounded-full bg-slate-400" />
             </TableHead>
@@ -4018,7 +4018,7 @@ const BatchItemsInline = ({ items, navigate }: { items: BatchItemData[]; navigat
             ))}
           </TableRow>
           {/* Filter Row */}
-          <TableRow className="border-b border-slate-200 bg-slate-50/50">
+          <TableRow className="border-b border-slate-300 bg-slate-100">
             <TableHead className="w-4 py-1 px-1"></TableHead>
             {batchItemColumns.map(col => (
               <TableHead key={col.key} className="py-1 px-1.5">
@@ -4047,7 +4047,7 @@ const BatchItemsInline = ({ items, navigate }: { items: BatchItemData[]; navigat
         </TableHeader>
         <TableBody>
           {sortedItems.map((item, idx) => (
-            <TableRow key={item.id} className={cn("hover:bg-slate-100/80 h-6 transition-colors", idx % 2 === 0 ? "bg-transparent" : "bg-slate-50/50")}>
+            <TableRow key={item.id} className={cn("hover:bg-slate-200/80 h-6 transition-colors", idx % 2 === 0 ? "bg-slate-50" : "bg-slate-100")}>
               <TableCell className="w-4 py-1 px-2">
                 <span className="inline-block w-1 h-1 rounded-full bg-slate-400" />
               </TableCell>
