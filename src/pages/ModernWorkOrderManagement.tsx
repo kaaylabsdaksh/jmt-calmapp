@@ -113,7 +113,7 @@ const ModernWorkOrderManagement = () => {
       <ModernTopNav />
       <main className="w-full max-w-none px-2 sm:px-4 lg:px-6 py-3 sm:py-6">
         <div className="w-full space-y-4 sm:space-y-6">
-          <ModernTopSearchFilters onSearch={handleSearch} onSearchViewModeChange={setSearchViewMode} />
+          <ModernTopSearchFilters onSearch={handleSearch} onSearchViewModeChange={handleSearchViewModeChange} />
           <ModernWorkOrdersTable 
             viewMode={viewMode} 
             onViewModeChange={setViewMode}
