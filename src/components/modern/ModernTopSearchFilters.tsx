@@ -975,24 +975,26 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
           </div>
         )}
 
-        {/* Search & Clear Buttons */}
-        <div className="flex justify-end gap-3 pt-2">
-          <Button 
-            variant="outline"
-            onClick={clearAllFilters}
-            className="rounded-lg h-10 px-5 font-medium border-destructive text-destructive hover:bg-destructive/10 hover:text-destructive"
-          >
-            <RotateCcw className="h-4 w-4 mr-2" />
-            Clear All
-          </Button>
-          <Button 
-            onClick={handleSearch}
-            className="rounded-lg h-10 px-6 font-medium bg-blue-600 hover:bg-blue-700 text-white shadow-sm"
-          >
-            <Search className="h-4 w-4 mr-2" />
-            Search
-          </Button>
-        </div>
+        {/* Search & Clear Buttons - Default view only */}
+        {viewMode === 'default' && (
+          <div className="flex justify-end gap-3 pt-2">
+            <Button 
+              variant="outline"
+              onClick={clearAllFilters}
+              className="rounded-lg h-10 px-5 font-medium border-destructive text-destructive hover:bg-destructive/10 hover:text-destructive"
+            >
+              <RotateCcw className="h-4 w-4 mr-2" />
+              Clear All
+            </Button>
+            <Button 
+              onClick={handleSearch}
+              className="rounded-lg h-10 px-6 font-medium bg-blue-600 hover:bg-blue-700 text-white shadow-sm"
+            >
+              <Search className="h-4 w-4 mr-2" />
+              Search
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );
