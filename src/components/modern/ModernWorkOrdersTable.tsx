@@ -4039,7 +4039,7 @@ const BatchItemsInline = ({ items, navigate }: { items: BatchItemData[]; navigat
     });
   };
 
-  const dateColumnKeys = new Set(batchItemColumns.filter(c => c.type === 'date').map(c => c.key));
+  const dateColumnKeys = new Set<string>(batchItemColumns.filter(c => c.type === 'date').map(c => c.key));
   
   const filteredItems = items.filter(item =>
     Object.entries(filters).every(([key, val]) => {
