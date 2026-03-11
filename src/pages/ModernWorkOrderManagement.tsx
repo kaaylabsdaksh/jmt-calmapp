@@ -40,6 +40,15 @@ const ModernWorkOrderManagement = () => {
   const [viewMode, setViewMode] = useState<'list' | 'grid'>('list');
   const [hasSearched, setHasSearched] = useState(false);
   const [searchViewMode, setSearchViewMode] = useState<'default' | 'csa'>('default');
+
+  const handleSearchViewModeChange = (mode: 'default' | 'csa') => {
+    setSearchViewMode(mode);
+    // CSA view should show data immediately without requiring a search click
+    if (mode === 'csa') {
+      setHasSearched(true);
+    }
+  };
+
   const handleSearch = (filters: SearchFilters) => {
     console.log('Parent received search filters:', filters);
     setSearchFilters(filters);
