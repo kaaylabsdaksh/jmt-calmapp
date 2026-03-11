@@ -5127,61 +5127,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                   {searchViewMode === 'csa' && expandedBatches.has(batch.id) && (
                     <TableRow className="bg-slate-50/40">
                       <TableCell colSpan={14} className="p-0">
-                        <div className="border-l-2 border-primary/30 ml-4 my-1">
-                          <Table>
-                            <TableHeader>
-                              <TableRow className="bg-muted/30 h-6">
-                                <TableHead className="font-semibold text-[10px] py-1 px-2">Item</TableHead>
-                                <TableHead className="font-semibold text-[10px] py-1 px-2">Location</TableHead>
-                                <TableHead className="font-semibold text-[10px] py-1 px-2">Created</TableHead>
-                                <TableHead className="font-semibold text-[10px] py-1 px-2">Action</TableHead>
-                                <TableHead className="font-semibold text-[10px] py-1 px-2">Item Status</TableHead>
-                                <TableHead className="font-semibold text-[10px] py-1 px-2">Manufacturer</TableHead>
-                                <TableHead className="font-semibold text-[10px] py-1 px-2">Model</TableHead>
-                                <TableHead className="font-semibold text-[10px] py-1 px-2">Description</TableHead>
-                                <TableHead className="font-semibold text-[10px] py-1 px-2">Serial #</TableHead>
-                                <TableHead className="font-semibold text-[10px] py-1 px-2">Deliver By</TableHead>
-                                <TableHead className="font-semibold text-[10px] py-1 px-2">Follow Up</TableHead>
-                              </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                              {getBatchItems(batch.woBatch).map((item) => (
-                                <TableRow key={item.id} className="hover:bg-muted/20 h-6">
-                                  <TableCell className="text-[11px] py-1 px-2">
-                                    <button
-                                      onClick={(e) => {
-                                        e.stopPropagation();
-                                        navigate('/edit-order');
-                                      }}
-                                      className="text-blue-600 hover:text-blue-800 hover:underline font-medium transition-colors text-[11px]"
-                                    >
-                                      {item.item}
-                                    </button>
-                                  </TableCell>
-                                  <TableCell className="text-[11px] py-1 px-2">{item.location}</TableCell>
-                                  <TableCell className="text-[11px] py-1 px-2">{item.itemCreated}</TableCell>
-                                  <TableCell className="text-[11px] py-1 px-2 font-medium">{item.action}</TableCell>
-                                  <TableCell className="py-1 px-2">
-                                    <span className={`px-1.5 py-0.5 rounded text-[10px] font-medium ${
-                                      item.itemStatus === 'Completed' ? 'bg-green-100 text-green-800' :
-                                      item.itemStatus === 'In Progress' ? 'bg-blue-100 text-blue-800' :
-                                      item.itemStatus === 'In Lab' ? 'bg-blue-100 text-blue-800' :
-                                      'bg-yellow-100 text-yellow-800'
-                                    }`}>
-                                      {item.itemStatus}
-                                    </span>
-                                  </TableCell>
-                                  <TableCell className="text-[11px] py-1 px-2">{item.manufacturer || '-'}</TableCell>
-                                  <TableCell className="text-[11px] py-1 px-2">{item.model || '-'}</TableCell>
-                                  <TableCell className="text-[10px] py-1 px-2 max-w-[120px] truncate">{item.description || '-'}</TableCell>
-                                  <TableCell className="text-[11px] py-1 px-2">{item.serialNumber || '-'}</TableCell>
-                                  <TableCell className="text-[11px] py-1 px-2">{item.deliverByDate || '-'}</TableCell>
-                                  <TableCell className="text-[11px] py-1 px-2">{item.followUpDate || '-'}</TableCell>
-                                </TableRow>
-                              ))}
-                            </TableBody>
-                          </Table>
-                        </div>
+                        <BatchItemsInline batchId={batch.woBatch} items={getBatchItems(batch.woBatch)} navigate={navigate} />
                       </TableCell>
                     </TableRow>
                   )}
