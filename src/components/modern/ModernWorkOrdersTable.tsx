@@ -4197,14 +4197,14 @@ const BatchItemsInline = ({ items, navigate }: { items: BatchItemData[]; navigat
         </TableHeader>
         <TableBody>
           {sortedItems.map((item, idx) => (
-            <TableRow key={item.id} className={cn("hover:bg-slate-200/80 h-6 transition-colors", idx % 2 === 0 ? "bg-slate-50" : "bg-slate-100")}>
+            <TableRow key={item.id} className={cn("hover:bg-slate-200/80 h-6 transition-colors", idx % 2 === 0 ? "bg-slate-50" : "bg-slate-100", item.itemStatus === 'Back to Customer' && "opacity-50")}>
               <TableCell className="w-4 py-1 px-2">
                 <span className="inline-block w-1 h-1 rounded-full bg-slate-400" />
               </TableCell>
               <TableCell className="text-[11px] py-1 px-2">
                 <button
                   onClick={(e) => { e.stopPropagation(); navigate('/edit-order'); }}
-                  className="text-blue-600 hover:text-blue-800 hover:underline font-medium transition-colors text-[11px]"
+                  className={cn("hover:underline font-medium transition-colors text-[11px]", item.itemStatus === 'Back to Customer' ? "text-gray-400 hover:text-gray-500" : "text-blue-600 hover:text-blue-800")}
                 >
                   {item.item}
                 </button>
@@ -4214,6 +4214,7 @@ const BatchItemsInline = ({ items, navigate }: { items: BatchItemData[]; navigat
               <TableCell className="text-[11px] py-1 px-2 font-medium">{item.action}</TableCell>
               <TableCell className="py-1 px-2">
                 <span className={`px-1.5 py-0.5 rounded text-[10px] font-medium ${
+                  item.itemStatus === 'Back to Customer' ? 'bg-gray-100 text-gray-400 border border-gray-200' :
                   item.itemStatus === 'Completed' ? 'bg-green-100 text-green-800' :
                   item.itemStatus === 'In Progress' ? 'bg-blue-100 text-blue-800' :
                   item.itemStatus === 'In Lab' ? 'bg-blue-100 text-blue-800' :
