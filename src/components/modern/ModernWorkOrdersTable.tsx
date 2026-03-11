@@ -4006,7 +4006,7 @@ const BatchItemsInline = ({ items, navigate }: { items: BatchItemData[]; navigat
     : filteredItems;
 
   return (
-    <div className="border-l-3 border-slate-400 ml-6 my-1.5 rounded-r-lg bg-slate-50 overflow-hidden">
+    <div className="border-l-3 border-slate-500 ml-6 my-1.5 rounded-r-lg bg-slate-100 overflow-hidden">
       <Table>
         <TableHeader>
           <TableRow className="bg-slate-100 h-7 border-b border-slate-200">
