@@ -4901,6 +4901,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                   // Batch View Headers
                   searchViewMode === 'csa' ? (
                     <>
+                      <TableHead className="font-semibold text-foreground text-xs bg-slate-100/80 py-2 w-8"></TableHead>
                       <TableHead className="font-semibold text-foreground text-xs bg-slate-100/80 py-2">WO Batch</TableHead>
                       <TableHead className="font-semibold text-foreground text-xs bg-slate-100/80 py-2">Acct #</TableHead>
                       <TableHead className="font-semibold text-foreground text-xs bg-slate-100/80 py-2">Customer Name</TableHead>
