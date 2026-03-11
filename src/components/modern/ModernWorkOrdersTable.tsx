@@ -4139,13 +4139,19 @@ const BatchItemsInline = ({ items, navigate }: { items: BatchItemData[]; navigat
     })
   );
 
-  const sortedItems = sort
-    ? [...filteredItems].sort((a, b) => {
-        const aVal = ((a as any)[sort.key] || '').toString();
-        const bVal = ((b as any)[sort.key] || '').toString();
-        return sort.direction === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
-      })
-    : filteredItems;
+  const sortedItems = (() => {
+    const sorted = sort
+      ? [...filteredItems].sort((a, b) => {
+          const aVal = ((a as any)[sort.key] || '').toString();
+          const bVal = ((b as any)[sort.key] || '').toString();
+          return sort.direction === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
+        })
+      : filteredItems;
+    // Push "Back to Customer" items to the bottom
+    const nonBtc = sorted.filter(i => i.itemStatus !== 'Back to Customer');
+    const btc = sorted.filter(i => i.itemStatus === 'Back to Customer');
+    return [...nonBtc, ...btc];
+  })();
 
   return (
     <div className="border-l-3 border-slate-500 ml-6 my-1.5 rounded-r-lg bg-slate-100 overflow-hidden">

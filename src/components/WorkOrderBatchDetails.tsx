@@ -465,6 +465,7 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
                         <TableCell className="text-[11px] py-1 px-2 font-medium">{item.action}</TableCell>
                         <TableCell className="py-1 px-2">
                           <span className={`px-1.5 py-0.5 rounded text-[10px] font-medium ${
+                            item.itemStatus === 'Back to Customer' ? 'bg-gray-100 text-gray-400 border border-gray-200' :
                             item.itemStatus === 'Completed' ? 'bg-green-100 text-green-800' :
                             item.itemStatus === 'In Progress' ? 'bg-blue-100 text-blue-800' :
                             'bg-yellow-100 text-yellow-800'
