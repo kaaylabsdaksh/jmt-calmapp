@@ -161,6 +161,70 @@ const mockBatch: WorkOrderBatch = {
   ]
 };
 
+// Date filter component for quick search — supports manual typing and calendar picker
+const DateColumnFilterLocal = ({ value, onChange, onClear }: { value: string; onChange: (val: string) => void; onClear: () => void }) => {
+  const [open, setOpen] = useState(false);
+  const [textValue, setTextValue] = useState(() => {
+    if (!value) return '';
+    try { return format(new Date(value), 'MM/dd/yyyy'); } catch { return ''; }
+  });
+  const selectedDate = value ? new Date(value) : undefined;
+
+  React.useEffect(() => {
+    if (!value) { setTextValue(''); return; }
+    try { setTextValue(format(new Date(value), 'MM/dd/yyyy')); } catch { setTextValue(''); }
+  }, [value]);
+
+  const handleTextChange = (raw: string) => {
+    let cleaned = raw.replace(/[^0-9/]/g, '');
+    if (cleaned.length > 2 && cleaned[2] !== '/') cleaned = cleaned.slice(0, 2) + '/' + cleaned.slice(2);
+    if (cleaned.length > 5 && cleaned[5] !== '/') cleaned = cleaned.slice(0, 5) + '/' + cleaned.slice(5);
+    if (cleaned.length > 10) cleaned = cleaned.slice(0, 10);
+    setTextValue(cleaned);
+    if (cleaned.length === 10) {
+      const [m, d, y] = cleaned.split('/').map(Number);
+      if (m >= 1 && m <= 12 && d >= 1 && d <= 31 && y >= 1900 && y <= 2100) {
+        const date = new Date(y, m - 1, d);
+        if (!isNaN(date.getTime())) { onChange(date.toISOString()); return; }
+      }
+    }
+    if (!cleaned) onClear();
+  };
+
+  return (
+    <div className="relative flex-1 flex items-center">
+      <Input
+        value={textValue}
+        onChange={(e) => handleTextChange(e.target.value)}
+        placeholder="MM/DD/YYYY"
+        className="h-6 text-[10px] pl-2 pr-12 border-slate-200 bg-white rounded placeholder:text-muted-foreground/40 focus:bg-background focus:border-slate-400 transition-colors"
+      />
+      <div className="absolute right-1 top-1/2 -translate-y-1/2 flex items-center gap-0.5">
+        {value && (
+          <button onClick={onClear} className="p-0.5 rounded-full hover:bg-muted transition-colors">
+            <X className="h-2.5 w-2.5 text-muted-foreground" />
+          </button>
+        )}
+        <Popover open={open} onOpenChange={setOpen}>
+          <PopoverTrigger asChild>
+            <button className="p-0.5 rounded hover:bg-muted transition-colors">
+              <CalendarIcon className="h-2.5 w-2.5 text-muted-foreground" />
+            </button>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto p-0 z-[200]" align="end">
+            <Calendar
+              mode="single"
+              selected={selectedDate}
+              onSelect={(date) => { onChange(date ? date.toISOString() : ''); setOpen(false); }}
+              className="p-3 pointer-events-auto"
+            />
+          </PopoverContent>
+        </Popover>
+      </div>
+    </div>
+  );
+};
+
 interface WorkOrderBatchDetailsProps {
   batchId?: string;
   onBack?: () => void;
