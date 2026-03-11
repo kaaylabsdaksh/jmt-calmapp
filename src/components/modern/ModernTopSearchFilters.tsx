@@ -848,47 +848,43 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
         ) : (
           /* CSA View - Only Location and Arrival From/To */
           <div className="space-y-4">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 items-end">
+            <div className="space-y-3">
+              {/* Location inline chips */}
               <div>
-                <Label className="text-sm font-medium text-muted-foreground mb-1.5 block">Location</Label>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className={cn(selectTriggerClass, "w-full justify-start text-left font-normal")}
-                    >
-                      {selectedLocations.length > 0 
-                        ? `${selectedLocations.length} Location${selectedLocations.length > 1 ? 's' : ''} selected`
-                        : "All Location"}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-56 p-2 bg-popover border shadow-xl rounded-lg z-[60]" align="start">
-                    <div className="space-y-1">
-                      {locationOptions.map((loc) => (
-                        <button
-                          key={loc.value}
-                          onClick={() => {
-                            setSelectedLocations(prev => 
-                              prev.includes(loc.value)
-                                ? prev.filter(l => l !== loc.value)
-                                : [...prev, loc.value]
-                            );
-                          }}
-                          className="w-full flex items-center gap-2 text-left px-3 py-2 rounded-md text-sm transition-colors hover:bg-muted text-foreground"
-                        >
-                          <span className="flex h-4 w-4 items-center justify-center">
-                            {selectedLocations.includes(loc.value) && (
-                              <Check className="h-4 w-4 stroke-[3]" />
-                            )}
-                          </span>
-                          {loc.label}
-                        </button>
-                      ))}
-                    </div>
-                  </PopoverContent>
-                </Popover>
+                <Label className="text-sm font-medium text-muted-foreground mb-2 block">Location</Label>
+                <div className="flex flex-wrap gap-1.5">
+                  {locationOptions.map((loc) => {
+                    const isSelected = selectedLocations.includes(loc.value);
+                    return (
+                      <button
+                        key={loc.value}
+                        onClick={() => {
+                          setSelectedLocations(prev =>
+                            prev.includes(loc.value)
+                              ? prev.filter(l => l !== loc.value)
+                              : [...prev, loc.value]
+                          );
+                        }}
+                        className={cn(
+                          "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border transition-all",
+                          isSelected
+                            ? "bg-primary text-primary-foreground border-primary"
+                            : "bg-background text-foreground border-border hover:bg-muted"
+                        )}
+                      >
+                        {isSelected && <Check className="h-3 w-3" />}
+                        {loc.label}
+                        {isSelected && (
+                          <X className="h-3 w-3 ml-0.5 hover:opacity-70" />
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
 
+              {/* Date fields row */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <Label className="text-sm font-medium text-muted-foreground mb-1.5 block">Arrival From</Label>
                 <Popover>
@@ -907,7 +903,6 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                   <PopoverContent className="w-auto p-0 border border-gray-200 shadow-xl rounded-lg z-[70]" align="start">
                     <Calendar mode="single" selected={dateFrom} onSelect={(date) => {
                       setDateFrom(date);
-                      // Auto-open Arrival To after selecting Arrival From
                       setTimeout(() => setArrivalToOpen(true), 200);
                     }} initialFocus className="pointer-events-auto rounded-lg p-3" />
                   </PopoverContent>
@@ -938,38 +933,19 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                 </Popover>
               </div>
             </div>
-            {/* Selected filter badges */}
-            {(selectedLocations.length > 0 || (dateFrom && dateTo)) && (
-              <div className="flex flex-wrap gap-1.5 mt-2">
-                {selectedLocations.map((loc) => {
-                  const label = locationOptions.find(l => l.value === loc)?.label || loc;
-                  return (
-                    <Badge
-                      key={loc}
-                      variant="secondary"
-                      className="px-2.5 py-1 text-xs flex items-center gap-1.5"
-                    >
-                      {label}
-                      <button
-                        onClick={() => setSelectedLocations(prev => prev.filter(l => l !== loc))}
-                        className="hover:bg-muted-foreground/20 rounded-full p-0.5 transition-colors"
-                      >
-                        <X className="h-3 w-3" />
-                      </button>
-                    </Badge>
-                  );
-                })}
-                {dateFrom && dateTo && (
-                  <Badge variant="secondary" className="px-2.5 py-1 text-xs flex items-center gap-1.5">
-                    {format(dateFrom, "MMM dd, yyyy")} — {format(dateTo, "MMM dd, yyyy")}
-                    <button
-                      onClick={() => { setDateFrom(undefined); setDateTo(undefined); }}
-                      className="hover:bg-muted-foreground/20 rounded-full p-0.5 transition-colors"
-                    >
-                      <X className="h-3 w-3" />
-                    </button>
-                  </Badge>
-                )}
+            </div>
+            {/* Selected date badge */}
+            {dateFrom && dateTo && (
+              <div className="flex flex-wrap gap-1.5">
+                <Badge variant="secondary" className="px-2.5 py-1 text-xs flex items-center gap-1.5">
+                  {format(dateFrom, "MMM dd, yyyy")} — {format(dateTo, "MMM dd, yyyy")}
+                  <button
+                    onClick={() => { setDateFrom(undefined); setDateTo(undefined); }}
+                    className="hover:bg-muted-foreground/20 rounded-full p-0.5 transition-colors"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                </Badge>
               </div>
             )}
           </div>
