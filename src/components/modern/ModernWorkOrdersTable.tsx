@@ -4039,9 +4039,21 @@ const BatchItemsInline = ({ items, navigate }: { items: BatchItemData[]; navigat
     });
   };
 
+  const dateColumnKeys = new Set(batchItemColumns.filter(c => c.type === 'date').map(c => c.key));
+  
   const filteredItems = items.filter(item =>
     Object.entries(filters).every(([key, val]) => {
       if (!val) return true;
+      if (dateColumnKeys.has(key)) {
+        // Date filter: compare selected date with the item's date string (MM/DD/YYYY)
+        const selectedDate = new Date(val);
+        const itemDateStr = ((item as any)[key] || '').toString();
+        if (!itemDateStr) return false;
+        const [m, d, y] = itemDateStr.split('/').map(Number);
+        if (!m || !d || !y) return false;
+        const itemDate = new Date(y, m - 1, d);
+        return itemDate.getFullYear() === selectedDate.getFullYear() && itemDate.getMonth() === selectedDate.getMonth() && itemDate.getDate() === selectedDate.getDate();
+      }
       return ((item as any)[key] || '').toString().toLowerCase().includes(val.toLowerCase());
     })
   );
