@@ -7,7 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { List, Grid3X3, Pencil, Search, X, ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
+import { List, Grid3X3, Pencil, Search, X, ArrowUpDown, ArrowUp, ArrowDown, ChevronRight, ChevronDown } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import WorkOrderBatchDetails from "@/components/WorkOrderBatchDetails";
@@ -3962,7 +3962,51 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
   const [currentView, setCurrentView] = useState<'item' | 'batch'>('item');
   const [columnFilters, setColumnFilters] = useState<Record<string, string>>({});
   const [sortConfig, setSortConfig] = useState<{ key: string; direction: 'asc' | 'desc' } | null>(null);
+  const [expandedBatches, setExpandedBatches] = useState<Set<string>>(new Set());
   const navigate = useNavigate();
+
+  const toggleBatchExpanded = (batchId: string) => {
+    setExpandedBatches(prev => {
+      const next = new Set(prev);
+      if (next.has(batchId)) next.delete(batchId);
+      else next.add(batchId);
+      return next;
+    });
+  };
+
+  // Mock items for expanded batch rows (CSA inline view)
+  const getBatchItems = (batchId: string) => {
+    // Return mock items based on batch - in real app this would be an API call
+    const itemSets: Record<string, Array<{ id: string; item: string; location: string; itemCreated: string; action: string; itemStatus: string; manufacturer: string; model: string; description: string; serialNumber: string; deliverByDate: string; followUpDate: string }>> = {
+      "383727": [
+        { id: "001", item: "Gloves", location: "Baton Rouge", itemCreated: "09/24/2021", action: "TEST", itemStatus: "Waiting on Customer", manufacturer: "", model: "", description: "Class 00 Rubber Insulating Gloves", serialNumber: "", deliverByDate: "10/15/2021", followUpDate: "08/11/2023" },
+        { id: "002", item: "Safety Helmet", location: "Houston", itemCreated: "10/15/2021", action: "CALIBRATE", itemStatus: "In Progress", manufacturer: "SafetyFirst", model: "SF-100", description: "Industrial Safety Helmet with Face Shield", serialNumber: "SF123456", deliverByDate: "11/15/2021", followUpDate: "11/28/2024" },
+        { id: "003", item: "Pressure Gauge", location: "Dallas", itemCreated: "11/02/2021", action: "REPAIR", itemStatus: "Completed", manufacturer: "PressureTech", model: "PT-500", description: "High-Precision Digital Pressure Gauge", serialNumber: "PT789012", deliverByDate: "12/01/2021", followUpDate: "11/23/2024" },
+      ],
+      "390118": [
+        { id: "001", item: "Transformer", location: "Lab B", itemCreated: "12/10/2022", action: "C/C", itemStatus: "In Lab", manufacturer: "GE", model: "GE-4500", description: "Step-down Transformer 480V", serialNumber: "GE445789", deliverByDate: "01/05/2023", followUpDate: "08/11/2023" },
+        { id: "002", item: "Relay", location: "Lab B", itemCreated: "12/10/2022", action: "TEST", itemStatus: "In Lab", manufacturer: "Siemens", model: "S7-200", description: "Protection Relay", serialNumber: "SIE998877", deliverByDate: "01/05/2023", followUpDate: "08/11/2023" },
+      ],
+    };
+    // Return items for known batches, or generate generic items based on totalCount
+    if (itemSets[batchId]) return itemSets[batchId];
+    const batch = mockWorkOrderBatches.find(b => b.woBatch === batchId);
+    const count = batch?.totalCount || 1;
+    return Array.from({ length: Math.min(count, 3) }, (_, i) => ({
+      id: String(i + 1).padStart(3, '0'),
+      item: `Item ${i + 1}`,
+      location: batch?.location || '-',
+      itemCreated: batch?.arrivalDate || '-',
+      action: "C/C",
+      itemStatus: batch?.itemStatus || '-',
+      manufacturer: '-',
+      model: '-',
+      description: `Work order item ${i + 1}`,
+      serialNumber: '-',
+      deliverByDate: batch?.minDeliverByDate || '-',
+      followUpDate: batch?.minFollowUpDate || '-',
+    }));
+  };
 
   const sortableColumns = new Set(['totalLabOpen', 'totalArCount', 'totalCount', 'lastCommentDate', 'minNeedByDate', 'minFollowUpDate', 'minDeliverByDate', 'itemCount', 'followUpDate', 'deliverByDate', 'aging']);
 
@@ -4857,6 +4901,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                   // Batch View Headers
                   searchViewMode === 'csa' ? (
                     <>
+                      <TableHead className="font-semibold text-foreground text-xs bg-slate-100/80 py-2 w-8"></TableHead>
                       <TableHead className="font-semibold text-foreground text-xs bg-slate-100/80 py-2">WO Batch</TableHead>
                       <TableHead className="font-semibold text-foreground text-xs bg-slate-100/80 py-2">Acct #</TableHead>
                       <TableHead className="font-semibold text-foreground text-xs bg-slate-100/80 py-2">Customer Name</TableHead>
@@ -4903,6 +4948,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
               <TableRow className="border-b border-gray-100">
                 {currentView === 'batch' ? (
                   <>
+                    {searchViewMode === 'csa' && <TableHead className="w-8 py-1.5 px-1"></TableHead>}
                     {(searchViewMode === 'csa' ? [
                       { key: 'woBatch', placeholder: '' },
                       { key: 'acctNumber', placeholder: '' },
@@ -5000,7 +5046,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
             <TableBody>
               {!hasSearched ? (
                 <TableRow>
-                  <TableCell colSpan={currentView === 'batch' ? (searchViewMode === 'csa' ? 12 : 8) : 11} className="text-center py-12">
+                  <TableCell colSpan={currentView === 'batch' ? (searchViewMode === 'csa' ? 14 : 8) : 11} className="text-center py-12">
                     <p className="text-muted-foreground text-lg">
                       Please enter search criteria in the Work Order Search above to view results
                     </p>
@@ -5011,16 +5057,27 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                   {currentView === 'batch' ? (
                     // Batch View - Show Work Order Batches
                     paginatedBatches.map((batch) => (
+                  <React.Fragment key={batch.id}>
                   <TableRow
-                    key={batch.id}
                     className={cn(
                       "cursor-pointer border-b border-muted/30 transition-colors",
                       searchViewMode === 'csa' 
                         ? "hover:bg-slate-50/80 [&>td]:py-2.5 [&>td]:px-3" 
-                        : "hover:bg-gray-50"
+                        : "hover:bg-gray-50",
+                      searchViewMode === 'csa' && expandedBatches.has(batch.id) && "bg-slate-50/60"
                     )}
-                    onClick={() => openBatchDetails(batch)}
+                    onClick={() => searchViewMode === 'csa' ? toggleBatchExpanded(batch.id) : openBatchDetails(batch)}
                   >
+                    {searchViewMode === 'csa' && (
+                      <TableCell className="w-8 px-1">
+                        <button className="p-0.5 rounded hover:bg-muted transition-all">
+                          {expandedBatches.has(batch.id) 
+                            ? <ChevronDown className="h-4 w-4 text-muted-foreground" /> 
+                            : <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                          }
+                        </button>
+                      </TableCell>
+                    )}
                     <TableCell className="font-semibold text-foreground text-[13px]">{batch.woBatch}</TableCell>
                     <TableCell className="text-muted-foreground text-[12px]">{batch.acctNumber}</TableCell>
                     <TableCell className="font-medium text-foreground text-[12px]">{batch.customerName}</TableCell>
@@ -5066,6 +5123,69 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                       </>
                     )}
                   </TableRow>
+                  {/* CSA Inline Accordion - expanded batch items */}
+                  {searchViewMode === 'csa' && expandedBatches.has(batch.id) && (
+                    <TableRow className="bg-slate-50/40">
+                      <TableCell colSpan={14} className="p-0">
+                        <div className="border-l-2 border-primary/30 ml-4 my-1">
+                          <Table>
+                            <TableHeader>
+                              <TableRow className="bg-muted/30 h-6">
+                                <TableHead className="font-semibold text-[10px] py-1 px-2">Item</TableHead>
+                                <TableHead className="font-semibold text-[10px] py-1 px-2">Location</TableHead>
+                                <TableHead className="font-semibold text-[10px] py-1 px-2">Created</TableHead>
+                                <TableHead className="font-semibold text-[10px] py-1 px-2">Action</TableHead>
+                                <TableHead className="font-semibold text-[10px] py-1 px-2">Item Status</TableHead>
+                                <TableHead className="font-semibold text-[10px] py-1 px-2">Manufacturer</TableHead>
+                                <TableHead className="font-semibold text-[10px] py-1 px-2">Model</TableHead>
+                                <TableHead className="font-semibold text-[10px] py-1 px-2">Description</TableHead>
+                                <TableHead className="font-semibold text-[10px] py-1 px-2">Serial #</TableHead>
+                                <TableHead className="font-semibold text-[10px] py-1 px-2">Deliver By</TableHead>
+                                <TableHead className="font-semibold text-[10px] py-1 px-2">Follow Up</TableHead>
+                              </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                              {getBatchItems(batch.woBatch).map((item) => (
+                                <TableRow key={item.id} className="hover:bg-muted/20 h-6">
+                                  <TableCell className="text-[11px] py-1 px-2">
+                                    <button
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        navigate('/edit-order');
+                                      }}
+                                      className="text-blue-600 hover:text-blue-800 hover:underline font-medium transition-colors text-[11px]"
+                                    >
+                                      {item.item}
+                                    </button>
+                                  </TableCell>
+                                  <TableCell className="text-[11px] py-1 px-2">{item.location}</TableCell>
+                                  <TableCell className="text-[11px] py-1 px-2">{item.itemCreated}</TableCell>
+                                  <TableCell className="text-[11px] py-1 px-2 font-medium">{item.action}</TableCell>
+                                  <TableCell className="py-1 px-2">
+                                    <span className={`px-1.5 py-0.5 rounded text-[10px] font-medium ${
+                                      item.itemStatus === 'Completed' ? 'bg-green-100 text-green-800' :
+                                      item.itemStatus === 'In Progress' ? 'bg-blue-100 text-blue-800' :
+                                      item.itemStatus === 'In Lab' ? 'bg-blue-100 text-blue-800' :
+                                      'bg-yellow-100 text-yellow-800'
+                                    }`}>
+                                      {item.itemStatus}
+                                    </span>
+                                  </TableCell>
+                                  <TableCell className="text-[11px] py-1 px-2">{item.manufacturer || '-'}</TableCell>
+                                  <TableCell className="text-[11px] py-1 px-2">{item.model || '-'}</TableCell>
+                                  <TableCell className="text-[10px] py-1 px-2 max-w-[120px] truncate">{item.description || '-'}</TableCell>
+                                  <TableCell className="text-[11px] py-1 px-2">{item.serialNumber || '-'}</TableCell>
+                                  <TableCell className="text-[11px] py-1 px-2">{item.deliverByDate || '-'}</TableCell>
+                                  <TableCell className="text-[11px] py-1 px-2">{item.followUpDate || '-'}</TableCell>
+                                </TableRow>
+                              ))}
+                            </TableBody>
+                          </Table>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  )}
+                  </React.Fragment>
                 ))
               ) : (
                 // Item View - Show Work Order Items
