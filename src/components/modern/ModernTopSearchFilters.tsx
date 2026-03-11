@@ -938,6 +938,29 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                 </Popover>
               </div>
             </div>
+            {/* Selected location badges */}
+            {selectedLocations.length > 0 && (
+              <div className="flex flex-wrap gap-1.5 mt-2">
+                {selectedLocations.map((loc) => {
+                  const label = locationOptions.find(l => l.value === loc)?.label || loc;
+                  return (
+                    <Badge
+                      key={loc}
+                      variant="secondary"
+                      className="px-2.5 py-1 text-xs flex items-center gap-1.5"
+                    >
+                      {label}
+                      <button
+                        onClick={() => setSelectedLocations(prev => prev.filter(l => l !== loc))}
+                        className="hover:bg-muted-foreground/20 rounded-full p-0.5 transition-colors"
+                      >
+                        <X className="h-3 w-3" />
+                      </button>
+                    </Badge>
+                  );
+                })}
+              </div>
+            )}
           </div>
         )}
 
