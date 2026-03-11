@@ -4047,7 +4047,7 @@ const BatchItemsInline = ({ items, navigate }: { items: BatchItemData[]; navigat
         </TableHeader>
         <TableBody>
           {sortedItems.map((item, idx) => (
-            <TableRow key={item.id} className={cn("hover:bg-slate-100/80 h-6 transition-colors", idx % 2 === 0 ? "bg-transparent" : "bg-slate-50/50")}>
+            <TableRow key={item.id} className={cn("hover:bg-slate-200/80 h-6 transition-colors", idx % 2 === 0 ? "bg-slate-50" : "bg-slate-100")}>
               <TableCell className="w-4 py-1 px-2">
                 <span className="inline-block w-1 h-1 rounded-full bg-slate-400" />
               </TableCell>
