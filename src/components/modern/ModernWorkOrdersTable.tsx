@@ -4045,6 +4045,50 @@ const DateColumnFilter = ({ value, onChange, onClear, small = false }: { value: 
   );
 };
 
+// Number filter component with up/down arrows and manual entry
+const NumberColumnFilter = ({ value, onChange, onClear, small = false }: { value: string; onChange: (val: string) => void; onClear: () => void; small?: boolean }) => {
+  const numVal = value ? parseInt(value) : 0;
+
+  const increment = () => onChange(String(numVal + 1));
+  const decrement = () => { if (numVal > 1) onChange(String(numVal - 1)); else onClear(); };
+
+  const handleChange = (raw: string) => {
+    const cleaned = raw.replace(/[^0-9]/g, '');
+    if (!cleaned) { onClear(); return; }
+    onChange(cleaned);
+  };
+
+  return (
+    <div className="relative flex-1 flex items-center">
+      <Input
+        value={value}
+        onChange={(e) => handleChange(e.target.value)}
+        placeholder=""
+        className={cn(
+          small
+            ? "h-6 text-[10px] pl-2 pr-10 border-slate-200 bg-white rounded placeholder:text-muted-foreground/40 focus:bg-background focus:border-slate-400 transition-colors text-center"
+            : "h-7 text-[11px] pl-2.5 pr-10 border-muted bg-muted/30 rounded-md placeholder:text-muted-foreground/40 focus:bg-background focus:border-primary/30 transition-colors text-center"
+        )}
+      />
+      <div className={cn("absolute top-1/2 -translate-y-1/2 flex items-center gap-0", small ? "right-0.5" : "right-1")}>
+        {value && (
+          <button onClick={onClear} className="p-0.5 rounded-full hover:bg-muted transition-colors">
+            <X className={cn("text-muted-foreground", small ? "h-2.5 w-2.5" : "h-3 w-3")} />
+          </button>
+        )}
+        <div className="flex flex-col">
+          <button onClick={increment} className={cn("hover:bg-muted rounded-sm transition-colors px-0.5", small ? "" : "py-px")}>
+            <ArrowUp className={cn("text-muted-foreground", small ? "h-2 w-2" : "h-2.5 w-2.5")} />
+          </button>
+          <button onClick={decrement} className={cn("hover:bg-muted rounded-sm transition-colors px-0.5", small ? "" : "py-px")}>
+            <ArrowDown className={cn("text-muted-foreground", small ? "h-2 w-2" : "h-2.5 w-2.5")} />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const batchItemColumns = [
   { key: 'item', label: 'Item', type: 'text' as const },
   { key: 'location', label: 'Location', type: 'text' as const },
