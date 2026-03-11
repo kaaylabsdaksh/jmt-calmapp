@@ -4009,7 +4009,7 @@ const BatchItemsInline = ({ items, navigate }: { items: BatchItemData[]; navigat
     <div className="border-l-3 border-slate-500 ml-6 my-1.5 rounded-r-lg bg-slate-100 overflow-hidden">
       <Table>
         <TableHeader>
-          <TableRow className="bg-slate-100 h-7 border-b border-slate-200">
+          <TableRow className="bg-slate-200 h-7 border-b border-slate-300">
             <TableHead className="font-semibold text-[10px] py-1 px-2 w-4">
               <span className="inline-block w-1.5 h-1.5 rounded-full bg-slate-400" />
             </TableHead>
