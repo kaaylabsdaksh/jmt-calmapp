@@ -4024,7 +4024,7 @@ const BatchItemsInline = ({ items, navigate }: { items: BatchItemData[]; navigat
               <TableHead key={col.key} className="py-1 px-1.5">
                 <div className="relative flex items-center gap-0.5">
                   <div className="relative flex-1">
-                    <Search className="absolute left-1.5 top-1/2 -translate-y-1/2 h-2.5 w-2.5 text-primary/30" />
+                    <Search className="absolute left-1.5 top-1/2 -translate-y-1/2 h-2.5 w-2.5 text-slate-400" />
                     <Input
                       placeholder=""
                       value={filters[col.key] || ''}
