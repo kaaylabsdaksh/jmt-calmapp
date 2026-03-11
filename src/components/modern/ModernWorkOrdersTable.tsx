@@ -4029,7 +4029,7 @@ const BatchItemsInline = ({ items, navigate }: { items: BatchItemData[]; navigat
                       placeholder=""
                       value={filters[col.key] || ''}
                       onChange={(e) => setFilters(prev => ({ ...prev, [col.key]: e.target.value }))}
-                      className="h-6 text-[10px] pl-5 pr-5 border-primary/15 bg-background/80 rounded placeholder:text-muted-foreground/40 focus:bg-background focus:border-primary/30 transition-colors"
+                      className="h-6 text-[10px] pl-5 pr-5 border-slate-200 bg-white rounded placeholder:text-muted-foreground/40 focus:bg-background focus:border-slate-400 transition-colors"
                     />
                     {filters[col.key] && (
                       <button
