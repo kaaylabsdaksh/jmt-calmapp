@@ -4003,15 +4003,14 @@ const DateColumnFilter = ({ value, onChange, onClear, small = false }: { value: 
 
   return (
     <div className="relative flex-1 flex items-center">
-      <CalendarIcon className={cn("absolute left-1.5 top-1/2 -translate-y-1/2 text-muted-foreground/50 z-10", small ? "h-2.5 w-2.5" : "h-3 w-3")} />
       <Input
         value={textValue}
         onChange={(e) => handleTextChange(e.target.value)}
         placeholder="MM/DD/YYYY"
         className={cn(
           small
-            ? "h-6 text-[10px] pl-5 pr-12 border-slate-200 bg-white rounded placeholder:text-muted-foreground/40 focus:bg-background focus:border-slate-400 transition-colors"
-            : "h-7 text-[11px] pl-6 pr-12 border-muted bg-muted/30 rounded-md placeholder:text-muted-foreground/40 focus:bg-background focus:border-primary/30 transition-colors"
+            ? "h-6 text-[10px] pl-2 pr-12 border-slate-200 bg-white rounded placeholder:text-muted-foreground/40 focus:bg-background focus:border-slate-400 transition-colors"
+            : "h-7 text-[11px] pl-2.5 pr-12 border-muted bg-muted/30 rounded-md placeholder:text-muted-foreground/40 focus:bg-background focus:border-primary/30 transition-colors"
         )}
       />
       <div className={cn("absolute top-1/2 -translate-y-1/2 flex items-center gap-0.5", small ? "right-1" : "right-1.5")}>
