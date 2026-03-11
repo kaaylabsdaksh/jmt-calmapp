@@ -5183,23 +5183,31 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                     ]).map((col) => (
                       <TableHead key={col.key} className="py-1.5 px-2">
                         <div className="relative flex items-center gap-1">
-                          <div className="relative flex-1">
-                            <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground/50" />
-                            <Input
-                              placeholder={col.placeholder}
+                          {col.type === 'date' ? (
+                            <DateColumnFilter
                               value={columnFilters[col.key] || ''}
-                              onChange={(e) => setColumnFilters(prev => ({ ...prev, [col.key]: e.target.value }))}
-                              className="h-7 text-[11px] pl-6 pr-6 border-muted bg-muted/30 rounded-md placeholder:text-muted-foreground/40 focus:bg-background focus:border-primary/30 transition-colors"
+                              onChange={(val) => setColumnFilters(prev => ({ ...prev, [col.key]: val }))}
+                              onClear={() => setColumnFilters(prev => ({ ...prev, [col.key]: '' }))}
                             />
-                            {columnFilters[col.key] && (
-                              <button
-                                onClick={() => setColumnFilters(prev => ({ ...prev, [col.key]: '' }))}
-                                className="absolute right-1.5 top-1/2 -translate-y-1/2 p-0.5 rounded-full hover:bg-muted transition-colors"
-                              >
-                                <X className="h-3 w-3 text-muted-foreground" />
-                              </button>
-                            )}
-                          </div>
+                          ) : (
+                            <div className="relative flex-1">
+                              <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground/50" />
+                              <Input
+                                placeholder={col.placeholder}
+                                value={columnFilters[col.key] || ''}
+                                onChange={(e) => setColumnFilters(prev => ({ ...prev, [col.key]: e.target.value }))}
+                                className="h-7 text-[11px] pl-6 pr-6 border-muted bg-muted/30 rounded-md placeholder:text-muted-foreground/40 focus:bg-background focus:border-primary/30 transition-colors"
+                              />
+                              {columnFilters[col.key] && (
+                                <button
+                                  onClick={() => setColumnFilters(prev => ({ ...prev, [col.key]: '' }))}
+                                  className="absolute right-1.5 top-1/2 -translate-y-1/2 p-0.5 rounded-full hover:bg-muted transition-colors"
+                                >
+                                  <X className="h-3 w-3 text-muted-foreground" />
+                                </button>
+                              )}
+                            </div>
+                          )}
                           {searchViewMode !== 'csa' && sortableColumns.has(col.key) && (
                             <button
                               onClick={() => handleSort(col.key)}
