@@ -4006,30 +4006,30 @@ const BatchItemsInline = ({ items, navigate }: { items: BatchItemData[]; navigat
     : filteredItems;
 
   return (
-    <div className="border-l-3 border-primary/40 ml-6 my-1.5 rounded-r-lg bg-primary/[0.03] overflow-hidden">
+    <div className="border-l-3 border-slate-400 ml-6 my-1.5 rounded-r-lg bg-slate-50 overflow-hidden">
       <Table>
         <TableHeader>
-          <TableRow className="bg-primary/[0.06] h-7 border-b border-primary/10">
-            <TableHead className="font-semibold text-[10px] py-1 px-2 text-primary/70 w-4">
-              <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary/40" />
+          <TableRow className="bg-slate-100 h-7 border-b border-slate-200">
+            <TableHead className="font-semibold text-[10px] py-1 px-2 w-4">
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-slate-400" />
             </TableHead>
             {batchItemColumns.map(col => (
-              <TableHead key={col.key} className="font-semibold text-[10px] py-1 px-2 text-primary/70">{col.label}</TableHead>
+              <TableHead key={col.key} className="font-semibold text-[10px] py-1 px-2 text-slate-700">{col.label}</TableHead>
             ))}
           </TableRow>
           {/* Filter Row */}
-          <TableRow className="border-b border-primary/10 bg-primary/[0.02]">
+          <TableRow className="border-b border-slate-200 bg-slate-50/50">
             <TableHead className="w-4 py-1 px-1"></TableHead>
             {batchItemColumns.map(col => (
               <TableHead key={col.key} className="py-1 px-1.5">
                 <div className="relative flex items-center gap-0.5">
                   <div className="relative flex-1">
-                    <Search className="absolute left-1.5 top-1/2 -translate-y-1/2 h-2.5 w-2.5 text-primary/30" />
+                    <Search className="absolute left-1.5 top-1/2 -translate-y-1/2 h-2.5 w-2.5 text-slate-400" />
                     <Input
                       placeholder=""
                       value={filters[col.key] || ''}
                       onChange={(e) => setFilters(prev => ({ ...prev, [col.key]: e.target.value }))}
-                      className="h-6 text-[10px] pl-5 pr-5 border-primary/15 bg-background/80 rounded placeholder:text-muted-foreground/40 focus:bg-background focus:border-primary/30 transition-colors"
+                      className="h-6 text-[10px] pl-5 pr-5 border-slate-200 bg-white rounded placeholder:text-muted-foreground/40 focus:bg-background focus:border-slate-400 transition-colors"
                     />
                     {filters[col.key] && (
                       <button
@@ -4047,9 +4047,9 @@ const BatchItemsInline = ({ items, navigate }: { items: BatchItemData[]; navigat
         </TableHeader>
         <TableBody>
           {sortedItems.map((item, idx) => (
-            <TableRow key={item.id} className={cn("hover:bg-primary/[0.06] h-6 transition-colors", idx % 2 === 0 ? "bg-transparent" : "bg-primary/[0.02]")}>
+            <TableRow key={item.id} className={cn("hover:bg-slate-100/80 h-6 transition-colors", idx % 2 === 0 ? "bg-transparent" : "bg-slate-50/50")}>
               <TableCell className="w-4 py-1 px-2">
-                <span className="inline-block w-1 h-1 rounded-full bg-primary/30" />
+                <span className="inline-block w-1 h-1 rounded-full bg-slate-400" />
               </TableCell>
               <TableCell className="text-[11px] py-1 px-2">
                 <button
