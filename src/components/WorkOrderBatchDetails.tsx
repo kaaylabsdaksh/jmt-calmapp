@@ -423,28 +423,41 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
               {/* Column Filter Row */}
               <TableRow className="border-b border-gray-100">
                 {(viewMode === 'csa' ? [
-                  'item', 'location', 'itemCreated', 'action', 'itemStatus', 'manufacturer', 'model', 'description', 'serialNumber', 'deliverByDate', 'followUpDate'
+                  { key: 'item', type: 'text' }, { key: 'location', type: 'text' }, { key: 'itemCreated', type: 'date' }, { key: 'action', type: 'text' }, { key: 'itemStatus', type: 'text' }, { key: 'manufacturer', type: 'text' }, { key: 'model', type: 'text' }, { key: 'description', type: 'text' }, { key: 'serialNumber', type: 'text' }, { key: 'deliverByDate', type: 'date' }, { key: 'followUpDate', type: 'date' }
                 ] : [
-                  'item', 'division', 'location', 'itemCreated', 'action', 'itemStatus', 'manufacturer', 'model', 'labCode', 'serialNumber', 'poNumber'
-                ]).map((key) => (
-                  <TableHead key={key} className="py-1 px-1.5">
-                    <div className="relative">
-                      <Search className="absolute left-1.5 top-1/2 -translate-y-1/2 h-2.5 w-2.5 text-muted-foreground/50" />
-                      <Input
-                        placeholder=""
-                        value={columnFilters[key] || ''}
-                        onChange={(e) => setColumnFilters(prev => ({ ...prev, [key]: e.target.value }))}
-                        className="h-6 text-[10px] pl-5 pr-5 border-muted bg-muted/30 rounded placeholder:text-muted-foreground/40 focus:bg-background focus:border-primary/30 transition-colors"
+                  { key: 'item', type: 'text' }, { key: 'division', type: 'text' }, { key: 'location', type: 'text' }, { key: 'itemCreated', type: 'text' }, { key: 'action', type: 'text' }, { key: 'itemStatus', type: 'text' }, { key: 'manufacturer', type: 'text' }, { key: 'model', type: 'text' }, { key: 'labCode', type: 'text' }, { key: 'serialNumber', type: 'text' }, { key: 'poNumber', type: 'text' }
+                ]).map((col) => (
+                  <TableHead key={col.key} className={cn("py-1 px-1.5", col.type === 'date' && "min-w-[150px]")}>
+                    {col.type === 'date' ? (
+                      <DateColumnFilterLocal
+                        value={columnFilters[col.key] || ''}
+                        onChange={(val) => setColumnFilters(prev => ({ ...prev, [col.key]: val }))}
+                        onClear={() => setColumnFilters(prev => ({ ...prev, [col.key]: '' }))}
                       />
-                      {columnFilters[key] && (
-                        <button
-                          onClick={() => setColumnFilters(prev => ({ ...prev, [key]: '' }))}
-                          className="absolute right-1 top-1/2 -translate-y-1/2 p-0.5 rounded-full hover:bg-muted transition-colors"
-                        >
-                          <X className="h-2.5 w-2.5 text-muted-foreground" />
-                        </button>
-                      )}
-                    </div>
+                    ) : (
+                      <div className="relative">
+                        {viewMode !== 'csa' && (
+                          <Search className="absolute left-1.5 top-1/2 -translate-y-1/2 h-2.5 w-2.5 text-muted-foreground/50" />
+                        )}
+                        <Input
+                          placeholder=""
+                          value={columnFilters[col.key] || ''}
+                          onChange={(e) => setColumnFilters(prev => ({ ...prev, [col.key]: e.target.value }))}
+                          className={cn(
+                            "h-6 text-[10px] pr-5 border-muted bg-muted/30 rounded placeholder:text-muted-foreground/40 focus:bg-background focus:border-primary/30 transition-colors",
+                            viewMode === 'csa' ? "pl-2" : "pl-5"
+                          )}
+                        />
+                        {columnFilters[col.key] && (
+                          <button
+                            onClick={() => setColumnFilters(prev => ({ ...prev, [col.key]: '' }))}
+                            className="absolute right-1 top-1/2 -translate-y-1/2 p-0.5 rounded-full hover:bg-muted transition-colors"
+                          >
+                            <X className="h-2.5 w-2.5 text-muted-foreground" />
+                          </button>
+                        )}
+                      </div>
+                    )}
                   </TableHead>
                 ))}
                 <TableHead className="w-8"></TableHead>
