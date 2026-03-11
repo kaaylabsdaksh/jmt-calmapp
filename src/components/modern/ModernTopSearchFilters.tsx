@@ -357,7 +357,9 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
       {/* Header Row */}
       <div className="flex items-center justify-between px-5 pt-5 pb-3">
         <div className="flex items-center gap-3">
-          <h2 className="text-lg font-semibold text-foreground">Work Order Search</h2>
+          {viewMode !== 'csa' && (
+            <h2 className="text-lg font-semibold text-foreground">Work Order Search</h2>
+          )}
           {/* Live Result Count */}
           {resultCount !== null && (
             <Badge variant="secondary" className="px-2.5 py-1 text-xs font-medium animate-in fade-in-50 slide-in-from-left-2">
