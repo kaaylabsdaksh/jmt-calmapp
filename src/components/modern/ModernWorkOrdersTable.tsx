@@ -5186,6 +5186,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                     </TableRow>
                   )}
                   </React.Fragment>
+                ))
               ) : (
                 // Item View - Show Work Order Items
                 paginatedWorkOrderItems.map((item) => (
