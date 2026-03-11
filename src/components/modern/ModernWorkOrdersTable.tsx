@@ -4036,20 +4036,6 @@ const BatchItemsInline = ({ items, navigate }: { items: BatchItemData[]; navigat
                       </button>
                     )}
                   </div>
-                  {batchItemSortableColumns.has(col.key) && (
-                    <button
-                      onClick={() => handleSort(col.key)}
-                      className="flex-shrink-0 p-0.5 rounded hover:bg-muted transition-colors"
-                    >
-                      {sort?.key === col.key ? (
-                        sort.direction === 'asc'
-                          ? <ArrowUp className="h-3 w-3 text-blue-600" strokeWidth={2.5} />
-                          : <ArrowDown className="h-3 w-3 text-blue-600" strokeWidth={2.5} />
-                      ) : (
-                        <ArrowUpDown className="h-2.5 w-2.5 text-gray-400/60" />
-                      )}
-                    </button>
-                  )}
                 </div>
               </TableHead>
             ))}
@@ -5137,7 +5123,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                               </button>
                             )}
                           </div>
-                          {sortableColumns.has(col.key) && (
+                          {searchViewMode !== 'csa' && sortableColumns.has(col.key) && (
                             <button
                               onClick={() => handleSort(col.key)}
                               className="flex-shrink-0 p-1 rounded hover:bg-muted transition-colors"
