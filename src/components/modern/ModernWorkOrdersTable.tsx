@@ -4726,7 +4726,33 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
     ? (isShowingAll ? sortedBatches : sortedBatches.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage))
     : [];
 
-  const openDetails = (order: WorkOrder) => {
+  // Lazy loading for grid view
+  const gridDataSource = currentView === 'batch' ? sortedBatches : columnFilteredItems;
+  const gridVisibleBatches = gridDataSource.slice(0, gridVisibleCount) as typeof sortedBatches;
+  const gridVisibleWorkOrderItems = (currentView === 'item' ? columnFilteredItems : []).slice(0, gridVisibleCount);
+  const hasMoreGridItems = gridVisibleCount < gridDataSource.length;
+
+  useEffect(() => {
+    if (viewMode !== 'grid' || !hasMoreGridItems) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setGridVisibleCount(prev => Math.min(prev + 12, gridDataSource.length));
+        }
+      },
+      { threshold: 0.1 }
+    );
+    const el = gridLoadMoreRef.current;
+    if (el) observer.observe(el);
+    return () => { if (el) observer.unobserve(el); };
+  }, [viewMode, hasMoreGridItems, gridDataSource.length]);
+
+  // Reset grid visible count when switching views or filters change
+  useEffect(() => {
+    setGridVisibleCount(12);
+  }, [viewMode, currentView, columnFilters, sortConfig, activeStatusFilter]);
+
+
     console.log('Opening details for order:', order.id, 'currentView:', currentView);
     setSelectedWorkOrder(order);
   };
