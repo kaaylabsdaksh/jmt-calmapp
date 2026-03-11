@@ -939,7 +939,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
               </div>
             </div>
             {/* Selected filter badges */}
-            {(selectedLocations.length > 0 || dateFrom || dateTo) && (
+            {(selectedLocations.length > 0 || (dateFrom && dateTo)) && (
               <div className="flex flex-wrap gap-1.5 mt-2">
                 {selectedLocations.map((loc) => {
                   const label = locationOptions.find(l => l.value === loc)?.label || loc;
@@ -959,22 +959,11 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                     </Badge>
                   );
                 })}
-                {dateFrom && (
+                {dateFrom && dateTo && (
                   <Badge variant="secondary" className="px-2.5 py-1 text-xs flex items-center gap-1.5">
-                    From: {format(dateFrom, "MMM dd, yyyy")}
+                    {format(dateFrom, "MMM dd, yyyy")} — {format(dateTo, "MMM dd, yyyy")}
                     <button
-                      onClick={() => setDateFrom(undefined)}
-                      className="hover:bg-muted-foreground/20 rounded-full p-0.5 transition-colors"
-                    >
-                      <X className="h-3 w-3" />
-                    </button>
-                  </Badge>
-                )}
-                {dateTo && (
-                  <Badge variant="secondary" className="px-2.5 py-1 text-xs flex items-center gap-1.5">
-                    To: {format(dateTo, "MMM dd, yyyy")}
-                    <button
-                      onClick={() => setDateTo(undefined)}
+                      onClick={() => { setDateFrom(undefined); setDateTo(undefined); }}
                       className="hover:bg-muted-foreground/20 rounded-full p-0.5 transition-colors"
                     >
                       <X className="h-3 w-3" />
