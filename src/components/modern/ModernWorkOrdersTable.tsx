@@ -5417,7 +5417,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                           </Badge>
                         </TableCell>
                         <TableCell className="text-center">
-                          <span className="inline-flex items-center justify-center bg-muted rounded-full w-5 h-5 text-[11px] font-bold text-foreground">{batch.totalCount}</span>
+                          <span className="text-[12px] font-medium text-foreground">{batch.totalCount}</span>
                         </TableCell>
                         <TableCell className="text-[12px] text-muted-foreground">{batch.contactName}</TableCell>
                         <TableCell className="text-[12px] font-mono text-muted-foreground">{batch.poNumber}</TableCell>
