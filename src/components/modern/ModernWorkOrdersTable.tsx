@@ -5215,7 +5215,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                       { key: 'customerName', placeholder: '', type: 'text' },
                       { key: 'location', placeholder: '', type: 'text' },
                       { key: 'priority', placeholder: '', type: 'text' },
-                      { key: 'itemCount', placeholder: '', type: 'text' },
+                      { key: 'itemCount', placeholder: '', type: 'number' },
                       { key: 'contactName', placeholder: '', type: 'text' },
                       { key: 'poNumber', placeholder: '', type: 'text' },
                       { key: 'itemStatus', placeholder: '', type: 'text' },
