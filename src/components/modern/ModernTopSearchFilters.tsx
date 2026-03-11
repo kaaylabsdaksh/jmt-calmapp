@@ -844,18 +844,44 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 items-end">
               <div>
                 <Label className="text-sm font-medium text-muted-foreground mb-1.5 block">Location</Label>
-                <Select value={searchValues.location || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, location: value === 'all' ? '' : value }))}>
-                  <SelectTrigger className={selectTriggerClass}>
-                    <SelectValue placeholder="All Location" />
-                  </SelectTrigger>
-                  <SelectContent className={selectContentClass}>
-                    <SelectItem value="all">All Location</SelectItem>
-                    <SelectItem value="al">AL - Alabama</SelectItem>
-                    <SelectItem value="br">BR - Brazil</SelectItem>
-                    <SelectItem value="bi">BI - Biloxi</SelectItem>
-                    <SelectItem value="od">OD - Odessa</SelectItem>
-                  </SelectContent>
-                </Select>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className={cn(selectTriggerClass, "w-full justify-start text-left font-normal")}
+                    >
+                      {selectedLocations.length > 0 
+                        ? selectedLocations.length === 1 
+                          ? locationOptions.find(l => l.value === selectedLocations[0])?.label || selectedLocations[0]
+                          : `${selectedLocations.length} Locations`
+                        : "All Location"}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-56 p-2 bg-popover border shadow-xl rounded-lg z-[60]" align="start">
+                    <div className="space-y-1">
+                      {locationOptions.map((loc) => (
+                        <button
+                          key={loc.value}
+                          onClick={() => {
+                            setSelectedLocations(prev => 
+                              prev.includes(loc.value)
+                                ? prev.filter(l => l !== loc.value)
+                                : [...prev, loc.value]
+                            );
+                          }}
+                          className="w-full flex items-center gap-2 text-left px-3 py-2 rounded-md text-sm transition-colors hover:bg-muted text-foreground"
+                        >
+                          <span className="flex h-4 w-4 items-center justify-center">
+                            {selectedLocations.includes(loc.value) && (
+                              <Check className="h-4 w-4 stroke-[3]" />
+                            )}
+                          </span>
+                          {loc.label}
+                        </button>
+                      ))}
+                    </div>
+                  </PopoverContent>
+                </Popover>
               </div>
 
               <div>
