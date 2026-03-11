@@ -3962,49 +3962,87 @@ interface BatchItemData {
   serialNumber: string; deliverByDate: string; followUpDate: string;
 }
 
-// Date filter component for quick search columns
+// Date filter component for quick search columns — supports manual typing and calendar picker
 const DateColumnFilter = ({ value, onChange, onClear, small = false }: { value: string; onChange: (val: string) => void; onClear: () => void; small?: boolean }) => {
   const [open, setOpen] = useState(false);
+  const [textValue, setTextValue] = useState(() => {
+    if (!value) return '';
+    try { return format(new Date(value), 'MM/dd/yyyy'); } catch { return ''; }
+  });
   const selectedDate = value ? new Date(value) : undefined;
-  
+
+  // Sync textValue when value changes externally (e.g. calendar pick or clear)
+  React.useEffect(() => {
+    if (!value) { setTextValue(''); return; }
+    try { setTextValue(format(new Date(value), 'MM/dd/yyyy')); } catch { setTextValue(''); }
+  }, [value]);
+
+  const handleTextChange = (raw: string) => {
+    // Allow only digits and slashes, auto-insert slashes
+    let cleaned = raw.replace(/[^0-9/]/g, '');
+    // Auto-insert slashes at positions 2 and 5
+    if (cleaned.length > 2 && cleaned[2] !== '/') cleaned = cleaned.slice(0, 2) + '/' + cleaned.slice(2);
+    if (cleaned.length > 5 && cleaned[5] !== '/') cleaned = cleaned.slice(0, 5) + '/' + cleaned.slice(5);
+    if (cleaned.length > 10) cleaned = cleaned.slice(0, 10);
+    setTextValue(cleaned);
+
+    // Try to parse complete date MM/DD/YYYY
+    if (cleaned.length === 10) {
+      const [m, d, y] = cleaned.split('/').map(Number);
+      if (m >= 1 && m <= 12 && d >= 1 && d <= 31 && y >= 1900 && y <= 2100) {
+        const date = new Date(y, m - 1, d);
+        if (!isNaN(date.getTime())) {
+          onChange(date.toISOString());
+          return;
+        }
+      }
+    }
+    // If text is cleared, clear the filter
+    if (!cleaned) onClear();
+  };
+
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <div className="relative flex-1 cursor-pointer">
-          <CalendarIcon className={cn("absolute left-1.5 top-1/2 -translate-y-1/2 text-muted-foreground/50", small ? "h-2.5 w-2.5" : "h-3 w-3")} />
-          <Input
-            readOnly
-            value={selectedDate ? format(selectedDate, 'MM/dd/yyyy') : ''}
-            placeholder=""
-            className={cn(
-              "cursor-pointer",
-              small
-                ? "h-6 text-[10px] pl-5 pr-5 border-slate-200 bg-white rounded placeholder:text-muted-foreground/40 focus:bg-background focus:border-slate-400 transition-colors"
-                : "h-7 text-[11px] pl-6 pr-6 border-muted bg-muted/30 rounded-md placeholder:text-muted-foreground/40 focus:bg-background focus:border-primary/30 transition-colors"
-            )}
-          />
-          {value && (
-            <button
-              onClick={(e) => { e.stopPropagation(); onClear(); }}
-              className={cn("absolute top-1/2 -translate-y-1/2 p-0.5 rounded-full hover:bg-muted transition-colors", small ? "right-1" : "right-1.5")}
-            >
-              <X className={cn("text-muted-foreground", small ? "h-2.5 w-2.5" : "h-3 w-3")} />
+    <div className="relative flex-1 flex items-center">
+      <CalendarIcon className={cn("absolute left-1.5 top-1/2 -translate-y-1/2 text-muted-foreground/50 z-10", small ? "h-2.5 w-2.5" : "h-3 w-3")} />
+      <Input
+        value={textValue}
+        onChange={(e) => handleTextChange(e.target.value)}
+        placeholder="MM/DD/YYYY"
+        className={cn(
+          small
+            ? "h-6 text-[10px] pl-5 pr-12 border-slate-200 bg-white rounded placeholder:text-muted-foreground/40 focus:bg-background focus:border-slate-400 transition-colors"
+            : "h-7 text-[11px] pl-6 pr-12 border-muted bg-muted/30 rounded-md placeholder:text-muted-foreground/40 focus:bg-background focus:border-primary/30 transition-colors"
+        )}
+      />
+      <div className={cn("absolute top-1/2 -translate-y-1/2 flex items-center gap-0.5", small ? "right-1" : "right-1.5")}>
+        {value && (
+          <button
+            onClick={onClear}
+            className="p-0.5 rounded-full hover:bg-muted transition-colors"
+          >
+            <X className={cn("text-muted-foreground", small ? "h-2.5 w-2.5" : "h-3 w-3")} />
+          </button>
+        )}
+        <Popover open={open} onOpenChange={setOpen}>
+          <PopoverTrigger asChild>
+            <button className="p-0.5 rounded hover:bg-muted transition-colors">
+              <CalendarIcon className={cn("text-muted-foreground", small ? "h-2.5 w-2.5" : "h-3 w-3")} />
             </button>
-          )}
-        </div>
-      </PopoverTrigger>
-      <PopoverContent className="w-auto p-0 z-[200]" align="start">
-        <Calendar
-          mode="single"
-          selected={selectedDate}
-          onSelect={(date) => {
-            onChange(date ? date.toISOString() : '');
-            setOpen(false);
-          }}
-          className="p-3 pointer-events-auto"
-        />
-      </PopoverContent>
-    </Popover>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto p-0 z-[200]" align="end">
+            <Calendar
+              mode="single"
+              selected={selectedDate}
+              onSelect={(date) => {
+                onChange(date ? date.toISOString() : '');
+                setOpen(false);
+              }}
+              className="p-3 pointer-events-auto"
+            />
+          </PopoverContent>
+        </Popover>
+      </div>
+    </div>
   );
 };
 
