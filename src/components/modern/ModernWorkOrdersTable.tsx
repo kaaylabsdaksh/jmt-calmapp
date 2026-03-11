@@ -7,10 +7,13 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { List, Grid3X3, Pencil, Search, X, ArrowUpDown, ArrowUp, ArrowDown, ChevronRight, ChevronDown } from "lucide-react";
+import { List, Grid3X3, Pencil, Search, X, ArrowUpDown, ArrowUp, ArrowDown, ChevronRight, ChevronDown, CalendarIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import WorkOrderBatchDetails from "@/components/WorkOrderBatchDetails";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
+import { format } from "date-fns";
 
 interface WorkOrderBatch {
   id: string;
@@ -3959,18 +3962,64 @@ interface BatchItemData {
   serialNumber: string; deliverByDate: string; followUpDate: string;
 }
 
+// Date filter component for quick search columns
+const DateColumnFilter = ({ value, onChange, onClear, small = false }: { value: string; onChange: (val: string) => void; onClear: () => void; small?: boolean }) => {
+  const [open, setOpen] = useState(false);
+  const selectedDate = value ? new Date(value) : undefined;
+  
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <div className="relative flex-1 cursor-pointer">
+          <CalendarIcon className={cn("absolute left-1.5 top-1/2 -translate-y-1/2 text-muted-foreground/50", small ? "h-2.5 w-2.5" : "h-3 w-3")} />
+          <Input
+            readOnly
+            value={selectedDate ? format(selectedDate, 'MM/dd/yyyy') : ''}
+            placeholder=""
+            className={cn(
+              "cursor-pointer",
+              small
+                ? "h-6 text-[10px] pl-5 pr-5 border-slate-200 bg-white rounded placeholder:text-muted-foreground/40 focus:bg-background focus:border-slate-400 transition-colors"
+                : "h-7 text-[11px] pl-6 pr-6 border-muted bg-muted/30 rounded-md placeholder:text-muted-foreground/40 focus:bg-background focus:border-primary/30 transition-colors"
+            )}
+          />
+          {value && (
+            <button
+              onClick={(e) => { e.stopPropagation(); onClear(); }}
+              className={cn("absolute top-1/2 -translate-y-1/2 p-0.5 rounded-full hover:bg-muted transition-colors", small ? "right-1" : "right-1.5")}
+            >
+              <X className={cn("text-muted-foreground", small ? "h-2.5 w-2.5" : "h-3 w-3")} />
+            </button>
+          )}
+        </div>
+      </PopoverTrigger>
+      <PopoverContent className="w-auto p-0 z-[200]" align="start">
+        <Calendar
+          mode="single"
+          selected={selectedDate}
+          onSelect={(date) => {
+            onChange(date ? date.toISOString() : '');
+            setOpen(false);
+          }}
+          className="p-3 pointer-events-auto"
+        />
+      </PopoverContent>
+    </Popover>
+  );
+};
+
 const batchItemColumns = [
-  { key: 'item', label: 'Item' },
-  { key: 'location', label: 'Location' },
-  { key: 'itemCreated', label: 'Created' },
-  { key: 'action', label: 'Action' },
-  { key: 'itemStatus', label: 'Item Status' },
-  { key: 'manufacturer', label: 'Manufacturer' },
-  { key: 'model', label: 'Model' },
-  { key: 'description', label: 'Description' },
-  { key: 'serialNumber', label: 'Serial #' },
-  { key: 'deliverByDate', label: 'Deliver By' },
-  { key: 'followUpDate', label: 'Follow Up' },
+  { key: 'item', label: 'Item', type: 'text' as const },
+  { key: 'location', label: 'Location', type: 'text' as const },
+  { key: 'itemCreated', label: 'Created', type: 'date' as const },
+  { key: 'action', label: 'Action', type: 'text' as const },
+  { key: 'itemStatus', label: 'Item Status', type: 'text' as const },
+  { key: 'manufacturer', label: 'Manufacturer', type: 'text' as const },
+  { key: 'model', label: 'Model', type: 'text' as const },
+  { key: 'description', label: 'Description', type: 'text' as const },
+  { key: 'serialNumber', label: 'Serial #', type: 'text' as const },
+  { key: 'deliverByDate', label: 'Deliver By', type: 'date' as const },
+  { key: 'followUpDate', label: 'Follow Up', type: 'date' as const },
 ] as const;
 
 const batchItemSortableColumns = new Set(['itemCreated', 'itemStatus', 'manufacturer', 'deliverByDate', 'followUpDate']);
@@ -3990,9 +4039,21 @@ const BatchItemsInline = ({ items, navigate }: { items: BatchItemData[]; navigat
     });
   };
 
+  const dateColumnKeys = new Set<string>(batchItemColumns.filter(c => c.type === 'date').map(c => c.key));
+  
   const filteredItems = items.filter(item =>
     Object.entries(filters).every(([key, val]) => {
       if (!val) return true;
+      if (dateColumnKeys.has(key)) {
+        // Date filter: compare selected date with the item's date string (MM/DD/YYYY)
+        const selectedDate = new Date(val);
+        const itemDateStr = ((item as any)[key] || '').toString();
+        if (!itemDateStr) return false;
+        const [m, d, y] = itemDateStr.split('/').map(Number);
+        if (!m || !d || !y) return false;
+        const itemDate = new Date(y, m - 1, d);
+        return itemDate.getFullYear() === selectedDate.getFullYear() && itemDate.getMonth() === selectedDate.getMonth() && itemDate.getDate() === selectedDate.getDate();
+      }
       return ((item as any)[key] || '').toString().toLowerCase().includes(val.toLowerCase());
     })
   );
@@ -4023,23 +4084,32 @@ const BatchItemsInline = ({ items, navigate }: { items: BatchItemData[]; navigat
             {batchItemColumns.map(col => (
               <TableHead key={col.key} className="py-1 px-1.5">
                 <div className="relative flex items-center gap-0.5">
-                  <div className="relative flex-1">
-                    <Search className="absolute left-1.5 top-1/2 -translate-y-1/2 h-2.5 w-2.5 text-slate-400" />
-                    <Input
-                      placeholder=""
+                  {col.type === 'date' ? (
+                    <DateColumnFilter
+                      small
                       value={filters[col.key] || ''}
-                      onChange={(e) => setFilters(prev => ({ ...prev, [col.key]: e.target.value }))}
-                      className="h-6 text-[10px] pl-5 pr-5 border-slate-200 bg-white rounded placeholder:text-muted-foreground/40 focus:bg-background focus:border-slate-400 transition-colors"
+                      onChange={(val) => setFilters(prev => ({ ...prev, [col.key]: val }))}
+                      onClear={() => setFilters(prev => ({ ...prev, [col.key]: '' }))}
                     />
-                    {filters[col.key] && (
-                      <button
-                        onClick={() => setFilters(prev => ({ ...prev, [col.key]: '' }))}
-                        className="absolute right-1 top-1/2 -translate-y-1/2 p-0.5 rounded-full hover:bg-muted transition-colors"
-                      >
-                        <X className="h-2.5 w-2.5 text-muted-foreground" />
-                      </button>
-                    )}
-                  </div>
+                  ) : (
+                    <div className="relative flex-1">
+                      <Search className="absolute left-1.5 top-1/2 -translate-y-1/2 h-2.5 w-2.5 text-slate-400" />
+                      <Input
+                        placeholder=""
+                        value={filters[col.key] || ''}
+                        onChange={(e) => setFilters(prev => ({ ...prev, [col.key]: e.target.value }))}
+                        className="h-6 text-[10px] pl-5 pr-5 border-slate-200 bg-white rounded placeholder:text-muted-foreground/40 focus:bg-background focus:border-slate-400 transition-colors"
+                      />
+                      {filters[col.key] && (
+                        <button
+                          onClick={() => setFilters(prev => ({ ...prev, [col.key]: '' }))}
+                          className="absolute right-1 top-1/2 -translate-y-1/2 p-0.5 rounded-full hover:bg-muted transition-colors"
+                        >
+                          <X className="h-2.5 w-2.5 text-muted-foreground" />
+                        </button>
+                      )}
+                    </div>
+                  )}
                 </div>
               </TableHead>
             ))}
@@ -4450,10 +4520,25 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
     return searchMatch && searchTagsMatch;
   });
   
+  // Date column keys for the main table
+  const mainDateColumns = new Set(['followUpDate', 'deliverByDate', 'minNeedByDate', 'minFollowUpDate', 'minDeliverByDate']);
+  
+  const matchesDateFilter = (fieldValue: string, filterValue: string): boolean => {
+    if (!fieldValue) return false;
+    const selectedDate = new Date(filterValue);
+    const [m, d, y] = fieldValue.split('/').map(Number);
+    if (!m || !d || !y) return false;
+    const itemDate = new Date(y, m - 1, d);
+    return itemDate.getFullYear() === selectedDate.getFullYear() && itemDate.getMonth() === selectedDate.getMonth() && itemDate.getDate() === selectedDate.getDate();
+  };
+
   // Apply column filters to batches
   const columnFilteredBatches = filteredWorkOrderBatches.filter(batch => {
     return Object.entries(columnFilters).every(([key, value]) => {
       if (!value) return true;
+      if (mainDateColumns.has(key)) {
+        return matchesDateFilter(String((batch as any)[key] || ''), value);
+      }
       const fieldValue = String((batch as any)[key] || '').toLowerCase();
       return fieldValue.includes(value.toLowerCase());
     });
@@ -5089,47 +5174,55 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                   <>
                     {searchViewMode === 'csa' && <TableHead className="w-8 py-1.5 px-1"></TableHead>}
                     {(searchViewMode === 'csa' ? [
-                      { key: 'woBatch', placeholder: '' },
-                      { key: 'acctNumber', placeholder: '' },
-                      { key: 'customerName', placeholder: '' },
-                      { key: 'location', placeholder: '' },
-                      { key: 'priority', placeholder: '' },
-                      { key: 'itemCount', placeholder: '' },
-                      { key: 'contactName', placeholder: '' },
-                      { key: 'poNumber', placeholder: '' },
-                      { key: 'itemStatus', placeholder: '' },
-                      { key: 'followUpDate', placeholder: '' },
-                      { key: 'deliverByDate', placeholder: '' },
-                      { key: 'aging', placeholder: '' },
+                      { key: 'woBatch', placeholder: '', type: 'text' },
+                      { key: 'acctNumber', placeholder: '', type: 'text' },
+                      { key: 'customerName', placeholder: '', type: 'text' },
+                      { key: 'location', placeholder: '', type: 'text' },
+                      { key: 'priority', placeholder: '', type: 'text' },
+                      { key: 'itemCount', placeholder: '', type: 'text' },
+                      { key: 'contactName', placeholder: '', type: 'text' },
+                      { key: 'poNumber', placeholder: '', type: 'text' },
+                      { key: 'itemStatus', placeholder: '', type: 'text' },
+                      { key: 'followUpDate', placeholder: '', type: 'date' },
+                      { key: 'deliverByDate', placeholder: '', type: 'date' },
+                      { key: 'aging', placeholder: '', type: 'text' },
                     ] : [
-                      { key: 'woBatch', placeholder: '' },
-                      { key: 'acctNumber', placeholder: '' },
-                      { key: 'srNumber', placeholder: '' },
-                      { key: 'customerName', placeholder: '' },
-                      { key: 'minNeedByDate', placeholder: '' },
-                      { key: 'totalCount', placeholder: '' },
-                      { key: 'totalLabOpen', placeholder: '' },
-                      { key: 'totalArCount', placeholder: '' },
+                      { key: 'woBatch', placeholder: '', type: 'text' },
+                      { key: 'acctNumber', placeholder: '', type: 'text' },
+                      { key: 'srNumber', placeholder: '', type: 'text' },
+                      { key: 'customerName', placeholder: '', type: 'text' },
+                      { key: 'minNeedByDate', placeholder: '', type: 'date' },
+                      { key: 'totalCount', placeholder: '', type: 'text' },
+                      { key: 'totalLabOpen', placeholder: '', type: 'text' },
+                      { key: 'totalArCount', placeholder: '', type: 'text' },
                     ]).map((col) => (
                       <TableHead key={col.key} className="py-1.5 px-2">
                         <div className="relative flex items-center gap-1">
-                          <div className="relative flex-1">
-                            <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground/50" />
-                            <Input
-                              placeholder={col.placeholder}
+                          {col.type === 'date' ? (
+                            <DateColumnFilter
                               value={columnFilters[col.key] || ''}
-                              onChange={(e) => setColumnFilters(prev => ({ ...prev, [col.key]: e.target.value }))}
-                              className="h-7 text-[11px] pl-6 pr-6 border-muted bg-muted/30 rounded-md placeholder:text-muted-foreground/40 focus:bg-background focus:border-primary/30 transition-colors"
+                              onChange={(val) => setColumnFilters(prev => ({ ...prev, [col.key]: val }))}
+                              onClear={() => setColumnFilters(prev => ({ ...prev, [col.key]: '' }))}
                             />
-                            {columnFilters[col.key] && (
-                              <button
-                                onClick={() => setColumnFilters(prev => ({ ...prev, [col.key]: '' }))}
-                                className="absolute right-1.5 top-1/2 -translate-y-1/2 p-0.5 rounded-full hover:bg-muted transition-colors"
-                              >
-                                <X className="h-3 w-3 text-muted-foreground" />
-                              </button>
-                            )}
-                          </div>
+                          ) : (
+                            <div className="relative flex-1">
+                              <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground/50" />
+                              <Input
+                                placeholder={col.placeholder}
+                                value={columnFilters[col.key] || ''}
+                                onChange={(e) => setColumnFilters(prev => ({ ...prev, [col.key]: e.target.value }))}
+                                className="h-7 text-[11px] pl-6 pr-6 border-muted bg-muted/30 rounded-md placeholder:text-muted-foreground/40 focus:bg-background focus:border-primary/30 transition-colors"
+                              />
+                              {columnFilters[col.key] && (
+                                <button
+                                  onClick={() => setColumnFilters(prev => ({ ...prev, [col.key]: '' }))}
+                                  className="absolute right-1.5 top-1/2 -translate-y-1/2 p-0.5 rounded-full hover:bg-muted transition-colors"
+                                >
+                                  <X className="h-3 w-3 text-muted-foreground" />
+                                </button>
+                              )}
+                            </div>
+                          )}
                           {searchViewMode !== 'csa' && sortableColumns.has(col.key) && (
                             <button
                               onClick={() => handleSort(col.key)}
