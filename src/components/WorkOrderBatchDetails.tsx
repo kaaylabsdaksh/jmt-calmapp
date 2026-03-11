@@ -449,11 +449,11 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
             <TableBody>
               {filteredItems.map((item) => (
                 <React.Fragment key={item.id}>
-                  <TableRow className="hover:bg-muted/30 h-6">
+                   <TableRow className={`hover:bg-muted/30 h-6 ${item.itemStatus === 'Back to Customer' ? 'opacity-50' : ''}`}>
                     <TableCell className="font-medium text-[11px] py-1 px-2">
                       <button
                         onClick={(e) => handleItemClick(item, e)}
-                        className="text-blue-600 hover:text-blue-800 hover:underline font-medium transition-colors text-[11px]"
+                        className={`hover:underline font-medium transition-colors text-[11px] ${item.itemStatus === 'Back to Customer' ? 'text-gray-400 hover:text-gray-500' : 'text-blue-600 hover:text-blue-800'}`}
                       >
                         {item.item}
                       </button>
