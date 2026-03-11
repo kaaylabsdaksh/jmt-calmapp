@@ -38,6 +38,13 @@ const searchTypeOptions = [
   { value: 'vendorRMANumber', label: 'Vendor RMA Number' },
 ];
 
+const locationOptions = [
+  { value: 'al', label: 'AL - Alabama' },
+  { value: 'br', label: 'BR - Brazil' },
+  { value: 'bi', label: 'BI - Biloxi' },
+  { value: 'od', label: 'OD - Odessa' },
+];
+
 interface SearchFilters {
   globalSearch: string;
   searchTags: string[];
