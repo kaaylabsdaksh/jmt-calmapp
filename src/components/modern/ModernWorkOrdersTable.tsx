@@ -3962,18 +3962,64 @@ interface BatchItemData {
   serialNumber: string; deliverByDate: string; followUpDate: string;
 }
 
+// Date filter component for quick search columns
+const DateColumnFilter = ({ value, onChange, onClear, small = false }: { value: string; onChange: (val: string) => void; onClear: () => void; small?: boolean }) => {
+  const [open, setOpen] = useState(false);
+  const selectedDate = value ? new Date(value) : undefined;
+  
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <div className="relative flex-1 cursor-pointer">
+          <CalendarIcon className={cn("absolute left-1.5 top-1/2 -translate-y-1/2 text-muted-foreground/50", small ? "h-2.5 w-2.5" : "h-3 w-3")} />
+          <Input
+            readOnly
+            value={selectedDate ? format(selectedDate, 'MM/dd/yyyy') : ''}
+            placeholder=""
+            className={cn(
+              "cursor-pointer",
+              small
+                ? "h-6 text-[10px] pl-5 pr-5 border-slate-200 bg-white rounded placeholder:text-muted-foreground/40 focus:bg-background focus:border-slate-400 transition-colors"
+                : "h-7 text-[11px] pl-6 pr-6 border-muted bg-muted/30 rounded-md placeholder:text-muted-foreground/40 focus:bg-background focus:border-primary/30 transition-colors"
+            )}
+          />
+          {value && (
+            <button
+              onClick={(e) => { e.stopPropagation(); onClear(); }}
+              className={cn("absolute top-1/2 -translate-y-1/2 p-0.5 rounded-full hover:bg-muted transition-colors", small ? "right-1" : "right-1.5")}
+            >
+              <X className={cn("text-muted-foreground", small ? "h-2.5 w-2.5" : "h-3 w-3")} />
+            </button>
+          )}
+        </div>
+      </PopoverTrigger>
+      <PopoverContent className="w-auto p-0 z-[200]" align="start">
+        <Calendar
+          mode="single"
+          selected={selectedDate}
+          onSelect={(date) => {
+            onChange(date ? date.toISOString() : '');
+            setOpen(false);
+          }}
+          className="p-3 pointer-events-auto"
+        />
+      </PopoverContent>
+    </Popover>
+  );
+};
+
 const batchItemColumns = [
-  { key: 'item', label: 'Item' },
-  { key: 'location', label: 'Location' },
-  { key: 'itemCreated', label: 'Created' },
-  { key: 'action', label: 'Action' },
-  { key: 'itemStatus', label: 'Item Status' },
-  { key: 'manufacturer', label: 'Manufacturer' },
-  { key: 'model', label: 'Model' },
-  { key: 'description', label: 'Description' },
-  { key: 'serialNumber', label: 'Serial #' },
-  { key: 'deliverByDate', label: 'Deliver By' },
-  { key: 'followUpDate', label: 'Follow Up' },
+  { key: 'item', label: 'Item', type: 'text' as const },
+  { key: 'location', label: 'Location', type: 'text' as const },
+  { key: 'itemCreated', label: 'Created', type: 'date' as const },
+  { key: 'action', label: 'Action', type: 'text' as const },
+  { key: 'itemStatus', label: 'Item Status', type: 'text' as const },
+  { key: 'manufacturer', label: 'Manufacturer', type: 'text' as const },
+  { key: 'model', label: 'Model', type: 'text' as const },
+  { key: 'description', label: 'Description', type: 'text' as const },
+  { key: 'serialNumber', label: 'Serial #', type: 'text' as const },
+  { key: 'deliverByDate', label: 'Deliver By', type: 'date' as const },
+  { key: 'followUpDate', label: 'Follow Up', type: 'date' as const },
 ] as const;
 
 const batchItemSortableColumns = new Set(['itemCreated', 'itemStatus', 'manufacturer', 'deliverByDate', 'followUpDate']);
