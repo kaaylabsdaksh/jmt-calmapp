@@ -5579,7 +5579,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
             ) : (
               <>
                 {currentView === 'batch' ? (
-                  paginatedBatches.map((batch) => (
+                  gridVisibleBatches.map((batch) => (
                 <div 
                   key={batch.id} 
                   className={cn(
