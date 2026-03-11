@@ -3962,7 +3962,51 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
   const [currentView, setCurrentView] = useState<'item' | 'batch'>('item');
   const [columnFilters, setColumnFilters] = useState<Record<string, string>>({});
   const [sortConfig, setSortConfig] = useState<{ key: string; direction: 'asc' | 'desc' } | null>(null);
+  const [expandedBatches, setExpandedBatches] = useState<Set<string>>(new Set());
   const navigate = useNavigate();
+
+  const toggleBatchExpanded = (batchId: string) => {
+    setExpandedBatches(prev => {
+      const next = new Set(prev);
+      if (next.has(batchId)) next.delete(batchId);
+      else next.add(batchId);
+      return next;
+    });
+  };
+
+  // Mock items for expanded batch rows (CSA inline view)
+  const getBatchItems = (batchId: string) => {
+    // Return mock items based on batch - in real app this would be an API call
+    const itemSets: Record<string, Array<{ id: string; item: string; location: string; itemCreated: string; action: string; itemStatus: string; manufacturer: string; model: string; description: string; serialNumber: string; deliverByDate: string; followUpDate: string }>> = {
+      "383727": [
+        { id: "001", item: "Gloves", location: "Baton Rouge", itemCreated: "09/24/2021", action: "TEST", itemStatus: "Waiting on Customer", manufacturer: "", model: "", description: "Class 00 Rubber Insulating Gloves", serialNumber: "", deliverByDate: "10/15/2021", followUpDate: "08/11/2023" },
+        { id: "002", item: "Safety Helmet", location: "Houston", itemCreated: "10/15/2021", action: "CALIBRATE", itemStatus: "In Progress", manufacturer: "SafetyFirst", model: "SF-100", description: "Industrial Safety Helmet with Face Shield", serialNumber: "SF123456", deliverByDate: "11/15/2021", followUpDate: "11/28/2024" },
+        { id: "003", item: "Pressure Gauge", location: "Dallas", itemCreated: "11/02/2021", action: "REPAIR", itemStatus: "Completed", manufacturer: "PressureTech", model: "PT-500", description: "High-Precision Digital Pressure Gauge", serialNumber: "PT789012", deliverByDate: "12/01/2021", followUpDate: "11/23/2024" },
+      ],
+      "390118": [
+        { id: "001", item: "Transformer", location: "Lab B", itemCreated: "12/10/2022", action: "C/C", itemStatus: "In Lab", manufacturer: "GE", model: "GE-4500", description: "Step-down Transformer 480V", serialNumber: "GE445789", deliverByDate: "01/05/2023", followUpDate: "08/11/2023" },
+        { id: "002", item: "Relay", location: "Lab B", itemCreated: "12/10/2022", action: "TEST", itemStatus: "In Lab", manufacturer: "Siemens", model: "S7-200", description: "Protection Relay", serialNumber: "SIE998877", deliverByDate: "01/05/2023", followUpDate: "08/11/2023" },
+      ],
+    };
+    // Return items for known batches, or generate generic items based on totalCount
+    if (itemSets[batchId]) return itemSets[batchId];
+    const batch = mockWorkOrderBatches.find(b => b.woBatch === batchId);
+    const count = batch?.totalCount || 1;
+    return Array.from({ length: Math.min(count, 3) }, (_, i) => ({
+      id: String(i + 1).padStart(3, '0'),
+      item: `Item ${i + 1}`,
+      location: batch?.location || '-',
+      itemCreated: batch?.arrivalDate || '-',
+      action: "C/C",
+      itemStatus: batch?.itemStatus || '-',
+      manufacturer: '-',
+      model: '-',
+      description: `Work order item ${i + 1}`,
+      serialNumber: '-',
+      deliverByDate: batch?.minDeliverByDate || '-',
+      followUpDate: batch?.minFollowUpDate || '-',
+    }));
+  };
 
   const sortableColumns = new Set(['totalLabOpen', 'totalArCount', 'totalCount', 'lastCommentDate', 'minNeedByDate', 'minFollowUpDate', 'minDeliverByDate', 'itemCount', 'followUpDate', 'deliverByDate', 'aging']);
 
