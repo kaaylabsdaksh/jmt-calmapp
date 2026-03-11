@@ -4084,23 +4084,32 @@ const BatchItemsInline = ({ items, navigate }: { items: BatchItemData[]; navigat
             {batchItemColumns.map(col => (
               <TableHead key={col.key} className="py-1 px-1.5">
                 <div className="relative flex items-center gap-0.5">
-                  <div className="relative flex-1">
-                    <Search className="absolute left-1.5 top-1/2 -translate-y-1/2 h-2.5 w-2.5 text-slate-400" />
-                    <Input
-                      placeholder=""
+                  {col.type === 'date' ? (
+                    <DateColumnFilter
+                      small
                       value={filters[col.key] || ''}
-                      onChange={(e) => setFilters(prev => ({ ...prev, [col.key]: e.target.value }))}
-                      className="h-6 text-[10px] pl-5 pr-5 border-slate-200 bg-white rounded placeholder:text-muted-foreground/40 focus:bg-background focus:border-slate-400 transition-colors"
+                      onChange={(val) => setFilters(prev => ({ ...prev, [col.key]: val }))}
+                      onClear={() => setFilters(prev => ({ ...prev, [col.key]: '' }))}
                     />
-                    {filters[col.key] && (
-                      <button
-                        onClick={() => setFilters(prev => ({ ...prev, [col.key]: '' }))}
-                        className="absolute right-1 top-1/2 -translate-y-1/2 p-0.5 rounded-full hover:bg-muted transition-colors"
-                      >
-                        <X className="h-2.5 w-2.5 text-muted-foreground" />
-                      </button>
-                    )}
-                  </div>
+                  ) : (
+                    <div className="relative flex-1">
+                      <Search className="absolute left-1.5 top-1/2 -translate-y-1/2 h-2.5 w-2.5 text-slate-400" />
+                      <Input
+                        placeholder=""
+                        value={filters[col.key] || ''}
+                        onChange={(e) => setFilters(prev => ({ ...prev, [col.key]: e.target.value }))}
+                        className="h-6 text-[10px] pl-5 pr-5 border-slate-200 bg-white rounded placeholder:text-muted-foreground/40 focus:bg-background focus:border-slate-400 transition-colors"
+                      />
+                      {filters[col.key] && (
+                        <button
+                          onClick={() => setFilters(prev => ({ ...prev, [col.key]: '' }))}
+                          className="absolute right-1 top-1/2 -translate-y-1/2 p-0.5 rounded-full hover:bg-muted transition-colors"
+                        >
+                          <X className="h-2.5 w-2.5 text-muted-foreground" />
+                        </button>
+                      )}
+                    </div>
+                  )}
                 </div>
               </TableHead>
             ))}
