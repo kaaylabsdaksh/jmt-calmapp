@@ -5219,8 +5219,8 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                       { key: 'contactName', placeholder: '', type: 'text' },
                       { key: 'poNumber', placeholder: '', type: 'text' },
                       { key: 'itemStatus', placeholder: '', type: 'text' },
-                      { key: 'followUpDate', placeholder: '', type: 'date' },
-                      { key: 'deliverByDate', placeholder: '', type: 'date' },
+                      { key: 'minFollowUpDate', placeholder: '', type: 'date' },
+                      { key: 'minDeliverByDate', placeholder: '', type: 'date' },
                       { key: 'aging', placeholder: '', type: 'text' },
                     ] : [
                       { key: 'woBatch', placeholder: '', type: 'text' },
