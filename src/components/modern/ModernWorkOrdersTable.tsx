@@ -4263,30 +4263,6 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
   const gridLoadMoreRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
-  // Lazy loading for grid view
-  const gridDataSource = currentView === 'batch' ? sortedBatches : columnFilteredItems;
-  const gridVisibleItems = gridDataSource.slice(0, gridVisibleCount);
-  const hasMoreGridItems = gridVisibleCount < gridDataSource.length;
-
-  useEffect(() => {
-    if (viewMode !== 'grid' || !hasMoreGridItems) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          setGridVisibleCount(prev => Math.min(prev + 12, gridDataSource.length));
-        }
-      },
-      { threshold: 0.1 }
-    );
-    const el = gridLoadMoreRef.current;
-    if (el) observer.observe(el);
-    return () => { if (el) observer.unobserve(el); };
-  }, [viewMode, hasMoreGridItems, gridDataSource.length]);
-
-  // Reset grid visible count when switching views or filters change
-  useEffect(() => {
-    setGridVisibleCount(12);
-  }, [viewMode, currentView, columnFilters, sortConfig, activeStatusFilter]);
 
   const toggleBatchExpanded = (batchId: string) => {
     setExpandedBatches(prev => {
