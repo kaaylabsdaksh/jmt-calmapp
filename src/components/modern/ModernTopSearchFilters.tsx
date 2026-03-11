@@ -104,6 +104,7 @@ function saveRecentSearches(searches: RecentSearch[]) {
 
 const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopSearchFiltersProps) => {
   const [viewMode, setViewMode] = useState<'default' | 'csa'>('default');
+  const [locationSearch, setLocationSearch] = useState('');
 
   const handleViewModeChange = (val: 'default' | 'csa') => {
     setViewMode(val);
