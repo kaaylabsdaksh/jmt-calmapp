@@ -5697,7 +5697,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                 </div>
               ))
             ) : (
-              paginatedWorkOrderItems.map((item) => (
+              gridVisibleWorkOrderItems.map((item) => (
                 <div key={item.id} className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer" onClick={() => openDetailsFromItem(item)}>
                   <div className="p-4 border-b border-gray-100">
                     <div className="flex items-center justify-between">
