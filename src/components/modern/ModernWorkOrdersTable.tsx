@@ -5273,7 +5273,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                   {searchViewMode === 'csa' && expandedBatches.has(batch.id) && (
                     <TableRow className="bg-slate-50/40">
                       <TableCell colSpan={14} className="p-0">
-                        <BatchItemsInline batchId={batch.woBatch} items={getBatchItems(batch.woBatch)} navigate={navigate} />
+                        <BatchItemsInline items={getBatchItems(batch.woBatch)} navigate={navigate} />
                       </TableCell>
                     </TableRow>
                   )}
