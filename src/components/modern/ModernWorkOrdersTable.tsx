@@ -4520,10 +4520,25 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
     return searchMatch && searchTagsMatch;
   });
   
+  // Date column keys for the main table
+  const mainDateColumns = new Set(['followUpDate', 'deliverByDate', 'minNeedByDate', 'minFollowUpDate', 'minDeliverByDate']);
+  
+  const matchesDateFilter = (fieldValue: string, filterValue: string): boolean => {
+    if (!fieldValue) return false;
+    const selectedDate = new Date(filterValue);
+    const [m, d, y] = fieldValue.split('/').map(Number);
+    if (!m || !d || !y) return false;
+    const itemDate = new Date(y, m - 1, d);
+    return itemDate.getFullYear() === selectedDate.getFullYear() && itemDate.getMonth() === selectedDate.getMonth() && itemDate.getDate() === selectedDate.getDate();
+  };
+
   // Apply column filters to batches
   const columnFilteredBatches = filteredWorkOrderBatches.filter(batch => {
     return Object.entries(columnFilters).every(([key, value]) => {
       if (!value) return true;
+      if (mainDateColumns.has(key)) {
+        return matchesDateFilter(String((batch as any)[key] || ''), value);
+      }
       const fieldValue = String((batch as any)[key] || '').toLowerCase();
       return fieldValue.includes(value.toLowerCase());
     });
