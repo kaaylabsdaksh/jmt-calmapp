@@ -4018,7 +4018,7 @@ const BatchItemsInline = ({ items, navigate }: { items: BatchItemData[]; navigat
             ))}
           </TableRow>
           {/* Filter Row */}
-          <TableRow className="border-b border-slate-200 bg-slate-50/50">
+          <TableRow className="border-b border-slate-300 bg-slate-100">
             <TableHead className="w-4 py-1 px-1"></TableHead>
             {batchItemColumns.map(col => (
               <TableHead key={col.key} className="py-1 px-1.5">
