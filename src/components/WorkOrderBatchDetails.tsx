@@ -236,7 +236,10 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
       }
     });
     
-    return items;
+    // Push "Back to Customer" items to the bottom
+    const nonBtc = items.filter(i => i.itemStatus !== 'Back to Customer');
+    const btc = items.filter(i => i.itemStatus === 'Back to Customer');
+    return [...nonBtc, ...btc];
   }, [searchQuery, statusFilter, labCodeFilter, columnFilters]);
 
   const clearAllFilters = () => {
