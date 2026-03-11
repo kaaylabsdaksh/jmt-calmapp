@@ -1,10 +1,14 @@
 import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronDown, ChevronUp, Calendar, User, MapPin, DollarSign, MessageSquare, Clock, Settings, Search, X } from 'lucide-react';
+import { ArrowLeft, ChevronDown, ChevronUp, Calendar as CalendarIcon, User, MapPin, DollarSign, MessageSquare, Clock, Settings, Search, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Calendar } from '@/components/ui/calendar';
+import { format } from 'date-fns';
+import { cn } from '@/lib/utils';
 
 interface WorkOrderItem {
   id: string;
@@ -155,6 +159,70 @@ const mockBatch: WorkOrderBatch = {
       departureDate: "11/26/2024"
     }
   ]
+};
+
+// Date filter component for quick search — supports manual typing and calendar picker
+const DateColumnFilterLocal = ({ value, onChange, onClear }: { value: string; onChange: (val: string) => void; onClear: () => void }) => {
+  const [open, setOpen] = useState(false);
+  const [textValue, setTextValue] = useState(() => {
+    if (!value) return '';
+    try { return format(new Date(value), 'MM/dd/yyyy'); } catch { return ''; }
+  });
+  const selectedDate = value ? new Date(value) : undefined;
+
+  React.useEffect(() => {
+    if (!value) { setTextValue(''); return; }
+    try { setTextValue(format(new Date(value), 'MM/dd/yyyy')); } catch { setTextValue(''); }
+  }, [value]);
+
+  const handleTextChange = (raw: string) => {
+    let cleaned = raw.replace(/[^0-9/]/g, '');
+    if (cleaned.length > 2 && cleaned[2] !== '/') cleaned = cleaned.slice(0, 2) + '/' + cleaned.slice(2);
+    if (cleaned.length > 5 && cleaned[5] !== '/') cleaned = cleaned.slice(0, 5) + '/' + cleaned.slice(5);
+    if (cleaned.length > 10) cleaned = cleaned.slice(0, 10);
+    setTextValue(cleaned);
+    if (cleaned.length === 10) {
+      const [m, d, y] = cleaned.split('/').map(Number);
+      if (m >= 1 && m <= 12 && d >= 1 && d <= 31 && y >= 1900 && y <= 2100) {
+        const date = new Date(y, m - 1, d);
+        if (!isNaN(date.getTime())) { onChange(date.toISOString()); return; }
+      }
+    }
+    if (!cleaned) onClear();
+  };
+
+  return (
+    <div className="relative flex-1 flex items-center">
+      <Input
+        value={textValue}
+        onChange={(e) => handleTextChange(e.target.value)}
+        placeholder="MM/DD/YYYY"
+        className="h-6 text-[10px] pl-2 pr-12 border-slate-200 bg-white rounded placeholder:text-muted-foreground/40 focus:bg-background focus:border-slate-400 transition-colors"
+      />
+      <div className="absolute right-1 top-1/2 -translate-y-1/2 flex items-center gap-0.5">
+        {value && (
+          <button onClick={onClear} className="p-0.5 rounded-full hover:bg-muted transition-colors">
+            <X className="h-2.5 w-2.5 text-muted-foreground" />
+          </button>
+        )}
+        <Popover open={open} onOpenChange={setOpen}>
+          <PopoverTrigger asChild>
+            <button className="p-0.5 rounded hover:bg-muted transition-colors">
+              <CalendarIcon className="h-2.5 w-2.5 text-muted-foreground" />
+            </button>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto p-0 z-[200]" align="end">
+            <Calendar
+              mode="single"
+              selected={selectedDate}
+              onSelect={(date) => { onChange(date ? date.toISOString() : ''); setOpen(false); }}
+              className="p-3 pointer-events-auto"
+            />
+          </PopoverContent>
+        </Popover>
+      </div>
+    </div>
+  );
 };
 
 interface WorkOrderBatchDetailsProps {
@@ -419,28 +487,41 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
               {/* Column Filter Row */}
               <TableRow className="border-b border-gray-100">
                 {(viewMode === 'csa' ? [
-                  'item', 'location', 'itemCreated', 'action', 'itemStatus', 'manufacturer', 'model', 'description', 'serialNumber', 'deliverByDate', 'followUpDate'
+                  { key: 'item', type: 'text' }, { key: 'location', type: 'text' }, { key: 'itemCreated', type: 'date' }, { key: 'action', type: 'text' }, { key: 'itemStatus', type: 'text' }, { key: 'manufacturer', type: 'text' }, { key: 'model', type: 'text' }, { key: 'description', type: 'text' }, { key: 'serialNumber', type: 'text' }, { key: 'deliverByDate', type: 'date' }, { key: 'followUpDate', type: 'date' }
                 ] : [
-                  'item', 'division', 'location', 'itemCreated', 'action', 'itemStatus', 'manufacturer', 'model', 'labCode', 'serialNumber', 'poNumber'
-                ]).map((key) => (
-                  <TableHead key={key} className="py-1 px-1.5">
-                    <div className="relative">
-                      <Search className="absolute left-1.5 top-1/2 -translate-y-1/2 h-2.5 w-2.5 text-muted-foreground/50" />
-                      <Input
-                        placeholder=""
-                        value={columnFilters[key] || ''}
-                        onChange={(e) => setColumnFilters(prev => ({ ...prev, [key]: e.target.value }))}
-                        className="h-6 text-[10px] pl-5 pr-5 border-muted bg-muted/30 rounded placeholder:text-muted-foreground/40 focus:bg-background focus:border-primary/30 transition-colors"
+                  { key: 'item', type: 'text' }, { key: 'division', type: 'text' }, { key: 'location', type: 'text' }, { key: 'itemCreated', type: 'text' }, { key: 'action', type: 'text' }, { key: 'itemStatus', type: 'text' }, { key: 'manufacturer', type: 'text' }, { key: 'model', type: 'text' }, { key: 'labCode', type: 'text' }, { key: 'serialNumber', type: 'text' }, { key: 'poNumber', type: 'text' }
+                ]).map((col) => (
+                  <TableHead key={col.key} className={cn("py-1 px-1.5", col.type === 'date' && "min-w-[150px]")}>
+                    {col.type === 'date' ? (
+                      <DateColumnFilterLocal
+                        value={columnFilters[col.key] || ''}
+                        onChange={(val) => setColumnFilters(prev => ({ ...prev, [col.key]: val }))}
+                        onClear={() => setColumnFilters(prev => ({ ...prev, [col.key]: '' }))}
                       />
-                      {columnFilters[key] && (
-                        <button
-                          onClick={() => setColumnFilters(prev => ({ ...prev, [key]: '' }))}
-                          className="absolute right-1 top-1/2 -translate-y-1/2 p-0.5 rounded-full hover:bg-muted transition-colors"
-                        >
-                          <X className="h-2.5 w-2.5 text-muted-foreground" />
-                        </button>
-                      )}
-                    </div>
+                    ) : (
+                      <div className="relative">
+                        {viewMode !== 'csa' && (
+                          <Search className="absolute left-1.5 top-1/2 -translate-y-1/2 h-2.5 w-2.5 text-muted-foreground/50" />
+                        )}
+                        <Input
+                          placeholder=""
+                          value={columnFilters[col.key] || ''}
+                          onChange={(e) => setColumnFilters(prev => ({ ...prev, [col.key]: e.target.value }))}
+                          className={cn(
+                            "h-6 text-[10px] pr-5 border-muted bg-muted/30 rounded placeholder:text-muted-foreground/40 focus:bg-background focus:border-primary/30 transition-colors",
+                            viewMode === 'csa' ? "pl-2" : "pl-5"
+                          )}
+                        />
+                        {columnFilters[col.key] && (
+                          <button
+                            onClick={() => setColumnFilters(prev => ({ ...prev, [col.key]: '' }))}
+                            className="absolute right-1 top-1/2 -translate-y-1/2 p-0.5 rounded-full hover:bg-muted transition-colors"
+                          >
+                            <X className="h-2.5 w-2.5 text-muted-foreground" />
+                          </button>
+                        )}
+                      </div>
+                    )}
                   </TableHead>
                 ))}
                 <TableHead className="w-8"></TableHead>
