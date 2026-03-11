@@ -5137,7 +5137,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                               </button>
                             )}
                           </div>
-                          {sortableColumns.has(col.key) && (
+                          {searchViewMode !== 'csa' && sortableColumns.has(col.key) && (
                             <button
                               onClick={() => handleSort(col.key)}
                               className="flex-shrink-0 p-1 rounded hover:bg-muted transition-colors"
