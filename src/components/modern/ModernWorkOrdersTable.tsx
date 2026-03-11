@@ -5284,6 +5284,12 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                               onChange={(val) => setColumnFilters(prev => ({ ...prev, [col.key]: val }))}
                               onClear={() => setColumnFilters(prev => ({ ...prev, [col.key]: '' }))}
                             />
+                          ) : col.type === 'number' ? (
+                            <NumberColumnFilter
+                              value={columnFilters[col.key] || ''}
+                              onChange={(val) => setColumnFilters(prev => ({ ...prev, [col.key]: val }))}
+                              onClear={() => setColumnFilters(prev => ({ ...prev, [col.key]: '' }))}
+                            />
                           ) : (
                             <div className="relative flex-1">
                               {searchViewMode !== 'csa' && <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground/50" />}
