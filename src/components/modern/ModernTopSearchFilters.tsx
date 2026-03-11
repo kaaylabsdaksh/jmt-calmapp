@@ -115,6 +115,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
   const [recentSearches, setRecentSearches] = useState<RecentSearch[]>(loadRecentSearches);
   
   const [resultCount, setResultCount] = useState<number | null>(null);
+  const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
   const searchContainerRef = useRef<HTMLDivElement>(null);
   const [searchValues, setSearchValues] = useState({
     woNumber: '',
