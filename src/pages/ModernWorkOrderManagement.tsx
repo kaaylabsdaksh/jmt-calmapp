@@ -40,6 +40,15 @@ const ModernWorkOrderManagement = () => {
   const [viewMode, setViewMode] = useState<'list' | 'grid'>('list');
   const [hasSearched, setHasSearched] = useState(false);
   const [searchViewMode, setSearchViewMode] = useState<'default' | 'csa'>('default');
+
+  const handleSearchViewModeChange = (mode: 'default' | 'csa') => {
+    setSearchViewMode(mode);
+    // CSA view should show data immediately without requiring a search click
+    if (mode === 'csa') {
+      setHasSearched(true);
+    }
+  };
+
   const handleSearch = (filters: SearchFilters) => {
     console.log('Parent received search filters:', filters);
     setSearchFilters(filters);
@@ -104,7 +113,7 @@ const ModernWorkOrderManagement = () => {
       <ModernTopNav />
       <main className="w-full max-w-none px-2 sm:px-4 lg:px-6 py-3 sm:py-6">
         <div className="w-full space-y-4 sm:space-y-6">
-          <ModernTopSearchFilters onSearch={handleSearch} onSearchViewModeChange={setSearchViewMode} />
+          <ModernTopSearchFilters onSearch={handleSearch} onSearchViewModeChange={handleSearchViewModeChange} />
           <ModernWorkOrdersTable 
             viewMode={viewMode} 
             onViewModeChange={setViewMode}
