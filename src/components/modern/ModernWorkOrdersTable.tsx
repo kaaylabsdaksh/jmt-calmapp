@@ -5171,8 +5171,8 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                       <TableHead className="font-semibold text-foreground text-xs bg-slate-100/80 py-2">Contact</TableHead>
                       <TableHead className="font-semibold text-foreground text-xs bg-slate-100/80 py-2">PO #</TableHead>
                       <TableHead className="font-semibold text-foreground text-xs bg-slate-100/80 py-2 min-w-[140px]">Status</TableHead>
-                      <TableHead className="font-semibold text-foreground text-xs bg-slate-100/80 py-2 min-w-[120px]">Follow-up</TableHead>
-                      <TableHead className="font-semibold text-foreground text-xs bg-slate-100/80 py-2 min-w-[120px]">Deliver By</TableHead>
+                      <TableHead className="font-semibold text-foreground text-xs bg-slate-100/80 py-2 min-w-[150px]">Follow-up</TableHead>
+                      <TableHead className="font-semibold text-foreground text-xs bg-slate-100/80 py-2 min-w-[150px]">Deliver By</TableHead>
                       <TableHead className="font-semibold text-foreground text-xs bg-slate-100/80 py-2 text-center">Aging</TableHead>
                     </>
                   ) : (
