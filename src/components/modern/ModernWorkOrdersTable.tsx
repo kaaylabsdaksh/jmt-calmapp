@@ -4006,15 +4006,15 @@ const BatchItemsInline = ({ items, navigate }: { items: BatchItemData[]; navigat
     : filteredItems;
 
   return (
-    <div className="border-l-3 border-primary/40 ml-6 my-1.5 rounded-r-lg bg-primary/[0.03] overflow-hidden">
+    <div className="border-l-3 border-slate-400 ml-6 my-1.5 rounded-r-lg bg-slate-50 overflow-hidden">
       <Table>
         <TableHeader>
-          <TableRow className="bg-primary/[0.06] h-7 border-b border-primary/10">
-            <TableHead className="font-semibold text-[10px] py-1 px-2 text-primary/70 w-4">
-              <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary/40" />
+          <TableRow className="bg-slate-100 h-7 border-b border-slate-200">
+            <TableHead className="font-semibold text-[10px] py-1 px-2 w-4">
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-slate-400" />
             </TableHead>
             {batchItemColumns.map(col => (
-              <TableHead key={col.key} className="font-semibold text-[10px] py-1 px-2 text-primary/70">{col.label}</TableHead>
+              <TableHead key={col.key} className="font-semibold text-[10px] py-1 px-2 text-slate-700">{col.label}</TableHead>
             ))}
           </TableRow>
           {/* Filter Row */}
