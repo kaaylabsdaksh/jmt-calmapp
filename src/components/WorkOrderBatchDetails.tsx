@@ -388,7 +388,7 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
           <ArrowLeft className="h-3 w-3 mr-1" />
           Back to Batches
         </Button>
-        <Button variant="outline" size="sm" className="h-7 text-xs px-3">Export</Button>
+        
       </div>
 
       {/* Filters - hidden in CSA view */}
