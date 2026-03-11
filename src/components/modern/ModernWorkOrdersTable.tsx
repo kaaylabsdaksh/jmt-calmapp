@@ -4948,6 +4948,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
               <TableRow className="border-b border-gray-100">
                 {currentView === 'batch' ? (
                   <>
+                    {searchViewMode === 'csa' && <TableHead className="w-8 py-1.5 px-1"></TableHead>}
                     {(searchViewMode === 'csa' ? [
                       { key: 'woBatch', placeholder: '' },
                       { key: 'acctNumber', placeholder: '' },
