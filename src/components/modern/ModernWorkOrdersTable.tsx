@@ -5046,7 +5046,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
             <TableBody>
               {!hasSearched ? (
                 <TableRow>
-                  <TableCell colSpan={currentView === 'batch' ? (searchViewMode === 'csa' ? 12 : 8) : 11} className="text-center py-12">
+                  <TableCell colSpan={currentView === 'batch' ? (searchViewMode === 'csa' ? 14 : 8) : 11} className="text-center py-12">
                     <p className="text-muted-foreground text-lg">
                       Please enter search criteria in the Work Order Search above to view results
                     </p>
