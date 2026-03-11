@@ -856,18 +856,11 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                   <PopoverTrigger asChild>
                     <Button
                       variant="outline"
-                      className={cn(selectTriggerClass, "w-full justify-between font-normal")}
+                      className={cn(selectTriggerClass, "w-full justify-start text-left font-normal")}
                     >
-                      <span>
-                        {selectedLocations.length > 0
-                          ? `${selectedLocations.length} Location${selectedLocations.length > 1 ? 's' : ''} selected`
-                          : "All Location"}
-                      </span>
-                      {selectedLocations.length > 0 && (
-                        <Badge className="ml-2 h-5 min-w-[20px] px-1.5 text-[10px] font-bold rounded-full bg-primary text-primary-foreground">
-                          {selectedLocations.length}
-                        </Badge>
-                      )}
+                      {selectedLocations.length > 0
+                        ? `${selectedLocations.length} Location${selectedLocations.length > 1 ? 's' : ''} selected`
+                        : "All Location"}
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-64 p-0 bg-popover border shadow-xl rounded-lg z-[60]" align="start">
