@@ -25,7 +25,10 @@ import {
   TruckIcon,
   Wifi,
   FileCheck,
-  Barcode
+  Barcode,
+  Eye,
+  Package,
+  UserCheck
 } from "lucide-react";
 
 import {
