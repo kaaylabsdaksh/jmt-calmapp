@@ -7,7 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { Search, Printer, FileText, Award, Database, ChevronDown, ChevronRight, MapPin, AlertTriangle, Zap } from "lucide-react";
+import { Search, Printer, FileText, Award, Database, ChevronDown, ChevronRight, MapPin, AlertTriangle, Zap, X, SlidersHorizontal } from "lucide-react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 // --- Types ---
 interface LogisticsItem {
@@ -269,47 +270,90 @@ const LogisticsView = () => {
         </div>
       </header>
 
-      {/* Filters Bar */}
-      <div className="px-2 sm:px-4 lg:px-6 py-3 border-b bg-card flex items-center gap-4 flex-wrap">
-        <div className="flex items-center gap-2">
-          <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Location</span>
-          <Select value={locationFilter} onValueChange={setLocationFilter}>
-            <SelectTrigger className="h-8 w-[140px] text-xs">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="baton-rouge">Baton Rouge</SelectItem>
-              <SelectItem value="lake-charles">Lake Charles</SelectItem>
-              <SelectItem value="houston">Houston</SelectItem>
-              <SelectItem value="new-orleans">New Orleans</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+      {/* Pill/Chip Filters Bar */}
+      <div className="px-2 sm:px-4 lg:px-6 py-3 border-b bg-card flex items-center gap-2 flex-wrap">
+        <SlidersHorizontal className="h-4 w-4 text-muted-foreground shrink-0" />
+
+        {/* Filter Chips */}
         {[
-          { label: "State", value: stateFilter, onChange: setStateFilter, options: [{ v: "all", l: "All" }, { v: "LA", l: "Louisiana" }, { v: "TX", l: "Texas" }] },
-          { label: "City", value: cityFilter, onChange: setCityFilter, options: [{ v: "all", l: "All" }, { v: "baton-rouge", l: "Baton Rouge" }, { v: "lake-charles", l: "Lake Charles" }] },
-          { label: "Division", value: divisionFilter, onChange: setDivisionFilter, options: [{ v: "all", l: "All" }, { v: "lab", l: "Lab" }, { v: "field", l: "Field" }] },
-          { label: "Driver", value: driverFilter, onChange: setDriverFilter, options: [{ v: "all", l: "All" }, { v: "mike", l: "Mike Johnson" }, { v: "sarah", l: "Sarah Williams" }] },
-        ].map(({ label, value, onChange, options }) => (
-          <div key={label} className="flex items-center gap-2">
-            <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">{label}</span>
-            <Select value={value} onValueChange={onChange}>
-              <SelectTrigger className="h-8 w-[120px] text-xs">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {options.map(o => <SelectItem key={o.v} value={o.v}>{o.l}</SelectItem>)}
-              </SelectContent>
-            </Select>
-          </div>
-        ))}
+          { label: "Location", value: locationFilter, defaultVal: "baton-rouge", displayValue: locationFilter === "baton-rouge" ? "Baton Rouge" : locationFilter === "lake-charles" ? "Lake Charles" : locationFilter === "houston" ? "Houston" : "New Orleans", onChange: setLocationFilter, options: [{ v: "baton-rouge", l: "Baton Rouge" }, { v: "lake-charles", l: "Lake Charles" }, { v: "houston", l: "Houston" }, { v: "new-orleans", l: "New Orleans" }] },
+          { label: "State", value: stateFilter, defaultVal: "all", displayValue: stateFilter === "all" ? "All" : stateFilter, onChange: setStateFilter, options: [{ v: "all", l: "All" }, { v: "LA", l: "Louisiana" }, { v: "TX", l: "Texas" }] },
+          { label: "City", value: cityFilter, defaultVal: "all", displayValue: cityFilter === "all" ? "All" : cityFilter === "baton-rouge" ? "Baton Rouge" : "Lake Charles", onChange: setCityFilter, options: [{ v: "all", l: "All" }, { v: "baton-rouge", l: "Baton Rouge" }, { v: "lake-charles", l: "Lake Charles" }] },
+          { label: "Division", value: divisionFilter, defaultVal: "all", displayValue: divisionFilter === "all" ? "All" : divisionFilter === "lab" ? "Lab" : "Field", onChange: setDivisionFilter, options: [{ v: "all", l: "All" }, { v: "lab", l: "Lab" }, { v: "field", l: "Field" }] },
+          { label: "Driver", value: driverFilter, defaultVal: "all", displayValue: driverFilter === "all" ? "All" : driverFilter === "mike" ? "Mike Johnson" : "Sarah Williams", onChange: setDriverFilter, options: [{ v: "all", l: "All" }, { v: "mike", l: "Mike Johnson" }, { v: "sarah", l: "Sarah Williams" }] },
+        ].map(({ label, value, defaultVal, displayValue, onChange, options }) => {
+          const isActive = value !== defaultVal || label === "Location";
+          return (
+            <Popover key={label}>
+              <PopoverTrigger asChild>
+                <button
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border transition-all duration-200 hover:shadow-sm ${
+                    isActive && label !== "Location"
+                      ? "bg-foreground text-background border-foreground"
+                      : "bg-card text-foreground border-border hover:border-foreground/30"
+                  }`}
+                >
+                  <span className="text-[10px] uppercase tracking-wider opacity-60">{label}</span>
+                  <span className="font-semibold">{displayValue}</span>
+                  <ChevronDown className="w-3 h-3 opacity-50" />
+                  {isActive && label !== "Location" && (
+                    <span
+                      role="button"
+                      className="ml-0.5 hover:opacity-100 opacity-70"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onChange(defaultVal);
+                      }}
+                    >
+                      <X className="w-3 h-3" />
+                    </span>
+                  )}
+                </button>
+              </PopoverTrigger>
+              <PopoverContent className="w-40 p-1" align="start">
+                <div className="flex flex-col">
+                  {options.map((o) => (
+                    <button
+                      key={o.v}
+                      onClick={() => onChange(o.v)}
+                      className={`text-left px-3 py-1.5 text-xs rounded-md transition-colors ${
+                        value === o.v
+                          ? "bg-primary/10 text-foreground font-medium"
+                          : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                      }`}
+                    >
+                      {o.l}
+                    </button>
+                  ))}
+                </div>
+              </PopoverContent>
+            </Popover>
+          );
+        })}
+
+        {/* Active filter count + Reset */}
+        {(stateFilter !== "all" || cityFilter !== "all" || divisionFilter !== "all" || driverFilter !== "all") && (
+          <button
+            onClick={() => {
+              setStateFilter("all");
+              setCityFilter("all");
+              setDivisionFilter("all");
+              setDriverFilter("all");
+            }}
+            className="text-[10px] text-destructive hover:text-destructive/80 font-medium uppercase tracking-wider transition-colors ml-1"
+          >
+            Reset filters
+          </button>
+        )}
+
+        {/* Search */}
         <div className="ml-auto relative w-56">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
           <Input
             placeholder="Search customer..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-9 h-8 text-xs"
+            className="pl-9 h-8 text-xs rounded-full"
           />
         </div>
       </div>
