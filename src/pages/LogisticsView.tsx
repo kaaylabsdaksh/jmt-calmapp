@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { Search, Printer, FileText, Award, Database, ChevronDown, ChevronRight, MapPin, AlertTriangle, Zap, Download, Settings } from "lucide-react";
+import { Search, Printer, FileText, Award, Database, ChevronDown, ChevronRight, MapPin, AlertTriangle, Zap } from "lucide-react";
 
 // --- Types ---
 interface LogisticsItem {
@@ -265,24 +265,6 @@ const LogisticsView = () => {
                 </BreadcrumbList>
               </Breadcrumb>
             </div>
-          </div>
-          <div className="flex items-center gap-1 sm:gap-2 w-full sm:w-auto">
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              className="p-2 rounded-lg hover:bg-primary hover:text-primary-foreground hover:shadow-md transition-all duration-300 transform hover:scale-105"
-              title="Download"
-            >
-              <Download className="h-4 w-4" />
-            </Button>
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              className="p-2 rounded-lg hover:bg-primary hover:text-primary-foreground hover:shadow-md transition-all duration-300 transform hover:scale-105"
-              title="Settings"
-            >
-              <Settings className="h-4 w-4" />
-            </Button>
           </div>
         </div>
       </header>
