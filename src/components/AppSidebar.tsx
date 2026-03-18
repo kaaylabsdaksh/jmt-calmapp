@@ -70,6 +70,11 @@ const quickActionCategories = {
     { title: "Quotes", icon: FileText },
     { title: "Reports", icon: BarChart3 },
   ],
+  "Views": [
+    { title: "Logistics View", icon: TruckIcon },
+    { title: "Customer Pickup View", icon: UserCheck },
+    { title: "Shipping View", icon: Package },
+  ],
   "User Management": [
     { title: "Manage Users", icon: Users },
     { title: "Manage Cust Portal Users", icon: Users },
