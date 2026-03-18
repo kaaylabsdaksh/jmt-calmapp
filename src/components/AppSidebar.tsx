@@ -62,6 +62,11 @@ const workOrderQuickActions = [
   { title: "Create Barcode", icon: Barcode },
 ];
 
+const viewsSubItems = [
+  { title: "Logistics View", icon: TruckIcon },
+  { title: "Customer Pickup View", icon: UserCheck },
+  { title: "Shipping View", icon: Package },
+];
 const quickActionCategories = {
   "Core Operations": [
     { title: "Work Orders", icon: ClipboardList, hasSubItems: true },
