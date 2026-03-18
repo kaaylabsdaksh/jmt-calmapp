@@ -356,7 +356,9 @@ const LogisticsView = () => {
 
           {/* Reset */}
           {(locationFilter.length > 0 || stateFilter.length > 0 || cityFilter.length > 0 || divisionFilter.length > 0 || driverFilter.length > 0) && (
-            <button
+            <Button
+              variant="ghost"
+              size="sm"
               onClick={() => {
                 setLocationFilter([]);
                 setStateFilter([]);
@@ -364,10 +366,11 @@ const LogisticsView = () => {
                 setDivisionFilter([]);
                 setDriverFilter([]);
               }}
-              className="text-[10px] text-destructive hover:text-destructive/80 font-medium uppercase tracking-wider transition-colors ml-1"
+              className="h-8 text-xs text-destructive hover:text-destructive hover:bg-destructive/10 gap-1"
             >
-              Reset filters
-            </button>
+              <X className="w-3.5 h-3.5" />
+              Clear all
+            </Button>
           )}
 
           {/* Search */}
