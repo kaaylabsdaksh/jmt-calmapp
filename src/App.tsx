@@ -9,6 +9,7 @@ import EditOrder from "./pages/EditOrder";
 import UnusedItemsManagement from "./pages/UnusedItemsManagement";
 import WorkOrderBatchDetailsDemo from "./pages/WorkOrderBatchDetailsDemo";
 import ItemDetail from "./pages/ItemDetail";
+import LogisticsView from "./pages/LogisticsView";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import { Layout } from "./components/Layout";
