@@ -276,34 +276,50 @@ const LogisticsView = () => {
         <SlidersHorizontal className="h-4 w-4 text-muted-foreground shrink-0" />
 
         {/* Filter Chips */}
-        {[
-          { label: "Location", value: locationFilter, defaultVal: "baton-rouge", displayValue: locationFilter === "baton-rouge" ? "Baton Rouge" : locationFilter === "lake-charles" ? "Lake Charles" : locationFilter === "houston" ? "Houston" : "New Orleans", onChange: setLocationFilter, options: [{ v: "baton-rouge", l: "Baton Rouge" }, { v: "lake-charles", l: "Lake Charles" }, { v: "houston", l: "Houston" }, { v: "new-orleans", l: "New Orleans" }] },
-          { label: "State", value: stateFilter, defaultVal: "all", displayValue: stateFilter === "all" ? "All" : stateFilter, onChange: setStateFilter, options: [{ v: "all", l: "All" }, { v: "LA", l: "Louisiana" }, { v: "TX", l: "Texas" }] },
-          { label: "City", value: cityFilter, defaultVal: "all", displayValue: cityFilter === "all" ? "All" : cityFilter === "baton-rouge" ? "Baton Rouge" : "Lake Charles", onChange: setCityFilter, options: [{ v: "all", l: "All" }, { v: "baton-rouge", l: "Baton Rouge" }, { v: "lake-charles", l: "Lake Charles" }] },
-          { label: "Division", value: divisionFilter, defaultVal: "all", displayValue: divisionFilter === "all" ? "All" : divisionFilter === "lab" ? "Lab" : "Field", onChange: setDivisionFilter, options: [{ v: "all", l: "All" }, { v: "lab", l: "Lab" }, { v: "field", l: "Field" }] },
-          { label: "Driver", value: driverFilter, defaultVal: "all", displayValue: driverFilter === "all" ? "All" : driverFilter === "mike" ? "Mike Johnson" : "Sarah Williams", onChange: setDriverFilter, options: [{ v: "all", l: "All" }, { v: "mike", l: "Mike Johnson" }, { v: "sarah", l: "Sarah Williams" }] },
-        ].map(({ label, value, defaultVal, displayValue, onChange, options }) => {
-          const isActive = value !== defaultVal || label === "Location";
+        {([
+          { label: "Location", values: locationFilter, onChange: setLocationFilter, singleSelect: true, options: [{ v: "baton-rouge", l: "Baton Rouge" }, { v: "lake-charles", l: "Lake Charles" }, { v: "houston", l: "Houston" }, { v: "new-orleans", l: "New Orleans" }] },
+          { label: "State", values: stateFilter, onChange: setStateFilter, singleSelect: false, options: [{ v: "LA", l: "Louisiana" }, { v: "TX", l: "Texas" }, { v: "MS", l: "Mississippi" }] },
+          { label: "City", values: cityFilter, onChange: setCityFilter, singleSelect: false, options: [{ v: "baton-rouge", l: "Baton Rouge" }, { v: "lake-charles", l: "Lake Charles" }, { v: "houston", l: "Houston" }] },
+          { label: "Division", values: divisionFilter, onChange: setDivisionFilter, singleSelect: false, options: [{ v: "lab", l: "Lab" }, { v: "field", l: "Field" }] },
+          { label: "Driver", values: driverFilter, onChange: setDriverFilter, singleSelect: false, options: [{ v: "mike", l: "Mike Johnson" }, { v: "sarah", l: "Sarah Williams" }, { v: "david", l: "David Chen" }] },
+        ] as const).map(({ label, values, onChange, singleSelect, options }) => {
+          const isActive = values.length > 0;
+          const displayText = values.length === 0
+            ? "All"
+            : values.length === 1
+            ? options.find(o => o.v === values[0])?.l || values[0]
+            : `${values.length} selected`;
+
+          const toggleValue = (v: string) => {
+            if (singleSelect) {
+              onChange([v]);
+            } else {
+              onChange(prev => 
+                prev.includes(v) ? prev.filter(x => x !== v) : [...prev, v]
+              );
+            }
+          };
+
           return (
             <Popover key={label}>
               <PopoverTrigger asChild>
                 <button
                   className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border transition-all duration-200 hover:shadow-sm ${
-                    isActive && label !== "Location"
+                    isActive && !singleSelect
                       ? "bg-foreground text-background border-foreground"
                       : "bg-card text-foreground border-border hover:border-foreground/30"
                   }`}
                 >
                   <span className="text-[10px] uppercase tracking-wider opacity-60">{label}</span>
-                  <span className="font-semibold">{displayValue}</span>
+                  <span className="font-semibold">{displayText}</span>
                   <ChevronDown className="w-3 h-3 opacity-50" />
-                  {isActive && label !== "Location" && (
+                  {isActive && !singleSelect && (
                     <span
                       role="button"
                       className="ml-0.5 hover:opacity-100 opacity-70"
                       onClick={(e) => {
                         e.stopPropagation();
-                        onChange(defaultVal);
+                        onChange([]);
                       }}
                     >
                       <X className="w-3 h-3" />
@@ -311,18 +327,36 @@ const LogisticsView = () => {
                   )}
                 </button>
               </PopoverTrigger>
-              <PopoverContent className="w-40 p-1" align="start">
-                <div className="flex flex-col">
-                  {options.map((o) => (
+              <PopoverContent className="w-48 p-2" align="start">
+                <div className="flex flex-col gap-0.5">
+                  {!singleSelect && (
                     <button
-                      key={o.v}
-                      onClick={() => onChange(o.v)}
-                      className={`text-left px-3 py-1.5 text-xs rounded-md transition-colors ${
-                        value === o.v
+                      onClick={() => onChange([])}
+                      className={`text-left px-2 py-1.5 text-xs rounded-md transition-colors ${
+                        values.length === 0
                           ? "bg-primary/10 text-foreground font-medium"
                           : "text-muted-foreground hover:bg-muted hover:text-foreground"
                       }`}
                     >
+                      All
+                    </button>
+                  )}
+                  {options.map((o) => (
+                    <button
+                      key={o.v}
+                      onClick={() => toggleValue(o.v)}
+                      className={`flex items-center gap-2 text-left px-2 py-1.5 text-xs rounded-md transition-colors ${
+                        values.includes(o.v)
+                          ? "bg-primary/10 text-foreground font-medium"
+                          : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                      }`}
+                    >
+                      {!singleSelect && (
+                        <Checkbox
+                          checked={values.includes(o.v)}
+                          className="h-3.5 w-3.5 pointer-events-none"
+                        />
+                      )}
                       {o.l}
                     </button>
                   ))}
@@ -333,13 +367,13 @@ const LogisticsView = () => {
         })}
 
         {/* Active filter count + Reset */}
-        {(stateFilter !== "all" || cityFilter !== "all" || divisionFilter !== "all" || driverFilter !== "all") && (
+        {(stateFilter.length > 0 || cityFilter.length > 0 || divisionFilter.length > 0 || driverFilter.length > 0) && (
           <button
             onClick={() => {
-              setStateFilter("all");
-              setCityFilter("all");
-              setDivisionFilter("all");
-              setDriverFilter("all");
+              setStateFilter([]);
+              setCityFilter([]);
+              setDivisionFilter([]);
+              setDriverFilter([]);
             }}
             className="text-[10px] text-destructive hover:text-destructive/80 font-medium uppercase tracking-wider transition-colors ml-1"
           >
