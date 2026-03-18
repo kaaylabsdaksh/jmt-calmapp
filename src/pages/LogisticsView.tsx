@@ -231,7 +231,7 @@ const LogisticsGroupCard = ({ group }: { group: LogisticsGroup }) => {
 
 // --- Main Page ---
 const LogisticsView = () => {
-  const [location, setLocation] = useState("baton-rouge");
+  const [locationFilter, setLocationFilter] = useState("baton-rouge");
   const [stateFilter, setStateFilter] = useState("all");
   const [cityFilter, setCityFilter] = useState("all");
   const [divisionFilter, setDivisionFilter] = useState("all");
