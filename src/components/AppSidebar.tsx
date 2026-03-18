@@ -63,9 +63,9 @@ const workOrderQuickActions = [
 ];
 
 const viewsSubItems = [
-  { title: "Logistics View", icon: TruckIcon },
-  { title: "Customer Pickup View", icon: UserCheck },
-  { title: "Shipping View", icon: Package },
+  { title: "Logistics View", icon: TruckIcon, url: "/logistics-view" },
+  { title: "Customer Pickup View", icon: UserCheck, url: "#" },
+  { title: "Shipping View", icon: Package, url: "#" },
 ];
 const quickActionCategories = {
   "Core Operations": [
@@ -280,15 +280,16 @@ export function AppSidebar() {
                                 <CollapsibleContent>
                                   <div className="ml-6 mt-1 space-y-1 border-l-2 border-sidebar-border pl-3">
                                     {viewsSubItems.map((subAction) => (
-                                      <Button
-                                        key={subAction.title}
-                                        variant="ghost"
-                                        size="sm"
-                                        className="w-full justify-start h-9 px-2 text-sidebar-foreground/80 hover:text-sidebar-accent-foreground hover:bg-sidebar-accent/50 transition-all"
-                                      >
-                                        {React.createElement(subAction.icon, { className: "h-3.5 w-3.5 shrink-0 mr-2" })}
-                                        <span className="text-xs">{subAction.title}</span>
-                                      </Button>
+                                      <Link key={subAction.title} to={subAction.url}>
+                                        <Button
+                                          variant="ghost"
+                                          size="sm"
+                                          className={`w-full justify-start h-9 px-2 text-sidebar-foreground/80 hover:text-sidebar-accent-foreground hover:bg-sidebar-accent/50 transition-all ${location.pathname === subAction.url ? 'bg-sidebar-accent/50 text-sidebar-accent-foreground' : ''}`}
+                                        >
+                                          {React.createElement(subAction.icon, { className: "h-3.5 w-3.5 shrink-0 mr-2" })}
+                                          <span className="text-xs">{subAction.title}</span>
+                                        </Button>
+                                      </Link>
                                     ))}
                                   </div>
                                 </CollapsibleContent>
