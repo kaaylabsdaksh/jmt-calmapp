@@ -69,9 +69,7 @@ const quickActionCategories = {
     { title: "Invoicing", icon: CreditCard },
     { title: "Quotes", icon: FileText },
     { title: "Reports", icon: BarChart3 },
-    { title: "Logistics View", icon: TruckIcon },
-    { title: "Customer Pickup View", icon: UserCheck },
-    { title: "Shipping View", icon: Package },
+    { title: "Views", icon: Eye, hasSubItems: true },
   ],
   "User Management": [
     { title: "Manage Users", icon: Users },
