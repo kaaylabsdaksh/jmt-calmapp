@@ -32,6 +32,7 @@ const App = () => {
           <Route path="/work-orders-v2" element={<WorkOrderSearchV2 />} />
           <Route path="/work-order/:id" element={<WorkOrderDetail />} />
           <Route path="/item/:id" element={<ItemDetail />} />
+          <Route path="/logistics-view" element={<LogisticsView />} />
           <Route path="/batch-details" element={<WorkOrderBatchDetailsDemo />} />
           <Route path="*" element={<NotFound />} />
         </Route>
