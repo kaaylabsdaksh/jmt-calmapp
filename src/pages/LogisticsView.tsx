@@ -355,9 +355,10 @@ const LogisticsView = () => {
           })}
 
           {/* Reset */}
-          {(stateFilter.length > 0 || cityFilter.length > 0 || divisionFilter.length > 0 || driverFilter.length > 0) && (
+          {(locationFilter.length > 0 || stateFilter.length > 0 || cityFilter.length > 0 || divisionFilter.length > 0 || driverFilter.length > 0) && (
             <button
               onClick={() => {
+                setLocationFilter([]);
                 setStateFilter([]);
                 setCityFilter([]);
                 setDivisionFilter([]);
