@@ -233,11 +233,11 @@ const LogisticsGroupCard = ({ group }: { group: LogisticsGroup }) => {
 
 // --- Main Page ---
 const LogisticsView = () => {
-  const [locationFilter, setLocationFilter] = useState("baton-rouge");
-  const [stateFilter, setStateFilter] = useState("all");
-  const [cityFilter, setCityFilter] = useState("all");
-  const [divisionFilter, setDivisionFilter] = useState("all");
-  const [driverFilter, setDriverFilter] = useState("all");
+  const [locationFilter, setLocationFilter] = useState<string[]>(["baton-rouge"]);
+  const [stateFilter, setStateFilter] = useState<string[]>([]);
+  const [cityFilter, setCityFilter] = useState<string[]>([]);
+  const [divisionFilter, setDivisionFilter] = useState<string[]>([]);
+  const [driverFilter, setDriverFilter] = useState<string[]>([]);
   const [activeTab, setActiveTab] = useState<"awaiting" | "printed">("awaiting");
   const [searchQuery, setSearchQuery] = useState("");
 
