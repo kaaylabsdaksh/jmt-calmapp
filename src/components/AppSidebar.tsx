@@ -235,6 +235,65 @@ export function AppSidebar() {
                                 </CollapsibleContent>
                               </div>
                             </Collapsible>
+                          ) : action.title === "Views" && action.hasSubItems ? (
+                            <Collapsible 
+                              open={expandedViews} 
+                              onOpenChange={setExpandedViews}
+                            >
+                              <div>
+                                <div className="flex items-center gap-1">
+                                  <SidebarMenuButton 
+                                    tooltip={action.title}
+                                    className="group flex-1"
+                                  >
+                                    <div
+                                      className={`
+                                        flex items-center w-full h-10 px-3 rounded-md
+                                        text-sidebar-foreground hover:text-sidebar-accent-foreground
+                                        hover:bg-sidebar-accent hover:shadow-sm
+                                        transition-all duration-200 ease-in-out
+                                        group-hover:translate-x-1 cursor-pointer
+                                      `}
+                                      onClick={() => setExpandedViews(!expandedViews)}
+                                    >
+                                      {React.createElement(action.icon, { className: "h-4 w-4 shrink-0 text-sidebar-foreground group-hover:scale-110 transition-transform duration-200" })}
+                                      <span className="ml-3 font-medium text-sm animate-fade-in">
+                                        {action.title}
+                                      </span>
+                                    </div>
+                                  </SidebarMenuButton>
+                                  <CollapsibleTrigger asChild>
+                                    <Button
+                                      variant="ghost"
+                                      size="sm"
+                                      className="h-8 w-8 p-0 hover:bg-sidebar-accent"
+                                    >
+                                      {expandedViews ? (
+                                        <ChevronDown className="h-3 w-3" />
+                                      ) : (
+                                        <ChevronRight className="h-3 w-3" />
+                                      )}
+                                    </Button>
+                                  </CollapsibleTrigger>
+                                </div>
+                                
+                                <CollapsibleContent>
+                                  <div className="ml-6 mt-1 space-y-1 border-l-2 border-sidebar-border pl-3">
+                                    {viewsSubItems.map((subAction) => (
+                                      <Button
+                                        key={subAction.title}
+                                        variant="ghost"
+                                        size="sm"
+                                        className="w-full justify-start h-9 px-2 text-sidebar-foreground/80 hover:text-sidebar-accent-foreground hover:bg-sidebar-accent/50 transition-all"
+                                      >
+                                        {React.createElement(subAction.icon, { className: "h-3.5 w-3.5 shrink-0 mr-2" })}
+                                        <span className="text-xs">{subAction.title}</span>
+                                      </Button>
+                                    ))}
+                                  </div>
+                                </CollapsibleContent>
+                              </div>
+                            </Collapsible>
                           ) : (
                             <SidebarMenuButton 
                               asChild
