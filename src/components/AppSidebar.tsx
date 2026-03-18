@@ -63,9 +63,9 @@ const workOrderQuickActions = [
 ];
 
 const viewsSubItems = [
-  { title: "Logistics View", icon: TruckIcon },
-  { title: "Customer Pickup View", icon: UserCheck },
-  { title: "Shipping View", icon: Package },
+  { title: "Logistics View", icon: TruckIcon, url: "/logistics-view" },
+  { title: "Customer Pickup View", icon: UserCheck, url: "#" },
+  { title: "Shipping View", icon: Package, url: "#" },
 ];
 const quickActionCategories = {
   "Core Operations": [
