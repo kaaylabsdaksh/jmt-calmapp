@@ -69,8 +69,6 @@ const quickActionCategories = {
     { title: "Invoicing", icon: CreditCard },
     { title: "Quotes", icon: FileText },
     { title: "Reports", icon: BarChart3 },
-  ],
-  "Views": [
     { title: "Logistics View", icon: TruckIcon },
     { title: "Customer Pickup View", icon: UserCheck },
     { title: "Shipping View", icon: Package },
