@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { Search, Printer, FileText, Award, Database, ChevronDown, ChevronRight, MapPin, AlertTriangle, Zap } from "lucide-react";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { SidebarTrigger } from "@/components/ui/sidebar";
+import { Search, Printer, FileText, Award, Database, ChevronDown, ChevronRight, MapPin, AlertTriangle, Zap, Download, Settings } from "lucide-react";
 
 // --- Types ---
 interface LogisticsItem {
@@ -228,7 +231,7 @@ const LogisticsGroupCard = ({ group }: { group: LogisticsGroup }) => {
 
 // --- Main Page ---
 const LogisticsView = () => {
-  const [location, setLocation] = useState("baton-rouge");
+  const [locationFilter, setLocationFilter] = useState("baton-rouge");
   const [stateFilter, setStateFilter] = useState("all");
   const [cityFilter, setCityFilter] = useState("all");
   const [divisionFilter, setDivisionFilter] = useState("all");
@@ -241,38 +244,65 @@ const LogisticsView = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Top Bar */}
-      <div className="bg-foreground text-background px-6 py-3 flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <h1 className="text-xl font-bold tracking-tight">Logistics</h1>
-          <div className="flex items-center gap-2 text-sm">
-            <span className="text-muted opacity-70">Location</span>
-            <Select value={location} onValueChange={setLocation}>
-              <SelectTrigger className="h-8 w-[160px] bg-background/10 border-background/20 text-background text-sm">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="baton-rouge">Baton Rouge</SelectItem>
-                <SelectItem value="lake-charles">Lake Charles</SelectItem>
-                <SelectItem value="houston">Houston</SelectItem>
-                <SelectItem value="new-orleans">New Orleans</SelectItem>
-              </SelectContent>
-            </Select>
+      {/* Top Nav - matching Work Order Management style */}
+      <header className="bg-white px-2 sm:px-4 lg:px-6 py-3 border-b border-border">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <SidebarTrigger className="text-foreground hover:bg-muted hover:text-foreground transition-all duration-300 transform hover:scale-105" />
+            <div>
+              <h1 className="text-base sm:text-lg font-semibold text-foreground leading-tight">Logistics</h1>
+              <Breadcrumb className="mt-1 hidden sm:block">
+                <BreadcrumbList>
+                  <BreadcrumbItem>
+                    <BreadcrumbLink asChild className="text-xs text-muted-foreground hover:text-foreground transition-colors">
+                      <Link to="/">Home</Link>
+                    </BreadcrumbLink>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator />
+                  <BreadcrumbItem>
+                    <BreadcrumbPage className="text-xs text-foreground font-medium">Logistics</BreadcrumbPage>
+                  </BreadcrumbItem>
+                </BreadcrumbList>
+              </Breadcrumb>
+            </div>
+          </div>
+          <div className="flex items-center gap-1 sm:gap-2 w-full sm:w-auto">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="p-2 rounded-lg hover:bg-primary hover:text-primary-foreground hover:shadow-md transition-all duration-300 transform hover:scale-105"
+              title="Download"
+            >
+              <Download className="h-4 w-4" />
+            </Button>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="p-2 rounded-lg hover:bg-primary hover:text-primary-foreground hover:shadow-md transition-all duration-300 transform hover:scale-105"
+              title="Settings"
+            >
+              <Settings className="h-4 w-4" />
+            </Button>
           </div>
         </div>
-        <div className="relative w-64">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted" />
-          <Input
-            placeholder="Search customer..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-9 h-8 bg-background/10 border-background/20 text-background placeholder:text-muted text-sm"
-          />
-        </div>
-      </div>
+      </header>
 
       {/* Filters Bar */}
-      <div className="px-6 py-3 border-b bg-card flex items-center gap-4 flex-wrap">
+      <div className="px-2 sm:px-4 lg:px-6 py-3 border-b bg-card flex items-center gap-4 flex-wrap">
+        <div className="flex items-center gap-2">
+          <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Location</span>
+          <Select value={locationFilter} onValueChange={setLocationFilter}>
+            <SelectTrigger className="h-8 w-[140px] text-xs">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="baton-rouge">Baton Rouge</SelectItem>
+              <SelectItem value="lake-charles">Lake Charles</SelectItem>
+              <SelectItem value="houston">Houston</SelectItem>
+              <SelectItem value="new-orleans">New Orleans</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
         {[
           { label: "State", value: stateFilter, onChange: setStateFilter, options: [{ v: "all", l: "All" }, { v: "LA", l: "Louisiana" }, { v: "TX", l: "Texas" }] },
           { label: "City", value: cityFilter, onChange: setCityFilter, options: [{ v: "all", l: "All" }, { v: "baton-rouge", l: "Baton Rouge" }, { v: "lake-charles", l: "Lake Charles" }] },
@@ -291,6 +321,15 @@ const LogisticsView = () => {
             </Select>
           </div>
         ))}
+        <div className="ml-auto relative w-56">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
+          <Input
+            placeholder="Search customer..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-9 h-8 text-xs"
+          />
+        </div>
       </div>
 
       {/* Tabs */}
