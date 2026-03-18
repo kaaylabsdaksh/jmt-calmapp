@@ -104,6 +104,7 @@ export function AppSidebar() {
   const location = useLocation();
   const [expandedGroups, setExpandedGroups] = useState<string[]>(["Core Operations"]);
   const [expandedWorkOrders, setExpandedWorkOrders] = useState(false);
+  const [expandedViews, setExpandedViews] = useState(false);
 
   const handleLogout = () => {
     // Navigate to login page
