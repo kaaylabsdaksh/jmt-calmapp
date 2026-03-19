@@ -121,7 +121,7 @@ const PriorityBadge = ({ priority }: { priority: LogisticsGroup["priority"] }) =
   const config: Record<string, { icon: typeof AlertTriangle; className: string }> = {
     EMERGENCY: { icon: AlertTriangle, className: "bg-destructive text-destructive-foreground font-semibold tracking-wide" },
     EXPEDITE: { icon: Zap, className: "bg-orange-500 text-white font-semibold tracking-wide" },
-    RUSH: { icon: Zap, className: "bg-warning text-warning-foreground font-semibold tracking-wide" },
+    RUSH: { icon: Zap, className: "bg-yellow-400 text-yellow-900 font-semibold tracking-wide" },
   };
   
   const entry = config[priority];
