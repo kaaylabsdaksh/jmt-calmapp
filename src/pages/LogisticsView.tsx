@@ -394,7 +394,7 @@ const LogisticsView = () => {
               variant="ghost"
               size="sm"
               className="h-7 w-7 p-0 text-muted-foreground hover:text-foreground"
-              onClick={() => setForceOpen(prev => prev === true ? true : true)}
+              onClick={() => setForceOpen(prev => ({ value: true, key: (prev?.key ?? 0) + 1 }))}
               title="Expand All"
             >
               <Maximize2 className="w-4 h-4" />
