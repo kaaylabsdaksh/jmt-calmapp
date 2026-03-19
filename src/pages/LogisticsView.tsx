@@ -174,78 +174,77 @@ const LogisticsGroupCard = ({ group, isPrinted, onPrint }: { group: LogisticsGro
         {/* Priority stripe */}
         <div className={`h-1 ${stripeColor}`} />
 
-        {/* Compact single-row header */}
-        <div className="px-3 py-2 flex items-center gap-3">
-          <CollapsibleTrigger asChild>
-            <Button variant="ghost" size="sm" className="h-6 w-6 p-0 shrink-0 hover:bg-muted rounded">
-              {isOpen ? <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" /> : <ChevronRight className="h-3.5 w-3.5 text-muted-foreground" />}
-            </Button>
-          </CollapsibleTrigger>
+        {/* Two-row header */}
+        <div className="px-3 py-2 space-y-1.5">
+          {/* Row 1: Invoice, customer, location, invoice date, deliver, items */}
+          <div className="flex items-center gap-3">
+            <CollapsibleTrigger asChild>
+              <Button variant="ghost" size="sm" className="h-6 w-6 p-0 shrink-0 hover:bg-muted rounded">
+                {isOpen ? <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" /> : <ChevronRight className="h-3.5 w-3.5 text-muted-foreground" />}
+              </Button>
+            </CollapsibleTrigger>
 
-          <div className="flex flex-col min-w-0">
-            <div className="flex items-center gap-2">
-              <span className="font-bold text-[13px] text-foreground whitespace-nowrap">{typeLabel} #{group.number}</span>
-              <span className="text-xs font-medium text-foreground truncate">{group.customerName}</span>
-              <span className="flex items-center gap-0.5 text-[11px] text-muted-foreground whitespace-nowrap">
-                <MapPin className="w-2.5 h-2.5" />
-                {group.city}, {group.state}
+            <span className="font-bold text-[13px] text-foreground whitespace-nowrap">{typeLabel} #{group.number}</span>
+            <span className="text-xs font-medium text-foreground truncate min-w-0">{group.customerName}</span>
+            <span className="flex items-center gap-0.5 text-[11px] text-muted-foreground whitespace-nowrap">
+              <MapPin className="w-2.5 h-2.5" />
+              {group.city}, {group.state}
+            </span>
+            {group.invoiceDate && (
+              <span className="text-[11px] text-muted-foreground whitespace-nowrap hidden lg:inline">
+                Inv: {group.invoiceDate}
               </span>
-              {group.invoiceDate && (
-                <span className="text-[11px] text-muted-foreground whitespace-nowrap hidden lg:inline">
-                  Inv: {group.invoiceDate}
-                </span>
-              )}
-            </div>
-            <div className="flex items-center gap-1.5 mt-0.5">
-              <PriorityBadge priority={group.priority} />
-              <Badge variant="outline" className="text-[9px] font-medium px-1.5 py-0 h-4">{group.division}</Badge>
-            </div>
-          </div>
+            )}
 
-          <div className="flex-1" />
+            <div className="flex-1" />
 
-          <div className="flex flex-col items-end whitespace-nowrap">
-            <div className={`flex items-center gap-1.5 ${isOverdue ? "text-destructive" : "text-muted-foreground"}`}>
+            <div className={`flex items-center gap-1.5 whitespace-nowrap ${isOverdue ? "text-destructive" : "text-muted-foreground"}`}>
               <span className="uppercase tracking-wider text-[9px] font-medium">Deliver</span>
               <span className={`text-xs font-semibold ${isOverdue ? "text-destructive" : "text-foreground"}`}>{displayDate}</span>
             </div>
-            <span className="text-[11px] text-muted-foreground mt-0.5">
+            <span className="text-[11px] text-muted-foreground whitespace-nowrap">
               <span className="font-semibold text-foreground">{group.itemCount}</span> items
             </span>
           </div>
 
-          <div className="h-4 w-px bg-border shrink-0" />
+          {/* Row 2: Priority badge, division, driver, printables */}
+          <div className="flex items-center gap-2 pl-9">
+            <PriorityBadge priority={group.priority} />
+            <Badge variant="outline" className="text-[9px] font-medium px-1.5 py-0 h-4">{group.division}</Badge>
 
-          <Select value={driver} onValueChange={setDriver}>
-            <SelectTrigger className="h-7 w-[130px] text-[11px] rounded border-dashed">
-              <SelectValue placeholder="Assign Driver" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="unassigned">Unassigned</SelectItem>
-              <SelectItem value="mike-johnson">Mike Johnson</SelectItem>
-              <SelectItem value="sarah-williams">Sarah Williams</SelectItem>
-              <SelectItem value="david-chen">David Chen</SelectItem>
-            </SelectContent>
-          </Select>
+            <div className="flex-1" />
 
-          {!isPrinted ? (
-            <div className="flex items-center gap-1">
-              <Button size="sm" className="h-7 text-[11px] gap-1 rounded px-3" onClick={() => onPrint?.(group.id)}>
-                <Printer className="w-3 h-3" />
-                Print All
-              </Button>
-              <Button variant="outline" size="sm" className="h-7 text-[11px] rounded px-2" onClick={() => onPrint?.(group.id)}>
-                {group.type === "INV" ? "Inv" : group.type === "DT" ? "DT" : "WO"}
-              </Button>
-              <Button variant="outline" size="sm" className="h-7 text-[11px] rounded px-2">Certs</Button>
-              <Button variant="outline" size="sm" className="h-7 text-[11px] rounded px-2">Data</Button>
-            </div>
-          ) : (
-            <Badge variant="outline" className="text-[10px] text-muted-foreground gap-1 px-2 py-0.5">
-              <Printer className="w-2.5 h-2.5" />
-              Printed
-            </Badge>
-          )}
+            <Select value={driver} onValueChange={setDriver}>
+              <SelectTrigger className="h-7 w-[130px] text-[11px] rounded border-dashed">
+                <SelectValue placeholder="Assign Driver" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="unassigned">Unassigned</SelectItem>
+                <SelectItem value="mike-johnson">Mike Johnson</SelectItem>
+                <SelectItem value="sarah-williams">Sarah Williams</SelectItem>
+                <SelectItem value="david-chen">David Chen</SelectItem>
+              </SelectContent>
+            </Select>
+
+            {!isPrinted ? (
+              <div className="flex items-center gap-1">
+                <Button size="sm" className="h-7 text-[11px] gap-1 rounded px-3" onClick={() => onPrint?.(group.id)}>
+                  <Printer className="w-3 h-3" />
+                  Print All
+                </Button>
+                <Button variant="outline" size="sm" className="h-7 text-[11px] rounded px-2" onClick={() => onPrint?.(group.id)}>
+                  {group.type === "INV" ? "Inv" : group.type === "DT" ? "DT" : "WO"}
+                </Button>
+                <Button variant="outline" size="sm" className="h-7 text-[11px] rounded px-2">Certs</Button>
+                <Button variant="outline" size="sm" className="h-7 text-[11px] rounded px-2">Data</Button>
+              </div>
+            ) : (
+              <Badge variant="outline" className="text-[10px] text-muted-foreground gap-1 px-2 py-0.5">
+                <Printer className="w-2.5 h-2.5" />
+                Printed
+              </Badge>
+            )}
+          </div>
         </div>
 
         {/* Items Table */}
