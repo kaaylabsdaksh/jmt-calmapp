@@ -249,7 +249,11 @@ const LogisticsView = () => {
   const [driverFilter, setDriverFilter] = useState<string[]>([]);
   const [activeTab, setActiveTab] = useState<"awaiting" | "printed">("awaiting");
   const [searchQuery, setSearchQuery] = useState("");
+  const [printedIds, setPrintedIds] = useState<Set<string>>(new Set());
 
+  const handlePrint = (id: string) => {
+    setPrintedIds(prev => new Set(prev).add(id));
+  };
   // Auto-filter groups based on search query
   const filteredGroups = mockGroups.filter(group => {
     if (!searchQuery.trim()) return true;
