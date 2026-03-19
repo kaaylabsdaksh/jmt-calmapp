@@ -158,124 +158,82 @@ const LogisticsGroupCard = ({ group, isPrinted, onPrint }: { group: LogisticsGro
 
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-      <div className={`bg-card rounded-lg border ${cardBorder} overflow-hidden transition-all ${isPrinted ? "opacity-50 grayscale" : "hover:shadow-md"}`}>
+      <div className={`bg-card rounded-md border ${cardBorder} overflow-hidden transition-all ${isPrinted ? "opacity-50 grayscale" : ""}`}>
         {/* Priority stripe */}
-        <div className={`h-1.5 ${stripeColor}`} />
+        <div className={`h-1 ${stripeColor}`} />
 
-        {/* Main header area */}
-        <div className="px-5 py-4">
-          {/* Top row: Identity + Metrics + Actions */}
-          <div className="flex items-center gap-6">
-            {/* Collapse trigger */}
-            <CollapsibleTrigger asChild>
-              <Button variant="ghost" size="sm" className="h-8 w-8 p-0 shrink-0 hover:bg-muted rounded-md">
-                {isOpen ? <ChevronDown className="h-4 w-4 text-muted-foreground" /> : <ChevronRight className="h-4 w-4 text-muted-foreground" />}
-              </Button>
-            </CollapsibleTrigger>
+        {/* Compact single-row header */}
+        <div className="px-3 py-2 flex items-center gap-3">
+          <CollapsibleTrigger asChild>
+            <Button variant="ghost" size="sm" className="h-6 w-6 p-0 shrink-0 hover:bg-muted rounded">
+              {isOpen ? <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" /> : <ChevronRight className="h-3.5 w-3.5 text-muted-foreground" />}
+            </Button>
+          </CollapsibleTrigger>
 
-            {/* Identity block */}
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2.5">
-                <h3 className="font-bold text-[15px] text-foreground tracking-tight">{typeLabel} #{group.number}</h3>
-                <PriorityBadge priority={group.priority} />
-                <Badge variant="outline" className="text-[10px] font-medium px-2 py-0 h-5 bg-muted/50">{group.division}</Badge>
-              </div>
-              <div className="flex items-center gap-2 mt-1">
-                <span className="text-sm font-medium text-foreground">{group.customerName}</span>
-                <span className="text-muted-foreground">·</span>
-                <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                  <MapPin className="w-3 h-3" />
-                  {group.city}, {group.state}
-                </span>
-                {group.invoiceDate && (
-                  <>
-                    <span className="text-muted-foreground">·</span>
-                    <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                      <Clock className="w-3 h-3" />
-                      {group.invoiceDate}
-                    </span>
-                  </>
-                )}
-              </div>
-            </div>
+          <span className="font-bold text-[13px] text-foreground whitespace-nowrap">{typeLabel} #{group.number}</span>
+          <PriorityBadge priority={group.priority} />
+          <Badge variant="outline" className="text-[9px] font-medium px-1.5 py-0 h-4">{group.division}</Badge>
 
-            {/* Metrics section */}
-            <div className="flex items-center gap-5 shrink-0">
-              {/* Deliver By - card-like chip */}
-              <div className={`flex flex-col items-center px-4 py-1.5 rounded-lg ${isOverdue ? "bg-destructive/10" : "bg-muted/50"}`}>
-                <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-medium">Deliver by</span>
-                <span className={`text-sm font-bold ${isOverdue ? "text-destructive" : "text-foreground"}`}>
-                  {displayDate}
-                </span>
-                {isOverdue && (
-                  <span className="text-[10px] font-bold text-destructive uppercase tracking-wide flex items-center gap-0.5">
-                    <AlertTriangle className="w-2.5 h-2.5" />
-                    Overdue
-                  </span>
-                )}
-              </div>
+          <div className="h-4 w-px bg-border shrink-0" />
 
-              {/* Item count chip */}
-              <div className="flex flex-col items-center px-3 py-1.5 rounded-lg bg-muted/50">
-                <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-medium">Items</span>
-                <span className="text-sm font-bold text-foreground">{group.itemCount}</span>
-              </div>
+          <span className="text-xs font-medium text-foreground truncate">{group.customerName}</span>
+          <span className="flex items-center gap-0.5 text-[11px] text-muted-foreground whitespace-nowrap">
+            <MapPin className="w-2.5 h-2.5" />
+            {group.city}, {group.state}
+          </span>
 
-              {/* Divider */}
-              <div className="h-10 w-px bg-border" />
+          {group.invoiceDate && (
+            <span className="text-[11px] text-muted-foreground whitespace-nowrap hidden lg:inline">
+              Inv: {group.invoiceDate}
+            </span>
+          )}
 
-              {/* Driver selector */}
-              <div className="flex flex-col gap-1">
-                <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-medium">Driver</span>
-                <Select value={driver} onValueChange={setDriver}>
-                  <SelectTrigger className="h-8 w-[145px] text-xs rounded-md border-dashed">
-                    <div className="flex items-center gap-1.5">
-                      <Truck className="w-3 h-3 text-muted-foreground" />
-                      <SelectValue placeholder="Assign" />
-                    </div>
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="unassigned">Unassigned</SelectItem>
-                    <SelectItem value="mike-johnson">Mike Johnson</SelectItem>
-                    <SelectItem value="sarah-williams">Sarah Williams</SelectItem>
-                    <SelectItem value="david-chen">David Chen</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+          <div className="flex-1" />
 
-              {/* Divider */}
-              <div className="h-10 w-px bg-border" />
-
-              {/* Actions */}
-              {!isPrinted ? (
-                <div className="flex items-center gap-1.5">
-                  <Button size="sm" className="h-9 text-xs gap-1.5 rounded-md shadow-sm px-4 font-semibold" onClick={() => onPrint?.(group.id)}>
-                    <Printer className="w-3.5 h-3.5" />
-                    Print All
-                  </Button>
-                  <div className="flex items-center border rounded-md overflow-hidden">
-                    <Button variant="ghost" size="sm" className="h-9 text-xs rounded-none border-r px-3 hover:bg-muted" onClick={() => onPrint?.(group.id)}>
-                      <FileText className="w-3 h-3 mr-1" />
-                      {group.type === "INV" ? "Invoice" : group.type === "DT" ? "DT" : "WO"}
-                    </Button>
-                    <Button variant="ghost" size="sm" className="h-9 text-xs rounded-none border-r px-3 hover:bg-muted">
-                      <Award className="w-3 h-3 mr-1" />
-                      Certs
-                    </Button>
-                    <Button variant="ghost" size="sm" className="h-9 text-xs rounded-none px-3 hover:bg-muted">
-                      <Database className="w-3 h-3 mr-1" />
-                      Data
-                    </Button>
-                  </div>
-                </div>
-              ) : (
-                <Badge variant="outline" className="text-xs text-muted-foreground gap-1 px-3 py-1.5">
-                  <Printer className="w-3 h-3" />
-                  Printed
-                </Badge>
-              )}
-            </div>
+          <div className={`flex items-center gap-1.5 whitespace-nowrap ${isOverdue ? "text-destructive" : "text-muted-foreground"}`}>
+            <span className="uppercase tracking-wider text-[9px] font-medium">Deliver</span>
+            <span className={`text-xs font-semibold ${isOverdue ? "text-destructive" : "text-foreground"}`}>{displayDate}</span>
+            {isOverdue && <span className="text-[9px] font-bold uppercase">Overdue</span>}
           </div>
+
+          <div className="h-4 w-px bg-border shrink-0" />
+
+          <span className="text-[11px] text-muted-foreground whitespace-nowrap">
+            <span className="font-semibold text-foreground">{group.itemCount}</span> items
+          </span>
+
+          <div className="h-4 w-px bg-border shrink-0" />
+
+          <Select value={driver} onValueChange={setDriver}>
+            <SelectTrigger className="h-7 w-[130px] text-[11px] rounded border-dashed">
+              <SelectValue placeholder="Assign Driver" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="unassigned">Unassigned</SelectItem>
+              <SelectItem value="mike-johnson">Mike Johnson</SelectItem>
+              <SelectItem value="sarah-williams">Sarah Williams</SelectItem>
+              <SelectItem value="david-chen">David Chen</SelectItem>
+            </SelectContent>
+          </Select>
+
+          {!isPrinted ? (
+            <div className="flex items-center gap-1">
+              <Button size="sm" className="h-7 text-[11px] gap-1 rounded px-3" onClick={() => onPrint?.(group.id)}>
+                <Printer className="w-3 h-3" />
+                Print All
+              </Button>
+              <Button variant="outline" size="sm" className="h-7 text-[11px] rounded px-2" onClick={() => onPrint?.(group.id)}>
+                {group.type === "INV" ? "Inv" : group.type === "DT" ? "DT" : "WO"}
+              </Button>
+              <Button variant="outline" size="sm" className="h-7 text-[11px] rounded px-2">Certs</Button>
+              <Button variant="outline" size="sm" className="h-7 text-[11px] rounded px-2">Data</Button>
+            </div>
+          ) : (
+            <Badge variant="outline" className="text-[10px] text-muted-foreground gap-1 px-2 py-0.5">
+              <Printer className="w-2.5 h-2.5" />
+              Printed
+            </Badge>
+          )}
         </div>
 
         {/* Items Table */}
