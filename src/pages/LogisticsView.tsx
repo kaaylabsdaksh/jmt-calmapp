@@ -215,22 +215,22 @@ const LogisticsGroupCard = ({ group, isPrinted, onPrint }: { group: LogisticsGro
             </div>
           </div>
 
-          {/* Right: Driver + Priority pill above printables */}
-          <div className="flex items-center gap-2 shrink-0">
-            <Select value={driver} onValueChange={setDriver}>
-              <SelectTrigger className="h-7 w-[130px] text-[11px] rounded border-dashed">
-                <SelectValue placeholder="Assign Driver" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="unassigned">Unassigned</SelectItem>
-                <SelectItem value="mike-johnson">Mike Johnson</SelectItem>
-                <SelectItem value="sarah-williams">Sarah Williams</SelectItem>
-                <SelectItem value="david-chen">David Chen</SelectItem>
-              </SelectContent>
-            </Select>
+          {/* Right: Priority pill + Driver + Printables */}
+          <div className="flex flex-col items-end gap-1 shrink-0">
+            <PriorityBadge priority={group.priority} />
+            <div className="flex items-center gap-2">
+              <Select value={driver} onValueChange={setDriver}>
+                <SelectTrigger className="h-7 w-[130px] text-[11px] rounded border-dashed">
+                  <SelectValue placeholder="Assign Driver" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="unassigned">Unassigned</SelectItem>
+                  <SelectItem value="mike-johnson">Mike Johnson</SelectItem>
+                  <SelectItem value="sarah-williams">Sarah Williams</SelectItem>
+                  <SelectItem value="david-chen">David Chen</SelectItem>
+                </SelectContent>
+              </Select>
 
-            <div className="flex flex-col items-end gap-1">
-              <PriorityBadge priority={group.priority} />
               {!isPrinted ? (
                 <div className="flex items-center gap-1">
                   <Button size="sm" className="h-7 text-[11px] gap-1 rounded px-3" onClick={() => onPrint?.(group.id)}>
