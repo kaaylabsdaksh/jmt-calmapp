@@ -60,10 +60,10 @@ const mockItems: LogisticsItem[] = [
 
 // --- Grouping logic: InvoiceNum > DTNum > WONumber ---
 const groupMetadata: Record<string, Omit<LogisticsGroup, "id" | "items" | "itemCount">> = {
-  "INV-988620": { type: "INV", number: "988620", invoiceDate: "Friday, February 20, 2026", priority: "EMERGENCY", customerName: "ExxonMobil Baton Rouge", city: "Baton Rouge", state: "LA", division: "Lab", deliverBy: "Sunday, March 1, 2026", assignedDriver: "unassigned" },
-  "DT-40915": { type: "DT", number: "40915", priority: "RUSH", customerName: "Turner Industries", city: "Lake Charles", state: "LA", division: "Field", deliverBy: "Monday, March 9, 2026", assignedDriver: "unassigned" },
-  "INV-988635": { type: "INV", number: "988635", invoiceDate: "Monday, February 24, 2026", priority: "NORMAL", customerName: "Dow Chemical Plaquemine", city: "Plaquemine", state: "LA", division: "Lab", deliverBy: "Wednesday, March 5, 2026", assignedDriver: "unassigned" },
-  "WO-572230": { type: "WO", number: "572230", priority: "NORMAL", customerName: "BASF Geismar", city: "Geismar", state: "LA", division: "Field", deliverBy: "Thursday, March 12, 2026", assignedDriver: "unassigned" },
+  "INV-988620": { type: "INV", number: "988620", invoiceDate: "Friday, February 20, 2026", priority: "EMERGENCY", customerName: "ExxonMobil Baton Rouge", city: "Baton Rouge", state: "LA", division: "Lab", deliverBy: "2026-03-01", assignedDriver: "unassigned" },
+  "DT-40915": { type: "DT", number: "40915", priority: "RUSH", customerName: "Turner Industries", city: "Lake Charles", state: "LA", division: "Field", deliverBy: "2026-03-09", assignedDriver: "unassigned" },
+  "INV-988635": { type: "INV", number: "988635", invoiceDate: "Monday, February 24, 2026", priority: "NORMAL", customerName: "Dow Chemical Plaquemine", city: "Plaquemine", state: "LA", division: "Lab", deliverBy: "2026-03-25", assignedDriver: "unassigned" },
+  "INV-988640": { type: "INV", number: "988640", invoiceDate: "Wednesday, March 4, 2026", priority: "RUSH", customerName: "Sasol Lake Charles", city: "Westlake", state: "LA", division: "Lab", deliverBy: "2026-03-15", assignedDriver: "unassigned" },
 };
 
 function buildGroups(items: LogisticsItem[]): LogisticsGroup[] {
