@@ -136,8 +136,13 @@ const PriorityBadge = ({ priority }: { priority: LogisticsGroup["priority"] }) =
 };
 
 // --- Logistics Group Card ---
-const LogisticsGroupCard = ({ group, isPrinted, onPrint }: { group: LogisticsGroup; isPrinted?: boolean; onPrint?: (id: string) => void }) => {
+const LogisticsGroupCard = ({ group, isPrinted, onPrint, forceOpen }: { group: LogisticsGroup; isPrinted?: boolean; onPrint?: (id: string) => void; forceOpen?: boolean | null }) => {
   const [isOpen, setIsOpen] = useState(!isPrinted);
+  
+  React.useEffect(() => {
+    if (forceOpen === true) setIsOpen(true);
+    if (forceOpen === false) setIsOpen(false);
+  }, [forceOpen]);
   const [driver, setDriver] = useState(group.assignedDriver);
 
   const typeLabel = group.type === "INV" ? "Invoice" : group.type === "DT" ? "DT" : "WO";
