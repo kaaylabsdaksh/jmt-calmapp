@@ -321,10 +321,10 @@ export function AppSidebar() {
                                 className={`
                                   w-full justify-start h-10 px-3 
                                   ${isActiveItem(action.title) 
-                                    ? "bg-sidebar-accent text-sidebar-accent-foreground shadow-sm font-semibold" 
-                                    : "text-sidebar-foreground hover:text-sidebar-accent-foreground"
+                                    ? "border-l-[3px] border-primary bg-primary/5 text-primary font-semibold" 
+                                    : "text-sidebar-foreground hover:text-sidebar-accent-foreground border-l-[3px] border-transparent"
                                   }
-                                  hover:bg-sidebar-accent hover:shadow-sm
+                                  hover:bg-sidebar-accent
                                   transition-all duration-200 ease-in-out
                                   group-hover:translate-x-1
                                 `}
