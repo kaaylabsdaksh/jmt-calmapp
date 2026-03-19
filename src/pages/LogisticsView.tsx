@@ -182,9 +182,13 @@ const LogisticsGroupCard = ({ group, isPrinted, onPrint }: { group: LogisticsGro
             </Button>
           </CollapsibleTrigger>
 
-          <span className="font-bold text-[13px] text-foreground whitespace-nowrap">{typeLabel} #{group.number}</span>
-          <PriorityBadge priority={group.priority} />
-          <Badge variant="outline" className="text-[9px] font-medium px-1.5 py-0 h-4">{group.division}</Badge>
+          <div className="flex flex-col">
+            <span className="font-bold text-[13px] text-foreground whitespace-nowrap">{typeLabel} #{group.number}</span>
+            <div className="flex items-center gap-1.5 mt-0.5">
+              <PriorityBadge priority={group.priority} />
+              <Badge variant="outline" className="text-[9px] font-medium px-1.5 py-0 h-4">{group.division}</Badge>
+            </div>
+          </div>
 
           <div className="h-4 w-px bg-border shrink-0" />
 
