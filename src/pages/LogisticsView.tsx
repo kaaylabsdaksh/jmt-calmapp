@@ -128,7 +128,7 @@ const LogisticsGroupCard = ({ group, isPrinted, onPrint }: { group: LogisticsGro
 
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-      <div className={`bg-card rounded-lg border shadow-sm overflow-hidden border-l-4 ${borderColor}`}>
+      <div className={`bg-card rounded-lg border shadow-sm overflow-hidden border-l-4 ${borderColor} ${isPrinted ? "opacity-50 grayscale" : ""}`}>
         {/* Card Header */}
         <div className="px-4 py-3 flex items-center gap-3 flex-wrap">
           <CollapsibleTrigger asChild>
