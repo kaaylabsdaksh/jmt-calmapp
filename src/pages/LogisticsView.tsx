@@ -241,7 +241,25 @@ const LogisticsView = () => {
   const [activeTab, setActiveTab] = useState<"awaiting" | "printed">("awaiting");
   const [searchQuery, setSearchQuery] = useState("");
 
-  const awaitingCount = mockGroups.length;
+  // Auto-filter groups based on search query
+  const filteredGroups = mockGroups.filter(group => {
+    if (!searchQuery.trim()) return true;
+    const q = searchQuery.toLowerCase();
+    return (
+      group.customerName.toLowerCase().includes(q) ||
+      group.number.toLowerCase().includes(q) ||
+      group.city.toLowerCase().includes(q) ||
+      group.division.toLowerCase().includes(q) ||
+      group.items.some(item =>
+        item.woBatch.toLowerCase().includes(q) ||
+        item.manufacturer.toLowerCase().includes(q) ||
+        item.model.toLowerCase().includes(q) ||
+        item.description.toLowerCase().includes(q)
+      )
+    );
+  });
+
+  const awaitingCount = filteredGroups.length;
   const printedCount = 1;
 
   return (
@@ -463,9 +481,15 @@ const LogisticsView = () => {
       {/* Content */}
       <div className="px-6 py-4 space-y-4">
         {activeTab === "awaiting" ? (
-          mockGroups.map(group => (
-            <LogisticsGroupCard key={group.id} group={group} />
-          ))
+          filteredGroups.length > 0 ? (
+            filteredGroups.map(group => (
+              <LogisticsGroupCard key={group.id} group={group} />
+            ))
+          ) : (
+            <div className="text-center py-12 text-muted-foreground text-sm">
+              No results found for "{searchQuery}".
+            </div>
+          )
         ) : (
           <div className="text-center py-12 text-muted-foreground text-sm">
             No printed/ready shipments at this time.
