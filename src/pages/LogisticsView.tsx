@@ -303,11 +303,8 @@ const LogisticsView = () => {
   };
   // Apply filters and search
   const applyFilters = (groups: LogisticsGroup[]) => groups.filter(group => {
-    // Location filter (INV vs DT)
-    if (locationFilter.length > 0) {
-      const typeMap: Record<string, string> = { inv: "INV", dt: "DT" };
-      if (!locationFilter.some(v => typeMap[v] === group.type)) return false;
-    }
+    // Location filter (matches city)
+    if (locationFilter.length > 0 && !locationFilter.some(v => group.city.toLowerCase().replace(/\s+/g, "-") === v)) return false;
     // State filter
     if (stateFilter.length > 0 && !stateFilter.some(v => group.state.toLowerCase().replace(/\s+/g, "-") === v)) return false;
     // City filter
