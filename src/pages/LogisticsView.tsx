@@ -29,7 +29,7 @@ interface LogisticsGroup {
   type: "INV" | "DT" | "WO";
   number: string;
   invoiceDate?: string;
-  priority: "EMERGENCY" | "RUSH" | "NORMAL";
+  priority: "EMERGENCY" | "EXPEDITE" | "RUSH" | "NORMAL";
   customerName: string;
   city: string;
   state: string;
@@ -113,12 +113,15 @@ const mockGroups: LogisticsGroup[] = buildGroups(mockItems);
 const PriorityBadge = ({ priority }: { priority: LogisticsGroup["priority"] }) => {
   if (priority === "NORMAL") return null;
   
-  const config = {
+  const config: Record<string, { icon: typeof AlertTriangle; className: string }> = {
     EMERGENCY: { icon: AlertTriangle, className: "bg-destructive text-destructive-foreground font-semibold tracking-wide" },
+    EXPEDITE: { icon: Zap, className: "bg-orange-500 text-white font-semibold tracking-wide" },
     RUSH: { icon: Zap, className: "bg-warning text-warning-foreground font-semibold tracking-wide" },
   };
   
-  const { icon: Icon, className } = config[priority];
+  const entry = config[priority];
+  if (!entry) return null;
+  const { icon: Icon, className } = entry;
   return (
     <Badge className={`${className} text-[10px] px-2 py-0.5 gap-1 uppercase`}>
       <Icon className="w-3 h-3" />
@@ -146,12 +149,16 @@ const LogisticsGroupCard = ({ group, isPrinted, onPrint }: { group: LogisticsGro
 
   const stripeColor = group.priority === "EMERGENCY"
     ? "bg-destructive"
+    : group.priority === "EXPEDITE"
+    ? "bg-orange-500"
     : group.priority === "RUSH"
     ? "bg-warning"
     : "bg-border";
 
   const cardBorder = group.priority === "EMERGENCY"
     ? "border-destructive/30"
+    : group.priority === "EXPEDITE"
+    ? "border-orange-400/30"
     : group.priority === "RUSH"
     ? "border-warning/30"
     : "border-border";
