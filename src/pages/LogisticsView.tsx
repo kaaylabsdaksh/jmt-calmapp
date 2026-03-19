@@ -115,8 +115,8 @@ const PriorityBadge = ({ priority }: { priority: LogisticsGroup["priority"] }) =
 };
 
 // --- Logistics Group Card ---
-const LogisticsGroupCard = ({ group }: { group: LogisticsGroup }) => {
-  const [isOpen, setIsOpen] = useState(true);
+const LogisticsGroupCard = ({ group, isPrinted, onPrint }: { group: LogisticsGroup; isPrinted?: boolean; onPrint?: (id: string) => void }) => {
+  const [isOpen, setIsOpen] = useState(!isPrinted);
   const [driver, setDriver] = useState(group.assignedDriver);
 
   const typeLabel = group.type === "INV" ? "Inv" : "DT";
