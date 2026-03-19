@@ -104,7 +104,9 @@ export function AppSidebar() {
   const location = useLocation();
   const [expandedGroups, setExpandedGroups] = useState<string[]>(["Core Operations"]);
   const [expandedWorkOrders, setExpandedWorkOrders] = useState(false);
-  const [expandedViews, setExpandedViews] = useState(false);
+  const [expandedViews, setExpandedViews] = useState(
+    location.pathname === "/logistics-view" || location.pathname === "/customer-pickup"
+  );
 
   const handleLogout = () => {
     // Navigate to login page
@@ -119,10 +121,19 @@ export function AppSidebar() {
     );
   };
 
-  // Check if current item is active (for Work Orders screen)
+  // Check if current item is active based on route
   const isActiveItem = (itemTitle: string) => {
     if (itemTitle === "Work Orders") {
-      return location.pathname === "/" || location.pathname.includes("work-order") || location.pathname === "/add-new-work-order";
+      return location.pathname === "/" || location.pathname.includes("work-order") || location.pathname === "/add-new-work-order" || location.pathname === "/edit-order" || location.pathname === "/edit-batch-work-order" || location.pathname === "/batch-details";
+    }
+    if (itemTitle === "Views") {
+      return location.pathname === "/logistics-view" || location.pathname === "/customer-pickup";
+    }
+    if (itemTitle === "Unused Items") {
+      return location.pathname === "/unused-items";
+    }
+    if (itemTitle === "Form Variations") {
+      return location.pathname === "/form-variations";
     }
     return false;
   };
@@ -249,7 +260,10 @@ export function AppSidebar() {
                                     <div
                                       className={`
                                         flex items-center w-full h-10 px-3 rounded-md
-                                        text-sidebar-foreground hover:text-sidebar-accent-foreground
+                                        ${isActiveItem("Views") 
+                                          ? "bg-sidebar-accent text-sidebar-accent-foreground shadow-sm font-semibold" 
+                                          : "text-sidebar-foreground hover:text-sidebar-accent-foreground"
+                                        }
                                         hover:bg-sidebar-accent hover:shadow-sm
                                         transition-all duration-200 ease-in-out
                                         group-hover:translate-x-1 cursor-pointer
