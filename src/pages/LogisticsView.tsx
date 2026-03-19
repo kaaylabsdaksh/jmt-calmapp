@@ -149,12 +149,16 @@ const LogisticsGroupCard = ({ group, isPrinted, onPrint }: { group: LogisticsGro
 
   const stripeColor = group.priority === "EMERGENCY"
     ? "bg-destructive"
+    : group.priority === "EXPEDITE"
+    ? "bg-orange-500"
     : group.priority === "RUSH"
     ? "bg-warning"
     : "bg-border";
 
   const cardBorder = group.priority === "EMERGENCY"
     ? "border-destructive/30"
+    : group.priority === "EXPEDITE"
+    ? "border-orange-400/30"
     : group.priority === "RUSH"
     ? "border-warning/30"
     : "border-border";
