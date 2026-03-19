@@ -113,12 +113,15 @@ const mockGroups: LogisticsGroup[] = buildGroups(mockItems);
 const PriorityBadge = ({ priority }: { priority: LogisticsGroup["priority"] }) => {
   if (priority === "NORMAL") return null;
   
-  const config = {
+  const config: Record<string, { icon: typeof AlertTriangle; className: string }> = {
     EMERGENCY: { icon: AlertTriangle, className: "bg-destructive text-destructive-foreground font-semibold tracking-wide" },
+    EXPEDITE: { icon: Zap, className: "bg-orange-500 text-white font-semibold tracking-wide" },
     RUSH: { icon: Zap, className: "bg-warning text-warning-foreground font-semibold tracking-wide" },
   };
   
-  const { icon: Icon, className } = config[priority];
+  const entry = config[priority];
+  if (!entry) return null;
+  const { icon: Icon, className } = entry;
   return (
     <Badge className={`${className} text-[10px] px-2 py-0.5 gap-1 uppercase`}>
       <Icon className="w-3 h-3" />
