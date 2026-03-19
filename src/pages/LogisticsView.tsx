@@ -463,9 +463,15 @@ const LogisticsView = () => {
       {/* Content */}
       <div className="px-6 py-4 space-y-4">
         {activeTab === "awaiting" ? (
-          mockGroups.map(group => (
-            <LogisticsGroupCard key={group.id} group={group} />
-          ))
+          filteredGroups.length > 0 ? (
+            filteredGroups.map(group => (
+              <LogisticsGroupCard key={group.id} group={group} />
+            ))
+          ) : (
+            <div className="text-center py-12 text-muted-foreground text-sm">
+              No results found for "{searchQuery}".
+            </div>
+          )
         ) : (
           <div className="text-center py-12 text-muted-foreground text-sm">
             No printed/ready shipments at this time.
