@@ -198,10 +198,10 @@ export function AppSidebar() {
                                     <Link
                                       to="/"
                                       className={`
-                                        flex items-center w-full h-10 px-3 rounded-md
+                                        flex items-center w-full h-10 px-3 rounded-lg
                                         ${isActiveItem(action.title) 
-                                          ? "border-l-[3px] border-primary bg-primary/5 text-primary font-semibold" 
-                                          : "text-sidebar-foreground hover:text-sidebar-accent-foreground border-l-[3px] border-transparent"
+                                          ? "bg-sidebar-foreground/15 text-sidebar-foreground font-semibold shadow-sm" 
+                                          : "text-sidebar-foreground hover:text-sidebar-accent-foreground"
                                         }
                                         hover:bg-sidebar-accent
                                         transition-all duration-200 ease-in-out
@@ -259,10 +259,10 @@ export function AppSidebar() {
                                   >
                                     <div
                                       className={`
-                                        flex items-center w-full h-10 px-3 rounded-md
+                                        flex items-center w-full h-10 px-3 rounded-lg
                                         ${isActiveItem("Views") 
-                                          ? "border-l-[3px] border-primary bg-primary/5 text-primary font-semibold" 
-                                          : "text-sidebar-foreground hover:text-sidebar-accent-foreground border-l-[3px] border-transparent"
+                                          ? "bg-sidebar-foreground/15 text-sidebar-foreground font-semibold shadow-sm" 
+                                          : "text-sidebar-foreground hover:text-sidebar-accent-foreground"
                                         }
                                         hover:bg-sidebar-accent
                                         transition-all duration-200 ease-in-out
@@ -298,7 +298,7 @@ export function AppSidebar() {
                                         <Button
                                           variant="ghost"
                                           size="sm"
-                                          className={`w-full justify-start h-9 px-2 hover:bg-sidebar-accent/50 transition-all ${location.pathname === subAction.url ? 'bg-primary/5 text-primary font-medium border-l-2 border-primary' : 'text-sidebar-foreground/80 hover:text-sidebar-accent-foreground'}`}
+                                          className={`w-full justify-start h-9 px-2 hover:bg-sidebar-accent/50 transition-all rounded-md ${location.pathname === subAction.url ? 'bg-sidebar-foreground/15 text-sidebar-foreground font-medium shadow-sm' : 'text-sidebar-foreground/80 hover:text-sidebar-accent-foreground'}`}
                                         >
                                           {React.createElement(subAction.icon, { className: "h-3.5 w-3.5 shrink-0 mr-2" })}
                                           <span className="text-xs">{subAction.title}</span>
@@ -319,10 +319,10 @@ export function AppSidebar() {
                                 variant="ghost"
                                 size="sm"
                                 className={`
-                                  w-full justify-start h-10 px-3 
+                                  w-full justify-start h-10 px-3 rounded-lg
                                   ${isActiveItem(action.title) 
-                                    ? "border-l-[3px] border-primary bg-primary/5 text-primary font-semibold" 
-                                    : "text-sidebar-foreground hover:text-sidebar-accent-foreground border-l-[3px] border-transparent"
+                                    ? "bg-sidebar-foreground/15 text-sidebar-foreground font-semibold shadow-sm" 
+                                    : "text-sidebar-foreground hover:text-sidebar-accent-foreground"
                                   }
                                   hover:bg-sidebar-accent
                                   transition-all duration-200 ease-in-out
@@ -360,9 +360,9 @@ export function AppSidebar() {
                           <Link
                             to="/"
                             className={`
-                              flex items-center justify-center w-full h-10 px-0 rounded-md
+                              flex items-center justify-center w-full h-10 px-0 rounded-lg
                               ${isActiveItem(action.title) 
-                                ? "bg-sidebar-accent text-sidebar-accent-foreground shadow-sm font-semibold" 
+                                ? "bg-sidebar-foreground/15 text-sidebar-foreground shadow-sm font-semibold" 
                                 : "text-sidebar-foreground hover:text-sidebar-accent-foreground"
                               }
                               hover:bg-sidebar-accent hover:shadow-sm
@@ -379,9 +379,9 @@ export function AppSidebar() {
                             variant="ghost"
                             size="sm"
                             className={`
-                              w-full justify-center h-10 px-0
+                              w-full justify-center h-10 px-0 rounded-lg
                               ${isActiveItem(action.title) 
-                                ? "bg-sidebar-accent text-sidebar-accent-foreground shadow-sm font-semibold" 
+                                ? "bg-sidebar-foreground/15 text-sidebar-foreground shadow-sm font-semibold" 
                                 : "text-sidebar-foreground hover:text-sidebar-accent-foreground"
                               }
                               hover:bg-sidebar-accent hover:shadow-sm
