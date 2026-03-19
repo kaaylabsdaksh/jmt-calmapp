@@ -29,7 +29,7 @@ interface LogisticsGroup {
   type: "INV" | "DT" | "WO";
   number: string;
   invoiceDate?: string;
-  priority: "EMERGENCY" | "RUSH" | "NORMAL";
+  priority: "EMERGENCY" | "EXPEDITE" | "RUSH" | "NORMAL";
   customerName: string;
   city: string;
   state: string;
