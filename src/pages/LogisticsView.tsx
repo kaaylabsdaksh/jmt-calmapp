@@ -157,7 +157,7 @@ const LogisticsGroupCard = ({ group, isPrinted, onPrint }: { group: LogisticsGro
     : group.priority === "EXPEDITE"
     ? "bg-orange-500"
     : group.priority === "RUSH"
-    ? "bg-warning"
+    ? "bg-yellow-400"
     : "bg-border";
 
   const cardBorder = group.priority === "EMERGENCY"
