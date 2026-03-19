@@ -498,19 +498,25 @@ const LogisticsView = () => {
       {/* Content */}
       <div className="px-6 py-4 space-y-4">
         {activeTab === "awaiting" ? (
-          filteredGroups.length > 0 ? (
-            filteredGroups.map(group => (
-              <LogisticsGroupCard key={group.id} group={group} />
+          awaitingGroups.length > 0 ? (
+            awaitingGroups.map(group => (
+              <LogisticsGroupCard key={group.id} group={group} onPrint={handlePrint} />
             ))
           ) : (
             <div className="text-center py-12 text-muted-foreground text-sm">
-              No results found for "{searchQuery}".
+              {searchQuery ? `No results found for "${searchQuery}".` : "All groups have been printed."}
             </div>
           )
         ) : (
-          <div className="text-center py-12 text-muted-foreground text-sm">
-            No printed/ready shipments at this time.
-          </div>
+          printedGroups.length > 0 ? (
+            printedGroups.map(group => (
+              <LogisticsGroupCard key={group.id} group={group} isPrinted />
+            ))
+          ) : (
+            <div className="text-center py-12 text-muted-foreground text-sm">
+              No printed/ready shipments at this time.
+            </div>
+          )
         )}
       </div>
     </div>
