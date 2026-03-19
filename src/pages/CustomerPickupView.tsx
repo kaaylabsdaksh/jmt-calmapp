@@ -279,10 +279,6 @@ const PickupGroupCard = ({ group, isPrinted, onPrint, forceOpen }: { group: Pick
 // --- Main Page ---
 const CustomerPickupView = () => {
   const [locationFilter, setLocationFilter] = useState<string[]>([]);
-  const [stateFilter, setStateFilter] = useState<string[]>([]);
-  const [cityFilter, setCityFilter] = useState<string[]>([]);
-  const [divisionFilter, setDivisionFilter] = useState<string[]>([]);
-  const [assignedToFilter, setAssignedToFilter] = useState<string[]>([]);
   const [activeTab, setActiveTab] = useState<"awaiting" | "printed">("awaiting");
   const [searchQuery, setSearchQuery] = useState("");
   const [printedIds, setPrintedIds] = useState<Set<string>>(new Set());
@@ -294,12 +290,6 @@ const CustomerPickupView = () => {
 
   const applyFilters = (groups: PickupGroup[]) => groups.filter(group => {
     if (locationFilter.length > 0 && !locationFilter.some(v => group.city.toLowerCase().replace(/\s+/g, "-") === v)) return false;
-    if (stateFilter.length > 0 && !stateFilter.some(v => group.state.toLowerCase().replace(/\s+/g, "-") === v)) return false;
-    if (cityFilter.length > 0 && !cityFilter.some(v => group.city.toLowerCase().replace(/\s+/g, "-") === v)) return false;
-    if (divisionFilter.length > 0 && !divisionFilter.some(v => group.division.toLowerCase() === v)) return false;
-    if (assignedToFilter.length > 0) {
-      if (!assignedToFilter.some(v => group.assignedTo === v || group.assignedTo === "unassigned")) return false;
-    }
     if (!searchQuery.trim()) return true;
     const q = searchQuery.toLowerCase();
     return (
@@ -376,10 +366,6 @@ const CustomerPickupView = () => {
           <div className="flex items-center gap-2 flex-wrap flex-1">
             {([
               { label: "Location", values: locationFilter, onChange: setLocationFilter, singleSelect: false, options: [{ v: "baton-rouge", l: "Baton Rouge" }, { v: "norco", l: "Norco" }, { v: "garyville", l: "Garyville" }, { v: "donaldsonville", l: "Donaldsonville" }] },
-              { label: "State", values: stateFilter, onChange: setStateFilter, singleSelect: false, options: [{ v: "la", l: "Louisiana" }, { v: "tx", l: "Texas" }] },
-              { label: "City", values: cityFilter, onChange: setCityFilter, singleSelect: false, options: [{ v: "baton-rouge", l: "Baton Rouge" }, { v: "norco", l: "Norco" }, { v: "garyville", l: "Garyville" }, { v: "donaldsonville", l: "Donaldsonville" }] },
-              { label: "Division", values: divisionFilter, onChange: setDivisionFilter, singleSelect: false, options: [{ v: "lab", l: "Lab" }, { v: "field", l: "Field" }] },
-              { label: "Assigned To", values: assignedToFilter, onChange: setAssignedToFilter, singleSelect: false, options: [{ v: "front-desk", l: "Front Desk" }, { v: "warehouse", l: "Warehouse" }, { v: "will-call", l: "Will Call" }] },
             ] as const).map(({ label, values, onChange, singleSelect, options }) => {
               const displayText = values.length === 0
                 ? "All"
@@ -453,16 +439,12 @@ const CustomerPickupView = () => {
               );
             })}
 
-            {(locationFilter.length > 0 || stateFilter.length > 0 || cityFilter.length > 0 || divisionFilter.length > 0 || assignedToFilter.length > 0 || searchQuery.trim().length > 0) && (
+            {(locationFilter.length > 0 || searchQuery.trim().length > 0) && (
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => {
                   setLocationFilter([]);
-                  setStateFilter([]);
-                  setCityFilter([]);
-                  setDivisionFilter([]);
-                  setAssignedToFilter([]);
                   setSearchQuery("");
                 }}
                 className="h-8 text-xs text-destructive hover:text-destructive hover:bg-destructive/10 gap-1"
@@ -478,10 +460,6 @@ const CustomerPickupView = () => {
         {(() => {
           const allFilters = [
             { label: "Location", values: locationFilter, onChange: setLocationFilter, options: [{ v: "baton-rouge", l: "Baton Rouge" }, { v: "norco", l: "Norco" }, { v: "garyville", l: "Garyville" }, { v: "donaldsonville", l: "Donaldsonville" }] },
-            { label: "State", values: stateFilter, onChange: setStateFilter, options: [{ v: "la", l: "Louisiana" }, { v: "tx", l: "Texas" }] },
-            { label: "City", values: cityFilter, onChange: setCityFilter, options: [{ v: "baton-rouge", l: "Baton Rouge" }, { v: "norco", l: "Norco" }, { v: "garyville", l: "Garyville" }, { v: "donaldsonville", l: "Donaldsonville" }] },
-            { label: "Division", values: divisionFilter, onChange: setDivisionFilter, options: [{ v: "lab", l: "Lab" }, { v: "field", l: "Field" }] },
-            { label: "Assigned To", values: assignedToFilter, onChange: setAssignedToFilter, options: [{ v: "front-desk", l: "Front Desk" }, { v: "warehouse", l: "Warehouse" }, { v: "will-call", l: "Will Call" }] },
           ];
           const tags = allFilters.flatMap(f =>
             f.values.map(v => ({
