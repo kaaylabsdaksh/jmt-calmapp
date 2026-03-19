@@ -204,17 +204,15 @@ const LogisticsGroupCard = ({ group, isPrinted, onPrint }: { group: LogisticsGro
 
           <div className="flex-1" />
 
-          <div className={`flex items-center gap-1.5 whitespace-nowrap ${isOverdue ? "text-destructive" : "text-muted-foreground"}`}>
-            <span className="uppercase tracking-wider text-[9px] font-medium">Deliver</span>
-            <span className={`text-xs font-semibold ${isOverdue ? "text-destructive" : "text-foreground"}`}>{displayDate}</span>
-            
+          <div className="flex flex-col items-end whitespace-nowrap">
+            <div className={`flex items-center gap-1.5 ${isOverdue ? "text-destructive" : "text-muted-foreground"}`}>
+              <span className="uppercase tracking-wider text-[9px] font-medium">Deliver</span>
+              <span className={`text-xs font-semibold ${isOverdue ? "text-destructive" : "text-foreground"}`}>{displayDate}</span>
+            </div>
+            <span className="text-[11px] text-muted-foreground mt-0.5">
+              <span className="font-semibold text-foreground">{group.itemCount}</span> items
+            </span>
           </div>
-
-          <div className="h-4 w-px bg-border shrink-0" />
-
-          <span className="text-[11px] text-muted-foreground whitespace-nowrap">
-            <span className="font-semibold text-foreground">{group.itemCount}</span> items
-          </span>
 
           <div className="h-4 w-px bg-border shrink-0" />
 
