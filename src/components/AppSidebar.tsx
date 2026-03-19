@@ -258,7 +258,10 @@ export function AppSidebar() {
                                     <div
                                       className={`
                                         flex items-center w-full h-10 px-3 rounded-md
-                                        text-sidebar-foreground hover:text-sidebar-accent-foreground
+                                        ${isActiveItem("Views") 
+                                          ? "bg-sidebar-accent text-sidebar-accent-foreground shadow-sm font-semibold" 
+                                          : "text-sidebar-foreground hover:text-sidebar-accent-foreground"
+                                        }
                                         hover:bg-sidebar-accent hover:shadow-sm
                                         transition-all duration-200 ease-in-out
                                         group-hover:translate-x-1 cursor-pointer
