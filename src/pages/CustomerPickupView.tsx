@@ -290,12 +290,6 @@ const CustomerPickupView = () => {
 
   const applyFilters = (groups: PickupGroup[]) => groups.filter(group => {
     if (locationFilter.length > 0 && !locationFilter.some(v => group.city.toLowerCase().replace(/\s+/g, "-") === v)) return false;
-    if (stateFilter.length > 0 && !stateFilter.some(v => group.state.toLowerCase().replace(/\s+/g, "-") === v)) return false;
-    if (cityFilter.length > 0 && !cityFilter.some(v => group.city.toLowerCase().replace(/\s+/g, "-") === v)) return false;
-    if (divisionFilter.length > 0 && !divisionFilter.some(v => group.division.toLowerCase() === v)) return false;
-    if (assignedToFilter.length > 0) {
-      if (!assignedToFilter.some(v => group.assignedTo === v || group.assignedTo === "unassigned")) return false;
-    }
     if (!searchQuery.trim()) return true;
     const q = searchQuery.toLowerCase();
     return (
