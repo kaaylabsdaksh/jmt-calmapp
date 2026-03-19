@@ -172,10 +172,24 @@ const LogisticsGroupCard = ({ group, isPrinted, onPrint }: { group: LogisticsGro
           <Badge variant="outline" className="text-[10px] font-normal">{group.division}</Badge>
 
           <div className="ml-auto flex items-center gap-3 flex-wrap">
-            <div className="text-xs">
-              <span className="text-muted-foreground">DELIVER BY: </span>
-              <span className="font-bold text-foreground">{group.deliverBy}</span>
-            </div>
+            {(() => {
+              const isOverdue = (() => {
+                try {
+                  return isBefore(parseISO(group.deliverBy), startOfDay(new Date()));
+                } catch { return false; }
+              })();
+              const displayDate = (() => {
+                try {
+                  return format(parseISO(group.deliverBy), "EEEE, MMMM d, yyyy");
+                } catch { return group.deliverBy; }
+              })();
+              return (
+                <div className="text-xs">
+                  <span className="text-muted-foreground">DELIVER BY: </span>
+                  <span className={`font-bold ${isOverdue ? "text-red-600 bg-red-100 px-1.5 py-0.5 rounded" : "text-foreground"}`}>{displayDate}</span>
+                </div>
+              );
+            })()}
 
             <Badge variant="secondary" className="text-xs">{group.itemCount} items</Badge>
 
