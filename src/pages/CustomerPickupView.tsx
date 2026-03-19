@@ -279,10 +279,6 @@ const PickupGroupCard = ({ group, isPrinted, onPrint, forceOpen }: { group: Pick
 // --- Main Page ---
 const CustomerPickupView = () => {
   const [locationFilter, setLocationFilter] = useState<string[]>([]);
-  const [stateFilter, setStateFilter] = useState<string[]>([]);
-  const [cityFilter, setCityFilter] = useState<string[]>([]);
-  const [divisionFilter, setDivisionFilter] = useState<string[]>([]);
-  const [assignedToFilter, setAssignedToFilter] = useState<string[]>([]);
   const [activeTab, setActiveTab] = useState<"awaiting" | "printed">("awaiting");
   const [searchQuery, setSearchQuery] = useState("");
   const [printedIds, setPrintedIds] = useState<Set<string>>(new Set());
