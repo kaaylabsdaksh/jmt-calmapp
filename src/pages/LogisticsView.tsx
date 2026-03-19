@@ -14,15 +14,18 @@ import { Checkbox } from "@/components/ui/checkbox";
 // --- Types ---
 interface LogisticsItem {
   woBatch: string;
+  woNumber: string;
   division: string;
   manufacturer: string;
   model: string;
   description: string;
+  invoiceNum?: string;
+  dtNum?: string;
 }
 
 interface LogisticsGroup {
   id: string;
-  type: "INV" | "DT";
+  type: "INV" | "DT" | "WO";
   number: string;
   invoiceDate?: string;
   priority: "EMERGENCY" | "RUSH" | "NORMAL";
@@ -36,65 +39,70 @@ interface LogisticsGroup {
   items: LogisticsItem[];
 }
 
-// --- Mock Data ---
-const mockGroups: LogisticsGroup[] = [
-  {
-    id: "1",
-    type: "INV",
-    number: "988620",
-    invoiceDate: "Friday, February 20, 2026",
-    priority: "EMERGENCY",
-    customerName: "ExxonMobil Baton Rouge",
-    city: "Baton Rouge",
-    state: "LA",
-    division: "Lab",
-    deliverBy: "Sunday, March 1, 2026",
-    itemCount: 3,
-    assignedDriver: "unassigned",
-    items: [
-      { woBatch: "572200-001", division: "Lab", manufacturer: "FLUKE", model: "719PRO 30G", description: "PRESSURE CALIBRATOR" },
-      { woBatch: "572200-002", division: "Lab", manufacturer: "ASHCROFT", model: '-30"Hg-0-60 PSI', description: "TEST GAUGE" },
-      { woBatch: "572200-003", division: "Lab", manufacturer: "WINTERS", model: "0-3000 PSI", description: "L/F PRESSURE GAUGE" },
-    ],
-  },
-  {
-    id: "2",
-    type: "DT",
-    number: "40915",
-    priority: "RUSH",
-    customerName: "Turner Industries",
-    city: "Lake Charles",
-    state: "LA",
-    division: "Field",
-    deliverBy: "Monday, March 9, 2026",
-    itemCount: 2,
-    assignedDriver: "unassigned",
-    items: [
-      { woBatch: "572210-001", division: "Field", manufacturer: "PROTO", model: "6062C", description: 'TORQUE WRENCH 1/4"' },
-      { woBatch: "572210-002", division: "Field", manufacturer: "PROTO", model: "6062D", description: 'TORQUE WRENCH 3/8"' },
-    ],
-  },
-  {
-    id: "3",
-    type: "INV",
-    number: "988635",
-    invoiceDate: "Monday, February 24, 2026",
-    priority: "NORMAL",
-    customerName: "Dow Chemical Plaquemine",
-    city: "Plaquemine",
-    state: "LA",
-    division: "Lab",
-    deliverBy: "Wednesday, March 5, 2026",
-    itemCount: 4,
-    assignedDriver: "unassigned",
-    items: [
-      { woBatch: "572220-001", division: "Lab", manufacturer: "FLUKE", model: "87V", description: "DIGITAL MULTIMETER" },
-      { woBatch: "572220-002", division: "Lab", manufacturer: "AMETEK", model: "RTC-159", description: "DRY BLOCK CALIBRATOR" },
-      { woBatch: "572220-003", division: "Lab", manufacturer: "FLUKE", model: "724", description: "TEMPERATURE CALIBRATOR" },
-      { woBatch: "572220-004", division: "Lab", manufacturer: "DRUCK", model: "DPI 611", description: "PRESSURE CALIBRATOR" },
-    ],
-  },
+// --- Raw Mock Items (flat list, before grouping) ---
+const mockItems: LogisticsItem[] = [
+  // Items with Invoice
+  { woBatch: "572200-001", woNumber: "572200", division: "Lab", manufacturer: "FLUKE", model: "719PRO 30G", description: "PRESSURE CALIBRATOR", invoiceNum: "988620", dtNum: "40910" },
+  { woBatch: "572200-002", woNumber: "572200", division: "Lab", manufacturer: "ASHCROFT", model: '-30"Hg-0-60 PSI', description: "TEST GAUGE", invoiceNum: "988620" },
+  { woBatch: "572200-003", woNumber: "572200", division: "Lab", manufacturer: "WINTERS", model: "0-3000 PSI", description: "L/F PRESSURE GAUGE", invoiceNum: "988620" },
+  // Items with DT only (no invoice)
+  { woBatch: "572210-001", woNumber: "572210", division: "Field", manufacturer: "PROTO", model: "6062C", description: 'TORQUE WRENCH 1/4"', dtNum: "40915" },
+  { woBatch: "572210-002", woNumber: "572210", division: "Field", manufacturer: "PROTO", model: "6062D", description: 'TORQUE WRENCH 3/8"', dtNum: "40915" },
+  // Items with Invoice
+  { woBatch: "572220-001", woNumber: "572220", division: "Lab", manufacturer: "FLUKE", model: "87V", description: "DIGITAL MULTIMETER", invoiceNum: "988635" },
+  { woBatch: "572220-002", woNumber: "572220", division: "Lab", manufacturer: "AMETEK", model: "RTC-159", description: "DRY BLOCK CALIBRATOR", invoiceNum: "988635" },
+  { woBatch: "572220-003", woNumber: "572220", division: "Lab", manufacturer: "FLUKE", model: "724", description: "TEMPERATURE CALIBRATOR", invoiceNum: "988635" },
+  { woBatch: "572220-004", woNumber: "572220", division: "Lab", manufacturer: "DRUCK", model: "DPI 611", description: "PRESSURE CALIBRATOR", invoiceNum: "988635" },
+  // Items with neither invoice nor DT — grouped by WO
+  { woBatch: "572230-001", woNumber: "572230", division: "Field", manufacturer: "FLUKE", model: "1587", description: "INSULATION MULTIMETER" },
+  { woBatch: "572230-002", woNumber: "572230", division: "Field", manufacturer: "MEGGER", model: "MIT485/2", description: "INSULATION TESTER" },
 ];
+
+// --- Grouping logic: InvoiceNum > DTNum > WONumber ---
+const groupMetadata: Record<string, Omit<LogisticsGroup, "id" | "items" | "itemCount">> = {
+  "INV-988620": { type: "INV", number: "988620", invoiceDate: "Friday, February 20, 2026", priority: "EMERGENCY", customerName: "ExxonMobil Baton Rouge", city: "Baton Rouge", state: "LA", division: "Lab", deliverBy: "Sunday, March 1, 2026", assignedDriver: "unassigned" },
+  "DT-40915": { type: "DT", number: "40915", priority: "RUSH", customerName: "Turner Industries", city: "Lake Charles", state: "LA", division: "Field", deliverBy: "Monday, March 9, 2026", assignedDriver: "unassigned" },
+  "INV-988635": { type: "INV", number: "988635", invoiceDate: "Monday, February 24, 2026", priority: "NORMAL", customerName: "Dow Chemical Plaquemine", city: "Plaquemine", state: "LA", division: "Lab", deliverBy: "Wednesday, March 5, 2026", assignedDriver: "unassigned" },
+  "WO-572230": { type: "WO", number: "572230", priority: "NORMAL", customerName: "BASF Geismar", city: "Geismar", state: "LA", division: "Field", deliverBy: "Thursday, March 12, 2026", assignedDriver: "unassigned" },
+};
+
+function buildGroups(items: LogisticsItem[]): LogisticsGroup[] {
+  const buckets = new Map<string, LogisticsItem[]>();
+
+  for (const item of items) {
+    const key = item.invoiceNum
+      ? `INV-${item.invoiceNum}`
+      : item.dtNum
+      ? `DT-${item.dtNum}`
+      : `WO-${item.woNumber}`;
+
+    if (!buckets.has(key)) buckets.set(key, []);
+    buckets.get(key)!.push(item);
+  }
+
+  return Array.from(buckets.entries()).map(([key, groupItems]) => {
+    const meta = groupMetadata[key] || {
+      type: key.startsWith("INV") ? "INV" : key.startsWith("DT") ? "DT" : "WO",
+      number: key.split("-")[1],
+      priority: "NORMAL" as const,
+      customerName: "Unknown",
+      city: "Unknown",
+      state: "",
+      division: groupItems[0]?.division || "",
+      deliverBy: "TBD",
+      assignedDriver: "unassigned",
+    };
+
+    return {
+      id: key,
+      ...meta,
+      items: groupItems,
+      itemCount: groupItems.length,
+    };
+  });
+}
+
+const mockGroups: LogisticsGroup[] = buildGroups(mockItems);
 
 // --- Priority Badge Component ---
 const PriorityBadge = ({ priority }: { priority: LogisticsGroup["priority"] }) => {
@@ -119,7 +127,7 @@ const LogisticsGroupCard = ({ group, isPrinted, onPrint }: { group: LogisticsGro
   const [isOpen, setIsOpen] = useState(!isPrinted);
   const [driver, setDriver] = useState(group.assignedDriver);
 
-  const typeLabel = group.type === "INV" ? "Inv" : "DT";
+  const typeLabel = group.type === "INV" ? "Inv" : group.type === "DT" ? "DT" : "WO";
   const borderColor = group.priority === "EMERGENCY" 
     ? "border-l-destructive" 
     : group.priority === "RUSH" 
@@ -186,7 +194,7 @@ const LogisticsGroupCard = ({ group, isPrinted, onPrint }: { group: LogisticsGro
                     Print All
                   </Button>
                   <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => onPrint?.(group.id)}>
-                    {group.type === "INV" ? "Invoice" : "DT"}
+                    {group.type === "INV" ? "Invoice" : group.type === "DT" ? "DT" : "WO"}
                   </Button>
                   <Button variant="outline" size="sm" className="h-8 text-xs">Certs</Button>
                   <Button variant="outline" size="sm" className="h-8 text-xs">Data</Button>
