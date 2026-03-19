@@ -200,15 +200,15 @@ export function AppSidebar() {
                                       className={`
                                         flex items-center w-full h-10 px-3 rounded-md
                                         ${isActiveItem(action.title) 
-                                          ? "bg-sidebar-accent text-sidebar-accent-foreground shadow-sm font-semibold" 
-                                          : "text-sidebar-foreground hover:text-sidebar-accent-foreground"
+                                          ? "border-l-[3px] border-primary bg-primary/5 text-primary font-semibold" 
+                                          : "text-sidebar-foreground hover:text-sidebar-accent-foreground border-l-[3px] border-transparent"
                                         }
-                                        hover:bg-sidebar-accent hover:shadow-sm
+                                        hover:bg-sidebar-accent
                                         transition-all duration-200 ease-in-out
                                         group-hover:translate-x-1
                                       `}
                                     >
-                                      {React.createElement(action.icon, { className: "h-4 w-4 shrink-0 text-sidebar-foreground group-hover:scale-110 transition-transform duration-200" })}
+                                      {React.createElement(action.icon, { className: `h-4 w-4 shrink-0 ${isActiveItem(action.title) ? "text-primary" : "text-sidebar-foreground"} group-hover:scale-110 transition-transform duration-200` })}
                                       <span className="ml-3 font-medium text-sm animate-fade-in">
                                         {action.title}
                                       </span>
@@ -261,16 +261,16 @@ export function AppSidebar() {
                                       className={`
                                         flex items-center w-full h-10 px-3 rounded-md
                                         ${isActiveItem("Views") 
-                                          ? "bg-sidebar-accent text-sidebar-accent-foreground shadow-sm font-semibold" 
-                                          : "text-sidebar-foreground hover:text-sidebar-accent-foreground"
+                                          ? "border-l-[3px] border-primary bg-primary/5 text-primary font-semibold" 
+                                          : "text-sidebar-foreground hover:text-sidebar-accent-foreground border-l-[3px] border-transparent"
                                         }
-                                        hover:bg-sidebar-accent hover:shadow-sm
+                                        hover:bg-sidebar-accent
                                         transition-all duration-200 ease-in-out
                                         group-hover:translate-x-1 cursor-pointer
                                       `}
                                       onClick={() => setExpandedViews(!expandedViews)}
                                     >
-                                      {React.createElement(action.icon, { className: "h-4 w-4 shrink-0 text-sidebar-foreground group-hover:scale-110 transition-transform duration-200" })}
+                                      {React.createElement(action.icon, { className: `h-4 w-4 shrink-0 ${isActiveItem("Views") ? "text-primary" : "text-sidebar-foreground"} group-hover:scale-110 transition-transform duration-200` })}
                                       <span className="ml-3 font-medium text-sm animate-fade-in">
                                         {action.title}
                                       </span>
@@ -298,7 +298,7 @@ export function AppSidebar() {
                                         <Button
                                           variant="ghost"
                                           size="sm"
-                                          className={`w-full justify-start h-9 px-2 text-sidebar-foreground/80 hover:text-sidebar-accent-foreground hover:bg-sidebar-accent/50 transition-all ${location.pathname === subAction.url ? 'bg-sidebar-accent/50 text-sidebar-accent-foreground' : ''}`}
+                                          className={`w-full justify-start h-9 px-2 hover:bg-sidebar-accent/50 transition-all ${location.pathname === subAction.url ? 'bg-primary/5 text-primary font-medium border-l-2 border-primary' : 'text-sidebar-foreground/80 hover:text-sidebar-accent-foreground'}`}
                                         >
                                           {React.createElement(subAction.icon, { className: "h-3.5 w-3.5 shrink-0 mr-2" })}
                                           <span className="text-xs">{subAction.title}</span>
@@ -321,10 +321,10 @@ export function AppSidebar() {
                                 className={`
                                   w-full justify-start h-10 px-3 
                                   ${isActiveItem(action.title) 
-                                    ? "bg-sidebar-accent text-sidebar-accent-foreground shadow-sm font-semibold" 
-                                    : "text-sidebar-foreground hover:text-sidebar-accent-foreground"
+                                    ? "border-l-[3px] border-primary bg-primary/5 text-primary font-semibold" 
+                                    : "text-sidebar-foreground hover:text-sidebar-accent-foreground border-l-[3px] border-transparent"
                                   }
-                                  hover:bg-sidebar-accent hover:shadow-sm
+                                  hover:bg-sidebar-accent
                                   transition-all duration-200 ease-in-out
                                   group-hover:translate-x-1
                                 `}
