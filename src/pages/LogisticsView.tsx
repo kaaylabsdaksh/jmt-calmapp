@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
+import { format, isBefore, startOfDay, parseISO } from "date-fns";
 import { Link } from "react-router-dom";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
@@ -53,17 +54,20 @@ const mockItems: LogisticsItem[] = [
   { woBatch: "572220-002", woNumber: "572220", division: "Lab", manufacturer: "AMETEK", model: "RTC-159", description: "DRY BLOCK CALIBRATOR", invoiceNum: "988635" },
   { woBatch: "572220-003", woNumber: "572220", division: "Lab", manufacturer: "FLUKE", model: "724", description: "TEMPERATURE CALIBRATOR", invoiceNum: "988635" },
   { woBatch: "572220-004", woNumber: "572220", division: "Lab", manufacturer: "DRUCK", model: "DPI 611", description: "PRESSURE CALIBRATOR", invoiceNum: "988635" },
-  // Items with neither invoice nor DT — grouped by WO
+  // Items with Invoice (overdue)
+  { woBatch: "572240-001", woNumber: "572240", division: "Lab", manufacturer: "FLUKE", model: "726", description: "MULTIFUNCTION CALIBRATOR", invoiceNum: "988640" },
+  { woBatch: "572240-002", woNumber: "572240", division: "Lab", manufacturer: "FLUKE", model: "754", description: "DOCUMENTING PROCESS CALIBRATOR", invoiceNum: "988640" },
+  // Items with neither invoice nor DT — will be excluded from groups
   { woBatch: "572230-001", woNumber: "572230", division: "Field", manufacturer: "FLUKE", model: "1587", description: "INSULATION MULTIMETER" },
   { woBatch: "572230-002", woNumber: "572230", division: "Field", manufacturer: "MEGGER", model: "MIT485/2", description: "INSULATION TESTER" },
 ];
 
 // --- Grouping logic: InvoiceNum > DTNum > WONumber ---
 const groupMetadata: Record<string, Omit<LogisticsGroup, "id" | "items" | "itemCount">> = {
-  "INV-988620": { type: "INV", number: "988620", invoiceDate: "Friday, February 20, 2026", priority: "EMERGENCY", customerName: "ExxonMobil Baton Rouge", city: "Baton Rouge", state: "LA", division: "Lab", deliverBy: "Sunday, March 1, 2026", assignedDriver: "unassigned" },
-  "DT-40915": { type: "DT", number: "40915", priority: "RUSH", customerName: "Turner Industries", city: "Lake Charles", state: "LA", division: "Field", deliverBy: "Monday, March 9, 2026", assignedDriver: "unassigned" },
-  "INV-988635": { type: "INV", number: "988635", invoiceDate: "Monday, February 24, 2026", priority: "NORMAL", customerName: "Dow Chemical Plaquemine", city: "Plaquemine", state: "LA", division: "Lab", deliverBy: "Wednesday, March 5, 2026", assignedDriver: "unassigned" },
-  "WO-572230": { type: "WO", number: "572230", priority: "NORMAL", customerName: "BASF Geismar", city: "Geismar", state: "LA", division: "Field", deliverBy: "Thursday, March 12, 2026", assignedDriver: "unassigned" },
+  "INV-988620": { type: "INV", number: "988620", invoiceDate: "Friday, February 20, 2026", priority: "EMERGENCY", customerName: "ExxonMobil Baton Rouge", city: "Baton Rouge", state: "LA", division: "Lab", deliverBy: "2026-03-01", assignedDriver: "unassigned" },
+  "DT-40915": { type: "DT", number: "40915", priority: "RUSH", customerName: "Turner Industries", city: "Lake Charles", state: "LA", division: "Field", deliverBy: "2026-03-09", assignedDriver: "unassigned" },
+  "INV-988635": { type: "INV", number: "988635", invoiceDate: "Monday, February 24, 2026", priority: "NORMAL", customerName: "Dow Chemical Plaquemine", city: "Plaquemine", state: "LA", division: "Lab", deliverBy: "2026-03-25", assignedDriver: "unassigned" },
+  "INV-988640": { type: "INV", number: "988640", invoiceDate: "Wednesday, March 4, 2026", priority: "RUSH", customerName: "Sasol Lake Charles", city: "Westlake", state: "LA", division: "Lab", deliverBy: "2026-03-15", assignedDriver: "unassigned" },
 };
 
 function buildGroups(items: LogisticsItem[]): LogisticsGroup[] {
@@ -168,10 +172,24 @@ const LogisticsGroupCard = ({ group, isPrinted, onPrint }: { group: LogisticsGro
           <Badge variant="outline" className="text-[10px] font-normal">{group.division}</Badge>
 
           <div className="ml-auto flex items-center gap-3 flex-wrap">
-            <div className="text-xs">
-              <span className="text-muted-foreground">DELIVER BY: </span>
-              <span className="font-bold text-foreground">{group.deliverBy}</span>
-            </div>
+            {(() => {
+              const isOverdue = (() => {
+                try {
+                  return isBefore(parseISO(group.deliverBy), startOfDay(new Date()));
+                } catch { return false; }
+              })();
+              const displayDate = (() => {
+                try {
+                  return format(parseISO(group.deliverBy), "EEEE, MMMM d, yyyy");
+                } catch { return group.deliverBy; }
+              })();
+              return (
+                <div className="text-xs">
+                  <span className="text-muted-foreground">DELIVER BY: </span>
+                  <span className={`font-bold ${isOverdue ? "text-red-600 bg-red-100 px-1.5 py-0.5 rounded" : "text-foreground"}`}>{displayDate}</span>
+                </div>
+              );
+            })()}
 
             <Badge variant="secondary" className="text-xs">{group.itemCount} items</Badge>
 
