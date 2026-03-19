@@ -360,9 +360,9 @@ export function AppSidebar() {
                           <Link
                             to="/"
                             className={`
-                              flex items-center justify-center w-full h-10 px-0 rounded-md
+                              flex items-center justify-center w-full h-10 px-0 rounded-lg
                               ${isActiveItem(action.title) 
-                                ? "bg-sidebar-accent text-sidebar-accent-foreground shadow-sm font-semibold" 
+                                ? "bg-sidebar-foreground/15 text-sidebar-foreground shadow-sm font-semibold" 
                                 : "text-sidebar-foreground hover:text-sidebar-accent-foreground"
                               }
                               hover:bg-sidebar-accent hover:shadow-sm
