@@ -301,8 +301,29 @@ const LogisticsView = () => {
   const handlePrint = (id: string) => {
     setPrintedIds(prev => new Set(prev).add(id));
   };
-  // Split groups by print status, then apply search filter
-  const applySearch = (groups: LogisticsGroup[]) => groups.filter(group => {
+  // Apply filters and search
+  const applyFilters = (groups: LogisticsGroup[]) => groups.filter(group => {
+    // Location filter (INV vs DT)
+    if (locationFilter.length > 0) {
+      const typeMap: Record<string, string> = { inv: "INV", dt: "DT" };
+      if (!locationFilter.some(v => typeMap[v] === group.type)) return false;
+    }
+    // State filter
+    if (stateFilter.length > 0 && !stateFilter.some(v => group.state.toLowerCase().replace(/\s+/g, "-") === v)) return false;
+    // City filter
+    if (cityFilter.length > 0 && !cityFilter.some(v => group.city.toLowerCase().replace(/\s+/g, "-") === v)) return false;
+    // Division filter
+    if (divisionFilter.length > 0 && !divisionFilter.some(v => group.division.toLowerCase() === v)) return false;
+    // Driver filter
+    if (driverFilter.length > 0) {
+      const driverMap: Record<string, string> = { mike: "Mike Johnson", sarah: "Sarah Williams", david: "David Chen" };
+      const selectedDriverNames = driverFilter.map(v => driverMap[v]?.toLowerCase() || v);
+      if (!selectedDriverNames.some(d => group.assignedDriver.toLowerCase() === d || group.assignedDriver === "unassigned")) {
+        // Only show unassigned if no driver filter — actually skip unassigned
+        return false;
+      }
+    }
+    // Search query
     if (!searchQuery.trim()) return true;
     const q = searchQuery.toLowerCase();
     return (
@@ -328,8 +349,8 @@ const LogisticsView = () => {
       try { return parseISO(a.deliverBy).getTime() - parseISO(b.deliverBy).getTime(); } catch { return 0; }
     });
 
-  const awaitingGroups = sortGroups(applySearch(mockGroups.filter(g => !printedIds.has(g.id))));
-  const printedGroups = sortGroups(applySearch(mockGroups.filter(g => printedIds.has(g.id))));
+  const awaitingGroups = sortGroups(applyFilters(mockGroups.filter(g => !printedIds.has(g.id))));
+  const printedGroups = sortGroups(applyFilters(mockGroups.filter(g => printedIds.has(g.id))));
 
   const awaitingCount = awaitingGroups.length;
   const printedCount = printedGroups.length;
