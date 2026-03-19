@@ -70,11 +70,11 @@ const viewsSubItems = [
 const quickActionCategories = {
   "Core Operations": [
     { title: "Work Orders", icon: ClipboardList, hasSubItems: true },
+    { title: "Views", icon: Eye, hasSubItems: true },
     { title: "Standards", icon: CheckCircle },
     { title: "Invoicing", icon: CreditCard },
     { title: "Quotes", icon: FileText },
     { title: "Reports", icon: BarChart3 },
-    { title: "Views", icon: Eye, hasSubItems: true },
   ],
   "User Management": [
     { title: "Manage Users", icon: Users },
