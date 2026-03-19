@@ -121,7 +121,7 @@ const PriorityBadge = ({ priority }: { priority: LogisticsGroup["priority"] }) =
   const config: Record<string, { icon: typeof AlertTriangle; className: string }> = {
     EMERGENCY: { icon: AlertTriangle, className: "bg-destructive text-destructive-foreground font-semibold tracking-wide" },
     EXPEDITE: { icon: Zap, className: "bg-orange-500 text-white font-semibold tracking-wide" },
-    RUSH: { icon: Zap, className: "bg-warning text-warning-foreground font-semibold tracking-wide" },
+    RUSH: { icon: Zap, className: "bg-yellow-400 text-yellow-900 font-semibold tracking-wide" },
   };
   
   const entry = config[priority];
@@ -157,7 +157,7 @@ const LogisticsGroupCard = ({ group, isPrinted, onPrint }: { group: LogisticsGro
     : group.priority === "EXPEDITE"
     ? "bg-orange-500"
     : group.priority === "RUSH"
-    ? "bg-warning"
+    ? "bg-yellow-400"
     : "bg-border";
 
   const cardBorder = group.priority === "EMERGENCY"
@@ -165,7 +165,7 @@ const LogisticsGroupCard = ({ group, isPrinted, onPrint }: { group: LogisticsGro
     : group.priority === "EXPEDITE"
     ? "border-orange-400/30"
     : group.priority === "RUSH"
-    ? "border-warning/30"
+    ? "border-yellow-400/30"
     : "border-border";
 
   return (
