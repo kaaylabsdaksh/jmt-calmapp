@@ -179,15 +179,24 @@ const LogisticsGroupCard = ({ group, isPrinted, onPrint }: { group: LogisticsGro
             </Select>
 
             <div className="flex items-center gap-1">
-              <Button size="sm" className="h-8 text-xs gap-1">
-                <Printer className="w-3.5 h-3.5" />
-                Print All
-              </Button>
-              <Button variant="outline" size="sm" className="h-8 text-xs">
-                {group.type === "INV" ? "Invoice" : "DT"}
-              </Button>
-              <Button variant="outline" size="sm" className="h-8 text-xs">Certs</Button>
-              <Button variant="outline" size="sm" className="h-8 text-xs">Data</Button>
+              {!isPrinted ? (
+                <>
+                  <Button size="sm" className="h-8 text-xs gap-1" onClick={() => onPrint?.(group.id)}>
+                    <Printer className="w-3.5 h-3.5" />
+                    Print All
+                  </Button>
+                  <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => onPrint?.(group.id)}>
+                    {group.type === "INV" ? "Invoice" : "DT"}
+                  </Button>
+                  <Button variant="outline" size="sm" className="h-8 text-xs">Certs</Button>
+                  <Button variant="outline" size="sm" className="h-8 text-xs">Data</Button>
+                </>
+              ) : (
+                <Badge variant="outline" className="text-xs text-muted-foreground gap-1">
+                  <Printer className="w-3 h-3" />
+                  Printed
+                </Badge>
+              )}
             </div>
           </div>
         </div>
