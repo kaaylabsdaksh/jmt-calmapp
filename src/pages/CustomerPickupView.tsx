@@ -439,16 +439,12 @@ const CustomerPickupView = () => {
               );
             })}
 
-            {(locationFilter.length > 0 || stateFilter.length > 0 || cityFilter.length > 0 || divisionFilter.length > 0 || assignedToFilter.length > 0 || searchQuery.trim().length > 0) && (
+            {(locationFilter.length > 0 || searchQuery.trim().length > 0) && (
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => {
                   setLocationFilter([]);
-                  setStateFilter([]);
-                  setCityFilter([]);
-                  setDivisionFilter([]);
-                  setAssignedToFilter([]);
                   setSearchQuery("");
                 }}
                 className="h-8 text-xs text-destructive hover:text-destructive hover:bg-destructive/10 gap-1"
