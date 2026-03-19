@@ -271,121 +271,126 @@ const LogisticsView = () => {
         </div>
       </header>
 
-      {/* Pill/Chip Filters Bar */}
+      {/* Filters & Search Bar */}
       <div className="px-2 sm:px-4 lg:px-6 py-3 border-b bg-card space-y-2">
-        <div className="flex items-center gap-2 flex-wrap">
-          <SlidersHorizontal className="h-4 w-4 text-muted-foreground shrink-0" />
-
-          {/* Filter Chips */}
-          {([
-            { label: "Location", values: locationFilter, onChange: setLocationFilter, singleSelect: false, options: [{ v: "baton-rouge", l: "Baton Rouge" }, { v: "lake-charles", l: "Lake Charles" }, { v: "houston", l: "Houston" }, { v: "new-orleans", l: "New Orleans" }] },
-            { label: "State", values: stateFilter, onChange: setStateFilter, singleSelect: false, options: [{ v: "LA", l: "Louisiana" }, { v: "TX", l: "Texas" }, { v: "MS", l: "Mississippi" }] },
-            { label: "City", values: cityFilter, onChange: setCityFilter, singleSelect: false, options: [{ v: "baton-rouge", l: "Baton Rouge" }, { v: "lake-charles", l: "Lake Charles" }, { v: "houston", l: "Houston" }] },
-            { label: "Division", values: divisionFilter, onChange: setDivisionFilter, singleSelect: false, options: [{ v: "lab", l: "Lab" }, { v: "field", l: "Field" }] },
-            { label: "Driver", values: driverFilter, onChange: setDriverFilter, singleSelect: false, options: [{ v: "mike", l: "Mike Johnson" }, { v: "sarah", l: "Sarah Williams" }, { v: "david", l: "David Chen" }] },
-          ] as const).map(({ label, values, onChange, singleSelect, options }) => {
-            const displayText = values.length === 0
-              ? "All"
-              : values.length === 1
-              ? options.find(o => o.v === values[0])?.l || values[0]
-              : `${values.length} ${label}s selected`;
-
-            const toggleValue = (v: string) => {
-              if (singleSelect) {
-                onChange([v]);
-              } else {
-                onChange(prev => 
-                  prev.includes(v) ? prev.filter(x => x !== v) : [...prev, v]
-                );
-              }
-            };
-
-            return (
-              <Popover key={label}>
-                <PopoverTrigger asChild>
-                  <button
-                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border transition-all duration-200 hover:shadow-sm ${
-                      values.length > 0 && !singleSelect
-                        ? "bg-foreground text-background border-foreground"
-                        : "bg-card text-foreground border-border hover:border-foreground/30"
-                    }`}
-                  >
-                    <span className="text-[10px] uppercase tracking-wider opacity-60">{label}</span>
-                    <span className="font-semibold">{displayText}</span>
-                    <ChevronDown className="w-3 h-3 opacity-50" />
-                  </button>
-                </PopoverTrigger>
-                <PopoverContent className="w-48 p-2" align="start">
-                  <div className="flex flex-col gap-0.5">
-                    {!singleSelect && (
-                      <button
-                        onClick={() => onChange([])}
-                        className={`text-left px-2 py-1.5 text-xs rounded-md transition-colors ${
-                          values.length === 0
-                            ? "bg-primary/10 text-foreground font-medium"
-                            : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                        }`}
-                      >
-                        All
-                      </button>
-                    )}
-                    {options.map((o) => (
-                      <button
-                        key={o.v}
-                        onClick={() => toggleValue(o.v)}
-                        className={`flex items-center gap-2 text-left px-2 py-1.5 text-xs rounded-md transition-colors ${
-                          values.includes(o.v)
-                            ? "bg-primary/10 text-foreground font-medium"
-                            : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                        }`}
-                      >
-                        {!singleSelect && (
-                          <Checkbox
-                            checked={values.includes(o.v)}
-                            className="h-3.5 w-3.5 pointer-events-none"
-                          />
-                        )}
-                        {o.l}
-                      </button>
-                    ))}
-                  </div>
-                </PopoverContent>
-              </Popover>
-            );
-          })}
-
-          {/* Reset */}
-          {(locationFilter.length > 0 || stateFilter.length > 0 || cityFilter.length > 0 || divisionFilter.length > 0 || driverFilter.length > 0) && (
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => {
-                setLocationFilter([]);
-                setStateFilter([]);
-                setCityFilter([]);
-                setDivisionFilter([]);
-                setDriverFilter([]);
-              }}
-              className="h-8 text-xs text-destructive hover:text-destructive hover:bg-destructive/10 gap-1"
-            >
-              <X className="w-3.5 h-3.5" />
-              Clear all
-            </Button>
-          )}
-
-          {/* Search */}
-          <div className="ml-auto relative w-56">
+        {/* Row 1: Search + Filters + Clear */}
+        <div className="flex items-center gap-3">
+          {/* Search - prominent placement */}
+          <div className="relative w-64 shrink-0">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
             <Input
-              placeholder="Search customer..."
+              placeholder="Search customer, invoice..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-9 h-8 text-xs rounded-full"
+              className="pl-9 h-9 text-xs rounded-lg border-border"
             />
+          </div>
+
+          <div className="h-6 w-px bg-border shrink-0" />
+
+          {/* Filter Chips */}
+          <div className="flex items-center gap-2 flex-wrap flex-1">
+            {([
+              { label: "Location", values: locationFilter, onChange: setLocationFilter, singleSelect: false, options: [{ v: "baton-rouge", l: "Baton Rouge" }, { v: "lake-charles", l: "Lake Charles" }, { v: "houston", l: "Houston" }, { v: "new-orleans", l: "New Orleans" }] },
+              { label: "State", values: stateFilter, onChange: setStateFilter, singleSelect: false, options: [{ v: "LA", l: "Louisiana" }, { v: "TX", l: "Texas" }, { v: "MS", l: "Mississippi" }] },
+              { label: "City", values: cityFilter, onChange: setCityFilter, singleSelect: false, options: [{ v: "baton-rouge", l: "Baton Rouge" }, { v: "lake-charles", l: "Lake Charles" }, { v: "houston", l: "Houston" }] },
+              { label: "Division", values: divisionFilter, onChange: setDivisionFilter, singleSelect: false, options: [{ v: "lab", l: "Lab" }, { v: "field", l: "Field" }] },
+              { label: "Driver", values: driverFilter, onChange: setDriverFilter, singleSelect: false, options: [{ v: "mike", l: "Mike Johnson" }, { v: "sarah", l: "Sarah Williams" }, { v: "david", l: "David Chen" }] },
+            ] as const).map(({ label, values, onChange, singleSelect, options }) => {
+              const displayText = values.length === 0
+                ? "All"
+                : values.length === 1
+                ? options.find(o => o.v === values[0])?.l || values[0]
+                : `${values.length} selected`;
+
+              const isActive = values.length > 0;
+
+              const toggleValue = (v: string) => {
+                if (singleSelect) {
+                  onChange([v]);
+                } else {
+                  onChange(prev => 
+                    prev.includes(v) ? prev.filter(x => x !== v) : [...prev, v]
+                  );
+                }
+              };
+
+              return (
+                <Popover key={label}>
+                  <PopoverTrigger asChild>
+                    <button
+                      className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium border transition-all duration-200 hover:shadow-sm ${
+                        isActive
+                          ? "bg-primary text-primary-foreground border-primary shadow-sm"
+                          : "bg-card text-foreground border-border hover:border-foreground/30"
+                      }`}
+                    >
+                      <span className="opacity-70">{label}:</span>
+                      <span className="font-semibold">{displayText}</span>
+                      <ChevronDown className="w-3 h-3 opacity-50" />
+                    </button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-48 p-2" align="start">
+                    <div className="flex flex-col gap-0.5">
+                      {!singleSelect && (
+                        <button
+                          onClick={() => onChange([])}
+                          className={`text-left px-2 py-1.5 text-xs rounded-md transition-colors ${
+                            values.length === 0
+                              ? "bg-primary/10 text-foreground font-medium"
+                              : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                          }`}
+                        >
+                          All
+                        </button>
+                      )}
+                      {options.map((o) => (
+                        <button
+                          key={o.v}
+                          onClick={() => toggleValue(o.v)}
+                          className={`flex items-center gap-2 text-left px-2 py-1.5 text-xs rounded-md transition-colors ${
+                            values.includes(o.v)
+                              ? "bg-primary/10 text-foreground font-medium"
+                              : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                          }`}
+                        >
+                          {!singleSelect && (
+                            <Checkbox
+                              checked={values.includes(o.v)}
+                              className="h-3.5 w-3.5 pointer-events-none"
+                            />
+                          )}
+                          {o.l}
+                        </button>
+                      ))}
+                    </div>
+                  </PopoverContent>
+                </Popover>
+              );
+            })}
+
+            {/* Clear all */}
+            {(locationFilter.length > 0 || stateFilter.length > 0 || cityFilter.length > 0 || divisionFilter.length > 0 || driverFilter.length > 0) && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  setLocationFilter([]);
+                  setStateFilter([]);
+                  setCityFilter([]);
+                  setDivisionFilter([]);
+                  setDriverFilter([]);
+                }}
+                className="h-8 text-xs text-destructive hover:text-destructive hover:bg-destructive/10 gap-1"
+              >
+                <X className="w-3.5 h-3.5" />
+                Clear all
+              </Button>
+            )}
           </div>
         </div>
 
-        {/* Selected filter tags row */}
+        {/* Row 2: Active filter tags */}
         {(() => {
           const allFilters = [
             { label: "Location", values: locationFilter, onChange: setLocationFilter, options: [{ v: "baton-rouge", l: "Baton Rouge" }, { v: "lake-charles", l: "Lake Charles" }, { v: "houston", l: "Houston" }, { v: "new-orleans", l: "New Orleans" }] },
@@ -397,17 +402,17 @@ const LogisticsView = () => {
           const tags = allFilters.flatMap(f =>
             f.values.map(v => ({
               key: `${f.label}-${v}`,
-              label: `${f.options.find(o => o.v === v)?.l || v}`,
+              label: `${f.label}: ${f.options.find(o => o.v === v)?.l || v}`,
               onRemove: () => f.onChange(prev => prev.filter(x => x !== v)),
             }))
           );
           if (tags.length === 0) return null;
           return (
-            <div className="flex items-center gap-1.5 flex-wrap pl-6">
+            <div className="flex items-center gap-1.5 flex-wrap ml-[calc(16rem+12px+1px+12px)]">
               {tags.map(tag => (
                 <span
                   key={tag.key}
-                  className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-muted rounded-full text-xs font-medium text-foreground"
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-muted rounded-md text-xs font-medium text-foreground"
                 >
                   {tag.label}
                   <button
