@@ -390,6 +390,26 @@ const LogisticsView = () => {
               </Breadcrumb>
             </div>
           </div>
+          <div className="flex items-center gap-1">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-7 w-7 p-0 text-muted-foreground hover:text-foreground"
+              onClick={() => setForceOpen(prev => prev === true ? true : true)}
+              title="Expand All"
+            >
+              <Maximize2 className="w-4 h-4" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-7 w-7 p-0 text-muted-foreground hover:text-foreground"
+              onClick={() => setForceOpen(prev => prev === false ? false : false)}
+              title="Collapse All"
+            >
+              <Minimize2 className="w-4 h-4" />
+            </Button>
+          </div>
         </div>
       </header>
 
