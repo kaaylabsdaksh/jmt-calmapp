@@ -75,7 +75,7 @@ function buildGroups(items: LogisticsItem[]): LogisticsGroup[] {
       ? `INV-${item.invoiceNum}`
       : item.dtNum
       ? `DT-${item.dtNum}`
-      : `WO-${item.woNumber}-${item.itemId}`;
+      : `WO-${item.woNumber}-${item.woBatch}`;
 
     if (!buckets.has(key)) buckets.set(key, []);
     buckets.get(key)!.push(item);
