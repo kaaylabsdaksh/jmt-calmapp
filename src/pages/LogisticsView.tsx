@@ -299,8 +299,17 @@ const LogisticsView = () => {
     );
   });
 
-  const awaitingGroups = applySearch(mockGroups.filter(g => !printedIds.has(g.id)));
-  const printedGroups = applySearch(mockGroups.filter(g => printedIds.has(g.id)));
+  const priorityOrder: Record<string, number> = { EMERGENCY: 0, EXPEDITE: 1, RUSH: 2, NORMAL: 3 };
+  const sortGroups = (groups: LogisticsGroup[]) =>
+    [...groups].sort((a, b) => {
+      const pa = priorityOrder[a.priority] ?? 3;
+      const pb = priorityOrder[b.priority] ?? 3;
+      if (pa !== pb) return pa - pb;
+      try { return parseISO(a.deliverBy).getTime() - parseISO(b.deliverBy).getTime(); } catch { return 0; }
+    });
+
+  const awaitingGroups = sortGroups(applySearch(mockGroups.filter(g => !printedIds.has(g.id))));
+  const printedGroups = sortGroups(applySearch(mockGroups.filter(g => printedIds.has(g.id))));
 
   const awaitingCount = awaitingGroups.length;
   const printedCount = printedGroups.length;
