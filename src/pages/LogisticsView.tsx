@@ -219,7 +219,7 @@ const LogisticsGroupCard = ({ group, isPrinted, onPrint }: { group: LogisticsGro
           </div>
 
           {/* Right: Priority pill + Driver + Printables */}
-          <div className="flex flex-col items-end gap-1 shrink-0">
+          <div className="flex flex-col items-end gap-2.5 shrink-0">
             <PriorityBadge priority={group.priority} />
             <div className="flex items-center gap-2">
               <Select value={driver} onValueChange={setDriver}>
