@@ -171,8 +171,16 @@ const LogisticsGroupCard = ({ group, isPrinted, onPrint }: { group: LogisticsGro
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
       <div className={`bg-card rounded-md border ${cardBorder} overflow-hidden transition-all ${isPrinted ? "opacity-50 grayscale" : ""}`}>
-        {/* Priority stripe */}
-        <div className={`h-1 ${stripeColor}`} />
+        {/* Priority stripe with embedded badge */}
+        <div className={`${stripeColor} flex items-center px-3 ${group.priority !== "NORMAL" ? "py-1" : "h-1"}`}>
+          {group.priority !== "NORMAL" && (
+            <div className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-wide">
+              {group.priority === "EMERGENCY" && <AlertTriangle className="w-3 h-3 text-destructive-foreground" />}
+              {(group.priority === "EXPEDITE" || group.priority === "RUSH") && <Zap className="w-3 h-3" />}
+              <span className={group.priority === "RUSH" ? "text-yellow-900" : "text-white"}>{group.priority}</span>
+            </div>
+          )}
+        </div>
 
         {/* Split two-column header */}
         <div className="px-3 py-2.5 flex items-center gap-4">
@@ -185,7 +193,7 @@ const LogisticsGroupCard = ({ group, isPrinted, onPrint }: { group: LogisticsGro
             </CollapsibleTrigger>
 
             <div className="min-w-0 space-y-1">
-              {/* Line 1: ID + Customer + Location */}
+              {/* Line 1: ID + Customer + Location + Division */}
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="font-bold text-[13px] text-foreground whitespace-nowrap">{typeLabel} #{group.number}</span>
                 <span className="text-xs font-medium text-foreground truncate">{group.customerName}</span>
@@ -193,11 +201,10 @@ const LogisticsGroupCard = ({ group, isPrinted, onPrint }: { group: LogisticsGro
                   <MapPin className="w-2.5 h-2.5" />
                   {group.city}, {group.state}
                 </span>
-              </div>
-              {/* Line 2: Badges + Dates + Items */}
-              <div className="flex items-center gap-2 flex-wrap">
-                <PriorityBadge priority={group.priority} />
                 <Badge variant="outline" className="text-[9px] font-medium px-1.5 py-0 h-4">{group.division}</Badge>
+              </div>
+              {/* Line 2: Dates + Items */}
+              <div className="flex items-center gap-2 flex-wrap">
                 {group.invoiceDate && (
                   <span className="text-[11px] text-muted-foreground whitespace-nowrap">
                     Inv: {group.invoiceDate}
