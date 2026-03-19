@@ -115,8 +115,8 @@ const PriorityBadge = ({ priority }: { priority: LogisticsGroup["priority"] }) =
 };
 
 // --- Logistics Group Card ---
-const LogisticsGroupCard = ({ group }: { group: LogisticsGroup }) => {
-  const [isOpen, setIsOpen] = useState(true);
+const LogisticsGroupCard = ({ group, isPrinted, onPrint }: { group: LogisticsGroup; isPrinted?: boolean; onPrint?: (id: string) => void }) => {
+  const [isOpen, setIsOpen] = useState(!isPrinted);
   const [driver, setDriver] = useState(group.assignedDriver);
 
   const typeLabel = group.type === "INV" ? "Inv" : "DT";
@@ -128,7 +128,7 @@ const LogisticsGroupCard = ({ group }: { group: LogisticsGroup }) => {
 
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-      <div className={`bg-card rounded-lg border shadow-sm overflow-hidden border-l-4 ${borderColor}`}>
+      <div className={`bg-card rounded-lg border shadow-sm overflow-hidden border-l-4 ${borderColor} ${isPrinted ? "opacity-50 grayscale" : ""}`}>
         {/* Card Header */}
         <div className="px-4 py-3 flex items-center gap-3 flex-wrap">
           <CollapsibleTrigger asChild>
@@ -179,15 +179,24 @@ const LogisticsGroupCard = ({ group }: { group: LogisticsGroup }) => {
             </Select>
 
             <div className="flex items-center gap-1">
-              <Button size="sm" className="h-8 text-xs gap-1">
-                <Printer className="w-3.5 h-3.5" />
-                Print All
-              </Button>
-              <Button variant="outline" size="sm" className="h-8 text-xs">
-                {group.type === "INV" ? "Invoice" : "DT"}
-              </Button>
-              <Button variant="outline" size="sm" className="h-8 text-xs">Certs</Button>
-              <Button variant="outline" size="sm" className="h-8 text-xs">Data</Button>
+              {!isPrinted ? (
+                <>
+                  <Button size="sm" className="h-8 text-xs gap-1" onClick={() => onPrint?.(group.id)}>
+                    <Printer className="w-3.5 h-3.5" />
+                    Print All
+                  </Button>
+                  <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => onPrint?.(group.id)}>
+                    {group.type === "INV" ? "Invoice" : "DT"}
+                  </Button>
+                  <Button variant="outline" size="sm" className="h-8 text-xs">Certs</Button>
+                  <Button variant="outline" size="sm" className="h-8 text-xs">Data</Button>
+                </>
+              ) : (
+                <Badge variant="outline" className="text-xs text-muted-foreground gap-1">
+                  <Printer className="w-3 h-3" />
+                  Printed
+                </Badge>
+              )}
             </div>
           </div>
         </div>
@@ -240,9 +249,13 @@ const LogisticsView = () => {
   const [driverFilter, setDriverFilter] = useState<string[]>([]);
   const [activeTab, setActiveTab] = useState<"awaiting" | "printed">("awaiting");
   const [searchQuery, setSearchQuery] = useState("");
+  const [printedIds, setPrintedIds] = useState<Set<string>>(new Set());
 
-  // Auto-filter groups based on search query
-  const filteredGroups = mockGroups.filter(group => {
+  const handlePrint = (id: string) => {
+    setPrintedIds(prev => new Set(prev).add(id));
+  };
+  // Split groups by print status, then apply search filter
+  const applySearch = (groups: LogisticsGroup[]) => groups.filter(group => {
     if (!searchQuery.trim()) return true;
     const q = searchQuery.toLowerCase();
     return (
@@ -259,8 +272,11 @@ const LogisticsView = () => {
     );
   });
 
-  const awaitingCount = filteredGroups.length;
-  const printedCount = 1;
+  const awaitingGroups = applySearch(mockGroups.filter(g => !printedIds.has(g.id)));
+  const printedGroups = applySearch(mockGroups.filter(g => printedIds.has(g.id)));
+
+  const awaitingCount = awaitingGroups.length;
+  const printedCount = printedGroups.length;
 
   return (
     <div className="min-h-screen bg-background">
@@ -482,19 +498,25 @@ const LogisticsView = () => {
       {/* Content */}
       <div className="px-6 py-4 space-y-4">
         {activeTab === "awaiting" ? (
-          filteredGroups.length > 0 ? (
-            filteredGroups.map(group => (
-              <LogisticsGroupCard key={group.id} group={group} />
+          awaitingGroups.length > 0 ? (
+            awaitingGroups.map(group => (
+              <LogisticsGroupCard key={group.id} group={group} onPrint={handlePrint} />
             ))
           ) : (
             <div className="text-center py-12 text-muted-foreground text-sm">
-              No results found for "{searchQuery}".
+              {searchQuery ? `No results found for "${searchQuery}".` : "All groups have been printed."}
             </div>
           )
         ) : (
-          <div className="text-center py-12 text-muted-foreground text-sm">
-            No printed/ready shipments at this time.
-          </div>
+          printedGroups.length > 0 ? (
+            printedGroups.map(group => (
+              <LogisticsGroupCard key={group.id} group={group} isPrinted />
+            ))
+          ) : (
+            <div className="text-center py-12 text-muted-foreground text-sm">
+              No printed/ready shipments at this time.
+            </div>
+          )
         )}
       </div>
     </div>
