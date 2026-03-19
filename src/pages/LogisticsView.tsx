@@ -194,7 +194,7 @@ const LogisticsGroupCard = ({ group, isPrinted, onPrint }: { group: LogisticsGro
                     Print All
                   </Button>
                   <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => onPrint?.(group.id)}>
-                    {group.type === "INV" ? "Invoice" : "DT"}
+                    {group.type === "INV" ? "Invoice" : group.type === "DT" ? "DT" : "WO"}
                   </Button>
                   <Button variant="outline" size="sm" className="h-8 text-xs">Certs</Button>
                   <Button variant="outline" size="sm" className="h-8 text-xs">Data</Button>
