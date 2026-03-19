@@ -551,34 +551,56 @@ const LogisticsView = () => {
 
       {/* Tabs */}
       <div className="px-6 bg-card border-b">
-        <div className="flex gap-0">
-          {([
-            { key: "awaiting" as const, label: "Awaiting Print", count: awaitingCount, icon: Printer },
-            { key: "printed" as const, label: "Printed / Ready", count: printedCount, icon: FileText },
-          ]).map(tab => (
-            <button
-              key={tab.key}
-              onClick={() => setActiveTab(tab.key)}
-              className={`relative px-5 py-3 text-sm font-medium transition-all duration-200 flex items-center gap-2.5 ${
-                activeTab === tab.key
-                  ? "text-foreground"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
+        <div className="flex items-center">
+          <div className="flex gap-0 flex-1">
+            {([
+              { key: "awaiting" as const, label: "Awaiting Print", count: awaitingCount, icon: Printer },
+              { key: "printed" as const, label: "Printed / Ready", count: printedCount, icon: FileText },
+            ]).map(tab => (
+              <button
+                key={tab.key}
+                onClick={() => setActiveTab(tab.key)}
+                className={`relative px-5 py-3 text-sm font-medium transition-all duration-200 flex items-center gap-2.5 ${
+                  activeTab === tab.key
+                    ? "text-foreground"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                <tab.icon className="w-4 h-4 text-foreground" />
+                {tab.label}
+                <span className={`inline-flex items-center justify-center h-5 min-w-5 px-1.5 rounded-full text-[11px] font-semibold ${
+                  activeTab === tab.key
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-muted text-muted-foreground"
+                }`}>
+                  {tab.count}
+                </span>
+                {activeTab === tab.key && (
+                  <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-primary rounded-full" />
+                )}
+              </button>
+            ))}
+          </div>
+          <div className="flex items-center gap-1">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-7 w-7 p-0 text-muted-foreground hover:text-foreground"
+              onClick={() => setForceOpen(prev => ({ value: true, key: (prev?.key ?? 0) + 1 }))}
+              title="Expand All"
             >
-              <tab.icon className="w-4 h-4 text-foreground" />
-              {tab.label}
-              <span className={`inline-flex items-center justify-center h-5 min-w-5 px-1.5 rounded-full text-[11px] font-semibold ${
-                activeTab === tab.key
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-muted text-muted-foreground"
-              }`}>
-                {tab.count}
-              </span>
-              {activeTab === tab.key && (
-                <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-primary rounded-full" />
-              )}
-            </button>
-          ))}
+              <Maximize2 className="w-4 h-4" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-7 w-7 p-0 text-muted-foreground hover:text-foreground"
+              onClick={() => setForceOpen(prev => ({ value: false, key: (prev?.key ?? 0) + 1 }))}
+              title="Collapse All"
+            >
+              <Minimize2 className="w-4 h-4" />
+            </Button>
+          </div>
         </div>
       </div>
 
