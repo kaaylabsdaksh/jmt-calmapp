@@ -462,7 +462,7 @@ const LogisticsView = () => {
                   : "text-muted-foreground hover:text-foreground"
               }`}
             >
-              <tab.icon className={`w-4 h-4 ${activeTab === tab.key ? "text-primary" : ""}`} />
+              <tab.icon className="w-4 h-4 text-foreground" />
               {tab.label}
               <span className={`inline-flex items-center justify-center h-5 min-w-5 px-1.5 rounded-full text-[11px] font-semibold ${
                 activeTab === tab.key
