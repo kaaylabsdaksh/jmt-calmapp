@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { Search, Printer, FileText, Award, Database, ChevronDown, ChevronRight, MapPin, AlertTriangle, Zap, X, Clock, Truck, Package } from "lucide-react";
+import { Search, Printer, FileText, Award, Database, ChevronDown, ChevronRight, MapPin, AlertTriangle, Zap, X, Clock, Truck, Package, Maximize2, Minimize2 } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Checkbox } from "@/components/ui/checkbox";
 
@@ -136,8 +136,12 @@ const PriorityBadge = ({ priority }: { priority: LogisticsGroup["priority"] }) =
 };
 
 // --- Logistics Group Card ---
-const LogisticsGroupCard = ({ group, isPrinted, onPrint }: { group: LogisticsGroup; isPrinted?: boolean; onPrint?: (id: string) => void }) => {
+const LogisticsGroupCard = ({ group, isPrinted, onPrint, forceOpen }: { group: LogisticsGroup; isPrinted?: boolean; onPrint?: (id: string) => void; forceOpen?: { value: boolean; key: number } | null }) => {
   const [isOpen, setIsOpen] = useState(!isPrinted);
+  
+  React.useEffect(() => {
+    if (forceOpen) setIsOpen(forceOpen.value);
+  }, [forceOpen]);
   const [driver, setDriver] = useState(group.assignedDriver);
 
   const typeLabel = group.type === "INV" ? "Invoice" : group.type === "DT" ? "DT" : "WO";
@@ -305,6 +309,7 @@ const LogisticsView = () => {
   const [activeTab, setActiveTab] = useState<"awaiting" | "printed">("awaiting");
   const [searchQuery, setSearchQuery] = useState("");
   const [printedIds, setPrintedIds] = useState<Set<string>>(new Set());
+  const [forceOpen, setForceOpen] = useState<{ value: boolean; key: number } | null>(null);
 
   const handlePrint = (id: string) => {
     setPrintedIds(prev => new Set(prev).add(id));
@@ -383,6 +388,26 @@ const LogisticsView = () => {
                 </BreadcrumbList>
               </Breadcrumb>
             </div>
+          </div>
+          <div className="flex items-center gap-1">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-7 w-7 p-0 text-muted-foreground hover:text-foreground"
+              onClick={() => setForceOpen(prev => ({ value: true, key: (prev?.key ?? 0) + 1 }))}
+              title="Expand All"
+            >
+              <Maximize2 className="w-4 h-4" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-7 w-7 p-0 text-muted-foreground hover:text-foreground"
+              onClick={() => setForceOpen(prev => ({ value: false, key: (prev?.key ?? 0) + 1 }))}
+              title="Collapse All"
+            >
+              <Minimize2 className="w-4 h-4" />
+            </Button>
           </div>
         </div>
       </header>
@@ -582,7 +607,7 @@ const LogisticsView = () => {
         {activeTab === "awaiting" ? (
           awaitingGroups.length > 0 ? (
             awaitingGroups.map(group => (
-              <LogisticsGroupCard key={group.id} group={group} onPrint={handlePrint} />
+              <LogisticsGroupCard key={group.id} group={group} onPrint={handlePrint} forceOpen={forceOpen} />
             ))
           ) : (
             <div className="text-center py-12 text-muted-foreground text-sm">
@@ -592,7 +617,7 @@ const LogisticsView = () => {
         ) : (
           printedGroups.length > 0 ? (
             printedGroups.map(group => (
-              <LogisticsGroupCard key={group.id} group={group} isPrinted />
+              <LogisticsGroupCard key={group.id} group={group} isPrinted forceOpen={forceOpen} />
             ))
           ) : (
             <div className="text-center py-12 text-muted-foreground text-sm">
