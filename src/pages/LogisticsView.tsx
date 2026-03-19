@@ -127,7 +127,7 @@ const LogisticsGroupCard = ({ group, isPrinted, onPrint }: { group: LogisticsGro
   const [isOpen, setIsOpen] = useState(!isPrinted);
   const [driver, setDriver] = useState(group.assignedDriver);
 
-  const typeLabel = group.type === "INV" ? "Inv" : "DT";
+  const typeLabel = group.type === "INV" ? "Inv" : group.type === "DT" ? "DT" : "WO";
   const borderColor = group.priority === "EMERGENCY" 
     ? "border-l-destructive" 
     : group.priority === "RUSH" 
