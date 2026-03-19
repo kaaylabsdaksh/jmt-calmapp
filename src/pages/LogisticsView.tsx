@@ -349,8 +349,8 @@ const LogisticsView = () => {
       try { return parseISO(a.deliverBy).getTime() - parseISO(b.deliverBy).getTime(); } catch { return 0; }
     });
 
-  const awaitingGroups = sortGroups(applySearch(mockGroups.filter(g => !printedIds.has(g.id))));
-  const printedGroups = sortGroups(applySearch(mockGroups.filter(g => printedIds.has(g.id))));
+  const awaitingGroups = sortGroups(applyFilters(mockGroups.filter(g => !printedIds.has(g.id))));
+  const printedGroups = sortGroups(applyFilters(mockGroups.filter(g => printedIds.has(g.id))));
 
   const awaitingCount = awaitingGroups.length;
   const printedCount = printedGroups.length;
