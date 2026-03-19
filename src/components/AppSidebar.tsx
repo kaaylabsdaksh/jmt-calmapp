@@ -298,7 +298,7 @@ export function AppSidebar() {
                                         <Button
                                           variant="ghost"
                                           size="sm"
-                                          className={`w-full justify-start h-9 px-2 text-sidebar-foreground/80 hover:text-sidebar-accent-foreground hover:bg-sidebar-accent/50 transition-all ${location.pathname === subAction.url ? 'bg-sidebar-accent/50 text-sidebar-accent-foreground' : ''}`}
+                                          className={`w-full justify-start h-9 px-2 hover:bg-sidebar-accent/50 transition-all ${location.pathname === subAction.url ? 'bg-primary/5 text-primary font-medium border-l-2 border-primary' : 'text-sidebar-foreground/80 hover:text-sidebar-accent-foreground'}`}
                                         >
                                           {React.createElement(subAction.icon, { className: "h-3.5 w-3.5 shrink-0 mr-2" })}
                                           <span className="text-xs">{subAction.title}</span>
