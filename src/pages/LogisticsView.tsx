@@ -241,7 +241,25 @@ const LogisticsView = () => {
   const [activeTab, setActiveTab] = useState<"awaiting" | "printed">("awaiting");
   const [searchQuery, setSearchQuery] = useState("");
 
-  const awaitingCount = mockGroups.length;
+  // Auto-filter groups based on search query
+  const filteredGroups = mockGroups.filter(group => {
+    if (!searchQuery.trim()) return true;
+    const q = searchQuery.toLowerCase();
+    return (
+      group.customerName.toLowerCase().includes(q) ||
+      group.number.toLowerCase().includes(q) ||
+      group.city.toLowerCase().includes(q) ||
+      group.division.toLowerCase().includes(q) ||
+      group.items.some(item =>
+        item.woBatch.toLowerCase().includes(q) ||
+        item.manufacturer.toLowerCase().includes(q) ||
+        item.model.toLowerCase().includes(q) ||
+        item.description.toLowerCase().includes(q)
+      )
+    );
+  });
+
+  const awaitingCount = filteredGroups.length;
   const printedCount = 1;
 
   return (
