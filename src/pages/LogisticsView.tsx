@@ -133,68 +133,89 @@ const LogisticsGroupCard = ({ group, isPrinted, onPrint }: { group: LogisticsGro
   const [driver, setDriver] = useState(group.assignedDriver);
 
   const typeLabel = group.type === "INV" ? "Inv" : group.type === "DT" ? "DT" : "WO";
-  const borderColor = group.priority === "EMERGENCY" 
-    ? "border-l-destructive" 
-    : group.priority === "RUSH" 
-    ? "border-l-warning" 
-    : "border-l-primary";
+
+  const isOverdue = (() => {
+    try { return isBefore(parseISO(group.deliverBy), startOfDay(new Date())); }
+    catch { return false; }
+  })();
+
+  const displayDate = (() => {
+    try { return format(parseISO(group.deliverBy), "EEEE, MMMM d, yyyy"); }
+    catch { return group.deliverBy; }
+  })();
+
+  const priorityRing = group.priority === "EMERGENCY"
+    ? "ring-2 ring-red-400/40"
+    : group.priority === "RUSH"
+    ? "ring-2 ring-amber-400/30"
+    : "";
+
+  const headerAccent = group.priority === "EMERGENCY"
+    ? "bg-red-50 dark:bg-red-950/20"
+    : group.priority === "RUSH"
+    ? "bg-amber-50 dark:bg-amber-950/20"
+    : "bg-card";
 
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-      <div className={`bg-card rounded-lg border shadow-sm overflow-hidden border-l-4 ${borderColor} ${isPrinted ? "opacity-50 grayscale" : ""}`}>
-        {/* Card Header */}
-        <div className="px-4 py-3 flex items-center gap-3 flex-wrap">
-          <CollapsibleTrigger asChild>
-            <Button variant="ghost" size="sm" className="h-7 w-7 p-0 shrink-0">
-              {isOpen ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
-            </Button>
-          </CollapsibleTrigger>
+      <div className={`bg-card rounded-xl border shadow-sm overflow-hidden transition-all ${priorityRing} ${isPrinted ? "opacity-50 grayscale" : ""}`}>
+        {/* Row 1: Primary identification */}
+        <div className={`px-4 pt-3 pb-2 ${headerAccent}`}>
+          <div className="flex items-center gap-2.5">
+            <CollapsibleTrigger asChild>
+              <Button variant="ghost" size="sm" className="h-7 w-7 p-0 shrink-0 hover:bg-background/60">
+                {isOpen ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
+              </Button>
+            </CollapsibleTrigger>
 
-          <span className="font-bold text-sm text-foreground">
-            {typeLabel} #{group.number}
-          </span>
-
-          <PriorityBadge priority={group.priority} />
-
-          {group.invoiceDate && (
-            <span className="text-xs text-muted-foreground hidden md:inline">
-              INVOICE: {group.invoiceDate}
+            <span className="font-bold text-[15px] text-foreground tracking-tight">
+              {typeLabel} #{group.number}
             </span>
-          )}
 
-          <span className="font-semibold text-sm text-foreground">{group.customerName}</span>
+            <PriorityBadge priority={group.priority} />
 
-          <div className="flex items-center gap-1 text-xs text-muted-foreground">
-            <MapPin className="w-3 h-3" />
-            {group.city}, {group.state}
+            <div className="h-4 w-px bg-border mx-1 hidden sm:block" />
+
+            <span className="font-semibold text-sm text-foreground">{group.customerName}</span>
+
+            <div className="flex items-center gap-1 text-xs text-muted-foreground">
+              <MapPin className="w-3 h-3" />
+              {group.city}, {group.state}
+            </div>
+
+            <Badge variant="outline" className="text-[10px] font-normal px-2 py-0 h-5">{group.division}</Badge>
+          </div>
+        </div>
+
+        {/* Row 2: Metadata + Actions */}
+        <div className="px-4 pb-3 pt-1.5 flex items-center gap-3 flex-wrap border-b border-dashed">
+          {/* Left: metadata pills */}
+          <div className="flex items-center gap-4 text-xs flex-1 flex-wrap">
+            {group.invoiceDate && (
+              <div className="flex items-center gap-1.5 text-muted-foreground">
+                <FileText className="w-3 h-3" />
+                <span>Invoice: {group.invoiceDate}</span>
+              </div>
+            )}
+
+            <div className="flex items-center gap-1.5">
+              <span className="text-muted-foreground uppercase tracking-wide text-[10px]">Deliver by</span>
+              <span className={`font-bold text-xs ${isOverdue ? "text-red-600 bg-red-100 dark:bg-red-900/40 px-2 py-0.5 rounded-md" : "text-foreground"}`}>
+                {displayDate}
+              </span>
+              {isOverdue && <span className="text-red-500 text-[10px] font-medium uppercase">Overdue</span>}
+            </div>
+
+            <div className="flex items-center gap-1 text-muted-foreground">
+              <Database className="w-3 h-3" />
+              <span className="font-medium text-foreground">{group.itemCount}</span> items
+            </div>
           </div>
 
-          <Badge variant="outline" className="text-[10px] font-normal">{group.division}</Badge>
-
-          <div className="ml-auto flex items-center gap-3 flex-wrap">
-            {(() => {
-              const isOverdue = (() => {
-                try {
-                  return isBefore(parseISO(group.deliverBy), startOfDay(new Date()));
-                } catch { return false; }
-              })();
-              const displayDate = (() => {
-                try {
-                  return format(parseISO(group.deliverBy), "EEEE, MMMM d, yyyy");
-                } catch { return group.deliverBy; }
-              })();
-              return (
-                <div className="text-xs">
-                  <span className="text-muted-foreground">DELIVER BY: </span>
-                  <span className={`font-bold ${isOverdue ? "text-red-600 bg-red-100 px-1.5 py-0.5 rounded" : "text-foreground"}`}>{displayDate}</span>
-                </div>
-              );
-            })()}
-
-            <Badge variant="secondary" className="text-xs">{group.itemCount} items</Badge>
-
+          {/* Right: driver + actions */}
+          <div className="flex items-center gap-2">
             <Select value={driver} onValueChange={setDriver}>
-              <SelectTrigger className="h-8 w-[140px] text-xs">
+              <SelectTrigger className="h-8 w-[150px] text-xs rounded-lg border-dashed">
                 <SelectValue placeholder="Assign Driver" />
               </SelectTrigger>
               <SelectContent>
@@ -205,53 +226,51 @@ const LogisticsGroupCard = ({ group, isPrinted, onPrint }: { group: LogisticsGro
               </SelectContent>
             </Select>
 
-            <div className="flex items-center gap-1">
-              {!isPrinted ? (
-                <>
-                  <Button size="sm" className="h-8 text-xs gap-1" onClick={() => onPrint?.(group.id)}>
-                    <Printer className="w-3.5 h-3.5" />
-                    Print All
-                  </Button>
-                  <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => onPrint?.(group.id)}>
-                    {group.type === "INV" ? "Invoice" : group.type === "DT" ? "DT" : "WO"}
-                  </Button>
-                  <Button variant="outline" size="sm" className="h-8 text-xs">Certs</Button>
-                  <Button variant="outline" size="sm" className="h-8 text-xs">Data</Button>
-                </>
-              ) : (
-                <Badge variant="outline" className="text-xs text-muted-foreground gap-1">
-                  <Printer className="w-3 h-3" />
-                  Printed
-                </Badge>
-              )}
-            </div>
+            {!isPrinted ? (
+              <div className="flex items-center gap-1">
+                <Button size="sm" className="h-8 text-xs gap-1.5 rounded-lg shadow-sm" onClick={() => onPrint?.(group.id)}>
+                  <Printer className="w-3.5 h-3.5" />
+                  Print All
+                </Button>
+                <Button variant="outline" size="sm" className="h-8 text-xs rounded-lg" onClick={() => onPrint?.(group.id)}>
+                  {group.type === "INV" ? "Invoice" : group.type === "DT" ? "DT" : "WO"}
+                </Button>
+                <Button variant="outline" size="sm" className="h-8 text-xs rounded-lg">Certs</Button>
+                <Button variant="outline" size="sm" className="h-8 text-xs rounded-lg">Data</Button>
+              </div>
+            ) : (
+              <Badge variant="outline" className="text-xs text-muted-foreground gap-1">
+                <Printer className="w-3 h-3" />
+                Printed
+              </Badge>
+            )}
           </div>
         </div>
 
         {/* Items Table */}
         <CollapsibleContent>
-          <div className="border-t">
+          <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="bg-muted/50">
-                  <th className="text-left px-4 py-2 font-medium text-muted-foreground text-xs uppercase tracking-wider">WO-Batch</th>
-                  <th className="text-left px-4 py-2 font-medium text-muted-foreground text-xs uppercase tracking-wider">Division</th>
-                  <th className="text-left px-4 py-2 font-medium text-muted-foreground text-xs uppercase tracking-wider">Manufacturer</th>
-                  <th className="text-left px-4 py-2 font-medium text-muted-foreground text-xs uppercase tracking-wider">Model</th>
-                  <th className="text-left px-4 py-2 font-medium text-muted-foreground text-xs uppercase tracking-wider">Description</th>
-                  <th className="text-right px-4 py-2 font-medium text-muted-foreground text-xs uppercase tracking-wider">Actions</th>
+                <tr className="bg-muted/40">
+                  <th className="text-left px-4 py-2 font-medium text-muted-foreground text-[11px] uppercase tracking-wider">WO-Batch</th>
+                  <th className="text-left px-4 py-2 font-medium text-muted-foreground text-[11px] uppercase tracking-wider">Division</th>
+                  <th className="text-left px-4 py-2 font-medium text-muted-foreground text-[11px] uppercase tracking-wider">Manufacturer</th>
+                  <th className="text-left px-4 py-2 font-medium text-muted-foreground text-[11px] uppercase tracking-wider">Model</th>
+                  <th className="text-left px-4 py-2 font-medium text-muted-foreground text-[11px] uppercase tracking-wider">Description</th>
+                  <th className="text-right px-4 py-2 font-medium text-muted-foreground text-[11px] uppercase tracking-wider">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {group.items.map((item, idx) => (
-                  <tr key={idx} className="border-t hover:bg-muted/30 transition-colors">
-                    <td className="px-4 py-2.5 font-mono text-xs text-foreground">{item.woBatch}</td>
-                    <td className="px-4 py-2.5 text-xs text-foreground">{item.division}</td>
-                    <td className="px-4 py-2.5 text-xs font-medium text-foreground">{item.manufacturer}</td>
+                  <tr key={idx} className="border-t border-muted/60 hover:bg-muted/20 transition-colors">
+                    <td className="px-4 py-2.5 font-mono text-xs font-medium text-foreground">{item.woBatch}</td>
+                    <td className="px-4 py-2.5 text-xs text-muted-foreground">{item.division}</td>
+                    <td className="px-4 py-2.5 text-xs font-semibold text-foreground uppercase">{item.manufacturer}</td>
                     <td className="px-4 py-2.5 text-xs text-foreground">{item.model}</td>
                     <td className="px-4 py-2.5 text-xs text-foreground">{item.description}</td>
                     <td className="px-4 py-2.5 text-right">
-                      <Button variant="outline" size="sm" className="h-7 text-xs gap-1">
+                      <Button variant="outline" size="sm" className="h-7 text-[11px] gap-1.5 rounded-md">
                         <Award className="w-3 h-3" />
                         Certs + Data
                       </Button>
