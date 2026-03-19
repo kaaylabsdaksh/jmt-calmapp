@@ -70,11 +70,12 @@ function buildGroups(items: LogisticsItem[]): LogisticsGroup[] {
   const buckets = new Map<string, LogisticsItem[]>();
 
   for (const item of items) {
+    // Items with invoice or DT get grouped; WO-only items stay individual
     const key = item.invoiceNum
       ? `INV-${item.invoiceNum}`
       : item.dtNum
       ? `DT-${item.dtNum}`
-      : `WO-${item.woNumber}`;
+      : `WO-${item.woNumber}-${item.woBatch}`;
 
     if (!buckets.has(key)) buckets.set(key, []);
     buckets.get(key)!.push(item);
