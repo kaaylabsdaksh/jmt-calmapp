@@ -177,22 +177,9 @@ const PickupGroupCard = ({ group, isPrinted, onPrint, forceOpen }: { group: Pick
                 <span className="whitespace-nowrap"><span className="text-muted-foreground font-normal">{typeLabel}</span> <span className="font-bold text-foreground">#{group.number}</span></span>
                 <span className="text-muted-foreground/40">·</span>
                 <span className="font-bold text-foreground truncate">{group.customerName}</span>
-                <span className="text-muted-foreground/40">·</span>
-                <span className="flex items-center gap-0.5 whitespace-nowrap">
-                  <MapPin className="w-2.5 h-2.5 text-muted-foreground" />
-                  <span className="font-bold text-foreground">{group.city}, {group.state}</span>
-                </span>
-                <span className="text-muted-foreground/40">·</span>
-                <Badge variant="outline" className="text-[9px] font-bold px-1.5 py-0 h-4">{group.division}</Badge>
               </div>
-              {/* Line 2: Dates + Items */}
+              {/* Line 2: Pickup By + Items */}
               <div className="flex items-center gap-2 flex-wrap text-[12px]">
-                {group.invoiceDate && (
-                  <span className="whitespace-nowrap">
-                    <span className="text-muted-foreground font-normal">Inv:</span> <span className="font-bold text-foreground">{group.invoiceDate}</span>
-                  </span>
-                )}
-                <span className="text-muted-foreground/40">·</span>
                 <div className={`flex items-center gap-1 whitespace-nowrap`}>
                   <span className={`uppercase tracking-wider text-[9px] font-normal ${isOverdue ? "text-destructive" : "text-muted-foreground"}`}>Pickup By</span>
                   <span className={`font-bold ${isOverdue ? "text-destructive" : "text-foreground"}`}>{displayDate}</span>
