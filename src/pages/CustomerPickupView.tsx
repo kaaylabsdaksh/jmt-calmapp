@@ -209,15 +209,15 @@ const PickupGroupCard = ({ group, isPrinted, onPrint, forceOpen }: { group: Pick
               </Select>
 
               <div className="flex items-center gap-1">
-                <Button size="sm" className="h-7 text-[11px] gap-1 rounded px-3" onClick={() => onPrint?.(group.id)}>
+                <Button size="sm" className="h-7 text-[11px] gap-1 rounded px-3 hover:!scale-100 hover:!shadow-none" onClick={() => onPrint?.(group.id)}>
                   <Printer className="w-3 h-3" />
                   Print All
                 </Button>
-                <Button variant="outline" size="sm" className="h-7 text-[11px] rounded px-2" onClick={() => onPrint?.(group.id)}>
+                <Button variant="outline" size="sm" className="h-7 text-[11px] rounded px-2 hover:!scale-100 hover:!shadow-none" onClick={() => onPrint?.(group.id)}>
                   {group.type === "INV" ? "Inv" : group.type === "DT" ? "DT" : "WO"}
                 </Button>
-                <Button variant="outline" size="sm" className="h-7 text-[11px] rounded px-2">Certs</Button>
-                <Button variant="outline" size="sm" className="h-7 text-[11px] rounded px-2">Data</Button>
+                <Button variant="outline" size="sm" className="h-7 text-[11px] rounded px-2 hover:!scale-100 hover:!shadow-none">Certs</Button>
+                <Button variant="outline" size="sm" className="h-7 text-[11px] rounded px-2 hover:!scale-100 hover:!shadow-none">Data</Button>
               </div>
             </div>
           </div>
