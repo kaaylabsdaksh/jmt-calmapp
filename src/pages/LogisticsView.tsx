@@ -182,27 +182,25 @@ const LogisticsGroupCard = ({ group, isPrinted, onPrint }: { group: LogisticsGro
             </Button>
           </CollapsibleTrigger>
 
-          <div className="flex flex-col">
-            <span className="font-bold text-[13px] text-foreground whitespace-nowrap">{typeLabel} #{group.number}</span>
+          <div className="flex flex-col min-w-0">
+            <div className="flex items-center gap-2">
+              <span className="font-bold text-[13px] text-foreground whitespace-nowrap">{typeLabel} #{group.number}</span>
+              <span className="text-xs font-medium text-foreground truncate">{group.customerName}</span>
+              <span className="flex items-center gap-0.5 text-[11px] text-muted-foreground whitespace-nowrap">
+                <MapPin className="w-2.5 h-2.5" />
+                {group.city}, {group.state}
+              </span>
+              {group.invoiceDate && (
+                <span className="text-[11px] text-muted-foreground whitespace-nowrap hidden lg:inline">
+                  Inv: {group.invoiceDate}
+                </span>
+              )}
+            </div>
             <div className="flex items-center gap-1.5 mt-0.5">
               <PriorityBadge priority={group.priority} />
               <Badge variant="outline" className="text-[9px] font-medium px-1.5 py-0 h-4">{group.division}</Badge>
             </div>
           </div>
-
-          <div className="h-4 w-px bg-border shrink-0" />
-
-          <span className="text-xs font-medium text-foreground truncate">{group.customerName}</span>
-          <span className="flex items-center gap-0.5 text-[11px] text-muted-foreground whitespace-nowrap">
-            <MapPin className="w-2.5 h-2.5" />
-            {group.city}, {group.state}
-          </span>
-
-          {group.invoiceDate && (
-            <span className="text-[11px] text-muted-foreground whitespace-nowrap hidden lg:inline">
-              Inv: {group.invoiceDate}
-            </span>
-          )}
 
           <div className="flex-1" />
 
