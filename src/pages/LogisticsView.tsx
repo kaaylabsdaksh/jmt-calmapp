@@ -174,10 +174,11 @@ const LogisticsGroupCard = ({ group, isPrinted, onPrint, forceOpen }: { group: L
 
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-      <div className={`bg-card rounded-md border ${cardBorder} overflow-hidden transition-all ${isPrinted ? "opacity-50 grayscale" : ""}`}>
-        {/* Thin priority stripe */}
-        <div className={`h-1 ${stripeColor}`} />
+      <div className={`bg-card rounded-md border ${cardBorder} overflow-hidden transition-all ${isPrinted ? "opacity-50 grayscale" : ""} flex`}>
+        {/* Left priority stripe */}
+        <div className={`w-1.5 shrink-0 ${stripeColor}`} />
 
+        <div className="flex-1 min-w-0">
         {/* Split two-column header */}
         <div className="px-3 py-2.5 flex items-center gap-4">
           {/* Left: Chevron + Info */}
@@ -294,6 +295,7 @@ const LogisticsGroupCard = ({ group, isPrinted, onPrint, forceOpen }: { group: L
             </table>
           </div>
         </CollapsibleContent>
+        </div>
       </div>
     </Collapsible>
   );
