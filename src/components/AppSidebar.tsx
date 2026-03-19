@@ -119,10 +119,19 @@ export function AppSidebar() {
     );
   };
 
-  // Check if current item is active (for Work Orders screen)
+  // Check if current item is active based on route
   const isActiveItem = (itemTitle: string) => {
     if (itemTitle === "Work Orders") {
-      return location.pathname === "/" || location.pathname.includes("work-order") || location.pathname === "/add-new-work-order";
+      return location.pathname === "/" || location.pathname.includes("work-order") || location.pathname === "/add-new-work-order" || location.pathname === "/edit-order" || location.pathname === "/edit-batch-work-order" || location.pathname === "/batch-details";
+    }
+    if (itemTitle === "Views") {
+      return location.pathname === "/logistics-view" || location.pathname === "/customer-pickup";
+    }
+    if (itemTitle === "Unused Items") {
+      return location.pathname === "/unused-items";
+    }
+    if (itemTitle === "Form Variations") {
+      return location.pathname === "/form-variations";
     }
     return false;
   };
