@@ -259,10 +259,10 @@ export function AppSidebar() {
                                   >
                                     <div
                                       className={`
-                                        flex items-center w-full h-10 px-3 rounded-md
+                                        flex items-center w-full h-10 px-3 rounded-lg
                                         ${isActiveItem("Views") 
-                                          ? "border-l-[3px] border-primary bg-primary/5 text-primary font-semibold" 
-                                          : "text-sidebar-foreground hover:text-sidebar-accent-foreground border-l-[3px] border-transparent"
+                                          ? "bg-sidebar-foreground/15 text-sidebar-foreground font-semibold shadow-sm" 
+                                          : "text-sidebar-foreground hover:text-sidebar-accent-foreground"
                                         }
                                         hover:bg-sidebar-accent
                                         transition-all duration-200 ease-in-out
