@@ -460,10 +460,6 @@ const CustomerPickupView = () => {
         {(() => {
           const allFilters = [
             { label: "Location", values: locationFilter, onChange: setLocationFilter, options: [{ v: "baton-rouge", l: "Baton Rouge" }, { v: "norco", l: "Norco" }, { v: "garyville", l: "Garyville" }, { v: "donaldsonville", l: "Donaldsonville" }] },
-            { label: "State", values: stateFilter, onChange: setStateFilter, options: [{ v: "la", l: "Louisiana" }, { v: "tx", l: "Texas" }] },
-            { label: "City", values: cityFilter, onChange: setCityFilter, options: [{ v: "baton-rouge", l: "Baton Rouge" }, { v: "norco", l: "Norco" }, { v: "garyville", l: "Garyville" }, { v: "donaldsonville", l: "Donaldsonville" }] },
-            { label: "Division", values: divisionFilter, onChange: setDivisionFilter, options: [{ v: "lab", l: "Lab" }, { v: "field", l: "Field" }] },
-            { label: "Assigned To", values: assignedToFilter, onChange: setAssignedToFilter, options: [{ v: "front-desk", l: "Front Desk" }, { v: "warehouse", l: "Warehouse" }, { v: "will-call", l: "Will Call" }] },
           ];
           const tags = allFilters.flatMap(f =>
             f.values.map(v => ({
