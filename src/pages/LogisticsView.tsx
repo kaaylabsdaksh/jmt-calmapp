@@ -254,8 +254,8 @@ const LogisticsView = () => {
   const handlePrint = (id: string) => {
     setPrintedIds(prev => new Set(prev).add(id));
   };
-  // Auto-filter groups based on search query
-  const filteredGroups = mockGroups.filter(group => {
+  // Split groups by print status, then apply search filter
+  const applySearch = (groups: LogisticsGroup[]) => groups.filter(group => {
     if (!searchQuery.trim()) return true;
     const q = searchQuery.toLowerCase();
     return (
@@ -272,8 +272,11 @@ const LogisticsView = () => {
     );
   });
 
-  const awaitingCount = filteredGroups.length;
-  const printedCount = 1;
+  const awaitingGroups = applySearch(mockGroups.filter(g => !printedIds.has(g.id)));
+  const printedGroups = applySearch(mockGroups.filter(g => printedIds.has(g.id)));
+
+  const awaitingCount = awaitingGroups.length;
+  const printedCount = printedGroups.length;
 
   return (
     <div className="min-h-screen bg-background">
