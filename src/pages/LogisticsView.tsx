@@ -617,7 +617,7 @@ const LogisticsView = () => {
         ) : (
           printedGroups.length > 0 ? (
             printedGroups.map(group => (
-              <LogisticsGroupCard key={group.id} group={group} isPrinted />
+              <LogisticsGroupCard key={group.id} group={group} isPrinted forceOpen={forceOpen} />
             ))
           ) : (
             <div className="text-center py-12 text-muted-foreground text-sm">
