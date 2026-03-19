@@ -366,10 +366,6 @@ const CustomerPickupView = () => {
           <div className="flex items-center gap-2 flex-wrap flex-1">
             {([
               { label: "Location", values: locationFilter, onChange: setLocationFilter, singleSelect: false, options: [{ v: "baton-rouge", l: "Baton Rouge" }, { v: "norco", l: "Norco" }, { v: "garyville", l: "Garyville" }, { v: "donaldsonville", l: "Donaldsonville" }] },
-              { label: "State", values: stateFilter, onChange: setStateFilter, singleSelect: false, options: [{ v: "la", l: "Louisiana" }, { v: "tx", l: "Texas" }] },
-              { label: "City", values: cityFilter, onChange: setCityFilter, singleSelect: false, options: [{ v: "baton-rouge", l: "Baton Rouge" }, { v: "norco", l: "Norco" }, { v: "garyville", l: "Garyville" }, { v: "donaldsonville", l: "Donaldsonville" }] },
-              { label: "Division", values: divisionFilter, onChange: setDivisionFilter, singleSelect: false, options: [{ v: "lab", l: "Lab" }, { v: "field", l: "Field" }] },
-              { label: "Assigned To", values: assignedToFilter, onChange: setAssignedToFilter, singleSelect: false, options: [{ v: "front-desk", l: "Front Desk" }, { v: "warehouse", l: "Warehouse" }, { v: "will-call", l: "Will Call" }] },
             ] as const).map(({ label, values, onChange, singleSelect, options }) => {
               const displayText = values.length === 0
                 ? "All"
