@@ -121,23 +121,6 @@ export function AppSidebar() {
     );
   };
 
-  // Check if current item is active based on route
-  const isActiveItem = (itemTitle: string) => {
-    if (itemTitle === "Work Orders") {
-      return location.pathname === "/" || location.pathname.includes("work-order") || location.pathname === "/add-new-work-order" || location.pathname === "/edit-order" || location.pathname === "/edit-batch-work-order" || location.pathname === "/batch-details";
-    }
-    if (itemTitle === "Views") {
-      return location.pathname === "/logistics-view" || location.pathname === "/customer-pickup";
-    }
-    if (itemTitle === "Unused Items") {
-      return location.pathname === "/unused-items";
-    }
-    if (itemTitle === "Form Variations") {
-      return location.pathname === "/form-variations";
-    }
-    return false;
-  };
-
   return (
     <Sidebar
       className={`${open ? "w-64" : "w-16"} border-r-0 bg-sidebar backdrop-blur-sm animate-fade-in shadow-lg`}
@@ -159,12 +142,12 @@ export function AppSidebar() {
         {Object.entries(quickActionCategories).map(([categoryName, actions], categoryIndex) => (
           <SidebarGroup key={categoryName} className="mb-4">
             {open ? (
-              <Collapsible 
-                open={expandedGroups.includes(categoryName)} 
+              <Collapsible
+                open={expandedGroups.includes(categoryName)}
                 onOpenChange={() => toggleGroup(categoryName)}
               >
                 <CollapsibleTrigger asChild>
-                  <SidebarGroupLabel 
+                  <SidebarGroupLabel
                     className="px-3 py-2 text-xs font-semibold text-sidebar-foreground/70 uppercase tracking-wider cursor-pointer hover:text-sidebar-foreground transition-colors flex items-center justify-between group"
                   >
                     <span>{categoryName}</span>
@@ -184,31 +167,22 @@ export function AppSidebar() {
                       {actions.map((action, index) => (
                         <SidebarMenuItem key={action.title}>
                           {action.title === "Work Orders" && action.hasSubItems ? (
-                            <Collapsible 
-                              open={expandedWorkOrders} 
+                            <Collapsible
+                              open={expandedWorkOrders}
                               onOpenChange={setExpandedWorkOrders}
                             >
                               <div>
                                 <div className="flex items-center gap-1">
-                                  <SidebarMenuButton 
+                                  <SidebarMenuButton
                                     asChild
                                     tooltip={action.title}
                                     className="group flex-1"
                                   >
                                     <Link
                                       to="/"
-                                      className={`
-                                        flex items-center w-full h-10 px-3 rounded-lg
-                                        ${isActiveItem(action.title) 
-                                          ? "bg-sidebar-foreground/15 text-sidebar-foreground font-semibold shadow-sm" 
-                                          : "text-sidebar-foreground hover:text-sidebar-accent-foreground"
-                                        }
-                                        hover:bg-sidebar-accent
-                                        transition-all duration-200 ease-in-out
-                                        group-hover:translate-x-1
-                                      `}
+                                      className="flex items-center w-full h-10 px-3 rounded-lg text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200 ease-in-out group-hover:translate-x-1"
                                     >
-                                      {React.createElement(action.icon, { className: `h-4 w-4 shrink-0 ${isActiveItem(action.title) ? "text-primary" : "text-sidebar-foreground"} group-hover:scale-110 transition-transform duration-200` })}
+                                      {React.createElement(action.icon, { className: "h-4 w-4 shrink-0 text-sidebar-foreground group-hover:scale-110 transition-transform duration-200" })}
                                       <span className="ml-3 font-medium text-sm animate-fade-in">
                                         {action.title}
                                       </span>
@@ -228,7 +202,7 @@ export function AppSidebar() {
                                     </Button>
                                   </CollapsibleTrigger>
                                 </div>
-                                
+
                                 <CollapsibleContent>
                                   <div className="ml-6 mt-1 space-y-1 border-l-2 border-sidebar-border pl-3">
                                     {workOrderQuickActions.map((subAction) => (
@@ -247,30 +221,21 @@ export function AppSidebar() {
                               </div>
                             </Collapsible>
                           ) : action.title === "Views" && action.hasSubItems ? (
-                            <Collapsible 
-                              open={expandedViews} 
+                            <Collapsible
+                              open={expandedViews}
                               onOpenChange={setExpandedViews}
                             >
                               <div>
                                 <div className="flex items-center gap-1">
-                                  <SidebarMenuButton 
+                                  <SidebarMenuButton
                                     tooltip={action.title}
                                     className="group flex-1"
                                   >
                                     <div
-                                      className={`
-                                        flex items-center w-full h-10 px-3 rounded-lg
-                                        ${isActiveItem("Views") 
-                                          ? "bg-sidebar-foreground/15 text-sidebar-foreground font-semibold shadow-sm" 
-                                          : "text-sidebar-foreground hover:text-sidebar-accent-foreground"
-                                        }
-                                        hover:bg-sidebar-accent
-                                        transition-all duration-200 ease-in-out
-                                        group-hover:translate-x-1 cursor-pointer
-                                      `}
+                                      className="flex items-center w-full h-10 px-3 rounded-lg text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200 ease-in-out group-hover:translate-x-1 cursor-pointer"
                                       onClick={() => setExpandedViews(!expandedViews)}
                                     >
-                                      {React.createElement(action.icon, { className: `h-4 w-4 shrink-0 ${isActiveItem("Views") ? "text-primary" : "text-sidebar-foreground"} group-hover:scale-110 transition-transform duration-200` })}
+                                      {React.createElement(action.icon, { className: "h-4 w-4 shrink-0 text-sidebar-foreground group-hover:scale-110 transition-transform duration-200" })}
                                       <span className="ml-3 font-medium text-sm animate-fade-in">
                                         {action.title}
                                       </span>
@@ -290,7 +255,7 @@ export function AppSidebar() {
                                     </Button>
                                   </CollapsibleTrigger>
                                 </div>
-                                
+
                                 <CollapsibleContent>
                                   <div className="ml-6 mt-1 space-y-1 border-l-2 border-sidebar-border pl-3">
                                     {viewsSubItems.map((subAction) => (
@@ -298,7 +263,7 @@ export function AppSidebar() {
                                         <Button
                                           variant="ghost"
                                           size="sm"
-                                          className={`w-full justify-start h-9 px-2 hover:bg-sidebar-accent/50 transition-all rounded-md ${location.pathname === subAction.url ? 'bg-sidebar-foreground/15 text-sidebar-foreground font-medium shadow-sm' : 'text-sidebar-foreground/80 hover:text-sidebar-accent-foreground'}`}
+                                          className="w-full justify-start h-9 px-2 rounded-md text-sidebar-foreground/80 hover:text-sidebar-accent-foreground hover:bg-sidebar-accent/50 transition-all"
                                         >
                                           {React.createElement(subAction.icon, { className: "h-3.5 w-3.5 shrink-0 mr-2" })}
                                           <span className="text-xs">{subAction.title}</span>
@@ -310,7 +275,7 @@ export function AppSidebar() {
                               </div>
                             </Collapsible>
                           ) : (
-                            <SidebarMenuButton 
+                            <SidebarMenuButton
                               asChild
                               tooltip={action.title}
                               className="group"
@@ -318,16 +283,7 @@ export function AppSidebar() {
                               <Button
                                 variant="ghost"
                                 size="sm"
-                                className={`
-                                  w-full justify-start h-10 px-3 rounded-lg
-                                  ${isActiveItem(action.title) 
-                                    ? "bg-sidebar-foreground/15 text-sidebar-foreground font-semibold shadow-sm" 
-                                    : "text-sidebar-foreground hover:text-sidebar-accent-foreground"
-                                  }
-                                  hover:bg-sidebar-accent
-                                  transition-all duration-200 ease-in-out
-                                  group-hover:translate-x-1
-                                `}
+                                className="w-full justify-start h-10 px-3 rounded-lg text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200 ease-in-out group-hover:translate-x-1"
                                 style={{
                                   animationDelay: `${(categoryIndex * 100) + (index * 50)}ms`
                                 }}
@@ -351,7 +307,7 @@ export function AppSidebar() {
                 <SidebarMenu className="space-y-1">
                   {actions.map((action, index) => (
                     <SidebarMenuItem key={action.title}>
-                      <SidebarMenuButton 
+                      <SidebarMenuButton
                         asChild
                         tooltip={action.title}
                         className="group"
@@ -359,15 +315,7 @@ export function AppSidebar() {
                         {action.title === "Work Orders" ? (
                           <Link
                             to="/"
-                            className={`
-                              flex items-center justify-center w-full h-10 px-0 rounded-lg
-                              ${isActiveItem(action.title) 
-                                ? "bg-sidebar-foreground/15 text-sidebar-foreground shadow-sm font-semibold" 
-                                : "text-sidebar-foreground hover:text-sidebar-accent-foreground"
-                              }
-                              hover:bg-sidebar-accent hover:shadow-sm
-                              transition-all duration-200 ease-in-out
-                            `}
+                            className="flex items-center justify-center w-full h-10 px-0 rounded-lg text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent hover:shadow-sm transition-all duration-200 ease-in-out"
                             style={{
                               animationDelay: `${(categoryIndex * 100) + (index * 50)}ms`
                             }}
@@ -378,15 +326,7 @@ export function AppSidebar() {
                           <Button
                             variant="ghost"
                             size="sm"
-                            className={`
-                              w-full justify-center h-10 px-0 rounded-lg
-                              ${isActiveItem(action.title) 
-                                ? "bg-sidebar-foreground/15 text-sidebar-foreground shadow-sm font-semibold" 
-                                : "text-sidebar-foreground hover:text-sidebar-accent-foreground"
-                              }
-                              hover:bg-sidebar-accent hover:shadow-sm
-                              transition-all duration-200 ease-in-out
-                            `}
+                            className="w-full justify-center h-10 px-0 rounded-lg text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent hover:shadow-sm transition-all duration-200 ease-in-out"
                             style={{
                               animationDelay: `${(categoryIndex * 100) + (index * 50)}ms`
                             }}
@@ -402,7 +342,7 @@ export function AppSidebar() {
             )}
           </SidebarGroup>
         ))}
-        
+
       </SidebarContent>
 
       <SidebarFooter className="border-t border-sidebar-border p-2 space-y-1">
