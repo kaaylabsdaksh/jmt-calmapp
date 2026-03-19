@@ -607,7 +607,7 @@ const LogisticsView = () => {
         {activeTab === "awaiting" ? (
           awaitingGroups.length > 0 ? (
             awaitingGroups.map(group => (
-              <LogisticsGroupCard key={group.id} group={group} onPrint={handlePrint} />
+              <LogisticsGroupCard key={group.id} group={group} onPrint={handlePrint} forceOpen={forceOpen} />
             ))
           ) : (
             <div className="text-center py-12 text-muted-foreground text-sm">
