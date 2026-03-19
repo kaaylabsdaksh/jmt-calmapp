@@ -186,33 +186,33 @@ const LogisticsGroupCard = ({ group, isPrinted, onPrint }: { group: LogisticsGro
 
             <div className="min-w-0 space-y-1">
               {/* Line 1: ID + Customer + Location + Division */}
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className="font-bold text-[13px] text-foreground whitespace-nowrap">{typeLabel} #{group.number}</span>
+              <div className="flex items-center gap-2 flex-wrap text-[12px]">
+                <span className="whitespace-nowrap"><span className="text-muted-foreground font-normal">{typeLabel}</span> <span className="font-bold text-foreground">#{group.number}</span></span>
                 <span className="text-muted-foreground/40">·</span>
-                <span className="text-xs font-medium text-foreground truncate">{group.customerName}</span>
+                <span className="font-bold text-foreground truncate">{group.customerName}</span>
                 <span className="text-muted-foreground/40">·</span>
-                <span className="flex items-center gap-0.5 text-[11px] text-muted-foreground whitespace-nowrap">
-                  <MapPin className="w-2.5 h-2.5" />
-                  {group.city}, {group.state}
+                <span className="flex items-center gap-0.5 whitespace-nowrap">
+                  <MapPin className="w-2.5 h-2.5 text-muted-foreground" />
+                  <span className="font-bold text-foreground">{group.city}, {group.state}</span>
                 </span>
                 <span className="text-muted-foreground/40">·</span>
-                <Badge variant="outline" className="text-[9px] font-medium px-1.5 py-0 h-4">{group.division}</Badge>
+                <Badge variant="outline" className="text-[9px] font-bold px-1.5 py-0 h-4">{group.division}</Badge>
               </div>
               {/* Line 2: Dates + Items */}
-              <div className="flex items-center gap-2 flex-wrap">
+              <div className="flex items-center gap-2 flex-wrap text-[12px]">
                 {group.invoiceDate && (
-                  <span className="text-[11px] text-muted-foreground whitespace-nowrap">
-                    Inv: {group.invoiceDate}
+                  <span className="whitespace-nowrap">
+                    <span className="text-muted-foreground font-normal">Inv:</span> <span className="font-bold text-foreground">{group.invoiceDate}</span>
                   </span>
                 )}
                 <span className="text-muted-foreground/40">·</span>
-                <div className={`flex items-center gap-1 whitespace-nowrap ${isOverdue ? "text-destructive" : "text-muted-foreground"}`}>
-                  <span className="uppercase tracking-wider text-[9px] font-medium">Deliver</span>
-                  <span className={`text-xs font-semibold ${isOverdue ? "text-destructive" : "text-foreground"}`}>{displayDate}</span>
+                <div className={`flex items-center gap-1 whitespace-nowrap`}>
+                  <span className={`uppercase tracking-wider text-[9px] font-normal ${isOverdue ? "text-destructive" : "text-muted-foreground"}`}>Deliver</span>
+                  <span className={`font-bold ${isOverdue ? "text-destructive" : "text-foreground"}`}>{displayDate}</span>
                 </div>
                 <span className="text-muted-foreground/40">·</span>
-                <span className="text-[11px] text-muted-foreground whitespace-nowrap">
-                  <span className="font-semibold text-foreground">{group.itemCount}</span> items
+                <span className="whitespace-nowrap">
+                  <span className="font-bold text-foreground">{group.itemCount}</span> <span className="text-muted-foreground font-normal">items</span>
                 </span>
               </div>
             </div>
