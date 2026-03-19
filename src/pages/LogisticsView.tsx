@@ -310,6 +310,7 @@ const LogisticsView = () => {
   const [activeTab, setActiveTab] = useState<"awaiting" | "printed">("awaiting");
   const [searchQuery, setSearchQuery] = useState("");
   const [printedIds, setPrintedIds] = useState<Set<string>>(new Set());
+  const [forceOpen, setForceOpen] = useState<boolean | null>(null);
 
   const handlePrint = (id: string) => {
     setPrintedIds(prev => new Set(prev).add(id));
