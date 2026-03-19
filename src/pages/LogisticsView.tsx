@@ -128,7 +128,7 @@ const PriorityBadge = ({ priority }: { priority: LogisticsGroup["priority"] }) =
   if (!entry) return null;
   const { icon: Icon, className } = entry;
   return (
-    <span className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${className}`}>
+    <span className={`inline-flex items-center gap-1 rounded-full border-0 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${className}`}>
       <Icon className="w-3 h-3" />
       {priority}
     </span>
