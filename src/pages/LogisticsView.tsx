@@ -447,34 +447,35 @@ const LogisticsView = () => {
       </div>
 
       {/* Tabs */}
-      <div className="px-6 pt-3 bg-card border-b">
-        <div className="flex gap-1">
-          <button
-            onClick={() => setActiveTab("awaiting")}
-            className={`px-4 py-2 text-sm font-medium rounded-t-md transition-colors flex items-center gap-2 ${
-              activeTab === "awaiting"
-                ? "text-primary-foreground bg-primary border-b-2 border-primary"
-                : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
-            }`}
-          >
-            Awaiting Print
-            <Badge variant={activeTab === "awaiting" ? "secondary" : "outline"} className="text-[10px] h-5 min-w-5 flex items-center justify-center">
-              {awaitingCount}
-            </Badge>
-          </button>
-          <button
-            onClick={() => setActiveTab("printed")}
-            className={`px-4 py-2 text-sm font-medium rounded-t-md transition-colors flex items-center gap-2 ${
-              activeTab === "printed"
-                ? "text-primary-foreground bg-primary border-b-2 border-primary"
-                : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
-            }`}
-          >
-            Printed / Ready
-            <Badge variant={activeTab === "printed" ? "secondary" : "outline"} className="text-[10px] h-5 min-w-5 flex items-center justify-center">
-              {printedCount}
-            </Badge>
-          </button>
+      <div className="px-6 bg-card border-b">
+        <div className="flex gap-0">
+          {([
+            { key: "awaiting" as const, label: "Awaiting Print", count: awaitingCount, icon: Printer },
+            { key: "printed" as const, label: "Printed / Ready", count: printedCount, icon: FileText },
+          ]).map(tab => (
+            <button
+              key={tab.key}
+              onClick={() => setActiveTab(tab.key)}
+              className={`relative px-5 py-3 text-sm font-medium transition-all duration-200 flex items-center gap-2.5 ${
+                activeTab === tab.key
+                  ? "text-foreground"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              <tab.icon className={`w-4 h-4 ${activeTab === tab.key ? "text-primary" : ""}`} />
+              {tab.label}
+              <span className={`inline-flex items-center justify-center h-5 min-w-5 px-1.5 rounded-full text-[11px] font-semibold ${
+                activeTab === tab.key
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-muted text-muted-foreground"
+              }`}>
+                {tab.count}
+              </span>
+              {activeTab === tab.key && (
+                <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-primary rounded-full" />
+              )}
+            </button>
+          ))}
         </div>
       </div>
 
