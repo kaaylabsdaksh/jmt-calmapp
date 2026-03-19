@@ -295,6 +295,7 @@ const LogisticsGroupCard = ({ group, isPrinted, onPrint, forceOpen }: { group: L
             </table>
           </div>
         </CollapsibleContent>
+        </div>
       </div>
     </Collapsible>
   );
