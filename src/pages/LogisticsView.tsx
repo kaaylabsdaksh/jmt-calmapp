@@ -188,11 +188,14 @@ const LogisticsGroupCard = ({ group, isPrinted, onPrint }: { group: LogisticsGro
               {/* Line 1: ID + Customer + Location + Division */}
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="font-bold text-[13px] text-foreground whitespace-nowrap">{typeLabel} #{group.number}</span>
+                <span className="text-muted-foreground/40">·</span>
                 <span className="text-xs font-medium text-foreground truncate">{group.customerName}</span>
+                <span className="text-muted-foreground/40">·</span>
                 <span className="flex items-center gap-0.5 text-[11px] text-muted-foreground whitespace-nowrap">
                   <MapPin className="w-2.5 h-2.5" />
                   {group.city}, {group.state}
                 </span>
+                <span className="text-muted-foreground/40">·</span>
                 <Badge variant="outline" className="text-[9px] font-medium px-1.5 py-0 h-4">{group.division}</Badge>
               </div>
               {/* Line 2: Dates + Items */}
