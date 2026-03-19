@@ -53,7 +53,10 @@ const mockItems: LogisticsItem[] = [
   { woBatch: "572220-002", woNumber: "572220", division: "Lab", manufacturer: "AMETEK", model: "RTC-159", description: "DRY BLOCK CALIBRATOR", invoiceNum: "988635" },
   { woBatch: "572220-003", woNumber: "572220", division: "Lab", manufacturer: "FLUKE", model: "724", description: "TEMPERATURE CALIBRATOR", invoiceNum: "988635" },
   { woBatch: "572220-004", woNumber: "572220", division: "Lab", manufacturer: "DRUCK", model: "DPI 611", description: "PRESSURE CALIBRATOR", invoiceNum: "988635" },
-  // Items with neither invoice nor DT — grouped by WO
+  // Items with Invoice (overdue)
+  { woBatch: "572240-001", woNumber: "572240", division: "Lab", manufacturer: "FLUKE", model: "726", description: "MULTIFUNCTION CALIBRATOR", invoiceNum: "988640" },
+  { woBatch: "572240-002", woNumber: "572240", division: "Lab", manufacturer: "FLUKE", model: "754", description: "DOCUMENTING PROCESS CALIBRATOR", invoiceNum: "988640" },
+  // Items with neither invoice nor DT — will be excluded from groups
   { woBatch: "572230-001", woNumber: "572230", division: "Field", manufacturer: "FLUKE", model: "1587", description: "INSULATION MULTIMETER" },
   { woBatch: "572230-002", woNumber: "572230", division: "Field", manufacturer: "MEGGER", model: "MIT485/2", description: "INSULATION TESTER" },
 ];
