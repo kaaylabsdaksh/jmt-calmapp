@@ -296,7 +296,7 @@ const LogisticsGroupCard = ({ group, isPrinted, onPrint, forceOpen }: { group: L
 
 // --- Main Page ---
 const LogisticsView = () => {
-  const [locationFilter, setLocationFilter] = useState<string[]>(["baton-rouge"]);
+  const [locationFilter, setLocationFilter] = useState<string[]>([]);
   const [stateFilter, setStateFilter] = useState<string[]>([]);
   const [cityFilter, setCityFilter] = useState<string[]>([]);
   const [divisionFilter, setDivisionFilter] = useState<string[]>([]);
