@@ -277,7 +277,7 @@ const LogisticsGroupCard = ({ group, isPrinted, onPrint, forceOpen }: { group: L
                     <td className="px-4 py-2.5 text-xs text-foreground">{item.model}</td>
                     <td className="px-4 py-2.5 text-xs text-foreground">{item.description}</td>
                     <td className="px-5 py-2.5 text-right">
-                      <Button variant="ghost" size="sm" className="h-7 text-[11px] gap-1.5 text-muted-foreground hover:text-foreground">
+                      <Button variant="outline" size="sm" className="h-7 text-[11px] gap-1.5 text-muted-foreground hover:text-foreground !transform-none !scale-100 hover:!scale-100 hover:!shadow-none">
                         <Award className="w-3 h-3" />
                         Certs + Data
                       </Button>
