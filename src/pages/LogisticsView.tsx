@@ -205,7 +205,7 @@ const LogisticsGroupCard = ({ group, isPrinted, onPrint }: { group: LogisticsGro
           <div className={`flex items-center gap-1.5 whitespace-nowrap ${isOverdue ? "text-destructive" : "text-muted-foreground"}`}>
             <span className="uppercase tracking-wider text-[9px] font-medium">Deliver</span>
             <span className={`text-xs font-semibold ${isOverdue ? "text-destructive" : "text-foreground"}`}>{displayDate}</span>
-            {isOverdue && <span className="text-[9px] font-bold uppercase">Overdue</span>}
+            
           </div>
 
           <div className="h-4 w-px bg-border shrink-0" />
