@@ -119,19 +119,19 @@ const PriorityBadge = ({ priority }: { priority: LogisticsGroup["priority"] }) =
   if (priority === "NORMAL") return null;
   
   const config: Record<string, { icon: typeof AlertTriangle; className: string }> = {
-    EMERGENCY: { icon: AlertTriangle, className: "bg-destructive text-destructive-foreground font-semibold tracking-wide" },
-    EXPEDITE: { icon: Zap, className: "bg-orange-500 text-white font-semibold tracking-wide" },
-    RUSH: { icon: Zap, className: "bg-yellow-400 text-yellow-900 font-semibold tracking-wide" },
+    EMERGENCY: { icon: AlertTriangle, className: "border-destructive/40 text-destructive bg-destructive/10" },
+    EXPEDITE: { icon: Zap, className: "border-orange-400/40 text-orange-600 bg-orange-50" },
+    RUSH: { icon: Zap, className: "border-yellow-400/40 text-yellow-700 bg-yellow-50" },
   };
   
   const entry = config[priority];
   if (!entry) return null;
   const { icon: Icon, className } = entry;
   return (
-    <Badge className={`${className} text-[10px] px-2 py-0.5 gap-1 uppercase`}>
+    <span className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${className}`}>
       <Icon className="w-3 h-3" />
       {priority}
-    </Badge>
+    </span>
   );
 };
 
@@ -171,16 +171,8 @@ const LogisticsGroupCard = ({ group, isPrinted, onPrint }: { group: LogisticsGro
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
       <div className={`bg-card rounded-md border ${cardBorder} overflow-hidden transition-all ${isPrinted ? "opacity-50 grayscale" : ""}`}>
-        {/* Priority stripe with embedded badge */}
-        <div className={`${stripeColor} flex items-center px-3 ${group.priority !== "NORMAL" ? "py-1" : "h-1"}`}>
-          {group.priority !== "NORMAL" && (
-            <div className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-wide">
-              {group.priority === "EMERGENCY" && <AlertTriangle className="w-3 h-3 text-destructive-foreground" />}
-              {(group.priority === "EXPEDITE" || group.priority === "RUSH") && <Zap className="w-3 h-3" />}
-              <span className={group.priority === "RUSH" ? "text-yellow-900" : "text-white"}>{group.priority}</span>
-            </div>
-          )}
-        </div>
+        {/* Thin priority stripe */}
+        <div className={`h-1 ${stripeColor}`} />
 
         {/* Split two-column header */}
         <div className="px-3 py-2.5 flex items-center gap-4">
@@ -223,7 +215,7 @@ const LogisticsGroupCard = ({ group, isPrinted, onPrint }: { group: LogisticsGro
             </div>
           </div>
 
-          {/* Right: Actions */}
+          {/* Right: Driver + Priority pill above printables */}
           <div className="flex items-center gap-2 shrink-0">
             <Select value={driver} onValueChange={setDriver}>
               <SelectTrigger className="h-7 w-[130px] text-[11px] rounded border-dashed">
@@ -237,24 +229,27 @@ const LogisticsGroupCard = ({ group, isPrinted, onPrint }: { group: LogisticsGro
               </SelectContent>
             </Select>
 
-            {!isPrinted ? (
-              <div className="flex items-center gap-1">
-                <Button size="sm" className="h-7 text-[11px] gap-1 rounded px-3" onClick={() => onPrint?.(group.id)}>
-                  <Printer className="w-3 h-3" />
-                  Print All
-                </Button>
-                <Button variant="outline" size="sm" className="h-7 text-[11px] rounded px-2" onClick={() => onPrint?.(group.id)}>
-                  {group.type === "INV" ? "Inv" : group.type === "DT" ? "DT" : "WO"}
-                </Button>
-                <Button variant="outline" size="sm" className="h-7 text-[11px] rounded px-2">Certs</Button>
-                <Button variant="outline" size="sm" className="h-7 text-[11px] rounded px-2">Data</Button>
-              </div>
-            ) : (
-              <Badge variant="outline" className="text-[10px] text-muted-foreground gap-1 px-2 py-0.5">
-                <Printer className="w-2.5 h-2.5" />
-                Printed
-              </Badge>
-            )}
+            <div className="flex flex-col items-end gap-1">
+              <PriorityBadge priority={group.priority} />
+              {!isPrinted ? (
+                <div className="flex items-center gap-1">
+                  <Button size="sm" className="h-7 text-[11px] gap-1 rounded px-3" onClick={() => onPrint?.(group.id)}>
+                    <Printer className="w-3 h-3" />
+                    Print All
+                  </Button>
+                  <Button variant="outline" size="sm" className="h-7 text-[11px] rounded px-2" onClick={() => onPrint?.(group.id)}>
+                    {group.type === "INV" ? "Inv" : group.type === "DT" ? "DT" : "WO"}
+                  </Button>
+                  <Button variant="outline" size="sm" className="h-7 text-[11px] rounded px-2">Certs</Button>
+                  <Button variant="outline" size="sm" className="h-7 text-[11px] rounded px-2">Data</Button>
+                </div>
+              ) : (
+                <Badge variant="outline" className="text-[10px] text-muted-foreground gap-1 px-2 py-0.5">
+                  <Printer className="w-2.5 h-2.5" />
+                  Printed
+                </Badge>
+              )}
+            </div>
           </div>
         </div>
 
