@@ -57,6 +57,10 @@ const mockItems: LogisticsItem[] = [
   // Items with Invoice (overdue)
   { woBatch: "572240-001", woNumber: "572240", division: "Lab", manufacturer: "FLUKE", model: "726", description: "MULTIFUNCTION CALIBRATOR", invoiceNum: "988640" },
   { woBatch: "572240-002", woNumber: "572240", division: "Lab", manufacturer: "FLUKE", model: "754", description: "DOCUMENTING PROCESS CALIBRATOR", invoiceNum: "988640" },
+  // Items with Invoice (expedite)
+  { woBatch: "572250-001", woNumber: "572250", division: "Field", manufacturer: "FLUKE", model: "1760", description: "THREE-PHASE POWER QUALITY RECORDER", invoiceNum: "988650" },
+  { woBatch: "572250-002", woNumber: "572250", division: "Field", manufacturer: "FLUKE", model: "435-II", description: "POWER QUALITY ANALYZER", invoiceNum: "988650" },
+  { woBatch: "572250-003", woNumber: "572250", division: "Field", manufacturer: "HIOKI", model: "PW3198", description: "POWER QUALITY ANALYZER", invoiceNum: "988650" },
   // Items with neither invoice nor DT — will be excluded from groups
   { woBatch: "572230-001", woNumber: "572230", division: "Field", manufacturer: "FLUKE", model: "1587", description: "INSULATION MULTIMETER" },
   { woBatch: "572230-002", woNumber: "572230", division: "Field", manufacturer: "MEGGER", model: "MIT485/2", description: "INSULATION TESTER" },
@@ -68,6 +72,7 @@ const groupMetadata: Record<string, Omit<LogisticsGroup, "id" | "items" | "itemC
   "DT-40915": { type: "DT", number: "40915", priority: "RUSH", customerName: "Turner Industries", city: "Lake Charles", state: "LA", division: "Field", deliverBy: "2026-03-09", assignedDriver: "unassigned" },
   "INV-988635": { type: "INV", number: "988635", invoiceDate: "Monday, February 24, 2026", priority: "NORMAL", customerName: "Dow Chemical Plaquemine", city: "Plaquemine", state: "LA", division: "Lab", deliverBy: "2026-03-25", assignedDriver: "unassigned" },
   "INV-988640": { type: "INV", number: "988640", invoiceDate: "Wednesday, March 4, 2026", priority: "RUSH", customerName: "Sasol Lake Charles", city: "Westlake", state: "LA", division: "Lab", deliverBy: "2026-03-15", assignedDriver: "unassigned" },
+  "INV-988650": { type: "INV", number: "988650", invoiceDate: "Tuesday, March 10, 2026", priority: "EXPEDITE", customerName: "BASF Geismar", city: "Geismar", state: "LA", division: "Field", deliverBy: "2026-03-20", assignedDriver: "unassigned" },
 };
 
 function buildGroups(items: LogisticsItem[]): LogisticsGroup[] {
