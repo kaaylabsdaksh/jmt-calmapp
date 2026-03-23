@@ -748,9 +748,9 @@ const AddNewWorkOrder = () => {
     }
     // Multi-account or no mapping: don't auto-populate account
     
-    // Select the RMA in the RMA section dropdown
     if (rmaData[rmaNumber as keyof typeof rmaData]) {
       setSelectedRMA(rmaNumber);
+      setRmaAccordionValue("rma");
     }
   };
 
