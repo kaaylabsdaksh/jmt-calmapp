@@ -136,6 +136,20 @@ const AddNewWorkOrder = () => {
   const [selectedRMAItems, setSelectedRMAItems] = useState<number[]>([]);
   const [rmaSearchOpen, setRmaSearchOpen] = useState(false);
   const [rmaSearchTerm, setRmaSearchTerm] = useState("");
+  
+  // RMA Number search field (top-level, next to Account #)
+  const [rmaSearchValue, setRmaSearchValue] = useState("");
+  const [rmaSearchSuggestions, setRmaSearchSuggestions] = useState<string[]>([]);
+  const [showRmaSuggestions, setShowRmaSuggestions] = useState(false);
+  const [highlightedRmaSuggestion, setHighlightedRmaSuggestion] = useState(-1);
+  const rmaInputRef = useRef<HTMLInputElement>(null);
+  
+  // Mock RMA-to-account mapping (an RMA can be linked to one or more accounts)
+  const rmaAccountMapping: Record<string, string[]> = {
+    "RMA-001": ["0152.01"],
+    "RMA-002": ["1500.00"],
+    "RMA-003": ["0152.01", "1500.01"], // multi-account RMA
+  };
   const [rmaData, setRmaData] = useState({
     "RMA-001": {
       type: "Repair",
