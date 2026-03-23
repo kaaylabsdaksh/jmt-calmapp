@@ -2166,11 +2166,11 @@ const AddNewWorkOrder = () => {
 
                         {/* Items Table */}
                         <div className="space-y-2">
-                          <a 
-                            href="#" 
-                            className="text-xs text-foreground font-medium hover:text-primary hover:underline"
-                            onClick={(e) => {
-                              e.preventDefault();
+                          <Button 
+                            variant="ghost"
+                            size="sm"
+                            className="h-7 px-2 text-xs font-semibold text-foreground hover:bg-accent hover:text-accent-foreground"
+                            onClick={() => {
                               const currentItems = rmaData[selectedRMA as keyof typeof rmaData].items;
                               if (selectedRMAItems.length === currentItems.length) {
                                 setSelectedRMAItems([]);
@@ -2180,7 +2180,7 @@ const AddNewWorkOrder = () => {
                             }}
                           >
                             {selectedRMAItems.length === rmaData[selectedRMA as keyof typeof rmaData].items.length ? "Deselect All" : "Select All"}
-                          </a>
+                          </Button>
                           
                           <div className="border rounded-lg overflow-x-auto">
                             <table className="w-full text-[11px]">
