@@ -1884,7 +1884,7 @@ const AddNewWorkOrder = () => {
               {/* RMA Section - Show after account is saved OR when a valid RMA is selected via top search */}
               {((isSaved && workOrderData.accountNumber) || (selectedRMA && selectedRMA !== "none" && rmaData[selectedRMA as keyof typeof rmaData])) && (
               <Card>
-                <Accordion type="single" collapsible>
+                <Accordion type="single" collapsible defaultValue={selectedRMA && selectedRMA !== "none" ? "rma" : undefined}>
                   <AccordionItem value="rma" className="border-0">
                     <AccordionTrigger className="px-4 sm:px-6 py-3 hover:no-underline">
                       <span className="text-sm font-semibold">RMA</span>
