@@ -1881,8 +1881,8 @@ const AddNewWorkOrder = () => {
               </Card>
               )}
 
-              {/* RMA Section - Only show after account is saved */}
-              {isSaved && workOrderData.accountNumber && (
+              {/* RMA Section - Show after account is saved OR when a valid RMA is selected via top search */}
+              {((isSaved && workOrderData.accountNumber) || (selectedRMA && selectedRMA !== "none" && rmaData[selectedRMA as keyof typeof rmaData])) && (
               <Card>
                 <Accordion type="single" collapsible>
                   <AccordionItem value="rma" className="border-0">
