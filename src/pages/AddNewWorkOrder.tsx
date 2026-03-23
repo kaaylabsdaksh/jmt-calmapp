@@ -183,6 +183,22 @@ const AddNewWorkOrder = () => {
       items: [
         { manufacturer: "Tektronix", model: "TBS1052B", description: "OSCILLOSCOPE 50MHZ", qty: "1", calFreq: "24", woItem: "", serialNumber: "TEK44321", custId: "", custSerial: "", priority: "Normal", repair: false, iso17025: true },
       ]
+    },
+    "RMA-003": {
+      type: "Calibration",
+      received: {
+        calFreq: "12",
+        location: "Baton Rouge",
+        division: "Lab",
+        poNumber: "RMA-PO-003",
+        arrivalDate: "2024-04-10",
+        arrivalType: "shipped",
+        priority: "Normal",
+        needByDate: "2024-05-01",
+      },
+      items: [
+        { manufacturer: "Fluke", model: "726", description: "PRECISION MULTIFUNCTION CALIBRATOR", qty: "1", calFreq: "12", woItem: "", serialNumber: "FL99887", custId: "", custSerial: "", priority: "Normal", repair: false, iso17025: true },
+      ]
     }
   });
 
