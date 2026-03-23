@@ -689,11 +689,86 @@ const AddNewWorkOrder = () => {
     }
   };
 
+  // Handle RMA number search input
+  const handleRmaSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setRmaSearchValue(value);
+    
+    if (!value) {
+      setShowRmaSuggestions(false);
+      setRmaSearchSuggestions([]);
+      return;
+    }
+    
+    // Search all known RMA numbers (from rmaData + rmaAccountMapping)
+    const allRmaNumbers = [...new Set([...Object.keys(rmaData), ...Object.keys(rmaAccountMapping)])];
+    const filtered = allRmaNumbers.filter(rma => rma.toLowerCase().includes(value.toLowerCase()));
+    setRmaSearchSuggestions(filtered);
+    setShowRmaSuggestions(true);
+    setHighlightedRmaSuggestion(-1);
+  };
+
+  const handleRmaSearchSelect = (rmaNumber: string) => {
+    setRmaSearchValue(rmaNumber);
+    setShowRmaSuggestions(false);
+    setRmaSearchSuggestions([]);
+    
+    const accounts = rmaAccountMapping[rmaNumber];
+    
+    if (accounts && accounts.length === 1) {
+      // Single account - auto-populate
+      const account = mockAccounts.find(a => a.accountNumber === accounts[0]);
+      if (account) {
+        setWorkOrderData(prev => ({
+          ...prev,
+          accountNumber: account.accountNumber,
+          customer: account.customerName,
+          srDocument: account.srDocument,
+          salesperson: account.salesperson,
+          contact: account.contact
+        }));
+      }
+    }
+    // Multi-account or no mapping: don't auto-populate account
+    
+    // Select the RMA in the RMA section dropdown
+    if (rmaData[rmaNumber as keyof typeof rmaData]) {
+      setSelectedRMA(rmaNumber);
+    }
+  };
+
+  const handleRmaSearchKeyDown = (e: React.KeyboardEvent) => {
+    if (!showRmaSuggestions || rmaSearchSuggestions.length === 0) return;
+    switch (e.key) {
+      case 'ArrowDown':
+        e.preventDefault();
+        setHighlightedRmaSuggestion(prev => prev < rmaSearchSuggestions.length - 1 ? prev + 1 : 0);
+        break;
+      case 'ArrowUp':
+        e.preventDefault();
+        setHighlightedRmaSuggestion(prev => prev > 0 ? prev - 1 : rmaSearchSuggestions.length - 1);
+        break;
+      case 'Enter':
+        e.preventDefault();
+        if (highlightedRmaSuggestion >= 0) {
+          handleRmaSearchSelect(rmaSearchSuggestions[highlightedRmaSuggestion]);
+        }
+        break;
+      case 'Escape':
+        setShowRmaSuggestions(false);
+        setHighlightedRmaSuggestion(-1);
+        break;
+    }
+  };
+
   // Handle clicks outside to close suggestions
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (inputRef.current && !inputRef.current.contains(event.target as Node)) {
         setShowSuggestions(false);
+      }
+      if (rmaInputRef.current && !rmaInputRef.current.contains(event.target as Node)) {
+        setShowRmaSuggestions(false);
       }
     };
 
