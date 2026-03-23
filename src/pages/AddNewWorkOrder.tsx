@@ -136,6 +136,20 @@ const AddNewWorkOrder = () => {
   const [selectedRMAItems, setSelectedRMAItems] = useState<number[]>([]);
   const [rmaSearchOpen, setRmaSearchOpen] = useState(false);
   const [rmaSearchTerm, setRmaSearchTerm] = useState("");
+  
+  // RMA Number search field (top-level, next to Account #)
+  const [rmaSearchValue, setRmaSearchValue] = useState("");
+  const [rmaSearchSuggestions, setRmaSearchSuggestions] = useState<string[]>([]);
+  const [showRmaSuggestions, setShowRmaSuggestions] = useState(false);
+  const [highlightedRmaSuggestion, setHighlightedRmaSuggestion] = useState(-1);
+  const rmaInputRef = useRef<HTMLInputElement>(null);
+  
+  // Mock RMA-to-account mapping (an RMA can be linked to one or more accounts)
+  const rmaAccountMapping: Record<string, string[]> = {
+    "RMA-001": ["0152.01"],
+    "RMA-002": ["1500.00"],
+    "RMA-003": ["0152.01", "1500.01"], // multi-account RMA
+  };
   const [rmaData, setRmaData] = useState({
     "RMA-001": {
       type: "Repair",
@@ -168,6 +182,22 @@ const AddNewWorkOrder = () => {
       },
       items: [
         { manufacturer: "Tektronix", model: "TBS1052B", description: "OSCILLOSCOPE 50MHZ", qty: "1", calFreq: "24", woItem: "", serialNumber: "TEK44321", custId: "", custSerial: "", priority: "Normal", repair: false, iso17025: true },
+      ]
+    },
+    "RMA-003": {
+      type: "Calibration",
+      received: {
+        calFreq: "12",
+        location: "Baton Rouge",
+        division: "Lab",
+        poNumber: "RMA-PO-003",
+        arrivalDate: "2024-04-10",
+        arrivalType: "shipped",
+        priority: "Normal",
+        needByDate: "2024-05-01",
+      },
+      items: [
+        { manufacturer: "Fluke", model: "726", description: "PRECISION MULTIFUNCTION CALIBRATOR", qty: "1", calFreq: "12", woItem: "", serialNumber: "FL99887", custId: "", custSerial: "", priority: "Normal", repair: false, iso17025: true },
       ]
     }
   });
@@ -675,11 +705,86 @@ const AddNewWorkOrder = () => {
     }
   };
 
+  // Handle RMA number search input
+  const handleRmaSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setRmaSearchValue(value);
+    
+    if (!value) {
+      setShowRmaSuggestions(false);
+      setRmaSearchSuggestions([]);
+      return;
+    }
+    
+    // Search all known RMA numbers (from rmaData + rmaAccountMapping)
+    const allRmaNumbers = [...new Set([...Object.keys(rmaData), ...Object.keys(rmaAccountMapping)])];
+    const filtered = allRmaNumbers.filter(rma => rma.toLowerCase().includes(value.toLowerCase()));
+    setRmaSearchSuggestions(filtered);
+    setShowRmaSuggestions(true);
+    setHighlightedRmaSuggestion(-1);
+  };
+
+  const handleRmaSearchSelect = (rmaNumber: string) => {
+    setRmaSearchValue(rmaNumber);
+    setShowRmaSuggestions(false);
+    setRmaSearchSuggestions([]);
+    
+    const accounts = rmaAccountMapping[rmaNumber];
+    
+    if (accounts && accounts.length === 1) {
+      // Single account - auto-populate
+      const account = mockAccounts.find(a => a.accountNumber === accounts[0]);
+      if (account) {
+        setWorkOrderData(prev => ({
+          ...prev,
+          accountNumber: account.accountNumber,
+          customer: account.customerName,
+          srDocument: account.srDocument,
+          salesperson: account.salesperson,
+          contact: account.contact
+        }));
+      }
+    }
+    // Multi-account or no mapping: don't auto-populate account
+    
+    // Select the RMA in the RMA section dropdown
+    if (rmaData[rmaNumber as keyof typeof rmaData]) {
+      setSelectedRMA(rmaNumber);
+    }
+  };
+
+  const handleRmaSearchKeyDown = (e: React.KeyboardEvent) => {
+    if (!showRmaSuggestions || rmaSearchSuggestions.length === 0) return;
+    switch (e.key) {
+      case 'ArrowDown':
+        e.preventDefault();
+        setHighlightedRmaSuggestion(prev => prev < rmaSearchSuggestions.length - 1 ? prev + 1 : 0);
+        break;
+      case 'ArrowUp':
+        e.preventDefault();
+        setHighlightedRmaSuggestion(prev => prev > 0 ? prev - 1 : rmaSearchSuggestions.length - 1);
+        break;
+      case 'Enter':
+        e.preventDefault();
+        if (highlightedRmaSuggestion >= 0) {
+          handleRmaSearchSelect(rmaSearchSuggestions[highlightedRmaSuggestion]);
+        }
+        break;
+      case 'Escape':
+        setShowRmaSuggestions(false);
+        setHighlightedRmaSuggestion(-1);
+        break;
+    }
+  };
+
   // Handle clicks outside to close suggestions
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (inputRef.current && !inputRef.current.contains(event.target as Node)) {
         setShowSuggestions(false);
+      }
+      if (rmaInputRef.current && !rmaInputRef.current.contains(event.target as Node)) {
+        setShowRmaSuggestions(false);
       }
     };
 
@@ -985,7 +1090,51 @@ const AddNewWorkOrder = () => {
             <TabsContent value="general" className="space-y-3">
               <Card>
                 <CardContent className="p-3 sm:p-4">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
+                    {/* RMA Number Search */}
+                    <div className="space-y-1 relative" ref={rmaInputRef}>
+                      <Label htmlFor="rmaSearch" className="text-xs font-medium">
+                        RMA #
+                      </Label>
+                      <div className="relative">
+                        <Input
+                          id="rmaSearch"
+                          placeholder="Search RMA..."
+                          value={rmaSearchValue}
+                          onChange={handleRmaSearchChange}
+                          onKeyDown={handleRmaSearchKeyDown}
+                          disabled={isSaved}
+                          className="h-8"
+                        />
+                        {/* RMA Suggestions Dropdown */}
+                        {showRmaSuggestions && rmaSearchSuggestions.length > 0 && (
+                          <div className="absolute top-full left-0 right-0 z-50 mt-1 bg-popover border rounded-md shadow-lg max-h-60 overflow-y-auto">
+                            {rmaSearchSuggestions.map((rma, index) => (
+                              <div
+                                key={rma}
+                                className={`px-3 py-2 cursor-pointer transition-colors border-b last:border-b-0 text-sm ${
+                                  index === highlightedRmaSuggestion 
+                                    ? 'bg-accent text-accent-foreground' 
+                                    : 'hover:bg-muted'
+                                }`}
+                                onClick={() => handleRmaSearchSelect(rma)}
+                              >
+                                <div className="font-medium">{rma}</div>
+                                {rmaAccountMapping[rma] && (
+                                  <div className="text-xs text-muted-foreground">
+                                    {rmaAccountMapping[rma].length === 1 
+                                      ? `Account: ${rmaAccountMapping[rma][0]}`
+                                      : `${rmaAccountMapping[rma].length} accounts`
+                                    }
+                                  </div>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
                     {/* Account Number */}
                     <div className="space-y-1 relative" ref={inputRef}>
                       <Label htmlFor="accountNumber" className="text-xs font-medium">
@@ -1763,7 +1912,7 @@ const AddNewWorkOrder = () => {
                                       None
                                     </CommandItem>
                                     {Object.keys(rmaData).map((rmaId) => (
-                                      <CommandItem key={rmaId} value={rmaId} onSelect={() => { setSelectedRMA(rmaId); setRmaSearchOpen(false); setRmaSearchTerm(""); }} className="text-xs">
+                                      <CommandItem key={rmaId} value={rmaId} onSelect={() => { setSelectedRMA(rmaId); setRmaSearchOpen(false); setRmaSearchTerm(""); setRmaSearchValue(rmaId); }} className="text-xs">
                                         <Check className={cn("mr-1 h-3 w-3", selectedRMA === rmaId ? "opacity-100" : "opacity-0")} />
                                         {rmaId}
                                       </CommandItem>
@@ -1791,7 +1940,7 @@ const AddNewWorkOrder = () => {
                                     <a 
                                       href="#" 
                                       className="text-foreground hover:underline font-medium"
-                                      onClick={(e) => { e.preventDefault(); setSelectedRMA(rmaId); }}
+                                      onClick={(e) => { e.preventDefault(); setSelectedRMA(rmaId); setRmaSearchValue(rmaId); }}
                                     >
                                       {rmaId}
                                     </a>
