@@ -1074,7 +1074,51 @@ const AddNewWorkOrder = () => {
             <TabsContent value="general" className="space-y-3">
               <Card>
                 <CardContent className="p-3 sm:p-4">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
+                    {/* RMA Number Search */}
+                    <div className="space-y-1 relative" ref={rmaInputRef}>
+                      <Label htmlFor="rmaSearch" className="text-xs font-medium">
+                        RMA #
+                      </Label>
+                      <div className="relative">
+                        <Input
+                          id="rmaSearch"
+                          placeholder="Search RMA..."
+                          value={rmaSearchValue}
+                          onChange={handleRmaSearchChange}
+                          onKeyDown={handleRmaSearchKeyDown}
+                          disabled={isSaved}
+                          className="h-8"
+                        />
+                        {/* RMA Suggestions Dropdown */}
+                        {showRmaSuggestions && rmaSearchSuggestions.length > 0 && (
+                          <div className="absolute top-full left-0 right-0 z-50 mt-1 bg-popover border rounded-md shadow-lg max-h-60 overflow-y-auto">
+                            {rmaSearchSuggestions.map((rma, index) => (
+                              <div
+                                key={rma}
+                                className={`px-3 py-2 cursor-pointer transition-colors border-b last:border-b-0 text-sm ${
+                                  index === highlightedRmaSuggestion 
+                                    ? 'bg-accent text-accent-foreground' 
+                                    : 'hover:bg-muted'
+                                }`}
+                                onClick={() => handleRmaSearchSelect(rma)}
+                              >
+                                <div className="font-medium">{rma}</div>
+                                {rmaAccountMapping[rma] && (
+                                  <div className="text-xs text-muted-foreground">
+                                    {rmaAccountMapping[rma].length === 1 
+                                      ? `Account: ${rmaAccountMapping[rma][0]}`
+                                      : `${rmaAccountMapping[rma].length} accounts`
+                                    }
+                                  </div>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
                     {/* Account Number */}
                     <div className="space-y-1 relative" ref={inputRef}>
                       <Label htmlFor="accountNumber" className="text-xs font-medium">
