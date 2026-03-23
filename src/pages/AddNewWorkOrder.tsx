@@ -136,6 +136,7 @@ const AddNewWorkOrder = () => {
   const [selectedRMAItems, setSelectedRMAItems] = useState<number[]>([]);
   const [rmaSearchOpen, setRmaSearchOpen] = useState(false);
   const [rmaSearchTerm, setRmaSearchTerm] = useState("");
+  const [rmaAccordionValue, setRmaAccordionValue] = useState<string | undefined>(undefined);
   
   // RMA Number search field (top-level, next to Account #)
   const [rmaSearchValue, setRmaSearchValue] = useState("");
