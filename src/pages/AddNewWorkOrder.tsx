@@ -136,6 +136,7 @@ const AddNewWorkOrder = () => {
   const [selectedRMAItems, setSelectedRMAItems] = useState<number[]>([]);
   const [rmaSearchOpen, setRmaSearchOpen] = useState(false);
   const [rmaSearchTerm, setRmaSearchTerm] = useState("");
+  const [rmaAccordionValue, setRmaAccordionValue] = useState<string | undefined>(undefined);
   
   // RMA Number search field (top-level, next to Account #)
   const [rmaSearchValue, setRmaSearchValue] = useState("");
@@ -747,9 +748,9 @@ const AddNewWorkOrder = () => {
     }
     // Multi-account or no mapping: don't auto-populate account
     
-    // Select the RMA in the RMA section dropdown
     if (rmaData[rmaNumber as keyof typeof rmaData]) {
       setSelectedRMA(rmaNumber);
+      setRmaAccordionValue("rma");
     }
   };
 
@@ -1881,10 +1882,10 @@ const AddNewWorkOrder = () => {
               </Card>
               )}
 
-              {/* RMA Section - Only show after account is saved */}
-              {isSaved && workOrderData.accountNumber && (
+              {/* RMA Section - Show after account is saved OR when a valid RMA is selected via top search */}
+              {((isSaved && workOrderData.accountNumber) || (selectedRMA && selectedRMA !== "none" && rmaData[selectedRMA as keyof typeof rmaData])) && (
               <Card>
-                <Accordion type="single" collapsible>
+                <Accordion type="single" collapsible value={rmaAccordionValue} onValueChange={setRmaAccordionValue}>
                   <AccordionItem value="rma" className="border-0">
                     <AccordionTrigger className="px-4 sm:px-6 py-3 hover:no-underline">
                       <span className="text-sm font-semibold">RMA</span>
