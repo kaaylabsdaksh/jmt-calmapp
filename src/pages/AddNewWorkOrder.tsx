@@ -1896,7 +1896,7 @@ const AddNewWorkOrder = () => {
                                       None
                                     </CommandItem>
                                     {Object.keys(rmaData).map((rmaId) => (
-                                      <CommandItem key={rmaId} value={rmaId} onSelect={() => { setSelectedRMA(rmaId); setRmaSearchOpen(false); setRmaSearchTerm(""); }} className="text-xs">
+                                      <CommandItem key={rmaId} value={rmaId} onSelect={() => { setSelectedRMA(rmaId); setRmaSearchOpen(false); setRmaSearchTerm(""); setRmaSearchValue(rmaId); }} className="text-xs">
                                         <Check className={cn("mr-1 h-3 w-3", selectedRMA === rmaId ? "opacity-100" : "opacity-0")} />
                                         {rmaId}
                                       </CommandItem>
