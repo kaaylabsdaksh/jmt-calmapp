@@ -764,6 +764,18 @@ const AddNewWorkOrder = () => {
   };
 
   const handleRmaSearchKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      if (showRmaSuggestions && highlightedRmaSuggestion >= 0) {
+        handleRmaSearchSelect(rmaSearchSuggestions[highlightedRmaSuggestion]);
+      } else if (rmaSearchValue) {
+        // Try exact match on Enter
+        const allRmaNumbers = [...new Set([...Object.keys(rmaData), ...Object.keys(rmaAccountMapping)])];
+        const match = allRmaNumbers.find(rma => rma.toLowerCase() === rmaSearchValue.toLowerCase());
+        if (match) handleRmaSearchSelect(match);
+      }
+      return;
+    }
     if (!showRmaSuggestions || rmaSearchSuggestions.length === 0) return;
     switch (e.key) {
       case 'ArrowDown':
@@ -773,12 +785,6 @@ const AddNewWorkOrder = () => {
       case 'ArrowUp':
         e.preventDefault();
         setHighlightedRmaSuggestion(prev => prev > 0 ? prev - 1 : rmaSearchSuggestions.length - 1);
-        break;
-      case 'Enter':
-        e.preventDefault();
-        if (highlightedRmaSuggestion >= 0) {
-          handleRmaSearchSelect(rmaSearchSuggestions[highlightedRmaSuggestion]);
-        }
         break;
       case 'Escape':
         setShowRmaSuggestions(false);
