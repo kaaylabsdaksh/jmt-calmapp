@@ -713,6 +713,8 @@ const AddNewWorkOrder = () => {
     if (!value) {
       setShowRmaSuggestions(false);
       setRmaSearchSuggestions([]);
+      // Clear RMA selection when field is cleared
+      setSelectedRMA("");
       return;
     }
     
@@ -722,6 +724,12 @@ const AddNewWorkOrder = () => {
     setRmaSearchSuggestions(filtered);
     setShowRmaSuggestions(true);
     setHighlightedRmaSuggestion(-1);
+    
+    // Auto-select if exact match is typed
+    const exactMatch = allRmaNumbers.find(rma => rma.toLowerCase() === value.toLowerCase());
+    if (exactMatch) {
+      handleRmaSearchSelect(exactMatch);
+    }
   };
 
   const handleRmaSearchSelect = (rmaNumber: string) => {
@@ -747,9 +755,11 @@ const AddNewWorkOrder = () => {
     }
     // Multi-account or no mapping: don't auto-populate account
     
-    // Select the RMA in the RMA section dropdown
+    // Select the RMA in the RMA section dropdown and switch to items tab
     if (rmaData[rmaNumber as keyof typeof rmaData]) {
       setSelectedRMA(rmaNumber);
+      // Auto-switch to items tab so user can see the RMA items
+      setActiveTab("items");
     }
   };
 
