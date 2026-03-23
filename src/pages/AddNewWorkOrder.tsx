@@ -1924,7 +1924,7 @@ const AddNewWorkOrder = () => {
                                     <a 
                                       href="#" 
                                       className="text-foreground hover:underline font-medium"
-                                      onClick={(e) => { e.preventDefault(); setSelectedRMA(rmaId); }}
+                                      onClick={(e) => { e.preventDefault(); setSelectedRMA(rmaId); setRmaSearchValue(rmaId); }}
                                     >
                                       {rmaId}
                                     </a>
