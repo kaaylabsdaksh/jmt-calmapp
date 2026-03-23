@@ -713,8 +713,6 @@ const AddNewWorkOrder = () => {
     if (!value) {
       setShowRmaSuggestions(false);
       setRmaSearchSuggestions([]);
-      // Clear RMA selection when field is cleared
-      setSelectedRMA("");
       return;
     }
     
@@ -724,12 +722,6 @@ const AddNewWorkOrder = () => {
     setRmaSearchSuggestions(filtered);
     setShowRmaSuggestions(true);
     setHighlightedRmaSuggestion(-1);
-    
-    // Auto-select if exact match is typed
-    const exactMatch = allRmaNumbers.find(rma => rma.toLowerCase() === value.toLowerCase());
-    if (exactMatch) {
-      handleRmaSearchSelect(exactMatch);
-    }
   };
 
   const handleRmaSearchSelect = (rmaNumber: string) => {
@@ -755,27 +747,13 @@ const AddNewWorkOrder = () => {
     }
     // Multi-account or no mapping: don't auto-populate account
     
-    // Select the RMA in the RMA section dropdown and switch to items tab
+    // Select the RMA in the RMA section dropdown
     if (rmaData[rmaNumber as keyof typeof rmaData]) {
       setSelectedRMA(rmaNumber);
-      // Auto-switch to items tab so user can see the RMA items
-      setActiveTab("items");
     }
   };
 
   const handleRmaSearchKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      if (showRmaSuggestions && highlightedRmaSuggestion >= 0) {
-        handleRmaSearchSelect(rmaSearchSuggestions[highlightedRmaSuggestion]);
-      } else if (rmaSearchValue) {
-        // Try exact match on Enter
-        const allRmaNumbers = [...new Set([...Object.keys(rmaData), ...Object.keys(rmaAccountMapping)])];
-        const match = allRmaNumbers.find(rma => rma.toLowerCase() === rmaSearchValue.toLowerCase());
-        if (match) handleRmaSearchSelect(match);
-      }
-      return;
-    }
     if (!showRmaSuggestions || rmaSearchSuggestions.length === 0) return;
     switch (e.key) {
       case 'ArrowDown':
@@ -785,6 +763,12 @@ const AddNewWorkOrder = () => {
       case 'ArrowUp':
         e.preventDefault();
         setHighlightedRmaSuggestion(prev => prev > 0 ? prev - 1 : rmaSearchSuggestions.length - 1);
+        break;
+      case 'Enter':
+        e.preventDefault();
+        if (highlightedRmaSuggestion >= 0) {
+          handleRmaSearchSelect(rmaSearchSuggestions[highlightedRmaSuggestion]);
+        }
         break;
       case 'Escape':
         setShowRmaSuggestions(false);
