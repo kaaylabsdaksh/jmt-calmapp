@@ -395,7 +395,12 @@ const ShippingView = () => {
   };
 
   const handleClaim = (id: string) => {
-    setClaimedIds(prev => new Set(prev).add(id));
+    setClaimedIds(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
   };
 
   const handleTrackingSave = (groupId: string, itemIdx: number, tracking: string, price: number) => {
