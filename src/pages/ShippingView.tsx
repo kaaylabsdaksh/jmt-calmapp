@@ -10,7 +10,7 @@ import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Search, Printer, FileText, ChevronDown, ChevronRight, AlertTriangle, Zap, X, Plus, Package, DollarSign } from "lucide-react";
+import { Search, Printer, FileText, ChevronDown, ChevronRight, AlertTriangle, Zap, X, Plus, Package, DollarSign, Flag } from "lucide-react";
 
 // --- Types ---
 interface TrackingEntry {
