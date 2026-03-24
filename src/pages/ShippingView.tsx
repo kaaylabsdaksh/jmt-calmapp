@@ -196,7 +196,7 @@ const TrackingPopover = ({ onSave }: { onSave: (tracking: string, price: number)
 const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim, onTrackingSave }: { group: ShippingGroup; isFinalized?: boolean; onFinalize?: (id: string) => void; isClaimed?: boolean; onClaim?: (id: string) => void; onTrackingSave?: (groupId: string, itemIdx: number, tracking: string, price: number) => void }) => {
   const [isOpen, setIsOpen] = useState(!isFinalized);
 
-  const itemsWithFreight = group.items.filter(i => i.trackingNumber);
+  const itemsWithFreight = group.items.filter(i => i.trackingEntries.length > 0);
   const freightStatus: "no-freight" | "partial" | "complete" =
     itemsWithFreight.length === 0 ? "no-freight"
     : itemsWithFreight.length === group.items.length ? "complete"
