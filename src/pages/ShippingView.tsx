@@ -22,6 +22,7 @@ interface ShippingItem {
   trackingNumber?: string;
   carrier?: string;
   woTotal?: number;
+  freightPrice?: number;
 }
 
 interface ShippingGroup {
