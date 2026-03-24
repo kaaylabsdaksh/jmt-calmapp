@@ -122,6 +122,7 @@ const TrackingPopover = ({ onSave }: { onSave: (tracking: string, price: number)
   const [price, setPrice] = useState("0.00");
 
   const handleSave = () => {
+    if (!tracking.trim()) return;
     onSave(tracking, parseFloat(price) || 0);
     setOpen(false);
     setTracking("");
@@ -137,44 +138,53 @@ const TrackingPopover = ({ onSave }: { onSave: (tracking: string, price: number)
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <div>
-          <span className="text-xs text-muted-foreground italic">No freight yet</span>
-          <div className="mt-1">
-            <Button variant="outline" size="sm" className="h-6 text-[10px] rounded px-2 gap-1 border-dashed text-muted-foreground hover:text-foreground">
-              <Plus className="w-2.5 h-2.5" />
-              Add tracking
-            </Button>
-          </div>
-        </div>
+        <Button variant="outline" size="sm" className="h-6 text-[10px] rounded px-2 gap-1 border-dashed text-muted-foreground hover:text-foreground">
+          <Plus className="w-2.5 h-2.5" />
+          Add tracking
+        </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-56 p-3" align="start">
-        <div className="space-y-3">
-          <div>
-            <label className="text-xs font-medium text-foreground">Tracking #</label>
-            <Input
-              placeholder="1Z..."
-              value={tracking}
-              onChange={(e) => setTracking(e.target.value)}
-              className="h-8 text-xs mt-1"
-            />
+      <PopoverContent className="w-64 p-0 rounded-lg shadow-lg" align="start" sideOffset={6}>
+        <div className="p-4 space-y-4">
+          <div className="flex items-center gap-2">
+            <div className="h-7 w-7 rounded-md bg-primary/10 flex items-center justify-center">
+              <Package className="w-3.5 h-3.5 text-primary" />
+            </div>
+            <div>
+              <p className="text-xs font-semibold text-foreground">Add Tracking</p>
+              <p className="text-[10px] text-muted-foreground">Enter shipment details</p>
+            </div>
           </div>
-          <div>
-            <label className="text-xs font-medium text-foreground">Price ($)</label>
-            <div className="flex items-center gap-2 mt-1">
+
+          <div className="space-y-3">
+            <div className="space-y-1.5">
+              <label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider">Tracking #</label>
+              <Input
+                placeholder="1Z..."
+                value={tracking}
+                onChange={(e) => setTracking(e.target.value)}
+                className="h-8 text-xs"
+                autoFocus
+              />
+            </div>
+            <div className="space-y-1.5">
+              <label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider">Price ($)</label>
               <Input
                 type="number"
                 step="0.01"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
-                className="h-8 text-xs flex-1"
+                className="h-8 text-xs"
               />
-              <Button size="sm" className="h-8 text-xs px-3" onClick={handleSave}>
-                Save
-              </Button>
             </div>
           </div>
-          <Button variant="outline" size="sm" className="h-7 text-xs w-full" onClick={handleCancel}>
+        </div>
+
+        <div className="border-t px-4 py-3 flex items-center justify-end gap-2 bg-muted/30 rounded-b-lg">
+          <Button variant="ghost" size="sm" className="h-7 text-[11px] px-3" onClick={handleCancel}>
             Cancel
+          </Button>
+          <Button size="sm" className="h-7 text-[11px] px-4" onClick={handleSave} disabled={!tracking.trim()}>
+            Save
           </Button>
         </div>
       </PopoverContent>
@@ -318,12 +328,14 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim 
                             <span className="text-xs text-primary font-mono">{item.trackingNumber}</span>
                           </div>
                         ) : (
-                          <TrackingPopover
-                            onSave={(tracking, price) => {
-                              // In a real app, this would update the item
-                              console.log(`Saved tracking: ${tracking}, price: ${price} for WO#${item.woNumber}`);
-                            }}
-                          />
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs text-muted-foreground italic">No freight yet</span>
+                            <TrackingPopover
+                              onSave={(tracking, price) => {
+                                console.log(`Saved tracking: ${tracking}, price: ${price} for WO#${item.woNumber}`);
+                              }}
+                            />
+                          </div>
                         )}
                       </td>
                       <td className="px-5 py-3 text-right text-xs font-medium text-foreground">
