@@ -162,6 +162,8 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim 
                 </div>
                 <div className="flex items-center gap-2 flex-wrap text-[12px]">
                   <span className="text-muted-foreground font-normal">{group.workOrderCount} work orders</span>
+                  <span className="text-muted-foreground/40">·</span>
+                  <span className="text-xs text-muted-foreground font-medium">{displayDate}</span>
                 </div>
               </div>
             </div>
@@ -169,8 +171,6 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim 
             {/* Right side: Priority + date + freight badge + action buttons */}
             <div className="flex items-center gap-3 shrink-0">
               <PriorityBadge priority={group.priority} />
-              <span className="text-xs text-muted-foreground font-medium">{displayDate}</span>
-              <span className="text-muted-foreground/40">—</span>
               <Badge variant="outline" className="text-[10px] font-medium px-2 py-0.5 h-5">
                 {group.freightStatus === "no-freight" ? "No freight" : "Freight added"}
               </Badge>
