@@ -1,13 +1,14 @@
 import React, { useState, useMemo } from "react";
 import { format, parseISO } from "date-fns";
 import { Link } from "react-router-dom";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Search, Printer, FileText, ChevronDown, ChevronRight, AlertTriangle, Zap, X, Plus, Package, DollarSign } from "lucide-react";
 
 // --- Types ---
@@ -261,11 +262,10 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize }: { group: Shipping
 
 // --- Main Page ---
 const ShippingView = () => {
-  const [locationFilter, setLocationFilter] = useState("baton-rouge");
+  const [locationFilter, setLocationFilter] = useState<string[]>([]);
   const [activeTab, setActiveTab] = useState<"active" | "printed">("active");
   const [searchQuery, setSearchQuery] = useState("");
   const [finalizedIds, setFinalizedIds] = useState<Set<string>>(new Set());
-  const [dateFilter] = useState("2026-03-04");
 
   const handleFinalize = (id: string) => {
     setFinalizedIds(prev => new Set(prev).add(id));
@@ -291,9 +291,9 @@ const ShippingView = () => {
   const printedGroups = filteredGroups.filter(g => finalizedIds.has(g.id));
 
   const locationOptions = [
-    { value: "baton-rouge", label: "Baton Rouge" },
-    { value: "lake-charles", label: "Lake Charles" },
-    { value: "houston", label: "Houston" },
+    { v: "baton-rouge", l: "Baton Rouge" },
+    { v: "lake-charles", l: "Lake Charles" },
+    { v: "houston", l: "Houston" },
   ];
 
   return (
@@ -320,35 +320,101 @@ const ShippingView = () => {
               </Breadcrumb>
             </div>
           </div>
-
-          {/* Right side: Date + Location + Search */}
-          <div className="flex items-center gap-3">
-            <Badge variant="outline" className="text-xs font-mono px-2.5 py-1 h-8 bg-muted/50">{dateFilter}</Badge>
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-muted-foreground">Location:</span>
-              <Select value={locationFilter} onValueChange={setLocationFilter}>
-                <SelectTrigger className="h-8 w-[140px] text-xs rounded border-border bg-foreground text-background">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {locationOptions.map(opt => (
-                    <SelectItem key={opt.value} value={opt.value}>{opt.label}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="relative w-48">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
-              <Input
-                placeholder="Search customer..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-9 h-8 text-xs rounded-lg border-border"
-              />
-            </div>
-          </div>
         </div>
       </header>
+
+      {/* Filters & Search Bar */}
+      <div className="px-2 sm:px-4 lg:px-6 py-3 border-b bg-card space-y-2">
+        <div className="flex items-center gap-3">
+          <div className="relative w-64 shrink-0">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
+            <Input
+              placeholder="Search customer, invoice..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-9 h-9 text-xs rounded-lg border-border"
+            />
+          </div>
+
+          <div className="h-6 w-px bg-border shrink-0" />
+
+          <div className="flex items-center gap-2 flex-wrap flex-1">
+            {(() => {
+              const displayText = locationFilter.length === 0
+                ? "All"
+                : locationFilter.length === 1
+                ? locationOptions.find(o => o.v === locationFilter[0])?.l || locationFilter[0]
+                : `${locationFilter.length} selected`;
+
+              const isActive = locationFilter.length > 0;
+
+              return (
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <button
+                      className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium border transition-all duration-200 hover:shadow-sm ${
+                        isActive
+                          ? "bg-primary text-primary-foreground border-primary shadow-sm"
+                          : "bg-card text-foreground border-border hover:border-foreground/30"
+                      }`}
+                    >
+                      <span className="opacity-70">Location:</span>
+                      <span className="font-semibold">{displayText}</span>
+                      <ChevronDown className="w-3 h-3 opacity-50" />
+                    </button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-48 p-2" align="start">
+                    <div className="flex flex-col gap-0.5">
+                      <button
+                        onClick={() => setLocationFilter([])}
+                        className={`text-left px-2 py-1.5 text-xs rounded-md transition-colors ${
+                          locationFilter.length === 0
+                            ? "bg-primary/10 text-foreground font-medium"
+                            : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                        }`}
+                      >
+                        All
+                      </button>
+                      {locationOptions.map((o) => (
+                        <button
+                          key={o.v}
+                          onClick={() => setLocationFilter(prev => prev.includes(o.v) ? prev.filter(x => x !== o.v) : [...prev, o.v])}
+                          className={`flex items-center gap-2 text-left px-2 py-1.5 text-xs rounded-md transition-colors ${
+                            locationFilter.includes(o.v)
+                              ? "bg-primary/10 text-foreground font-medium"
+                              : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                          }`}
+                        >
+                          <Checkbox
+                            checked={locationFilter.includes(o.v)}
+                            className="h-3.5 w-3.5 pointer-events-none"
+                          />
+                          {o.l}
+                        </button>
+                      ))}
+                    </div>
+                  </PopoverContent>
+                </Popover>
+              );
+            })()}
+
+            {(locationFilter.length > 0 || searchQuery.trim().length > 0) && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  setLocationFilter([]);
+                  setSearchQuery("");
+                }}
+                className="h-8 text-xs text-destructive hover:text-destructive hover:bg-destructive/10 gap-1"
+              >
+                <X className="w-3.5 h-3.5" />
+                Clear all
+              </Button>
+            )}
+          </div>
+        </div>
+      </div>
 
       {/* Tabs */}
       <div className="px-6 bg-card border-b">
