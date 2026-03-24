@@ -246,7 +246,7 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize }: { group: Shipping
               </div>
               <Button
                 size="sm"
-                className="h-8 text-xs rounded px-4 bg-[hsl(var(--primary))] hover:bg-[hsl(var(--primary))]/90"
+                className="h-8 text-xs rounded px-4 bg-primary text-primary-foreground hover:bg-primary/90"
                 onClick={() => onFinalize?.(group.id)}
               >
                 Finalize DT-{group.dtNumber}
