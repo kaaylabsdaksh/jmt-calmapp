@@ -124,20 +124,20 @@ const PriorityBadge = ({ priority }: { priority: ShippingGroup["priority"] }) =>
 const TrackingPopover = ({ onSave }: { onSave: (tracking: string, price: number) => void }) => {
   const [open, setOpen] = useState(false);
   const [tracking, setTracking] = useState("");
-  const [price, setPrice] = useState("0.00");
+  const [price, setPrice] = useState("");
 
   const handleSave = () => {
     if (!tracking.trim()) return;
     onSave(tracking, parseFloat(price) || 0);
     setOpen(false);
     setTracking("");
-    setPrice("0.00");
+    setPrice("");
   };
 
   const handleCancel = () => {
     setOpen(false);
     setTracking("");
-    setPrice("0.00");
+    setPrice("");
   };
 
   return (
@@ -170,7 +170,9 @@ const TrackingPopover = ({ onSave }: { onSave: (tracking: string, price: number)
               <label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider">Price ($)</label>
               <Input
                 type="number"
-                step="0.01"
+                step="1"
+                min="0"
+                placeholder="0"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
                 className="h-8 text-xs"
