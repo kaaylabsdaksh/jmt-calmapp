@@ -346,7 +346,9 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim,
             <div className="border-t bg-muted/20 px-5 py-3 flex items-center justify-end gap-4">
               <div className="flex items-center gap-2 text-sm">
                 <span className="text-muted-foreground">Invoice freight line:</span>
-                <span className="font-bold text-foreground text-base">${group.invoiceFreight.toFixed(2)}</span>
+                <span className="font-bold text-foreground text-base">
+                  ${group.items.reduce((sum, item) => sum + (item.freightPrice || 0), 0).toFixed(2)}
+                </span>
               </div>
               <Button
                 size="sm"
