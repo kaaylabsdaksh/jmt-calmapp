@@ -119,6 +119,12 @@ const PriorityBadge = ({ priority }: { priority: ShippingGroup["priority"] }) =>
 const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim }: { group: ShippingGroup; isFinalized?: boolean; onFinalize?: (id: string) => void; isClaimed?: boolean; onClaim?: (id: string) => void }) => {
   const [isOpen, setIsOpen] = useState(!isFinalized);
 
+  const itemsWithFreight = group.items.filter(i => i.trackingNumber);
+  const freightStatus: "no-freight" | "partial" | "complete" =
+    itemsWithFreight.length === 0 ? "no-freight"
+    : itemsWithFreight.length === group.items.length ? "complete"
+    : "partial";
+
   const displayDate = (() => {
     try { return format(parseISO(group.date), "yyyy-MM-dd"); }
     catch { return group.date; }
