@@ -95,8 +95,8 @@ const mockShippingGroups: ShippingGroup[] = [
     workOrderCount: 2,
     invoiceFreight: 0,
     items: [
-      { woNumber: "4260", customerName: "BASF Geismar", manufacturer: "AMETEK", model: "RTC-159", description: "DRY BLOCK CALIBRATOR", woTotal: undefined },
-      { woNumber: "4261", customerName: "BASF Geismar", manufacturer: "HIOKI", model: "PW3198", description: "POWER QUALITY ANALYZER", woTotal: undefined },
+      { woNumber: "4260", customerName: "BASF Geismar", manufacturer: "AMETEK", model: "RTC-159", description: "DRY BLOCK CALIBRATOR", trackingEntries: [], woTotal: undefined },
+      { woNumber: "4261", customerName: "BASF Geismar", manufacturer: "HIOKI", model: "PW3198", description: "POWER QUALITY ANALYZER", trackingEntries: [], woTotal: undefined },
     ],
   },
 ];
