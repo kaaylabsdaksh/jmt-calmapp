@@ -506,7 +506,7 @@ const ShippingView = () => {
         ) : (
           printedGroups.length > 0 ? (
             printedGroups.map(group => (
-              <ShippingGroupCard key={group.id} group={group} isFinalized />
+              <ShippingGroupCard key={group.id} group={group} isFinalized isClaimed={claimedIds.has(group.id)} />
             ))
           ) : (
             <div className="text-center py-12 text-muted-foreground text-sm">
