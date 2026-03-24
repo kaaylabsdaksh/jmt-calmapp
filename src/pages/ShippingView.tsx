@@ -328,7 +328,7 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim,
                             <span className="text-xs text-muted-foreground italic">No freight yet</span>
                             <TrackingPopover
                               onSave={(tracking, price) => {
-                                console.log(`Saved tracking: ${tracking}, price: ${price} for WO#${item.woNumber}`);
+                                onTrackingSave?.(group.id, idx, tracking, price);
                               }}
                             />
                           </div>
