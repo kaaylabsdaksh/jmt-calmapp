@@ -369,12 +369,14 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim,
                                         Shared • counted on WO #{owner}
                                       </span>
                                     )}
-                                    <button
-                                      onClick={() => onTrackingDelete?.(group.id, idx, tIdx)}
-                                      className="text-muted-foreground hover:text-destructive transition-colors ml-1"
-                                    >
-                                      <X className="w-3 h-3" />
-                                    </button>
+                                    {!isShared && (
+                                      <button
+                                        onClick={() => onTrackingDelete?.(group.id, idx, tIdx)}
+                                        className="text-muted-foreground hover:text-destructive transition-colors ml-1"
+                                      >
+                                        <X className="w-3 h-3" />
+                                      </button>
+                                    )}
                                   </div>
                                 );
                               })}
