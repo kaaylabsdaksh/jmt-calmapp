@@ -162,6 +162,8 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim 
                 </div>
                 <div className="flex items-center gap-2 flex-wrap text-[12px]">
                   <span className="text-muted-foreground font-normal">{group.workOrderCount} work orders</span>
+                  <span className="text-muted-foreground/40">·</span>
+                  <span className="text-xs text-muted-foreground font-medium">{displayDate}</span>
                 </div>
               </div>
             </div>
