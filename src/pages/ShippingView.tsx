@@ -145,14 +145,9 @@ const TrackingPopover = ({ onSave }: { onSave: (tracking: string, price: number)
       </PopoverTrigger>
       <PopoverContent className="w-64 p-0 rounded-lg shadow-lg" align="start" sideOffset={6}>
         <div className="p-4 space-y-4">
-          <div className="flex items-center gap-2">
-            <div className="h-7 w-7 rounded-md bg-primary/10 flex items-center justify-center">
-              <Package className="w-3.5 h-3.5 text-primary" />
-            </div>
-            <div>
-              <p className="text-xs font-semibold text-foreground">Add Tracking</p>
-              <p className="text-[10px] text-muted-foreground">Enter shipment details</p>
-            </div>
+          <div>
+            <p className="text-xs font-semibold text-foreground">Add Tracking</p>
+            <p className="text-[10px] text-muted-foreground">Enter shipment details</p>
           </div>
 
           <div className="space-y-3">
