@@ -170,7 +170,9 @@ const TrackingPopover = ({ onSave }: { onSave: (tracking: string, price: number)
               <label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider">Price ($)</label>
               <Input
                 type="number"
-                step="0.01"
+                step="1"
+                min="0"
+                placeholder="0"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
                 className="h-8 text-xs"
