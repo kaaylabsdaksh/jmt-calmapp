@@ -68,8 +68,8 @@ const mockShippingGroups: ShippingGroup[] = [
     workOrderCount: 2,
     invoiceFreight: 45.00,
     items: [
-      { woNumber: "4240", customerName: "ExxonMobil Baton Rouge", manufacturer: "FLUKE", model: "87V", description: "DIGITAL MULTIMETER", trackingNumber: "1Z999AA10123456784", carrier: "UPS", woTotal: 250.00 },
-      { woNumber: "4241", customerName: "ExxonMobil Baton Rouge", manufacturer: "FLUKE", model: "726", description: "MULTIFUNCTION CALIBRATOR", trackingNumber: "1Z999AA10123456784", carrier: "UPS", woTotal: 475.00 },
+      { woNumber: "4240", customerName: "ExxonMobil Baton Rouge", manufacturer: "FLUKE", model: "87V", description: "DIGITAL MULTIMETER", trackingEntries: [{ trackingNumber: "1Z999AA10123456784", carrier: "UPS", freightPrice: 22.50 }], woTotal: 250.00 },
+      { woNumber: "4241", customerName: "ExxonMobil Baton Rouge", manufacturer: "FLUKE", model: "726", description: "MULTIFUNCTION CALIBRATOR", trackingEntries: [{ trackingNumber: "1Z999AA10123456784", carrier: "UPS", freightPrice: 22.50 }], woTotal: 475.00 },
     ],
   },
   {
