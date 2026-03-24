@@ -30,7 +30,7 @@ interface ShippingGroup {
   customerName: string;
   priority: "EMERGENCY" | "EXPEDITE" | "RUSH" | "NORMAL";
   date: string;
-  freightStatus: "no-freight" | "has-freight";
+  freightStatus?: string; // legacy, now computed dynamically
   workOrderCount: number;
   invoiceFreight: number;
   items: ShippingItem[];
@@ -119,6 +119,12 @@ const PriorityBadge = ({ priority }: { priority: ShippingGroup["priority"] }) =>
 const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim }: { group: ShippingGroup; isFinalized?: boolean; onFinalize?: (id: string) => void; isClaimed?: boolean; onClaim?: (id: string) => void }) => {
   const [isOpen, setIsOpen] = useState(!isFinalized);
 
+  const itemsWithFreight = group.items.filter(i => i.trackingNumber);
+  const freightStatus: "no-freight" | "partial" | "complete" =
+    itemsWithFreight.length === 0 ? "no-freight"
+    : itemsWithFreight.length === group.items.length ? "complete"
+    : "partial";
+
   const displayDate = (() => {
     try { return format(parseISO(group.date), "yyyy-MM-dd"); }
     catch { return group.date; }
@@ -171,8 +177,12 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim 
             {/* Right side: Priority + date + freight badge + action buttons */}
             <div className="flex items-center gap-3 shrink-0">
               <PriorityBadge priority={group.priority} />
-              <Badge variant="outline" className="text-[10px] font-medium px-2 py-0.5 h-5">
-                {group.freightStatus === "no-freight" ? "No freight" : "Freight added"}
+              <Badge variant="outline" className={`text-[10px] font-medium px-2 py-0.5 h-5 ${
+                freightStatus === "complete" ? "bg-green-100 text-green-700 border-green-300" :
+                freightStatus === "partial" ? "bg-amber-100 text-amber-700 border-amber-300" :
+                ""
+              }`}>
+                {freightStatus === "complete" ? "Freight complete" : freightStatus === "partial" ? "Partial" : "No freight"}
               </Badge>
 
               <div className="flex items-center gap-1 ml-2">
