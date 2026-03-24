@@ -327,7 +327,7 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim,
                             <div key={tIdx} className="flex items-center gap-1.5">
                               <span className="text-xs text-foreground font-mono">{entry.trackingNumber}</span>
                               {entry.freightPrice > 0 && (
-                                <span className="text-[10px] text-muted-foreground">(${entry.freightPrice.toFixed(2)})</span>
+                                <span className="text-[10px] text-muted-foreground">(${Math.round(entry.freightPrice)})</span>
                               )}
                               <button
                                 onClick={() => onTrackingDelete?.(group.id, idx, tIdx)}
