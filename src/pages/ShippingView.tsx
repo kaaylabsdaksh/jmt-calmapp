@@ -324,7 +324,7 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim,
                       <td className="px-4 py-3">
                         <div className="space-y-1.5">
                           {item.trackingEntries.map((entry, tIdx) => (
-                            <div key={tIdx} className="flex items-center gap-1.5 group/track">
+                            <div key={tIdx} className="flex items-center gap-1.5">
                               <span className="text-xs font-medium text-foreground">{entry.carrier}:</span>
                               <span className="text-xs text-primary font-mono">{entry.trackingNumber}</span>
                               {entry.freightPrice > 0 && (
@@ -332,7 +332,7 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim,
                               )}
                               <button
                                 onClick={() => onTrackingDelete?.(group.id, idx, tIdx)}
-                                className="opacity-0 group-hover/track:opacity-100 transition-opacity ml-1 text-muted-foreground hover:text-destructive"
+                                className="text-muted-foreground hover:text-destructive transition-colors ml-1"
                               >
                                 <X className="w-3 h-3" />
                               </button>
