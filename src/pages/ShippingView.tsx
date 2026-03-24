@@ -401,7 +401,21 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim,
               <div className="flex items-center gap-2 text-sm">
                 <span className="text-muted-foreground">Invoice freight line:</span>
                 <span className="font-bold text-foreground text-base">
-                  ${group.items.reduce((sum, item) => sum + item.trackingEntries.reduce((s, e) => s + e.freightPrice, 0), 0).toFixed(2)}
+                  ${(() => {
+                    // Build owner map to exclude shared entries from total
+                    const ownerMap = new Map<string, string>();
+                    group.items.forEach((item) => {
+                      item.trackingEntries.forEach((entry) => {
+                        const key = entry.trackingNumber.trim().toLowerCase();
+                        if (!ownerMap.has(key)) ownerMap.set(key, item.woNumber);
+                      });
+                    });
+                    return Math.round(group.items.reduce((sum, item) =>
+                      sum + item.trackingEntries.reduce((s, e) => {
+                        const key = e.trackingNumber.trim().toLowerCase();
+                        return s + (ownerMap.get(key) === item.woNumber ? e.freightPrice : 0);
+                      }, 0), 0));
+                  })()}
                 </span>
               </div>
               <Button
