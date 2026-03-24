@@ -322,24 +322,28 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim,
                         <div className="text-[11px] text-muted-foreground">{item.manufacturer} · {item.description}</div>
                       </td>
                       <td className="px-4 py-3">
-                        {item.trackingNumber ? (
-                          <div>
-                            <span className="text-xs font-medium text-foreground">{item.carrier}: </span>
-                            <span className="text-xs text-primary font-mono">{item.trackingNumber}</span>
-                            {item.freightPrice != null && item.freightPrice > 0 && (
-                              <span className="text-[10px] text-muted-foreground ml-2">(${item.freightPrice.toFixed(2)})</span>
-                            )}
-                          </div>
-                        ) : (
-                          <div className="flex items-center gap-2">
-                            <span className="text-xs text-muted-foreground italic">No freight yet</span>
-                            <TrackingPopover
-                              onSave={(tracking, price) => {
-                                onTrackingSave?.(group.id, idx, tracking, price);
-                              }}
-                            />
-                          </div>
-                        )}
+                        <div className="space-y-1.5">
+                          {item.trackingEntries.map((entry, tIdx) => (
+                            <div key={tIdx} className="flex items-center gap-1.5 group/track">
+                              <span className="text-xs font-medium text-foreground">{entry.carrier}:</span>
+                              <span className="text-xs text-primary font-mono">{entry.trackingNumber}</span>
+                              {entry.freightPrice > 0 && (
+                                <span className="text-[10px] text-muted-foreground">(${entry.freightPrice.toFixed(2)})</span>
+                              )}
+                              <button
+                                onClick={() => onTrackingDelete?.(group.id, idx, tIdx)}
+                                className="opacity-0 group-hover/track:opacity-100 transition-opacity ml-1 text-muted-foreground hover:text-destructive"
+                              >
+                                <X className="w-3 h-3" />
+                              </button>
+                            </div>
+                          ))}
+                          <TrackingPopover
+                            onSave={(tracking, price) => {
+                              onTrackingSave?.(group.id, idx, tracking, price);
+                            }}
+                          />
+                        </div>
                       </td>
                       <td className="px-5 py-3 text-right text-xs font-medium text-foreground">
                         {item.woTotal != null ? `$${item.woTotal.toFixed(2)}` : "—"}
