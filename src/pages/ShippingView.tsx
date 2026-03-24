@@ -30,7 +30,7 @@ interface ShippingGroup {
   customerName: string;
   priority: "EMERGENCY" | "EXPEDITE" | "RUSH" | "NORMAL";
   date: string;
-  freightStatus: "no-freight" | "has-freight";
+  freightStatus?: string; // legacy, now computed dynamically
   workOrderCount: number;
   invoiceFreight: number;
   items: ShippingItem[];
