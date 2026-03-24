@@ -115,6 +115,73 @@ const PriorityBadge = ({ priority }: { priority: ShippingGroup["priority"] }) =>
   );
 };
 
+// --- Tracking Popover ---
+const TrackingPopover = ({ onSave }: { onSave: (tracking: string, price: number) => void }) => {
+  const [open, setOpen] = useState(false);
+  const [tracking, setTracking] = useState("");
+  const [price, setPrice] = useState("0.00");
+
+  const handleSave = () => {
+    onSave(tracking, parseFloat(price) || 0);
+    setOpen(false);
+    setTracking("");
+    setPrice("0.00");
+  };
+
+  const handleCancel = () => {
+    setOpen(false);
+    setTracking("");
+    setPrice("0.00");
+  };
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <div>
+          <span className="text-xs text-muted-foreground italic">No freight yet</span>
+          <div className="mt-1">
+            <Button variant="outline" size="sm" className="h-6 text-[10px] rounded px-2 gap-1 border-dashed text-muted-foreground hover:text-foreground">
+              <Plus className="w-2.5 h-2.5" />
+              Add tracking
+            </Button>
+          </div>
+        </div>
+      </PopoverTrigger>
+      <PopoverContent className="w-56 p-3" align="start">
+        <div className="space-y-3">
+          <div>
+            <label className="text-xs font-medium text-foreground">Tracking #</label>
+            <Input
+              placeholder="1Z..."
+              value={tracking}
+              onChange={(e) => setTracking(e.target.value)}
+              className="h-8 text-xs mt-1"
+            />
+          </div>
+          <div>
+            <label className="text-xs font-medium text-foreground">Price ($)</label>
+            <div className="flex items-center gap-2 mt-1">
+              <Input
+                type="number"
+                step="0.01"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+                className="h-8 text-xs flex-1"
+              />
+              <Button size="sm" className="h-8 text-xs px-3" onClick={handleSave}>
+                Save
+              </Button>
+            </div>
+          </div>
+          <Button variant="outline" size="sm" className="h-7 text-xs w-full" onClick={handleCancel}>
+            Cancel
+          </Button>
+        </div>
+      </PopoverContent>
+    </Popover>
+  );
+};
+
 // --- Shipping Group Card ---
 const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim }: { group: ShippingGroup; isFinalized?: boolean; onFinalize?: (id: string) => void; isClaimed?: boolean; onClaim?: (id: string) => void }) => {
   const [isOpen, setIsOpen] = useState(!isFinalized);
@@ -251,15 +318,12 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim 
                             <span className="text-xs text-primary font-mono">{item.trackingNumber}</span>
                           </div>
                         ) : (
-                          <div>
-                            <span className="text-xs text-muted-foreground italic">No freight yet</span>
-                            <div className="mt-1">
-                              <Button variant="outline" size="sm" className="h-6 text-[10px] rounded px-2 gap-1 border-dashed text-muted-foreground hover:text-foreground">
-                                <Plus className="w-2.5 h-2.5" />
-                                Add tracking
-                              </Button>
-                            </div>
-                          </div>
+                          <TrackingPopover
+                            onSave={(tracking, price) => {
+                              // In a real app, this would update the item
+                              console.log(`Saved tracking: ${tracking}, price: ${price} for WO#${item.woNumber}`);
+                            }}
+                          />
                         )}
                       </td>
                       <td className="px-5 py-3 text-right text-xs font-medium text-foreground">
