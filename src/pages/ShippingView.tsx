@@ -368,11 +368,11 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim,
 
 // --- Main Page ---
 const ShippingView = () => {
+  const [shippingGroups, setShippingGroups] = useState<ShippingGroup[]>(mockShippingGroups);
   const [locationFilter, setLocationFilter] = useState<string[]>([]);
   const [activeTab, setActiveTab] = useState<"active" | "printed">("active");
   const [searchQuery, setSearchQuery] = useState("");
   const [finalizedIds, setFinalizedIds] = useState<Set<string>>(new Set());
-
   const [claimedIds, setClaimedIds] = useState<Set<string>>(new Set());
 
   const handleFinalize = (id: string) => {
@@ -383,8 +383,17 @@ const ShippingView = () => {
     setClaimedIds(prev => new Set(prev).add(id));
   };
 
+  const handleTrackingSave = (groupId: string, itemIdx: number, tracking: string, price: number) => {
+    setShippingGroups(prev => prev.map(g => {
+      if (g.id !== groupId) return g;
+      const newItems = [...g.items];
+      newItems[itemIdx] = { ...newItems[itemIdx], trackingNumber: tracking, carrier: "UPS", freightPrice: price };
+      return { ...g, items: newItems };
+    }));
+  };
+
   const filteredGroups = useMemo(() => {
-    return mockShippingGroups.filter(group => {
+    return shippingGroups.filter(group => {
       if (!searchQuery.trim()) return true;
       const q = searchQuery.toLowerCase();
       return (
@@ -397,7 +406,7 @@ const ShippingView = () => {
         )
       );
     });
-  }, [searchQuery]);
+  }, [searchQuery, shippingGroups]);
 
   const activeGroups = filteredGroups.filter(g => !finalizedIds.has(g.id));
   const printedGroups = filteredGroups.filter(g => finalizedIds.has(g.id));
