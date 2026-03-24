@@ -398,7 +398,22 @@ const ShippingView = () => {
     setShippingGroups(prev => prev.map(g => {
       if (g.id !== groupId) return g;
       const newItems = [...g.items];
-      newItems[itemIdx] = { ...newItems[itemIdx], trackingNumber: tracking, carrier: "UPS", freightPrice: price };
+      newItems[itemIdx] = {
+        ...newItems[itemIdx],
+        trackingEntries: [...newItems[itemIdx].trackingEntries, { trackingNumber: tracking, carrier: "UPS", freightPrice: price }],
+      };
+      return { ...g, items: newItems };
+    }));
+  };
+
+  const handleTrackingDelete = (groupId: string, itemIdx: number, trackingIdx: number) => {
+    setShippingGroups(prev => prev.map(g => {
+      if (g.id !== groupId) return g;
+      const newItems = [...g.items];
+      newItems[itemIdx] = {
+        ...newItems[itemIdx],
+        trackingEntries: newItems[itemIdx].trackingEntries.filter((_, i) => i !== trackingIdx),
+      };
       return { ...g, items: newItems };
     }));
   };
