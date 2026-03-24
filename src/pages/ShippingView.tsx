@@ -325,8 +325,7 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim,
                         <div className="space-y-1.5">
                           {item.trackingEntries.map((entry, tIdx) => (
                             <div key={tIdx} className="flex items-center gap-1.5">
-                              <span className="text-xs font-medium text-foreground">{entry.carrier}:</span>
-                              <span className="text-xs text-primary font-mono">{entry.trackingNumber}</span>
+                              <span className="text-xs text-foreground font-mono">{entry.trackingNumber}</span>
                               {entry.freightPrice > 0 && (
                                 <span className="text-[10px] text-muted-foreground">(${entry.freightPrice.toFixed(2)})</span>
                               )}
