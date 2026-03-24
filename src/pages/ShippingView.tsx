@@ -13,16 +13,20 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Search, Printer, FileText, ChevronDown, ChevronRight, AlertTriangle, Zap, X, Plus, Package, DollarSign } from "lucide-react";
 
 // --- Types ---
+interface TrackingEntry {
+  trackingNumber: string;
+  carrier: string;
+  freightPrice: number;
+}
+
 interface ShippingItem {
   woNumber: string;
   customerName: string;
   manufacturer: string;
   model: string;
   description: string;
-  trackingNumber?: string;
-  carrier?: string;
+  trackingEntries: TrackingEntry[];
   woTotal?: number;
-  freightPrice?: number;
 }
 
 interface ShippingGroup {
@@ -49,9 +53,9 @@ const mockShippingGroups: ShippingGroup[] = [
     workOrderCount: 3,
     invoiceFreight: 0,
     items: [
-      { woNumber: "4230", customerName: "Shell Chemical LP", manufacturer: "ASHCROFT", model: "TEST GAUGE", description: "TEST GAUGE", woTotal: undefined },
-      { woNumber: "4231", customerName: "Shell Chemical LP", manufacturer: "OMEGA", model: "THERMOMETER", description: "THERMOMETER", woTotal: undefined },
-      { woNumber: "4232", customerName: "Shell Chemical LP", manufacturer: "OMEGA", model: "DIGITAL THERMOMETER", description: "DIGITAL THERMOMETER", woTotal: undefined },
+      { woNumber: "4230", customerName: "Shell Chemical LP", manufacturer: "ASHCROFT", model: "TEST GAUGE", description: "TEST GAUGE", trackingEntries: [], woTotal: undefined },
+      { woNumber: "4231", customerName: "Shell Chemical LP", manufacturer: "OMEGA", model: "THERMOMETER", description: "THERMOMETER", trackingEntries: [], woTotal: undefined },
+      { woNumber: "4232", customerName: "Shell Chemical LP", manufacturer: "OMEGA", model: "DIGITAL THERMOMETER", description: "DIGITAL THERMOMETER", trackingEntries: [], woTotal: undefined },
     ],
   },
   {
@@ -64,8 +68,8 @@ const mockShippingGroups: ShippingGroup[] = [
     workOrderCount: 2,
     invoiceFreight: 45.00,
     items: [
-      { woNumber: "4240", customerName: "ExxonMobil Baton Rouge", manufacturer: "FLUKE", model: "87V", description: "DIGITAL MULTIMETER", trackingNumber: "1Z999AA10123456784", carrier: "UPS", woTotal: 250.00 },
-      { woNumber: "4241", customerName: "ExxonMobil Baton Rouge", manufacturer: "FLUKE", model: "726", description: "MULTIFUNCTION CALIBRATOR", trackingNumber: "1Z999AA10123456784", carrier: "UPS", woTotal: 475.00 },
+      { woNumber: "4240", customerName: "ExxonMobil Baton Rouge", manufacturer: "FLUKE", model: "87V", description: "DIGITAL MULTIMETER", trackingEntries: [{ trackingNumber: "1Z999AA10123456784", carrier: "UPS", freightPrice: 22.50 }], woTotal: 250.00 },
+      { woNumber: "4241", customerName: "ExxonMobil Baton Rouge", manufacturer: "FLUKE", model: "726", description: "MULTIFUNCTION CALIBRATOR", trackingEntries: [{ trackingNumber: "1Z999AA10123456784", carrier: "UPS", freightPrice: 22.50 }], woTotal: 475.00 },
     ],
   },
   {
@@ -78,7 +82,7 @@ const mockShippingGroups: ShippingGroup[] = [
     workOrderCount: 1,
     invoiceFreight: 0,
     items: [
-      { woNumber: "4250", customerName: "Dow Chemical Plaquemine", manufacturer: "DRUCK", model: "DPI 611", description: "PRESSURE CALIBRATOR", woTotal: undefined },
+      { woNumber: "4250", customerName: "Dow Chemical Plaquemine", manufacturer: "DRUCK", model: "DPI 611", description: "PRESSURE CALIBRATOR", trackingEntries: [], woTotal: undefined },
     ],
   },
   {
@@ -91,8 +95,8 @@ const mockShippingGroups: ShippingGroup[] = [
     workOrderCount: 2,
     invoiceFreight: 0,
     items: [
-      { woNumber: "4260", customerName: "BASF Geismar", manufacturer: "AMETEK", model: "RTC-159", description: "DRY BLOCK CALIBRATOR", woTotal: undefined },
-      { woNumber: "4261", customerName: "BASF Geismar", manufacturer: "HIOKI", model: "PW3198", description: "POWER QUALITY ANALYZER", woTotal: undefined },
+      { woNumber: "4260", customerName: "BASF Geismar", manufacturer: "AMETEK", model: "RTC-159", description: "DRY BLOCK CALIBRATOR", trackingEntries: [], woTotal: undefined },
+      { woNumber: "4261", customerName: "BASF Geismar", manufacturer: "HIOKI", model: "PW3198", description: "POWER QUALITY ANALYZER", trackingEntries: [], woTotal: undefined },
     ],
   },
 ];
@@ -189,10 +193,10 @@ const TrackingPopover = ({ onSave }: { onSave: (tracking: string, price: number)
 };
 
 // --- Shipping Group Card ---
-const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim, onTrackingSave }: { group: ShippingGroup; isFinalized?: boolean; onFinalize?: (id: string) => void; isClaimed?: boolean; onClaim?: (id: string) => void; onTrackingSave?: (groupId: string, itemIdx: number, tracking: string, price: number) => void }) => {
+const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim, onTrackingSave, onTrackingDelete }: { group: ShippingGroup; isFinalized?: boolean; onFinalize?: (id: string) => void; isClaimed?: boolean; onClaim?: (id: string) => void; onTrackingSave?: (groupId: string, itemIdx: number, tracking: string, price: number) => void; onTrackingDelete?: (groupId: string, itemIdx: number, trackingIdx: number) => void }) => {
   const [isOpen, setIsOpen] = useState(!isFinalized);
 
-  const itemsWithFreight = group.items.filter(i => i.trackingNumber);
+  const itemsWithFreight = group.items.filter(i => i.trackingEntries.length > 0);
   const freightStatus: "no-freight" | "partial" | "complete" =
     itemsWithFreight.length === 0 ? "no-freight"
     : itemsWithFreight.length === group.items.length ? "complete"
@@ -318,24 +322,28 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim,
                         <div className="text-[11px] text-muted-foreground">{item.manufacturer} · {item.description}</div>
                       </td>
                       <td className="px-4 py-3">
-                        {item.trackingNumber ? (
-                          <div>
-                            <span className="text-xs font-medium text-foreground">{item.carrier}: </span>
-                            <span className="text-xs text-primary font-mono">{item.trackingNumber}</span>
-                            {item.freightPrice != null && item.freightPrice > 0 && (
-                              <span className="text-[10px] text-muted-foreground ml-2">(${item.freightPrice.toFixed(2)})</span>
-                            )}
-                          </div>
-                        ) : (
-                          <div className="flex items-center gap-2">
-                            <span className="text-xs text-muted-foreground italic">No freight yet</span>
-                            <TrackingPopover
-                              onSave={(tracking, price) => {
-                                onTrackingSave?.(group.id, idx, tracking, price);
-                              }}
-                            />
-                          </div>
-                        )}
+                        <div className="space-y-1.5">
+                          {item.trackingEntries.map((entry, tIdx) => (
+                            <div key={tIdx} className="flex items-center gap-1.5 group/track">
+                              <span className="text-xs font-medium text-foreground">{entry.carrier}:</span>
+                              <span className="text-xs text-primary font-mono">{entry.trackingNumber}</span>
+                              {entry.freightPrice > 0 && (
+                                <span className="text-[10px] text-muted-foreground">(${entry.freightPrice.toFixed(2)})</span>
+                              )}
+                              <button
+                                onClick={() => onTrackingDelete?.(group.id, idx, tIdx)}
+                                className="opacity-0 group-hover/track:opacity-100 transition-opacity ml-1 text-muted-foreground hover:text-destructive"
+                              >
+                                <X className="w-3 h-3" />
+                              </button>
+                            </div>
+                          ))}
+                          <TrackingPopover
+                            onSave={(tracking, price) => {
+                              onTrackingSave?.(group.id, idx, tracking, price);
+                            }}
+                          />
+                        </div>
                       </td>
                       <td className="px-5 py-3 text-right text-xs font-medium text-foreground">
                         {item.woTotal != null ? `$${item.woTotal.toFixed(2)}` : "—"}
@@ -351,7 +359,7 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim,
               <div className="flex items-center gap-2 text-sm">
                 <span className="text-muted-foreground">Invoice freight line:</span>
                 <span className="font-bold text-foreground text-base">
-                  ${group.items.reduce((sum, item) => sum + (item.freightPrice || 0), 0).toFixed(2)}
+                  ${group.items.reduce((sum, item) => sum + item.trackingEntries.reduce((s, e) => s + e.freightPrice, 0), 0).toFixed(2)}
                 </span>
               </div>
               <Button
@@ -390,7 +398,22 @@ const ShippingView = () => {
     setShippingGroups(prev => prev.map(g => {
       if (g.id !== groupId) return g;
       const newItems = [...g.items];
-      newItems[itemIdx] = { ...newItems[itemIdx], trackingNumber: tracking, carrier: "UPS", freightPrice: price };
+      newItems[itemIdx] = {
+        ...newItems[itemIdx],
+        trackingEntries: [...newItems[itemIdx].trackingEntries, { trackingNumber: tracking, carrier: "UPS", freightPrice: price }],
+      };
+      return { ...g, items: newItems };
+    }));
+  };
+
+  const handleTrackingDelete = (groupId: string, itemIdx: number, trackingIdx: number) => {
+    setShippingGroups(prev => prev.map(g => {
+      if (g.id !== groupId) return g;
+      const newItems = [...g.items];
+      newItems[itemIdx] = {
+        ...newItems[itemIdx],
+        trackingEntries: newItems[itemIdx].trackingEntries.filter((_, i) => i !== trackingIdx),
+      };
       return { ...g, items: newItems };
     }));
   };
@@ -607,7 +630,7 @@ const ShippingView = () => {
         {activeTab === "active" ? (
           activeGroups.length > 0 ? (
             activeGroups.map(group => (
-              <ShippingGroupCard key={group.id} group={group} onFinalize={handleFinalize} isClaimed={claimedIds.has(group.id)} onClaim={handleClaim} onTrackingSave={handleTrackingSave} />
+              <ShippingGroupCard key={group.id} group={group} onFinalize={handleFinalize} isClaimed={claimedIds.has(group.id)} onClaim={handleClaim} onTrackingSave={handleTrackingSave} onTrackingDelete={handleTrackingDelete} />
             ))
           ) : (
             <div className="text-center py-12 text-muted-foreground text-sm">
