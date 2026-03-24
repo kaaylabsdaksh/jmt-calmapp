@@ -243,7 +243,10 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim,
                 <div className="flex items-center gap-2 flex-wrap text-[12px]">
                   <span className="whitespace-nowrap"><span className="text-muted-foreground font-normal">DT</span> <span className="font-bold text-foreground">#{group.dtNumber}</span></span>
                   <span className="text-muted-foreground/40">—</span>
-                  <span className="font-bold text-foreground truncate">{group.customerName}</span>
+                  <span className="font-bold text-foreground truncate flex items-center gap-1.5">
+                    {group.customerName}
+                    {isClaimed && <Flag className="h-3.5 w-3.5 text-green-600 fill-green-600 shrink-0" />}
+                  </span>
                 </div>
                 <div className="flex items-center gap-2 flex-wrap text-[12px]">
                   <span className="text-muted-foreground font-normal">{group.workOrderCount} work orders</span>
