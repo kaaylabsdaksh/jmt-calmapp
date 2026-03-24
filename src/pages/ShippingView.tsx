@@ -414,6 +414,34 @@ const ShippingView = () => {
             )}
           </div>
         </div>
+
+        {/* Row 2: Active filter tags */}
+        {(() => {
+          const tags = locationFilter.map(v => ({
+            key: `Location-${v}`,
+            label: `Location: ${locationOptions.find(o => o.v === v)?.l || v}`,
+            onRemove: () => setLocationFilter(prev => prev.filter(x => x !== v)),
+          }));
+          if (tags.length === 0) return null;
+          return (
+            <div className="flex items-center gap-1.5 flex-wrap ml-[calc(16rem+12px+1px+12px)]">
+              {tags.map(tag => (
+                <span
+                  key={tag.key}
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-muted rounded-md text-xs font-medium text-foreground"
+                >
+                  {tag.label}
+                  <button
+                    onClick={tag.onRemove}
+                    className="hover:text-destructive transition-colors"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                </span>
+              ))}
+            </div>
+          );
+        })()}
       </div>
 
       {/* Tabs */}
