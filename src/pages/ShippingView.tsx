@@ -496,7 +496,7 @@ const ShippingView = () => {
         {activeTab === "active" ? (
           activeGroups.length > 0 ? (
             activeGroups.map(group => (
-              <ShippingGroupCard key={group.id} group={group} onFinalize={handleFinalize} />
+              <ShippingGroupCard key={group.id} group={group} onFinalize={handleFinalize} isClaimed={claimedIds.has(group.id)} onClaim={handleClaim} />
             ))
           ) : (
             <div className="text-center py-12 text-muted-foreground text-sm">
