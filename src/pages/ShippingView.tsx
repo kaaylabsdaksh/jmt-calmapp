@@ -9,6 +9,7 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbP
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Checkbox } from "@/components/ui/checkbox";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Search, Printer, FileText, ChevronDown, ChevronRight, AlertTriangle, Zap, X, Plus, Package, DollarSign } from "lucide-react";
 
 // --- Types ---
@@ -175,10 +176,24 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim 
               </Badge>
 
               <div className="flex items-center gap-1 ml-2">
-                <Button size="sm" className="h-7 text-[11px] gap-1 rounded px-3">
-                  <Printer className="w-3 h-3" />
-                  Print all
-                </Button>
+                <div className="flex items-center">
+                  <Button size="sm" className="h-7 text-[11px] gap-1 rounded-r-none px-3">
+                    <Printer className="w-3 h-3" />
+                    Print all
+                  </Button>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button size="sm" className="h-7 text-[11px] rounded-l-none border-l border-primary-foreground/20 px-1.5">
+                        <ChevronDown className="w-3 h-3" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="w-36">
+                      <DropdownMenuItem className="text-xs">DT / Invoice</DropdownMenuItem>
+                      <DropdownMenuItem className="text-xs">Certs</DropdownMenuItem>
+                      <DropdownMenuItem className="text-xs">Data</DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
                 <span className="text-muted-foreground/40">·</span>
                 {isClaimed ? (
                   <Badge className="h-7 text-[11px] rounded px-2 gap-1 bg-green-100 text-green-700 border border-green-300 hover:bg-green-100 cursor-default">
