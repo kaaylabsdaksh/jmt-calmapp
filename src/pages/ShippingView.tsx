@@ -180,10 +180,17 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim 
                   Print all
                 </Button>
                 <span className="text-muted-foreground/40">·</span>
-                <Button variant="outline" size="sm" className="h-7 text-[11px] rounded px-2 gap-1 text-amber-600 border-amber-300 hover:bg-amber-50">
-                  <FileText className="w-3 h-3" />
-                  Claim
-                </Button>
+                {isClaimed ? (
+                  <Badge className="h-7 text-[11px] rounded px-2 gap-1 bg-green-100 text-green-700 border border-green-300 hover:bg-green-100 cursor-default">
+                    <FileText className="w-3 h-3" />
+                    Claimed
+                  </Badge>
+                ) : (
+                  <Button variant="outline" size="sm" className="h-7 text-[11px] rounded px-2 gap-1 text-amber-600 border-amber-300 hover:bg-amber-50" onClick={() => onClaim?.(group.id)}>
+                    <FileText className="w-3 h-3" />
+                    Claim
+                  </Button>
+                )}
                 <Button variant="outline" size="sm" className="h-7 text-[11px] rounded px-2 gap-1">
                   <Plus className="w-3 h-3" />
                   Bulk freight
