@@ -53,9 +53,9 @@ const mockShippingGroups: ShippingGroup[] = [
     workOrderCount: 3,
     invoiceFreight: 0,
     items: [
-      { woNumber: "4230", customerName: "Shell Chemical LP", manufacturer: "ASHCROFT", model: "TEST GAUGE", description: "TEST GAUGE", woTotal: undefined },
-      { woNumber: "4231", customerName: "Shell Chemical LP", manufacturer: "OMEGA", model: "THERMOMETER", description: "THERMOMETER", woTotal: undefined },
-      { woNumber: "4232", customerName: "Shell Chemical LP", manufacturer: "OMEGA", model: "DIGITAL THERMOMETER", description: "DIGITAL THERMOMETER", woTotal: undefined },
+      { woNumber: "4230", customerName: "Shell Chemical LP", manufacturer: "ASHCROFT", model: "TEST GAUGE", description: "TEST GAUGE", trackingEntries: [], woTotal: undefined },
+      { woNumber: "4231", customerName: "Shell Chemical LP", manufacturer: "OMEGA", model: "THERMOMETER", description: "THERMOMETER", trackingEntries: [], woTotal: undefined },
+      { woNumber: "4232", customerName: "Shell Chemical LP", manufacturer: "OMEGA", model: "DIGITAL THERMOMETER", description: "DIGITAL THERMOMETER", trackingEntries: [], woTotal: undefined },
     ],
   },
   {
