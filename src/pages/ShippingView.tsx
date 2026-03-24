@@ -328,12 +328,14 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim 
                             <span className="text-xs text-primary font-mono">{item.trackingNumber}</span>
                           </div>
                         ) : (
-                          <TrackingPopover
-                            onSave={(tracking, price) => {
-                              // In a real app, this would update the item
-                              console.log(`Saved tracking: ${tracking}, price: ${price} for WO#${item.woNumber}`);
-                            }}
-                          />
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs text-muted-foreground italic">No freight yet</span>
+                            <TrackingPopover
+                              onSave={(tracking, price) => {
+                                console.log(`Saved tracking: ${tracking}, price: ${price} for WO#${item.woNumber}`);
+                              }}
+                            />
+                          </div>
                         )}
                       </td>
                       <td className="px-5 py-3 text-right text-xs font-medium text-foreground">
