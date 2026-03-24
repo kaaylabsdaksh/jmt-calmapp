@@ -251,15 +251,12 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim 
                             <span className="text-xs text-primary font-mono">{item.trackingNumber}</span>
                           </div>
                         ) : (
-                          <div>
-                            <span className="text-xs text-muted-foreground italic">No freight yet</span>
-                            <div className="mt-1">
-                              <Button variant="outline" size="sm" className="h-6 text-[10px] rounded px-2 gap-1 border-dashed text-muted-foreground hover:text-foreground">
-                                <Plus className="w-2.5 h-2.5" />
-                                Add tracking
-                              </Button>
-                            </div>
-                          </div>
+                          <TrackingPopover
+                            onSave={(tracking, price) => {
+                              // In a real app, this would update the item
+                              console.log(`Saved tracking: ${tracking}, price: ${price} for WO#${item.woNumber}`);
+                            }}
+                          />
                         )}
                       </td>
                       <td className="px-5 py-3 text-right text-xs font-medium text-foreground">
