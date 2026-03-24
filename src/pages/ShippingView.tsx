@@ -82,7 +82,7 @@ const mockShippingGroups: ShippingGroup[] = [
     workOrderCount: 1,
     invoiceFreight: 0,
     items: [
-      { woNumber: "4250", customerName: "Dow Chemical Plaquemine", manufacturer: "DRUCK", model: "DPI 611", description: "PRESSURE CALIBRATOR", woTotal: undefined },
+      { woNumber: "4250", customerName: "Dow Chemical Plaquemine", manufacturer: "DRUCK", model: "DPI 611", description: "PRESSURE CALIBRATOR", trackingEntries: [], woTotal: undefined },
     ],
   },
   {
