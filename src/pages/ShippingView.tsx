@@ -285,7 +285,7 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim,
                 </div>
                 <span className="text-muted-foreground/40">·</span>
                 {isClaimed ? (
-                  <Badge className="h-7 text-[11px] rounded px-2 gap-1 bg-green-100 text-green-700 border border-green-300 hover:bg-green-100 cursor-default">
+                  <Badge className="h-7 text-[11px] rounded px-2 gap-1 bg-green-100 text-green-700 border border-green-300 hover:bg-green-200 cursor-pointer" onClick={() => onClaim?.(group.id)}>
                     <FileText className="w-3 h-3" />
                     Claimed
                   </Badge>
@@ -395,7 +395,12 @@ const ShippingView = () => {
   };
 
   const handleClaim = (id: string) => {
-    setClaimedIds(prev => new Set(prev).add(id));
+    setClaimedIds(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
   };
 
   const handleTrackingSave = (groupId: string, itemIdx: number, tracking: string, price: number) => {
