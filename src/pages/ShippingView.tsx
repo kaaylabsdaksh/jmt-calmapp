@@ -115,7 +115,7 @@ const PriorityBadge = ({ priority }: { priority: ShippingGroup["priority"] }) =>
 };
 
 // --- Shipping Group Card ---
-const ShippingGroupCard = ({ group, isFinalized, onFinalize }: { group: ShippingGroup; isFinalized?: boolean; onFinalize?: (id: string) => void }) => {
+const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim }: { group: ShippingGroup; isFinalized?: boolean; onFinalize?: (id: string) => void; isClaimed?: boolean; onClaim?: (id: string) => void }) => {
   const [isOpen, setIsOpen] = useState(!isFinalized);
 
   const displayDate = (() => {
