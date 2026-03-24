@@ -124,7 +124,7 @@ const PriorityBadge = ({ priority }: { priority: ShippingGroup["priority"] }) =>
 const TrackingPopover = ({ onSave }: { onSave: (tracking: string, price: number) => void }) => {
   const [open, setOpen] = useState(false);
   const [tracking, setTracking] = useState("");
-  const [price, setPrice] = useState("0.00");
+  const [price, setPrice] = useState("");
 
   const handleSave = () => {
     if (!tracking.trim()) return;
