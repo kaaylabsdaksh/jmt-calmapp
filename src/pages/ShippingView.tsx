@@ -347,7 +347,10 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim,
                         </div>
                       </td>
                       <td className="px-5 py-3 text-right text-xs font-medium text-foreground">
-                        {item.woTotal != null ? `$${item.woTotal.toFixed(2)}` : "—"}
+                        {(() => {
+                          const total = item.trackingEntries.reduce((sum, e) => sum + e.freightPrice, 0);
+                          return total > 0 ? `$${Math.round(total)}` : "—";
+                        })()}
                       </td>
                     </tr>
                   ))}
