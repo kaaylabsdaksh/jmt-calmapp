@@ -262,11 +262,10 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize }: { group: Shipping
 
 // --- Main Page ---
 const ShippingView = () => {
-  const [locationFilter, setLocationFilter] = useState("baton-rouge");
+  const [locationFilter, setLocationFilter] = useState<string[]>([]);
   const [activeTab, setActiveTab] = useState<"active" | "printed">("active");
   const [searchQuery, setSearchQuery] = useState("");
   const [finalizedIds, setFinalizedIds] = useState<Set<string>>(new Set());
-  const [dateFilter] = useState("2026-03-04");
 
   const handleFinalize = (id: string) => {
     setFinalizedIds(prev => new Set(prev).add(id));
@@ -292,9 +291,9 @@ const ShippingView = () => {
   const printedGroups = filteredGroups.filter(g => finalizedIds.has(g.id));
 
   const locationOptions = [
-    { value: "baton-rouge", label: "Baton Rouge" },
-    { value: "lake-charles", label: "Lake Charles" },
-    { value: "houston", label: "Houston" },
+    { v: "baton-rouge", l: "Baton Rouge" },
+    { v: "lake-charles", l: "Lake Charles" },
+    { v: "houston", l: "Houston" },
   ];
 
   return (
