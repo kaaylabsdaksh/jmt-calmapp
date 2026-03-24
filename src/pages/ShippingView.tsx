@@ -318,45 +318,80 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim,
                     <th className="text-right px-5 py-2 font-medium text-muted-foreground text-[11px] uppercase tracking-wider w-28">WO Total</th>
                   </tr>
                 </thead>
-                <tbody>
-                  {group.items.map((item, idx) => (
-                    <tr key={idx} className="border-t border-muted/40 hover:bg-muted/20 transition-colors">
-                      <td className="px-5 py-3 font-mono text-xs font-bold text-foreground">#{item.woNumber}</td>
-                      <td className="px-4 py-3">
-                        <div className="text-xs font-semibold text-foreground">{item.customerName}</div>
-                        <div className="text-[11px] text-muted-foreground">{item.manufacturer} · {item.description}</div>
-                      </td>
-                      <td className="px-4 py-3">
-                        <div className="space-y-1.5">
-                          {item.trackingEntries.map((entry, tIdx) => (
-                            <div key={tIdx} className="flex items-center gap-1.5">
-                              <span className="text-xs text-foreground font-mono">{entry.trackingNumber}</span>
-                              {entry.freightPrice > 0 && (
-                                <span className="text-[10px] text-muted-foreground">(${Math.round(entry.freightPrice)})</span>
-                              )}
-                              <button
-                                onClick={() => onTrackingDelete?.(group.id, idx, tIdx)}
-                                className="text-muted-foreground hover:text-destructive transition-colors ml-1"
-                              >
-                                <X className="w-3 h-3" />
-                              </button>
+                    <tbody>
+                  {(() => {
+                    // Build a map of tracking# -> first item WO number (first occurrence wins)
+                    const trackingOwnerMap = new Map<string, string>();
+                    group.items.forEach((item) => {
+                      item.trackingEntries.forEach((entry) => {
+                        const key = entry.trackingNumber.trim().toLowerCase();
+                        if (!trackingOwnerMap.has(key)) {
+                          trackingOwnerMap.set(key, item.woNumber);
+                        }
+                      });
+                    });
+
+                    return group.items.map((item, idx) => {
+                      // Calculate total excluding shared (duplicate) tracking entries
+                      const uniqueTotal = item.trackingEntries.reduce((sum, e) => {
+                        const key = e.trackingNumber.trim().toLowerCase();
+                        const owner = trackingOwnerMap.get(key);
+                        const isShared = owner !== item.woNumber;
+                        return sum + (isShared ? 0 : e.freightPrice);
+                      }, 0);
+
+                      return (
+                        <tr key={idx} className="border-t border-muted/40 hover:bg-muted/20 transition-colors">
+                          <td className="px-5 py-3 font-mono text-xs font-bold text-foreground">#{item.woNumber}</td>
+                          <td className="px-4 py-3">
+                            <div className="text-xs font-semibold text-foreground">{item.customerName}</div>
+                            <div className="text-[11px] text-muted-foreground">{item.manufacturer} · {item.description}</div>
+                          </td>
+                          <td className="px-4 py-3">
+                            <div className="space-y-1.5">
+                              {item.trackingEntries.map((entry, tIdx) => {
+                                const key = entry.trackingNumber.trim().toLowerCase();
+                                const owner = trackingOwnerMap.get(key);
+                                const isShared = owner !== item.woNumber;
+
+                                return (
+                                  <div key={tIdx} className="flex items-center gap-1.5 flex-wrap">
+                                    <span className={`text-xs font-mono ${isShared ? "line-through text-muted-foreground" : "text-foreground"}`}>
+                                      {entry.trackingNumber}
+                                    </span>
+                                    {entry.freightPrice > 0 && (
+                                      <span className={`text-[10px] ${isShared ? "line-through text-muted-foreground/60" : "text-muted-foreground"}`}>
+                                        (${Math.round(entry.freightPrice)})
+                                      </span>
+                                    )}
+                                    {isShared && (
+                                      <span className="text-[10px] text-amber-600 font-medium">
+                                        Shared • counted on WO #{owner}
+                                      </span>
+                                    )}
+                                    <button
+                                      onClick={() => onTrackingDelete?.(group.id, idx, tIdx)}
+                                      className="text-muted-foreground hover:text-destructive transition-colors ml-1"
+                                    >
+                                      <X className="w-3 h-3" />
+                                    </button>
+                                  </div>
+                                );
+                              })}
+                              <TrackingPopover
+                                onSave={(tracking, price) => {
+                                  onTrackingSave?.(group.id, idx, tracking, price);
+                                }}
+                              />
                             </div>
-                          ))}
-                          <TrackingPopover
-                            onSave={(tracking, price) => {
-                              onTrackingSave?.(group.id, idx, tracking, price);
-                            }}
-                          />
-                        </div>
-                      </td>
-                      <td className="px-5 py-3 text-right text-xs font-medium text-foreground">
-                        {(() => {
-                          const total = item.trackingEntries.reduce((sum, e) => sum + e.freightPrice, 0);
-                          return total > 0 ? `$${Math.round(total)}` : "—";
-                        })()}
-                      </td>
-                    </tr>
-                  ))}
+                          </td>
+                          <td className="px-5 py-3 text-right text-xs font-medium text-foreground">
+                            {uniqueTotal > 0 ? `$${Math.round(uniqueTotal)}` : "—"}
+                          </td>
+                        </tr>
+                      );
+                    });
+                  })()}
                 </tbody>
               </table>
             </div>
