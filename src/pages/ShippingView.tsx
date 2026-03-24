@@ -13,16 +13,20 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Search, Printer, FileText, ChevronDown, ChevronRight, AlertTriangle, Zap, X, Plus, Package, DollarSign } from "lucide-react";
 
 // --- Types ---
+interface TrackingEntry {
+  trackingNumber: string;
+  carrier: string;
+  freightPrice: number;
+}
+
 interface ShippingItem {
   woNumber: string;
   customerName: string;
   manufacturer: string;
   model: string;
   description: string;
-  trackingNumber?: string;
-  carrier?: string;
+  trackingEntries: TrackingEntry[];
   woTotal?: number;
-  freightPrice?: number;
 }
 
 interface ShippingGroup {
