@@ -115,7 +115,7 @@ const PriorityBadge = ({ priority }: { priority: ShippingGroup["priority"] }) =>
 };
 
 // --- Shipping Group Card ---
-const ShippingGroupCard = ({ group, isFinalized, onFinalize }: { group: ShippingGroup; isFinalized?: boolean; onFinalize?: (id: string) => void }) => {
+const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim }: { group: ShippingGroup; isFinalized?: boolean; onFinalize?: (id: string) => void; isClaimed?: boolean; onClaim?: (id: string) => void }) => {
   const [isOpen, setIsOpen] = useState(!isFinalized);
 
   const displayDate = (() => {
@@ -180,10 +180,17 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize }: { group: Shipping
                   Print all
                 </Button>
                 <span className="text-muted-foreground/40">·</span>
-                <Button variant="outline" size="sm" className="h-7 text-[11px] rounded px-2 gap-1 text-amber-600 border-amber-300 hover:bg-amber-50">
-                  <FileText className="w-3 h-3" />
-                  Claim
-                </Button>
+                {isClaimed ? (
+                  <Badge className="h-7 text-[11px] rounded px-2 gap-1 bg-green-100 text-green-700 border border-green-300 hover:bg-green-100 cursor-default">
+                    <FileText className="w-3 h-3" />
+                    Claimed
+                  </Badge>
+                ) : (
+                  <Button variant="outline" size="sm" className="h-7 text-[11px] rounded px-2 gap-1 text-amber-600 border-amber-300 hover:bg-amber-50" onClick={() => onClaim?.(group.id)}>
+                    <FileText className="w-3 h-3" />
+                    Claim
+                  </Button>
+                )}
                 <Button variant="outline" size="sm" className="h-7 text-[11px] rounded px-2 gap-1">
                   <Plus className="w-3 h-3" />
                   Bulk freight
@@ -267,8 +274,14 @@ const ShippingView = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [finalizedIds, setFinalizedIds] = useState<Set<string>>(new Set());
 
+  const [claimedIds, setClaimedIds] = useState<Set<string>>(new Set());
+
   const handleFinalize = (id: string) => {
     setFinalizedIds(prev => new Set(prev).add(id));
+  };
+
+  const handleClaim = (id: string) => {
+    setClaimedIds(prev => new Set(prev).add(id));
   };
 
   const filteredGroups = useMemo(() => {
@@ -483,7 +496,7 @@ const ShippingView = () => {
         {activeTab === "active" ? (
           activeGroups.length > 0 ? (
             activeGroups.map(group => (
-              <ShippingGroupCard key={group.id} group={group} onFinalize={handleFinalize} />
+              <ShippingGroupCard key={group.id} group={group} onFinalize={handleFinalize} isClaimed={claimedIds.has(group.id)} onClaim={handleClaim} />
             ))
           ) : (
             <div className="text-center py-12 text-muted-foreground text-sm">
@@ -493,7 +506,7 @@ const ShippingView = () => {
         ) : (
           printedGroups.length > 0 ? (
             printedGroups.map(group => (
-              <ShippingGroupCard key={group.id} group={group} isFinalized />
+              <ShippingGroupCard key={group.id} group={group} isFinalized isClaimed={claimedIds.has(group.id)} />
             ))
           ) : (
             <div className="text-center py-12 text-muted-foreground text-sm">
