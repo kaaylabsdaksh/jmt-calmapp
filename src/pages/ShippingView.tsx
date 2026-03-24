@@ -359,7 +359,7 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim,
               <div className="flex items-center gap-2 text-sm">
                 <span className="text-muted-foreground">Invoice freight line:</span>
                 <span className="font-bold text-foreground text-base">
-                  ${group.items.reduce((sum, item) => sum + (item.freightPrice || 0), 0).toFixed(2)}
+                  ${group.items.reduce((sum, item) => sum + item.trackingEntries.reduce((s, e) => s + e.freightPrice, 0), 0).toFixed(2)}
                 </span>
               </div>
               <Button
