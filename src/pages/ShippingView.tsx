@@ -472,11 +472,18 @@ const ShippingView = () => {
   const handleTrackingDelete = (groupId: string, itemIdx: number, trackingIdx: number) => {
     setShippingGroups(prev => prev.map(g => {
       if (g.id !== groupId) return g;
-      const newItems = [...g.items];
-      newItems[itemIdx] = {
-        ...newItems[itemIdx],
-        trackingEntries: newItems[itemIdx].trackingEntries.filter((_, i) => i !== trackingIdx),
-      };
+      const deletedTracking = g.items[itemIdx].trackingEntries[trackingIdx]?.trackingNumber.trim().toLowerCase();
+      // Remove from the target item and also remove matching tracking from all other items
+      const newItems = g.items.map((item, iIdx) => {
+        if (iIdx === itemIdx) {
+          return { ...item, trackingEntries: item.trackingEntries.filter((_, i) => i !== trackingIdx) };
+        }
+        // Remove duplicate entries with the same tracking number from other items
+        return {
+          ...item,
+          trackingEntries: item.trackingEntries.filter(e => e.trackingNumber.trim().toLowerCase() !== deletedTracking),
+        };
+      });
       return { ...g, items: newItems };
     }));
   };
