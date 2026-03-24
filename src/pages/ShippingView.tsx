@@ -137,7 +137,7 @@ const TrackingPopover = ({ onSave }: { onSave: (tracking: string, price: number)
   const handleCancel = () => {
     setOpen(false);
     setTracking("");
-    setPrice("0.00");
+    setPrice("");
   };
 
   return (
