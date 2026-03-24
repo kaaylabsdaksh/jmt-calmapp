@@ -322,6 +322,9 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim,
                           <div>
                             <span className="text-xs font-medium text-foreground">{item.carrier}: </span>
                             <span className="text-xs text-primary font-mono">{item.trackingNumber}</span>
+                            {item.freightPrice != null && item.freightPrice > 0 && (
+                              <span className="text-[10px] text-muted-foreground ml-2">(${item.freightPrice.toFixed(2)})</span>
+                            )}
                           </div>
                         ) : (
                           <div className="flex items-center gap-2">
