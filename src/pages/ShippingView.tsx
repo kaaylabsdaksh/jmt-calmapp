@@ -280,6 +280,10 @@ const ShippingView = () => {
     setFinalizedIds(prev => new Set(prev).add(id));
   };
 
+  const handleClaim = (id: string) => {
+    setClaimedIds(prev => new Set(prev).add(id));
+  };
+
   const filteredGroups = useMemo(() => {
     return mockShippingGroups.filter(group => {
       if (!searchQuery.trim()) return true;
