@@ -22,6 +22,7 @@ interface ShippingItem {
   trackingNumber?: string;
   carrier?: string;
   woTotal?: number;
+  freightPrice?: number;
 }
 
 interface ShippingGroup {
@@ -188,7 +189,7 @@ const TrackingPopover = ({ onSave }: { onSave: (tracking: string, price: number)
 };
 
 // --- Shipping Group Card ---
-const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim }: { group: ShippingGroup; isFinalized?: boolean; onFinalize?: (id: string) => void; isClaimed?: boolean; onClaim?: (id: string) => void }) => {
+const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim, onTrackingSave }: { group: ShippingGroup; isFinalized?: boolean; onFinalize?: (id: string) => void; isClaimed?: boolean; onClaim?: (id: string) => void; onTrackingSave?: (groupId: string, itemIdx: number, tracking: string, price: number) => void }) => {
   const [isOpen, setIsOpen] = useState(!isFinalized);
 
   const itemsWithFreight = group.items.filter(i => i.trackingNumber);
@@ -321,13 +322,16 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim 
                           <div>
                             <span className="text-xs font-medium text-foreground">{item.carrier}: </span>
                             <span className="text-xs text-primary font-mono">{item.trackingNumber}</span>
+                            {item.freightPrice != null && item.freightPrice > 0 && (
+                              <span className="text-[10px] text-muted-foreground ml-2">(${item.freightPrice.toFixed(2)})</span>
+                            )}
                           </div>
                         ) : (
                           <div className="flex items-center gap-2">
                             <span className="text-xs text-muted-foreground italic">No freight yet</span>
                             <TrackingPopover
                               onSave={(tracking, price) => {
-                                console.log(`Saved tracking: ${tracking}, price: ${price} for WO#${item.woNumber}`);
+                                onTrackingSave?.(group.id, idx, tracking, price);
                               }}
                             />
                           </div>
@@ -346,7 +350,9 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim 
             <div className="border-t bg-muted/20 px-5 py-3 flex items-center justify-end gap-4">
               <div className="flex items-center gap-2 text-sm">
                 <span className="text-muted-foreground">Invoice freight line:</span>
-                <span className="font-bold text-foreground text-base">${group.invoiceFreight.toFixed(2)}</span>
+                <span className="font-bold text-foreground text-base">
+                  ${group.items.reduce((sum, item) => sum + (item.freightPrice || 0), 0).toFixed(2)}
+                </span>
               </div>
               <Button
                 size="sm"
@@ -365,11 +371,11 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim 
 
 // --- Main Page ---
 const ShippingView = () => {
+  const [shippingGroups, setShippingGroups] = useState<ShippingGroup[]>(mockShippingGroups);
   const [locationFilter, setLocationFilter] = useState<string[]>([]);
   const [activeTab, setActiveTab] = useState<"active" | "printed">("active");
   const [searchQuery, setSearchQuery] = useState("");
   const [finalizedIds, setFinalizedIds] = useState<Set<string>>(new Set());
-
   const [claimedIds, setClaimedIds] = useState<Set<string>>(new Set());
 
   const handleFinalize = (id: string) => {
@@ -380,8 +386,17 @@ const ShippingView = () => {
     setClaimedIds(prev => new Set(prev).add(id));
   };
 
+  const handleTrackingSave = (groupId: string, itemIdx: number, tracking: string, price: number) => {
+    setShippingGroups(prev => prev.map(g => {
+      if (g.id !== groupId) return g;
+      const newItems = [...g.items];
+      newItems[itemIdx] = { ...newItems[itemIdx], trackingNumber: tracking, carrier: "UPS", freightPrice: price };
+      return { ...g, items: newItems };
+    }));
+  };
+
   const filteredGroups = useMemo(() => {
-    return mockShippingGroups.filter(group => {
+    return shippingGroups.filter(group => {
       if (!searchQuery.trim()) return true;
       const q = searchQuery.toLowerCase();
       return (
@@ -394,7 +409,7 @@ const ShippingView = () => {
         )
       );
     });
-  }, [searchQuery]);
+  }, [searchQuery, shippingGroups]);
 
   const activeGroups = filteredGroups.filter(g => !finalizedIds.has(g.id));
   const printedGroups = filteredGroups.filter(g => finalizedIds.has(g.id));
@@ -592,7 +607,7 @@ const ShippingView = () => {
         {activeTab === "active" ? (
           activeGroups.length > 0 ? (
             activeGroups.map(group => (
-              <ShippingGroupCard key={group.id} group={group} onFinalize={handleFinalize} isClaimed={claimedIds.has(group.id)} onClaim={handleClaim} />
+              <ShippingGroupCard key={group.id} group={group} onFinalize={handleFinalize} isClaimed={claimedIds.has(group.id)} onClaim={handleClaim} onTrackingSave={handleTrackingSave} />
             ))
           ) : (
             <div className="text-center py-12 text-muted-foreground text-sm">
