@@ -512,8 +512,9 @@ const ShippingView = () => {
     });
   }, [searchQuery, shippingGroups]);
 
-  const activeGroups = filteredGroups.filter(g => !finalizedIds.has(g.id));
-  const printedGroups = filteredGroups.filter(g => finalizedIds.has(g.id));
+  const activeGroups = filteredGroups.filter(g => !finalizedIds.has(g.id) && !printedIds.has(g.id));
+  const printedGroups = filteredGroups.filter(g => printedIds.has(g.id) && !finalizedIds.has(g.id));
+  const finalizedGroups = filteredGroups.filter(g => finalizedIds.has(g.id));
 
   const locationOptions = [
     { v: "baton-rouge", l: "Baton Rouge" },
@@ -716,13 +717,18 @@ const ShippingView = () => {
             </div>
           )
         ) : (
-          printedGroups.length > 0 ? (
-            printedGroups.map(group => (
-              <ShippingGroupCard key={group.id} group={group} isFinalized isClaimed={claimedIds.has(group.id)} />
-            ))
+          printedGroups.length > 0 || finalizedGroups.length > 0 ? (
+            <>
+              {printedGroups.map(group => (
+                <ShippingGroupCard key={group.id} group={group} onFinalize={handleFinalize} isClaimed={claimedIds.has(group.id)} onClaim={handleClaim} onTrackingSave={handleTrackingSave} onTrackingDelete={handleTrackingDelete} isPrintReady onPrint={handlePrint} />
+              ))}
+              {finalizedGroups.map(group => (
+                <ShippingGroupCard key={group.id} group={group} isFinalized isClaimed={claimedIds.has(group.id)} isPrintReady />
+              ))}
+            </>
           ) : (
             <div className="text-center py-12 text-muted-foreground text-sm">
-              No finalized shipments at this time.
+              No printed shipments at this time.
             </div>
           )
         )}
