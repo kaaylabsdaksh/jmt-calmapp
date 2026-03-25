@@ -409,6 +409,7 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim,
               <table className="w-full text-sm">
                 <thead>
                   <tr className="bg-muted/30">
+                    {bulkFreightOpen && <th className="w-8 pl-5 pr-1 py-2"></th>}
                     <th className="text-left px-5 py-2 font-medium text-muted-foreground text-[11px] uppercase tracking-wider w-20">WO #</th>
                     <th className="text-left px-4 py-2 font-medium text-muted-foreground text-[11px] uppercase tracking-wider">Customer</th>
                     <th className="text-left px-4 py-2 font-medium text-muted-foreground text-[11px] uppercase tracking-wider">Tracking / Freight</th>
