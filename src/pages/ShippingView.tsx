@@ -446,6 +446,11 @@ const ShippingView = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [finalizedIds, setFinalizedIds] = useState<Set<string>>(new Set());
   const [claimedIds, setClaimedIds] = useState<Set<string>>(new Set());
+  const [printedIds, setPrintedIds] = useState<Set<string>>(new Set());
+
+  const handlePrint = (id: string) => {
+    setPrintedIds(prev => new Set(prev).add(id));
+  };
 
   const handleFinalize = (id: string) => {
     setFinalizedIds(prev => new Set(prev).add(id));
