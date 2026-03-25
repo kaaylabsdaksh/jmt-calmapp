@@ -252,6 +252,14 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim,
                   <span className="text-muted-foreground font-normal">{group.workOrderCount} work orders</span>
                   <span className="text-muted-foreground/40">·</span>
                   <span className="text-xs text-muted-foreground font-medium">{displayDate}</span>
+                  {isFinalized && finalizedAt && (
+                    <>
+                      <span className="text-muted-foreground/40">·</span>
+                      <span className="text-xs text-green-600 font-medium">
+                        Printed {finalizedAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                      </span>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
