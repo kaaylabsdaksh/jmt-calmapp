@@ -318,6 +318,115 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim,
             </div>
           </div>
 
+          {/* Bulk Freight Panel */}
+          {bulkFreightOpen && (
+            <div className="border-t bg-muted/30 px-5 py-3">
+              <div className="flex items-center gap-6">
+                {/* Selection */}
+                <div className="flex flex-col gap-0.5 min-w-[100px]">
+                  <span className="text-xs font-medium text-foreground">{bulkSelectedItems.size} of {group.items.length} selected</span>
+                  <button
+                    className="text-[11px] text-primary hover:underline text-left font-medium"
+                    onClick={() => {
+                      if (bulkSelectedItems.size === group.items.length) {
+                        setBulkSelectedItems(new Set());
+                      } else {
+                        setBulkSelectedItems(new Set(group.items.map((_, i) => i)));
+                      }
+                    }}
+                  >
+                    {bulkSelectedItems.size === group.items.length ? "Deselect all" : "Select all"}
+                  </button>
+                </div>
+
+                {/* Item chips */}
+                <div className="flex items-center gap-1.5 flex-wrap flex-1">
+                  {group.items.map((item, idx) => {
+                    const selected = bulkSelectedItems.has(idx);
+                    return (
+                      <button
+                        key={idx}
+                        onClick={() => {
+                          const next = new Set(bulkSelectedItems);
+                          if (selected) next.delete(idx); else next.add(idx);
+                          setBulkSelectedItems(next);
+                        }}
+                        className={`h-7 px-2.5 rounded text-[11px] font-medium border transition-all ${
+                          selected
+                            ? "bg-primary text-primary-foreground border-primary"
+                            : "bg-card text-muted-foreground border-border hover:border-primary/50"
+                        }`}
+                      >
+                        WO #{item.woNumber}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Tracking & Price */}
+                <div className="flex items-center gap-3">
+                  <div className="flex flex-col gap-0.5">
+                    <label className="text-[10px] text-muted-foreground font-medium">Tracking #</label>
+                    <input
+                      type="text"
+                      placeholder="1Z..."
+                      value={bulkTracking}
+                      onChange={e => setBulkTracking(e.target.value)}
+                      className="h-8 w-44 rounded border border-border bg-background px-2.5 text-xs text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-primary"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-0.5">
+                    <label className="text-[10px] text-muted-foreground font-medium">Price ($)</label>
+                    <input
+                      type="text"
+                      placeholder="0"
+                      value={bulkPrice}
+                      onChange={e => {
+                        const val = e.target.value.replace(/[^0-9]/g, "");
+                        setBulkPrice(val);
+                      }}
+                      className="h-8 w-20 rounded border border-border bg-background px-2.5 text-xs text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-primary"
+                    />
+                  </div>
+                </div>
+
+                {/* Apply & Cancel */}
+                <div className="flex items-center gap-2">
+                  <Button
+                    size="sm"
+                    className="h-8 text-xs rounded px-4"
+                    disabled={bulkSelectedItems.size === 0 || !bulkTracking.trim()}
+                    onClick={() => {
+                      const price = parseInt(bulkPrice) || 0;
+                      bulkSelectedItems.forEach(idx => {
+                        onTrackingSave?.(group.id, idx, bulkTracking.trim(), price);
+                      });
+                      setBulkFreightOpen(false);
+                      setBulkSelectedItems(new Set());
+                      setBulkTracking("");
+                      setBulkPrice("");
+                    }}
+                  >
+                    Apply to {bulkSelectedItems.size} WOs
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-8 text-xs rounded px-3"
+                    onClick={() => {
+                      setBulkFreightOpen(false);
+                      setBulkSelectedItems(new Set());
+                      setBulkTracking("");
+                      setBulkPrice("");
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Items Table */}
           <CollapsibleContent>
             <div className="border-t">
