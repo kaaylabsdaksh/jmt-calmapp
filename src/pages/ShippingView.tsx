@@ -447,6 +447,7 @@ const ShippingView = () => {
   const [finalizedIds, setFinalizedIds] = useState<Set<string>>(new Set());
   const [claimedIds, setClaimedIds] = useState<Set<string>>(new Set());
   const [printedIds, setPrintedIds] = useState<Set<string>>(new Set());
+  const [finalizedTimestamps, setFinalizedTimestamps] = useState<Map<string, Date>>(new Map());
 
   const handlePrint = (id: string) => {
     setPrintedIds(prev => new Set(prev).add(id));
@@ -454,6 +455,7 @@ const ShippingView = () => {
 
   const handleFinalize = (id: string) => {
     setFinalizedIds(prev => new Set(prev).add(id));
+    setFinalizedTimestamps(prev => new Map(prev).set(id, new Date()));
   };
 
   const handleClaim = (id: string) => {
