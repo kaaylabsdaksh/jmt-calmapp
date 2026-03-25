@@ -439,7 +439,21 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim,
                       }, 0);
 
                       return (
-                        <tr key={idx} className="border-t border-muted/40 hover:bg-muted/20 transition-colors">
+                          <tr key={idx} className="border-t border-muted/40 hover:bg-muted/20 transition-colors">
+                          {bulkFreightOpen && (
+                            <td className="pl-5 pr-1 py-3 w-8">
+                              <input
+                                type="checkbox"
+                                checked={bulkSelectedItems.has(idx)}
+                                onChange={() => {
+                                  const next = new Set(bulkSelectedItems);
+                                  if (next.has(idx)) next.delete(idx); else next.add(idx);
+                                  setBulkSelectedItems(next);
+                                }}
+                                className="h-3.5 w-3.5 rounded border-border accent-primary cursor-pointer"
+                              />
+                            </td>
+                          )}
                           <td className="px-5 py-3 font-mono text-xs font-bold text-foreground">#{item.woNumber}</td>
                           <td className="px-4 py-3">
                             <div className="text-xs font-semibold text-foreground">{item.customerName}</div>
