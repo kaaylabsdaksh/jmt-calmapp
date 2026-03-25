@@ -425,8 +425,8 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim,
                 size="sm"
                 className="h-8 text-xs rounded px-4 bg-primary text-primary-foreground hover:bg-primary/90"
                 onClick={() => onFinalize?.(group.id)}
-                disabled={freightStatus !== "complete"}
-                title={freightStatus !== "complete" ? "All items must have tracking to finalize" : undefined}
+                disabled={!isPrintReady}
+                title={!isPrintReady ? "DT must be printed before finalizing" : undefined}
               >
                 Finalize DT-{group.dtNumber}
               </Button>
