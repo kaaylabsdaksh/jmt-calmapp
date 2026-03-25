@@ -733,7 +733,7 @@ const ShippingView = () => {
                 <ShippingGroupCard key={group.id} group={group} onFinalize={handleFinalize} isClaimed={claimedIds.has(group.id)} onClaim={handleClaim} onTrackingSave={handleTrackingSave} onTrackingDelete={handleTrackingDelete} isPrintReady onPrint={handlePrint} />
               ))}
               {finalizedGroups.map(group => (
-                <ShippingGroupCard key={group.id} group={group} isFinalized isClaimed={claimedIds.has(group.id)} isPrintReady />
+                <ShippingGroupCard key={group.id} group={group} isFinalized isClaimed={claimedIds.has(group.id)} isPrintReady finalizedAt={finalizedTimestamps.get(group.id)} />
               ))}
             </>
           ) : (
