@@ -371,7 +371,7 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim,
                   <Button
                     size="sm"
                     className="h-8 text-xs rounded px-4"
-                    disabled={bulkSelectedItems.size === 0 || !bulkTracking.trim()}
+                    disabled={bulkSelectedItems.size === 0 || !bulkTracking.trim() || !bulkPrice.trim()}
                     onClick={() => {
                       const price = parseInt(bulkPrice) || 0;
                       bulkSelectedItems.forEach(idx => {
