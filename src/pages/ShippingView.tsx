@@ -322,11 +322,11 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim,
           {bulkFreightOpen && (
             <div className="border-t bg-muted/30 px-5 py-3">
               <div className="flex items-center gap-6">
-                {/* Selection */}
+                {/* Selection info */}
                 <div className="flex flex-col gap-0.5 min-w-[100px]">
                   <span className="text-xs font-medium text-foreground">{bulkSelectedItems.size} of {group.items.length} selected</span>
                   <button
-                    className="text-[11px] text-primary hover:underline text-left font-medium"
+                    className="text-[11px] text-amber-600 hover:underline text-left font-medium"
                     onClick={() => {
                       if (bulkSelectedItems.size === group.items.length) {
                         setBulkSelectedItems(new Set());
@@ -337,30 +337,6 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim,
                   >
                     {bulkSelectedItems.size === group.items.length ? "Deselect all" : "Select all"}
                   </button>
-                </div>
-
-                {/* Item chips */}
-                <div className="flex items-center gap-1.5 flex-wrap flex-1">
-                  {group.items.map((item, idx) => {
-                    const selected = bulkSelectedItems.has(idx);
-                    return (
-                      <button
-                        key={idx}
-                        onClick={() => {
-                          const next = new Set(bulkSelectedItems);
-                          if (selected) next.delete(idx); else next.add(idx);
-                          setBulkSelectedItems(next);
-                        }}
-                        className={`h-7 px-2.5 rounded text-[11px] font-medium border transition-all ${
-                          selected
-                            ? "bg-primary text-primary-foreground border-primary"
-                            : "bg-card text-muted-foreground border-border hover:border-primary/50"
-                        }`}
-                      >
-                        WO #{item.woNumber}
-                      </button>
-                    );
-                  })}
                 </div>
 
                 {/* Tracking & Price */}
@@ -391,7 +367,7 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim,
                 </div>
 
                 {/* Apply & Cancel */}
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 ml-auto">
                   <Button
                     size="sm"
                     className="h-8 text-xs rounded px-4"
