@@ -512,8 +512,9 @@ const ShippingView = () => {
     });
   }, [searchQuery, shippingGroups]);
 
-  const activeGroups = filteredGroups.filter(g => !finalizedIds.has(g.id));
-  const printedGroups = filteredGroups.filter(g => finalizedIds.has(g.id));
+  const activeGroups = filteredGroups.filter(g => !finalizedIds.has(g.id) && !printedIds.has(g.id));
+  const printedGroups = filteredGroups.filter(g => printedIds.has(g.id) && !finalizedIds.has(g.id));
+  const finalizedGroups = filteredGroups.filter(g => finalizedIds.has(g.id));
 
   const locationOptions = [
     { v: "baton-rouge", l: "Baton Rouge" },
