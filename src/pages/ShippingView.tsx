@@ -283,7 +283,12 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim,
                   )}
                 </div>
               </div>
-            </div>
+              </div>
+              {!isOpen && batchTotal > 0 && (
+                <div className="ml-auto mr-2 text-xs font-bold text-foreground">
+                  ${batchTotal}
+                </div>
+              )}
 
             {/* Right side: Priority + date + freight badge + action buttons */}
             <div className="flex items-center gap-3 shrink-0">
