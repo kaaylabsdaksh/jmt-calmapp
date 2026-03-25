@@ -310,7 +310,7 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim,
                     Claim
                   </Button>
                 )}
-                <Button variant="outline" size="sm" className="h-7 text-[11px] rounded px-2 gap-1">
+                <Button variant="outline" size="sm" className="h-7 text-[11px] rounded px-2 gap-1" onClick={() => { setBulkFreightOpen(!bulkFreightOpen); setBulkSelectedItems(new Set()); setBulkTracking(""); setBulkPrice(""); }}>
                   <Plus className="w-3 h-3" />
                   Bulk freight
                 </Button>
