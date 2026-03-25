@@ -212,8 +212,25 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim,
     try { return format(parseISO(group.date), "yyyy-MM-dd"); }
     catch { return group.date; }
   })();
+  // Compute batch total for header display
+  const batchTotal = (() => {
+    const ownerMap = new Map<string, string>();
+    group.items.forEach((item) => {
+      item.trackingEntries.forEach((entry) => {
+        const key = entry.trackingNumber.trim().toLowerCase();
+        const existing = ownerMap.get(key);
+        if (!existing || item.woNumber.localeCompare(existing, undefined, { numeric: true }) < 0) {
+          ownerMap.set(key, item.woNumber);
+        }
+      });
+    });
+    return Math.round(group.items.reduce((sum, item) =>
+      sum + item.trackingEntries.reduce((s, e) => {
+        const key = e.trackingNumber.trim().toLowerCase();
+        return s + (ownerMap.get(key) === item.woNumber ? e.freightPrice : 0);
+      }, 0), 0));
+  })();
 
-  const stripeColor = group.priority === "EMERGENCY"
     ? "bg-destructive"
     : group.priority === "EXPEDITE"
     ? "bg-orange-500"
