@@ -271,7 +271,7 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim,
                 <div className="flex items-center">
                   <Button size="sm" className="h-7 text-[11px] gap-1 rounded-r-none px-3" onClick={() => onPrint?.(group.id)}>
                     <Printer className="w-3 h-3" />
-                    {isPrintReady ? "Printed" : "Print all"}
+                    {isPrintReady ? "Re-print" : "Print all"}
                   </Button>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
