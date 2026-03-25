@@ -195,7 +195,7 @@ const TrackingPopover = ({ onSave }: { onSave: (tracking: string, price: number)
 };
 
 // --- Shipping Group Card ---
-const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim, onTrackingSave, onTrackingDelete, isPrintReady, onPrint }: { group: ShippingGroup; isFinalized?: boolean; onFinalize?: (id: string) => void; isClaimed?: boolean; onClaim?: (id: string) => void; onTrackingSave?: (groupId: string, itemIdx: number, tracking: string, price: number) => void; onTrackingDelete?: (groupId: string, itemIdx: number, trackingIdx: number) => void; isPrintReady?: boolean; onPrint?: (id: string) => void }) => {
+const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim, onTrackingSave, onTrackingDelete, isPrintReady, onPrint, finalizedAt }: { group: ShippingGroup; isFinalized?: boolean; onFinalize?: (id: string) => void; isClaimed?: boolean; onClaim?: (id: string) => void; onTrackingSave?: (groupId: string, itemIdx: number, tracking: string, price: number) => void; onTrackingDelete?: (groupId: string, itemIdx: number, trackingIdx: number) => void; isPrintReady?: boolean; onPrint?: (id: string) => void; finalizedAt?: Date }) => {
   const [isOpen, setIsOpen] = useState(!isFinalized);
 
   const itemsWithFreight = group.items.filter(i => i.trackingEntries.length > 0);
@@ -252,6 +252,14 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim,
                   <span className="text-muted-foreground font-normal">{group.workOrderCount} work orders</span>
                   <span className="text-muted-foreground/40">·</span>
                   <span className="text-xs text-muted-foreground font-medium">{displayDate}</span>
+                  {isFinalized && finalizedAt && (
+                    <>
+                      <span className="text-muted-foreground/40">·</span>
+                      <span className="text-xs text-green-600 font-medium">
+                        Printed {finalizedAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                      </span>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
@@ -447,6 +455,7 @@ const ShippingView = () => {
   const [finalizedIds, setFinalizedIds] = useState<Set<string>>(new Set());
   const [claimedIds, setClaimedIds] = useState<Set<string>>(new Set());
   const [printedIds, setPrintedIds] = useState<Set<string>>(new Set());
+  const [finalizedTimestamps, setFinalizedTimestamps] = useState<Map<string, Date>>(new Map());
 
   const handlePrint = (id: string) => {
     setPrintedIds(prev => new Set(prev).add(id));
@@ -454,6 +463,7 @@ const ShippingView = () => {
 
   const handleFinalize = (id: string) => {
     setFinalizedIds(prev => new Set(prev).add(id));
+    setFinalizedTimestamps(prev => new Map(prev).set(id, new Date()));
   };
 
   const handleClaim = (id: string) => {
@@ -723,7 +733,7 @@ const ShippingView = () => {
                 <ShippingGroupCard key={group.id} group={group} onFinalize={handleFinalize} isClaimed={claimedIds.has(group.id)} onClaim={handleClaim} onTrackingSave={handleTrackingSave} onTrackingDelete={handleTrackingDelete} isPrintReady onPrint={handlePrint} />
               ))}
               {finalizedGroups.map(group => (
-                <ShippingGroupCard key={group.id} group={group} isFinalized isClaimed={claimedIds.has(group.id)} isPrintReady />
+                <ShippingGroupCard key={group.id} group={group} isFinalized isClaimed={claimedIds.has(group.id)} isPrintReady finalizedAt={finalizedTimestamps.get(group.id)} />
               ))}
             </>
           ) : (
