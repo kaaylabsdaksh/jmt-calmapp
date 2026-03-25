@@ -686,7 +686,7 @@ const ShippingView = () => {
           <div className="flex gap-0 flex-1">
             {([
               { key: "active" as const, label: "Active", count: activeGroups.length },
-              { key: "printed" as const, label: "Printed / Ready", count: printedGroups.length },
+              { key: "printed" as const, label: "Printed / Ready", count: printedGroups.length + finalizedGroups.length },
             ]).map(tab => (
               <button
                 key={tab.key}
