@@ -227,7 +227,7 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim,
 
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-      <div className={`bg-card rounded-md border ${cardBorder} overflow-hidden transition-all ${isFinalized ? "opacity-50 grayscale" : ""} flex`}>
+      <div className={`bg-card rounded-md border ${cardBorder} overflow-hidden transition-all flex`}>
         <div className={`w-[3px] shrink-0 ${stripeColor} rounded-l-md`} />
         <div className="flex-1 min-w-0">
           {/* Header */}
