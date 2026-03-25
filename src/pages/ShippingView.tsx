@@ -195,7 +195,7 @@ const TrackingPopover = ({ onSave }: { onSave: (tracking: string, price: number)
 };
 
 // --- Shipping Group Card ---
-const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim, onTrackingSave, onTrackingDelete }: { group: ShippingGroup; isFinalized?: boolean; onFinalize?: (id: string) => void; isClaimed?: boolean; onClaim?: (id: string) => void; onTrackingSave?: (groupId: string, itemIdx: number, tracking: string, price: number) => void; onTrackingDelete?: (groupId: string, itemIdx: number, trackingIdx: number) => void }) => {
+const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim, onTrackingSave, onTrackingDelete, isPrintReady, onPrint }: { group: ShippingGroup; isFinalized?: boolean; onFinalize?: (id: string) => void; isClaimed?: boolean; onClaim?: (id: string) => void; onTrackingSave?: (groupId: string, itemIdx: number, tracking: string, price: number) => void; onTrackingDelete?: (groupId: string, itemIdx: number, trackingIdx: number) => void; isPrintReady?: boolean; onPrint?: (id: string) => void }) => {
   const [isOpen, setIsOpen] = useState(!isFinalized);
 
   const itemsWithFreight = group.items.filter(i => i.trackingEntries.length > 0);
@@ -269,9 +269,9 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim,
 
               <div className="flex items-center gap-1 ml-2">
                 <div className="flex items-center">
-                  <Button size="sm" className="h-7 text-[11px] gap-1 rounded-r-none px-3">
+                  <Button size="sm" className="h-7 text-[11px] gap-1 rounded-r-none px-3" onClick={() => onPrint?.(group.id)}>
                     <Printer className="w-3 h-3" />
-                    Print all
+                    {isPrintReady ? "Printed" : "Print all"}
                   </Button>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -425,8 +425,8 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim,
                 size="sm"
                 className="h-8 text-xs rounded px-4 bg-primary text-primary-foreground hover:bg-primary/90"
                 onClick={() => onFinalize?.(group.id)}
-                disabled={freightStatus !== "complete"}
-                title={freightStatus !== "complete" ? "All items must have tracking to finalize" : undefined}
+                disabled={!isPrintReady}
+                title={!isPrintReady ? "DT must be printed before finalizing" : undefined}
               >
                 Finalize DT-{group.dtNumber}
               </Button>
@@ -446,6 +446,11 @@ const ShippingView = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [finalizedIds, setFinalizedIds] = useState<Set<string>>(new Set());
   const [claimedIds, setClaimedIds] = useState<Set<string>>(new Set());
+  const [printedIds, setPrintedIds] = useState<Set<string>>(new Set());
+
+  const handlePrint = (id: string) => {
+    setPrintedIds(prev => new Set(prev).add(id));
+  };
 
   const handleFinalize = (id: string) => {
     setFinalizedIds(prev => new Set(prev).add(id));
@@ -703,7 +708,7 @@ const ShippingView = () => {
         {activeTab === "active" ? (
           activeGroups.length > 0 ? (
             activeGroups.map(group => (
-              <ShippingGroupCard key={group.id} group={group} onFinalize={handleFinalize} isClaimed={claimedIds.has(group.id)} onClaim={handleClaim} onTrackingSave={handleTrackingSave} onTrackingDelete={handleTrackingDelete} />
+              <ShippingGroupCard key={group.id} group={group} onFinalize={handleFinalize} isClaimed={claimedIds.has(group.id)} onClaim={handleClaim} onTrackingSave={handleTrackingSave} onTrackingDelete={handleTrackingDelete} isPrintReady={printedIds.has(group.id)} onPrint={handlePrint} />
             ))
           ) : (
             <div className="text-center py-12 text-muted-foreground text-sm">
