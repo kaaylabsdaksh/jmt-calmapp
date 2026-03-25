@@ -231,6 +231,7 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim,
       }, 0), 0));
   })();
 
+  const stripeColor = group.priority === "EMERGENCY"
     ? "bg-destructive"
     : group.priority === "EXPEDITE"
     ? "bg-orange-500"
