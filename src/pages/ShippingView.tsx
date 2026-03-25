@@ -320,12 +320,13 @@ const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim,
                 </thead>
                     <tbody>
                   {(() => {
-                    // Build a map of tracking# -> first item WO number (first occurrence wins)
+                    // Build a map of tracking# -> lowest WO number that has this tracking (lowest WO wins ownership)
                     const trackingOwnerMap = new Map<string, string>();
                     group.items.forEach((item) => {
                       item.trackingEntries.forEach((entry) => {
                         const key = entry.trackingNumber.trim().toLowerCase();
-                        if (!trackingOwnerMap.has(key)) {
+                        const existing = trackingOwnerMap.get(key);
+                        if (!existing || item.woNumber.localeCompare(existing, undefined, { numeric: true }) < 0) {
                           trackingOwnerMap.set(key, item.woNumber);
                         }
                       });
