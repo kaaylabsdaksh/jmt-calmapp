@@ -197,6 +197,10 @@ const TrackingPopover = ({ onSave }: { onSave: (tracking: string, price: number)
 // --- Shipping Group Card ---
 const ShippingGroupCard = ({ group, isFinalized, onFinalize, isClaimed, onClaim, onTrackingSave, onTrackingDelete, isPrintReady, onPrint, finalizedAt }: { group: ShippingGroup; isFinalized?: boolean; onFinalize?: (id: string) => void; isClaimed?: boolean; onClaim?: (id: string) => void; onTrackingSave?: (groupId: string, itemIdx: number, tracking: string, price: number) => void; onTrackingDelete?: (groupId: string, itemIdx: number, trackingIdx: number) => void; isPrintReady?: boolean; onPrint?: (id: string) => void; finalizedAt?: Date }) => {
   const [isOpen, setIsOpen] = useState(!isFinalized);
+  const [bulkFreightOpen, setBulkFreightOpen] = useState(false);
+  const [bulkSelectedItems, setBulkSelectedItems] = useState<Set<number>>(new Set());
+  const [bulkTracking, setBulkTracking] = useState("");
+  const [bulkPrice, setBulkPrice] = useState("");
 
   const itemsWithFreight = group.items.filter(i => i.trackingEntries.length > 0);
   const freightStatus: "no-freight" | "partial" | "complete" =
