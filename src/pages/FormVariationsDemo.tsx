@@ -10354,7 +10354,7 @@ const FormVariationsDemo = () => {
                                 setSelectedFailDescriptions(prev => [...prev, desc]);
                               }}
                             >
-                              <div className="h-5 w-5 rounded-md border-2 border-muted-foreground/20 flex items-center justify-center group-hover:border-primary/50 group-hover:bg-primary/10 transition-colors shrink-0">
+                              <div className="h-4 w-4 rounded border-2 border-muted-foreground/20 flex items-center justify-center group-hover:border-primary/50 group-hover:bg-primary/10 transition-colors shrink-0">
                                 <Plus className="h-3 w-3 text-muted-foreground/40 group-hover:text-primary transition-colors" />
                               </div>
                               <span className="text-foreground/80 group-hover:text-foreground transition-colors">{desc}</span>
