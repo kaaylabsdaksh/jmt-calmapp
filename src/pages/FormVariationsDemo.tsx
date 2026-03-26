@@ -10387,7 +10387,7 @@ const FormVariationsDemo = () => {
                           {selectedFailDescriptions.map((desc) => (
                             <div
                               key={desc}
-                              className="group flex items-center gap-2 w-full px-3 py-2.5 text-sm rounded-lg bg-emerald-50 hover:bg-emerald-100/80 transition-all border border-emerald-200/60"
+                              className="group flex items-center gap-2 w-full px-2.5 py-2 text-xs rounded-md bg-emerald-50 hover:bg-emerald-100/80 transition-all border border-emerald-200/60"
                             >
                               <div className="h-5 w-5 rounded-md bg-emerald-500 flex items-center justify-center shrink-0">
                                 <Check className="h-3 w-3 text-white" />
