@@ -13,7 +13,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, ChevronLeft, ChevronDown, ChevronUp, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield, Wrench, Activity, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock, ExternalLink, ArrowUp, ArrowLeft, Pencil, ImageIcon, Plus, Minus, MoreHorizontal, Play, Square, RefreshCw, Minimize2, Maximize2, Search } from "lucide-react";
+import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, ChevronLeft, ChevronDown, ChevronUp, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield, Wrench, Activity, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock, ExternalLink, ArrowUp, ArrowLeft, Pencil, ImageIcon, Plus, Minus, MoreHorizontal, Play, Square, RefreshCw, Minimize2, Maximize2 } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
@@ -56,8 +56,6 @@ const FormVariationsDemo = () => {
   const [failLogEmployee, setFailLogEmployee] = useState("");
   const [failLogFailType, setFailLogFailType] = useState("");
   const [failLogQuantity, setFailLogQuantity] = useState("1");
-  const [failDescSearch, setFailDescSearch] = useState("");
-  const [failDescDropdownOpen, setFailDescDropdownOpen] = useState(false);
   const [availableFailDescriptions, setAvailableFailDescriptions] = useState<string[]>([
     "Incorrect PO",
     "SO does not match",
@@ -10333,155 +10331,94 @@ const FormVariationsDemo = () => {
                   </div>
                 </div>
 
-                {/* Searchable Multi-Select + Actions */}
+                {/* Dual List + Actions Row */}
                 <div className="grid grid-cols-12 gap-3">
-                  {/* Multi-Select Dropdown */}
-                  <div className="col-span-12 lg:col-span-9">
-                    <div className="space-y-2">
-                      <div className="flex items-center justify-between">
-                        <Label className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Fail Descriptions</Label>
-                        {selectedFailDescriptions.length > 0 && (
-                          <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">
-                            {selectedFailDescriptions.length} selected
-                          </span>
-                        )}
-                      </div>
-                      
-                      {/* Dropdown Trigger */}
-                      <div className="relative">
-                        <div 
-                          className="flex items-center gap-1.5 min-h-[28px] w-full rounded-md border border-input bg-background px-2 py-1 cursor-pointer hover:border-primary/50 transition-colors"
-                          onClick={() => setFailDescDropdownOpen(!failDescDropdownOpen)}
-                        >
-                          {selectedFailDescriptions.length === 0 ? (
-                            <span className="text-xs text-muted-foreground">Select fail descriptions...</span>
-                          ) : (
-                            <div className="flex flex-wrap gap-1 flex-1">
-                              {selectedFailDescriptions.map((desc) => (
-                                <span
-                                  key={desc}
-                                  className="inline-flex items-center gap-1 bg-emerald-100 text-emerald-800 text-[10px] font-medium px-2 py-0.5 rounded-full"
-                                >
-                                  {desc}
-                                  <button
-                                    type="button"
-                                    className="hover:bg-emerald-200 rounded-full p-0.5 transition-colors"
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      setSelectedFailDescriptions(prev => prev.filter(d => d !== desc));
-                                      setAvailableFailDescriptions(prev => [...prev, desc]);
-                                    }}
-                                  >
-                                    <X className="h-2.5 w-2.5" />
-                                  </button>
-                                </span>
-                              ))}
+                  {/* Available List */}
+                  <div className="col-span-12 lg:col-span-5">
+                    <div className="flex items-center justify-between mb-1.5">
+                      <Label className="text-xs font-semibold">Fail Descriptions</Label>
+                      <span className="text-[10px] font-medium text-muted-foreground bg-muted px-2 py-0.5 rounded-full">
+                        {availableFailDescriptions.length} available
+                      </span>
+                    </div>
+                    <div className="border rounded-lg overflow-hidden bg-background shadow-sm">
+                      <ScrollArea className="h-[160px]">
+                        <div className="p-1.5 space-y-0.5">
+                          {availableFailDescriptions.map((desc) => (
+                            <button
+                              key={desc}
+                              type="button"
+                              className="flex items-center gap-2 w-full px-2.5 py-2 text-xs rounded-md hover:bg-primary/5 transition-all group text-left"
+                              onClick={() => {
+                                setAvailableFailDescriptions(prev => prev.filter(d => d !== desc));
+                                setSelectedFailDescriptions(prev => [...prev, desc]);
+                              }}
+                            >
+                              <div className="h-4 w-4 rounded border-2 border-muted-foreground/20 flex items-center justify-center group-hover:border-primary/50 group-hover:bg-primary/10 transition-colors shrink-0">
+                                <Plus className="h-3 w-3 text-muted-foreground/40 group-hover:text-primary transition-colors" />
+                              </div>
+                              <span className="text-foreground/80 group-hover:text-foreground transition-colors">{desc}</span>
+                            </button>
+                          ))}
+                          {availableFailDescriptions.length === 0 && (
+                            <div className="flex flex-col items-center justify-center py-8 text-muted-foreground">
+                              <CheckCircle className="h-8 w-8 mb-2 text-emerald-400" />
+                              <p className="text-xs">All items selected</p>
                             </div>
                           )}
-                          <ChevronsUpDown className="h-3 w-3 text-muted-foreground shrink-0 ml-auto" />
                         </div>
+                      </ScrollArea>
+                    </div>
+                  </div>
 
-                        {/* Dropdown Panel */}
-                        {failDescDropdownOpen && (
-                          <div className="absolute z-50 top-full left-0 right-0 mt-1 border rounded-lg bg-background shadow-lg overflow-hidden">
-                            {/* Search */}
-                            <div className="p-2 border-b">
-                              <div className="relative">
-                                <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground" />
-                                <Input
-                                  placeholder="Search descriptions..."
-                                  value={failDescSearch}
-                                  onChange={(e) => setFailDescSearch(e.target.value)}
-                                  className="h-7 text-xs pl-7 bg-muted/30"
-                                  autoFocus
-                                />
+                  {/* Selected List */}
+                  <div className="col-span-12 lg:col-span-4">
+                    <div className="flex items-center justify-between mb-1.5">
+                      <Label className="text-xs font-semibold text-emerald-700">Fails to Add</Label>
+                      {selectedFailDescriptions.length > 0 && (
+                        <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">
+                          {selectedFailDescriptions.length} selected
+                        </span>
+                      )}
+                    </div>
+                    <div className="border border-emerald-300/50 rounded-lg overflow-hidden bg-emerald-50/30 shadow-sm">
+                      <ScrollArea className="h-[160px]">
+                        <div className="p-1.5 space-y-0.5">
+                          {selectedFailDescriptions.map((desc) => (
+                            <div
+                              key={desc}
+                              className="group flex items-center gap-2 w-full px-2.5 py-2 text-xs rounded-md bg-emerald-50 hover:bg-emerald-100/80 transition-all border border-emerald-200/60"
+                            >
+                              <div className="h-4 w-4 rounded bg-emerald-500 flex items-center justify-center shrink-0">
+                                <Check className="h-3 w-3 text-white" />
                               </div>
-                            </div>
-                            {/* Options */}
-                            <ScrollArea className="max-h-[180px]">
-                              <div className="p-1">
-                                {[...availableFailDescriptions, ...selectedFailDescriptions]
-                                  .filter(desc => desc.toLowerCase().includes(failDescSearch.toLowerCase()))
-                                  .map((desc) => {
-                                    const isSelected = selectedFailDescriptions.includes(desc);
-                                    return (
-                                      <button
-                                        key={desc}
-                                        type="button"
-                                        className={`flex items-center gap-2 w-full px-2.5 py-1.5 text-xs rounded-md transition-all text-left ${
-                                          isSelected 
-                                            ? 'bg-emerald-50 text-emerald-800' 
-                                            : 'hover:bg-muted/50 text-foreground'
-                                        }`}
-                                        onClick={() => {
-                                          if (isSelected) {
-                                            setSelectedFailDescriptions(prev => prev.filter(d => d !== desc));
-                                            setAvailableFailDescriptions(prev => [...prev, desc]);
-                                          } else {
-                                            setAvailableFailDescriptions(prev => prev.filter(d => d !== desc));
-                                            setSelectedFailDescriptions(prev => [...prev, desc]);
-                                          }
-                                        }}
-                                      >
-                                        <div className={`h-3.5 w-3.5 rounded border flex items-center justify-center shrink-0 transition-colors ${
-                                          isSelected 
-                                            ? 'bg-emerald-500 border-emerald-500' 
-                                            : 'border-muted-foreground/30'
-                                        }`}>
-                                          {isSelected && <Check className="h-2.5 w-2.5 text-white" />}
-                                        </div>
-                                        <span>{desc}</span>
-                                      </button>
-                                    );
-                                  })}
-                                {[...availableFailDescriptions, ...selectedFailDescriptions]
-                                  .filter(desc => desc.toLowerCase().includes(failDescSearch.toLowerCase())).length === 0 && (
-                                  <p className="text-xs text-muted-foreground text-center py-4">No matching descriptions</p>
-                                )}
-                              </div>
-                            </ScrollArea>
-                            {/* Footer */}
-                            <div className="border-t px-2 py-1.5 flex justify-between items-center gap-2 bg-muted/30">
-                              <Button
-                                type="button"
-                                variant="outline"
-                                size="sm"
-                                className="text-[10px] h-6 px-2.5 border-border text-foreground hover:bg-muted"
+                              <span className="flex-1 text-foreground font-medium text-left text-xs">{desc}</span>
+                              <button type="button" className="h-4 w-4 rounded flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-destructive/10"
                                 onClick={() => {
-                                  if (availableFailDescriptions.length > 0) {
-                                    setSelectedFailDescriptions(prev => [...prev, ...availableFailDescriptions]);
-                                    setAvailableFailDescriptions([]);
-                                  } else {
-                                    setAvailableFailDescriptions(prev => [...prev, ...selectedFailDescriptions]);
-                                    setSelectedFailDescriptions([]);
-                                  }
+                                  setSelectedFailDescriptions(prev => prev.filter(d => d !== desc));
+                                  setAvailableFailDescriptions(prev => [...prev, desc]);
                                 }}
                               >
-                                {availableFailDescriptions.length > 0 ? 'Select all' : 'Clear all'}
-                              </Button>
-                              <Button
-                                type="button"
-                                size="sm"
-                                className="text-[10px] h-6 px-3 bg-foreground text-background hover:bg-foreground/90"
-                                onClick={() => {
-                                  setFailDescDropdownOpen(false);
-                                  setFailDescSearch("");
-                                }}
-                              >
-                                <Check className="h-3 w-3 mr-1" />
-                                Done
-                              </Button>
+                                <X className="h-3 w-3 text-destructive" />
+                              </button>
                             </div>
-                          </div>
-                        )}
-                      </div>
+                          ))}
+                          {selectedFailDescriptions.length === 0 && (
+                            <div className="flex flex-col items-center justify-center py-8 text-muted-foreground">
+                              <ArrowLeft className="h-6 w-6 mb-2 text-muted-foreground/30" />
+                              <p className="text-xs">Click items to add them</p>
+                            </div>
+                          )}
+                        </div>
+                      </ScrollArea>
                     </div>
                   </div>
 
                   {/* Action Panel */}
                   <div className="col-span-12 lg:col-span-3">
-                    <div className="space-y-2">
-                      <div className="space-y-1">
+                    <Label className="text-xs font-semibold mb-1.5 block">Actions</Label>
+                    <div className="border rounded-lg p-3 bg-muted/20 space-y-3 shadow-sm h-[160px] flex flex-col">
+                      <div className="space-y-1.5">
                         <Label className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Quantity</Label>
                         <Input
                           type="number"
@@ -10491,32 +10428,46 @@ const FormVariationsDemo = () => {
                           className="h-7 text-xs bg-background"
                         />
                       </div>
-                      <Button
-                        onClick={() => {
-                          if (failLogEmployee && failLogFailType && selectedFailDescriptions.length > 0) {
-                            const newEntries = selectedFailDescriptions.map(desc => ({
-                              id: `${Date.now()}-${Math.random()}`,
-                              failType: failLogFailType,
-                              failDescription: desc,
-                              quantity: parseInt(failLogQuantity) || 1,
-                              employee: failLogEmployee,
-                              location: failLogLocation,
-                              date: new Date().toLocaleDateString()
-                            }));
-                            setFailLogEntries(prev => [...prev, ...newEntries]);
+                      
+                      <div className="flex flex-col gap-2 mt-auto">
+                        <Button
+                          onClick={() => {
+                            if (failLogEmployee && failLogFailType && selectedFailDescriptions.length > 0) {
+                              const newEntries = selectedFailDescriptions.map(desc => ({
+                                id: `${Date.now()}-${Math.random()}`,
+                                failType: failLogFailType,
+                                failDescription: desc,
+                                quantity: parseInt(failLogQuantity) || 1,
+                                employee: failLogEmployee,
+                                location: failLogLocation,
+                                date: new Date().toLocaleDateString()
+                              }));
+                              setFailLogEntries(prev => [...prev, ...newEntries]);
+                              setSelectedFailDescriptions([]);
+                              setFailLogQuantity("1");
+                              toast({ title: "Fail entries added", description: `${newEntries.length} fail log entries have been added.` });
+                            } else {
+                              toast({ title: "Missing information", description: "Please select an employee, fail type, and at least one fail description.", variant: "destructive" });
+                            }
+                          }}
+                          className="bg-primary text-primary-foreground hover:bg-primary/90 text-xs h-7"
+                          disabled={!failLogEmployee || !failLogFailType || selectedFailDescriptions.length === 0}
+                        >
+                          <Plus className="h-3.5 w-3.5 mr-1" />
+                          Add Fail to Employee
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="text-[10px] h-7"
+                          onClick={() => {
                             setSelectedFailDescriptions([]);
                             setFailLogQuantity("1");
-                            toast({ title: "Fail entries added", description: `${newEntries.length} fail log entries have been added.` });
-                          } else {
-                            toast({ title: "Missing information", description: "Please select an employee, fail type, and at least one fail description.", variant: "destructive" });
-                          }
-                        }}
-                        className="bg-primary text-primary-foreground hover:bg-primary/90 text-xs h-7 w-full"
-                        disabled={!failLogEmployee || !failLogFailType || selectedFailDescriptions.length === 0}
-                      >
-                        <Plus className="h-3.5 w-3.5 mr-1" />
-                        Add Fail to Employee
-                      </Button>
+                          }}
+                        >
+                          Clear Selection
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 </div>
