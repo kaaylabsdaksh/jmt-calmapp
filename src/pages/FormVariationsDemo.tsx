@@ -10281,7 +10281,7 @@ const FormVariationsDemo = () => {
               </div>
 
               {/* Modern Layout */}
-              <div className="space-y-6">
+              <div className="space-y-3">
                 {/* Top Row - Selectors in a clean horizontal strip */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 px-3 py-2.5 rounded-lg bg-muted/30 border border-border">
                   <div className="space-y-1">
@@ -10332,29 +10332,29 @@ const FormVariationsDemo = () => {
                 </div>
 
                 {/* Dual List + Actions Row */}
-                <div className="grid grid-cols-12 gap-5">
+                <div className="grid grid-cols-12 gap-3">
                   {/* Available List */}
                   <div className="col-span-12 lg:col-span-5">
-                    <div className="flex items-center justify-between mb-2">
-                      <Label className="text-sm font-semibold">Fail Descriptions</Label>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <Label className="text-xs font-semibold">Fail Descriptions</Label>
                       <span className="text-[10px] font-medium text-muted-foreground bg-muted px-2 py-0.5 rounded-full">
                         {availableFailDescriptions.length} available
                       </span>
                     </div>
-                    <div className="border rounded-xl overflow-hidden bg-background shadow-sm">
-                      <ScrollArea className="h-[220px]">
+                    <div className="border rounded-lg overflow-hidden bg-background shadow-sm">
+                      <ScrollArea className="h-[160px]">
                         <div className="p-1.5 space-y-0.5">
                           {availableFailDescriptions.map((desc) => (
                             <button
                               key={desc}
                               type="button"
-                              className="flex items-center gap-2 w-full px-3 py-2.5 text-sm rounded-lg hover:bg-primary/5 transition-all group text-left"
+                              className="flex items-center gap-2 w-full px-2.5 py-2 text-xs rounded-md hover:bg-primary/5 transition-all group text-left"
                               onClick={() => {
                                 setAvailableFailDescriptions(prev => prev.filter(d => d !== desc));
                                 setSelectedFailDescriptions(prev => [...prev, desc]);
                               }}
                             >
-                              <div className="h-5 w-5 rounded-md border-2 border-muted-foreground/20 flex items-center justify-center group-hover:border-primary/50 group-hover:bg-primary/10 transition-colors shrink-0">
+                              <div className="h-4 w-4 rounded border-2 border-muted-foreground/20 flex items-center justify-center group-hover:border-primary/50 group-hover:bg-primary/10 transition-colors shrink-0">
                                 <Plus className="h-3 w-3 text-muted-foreground/40 group-hover:text-primary transition-colors" />
                               </div>
                               <span className="text-foreground/80 group-hover:text-foreground transition-colors">{desc}</span>
@@ -10373,29 +10373,27 @@ const FormVariationsDemo = () => {
 
                   {/* Selected List */}
                   <div className="col-span-12 lg:col-span-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <Label className="text-sm font-semibold text-emerald-700">Fails to Add</Label>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <Label className="text-xs font-semibold text-emerald-700">Fails to Add</Label>
                       {selectedFailDescriptions.length > 0 && (
                         <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">
                           {selectedFailDescriptions.length} selected
                         </span>
                       )}
                     </div>
-                    <div className="border border-emerald-300/50 rounded-xl overflow-hidden bg-emerald-50/30 shadow-sm">
-                      <ScrollArea className="h-[220px]">
+                    <div className="border border-emerald-300/50 rounded-lg overflow-hidden bg-emerald-50/30 shadow-sm">
+                      <ScrollArea className="h-[160px]">
                         <div className="p-1.5 space-y-0.5">
                           {selectedFailDescriptions.map((desc) => (
                             <div
                               key={desc}
-                              className="group flex items-center gap-2 w-full px-3 py-2.5 text-sm rounded-lg bg-emerald-50 hover:bg-emerald-100/80 transition-all border border-emerald-200/60"
+                              className="group flex items-center gap-2 w-full px-2.5 py-2 text-xs rounded-md bg-emerald-50 hover:bg-emerald-100/80 transition-all border border-emerald-200/60"
                             >
-                              <div className="h-5 w-5 rounded-md bg-emerald-500 flex items-center justify-center shrink-0">
+                              <div className="h-4 w-4 rounded bg-emerald-500 flex items-center justify-center shrink-0">
                                 <Check className="h-3 w-3 text-white" />
                               </div>
-                              <span className="flex-1 text-foreground font-medium text-left">{desc}</span>
-                              <button
-                                type="button"
-                                className="h-5 w-5 rounded-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-destructive/10"
+                              <span className="flex-1 text-foreground font-medium text-left text-xs">{desc}</span>
+                              <button type="button" className="h-4 w-4 rounded flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-destructive/10"
                                 onClick={() => {
                                   setSelectedFailDescriptions(prev => prev.filter(d => d !== desc));
                                   setAvailableFailDescriptions(prev => [...prev, desc]);
@@ -10418,16 +10416,16 @@ const FormVariationsDemo = () => {
 
                   {/* Action Panel */}
                   <div className="col-span-12 lg:col-span-3">
-                    <Label className="text-sm font-semibold mb-2 block">Actions</Label>
-                    <div className="border rounded-xl p-4 bg-muted/20 space-y-4 shadow-sm h-[220px] flex flex-col">
+                    <Label className="text-xs font-semibold mb-1.5 block">Actions</Label>
+                    <div className="border rounded-lg p-3 bg-muted/20 space-y-3 shadow-sm h-[160px] flex flex-col">
                       <div className="space-y-1.5">
-                        <Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Quantity</Label>
+                        <Label className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Quantity</Label>
                         <Input
                           type="number"
                           min="1"
                           value={failLogQuantity}
                           onChange={(e) => setFailLogQuantity(e.target.value)}
-                          className="h-9 bg-background"
+                          className="h-7 text-xs bg-background"
                         />
                       </div>
                       
@@ -10452,7 +10450,7 @@ const FormVariationsDemo = () => {
                               toast({ title: "Missing information", description: "Please select an employee, fail type, and at least one fail description.", variant: "destructive" });
                             }
                           }}
-                          className="bg-primary text-primary-foreground hover:bg-primary/90 text-xs h-9"
+                          className="bg-primary text-primary-foreground hover:bg-primary/90 text-xs h-7"
                           disabled={!failLogEmployee || !failLogFailType || selectedFailDescriptions.length === 0}
                         >
                           <Plus className="h-3.5 w-3.5 mr-1" />
@@ -10461,7 +10459,7 @@ const FormVariationsDemo = () => {
                         <Button
                           variant="outline"
                           size="sm"
-                          className="text-xs h-8"
+                          className="text-[10px] h-7"
                           onClick={() => {
                             setSelectedFailDescriptions([]);
                             setFailLogQuantity("1");
