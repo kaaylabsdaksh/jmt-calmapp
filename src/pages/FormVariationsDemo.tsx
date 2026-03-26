@@ -10551,13 +10551,6 @@ const FormVariationsDemo = () => {
                   </Table>
                 </div>
               </div>
-
-              {/* Footer Actions */}
-              <div className="flex justify-center pt-6 border-t mt-6">
-                <Button variant="outline" onClick={() => setActiveSection('work-order-items')}>
-                  Back
-                </Button>
-              </div>
             </CardContent>
           </Card>
         )}
