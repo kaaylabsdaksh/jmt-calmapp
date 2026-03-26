@@ -10388,7 +10388,7 @@ const FormVariationsDemo = () => {
                             <button
                               type="button"
                               key={desc}
-                              className="group flex items-center gap-2 w-full px-2.5 py-2 text-xs rounded-md bg-emerald-50 hover:bg-red-50 transition-all border border-emerald-200/60 hover:border-red-200/60 text-left"
+                              className="group flex items-center gap-2 w-full px-2.5 py-2 text-xs rounded-md bg-muted/40 hover:bg-red-50 transition-all border border-border hover:border-red-200/60 text-left"
                               onClick={() => {
                                 setSelectedFailDescriptions(prev => prev.filter(d => d !== desc));
                                 setAvailableFailDescriptions(prev => [...prev, desc]);
