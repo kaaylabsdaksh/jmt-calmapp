@@ -13,7 +13,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, ChevronLeft, ChevronDown, ChevronUp, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield, Wrench, Activity, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock, ExternalLink, ArrowUp, Pencil, ImageIcon, Plus, Minus, MoreHorizontal, Play, Square, RefreshCw, Minimize2, Maximize2 } from "lucide-react";
+import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, ChevronLeft, ChevronDown, ChevronUp, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield, Wrench, Activity, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock, ExternalLink, ArrowUp, ArrowLeft, Pencil, ImageIcon, Plus, Minus, MoreHorizontal, Play, Square, RefreshCw, Minimize2, Maximize2 } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
@@ -10280,15 +10280,14 @@ const FormVariationsDemo = () => {
                 </div>
               </div>
 
-              {/* Main Form */}
-              <div className="grid grid-cols-12 gap-6">
-                {/* Left Column - Selection Fields */}
-                <div className="col-span-12 lg:col-span-3 space-y-4">
-                  {/* Location */}
-                  <div className="space-y-2">
-                    <Label className="text-sm font-medium">Location</Label>
+              {/* Modern Layout */}
+              <div className="space-y-6">
+                {/* Top Row - Selectors in a clean horizontal strip */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 p-4 rounded-xl bg-muted/30 border border-border">
+                  <div className="space-y-1.5">
+                    <Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Location</Label>
                     <Select value={failLogLocation} onValueChange={setFailLogLocation}>
-                      <SelectTrigger className="h-9">
+                      <SelectTrigger className="h-9 bg-background">
                         <SelectValue placeholder="Select location..." />
                       </SelectTrigger>
                       <SelectContent>
@@ -10300,12 +10299,10 @@ const FormVariationsDemo = () => {
                       </SelectContent>
                     </Select>
                   </div>
-
-                  {/* Employee */}
-                  <div className="space-y-2">
-                    <Label className="text-sm font-medium">Employee</Label>
+                  <div className="space-y-1.5">
+                    <Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Employee</Label>
                     <Select value={failLogEmployee} onValueChange={setFailLogEmployee}>
-                      <SelectTrigger className="h-9">
+                      <SelectTrigger className="h-9 bg-background">
                         <SelectValue placeholder="Select employee..." />
                       </SelectTrigger>
                       <SelectContent>
@@ -10317,12 +10314,10 @@ const FormVariationsDemo = () => {
                       </SelectContent>
                     </Select>
                   </div>
-
-                  {/* Fail Type */}
-                  <div className="space-y-2">
-                    <Label className="text-sm font-medium">Fail Type</Label>
+                  <div className="space-y-1.5">
+                    <Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Fail Type</Label>
                     <Select value={failLogFailType} onValueChange={setFailLogFailType}>
-                      <SelectTrigger className="h-9">
+                      <SelectTrigger className="h-9 bg-background">
                         <SelectValue placeholder="Select type..." />
                       </SelectTrigger>
                       <SelectContent>
@@ -10336,163 +10331,146 @@ const FormVariationsDemo = () => {
                   </div>
                 </div>
 
-                {/* Middle Column - Dual List Box */}
-                <div className="col-span-12 lg:col-span-6">
-                  <div className="flex gap-3 items-stretch">
-                    {/* Available Descriptions */}
-                    <div className="flex-1">
-                      <Label className="text-sm font-medium mb-3 block">Fail Description</Label>
-                      <div className="border rounded-lg overflow-hidden bg-background">
-                        <div className="bg-muted/50 px-3 py-2 border-b">
-                          <span className="text-xs font-medium text-muted-foreground">Available</span>
-                        </div>
-                        <ScrollArea className="h-[200px]">
-                          <div className="p-2 space-y-1">
-                            {availableFailDescriptions.map((desc) => (
-                              <div
-                                key={desc}
-                                className="flex items-center justify-between gap-2 px-3 py-2 text-sm rounded-md hover:bg-muted transition-colors group"
-                              >
-                                <span>{desc}</span>
-                                <Button
-                                  variant="ghost"
-                                  size="icon"
-                                  className="h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity text-muted-foreground hover:text-emerald-600 hover:bg-emerald-50"
-                                  onClick={() => {
-                                    setAvailableFailDescriptions(prev => prev.filter(d => d !== desc));
-                                    setSelectedFailDescriptions(prev => [...prev, desc]);
-                                  }}
-                                >
-                                  <Plus className="h-4 w-4" />
-                                </Button>
-                              </div>
-                            ))}
-                            {availableFailDescriptions.length === 0 && (
-                              <p className="text-xs text-muted-foreground text-center py-4">No items available</p>
-                            )}
-                          </div>
-                        </ScrollArea>
-                      </div>
+                {/* Dual List + Actions Row */}
+                <div className="grid grid-cols-12 gap-5">
+                  {/* Available List */}
+                  <div className="col-span-12 lg:col-span-5">
+                    <div className="flex items-center justify-between mb-2">
+                      <Label className="text-sm font-semibold">Fail Descriptions</Label>
+                      <span className="text-[10px] font-medium text-muted-foreground bg-muted px-2 py-0.5 rounded-full">
+                        {availableFailDescriptions.length} available
+                      </span>
                     </div>
-
-                    {/* Transfer Buttons */}
-                    <div className="flex flex-col justify-center gap-2 pt-8">
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        className="h-9 w-9"
-                        onClick={() => {
-                          setSelectedFailDescriptions(prev => [...prev, ...availableFailDescriptions]);
-                          setAvailableFailDescriptions([]);
-                        }}
-                        disabled={availableFailDescriptions.length === 0}
-                      >
-                        <ChevronRight className="h-4 w-4" />
-                        <ChevronRight className="h-4 w-4 -ml-2" />
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        className="h-9 w-9"
-                        onClick={() => {
-                          setAvailableFailDescriptions(prev => [...prev, ...selectedFailDescriptions]);
-                          setSelectedFailDescriptions([]);
-                        }}
-                        disabled={selectedFailDescriptions.length === 0}
-                      >
-                        <ChevronLeft className="h-4 w-4" />
-                        <ChevronLeft className="h-4 w-4 -ml-2" />
-                      </Button>
-                    </div>
-
-                    {/* Selected Descriptions */}
-                    <div className="flex-1">
-                      <Label className="text-sm font-medium mb-3 block text-foreground">Fails to Add</Label>
-                      <div className="border rounded-lg overflow-hidden bg-background border-emerald-500/40">
-                        <div className="bg-emerald-500/15 px-3 py-2 border-b border-emerald-500/20">
-                          <span className="text-xs font-medium text-emerald-700">Selected</span>
-                        </div>
-                        <ScrollArea className="h-[200px]">
-                          <div className="p-2 space-y-1">
-                            {selectedFailDescriptions.map((desc) => (
-                              <div
-                                key={desc}
-                                className="group flex items-center gap-2 w-full px-3 py-2 text-sm rounded-md bg-emerald-50 hover:bg-emerald-100 transition-colors border border-emerald-200"
-                              >
-                                <span className="flex-1 text-left">{desc}</span>
-                                <Button
-                                  type="button"
-                                  variant="ghost"
-                                  size="icon"
-                                  className="h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity text-destructive hover:text-destructive hover:bg-destructive/10"
-                                  onClick={() => {
-                                    setSelectedFailDescriptions(prev => prev.filter(d => d !== desc));
-                                    setAvailableFailDescriptions(prev => [...prev, desc]);
-                                  }}
-                                >
-                                  <Minus className="h-4 w-4" />
-                                </Button>
+                    <div className="border rounded-xl overflow-hidden bg-background shadow-sm">
+                      <ScrollArea className="h-[220px]">
+                        <div className="p-1.5 space-y-0.5">
+                          {availableFailDescriptions.map((desc) => (
+                            <button
+                              key={desc}
+                              type="button"
+                              className="flex items-center gap-2 w-full px-3 py-2.5 text-sm rounded-lg hover:bg-primary/5 transition-all group text-left"
+                              onClick={() => {
+                                setAvailableFailDescriptions(prev => prev.filter(d => d !== desc));
+                                setSelectedFailDescriptions(prev => [...prev, desc]);
+                              }}
+                            >
+                              <div className="h-5 w-5 rounded-md border-2 border-muted-foreground/20 flex items-center justify-center group-hover:border-primary/50 group-hover:bg-primary/10 transition-colors shrink-0">
+                                <Plus className="h-3 w-3 text-muted-foreground/40 group-hover:text-primary transition-colors" />
                               </div>
-                            ))}
-                            {selectedFailDescriptions.length === 0 && (
-                              <p className="text-xs text-muted-foreground text-center py-4">No items selected</p>
-                            )}
-                          </div>
-                        </ScrollArea>
-                      </div>
+                              <span className="text-foreground/80 group-hover:text-foreground transition-colors">{desc}</span>
+                            </button>
+                          ))}
+                          {availableFailDescriptions.length === 0 && (
+                            <div className="flex flex-col items-center justify-center py-8 text-muted-foreground">
+                              <CheckCircle className="h-8 w-8 mb-2 text-emerald-400" />
+                              <p className="text-xs">All items selected</p>
+                            </div>
+                          )}
+                        </div>
+                      </ScrollArea>
                     </div>
                   </div>
-                </div>
 
-                {/* Right Column - Actions */}
-                <div className="col-span-12 lg:col-span-3 space-y-4">
-                  <div className="space-y-2">
-                    <Label className="text-sm font-medium">Quantity</Label>
-                    <Input
-                      type="number"
-                      min="1"
-                      value={failLogQuantity}
-                      onChange={(e) => setFailLogQuantity(e.target.value)}
-                      className="h-9"
-                    />
+                  {/* Selected List */}
+                  <div className="col-span-12 lg:col-span-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <Label className="text-sm font-semibold text-emerald-700">Fails to Add</Label>
+                      {selectedFailDescriptions.length > 0 && (
+                        <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">
+                          {selectedFailDescriptions.length} selected
+                        </span>
+                      )}
+                    </div>
+                    <div className="border border-emerald-300/50 rounded-xl overflow-hidden bg-emerald-50/30 shadow-sm">
+                      <ScrollArea className="h-[220px]">
+                        <div className="p-1.5 space-y-0.5">
+                          {selectedFailDescriptions.map((desc) => (
+                            <div
+                              key={desc}
+                              className="group flex items-center gap-2 w-full px-3 py-2.5 text-sm rounded-lg bg-emerald-50 hover:bg-emerald-100/80 transition-all border border-emerald-200/60"
+                            >
+                              <div className="h-5 w-5 rounded-md bg-emerald-500 flex items-center justify-center shrink-0">
+                                <Check className="h-3 w-3 text-white" />
+                              </div>
+                              <span className="flex-1 text-foreground font-medium text-left">{desc}</span>
+                              <button
+                                type="button"
+                                className="h-5 w-5 rounded-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-destructive/10"
+                                onClick={() => {
+                                  setSelectedFailDescriptions(prev => prev.filter(d => d !== desc));
+                                  setAvailableFailDescriptions(prev => [...prev, desc]);
+                                }}
+                              >
+                                <X className="h-3 w-3 text-destructive" />
+                              </button>
+                            </div>
+                          ))}
+                          {selectedFailDescriptions.length === 0 && (
+                            <div className="flex flex-col items-center justify-center py-8 text-muted-foreground">
+                              <ArrowLeft className="h-6 w-6 mb-2 text-muted-foreground/30" />
+                              <p className="text-xs">Click items to add them</p>
+                            </div>
+                          )}
+                        </div>
+                      </ScrollArea>
+                    </div>
                   </div>
-                  
-                  <div className="flex flex-col gap-2 pt-4">
-                    <Button
-                      onClick={() => {
-                        if (failLogEmployee && failLogFailType && selectedFailDescriptions.length > 0) {
-                          const newEntries = selectedFailDescriptions.map(desc => ({
-                            id: `${Date.now()}-${Math.random()}`,
-                            failType: failLogFailType,
-                            failDescription: desc,
-                            quantity: parseInt(failLogQuantity) || 1,
-                            employee: failLogEmployee,
-                            location: failLogLocation,
-                            date: new Date().toLocaleDateString()
-                          }));
-                          setFailLogEntries(prev => [...prev, ...newEntries]);
-                          // Reset selections
-                          setSelectedFailDescriptions([]);
-                          setFailLogQuantity("1");
-                          toast({ title: "Fail entries added", description: `${newEntries.length} fail log entries have been added.` });
-                        } else {
-                          toast({ title: "Missing information", description: "Please select an employee, fail type, and at least one fail description.", variant: "destructive" });
-                        }
-                      }}
-                      className="bg-primary text-primary-foreground hover:bg-primary/90"
-                      disabled={!failLogEmployee || !failLogFailType || selectedFailDescriptions.length === 0}
-                    >
-                      Add Fail to Employee
-                    </Button>
-                    <Button
-                      variant="outline"
-                      onClick={() => {
-                        setSelectedFailDescriptions([]);
-                        setFailLogQuantity("1");
-                      }}
-                    >
-                      Cancel
-                    </Button>
+
+                  {/* Action Panel */}
+                  <div className="col-span-12 lg:col-span-3">
+                    <Label className="text-sm font-semibold mb-2 block">Actions</Label>
+                    <div className="border rounded-xl p-4 bg-muted/20 space-y-4 shadow-sm h-[220px] flex flex-col">
+                      <div className="space-y-1.5">
+                        <Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Quantity</Label>
+                        <Input
+                          type="number"
+                          min="1"
+                          value={failLogQuantity}
+                          onChange={(e) => setFailLogQuantity(e.target.value)}
+                          className="h-9 bg-background"
+                        />
+                      </div>
+                      
+                      <div className="flex flex-col gap-2 mt-auto">
+                        <Button
+                          onClick={() => {
+                            if (failLogEmployee && failLogFailType && selectedFailDescriptions.length > 0) {
+                              const newEntries = selectedFailDescriptions.map(desc => ({
+                                id: `${Date.now()}-${Math.random()}`,
+                                failType: failLogFailType,
+                                failDescription: desc,
+                                quantity: parseInt(failLogQuantity) || 1,
+                                employee: failLogEmployee,
+                                location: failLogLocation,
+                                date: new Date().toLocaleDateString()
+                              }));
+                              setFailLogEntries(prev => [...prev, ...newEntries]);
+                              setSelectedFailDescriptions([]);
+                              setFailLogQuantity("1");
+                              toast({ title: "Fail entries added", description: `${newEntries.length} fail log entries have been added.` });
+                            } else {
+                              toast({ title: "Missing information", description: "Please select an employee, fail type, and at least one fail description.", variant: "destructive" });
+                            }
+                          }}
+                          className="bg-primary text-primary-foreground hover:bg-primary/90 text-xs h-9"
+                          disabled={!failLogEmployee || !failLogFailType || selectedFailDescriptions.length === 0}
+                        >
+                          <Plus className="h-3.5 w-3.5 mr-1" />
+                          Add Fail to Employee
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="text-xs h-8"
+                          onClick={() => {
+                            setSelectedFailDescriptions([]);
+                            setFailLogQuantity("1");
+                          }}
+                        >
+                          Clear Selection
+                        </Button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -10505,17 +10483,17 @@ const FormVariationsDemo = () => {
                     <span className="text-xs text-muted-foreground">{failLogEntries.length} entry(s)</span>
                   )}
                 </div>
-                <div className="border rounded-lg overflow-hidden">
+                <div className="border rounded-xl overflow-hidden shadow-sm">
                   <Table>
                     <TableHeader>
-                      <TableRow className="bg-primary/5">
-                        <TableHead className="text-xs font-medium w-12"></TableHead>
-                        <TableHead className="text-xs font-medium">Fail Type</TableHead>
-                        <TableHead className="text-xs font-medium">Fail Description</TableHead>
-                        <TableHead className="text-xs font-medium w-24 text-right">Quantity</TableHead>
-                        <TableHead className="text-xs font-medium">Employee</TableHead>
-                        <TableHead className="text-xs font-medium">Date</TableHead>
-                        <TableHead className="text-xs font-medium w-16"></TableHead>
+                      <TableRow className="bg-muted/50">
+                        <TableHead className="text-[10px] font-semibold uppercase tracking-wider w-12">#</TableHead>
+                        <TableHead className="text-[10px] font-semibold uppercase tracking-wider">Fail Type</TableHead>
+                        <TableHead className="text-[10px] font-semibold uppercase tracking-wider">Description</TableHead>
+                        <TableHead className="text-[10px] font-semibold uppercase tracking-wider w-20 text-right">Qty</TableHead>
+                        <TableHead className="text-[10px] font-semibold uppercase tracking-wider">Employee</TableHead>
+                        <TableHead className="text-[10px] font-semibold uppercase tracking-wider">Date</TableHead>
+                        <TableHead className="text-[10px] font-semibold uppercase tracking-wider w-12"></TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -10533,9 +10511,9 @@ const FormVariationsDemo = () => {
                       ) : (
                         failLogEntries.map((entry, index) => (
                           <TableRow key={entry.id} className="hover:bg-muted/50 transition-colors duration-200">
-                            <TableCell className="text-sm font-medium">{index + 1}</TableCell>
-                            <TableCell className="text-sm">
-                              <Badge variant="outline" className="font-normal">
+                            <TableCell className="text-xs font-medium text-muted-foreground">{index + 1}</TableCell>
+                            <TableCell className="text-xs">
+                              <Badge variant="outline" className="font-normal text-[10px]">
                                 {entry.failType === 'attached-form' ? 'Attached Form' : 
                                  entry.failType === 'documentation' ? 'Documentation' :
                                  entry.failType === 'calibration' ? 'Calibration' :
@@ -10543,27 +10521,27 @@ const FormVariationsDemo = () => {
                                  entry.failType === 'quality' ? 'Quality' : entry.failType}
                               </Badge>
                             </TableCell>
-                            <TableCell className="text-sm">{entry.failDescription}</TableCell>
-                            <TableCell className="text-sm text-right font-medium">{entry.quantity}</TableCell>
-                            <TableCell className="text-sm">
+                            <TableCell className="text-xs">{entry.failDescription}</TableCell>
+                            <TableCell className="text-xs text-right font-semibold">{entry.quantity}</TableCell>
+                            <TableCell className="text-xs">
                               {entry.employee === 'amanda-phillips' ? 'Amanda R. Phillips (T)' :
                                entry.employee === 'john-smith' ? 'John Smith (T)' :
                                entry.employee === 'sarah-johnson' ? 'Sarah Johnson (S)' :
                                entry.employee === 'michael-brown' ? 'Michael Brown (T)' :
                                entry.employee === 'emily-davis' ? 'Emily Davis (L)' : entry.employee}
                             </TableCell>
-                            <TableCell className="text-sm">{entry.date}</TableCell>
+                            <TableCell className="text-xs text-muted-foreground">{entry.date}</TableCell>
                             <TableCell>
                               <Button
                                 variant="ghost"
                                 size="icon"
-                                className="h-7 w-7 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                                className="h-6 w-6 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
                                 onClick={() => {
                                   setFailLogEntries(prev => prev.filter(e => e.id !== entry.id));
                                   toast({ title: "Entry removed", description: "Fail log entry has been deleted." });
                                 }}
                               >
-                                <X className="h-4 w-4" />
+                                <X className="h-3.5 w-3.5" />
                               </Button>
                             </TableCell>
                           </TableRow>
