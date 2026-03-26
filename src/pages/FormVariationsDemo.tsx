@@ -56,6 +56,8 @@ const FormVariationsDemo = () => {
   const [failLogEmployee, setFailLogEmployee] = useState("");
   const [failLogFailType, setFailLogFailType] = useState("");
   const [failLogQuantity, setFailLogQuantity] = useState("1");
+  const [failDescSearch, setFailDescSearch] = useState("");
+  const [failDescDropdownOpen, setFailDescDropdownOpen] = useState(false);
   const [availableFailDescriptions, setAvailableFailDescriptions] = useState<string[]>([
     "Incorrect PO",
     "SO does not match",
