@@ -10393,9 +10393,7 @@ const FormVariationsDemo = () => {
                                 <Check className="h-3 w-3 text-white" />
                               </div>
                               <span className="flex-1 text-foreground font-medium text-left text-xs">{desc}</span>
-                              <button
-                                type="button"
-                                className="h-5 w-5 rounded-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-destructive/10"
+                              <button type="button" className="h-4 w-4 rounded flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-destructive/10"
                                 onClick={() => {
                                   setSelectedFailDescriptions(prev => prev.filter(d => d !== desc));
                                   setAvailableFailDescriptions(prev => [...prev, desc]);
