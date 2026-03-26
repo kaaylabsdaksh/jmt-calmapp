@@ -10281,7 +10281,7 @@ const FormVariationsDemo = () => {
               </div>
 
               {/* Modern Layout */}
-              <div className="space-y-6">
+              <div className="space-y-3">
                 {/* Top Row - Selectors in a clean horizontal strip */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 px-3 py-2.5 rounded-lg bg-muted/30 border border-border">
                   <div className="space-y-1">
