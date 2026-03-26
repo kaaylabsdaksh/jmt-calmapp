@@ -10440,8 +10440,21 @@ const FormVariationsDemo = () => {
                                 date: new Date().toLocaleDateString()
                               }));
                               setFailLogEntries(prev => [...prev, ...newEntries]);
-                              setSelectedFailDescriptions([]);
+                              setFailLogLocation("");
+                              setFailLogEmployee("");
+                              setFailLogFailType("");
                               setFailLogQuantity("1");
+                              setSelectedFailDescriptions([]);
+                              setAvailableFailDescriptions([
+                                "Incorrect PO",
+                                "SO does not match",
+                                "SO not attached",
+                                "SR form not attached",
+                                "Missing documentation",
+                                "Incomplete form",
+                                "Wrong serial number",
+                                "Calibration overdue"
+                              ]);
                               toast({ title: "Fail entries added", description: `${newEntries.length} fail log entries have been added.` });
                             } else {
                               toast({ title: "Missing information", description: "Please select an employee, fail type, and at least one fail description.", variant: "destructive" });
