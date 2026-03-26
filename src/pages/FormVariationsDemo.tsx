@@ -10450,7 +10450,7 @@ const FormVariationsDemo = () => {
                               toast({ title: "Missing information", description: "Please select an employee, fail type, and at least one fail description.", variant: "destructive" });
                             }
                           }}
-                          className="bg-primary text-primary-foreground hover:bg-primary/90 text-xs h-9"
+                          className="bg-primary text-primary-foreground hover:bg-primary/90 text-xs h-7"
                           disabled={!failLogEmployee || !failLogFailType || selectedFailDescriptions.length === 0}
                         >
                           <Plus className="h-3.5 w-3.5 mr-1" />
