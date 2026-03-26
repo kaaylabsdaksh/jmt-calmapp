@@ -10283,11 +10283,11 @@ const FormVariationsDemo = () => {
               {/* Modern Layout */}
               <div className="space-y-6">
                 {/* Top Row - Selectors in a clean horizontal strip */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 p-4 rounded-xl bg-muted/30 border border-border">
-                  <div className="space-y-1.5">
-                    <Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Location</Label>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 px-3 py-2.5 rounded-lg bg-muted/30 border border-border">
+                  <div className="space-y-1">
+                    <Label className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Location</Label>
                     <Select value={failLogLocation} onValueChange={setFailLogLocation}>
-                      <SelectTrigger className="h-9 bg-background">
+                      <SelectTrigger className="h-7 text-xs bg-background">
                         <SelectValue placeholder="Select location..." />
                       </SelectTrigger>
                       <SelectContent>
@@ -10299,10 +10299,10 @@ const FormVariationsDemo = () => {
                       </SelectContent>
                     </Select>
                   </div>
-                  <div className="space-y-1.5">
-                    <Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Employee</Label>
+                  <div className="space-y-1">
+                    <Label className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Employee</Label>
                     <Select value={failLogEmployee} onValueChange={setFailLogEmployee}>
-                      <SelectTrigger className="h-9 bg-background">
+                      <SelectTrigger className="h-7 text-xs bg-background">
                         <SelectValue placeholder="Select employee..." />
                       </SelectTrigger>
                       <SelectContent>
@@ -10314,10 +10314,10 @@ const FormVariationsDemo = () => {
                       </SelectContent>
                     </Select>
                   </div>
-                  <div className="space-y-1.5">
-                    <Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Fail Type</Label>
+                  <div className="space-y-1">
+                    <Label className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Fail Type</Label>
                     <Select value={failLogFailType} onValueChange={setFailLogFailType}>
-                      <SelectTrigger className="h-9 bg-background">
+                      <SelectTrigger className="h-7 text-xs bg-background">
                         <SelectValue placeholder="Select type..." />
                       </SelectTrigger>
                       <SelectContent>
