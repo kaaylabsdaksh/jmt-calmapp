@@ -10283,7 +10283,7 @@ const FormVariationsDemo = () => {
               {/* Modern Layout */}
               <div className="space-y-6">
                 {/* Top Row - Selectors in a clean horizontal strip */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 p-4 rounded-xl bg-muted/30 border border-border">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 px-3 py-2.5 rounded-lg bg-muted/30 border border-border">
                   <div className="space-y-1.5">
                     <Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Location</Label>
                     <Select value={failLogLocation} onValueChange={setFailLogLocation}>
