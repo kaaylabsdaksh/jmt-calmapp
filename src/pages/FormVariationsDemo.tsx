@@ -10341,8 +10341,8 @@ const FormVariationsDemo = () => {
                         {availableFailDescriptions.length} available
                       </span>
                     </div>
-                    <div className="border rounded-xl overflow-hidden bg-background shadow-sm">
-                      <ScrollArea className="h-[220px]">
+                    <div className="border rounded-lg overflow-hidden bg-background shadow-sm">
+                      <ScrollArea className="h-[160px]">
                         <div className="p-1.5 space-y-0.5">
                           {availableFailDescriptions.map((desc) => (
                             <button
