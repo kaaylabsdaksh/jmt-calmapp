@@ -10459,7 +10459,7 @@ const FormVariationsDemo = () => {
                         <Button
                           variant="outline"
                           size="sm"
-                          className="text-xs h-8"
+                          className="text-[10px] h-7"
                           onClick={() => {
                             setSelectedFailDescriptions([]);
                             setFailLogQuantity("1");
