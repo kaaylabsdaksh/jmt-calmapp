@@ -10381,8 +10381,8 @@ const FormVariationsDemo = () => {
                         </span>
                       )}
                     </div>
-                    <div className="border border-emerald-300/50 rounded-xl overflow-hidden bg-emerald-50/30 shadow-sm">
-                      <ScrollArea className="h-[220px]">
+                    <div className="border border-emerald-300/50 rounded-lg overflow-hidden bg-emerald-50/30 shadow-sm">
+                      <ScrollArea className="h-[160px]">
                         <div className="p-1.5 space-y-0.5">
                           {selectedFailDescriptions.map((desc) => (
                             <div
