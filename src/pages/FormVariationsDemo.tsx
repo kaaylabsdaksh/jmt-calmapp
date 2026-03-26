@@ -10416,8 +10416,8 @@ const FormVariationsDemo = () => {
 
                   {/* Action Panel */}
                   <div className="col-span-12 lg:col-span-3">
-                    <Label className="text-sm font-semibold mb-2 block">Actions</Label>
-                    <div className="border rounded-xl p-4 bg-muted/20 space-y-4 shadow-sm h-[220px] flex flex-col">
+                    <Label className="text-xs font-semibold mb-1.5 block">Actions</Label>
+                    <div className="border rounded-lg p-3 bg-muted/20 space-y-3 shadow-sm h-[160px] flex flex-col">
                       <div className="space-y-1.5">
                         <Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Quantity</Label>
                         <Input
