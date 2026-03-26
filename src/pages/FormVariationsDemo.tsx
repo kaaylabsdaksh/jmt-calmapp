@@ -10425,7 +10425,7 @@ const FormVariationsDemo = () => {
                           min="1"
                           value={failLogQuantity}
                           onChange={(e) => setFailLogQuantity(e.target.value)}
-                          className="h-9 bg-background"
+                          className="h-7 text-xs bg-background"
                         />
                       </div>
                       
