@@ -10441,12 +10441,12 @@ const FormVariationsDemo = () => {
                               </div>
                             </ScrollArea>
                             {/* Footer */}
-                            <div className="border-t px-2 py-1.5 flex justify-between items-center gap-2">
+                            <div className="border-t px-2 py-1.5 flex justify-between items-center gap-2 bg-muted/30">
                               <Button
                                 type="button"
-                                variant="ghost"
+                                variant="outline"
                                 size="sm"
-                                className="text-[10px] h-6 px-2 text-primary hover:text-primary hover:bg-primary/10"
+                                className="text-[10px] h-6 px-2.5 border-border text-foreground hover:bg-muted"
                                 onClick={() => {
                                   if (availableFailDescriptions.length > 0) {
                                     setSelectedFailDescriptions(prev => [...prev, ...availableFailDescriptions]);
@@ -10462,7 +10462,7 @@ const FormVariationsDemo = () => {
                               <Button
                                 type="button"
                                 size="sm"
-                                className="text-[10px] h-6 px-3 bg-primary text-primary-foreground hover:bg-primary/90"
+                                className="text-[10px] h-6 px-3 bg-foreground text-background hover:bg-foreground/90"
                                 onClick={() => {
                                   setFailDescDropdownOpen(false);
                                   setFailDescSearch("");
