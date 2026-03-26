@@ -10392,7 +10392,7 @@ const FormVariationsDemo = () => {
                               <div className="h-4 w-4 rounded bg-emerald-500 flex items-center justify-center shrink-0">
                                 <Check className="h-3 w-3 text-white" />
                               </div>
-                              <span className="flex-1 text-foreground font-medium text-left">{desc}</span>
+                              <span className="flex-1 text-foreground font-medium text-left text-xs">{desc}</span>
                               <button
                                 type="button"
                                 className="h-5 w-5 rounded-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-destructive/10"
