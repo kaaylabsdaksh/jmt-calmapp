@@ -10385,23 +10385,20 @@ const FormVariationsDemo = () => {
                       <ScrollArea className="h-[160px]">
                         <div className="p-1.5 space-y-0.5">
                           {selectedFailDescriptions.map((desc) => (
-                            <div
+                            <button
+                              type="button"
                               key={desc}
-                              className="group flex items-center gap-2 w-full px-2.5 py-2 text-xs rounded-md bg-emerald-50 hover:bg-emerald-100/80 transition-all border border-emerald-200/60"
+                              className="group flex items-center gap-2 w-full px-2.5 py-2 text-xs rounded-md bg-emerald-50 hover:bg-red-50 transition-all border border-emerald-200/60 hover:border-red-200/60 text-left"
+                              onClick={() => {
+                                setSelectedFailDescriptions(prev => prev.filter(d => d !== desc));
+                                setAvailableFailDescriptions(prev => [...prev, desc]);
+                              }}
                             >
-                              <div className="h-4 w-4 rounded bg-emerald-500 flex items-center justify-center shrink-0">
-                                <Check className="h-3 w-3 text-white" />
+                              <div className="h-4 w-4 rounded-full border border-red-300 flex items-center justify-center group-hover:border-red-500 group-hover:bg-red-500 transition-colors shrink-0">
+                                <Minus className="h-2.5 w-2.5 text-red-400 group-hover:text-white transition-colors" />
                               </div>
-                              <span className="flex-1 text-foreground font-medium text-left text-xs">{desc}</span>
-                              <button type="button" className="h-4 w-4 rounded flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-destructive/10"
-                                onClick={() => {
-                                  setSelectedFailDescriptions(prev => prev.filter(d => d !== desc));
-                                  setAvailableFailDescriptions(prev => [...prev, desc]);
-                                }}
-                              >
-                                <X className="h-3 w-3 text-destructive" />
-                              </button>
-                            </div>
+                              <span className="flex-1 text-foreground font-medium text-xs">{desc}</span>
+                            </button>
                           ))}
                           {selectedFailDescriptions.length === 0 && (
                             <div className="flex flex-col items-center justify-center py-8 text-muted-foreground">
