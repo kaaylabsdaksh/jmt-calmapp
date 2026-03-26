@@ -10441,27 +10441,36 @@ const FormVariationsDemo = () => {
                               </div>
                             </ScrollArea>
                             {/* Footer */}
-                            <div className="border-t p-1.5 flex justify-between">
-                              <button
+                            <div className="border-t px-2 py-1.5 flex justify-between items-center gap-2">
+                              <Button
                                 type="button"
-                                className="text-[10px] text-muted-foreground hover:text-foreground px-2 py-1 rounded transition-colors"
+                                variant="ghost"
+                                size="sm"
+                                className="text-[10px] h-6 px-2 text-primary hover:text-primary hover:bg-primary/10"
                                 onClick={() => {
-                                  setSelectedFailDescriptions(prev => [...prev, ...availableFailDescriptions]);
-                                  setAvailableFailDescriptions([]);
+                                  if (availableFailDescriptions.length > 0) {
+                                    setSelectedFailDescriptions(prev => [...prev, ...availableFailDescriptions]);
+                                    setAvailableFailDescriptions([]);
+                                  } else {
+                                    setAvailableFailDescriptions(prev => [...prev, ...selectedFailDescriptions]);
+                                    setSelectedFailDescriptions([]);
+                                  }
                                 }}
                               >
-                                Select all
-                              </button>
-                              <button
+                                {availableFailDescriptions.length > 0 ? 'Select all' : 'Clear all'}
+                              </Button>
+                              <Button
                                 type="button"
-                                className="text-[10px] text-muted-foreground hover:text-foreground px-2 py-1 rounded transition-colors"
+                                size="sm"
+                                className="text-[10px] h-6 px-3 bg-primary text-primary-foreground hover:bg-primary/90"
                                 onClick={() => {
                                   setFailDescDropdownOpen(false);
                                   setFailDescSearch("");
                                 }}
                               >
+                                <Check className="h-3 w-3 mr-1" />
                                 Done
-                              </button>
+                              </Button>
                             </div>
                           </div>
                         )}
