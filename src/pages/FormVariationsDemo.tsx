@@ -10373,8 +10373,8 @@ const FormVariationsDemo = () => {
 
                   {/* Selected List */}
                   <div className="col-span-12 lg:col-span-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <Label className="text-sm font-semibold text-emerald-700">Fails to Add</Label>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <Label className="text-xs font-semibold text-emerald-700">Fails to Add</Label>
                       {selectedFailDescriptions.length > 0 && (
                         <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">
                           {selectedFailDescriptions.length} selected
