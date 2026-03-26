@@ -10335,8 +10335,8 @@ const FormVariationsDemo = () => {
                 <div className="grid grid-cols-12 gap-3">
                   {/* Available List */}
                   <div className="col-span-12 lg:col-span-5">
-                    <div className="flex items-center justify-between mb-2">
-                      <Label className="text-sm font-semibold">Fail Descriptions</Label>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <Label className="text-xs font-semibold">Fail Descriptions</Label>
                       <span className="text-[10px] font-medium text-muted-foreground bg-muted px-2 py-0.5 rounded-full">
                         {availableFailDescriptions.length} available
                       </span>
