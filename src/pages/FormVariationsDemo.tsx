@@ -9817,8 +9817,8 @@ const FormVariationsDemo = () => {
             <CardContent className="p-4">
               {/* Header */}
               <div className="flex items-center gap-2 pb-3 border-b border-border mb-4">
-                <div className="p-1.5 bg-primary/10 rounded-md">
-                  <FileText className="h-4 w-4 text-primary" />
+                <div className="p-1.5 bg-muted rounded-md">
+                  <FileText className="h-4 w-4 text-foreground" />
                 </div>
                 <div>
                   <h3 className="text-sm font-semibold">External Files</h3>
