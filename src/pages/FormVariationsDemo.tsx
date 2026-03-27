@@ -405,6 +405,7 @@ const FormVariationsDemo = () => {
   const [externalFilesSelectedItems, setExternalFilesSelectedItems] = useState<string[]>([]);
   const [externalFilesSelectedTags, setExternalFilesSelectedTags] = useState<string[]>([]);
   const [externalFilesDragging, setExternalFilesDragging] = useState(false);
+  const [externalFilesPending, setExternalFilesPending] = useState<File[]>([]);
   const [externalFilesUploaded, setExternalFilesUploaded] = useState<{
     id: string;
     name: string;
@@ -9828,7 +9829,7 @@ const FormVariationsDemo = () => {
 
               {/* Validation Message */}
               {!externalFilesDocType && (
-                <div className="flex items-center gap-2 text-xs text-amber-700 bg-amber-50 border border-amber-200 p-2 rounded-md mb-4">
+                <div className="flex items-center gap-2 text-xs text-muted-foreground bg-muted/50 border border-border p-2 rounded-md mb-4">
                   <AlertCircle className="h-3.5 w-3.5" />
                   <span>Select a document type to enable file upload options</span>
                 </div>
@@ -9843,11 +9844,12 @@ const FormVariationsDemo = () => {
                     <Label className="text-xs font-medium flex items-center gap-1">
                       Doc Type <span className="text-destructive">*</span>
                     </Label>
-                    <Select value={externalFilesDocType} onValueChange={setExternalFilesDocType}>
+                    <Select value={externalFilesDocType} onValueChange={(val) => setExternalFilesDocType(val === "__empty__" ? "" : val)}>
                       <SelectTrigger className="h-8 text-xs">
                         <SelectValue placeholder="Select type..." />
                       </SelectTrigger>
                       <SelectContent>
+                        <SelectItem value="__empty__" className="text-muted-foreground">-- Select --</SelectItem>
                         {["Certificate", "Report", "Invoice", "Purchase Order", "Calibration Data", "Test Results"].map(type => (
                           <SelectItem key={type} value={type}>{type}</SelectItem>
                         ))}
@@ -9944,7 +9946,7 @@ const FormVariationsDemo = () => {
                     <Label className="text-xs font-medium">Upload Files</Label>
                     <div
                       className={cn(
-                        "border-2 border-dashed rounded-lg p-5 flex flex-col items-center justify-center gap-2 transition-all min-h-[140px]",
+                        "border-2 border-dashed rounded-lg p-3 flex flex-col items-center justify-center gap-1.5 transition-all min-h-[80px]",
                         externalFilesDragging && externalFilesDocType ? "border-foreground/50 bg-muted/30" : "border-border bg-muted/20 hover:bg-muted/40 hover:border-muted-foreground/50",
                         !externalFilesDocType && "cursor-not-allowed"
                       )}
@@ -9957,34 +9959,15 @@ const FormVariationsDemo = () => {
                         e.preventDefault();
                         setExternalFilesDragging(false);
                         if (!e.dataTransfer.files || !externalFilesDocType) return;
-                        const newFiles = Array.from(e.dataTransfer.files).map((file, idx) => ({
-                          id: `${Date.now()}-${idx}`,
-                          name: file.name,
-                          type: externalFilesDocType,
-                          tags: [...externalFilesSelectedTags],
-                          items: [...externalFilesSelectedItems],
-                          uploadedBy: "Current User",
-                          uploadedDate: new Date().toLocaleDateString(),
-                        }));
-                        setExternalFilesUploaded(prev => [...prev, ...newFiles]);
-                        setExternalFilesDocType("");
-                        setExternalFilesSelectedItems([]);
-                        setExternalFilesSelectedTags([]);
+                        setExternalFilesPending(prev => [...prev, ...Array.from(e.dataTransfer.files)]);
                       }}
                     >
-                      <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center">
-                        <Upload className="h-5 w-5 text-muted-foreground" />
-                      </div>
-                      <div className="text-center">
-                        <p className="text-xs text-muted-foreground">
-                          Drag file(s) here
-                        </p>
-                        <span className="text-[11px] text-muted-foreground">or</span>
-                      </div>
+                      <Upload className="h-4 w-4 text-muted-foreground" />
+                      <p className="text-[11px] text-muted-foreground">Drag file(s) here or</p>
                       <Button
                         variant="outline"
                         size="sm"
-                        className="h-7 text-xs"
+                        className="h-6 text-[11px] px-3"
                         disabled={!externalFilesDocType}
                         onClick={() => document.getElementById("ef-file-upload")?.click()}
                       >
@@ -9997,24 +9980,72 @@ const FormVariationsDemo = () => {
                         className="hidden"
                         onChange={(e) => {
                           if (!e.target.files || !externalFilesDocType) return;
-                          const newFiles = Array.from(e.target.files).map((file, idx) => ({
-                            id: `${Date.now()}-${idx}`,
-                            name: file.name,
-                            type: externalFilesDocType,
-                            tags: [...externalFilesSelectedTags],
-                            items: [...externalFilesSelectedItems],
-                            uploadedBy: "Current User",
-                            uploadedDate: new Date().toLocaleDateString(),
-                          }));
-                          setExternalFilesUploaded(prev => [...prev, ...newFiles]);
-                          setExternalFilesDocType("");
-                          setExternalFilesSelectedItems([]);
-                          setExternalFilesSelectedTags([]);
+                          setExternalFilesPending(prev => [...prev, ...Array.from(e.target.files!)]);
                           e.target.value = "";
                         }}
                         disabled={!externalFilesDocType}
                       />
                     </div>
+
+                    {/* Pending files preview */}
+                    {externalFilesPending.length > 0 && (
+                      <div className="space-y-1 mt-1.5">
+                        <div className="flex items-center justify-between">
+                          <span className="text-[11px] text-muted-foreground">{externalFilesPending.length} file(s) selected</span>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-5 text-[10px] px-1.5 text-muted-foreground hover:text-destructive"
+                            onClick={() => setExternalFilesPending([])}
+                          >
+                            Clear All
+                          </Button>
+                        </div>
+                        <ScrollArea className="max-h-[80px]">
+                          <div className="space-y-0.5">
+                            {externalFilesPending.map((file, idx) => (
+                              <div key={`${file.name}-${idx}`} className="flex items-center justify-between bg-muted/40 rounded px-2 py-1 group">
+                                <div className="flex items-center gap-1.5 min-w-0">
+                                  <FileText className="h-3 w-3 text-muted-foreground shrink-0" />
+                                  <span className="text-[11px] truncate">{file.name}</span>
+                                  <span className="text-[10px] text-muted-foreground shrink-0">({(file.size / 1024).toFixed(1)} KB)</span>
+                                </div>
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  className="h-5 w-5 p-0 opacity-0 group-hover:opacity-100 text-muted-foreground hover:text-destructive"
+                                  onClick={() => setExternalFilesPending(prev => prev.filter((_, i) => i !== idx))}
+                                >
+                                  <X className="h-3 w-3" />
+                                </Button>
+                              </div>
+                            ))}
+                          </div>
+                        </ScrollArea>
+                        <Button
+                          size="sm"
+                          className="h-7 text-xs w-full bg-foreground text-background hover:bg-foreground/90"
+                          onClick={() => {
+                            const newFiles = externalFilesPending.map((file, idx) => ({
+                              id: `${Date.now()}-${idx}`,
+                              name: file.name,
+                              type: externalFilesDocType,
+                              tags: [...externalFilesSelectedTags],
+                              items: [...externalFilesSelectedItems],
+                              uploadedBy: "Current User",
+                              uploadedDate: new Date().toLocaleDateString(),
+                            }));
+                            setExternalFilesUploaded(prev => [...prev, ...newFiles]);
+                            setExternalFilesPending([]);
+                            setExternalFilesDocType("");
+                            setExternalFilesSelectedItems([]);
+                            setExternalFilesSelectedTags([]);
+                          }}
+                        >
+                          Submit
+                        </Button>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -10237,17 +10268,22 @@ const FormVariationsDemo = () => {
 
               {/* Delete Confirmation Dialog */}
               <AlertDialog open={!!deletingFile} onOpenChange={(open) => !open && setDeletingFile(null)}>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>Delete File</AlertDialogTitle>
-                    <AlertDialogDescription>
-                      Are you sure you want to delete "{deletingFile?.name}"? This action cannot be undone.
+                <AlertDialogContent className="max-w-sm rounded-xl p-6 bg-background border shadow-2xl">
+                  <AlertDialogHeader className="space-y-3">
+                    <div className="mx-auto w-12 h-12 rounded-full bg-destructive/10 flex items-center justify-center">
+                      <AlertCircle className="h-6 w-6 text-destructive" />
+                    </div>
+                    <AlertDialogTitle className="text-center text-base font-semibold">Delete File</AlertDialogTitle>
+                    <AlertDialogDescription className="text-center text-sm text-muted-foreground leading-relaxed">
+                      Are you sure you want to delete<br />
+                      <span className="font-medium text-foreground break-all">"{deletingFile?.name}"</span>?<br />
+                      This action cannot be undone.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogFooter className="flex-row gap-3 sm:justify-center pt-4">
+                    <AlertDialogCancel className="flex-1 h-10 text-sm border-border focus:ring-ring">Cancel</AlertDialogCancel>
                     <AlertDialogAction
-                      className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                      className="flex-1 h-10 text-sm bg-destructive text-destructive-foreground hover:bg-destructive/90 focus:ring-destructive"
                       onClick={() => {
                         if (deletingFile) {
                           setExternalFilesUploaded(prev => prev.filter(f => f.id !== deletingFile.id));
