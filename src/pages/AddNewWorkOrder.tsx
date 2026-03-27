@@ -3961,9 +3961,7 @@ const AddNewWorkOrder = () => {
                             <SelectValue placeholder="Select type..." />
                           </SelectTrigger>
                           <SelectContent>
-                            {["Certificate", "Report", "Invoice", "Purchase Order", "Calibration Data", "Test Results"].map(type => (
-                              <SelectItem key={type} value={type}>{type}</SelectItem>
-                            ))}
+                            <SelectItem value="Customer Documentation">Customer Documentation</SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
