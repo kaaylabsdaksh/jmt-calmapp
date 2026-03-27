@@ -9829,7 +9829,7 @@ const FormVariationsDemo = () => {
 
               {/* Validation Message */}
               {!externalFilesDocType && (
-                <div className="flex items-center gap-2 text-xs text-amber-700 bg-amber-50 border border-amber-200 p-2 rounded-md mb-4">
+                <div className="flex items-center gap-2 text-xs text-muted-foreground bg-muted/50 border border-border p-2 rounded-md mb-4">
                   <AlertCircle className="h-3.5 w-3.5" />
                   <span>Select a document type to enable file upload options</span>
                 </div>
