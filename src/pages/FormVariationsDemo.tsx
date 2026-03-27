@@ -9946,7 +9946,7 @@ const FormVariationsDemo = () => {
                     <Label className="text-xs font-medium">Upload Files</Label>
                     <div
                       className={cn(
-                        "border-2 border-dashed rounded-lg p-5 flex flex-col items-center justify-center gap-2 transition-all min-h-[140px]",
+                        "border-2 border-dashed rounded-lg p-3 flex flex-col items-center justify-center gap-1.5 transition-all min-h-[80px]",
                         externalFilesDragging && externalFilesDocType ? "border-foreground/50 bg-muted/30" : "border-border bg-muted/20 hover:bg-muted/40 hover:border-muted-foreground/50",
                         !externalFilesDocType && "cursor-not-allowed"
                       )}
@@ -9959,34 +9959,15 @@ const FormVariationsDemo = () => {
                         e.preventDefault();
                         setExternalFilesDragging(false);
                         if (!e.dataTransfer.files || !externalFilesDocType) return;
-                        const newFiles = Array.from(e.dataTransfer.files).map((file, idx) => ({
-                          id: `${Date.now()}-${idx}`,
-                          name: file.name,
-                          type: externalFilesDocType,
-                          tags: [...externalFilesSelectedTags],
-                          items: [...externalFilesSelectedItems],
-                          uploadedBy: "Current User",
-                          uploadedDate: new Date().toLocaleDateString(),
-                        }));
-                        setExternalFilesUploaded(prev => [...prev, ...newFiles]);
-                        setExternalFilesDocType("");
-                        setExternalFilesSelectedItems([]);
-                        setExternalFilesSelectedTags([]);
+                        setExternalFilesPending(prev => [...prev, ...Array.from(e.dataTransfer.files)]);
                       }}
                     >
-                      <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center">
-                        <Upload className="h-5 w-5 text-muted-foreground" />
-                      </div>
-                      <div className="text-center">
-                        <p className="text-xs text-muted-foreground">
-                          Drag file(s) here
-                        </p>
-                        <span className="text-[11px] text-muted-foreground">or</span>
-                      </div>
+                      <Upload className="h-4 w-4 text-muted-foreground" />
+                      <p className="text-[11px] text-muted-foreground">Drag file(s) here or</p>
                       <Button
                         variant="outline"
                         size="sm"
-                        className="h-7 text-xs"
+                        className="h-6 text-[11px] px-3"
                         disabled={!externalFilesDocType}
                         onClick={() => document.getElementById("ef-file-upload")?.click()}
                       >
@@ -9999,24 +9980,72 @@ const FormVariationsDemo = () => {
                         className="hidden"
                         onChange={(e) => {
                           if (!e.target.files || !externalFilesDocType) return;
-                          const newFiles = Array.from(e.target.files).map((file, idx) => ({
-                            id: `${Date.now()}-${idx}`,
-                            name: file.name,
-                            type: externalFilesDocType,
-                            tags: [...externalFilesSelectedTags],
-                            items: [...externalFilesSelectedItems],
-                            uploadedBy: "Current User",
-                            uploadedDate: new Date().toLocaleDateString(),
-                          }));
-                          setExternalFilesUploaded(prev => [...prev, ...newFiles]);
-                          setExternalFilesDocType("");
-                          setExternalFilesSelectedItems([]);
-                          setExternalFilesSelectedTags([]);
+                          setExternalFilesPending(prev => [...prev, ...Array.from(e.target.files!)]);
                           e.target.value = "";
                         }}
                         disabled={!externalFilesDocType}
                       />
                     </div>
+
+                    {/* Pending files preview */}
+                    {externalFilesPending.length > 0 && (
+                      <div className="space-y-1 mt-1.5">
+                        <div className="flex items-center justify-between">
+                          <span className="text-[11px] text-muted-foreground">{externalFilesPending.length} file(s) selected</span>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-5 text-[10px] px-1.5 text-muted-foreground hover:text-destructive"
+                            onClick={() => setExternalFilesPending([])}
+                          >
+                            Clear All
+                          </Button>
+                        </div>
+                        <ScrollArea className="max-h-[80px]">
+                          <div className="space-y-0.5">
+                            {externalFilesPending.map((file, idx) => (
+                              <div key={`${file.name}-${idx}`} className="flex items-center justify-between bg-muted/40 rounded px-2 py-1 group">
+                                <div className="flex items-center gap-1.5 min-w-0">
+                                  <FileText className="h-3 w-3 text-muted-foreground shrink-0" />
+                                  <span className="text-[11px] truncate">{file.name}</span>
+                                  <span className="text-[10px] text-muted-foreground shrink-0">({(file.size / 1024).toFixed(1)} KB)</span>
+                                </div>
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  className="h-5 w-5 p-0 opacity-0 group-hover:opacity-100 text-muted-foreground hover:text-destructive"
+                                  onClick={() => setExternalFilesPending(prev => prev.filter((_, i) => i !== idx))}
+                                >
+                                  <X className="h-3 w-3" />
+                                </Button>
+                              </div>
+                            ))}
+                          </div>
+                        </ScrollArea>
+                        <Button
+                          size="sm"
+                          className="h-7 text-xs w-full bg-foreground text-background hover:bg-foreground/90"
+                          onClick={() => {
+                            const newFiles = externalFilesPending.map((file, idx) => ({
+                              id: `${Date.now()}-${idx}`,
+                              name: file.name,
+                              type: externalFilesDocType,
+                              tags: [...externalFilesSelectedTags],
+                              items: [...externalFilesSelectedItems],
+                              uploadedBy: "Current User",
+                              uploadedDate: new Date().toLocaleDateString(),
+                            }));
+                            setExternalFilesUploaded(prev => [...prev, ...newFiles]);
+                            setExternalFilesPending([]);
+                            setExternalFilesDocType("");
+                            setExternalFilesSelectedItems([]);
+                            setExternalFilesSelectedTags([]);
+                          }}
+                        >
+                          Submit
+                        </Button>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
