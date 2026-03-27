@@ -78,6 +78,28 @@ const AddNewWorkOrder = () => {
   
   const [isRFIDDialogOpen, setIsRFIDDialogOpen] = useState(false);
   const [isCopyConfirmDialogOpen, setIsCopyConfirmDialogOpen] = useState(false);
+
+  // External files state
+  const [externalFilesDocType, setExternalFilesDocType] = useState<string>("");
+  const [externalFilesSelectedItems, setExternalFilesSelectedItems] = useState<string[]>([]);
+  const [externalFilesSelectedTags, setExternalFilesSelectedTags] = useState<string[]>([]);
+  const [externalFilesDragging, setExternalFilesDragging] = useState(false);
+  const [externalFilesUploaded, setExternalFilesUploaded] = useState<{
+    id: string;
+    name: string;
+    type: string;
+    tags: string[];
+    items: string[];
+    uploadedBy: string;
+    uploadedDate: string;
+  }[]>([]);
+  const [editingFileId, setEditingFileId] = useState<string | null>(null);
+  const [editingFileData, setEditingFileData] = useState<{
+    type: string;
+    tags: string[];
+    items: string[];
+  } | null>(null);
+  const [deletingFile, setDeletingFile] = useState<{ id: string; name: string } | null>(null);
   
   // Copy from other WO states
   const [isCopyFromWOExpanded, setIsCopyFromWOExpanded] = useState(false);
