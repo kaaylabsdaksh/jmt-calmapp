@@ -3956,11 +3956,12 @@ const AddNewWorkOrder = () => {
                         <Label className="text-xs font-medium flex items-center gap-1">
                           Doc Type <span className="text-destructive">*</span>
                         </Label>
-                        <Select value={externalFilesDocType} onValueChange={setExternalFilesDocType}>
+                        <Select value={externalFilesDocType} onValueChange={(val) => setExternalFilesDocType(val === "__empty__" ? "" : val)}>
                           <SelectTrigger className="h-8 text-xs">
                             <SelectValue placeholder="Select type..." />
                           </SelectTrigger>
                           <SelectContent>
+                            <SelectItem value="__empty__" className="text-muted-foreground">-- Select --</SelectItem>
                             <SelectItem value="Customer Documentation">Customer Documentation</SelectItem>
                             <SelectItem value="Other">Other</SelectItem>
                             <SelectItem value="To Factory/Vendor">To Factory/Vendor</SelectItem>
