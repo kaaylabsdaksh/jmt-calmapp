@@ -3927,9 +3927,450 @@ const AddNewWorkOrder = () => {
             </TabsContent>
 
             <TabsContent value="external">
-              <Card>
-                <CardContent className="p-6">
-                  <p className="text-muted-foreground">External Files content coming soon...</p>
+              <Card className="border-0 shadow-md">
+                <CardContent className="p-4">
+                  {/* Header */}
+                  <div className="flex items-center gap-2 pb-3 border-b border-border mb-4">
+                    <div className="p-1.5 bg-muted rounded-md">
+                      <FileText className="h-4 w-4 text-foreground" />
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-semibold">External Files</h3>
+                      <p className="text-xs text-muted-foreground">Manage external documents and files</p>
+                    </div>
+                  </div>
+
+                  {/* Validation Message */}
+                  {!externalFilesDocType && (
+                    <div className="flex items-center gap-2 text-xs text-amber-700 bg-amber-50 border border-amber-200 p-2 rounded-md mb-4">
+                      <AlertCircle className="h-3.5 w-3.5" />
+                      <span>Select a document type to enable file upload options</span>
+                    </div>
+                  )}
+
+                  {/* Main Upload Form */}
+                  <div className="grid grid-cols-12 gap-4">
+                    {/* Left Column - Doc Type & Items */}
+                    <div className="col-span-12 md:col-span-3 space-y-3">
+                      <div className="space-y-1">
+                        <Label className="text-xs font-medium flex items-center gap-1">
+                          Doc Type <span className="text-destructive">*</span>
+                        </Label>
+                        <Select value={externalFilesDocType} onValueChange={setExternalFilesDocType}>
+                          <SelectTrigger className="h-8 text-xs">
+                            <SelectValue placeholder="Select type..." />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {["Certificate", "Report", "Invoice", "Purchase Order", "Calibration Data", "Test Results"].map(type => (
+                              <SelectItem key={type} value={type}>{type}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      <div className={cn("space-y-2 transition-opacity", !externalFilesDocType && "opacity-40 pointer-events-none")}>
+                        <div className="flex items-center justify-between">
+                          <Label className="text-xs font-medium">Item(s)</Label>
+                          <button
+                            type="button"
+                            className="text-[11px] font-medium text-foreground hover:text-foreground/70 transition-colors disabled:opacity-50"
+                            onClick={() => {
+                              const items = ["001", "002", "003", "004", "005"];
+                              if (externalFilesSelectedItems.length === items.length) {
+                                setExternalFilesSelectedItems([]);
+                              } else {
+                                setExternalFilesSelectedItems([...items]);
+                              }
+                            }}
+                            disabled={!externalFilesDocType}
+                          >
+                            {externalFilesSelectedItems.length === 5 ? "Clear All" : "Select All"}
+                          </button>
+                        </div>
+                        <div className="flex flex-wrap gap-1.5">
+                          {["001", "002", "003", "004", "005"].map(item => {
+                            const isSelected = externalFilesSelectedItems.includes(item);
+                            return (
+                              <button
+                                key={item}
+                                type="button"
+                                onClick={() => {
+                                  setExternalFilesSelectedItems(prev =>
+                                    prev.includes(item) ? prev.filter(i => i !== item) : [...prev, item]
+                                  );
+                                }}
+                                disabled={!externalFilesDocType}
+                                className={cn(
+                                  "px-3 py-1 rounded-full text-xs font-medium transition-all duration-200 border",
+                                  isSelected 
+                                    ? "border-foreground bg-foreground text-background" 
+                                    : "bg-background border-muted-foreground/30 text-muted-foreground hover:border-muted-foreground/50"
+                                )}
+                              >
+                                {item}
+                              </button>
+                            );
+                          })}
+                        </div>
+                        <p className="text-[10px] text-muted-foreground">
+                          For Batch level, do not select any items.
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Middle Column - Doc Tags */}
+                    <div className={cn("col-span-12 md:col-span-4 transition-opacity", !externalFilesDocType && "opacity-40 pointer-events-none")}>
+                      <div className="space-y-2">
+                        <Label className="text-xs font-medium text-foreground">Doc Tag(s)</Label>
+                        <div className="flex flex-wrap gap-1.5">
+                          {["Customer Approval", "Customer ID List", "Customer Notes", "Emails", "Equipment Submission Form", "Equipment Tag", "Safety Data Sheet"].map(tag => {
+                            const isSelected = externalFilesSelectedTags.includes(tag);
+                            return (
+                              <button
+                                key={tag}
+                                type="button"
+                                onClick={() => {
+                                  setExternalFilesSelectedTags(prev =>
+                                    prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
+                                  );
+                                }}
+                                disabled={!externalFilesDocType}
+                                className={cn(
+                                  "px-3 py-1 rounded-full text-xs font-medium transition-all duration-200 border",
+                                  isSelected 
+                                    ? "border-foreground bg-foreground text-background" 
+                                    : "bg-background border-muted-foreground/30 text-muted-foreground hover:border-muted-foreground/50"
+                                )}
+                              >
+                                {tag}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Right Column - Upload Area */}
+                    <div className={cn("col-span-12 md:col-span-5 transition-opacity", !externalFilesDocType && "opacity-40 pointer-events-none")}>
+                      <div className="space-y-1">
+                        <Label className="text-xs font-medium">Upload Files</Label>
+                        <div
+                          className={cn(
+                            "border-2 border-dashed rounded-lg p-5 flex flex-col items-center justify-center gap-2 transition-all min-h-[140px]",
+                            externalFilesDragging && externalFilesDocType ? "border-foreground/50 bg-muted/30" : "border-border bg-muted/20 hover:bg-muted/40 hover:border-muted-foreground/50",
+                            !externalFilesDocType && "cursor-not-allowed"
+                          )}
+                          onDragOver={(e) => {
+                            e.preventDefault();
+                            if (externalFilesDocType) setExternalFilesDragging(true);
+                          }}
+                          onDragLeave={() => setExternalFilesDragging(false)}
+                          onDrop={(e) => {
+                            e.preventDefault();
+                            setExternalFilesDragging(false);
+                            if (!e.dataTransfer.files || !externalFilesDocType) return;
+                            const newFiles = Array.from(e.dataTransfer.files).map((file, idx) => ({
+                              id: `${Date.now()}-${idx}`,
+                              name: file.name,
+                              type: externalFilesDocType,
+                              tags: [...externalFilesSelectedTags],
+                              items: [...externalFilesSelectedItems],
+                              uploadedBy: "Current User",
+                              uploadedDate: new Date().toLocaleDateString(),
+                            }));
+                            setExternalFilesUploaded(prev => [...prev, ...newFiles]);
+                            setExternalFilesDocType("");
+                            setExternalFilesSelectedItems([]);
+                            setExternalFilesSelectedTags([]);
+                          }}
+                        >
+                          <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center">
+                            <Upload className="h-5 w-5 text-muted-foreground" />
+                          </div>
+                          <div className="text-center">
+                            <p className="text-xs text-muted-foreground">Drag file(s) here</p>
+                            <span className="text-[11px] text-muted-foreground">or</span>
+                          </div>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="h-7 text-xs"
+                            disabled={!externalFilesDocType}
+                            onClick={() => document.getElementById("batch-ef-file-upload")?.click()}
+                          >
+                            Select Files
+                          </Button>
+                          <input
+                            id="batch-ef-file-upload"
+                            type="file"
+                            multiple
+                            className="hidden"
+                            onChange={(e) => {
+                              if (!e.target.files || !externalFilesDocType) return;
+                              const newFiles = Array.from(e.target.files).map((file, idx) => ({
+                                id: `${Date.now()}-${idx}`,
+                                name: file.name,
+                                type: externalFilesDocType,
+                                tags: [...externalFilesSelectedTags],
+                                items: [...externalFilesSelectedItems],
+                                uploadedBy: "Current User",
+                                uploadedDate: new Date().toLocaleDateString(),
+                              }));
+                              setExternalFilesUploaded(prev => [...prev, ...newFiles]);
+                              setExternalFilesDocType("");
+                              setExternalFilesSelectedItems([]);
+                              setExternalFilesSelectedTags([]);
+                              e.target.value = "";
+                            }}
+                            disabled={!externalFilesDocType}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Uploaded Files Table */}
+                  <div className="mt-5">
+                    <div className="flex items-center justify-between mb-2">
+                      <h4 className="text-xs font-semibold text-foreground">Uploaded Files</h4>
+                      {externalFilesUploaded.length > 0 && (
+                        <span className="text-[11px] text-muted-foreground">{externalFilesUploaded.length} file(s)</span>
+                      )}
+                    </div>
+                    <div className="border rounded-lg overflow-hidden">
+                      <Table>
+                        <TableHeader>
+                          <TableRow className="bg-muted/50">
+                            <TableHead className="text-xs font-medium w-12">#</TableHead>
+                            <TableHead className="text-xs font-medium">External File</TableHead>
+                            <TableHead className="text-xs font-medium w-28">Type</TableHead>
+                            <TableHead className="text-xs font-medium">Tag(s)</TableHead>
+                            <TableHead className="text-xs font-medium w-24">Item(s)</TableHead>
+                            <TableHead className="text-xs font-medium w-28">Uploaded By</TableHead>
+                            <TableHead className="text-xs font-medium w-28">Uploaded Date</TableHead>
+                            <TableHead className="text-xs font-medium w-10"></TableHead>
+                          </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                          {externalFilesUploaded.length === 0 ? (
+                            <TableRow>
+                              <TableCell colSpan={8} className="text-center py-12">
+                                <div className="flex flex-col items-center gap-2">
+                                  <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center">
+                                    <FileText className="h-6 w-6 text-muted-foreground/50" />
+                                  </div>
+                                  <p className="text-sm text-muted-foreground">No files uploaded</p>
+                                </div>
+                              </TableCell>
+                            </TableRow>
+                          ) : (
+                            externalFilesUploaded.map((file, index) => (
+                              <TableRow key={file.id} className="hover:bg-muted/50 transition-colors duration-200">
+                                <TableCell className="text-sm font-medium">{index + 1}</TableCell>
+                                <TableCell className="text-sm font-medium text-foreground">{file.name}</TableCell>
+                                <TableCell className="text-sm">{file.type}</TableCell>
+                                <TableCell className="text-sm">
+                                  {file.tags.length > 0 ? (
+                                    <div className="flex flex-wrap gap-1">
+                                      {file.tags.slice(0, 2).map(tag => (
+                                        <span key={tag} className="inline-flex px-2 py-0.5 rounded-full bg-muted text-foreground text-xs">
+                                          {tag}
+                                        </span>
+                                      ))}
+                                      {file.tags.length > 2 && (
+                                        <span className="text-xs text-muted-foreground">+{file.tags.length - 2}</span>
+                                      )}
+                                    </div>
+                                  ) : "-"}
+                                </TableCell>
+                                <TableCell className="text-sm">
+                                  {file.items.length > 0 ? file.items.join(", ") : <span className="text-muted-foreground">Batch</span>}
+                                </TableCell>
+                                <TableCell className="text-sm">{file.uploadedBy}</TableCell>
+                                <TableCell className="text-sm">{file.uploadedDate}</TableCell>
+                                <TableCell>
+                                  <div className="flex items-center gap-1">
+                                    <Button
+                                      variant="ghost"
+                                      size="icon"
+                                      className="h-7 w-7 text-muted-foreground hover:text-blue-600 hover:bg-blue-50"
+                                      onClick={() => {
+                                        setEditingFileId(file.id);
+                                        setEditingFileData({
+                                          type: file.type,
+                                          tags: [...file.tags],
+                                          items: [...file.items]
+                                        });
+                                      }}
+                                    >
+                                      <Pencil className="h-4 w-4" />
+                                    </Button>
+                                    <Button
+                                      variant="ghost"
+                                      size="icon"
+                                      className="h-7 w-7 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                                      onClick={() => setDeletingFile({ id: file.id, name: file.name })}
+                                    >
+                                      <X className="h-4 w-4" />
+                                    </Button>
+                                  </div>
+                                </TableCell>
+                              </TableRow>
+                            ))
+                          )}
+                        </TableBody>
+                      </Table>
+                    </div>
+                  </div>
+
+                  {/* Edit File Dialog */}
+                  <Dialog open={!!editingFileId} onOpenChange={(open) => {
+                    if (!open) {
+                      setEditingFileId(null);
+                      setEditingFileData(null);
+                    }
+                  }}>
+                    <DialogContent className="sm:max-w-[500px]">
+                      <DialogHeader>
+                        <DialogTitle>Edit File Details</DialogTitle>
+                      </DialogHeader>
+                      <div className="space-y-4 py-4">
+                        <div className="space-y-2">
+                          <Label className="text-sm font-medium">Document Type</Label>
+                          <Select 
+                            value={editingFileData?.type || ''} 
+                            onValueChange={(value) => setEditingFileData(prev => prev ? {...prev, type: value} : null)}
+                          >
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select type" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="Certificate">Certificate</SelectItem>
+                              <SelectItem value="Quote">Quote</SelectItem>
+                              <SelectItem value="Invoice">Invoice</SelectItem>
+                              <SelectItem value="Report">Report</SelectItem>
+                              <SelectItem value="Other">Other</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <div className="space-y-2">
+                          <Label className="text-sm font-medium">Tags</Label>
+                          <div className="flex flex-wrap gap-2">
+                            {["Customer Approval", "Customer ID List", "Customer Notes", "Emails", "Equipment Submission Form", "Equipment Tag", "Safety Data Sheet"].map(tag => {
+                              const isSelected = editingFileData?.tags.includes(tag) || false;
+                              return (
+                                <button
+                                  key={tag}
+                                  type="button"
+                                  onClick={() => {
+                                    setEditingFileData(prev => {
+                                      if (!prev) return null;
+                                      return {
+                                        ...prev,
+                                        tags: prev.tags.includes(tag) 
+                                          ? prev.tags.filter(t => t !== tag) 
+                                          : [...prev.tags, tag]
+                                      };
+                                    });
+                                  }}
+                                  className={cn(
+                                    "px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 border",
+                                    isSelected 
+                                      ? "border-foreground bg-foreground text-background" 
+                                      : "bg-background border-muted-foreground/30 text-muted-foreground hover:border-muted-foreground/50"
+                                  )}
+                                >
+                                  {tag}
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
+                        <div className="space-y-2">
+                          <Label className="text-sm font-medium">Items</Label>
+                          <div className="flex flex-wrap gap-2">
+                            {["001", "002", "003", "004", "005"].map(item => {
+                              const isSelected = editingFileData?.items.includes(item) || false;
+                              return (
+                                <button
+                                  key={item}
+                                  type="button"
+                                  onClick={() => {
+                                    setEditingFileData(prev => {
+                                      if (!prev) return null;
+                                      return {
+                                        ...prev,
+                                        items: prev.items.includes(item) 
+                                          ? prev.items.filter(i => i !== item) 
+                                          : [...prev.items, item]
+                                      };
+                                    });
+                                  }}
+                                  className={cn(
+                                    "px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 border",
+                                    isSelected 
+                                      ? "border-foreground bg-foreground text-background" 
+                                      : "bg-background border-muted-foreground/30 text-muted-foreground hover:border-muted-foreground/50"
+                                  )}
+                                >
+                                  {item}
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      </div>
+                      <DialogFooter>
+                        <Button variant="outline" onClick={() => {
+                          setEditingFileId(null);
+                          setEditingFileData(null);
+                        }}>
+                          Cancel
+                        </Button>
+                        <Button onClick={() => {
+                          if (editingFileId && editingFileData) {
+                            setExternalFilesUploaded(prev => prev.map(f => 
+                              f.id === editingFileId 
+                                ? { ...f, type: editingFileData.type, tags: editingFileData.tags, items: editingFileData.items }
+                                : f
+                            ));
+                            setEditingFileId(null);
+                            setEditingFileData(null);
+                            toast({ title: "File updated", description: "File details have been saved." });
+                          }
+                        }}>
+                          Save Changes
+                        </Button>
+                      </DialogFooter>
+                    </DialogContent>
+                  </Dialog>
+
+                  {/* Delete Confirmation Dialog */}
+                  <AlertDialog open={!!deletingFile} onOpenChange={(open) => !open && setDeletingFile(null)}>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Delete File</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          Are you sure you want to delete "{deletingFile?.name}"? This action cannot be undone.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction
+                          className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                          onClick={() => {
+                            if (deletingFile) {
+                              setExternalFilesUploaded(prev => prev.filter(f => f.id !== deletingFile.id));
+                              toast({ title: "File deleted", description: `${deletingFile.name} has been removed.` });
+                              setDeletingFile(null);
+                            }
+                          }}
+                        >
+                          Delete
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </CardContent>
               </Card>
             </TabsContent>
