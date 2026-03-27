@@ -84,6 +84,7 @@ const AddNewWorkOrder = () => {
   const [externalFilesSelectedItems, setExternalFilesSelectedItems] = useState<string[]>([]);
   const [externalFilesSelectedTags, setExternalFilesSelectedTags] = useState<string[]>([]);
   const [externalFilesDragging, setExternalFilesDragging] = useState(false);
+  const [externalFilesPending, setExternalFilesPending] = useState<File[]>([]);
   const [externalFilesUploaded, setExternalFilesUploaded] = useState<{
     id: string;
     name: string;
