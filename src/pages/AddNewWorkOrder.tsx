@@ -4381,20 +4381,22 @@ const AddNewWorkOrder = () => {
 
                   {/* Delete Confirmation Dialog */}
                   <AlertDialog open={!!deletingFile} onOpenChange={(open) => !open && setDeletingFile(null)}>
-                    <AlertDialogContent className="max-w-sm rounded-xl p-6">
+                    <AlertDialogContent className="max-w-sm rounded-xl p-6 bg-background border shadow-2xl">
                       <AlertDialogHeader className="space-y-3">
                         <div className="mx-auto w-12 h-12 rounded-full bg-destructive/10 flex items-center justify-center">
                           <AlertCircle className="h-6 w-6 text-destructive" />
                         </div>
                         <AlertDialogTitle className="text-center text-base font-semibold">Delete File</AlertDialogTitle>
-                        <AlertDialogDescription className="text-center text-sm text-muted-foreground">
-                          Are you sure you want to delete <span className="font-medium text-foreground">"{deletingFile?.name}"</span>? This action cannot be undone.
+                        <AlertDialogDescription className="text-center text-sm text-muted-foreground leading-relaxed">
+                          Are you sure you want to delete<br />
+                          <span className="font-medium text-foreground break-all">"{deletingFile?.name}"</span>?<br />
+                          This action cannot be undone.
                         </AlertDialogDescription>
                       </AlertDialogHeader>
-                      <AlertDialogFooter className="flex-row gap-2 sm:justify-center pt-2">
-                        <AlertDialogCancel className="flex-1 h-9 text-sm">Cancel</AlertDialogCancel>
+                      <AlertDialogFooter className="flex-row gap-3 sm:justify-center pt-4">
+                        <AlertDialogCancel className="flex-1 h-10 text-sm border-border focus:ring-ring">Cancel</AlertDialogCancel>
                         <AlertDialogAction
-                          className="flex-1 h-9 text-sm bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                          className="flex-1 h-10 text-sm bg-destructive text-destructive-foreground hover:bg-destructive/90 focus:ring-destructive"
                           onClick={() => {
                             if (deletingFile) {
                               setExternalFilesUploaded(prev => prev.filter(f => f.id !== deletingFile.id));
