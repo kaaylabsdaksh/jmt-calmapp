@@ -10199,7 +10199,7 @@ const FormVariationsDemo = () => {
                               className={cn(
                                 "px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 border",
                                 isSelected 
-                                  ? "border-primary bg-primary/20 text-foreground" 
+                                  ? "border-foreground bg-foreground text-background" 
                                   : "bg-background border-muted-foreground/30 text-muted-foreground hover:border-muted-foreground/50"
                               )}
                             >
