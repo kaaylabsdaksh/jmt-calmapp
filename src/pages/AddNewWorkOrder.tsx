@@ -4155,7 +4155,7 @@ const AddNewWorkOrder = () => {
                                 setExternalFilesSelectedTags([]);
                               }}
                             >
-                              Add {externalFilesPending.length} File(s)
+                              Submit
                             </Button>
                           </div>
                         )}
