@@ -9817,8 +9817,8 @@ const FormVariationsDemo = () => {
             <CardContent className="p-4">
               {/* Header */}
               <div className="flex items-center gap-2 pb-3 border-b border-border mb-4">
-                <div className="p-1.5 bg-primary/10 rounded-md">
-                  <FileText className="h-4 w-4 text-primary" />
+                <div className="p-1.5 bg-muted rounded-md">
+                  <FileText className="h-4 w-4 text-foreground" />
                 </div>
                 <div>
                   <h3 className="text-sm font-semibold">External Files</h3>
@@ -9891,7 +9891,7 @@ const FormVariationsDemo = () => {
                             className={cn(
                               "px-3 py-1 rounded-full text-xs font-medium transition-all duration-200 border",
                               isSelected 
-                                ? "border-primary bg-primary/20 text-foreground" 
+                                ? "border-foreground bg-foreground text-background" 
                                 : "bg-background border-muted-foreground/30 text-muted-foreground hover:border-muted-foreground/50"
                             )}
                           >
@@ -9926,7 +9926,7 @@ const FormVariationsDemo = () => {
                             className={cn(
                               "px-3 py-1 rounded-full text-xs font-medium transition-all duration-200 border",
                               isSelected 
-                                ? "border-primary bg-primary/20 text-foreground" 
+                                ? "border-foreground bg-foreground text-background" 
                                 : "bg-background border-muted-foreground/30 text-muted-foreground hover:border-muted-foreground/50"
                             )}
                           >
@@ -9945,7 +9945,7 @@ const FormVariationsDemo = () => {
                     <div
                       className={cn(
                         "border-2 border-dashed rounded-lg p-5 flex flex-col items-center justify-center gap-2 transition-all min-h-[140px]",
-                        externalFilesDragging && externalFilesDocType ? "border-primary bg-primary/5" : "border-border bg-muted/20 hover:bg-muted/40 hover:border-muted-foreground/50",
+                        externalFilesDragging && externalFilesDocType ? "border-foreground/50 bg-muted/30" : "border-border bg-muted/20 hover:bg-muted/40 hover:border-muted-foreground/50",
                         !externalFilesDocType && "cursor-not-allowed"
                       )}
                       onDragOver={(e) => {
@@ -9972,8 +9972,8 @@ const FormVariationsDemo = () => {
                         setExternalFilesSelectedTags([]);
                       }}
                     >
-                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                        <Upload className="h-5 w-5 text-primary" />
+                      <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center">
+                        <Upload className="h-5 w-5 text-muted-foreground" />
                       </div>
                       <div className="text-center">
                         <p className="text-xs text-muted-foreground">
@@ -10166,7 +10166,7 @@ const FormVariationsDemo = () => {
                               className={cn(
                                 "px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 border",
                                 isSelected 
-                                  ? "border-primary bg-primary/20 text-foreground" 
+                                    ? "border-foreground bg-foreground text-background" 
                                   : "bg-background border-muted-foreground/30 text-muted-foreground hover:border-muted-foreground/50"
                               )}
                             >
@@ -10199,7 +10199,7 @@ const FormVariationsDemo = () => {
                               className={cn(
                                 "px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 border",
                                 isSelected 
-                                  ? "border-primary bg-primary/20 text-foreground" 
+                                  ? "border-foreground bg-foreground text-background" 
                                   : "bg-background border-muted-foreground/30 text-muted-foreground hover:border-muted-foreground/50"
                               )}
                             >
