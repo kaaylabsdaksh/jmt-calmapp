@@ -9945,7 +9945,7 @@ const FormVariationsDemo = () => {
                     <div
                       className={cn(
                         "border-2 border-dashed rounded-lg p-5 flex flex-col items-center justify-center gap-2 transition-all min-h-[140px]",
-                        externalFilesDragging && externalFilesDocType ? "border-primary bg-primary/5" : "border-border bg-muted/20 hover:bg-muted/40 hover:border-muted-foreground/50",
+                        externalFilesDragging && externalFilesDocType ? "border-foreground/50 bg-muted/30" : "border-border bg-muted/20 hover:bg-muted/40 hover:border-muted-foreground/50",
                         !externalFilesDocType && "cursor-not-allowed"
                       )}
                       onDragOver={(e) => {
