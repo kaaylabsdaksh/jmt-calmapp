@@ -9814,37 +9814,37 @@ const FormVariationsDemo = () => {
         
         {activeSection === 'external-files' && (
           <Card className="border-0 shadow-md">
-            <CardContent className="p-6">
+            <CardContent className="p-4">
               {/* Header */}
-              <div className="flex items-center gap-3 pb-4 border-b border-border mb-6">
-                <div className="p-2 bg-primary/10 rounded-lg">
-                  <FileText className="h-5 w-5 text-primary" />
+              <div className="flex items-center gap-2 pb-3 border-b border-border mb-4">
+                <div className="p-1.5 bg-primary/10 rounded-md">
+                  <FileText className="h-4 w-4 text-primary" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold">External Files</h3>
-                  <p className="text-sm text-muted-foreground">Manage external documents and files</p>
+                  <h3 className="text-sm font-semibold">External Files</h3>
+                  <p className="text-xs text-muted-foreground">Manage external documents and files</p>
                 </div>
               </div>
 
               {/* Validation Message */}
               {!externalFilesDocType && (
-                <div className="flex items-center gap-2 text-sm text-amber-700 bg-amber-50 border border-amber-200 p-3 rounded-lg mb-6">
-                  <AlertCircle className="h-4 w-4" />
+                <div className="flex items-center gap-2 text-xs text-amber-700 bg-amber-50 border border-amber-200 p-2 rounded-md mb-4">
+                  <AlertCircle className="h-3.5 w-3.5" />
                   <span>Select a document type to enable file upload options</span>
                 </div>
               )}
 
               {/* Main Upload Form */}
-              <div className="grid grid-cols-12 gap-6">
+              <div className="grid grid-cols-12 gap-4">
                 {/* Left Column - Doc Type & Items */}
-                <div className="col-span-12 md:col-span-3 space-y-4">
+                <div className="col-span-12 md:col-span-3 space-y-3">
                   {/* Doc Type */}
-                  <div className="space-y-2">
-                    <Label className="text-sm font-medium flex items-center gap-1">
+                  <div className="space-y-1">
+                    <Label className="text-xs font-medium flex items-center gap-1">
                       Doc Type <span className="text-destructive">*</span>
                     </Label>
                     <Select value={externalFilesDocType} onValueChange={setExternalFilesDocType}>
-                      <SelectTrigger className="h-10">
+                      <SelectTrigger className="h-8 text-xs">
                         <SelectValue placeholder="Select type..." />
                       </SelectTrigger>
                       <SelectContent>
@@ -9856,12 +9856,12 @@ const FormVariationsDemo = () => {
                   </div>
 
                   {/* Items Selection */}
-                  <div className={cn("space-y-3 transition-opacity", !externalFilesDocType && "opacity-40 pointer-events-none")}>
+                  <div className={cn("space-y-2 transition-opacity", !externalFilesDocType && "opacity-40 pointer-events-none")}>
                     <div className="flex items-center justify-between">
-                      <Label className="text-sm font-medium">Item(s)</Label>
+                      <Label className="text-xs font-medium">Item(s)</Label>
                       <button
                         type="button"
-                        className="text-xs font-medium text-foreground hover:text-foreground/70 transition-colors disabled:opacity-50"
+                        className="text-[11px] font-medium text-foreground hover:text-foreground/70 transition-colors disabled:opacity-50"
                         onClick={() => {
                           const items = ["001", "002", "003", "004", "005"];
                           if (externalFilesSelectedItems.length === items.length) {
@@ -9875,7 +9875,7 @@ const FormVariationsDemo = () => {
                         {externalFilesSelectedItems.length === 5 ? "Clear All" : "Select All"}
                       </button>
                     </div>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-1.5">
                       {["001", "002", "003", "004", "005"].map(item => {
                         const isSelected = externalFilesSelectedItems.includes(item);
                         return (
@@ -9889,7 +9889,7 @@ const FormVariationsDemo = () => {
                             }}
                             disabled={!externalFilesDocType}
                             className={cn(
-                              "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border",
+                              "px-3 py-1 rounded-full text-xs font-medium transition-all duration-200 border",
                               isSelected 
                                 ? "border-primary bg-primary/20 text-foreground" 
                                 : "bg-background border-muted-foreground/30 text-muted-foreground hover:border-muted-foreground/50"
@@ -9900,7 +9900,7 @@ const FormVariationsDemo = () => {
                         );
                       })}
                     </div>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-[10px] text-muted-foreground">
                       For Batch level, do not select any items.
                     </p>
                   </div>
