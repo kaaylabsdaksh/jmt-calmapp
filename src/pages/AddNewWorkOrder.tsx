@@ -3962,6 +3962,8 @@ const AddNewWorkOrder = () => {
                           </SelectTrigger>
                           <SelectContent>
                             <SelectItem value="Customer Documentation">Customer Documentation</SelectItem>
+                            <SelectItem value="Other">Other</SelectItem>
+                            <SelectItem value="To Factory/Vendor">To Factory/Vendor</SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
