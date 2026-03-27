@@ -9940,11 +9940,11 @@ const FormVariationsDemo = () => {
 
                 {/* Right Column - Upload Area */}
                 <div className={cn("col-span-12 md:col-span-5 transition-opacity", !externalFilesDocType && "opacity-40 pointer-events-none")}>
-                  <div className="space-y-2">
-                    <Label className="text-sm font-medium">Upload Files</Label>
+                  <div className="space-y-1">
+                    <Label className="text-xs font-medium">Upload Files</Label>
                     <div
                       className={cn(
-                        "border-2 border-dashed rounded-lg p-8 flex flex-col items-center justify-center gap-3 transition-all min-h-[200px]",
+                        "border-2 border-dashed rounded-lg p-5 flex flex-col items-center justify-center gap-2 transition-all min-h-[140px]",
                         externalFilesDragging && externalFilesDocType ? "border-primary bg-primary/5" : "border-border bg-muted/20 hover:bg-muted/40 hover:border-muted-foreground/50",
                         !externalFilesDocType && "cursor-not-allowed"
                       )}
@@ -9967,24 +9967,24 @@ const FormVariationsDemo = () => {
                           uploadedDate: new Date().toLocaleDateString(),
                         }));
                         setExternalFilesUploaded(prev => [...prev, ...newFiles]);
-                        // Reset for next upload
                         setExternalFilesDocType("");
                         setExternalFilesSelectedItems([]);
                         setExternalFilesSelectedTags([]);
                       }}
                     >
-                      <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                        <Upload className="h-6 w-6 text-primary" />
+                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                        <Upload className="h-5 w-5 text-primary" />
                       </div>
                       <div className="text-center">
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-xs text-muted-foreground">
                           Drag file(s) here
                         </p>
-                        <span className="text-xs text-muted-foreground">or</span>
+                        <span className="text-[11px] text-muted-foreground">or</span>
                       </div>
                       <Button
                         variant="outline"
                         size="sm"
+                        className="h-7 text-xs"
                         disabled={!externalFilesDocType}
                         onClick={() => document.getElementById("ef-file-upload")?.click()}
                       >
@@ -10007,7 +10007,6 @@ const FormVariationsDemo = () => {
                             uploadedDate: new Date().toLocaleDateString(),
                           }));
                           setExternalFilesUploaded(prev => [...prev, ...newFiles]);
-                          // Reset for next upload
                           setExternalFilesDocType("");
                           setExternalFilesSelectedItems([]);
                           setExternalFilesSelectedTags([]);
@@ -10021,11 +10020,11 @@ const FormVariationsDemo = () => {
               </div>
 
               {/* Uploaded Files Table */}
-              <div className="mt-8">
-                <div className="flex items-center justify-between mb-3">
-                  <h4 className="text-sm font-semibold text-foreground">Uploaded Files</h4>
+              <div className="mt-5">
+                <div className="flex items-center justify-between mb-2">
+                  <h4 className="text-xs font-semibold text-foreground">Uploaded Files</h4>
                   {externalFilesUploaded.length > 0 && (
-                    <span className="text-xs text-muted-foreground">{externalFilesUploaded.length} file(s)</span>
+                    <span className="text-[11px] text-muted-foreground">{externalFilesUploaded.length} file(s)</span>
                   )}
                 </div>
                 <div className="border rounded-lg overflow-hidden">
