@@ -9908,9 +9908,9 @@ const FormVariationsDemo = () => {
 
                 {/* Middle Column - Doc Tags */}
                 <div className={cn("col-span-12 md:col-span-4 transition-opacity", !externalFilesDocType && "opacity-40 pointer-events-none")}>
-                  <div className="space-y-3">
-                    <Label className="text-sm font-medium text-foreground">Doc Tag(s)</Label>
-                    <div className="flex flex-wrap gap-2">
+                  <div className="space-y-2">
+                    <Label className="text-xs font-medium text-foreground">Doc Tag(s)</Label>
+                    <div className="flex flex-wrap gap-1.5">
                       {["Customer Approval", "Customer ID List", "Customer Notes", "Emails", "Equipment Submission Form", "Equipment Tag", "Safety Data Sheet"].map(tag => {
                         const isSelected = externalFilesSelectedTags.includes(tag);
                         return (
@@ -9924,7 +9924,7 @@ const FormVariationsDemo = () => {
                             }}
                             disabled={!externalFilesDocType}
                             className={cn(
-                              "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border",
+                              "px-3 py-1 rounded-full text-xs font-medium transition-all duration-200 border",
                               isSelected 
                                 ? "border-primary bg-primary/20 text-foreground" 
                                 : "bg-background border-muted-foreground/30 text-muted-foreground hover:border-muted-foreground/50"
