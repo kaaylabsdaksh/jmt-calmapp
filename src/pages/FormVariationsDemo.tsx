@@ -10540,8 +10540,8 @@ const FormVariationsDemo = () => {
                         <TableHead className="text-[10px] font-semibold uppercase tracking-wider">Fixed On</TableHead>
                         <TableHead className="text-[10px] font-semibold uppercase tracking-wider">Fail Type</TableHead>
                         <TableHead className="text-[10px] font-semibold uppercase tracking-wider">Fail Description</TableHead>
-                        <TableHead className="text-[10px] font-semibold uppercase tracking-wider w-16"></TableHead>
                         <TableHead className="text-[10px] font-semibold uppercase tracking-wider w-16 text-right">Quantity</TableHead>
+                        <TableHead className="text-[10px] font-semibold uppercase tracking-wider w-16"></TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
