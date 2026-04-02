@@ -10540,8 +10540,8 @@ const FormVariationsDemo = () => {
                         <TableHead className="text-[10px] font-semibold uppercase tracking-wider">Fixed On</TableHead>
                         <TableHead className="text-[10px] font-semibold uppercase tracking-wider">Fail Type</TableHead>
                         <TableHead className="text-[10px] font-semibold uppercase tracking-wider">Fail Description</TableHead>
-                        <TableHead className="text-[10px] font-semibold uppercase tracking-wider w-16"></TableHead>
                         <TableHead className="text-[10px] font-semibold uppercase tracking-wider w-16 text-right">Quantity</TableHead>
+                        <TableHead className="text-[10px] font-semibold uppercase tracking-wider w-16"></TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -10602,6 +10602,7 @@ const FormVariationsDemo = () => {
                                    entry.failType === 'certificate' ? 'Certificate' : entry.failType}
                                 </TableCell>
                                 <TableCell className="text-xs">{entry.failDescription}</TableCell>
+                                <TableCell className="text-xs text-right font-semibold">{entry.quantity}</TableCell>
                                 <TableCell className="text-xs">
                                   <div className="flex items-center gap-2">
                                     <Button
@@ -10625,7 +10626,6 @@ const FormVariationsDemo = () => {
                                     </Button>
                                   </div>
                                 </TableCell>
-                                <TableCell className="text-xs text-right font-semibold">{entry.quantity}</TableCell>
                               </TableRow>
                             ))
                           ]);
