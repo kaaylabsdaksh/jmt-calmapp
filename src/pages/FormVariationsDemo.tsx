@@ -75,6 +75,8 @@ const FormVariationsDemo = () => {
     employee: string;
     location: string;
     date: string;
+    fixedByQA: boolean;
+    fixedByTech: boolean;
   }>>([]);
   
   // ESL Tab state - track which tab is active for footer visibility
