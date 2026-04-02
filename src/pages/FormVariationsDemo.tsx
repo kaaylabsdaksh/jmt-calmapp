@@ -11161,6 +11161,38 @@ const FormVariationsDemo = () => {
             </Button>
           </div>
         </div>
+      ) : activeSection === 'fail-log' ? (
+        <div ref={footerRef} className="fixed bottom-0 left-[256px] right-0 bg-background border-t border-border shadow-lg z-10 py-3 px-6">
+          <div className="flex items-center justify-between gap-4 max-w-[1400px] mx-auto">
+            {/* Left side - Fail log actions */}
+            <div className="flex items-center gap-2">
+              <Button variant="outline" size="default" className="h-9 text-sm px-4">
+                Unlock
+              </Button>
+              <Button variant="outline" size="default" className="h-9 text-sm px-4">
+                Process
+              </Button>
+              <Button variant="outline" size="default" className="h-9 text-sm px-4">
+                Delete All
+              </Button>
+              <Button variant="outline" size="default" className="h-9 text-sm px-4">
+                Return to QA Inspection
+              </Button>
+              <Button variant="outline" size="default" className="h-9 text-sm px-4">
+                Back
+              </Button>
+            </div>
+            {/* Right side - Save and Cancel */}
+            <div className="flex items-center gap-2">
+              <Button variant="outline" size="default" className="h-9 text-sm px-4">
+                Save
+              </Button>
+              <Button variant="outline" size="default" className="h-9 text-sm px-4" onClick={handleCancel}>
+                Cancel
+              </Button>
+            </div>
+          </div>
+        </div>
       ) : (
         <FixedActionFooter 
           onCancel={handleCancel}
