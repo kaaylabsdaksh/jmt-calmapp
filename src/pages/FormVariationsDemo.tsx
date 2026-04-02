@@ -11170,7 +11170,7 @@ const FormVariationsDemo = () => {
               <Button variant="outline" size="default" className="h-9 text-sm px-4" disabled={failLogProcessMode} onClick={() => setFailLogProcessMode(true)}>
                 Unlock
               </Button>
-              <Button variant="outline" size="default" className="h-9 text-sm px-4" disabled={!failLogProcessMode}>
+              <Button variant="outline" size="default" className="h-9 text-sm px-4" disabled={!failLogProcessMode} onClick={() => setFailLogProcessMode(false)}>
                 Process
               </Button>
               <Button variant="outline" size="default" className="h-9 text-sm px-4" disabled={failLogProcessMode} onClick={() => setFailLogProcessMode(false)}>
