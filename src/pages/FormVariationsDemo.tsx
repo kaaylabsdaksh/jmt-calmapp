@@ -10606,8 +10606,7 @@ const FormVariationsDemo = () => {
                                   <div className="flex items-center gap-2">
                                     <Button
                                       variant="link"
-                                      className="text-xs p-0 h-auto text-accent-foreground hover:text-accent-foreground/80"
-                                      style={{ color: 'hsl(45, 80%, 50%)' }}
+                                      className="text-xs p-0 h-auto text-foreground hover:text-foreground/70"
                                       onClick={() => {
                                         setFailLogEntries(prev => prev.filter(e => e.id !== entry.id));
                                         toast({ title: "Entry removed", description: "Fail log entry has been deleted." });
@@ -10617,8 +10616,7 @@ const FormVariationsDemo = () => {
                                     </Button>
                                     <Button
                                       variant="link"
-                                      className="text-xs p-0 h-auto text-accent-foreground hover:text-accent-foreground/80"
-                                      style={{ color: 'hsl(45, 80%, 50%)' }}
+                                      className="text-xs p-0 h-auto text-foreground hover:text-foreground/70"
                                       onClick={() => {
                                         setFailLogEntries(prev => prev.map(e => e.id === entry.id ? { ...e, quantity: 0 } : e));
                                       }}
