@@ -11176,17 +11176,17 @@ const FormVariationsDemo = () => {
               </Button>
               <Button 
                 size="default" 
-                className={`h-9 text-sm px-4 ${failLogProcessMode ? 'bg-primary text-primary-foreground hover:bg-primary/90' : 'bg-transparent text-muted-foreground border border-border hover:bg-muted/50'}`}
-                onClick={() => setFailLogProcessMode(false)}
-              >
-                Process
-              </Button>
-              <Button 
-                size="default" 
                 className={`h-9 text-sm px-4 ${!failLogProcessMode ? 'bg-primary text-primary-foreground hover:bg-primary/90' : 'bg-transparent text-muted-foreground border border-border hover:bg-muted/50'}`}
                 onClick={() => setFailLogProcessMode(false)}
               >
                 Delete All
+              </Button>
+              <Button 
+                size="default" 
+                className={`h-9 text-sm px-4 ${failLogProcessMode ? 'bg-primary text-primary-foreground hover:bg-primary/90' : 'bg-transparent text-muted-foreground border border-border hover:bg-muted/50'}`}
+                onClick={() => setFailLogProcessMode(false)}
+              >
+                Process
               </Button>
               <Button 
                 size="default" 
