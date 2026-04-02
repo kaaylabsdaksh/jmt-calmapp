@@ -11167,16 +11167,16 @@ const FormVariationsDemo = () => {
           <div className="flex items-center justify-between gap-4 max-w-[1400px] mx-auto">
             {/* Left side - Fail log actions */}
             <div className="flex items-center gap-2">
-              <Button variant="outline" size="default" className="h-9 text-sm px-4" disabled={failLogProcessMode}>
+              <Button variant="outline" size="default" className="h-9 text-sm px-4" disabled={failLogProcessMode} onClick={() => setFailLogProcessMode(false)}>
                 Unlock
               </Button>
-              <Button variant="outline" size="default" className="h-9 text-sm px-4" onClick={() => setFailLogProcessMode(true)} disabled={failLogProcessMode}>
+              <Button variant="outline" size="default" className="h-9 text-sm px-4" disabled={!failLogProcessMode}>
                 Process
               </Button>
-              <Button variant="outline" size="default" className="h-9 text-sm px-4" onClick={() => setFailLogProcessMode(true)} disabled={failLogProcessMode}>
+              <Button variant="outline" size="default" className="h-9 text-sm px-4" disabled={failLogProcessMode} onClick={() => setFailLogProcessMode(false)}>
                 Delete All
               </Button>
-              <Button variant="outline" size="default" className="h-9 text-sm px-4" disabled={!failLogProcessMode}>
+              <Button variant="outline" size="default" className="h-9 text-sm px-4" disabled={!failLogProcessMode} onClick={() => setFailLogProcessMode(true)}>
                 Return to QA Inspection
               </Button>
             </div>
