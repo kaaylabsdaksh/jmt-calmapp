@@ -75,6 +75,8 @@ const FormVariationsDemo = () => {
     employee: string;
     location: string;
     date: string;
+    fixedByQA: boolean;
+    fixedByTech: boolean;
   }>>([]);
   
   // ESL Tab state - track which tab is active for footer visibility
@@ -10472,7 +10474,9 @@ const FormVariationsDemo = () => {
                                 quantity: parseInt(failLogQuantity) || 1,
                                 employee: failLogEmployee,
                                 location: failLogLocation,
-                                date: new Date().toLocaleDateString()
+                                date: new Date().toLocaleString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true }),
+                                fixedByQA: false,
+                                fixedByTech: false,
                               }));
                               setFailLogEntries(prev => [...prev, ...newEntries]);
                               setFailLogLocation("");
@@ -10530,19 +10534,20 @@ const FormVariationsDemo = () => {
                   <Table>
                     <TableHeader>
                       <TableRow className="bg-muted/50">
-                        <TableHead className="text-[10px] font-semibold uppercase tracking-wider w-12">#</TableHead>
+                        <TableHead className="text-[10px] font-semibold uppercase tracking-wider w-20">Fixed by QA</TableHead>
+                        <TableHead className="text-[10px] font-semibold uppercase tracking-wider w-20">Fixed by Tech</TableHead>
+                        <TableHead className="text-[10px] font-semibold uppercase tracking-wider">Fixed By</TableHead>
+                        <TableHead className="text-[10px] font-semibold uppercase tracking-wider">Fixed On</TableHead>
                         <TableHead className="text-[10px] font-semibold uppercase tracking-wider">Fail Type</TableHead>
-                        <TableHead className="text-[10px] font-semibold uppercase tracking-wider">Description</TableHead>
-                        <TableHead className="text-[10px] font-semibold uppercase tracking-wider w-20 text-right">Qty</TableHead>
-                        <TableHead className="text-[10px] font-semibold uppercase tracking-wider">Employee</TableHead>
-                        <TableHead className="text-[10px] font-semibold uppercase tracking-wider">Date</TableHead>
-                        <TableHead className="text-[10px] font-semibold uppercase tracking-wider w-12"></TableHead>
+                        <TableHead className="text-[10px] font-semibold uppercase tracking-wider">Fail Description</TableHead>
+                        <TableHead className="text-[10px] font-semibold uppercase tracking-wider w-16"></TableHead>
+                        <TableHead className="text-[10px] font-semibold uppercase tracking-wider w-16 text-right">Quantity</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
                       {failLogEntries.length === 0 ? (
                         <TableRow>
-                          <TableCell colSpan={7} className="text-center py-12">
+                          <TableCell colSpan={8} className="text-center py-12">
                             <div className="flex flex-col items-center gap-2">
                               <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center">
                                 <AlertCircle className="h-6 w-6 text-muted-foreground/50" />
@@ -10552,43 +10557,81 @@ const FormVariationsDemo = () => {
                           </TableCell>
                         </TableRow>
                       ) : (
-                        failLogEntries.map((entry, index) => (
-                          <TableRow key={entry.id} className="hover:bg-muted/50 transition-colors duration-200">
-                            <TableCell className="text-xs font-medium text-muted-foreground">{index + 1}</TableCell>
-                            <TableCell className="text-xs">
-                              <Badge variant="outline" className="font-normal text-[10px]">
-                                {entry.failType === 'attached-form' ? 'Attached Form' : 
-                                 entry.failType === 'documentation' ? 'Documentation' :
-                                 entry.failType === 'calibration' ? 'Calibration' :
-                                 entry.failType === 'process' ? 'Process' :
-                                 entry.failType === 'quality' ? 'Quality' : entry.failType}
-                              </Badge>
-                            </TableCell>
-                            <TableCell className="text-xs">{entry.failDescription}</TableCell>
-                            <TableCell className="text-xs text-right font-semibold">{entry.quantity}</TableCell>
-                            <TableCell className="text-xs">
-                              {entry.employee === 'amanda-phillips' ? 'Amanda R. Phillips (T)' :
-                               entry.employee === 'john-smith' ? 'John Smith (T)' :
-                               entry.employee === 'sarah-johnson' ? 'Sarah Johnson (S)' :
-                               entry.employee === 'michael-brown' ? 'Michael Brown (T)' :
-                               entry.employee === 'emily-davis' ? 'Emily Davis (L)' : entry.employee}
-                            </TableCell>
-                            <TableCell className="text-xs text-muted-foreground">{entry.date}</TableCell>
-                            <TableCell>
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                className="h-6 w-6 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-                                onClick={() => {
-                                  setFailLogEntries(prev => prev.filter(e => e.id !== entry.id));
-                                  toast({ title: "Entry removed", description: "Fail log entry has been deleted." });
-                                }}
-                              >
-                                <X className="h-3.5 w-3.5" />
-                              </Button>
-                            </TableCell>
-                          </TableRow>
-                        ))
+                        (() => {
+                          const grouped: Record<string, typeof failLogEntries> = {};
+                          failLogEntries.forEach(entry => {
+                            const empName = entry.employee === 'amanda-phillips' ? 'Amanda R. Phillips (T)' :
+                              entry.employee === 'john-smith' ? 'John Smith (T)' :
+                              entry.employee === 'sarah-johnson' ? 'Sarah Johnson (S)' :
+                              entry.employee === 'michael-brown' ? 'Michael Brown (T)' :
+                              entry.employee === 'emily-davis' ? 'Emily Davis (L)' : entry.employee;
+                            if (!grouped[empName]) grouped[empName] = [];
+                            grouped[empName].push(entry);
+                          });
+                          return Object.entries(grouped).flatMap(([empName, entries]) => [
+                            <TableRow key={`group-${empName}`} className="bg-muted/30">
+                              <TableCell colSpan={8} className="text-xs font-semibold py-1.5">{empName}</TableCell>
+                            </TableRow>,
+                            ...entries.map((entry) => (
+                              <TableRow key={entry.id} className="hover:bg-muted/50 transition-colors duration-200">
+                                <TableCell className="text-center">
+                                  <Checkbox 
+                                    checked={entry.fixedByQA}
+                                    onCheckedChange={(checked) => {
+                                      setFailLogEntries(prev => prev.map(e => e.id === entry.id ? { ...e, fixedByQA: !!checked } : e));
+                                    }}
+                                  />
+                                </TableCell>
+                                <TableCell className="text-center">
+                                  <Checkbox 
+                                    checked={entry.fixedByTech}
+                                    onCheckedChange={(checked) => {
+                                      setFailLogEntries(prev => prev.map(e => e.id === entry.id ? { ...e, fixedByTech: !!checked } : e));
+                                    }}
+                                  />
+                                </TableCell>
+                                <TableCell className="text-xs">Admin User</TableCell>
+                                <TableCell className="text-xs">{entry.date}</TableCell>
+                                <TableCell className="text-xs">
+                                  {entry.failType === 'attached-form' ? 'Attached Form' : 
+                                   entry.failType === 'documentation' ? 'Documentation' :
+                                   entry.failType === 'calibration' ? 'Calibration' :
+                                   entry.failType === 'process' ? 'Process' :
+                                   entry.failType === 'quality' ? 'Quality' :
+                                   entry.failType === 'inspection-report' ? 'Inspection Report' :
+                                   entry.failType === 'certificate' ? 'Certificate' : entry.failType}
+                                </TableCell>
+                                <TableCell className="text-xs">{entry.failDescription}</TableCell>
+                                <TableCell className="text-xs">
+                                  <div className="flex items-center gap-2">
+                                    <Button
+                                      variant="link"
+                                      className="text-xs p-0 h-auto text-primary hover:text-primary/80"
+                                      onClick={() => {
+                                        setFailLogEntries(prev => prev.filter(e => e.id !== entry.id));
+                                        toast({ title: "Entry removed", description: "Fail log entry has been deleted." });
+                                      }}
+                                    >
+                                      Delete
+                                    </Button>
+                                    {entry.quantity > 1 && (
+                                      <Button
+                                        variant="link"
+                                        className="text-xs p-0 h-auto text-primary hover:text-primary/80"
+                                        onClick={() => {
+                                          setFailLogEntries(prev => prev.map(e => e.id === entry.id ? { ...e, quantity: 0 } : e));
+                                        }}
+                                      >
+                                        Clear
+                                      </Button>
+                                    )}
+                                  </div>
+                                </TableCell>
+                                <TableCell className="text-xs text-right font-semibold">{entry.quantity}</TableCell>
+                              </TableRow>
+                            ))
+                          ]);
+                        })()
                       )}
                     </TableBody>
                   </Table>
