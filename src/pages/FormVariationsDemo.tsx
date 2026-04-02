@@ -10474,7 +10474,9 @@ const FormVariationsDemo = () => {
                                 quantity: parseInt(failLogQuantity) || 1,
                                 employee: failLogEmployee,
                                 location: failLogLocation,
-                                date: new Date().toLocaleDateString()
+                                date: new Date().toLocaleString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true }),
+                                fixedByQA: false,
+                                fixedByTech: false,
                               }));
                               setFailLogEntries(prev => [...prev, ...newEntries]);
                               setFailLogLocation("");
