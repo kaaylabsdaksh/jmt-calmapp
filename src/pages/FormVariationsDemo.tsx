@@ -10614,17 +10614,15 @@ const FormVariationsDemo = () => {
                                     >
                                       Delete
                                     </Button>
-                                    {entry.quantity > 1 && (
-                                      <Button
-                                        variant="link"
-                                        className="text-xs p-0 h-auto text-primary hover:text-primary/80"
-                                        onClick={() => {
-                                          setFailLogEntries(prev => prev.map(e => e.id === entry.id ? { ...e, quantity: 0 } : e));
-                                        }}
-                                      >
-                                        Clear
-                                      </Button>
-                                    )}
+                                    <Button
+                                      variant="link"
+                                      className="text-xs p-0 h-auto text-primary hover:text-primary/80"
+                                      onClick={() => {
+                                        setFailLogEntries(prev => prev.map(e => e.id === entry.id ? { ...e, quantity: 0 } : e));
+                                      }}
+                                    >
+                                      Clear
+                                    </Button>
                                   </div>
                                 </TableCell>
                                 <TableCell className="text-xs text-right font-semibold">{entry.quantity}</TableCell>
