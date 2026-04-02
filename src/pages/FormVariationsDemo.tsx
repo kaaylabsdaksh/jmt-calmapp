@@ -11184,12 +11184,20 @@ const FormVariationsDemo = () => {
             </div>
             {/* Right side - Save and Cancel */}
             <div className="flex items-center gap-2">
-              <Button variant="outline" size="default" className="h-10 px-6 rounded-r-none border-r-0" onClick={handleCancel}>
-                <X className="h-4 w-4 mr-2" />
+              <Button 
+                size="sm"
+                variant="outline" 
+                onClick={handleCancel}
+              >
+                <X className="h-3 w-3 mr-1" />
                 Cancel
               </Button>
-              <Button className="h-10 px-6 rounded-l-none bg-emerald-500 hover:bg-emerald-600 text-white border-emerald-500">
-                <Save className="h-4 w-4 mr-2" />
+              <Button 
+                size="sm"
+                onClick={handleSave}
+                className="bg-success text-success-foreground hover:bg-success/90"
+              >
+                <Save className="h-3 w-3 mr-1" />
                 Save Item
               </Button>
             </div>
