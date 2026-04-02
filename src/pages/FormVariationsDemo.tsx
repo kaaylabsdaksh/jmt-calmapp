@@ -11179,9 +11179,6 @@ const FormVariationsDemo = () => {
               <Button variant="outline" size="default" className="h-9 text-sm px-4" disabled={!failLogProcessMode}>
                 Return to QA Inspection
               </Button>
-              <Button variant="outline" size="default" className="h-9 text-sm px-4" onClick={() => setFailLogProcessMode(false)}>
-                Back
-              </Button>
             </div>
             {/* Right side - Save and Cancel */}
             <div className="flex items-center gap-2">
