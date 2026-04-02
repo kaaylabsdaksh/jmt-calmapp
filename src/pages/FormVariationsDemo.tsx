@@ -11167,16 +11167,32 @@ const FormVariationsDemo = () => {
           <div className="flex items-center justify-between gap-4 max-w-[1400px] mx-auto">
             {/* Left side - Fail log actions */}
             <div className="flex items-center gap-2">
-              <Button variant="outline" size="default" className="h-9 text-sm px-4" disabled={failLogProcessMode} onClick={() => setFailLogProcessMode(true)}>
+              <Button 
+                size="default" 
+                className={`h-9 text-sm px-4 ${!failLogProcessMode ? 'bg-primary text-primary-foreground hover:bg-primary/90' : 'bg-transparent text-muted-foreground border border-border hover:bg-muted/50'}`}
+                onClick={() => setFailLogProcessMode(true)}
+              >
                 Unlock
               </Button>
-              <Button variant="outline" size="default" className="h-9 text-sm px-4" disabled={!failLogProcessMode} onClick={() => setFailLogProcessMode(false)}>
+              <Button 
+                size="default" 
+                className={`h-9 text-sm px-4 ${failLogProcessMode ? 'bg-primary text-primary-foreground hover:bg-primary/90' : 'bg-transparent text-muted-foreground border border-border hover:bg-muted/50'}`}
+                onClick={() => setFailLogProcessMode(false)}
+              >
                 Process
               </Button>
-              <Button variant="outline" size="default" className="h-9 text-sm px-4" disabled={failLogProcessMode} onClick={() => setFailLogProcessMode(false)}>
+              <Button 
+                size="default" 
+                className={`h-9 text-sm px-4 ${!failLogProcessMode ? 'bg-primary text-primary-foreground hover:bg-primary/90' : 'bg-transparent text-muted-foreground border border-border hover:bg-muted/50'}`}
+                onClick={() => setFailLogProcessMode(false)}
+              >
                 Delete All
               </Button>
-              <Button variant="outline" size="default" className="h-9 text-sm px-4" disabled={!failLogProcessMode} onClick={() => setFailLogProcessMode(true)}>
+              <Button 
+                size="default" 
+                className={`h-9 text-sm px-4 ${failLogProcessMode ? 'bg-primary text-primary-foreground hover:bg-primary/90' : 'bg-transparent text-muted-foreground border border-border hover:bg-muted/50'}`}
+                onClick={() => setFailLogProcessMode(true)}
+              >
                 Return to QA Inspection
               </Button>
             </div>
