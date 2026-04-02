@@ -78,6 +78,7 @@ const FormVariationsDemo = () => {
     fixedByQA: boolean;
     fixedByTech: boolean;
   }>>([]);
+  const [failLogProcessMode, setFailLogProcessMode] = useState(false);
   
   // ESL Tab state - track which tab is active for footer visibility
   const [activeEslTab, setActiveEslTab] = useState<string>('general');
