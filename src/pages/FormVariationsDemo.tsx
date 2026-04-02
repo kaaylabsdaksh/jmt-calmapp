@@ -10602,7 +10602,7 @@ const FormVariationsDemo = () => {
                                    entry.failType === 'certificate' ? 'Certificate' : entry.failType}
                                 </TableCell>
                                 <TableCell className="text-xs">{entry.failDescription}</TableCell>
-                                <TableCell className="text-xs text-right font-semibold">{entry.quantity}</TableCell>
+                                <TableCell className="text-xs font-semibold">{entry.quantity}</TableCell>
                                 <TableCell className="text-xs">
                                   <div className="flex items-center gap-2">
                                     <Button
