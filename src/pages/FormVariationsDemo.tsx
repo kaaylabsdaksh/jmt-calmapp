@@ -7764,13 +7764,30 @@ const FormVariationsDemo = () => {
                     </PopoverTrigger>
                     <PopoverContent className="w-52 p-3" align="end">
                       <div className="space-y-1">
-                        <p className="text-xs font-medium text-muted-foreground mb-2">Select sections to expand</p>
+                        <p className="text-xs font-medium text-muted-foreground mb-2">Select &amp; reorder sections</p>
                         <div className="flex items-center gap-2 mb-2">
                           <Button variant="outline" size="sm" className="text-[10px] h-6 px-2" onClick={() => setExpandAllSections([...singleAccordionValues])}>All</Button>
                           <Button variant="outline" size="sm" className="text-[10px] h-6 px-2" onClick={() => setExpandAllSections([])}>None</Button>
+                          <Button variant="outline" size="sm" className="text-[10px] h-6 px-2" onClick={() => setSectionOrder([...singleAccordionValues])}>Reset Order</Button>
                         </div>
-                        {singleAccordionValues.map((val) => (
-                          <div key={val} className="flex items-center gap-2 py-1">
+                        {sectionOrder.map((val, idx) => (
+                          <div key={val} className="flex items-center gap-1 py-0.5">
+                            <div className="flex flex-col">
+                              <button
+                                className="h-3 w-3 flex items-center justify-center text-muted-foreground hover:text-foreground disabled:opacity-30"
+                                onClick={() => moveSectionUp(idx)}
+                                disabled={idx === 0}
+                              >
+                                <ChevronUp className="h-3 w-3" />
+                              </button>
+                              <button
+                                className="h-3 w-3 flex items-center justify-center text-muted-foreground hover:text-foreground disabled:opacity-30"
+                                onClick={() => moveSectionDown(idx)}
+                                disabled={idx === sectionOrder.length - 1}
+                              >
+                                <ChevronDown className="h-3 w-3" />
+                              </button>
+                            </div>
                             <Checkbox
                               id={`expand-${val}`}
                               checked={expandAllSections.includes(val)}
