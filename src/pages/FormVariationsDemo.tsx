@@ -7734,50 +7734,41 @@ const FormVariationsDemo = () => {
               <>
                 {/* Expand/Collapse All buttons */}
                 <div className="flex justify-end gap-2 mb-3 items-center">
-                  <Popover>
-                    <PopoverTrigger asChild>
+                  <ContextMenu>
+                    <ContextMenuTrigger asChild>
                       <Button
                         variant="ghost"
                         size="sm"
                         className="text-xs text-muted-foreground hover:text-foreground"
+                        onClick={() => setOpenAccordions(expandAllSections)}
                       >
-                        <Settings className="h-3.5 w-3.5 mr-1" />
-                        Sections ({expandAllSections.length}/{singleAccordionValues.length})
+                        <Maximize2 className="h-3.5 w-3.5 mr-1" />
+                        Expand
                       </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-52 p-3" align="end">
-                      <div className="space-y-1">
-                        <p className="text-xs font-medium text-muted-foreground mb-2">Select sections to expand</p>
-                        <div className="flex items-center gap-2 mb-2">
-                          <Button variant="outline" size="sm" className="text-[10px] h-6 px-2" onClick={() => setExpandAllSections([...singleAccordionValues])}>All</Button>
-                          <Button variant="outline" size="sm" className="text-[10px] h-6 px-2" onClick={() => setExpandAllSections([])}>None</Button>
-                        </div>
-                        {singleAccordionValues.map((val) => (
-                          <div key={val} className="flex items-center gap-2 py-1">
-                            <Checkbox
-                              id={`expand-${val}`}
-                              checked={expandAllSections.includes(val)}
-                              onCheckedChange={(checked) => {
-                                setExpandAllSections(prev =>
-                                  checked ? [...prev, val] : prev.filter(v => v !== val)
-                                );
-                              }}
-                            />
-                            <label htmlFor={`expand-${val}`} className="text-xs cursor-pointer">{singleAccordionLabels[val]}</label>
-                          </div>
-                        ))}
-                      </div>
-                    </PopoverContent>
-                  </Popover>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="text-xs text-muted-foreground hover:text-foreground"
-                    onClick={() => setOpenAccordions(expandAllSections)}
-                  >
-                    <Maximize2 className="h-3.5 w-3.5 mr-1" />
-                    Expand
-                  </Button>
+                    </ContextMenuTrigger>
+                    <ContextMenuContent className="w-52">
+                      <ContextMenuLabel className="text-xs">Select sections to expand</ContextMenuLabel>
+                      <ContextMenuSeparator />
+                      {singleAccordionValues.map((val) => (
+                        <ContextMenuCheckboxItem
+                          key={val}
+                          checked={expandAllSections.includes(val)}
+                          onCheckedChange={(checked) => {
+                            setExpandAllSections(prev =>
+                              checked ? [...prev, val] : prev.filter(v => v !== val)
+                            );
+                          }}
+                          onSelect={(e) => e.preventDefault()}
+                          className="text-xs"
+                        >
+                          {singleAccordionLabels[val]}
+                        </ContextMenuCheckboxItem>
+                      ))}
+                      <ContextMenuSeparator />
+                      <ContextMenuItem className="text-xs" onSelect={() => setExpandAllSections([...singleAccordionValues])}>Select All</ContextMenuItem>
+                      <ContextMenuItem className="text-xs" onSelect={() => setExpandAllSections([])}>Deselect All</ContextMenuItem>
+                    </ContextMenuContent>
+                  </ContextMenu>
                   <Button
                     variant="ghost"
                     size="sm"
