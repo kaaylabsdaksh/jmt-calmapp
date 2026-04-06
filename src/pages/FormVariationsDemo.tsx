@@ -53,6 +53,24 @@ const FormVariationsDemo = () => {
   };
   const [openAccordions, setOpenAccordions] = useState<string[]>(['general']);
   const [expandAllSections, setExpandAllSections] = useState<string[]>(singleAccordionValues);
+  const [sectionOrder, setSectionOrder] = useState<string[]>([...singleAccordionValues]);
+
+  const moveSectionUp = (index: number) => {
+    if (index === 0) return;
+    setSectionOrder(prev => {
+      const next = [...prev];
+      [next[index - 1], next[index]] = [next[index], next[index - 1]];
+      return next;
+    });
+  };
+  const moveSectionDown = (index: number) => {
+    setSectionOrder(prev => {
+      if (index >= prev.length - 1) return prev;
+      const next = [...prev];
+      [next[index], next[index + 1]] = [next[index + 1], next[index]];
+      return next;
+    });
+  };
   
   // Main section state
   const [activeSection, setActiveSection] = useState<'work-order-items' | 'estimate' | 'qf3' | 'external-files' | 'fail-log' | 'cert-files'>('work-order-items');
