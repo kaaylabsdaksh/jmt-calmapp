@@ -7741,7 +7741,7 @@ const FormVariationsDemo = () => {
                         className="text-xs text-muted-foreground hover:text-foreground"
                       >
                         <Settings className="h-3.5 w-3.5 mr-1" />
-                        Sections ({expandAllSections.length}/{singleAccordionValues.length})
+                        ({expandAllSections.length}/{singleAccordionValues.length})
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-52 p-3" align="end">
