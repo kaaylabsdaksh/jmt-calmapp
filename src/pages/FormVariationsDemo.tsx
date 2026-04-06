@@ -7800,7 +7800,6 @@ const FormVariationsDemo = () => {
                         <div className="flex items-center gap-2 mb-2">
                           <Button variant="outline" size="sm" className="text-[10px] h-6 px-2" onClick={() => setExpandAllSections([...singleAccordionValues])}>All</Button>
                           <Button variant="outline" size="sm" className="text-[10px] h-6 px-2" onClick={() => setExpandAllSections([])}>None</Button>
-                          <Button variant="outline" size="sm" className="text-[10px] h-6 px-2" onClick={() => setSectionOrder([...singleAccordionValues])}>Reset Order</Button>
                         </div>
                          {sectionOrder.map((val, idx) => (
                           <div key={val} className="flex items-center gap-1 py-0.5">
@@ -7874,7 +7873,21 @@ const FormVariationsDemo = () => {
                     <AccordionItem value={sectionId} className={isLast ? "border-b-0" : "border-b"}>
                       <AccordionTrigger className="hover:no-underline py-4">
                         <div className="flex items-center gap-3">
-                          <GripVertical className="h-4 w-4 text-muted-foreground cursor-grab active:cursor-grabbing shrink-0" />
+                          <span
+                            title="Double-click to reset position"
+                            onDoubleClick={(e) => {
+                              e.stopPropagation();
+                              const defaultIdx = singleAccordionValues.indexOf(sectionId);
+                              setSectionOrder(prev => {
+                                const next = prev.filter(id => id !== sectionId);
+                                next.splice(Math.min(defaultIdx, next.length), 0, sectionId);
+                                return next;
+                              });
+                              toast({ title: `${config.label} reset to default position` });
+                            }}
+                          >
+                            <GripVertical className="h-4 w-4 text-muted-foreground cursor-grab active:cursor-grabbing shrink-0" />
+                          </span>
                           <IconComp className="h-5 w-5 text-foreground" />
                           <h3 className="font-semibold">{config.label}</h3>
                           {config.statusKey && tabStatus[config.statusKey] === 'completed' && (
