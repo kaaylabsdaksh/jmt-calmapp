@@ -7775,7 +7775,7 @@ const FormVariationsDemo = () => {
                     onClick={() => setOpenAccordions(expandAllSections)}
                   >
                     <Maximize2 className="h-3.5 w-3.5 mr-1" />
-                    Expand All
+                    Expand
                   </Button>
                   <Button
                     variant="ghost"
@@ -7784,7 +7784,7 @@ const FormVariationsDemo = () => {
                     onClick={() => setOpenAccordions([])}
                   >
                     <Minimize2 className="h-3.5 w-3.5 mr-1" />
-                    Collapse All
+                    Collapse
                   </Button>
                 </div>
                 <Accordion type="multiple" value={openAccordions} onValueChange={setOpenAccordions} className="space-y-0 accordion-fields">
