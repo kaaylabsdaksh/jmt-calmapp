@@ -15,7 +15,6 @@ import { Separator } from "@/components/ui/separator";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, ChevronLeft, ChevronDown, ChevronUp, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield, Wrench, Activity, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock, ExternalLink, ArrowUp, ArrowLeft, Pencil, ImageIcon, Plus, Minus, MoreHorizontal, Play, Square, RefreshCw, Minimize2, Maximize2 } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger, ContextMenuCheckboxItem, ContextMenuSeparator, ContextMenuLabel } from "@/components/ui/context-menu";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -7734,41 +7733,50 @@ const FormVariationsDemo = () => {
               <>
                 {/* Expand/Collapse All buttons */}
                 <div className="flex justify-end gap-2 mb-3 items-center">
-                  <ContextMenu>
-                    <ContextMenuTrigger asChild>
+                  <Popover>
+                    <PopoverTrigger asChild>
                       <Button
                         variant="ghost"
                         size="sm"
                         className="text-xs text-muted-foreground hover:text-foreground"
-                        onClick={() => setOpenAccordions(expandAllSections)}
                       >
-                        <Maximize2 className="h-3.5 w-3.5 mr-1" />
-                        Expand
+                        <Settings className="h-3.5 w-3.5 mr-1" />
+                        Sections ({expandAllSections.length}/{singleAccordionValues.length})
                       </Button>
-                    </ContextMenuTrigger>
-                    <ContextMenuContent className="w-52">
-                      <ContextMenuLabel className="text-xs">Select sections to expand</ContextMenuLabel>
-                      <ContextMenuSeparator />
-                      {singleAccordionValues.map((val) => (
-                        <ContextMenuCheckboxItem
-                          key={val}
-                          checked={expandAllSections.includes(val)}
-                          onCheckedChange={(checked) => {
-                            setExpandAllSections(prev =>
-                              checked ? [...prev, val] : prev.filter(v => v !== val)
-                            );
-                          }}
-                          onSelect={(e) => e.preventDefault()}
-                          className="text-xs"
-                        >
-                          {singleAccordionLabels[val]}
-                        </ContextMenuCheckboxItem>
-                      ))}
-                      <ContextMenuSeparator />
-                      <ContextMenuItem className="text-xs" onSelect={() => setExpandAllSections([...singleAccordionValues])}>Select All</ContextMenuItem>
-                      <ContextMenuItem className="text-xs" onSelect={() => setExpandAllSections([])}>Deselect All</ContextMenuItem>
-                    </ContextMenuContent>
-                  </ContextMenu>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-52 p-3" align="end">
+                      <div className="space-y-1">
+                        <p className="text-xs font-medium text-muted-foreground mb-2">Select sections to expand</p>
+                        <div className="flex items-center gap-2 mb-2">
+                          <Button variant="outline" size="sm" className="text-[10px] h-6 px-2" onClick={() => setExpandAllSections([...singleAccordionValues])}>All</Button>
+                          <Button variant="outline" size="sm" className="text-[10px] h-6 px-2" onClick={() => setExpandAllSections([])}>None</Button>
+                        </div>
+                        {singleAccordionValues.map((val) => (
+                          <div key={val} className="flex items-center gap-2 py-1">
+                            <Checkbox
+                              id={`expand-${val}`}
+                              checked={expandAllSections.includes(val)}
+                              onCheckedChange={(checked) => {
+                                setExpandAllSections(prev =>
+                                  checked ? [...prev, val] : prev.filter(v => v !== val)
+                                );
+                              }}
+                            />
+                            <label htmlFor={`expand-${val}`} className="text-xs cursor-pointer">{singleAccordionLabels[val]}</label>
+                          </div>
+                        ))}
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="text-xs text-muted-foreground hover:text-foreground"
+                    onClick={() => setOpenAccordions(expandAllSections)}
+                  >
+                    <Maximize2 className="h-3.5 w-3.5 mr-1" />
+                    Expand
+                  </Button>
                   <Button
                     variant="ghost"
                     size="sm"
