@@ -13,7 +13,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, ChevronLeft, ChevronDown, ChevronUp, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield, Wrench, Activity, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock, ExternalLink, ArrowUp, ArrowLeft, Pencil, ImageIcon, Plus, Minus, MoreHorizontal, Play, Square, RefreshCw, Minimize2, Maximize2 } from "lucide-react";
+import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, ChevronLeft, ChevronDown, ChevronUp, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield, Wrench, Activity, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock, ExternalLink, ArrowUp, ArrowDown, ArrowLeft, Pencil, ImageIcon, Plus, Minus, MoreHorizontal, Play, Square, RefreshCw, Minimize2, Maximize2, GripVertical } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
@@ -53,6 +53,24 @@ const FormVariationsDemo = () => {
   };
   const [openAccordions, setOpenAccordions] = useState<string[]>(['general']);
   const [expandAllSections, setExpandAllSections] = useState<string[]>(singleAccordionValues);
+  const [sectionOrder, setSectionOrder] = useState<string[]>([...singleAccordionValues]);
+
+  const moveSectionUp = (index: number) => {
+    if (index === 0) return;
+    setSectionOrder(prev => {
+      const next = [...prev];
+      [next[index - 1], next[index]] = [next[index], next[index - 1]];
+      return next;
+    });
+  };
+  const moveSectionDown = (index: number) => {
+    setSectionOrder(prev => {
+      if (index >= prev.length - 1) return prev;
+      const next = [...prev];
+      [next[index], next[index + 1]] = [next[index + 1], next[index]];
+      return next;
+    });
+  };
   
   // Main section state
   const [activeSection, setActiveSection] = useState<'work-order-items' | 'estimate' | 'qf3' | 'external-files' | 'fail-log' | 'cert-files'>('work-order-items');
@@ -7746,13 +7764,30 @@ const FormVariationsDemo = () => {
                     </PopoverTrigger>
                     <PopoverContent className="w-52 p-3" align="end">
                       <div className="space-y-1">
-                        <p className="text-xs font-medium text-muted-foreground mb-2">Select sections to expand</p>
+                        <p className="text-xs font-medium text-muted-foreground mb-2">Select &amp; reorder sections</p>
                         <div className="flex items-center gap-2 mb-2">
                           <Button variant="outline" size="sm" className="text-[10px] h-6 px-2" onClick={() => setExpandAllSections([...singleAccordionValues])}>All</Button>
                           <Button variant="outline" size="sm" className="text-[10px] h-6 px-2" onClick={() => setExpandAllSections([])}>None</Button>
+                          <Button variant="outline" size="sm" className="text-[10px] h-6 px-2" onClick={() => setSectionOrder([...singleAccordionValues])}>Reset Order</Button>
                         </div>
-                        {singleAccordionValues.map((val) => (
-                          <div key={val} className="flex items-center gap-2 py-1">
+                        {sectionOrder.map((val, idx) => (
+                          <div key={val} className="flex items-center gap-1 py-0.5">
+                            <div className="flex flex-col">
+                              <button
+                                className="h-3 w-3 flex items-center justify-center text-muted-foreground hover:text-foreground disabled:opacity-30"
+                                onClick={() => moveSectionUp(idx)}
+                                disabled={idx === 0}
+                              >
+                                <ChevronUp className="h-3 w-3" />
+                              </button>
+                              <button
+                                className="h-3 w-3 flex items-center justify-center text-muted-foreground hover:text-foreground disabled:opacity-30"
+                                onClick={() => moveSectionDown(idx)}
+                                disabled={idx === sectionOrder.length - 1}
+                              >
+                                <ChevronDown className="h-3 w-3" />
+                              </button>
+                            </div>
                             <Checkbox
                               id={`expand-${val}`}
                               checked={expandAllSections.includes(val)}
@@ -7788,174 +7823,43 @@ const FormVariationsDemo = () => {
                   </Button>
                 </div>
                 <Accordion type="multiple" value={openAccordions} onValueChange={setOpenAccordions} className="space-y-0 accordion-fields">
-                <AccordionItem value="general" className="border-b">
-                  <AccordionTrigger className="hover:no-underline py-4">
-                    <div className="flex items-center gap-3">
-                      <Info className="h-5 w-5 text-foreground" />
-                      <h3 className="font-semibold">General</h3>
-                      {tabStatus['general'] === 'completed' && (
-                        <CheckCircle className="h-4 w-4 ml-auto mr-2 text-green-600" />
-                      )}
-                      {tabStatus['general'] === 'error' && (
-                        <AlertCircle className="h-4 w-4 ml-auto mr-2 text-destructive" />
-                      )}
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent className="pb-4">
-                    {renderGeneralSection(accordionDensity === 'compact')}
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="product" className="border-b">
-                  <AccordionTrigger className="hover:no-underline py-4">
-                    <div className="flex items-center gap-3">
-                      <Package className="h-5 w-5 text-foreground" />
-                      <h3 className="font-semibold">Product</h3>
-                      {tabStatus['product'] === 'completed' && (
-                        <CheckCircle className="h-4 w-4 ml-auto mr-2 text-green-600" />
-                      )}
-                      {tabStatus['product'] === 'error' && (
-                        <AlertCircle className="h-4 w-4 ml-auto mr-2 text-destructive" />
-                      )}
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent className="pb-2">
-                    {renderProductSection(accordionDensity === 'compact')}
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="logistics" className="border-b">
-                  <AccordionTrigger className="hover:no-underline py-4">
-                    <div className="flex items-center gap-3">
-                      <Truck className="h-5 w-5 text-foreground" />
-                      <h3 className="font-semibold">Logistics</h3>
-                      {tabStatus['logistics'] === 'completed' && (
-                        <CheckCircle className="h-4 w-4 ml-auto mr-2 text-green-600" />
-                      )}
-                      {tabStatus['logistics'] === 'error' && (
-                        <AlertCircle className="h-4 w-4 ml-auto mr-2 text-destructive" />
-                      )}
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent className="pb-4">
-                    {renderLogisticsSection(accordionDensity === 'compact')}
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="lab-cost" className="border-b">
-                  <AccordionTrigger className="hover:no-underline py-4">
-                    <div className="flex items-center gap-3">
-                      <DollarSign className="h-5 w-5 text-foreground" />
-                      <h3 className="font-semibold">Lab + Cost</h3>
-                      {tabStatus['cost'] === 'completed' && (
-                        <CheckCircle className="h-4 w-4 ml-auto mr-2 text-green-600" />
-                      )}
-                      {tabStatus['cost'] === 'error' && (
-                        <AlertCircle className="h-4 w-4 ml-auto mr-2 text-destructive" />
-                      )}
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent className="pb-2 space-y-2">
-                    {renderLabSection(accordionDensity === 'compact')}
-                    {renderCostSection(accordionDensity === 'compact')}
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="factory" className="border-b">
-                  <AccordionTrigger className="hover:no-underline py-4">
-                    <div className="flex items-center gap-3">
-                      <Settings className="h-5 w-5 text-foreground" />
-                      <h3 className="font-semibold">Factory</h3>
-                      {tabStatus['factory-config'] === 'completed' && (
-                        <CheckCircle className="h-4 w-4 ml-auto mr-2 text-green-600" />
-                      )}
-                      {tabStatus['factory-config'] === 'error' && (
-                        <AlertCircle className="h-4 w-4 ml-auto mr-2 text-destructive" />
-                      )}
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent className="pb-4">
-                    {renderFactoryConfigSection(accordionDensity === 'compact')}
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="transit" className="border-b">
-                  <AccordionTrigger className="hover:no-underline py-4">
-                    <div className="flex items-center gap-3">
-                      <Truck className="h-5 w-5 text-foreground" />
-                      <h3 className="font-semibold">Transit</h3>
-                      {tabStatus['transit'] === 'completed' && (
-                        <CheckCircle className="h-4 w-4 ml-auto mr-2 text-green-600" />
-                      )}
-                      {tabStatus['transit'] === 'error' && (
-                        <AlertCircle className="h-4 w-4 ml-auto mr-2 text-destructive" />
-                      )}
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent className="pb-4">
-                    {renderTransitSection(true, accordionDensity === 'compact')}
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="parts" className="border-b">
-                  <AccordionTrigger className="hover:no-underline py-4">
-                    <div className="flex items-center gap-3">
-                      <Wrench className="h-5 w-5 text-foreground" />
-                      <h3 className="font-semibold">Parts</h3>
-                      {tabStatus['parts'] === 'completed' && (
-                        <CheckCircle className="h-4 w-4 ml-auto mr-2 text-green-600" />
-                      )}
-                      {tabStatus['parts'] === 'error' && (
-                        <AlertCircle className="h-4 w-4 ml-auto mr-2 text-destructive" />
-                      )}
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent className="pb-4">
-                    {renderPartsSection(true, accordionDensity === 'compact')}
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="images" className="border-b">
-                  <AccordionTrigger className="hover:no-underline py-4">
-                    <div className="flex items-center gap-3">
-                      <ImageIcon className="h-5 w-5 text-foreground" />
-                      <h3 className="font-semibold">Images</h3>
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent className="pb-4">
-                    {renderProductImagesSection(true, accordionDensity === 'compact')}
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="additional" className="border-b">
-                  <AccordionTrigger className="hover:no-underline py-4">
-                    <div className="flex items-center gap-3">
-                      <List className="h-5 w-5 text-foreground" />
-                      <h3 className="font-semibold">Additional</h3>
-                      {tabStatus['options'] === 'completed' && (
-                        <CheckCircle className="h-4 w-4 ml-auto mr-2 text-green-600" />
-                      )}
-                      {tabStatus['options'] === 'error' && (
-                        <AlertCircle className="h-4 w-4 ml-auto mr-2 text-destructive" />
-                      )}
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent className="pb-4">
-                    {renderOptionsSection(accordionDensity === 'compact')}
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="activity-log" className="border-b-0">
-                  <AccordionTrigger className="hover:no-underline py-4">
-                    <div className="flex items-center gap-3">
-                      <MessageSquare className="h-5 w-5 text-foreground" />
-                      <h3 className="font-semibold">Comments</h3>
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent className="pb-4">
-                    {renderActivityLog(accordionDensity === 'compact')}
-                  </AccordionContent>
-                </AccordionItem>
+                {sectionOrder.map((sectionId) => {
+                  const sectionConfig: Record<string, { icon: any; label: string; statusKey?: string; render: () => React.ReactNode; lastItem?: boolean }> = {
+                    'general': { icon: Info, label: 'General', statusKey: 'general', render: () => renderGeneralSection(accordionDensity === 'compact') },
+                    'product': { icon: Package, label: 'Product', statusKey: 'product', render: () => renderProductSection(accordionDensity === 'compact') },
+                    'logistics': { icon: Truck, label: 'Logistics', statusKey: 'logistics', render: () => renderLogisticsSection(accordionDensity === 'compact') },
+                    'lab-cost': { icon: DollarSign, label: 'Lab + Cost', statusKey: 'cost', render: () => <>{renderLabSection(accordionDensity === 'compact')}{renderCostSection(accordionDensity === 'compact')}</> },
+                    'factory': { icon: Settings, label: 'Factory', statusKey: 'factory-config', render: () => renderFactoryConfigSection(accordionDensity === 'compact') },
+                    'transit': { icon: Truck, label: 'Transit', statusKey: 'transit', render: () => renderTransitSection(true, accordionDensity === 'compact') },
+                    'parts': { icon: Wrench, label: 'Parts', statusKey: 'parts', render: () => renderPartsSection(true, accordionDensity === 'compact') },
+                    'images': { icon: ImageIcon, label: 'Images', render: () => renderProductImagesSection(true, accordionDensity === 'compact') },
+                    'additional': { icon: List, label: 'Additional', statusKey: 'options', render: () => renderOptionsSection(accordionDensity === 'compact') },
+                    'activity-log': { icon: MessageSquare, label: 'Comments', render: () => renderActivityLog(accordionDensity === 'compact') },
+                  };
+                  const config = sectionConfig[sectionId];
+                  if (!config) return null;
+                  const IconComp = config.icon;
+                  const isLast = sectionOrder.indexOf(sectionId) === sectionOrder.length - 1;
+                  return (
+                    <AccordionItem key={sectionId} value={sectionId} className={isLast ? "border-b-0" : "border-b"}>
+                      <AccordionTrigger className="hover:no-underline py-4">
+                        <div className="flex items-center gap-3">
+                          <IconComp className="h-5 w-5 text-foreground" />
+                          <h3 className="font-semibold">{config.label}</h3>
+                          {config.statusKey && tabStatus[config.statusKey] === 'completed' && (
+                            <CheckCircle className="h-4 w-4 ml-auto mr-2 text-green-600" />
+                          )}
+                          {config.statusKey && tabStatus[config.statusKey] === 'error' && (
+                            <AlertCircle className="h-4 w-4 ml-auto mr-2 text-destructive" />
+                          )}
+                        </div>
+                      </AccordionTrigger>
+                      <AccordionContent className="pb-4">
+                        {config.render()}
+                      </AccordionContent>
+                    </AccordionItem>
+                  );
+                })}
               </Accordion>
               </>
             )}
