@@ -7764,30 +7764,13 @@ const FormVariationsDemo = () => {
                     </PopoverTrigger>
                     <PopoverContent className="w-52 p-3" align="end">
                       <div className="space-y-1">
-                        <p className="text-xs font-medium text-muted-foreground mb-2">Select &amp; reorder sections</p>
+                        <p className="text-xs font-medium text-muted-foreground mb-2">Select sections to expand</p>
                         <div className="flex items-center gap-2 mb-2">
                           <Button variant="outline" size="sm" className="text-[10px] h-6 px-2" onClick={() => setExpandAllSections([...singleAccordionValues])}>All</Button>
                           <Button variant="outline" size="sm" className="text-[10px] h-6 px-2" onClick={() => setExpandAllSections([])}>None</Button>
-                          <Button variant="outline" size="sm" className="text-[10px] h-6 px-2" onClick={() => setSectionOrder([...singleAccordionValues])}>Reset Order</Button>
                         </div>
-                        {sectionOrder.map((val, idx) => (
-                          <div key={val} className="flex items-center gap-1 py-0.5">
-                            <div className="flex flex-col">
-                              <button
-                                className="h-3 w-3 flex items-center justify-center text-muted-foreground hover:text-foreground disabled:opacity-30"
-                                onClick={() => moveSectionUp(idx)}
-                                disabled={idx === 0}
-                              >
-                                <ChevronUp className="h-3 w-3" />
-                              </button>
-                              <button
-                                className="h-3 w-3 flex items-center justify-center text-muted-foreground hover:text-foreground disabled:opacity-30"
-                                onClick={() => moveSectionDown(idx)}
-                                disabled={idx === sectionOrder.length - 1}
-                              >
-                                <ChevronDown className="h-3 w-3" />
-                              </button>
-                            </div>
+                        {sectionOrder.map((val) => (
+                          <div key={val} className="flex items-center gap-2 py-1">
                             <Checkbox
                               id={`expand-${val}`}
                               checked={expandAllSections.includes(val)}
@@ -7798,6 +7781,46 @@ const FormVariationsDemo = () => {
                               }}
                             />
                             <label htmlFor={`expand-${val}`} className="text-xs cursor-pointer">{singleAccordionLabels[val]}</label>
+                          </div>
+                        ))}
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="text-xs text-muted-foreground hover:text-foreground"
+                      >
+                        <GripVertical className="h-3.5 w-3.5 mr-1" />
+                        Reorder
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-52 p-3" align="end">
+                      <div className="space-y-1">
+                        <div className="flex items-center justify-between mb-2">
+                          <p className="text-xs font-medium text-muted-foreground">Reorder sections</p>
+                          <Button variant="outline" size="sm" className="text-[10px] h-6 px-2" onClick={() => setSectionOrder([...singleAccordionValues])}>Reset</Button>
+                        </div>
+                        {sectionOrder.map((val, idx) => (
+                          <div key={val} className="flex items-center gap-1.5 py-0.5 rounded px-1 hover:bg-muted/50">
+                            <GripVertical className="h-3 w-3 text-muted-foreground/50 flex-shrink-0" />
+                            <span className="text-xs flex-1">{singleAccordionLabels[val]}</span>
+                            <button
+                              className="h-5 w-5 flex items-center justify-center rounded text-muted-foreground hover:text-foreground hover:bg-muted disabled:opacity-30 disabled:hover:bg-transparent"
+                              onClick={() => moveSectionUp(idx)}
+                              disabled={idx === 0}
+                            >
+                              <ChevronUp className="h-3 w-3" />
+                            </button>
+                            <button
+                              className="h-5 w-5 flex items-center justify-center rounded text-muted-foreground hover:text-foreground hover:bg-muted disabled:opacity-30 disabled:hover:bg-transparent"
+                              onClick={() => moveSectionDown(idx)}
+                              disabled={idx === sectionOrder.length - 1}
+                            >
+                              <ChevronDown className="h-3 w-3" />
+                            </button>
                           </div>
                         ))}
                       </div>
