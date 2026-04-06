@@ -54,6 +54,8 @@ const FormVariationsDemo = () => {
   const [openAccordions, setOpenAccordions] = useState<string[]>(['general']);
   const [expandAllSections, setExpandAllSections] = useState<string[]>(singleAccordionValues);
   const [sectionOrder, setSectionOrder] = useState<string[]>([...singleAccordionValues]);
+  const [draggedSection, setDraggedSection] = useState<string | null>(null);
+  const [dragOverSection, setDragOverSection] = useState<string | null>(null);
 
   const moveSectionUp = (index: number) => {
     if (index === 0) return;
@@ -70,6 +72,36 @@ const FormVariationsDemo = () => {
       [next[index], next[index + 1]] = [next[index + 1], next[index]];
       return next;
     });
+  };
+
+  const handleDragStart = (e: React.DragEvent, sectionId: string) => {
+    setDraggedSection(sectionId);
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', sectionId);
+  };
+  const handleDragOver = (e: React.DragEvent, sectionId: string) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    if (sectionId !== draggedSection) setDragOverSection(sectionId);
+  };
+  const handleDragLeave = () => setDragOverSection(null);
+  const handleDrop = (e: React.DragEvent, targetId: string) => {
+    e.preventDefault();
+    setDragOverSection(null);
+    if (!draggedSection || draggedSection === targetId) return;
+    setSectionOrder(prev => {
+      const next = [...prev];
+      const fromIdx = next.indexOf(draggedSection);
+      const toIdx = next.indexOf(targetId);
+      next.splice(fromIdx, 1);
+      next.splice(toIdx, 0, draggedSection);
+      return next;
+    });
+    setDraggedSection(null);
+  };
+  const handleDragEnd = () => {
+    setDraggedSection(null);
+    setDragOverSection(null);
   };
   
   // Main section state
