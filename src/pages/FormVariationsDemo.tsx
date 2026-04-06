@@ -7800,7 +7800,6 @@ const FormVariationsDemo = () => {
                         <div className="flex items-center gap-2 mb-2">
                           <Button variant="outline" size="sm" className="text-[10px] h-6 px-2" onClick={() => setExpandAllSections([...singleAccordionValues])}>All</Button>
                           <Button variant="outline" size="sm" className="text-[10px] h-6 px-2" onClick={() => setExpandAllSections([])}>None</Button>
-                          <Button variant="outline" size="sm" className="text-[10px] h-6 px-2" onClick={() => setSectionOrder([...singleAccordionValues])}>Reset Order</Button>
                         </div>
                          {sectionOrder.map((val, idx) => (
                           <div key={val} className="flex items-center gap-1 py-0.5">
