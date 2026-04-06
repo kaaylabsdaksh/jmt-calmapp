@@ -54,6 +54,8 @@ const FormVariationsDemo = () => {
   const [openAccordions, setOpenAccordions] = useState<string[]>(['general']);
   const [expandAllSections, setExpandAllSections] = useState<string[]>(singleAccordionValues);
   const [sectionOrder, setSectionOrder] = useState<string[]>([...singleAccordionValues]);
+  const [draggedSection, setDraggedSection] = useState<string | null>(null);
+  const [dragOverSection, setDragOverSection] = useState<string | null>(null);
 
   const moveSectionUp = (index: number) => {
     if (index === 0) return;
@@ -70,6 +72,36 @@ const FormVariationsDemo = () => {
       [next[index], next[index + 1]] = [next[index + 1], next[index]];
       return next;
     });
+  };
+
+  const handleDragStart = (e: React.DragEvent, sectionId: string) => {
+    setDraggedSection(sectionId);
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', sectionId);
+  };
+  const handleDragOver = (e: React.DragEvent, sectionId: string) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    if (sectionId !== draggedSection) setDragOverSection(sectionId);
+  };
+  const handleDragLeave = () => setDragOverSection(null);
+  const handleDrop = (e: React.DragEvent, targetId: string) => {
+    e.preventDefault();
+    setDragOverSection(null);
+    if (!draggedSection || draggedSection === targetId) return;
+    setSectionOrder(prev => {
+      const next = [...prev];
+      const fromIdx = next.indexOf(draggedSection);
+      const toIdx = next.indexOf(targetId);
+      next.splice(fromIdx, 1);
+      next.splice(toIdx, 0, draggedSection);
+      return next;
+    });
+    setDraggedSection(null);
+  };
+  const handleDragEnd = () => {
+    setDraggedSection(null);
+    setDragOverSection(null);
   };
   
   // Main section state
@@ -7840,10 +7872,25 @@ const FormVariationsDemo = () => {
                   if (!config) return null;
                   const IconComp = config.icon;
                   const isLast = sectionOrder.indexOf(sectionId) === sectionOrder.length - 1;
-                  return (
-                    <AccordionItem key={sectionId} value={sectionId} className={isLast ? "border-b-0" : "border-b"}>
+                    return (
+                    <div
+                      key={sectionId}
+                      draggable
+                      onDragStart={(e) => handleDragStart(e, sectionId)}
+                      onDragOver={(e) => handleDragOver(e, sectionId)}
+                      onDragLeave={handleDragLeave}
+                      onDrop={(e) => handleDrop(e, sectionId)}
+                      onDragEnd={handleDragEnd}
+                      className={cn(
+                        "transition-all duration-200",
+                        draggedSection === sectionId && "opacity-40",
+                        dragOverSection === sectionId && "border-t-2 border-primary"
+                      )}
+                    >
+                    <AccordionItem value={sectionId} className={isLast ? "border-b-0" : "border-b"}>
                       <AccordionTrigger className="hover:no-underline py-4">
                         <div className="flex items-center gap-3">
+                          <GripVertical className="h-4 w-4 text-muted-foreground cursor-grab active:cursor-grabbing shrink-0" />
                           <IconComp className="h-5 w-5 text-foreground" />
                           <h3 className="font-semibold">{config.label}</h3>
                           {config.statusKey && tabStatus[config.statusKey] === 'completed' && (
@@ -7858,6 +7905,7 @@ const FormVariationsDemo = () => {
                         {config.render()}
                       </AccordionContent>
                     </AccordionItem>
+                    </div>
                   );
                 })}
               </Accordion>
