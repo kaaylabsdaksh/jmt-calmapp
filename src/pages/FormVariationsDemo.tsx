@@ -46,7 +46,13 @@ const FormVariationsDemo = () => {
   // Accordion expand/collapse state
   const eslAccordionValues = ['general', 'details', 'testing', 'work-status', 'transit'];
   const singleAccordionValues = ['general', 'product', 'logistics', 'lab-cost', 'factory', 'transit', 'parts', 'images', 'additional', 'activity-log'];
+  const singleAccordionLabels: Record<string, string> = {
+    'general': 'General', 'product': 'Product', 'logistics': 'Logistics', 'lab-cost': 'Lab + Cost',
+    'factory': 'Factory', 'transit': 'Transit', 'parts': 'Parts', 'images': 'Images',
+    'additional': 'Additional', 'activity-log': 'Activity Log'
+  };
   const [openAccordions, setOpenAccordions] = useState<string[]>(['general']);
+  const [expandAllSections, setExpandAllSections] = useState<string[]>(singleAccordionValues);
   
   // Main section state
   const [activeSection, setActiveSection] = useState<'work-order-items' | 'estimate' | 'qf3' | 'external-files' | 'fail-log' | 'cert-files'>('work-order-items');
