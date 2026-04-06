@@ -7872,10 +7872,25 @@ const FormVariationsDemo = () => {
                   if (!config) return null;
                   const IconComp = config.icon;
                   const isLast = sectionOrder.indexOf(sectionId) === sectionOrder.length - 1;
-                  return (
-                    <AccordionItem key={sectionId} value={sectionId} className={isLast ? "border-b-0" : "border-b"}>
+                    return (
+                    <div
+                      key={sectionId}
+                      draggable
+                      onDragStart={(e) => handleDragStart(e, sectionId)}
+                      onDragOver={(e) => handleDragOver(e, sectionId)}
+                      onDragLeave={handleDragLeave}
+                      onDrop={(e) => handleDrop(e, sectionId)}
+                      onDragEnd={handleDragEnd}
+                      className={cn(
+                        "transition-all duration-200",
+                        draggedSection === sectionId && "opacity-40",
+                        dragOverSection === sectionId && "border-t-2 border-primary"
+                      )}
+                    >
+                    <AccordionItem value={sectionId} className={isLast ? "border-b-0" : "border-b"}>
                       <AccordionTrigger className="hover:no-underline py-4">
                         <div className="flex items-center gap-3">
+                          <GripVertical className="h-4 w-4 text-muted-foreground cursor-grab active:cursor-grabbing shrink-0" />
                           <IconComp className="h-5 w-5 text-foreground" />
                           <h3 className="font-semibold">{config.label}</h3>
                           {config.statusKey && tabStatus[config.statusKey] === 'completed' && (
@@ -7890,6 +7905,7 @@ const FormVariationsDemo = () => {
                         {config.render()}
                       </AccordionContent>
                     </AccordionItem>
+                    </div>
                   );
                 })}
               </Accordion>
