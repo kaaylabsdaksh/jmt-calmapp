@@ -7873,8 +7873,7 @@ const FormVariationsDemo = () => {
                     <AccordionItem value={sectionId} className={isLast ? "border-b-0" : "border-b"}>
                       <AccordionTrigger className="hover:no-underline py-4">
                         <div className="flex items-center gap-3">
-                          <GripVertical
-                            className="h-4 w-4 text-muted-foreground cursor-grab active:cursor-grabbing shrink-0"
+                          <span
                             title="Double-click to reset position"
                             onDoubleClick={(e) => {
                               e.stopPropagation();
@@ -7886,7 +7885,9 @@ const FormVariationsDemo = () => {
                               });
                               toast({ title: `${config.label} reset to default position` });
                             }}
-                          />
+                          >
+                            <GripVertical className="h-4 w-4 text-muted-foreground cursor-grab active:cursor-grabbing shrink-0" />
+                          </span>
                           <IconComp className="h-5 w-5 text-foreground" />
                           <h3 className="font-semibold">{config.label}</h3>
                           {config.statusKey && tabStatus[config.statusKey] === 'completed' && (
