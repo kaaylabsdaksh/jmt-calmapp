@@ -358,8 +358,8 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
     return value && value !== 'all';
   }) || dateFrom || dateTo || dateType;
 
-  const selectTriggerClass = "bg-white border border-gray-200 rounded-lg h-8 text-xs focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all";
-  const selectContentClass = "bg-white border border-gray-200 shadow-xl rounded-lg z-[9999]";
+  const selectTriggerClass = "bg-white border border-gray-200 rounded-md h-7 text-[11px] px-2 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all";
+  const selectContentClass = "bg-white border border-gray-200 shadow-xl rounded-md z-[9999] text-[11px]";
 
   return (
     <div className="bg-card rounded-xl shadow-sm border mb-6">
@@ -556,7 +556,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
             </div>
 
             {/* Row: WO Status, WO Type, Assignee, Action Code, Lab Code */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-1.5">
               <Select value={searchValues.status || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, status: value === 'all' ? '' : value }))}>
                 <SelectTrigger className={selectTriggerClass}>
                   <SelectValue placeholder="All WO Status" />
@@ -665,7 +665,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
             </div>
 
             {/* Row: Rotation Management, Invoice Status, Departure Type, Salesperson, WO Item Type */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-1.5">
               <Select value={searchValues.rotationManagement || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, rotationManagement: value === 'all' ? '' : value }))}>
                 <SelectTrigger className={selectTriggerClass}>
                   <SelectValue placeholder="All Rotation Management" />
@@ -729,7 +729,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
             </div>
 
             {/* Row: Priority, Work Order Item Status, Division, Location */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-1.5">
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
