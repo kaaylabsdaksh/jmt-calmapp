@@ -810,7 +810,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
             {/* Additional Filters - Checkboxes */}
             <div className="pt-2.5 border-t border-gray-100">
               <h3 className="text-xs font-semibold text-gray-700 mb-2">Additional Filters</h3>
-              <div className="flex flex-wrap gap-x-5 gap-y-1.5">
+              <div className="flex flex-wrap gap-x-3 gap-y-1.5">
                 {[
                   { id: 'newEquip', label: 'New Equip', key: 'newEquip' as const },
                   { id: 'usedSurplus', label: 'Used Surplus', key: 'usedSurplus' as const },
@@ -823,7 +823,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                   { id: 'nonJMAccts', label: 'Non JM Accts', key: 'nonJMAccts' as const },
                   { id: 'viewTemplate', label: 'View Template', key: 'viewTemplate' as const },
                 ].map((filter) => (
-                  <div key={filter.id} className="flex items-center space-x-2">
+                  <div key={filter.id} className="flex items-center space-x-1.5">
                     <Checkbox
                       id={filter.id}
                       checked={searchValues[filter.key]}
