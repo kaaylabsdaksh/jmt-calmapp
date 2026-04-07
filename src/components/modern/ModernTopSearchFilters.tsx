@@ -635,9 +635,36 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                   <SelectItem value="unassigned">Unassigned</SelectItem>
                 </SelectContent>
               </Select>
+
+              <Select value={searchValues.actionCode || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, actionCode: value === 'all' ? '' : value }))}>
+                <SelectTrigger className={selectTriggerClass}>
+                  <SelectValue placeholder="All Action Code" />
+                </SelectTrigger>
+                <SelectContent className={selectContentClass}>
+                  <SelectItem value="all">All Action Code</SelectItem>
+                  <SelectItem value="c/c">C/C</SelectItem>
+                  <SelectItem value="r/c/c">R/C/C</SelectItem>
+                  <SelectItem value="repair">REPAIR</SelectItem>
+                  <SelectItem value="test">TEST</SelectItem>
+                </SelectContent>
+              </Select>
+
+              <Select value={searchValues.labCode || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, labCode: value === 'all' ? '' : value }))}>
+                <SelectTrigger className={selectTriggerClass}>
+                  <SelectValue placeholder="All Lab Code" />
+                </SelectTrigger>
+                <SelectContent className={selectContentClass}>
+                  <SelectItem value="all">All Lab Code</SelectItem>
+                  <SelectItem value="lab-001">LAB-001</SelectItem>
+                  <SelectItem value="lab-002">LAB-002</SelectItem>
+                  <SelectItem value="lab-003">LAB-003</SelectItem>
+                  <SelectItem value="lab-004">LAB-004</SelectItem>
+                  <SelectItem value="lab-005">LAB-005</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
-            {/* Row: Action Code, Lab Code, Rotation Management, Invoice Status */}
+            {/* Row: Rotation Management, Invoice Status */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
               <Select value={searchValues.actionCode || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, actionCode: value === 'all' ? '' : value }))}>
                 <SelectTrigger className={selectTriggerClass}>
