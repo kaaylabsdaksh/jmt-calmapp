@@ -664,8 +664,8 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
               </Select>
             </div>
 
-            {/* Row: Rotation Management, Invoice Status */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
+            {/* Row: Rotation Management, Invoice Status, Departure Type, Salesperson, WO Item Type */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-2">
               <Select value={searchValues.rotationManagement || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, rotationManagement: value === 'all' ? '' : value }))}>
                 <SelectTrigger className={selectTriggerClass}>
                   <SelectValue placeholder="All Rotation Management" />
@@ -689,10 +689,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                   <SelectItem value="quote-approved">Quote Approved</SelectItem>
                 </SelectContent>
               </Select>
-            </div>
 
-            {/* Row: Departure Type, Salesperson, Priority, Work Order Item Status */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
               <Select value={searchValues.departureType || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, departureType: value === 'all' ? '' : value }))}>
                 <SelectTrigger className={selectTriggerClass}>
                   <SelectValue placeholder="All Departure Type" />
@@ -717,6 +714,22 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                 </SelectContent>
               </Select>
 
+              <Select value={searchValues.workOrderItemType || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, workOrderItemType: value === 'all' ? '' : value }))}>
+                <SelectTrigger className={selectTriggerClass}>
+                  <SelectValue placeholder="All WO Item Type" />
+                </SelectTrigger>
+                <SelectContent className={selectContentClass}>
+                  <SelectItem value="all">All WO Item Type</SelectItem>
+                  <SelectItem value="esl-gloves">ESL - Gloves</SelectItem>
+                  <SelectItem value="esl-blankets">ESL - Blankets</SelectItem>
+                  <SelectItem value="calibration">Calibration</SelectItem>
+                  <SelectItem value="repair">Repair</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Row: Priority, Work Order Item Status, Division, Location */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
@@ -757,29 +770,13 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
 
               <Select value={searchValues.workOrderItemStatus || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, workOrderItemStatus: value === 'all' ? '' : value }))}>
                 <SelectTrigger className={selectTriggerClass}>
-                  <SelectValue placeholder="All Work Order Item Status" />
+                  <SelectValue placeholder="All WO Item Status" />
                 </SelectTrigger>
                 <SelectContent className={selectContentClass}>
-                  <SelectItem value="all">All Work Order Item Status</SelectItem>
+                  <SelectItem value="all">All WO Item Status</SelectItem>
                   <SelectItem value="in-lab">In Lab</SelectItem>
                   <SelectItem value="assigned">Assigned</SelectItem>
                   <SelectItem value="completed">Completed</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            {/* Row: Work Order Item Type, Division, Location */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-              <Select value={searchValues.workOrderItemType || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, workOrderItemType: value === 'all' ? '' : value }))}>
-                <SelectTrigger className={selectTriggerClass}>
-                  <SelectValue placeholder="All Work Order Item Type" />
-                </SelectTrigger>
-                <SelectContent className={selectContentClass}>
-                  <SelectItem value="all">All Work Order Item Type</SelectItem>
-                  <SelectItem value="esl-gloves">ESL - Gloves</SelectItem>
-                  <SelectItem value="esl-blankets">ESL - Blankets</SelectItem>
-                  <SelectItem value="calibration">Calibration</SelectItem>
-                  <SelectItem value="repair">Repair</SelectItem>
                 </SelectContent>
               </Select>
 
