@@ -2956,6 +2956,7 @@ interface WorkOrderItem {
   manufacturer: string;
   model: string;
   serialNumber: string;
+  custId: string;
   created: string;
   departure: string;
   itemStatus: string; // Allow all status values from dropdown
@@ -5283,10 +5284,16 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                     <TableHead className="font-semibold text-gray-900">Manufacturer</TableHead>
                     <TableHead className="font-semibold text-gray-900">Model</TableHead>
                     <TableHead className="font-semibold text-gray-900">Serial Number</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Type</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Cust ID</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Item Type</TableHead>
                     <TableHead className="font-semibold text-gray-900">Customer</TableHead>
                     <TableHead className="font-semibold text-gray-900">Assigned To</TableHead>
-                    <TableHead className="w-12"></TableHead>
+                    <TableHead className="font-semibold text-gray-900">PO Number</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Created Date</TableHead>
+                    <TableHead className="font-semibold text-gray-900 min-w-[120px]">Need By Date</TableHead>
+                    <TableHead className="font-semibold text-gray-900 min-w-[120px]">Deliver by Date</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Division</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Location</TableHead>
                   </>
                 )}
               </TableRow>
@@ -5367,38 +5374,54 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                 ) : (
                   <>
                     {[
-                      { key: 'workOrderNumber', placeholder: '' },
-                      { key: 'itemNumber', placeholder: '' },
-                      { key: 'itemStatus', placeholder: '' },
-                      { key: 'priority', placeholder: '' },
-                      { key: 'manufacturer', placeholder: '' },
-                      { key: 'model', placeholder: '' },
-                      { key: 'serialNumber', placeholder: '' },
-                      { key: 'itemType', placeholder: '' },
-                      { key: 'customer', placeholder: '' },
-                      { key: 'assignedTo', placeholder: '' },
+                      { key: 'workOrderNumber', placeholder: '', type: 'text' },
+                      { key: 'itemNumber', placeholder: '', type: 'text' },
+                      { key: 'itemStatus', placeholder: '', type: 'text' },
+                      { key: 'priority', placeholder: '', type: 'text' },
+                      { key: 'manufacturer', placeholder: '', type: 'text' },
+                      { key: 'model', placeholder: '', type: 'text' },
+                      { key: 'serialNumber', placeholder: '', type: 'text' },
+                      { key: 'custId', placeholder: '', type: 'text' },
+                      { key: 'itemType', placeholder: '', type: 'text' },
+                      { key: 'customer', placeholder: '', type: 'text' },
+                      { key: 'assignedTo', placeholder: '', type: 'text' },
+                      { key: 'poNumber', placeholder: '', type: 'text' },
+                      { key: 'created', placeholder: '', type: 'date' },
+                      { key: 'needByDate', placeholder: '', type: 'date' },
+                      { key: 'deliverByDate', placeholder: '', type: 'date' },
+                      { key: 'division', placeholder: '', type: 'text' },
+                      { key: 'location', placeholder: '', type: 'text' },
                     ].map((col) => (
                       <TableHead key={col.key} className="py-1.5 px-2">
                         <div className="relative">
-                          <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground/50" />
-                          <Input
-                            placeholder={col.placeholder}
-                            value={columnFilters[col.key] || ''}
-                            onChange={(e) => setColumnFilters(prev => ({ ...prev, [col.key]: e.target.value }))}
-                            className="h-7 text-[11px] pl-6 pr-6 border-muted bg-muted/30 rounded-md placeholder:text-muted-foreground/40 focus:bg-background focus:border-primary/30 transition-colors"
-                          />
-                          {columnFilters[col.key] && (
-                            <button
-                              onClick={() => setColumnFilters(prev => ({ ...prev, [col.key]: '' }))}
-                              className="absolute right-1.5 top-1/2 -translate-y-1/2 p-0.5 rounded-full hover:bg-muted transition-colors"
-                            >
-                              <X className="h-3 w-3 text-muted-foreground" />
-                            </button>
+                          {col.type === 'date' ? (
+                            <DateColumnFilter
+                              value={columnFilters[col.key] || ''}
+                              onChange={(val) => setColumnFilters(prev => ({ ...prev, [col.key]: val }))}
+                              onClear={() => setColumnFilters(prev => ({ ...prev, [col.key]: '' }))}
+                            />
+                          ) : (
+                            <>
+                              <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground/50" />
+                              <Input
+                                placeholder={col.placeholder}
+                                value={columnFilters[col.key] || ''}
+                                onChange={(e) => setColumnFilters(prev => ({ ...prev, [col.key]: e.target.value }))}
+                                className="h-7 text-[11px] pl-6 pr-6 border-muted bg-muted/30 rounded-md placeholder:text-muted-foreground/40 focus:bg-background focus:border-primary/30 transition-colors"
+                              />
+                              {columnFilters[col.key] && (
+                                <button
+                                  onClick={() => setColumnFilters(prev => ({ ...prev, [col.key]: '' }))}
+                                  className="absolute right-1.5 top-1/2 -translate-y-1/2 p-0.5 rounded-full hover:bg-muted transition-colors"
+                                >
+                                  <X className="h-3 w-3 text-muted-foreground" />
+                                </button>
+                              )}
+                            </>
                           )}
                         </div>
                       </TableHead>
                     ))}
-                    <TableHead className="w-12"></TableHead>
                   </>
                 )}
               </TableRow>
@@ -5549,6 +5572,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                     <TableCell className="font-medium">{item.manufacturer}</TableCell>
                     <TableCell className="font-mono text-sm">{item.model}</TableCell>
                     <TableCell className="font-mono text-sm">{item.serialNumber}</TableCell>
+                    <TableCell className="text-sm">{item.custId}</TableCell>
                     <TableCell className="text-sm">
                       <button
                         onClick={(e) => handleItemTypeClick(item, e)}
@@ -5559,7 +5583,12 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                     </TableCell>
                     <TableCell className="font-medium">{item.customer}</TableCell>
                     <TableCell>{item.assignedTo}</TableCell>
-                    <TableCell></TableCell>
+                    <TableCell className="font-mono text-sm">{item.poNumber}</TableCell>
+                    <TableCell className="text-sm">{item.created}</TableCell>
+                    <TableCell className="text-sm">{item.needByDate || '—'}</TableCell>
+                    <TableCell className="text-sm">{item.deliverByDate}</TableCell>
+                    <TableCell className="text-sm">{item.division}</TableCell>
+                    <TableCell className="text-sm">{item.location || '—'}</TableCell>
                   </TableRow>
                 ))
               )}
