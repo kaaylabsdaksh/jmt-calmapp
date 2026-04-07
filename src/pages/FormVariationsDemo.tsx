@@ -7798,16 +7798,22 @@ const FormVariationsDemo = () => {
                       <div className="space-y-1">
                         <div className="flex items-center justify-between mb-2">
                           <p className="text-xs font-medium text-muted-foreground">Select &amp; reorder sections</p>
-                          <button
-                            onClick={() => {
-                              setExpandAllSections([...singleAccordionValues]);
-                              setSectionOrder([...singleAccordionValues]);
-                            }}
-                            className="p-1 rounded-md hover:bg-muted transition-colors"
-                            title="Reset to defaults"
-                          >
-                            <RotateCcw className="h-3 w-3 text-muted-foreground" />
-                          </button>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <button
+                                onClick={() => {
+                                  setExpandAllSections([...singleAccordionValues]);
+                                  setSectionOrder([...singleAccordionValues]);
+                                }}
+                                className="p-1 rounded-md hover:bg-muted transition-colors"
+                              >
+                                <RotateCcw className="h-3 w-3 text-muted-foreground" />
+                              </button>
+                            </TooltipTrigger>
+                            <TooltipContent side="bottom" className="text-xs">
+                              Reset to defaults
+                            </TooltipContent>
+                          </Tooltip>
                         </div>
                         <div className="flex items-center gap-2 mb-2">
                           <Button variant="outline" size="sm" className="text-[10px] h-6 px-2" onClick={() => setExpandAllSections([...singleAccordionValues])}>All</Button>
