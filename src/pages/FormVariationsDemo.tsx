@@ -7794,7 +7794,7 @@ const FormVariationsDemo = () => {
                         ({expandAllSections.length}/{singleAccordionValues.length})
                       </Button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-52 p-3" align="end">
+                    <PopoverContent className="w-56 p-3" align="end">
                       <div className="space-y-1">
                         <p className="text-xs font-medium text-muted-foreground mb-2">Select &amp; reorder sections</p>
                         <div className="flex items-center gap-2 mb-2">
@@ -7802,7 +7802,21 @@ const FormVariationsDemo = () => {
                           <Button variant="outline" size="sm" className="text-[10px] h-6 px-2" onClick={() => setExpandAllSections([])}>None</Button>
                         </div>
                          {sectionOrder.map((val, idx) => (
-                          <div key={val} className="flex items-center gap-1 py-0.5">
+                          <div
+                            key={val}
+                            draggable
+                            onDragStart={(e) => handleDragStart(e, val)}
+                            onDragOver={(e) => handleDragOver(e, val)}
+                            onDragLeave={handleDragLeave}
+                            onDrop={(e) => handleDrop(e, val)}
+                            onDragEnd={handleDragEnd}
+                            className={cn(
+                              "flex items-center gap-1.5 py-1 px-1 rounded-md transition-all",
+                              draggedSection === val && "opacity-40",
+                              dragOverSection === val && "border-t-2 border-primary"
+                            )}
+                          >
+                            <GripVertical className="h-3 w-3 text-muted-foreground cursor-grab active:cursor-grabbing shrink-0" />
                             <Checkbox
                               id={`expand-${val}`}
                               checked={expandAllSections.includes(val)}
@@ -7812,7 +7826,7 @@ const FormVariationsDemo = () => {
                                 );
                               }}
                             />
-                            <label htmlFor={`expand-${val}`} className="text-xs cursor-pointer">{singleAccordionLabels[val]}</label>
+                            <label htmlFor={`expand-${val}`} className="text-xs cursor-pointer flex-1">{singleAccordionLabels[val]}</label>
                           </div>
                         ))}
                       </div>
@@ -7856,38 +7870,10 @@ const FormVariationsDemo = () => {
                   const IconComp = config.icon;
                   const isLast = sectionOrder.indexOf(sectionId) === sectionOrder.length - 1;
                     return (
-                    <div
-                      key={sectionId}
-                      draggable
-                      onDragStart={(e) => handleDragStart(e, sectionId)}
-                      onDragOver={(e) => handleDragOver(e, sectionId)}
-                      onDragLeave={handleDragLeave}
-                      onDrop={(e) => handleDrop(e, sectionId)}
-                      onDragEnd={handleDragEnd}
-                      className={cn(
-                        "transition-all duration-200",
-                        draggedSection === sectionId && "opacity-40",
-                        dragOverSection === sectionId && "border-t-2 border-primary"
-                      )}
-                    >
+                    <div key={sectionId}>
                     <AccordionItem value={sectionId} className={isLast ? "border-b-0" : "border-b"}>
                       <AccordionTrigger className="hover:no-underline py-4">
                         <div className="flex items-center gap-3">
-                          <span
-                            title="Double-click to reset position"
-                            onDoubleClick={(e) => {
-                              e.stopPropagation();
-                              const defaultIdx = singleAccordionValues.indexOf(sectionId);
-                              setSectionOrder(prev => {
-                                const next = prev.filter(id => id !== sectionId);
-                                next.splice(Math.min(defaultIdx, next.length), 0, sectionId);
-                                return next;
-                              });
-                              toast({ title: `${config.label} reset to default position` });
-                            }}
-                          >
-                            <GripVertical className="h-4 w-4 text-muted-foreground cursor-grab active:cursor-grabbing shrink-0" />
-                          </span>
                           <IconComp className="h-5 w-5 text-foreground" />
                           <h3 className="font-semibold">{config.label}</h3>
                           {config.statusKey && tabStatus[config.statusKey] === 'completed' && (
