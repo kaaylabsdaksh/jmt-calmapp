@@ -4769,7 +4769,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
 
   const totalPages = currentView === 'batch' 
     ? Math.ceil(sortedBatches.length / itemsPerPage)
-    : Math.ceil(columnFilteredItems.length / itemsPerPage);
+    : Math.ceil(sortedFilteredItems.length / itemsPerPage);
 
   // Get paginated data
   const isShowingAll = itemsPerPage >= 999999;
@@ -4778,7 +4778,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
     : [];
     
   const paginatedWorkOrderItems = currentView === 'item' 
-    ? (isShowingAll ? columnFilteredItems : columnFilteredItems.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage))
+    ? (isShowingAll ? sortedFilteredItems : sortedFilteredItems.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage))
     : [];
 
   const paginatedBatches = currentView === 'batch'
