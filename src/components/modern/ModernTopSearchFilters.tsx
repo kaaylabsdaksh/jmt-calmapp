@@ -810,7 +810,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
             {/* Additional Filters - Checkboxes */}
             <div className="pt-2.5 border-t border-gray-100">
               <h3 className="text-xs font-semibold text-gray-700 mb-2">Additional Filters</h3>
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-x-4 gap-y-1.5">
+              <div className="flex flex-wrap gap-x-5 gap-y-1.5">
                 {[
                   { id: 'newEquip', label: 'New Equip', key: 'newEquip' as const },
                   { id: 'usedSurplus', label: 'Used Surplus', key: 'usedSurplus' as const },
