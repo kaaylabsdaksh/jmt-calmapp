@@ -664,8 +664,8 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
               </Select>
             </div>
 
-            {/* Row: Rotation Management, Invoice Status */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
+            {/* Row: Rotation Management, Invoice Status, Departure Type, Salesperson, WO Item Type */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-2">
               <Select value={searchValues.rotationManagement || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, rotationManagement: value === 'all' ? '' : value }))}>
                 <SelectTrigger className={selectTriggerClass}>
                   <SelectValue placeholder="All Rotation Management" />
