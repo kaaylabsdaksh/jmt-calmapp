@@ -4349,7 +4349,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
     }));
   };
 
-  const sortableColumns = new Set(['totalLabOpen', 'totalArCount', 'totalCount', 'lastCommentDate', 'minNeedByDate', 'minFollowUpDate', 'minDeliverByDate', 'itemCount', 'followUpDate', 'deliverByDate', 'aging']);
+  const sortableColumns = new Set(['totalLabOpen', 'totalArCount', 'totalCount', 'lastCommentDate', 'minNeedByDate', 'minFollowUpDate', 'minDeliverByDate', 'itemCount', 'followUpDate', 'deliverByDate', 'aging', 'workOrderNumber', 'itemNumber', 'itemStatus', 'priority', 'manufacturer', 'model', 'serialNumber', 'custId', 'itemType', 'customer', 'assignedTo', 'poNumber', 'created', 'needByDate', 'division', 'location']);
 
   // Calculate business days between two dates (excludes weekends)
   const calculateBusinessDays = (startDate: Date, endDate: Date): number => {
@@ -4750,9 +4750,26 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
     });
   });
 
+  // Sort items if sort is active
+  const sortedFilteredItems = [...columnFilteredItems];
+  if (sortConfig && currentView === 'item') {
+    const dir = sortConfig.direction === 'asc' ? 1 : -1;
+    const dateColumns = new Set(['created', 'needByDate', 'deliverByDate']);
+    sortedFilteredItems.sort((a, b) => {
+      const aVal = (a as any)[sortConfig.key] || '';
+      const bVal = (b as any)[sortConfig.key] || '';
+      if (dateColumns.has(sortConfig.key)) {
+        const aDate = parseDate(String(aVal));
+        const bDate = parseDate(String(bVal));
+        return (aDate - bDate) * dir;
+      }
+      return String(aVal).localeCompare(String(bVal)) * dir;
+    });
+  }
+
   const totalPages = currentView === 'batch' 
     ? Math.ceil(sortedBatches.length / itemsPerPage)
-    : Math.ceil(columnFilteredItems.length / itemsPerPage);
+    : Math.ceil(sortedFilteredItems.length / itemsPerPage);
 
   // Get paginated data
   const isShowingAll = itemsPerPage >= 999999;
@@ -4761,7 +4778,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
     : [];
     
   const paginatedWorkOrderItems = currentView === 'item' 
-    ? (isShowingAll ? columnFilteredItems : columnFilteredItems.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage))
+    ? (isShowingAll ? sortedFilteredItems : sortedFilteredItems.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage))
     : [];
 
   const paginatedBatches = currentView === 'batch'
@@ -5318,23 +5335,38 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                 ) : (
                   // Item View Headers
                   <>
-                    <TableHead className="font-semibold text-gray-900 text-[11px] py-1.5 px-2 whitespace-nowrap">Work Order #</TableHead>
-                    <TableHead className="font-semibold text-gray-900 text-[11px] py-1.5 px-2 whitespace-nowrap">Item</TableHead>
-                    <TableHead className="font-semibold text-gray-900 text-[11px] py-1.5 px-2 whitespace-nowrap">Item Status</TableHead>
-                    <TableHead className="font-semibold text-gray-900 text-[11px] py-1.5 px-2 whitespace-nowrap">Priority</TableHead>
-                    <TableHead className="font-semibold text-gray-900 text-[11px] py-1.5 px-2 whitespace-nowrap">Manufacturer</TableHead>
-                    <TableHead className="font-semibold text-gray-900 text-[11px] py-1.5 px-2 whitespace-nowrap">Model</TableHead>
-                    <TableHead className="font-semibold text-gray-900 text-[11px] py-1.5 px-2 whitespace-nowrap">Serial #</TableHead>
-                    <TableHead className="font-semibold text-gray-900 text-[11px] py-1.5 px-2 whitespace-nowrap">Cust ID</TableHead>
-                    <TableHead className="font-semibold text-gray-900 text-[11px] py-1.5 px-2 whitespace-nowrap">Item Type</TableHead>
-                    <TableHead className="font-semibold text-gray-900 text-[11px] py-1.5 px-2 whitespace-nowrap">Customer</TableHead>
-                    <TableHead className="font-semibold text-gray-900 text-[11px] py-1.5 px-2 whitespace-nowrap">Assigned To</TableHead>
-                    <TableHead className="font-semibold text-gray-900 text-[11px] py-1.5 px-2 whitespace-nowrap">PO #</TableHead>
-                    <TableHead className="font-semibold text-gray-900 text-[11px] py-1.5 px-2 whitespace-nowrap">Created</TableHead>
-                    <TableHead className="font-semibold text-gray-900 text-[11px] py-1.5 px-2 whitespace-nowrap">Need By</TableHead>
-                    <TableHead className="font-semibold text-gray-900 text-[11px] py-1.5 px-2 whitespace-nowrap">Deliver By</TableHead>
-                    <TableHead className="font-semibold text-gray-900 text-[11px] py-1.5 px-2 whitespace-nowrap">Division</TableHead>
-                    <TableHead className="font-semibold text-gray-900 text-[11px] py-1.5 px-2 whitespace-nowrap">Location</TableHead>
+                    {[
+                      { key: 'workOrderNumber', label: 'Work Order #' },
+                      { key: 'itemNumber', label: 'Item' },
+                      { key: 'itemStatus', label: 'Item Status' },
+                      { key: 'priority', label: 'Priority' },
+                      { key: 'manufacturer', label: 'Manufacturer' },
+                      { key: 'model', label: 'Model' },
+                      { key: 'serialNumber', label: 'Serial #' },
+                      { key: 'custId', label: 'Cust ID' },
+                      { key: 'itemType', label: 'Item Type' },
+                      { key: 'customer', label: 'Customer' },
+                      { key: 'assignedTo', label: 'Assigned To' },
+                      { key: 'poNumber', label: 'PO #' },
+                      { key: 'created', label: 'Created' },
+                      { key: 'needByDate', label: 'Need By' },
+                      { key: 'deliverByDate', label: 'Deliver By' },
+                      { key: 'division', label: 'Division' },
+                      { key: 'location', label: 'Location' },
+                    ].map(col => (
+                      <TableHead key={col.key} className="font-semibold text-gray-900 text-[11px] py-1.5 px-2 whitespace-nowrap">
+                        <div className="flex items-center gap-1">
+                          <span>{col.label}</span>
+                          <button
+                            onClick={() => handleSort(col.key)}
+                            className="flex-shrink-0 p-0.5 rounded hover:bg-muted transition-colors"
+                            title={`Sort by ${col.label}`}
+                          >
+                            <SortIcon columnKey={col.key} />
+                          </button>
+                        </div>
+                      </TableHead>
+                    ))}
                   </>
                 )}
               </TableRow>
@@ -5873,7 +5905,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
         <div className="p-6 border-t border-gray-200 flex justify-between items-center">
           <div className="flex items-center gap-4">
             <span className="text-sm text-gray-600">
-              Showing {((currentPage - 1) * itemsPerPage) + 1}-{Math.min(currentPage * itemsPerPage, currentView === 'batch' ? sortedBatches.length : columnFilteredItems.length)} of {currentView === 'batch' ? sortedBatches.length : columnFilteredItems.length} items
+              Showing {((currentPage - 1) * itemsPerPage) + 1}-{Math.min(currentPage * itemsPerPage, currentView === 'batch' ? sortedBatches.length : sortedFilteredItems.length)} of {currentView === 'batch' ? sortedBatches.length : sortedFilteredItems.length} items
             </span>
             <div className="flex items-center gap-2">
               <span className="text-sm text-gray-600">Show:</span>
