@@ -358,7 +358,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
     return value && value !== 'all';
   }) || dateFrom || dateTo || dateType;
 
-  const selectTriggerClass = "bg-white border border-gray-200 rounded-lg h-10 text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all";
+  const selectTriggerClass = "bg-white border border-gray-200 rounded-lg h-8 text-xs focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all";
   const selectContentClass = "bg-white border border-gray-200 shadow-xl rounded-lg z-[9999]";
 
   return (
@@ -389,23 +389,23 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
       </div>
       <div className="mx-5 mb-4 border-b" />
 
-      <div className="px-5 pb-5 space-y-4">
+      <div className="px-4 pb-4 space-y-2.5">
         {/* Search Criteria Section - Default view only */}
         {viewMode === 'default' && (
         <div ref={searchContainerRef}>
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-sm font-medium text-muted-foreground">Search Criteria</span>
-            <span className="text-xs text-muted-foreground/60">Add search criteria by selecting a field and value</span>
+          <div className="flex items-center justify-between mb-1.5">
+            <span className="text-xs font-medium text-muted-foreground">Search Criteria</span>
+            <span className="text-[10px] text-muted-foreground/60">Add search criteria by selecting a field and value</span>
           </div>
 
           {/* Active Search Chips */}
           {searchChips.length > 0 && (
-            <div className="mb-3 flex flex-wrap gap-2">
+            <div className="mb-2 flex flex-wrap gap-1.5">
               {searchChips.map((chip) => (
                 <Badge
                   key={chip.id}
                   variant="default"
-                  className="px-3 py-1 text-xs flex items-center gap-1.5"
+                  className="px-2 py-0.5 text-[10px] flex items-center gap-1"
                 >
                   <span className="font-medium">{chip.label}:</span>
                   <span>{chip.value}</span>
@@ -424,9 +424,9 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
           {/* Search Bar */}
           <div className="flex gap-2">
             <div className="relative flex-1">
-              <div className="flex items-center bg-background border rounded-lg h-10 focus-within:ring-2 focus-within:ring-primary/20 focus-within:border-primary transition-all">
+              <div className="flex items-center bg-background border rounded-lg h-8 focus-within:ring-2 focus-within:ring-primary/20 focus-within:border-primary transition-all">
                 <Select value={selectedSearchType} onValueChange={setSelectedSearchType}>
-                  <SelectTrigger className="w-[140px] sm:w-[180px] border-0 border-r rounded-l-lg rounded-r-none h-full text-xs sm:text-sm bg-transparent hover:bg-muted focus:ring-0 focus:ring-offset-0">
+                  <SelectTrigger className="w-[130px] sm:w-[160px] border-0 border-r rounded-l-lg rounded-r-none h-full text-xs bg-transparent hover:bg-muted focus:ring-0 focus:ring-offset-0">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent className={selectContentClass}>
@@ -438,14 +438,14 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                   </SelectContent>
                 </Select>
                 <div className="relative flex-1 flex items-center">
-                  <Search className="absolute left-3 h-4 w-4 text-muted-foreground" />
+                  <Search className="absolute left-2.5 h-3.5 w-3.5 text-muted-foreground" />
                   <Input
                     placeholder="Enter value and press Enter or click Add..."
                     value={searchInput}
                     onChange={(e) => handleInputChange(e.target.value)}
                     onKeyDown={handleKeyDown}
                     onFocus={handleInputFocus}
-                    className="pl-9 border-0 h-full text-sm placeholder:text-muted-foreground focus-visible:ring-0 focus-visible:ring-offset-0 bg-transparent"
+                    className="pl-8 border-0 h-full text-xs placeholder:text-muted-foreground focus-visible:ring-0 focus-visible:ring-offset-0 bg-transparent"
                   />
                 </div>
               </div>
@@ -490,10 +490,9 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
             <Button 
               onClick={() => addSearchChip()}
               variant="outline"
-              size="sm"
-              className="h-10 px-4"
+              className="h-8 px-3 text-xs"
             >
-              <Plus className="h-4 w-4 mr-1.5" />
+              <Plus className="h-3.5 w-3.5 mr-1" />
               Add
             </Button>
           </div>
@@ -503,7 +502,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
         {viewMode === 'default' ? (
           <>
             {/* Date Row: Date Type + From + To */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
               <Select value={dateType} onValueChange={setDateType}>
                 <SelectTrigger className={selectTriggerClass}>
                   <SelectValue placeholder="Created" />
@@ -524,11 +523,11 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                   <Button
                     variant="outline"
                     className={cn(
-                      "w-full justify-start text-left font-normal h-10 text-sm border-gray-200 rounded-lg",
+                      "w-full justify-start text-left font-normal h-8 text-xs border-gray-200 rounded-lg",
                       !dateFrom && "text-gray-500"
                     )}
                   >
-                    <CalendarIcon className="mr-2 h-4 w-4 text-gray-400 flex-shrink-0" />
+                    <CalendarIcon className="mr-1.5 h-3.5 w-3.5 text-gray-400 flex-shrink-0" />
                     {dateFrom ? format(dateFrom, "MMM dd, yyyy") : "From date"}
                   </Button>
                 </PopoverTrigger>
@@ -542,11 +541,11 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                   <Button
                     variant="outline"
                     className={cn(
-                      "w-full justify-start text-left font-normal h-10 text-sm border-gray-200 rounded-lg",
+                      "w-full justify-start text-left font-normal h-8 text-xs border-gray-200 rounded-lg",
                       !dateTo && "text-gray-500"
                     )}
                   >
-                    <CalendarIcon className="mr-2 h-4 w-4 text-gray-400 flex-shrink-0" />
+                    <CalendarIcon className="mr-1.5 h-3.5 w-3.5 text-gray-400 flex-shrink-0" />
                     {dateTo ? format(dateTo, "MMM dd, yyyy") : "To date"}
                   </Button>
                 </PopoverTrigger>
@@ -557,7 +556,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
             </div>
 
             {/* Row: WO Status, WO Type, Assignee */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
               <Select value={searchValues.status || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, status: value === 'all' ? '' : value }))}>
                 <SelectTrigger className={selectTriggerClass}>
                   <SelectValue placeholder="All WO Status" />
@@ -639,7 +638,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
             </div>
 
             {/* Row: Action Code, Lab Code, Rotation Management, Invoice Status */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
               <Select value={searchValues.actionCode || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, actionCode: value === 'all' ? '' : value }))}>
                 <SelectTrigger className={selectTriggerClass}>
                   <SelectValue placeholder="All Action Code" />
@@ -693,7 +692,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
             </div>
 
             {/* Row: Departure Type, Salesperson, Priority, Work Order Item Status */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
               <Select value={searchValues.departureType || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, departureType: value === 'all' ? '' : value }))}>
                 <SelectTrigger className={selectTriggerClass}>
                   <SelectValue placeholder="All Departure Type" />
@@ -770,7 +769,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
             </div>
 
             {/* Row: Work Order Item Type, Division, Location */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
               <Select value={searchValues.workOrderItemType || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, workOrderItemType: value === 'all' ? '' : value }))}>
                 <SelectTrigger className={selectTriggerClass}>
                   <SelectValue placeholder="All Work Order Item Type" />
@@ -812,9 +811,9 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
             </div>
 
             {/* Additional Filters - Checkboxes */}
-            <div className="pt-4 border-t border-gray-100">
-              <h3 className="text-sm font-semibold text-gray-700 mb-3">Additional Filters</h3>
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-x-6 gap-y-2.5">
+            <div className="pt-2.5 border-t border-gray-100">
+              <h3 className="text-xs font-semibold text-gray-700 mb-2">Additional Filters</h3>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-x-4 gap-y-1.5">
                 {[
                   { id: 'newEquip', label: 'New Equip', key: 'newEquip' as const },
                   { id: 'usedSurplus', label: 'Used Surplus', key: 'usedSurplus' as const },
@@ -837,7 +836,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                     />
                     <Label
                       htmlFor={filter.id}
-                      className="text-sm font-normal leading-none cursor-pointer text-gray-700"
+                      className="text-xs font-normal leading-none cursor-pointer text-gray-700"
                     >
                       {filter.label}
                     </Label>
@@ -1009,20 +1008,20 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
 
         {/* Search & Clear Buttons - Default view only */}
         {viewMode === 'default' && (
-          <div className="flex justify-end gap-3 pt-2">
+          <div className="flex justify-end gap-2 pt-1.5">
             <Button 
               variant="outline"
               onClick={clearAllFilters}
-              className="rounded-lg h-10 px-5 font-medium border-destructive text-destructive hover:bg-destructive/10 hover:text-destructive"
+              className="rounded-lg h-8 px-4 text-xs font-medium border-destructive text-destructive hover:bg-destructive/10 hover:text-destructive"
             >
-              <RotateCcw className="h-4 w-4 mr-2" />
+              <RotateCcw className="h-3.5 w-3.5 mr-1.5" />
               Clear All
             </Button>
             <Button 
               onClick={handleSearch}
-              className="rounded-lg h-10 px-6 font-medium bg-blue-600 hover:bg-blue-700 text-white shadow-sm"
+              className="rounded-lg h-8 px-5 text-xs font-medium bg-blue-600 hover:bg-blue-700 text-white shadow-sm"
             >
-              <Search className="h-4 w-4 mr-2" />
+              <Search className="h-3.5 w-3.5 mr-1.5" />
               Search
             </Button>
           </div>
