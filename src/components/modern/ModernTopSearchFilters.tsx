@@ -555,8 +555,8 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
               </Popover>
             </div>
 
-            {/* Row: WO Status, WO Type, Assignee */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            {/* Row: WO Status, WO Type, Assignee, Action Code, Lab Code */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-2">
               <Select value={searchValues.status || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, status: value === 'all' ? '' : value }))}>
                 <SelectTrigger className={selectTriggerClass}>
                   <SelectValue placeholder="All WO Status" />
@@ -635,10 +635,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                   <SelectItem value="unassigned">Unassigned</SelectItem>
                 </SelectContent>
               </Select>
-            </div>
 
-            {/* Row: Action Code, Lab Code, Rotation Management, Invoice Status */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
               <Select value={searchValues.actionCode || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, actionCode: value === 'all' ? '' : value }))}>
                 <SelectTrigger className={selectTriggerClass}>
                   <SelectValue placeholder="All Action Code" />
@@ -665,7 +662,10 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                   <SelectItem value="lab-005">LAB-005</SelectItem>
                 </SelectContent>
               </Select>
+            </div>
 
+            {/* Row: Rotation Management, Invoice Status */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
               <Select value={searchValues.rotationManagement || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, rotationManagement: value === 'all' ? '' : value }))}>
                 <SelectTrigger className={selectTriggerClass}>
                   <SelectValue placeholder="All Rotation Management" />
