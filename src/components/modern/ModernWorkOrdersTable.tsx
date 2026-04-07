@@ -4750,6 +4750,23 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
     });
   });
 
+  // Sort items if sort is active
+  const sortedFilteredItems = [...columnFilteredItems];
+  if (sortConfig && currentView === 'item') {
+    const dir = sortConfig.direction === 'asc' ? 1 : -1;
+    const dateColumns = new Set(['created', 'needByDate', 'deliverByDate']);
+    sortedFilteredItems.sort((a, b) => {
+      const aVal = (a as any)[sortConfig.key] || '';
+      const bVal = (b as any)[sortConfig.key] || '';
+      if (dateColumns.has(sortConfig.key)) {
+        const aDate = parseDate(String(aVal));
+        const bDate = parseDate(String(bVal));
+        return (aDate - bDate) * dir;
+      }
+      return String(aVal).localeCompare(String(bVal)) * dir;
+    });
+  }
+
   const totalPages = currentView === 'batch' 
     ? Math.ceil(sortedBatches.length / itemsPerPage)
     : Math.ceil(columnFilteredItems.length / itemsPerPage);
