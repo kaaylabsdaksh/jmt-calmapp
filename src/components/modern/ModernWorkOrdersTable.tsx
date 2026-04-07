@@ -5433,7 +5433,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                       { key: 'division', placeholder: '', type: 'text' },
                       { key: 'location', placeholder: '', type: 'text' },
                     ].map((col) => (
-                      <TableHead key={col.key} className="py-1.5 px-2">
+                      <TableHead key={col.key} className="py-1 px-1.5">
                         <div className="relative">
                           {col.type === 'date' ? (
                             <DateColumnFilter
