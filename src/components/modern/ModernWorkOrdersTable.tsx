@@ -5905,7 +5905,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
         <div className="p-6 border-t border-gray-200 flex justify-between items-center">
           <div className="flex items-center gap-4">
             <span className="text-sm text-gray-600">
-              Showing {((currentPage - 1) * itemsPerPage) + 1}-{Math.min(currentPage * itemsPerPage, currentView === 'batch' ? sortedBatches.length : columnFilteredItems.length)} of {currentView === 'batch' ? sortedBatches.length : columnFilteredItems.length} items
+              Showing {((currentPage - 1) * itemsPerPage) + 1}-{Math.min(currentPage * itemsPerPage, currentView === 'batch' ? sortedBatches.length : sortedFilteredItems.length)} of {currentView === 'batch' ? sortedBatches.length : sortedFilteredItems.length} items
             </span>
             <div className="flex items-center gap-2">
               <span className="text-sm text-gray-600">Show:</span>
