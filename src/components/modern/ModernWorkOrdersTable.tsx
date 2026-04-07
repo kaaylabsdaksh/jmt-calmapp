@@ -5318,23 +5318,23 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                 ) : (
                   // Item View Headers
                   <>
-                    <TableHead className="font-semibold text-gray-900">Work Order #</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Item</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Item Status</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Priority</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Manufacturer</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Model</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Serial Number</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Cust ID</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Item Type</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Customer</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Assigned To</TableHead>
-                    <TableHead className="font-semibold text-gray-900">PO Number</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Created Date</TableHead>
-                    <TableHead className="font-semibold text-gray-900 min-w-[120px]">Need By Date</TableHead>
-                    <TableHead className="font-semibold text-gray-900 min-w-[120px]">Deliver by Date</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Division</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Location</TableHead>
+                    <TableHead className="font-semibold text-gray-900 text-[11px] py-1.5 px-2 whitespace-nowrap">Work Order #</TableHead>
+                    <TableHead className="font-semibold text-gray-900 text-[11px] py-1.5 px-2 whitespace-nowrap">Item</TableHead>
+                    <TableHead className="font-semibold text-gray-900 text-[11px] py-1.5 px-2 whitespace-nowrap">Item Status</TableHead>
+                    <TableHead className="font-semibold text-gray-900 text-[11px] py-1.5 px-2 whitespace-nowrap">Priority</TableHead>
+                    <TableHead className="font-semibold text-gray-900 text-[11px] py-1.5 px-2 whitespace-nowrap">Manufacturer</TableHead>
+                    <TableHead className="font-semibold text-gray-900 text-[11px] py-1.5 px-2 whitespace-nowrap">Model</TableHead>
+                    <TableHead className="font-semibold text-gray-900 text-[11px] py-1.5 px-2 whitespace-nowrap">Serial #</TableHead>
+                    <TableHead className="font-semibold text-gray-900 text-[11px] py-1.5 px-2 whitespace-nowrap">Cust ID</TableHead>
+                    <TableHead className="font-semibold text-gray-900 text-[11px] py-1.5 px-2 whitespace-nowrap">Item Type</TableHead>
+                    <TableHead className="font-semibold text-gray-900 text-[11px] py-1.5 px-2 whitespace-nowrap">Customer</TableHead>
+                    <TableHead className="font-semibold text-gray-900 text-[11px] py-1.5 px-2 whitespace-nowrap">Assigned To</TableHead>
+                    <TableHead className="font-semibold text-gray-900 text-[11px] py-1.5 px-2 whitespace-nowrap">PO #</TableHead>
+                    <TableHead className="font-semibold text-gray-900 text-[11px] py-1.5 px-2 whitespace-nowrap">Created</TableHead>
+                    <TableHead className="font-semibold text-gray-900 text-[11px] py-1.5 px-2 whitespace-nowrap">Need By</TableHead>
+                    <TableHead className="font-semibold text-gray-900 text-[11px] py-1.5 px-2 whitespace-nowrap">Deliver By</TableHead>
+                    <TableHead className="font-semibold text-gray-900 text-[11px] py-1.5 px-2 whitespace-nowrap">Division</TableHead>
+                    <TableHead className="font-semibold text-gray-900 text-[11px] py-1.5 px-2 whitespace-nowrap">Location</TableHead>
                   </>
                 )}
               </TableRow>
@@ -5433,7 +5433,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                       { key: 'division', placeholder: '', type: 'text' },
                       { key: 'location', placeholder: '', type: 'text' },
                     ].map((col) => (
-                      <TableHead key={col.key} className="py-1.5 px-2">
+                      <TableHead key={col.key} className="py-1 px-1.5">
                         <div className="relative">
                           {col.type === 'date' ? (
                             <DateColumnFilter
@@ -5443,12 +5443,12 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                             />
                           ) : (
                             <>
-                              <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground/50" />
+                              <Search className="absolute left-1.5 top-1/2 -translate-y-1/2 h-2.5 w-2.5 text-muted-foreground/50" />
                               <Input
                                 placeholder={col.placeholder}
                                 value={columnFilters[col.key] || ''}
                                 onChange={(e) => setColumnFilters(prev => ({ ...prev, [col.key]: e.target.value }))}
-                                className="h-7 text-[11px] pl-6 pr-6 border-muted bg-muted/30 rounded-md placeholder:text-muted-foreground/40 focus:bg-background focus:border-primary/30 transition-colors"
+                                className="h-6 text-[10px] pl-5 pr-5 border-muted bg-muted/30 rounded-md placeholder:text-muted-foreground/40 focus:bg-background focus:border-primary/30 transition-colors"
                               />
                               {columnFilters[col.key] && (
                                 <button
@@ -5562,16 +5562,16 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                 paginatedWorkOrderItems.map((item) => (
                   <TableRow
                     key={item.id}
-                    className="hover:bg-gray-50 cursor-pointer border-b border-gray-100"
+                    className="hover:bg-gray-50 cursor-pointer border-b border-gray-100 [&>td]:py-1.5 [&>td]:px-2 [&>td]:text-[11px]"
                     onClick={() => openDetailsFromItem(item)}
                   >
                     <TableCell className="font-medium text-blue-600">
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-1.5">
                         <button
                           onClick={(e) => handleItemTypeClick(item, e)}
                           className="text-gray-400 hover:text-blue-600 transition-colors"
                         >
-                          <Pencil className="h-4 w-4" />
+                          <Pencil className="h-3.5 w-3.5" />
                         </button>
                         <button
                           onClick={(e) => {
@@ -5579,7 +5579,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                             navigate(`/edit-batch-work-order`, {
                               state: {
                                 workOrderId: item.workOrderId,
-                                accountNumber: "1500.00", // TODO: Get from actual data
+                                accountNumber: "1500.00",
                                 customer: item.customer
                               }
                             });
@@ -5590,7 +5590,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                         </button>
                       </div>
                     </TableCell>
-                    <TableCell className="font-mono text-sm">
+                    <TableCell className="font-mono">
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
@@ -5603,7 +5603,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                     </TableCell>
                     <TableCell>{getItemStatusBadge(item.itemStatus)}</TableCell>
                     <TableCell>
-                      <span className={cn("px-2 py-1 rounded-md text-xs font-medium",
+                      <span className={cn("px-1.5 py-0.5 rounded-md text-[10px] font-medium",
                         item.priority === "Critical" ? "bg-red-100 text-red-800" :
                         item.priority === "High" ? "bg-orange-100 text-orange-800" :
                         item.priority === "Medium" ? "bg-yellow-100 text-yellow-800" :
@@ -5611,10 +5611,10 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                       )}>{item.priority}</span>
                     </TableCell>
                     <TableCell className="font-medium">{item.manufacturer}</TableCell>
-                    <TableCell className="font-mono text-sm">{item.model}</TableCell>
-                    <TableCell className="font-mono text-sm">{item.serialNumber}</TableCell>
-                    <TableCell className="text-sm">{item.custId}</TableCell>
-                    <TableCell className="text-sm">
+                    <TableCell className="font-mono">{item.model}</TableCell>
+                    <TableCell className="font-mono">{item.serialNumber}</TableCell>
+                    <TableCell>{item.custId}</TableCell>
+                    <TableCell>
                       <button
                         onClick={(e) => handleItemTypeClick(item, e)}
                         className="text-blue-600 hover:text-blue-800 hover:underline font-medium transition-colors"
@@ -5624,12 +5624,12 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                     </TableCell>
                     <TableCell className="font-medium">{item.customer}</TableCell>
                     <TableCell>{item.assignedTo}</TableCell>
-                    <TableCell className="font-mono text-sm">{item.poNumber}</TableCell>
-                    <TableCell className="text-sm">{item.created}</TableCell>
-                    <TableCell className="text-sm">{item.needByDate || '—'}</TableCell>
-                    <TableCell className="text-sm">{item.deliverByDate}</TableCell>
-                    <TableCell className="text-sm">{item.division}</TableCell>
-                    <TableCell className="text-sm">{item.location || '—'}</TableCell>
+                    <TableCell className="font-mono">{item.poNumber}</TableCell>
+                    <TableCell>{item.created}</TableCell>
+                    <TableCell>{item.needByDate || '—'}</TableCell>
+                    <TableCell>{item.deliverByDate}</TableCell>
+                    <TableCell>{item.division}</TableCell>
+                    <TableCell>{item.location || '—'}</TableCell>
                   </TableRow>
                 ))
               )}
