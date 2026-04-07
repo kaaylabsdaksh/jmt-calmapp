@@ -2956,6 +2956,7 @@ interface WorkOrderItem {
   manufacturer: string;
   model: string;
   serialNumber: string;
+  custId: string;
   created: string;
   departure: string;
   itemStatus: string; // Allow all status values from dropdown
@@ -2988,6 +2989,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     manufacturer: "ADEULIS",
     model: "PPS-1734",
     serialNumber: "SN986401",
+    custId: "CSTD",
     created: "10/15/2024",
     departure: "11/25/2024",
     itemStatus: "In Lab",
@@ -3016,6 +3018,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     manufacturer: "ADEULIS",
     model: "PPS-1735",
     serialNumber: "SN986402",
+    custId: "CSTD",
     created: "10/15/2024",
     departure: "11/26/2024",
     itemStatus: "Q/A Inspection",
@@ -3044,6 +3047,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     manufacturer: "ADEULIS",
     model: "PPS-1736",
     serialNumber: "SN986403",
+    custId: "CSTD",
     created: "10/15/2024",
     departure: "11/27/2024",
     itemStatus: "[Open Items]",
@@ -3064,6 +3068,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     manufacturer: "STARRETT",
     model: "844-441",
     serialNumber: "SN789012",
+    custId: "CSTID-123",
     created: "10/12/2024",
     departure: "11/21/2024",
     itemStatus: "Back to Customer",
@@ -3083,6 +3088,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     manufacturer: "STARRETT",
     model: "844-442",
     serialNumber: "SN789013",
+    custId: "CSTID-123",
     created: "10/12/2024",
     departure: "11/21/2024",
     itemStatus: "Ready for Departure",
@@ -3103,6 +3109,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     manufacturer: "CHARLS LTD",
     model: "1000PS-A",
     serialNumber: "SN345678",
+    custId: "CSTD",
     created: "10/08/2024",
     departure: "TBD",
     itemStatus: "Awaiting Parts",
@@ -3122,6 +3129,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     manufacturer: "CHARLS LTD",
     model: "1000PS-B",
     serialNumber: "SN345679",
+    custId: "CSTD",
     created: "10/08/2024",
     departure: "TBD",
     itemStatus: "Q/A Fail Log",
@@ -3141,6 +3149,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     manufacturer: "CHARLS LTD",
     model: "1000PS-C",
     serialNumber: "SN345680",
+    custId: "CSTD",
     created: "10/08/2024",
     departure: "TBD",
     itemStatus: "Assigned to Tech",
@@ -3161,6 +3170,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     manufacturer: "PRECISION TOOLS",
     model: "CAL-500",
     serialNumber: "SN901234",
+    custId: "MFG",
     created: "11/01/2024",
     departure: "12/02/2024",
     itemStatus: "Q/A Inspection",
@@ -3181,6 +3191,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     manufacturer: "SNAP-ON",
     model: "TW-PRO-500-10",
     serialNumber: "SN567890",
+    custId: "MFG",
     created: "11/10/2024",
     departure: "12/06/2024",
     itemStatus: "Calibrated on Shelf",
@@ -3200,6 +3211,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     manufacturer: "SNAP-ON",
     model: "TW-PRO-500-50",
     serialNumber: "SN567891",
+    custId: "MFG",
     created: "11/10/2024",
     departure: "12/06/2024",
     itemStatus: "A/R Invoicing",
@@ -3219,6 +3231,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     manufacturer: "SNAP-ON",
     model: "TW-PRO-500-100",
     serialNumber: "SN567892",
+    custId: "CSTD-QS",
     created: "11/10/2024",
     departure: "12/06/2024",
     itemStatus: "In Metrology",
@@ -3239,6 +3252,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     manufacturer: "METTLER TOLEDO",
     model: "XS205",
     serialNumber: "SN234567",
+    custId: "CSTD",
     created: "11/05/2024",
     departure: "11/15/2024",
     itemStatus: "Back to Customer",
@@ -3258,6 +3272,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     manufacturer: "METTLER TOLEDO",
     model: "XS105",
     serialNumber: "SN234568",
+    custId: "CSTD",
     created: "11/05/2024",
     departure: "11/15/2024",
     itemStatus: "Ready for Departure",
@@ -3278,6 +3293,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     manufacturer: "FLUKE",
     model: "8846A",
     serialNumber: "SN345678",
+    custId: "CSTD",
     created: "11/12/2024",
     departure: "12/15/2024",
     itemStatus: "Lab Management",
@@ -3297,6 +3313,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     manufacturer: "FLUKE",
     model: "8845A",
     serialNumber: "SN345679",
+    custId: "CSTD",
     created: "11/12/2024",
     departure: "12/15/2024",
     itemStatus: "Repair Department",
@@ -3316,6 +3333,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     manufacturer: "FLUKE",
     model: "8808A",
     serialNumber: "SN345680",
+    custId: "CSTD",
     created: "11/12/2024",
     departure: "12/15/2024",
     itemStatus: "[Awaiting CDR]",
@@ -3336,6 +3354,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     manufacturer: "KEYSIGHT",
     model: "34465A",
     serialNumber: "SN456789",
+    custId: "CSTD",
     created: "11/18/2024",
     departure: "12/20/2024",
     itemStatus: "Lab Hold",
@@ -3355,6 +3374,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     manufacturer: "KEYSIGHT",
     model: "34461A",
     serialNumber: "SN456790",
+    custId: "CSTD",
     created: "11/18/2024",
     departure: "12/20/2024",
     itemStatus: "Q/A Disapproved",
@@ -3375,6 +3395,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     manufacturer: "TEKTRONIX",
     model: "MSO58",
     serialNumber: "SN567890",
+    custId: "CSTD",
     created: "11/20/2024",
     departure: "01/15/2025",
     itemStatus: "[In Lab - Assigned to Tech]",
@@ -3394,6 +3415,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     manufacturer: "TEKTRONIX",
     model: "MSO56",
     serialNumber: "SN567891",
+    custId: "CSTD",
     created: "11/20/2024",
     departure: "01/15/2025",
     itemStatus: "ME Review",
@@ -3414,6 +3436,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     manufacturer: "ROHDE & SCHWARZ",
     model: "FSW85",
     serialNumber: "SN678901",
+    custId: "CSTD",
     created: "11/22/2024",
     departure: "01/20/2025",
     itemStatus: "Scheduled",
@@ -3433,6 +3456,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     manufacturer: "ROHDE & SCHWARZ",
     model: "FSW67",
     serialNumber: "SN678902",
+    custId: "CSTD",
     created: "11/22/2024",
     departure: "01/20/2025",
     itemStatus: "To Factory",
@@ -3453,6 +3477,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     manufacturer: "ANRITSU",
     model: "MS2038C",
     serialNumber: "SN789012",
+    custId: "CSTD",
     created: "11/25/2024",
     departure: "12/30/2024",
     itemStatus: "Calibrated on Shelf",
@@ -3472,6 +3497,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     manufacturer: "ANRITSU",
     model: "MS2037C",
     serialNumber: "SN789013",
+    custId: "CSTD",
     created: "11/25/2024",
     departure: "12/30/2024",
     itemStatus: "Shipped",
@@ -3492,6 +3518,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     manufacturer: "HIOKI",
     model: "IM3570",
     serialNumber: "SN890123",
+    custId: "CSTD",
     created: "11/28/2024",
     departure: "01/05/2025",
     itemStatus: "Estimate",
@@ -3511,6 +3538,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     manufacturer: "HIOKI",
     model: "IM3533",
     serialNumber: "SN890124",
+    custId: "CSTD",
     created: "11/28/2024",
     departure: "01/05/2025",
     itemStatus: "Awaiting PR Approval",
@@ -3531,6 +3559,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     manufacturer: "RIGOL",
     model: "DG4162",
     serialNumber: "SN901234",
+    custId: "CSTD",
     created: "12/01/2024",
     departure: "01/10/2025",
     itemStatus: "Rotation",
@@ -3550,6 +3579,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     manufacturer: "RIGOL",
     model: "DG4102",
     serialNumber: "SN901235",
+    custId: "CSTD",
     created: "12/01/2024",
     departure: "01/10/2025",
     itemStatus: "To Factory - Warranty",
@@ -3570,6 +3600,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     manufacturer: "YOKOGAWA",
     model: "GS200",
     serialNumber: "SN087654",
+    custId: "CSTD",
     created: "12/03/2024",
     departure: "01/12/2025",
     itemStatus: "Admin Processing",
@@ -3589,6 +3620,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     manufacturer: "YOKOGAWA",
     model: "GS610",
     serialNumber: "SN012346",
+    custId: "CSTD",
     created: "12/03/2024",
     departure: "01/12/2025",
     itemStatus: "Q/A Hold",
@@ -3609,6 +3641,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     manufacturer: "NATIONAL INSTRUMENTS",
     model: "PXIe-5171R",
     serialNumber: "SN987601",
+    custId: "CSTD",
     created: "12/05/2024",
     departure: "01/15/2025",
     itemStatus: "Surplus Stock",
@@ -3628,6 +3661,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     manufacturer: "NATIONAL INSTRUMENTS",
     model: "PXIe-5663E",
     serialNumber: "SN987602",
+    custId: "CSTD",
     created: "12/05/2024",
     departure: "01/15/2025",
     itemStatus: "Shipped",
@@ -3648,6 +3682,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     manufacturer: "B&K PRECISION",
     model: "5491B",
     serialNumber: "SN234567",
+    custId: "CSTD",
     created: "12/08/2024",
     departure: "01/18/2025",
     itemStatus: "Waiting on Customer",
@@ -3667,6 +3702,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     manufacturer: "B&K PRECISION",
     model: "5492B",
     serialNumber: "SN234568",
+    custId: "CSTD",
     created: "12/08/2024",
     departure: "01/18/2025",
     itemStatus: "Onsite",
@@ -3687,6 +3723,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     manufacturer: "AMETEK",
     model: "JOFRA RTC-157",
     serialNumber: "SN345678",
+    custId: "CSTD",
     created: "12/10/2024",
     departure: "01/20/2025",
     itemStatus: "Not Used",
@@ -3706,6 +3743,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     manufacturer: "AMETEK",
     model: "JOFRA RTC-158",
     serialNumber: "SN345679",
+    custId: "CSTD",
     created: "12/10/2024",
     departure: "01/20/2025",
     itemStatus: "Item Not Found on Site",
@@ -3726,6 +3764,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     manufacturer: "MEGGER",
     model: "BITE3",
     serialNumber: "SN456789",
+    custId: "CSTD",
     created: "12/12/2024",
     departure: "01/25/2025",
     itemStatus: "Return to Lab for Processing",
@@ -3746,6 +3785,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     manufacturer: "SNAP-ON",
     model: "TQR-250",
     serialNumber: "SN-TQ-8801",
+    custId: "CSTD",
     created: "02/10/2026",
     departure: "03/15/2026",
     itemStatus: "In Lab",
@@ -3774,6 +3814,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     manufacturer: "FLUKE",
     model: "PG-700",
     serialNumber: "SN-PG-4422",
+    custId: "CSTD",
     created: "02/10/2026",
     departure: "03/18/2026",
     itemStatus: "Assigned to Tech",
@@ -3802,6 +3843,7 @@ const mockWorkOrderItems: WorkOrderItem[] = [
     manufacturer: "KEYSIGHT",
     model: "34465A",
     serialNumber: "SN-MM-7733",
+    custId: "CSTD",
     created: "02/10/2026",
     departure: "03/20/2026",
     itemStatus: "Q/A Inspection",
@@ -5283,10 +5325,16 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                     <TableHead className="font-semibold text-gray-900">Manufacturer</TableHead>
                     <TableHead className="font-semibold text-gray-900">Model</TableHead>
                     <TableHead className="font-semibold text-gray-900">Serial Number</TableHead>
-                    <TableHead className="font-semibold text-gray-900">Type</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Cust ID</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Item Type</TableHead>
                     <TableHead className="font-semibold text-gray-900">Customer</TableHead>
                     <TableHead className="font-semibold text-gray-900">Assigned To</TableHead>
-                    <TableHead className="w-12"></TableHead>
+                    <TableHead className="font-semibold text-gray-900">PO Number</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Created Date</TableHead>
+                    <TableHead className="font-semibold text-gray-900 min-w-[120px]">Need By Date</TableHead>
+                    <TableHead className="font-semibold text-gray-900 min-w-[120px]">Deliver by Date</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Division</TableHead>
+                    <TableHead className="font-semibold text-gray-900">Location</TableHead>
                   </>
                 )}
               </TableRow>
@@ -5367,38 +5415,54 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                 ) : (
                   <>
                     {[
-                      { key: 'workOrderNumber', placeholder: '' },
-                      { key: 'itemNumber', placeholder: '' },
-                      { key: 'itemStatus', placeholder: '' },
-                      { key: 'priority', placeholder: '' },
-                      { key: 'manufacturer', placeholder: '' },
-                      { key: 'model', placeholder: '' },
-                      { key: 'serialNumber', placeholder: '' },
-                      { key: 'itemType', placeholder: '' },
-                      { key: 'customer', placeholder: '' },
-                      { key: 'assignedTo', placeholder: '' },
+                      { key: 'workOrderNumber', placeholder: '', type: 'text' },
+                      { key: 'itemNumber', placeholder: '', type: 'text' },
+                      { key: 'itemStatus', placeholder: '', type: 'text' },
+                      { key: 'priority', placeholder: '', type: 'text' },
+                      { key: 'manufacturer', placeholder: '', type: 'text' },
+                      { key: 'model', placeholder: '', type: 'text' },
+                      { key: 'serialNumber', placeholder: '', type: 'text' },
+                      { key: 'custId', placeholder: '', type: 'text' },
+                      { key: 'itemType', placeholder: '', type: 'text' },
+                      { key: 'customer', placeholder: '', type: 'text' },
+                      { key: 'assignedTo', placeholder: '', type: 'text' },
+                      { key: 'poNumber', placeholder: '', type: 'text' },
+                      { key: 'created', placeholder: '', type: 'date' },
+                      { key: 'needByDate', placeholder: '', type: 'date' },
+                      { key: 'deliverByDate', placeholder: '', type: 'date' },
+                      { key: 'division', placeholder: '', type: 'text' },
+                      { key: 'location', placeholder: '', type: 'text' },
                     ].map((col) => (
                       <TableHead key={col.key} className="py-1.5 px-2">
                         <div className="relative">
-                          <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground/50" />
-                          <Input
-                            placeholder={col.placeholder}
-                            value={columnFilters[col.key] || ''}
-                            onChange={(e) => setColumnFilters(prev => ({ ...prev, [col.key]: e.target.value }))}
-                            className="h-7 text-[11px] pl-6 pr-6 border-muted bg-muted/30 rounded-md placeholder:text-muted-foreground/40 focus:bg-background focus:border-primary/30 transition-colors"
-                          />
-                          {columnFilters[col.key] && (
-                            <button
-                              onClick={() => setColumnFilters(prev => ({ ...prev, [col.key]: '' }))}
-                              className="absolute right-1.5 top-1/2 -translate-y-1/2 p-0.5 rounded-full hover:bg-muted transition-colors"
-                            >
-                              <X className="h-3 w-3 text-muted-foreground" />
-                            </button>
+                          {col.type === 'date' ? (
+                            <DateColumnFilter
+                              value={columnFilters[col.key] || ''}
+                              onChange={(val) => setColumnFilters(prev => ({ ...prev, [col.key]: val }))}
+                              onClear={() => setColumnFilters(prev => ({ ...prev, [col.key]: '' }))}
+                            />
+                          ) : (
+                            <>
+                              <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground/50" />
+                              <Input
+                                placeholder={col.placeholder}
+                                value={columnFilters[col.key] || ''}
+                                onChange={(e) => setColumnFilters(prev => ({ ...prev, [col.key]: e.target.value }))}
+                                className="h-7 text-[11px] pl-6 pr-6 border-muted bg-muted/30 rounded-md placeholder:text-muted-foreground/40 focus:bg-background focus:border-primary/30 transition-colors"
+                              />
+                              {columnFilters[col.key] && (
+                                <button
+                                  onClick={() => setColumnFilters(prev => ({ ...prev, [col.key]: '' }))}
+                                  className="absolute right-1.5 top-1/2 -translate-y-1/2 p-0.5 rounded-full hover:bg-muted transition-colors"
+                                >
+                                  <X className="h-3 w-3 text-muted-foreground" />
+                                </button>
+                              )}
+                            </>
                           )}
                         </div>
                       </TableHead>
                     ))}
-                    <TableHead className="w-12"></TableHead>
                   </>
                 )}
               </TableRow>
@@ -5406,7 +5470,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
             <TableBody>
               {!hasSearched ? (
                 <TableRow>
-                  <TableCell colSpan={currentView === 'batch' ? (searchViewMode === 'csa' ? 14 : 8) : 11} className="text-center py-12">
+                  <TableCell colSpan={currentView === 'batch' ? (searchViewMode === 'csa' ? 14 : 8) : 17} className="text-center py-12">
                     <p className="text-muted-foreground text-lg">
                       Please enter search criteria in the Work Order Search above to view results
                     </p>
@@ -5549,6 +5613,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                     <TableCell className="font-medium">{item.manufacturer}</TableCell>
                     <TableCell className="font-mono text-sm">{item.model}</TableCell>
                     <TableCell className="font-mono text-sm">{item.serialNumber}</TableCell>
+                    <TableCell className="text-sm">{item.custId}</TableCell>
                     <TableCell className="text-sm">
                       <button
                         onClick={(e) => handleItemTypeClick(item, e)}
@@ -5559,7 +5624,12 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                     </TableCell>
                     <TableCell className="font-medium">{item.customer}</TableCell>
                     <TableCell>{item.assignedTo}</TableCell>
-                    <TableCell></TableCell>
+                    <TableCell className="font-mono text-sm">{item.poNumber}</TableCell>
+                    <TableCell className="text-sm">{item.created}</TableCell>
+                    <TableCell className="text-sm">{item.needByDate || '—'}</TableCell>
+                    <TableCell className="text-sm">{item.deliverByDate}</TableCell>
+                    <TableCell className="text-sm">{item.division}</TableCell>
+                    <TableCell className="text-sm">{item.location || '—'}</TableCell>
                   </TableRow>
                 ))
               )}
