@@ -823,7 +823,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                   { id: 'nonJMAccts', label: 'Non JM Accts', key: 'nonJMAccts' as const },
                   { id: 'viewTemplate', label: 'View Template', key: 'viewTemplate' as const },
                 ].map((filter) => (
-                  <div key={filter.id} className="flex items-center space-x-2">
+                  <div key={filter.id} className="flex items-center space-x-1.5">
                     <Checkbox
                       id={filter.id}
                       checked={searchValues[filter.key]}
