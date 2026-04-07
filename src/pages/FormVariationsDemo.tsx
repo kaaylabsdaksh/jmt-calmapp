@@ -7806,7 +7806,7 @@ const FormVariationsDemo = () => {
                             className="p-1 rounded-md hover:bg-muted transition-colors"
                             title="Reset to defaults"
                           >
-                            <RefreshCw className="h-3 w-3 text-muted-foreground" />
+                            <RotateCcw className="h-3 w-3 text-muted-foreground" />
                           </button>
                         </div>
                         <div className="flex items-center gap-2 mb-2">
