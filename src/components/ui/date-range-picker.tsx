@@ -2,6 +2,7 @@ import * as React from "react";
 import { ChevronLeft, ChevronRight, X, CalendarIcon, ChevronDown } from "lucide-react";
 import { format, addMonths, isSameDay, isAfter, isBefore, startOfMonth } from "date-fns";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { buttonVariants } from "@/components/ui/button";
 
@@ -65,9 +66,7 @@ function DateRangePicker({
     }
   };
 
-  const handleClear = (e: React.PointerEvent) => {
-    e.stopPropagation();
-    e.preventDefault();
+  const clearDates = () => {
     onDateFromChange(undefined);
     onDateToChange(undefined);
     setSelectingEnd(false);
@@ -100,11 +99,12 @@ function DateRangePicker({
   };
 
   const currentTypeLabel = dateTypeOptions?.find(o => o.value === dateType)?.label || "Created";
+  const showTypeSegment = dateTypeOptions && onDateTypeChange;
 
   return (
     <div className={cn("flex h-7 rounded-md border border-border overflow-hidden", triggerClassName)}>
       {/* Left segment: Date Type */}
-      {dateTypeOptions && onDateTypeChange && (
+      {showTypeSegment && (
         <Popover open={typeDropdownOpen} onOpenChange={setTypeDropdownOpen}>
           <PopoverTrigger asChild>
             <button
@@ -145,7 +145,7 @@ function DateRangePicker({
         <PopoverTrigger asChild>
           <button
             className={cn(
-              "flex-1 flex items-center px-2 text-[11px] text-left bg-background hover:bg-background transition-colors",
+              "flex-1 flex items-center px-2 text-[11px] text-left bg-background hover:bg-background transition-colors min-w-0",
               !dateFrom && "text-muted-foreground"
             )}
           >
@@ -153,76 +153,88 @@ function DateRangePicker({
             <span className="flex-1 truncate">{displayText()}</span>
           </button>
         </PopoverTrigger>
-        <PopoverContent
-          className="w-auto p-0 border shadow-xl rounded-lg z-[70]"
-          align="start"
+        <PopoverContent className="w-auto p-0 border shadow-xl rounded-lg z-[70]" align="start">
+          <div className={cn("p-4", className)}>
+            {/* Header */}
+            <div className="flex items-center justify-between mb-3">
+              <button
+                onClick={handlePrevMonth}
+                className={cn(buttonVariants({ variant: "outline" }), "h-7 w-7 p-0 opacity-60 hover:opacity-100")}
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </button>
+              <div className="flex gap-8">
+                <span className="text-sm font-semibold">{format(leftMonth, "MMMM yyyy")}</span>
+                <span className="text-sm font-semibold">{format(rightMonth, "MMMM yyyy")}</span>
+              </div>
+              <button
+                onClick={handleNextMonth}
+                className={cn(buttonVariants({ variant: "outline" }), "h-7 w-7 p-0 opacity-60 hover:opacity-100")}
+              >
+                <ChevronRight className="h-4 w-4" />
+              </button>
+            </div>
+
+            {/* Two calendars side by side */}
+            <div className="flex gap-6">
+              <MonthGrid
+                month={leftMonth}
+                dateFrom={dateFrom}
+                dateTo={dateTo}
+                isInRange={isInRange}
+                isRangeStart={isRangeStart}
+                isRangeEnd={isRangeEnd}
+                onDayClick={handleDayClick}
+                onDayHover={selectingEnd ? setHoverDate : undefined}
+              />
+              <MonthGrid
+                month={rightMonth}
+                dateFrom={dateFrom}
+                dateTo={dateTo}
+                isInRange={isInRange}
+                isRangeStart={isRangeStart}
+                isRangeEnd={isRangeEnd}
+                onDayClick={handleDayClick}
+                onDayHover={selectingEnd ? setHoverDate : undefined}
+              />
+            </div>
+
+            {/* Footer info */}
+            <div className="flex items-center justify-between mt-3 pt-3 border-t">
+              <div className="flex gap-3">
+                <div className="text-[11px] text-muted-foreground">
+                  <span className="font-medium text-foreground">From:</span>{" "}
+                  {dateFrom ? format(dateFrom, "MMM dd, yyyy") : "—"}
+                </div>
+                <div className="text-[11px] text-muted-foreground">
+                  <span className="font-medium text-foreground">To:</span>{" "}
+                  {dateTo ? format(dateTo, "MMM dd, yyyy") : "—"}
+                </div>
+              </div>
+              {(dateFrom || dateTo) && (
+                <Button variant="ghost" size="sm" className="h-6 text-[10px] px-2" onClick={clearDates}>
+                  Clear dates
+                </Button>
+              )}
+            </div>
+          </div>
+        </PopoverContent>
+      </Popover>
+
+      {/* Clear button */}
+      {(dateFrom || dateTo) && (
+        <span
+          className="flex items-center justify-center px-1.5 text-muted-foreground hover:text-foreground cursor-pointer border-l border-border bg-background"
+          onPointerDown={(e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            clearDates();
+          }}
         >
-        <div className={cn("p-4", className)}>
-          {/* Header */}
-          <div className="flex items-center justify-between mb-3">
-            <button
-              onClick={handlePrevMonth}
-              className={cn(buttonVariants({ variant: "outline" }), "h-7 w-7 p-0 opacity-60 hover:opacity-100")}
-            >
-              <ChevronLeft className="h-4 w-4" />
-            </button>
-            <div className="flex gap-8">
-              <span className="text-sm font-semibold">{format(leftMonth, "MMMM yyyy")}</span>
-              <span className="text-sm font-semibold">{format(rightMonth, "MMMM yyyy")}</span>
-            </div>
-            <button
-              onClick={handleNextMonth}
-              className={cn(buttonVariants({ variant: "outline" }), "h-7 w-7 p-0 opacity-60 hover:opacity-100")}
-            >
-              <ChevronRight className="h-4 w-4" />
-            </button>
-          </div>
-
-          {/* Two calendars side by side */}
-          <div className="flex gap-6">
-            <MonthGrid
-              month={leftMonth}
-              dateFrom={dateFrom}
-              dateTo={dateTo}
-              isInRange={isInRange}
-              isRangeStart={isRangeStart}
-              isRangeEnd={isRangeEnd}
-              onDayClick={handleDayClick}
-              onDayHover={selectingEnd ? setHoverDate : undefined}
-            />
-            <MonthGrid
-              month={rightMonth}
-              dateFrom={dateFrom}
-              dateTo={dateTo}
-              isInRange={isInRange}
-              isRangeStart={isRangeStart}
-              isRangeEnd={isRangeEnd}
-              onDayClick={handleDayClick}
-              onDayHover={selectingEnd ? setHoverDate : undefined}
-            />
-          </div>
-
-          {/* Footer info */}
-          <div className="flex items-center justify-between mt-3 pt-3 border-t">
-            <div className="flex gap-3">
-              <div className="text-[11px] text-muted-foreground">
-                <span className="font-medium text-foreground">From:</span>{" "}
-                {dateFrom ? format(dateFrom, "MMM dd, yyyy") : "—"}
-              </div>
-              <div className="text-[11px] text-muted-foreground">
-                <span className="font-medium text-foreground">To:</span>{" "}
-                {dateTo ? format(dateTo, "MMM dd, yyyy") : "—"}
-              </div>
-            </div>
-            {(dateFrom || dateTo) && (
-              <Button variant="ghost" size="sm" className="h-6 text-[10px] px-2" onClick={handleClear}>
-                Clear dates
-              </Button>
-            )}
-          </div>
-        </div>
-      </PopoverContent>
-    </Popover>
+          <X className="h-3 w-3" />
+        </span>
+      )}
+    </div>
   );
 }
 
@@ -260,10 +272,7 @@ function MonthGrid({
   today.setHours(0, 0, 0, 0);
 
   return (
-    <div
-      className="select-none"
-      onMouseLeave={() => onDayHover?.(null)}
-    >
+    <div className="select-none" onMouseLeave={() => onDayHover?.(null)}>
       <div className="grid grid-cols-7 gap-0 mb-1">
         {weekdays.map((d, i) => (
           <div key={i} className="w-9 h-7 flex items-center justify-center text-[11px] font-medium text-muted-foreground">
