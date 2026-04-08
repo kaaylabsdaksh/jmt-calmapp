@@ -110,7 +110,7 @@ function DateRangePicker({
           <span className="flex-1 truncate">{displayText()}</span>
           {(dateFrom || dateTo) && (
             <X
-              className="h-3 w-3 text-muted-foreground hover:text-foreground ml-1 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity"
+              className="h-3 w-3 text-muted-foreground hover:text-foreground ml-1 flex-shrink-0 cursor-pointer"
               onClick={handleClear}
             />
           )}
