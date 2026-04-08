@@ -503,7 +503,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
 
         {viewMode === 'default' ? (
           <>
-            {/* Date Row: Date Type + Date Range Picker */}
+            {/* Date Row: Date Type + Date Range + WO Item Status + Division + Location */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-1.5">
               <Select value={dateType} onValueChange={setDateType}>
                 <SelectTrigger className={selectTriggerClass}>
@@ -526,6 +526,44 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                 onDateFromChange={setDateFrom}
                 onDateToChange={setDateTo}
               />
+
+              <Select value={searchValues.workOrderItemStatus || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, workOrderItemStatus: value === 'all' ? '' : value }))}>
+                <SelectTrigger className={selectTriggerClass}>
+                  <SelectValue placeholder="All WO Item Status" />
+                </SelectTrigger>
+                <SelectContent className={selectContentClass}>
+                  <SelectItem value="all">All WO Item Status</SelectItem>
+                  <SelectItem value="in-lab">In Lab</SelectItem>
+                  <SelectItem value="assigned">Assigned</SelectItem>
+                  <SelectItem value="completed">Completed</SelectItem>
+                </SelectContent>
+              </Select>
+
+              <Select value={searchValues.division || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, division: value === 'all' ? '' : value }))}>
+                <SelectTrigger className={selectTriggerClass}>
+                  <SelectValue placeholder="All Division" />
+                </SelectTrigger>
+                <SelectContent className={selectContentClass}>
+                  <SelectItem value="all">All Division</SelectItem>
+                  <SelectItem value="lab">Lab</SelectItem>
+                  <SelectItem value="rental">Rental</SelectItem>
+                  <SelectItem value="esl">ESL</SelectItem>
+                  <SelectItem value="esl-onsite">ESL Onsite</SelectItem>
+                </SelectContent>
+              </Select>
+
+              <Select value={searchValues.location || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, location: value === 'all' ? '' : value }))}>
+                <SelectTrigger className={selectTriggerClass}>
+                  <SelectValue placeholder="All Location" />
+                </SelectTrigger>
+                <SelectContent className={selectContentClass}>
+                  <SelectItem value="all">All Location</SelectItem>
+                  <SelectItem value="al">AL - Alabama</SelectItem>
+                  <SelectItem value="br">BR - Brazil</SelectItem>
+                  <SelectItem value="bi">BI - Biloxi</SelectItem>
+                  <SelectItem value="od">OD - Odessa</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
             {/* Row: WO Status, WO Type, Assignee, Action Code, Lab Code */}
@@ -701,7 +739,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
               </Select>
             </div>
 
-            {/* Row: Priority, Work Order Item Status, Division, Location */}
+            {/* Row: Priority */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-1.5">
               <Popover>
                 <PopoverTrigger asChild>
@@ -714,7 +752,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                       : "All Priority"}
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-56 p-2 bg-white border border-gray-200 shadow-xl rounded-lg z-[60]" align="start">
+                <PopoverContent className="w-56 p-2 bg-popover border shadow-xl rounded-lg z-[60]" align="start">
                   <div className="space-y-1">
                     {['critical', 'high', 'medium', 'low'].map((priority) => (
                       <button
@@ -740,44 +778,6 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                   </div>
                 </PopoverContent>
               </Popover>
-
-              <Select value={searchValues.workOrderItemStatus || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, workOrderItemStatus: value === 'all' ? '' : value }))}>
-                <SelectTrigger className={selectTriggerClass}>
-                  <SelectValue placeholder="All WO Item Status" />
-                </SelectTrigger>
-                <SelectContent className={selectContentClass}>
-                  <SelectItem value="all">All WO Item Status</SelectItem>
-                  <SelectItem value="in-lab">In Lab</SelectItem>
-                  <SelectItem value="assigned">Assigned</SelectItem>
-                  <SelectItem value="completed">Completed</SelectItem>
-                </SelectContent>
-              </Select>
-
-              <Select value={searchValues.division || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, division: value === 'all' ? '' : value }))}>
-                <SelectTrigger className={selectTriggerClass}>
-                  <SelectValue placeholder="All Division" />
-                </SelectTrigger>
-                <SelectContent className={selectContentClass}>
-                  <SelectItem value="all">All Division</SelectItem>
-                  <SelectItem value="lab">Lab</SelectItem>
-                  <SelectItem value="rental">Rental</SelectItem>
-                  <SelectItem value="esl">ESL</SelectItem>
-                  <SelectItem value="esl-onsite">ESL Onsite</SelectItem>
-                </SelectContent>
-              </Select>
-
-              <Select value={searchValues.location || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, location: value === 'all' ? '' : value }))}>
-                <SelectTrigger className={selectTriggerClass}>
-                  <SelectValue placeholder="All Location" />
-                </SelectTrigger>
-                <SelectContent className={selectContentClass}>
-                  <SelectItem value="all">All Location</SelectItem>
-                  <SelectItem value="al">AL - Alabama</SelectItem>
-                  <SelectItem value="br">BR - Brazil</SelectItem>
-                  <SelectItem value="bi">BI - Biloxi</SelectItem>
-                  <SelectItem value="od">OD - Odessa</SelectItem>
-                </SelectContent>
-              </Select>
             </div>
 
             {/* Additional Filters - Checkboxes */}
