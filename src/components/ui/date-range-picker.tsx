@@ -109,10 +109,20 @@ function DateRangePicker({
           <CalendarIcon className="mr-1.5 h-3 w-3 text-muted-foreground flex-shrink-0" />
           <span className="flex-1 truncate">{displayText()}</span>
           {(dateFrom || dateTo) && (
-            <X
-              className="h-3 w-3 text-muted-foreground hover:text-foreground ml-1 flex-shrink-0 cursor-pointer"
-              onClick={handleClear}
-            />
+            <span
+              className="h-4 w-4 flex items-center justify-center text-muted-foreground hover:text-foreground ml-1 flex-shrink-0 cursor-pointer"
+              onPointerDown={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                onDateFromChange(undefined);
+                onDateToChange(undefined);
+                setSelectingEnd(false);
+                setHoverDate(null);
+                setOpen(false);
+              }}
+            >
+              <X className="h-3 w-3" />
+            </span>
           )}
         </Button>
       </PopoverTrigger>
