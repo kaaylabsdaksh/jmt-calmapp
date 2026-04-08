@@ -101,7 +101,7 @@ function DateRangePicker({
         <Button
           variant="outline"
           className={cn(
-            "w-full justify-start text-left font-normal h-7 text-[11px] border-border rounded-md px-2 group",
+            "w-full justify-start text-left font-normal h-7 text-[11px] border-border rounded-md px-2 group hover:bg-background hover:text-foreground",
             !dateFrom && "text-muted-foreground",
             triggerClassName
           )}
