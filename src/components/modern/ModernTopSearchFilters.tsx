@@ -504,7 +504,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
         {viewMode === 'default' ? (
           <>
             {/* Date Row: Date Type + Date Range Picker */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-1.5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-1.5">
               <Select value={dateType} onValueChange={setDateType}>
                 <SelectTrigger className={selectTriggerClass}>
                   <SelectValue placeholder="Created" />
@@ -520,14 +520,12 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                 </SelectContent>
               </Select>
 
-              <div className="sm:col-span-2">
-                <DateRangePicker
-                  dateFrom={dateFrom}
-                  dateTo={dateTo}
-                  onDateFromChange={setDateFrom}
-                  onDateToChange={setDateTo}
-                />
-              </div>
+              <DateRangePicker
+                dateFrom={dateFrom}
+                dateTo={dateTo}
+                onDateFromChange={setDateFrom}
+                onDateToChange={setDateTo}
+              />
             </div>
 
             {/* Row: WO Status, WO Type, Assignee, Action Code, Lab Code */}
