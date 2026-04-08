@@ -1,16 +1,23 @@
 import * as React from "react";
-import { ChevronLeft, ChevronRight, X, CalendarIcon } from "lucide-react";
-import { format, addMonths, isSameDay, isAfter, isBefore, isSameMonth, startOfMonth } from "date-fns";
+import { ChevronLeft, ChevronRight, X, CalendarIcon, ChevronDown } from "lucide-react";
+import { format, addMonths, isSameDay, isAfter, isBefore, startOfMonth } from "date-fns";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { buttonVariants } from "@/components/ui/button";
+
+interface DateTypeOption {
+  value: string;
+  label: string;
+}
 
 interface DateRangePickerProps {
   dateFrom?: Date;
   dateTo?: Date;
   onDateFromChange: (date: Date | undefined) => void;
   onDateToChange: (date: Date | undefined) => void;
+  dateType?: string;
+  onDateTypeChange?: (value: string) => void;
+  dateTypeOptions?: DateTypeOption[];
   className?: string;
   triggerClassName?: string;
 }
@@ -20,6 +27,9 @@ function DateRangePicker({
   dateTo,
   onDateFromChange,
   onDateToChange,
+  dateType,
+  onDateTypeChange,
+  dateTypeOptions,
   className,
   triggerClassName,
 }: DateRangePickerProps) {
@@ -29,6 +39,7 @@ function DateRangePicker({
   );
   const [selectingEnd, setSelectingEnd] = React.useState(false);
   const [hoverDate, setHoverDate] = React.useState<Date | null>(null);
+  const [typeDropdownOpen, setTypeDropdownOpen] = React.useState(false);
 
   const rightMonth = addMonths(leftMonth, 1);
 
@@ -37,15 +48,12 @@ function DateRangePicker({
 
   const handleDayClick = (day: Date) => {
     if (!selectingEnd || !dateFrom) {
-      // Selecting start date
       onDateFromChange(day);
       onDateToChange(undefined);
       setSelectingEnd(true);
       setHoverDate(null);
     } else {
-      // Selecting end date
       if (isBefore(day, dateFrom)) {
-        // If clicked before start, reset start
         onDateFromChange(day);
         onDateToChange(undefined);
         setSelectingEnd(true);
@@ -57,12 +65,14 @@ function DateRangePicker({
     }
   };
 
-  const handleClear = (e: React.MouseEvent) => {
+  const handleClear = (e: React.PointerEvent) => {
     e.stopPropagation();
+    e.preventDefault();
     onDateFromChange(undefined);
     onDateToChange(undefined);
     setSelectingEnd(false);
     setHoverDate(null);
+    setOpen(false);
   };
 
   const isInRange = (day: Date) => {
@@ -84,52 +94,69 @@ function DateRangePicker({
       return `${format(dateFrom, "MMM dd")} – ${format(dateTo, "MMM dd, yyyy")}`;
     }
     if (dateFrom) {
-      return `${format(dateFrom, "MMM dd, yyyy")} – ...`;
+      return `${format(dateFrom, "MMM dd")} – ...`;
     }
     return "Select date range";
   };
 
+  const currentTypeLabel = dateTypeOptions?.find(o => o.value === dateType)?.label || "Created";
+
   return (
-    <Popover open={open} onOpenChange={(val) => {
-      setOpen(val);
-      if (!val) {
-        setSelectingEnd(false);
-        setHoverDate(null);
-      }
-    }}>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          className={cn(
-            "w-full justify-start text-left font-normal h-7 text-[11px] border-border rounded-md px-2 group hover:bg-background hover:text-foreground",
-            !dateFrom && "text-muted-foreground",
-            triggerClassName
-          )}
-        >
-          <CalendarIcon className="mr-1.5 h-3 w-3 text-muted-foreground flex-shrink-0" />
-          <span className="flex-1 truncate">{displayText()}</span>
-          {(dateFrom || dateTo) && (
-            <span
-              className="h-4 w-4 flex items-center justify-center text-muted-foreground hover:text-foreground ml-1 flex-shrink-0 cursor-pointer"
-              onPointerDown={(e) => {
-                e.stopPropagation();
-                e.preventDefault();
-                onDateFromChange(undefined);
-                onDateToChange(undefined);
-                setSelectingEnd(false);
-                setHoverDate(null);
-                setOpen(false);
-              }}
+    <div className={cn("flex h-7 rounded-md border border-border overflow-hidden", triggerClassName)}>
+      {/* Left segment: Date Type */}
+      {dateTypeOptions && onDateTypeChange && (
+        <Popover open={typeDropdownOpen} onOpenChange={setTypeDropdownOpen}>
+          <PopoverTrigger asChild>
+            <button
+              className="flex items-center gap-1 px-2 text-[11px] font-medium text-foreground bg-muted/40 border-r border-border hover:bg-muted transition-colors whitespace-nowrap"
             >
-              <X className="h-3 w-3" />
-            </span>
-          )}
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent
-        className="w-auto p-0 border shadow-xl rounded-lg z-[70]"
-        align="start"
-      >
+              {currentTypeLabel}
+              <ChevronDown className="h-3 w-3 text-muted-foreground" />
+            </button>
+          </PopoverTrigger>
+          <PopoverContent className="w-44 p-1 border shadow-lg rounded-md z-[80]" align="start">
+            {dateTypeOptions.map((option) => (
+              <button
+                key={option.value}
+                onClick={() => {
+                  onDateTypeChange(option.value);
+                  setTypeDropdownOpen(false);
+                }}
+                className={cn(
+                  "w-full text-left px-3 py-1.5 text-[11px] rounded-sm transition-colors hover:bg-muted",
+                  dateType === option.value && "bg-accent font-medium"
+                )}
+              >
+                {option.label}
+              </button>
+            ))}
+          </PopoverContent>
+        </Popover>
+      )}
+
+      {/* Right segment: Date Range */}
+      <Popover open={open} onOpenChange={(val) => {
+        setOpen(val);
+        if (!val) {
+          setSelectingEnd(false);
+          setHoverDate(null);
+        }
+      }}>
+        <PopoverTrigger asChild>
+          <button
+            className={cn(
+              "flex-1 flex items-center px-2 text-[11px] text-left bg-background hover:bg-background transition-colors",
+              !dateFrom && "text-muted-foreground"
+            )}
+          >
+            <CalendarIcon className="mr-1.5 h-3 w-3 text-muted-foreground flex-shrink-0" />
+            <span className="flex-1 truncate">{displayText()}</span>
+          </button>
+        </PopoverTrigger>
+        <PopoverContent
+          className="w-auto p-0 border shadow-xl rounded-lg z-[70]"
+          align="start"
+        >
         <div className={cn("p-4", className)}>
           {/* Header */}
           <div className="flex items-center justify-between mb-3">
