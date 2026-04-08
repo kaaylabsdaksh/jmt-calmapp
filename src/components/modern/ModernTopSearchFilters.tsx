@@ -503,28 +503,24 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
 
         {viewMode === 'default' ? (
           <>
-            {/* Date Row: Date Type + Date Range + WO Item Status + Division + Location */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-1.5">
-              <Select value={dateType} onValueChange={setDateType}>
-                <SelectTrigger className={selectTriggerClass}>
-                  <SelectValue placeholder="Created" />
-                </SelectTrigger>
-                <SelectContent className={selectContentClass}>
-                  <SelectItem value="created">Created</SelectItem>
-                  <SelectItem value="arrival">Arrival</SelectItem>
-                  <SelectItem value="need-by">Need By</SelectItem>
-                  <SelectItem value="status-date">Status Date</SelectItem>
-                  <SelectItem value="last-comment">Last Comment</SelectItem>
-                  <SelectItem value="departure-date">Departure Date</SelectItem>
-                  <SelectItem value="samsara-doc-submit">Samsara Doc Submit Date</SelectItem>
-                </SelectContent>
-              </Select>
-
+            {/* Date Row: Date Range (with type) + WO Item Status + Division + Location */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-1.5">
               <DateRangePicker
                 dateFrom={dateFrom}
                 dateTo={dateTo}
                 onDateFromChange={setDateFrom}
                 onDateToChange={setDateTo}
+                dateType={dateType}
+                onDateTypeChange={setDateType}
+                dateTypeOptions={[
+                  { value: "created", label: "Created" },
+                  { value: "arrival", label: "Arrival" },
+                  { value: "need-by", label: "Need By" },
+                  { value: "status-date", label: "Status Date" },
+                  { value: "last-comment", label: "Last Comment" },
+                  { value: "departure-date", label: "Departure Date" },
+                  { value: "samsara-doc-submit", label: "Samsara Doc Submit" },
+                ]}
               />
 
               <Select value={searchValues.workOrderItemStatus || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, workOrderItemStatus: value === 'all' ? '' : value }))}>
