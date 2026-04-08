@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Calendar } from "@/components/ui/calendar";
+import { DateRangePicker } from "@/components/ui/date-range-picker";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
@@ -502,8 +503,8 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
 
         {viewMode === 'default' ? (
           <>
-            {/* Date Row: Date Type + From + To */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            {/* Date Row: Date Type + Date Range Picker */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-1.5">
               <Select value={dateType} onValueChange={setDateType}>
                 <SelectTrigger className={selectTriggerClass}>
                   <SelectValue placeholder="Created" />
@@ -519,48 +520,14 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                 </SelectContent>
               </Select>
 
-              <Popover open={dateFromOpen} onOpenChange={setDateFromOpen}>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className={cn(
-                      "w-full justify-start text-left font-normal h-8 text-xs border-gray-200 rounded-lg",
-                      !dateFrom && "text-gray-500"
-                    )}
-                  >
-                    <CalendarIcon className="mr-1.5 h-3.5 w-3.5 text-gray-400 flex-shrink-0" />
-                    {dateFrom ? format(dateFrom, "MMM dd, yyyy") : "From date"}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0 border border-gray-200 shadow-xl rounded-lg z-[70]" align="start">
-                  <Calendar mode="single" selected={dateFrom} onSelect={(date) => {
-                    setDateFrom(date);
-                    setDateFromOpen(false);
-                    setTimeout(() => setArrivalToOpen(true), 150);
-                  }} initialFocus className="pointer-events-auto rounded-lg p-3" />
-                </PopoverContent>
-              </Popover>
-
-              <Popover open={arrivalToOpen} onOpenChange={setArrivalToOpen}>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className={cn(
-                      "w-full justify-start text-left font-normal h-8 text-xs border-gray-200 rounded-lg",
-                      !dateTo && "text-gray-500"
-                    )}
-                  >
-                    <CalendarIcon className="mr-1.5 h-3.5 w-3.5 text-gray-400 flex-shrink-0" />
-                    {dateTo ? format(dateTo, "MMM dd, yyyy") : "To date"}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0 border border-gray-200 shadow-xl rounded-lg z-[70]" align="start">
-                  <Calendar mode="single" selected={dateTo} onSelect={(date) => {
-                    setDateTo(date);
-                    setArrivalToOpen(false);
-                  }} initialFocus className="pointer-events-auto rounded-lg p-3" />
-                </PopoverContent>
-              </Popover>
+              <div className="sm:col-span-2">
+                <DateRangePicker
+                  dateFrom={dateFrom}
+                  dateTo={dateTo}
+                  onDateFromChange={setDateFrom}
+                  onDateToChange={setDateTo}
+                />
+              </div>
             </div>
 
             {/* Row: WO Status, WO Type, Assignee, Action Code, Lab Code */}
@@ -926,52 +893,15 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                 </Popover>
               </div>
 
-              <div>
-                <Label className="text-sm font-medium text-muted-foreground mb-1.5 block">Arrival From</Label>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className={cn(
-                        "w-full justify-start text-left font-normal h-10 text-sm border-gray-200 rounded-lg",
-                        !dateFrom && "text-gray-500"
-                      )}
-                    >
-                      <CalendarIcon className="mr-2 h-4 w-4 text-gray-400 flex-shrink-0" />
-                      {dateFrom ? format(dateFrom, "MMM dd, yyyy") : "From date"}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0 border border-gray-200 shadow-xl rounded-lg z-[70]" align="start">
-                    <Calendar mode="single" selected={dateFrom} onSelect={(date) => {
-                      setDateFrom(date);
-                      setTimeout(() => setArrivalToOpen(true), 200);
-                    }} initialFocus className="pointer-events-auto rounded-lg p-3" />
-                  </PopoverContent>
-                </Popover>
-              </div>
-
-              <div>
-                <Label className="text-sm font-medium text-muted-foreground mb-1.5 block">Arrival To</Label>
-                <Popover open={arrivalToOpen} onOpenChange={setArrivalToOpen}>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className={cn(
-                        "w-full justify-start text-left font-normal h-10 text-sm border-gray-200 rounded-lg",
-                        !dateTo && "text-gray-500"
-                      )}
-                    >
-                      <CalendarIcon className="mr-2 h-4 w-4 text-gray-400 flex-shrink-0" />
-                      {dateTo ? format(dateTo, "MMM dd, yyyy") : "To date"}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0 border border-gray-200 shadow-xl rounded-lg z-[70]" align="start">
-                    <Calendar mode="single" selected={dateTo} onSelect={(date) => {
-                      setDateTo(date);
-                      setArrivalToOpen(false);
-                    }} initialFocus className="pointer-events-auto rounded-lg p-3" />
-                  </PopoverContent>
-                </Popover>
+              <div className="sm:col-span-2">
+                <Label className="text-sm font-medium text-muted-foreground mb-1.5 block">Arrival Date Range</Label>
+                <DateRangePicker
+                  dateFrom={dateFrom}
+                  dateTo={dateTo}
+                  onDateFromChange={setDateFrom}
+                  onDateToChange={setDateTo}
+                  triggerClassName="h-10 text-sm"
+                />
               </div>
             </div>
             {/* Selected filter badges */}
