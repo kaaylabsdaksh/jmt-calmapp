@@ -55,6 +55,7 @@ const FormVariationsDemo = () => {
   const [openAccordions, setOpenAccordions] = useState<string[]>(['general']);
   const [expandAllSections, setExpandAllSections] = useState<string[]>(singleAccordionValues);
   const [sectionOrder, setSectionOrder] = useState<string[]>([...singleAccordionValues]);
+  const [hiddenSections, setHiddenSections] = useState<string[]>([]);
   const [draggedSection, setDraggedSection] = useState<string | null>(null);
   const [dragOverSection, setDragOverSection] = useState<string | null>(null);
 
