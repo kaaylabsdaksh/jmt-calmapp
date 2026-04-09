@@ -13,7 +13,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, ChevronLeft, ChevronDown, ChevronUp, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, Trash2, FileText, Camera, User, Shield, Wrench, Activity, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock, ExternalLink, ArrowUp, ArrowDown, ArrowLeft, Pencil, ImageIcon, Plus, Minus, MoreHorizontal, Play, Square, RefreshCw, Minimize2, Maximize2, GripVertical, RotateCcw } from "lucide-react";
+import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, ChevronLeft, ChevronDown, ChevronUp, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, EyeOff, Trash2, FileText, Camera, User, Shield, Wrench, Activity, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock, ExternalLink, ArrowUp, ArrowDown, ArrowLeft, Pencil, ImageIcon, Plus, Minus, MoreHorizontal, Play, Square, RefreshCw, Minimize2, Maximize2, GripVertical, RotateCcw } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
@@ -55,6 +55,7 @@ const FormVariationsDemo = () => {
   const [openAccordions, setOpenAccordions] = useState<string[]>(['general']);
   const [expandAllSections, setExpandAllSections] = useState<string[]>(singleAccordionValues);
   const [sectionOrder, setSectionOrder] = useState<string[]>([...singleAccordionValues]);
+  const [hiddenSections, setHiddenSections] = useState<string[]>([]);
   const [draggedSection, setDraggedSection] = useState<string | null>(null);
   const [dragOverSection, setDragOverSection] = useState<string | null>(null);
 
@@ -7805,6 +7806,7 @@ const FormVariationsDemo = () => {
                                 onClick={() => {
                                   setExpandAllSections([...singleAccordionValues]);
                                   setSectionOrder([...singleAccordionValues]);
+                                  setHiddenSections([]);
                                 }}
                                 className="p-1 rounded-md hover:bg-muted transition-colors"
                               >
@@ -7846,6 +7848,28 @@ const FormVariationsDemo = () => {
                               }}
                             />
                             <label htmlFor={`expand-${val}`} className="text-xs cursor-pointer flex-1">{singleAccordionLabels[val]}</label>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setHiddenSections(prev =>
+                                      prev.includes(val) ? prev.filter(v => v !== val) : [...prev, val]
+                                    );
+                                  }}
+                                  className="p-0.5 rounded hover:bg-muted transition-colors"
+                                >
+                                  {hiddenSections.includes(val) ? (
+                                    <EyeOff className="h-3 w-3 text-muted-foreground" />
+                                  ) : (
+                                    <Eye className="h-3 w-3 text-muted-foreground" />
+                                  )}
+                                </button>
+                              </TooltipTrigger>
+                              <TooltipContent side="left" className="text-xs">
+                                {hiddenSections.includes(val) ? 'Show section' : 'Hide section'}
+                              </TooltipContent>
+                            </Tooltip>
                           </div>
                         ))}
                       </div>
@@ -7871,7 +7895,7 @@ const FormVariationsDemo = () => {
                   </Button>
                 </div>
                 <Accordion type="multiple" value={openAccordions} onValueChange={setOpenAccordions} className="space-y-0 accordion-fields">
-                {sectionOrder.map((sectionId) => {
+                {sectionOrder.filter(id => !hiddenSections.includes(id)).map((sectionId) => {
                   const sectionConfig: Record<string, { icon: any; label: string; statusKey?: string; render: () => React.ReactNode; lastItem?: boolean }> = {
                     'general': { icon: Info, label: 'General', statusKey: 'general', render: () => renderGeneralSection(accordionDensity === 'compact') },
                     'product': { icon: Package, label: 'Product', statusKey: 'product', render: () => renderProductSection(accordionDensity === 'compact') },
