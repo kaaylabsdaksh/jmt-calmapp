@@ -7806,6 +7806,7 @@ const FormVariationsDemo = () => {
                                 onClick={() => {
                                   setExpandAllSections([...singleAccordionValues]);
                                   setSectionOrder([...singleAccordionValues]);
+                                  setHiddenSections([]);
                                 }}
                                 className="p-1 rounded-md hover:bg-muted transition-colors"
                               >
@@ -7847,6 +7848,28 @@ const FormVariationsDemo = () => {
                               }}
                             />
                             <label htmlFor={`expand-${val}`} className="text-xs cursor-pointer flex-1">{singleAccordionLabels[val]}</label>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setHiddenSections(prev =>
+                                      prev.includes(val) ? prev.filter(v => v !== val) : [...prev, val]
+                                    );
+                                  }}
+                                  className="p-0.5 rounded hover:bg-muted transition-colors"
+                                >
+                                  {hiddenSections.includes(val) ? (
+                                    <EyeOff className="h-3 w-3 text-muted-foreground" />
+                                  ) : (
+                                    <Eye className="h-3 w-3 text-muted-foreground" />
+                                  )}
+                                </button>
+                              </TooltipTrigger>
+                              <TooltipContent side="left" className="text-xs">
+                                {hiddenSections.includes(val) ? 'Show section' : 'Hide section'}
+                              </TooltipContent>
+                            </Tooltip>
                           </div>
                         ))}
                       </div>
@@ -7872,7 +7895,7 @@ const FormVariationsDemo = () => {
                   </Button>
                 </div>
                 <Accordion type="multiple" value={openAccordions} onValueChange={setOpenAccordions} className="space-y-0 accordion-fields">
-                {sectionOrder.map((sectionId) => {
+                {sectionOrder.filter(id => !hiddenSections.includes(id)).map((sectionId) => {
                   const sectionConfig: Record<string, { icon: any; label: string; statusKey?: string; render: () => React.ReactNode; lastItem?: boolean }> = {
                     'general': { icon: Info, label: 'General', statusKey: 'general', render: () => renderGeneralSection(accordionDensity === 'compact') },
                     'product': { icon: Package, label: 'Product', statusKey: 'product', render: () => renderProductSection(accordionDensity === 'compact') },
