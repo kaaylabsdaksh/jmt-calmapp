@@ -63,18 +63,20 @@ const ModernTopNav = () => {
 
         {/* Action Buttons */}
         <div className="flex items-center gap-1 sm:gap-2 w-full sm:w-auto">
-          <Button 
-            variant="outline"
-            className="rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border-border text-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary bg-transparent transform hover:scale-105 text-xs sm:text-sm font-medium px-3 sm:px-4"
-            onClick={() => {
-              if (location.pathname === "/onsite-projects") navigate("/onsite-projects/new");
-              else navigate("/add-new-work-order", { state: { from: 'home' } });
-            }}
-          >
-            <Plus className="h-4 w-4 mr-2" />
-            <span className="hidden sm:inline">Add New</span>
-            <span className="sm:hidden">Add</span>
-          </Button>
+          {location.pathname !== "/onsite-projects/new" && (
+            <Button 
+              variant="outline"
+              className="rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border-border text-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary bg-transparent transform hover:scale-105 text-xs sm:text-sm font-medium px-3 sm:px-4"
+              onClick={() => {
+                if (location.pathname === "/onsite-projects") navigate("/onsite-projects/new");
+                else navigate("/add-new-work-order", { state: { from: 'home' } });
+              }}
+            >
+              <Plus className="h-4 w-4 mr-2" />
+              <span className="hidden sm:inline">Add New</span>
+              <span className="sm:hidden">Add</span>
+            </Button>
+          )}
           {location.pathname === "/onsite-projects" ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
