@@ -126,10 +126,50 @@ const OnsiteProjects = () => {
                 <Input
                   value={searchValue}
                   onChange={(e) => setSearchValue(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      addSearchChip();
+                    }
+                  }}
                   placeholder="Enter value and press Enter or click Add..."
                   className="h-8 text-xs border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                 />
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="ghost"
+                  onClick={addSearchChip}
+                  disabled={!searchValue.trim()}
+                  className="h-8 px-3 text-xs rounded-none border-l border-input"
+                >
+                  <Plus className="h-3.5 w-3.5 mr-1" />Add
+                </Button>
               </div>
+
+              {/* Active search chips */}
+              {searchChips.length > 0 && (
+                <div className="flex flex-wrap gap-1.5">
+                  {searchChips.map(chip => (
+                    <Badge
+                      key={chip.id}
+                      variant="secondary"
+                      className="h-6 text-[11px] font-normal pl-2 pr-1 gap-1"
+                    >
+                      <span className="text-muted-foreground">{chip.fieldLabel}:</span>
+                      <span className="text-foreground">{chip.value}</span>
+                      <button
+                        type="button"
+                        onClick={() => removeSearchChip(chip.id)}
+                        className="ml-0.5 rounded-sm hover:bg-muted-foreground/20 p-0.5"
+                        aria-label={`Remove ${chip.fieldLabel} ${chip.value}`}
+                      >
+                        <X className="h-3 w-3" />
+                      </button>
+                    </Badge>
+                  ))}
+                </div>
+              )}
 
               {/* Date + Status */}
               {/* Date / Status / Salesperson / Location */}
