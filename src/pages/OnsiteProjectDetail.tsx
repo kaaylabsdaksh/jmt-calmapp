@@ -434,37 +434,10 @@ const OnsiteProjectDetail = () => {
           </SectionCard>
 
           {/* Quotes */}
-          <SectionCard
-            title="Linked Quotes"
-            action={
-              <Button size="sm" variant="outline" className="h-7 text-xs">
-                <Plus className="h-3.5 w-3.5 mr-1" /> Link Quote
-              </Button>
-            }
-          >
-            <Table>
-              <TableHeader>
-                <TableRow className="hover:bg-transparent">
-                  {["Quote #","Acct #","JM Location","Customer","Quote Status","Lab/ESL","Total"].map(h => (
-                    <TableHead key={h} className="text-[11px] uppercase tracking-wide">{h}</TableHead>
-                  ))}
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                <EmptyRow colSpan={7} />
-              </TableBody>
-            </Table>
-          </SectionCard>
-
+          <SectionCard title="Linked Quotes">
+...
           {/* WO Batches */}
-          <SectionCard
-            title="Work Order Batches"
-            action={
-              <Button size="sm" variant="outline" className="h-7 text-xs">
-                <Plus className="h-3.5 w-3.5 mr-1" /> Link Batch
-              </Button>
-            }
-          >
+          <SectionCard title="Work Order Batches">
             <Table>
               <TableHeader>
                 <TableRow className="hover:bg-transparent">
