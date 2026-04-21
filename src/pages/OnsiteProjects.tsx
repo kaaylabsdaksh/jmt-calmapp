@@ -260,12 +260,20 @@ const OnsiteProjects = () => {
               </div>
 
               {/* Action buttons */}
-              <div className="flex items-center justify-end gap-2 pt-2 border-t">
-                <Button size="sm" variant="outline" className="h-8 text-xs" onClick={handleClear}>
-                  <RotateCcw className="h-3.5 w-3.5 mr-1.5" />Clear All
+              <div className="flex justify-end gap-2 pt-1.5">
+                <Button
+                  variant="outline"
+                  onClick={handleClear}
+                  className="rounded-lg h-8 px-4 text-xs font-medium border-destructive text-destructive hover:bg-destructive/10 hover:text-destructive"
+                >
+                  <RotateCcw className="h-3.5 w-3.5 mr-1.5" />
+                  Clear All
                 </Button>
-                <Button size="sm" className="h-8 text-xs">
-                  <Search className="h-3.5 w-3.5 mr-1.5" />Search
+                <Button
+                  className="rounded-lg h-8 px-5 text-xs font-medium bg-blue-600 hover:bg-blue-700 text-white shadow-sm"
+                >
+                  <Search className="h-3.5 w-3.5 mr-1.5" />
+                  Search
                 </Button>
               </div>
             </CardContent>
