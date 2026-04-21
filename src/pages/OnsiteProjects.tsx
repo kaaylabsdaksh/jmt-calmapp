@@ -107,6 +107,14 @@ const OnsiteProjects = () => {
     else setModifiedTo(d);
   };
 
+  const [hasSearched, setHasSearched] = useState(false);
+  const [results, setResults] = useState<ProjectRow[]>([]);
+
+  const handleSearch = () => {
+    setResults(mockProjects);
+    setHasSearched(true);
+  };
+
   const handleClear = () => {
     setSearchValue("");
     setSearchChips([]);
@@ -116,6 +124,8 @@ const OnsiteProjects = () => {
     setStartFrom(undefined); setStartTo(undefined);
     setCreatedFrom(undefined); setCreatedTo(undefined);
     setModifiedFrom(undefined); setModifiedTo(undefined);
+    setResults([]);
+    setHasSearched(false);
   };
 
   return (
