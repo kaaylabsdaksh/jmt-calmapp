@@ -125,6 +125,7 @@ const OnsiteProjects = () => {
                 <Select value={status} onValueChange={setStatus}>
                   <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="All Status" /></SelectTrigger>
                   <SelectContent>
+                    <SelectItem value="all">All Status</SelectItem>
                     <SelectItem value="created">Created</SelectItem>
                     <SelectItem value="checked-out">Checked Out</SelectItem>
                     <SelectItem value="completed">Completed</SelectItem>
@@ -134,6 +135,7 @@ const OnsiteProjects = () => {
                 <Select value={salesperson} onValueChange={setSalesperson}>
                   <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="All Salesperson" /></SelectTrigger>
                   <SelectContent>
+                    <SelectItem value="all">All Salesperson</SelectItem>
                     <SelectItem value="john-doe">John Doe</SelectItem>
                     <SelectItem value="jane-smith">Jane Smith</SelectItem>
                     <SelectItem value="mike-wilson">Mike Wilson</SelectItem>
@@ -142,6 +144,7 @@ const OnsiteProjects = () => {
                 <Select value={location} onValueChange={setLocation}>
                   <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="All Location" /></SelectTrigger>
                   <SelectContent>
+                    <SelectItem value="all">All Location</SelectItem>
                     <SelectItem value="baton-rouge">Baton Rouge</SelectItem>
                     <SelectItem value="houston">Houston</SelectItem>
                     <SelectItem value="dallas">Dallas</SelectItem>
@@ -154,6 +157,7 @@ const OnsiteProjects = () => {
                 <Select value={division} onValueChange={setDivision}>
                   <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="All Division" /></SelectTrigger>
                   <SelectContent>
+                    <SelectItem value="all">All Division</SelectItem>
                     <SelectItem value="cal">Calibration</SelectItem>
                     <SelectItem value="repair">Repair</SelectItem>
                     <SelectItem value="field">Field Service</SelectItem>
@@ -162,6 +166,7 @@ const OnsiteProjects = () => {
                 <Select value={vehicle} onValueChange={setVehicle}>
                   <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="All Vehicle" /></SelectTrigger>
                   <SelectContent>
+                    <SelectItem value="all">All Vehicle</SelectItem>
                     <SelectItem value="van-1">Van 1 - LA1234</SelectItem>
                     <SelectItem value="van-2">Van 2 - LA5678</SelectItem>
                     <SelectItem value="truck-1">Truck 1 - TX9012</SelectItem>
@@ -170,6 +175,7 @@ const OnsiteProjects = () => {
                 <Select value={stateVal} onValueChange={setStateVal}>
                   <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="All State" /></SelectTrigger>
                   <SelectContent>
+                    <SelectItem value="all">All State</SelectItem>
                     <SelectItem value="LA">LA</SelectItem>
                     <SelectItem value="TX">TX</SelectItem>
                     <SelectItem value="MS">MS</SelectItem>
@@ -179,6 +185,7 @@ const OnsiteProjects = () => {
                 <Select value={confirmed} onValueChange={setConfirmed}>
                   <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="All Confirmed" /></SelectTrigger>
                   <SelectContent>
+                    <SelectItem value="all">All Confirmed</SelectItem>
                     <SelectItem value="yes">Confirmed: Yes</SelectItem>
                     <SelectItem value="no">Confirmed: No</SelectItem>
                   </SelectContent>
@@ -186,6 +193,7 @@ const OnsiteProjects = () => {
                 <Select value={poReceived} onValueChange={setPoReceived}>
                   <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="All PO Received" /></SelectTrigger>
                   <SelectContent>
+                    <SelectItem value="all">All PO Received</SelectItem>
                     <SelectItem value="yes">PO Received: Yes</SelectItem>
                     <SelectItem value="no">PO Received: No</SelectItem>
                   </SelectContent>
