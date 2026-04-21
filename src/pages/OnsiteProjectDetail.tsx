@@ -109,6 +109,31 @@ const OnsiteProjectDetail = () => {
   const [vehicleSelect, setVehicleSelect] = useState("");
   const [techSelect, setTechSelect] = useState("");
 
+  type TechRow = { id: string; value: string; name: string; role: string; comment: string };
+  const TECH_OPTIONS: Record<string, string> = {
+    john: "John Doe",
+    jane: "Jane Smith",
+    mike: "Mike Wilson",
+  };
+  const [technicians, setTechnicians] = useState<TechRow[]>([]);
+  const handleAddTech = () => {
+    if (!techSelect) return;
+    if (technicians.some(t => t.value === techSelect)) return;
+    setTechnicians(prev => [
+      ...prev,
+      {
+        id: `${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+        value: techSelect,
+        name: TECH_OPTIONS[techSelect] ?? techSelect,
+        role: "",
+        comment: "",
+      },
+    ]);
+    setTechSelect("");
+  };
+  const handleRemoveTech = (id: string) =>
+    setTechnicians(prev => prev.filter(t => t.id !== id));
+
   // Accounts state
   const [accounts, setAccounts] = useState<AccountRow[]>([]);
   const [acctDialogOpen, setAcctDialogOpen] = useState(false);
