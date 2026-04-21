@@ -80,6 +80,48 @@ const OnsiteProjectDetail = () => {
   const [vehicleSelect, setVehicleSelect] = useState("");
   const [techSelect, setTechSelect] = useState("");
 
+  // Accounts state
+  const [accounts, setAccounts] = useState<AccountRow[]>([]);
+  const [acctDialogOpen, setAcctDialogOpen] = useState(false);
+  const [acctForm, setAcctForm] = useState<{
+    acct: string; jmLocation: string; division: string;
+    startDate?: Date; endDate?: Date;
+  }>({ acct: "", jmLocation: "", division: "" });
+
+  const resetAcctForm = () =>
+    setAcctForm({ acct: "", jmLocation: "", division: "", startDate: undefined, endDate: undefined });
+
+  const handleAddAccount = () => {
+    const trimmed = acctForm.acct.trim();
+    if (!trimmed || !acctForm.jmLocation || !acctForm.division || !acctForm.startDate || !acctForm.endDate) return;
+    const lookup = accountLookup[trimmed] ?? {
+      sr: "—", osr: "—", customer: "—", rep: "—", cityState: "—",
+    };
+    setAccounts(prev => [
+      ...prev,
+      {
+        id: `${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+        acct: trimmed,
+        jmLocation: acctForm.jmLocation,
+        division: acctForm.division,
+        startDate: acctForm.startDate,
+        endDate: acctForm.endDate,
+        poRcvd: "No",
+        confirmed: "No",
+        ...lookup,
+      },
+    ]);
+    resetAcctForm();
+    setAcctDialogOpen(false);
+  };
+
+  const removeAccount = (id: string) =>
+    setAccounts(prev => prev.filter(a => a.id !== id));
+
+  const acctFormValid =
+    !!acctForm.acct.trim() && !!acctForm.jmLocation && !!acctForm.division &&
+    !!acctForm.startDate && !!acctForm.endDate;
+
   return (
     <div className="bg-background min-h-full">
       <ModernTopNav />
