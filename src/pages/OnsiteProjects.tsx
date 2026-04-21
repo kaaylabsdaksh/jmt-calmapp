@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search, RotateCcw, Plus, Download, FileSpreadsheet, ArrowLeft, Menu as MenuIcon } from "lucide-react";
+import { Search, RotateCcw, Plus, Download, FileSpreadsheet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -239,12 +239,6 @@ const OnsiteProjects = () => {
                   </Button>
                   <Button size="sm" variant="outline" className="h-8 text-xs">
                     <FileSpreadsheet className="h-3.5 w-3.5 mr-1.5" />Export w/Details
-                  </Button>
-                  <Button size="sm" variant="ghost" className="h-8 text-xs">
-                    <ArrowLeft className="h-3.5 w-3.5 mr-1.5" />Back
-                  </Button>
-                  <Button size="sm" variant="ghost" className="h-8 text-xs">
-                    <MenuIcon className="h-3.5 w-3.5 mr-1.5" />Menu
                   </Button>
                 </div>
               </div>
