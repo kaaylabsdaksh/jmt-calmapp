@@ -166,7 +166,12 @@ const OnsiteProjectDetail = () => {
           <SectionCard
             title="Accounts"
             action={
-              <Button size="sm" variant="outline" className="h-7 text-xs">
+              <Button
+                size="sm"
+                variant="outline"
+                className="h-7 text-xs"
+                onClick={() => { resetAcctForm(); setAcctDialogOpen(true); }}
+              >
                 <Plus className="h-3.5 w-3.5 mr-1" /> Add Account
               </Button>
             }
@@ -174,13 +179,43 @@ const OnsiteProjectDetail = () => {
             <Table>
               <TableHeader>
                 <TableRow className="hover:bg-transparent">
-                  {["Acct #","SR #","OSR #","JM Location","Division","Customer","Rep","City, State","Start Date","End Date","PO Rcv'd","Confirmed"].map(h => (
-                    <TableHead key={h} className="text-[11px] uppercase tracking-wide">{h}</TableHead>
+                  {["Acct #","SR #","OSR #","JM Location","Division","Customer","Rep","City, State","Start Date","End Date","PO Rcv'd","Confirmed",""].map((h, i) => (
+                    <TableHead key={`${h}-${i}`} className="text-[11px] uppercase tracking-wide">{h}</TableHead>
                   ))}
                 </TableRow>
               </TableHeader>
               <TableBody>
-                <EmptyRow colSpan={12} />
+                {accounts.length === 0 ? (
+                  <EmptyRow colSpan={13} />
+                ) : (
+                  accounts.map(row => (
+                    <TableRow key={row.id} className="text-xs">
+                      <TableCell className="py-2 font-medium">{row.acct}</TableCell>
+                      <TableCell className="py-2">{row.sr}</TableCell>
+                      <TableCell className="py-2">{row.osr}</TableCell>
+                      <TableCell className="py-2">{row.jmLocation}</TableCell>
+                      <TableCell className="py-2">{row.division}</TableCell>
+                      <TableCell className="py-2">{row.customer}</TableCell>
+                      <TableCell className="py-2">{row.rep}</TableCell>
+                      <TableCell className="py-2">{row.cityState}</TableCell>
+                      <TableCell className="py-2">{row.startDate ? format(row.startDate, "MM/dd/yyyy") : "—"}</TableCell>
+                      <TableCell className="py-2">{row.endDate ? format(row.endDate, "MM/dd/yyyy") : "—"}</TableCell>
+                      <TableCell className="py-2">{row.poRcvd}</TableCell>
+                      <TableCell className="py-2">{row.confirmed}</TableCell>
+                      <TableCell className="py-2 text-right">
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="h-6 w-6 p-0 text-muted-foreground hover:text-destructive"
+                          onClick={() => removeAccount(row.id)}
+                          aria-label="Remove account"
+                        >
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
               </TableBody>
             </Table>
             <div className="flex justify-end gap-2 px-3 py-2 border-t bg-muted/30">
