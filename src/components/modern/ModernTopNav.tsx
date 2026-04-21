@@ -13,6 +13,7 @@ import {
 const routeMeta: Record<string, { title: string; crumb: string }> = {
   "/": { title: "Work Order Management", crumb: "Work Orders" },
   "/onsite-projects": { title: "Onsite Projects", crumb: "Onsite Projects" },
+  "/onsite-projects/new": { title: "Onsite Project # XXX", crumb: "New Project" },
 };
 
 const ModernTopNav = () => {
@@ -56,7 +57,10 @@ const ModernTopNav = () => {
           <Button 
             variant="outline"
             className="rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border-border text-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary bg-transparent transform hover:scale-105 text-xs sm:text-sm font-medium px-3 sm:px-4"
-            onClick={() => navigate("/add-new-work-order", { state: { from: 'home' } })}
+            onClick={() => {
+              if (location.pathname === "/onsite-projects") navigate("/onsite-projects/new");
+              else navigate("/add-new-work-order", { state: { from: 'home' } });
+            }}
           >
             <Plus className="h-4 w-4 mr-2" />
             <span className="hidden sm:inline">Add New</span>
