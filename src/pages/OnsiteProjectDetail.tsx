@@ -289,8 +289,30 @@ const OnsiteProjectDetail = () => {
                           </PopoverContent>
                         </Popover>
                       </TableCell>
-                      <TableCell className="py-2 text-xs text-muted-foreground">No</TableCell>
-                      <TableCell className="py-2 text-xs text-muted-foreground">No</TableCell>
+                      <TableCell className="py-2">
+                        <Select
+                          value={acctForm.poRcvd}
+                          onValueChange={(v) => setAcctForm(s => ({ ...s, poRcvd: v }))}
+                        >
+                          <SelectTrigger className="h-7 text-xs"><SelectValue /></SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="Yes">Yes</SelectItem>
+                            <SelectItem value="No">No</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </TableCell>
+                      <TableCell className="py-2">
+                        <Select
+                          value={acctForm.confirmed}
+                          onValueChange={(v) => setAcctForm(s => ({ ...s, confirmed: v }))}
+                        >
+                          <SelectTrigger className="h-7 text-xs"><SelectValue /></SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="Yes">Yes</SelectItem>
+                            <SelectItem value="No">No</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </TableCell>
                       <TableCell className="py-2 text-right">
                         <div className="flex items-center justify-end gap-1">
                           <Button
