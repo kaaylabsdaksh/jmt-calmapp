@@ -372,20 +372,7 @@ const OnsiteProjectDetail = () => {
                 ) : (
                   accounts.map(row => (
                     <TableRow key={row.id} className="text-xs">
-                      <TableCell className="py-2">
-                        <Input
-                          value={row.acct}
-                          onChange={(e) => {
-                            const next = e.target.value;
-                            setAccounts(prev => prev.map(a => {
-                              if (a.id !== row.id) return a;
-                              const info = getAccountInfo(next) ?? { sr: "—", osr: "—", customer: "—", rep: "—", cityState: "—" };
-                              return { ...a, acct: next, ...info };
-                            }));
-                          }}
-                          className="h-7 text-xs font-medium"
-                        />
-                      </TableCell>
+                      <TableCell className="py-2 font-medium">{row.acct}</TableCell>
                       <TableCell className="py-2">{row.sr}</TableCell>
                       <TableCell className="py-2">{row.osr}</TableCell>
                       <TableCell className="py-2">{row.jmLocation}</TableCell>
