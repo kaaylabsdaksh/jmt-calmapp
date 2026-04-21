@@ -186,8 +186,9 @@ const OnsiteProjects = () => {
                   <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="All Confirmed" /></SelectTrigger>
                   <SelectContent>
                     <SelectItem value="all">All Confirmed</SelectItem>
-                    <SelectItem value="yes">Confirmed: Yes</SelectItem>
-                    <SelectItem value="no">Confirmed: No</SelectItem>
+                    <SelectItem value="yes">Yes</SelectItem>
+                    <SelectItem value="no">No</SelectItem>
+                    <SelectItem value="partial">Partial</SelectItem>
                   </SelectContent>
                 </Select>
                 <Select value={poReceived} onValueChange={setPoReceived}>
