@@ -93,7 +93,7 @@ const quickActionCategories = {
     { title: "Manage Templates", icon: FileSpreadsheet },
   ],
   "Project Management": [
-    { title: "Onsite Projects", icon: MapPin },
+    { title: "Onsite Projects", icon: MapPin, url: "/onsite-projects" },
     { title: "Outsource Vendors", icon: Truck },
     { title: "Onsite Work Orders", icon: ClipboardList },
   ]
