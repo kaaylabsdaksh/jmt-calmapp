@@ -240,12 +240,6 @@ const OnsiteProjects = () => {
                   <Button size="sm" variant="outline" className="h-8 text-xs">
                     <FileSpreadsheet className="h-3.5 w-3.5 mr-1.5" />Export w/Details
                   </Button>
-                  <Button size="sm" variant="ghost" className="h-8 text-xs">
-                    <ArrowLeft className="h-3.5 w-3.5 mr-1.5" />Back
-                  </Button>
-                  <Button size="sm" variant="ghost" className="h-8 text-xs">
-                    <MenuIcon className="h-3.5 w-3.5 mr-1.5" />Menu
-                  </Button>
                 </div>
               </div>
             </CardContent>
