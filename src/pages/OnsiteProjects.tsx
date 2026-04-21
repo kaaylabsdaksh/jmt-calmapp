@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search, RotateCcw, Plus, Download, FileSpreadsheet } from "lucide-react";
+import { Search, RotateCcw, Download, FileSpreadsheet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -228,9 +228,6 @@ const OnsiteProjects = () => {
                   <Button size="sm" className="h-8 text-xs"><Search className="h-3.5 w-3.5 mr-1.5" />Search</Button>
                   <Button size="sm" variant="outline" className="h-8 text-xs" onClick={handleClear}>
                     <RotateCcw className="h-3.5 w-3.5 mr-1.5" />Clear
-                  </Button>
-                  <Button size="sm" variant="outline" className="h-8 text-xs">
-                    <Plus className="h-3.5 w-3.5 mr-1.5" />Add New
                   </Button>
                 </div>
                 <div className="flex flex-wrap gap-2">
