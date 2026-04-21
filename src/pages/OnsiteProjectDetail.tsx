@@ -543,7 +543,7 @@ const OnsiteProjectDetail = () => {
                     <SelectItem value="mike">Mike Wilson</SelectItem>
                   </SelectContent>
                 </Select>
-                <Button size="sm" variant="outline" className="h-7 text-xs">
+                <Button size="sm" variant="outline" className="h-7 text-xs" disabled={!techSelect} onClick={handleAddTech}>
                   <UserPlus className="h-3.5 w-3.5 mr-1" /> Add Tech
                 </Button>
               </div>
@@ -559,7 +559,36 @@ const OnsiteProjectDetail = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                <EmptyRow colSpan={4} />
+                {technicians.length === 0 ? (
+                  <EmptyRow colSpan={4} />
+                ) : (
+                  technicians.map((t) => (
+                    <TableRow key={t.id}>
+                      <TableCell className="py-2 text-xs font-medium">{t.name}</TableCell>
+                      <TableCell className="py-2">
+                        <Input
+                          value={t.role}
+                          onChange={(e) => setTechnicians(prev => prev.map(r => r.id === t.id ? { ...r, role: e.target.value } : r))}
+                          placeholder="Role"
+                          className="h-7 text-xs"
+                        />
+                      </TableCell>
+                      <TableCell className="py-2">
+                        <Input
+                          value={t.comment}
+                          onChange={(e) => setTechnicians(prev => prev.map(r => r.id === t.id ? { ...r, comment: e.target.value } : r))}
+                          placeholder="Comments"
+                          className="h-7 text-xs"
+                        />
+                      </TableCell>
+                      <TableCell className="py-2">
+                        <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => handleRemoveTech(t.id)}>
+                          <Trash2 className="h-3.5 w-3.5 text-muted-foreground" />
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
               </TableBody>
             </Table>
           </SectionCard>
