@@ -124,7 +124,7 @@ const OnsiteProjectDetail = () => {
   const handleAddAccount = () => {
     const trimmed = acctForm.acct.trim();
     if (!trimmed || !acctForm.jmLocation || !acctForm.division || !acctForm.startDate || !acctForm.endDate) return;
-    const lookup = accountLookup[trimmed] ?? {
+    const lookup = getAccountInfo(trimmed) ?? {
       sr: "—", osr: "—", customer: "—", rep: "—", cityState: "—",
     };
     setAccounts(prev => [
@@ -221,7 +221,7 @@ const OnsiteProjectDetail = () => {
               <TableBody>
                 {/* Inline add-account editor row */}
                 {acctDialogOpen && (() => {
-                  const lookup = accountLookup[acctForm.acct.trim()];
+                  const lookup = getAccountInfo(acctForm.acct);
                   const placeholder = (v?: string) => v ?? "—";
                   return (
                     <TableRow className="bg-muted/30 hover:bg-muted/30 align-top">
