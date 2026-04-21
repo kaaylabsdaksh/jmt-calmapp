@@ -585,13 +585,6 @@ const OnsiteProjectDetail = () => {
                   <BarChart3 className="h-3.5 w-3.5 mr-2" /> Value Report
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="text-xs">
-                  <Truck className="h-3.5 w-3.5 mr-2" /> Add Vehicle
-                </DropdownMenuItem>
-                <DropdownMenuItem className="text-xs">
-                  <UserPlus className="h-3.5 w-3.5 mr-2" /> Add Tech
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
                 <DropdownMenuItem className="text-xs text-destructive focus:text-destructive">
                   <X className="h-3.5 w-3.5 mr-2" /> Cancel Project
                 </DropdownMenuItem>
