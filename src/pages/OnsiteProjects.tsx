@@ -107,7 +107,8 @@ const OnsiteProjects = () => {
               </div>
 
               {/* Date + Status */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              {/* Date / Status / Salesperson / Location */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
                 <DateRangePicker
                   dateFrom={dateFromMap[dateType]}
                   dateTo={dateToMap[dateType]}
@@ -130,10 +131,6 @@ const OnsiteProjects = () => {
                     <SelectItem value="cancelled">Cancelled</SelectItem>
                   </SelectContent>
                 </Select>
-              </div>
-
-              {/* Row: Salesperson / Location / Division */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                 <Select value={salesperson} onValueChange={setSalesperson}>
                   <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="All Salesperson" /></SelectTrigger>
                   <SelectContent>
@@ -150,6 +147,10 @@ const OnsiteProjects = () => {
                     <SelectItem value="dallas">Dallas</SelectItem>
                   </SelectContent>
                 </Select>
+              </div>
+
+              {/* Division / Vehicle / State / Confirmed / PO Received */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
                 <Select value={division} onValueChange={setDivision}>
                   <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="All Division" /></SelectTrigger>
                   <SelectContent>
@@ -158,10 +159,6 @@ const OnsiteProjects = () => {
                     <SelectItem value="field">Field Service</SelectItem>
                   </SelectContent>
                 </Select>
-              </div>
-
-              {/* Row: Vehicle / State / Confirmed / PO Received */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 <Select value={vehicle} onValueChange={setVehicle}>
                   <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="All Vehicle" /></SelectTrigger>
                   <SelectContent>
