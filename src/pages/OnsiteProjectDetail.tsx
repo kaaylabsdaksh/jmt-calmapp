@@ -52,7 +52,7 @@ const OnsiteProjectDetail = () => {
   return (
     <div className="bg-background min-h-full">
       <ModernTopNav />
-      <main className="w-full max-w-none px-2 sm:px-4 lg:px-6 py-3 sm:py-6 pb-24">
+      <main className="w-full max-w-none px-2 sm:px-4 lg:px-6 py-3 sm:py-6">
         <div className="w-full space-y-4">
           {/* Header strip: Project # + Status */}
           <Card>
@@ -263,8 +263,8 @@ const OnsiteProjectDetail = () => {
         </div>
       </main>
 
-      {/* Sticky footer actions — standardized layout */}
-      <div className="fixed bottom-0 left-0 right-0 z-30 border-t border-border bg-background shadow-lg">
+      {/* Footer actions — sticky inside content column so sidebar isn't overlapped */}
+      <div className="sticky bottom-0 z-30 border-t border-border bg-background shadow-lg">
         <div className="w-full max-w-none px-2 sm:px-4 lg:px-6 py-2 flex items-center justify-between gap-2">
           {/* Left: More actions */}
           <div className="flex items-center gap-2">
