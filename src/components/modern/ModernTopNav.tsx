@@ -95,14 +95,16 @@ const ModernTopNav = () => {
               <Download className="h-4 w-4" />
             </Button>
           )}
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            className="p-2 rounded-lg hover:bg-primary hover:text-primary-foreground hover:shadow-md transition-all duration-300 transform hover:scale-105"
-            title="Settings"
-          >
-            <Settings className="h-4 w-4" />
-          </Button>
+          {location.pathname !== "/onsite-projects" && (
+            <Button
+              variant="ghost"
+              size="sm"
+              className="p-2 rounded-lg hover:bg-primary hover:text-primary-foreground hover:shadow-md transition-all duration-300 transform hover:scale-105"
+              title="Settings"
+            >
+              <Settings className="h-4 w-4" />
+            </Button>
+          )}
         </div>
       </div>
     </header>
