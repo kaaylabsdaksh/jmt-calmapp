@@ -86,10 +86,11 @@ const OnsiteProjectDetail = () => {
   const [acctForm, setAcctForm] = useState<{
     acct: string; jmLocation: string; division: string;
     startDate?: Date; endDate?: Date;
-  }>({ acct: "", jmLocation: "", division: "" });
+    poRcvd: string; confirmed: string;
+  }>({ acct: "", jmLocation: "", division: "", poRcvd: "No", confirmed: "No" });
 
   const resetAcctForm = () =>
-    setAcctForm({ acct: "", jmLocation: "", division: "", startDate: undefined, endDate: undefined });
+    setAcctForm({ acct: "", jmLocation: "", division: "", startDate: undefined, endDate: undefined, poRcvd: "No", confirmed: "No" });
 
   const handleAddAccount = () => {
     const trimmed = acctForm.acct.trim();
@@ -106,8 +107,8 @@ const OnsiteProjectDetail = () => {
         division: acctForm.division,
         startDate: acctForm.startDate,
         endDate: acctForm.endDate,
-        poRcvd: "No",
-        confirmed: "No",
+        poRcvd: acctForm.poRcvd,
+        confirmed: acctForm.confirmed,
         ...lookup,
       },
     ]);
@@ -288,8 +289,30 @@ const OnsiteProjectDetail = () => {
                           </PopoverContent>
                         </Popover>
                       </TableCell>
-                      <TableCell className="py-2 text-xs text-muted-foreground">No</TableCell>
-                      <TableCell className="py-2 text-xs text-muted-foreground">No</TableCell>
+                      <TableCell className="py-2">
+                        <Select
+                          value={acctForm.poRcvd}
+                          onValueChange={(v) => setAcctForm(s => ({ ...s, poRcvd: v }))}
+                        >
+                          <SelectTrigger className="h-7 text-xs"><SelectValue /></SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="Yes">Yes</SelectItem>
+                            <SelectItem value="No">No</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </TableCell>
+                      <TableCell className="py-2">
+                        <Select
+                          value={acctForm.confirmed}
+                          onValueChange={(v) => setAcctForm(s => ({ ...s, confirmed: v }))}
+                        >
+                          <SelectTrigger className="h-7 text-xs"><SelectValue /></SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="Yes">Yes</SelectItem>
+                            <SelectItem value="No">No</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </TableCell>
                       <TableCell className="py-2 text-right">
                         <div className="flex items-center justify-end gap-1">
                           <Button
