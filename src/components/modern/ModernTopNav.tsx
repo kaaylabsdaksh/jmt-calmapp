@@ -33,20 +33,28 @@ const ModernTopNav = () => {
             {location.pathname === "/onsite-projects" ? null : (
               <Breadcrumb className="mt-1 hidden sm:block">
                 <BreadcrumbList>
-                  <BreadcrumbItem>
-                    <BreadcrumbLink
-                      asChild
-                      className="text-xs text-muted-foreground hover:text-foreground transition-colors"
-                    >
-                      <Link to="/">Home</Link>
-                    </BreadcrumbLink>
-                  </BreadcrumbItem>
-                  <BreadcrumbSeparator />
-                  <BreadcrumbItem>
-                    <BreadcrumbPage className="text-xs text-foreground font-medium">
-                      {meta.crumb}
-                    </BreadcrumbPage>
-                  </BreadcrumbItem>
+                  {meta.crumbs.map((c, i) => {
+                    const isLast = i === meta.crumbs.length - 1;
+                    return (
+                      <span key={`${c.label}-${i}`} className="contents">
+                        <BreadcrumbItem>
+                          {isLast || !c.to ? (
+                            <BreadcrumbPage className="text-xs text-foreground font-medium">
+                              {c.label}
+                            </BreadcrumbPage>
+                          ) : (
+                            <BreadcrumbLink
+                              asChild
+                              className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+                            >
+                              <Link to={c.to}>{c.label}</Link>
+                            </BreadcrumbLink>
+                          )}
+                        </BreadcrumbItem>
+                        {!isLast && <BreadcrumbSeparator />}
+                      </span>
+                    );
+                  })}
                 </BreadcrumbList>
               </Breadcrumb>
             )}
