@@ -16,6 +16,34 @@ interface SearchChip {
   value: string;
 }
 
+interface ProjectRow {
+  projectNumber: string;
+  status: string;
+  jmLocation: string;
+  custAcct: string;
+  customer: string;
+  startDate: string;
+  created: string;
+  createdBy: string;
+  numCO: number;
+  poRcvd: string;
+  confirmed: string;
+  quoteTotal: number;
+}
+
+const mockProjects: ProjectRow[] = [
+  { projectNumber: "0007020", status: "Completed", jmLocation: "Baton Rouge", custAcct: "2588.00", customer: "John Deere", startDate: "3/20/2023", created: "03/20/2023 07:07 AM", createdBy: "Christian B. ONeal", numCO: 0, poRcvd: "No", confirmed: "No", quoteTotal: 0.0 },
+  { projectNumber: "0007051", status: "Completed", jmLocation: "Baton Rouge", custAcct: "10323.00, 10323.04", customer: "Sabal Trail Transmission LLC", startDate: "3/27/2023", created: "03/27/2023 07:54 AM", createdBy: "Jerome J. Davis", numCO: 0, poRcvd: "No", confirmed: "No", quoteTotal: 0.0 },
+  { projectNumber: "0007056", status: "Completed", jmLocation: "Baton Rouge", custAcct: "0185.12", customer: "Entergy Mississippi LLC", startDate: "3/27/2023", created: "03/27/2023 07:18 AM", createdBy: "Vincent E. Lloyde", numCO: 0, poRcvd: "No", confirmed: "No", quoteTotal: 0.0 },
+  { projectNumber: "0007057", status: "Completed", jmLocation: "Baton Rouge", custAcct: "1790.00", customer: "Shintech", startDate: "3/30/2023", created: "03/30/2023 07:38 AM", createdBy: "Vincent E. Lloyde", numCO: 0, poRcvd: "No", confirmed: "No", quoteTotal: 0.0 },
+  { projectNumber: "0007058", status: "Completed", jmLocation: "Baton Rouge", custAcct: "4051.00", customer: "Pinnacle Polymers", startDate: "3/27/2023", created: "03/27/2023 07:34 AM", createdBy: "Lucas M Roberts", numCO: 0, poRcvd: "No", confirmed: "No", quoteTotal: 0.0 },
+  { projectNumber: "0007060", status: "Completed", jmLocation: "Baton Rouge", custAcct: "0367.00", customer: "Occidental Chem", startDate: "3/27/2023", created: "03/27/2023 06:23 AM", createdBy: "Christian B. ONeal", numCO: 0, poRcvd: "No", confirmed: "No", quoteTotal: 0.0 },
+  { projectNumber: "0007080", status: "Completed", jmLocation: "Baton Rouge", custAcct: "3098.00, 6158.14", customer: "Cheniere Sabine Pass, Zachry Industrial Inc", startDate: "4/3/2023", created: "04/03/2023 06:41 AM", createdBy: "Christian B. ONeal", numCO: 0, poRcvd: "No", confirmed: "No", quoteTotal: 0.0 },
+  { projectNumber: "0007091", status: "Completed", jmLocation: "Baton Rouge", custAcct: "6941.00", customer: "Wolseley Industrial", startDate: "3/29/2023", created: "03/29/2023 06:46 AM", createdBy: "Christian B. ONeal", numCO: 0, poRcvd: "No", confirmed: "No", quoteTotal: 0.0 },
+  { projectNumber: "0007093", status: "Completed", jmLocation: "Baton Rouge", custAcct: "0364.03, 0364.10, 0364.11", customer: "Marathon Petro Elect, Marathon Petro Inst...", startDate: "4/3/2023", created: "04/03/2023 06:55 AM", createdBy: "Jerome J. Davis", numCO: 0, poRcvd: "No", confirmed: "No", quoteTotal: 0.0 },
+  { projectNumber: "0007130", status: "Completed", jmLocation: "Baton Rouge", custAcct: "2343.07", customer: "LA Integrated PE JV LLC Whse", startDate: "4/17/2023", created: "04/17/2023 06:49 AM", createdBy: "Vincent E. Lloyde", numCO: 0, poRcvd: "No", confirmed: "No", quoteTotal: 0.0 },
+];
+
 const searchFieldOptions = [
   { value: "projectNumber", label: "Project Number" },
   { value: "customerAcct", label: "Customer Acct" },
