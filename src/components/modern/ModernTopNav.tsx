@@ -1,8 +1,14 @@
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Plus, Download, Settings } from "lucide-react";
+import { Plus, Download, Settings, FileSpreadsheet, FileText } from "lucide-react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const routeMeta: Record<string, { title: string; crumb: string }> = {
   "/": { title: "Work Order Management", crumb: "Work Orders" },
