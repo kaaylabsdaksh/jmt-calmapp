@@ -81,6 +81,7 @@ const OnsiteProjects = () => {
 
   const handleClear = () => {
     setSearchValue("");
+    setSearchChips([]);
     setStatus(""); setConfirmed(""); setPoReceived("");
     setSalesperson(""); setLocation(""); setDivision("");
     setVehicle(""); setStateVal("");
