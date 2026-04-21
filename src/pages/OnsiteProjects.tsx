@@ -159,9 +159,6 @@ const OnsiteProjects = () => {
                     <SelectItem value="field">Field Service</SelectItem>
                   </SelectContent>
                 </Select>
-
-              {/* Row: Vehicle / State / Confirmed / PO Received */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 <Select value={vehicle} onValueChange={setVehicle}>
                   <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="All Vehicle" /></SelectTrigger>
                   <SelectContent>
