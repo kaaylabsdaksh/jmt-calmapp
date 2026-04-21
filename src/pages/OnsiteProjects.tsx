@@ -28,6 +28,22 @@ const searchFieldOptions = [
 const OnsiteProjects = () => {
   const [searchField, setSearchField] = useState("projectNumber");
   const [searchValue, setSearchValue] = useState("");
+  const [searchChips, setSearchChips] = useState<SearchChip[]>([]);
+
+  const addSearchChip = () => {
+    const trimmed = searchValue.trim();
+    if (!trimmed) return;
+    const fieldLabel = searchFieldOptions.find(o => o.value === searchField)?.label ?? searchField;
+    setSearchChips(prev => [
+      ...prev,
+      { id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`, field: searchField, fieldLabel, value: trimmed },
+    ]);
+    setSearchValue("");
+  };
+
+  const removeSearchChip = (id: string) => {
+    setSearchChips(prev => prev.filter(c => c.id !== id));
+  };
 
   const [status, setStatus] = useState("");
   const [confirmed, setConfirmed] = useState("");
