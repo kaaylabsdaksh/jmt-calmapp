@@ -1,11 +1,18 @@
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Plus, Download, Settings } from "lucide-react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 
+const routeMeta: Record<string, { title: string; crumb: string }> = {
+  "/": { title: "Work Order Management", crumb: "Work Orders" },
+  "/onsite-projects": { title: "Onsite Projects", crumb: "Onsite Projects" },
+};
+
 const ModernTopNav = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const meta = routeMeta[location.pathname] ?? routeMeta["/"];
 
   return (
     <header className="bg-white px-2 sm:px-4 lg:px-6 py-3 border-b border-border">
@@ -14,7 +21,7 @@ const ModernTopNav = () => {
         <div className="flex items-center gap-2 sm:gap-3">
           <SidebarTrigger className="text-foreground hover:bg-muted hover:text-foreground transition-all duration-300 transform hover:scale-105" />
           <div>
-            <h1 className="text-base sm:text-lg font-semibold text-foreground leading-tight">Work Order Management</h1>
+            <h1 className="text-base sm:text-lg font-semibold text-foreground leading-tight">{meta.title}</h1>
             <Breadcrumb className="mt-1 hidden sm:block">
               <BreadcrumbList>
                 <BreadcrumbItem>
@@ -28,7 +35,7 @@ const ModernTopNav = () => {
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
                   <BreadcrumbPage className="text-xs text-foreground font-medium">
-                    Work Orders
+                    {meta.crumb}
                   </BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
