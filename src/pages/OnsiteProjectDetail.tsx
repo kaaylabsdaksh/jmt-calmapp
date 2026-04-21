@@ -86,10 +86,11 @@ const OnsiteProjectDetail = () => {
   const [acctForm, setAcctForm] = useState<{
     acct: string; jmLocation: string; division: string;
     startDate?: Date; endDate?: Date;
-  }>({ acct: "", jmLocation: "", division: "" });
+    poRcvd: string; confirmed: string;
+  }>({ acct: "", jmLocation: "", division: "", poRcvd: "No", confirmed: "No" });
 
   const resetAcctForm = () =>
-    setAcctForm({ acct: "", jmLocation: "", division: "", startDate: undefined, endDate: undefined });
+    setAcctForm({ acct: "", jmLocation: "", division: "", startDate: undefined, endDate: undefined, poRcvd: "No", confirmed: "No" });
 
   const handleAddAccount = () => {
     const trimmed = acctForm.acct.trim();
@@ -106,8 +107,8 @@ const OnsiteProjectDetail = () => {
         division: acctForm.division,
         startDate: acctForm.startDate,
         endDate: acctForm.endDate,
-        poRcvd: "No",
-        confirmed: "No",
+        poRcvd: acctForm.poRcvd,
+        confirmed: acctForm.confirmed,
         ...lookup,
       },
     ]);
