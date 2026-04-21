@@ -147,15 +147,14 @@ const OnsiteProjects = () => {
                   {searchChips.map(chip => (
                     <Badge
                       key={chip.id}
-                      variant="secondary"
-                      className="h-6 text-[11px] font-normal pl-2 pr-1 gap-1"
+                      className="h-6 text-[11px] font-normal pl-2 pr-1 gap-1 bg-primary text-primary-foreground hover:bg-primary/90"
                     >
-                      <span className="text-muted-foreground">{chip.fieldLabel}:</span>
-                      <span className="text-foreground">{chip.value}</span>
+                      <span className="opacity-70">{chip.fieldLabel}:</span>
+                      <span>{chip.value}</span>
                       <button
                         type="button"
                         onClick={() => removeSearchChip(chip.id)}
-                        className="ml-0.5 rounded-sm hover:bg-muted-foreground/20 p-0.5"
+                        className="ml-0.5 rounded-sm hover:bg-primary-foreground/20 p-0.5"
                         aria-label={`Remove ${chip.fieldLabel} ${chip.value}`}
                       >
                         <X className="h-3 w-3" />
