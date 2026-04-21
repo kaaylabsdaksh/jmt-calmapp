@@ -230,14 +230,6 @@ const OnsiteProjects = () => {
                     <RotateCcw className="h-3.5 w-3.5 mr-1.5" />Clear
                   </Button>
                 </div>
-                <div className="flex flex-wrap gap-2">
-                  <Button size="sm" variant="outline" className="h-8 text-xs">
-                    <Download className="h-3.5 w-3.5 mr-1.5" />Export
-                  </Button>
-                  <Button size="sm" variant="outline" className="h-8 text-xs">
-                    <FileSpreadsheet className="h-3.5 w-3.5 mr-1.5" />Export w/Details
-                  </Button>
-                </div>
               </div>
             </CardContent>
           </Card>
