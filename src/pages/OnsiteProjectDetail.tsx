@@ -16,13 +16,42 @@ import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
 import ModernTopNav from "@/components/modern/ModernTopNav";
 
-// Mock account lookup — used to pre-populate the rest of the row
-const accountLookup: Record<string, { sr: string; osr: string; customer: string; rep: string; cityState: string }> = {
+// Mock account lookup — pre-populates Customer, SR #, OSR #, Rep, and City/State
+type AccountInfo = { sr: string; osr: string; customer: string; rep: string; cityState: string };
+const accountLookup: Record<string, AccountInfo> = {
   "2588.00":  { sr: "SR-1001", osr: "OSR-22", customer: "John Deere", rep: "Christian B. ONeal", cityState: "Baton Rouge, LA" },
   "10323.00": { sr: "SR-1042", osr: "OSR-31", customer: "Sabal Trail Transmission LLC", rep: "Jerome J. Davis", cityState: "Houston, TX" },
   "0185.12":  { sr: "SR-0987", osr: "OSR-14", customer: "Entergy Mississippi LLC", rep: "Vincent E. Lloyde", cityState: "Jackson, MS" },
   "1790.00":  { sr: "SR-1120", osr: "OSR-08", customer: "Shintech", rep: "Vincent E. Lloyde", cityState: "Plaquemine, LA" },
   "4051.00":  { sr: "SR-1135", osr: "OSR-19", customer: "Pinnacle Polymers", rep: "Lucas M Roberts", cityState: "Garyville, LA" },
+  "0367.00":  { sr: "SR-1208", osr: "OSR-27", customer: "Occidental Chem", rep: "Christian B. ONeal", cityState: "Geismar, LA" },
+  "6941.00":  { sr: "SR-1311", osr: "OSR-12", customer: "Wolseley Industrial", rep: "Christian B. ONeal", cityState: "Baton Rouge, LA" },
+  "3098.00":  { sr: "SR-1402", osr: "OSR-44", customer: "Cheniere Sabine Pass", rep: "Christian B. ONeal", cityState: "Sabine Pass, TX" },
+};
+
+// Deterministic synthetic data for account numbers not in the lookup
+const REPS = ["Christian B. ONeal", "Jerome J. Davis", "Vincent E. Lloyde", "Lucas M Roberts"];
+const CITIES = ["Baton Rouge, LA", "Houston, TX", "Dallas, TX", "Jackson, MS", "New Orleans, LA"];
+const CUSTOMER_PREFIXES = ["Acme", "Northstar", "Pioneer", "Summit", "Apex", "Vertex", "Liberty", "Cascade"];
+const CUSTOMER_SUFFIXES = ["Industries", "Energy", "Chemical", "Manufacturing", "Services", "Holdings"];
+const hashStr = (s: string) => {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
+  return h;
+};
+const getAccountInfo = (raw: string): AccountInfo | null => {
+  const key = raw.trim();
+  if (!key) return null;
+  if (accountLookup[key]) return accountLookup[key];
+  const h = hashStr(key);
+  const digits = key.replace(/\D/g, "").padStart(4, "0").slice(-4);
+  return {
+    sr: `SR-${1000 + (h % 9000)}`,
+    osr: `OSR-${10 + (h % 90)}`,
+    customer: `${CUSTOMER_PREFIXES[h % CUSTOMER_PREFIXES.length]} ${CUSTOMER_SUFFIXES[(h >> 3) % CUSTOMER_SUFFIXES.length]} ${digits}`,
+    rep: REPS[h % REPS.length],
+    cityState: CITIES[(h >> 5) % CITIES.length],
+  };
 };
 
 interface AccountRow {
