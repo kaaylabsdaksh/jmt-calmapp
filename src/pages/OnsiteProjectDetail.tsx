@@ -52,7 +52,7 @@ const OnsiteProjectDetail = () => {
   return (
     <div className="bg-background min-h-full">
       <ModernTopNav />
-      <main className="w-full max-w-none px-2 sm:px-4 lg:px-6 py-3 sm:py-6 pb-24">
+      <main className="w-full max-w-none px-2 sm:px-4 lg:px-6 py-3 sm:py-6">
         <div className="w-full space-y-4">
           {/* Header strip: Project # + Status */}
           <Card>
