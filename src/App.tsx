@@ -12,6 +12,7 @@ import ItemDetail from "./pages/ItemDetail";
 import LogisticsView from "./pages/LogisticsView";
 import CustomerPickupView from "./pages/CustomerPickupView";
 import ShippingView from "./pages/ShippingView";
+import OnsiteProjects from "./pages/OnsiteProjects";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import { Layout } from "./components/Layout";
