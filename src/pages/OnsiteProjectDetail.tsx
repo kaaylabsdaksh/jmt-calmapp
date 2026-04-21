@@ -225,18 +225,22 @@ const OnsiteProjectDetail = () => {
                   const placeholder = (v?: string) => v ?? "—";
                   return (
                     <TableRow className="bg-muted/30 hover:bg-muted/30 align-top">
-                      <TableCell className="py-2">
-                        <Input
-                          autoFocus
-                          value={acctForm.acct}
-                          onChange={(e) => setAcctForm(s => ({ ...s, acct: e.target.value }))}
-                          onKeyDown={(e) => { if (e.key === "Enter" && acctFormValid) handleAddAccount(); }}
-                          placeholder="2588.00"
-                          className="h-7 text-[11px] px-1.5"
-                        />
+                      <TableCell colSpan={3} className="py-2 min-w-[220px]">
+                        <div className="space-y-1.5">
+                          <Input
+                            autoFocus
+                            value={acctForm.acct}
+                            onChange={(e) => setAcctForm(s => ({ ...s, acct: e.target.value }))}
+                            onKeyDown={(e) => { if (e.key === "Enter" && acctFormValid) handleAddAccount(); }}
+                            placeholder="2588.00"
+                            className="h-8 text-sm px-2"
+                          />
+                          <div className="grid grid-cols-2 gap-2 text-[10px] text-muted-foreground">
+                            <span>SR #: {placeholder(lookup?.sr)}</span>
+                            <span>OSR #: {placeholder(lookup?.osr)}</span>
+                          </div>
+                        </div>
                       </TableCell>
-                      <TableCell className="py-2 text-xs text-muted-foreground">{placeholder(lookup?.sr)}</TableCell>
-                      <TableCell className="py-2 text-xs text-muted-foreground">{placeholder(lookup?.osr)}</TableCell>
                       <TableCell className="py-2">
                         <Select
                           value={acctForm.jmLocation}
