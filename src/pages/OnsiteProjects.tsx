@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search, RotateCcw, Plus, Download, FileSpreadsheet } from "lucide-react";
+import { Search, RotateCcw, Download, FileSpreadsheet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
