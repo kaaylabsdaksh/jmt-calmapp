@@ -231,8 +231,8 @@ const OnsiteProjectDetail = () => {
                           value={acctForm.acct}
                           onChange={(e) => setAcctForm(s => ({ ...s, acct: e.target.value }))}
                           onKeyDown={(e) => { if (e.key === "Enter" && acctFormValid) handleAddAccount(); }}
-                          placeholder="e.g. 2588.00"
-                          className="h-7 text-xs"
+                          placeholder="2588.00"
+                          className="h-7 text-[11px] px-1.5"
                         />
                       </TableCell>
                       <TableCell className="py-2 text-xs text-muted-foreground">{placeholder(lookup?.sr)}</TableCell>
