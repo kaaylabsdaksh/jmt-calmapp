@@ -566,12 +566,19 @@ const OnsiteProjectDetail = () => {
                     <TableRow key={t.id}>
                       <TableCell className="py-2 text-xs font-medium">{t.name}</TableCell>
                       <TableCell className="py-2">
-                        <Input
+                        <Select
                           value={t.role}
-                          onChange={(e) => setTechnicians(prev => prev.map(r => r.id === t.id ? { ...r, role: e.target.value } : r))}
-                          placeholder="Role"
-                          className="h-7 text-xs"
-                        />
+                          onValueChange={(v) => setTechnicians(prev => prev.map(r => r.id === t.id ? { ...r, role: v } : r))}
+                        >
+                          <SelectTrigger className="h-7 text-xs">
+                            <SelectValue placeholder="Select role" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="Lead Technician">Lead Technician</SelectItem>
+                            <SelectItem value="Training">Training</SelectItem>
+                            <SelectItem value="Key Group">Key Group</SelectItem>
+                          </SelectContent>
+                        </Select>
                       </TableCell>
                       <TableCell className="py-2">
                         <Input
