@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Save, FileText, BarChart3, Plus, X, Truck, UserPlus, MessageSquare, MoreHorizontal } from "lucide-react";
+import { format } from "date-fns";
+import { ArrowLeft, Save, FileText, BarChart3, Plus, X, Truck, UserPlus, MessageSquare, MoreHorizontal, CalendarIcon, Trash2 } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,7 +10,37 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Textarea } from "@/components/ui/textarea";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
+import { cn } from "@/lib/utils";
 import ModernTopNav from "@/components/modern/ModernTopNav";
+
+// Mock account lookup — used to pre-populate the rest of the row
+const accountLookup: Record<string, { sr: string; osr: string; customer: string; rep: string; cityState: string }> = {
+  "2588.00":  { sr: "SR-1001", osr: "OSR-22", customer: "John Deere", rep: "Christian B. ONeal", cityState: "Baton Rouge, LA" },
+  "10323.00": { sr: "SR-1042", osr: "OSR-31", customer: "Sabal Trail Transmission LLC", rep: "Jerome J. Davis", cityState: "Houston, TX" },
+  "0185.12":  { sr: "SR-0987", osr: "OSR-14", customer: "Entergy Mississippi LLC", rep: "Vincent E. Lloyde", cityState: "Jackson, MS" },
+  "1790.00":  { sr: "SR-1120", osr: "OSR-08", customer: "Shintech", rep: "Vincent E. Lloyde", cityState: "Plaquemine, LA" },
+  "4051.00":  { sr: "SR-1135", osr: "OSR-19", customer: "Pinnacle Polymers", rep: "Lucas M Roberts", cityState: "Garyville, LA" },
+};
+
+interface AccountRow {
+  id: string;
+  acct: string;
+  sr: string;
+  osr: string;
+  jmLocation: string;
+  division: string;
+  customer: string;
+  rep: string;
+  cityState: string;
+  startDate?: Date;
+  endDate?: Date;
+  poRcvd: string;
+  confirmed: string;
+}
+
 
 const SectionCard = ({
   title,
@@ -48,6 +79,48 @@ const OnsiteProjectDetail = () => {
   const [comment, setComment] = useState("");
   const [vehicleSelect, setVehicleSelect] = useState("");
   const [techSelect, setTechSelect] = useState("");
+
+  // Accounts state
+  const [accounts, setAccounts] = useState<AccountRow[]>([]);
+  const [acctDialogOpen, setAcctDialogOpen] = useState(false);
+  const [acctForm, setAcctForm] = useState<{
+    acct: string; jmLocation: string; division: string;
+    startDate?: Date; endDate?: Date;
+  }>({ acct: "", jmLocation: "", division: "" });
+
+  const resetAcctForm = () =>
+    setAcctForm({ acct: "", jmLocation: "", division: "", startDate: undefined, endDate: undefined });
+
+  const handleAddAccount = () => {
+    const trimmed = acctForm.acct.trim();
+    if (!trimmed || !acctForm.jmLocation || !acctForm.division || !acctForm.startDate || !acctForm.endDate) return;
+    const lookup = accountLookup[trimmed] ?? {
+      sr: "—", osr: "—", customer: "—", rep: "—", cityState: "—",
+    };
+    setAccounts(prev => [
+      ...prev,
+      {
+        id: `${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+        acct: trimmed,
+        jmLocation: acctForm.jmLocation,
+        division: acctForm.division,
+        startDate: acctForm.startDate,
+        endDate: acctForm.endDate,
+        poRcvd: "No",
+        confirmed: "No",
+        ...lookup,
+      },
+    ]);
+    resetAcctForm();
+    setAcctDialogOpen(false);
+  };
+
+  const removeAccount = (id: string) =>
+    setAccounts(prev => prev.filter(a => a.id !== id));
+
+  const acctFormValid =
+    !!acctForm.acct.trim() && !!acctForm.jmLocation && !!acctForm.division &&
+    !!acctForm.startDate && !!acctForm.endDate;
 
   return (
     <div className="bg-background min-h-full">
@@ -93,7 +166,12 @@ const OnsiteProjectDetail = () => {
           <SectionCard
             title="Accounts"
             action={
-              <Button size="sm" variant="outline" className="h-7 text-xs">
+              <Button
+                size="sm"
+                variant="outline"
+                className="h-7 text-xs"
+                onClick={() => { resetAcctForm(); setAcctDialogOpen(true); }}
+              >
                 <Plus className="h-3.5 w-3.5 mr-1" /> Add Account
               </Button>
             }
@@ -101,13 +179,43 @@ const OnsiteProjectDetail = () => {
             <Table>
               <TableHeader>
                 <TableRow className="hover:bg-transparent">
-                  {["Acct #","SR #","OSR #","JM Location","Division","Customer","Rep","City, State","Start Date","End Date","PO Rcv'd","Confirmed"].map(h => (
-                    <TableHead key={h} className="text-[11px] uppercase tracking-wide">{h}</TableHead>
+                  {["Acct #","SR #","OSR #","JM Location","Division","Customer","Rep","City, State","Start Date","End Date","PO Rcv'd","Confirmed",""].map((h, i) => (
+                    <TableHead key={`${h}-${i}`} className="text-[11px] uppercase tracking-wide">{h}</TableHead>
                   ))}
                 </TableRow>
               </TableHeader>
               <TableBody>
-                <EmptyRow colSpan={12} />
+                {accounts.length === 0 ? (
+                  <EmptyRow colSpan={13} />
+                ) : (
+                  accounts.map(row => (
+                    <TableRow key={row.id} className="text-xs">
+                      <TableCell className="py-2 font-medium">{row.acct}</TableCell>
+                      <TableCell className="py-2">{row.sr}</TableCell>
+                      <TableCell className="py-2">{row.osr}</TableCell>
+                      <TableCell className="py-2">{row.jmLocation}</TableCell>
+                      <TableCell className="py-2">{row.division}</TableCell>
+                      <TableCell className="py-2">{row.customer}</TableCell>
+                      <TableCell className="py-2">{row.rep}</TableCell>
+                      <TableCell className="py-2">{row.cityState}</TableCell>
+                      <TableCell className="py-2">{row.startDate ? format(row.startDate, "MM/dd/yyyy") : "—"}</TableCell>
+                      <TableCell className="py-2">{row.endDate ? format(row.endDate, "MM/dd/yyyy") : "—"}</TableCell>
+                      <TableCell className="py-2">{row.poRcvd}</TableCell>
+                      <TableCell className="py-2">{row.confirmed}</TableCell>
+                      <TableCell className="py-2 text-right">
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="h-6 w-6 p-0 text-muted-foreground hover:text-destructive"
+                          onClick={() => removeAccount(row.id)}
+                          aria-label="Remove account"
+                        >
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
               </TableBody>
             </Table>
             <div className="flex justify-end gap-2 px-3 py-2 border-t bg-muted/30">
@@ -318,6 +426,151 @@ const OnsiteProjectDetail = () => {
           </div>
         </div>
       </div>
+
+      {/* Add Account Dialog */}
+      <Dialog open={acctDialogOpen} onOpenChange={(o) => { setAcctDialogOpen(o); if (!o) resetAcctForm(); }}>
+        <DialogContent className="sm:max-w-lg">
+          <DialogHeader>
+            <DialogTitle className="text-base">Add Account</DialogTitle>
+            <DialogDescription className="text-xs">
+              Enter the required fields. Customer, SR #, OSR #, Rep, and City/State will be pre-populated from the account number.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 py-2">
+            <div className="space-y-1 sm:col-span-2">
+              <Label className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
+                Account # <span className="text-destructive">*</span>
+              </Label>
+              <Input
+                value={acctForm.acct}
+                onChange={(e) => setAcctForm(s => ({ ...s, acct: e.target.value }))}
+                placeholder="e.g. 2588.00"
+                className="h-8 text-xs"
+                autoFocus
+              />
+              {acctForm.acct && !accountLookup[acctForm.acct.trim()] && (
+                <p className="text-[10px] text-muted-foreground">
+                  No match in lookup — Customer/SR/OSR/Rep/City will show as "—".
+                </p>
+              )}
+            </div>
+
+            <div className="space-y-1">
+              <Label className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
+                JM Location <span className="text-destructive">*</span>
+              </Label>
+              <Select
+                value={acctForm.jmLocation}
+                onValueChange={(v) => setAcctForm(s => ({ ...s, jmLocation: v }))}
+              >
+                <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="Select location" /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Baton Rouge">Baton Rouge</SelectItem>
+                  <SelectItem value="Houston">Houston</SelectItem>
+                  <SelectItem value="Dallas">Dallas</SelectItem>
+                  <SelectItem value="Jackson">Jackson</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-1">
+              <Label className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
+                Division <span className="text-destructive">*</span>
+              </Label>
+              <Select
+                value={acctForm.division}
+                onValueChange={(v) => setAcctForm(s => ({ ...s, division: v }))}
+              >
+                <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="Select division" /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Calibration">Calibration</SelectItem>
+                  <SelectItem value="Repair">Repair</SelectItem>
+                  <SelectItem value="Field Service">Field Service</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-1">
+              <Label className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
+                Start Date <span className="text-destructive">*</span>
+              </Label>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className={cn(
+                      "h-8 w-full justify-start text-xs font-normal",
+                      !acctForm.startDate && "text-muted-foreground"
+                    )}
+                  >
+                    <CalendarIcon className="h-3.5 w-3.5 mr-2" />
+                    {acctForm.startDate ? format(acctForm.startDate, "MM/dd/yyyy") : "Pick a date"}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={acctForm.startDate}
+                    onSelect={(d) => setAcctForm(s => ({ ...s, startDate: d ?? undefined }))}
+                    initialFocus
+                    className={cn("p-3 pointer-events-auto")}
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
+
+            <div className="space-y-1">
+              <Label className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
+                End Date <span className="text-destructive">*</span>
+              </Label>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className={cn(
+                      "h-8 w-full justify-start text-xs font-normal",
+                      !acctForm.endDate && "text-muted-foreground"
+                    )}
+                  >
+                    <CalendarIcon className="h-3.5 w-3.5 mr-2" />
+                    {acctForm.endDate ? format(acctForm.endDate, "MM/dd/yyyy") : "Pick a date"}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={acctForm.endDate}
+                    onSelect={(d) => setAcctForm(s => ({ ...s, endDate: d ?? undefined }))}
+                    disabled={(date) => acctForm.startDate ? date < acctForm.startDate : false}
+                    initialFocus
+                    className={cn("p-3 pointer-events-auto")}
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-8 px-3 text-xs"
+              onClick={() => { setAcctDialogOpen(false); resetAcctForm(); }}
+            >
+              <X className="h-3.5 w-3.5 mr-1.5" /> Cancel
+            </Button>
+            <Button
+              size="sm"
+              className="h-8 px-4 text-xs bg-green-600 hover:bg-green-700 text-white"
+              disabled={!acctFormValid}
+              onClick={handleAddAccount}
+            >
+              <Plus className="h-3.5 w-3.5 mr-1.5" /> Add Account
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
