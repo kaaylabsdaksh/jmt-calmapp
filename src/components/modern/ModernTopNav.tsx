@@ -22,24 +22,26 @@ const ModernTopNav = () => {
           <SidebarTrigger className="text-foreground hover:bg-muted hover:text-foreground transition-all duration-300 transform hover:scale-105" />
           <div>
             <h1 className="text-base sm:text-lg font-semibold text-foreground leading-tight">{meta.title}</h1>
-            <Breadcrumb className="mt-1 hidden sm:block">
-              <BreadcrumbList>
-                <BreadcrumbItem>
-                  <BreadcrumbLink 
-                    asChild 
-                    className="text-xs text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    <Link to="/">Home</Link>
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  <BreadcrumbPage className="text-xs text-foreground font-medium">
-                    {meta.crumb}
-                  </BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
+            {location.pathname === "/onsite-projects" ? null : (
+              <Breadcrumb className="mt-1 hidden sm:block">
+                <BreadcrumbList>
+                  <BreadcrumbItem>
+                    <BreadcrumbLink
+                      asChild
+                      className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      <Link to="/">Home</Link>
+                    </BreadcrumbLink>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator />
+                  <BreadcrumbItem>
+                    <BreadcrumbPage className="text-xs text-foreground font-medium">
+                      {meta.crumb}
+                    </BreadcrumbPage>
+                  </BreadcrumbItem>
+                </BreadcrumbList>
+              </Breadcrumb>
+            )}
           </div>
         </div>
 
