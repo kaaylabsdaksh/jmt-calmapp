@@ -434,14 +434,7 @@ const OnsiteProjectDetail = () => {
           </SectionCard>
 
           {/* Quotes */}
-          <SectionCard
-            title="Linked Quotes"
-            action={
-              <Button size="sm" variant="outline" className="h-7 text-xs">
-                <Plus className="h-3.5 w-3.5 mr-1" /> Link Quote
-              </Button>
-            }
-          >
+          <SectionCard title="Linked Quotes">
             <Table>
               <TableHeader>
                 <TableRow className="hover:bg-transparent">
@@ -457,14 +450,7 @@ const OnsiteProjectDetail = () => {
           </SectionCard>
 
           {/* WO Batches */}
-          <SectionCard
-            title="Work Order Batches"
-            action={
-              <Button size="sm" variant="outline" className="h-7 text-xs">
-                <Plus className="h-3.5 w-3.5 mr-1" /> Link Batch
-              </Button>
-            }
-          >
+          <SectionCard title="Work Order Batches">
             <Table>
               <TableHeader>
                 <TableRow className="hover:bg-transparent">
