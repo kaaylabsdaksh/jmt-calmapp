@@ -563,39 +563,65 @@ const OnsiteProjectDetail = () => {
                 {technicians.length === 0 ? (
                   <EmptyRow colSpan={4} />
                 ) : (
-                  technicians.map((t) => (
-                    <TableRow key={t.id}>
-                      <TableCell className="py-2 text-xs font-medium">{t.name}</TableCell>
-                      <TableCell className="py-2">
-                        <Select
-                          value={t.role}
-                          onValueChange={(v) => setTechnicians(prev => prev.map(r => r.id === t.id ? { ...r, role: v } : r))}
-                        >
-                          <SelectTrigger className="h-7 text-xs">
-                            <SelectValue placeholder="Select role" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="Lead Technician">Lead Technician</SelectItem>
-                            <SelectItem value="Training">Training</SelectItem>
-                            <SelectItem value="Key Group">Key Group</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </TableCell>
-                      <TableCell className="py-2">
-                        <Input
-                          value={t.comment}
-                          onChange={(e) => setTechnicians(prev => prev.map(r => r.id === t.id ? { ...r, comment: e.target.value } : r))}
-                          placeholder="Comments"
-                          className="h-7 text-xs"
-                        />
-                      </TableCell>
-                      <TableCell className="py-2">
-                        <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => handleRemoveTech(t.id)}>
-                          <Trash2 className="h-3.5 w-3.5 text-muted-foreground" />
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  ))
+                  technicians.map((t) => {
+                    const isEditing = editingTechId === t.id;
+                    return (
+                      <TableRow key={t.id}>
+                        <TableCell className="py-2 text-xs font-medium">{t.name}</TableCell>
+                        <TableCell className="py-2">
+                          {isEditing ? (
+                            <Select
+                              value={t.role}
+                              onValueChange={(v) => setTechnicians(prev => prev.map(r => r.id === t.id ? { ...r, role: v } : r))}
+                            >
+                              <SelectTrigger className="h-7 text-xs">
+                                <SelectValue placeholder="Select role" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="Lead Technician">Lead Technician</SelectItem>
+                                <SelectItem value="Training">Training</SelectItem>
+                                <SelectItem value="Key Group">Key Group</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          ) : (
+                            <span className="text-xs">{t.role || <span className="text-muted-foreground">—</span>}</span>
+                          )}
+                        </TableCell>
+                        <TableCell className="py-2">
+                          {isEditing ? (
+                            <Input
+                              value={t.comment}
+                              onChange={(e) => setTechnicians(prev => prev.map(r => r.id === t.id ? { ...r, comment: e.target.value } : r))}
+                              placeholder="Comments"
+                              className="h-7 text-xs"
+                            />
+                          ) : (
+                            <span className="text-xs">{t.comment || <span className="text-muted-foreground">—</span>}</span>
+                          )}
+                        </TableCell>
+                        <TableCell className="py-2">
+                          <div className="flex items-center gap-0.5 justify-end">
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-7 w-7"
+                              onClick={() => setEditingTechId(isEditing ? null : t.id)}
+                              aria-label={isEditing ? "Save" : "Edit"}
+                            >
+                              {isEditing ? (
+                                <Check className="h-3.5 w-3.5 text-muted-foreground" />
+                              ) : (
+                                <Pencil className="h-3.5 w-3.5 text-muted-foreground" />
+                              )}
+                            </Button>
+                            <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => handleRemoveTech(t.id)}>
+                              <Trash2 className="h-3.5 w-3.5 text-muted-foreground" />
+                            </Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })
                 )}
               </TableBody>
             </Table>
