@@ -1,12 +1,20 @@
 import { useState } from "react";
-import { Search, RotateCcw } from "lucide-react";
+import { Search, RotateCcw, Plus, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { DateRangePicker } from "@/components/ui/date-range-picker";
 import ModernTopNav from "@/components/modern/ModernTopNav";
+
+interface SearchChip {
+  id: string;
+  field: string;
+  fieldLabel: string;
+  value: string;
+}
 
 const searchFieldOptions = [
   { value: "projectNumber", label: "Project Number" },
@@ -20,6 +28,22 @@ const searchFieldOptions = [
 const OnsiteProjects = () => {
   const [searchField, setSearchField] = useState("projectNumber");
   const [searchValue, setSearchValue] = useState("");
+  const [searchChips, setSearchChips] = useState<SearchChip[]>([]);
+
+  const addSearchChip = () => {
+    const trimmed = searchValue.trim();
+    if (!trimmed) return;
+    const fieldLabel = searchFieldOptions.find(o => o.value === searchField)?.label ?? searchField;
+    setSearchChips(prev => [
+      ...prev,
+      { id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`, field: searchField, fieldLabel, value: trimmed },
+    ]);
+    setSearchValue("");
+  };
+
+  const removeSearchChip = (id: string) => {
+    setSearchChips(prev => prev.filter(c => c.id !== id));
+  };
 
   const [status, setStatus] = useState("");
   const [confirmed, setConfirmed] = useState("");
@@ -57,6 +81,7 @@ const OnsiteProjects = () => {
 
   const handleClear = () => {
     setSearchValue("");
+    setSearchChips([]);
     setStatus(""); setConfirmed(""); setPoReceived("");
     setSalesperson(""); setLocation(""); setDivision("");
     setVehicle(""); setStateVal("");
@@ -101,10 +126,50 @@ const OnsiteProjects = () => {
                 <Input
                   value={searchValue}
                   onChange={(e) => setSearchValue(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      addSearchChip();
+                    }
+                  }}
                   placeholder="Enter value and press Enter or click Add..."
                   className="h-8 text-xs border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                 />
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="ghost"
+                  onClick={addSearchChip}
+                  disabled={!searchValue.trim()}
+                  className="h-8 px-3 text-xs rounded-none border-l border-input"
+                >
+                  <Plus className="h-3.5 w-3.5 mr-1" />Add
+                </Button>
               </div>
+
+              {/* Active search chips */}
+              {searchChips.length > 0 && (
+                <div className="flex flex-wrap gap-1.5">
+                  {searchChips.map(chip => (
+                    <Badge
+                      key={chip.id}
+                      variant="secondary"
+                      className="h-6 text-[11px] font-normal pl-2 pr-1 gap-1"
+                    >
+                      <span className="text-muted-foreground">{chip.fieldLabel}:</span>
+                      <span className="text-foreground">{chip.value}</span>
+                      <button
+                        type="button"
+                        onClick={() => removeSearchChip(chip.id)}
+                        className="ml-0.5 rounded-sm hover:bg-muted-foreground/20 p-0.5"
+                        aria-label={`Remove ${chip.fieldLabel} ${chip.value}`}
+                      >
+                        <X className="h-3 w-3" />
+                      </button>
+                    </Badge>
+                  ))}
+                </div>
+              )}
 
               {/* Date + Status */}
               {/* Date / Status / Salesperson / Location */}
