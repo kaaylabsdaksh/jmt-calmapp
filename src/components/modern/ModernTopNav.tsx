@@ -35,7 +35,7 @@ const ModernTopNav = () => {
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
                   <BreadcrumbPage className="text-xs text-foreground font-medium">
-                    Work Orders
+                    {meta.crumb}
                   </BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
