@@ -1,8 +1,14 @@
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Plus, Download, Settings } from "lucide-react";
+import { Plus, Download, Settings, FileSpreadsheet, FileText } from "lucide-react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const routeMeta: Record<string, { title: string; crumb: string }> = {
   "/": { title: "Work Order Management", crumb: "Work Orders" },
@@ -56,14 +62,39 @@ const ModernTopNav = () => {
             <span className="hidden sm:inline">Add New</span>
             <span className="sm:hidden">Add</span>
           </Button>
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            className="p-2 rounded-lg hover:bg-primary hover:text-primary-foreground hover:shadow-md transition-all duration-300 transform hover:scale-105"
-            title="Download"
-          >
-            <Download className="h-4 w-4" />
-          </Button>
+          {location.pathname === "/onsite-projects" ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="p-2 rounded-lg hover:bg-primary hover:text-primary-foreground hover:shadow-md transition-all duration-300 transform hover:scale-105"
+                  title="Export"
+                >
+                  <Download className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuItem className="text-xs">
+                  <FileSpreadsheet className="h-3.5 w-3.5 mr-2" />
+                  Export
+                </DropdownMenuItem>
+                <DropdownMenuItem className="text-xs">
+                  <FileText className="h-3.5 w-3.5 mr-2" />
+                  Export with Details
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Button
+              variant="ghost"
+              size="sm"
+              className="p-2 rounded-lg hover:bg-primary hover:text-primary-foreground hover:shadow-md transition-all duration-300 transform hover:scale-105"
+              title="Download"
+            >
+              <Download className="h-4 w-4" />
+            </Button>
+          )}
           <Button 
             variant="ghost" 
             size="sm" 
