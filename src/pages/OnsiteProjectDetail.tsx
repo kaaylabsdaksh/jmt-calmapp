@@ -353,8 +353,34 @@ const OnsiteProjectDetail = () => {
                       <TableCell className="py-2">{row.cityState}</TableCell>
                       <TableCell className="py-2">{row.startDate ? format(row.startDate, "MM/dd/yyyy") : "—"}</TableCell>
                       <TableCell className="py-2">{row.endDate ? format(row.endDate, "MM/dd/yyyy") : "—"}</TableCell>
-                      <TableCell className="py-2">{row.poRcvd}</TableCell>
-                      <TableCell className="py-2">{row.confirmed}</TableCell>
+                      <TableCell className="py-2">
+                        <Select
+                          value={row.poRcvd}
+                          onValueChange={(v) =>
+                            setAccounts(prev => prev.map(a => a.id === row.id ? { ...a, poRcvd: v } : a))
+                          }
+                        >
+                          <SelectTrigger className="h-7 text-xs"><SelectValue /></SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="Yes">Yes</SelectItem>
+                            <SelectItem value="No">No</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </TableCell>
+                      <TableCell className="py-2">
+                        <Select
+                          value={row.confirmed}
+                          onValueChange={(v) =>
+                            setAccounts(prev => prev.map(a => a.id === row.id ? { ...a, confirmed: v } : a))
+                          }
+                        >
+                          <SelectTrigger className="h-7 text-xs"><SelectValue /></SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="Yes">Yes</SelectItem>
+                            <SelectItem value="No">No</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </TableCell>
                       <TableCell className="py-2 text-right">
                         <Button
                           size="sm"
