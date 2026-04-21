@@ -10,10 +10,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-const routeMeta: Record<string, { title: string; crumb: string }> = {
-  "/": { title: "Work Order Management", crumb: "Work Orders" },
-  "/onsite-projects": { title: "Onsite Projects", crumb: "Onsite Projects" },
-  "/onsite-projects/new": { title: "Onsite Project # XXX", crumb: "New Project" },
+type Crumb = { label: string; to?: string };
+const routeMeta: Record<string, { title: string; crumbs: Crumb[] }> = {
+  "/": { title: "Work Order Management", crumbs: [{ label: "Home", to: "/" }, { label: "Work Orders" }] },
+  "/onsite-projects": { title: "Onsite Projects", crumbs: [{ label: "Home", to: "/" }, { label: "Onsite Projects" }] },
+  "/onsite-projects/new": { title: "Onsite Project # XXX", crumbs: [{ label: "Onsite Projects", to: "/onsite-projects" }, { label: "New Project" }] },
 };
 
 const ModernTopNav = () => {
