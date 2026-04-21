@@ -2,29 +2,32 @@ import { useState } from "react";
 import { Search, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { DateRangePicker } from "@/components/ui/date-range-picker";
 import ModernTopNav from "@/components/modern/ModernTopNav";
 
+const searchFieldOptions = [
+  { value: "projectNumber", label: "Project Number" },
+  { value: "customerAcct", label: "Customer Acct" },
+  { value: "customerName", label: "Customer Name" },
+  { value: "createdBy", label: "Created By" },
+  { value: "stdNumber", label: "Std #" },
+  { value: "city", label: "City" },
+];
+
 const OnsiteProjects = () => {
-  const [projectNum, setProjectNum] = useState("");
+  const [searchField, setSearchField] = useState("projectNumber");
+  const [searchValue, setSearchValue] = useState("");
+
   const [status, setStatus] = useState("");
-  const [createdBy, setCreatedBy] = useState("");
-  const [stdNum, setStdNum] = useState("");
   const [confirmed, setConfirmed] = useState("");
   const [poReceived, setPoReceived] = useState("");
-
-  const [custAcct, setCustAcct] = useState("");
-  const [custName, setCustName] = useState("");
   const [salesperson, setSalesperson] = useState("");
   const [location, setLocation] = useState("");
   const [division, setDivision] = useState("");
   const [vehicle, setVehicle] = useState("");
-
-  const [city, setCity] = useState("");
   const [stateVal, setStateVal] = useState("");
 
   const [startFrom, setStartFrom] = useState<Date | undefined>();
@@ -34,17 +37,6 @@ const OnsiteProjects = () => {
   const [modifiedFrom, setModifiedFrom] = useState<Date | undefined>();
   const [modifiedTo, setModifiedTo] = useState<Date | undefined>();
   const [dateType, setDateType] = useState("start");
-
-  const handleClear = () => {
-    setProjectNum(""); setStatus(""); setCreatedBy(""); setStdNum("");
-    setConfirmed(""); setPoReceived("");
-    setCustAcct(""); setCustName(""); setSalesperson(""); setLocation("");
-    setDivision(""); setVehicle("");
-    setCity(""); setStateVal("");
-    setStartFrom(undefined); setStartTo(undefined);
-    setCreatedFrom(undefined); setCreatedTo(undefined);
-    setModifiedFrom(undefined); setModifiedTo(undefined);
-  };
 
   const dateFromMap: Record<string, Date | undefined> = {
     start: startFrom, created: createdFrom, modified: modifiedFrom,
@@ -63,173 +55,154 @@ const OnsiteProjects = () => {
     else setModifiedTo(d);
   };
 
+  const handleClear = () => {
+    setSearchValue("");
+    setStatus(""); setConfirmed(""); setPoReceived("");
+    setSalesperson(""); setLocation(""); setDivision("");
+    setVehicle(""); setStateVal("");
+    setStartFrom(undefined); setStartTo(undefined);
+    setCreatedFrom(undefined); setCreatedTo(undefined);
+    setModifiedFrom(undefined); setModifiedTo(undefined);
+  };
+
   return (
     <div className="bg-background min-h-full">
       <ModernTopNav />
       <main className="w-full max-w-none px-2 sm:px-4 lg:px-6 py-3 sm:py-6">
         <div className="w-full space-y-4">
           {/* Page header */}
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-xl font-semibold text-foreground">Onsite Projects</h1>
-              <p className="text-xs text-muted-foreground mt-0.5">Search and manage onsite calibration projects</p>
-            </div>
+          <div>
+            <h1 className="text-xl font-semibold text-foreground">Onsite Projects</h1>
+            <p className="text-xs text-muted-foreground mt-0.5">Search and manage onsite calibration projects</p>
           </div>
 
           {/* Filters */}
           <Card>
             <CardContent className="p-3 space-y-2">
-              {/* Row 1 */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
-                <div className="space-y-0.5">
-                  <Label className="text-[11px] text-muted-foreground">Project #</Label>
-                  <Input value={projectNum} onChange={(e) => setProjectNum(e.target.value)} className="h-7 text-xs" />
-                </div>
-                <div className="space-y-0.5">
-                  <Label className="text-[11px] text-muted-foreground">Status</Label>
-                  <Select value={status} onValueChange={setStatus}>
-                    <SelectTrigger className="h-7 text-xs"><SelectValue placeholder="Any" /></SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="created">Created</SelectItem>
-                      <SelectItem value="checked-out">Checked Out</SelectItem>
-                      <SelectItem value="completed">Completed</SelectItem>
-                      <SelectItem value="cancelled">Cancelled</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-0.5">
-                  <Label className="text-[11px] text-muted-foreground">Created By</Label>
-                  <Input value={createdBy} onChange={(e) => setCreatedBy(e.target.value)} className="h-7 text-xs" />
-                </div>
-                <div className="space-y-0.5">
-                  <Label className="text-[11px] text-muted-foreground">Std #</Label>
-                  <Input value={stdNum} onChange={(e) => setStdNum(e.target.value)} className="h-7 text-xs" />
-                </div>
-                <div className="space-y-0.5">
-                  <Label className="text-[11px] text-muted-foreground">Confirmed</Label>
-                  <Select value={confirmed} onValueChange={setConfirmed}>
-                    <SelectTrigger className="h-7 text-xs"><SelectValue placeholder="Any" /></SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="yes">Yes</SelectItem>
-                      <SelectItem value="no">No</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-0.5">
-                  <Label className="text-[11px] text-muted-foreground">PO Received</Label>
-                  <Select value={poReceived} onValueChange={setPoReceived}>
-                    <SelectTrigger className="h-7 text-xs"><SelectValue placeholder="Any" /></SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="yes">Yes</SelectItem>
-                      <SelectItem value="no">No</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+              <div className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
+                Search Criteria
               </div>
 
-              {/* Row 2 - Customer + Location */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
-                <div className="space-y-0.5">
-                  <Label className="text-[11px] text-muted-foreground">Customer Acct</Label>
-                  <Input value={custAcct} onChange={(e) => setCustAcct(e.target.value)} className="h-7 text-xs" />
+              {/* Search type + value */}
+              <div className="flex items-stretch gap-0 rounded-md border border-input bg-background overflow-hidden h-8">
+                <Select value={searchField} onValueChange={setSearchField}>
+                  <SelectTrigger className="h-8 w-44 text-xs border-0 border-r border-input rounded-none focus:ring-0 focus:ring-offset-0 shrink-0">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {searchFieldOptions.map(opt => (
+                      <SelectItem key={opt.value} value={opt.value}>{opt.label}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <div className="flex items-center pl-2 text-muted-foreground">
+                  <Search className="h-3.5 w-3.5" />
                 </div>
-                <div className="space-y-1 lg:col-span-2">
-                  <Label className="text-[11px] text-muted-foreground">Customer Name</Label>
-                  <Input value={custName} onChange={(e) => setCustName(e.target.value)} className="h-7 text-xs" />
-                </div>
-                <div className="space-y-0.5">
-                  <Label className="text-[11px] text-muted-foreground">Salesperson</Label>
-                  <Select value={salesperson} onValueChange={setSalesperson}>
-                    <SelectTrigger className="h-7 text-xs"><SelectValue placeholder="Any" /></SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="john-doe">John Doe</SelectItem>
-                      <SelectItem value="jane-smith">Jane Smith</SelectItem>
-                      <SelectItem value="mike-wilson">Mike Wilson</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-0.5">
-                  <Label className="text-[11px] text-muted-foreground">Location</Label>
-                  <Select value={location} onValueChange={setLocation}>
-                    <SelectTrigger className="h-7 text-xs"><SelectValue placeholder="Any" /></SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="baton-rouge">Baton Rouge</SelectItem>
-                      <SelectItem value="houston">Houston</SelectItem>
-                      <SelectItem value="dallas">Dallas</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-0.5">
-                  <Label className="text-[11px] text-muted-foreground">Division</Label>
-                  <Select value={division} onValueChange={setDivision}>
-                    <SelectTrigger className="h-7 text-xs"><SelectValue placeholder="Any" /></SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="cal">Calibration</SelectItem>
-                      <SelectItem value="repair">Repair</SelectItem>
-                      <SelectItem value="field">Field Service</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+                <Input
+                  value={searchValue}
+                  onChange={(e) => setSearchValue(e.target.value)}
+                  placeholder="Enter value and press Enter or click Add..."
+                  className="h-8 text-xs border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+                />
               </div>
 
-              {/* Row 3 - Vehicle + City/State + Date */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
-                <div className="space-y-1 lg:col-span-2">
-                  <div className="flex items-center justify-between">
-                    <Label className="text-[11px] text-muted-foreground">Vehicle</Label>
-                    <button className="text-[10px] text-primary hover:underline">+ Add Vehicle</button>
-                  </div>
-                  <Select value={vehicle} onValueChange={setVehicle}>
-                    <SelectTrigger className="h-7 text-xs"><SelectValue placeholder="Any" /></SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="van-1">Van 1 - LA1234</SelectItem>
-                      <SelectItem value="van-2">Van 2 - LA5678</SelectItem>
-                      <SelectItem value="truck-1">Truck 1 - TX9012</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-0.5">
-                  <Label className="text-[11px] text-muted-foreground">City</Label>
-                  <Input value={city} onChange={(e) => setCity(e.target.value)} className="h-7 text-xs" />
-                </div>
-                <div className="space-y-0.5">
-                  <Label className="text-[11px] text-muted-foreground">State</Label>
-                  <Select value={stateVal} onValueChange={setStateVal}>
-                    <SelectTrigger className="h-7 text-xs"><SelectValue placeholder="Any" /></SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="LA">LA</SelectItem>
-                      <SelectItem value="TX">TX</SelectItem>
-                      <SelectItem value="MS">MS</SelectItem>
-                      <SelectItem value="AL">AL</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-1 lg:col-span-2">
-                  <Label className="text-[11px] text-muted-foreground">Date Range</Label>
-                  <DateRangePicker
-                    dateFrom={dateFromMap[dateType]}
-                    dateTo={dateToMap[dateType]}
-                    onDateFromChange={setDateFrom}
-                    onDateToChange={setDateTo}
-                    dateType={dateType}
-                    onDateTypeChange={setDateType}
-                    dateTypeOptions={[
-                      { value: "start", label: "Start" },
-                      { value: "created", label: "Created" },
-                      { value: "modified", label: "Modified" },
-                    ]}
-                  />
-                </div>
+              {/* Date + Status */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <DateRangePicker
+                  dateFrom={dateFromMap[dateType]}
+                  dateTo={dateToMap[dateType]}
+                  onDateFromChange={setDateFrom}
+                  onDateToChange={setDateTo}
+                  dateType={dateType}
+                  onDateTypeChange={setDateType}
+                  dateTypeOptions={[
+                    { value: "start", label: "Start" },
+                    { value: "created", label: "Created" },
+                    { value: "modified", label: "Modified" },
+                  ]}
+                />
+                <Select value={status} onValueChange={setStatus}>
+                  <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="All Status" /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="created">Created</SelectItem>
+                    <SelectItem value="checked-out">Checked Out</SelectItem>
+                    <SelectItem value="completed">Completed</SelectItem>
+                    <SelectItem value="cancelled">Cancelled</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Row: Salesperson / Location / Division */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                <Select value={salesperson} onValueChange={setSalesperson}>
+                  <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="All Salesperson" /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="john-doe">John Doe</SelectItem>
+                    <SelectItem value="jane-smith">Jane Smith</SelectItem>
+                    <SelectItem value="mike-wilson">Mike Wilson</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Select value={location} onValueChange={setLocation}>
+                  <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="All Location" /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="baton-rouge">Baton Rouge</SelectItem>
+                    <SelectItem value="houston">Houston</SelectItem>
+                    <SelectItem value="dallas">Dallas</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Select value={division} onValueChange={setDivision}>
+                  <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="All Division" /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="cal">Calibration</SelectItem>
+                    <SelectItem value="repair">Repair</SelectItem>
+                    <SelectItem value="field">Field Service</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Row: Vehicle / State / Confirmed / PO Received */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                <Select value={vehicle} onValueChange={setVehicle}>
+                  <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="All Vehicle" /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="van-1">Van 1 - LA1234</SelectItem>
+                    <SelectItem value="van-2">Van 2 - LA5678</SelectItem>
+                    <SelectItem value="truck-1">Truck 1 - TX9012</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Select value={stateVal} onValueChange={setStateVal}>
+                  <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="All State" /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="LA">LA</SelectItem>
+                    <SelectItem value="TX">TX</SelectItem>
+                    <SelectItem value="MS">MS</SelectItem>
+                    <SelectItem value="AL">AL</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Select value={confirmed} onValueChange={setConfirmed}>
+                  <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="All Confirmed" /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="yes">Confirmed: Yes</SelectItem>
+                    <SelectItem value="no">Confirmed: No</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Select value={poReceived} onValueChange={setPoReceived}>
+                  <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="All PO Received" /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="yes">PO Received: Yes</SelectItem>
+                    <SelectItem value="no">PO Received: No</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
 
               {/* Action buttons */}
-              <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t">
-                <div className="flex flex-wrap gap-2">
-                  <Button size="sm" className="h-7 text-xs"><Search className="h-3.5 w-3.5 mr-1.5" />Search</Button>
-                  <Button size="sm" variant="outline" className="h-7 text-xs" onClick={handleClear}>
-                    <RotateCcw className="h-3.5 w-3.5 mr-1.5" />Clear
-                  </Button>
-                </div>
+              <div className="flex items-center justify-end gap-2 pt-2 border-t">
+                <Button size="sm" variant="outline" className="h-8 text-xs" onClick={handleClear}>
+                  <RotateCcw className="h-3.5 w-3.5 mr-1.5" />Clear All
+                </Button>
+                <Button size="sm" className="h-8 text-xs">
+                  <Search className="h-3.5 w-3.5 mr-1.5" />Search
+                </Button>
               </div>
             </CardContent>
           </Card>
