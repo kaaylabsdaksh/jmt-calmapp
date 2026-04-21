@@ -435,7 +435,20 @@ const OnsiteProjectDetail = () => {
 
           {/* Quotes */}
           <SectionCard title="Linked Quotes">
-...
+            <Table>
+              <TableHeader>
+                <TableRow className="hover:bg-transparent">
+                  {["Quote #","Acct #","JM Location","Customer","Quote Status","Lab/ESL","Total"].map(h => (
+                    <TableHead key={h} className="text-[11px] uppercase tracking-wide">{h}</TableHead>
+                  ))}
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <EmptyRow colSpan={7} />
+              </TableBody>
+            </Table>
+          </SectionCard>
+
           {/* WO Batches */}
           <SectionCard title="Work Order Batches">
             <Table>
