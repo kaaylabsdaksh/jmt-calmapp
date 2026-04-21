@@ -78,17 +78,17 @@ const OnsiteProjects = () => {
 
           {/* Filters */}
           <Card>
-            <CardContent className="p-4 space-y-3">
+            <CardContent className="p-3 space-y-2">
               {/* Row 1 */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-                <div className="space-y-1">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+                <div className="space-y-0.5">
                   <Label className="text-[11px] text-muted-foreground">Project #</Label>
-                  <Input value={projectNum} onChange={(e) => setProjectNum(e.target.value)} className="h-8 text-xs" />
+                  <Input value={projectNum} onChange={(e) => setProjectNum(e.target.value)} className="h-7 text-xs" />
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-0.5">
                   <Label className="text-[11px] text-muted-foreground">Status</Label>
                   <Select value={status} onValueChange={setStatus}>
-                    <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="Any" /></SelectTrigger>
+                    <SelectTrigger className="h-7 text-xs"><SelectValue placeholder="Any" /></SelectTrigger>
                     <SelectContent>
                       <SelectItem value="created">Created</SelectItem>
                       <SelectItem value="checked-out">Checked Out</SelectItem>
@@ -97,28 +97,28 @@ const OnsiteProjects = () => {
                     </SelectContent>
                   </Select>
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-0.5">
                   <Label className="text-[11px] text-muted-foreground">Created By</Label>
-                  <Input value={createdBy} onChange={(e) => setCreatedBy(e.target.value)} className="h-8 text-xs" />
+                  <Input value={createdBy} onChange={(e) => setCreatedBy(e.target.value)} className="h-7 text-xs" />
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-0.5">
                   <Label className="text-[11px] text-muted-foreground">Std #</Label>
-                  <Input value={stdNum} onChange={(e) => setStdNum(e.target.value)} className="h-8 text-xs" />
+                  <Input value={stdNum} onChange={(e) => setStdNum(e.target.value)} className="h-7 text-xs" />
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-0.5">
                   <Label className="text-[11px] text-muted-foreground">Confirmed</Label>
                   <Select value={confirmed} onValueChange={setConfirmed}>
-                    <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="Any" /></SelectTrigger>
+                    <SelectTrigger className="h-7 text-xs"><SelectValue placeholder="Any" /></SelectTrigger>
                     <SelectContent>
                       <SelectItem value="yes">Yes</SelectItem>
                       <SelectItem value="no">No</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-0.5">
                   <Label className="text-[11px] text-muted-foreground">PO Received</Label>
                   <Select value={poReceived} onValueChange={setPoReceived}>
-                    <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="Any" /></SelectTrigger>
+                    <SelectTrigger className="h-7 text-xs"><SelectValue placeholder="Any" /></SelectTrigger>
                     <SelectContent>
                       <SelectItem value="yes">Yes</SelectItem>
                       <SelectItem value="no">No</SelectItem>
@@ -128,19 +128,19 @@ const OnsiteProjects = () => {
               </div>
 
               {/* Row 2 - Customer + Location */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-                <div className="space-y-1">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+                <div className="space-y-0.5">
                   <Label className="text-[11px] text-muted-foreground">Customer Acct</Label>
-                  <Input value={custAcct} onChange={(e) => setCustAcct(e.target.value)} className="h-8 text-xs" />
+                  <Input value={custAcct} onChange={(e) => setCustAcct(e.target.value)} className="h-7 text-xs" />
                 </div>
                 <div className="space-y-1 lg:col-span-2">
                   <Label className="text-[11px] text-muted-foreground">Customer Name</Label>
-                  <Input value={custName} onChange={(e) => setCustName(e.target.value)} className="h-8 text-xs" />
+                  <Input value={custName} onChange={(e) => setCustName(e.target.value)} className="h-7 text-xs" />
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-0.5">
                   <Label className="text-[11px] text-muted-foreground">Salesperson</Label>
                   <Select value={salesperson} onValueChange={setSalesperson}>
-                    <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="Any" /></SelectTrigger>
+                    <SelectTrigger className="h-7 text-xs"><SelectValue placeholder="Any" /></SelectTrigger>
                     <SelectContent>
                       <SelectItem value="john-doe">John Doe</SelectItem>
                       <SelectItem value="jane-smith">Jane Smith</SelectItem>
@@ -148,10 +148,10 @@ const OnsiteProjects = () => {
                     </SelectContent>
                   </Select>
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-0.5">
                   <Label className="text-[11px] text-muted-foreground">Location</Label>
                   <Select value={location} onValueChange={setLocation}>
-                    <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="Any" /></SelectTrigger>
+                    <SelectTrigger className="h-7 text-xs"><SelectValue placeholder="Any" /></SelectTrigger>
                     <SelectContent>
                       <SelectItem value="baton-rouge">Baton Rouge</SelectItem>
                       <SelectItem value="houston">Houston</SelectItem>
@@ -159,10 +159,10 @@ const OnsiteProjects = () => {
                     </SelectContent>
                   </Select>
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-0.5">
                   <Label className="text-[11px] text-muted-foreground">Division</Label>
                   <Select value={division} onValueChange={setDivision}>
-                    <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="Any" /></SelectTrigger>
+                    <SelectTrigger className="h-7 text-xs"><SelectValue placeholder="Any" /></SelectTrigger>
                     <SelectContent>
                       <SelectItem value="cal">Calibration</SelectItem>
                       <SelectItem value="repair">Repair</SelectItem>
@@ -173,14 +173,14 @@ const OnsiteProjects = () => {
               </div>
 
               {/* Row 3 - Vehicle + City/State + Date */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
                 <div className="space-y-1 lg:col-span-2">
                   <div className="flex items-center justify-between">
                     <Label className="text-[11px] text-muted-foreground">Vehicle</Label>
                     <button className="text-[10px] text-primary hover:underline">+ Add Vehicle</button>
                   </div>
                   <Select value={vehicle} onValueChange={setVehicle}>
-                    <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="Any" /></SelectTrigger>
+                    <SelectTrigger className="h-7 text-xs"><SelectValue placeholder="Any" /></SelectTrigger>
                     <SelectContent>
                       <SelectItem value="van-1">Van 1 - LA1234</SelectItem>
                       <SelectItem value="van-2">Van 2 - LA5678</SelectItem>
@@ -188,14 +188,14 @@ const OnsiteProjects = () => {
                     </SelectContent>
                   </Select>
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-0.5">
                   <Label className="text-[11px] text-muted-foreground">City</Label>
-                  <Input value={city} onChange={(e) => setCity(e.target.value)} className="h-8 text-xs" />
+                  <Input value={city} onChange={(e) => setCity(e.target.value)} className="h-7 text-xs" />
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-0.5">
                   <Label className="text-[11px] text-muted-foreground">State</Label>
                   <Select value={stateVal} onValueChange={setStateVal}>
-                    <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="Any" /></SelectTrigger>
+                    <SelectTrigger className="h-7 text-xs"><SelectValue placeholder="Any" /></SelectTrigger>
                     <SelectContent>
                       <SelectItem value="LA">LA</SelectItem>
                       <SelectItem value="TX">TX</SelectItem>
@@ -225,8 +225,8 @@ const OnsiteProjects = () => {
               {/* Action buttons */}
               <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t">
                 <div className="flex flex-wrap gap-2">
-                  <Button size="sm" className="h-8 text-xs"><Search className="h-3.5 w-3.5 mr-1.5" />Search</Button>
-                  <Button size="sm" variant="outline" className="h-8 text-xs" onClick={handleClear}>
+                  <Button size="sm" className="h-7 text-xs"><Search className="h-3.5 w-3.5 mr-1.5" />Search</Button>
+                  <Button size="sm" variant="outline" className="h-7 text-xs" onClick={handleClear}>
                     <RotateCcw className="h-3.5 w-3.5 mr-1.5" />Clear
                   </Button>
                 </div>
