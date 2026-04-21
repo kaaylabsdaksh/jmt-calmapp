@@ -95,12 +95,6 @@ const OnsiteProjects = () => {
       <ModernTopNav />
       <main className="w-full max-w-none px-2 sm:px-4 lg:px-6 py-3 sm:py-6">
         <div className="w-full space-y-4">
-          {/* Page header */}
-          <div>
-            <h1 className="text-xl font-semibold text-foreground">Onsite Projects</h1>
-            <p className="text-xs text-muted-foreground mt-0.5">Search and manage onsite calibration projects</p>
-          </div>
-
           {/* Filters */}
           <Card>
             <CardContent className="p-3 space-y-2">
