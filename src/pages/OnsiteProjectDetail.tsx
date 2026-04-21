@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Save, FileText, BarChart3, Plus, X, Truck, UserPlus, MessageSquare } from "lucide-react";
+import { ArrowLeft, Save, FileText, BarChart3, Plus, X, Truck, UserPlus, MessageSquare, MoreHorizontal } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -262,48 +263,57 @@ const OnsiteProjectDetail = () => {
         </div>
       </main>
 
-      {/* Sticky footer actions */}
-      <div className="fixed bottom-0 left-0 right-0 z-30 border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
-        <div className="w-full max-w-none px-2 sm:px-4 lg:px-6 py-2 flex flex-wrap items-center justify-between gap-2">
+      {/* Sticky footer actions — standardized layout */}
+      <div className="fixed bottom-0 left-0 right-0 z-30 border-t border-border bg-background shadow-lg">
+        <div className="w-full max-w-none px-2 sm:px-4 lg:px-6 py-2 flex items-center justify-between gap-2">
+          {/* Left: More actions */}
+          <div className="flex items-center gap-2">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button size="sm" variant="outline" className="h-8 px-3 text-xs">
+                  <MoreHorizontal className="h-3.5 w-3.5 mr-1.5" />
+                  More Actions
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-56">
+                <DropdownMenuItem className="text-xs">
+                  <FileText className="h-3.5 w-3.5 mr-2" /> Report
+                </DropdownMenuItem>
+                <DropdownMenuItem className="text-xs">
+                  <BarChart3 className="h-3.5 w-3.5 mr-2" /> Value Report
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className="text-xs">
+                  <Truck className="h-3.5 w-3.5 mr-2" /> Add Vehicle
+                </DropdownMenuItem>
+                <DropdownMenuItem className="text-xs">
+                  <UserPlus className="h-3.5 w-3.5 mr-2" /> Add Tech
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className="text-xs text-destructive focus:text-destructive">
+                  <X className="h-3.5 w-3.5 mr-2" /> Cancel Project
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+
+          {/* Right: Cancel + Save (standard) */}
           <div className="flex items-center gap-2">
             <Button
+              size="sm"
               variant="outline"
               onClick={() => navigate("/onsite-projects")}
               className="h-8 px-3 text-xs"
             >
-              <ArrowLeft className="h-3.5 w-3.5 mr-1.5" /> Back
+              <X className="h-3.5 w-3.5 mr-1.5" />
+              Cancel
             </Button>
-          </div>
-          <div className="flex flex-wrap items-center gap-2">
-            <Button variant="outline" className="h-8 px-3 text-xs" disabled>
-              <FileText className="h-3.5 w-3.5 mr-1.5" /> Report
-            </Button>
-            <Button variant="outline" className="h-8 px-3 text-xs">
-              <BarChart3 className="h-3.5 w-3.5 mr-1.5" /> Value Report
-            </Button>
-            <div className="flex items-center gap-2">
-              <Select value={vehicleSelect} onValueChange={setVehicleSelect}>
-                <SelectTrigger className="h-8 w-44 text-xs">
-                  <SelectValue placeholder="Select vehicle" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="van-1">Van 1 - LA1234</SelectItem>
-                  <SelectItem value="van-2">Van 2 - LA5678</SelectItem>
-                  <SelectItem value="truck-1">Truck 1 - TX9012</SelectItem>
-                </SelectContent>
-              </Select>
-              <Button variant="outline" className="h-8 px-3 text-xs" disabled={!vehicleSelect}>
-                <Truck className="h-3.5 w-3.5 mr-1.5" /> Add Vehicle
-              </Button>
-            </div>
             <Button
-              variant="outline"
-              className="h-8 px-3 text-xs border-destructive text-destructive hover:bg-destructive/10 hover:text-destructive"
+              size="sm"
+              className="h-8 px-4 text-xs bg-green-600 hover:bg-green-700 text-white"
             >
-              <X className="h-3.5 w-3.5 mr-1.5" /> Cancel Project
-            </Button>
-            <Button className="h-8 px-4 text-xs bg-blue-600 hover:bg-blue-700 text-white">
-              <Save className="h-3.5 w-3.5 mr-1.5" /> Save
+              <Save className="h-3.5 w-3.5 mr-1.5" />
+              Save
             </Button>
           </div>
         </div>
