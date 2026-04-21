@@ -10,7 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Textarea } from "@/components/ui/textarea";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog";
+
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
@@ -170,9 +170,13 @@ const OnsiteProjectDetail = () => {
                 size="sm"
                 variant="outline"
                 className="h-7 text-xs"
-                onClick={() => { resetAcctForm(); setAcctDialogOpen(true); }}
+                onClick={() => {
+                  if (acctDialogOpen) { setAcctDialogOpen(false); resetAcctForm(); }
+                  else { resetAcctForm(); setAcctDialogOpen(true); }
+                }}
               >
-                <Plus className="h-3.5 w-3.5 mr-1" /> Add Account
+                {acctDialogOpen ? <X className="h-3.5 w-3.5 mr-1" /> : <Plus className="h-3.5 w-3.5 mr-1" />}
+                {acctDialogOpen ? "Close" : "Add Account"}
               </Button>
             }
           >
@@ -185,7 +189,133 @@ const OnsiteProjectDetail = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {accounts.length === 0 ? (
+                {/* Inline add-account editor row */}
+                {acctDialogOpen && (() => {
+                  const lookup = accountLookup[acctForm.acct.trim()];
+                  const placeholder = (v?: string) => v ?? "—";
+                  return (
+                    <TableRow className="bg-muted/30 hover:bg-muted/30 align-top">
+                      <TableCell className="py-2">
+                        <Input
+                          autoFocus
+                          value={acctForm.acct}
+                          onChange={(e) => setAcctForm(s => ({ ...s, acct: e.target.value }))}
+                          onKeyDown={(e) => { if (e.key === "Enter" && acctFormValid) handleAddAccount(); }}
+                          placeholder="e.g. 2588.00"
+                          className="h-7 text-xs"
+                        />
+                      </TableCell>
+                      <TableCell className="py-2 text-xs text-muted-foreground">{placeholder(lookup?.sr)}</TableCell>
+                      <TableCell className="py-2 text-xs text-muted-foreground">{placeholder(lookup?.osr)}</TableCell>
+                      <TableCell className="py-2">
+                        <Select
+                          value={acctForm.jmLocation}
+                          onValueChange={(v) => setAcctForm(s => ({ ...s, jmLocation: v }))}
+                        >
+                          <SelectTrigger className="h-7 text-xs"><SelectValue placeholder="Select…" /></SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="Baton Rouge">Baton Rouge</SelectItem>
+                            <SelectItem value="Houston">Houston</SelectItem>
+                            <SelectItem value="Dallas">Dallas</SelectItem>
+                            <SelectItem value="Jackson">Jackson</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </TableCell>
+                      <TableCell className="py-2">
+                        <Select
+                          value={acctForm.division}
+                          onValueChange={(v) => setAcctForm(s => ({ ...s, division: v }))}
+                        >
+                          <SelectTrigger className="h-7 text-xs"><SelectValue placeholder="Select…" /></SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="Calibration">Calibration</SelectItem>
+                            <SelectItem value="Repair">Repair</SelectItem>
+                            <SelectItem value="Field Service">Field Service</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </TableCell>
+                      <TableCell className="py-2 text-xs text-muted-foreground">{placeholder(lookup?.customer)}</TableCell>
+                      <TableCell className="py-2 text-xs text-muted-foreground">{placeholder(lookup?.rep)}</TableCell>
+                      <TableCell className="py-2 text-xs text-muted-foreground">{placeholder(lookup?.cityState)}</TableCell>
+                      <TableCell className="py-2">
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <Button
+                              variant="outline"
+                              className={cn(
+                                "h-7 w-full justify-start text-xs font-normal px-2",
+                                !acctForm.startDate && "text-muted-foreground"
+                              )}
+                            >
+                              <CalendarIcon className="h-3 w-3 mr-1.5" />
+                              {acctForm.startDate ? format(acctForm.startDate, "MM/dd/yy") : "Pick"}
+                            </Button>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-auto p-0" align="start">
+                            <Calendar
+                              mode="single"
+                              selected={acctForm.startDate}
+                              onSelect={(d) => setAcctForm(s => ({ ...s, startDate: d ?? undefined }))}
+                              initialFocus
+                              className={cn("p-3 pointer-events-auto")}
+                            />
+                          </PopoverContent>
+                        </Popover>
+                      </TableCell>
+                      <TableCell className="py-2">
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <Button
+                              variant="outline"
+                              className={cn(
+                                "h-7 w-full justify-start text-xs font-normal px-2",
+                                !acctForm.endDate && "text-muted-foreground"
+                              )}
+                            >
+                              <CalendarIcon className="h-3 w-3 mr-1.5" />
+                              {acctForm.endDate ? format(acctForm.endDate, "MM/dd/yy") : "Pick"}
+                            </Button>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-auto p-0" align="start">
+                            <Calendar
+                              mode="single"
+                              selected={acctForm.endDate}
+                              onSelect={(d) => setAcctForm(s => ({ ...s, endDate: d ?? undefined }))}
+                              disabled={(date) => acctForm.startDate ? date < acctForm.startDate : false}
+                              initialFocus
+                              className={cn("p-3 pointer-events-auto")}
+                            />
+                          </PopoverContent>
+                        </Popover>
+                      </TableCell>
+                      <TableCell className="py-2 text-xs text-muted-foreground">No</TableCell>
+                      <TableCell className="py-2 text-xs text-muted-foreground">No</TableCell>
+                      <TableCell className="py-2 text-right">
+                        <div className="flex items-center justify-end gap-1">
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            className="h-6 w-6 p-0 text-muted-foreground hover:text-destructive"
+                            onClick={() => { setAcctDialogOpen(false); resetAcctForm(); }}
+                            aria-label="Cancel"
+                          >
+                            <X className="h-3.5 w-3.5" />
+                          </Button>
+                          <Button
+                            size="sm"
+                            className="h-6 px-2 text-[11px] bg-green-600 hover:bg-green-700 text-white"
+                            disabled={!acctFormValid}
+                            onClick={handleAddAccount}
+                          >
+                            Add
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })()}
+
+                {accounts.length === 0 && !acctDialogOpen ? (
                   <EmptyRow colSpan={13} />
                 ) : (
                   accounts.map(row => (
@@ -426,151 +556,6 @@ const OnsiteProjectDetail = () => {
           </div>
         </div>
       </div>
-
-      {/* Add Account Dialog */}
-      <Dialog open={acctDialogOpen} onOpenChange={(o) => { setAcctDialogOpen(o); if (!o) resetAcctForm(); }}>
-        <DialogContent className="sm:max-w-lg">
-          <DialogHeader>
-            <DialogTitle className="text-base">Add Account</DialogTitle>
-            <DialogDescription className="text-xs">
-              Enter the required fields. Customer, SR #, OSR #, Rep, and City/State will be pre-populated from the account number.
-            </DialogDescription>
-          </DialogHeader>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 py-2">
-            <div className="space-y-1 sm:col-span-2">
-              <Label className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
-                Account # <span className="text-destructive">*</span>
-              </Label>
-              <Input
-                value={acctForm.acct}
-                onChange={(e) => setAcctForm(s => ({ ...s, acct: e.target.value }))}
-                placeholder="e.g. 2588.00"
-                className="h-8 text-xs"
-                autoFocus
-              />
-              {acctForm.acct && !accountLookup[acctForm.acct.trim()] && (
-                <p className="text-[10px] text-muted-foreground">
-                  No match in lookup — Customer/SR/OSR/Rep/City will show as "—".
-                </p>
-              )}
-            </div>
-
-            <div className="space-y-1">
-              <Label className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
-                JM Location <span className="text-destructive">*</span>
-              </Label>
-              <Select
-                value={acctForm.jmLocation}
-                onValueChange={(v) => setAcctForm(s => ({ ...s, jmLocation: v }))}
-              >
-                <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="Select location" /></SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Baton Rouge">Baton Rouge</SelectItem>
-                  <SelectItem value="Houston">Houston</SelectItem>
-                  <SelectItem value="Dallas">Dallas</SelectItem>
-                  <SelectItem value="Jackson">Jackson</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-1">
-              <Label className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
-                Division <span className="text-destructive">*</span>
-              </Label>
-              <Select
-                value={acctForm.division}
-                onValueChange={(v) => setAcctForm(s => ({ ...s, division: v }))}
-              >
-                <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="Select division" /></SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Calibration">Calibration</SelectItem>
-                  <SelectItem value="Repair">Repair</SelectItem>
-                  <SelectItem value="Field Service">Field Service</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-1">
-              <Label className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
-                Start Date <span className="text-destructive">*</span>
-              </Label>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className={cn(
-                      "h-8 w-full justify-start text-xs font-normal",
-                      !acctForm.startDate && "text-muted-foreground"
-                    )}
-                  >
-                    <CalendarIcon className="h-3.5 w-3.5 mr-2" />
-                    {acctForm.startDate ? format(acctForm.startDate, "MM/dd/yyyy") : "Pick a date"}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    mode="single"
-                    selected={acctForm.startDate}
-                    onSelect={(d) => setAcctForm(s => ({ ...s, startDate: d ?? undefined }))}
-                    initialFocus
-                    className={cn("p-3 pointer-events-auto")}
-                  />
-                </PopoverContent>
-              </Popover>
-            </div>
-
-            <div className="space-y-1">
-              <Label className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
-                End Date <span className="text-destructive">*</span>
-              </Label>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className={cn(
-                      "h-8 w-full justify-start text-xs font-normal",
-                      !acctForm.endDate && "text-muted-foreground"
-                    )}
-                  >
-                    <CalendarIcon className="h-3.5 w-3.5 mr-2" />
-                    {acctForm.endDate ? format(acctForm.endDate, "MM/dd/yyyy") : "Pick a date"}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    mode="single"
-                    selected={acctForm.endDate}
-                    onSelect={(d) => setAcctForm(s => ({ ...s, endDate: d ?? undefined }))}
-                    disabled={(date) => acctForm.startDate ? date < acctForm.startDate : false}
-                    initialFocus
-                    className={cn("p-3 pointer-events-auto")}
-                  />
-                </PopoverContent>
-              </Popover>
-            </div>
-          </div>
-
-          <DialogFooter>
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-8 px-3 text-xs"
-              onClick={() => { setAcctDialogOpen(false); resetAcctForm(); }}
-            >
-              <X className="h-3.5 w-3.5 mr-1.5" /> Cancel
-            </Button>
-            <Button
-              size="sm"
-              className="h-8 px-4 text-xs bg-green-600 hover:bg-green-700 text-white"
-              disabled={!acctFormValid}
-              onClick={handleAddAccount}
-            >
-              <Plus className="h-3.5 w-3.5 mr-1.5" /> Add Account
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 };
