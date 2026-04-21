@@ -1,12 +1,20 @@
 import { useState } from "react";
-import { Search, RotateCcw } from "lucide-react";
+import { Search, RotateCcw, Plus, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { DateRangePicker } from "@/components/ui/date-range-picker";
 import ModernTopNav from "@/components/modern/ModernTopNav";
+
+interface SearchChip {
+  id: string;
+  field: string;
+  fieldLabel: string;
+  value: string;
+}
 
 const searchFieldOptions = [
   { value: "projectNumber", label: "Project Number" },
