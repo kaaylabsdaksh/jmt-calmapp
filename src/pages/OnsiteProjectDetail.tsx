@@ -133,6 +133,7 @@ const OnsiteProjectDetail = () => {
   };
   const handleRemoveTech = (id: string) =>
     setTechnicians(prev => prev.filter(t => t.id !== id));
+  const [editingTechId, setEditingTechId] = useState<string | null>(null);
 
   // Accounts state
   const [accounts, setAccounts] = useState<AccountRow[]>([]);
