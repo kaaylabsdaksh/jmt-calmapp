@@ -90,8 +90,8 @@ const OnsiteProjects = () => {
                   <Select value={status} onValueChange={setStatus}>
                     <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="Any" /></SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="open">Open</SelectItem>
-                      <SelectItem value="in-progress">In Progress</SelectItem>
+                      <SelectItem value="created">Created</SelectItem>
+                      <SelectItem value="checked-out">Checked Out</SelectItem>
                       <SelectItem value="completed">Completed</SelectItem>
                       <SelectItem value="cancelled">Cancelled</SelectItem>
                     </SelectContent>
