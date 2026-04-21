@@ -308,6 +308,7 @@ const OnsiteProjects = () => {
                   Clear All
                 </Button>
                 <Button
+                  onClick={handleSearch}
                   className="rounded-lg h-8 px-5 text-xs font-medium bg-blue-600 hover:bg-blue-700 text-white shadow-sm"
                 >
                   <Search className="h-3.5 w-3.5 mr-1.5" />
@@ -338,11 +339,34 @@ const OnsiteProjects = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  <TableRow>
-                    <TableCell colSpan={12} className="text-center text-xs text-muted-foreground py-12">
-                      No data to display
-                    </TableCell>
-                  </TableRow>
+                  {!hasSearched || results.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={12} className="text-center text-xs text-muted-foreground py-12">
+                        No data to display
+                      </TableCell>
+                    </TableRow>
+                  ) : (
+                    results.map((row) => (
+                      <TableRow key={row.projectNumber} className="text-xs">
+                        <TableCell className="py-2">
+                          <button className="text-blue-600 hover:underline font-medium">
+                            {row.projectNumber}
+                          </button>
+                        </TableCell>
+                        <TableCell className="py-2">{row.status}</TableCell>
+                        <TableCell className="py-2">{row.jmLocation}</TableCell>
+                        <TableCell className="py-2">{row.custAcct}</TableCell>
+                        <TableCell className="py-2">{row.customer}</TableCell>
+                        <TableCell className="py-2">{row.startDate}</TableCell>
+                        <TableCell className="py-2">{row.created}</TableCell>
+                        <TableCell className="py-2">{row.createdBy}</TableCell>
+                        <TableCell className="py-2 text-right">{row.numCO}</TableCell>
+                        <TableCell className="py-2">{row.poRcvd}</TableCell>
+                        <TableCell className="py-2">{row.confirmed}</TableCell>
+                        <TableCell className="py-2 text-right">{row.quoteTotal.toFixed(2)}</TableCell>
+                      </TableRow>
+                    ))
+                  )}
                 </TableBody>
               </Table>
             </CardContent>
