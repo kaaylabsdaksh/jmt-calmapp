@@ -754,7 +754,7 @@ const OnsiteProjectDetail = () => {
           </SectionCard>
 
           {/* Comments meta */}
-          <SectionCard title="Audit Trail" subtitle="Created and modified history" icon={MessageSquare} accent="slate">
+          <SectionCard title="Comments" subtitle="Created and modified history" icon={MessageSquare} accent="slate">
             <div className="p-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-muted-foreground">
                 <div>
