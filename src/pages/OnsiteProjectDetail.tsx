@@ -289,6 +289,7 @@ const OnsiteProjectDetail = () => {
     }));
     setDraftEdits({});
     setEditingAcctIds(new Set());
+    setPreviewChanges(false);
   };
   const cancelAccountChanges = () => {
     setDraftEdits({});
