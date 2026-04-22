@@ -187,8 +187,33 @@ const OnsiteProjectDetail = () => {
     setTechnicians(prev => prev.filter(t => t.id !== id));
   const [editingTechId, setEditingTechId] = useState<string | null>(null);
 
-  // Accounts state
-  const [accounts, setAccounts] = useState<AccountRow[]>([]);
+  // Accounts state — prefill from incoming project row when available
+  const buildInitialAccounts = (): AccountRow[] => {
+    if (!incoming) return [];
+    const accts = incoming.custAcct.split(",").map(s => s.trim()).filter(Boolean);
+    const customers = incoming.customer.split(",").map(s => s.trim()).filter(Boolean);
+    const start = parseMDY(incoming.startDate);
+    return accts.map((acct, i) => {
+      const lookup = getAccountInfo(acct) ?? {
+        sr: "—", osr: "—",
+        customer: customers[i] ?? customers[0] ?? "—",
+        rep: "—", cityState: "—",
+      };
+      return {
+        id: `${Date.now()}-${i}-${Math.random().toString(36).slice(2, 6)}`,
+        acct,
+        jmLocation: incoming.jmLocation,
+        division: "",
+        startDate: start,
+        endDate: undefined,
+        poRcvd: incoming.poRcvd,
+        confirmed: incoming.confirmed,
+        ...lookup,
+        customer: customers[i] ?? lookup.customer,
+      };
+    });
+  };
+  const [accounts, setAccounts] = useState<AccountRow[]>(buildInitialAccounts);
   const [acctDialogOpen, setAcctDialogOpen] = useState(false);
   const [acctForm, setAcctForm] = useState<{
     acct: string; jmLocation: string; division: string;
