@@ -233,48 +233,6 @@ const VehicleStandards = () => {
                 </div>
               </div>
 
-              {/* Stats */}
-              <div className="flex items-center gap-2">
-                <div className="flex items-center gap-2 px-3 py-1.5 rounded-md border bg-background">
-                  <Package className="h-3.5 w-3.5 text-muted-foreground" />
-                  <span className="text-xs text-muted-foreground">Total</span>
-                  <span className="text-sm font-semibold">{stats.total}</span>
-                </div>
-                <div
-                  className={cn(
-                    "flex items-center gap-2 px-3 py-1.5 rounded-md border",
-                    stats.dueSoon > 0
-                      ? "bg-amber-50 border-amber-200 dark:bg-amber-950/30 dark:border-amber-900"
-                      : "bg-background",
-                  )}
-                >
-                  <AlertTriangle
-                    className={cn(
-                      "h-3.5 w-3.5",
-                      stats.dueSoon > 0 ? "text-amber-600" : "text-muted-foreground",
-                    )}
-                  />
-                  <span className="text-xs text-muted-foreground">Due soon</span>
-                  <span className="text-sm font-semibold">{stats.dueSoon}</span>
-                </div>
-                <div
-                  className={cn(
-                    "flex items-center gap-2 px-3 py-1.5 rounded-md border",
-                    stats.overdue > 0
-                      ? "bg-destructive/10 border-destructive/30"
-                      : "bg-background",
-                  )}
-                >
-                  <AlertTriangle
-                    className={cn(
-                      "h-3.5 w-3.5",
-                      stats.overdue > 0 ? "text-destructive" : "text-muted-foreground",
-                    )}
-                  />
-                  <span className="text-xs text-muted-foreground">Overdue</span>
-                  <span className="text-sm font-semibold">{stats.overdue}</span>
-                </div>
-              </div>
             </div>
           </CardContent>
         </Card>
