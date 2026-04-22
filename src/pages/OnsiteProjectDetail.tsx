@@ -216,7 +216,7 @@ const OnsiteProjectDetail = () => {
       <main className="w-full max-w-none px-2 sm:px-4 lg:px-6 py-3 sm:py-6">
         <div className="w-full space-y-4">
           {/* Header strip: Project # + Status */}
-          <Card className="overflow-hidden border-l-4 border-l-primary bg-gradient-to-r from-primary/5 to-transparent">
+          <Card className="overflow-hidden bg-gradient-to-r from-primary/5 to-transparent">
             <CardContent className="p-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                 <div className="space-y-1">
