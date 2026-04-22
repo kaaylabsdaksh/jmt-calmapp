@@ -394,7 +394,7 @@ const OnsiteProjects = () => {
                             </TableCell>
                             <TableCell className="py-2">
                               <button
-                                className="text-primary hover:underline font-medium"
+                                className="text-foreground hover:underline font-medium"
                                 onClick={(e) => e.stopPropagation()}
                               >
                                 {row.projectNumber}
