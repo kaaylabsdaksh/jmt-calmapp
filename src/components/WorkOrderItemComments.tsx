@@ -137,7 +137,7 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
       <CardContent className="p-6 space-y-6">
         {/* Add Comment Form - Minimal Design */}
         <div className="bg-muted/30 rounded-lg p-4">
-          <div className="flex items-start gap-3">
+          <div className="flex items-end gap-3">
             <div className="w-48 shrink-0">
               <Label htmlFor="comment-type" className="text-xs font-medium uppercase tracking-wide text-muted-foreground mb-2 block">
                 Type
@@ -161,16 +161,16 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
               <Label htmlFor="comment-text" className="text-xs font-medium uppercase tracking-wide text-muted-foreground mb-2 block">
                 Comment
               </Label>
-              <Textarea
+              <Input
                 id="comment-text"
                 value={commentText}
                 onChange={(e) => setCommentText(e.target.value)}
                 placeholder="Enter your comment..."
-                className="min-h-[70px] resize-none bg-background border-border text-sm"
+                className="h-9 bg-background border-border text-sm"
               />
             </div>
 
-            <div className="shrink-0 self-end">
+            <div className="shrink-0">
               <Button 
                 onClick={handleAddComment}
                 disabled={!commentType || !commentText.trim()}
