@@ -495,7 +495,7 @@ const OnsiteProjectDetail = () => {
           </SectionCard>
 
           {/* Quotes */}
-          <SectionCard title="Linked Quotes">
+          <SectionCard title="Linked Quotes" subtitle="Quotes associated with project accounts" icon={FileSpreadsheet} accent="violet">
             <Table>
               <TableHeader>
                 <TableRow className="hover:bg-transparent">
