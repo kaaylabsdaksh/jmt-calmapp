@@ -663,14 +663,8 @@ const OnsiteProjectDetail = () => {
           </SectionCard>
 
           {/* Comments meta */}
-          <Card>
-            <CardHeader className="py-2.5 px-3 border-b flex flex-row items-center gap-2 space-y-0">
-              <MessageSquare className="h-3.5 w-3.5 text-muted-foreground" />
-              <CardTitle className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-                Comments
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="p-3">
+          <SectionCard title="Audit Trail" subtitle="Created and modified history" icon={MessageSquare} accent="slate">
+            <div className="p-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-muted-foreground">
                 <div>
                   <span className="font-medium text-foreground">Created By: </span>
@@ -681,8 +675,8 @@ const OnsiteProjectDetail = () => {
                   <span>—</span>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </SectionCard>
         </div>
       </main>
 
