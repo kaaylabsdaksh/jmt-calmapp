@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
-import { ArrowLeft, Save, FileText, BarChart3, Plus, X, Truck, UserPlus, MessageSquare, MoreHorizontal, CalendarIcon, Trash2, Pencil, Check } from "lucide-react";
+import { ArrowLeft, Save, FileText, BarChart3, Plus, X, Truck, UserPlus, MessageSquare, MoreHorizontal, CalendarIcon, Trash2, Pencil, Check, Building2, FileSpreadsheet, ClipboardList, Users, Wrench, Hash } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -71,25 +71,59 @@ interface AccountRow {
 }
 
 
+type SectionAccent = "blue" | "violet" | "emerald" | "amber" | "rose" | "slate";
+
+const accentStyles: Record<SectionAccent, { bar: string; iconBg: string; iconText: string; headerBg: string }> = {
+  blue:    { bar: "bg-blue-500",    iconBg: "bg-blue-100 dark:bg-blue-950",       iconText: "text-blue-600 dark:text-blue-400",       headerBg: "bg-blue-50/50 dark:bg-blue-950/20" },
+  violet:  { bar: "bg-violet-500",  iconBg: "bg-violet-100 dark:bg-violet-950",   iconText: "text-violet-600 dark:text-violet-400",   headerBg: "bg-violet-50/50 dark:bg-violet-950/20" },
+  emerald: { bar: "bg-emerald-500", iconBg: "bg-emerald-100 dark:bg-emerald-950", iconText: "text-emerald-600 dark:text-emerald-400", headerBg: "bg-emerald-50/50 dark:bg-emerald-950/20" },
+  amber:   { bar: "bg-amber-500",   iconBg: "bg-amber-100 dark:bg-amber-950",     iconText: "text-amber-600 dark:text-amber-400",     headerBg: "bg-amber-50/50 dark:bg-amber-950/20" },
+  rose:    { bar: "bg-rose-500",    iconBg: "bg-rose-100 dark:bg-rose-950",       iconText: "text-rose-600 dark:text-rose-400",       headerBg: "bg-rose-50/50 dark:bg-rose-950/20" },
+  slate:   { bar: "bg-slate-500",   iconBg: "bg-slate-100 dark:bg-slate-800",     iconText: "text-slate-600 dark:text-slate-300",     headerBg: "bg-slate-50/50 dark:bg-slate-900/40" },
+};
+
 const SectionCard = ({
   title,
+  subtitle,
+  icon: Icon,
+  accent = "slate",
   action,
   children,
 }: {
   title: string;
+  subtitle?: string;
+  icon?: React.ComponentType<{ className?: string }>;
+  accent?: SectionAccent;
   action?: React.ReactNode;
   children: React.ReactNode;
-}) => (
-  <Card>
-    <CardHeader className="py-2.5 px-3 flex flex-row items-center justify-between space-y-0 border-b">
-      <CardTitle className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-        {title}
-      </CardTitle>
-      {action}
-    </CardHeader>
-    <CardContent className="p-0">{children}</CardContent>
-  </Card>
-);
+}) => {
+  const styles = accentStyles[accent];
+  return (
+    <Card className="overflow-hidden relative">
+      {/* Accent bar */}
+      <div className={cn("absolute left-0 top-0 bottom-0 w-1", styles.bar)} aria-hidden />
+      <CardHeader className={cn("py-2.5 pl-4 pr-3 flex flex-row items-center justify-between space-y-0 border-b", styles.headerBg)}>
+        <div className="flex items-center gap-2.5 min-w-0">
+          {Icon && (
+            <div className={cn("h-7 w-7 rounded-md flex items-center justify-center shrink-0", styles.iconBg)}>
+              <Icon className={cn("h-3.5 w-3.5", styles.iconText)} />
+            </div>
+          )}
+          <div className="min-w-0">
+            <CardTitle className="text-xs font-semibold text-foreground leading-tight">
+              {title}
+            </CardTitle>
+            {subtitle && (
+              <p className="text-[10px] text-muted-foreground mt-0.5 truncate">{subtitle}</p>
+            )}
+          </div>
+        </div>
+        {action}
+      </CardHeader>
+      <CardContent className="p-0">{children}</CardContent>
+    </Card>
+  );
+};
 
 const EmptyRow = ({ colSpan, label = "No data to display" }: { colSpan: number; label?: string }) => (
   <TableRow>
@@ -184,18 +218,18 @@ const OnsiteProjectDetail = () => {
       <main className="w-full max-w-none px-2 sm:px-4 lg:px-6 py-3 sm:py-6">
         <div className="w-full space-y-4">
           {/* Header strip: Project # + Status */}
-          <Card>
-            <CardContent className="p-3">
+          <Card className="overflow-hidden border-l-4 border-l-primary bg-gradient-to-r from-primary/5 to-transparent">
+            <CardContent className="p-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                 <div className="space-y-1">
-                  <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
-                    Project #
+                  <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide flex items-center gap-1.5">
+                    <Hash className="h-3 w-3" /> Project #
                   </Label>
                   <Input
                     value={projectNumber}
                     onChange={(e) => setProjectNumber(e.target.value)}
                     placeholder="Auto-generated"
-                    className="h-8 text-xs"
+                    className="h-8 text-xs font-mono"
                   />
                 </div>
                 <div className="space-y-1">
@@ -221,6 +255,9 @@ const OnsiteProjectDetail = () => {
           {/* Accounts grid */}
           <SectionCard
             title="Accounts"
+            subtitle="Customer accounts linked to this project"
+            icon={Building2}
+            accent="blue"
             action={
               <Button
                 size="sm"
@@ -458,7 +495,7 @@ const OnsiteProjectDetail = () => {
           </SectionCard>
 
           {/* Quotes */}
-          <SectionCard title="Linked Quotes">
+          <SectionCard title="Linked Quotes" subtitle="Quotes associated with project accounts" icon={FileSpreadsheet} accent="violet">
             <Table>
               <TableHeader>
                 <TableRow className="hover:bg-transparent">
@@ -474,7 +511,7 @@ const OnsiteProjectDetail = () => {
           </SectionCard>
 
           {/* WO Batches */}
-          <SectionCard title="Work Order Batches">
+          <SectionCard title="Work Order Batches" subtitle="Batches generated from this project" icon={ClipboardList} accent="emerald">
             <Table>
               <TableHeader>
                 <TableRow className="hover:bg-transparent">
@@ -490,13 +527,8 @@ const OnsiteProjectDetail = () => {
           </SectionCard>
 
           {/* Vehicles + Comment */}
-          <Card>
-            <CardHeader className="py-2.5 px-3 border-b">
-              <CardTitle className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-                Vehicle & Comment
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="p-3 space-y-3">
+          <SectionCard title="Vehicle & Comment" subtitle="Transport and project notes" icon={Truck} accent="amber">
+            <div className="p-4 space-y-3">
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div className="space-y-1">
                   <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
@@ -526,12 +558,15 @@ const OnsiteProjectDetail = () => {
                   className="text-xs"
                 />
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </SectionCard>
 
           {/* Technicians */}
           <SectionCard
             title="Technicians"
+            subtitle="Field staff assigned to this project"
+            icon={Users}
+            accent="rose"
             action={
               <div className="flex items-center gap-2">
                 <Select value={techSelect} onValueChange={setTechSelect}>
@@ -628,14 +663,8 @@ const OnsiteProjectDetail = () => {
           </SectionCard>
 
           {/* Comments meta */}
-          <Card>
-            <CardHeader className="py-2.5 px-3 border-b flex flex-row items-center gap-2 space-y-0">
-              <MessageSquare className="h-3.5 w-3.5 text-muted-foreground" />
-              <CardTitle className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-                Comments
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="p-3">
+          <SectionCard title="Audit Trail" subtitle="Created and modified history" icon={MessageSquare} accent="slate">
+            <div className="p-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-muted-foreground">
                 <div>
                   <span className="font-medium text-foreground">Created By: </span>
@@ -646,8 +675,8 @@ const OnsiteProjectDetail = () => {
                   <span>—</span>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </SectionCard>
         </div>
       </main>
 
