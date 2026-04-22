@@ -407,7 +407,10 @@ const OnsiteProjects = () => {
                             <TableCell className="py-2">
                               <button
                                 className="text-foreground hover:underline font-medium"
-                                onClick={(e) => e.stopPropagation()}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  navigate("/onsite-projects/new", { state: { project: row } });
+                                }}
                               >
                                 {row.projectNumber}
                               </button>
