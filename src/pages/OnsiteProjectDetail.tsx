@@ -15,6 +15,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
 import ModernTopNav from "@/components/modern/ModernTopNav";
+import { WorkOrderItemComments } from "@/components/WorkOrderItemComments";
 
 // Mock account lookup — pre-populates Customer, SR #, OSR #, Rep, and City/State
 type AccountInfo = { sr: string; osr: string; customer: string; rep: string; cityState: string };
