@@ -330,7 +330,7 @@ const VehicleStandards = () => {
                   <TableHead className="text-[11px] uppercase tracking-wide">Std #</TableHead>
                   <TableHead className="text-[11px] uppercase tracking-wide">Manufacturer</TableHead>
                   <TableHead className="text-[11px] uppercase tracking-wide">Model</TableHead>
-                  <TableHead className="text-[11px] uppercase tracking-wide">Description</TableHead>
+                  
                   <TableHead className="text-[11px] uppercase tracking-wide">Next Cal</TableHead>
                   <TableHead className="text-[11px] uppercase tracking-wide">Checked Out</TableHead>
                   <TableHead className="text-[11px] uppercase tracking-wide">Checked In</TableHead>
@@ -339,7 +339,7 @@ const VehicleStandards = () => {
               <TableBody>
                 {filteredRows.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={9} className="text-center py-16">
+                    <TableCell colSpan={8} className="text-center py-16">
                       <div className="flex flex-col items-center gap-2 text-muted-foreground">
                         <ScanLine className="h-8 w-8 opacity-40" />
                         <div className="text-sm font-medium">
@@ -355,7 +355,6 @@ const VehicleStandards = () => {
                   </TableRow>
                 ) : (
                   filteredRows.map((r) => {
-                    const status = calStatus(r.nextCalDate);
                     const isSelected = selectedIds.has(r.id);
                     return (
                       <TableRow
@@ -378,28 +377,7 @@ const VehicleStandards = () => {
                         <TableCell className="py-2 text-xs font-medium">{r.stdNo}</TableCell>
                         <TableCell className="py-2 text-xs">{r.manufacturer}</TableCell>
                         <TableCell className="py-2 text-xs">{r.model}</TableCell>
-                        <TableCell className="py-2 text-xs">{r.description}</TableCell>
-                        <TableCell className="py-2 text-xs">
-                          <div className="flex items-center gap-2">
-                            <span>{r.nextCalDate}</span>
-                            {status.label !== "—" && (
-                              <Badge
-                                variant="secondary"
-                                className={cn(
-                                  "h-5 text-[10px] px-1.5",
-                                  status.tone === "bad" &&
-                                    "bg-destructive text-destructive-foreground",
-                                  status.tone === "warn" &&
-                                    "bg-amber-500 text-white",
-                                  status.tone === "ok" &&
-                                    "bg-emerald-600 text-white",
-                                )}
-                              >
-                                {status.label}
-                              </Badge>
-                            )}
-                          </div>
-                        </TableCell>
+                        <TableCell className="py-2 text-xs">{r.nextCalDate}</TableCell>
                         <TableCell className="py-2 text-xs">{r.checkedOut}</TableCell>
                         <TableCell className="py-2 text-xs">{r.checkedIn}</TableCell>
                       </TableRow>
