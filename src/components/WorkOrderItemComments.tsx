@@ -273,16 +273,16 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
                 <table className="w-full">
                   <thead>
                     <tr className="bg-muted/30 border-b border-border">
-                      <th className="text-left p-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground w-[100px]">
+                      <th className="text-left px-2 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground w-[90px]">
                         Type
                       </th>
-                      <th className="text-left p-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground w-[130px]">
+                      <th className="text-left px-2 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground w-[120px]">
                         User
                       </th>
-                      <th className="text-left p-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground w-[150px]">
+                      <th className="text-left px-2 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground w-[140px]">
                         Date
                       </th>
-                      <th className="text-left p-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                      <th className="text-left px-2 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
                         Details
                       </th>
                     </tr>
@@ -293,21 +293,21 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
                         key={comment.id}
                         className="border-b border-border last:border-b-0 hover:bg-muted/20 transition-colors"
                       >
-                        <td className="p-3">
+                        <td className="px-2 py-1.5">
                           <Badge
                             variant="outline"
-                            className={`${getTypeColor(comment.type)} text-xs`}
+                            className={`${getTypeColor(comment.type)} text-[10px] px-1.5 py-0 h-4`}
                           >
                             {comment.type}
                           </Badge>
                         </td>
-                        <td className="p-3 text-sm text-foreground">
+                        <td className="px-2 py-1.5 text-xs text-foreground">
                           {comment.user}
                         </td>
-                        <td className="p-3 text-sm text-muted-foreground font-mono">
+                        <td className="px-2 py-1.5 text-[11px] text-muted-foreground font-mono">
                           {format(comment.dateEntered, "MM/dd/yyyy hh:mm a")}
                         </td>
-                        <td className="p-3 text-sm text-foreground/90">
+                        <td className="px-2 py-1.5 text-xs text-foreground/90">
                           <div className="line-clamp-2">
                             {comment.comment}
                           </div>
