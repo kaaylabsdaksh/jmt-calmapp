@@ -214,6 +214,50 @@ const OnsiteProjectDetail = () => {
     });
   };
   const [accounts, setAccounts] = useState<AccountRow[]>(buildInitialAccounts);
+  // Pending edits keyed by row id — only fields user can edit inline
+  type AcctEdit = { startDate?: Date; endDate?: Date; poRcvd: string; confirmed: string };
+  const [draftEdits, setDraftEdits] = useState<Record<string, AcctEdit>>({});
+  const [rowStartOpen, setRowStartOpen] = useState<string | null>(null);
+  const [rowEndOpen, setRowEndOpen] = useState<string | null>(null);
+
+  const getRowValue = (row: AccountRow): AcctEdit => {
+    return draftEdits[row.id] ?? {
+      startDate: row.startDate,
+      endDate: row.endDate,
+      poRcvd: row.poRcvd,
+      confirmed: row.confirmed,
+    };
+  };
+  const updateDraft = (id: string, patch: Partial<AcctEdit>) => {
+    setDraftEdits(prev => {
+      const row = accounts.find(a => a.id === id);
+      if (!row) return prev;
+      const current = prev[id] ?? {
+        startDate: row.startDate, endDate: row.endDate,
+        poRcvd: row.poRcvd, confirmed: row.confirmed,
+      };
+      const next = { ...current, ...patch };
+      // If matches original, drop the draft entry
+      const same =
+        (next.startDate?.getTime() ?? 0) === (row.startDate?.getTime() ?? 0) &&
+        (next.endDate?.getTime() ?? 0) === (row.endDate?.getTime() ?? 0) &&
+        next.poRcvd === row.poRcvd &&
+        next.confirmed === row.confirmed;
+      const copy = { ...prev };
+      if (same) delete copy[id]; else copy[id] = next;
+      return copy;
+    });
+  };
+  const hasPendingChanges = Object.keys(draftEdits).length > 0;
+  const saveAccountChanges = () => {
+    setAccounts(prev => prev.map(a => {
+      const e = draftEdits[a.id];
+      return e ? { ...a, ...e } : a;
+    }));
+    setDraftEdits({});
+  };
+  const cancelAccountChanges = () => setDraftEdits({});
+
   const [acctDialogOpen, setAcctDialogOpen] = useState(false);
   const [acctForm, setAcctForm] = useState<{
     acct: string; jmLocation: string; division: string;
