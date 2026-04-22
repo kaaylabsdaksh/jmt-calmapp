@@ -230,7 +230,7 @@ const VehicleStandards = () => {
           <CardContent className="p-4">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-md bg-primary/10 text-primary flex items-center justify-center">
+                <div className="h-10 w-10 rounded-md bg-foreground/10 text-foreground flex items-center justify-center">
                   <Truck className="h-5 w-5" />
                 </div>
                 <div>
