@@ -758,22 +758,30 @@ const OnsiteProjectDetail = () => {
             <div className="p-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-muted-foreground">
                 <div>
-                  <div className="font-medium text-foreground">Created By</div>
-                  <div className="mt-0.5">
-                    <a href="#" className="text-primary hover:underline">Nicole E. Seawell</a>
-                  </div>
-                  <div className="mt-0.5">Created On: 04/30/2025 07:34 AM</div>
+                  <span className="font-medium text-foreground">Created By: </span>
+                  <span>—</span>
                 </div>
                 <div className="sm:text-right">
-                  <div className="font-medium text-foreground">Modified By</div>
-                  <div className="mt-0.5">
-                    <a href="#" className="text-primary hover:underline">Nicole E. Seawell</a>
-                  </div>
-                  <div className="mt-0.5">Modified On: 04/30/2025 07:34 AM</div>
+                  <span className="font-medium text-foreground">Modified By: </span>
+                  <span>—</span>
                 </div>
               </div>
             </div>
           </SectionCard>
+
+          {/* Created / Modified meta strip */}
+          <div className="flex flex-wrap items-center justify-between gap-2 px-3 py-2 text-[11px] text-muted-foreground border-t border-border">
+            <div>
+              <span className="font-medium text-foreground">Created On: </span>
+              04/30/2025 07:34 AM by{" "}
+              <a href="#" className="text-primary hover:underline">Nicole E. Seawell</a>
+            </div>
+            <div>
+              <span className="font-medium text-foreground">Modified On: </span>
+              04/30/2025 07:34 AM by{" "}
+              <a href="#" className="text-primary hover:underline">Nicole E. Seawell</a>
+            </div>
+          </div>
         </div>
       </main>
 
