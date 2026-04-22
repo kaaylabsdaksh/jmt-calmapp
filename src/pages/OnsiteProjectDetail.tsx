@@ -156,9 +156,21 @@ const OnsiteProjectDetail = () => {
   const [quoteAmount, setQuoteAmount] = useState(incoming?.quoteTotal != null ? String(incoming.quoteTotal) : "");
   const [frequency, setFrequency] = useState("");
   const [mileage, setMileage] = useState("");
-  const [vehicleType, setVehicleType] = useState("");
-  const [comment, setComment] = useState("");
   const [vehicleSelect, setVehicleSelect] = useState("");
+  type VehicleRow = { id: string; vehicle: string; std: string; comment: string };
+  const VEHICLE_OPTIONS = ["Van 12", "Truck 7", "Trailer 3", "Service Van 4", "Box Truck 9"];
+  const [vehicles, setVehicles] = useState<VehicleRow[]>([]);
+  const [editingVehicleId, setEditingVehicleId] = useState<string | null>(null);
+  const handleAddVehicle = () => {
+    if (!vehicleSelect) return;
+    if (vehicles.some(v => v.vehicle === vehicleSelect)) return;
+    const id = `${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
+    setVehicles(prev => [...prev, { id, vehicle: vehicleSelect, std: "", comment: "" }]);
+    setVehicleSelect("");
+    setEditingVehicleId(id);
+  };
+  const handleRemoveVehicle = (id: string) =>
+    setVehicles(prev => prev.filter(v => v.id !== id));
   const [techSelect, setTechSelect] = useState("");
 
   type TechRow = { id: string; value: string; name: string; role: string; comment: string };
@@ -863,39 +875,98 @@ const OnsiteProjectDetail = () => {
             </Table>
           </SectionCard>
 
-          {/* Vehicles + Comment */}
-          <SectionCard title="Vehicle & Comment" subtitle="Transport and project notes" icon={Truck} accent="amber">
-            <div className="p-4 space-y-3">
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <div className="space-y-1">
-                  <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
-                    Vehicle Type
-                  </Label>
-                  <Select value={vehicleType} onValueChange={setVehicleType}>
-                    <SelectTrigger className="h-8 text-xs">
-                      <SelectValue placeholder="Select vehicle type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="van">Van</SelectItem>
-                      <SelectItem value="truck">Truck</SelectItem>
-                      <SelectItem value="trailer">Trailer</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+          {/* Vehicles */}
+          <SectionCard
+            title="Vehicles"
+            subtitle="Vehicles, standards and notes"
+            icon={Truck}
+            accent="amber"
+            action={
+              <div className="flex items-center gap-2">
+                <Select value={vehicleSelect} onValueChange={setVehicleSelect}>
+                  <SelectTrigger className="h-7 w-48 text-xs">
+                    <SelectValue placeholder="Select vehicle" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {VEHICLE_OPTIONS.map(v => (
+                      <SelectItem key={v} value={v}>{v}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <Button size="sm" variant="outline" className="h-7 text-xs" disabled={!vehicleSelect} onClick={handleAddVehicle}>
+                  <Plus className="h-3.5 w-3.5 mr-1" /> Add Vehicle
+                </Button>
               </div>
-              <div className="space-y-1">
-                <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
-                  Comment
-                </Label>
-                <Textarea
-                  value={comment}
-                  onChange={(e) => setComment(e.target.value)}
-                  rows={3}
-                  placeholder="Add project notes…"
-                  className="text-xs"
-                />
-              </div>
-            </div>
+            }
+          >
+            <Table>
+              <TableHeader>
+                <TableRow className="hover:bg-transparent">
+                  <TableHead className="text-[11px] uppercase tracking-wide w-48">Vehicle</TableHead>
+                  <TableHead className="text-[11px] uppercase tracking-wide">Std</TableHead>
+                  <TableHead className="text-[11px] uppercase tracking-wide">Comments</TableHead>
+                  <TableHead className="text-[11px] uppercase tracking-wide w-20"></TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {vehicles.length === 0 ? (
+                  <EmptyRow colSpan={4} />
+                ) : (
+                  vehicles.map((v) => {
+                    const isEditing = editingVehicleId === v.id;
+                    return (
+                      <TableRow key={v.id}>
+                        <TableCell className="py-2 text-xs font-medium">{v.vehicle}</TableCell>
+                        <TableCell className="py-2">
+                          {isEditing ? (
+                            <Input
+                              value={v.std}
+                              onChange={(e) => setVehicles(prev => prev.map(r => r.id === v.id ? { ...r, std: e.target.value } : r))}
+                              placeholder="e.g. 2397, 2486, 4152"
+                              className="h-7 text-xs"
+                            />
+                          ) : (
+                            <span className="text-xs">{v.std || <span className="text-muted-foreground">—</span>}</span>
+                          )}
+                        </TableCell>
+                        <TableCell className="py-2">
+                          {isEditing ? (
+                            <Input
+                              value={v.comment}
+                              onChange={(e) => setVehicles(prev => prev.map(r => r.id === v.id ? { ...r, comment: e.target.value } : r))}
+                              placeholder="Comments"
+                              className="h-7 text-xs"
+                            />
+                          ) : (
+                            <span className="text-xs">{v.comment || <span className="text-muted-foreground">—</span>}</span>
+                          )}
+                        </TableCell>
+                        <TableCell className="py-2">
+                          <div className="flex items-center gap-0.5 justify-end">
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-7 w-7"
+                              onClick={() => setEditingVehicleId(isEditing ? null : v.id)}
+                            >
+                              {isEditing ? <Check className="h-3.5 w-3.5" /> : <Pencil className="h-3.5 w-3.5" />}
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-7 w-7 text-destructive hover:text-destructive"
+                              onClick={() => handleRemoveVehicle(v.id)}
+                            >
+                              <Trash2 className="h-3.5 w-3.5" />
+                            </Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })
+                )}
+              </TableBody>
+            </Table>
           </SectionCard>
 
           {/* Technicians */}
