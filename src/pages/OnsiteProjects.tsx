@@ -73,6 +73,7 @@ const searchFieldOptions = [
 ];
 
 const OnsiteProjects = () => {
+  const navigate = useNavigate();
   const [searchField, setSearchField] = useState("projectNumber");
   const [searchValue, setSearchValue] = useState("");
   const [searchChips, setSearchChips] = useState<SearchChip[]>([]);
