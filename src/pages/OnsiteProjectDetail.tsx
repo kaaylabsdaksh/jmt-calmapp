@@ -156,9 +156,21 @@ const OnsiteProjectDetail = () => {
   const [quoteAmount, setQuoteAmount] = useState(incoming?.quoteTotal != null ? String(incoming.quoteTotal) : "");
   const [frequency, setFrequency] = useState("");
   const [mileage, setMileage] = useState("");
-  const [vehicleType, setVehicleType] = useState("");
-  const [comment, setComment] = useState("");
   const [vehicleSelect, setVehicleSelect] = useState("");
+  type VehicleRow = { id: string; vehicle: string; std: string; comment: string };
+  const VEHICLE_OPTIONS = ["Van 12", "Truck 7", "Trailer 3", "Service Van 4", "Box Truck 9"];
+  const [vehicles, setVehicles] = useState<VehicleRow[]>([]);
+  const [editingVehicleId, setEditingVehicleId] = useState<string | null>(null);
+  const handleAddVehicle = () => {
+    if (!vehicleSelect) return;
+    if (vehicles.some(v => v.vehicle === vehicleSelect)) return;
+    const id = `${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
+    setVehicles(prev => [...prev, { id, vehicle: vehicleSelect, std: "", comment: "" }]);
+    setVehicleSelect("");
+    setEditingVehicleId(id);
+  };
+  const handleRemoveVehicle = (id: string) =>
+    setVehicles(prev => prev.filter(v => v.id !== id));
   const [techSelect, setTechSelect] = useState("");
 
   type TechRow = { id: string; value: string; name: string; role: string; comment: string };
