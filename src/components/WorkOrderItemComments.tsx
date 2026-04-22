@@ -182,19 +182,6 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
             </div>
           </div>
 
-          <div className="flex items-center space-x-2 mt-3 ml-[200px]">
-            <Checkbox
-              id="include-copy"
-              checked={includeInCopy}
-              onCheckedChange={(checked) => setIncludeInCopy(checked as boolean)}
-            />
-            <Label
-              htmlFor="include-copy"
-              className="text-sm font-normal cursor-pointer text-muted-foreground"
-            >
-              Include in Copy as New
-            </Label>
-          </div>
         </div>
 
         {/* Comments History - Minimal Design */}
