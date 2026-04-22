@@ -602,8 +602,11 @@ const OnsiteProjectDetail = () => {
                 {accounts.length === 0 && !acctDialogOpen ? (
                   <EmptyRow colSpan={13} />
                 ) : (
-                  accounts.map(row => (
-                    <TableRow key={row.id} className="text-xs">
+                  accounts.map(row => {
+                    const v = getRowValue(row);
+                    const isDirty = !!draftEdits[row.id];
+                    return (
+                    <TableRow key={row.id} className={cn("text-xs", isDirty && "bg-amber-50/40 dark:bg-amber-950/10")}>
                       <TableCell className="py-2 font-medium">{row.acct}</TableCell>
                       <TableCell className="py-2">
                         <a href={`#sr-${row.sr}`} className="text-foreground hover:underline font-medium">{row.sr}</a>
@@ -616,14 +619,73 @@ const OnsiteProjectDetail = () => {
                       <TableCell className="py-2">{row.customer}</TableCell>
                       <TableCell className="py-2">{row.rep}</TableCell>
                       <TableCell className="py-2">{row.cityState}</TableCell>
-                      <TableCell className="py-2">{row.startDate ? format(row.startDate, "MM/dd/yyyy") : "—"}</TableCell>
-                      <TableCell className="py-2">{row.endDate ? format(row.endDate, "MM/dd/yyyy") : "—"}</TableCell>
+                      <TableCell className="py-2">
+                        <Popover
+                          open={rowStartOpen === row.id}
+                          onOpenChange={(o) => setRowStartOpen(o ? row.id : null)}
+                        >
+                          <PopoverTrigger asChild>
+                            <Button
+                              variant="outline"
+                              className={cn(
+                                "h-7 w-full justify-start text-xs font-normal px-2",
+                                !v.startDate && "text-muted-foreground"
+                              )}
+                            >
+                              <CalendarIcon className="h-3 w-3 mr-1.5" />
+                              {v.startDate ? format(v.startDate, "MM/dd/yyyy") : "Pick"}
+                            </Button>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-auto p-0" align="start">
+                            <Calendar
+                              mode="single"
+                              selected={v.startDate}
+                              onSelect={(d) => {
+                                updateDraft(row.id, { startDate: d ?? undefined });
+                                if (d) setRowStartOpen(null);
+                              }}
+                              initialFocus
+                              className={cn("p-3 pointer-events-auto")}
+                            />
+                          </PopoverContent>
+                        </Popover>
+                      </TableCell>
+                      <TableCell className="py-2">
+                        <Popover
+                          open={rowEndOpen === row.id}
+                          onOpenChange={(o) => setRowEndOpen(o ? row.id : null)}
+                        >
+                          <PopoverTrigger asChild>
+                            <Button
+                              variant="outline"
+                              className={cn(
+                                "h-7 w-full justify-start text-xs font-normal px-2",
+                                !v.endDate && "text-muted-foreground"
+                              )}
+                            >
+                              <CalendarIcon className="h-3 w-3 mr-1.5" />
+                              {v.endDate ? format(v.endDate, "MM/dd/yyyy") : "Pick"}
+                            </Button>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-auto p-0" align="start">
+                            <Calendar
+                              mode="single"
+                              selected={v.endDate}
+                              onSelect={(d) => {
+                                updateDraft(row.id, { endDate: d ?? undefined });
+                                if (d) setRowEndOpen(null);
+                              }}
+                              disabled={(date) => v.startDate ? date < v.startDate : false}
+                              initialFocus
+                              className={cn("p-3 pointer-events-auto")}
+                            />
+                          </PopoverContent>
+                        </Popover>
+                      </TableCell>
                       <TableCell className="py-2">
                         <Select
-                          value={row.poRcvd}
-                          onValueChange={(v) =>
-                            setAccounts(prev => prev.map(a => a.id === row.id ? { ...a, poRcvd: v } : a))
-                          }
+                          value={v.poRcvd}
+                          onValueChange={(val) => updateDraft(row.id, { poRcvd: val })}
                         >
                           <SelectTrigger className="h-7 text-xs"><SelectValue /></SelectTrigger>
                           <SelectContent>
@@ -634,10 +696,8 @@ const OnsiteProjectDetail = () => {
                       </TableCell>
                       <TableCell className="py-2">
                         <Select
-                          value={row.confirmed}
-                          onValueChange={(v) =>
-                            setAccounts(prev => prev.map(a => a.id === row.id ? { ...a, confirmed: v } : a))
-                          }
+                          value={v.confirmed}
+                          onValueChange={(val) => updateDraft(row.id, { confirmed: val })}
                         >
                           <SelectTrigger className="h-7 text-xs"><SelectValue /></SelectTrigger>
                           <SelectContent>
@@ -658,14 +718,35 @@ const OnsiteProjectDetail = () => {
                         </Button>
                       </TableCell>
                     </TableRow>
-                  ))
+                    );
+                  })
                 )}
               </TableBody>
             </Table>
-            <div className="flex justify-end gap-2 px-3 py-2 border-t bg-muted/30">
-              <Button size="sm" variant="outline" className="h-7 text-xs" disabled>Preview changes</Button>
-              <Button size="sm" variant="outline" className="h-7 text-xs" disabled>Save changes</Button>
-              <Button size="sm" variant="ghost" className="h-7 text-xs" disabled>Cancel changes</Button>
+            <div className="flex items-center justify-end gap-2 px-3 py-2 border-t bg-muted/30">
+              {hasPendingChanges && (
+                <span className="text-[11px] text-muted-foreground mr-auto">
+                  {Object.keys(draftEdits).length} unsaved change{Object.keys(draftEdits).length === 1 ? "" : "s"}
+                </span>
+              )}
+              <Button
+                size="sm"
+                variant="ghost"
+                className="h-7 text-xs"
+                disabled={!hasPendingChanges}
+                onClick={cancelAccountChanges}
+              >
+                Cancel changes
+              </Button>
+              <Button
+                size="sm"
+                className="h-7 text-xs bg-green-600 hover:bg-green-700 text-white"
+                disabled={!hasPendingChanges}
+                onClick={saveAccountChanges}
+              >
+                <Save className="h-3.5 w-3.5 mr-1" />
+                Save changes
+              </Button>
             </div>
           </SectionCard>
 
