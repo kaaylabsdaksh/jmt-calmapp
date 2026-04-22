@@ -248,6 +248,75 @@ const OnsiteProjectDetail = () => {
                     </SelectContent>
                   </Select>
                 </div>
+                <div className="space-y-1">
+                  <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
+                    Product Group
+                  </Label>
+                  <Select value={productGroup} onValueChange={setProductGroup}>
+                    <SelectTrigger className="h-8 text-xs">
+                      <SelectValue placeholder="Select product group" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="electrical">Electrical</SelectItem>
+                      <SelectItem value="mechanical">Mechanical</SelectItem>
+                      <SelectItem value="instrumentation">Instrumentation</SelectItem>
+                      <SelectItem value="safety">Safety</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-1">
+                  <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
+                    New Job
+                  </Label>
+                  <Select value={newJob} onValueChange={setNewJob}>
+                    <SelectTrigger className="h-8 text-xs">
+                      <SelectValue placeholder="Select" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="yes">Yes</SelectItem>
+                      <SelectItem value="no">No</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-1">
+                  <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
+                    Quote Amount
+                  </Label>
+                  <Input
+                    value={quoteAmount}
+                    onChange={(e) => setQuoteAmount(e.target.value)}
+                    placeholder="$0.00"
+                    className="h-8 text-xs"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
+                    Frequency
+                  </Label>
+                  <Select value={frequency} onValueChange={setFrequency}>
+                    <SelectTrigger className="h-8 text-xs">
+                      <SelectValue placeholder="Select frequency" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="one-time">One-time</SelectItem>
+                      <SelectItem value="monthly">Monthly</SelectItem>
+                      <SelectItem value="quarterly">Quarterly</SelectItem>
+                      <SelectItem value="semi-annual">Semi-annual</SelectItem>
+                      <SelectItem value="annual">Annual</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-1">
+                  <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
+                    Mileage
+                  </Label>
+                  <Input
+                    value={mileage}
+                    onChange={(e) => setMileage(e.target.value)}
+                    placeholder="0"
+                    className="h-8 text-xs"
+                  />
+                </div>
               </div>
             </CardContent>
           </Card>
