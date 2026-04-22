@@ -15,6 +15,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
 import ModernTopNav from "@/components/modern/ModernTopNav";
+import { WorkOrderItemComments } from "@/components/WorkOrderItemComments";
 
 // Mock account lookup — pre-populates Customer, SR #, OSR #, Rep, and City/State
 type AccountInfo = { sr: string; osr: string; customer: string; rep: string; cityState: string };
@@ -753,20 +754,9 @@ const OnsiteProjectDetail = () => {
             </Table>
           </SectionCard>
 
-          {/* Comments meta */}
-          <SectionCard title="Comments" subtitle="Created and modified history" icon={MessageSquare} accent="slate">
-            <div className="p-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-muted-foreground">
-                <div>
-                  <span className="font-medium text-foreground">Created By: </span>
-                  <span>—</span>
-                </div>
-                <div className="sm:text-right">
-                  <span className="font-medium text-foreground">Modified By: </span>
-                  <span>—</span>
-                </div>
-              </div>
-            </div>
+          {/* Comments */}
+          <SectionCard title="Comments" subtitle="Activity history and notes" icon={MessageSquare} accent="slate">
+            <WorkOrderItemComments />
           </SectionCard>
 
           {/* Created / Modified meta strip */}
