@@ -327,7 +327,7 @@ const OnsiteProjectDetail = () => {
                       <TableCell className="py-2 text-xs text-muted-foreground">{placeholder(lookup?.rep)}</TableCell>
                       <TableCell className="py-2 text-xs text-muted-foreground">{placeholder(lookup?.cityState)}</TableCell>
                       <TableCell className="py-2">
-                        <Popover>
+                        <Popover open={startDateOpen} onOpenChange={setStartDateOpen}>
                           <PopoverTrigger asChild>
                             <Button
                               variant="outline"
@@ -344,7 +344,13 @@ const OnsiteProjectDetail = () => {
                             <Calendar
                               mode="single"
                               selected={acctForm.startDate}
-                              onSelect={(d) => setAcctForm(s => ({ ...s, startDate: d ?? undefined }))}
+                              onSelect={(d) => {
+                                setAcctForm(s => ({ ...s, startDate: d ?? undefined }));
+                                if (d) {
+                                  setStartDateOpen(false);
+                                  setTimeout(() => setEndDateOpen(true), 100);
+                                }
+                              }}
                               initialFocus
                               className={cn("p-3 pointer-events-auto")}
                             />
@@ -352,7 +358,7 @@ const OnsiteProjectDetail = () => {
                         </Popover>
                       </TableCell>
                       <TableCell className="py-2">
-                        <Popover>
+                        <Popover open={endDateOpen} onOpenChange={setEndDateOpen}>
                           <PopoverTrigger asChild>
                             <Button
                               variant="outline"
@@ -369,7 +375,10 @@ const OnsiteProjectDetail = () => {
                             <Calendar
                               mode="single"
                               selected={acctForm.endDate}
-                              onSelect={(d) => setAcctForm(s => ({ ...s, endDate: d ?? undefined }))}
+                              onSelect={(d) => {
+                                setAcctForm(s => ({ ...s, endDate: d ?? undefined }));
+                                if (d) setEndDateOpen(false);
+                              }}
                               disabled={(date) => acctForm.startDate ? date < acctForm.startDate : false}
                               initialFocus
                               className={cn("p-3 pointer-events-auto")}
