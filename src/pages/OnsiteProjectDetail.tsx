@@ -219,6 +219,26 @@ const OnsiteProjectDetail = () => {
   const [draftEdits, setDraftEdits] = useState<Record<string, AcctEdit>>({});
   const [rowStartOpen, setRowStartOpen] = useState<string | null>(null);
   const [rowEndOpen, setRowEndOpen] = useState<string | null>(null);
+  const [editingAcctIds, setEditingAcctIds] = useState<Set<string>>(new Set());
+  const isRowEditing = (id: string) => editingAcctIds.has(id);
+  const toggleRowEditing = (id: string) => {
+    setEditingAcctIds(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+        // Discard any unsaved draft for this row when exiting edit mode
+        setDraftEdits(d => {
+          if (!d[id]) return d;
+          const c = { ...d };
+          delete c[id];
+          return c;
+        });
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
+  };
 
   const getRowValue = (row: AccountRow): AcctEdit => {
     return draftEdits[row.id] ?? {
@@ -255,8 +275,12 @@ const OnsiteProjectDetail = () => {
       return e ? { ...a, ...e } : a;
     }));
     setDraftEdits({});
+    setEditingAcctIds(new Set());
   };
-  const cancelAccountChanges = () => setDraftEdits({});
+  const cancelAccountChanges = () => {
+    setDraftEdits({});
+    setEditingAcctIds(new Set());
+  };
 
   const [acctDialogOpen, setAcctDialogOpen] = useState(false);
   const [acctForm, setAcctForm] = useState<{
@@ -620,102 +644,132 @@ const OnsiteProjectDetail = () => {
                       <TableCell className="py-2">{row.rep}</TableCell>
                       <TableCell className="py-2">{row.cityState}</TableCell>
                       <TableCell className="py-2">
-                        <Popover
-                          open={rowStartOpen === row.id}
-                          onOpenChange={(o) => setRowStartOpen(o ? row.id : null)}
-                        >
-                          <PopoverTrigger asChild>
-                            <Button
-                              variant="outline"
-                              className={cn(
-                                "h-7 w-full justify-start text-xs font-normal px-2",
-                                !v.startDate && "text-muted-foreground"
-                              )}
-                            >
-                              <CalendarIcon className="h-3 w-3 mr-1.5" />
-                              {v.startDate ? format(v.startDate, "MM/dd/yyyy") : "Pick"}
-                            </Button>
-                          </PopoverTrigger>
-                          <PopoverContent className="w-auto p-0" align="start">
-                            <Calendar
-                              mode="single"
-                              selected={v.startDate}
-                              onSelect={(d) => {
-                                updateDraft(row.id, { startDate: d ?? undefined });
-                                if (d) setRowStartOpen(null);
-                              }}
-                              initialFocus
-                              className={cn("p-3 pointer-events-auto")}
-                            />
-                          </PopoverContent>
-                        </Popover>
+                        {isRowEditing(row.id) ? (
+                          <Popover
+                            open={rowStartOpen === row.id}
+                            onOpenChange={(o) => setRowStartOpen(o ? row.id : null)}
+                          >
+                            <PopoverTrigger asChild>
+                              <Button
+                                variant="outline"
+                                className={cn(
+                                  "h-7 w-full justify-start text-xs font-normal px-2",
+                                  !v.startDate && "text-muted-foreground"
+                                )}
+                              >
+                                <CalendarIcon className="h-3 w-3 mr-1.5" />
+                                {v.startDate ? format(v.startDate, "MM/dd/yyyy") : "Pick"}
+                              </Button>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-auto p-0" align="start">
+                              <Calendar
+                                mode="single"
+                                selected={v.startDate}
+                                onSelect={(d) => {
+                                  updateDraft(row.id, { startDate: d ?? undefined });
+                                  if (d) setRowStartOpen(null);
+                                }}
+                                initialFocus
+                                className={cn("p-3 pointer-events-auto")}
+                              />
+                            </PopoverContent>
+                          </Popover>
+                        ) : (
+                          <span>{v.startDate ? format(v.startDate, "MM/dd/yyyy") : "—"}</span>
+                        )}
                       </TableCell>
                       <TableCell className="py-2">
-                        <Popover
-                          open={rowEndOpen === row.id}
-                          onOpenChange={(o) => setRowEndOpen(o ? row.id : null)}
-                        >
-                          <PopoverTrigger asChild>
-                            <Button
-                              variant="outline"
-                              className={cn(
-                                "h-7 w-full justify-start text-xs font-normal px-2",
-                                !v.endDate && "text-muted-foreground"
-                              )}
-                            >
-                              <CalendarIcon className="h-3 w-3 mr-1.5" />
-                              {v.endDate ? format(v.endDate, "MM/dd/yyyy") : "Pick"}
-                            </Button>
-                          </PopoverTrigger>
-                          <PopoverContent className="w-auto p-0" align="start">
-                            <Calendar
-                              mode="single"
-                              selected={v.endDate}
-                              onSelect={(d) => {
-                                updateDraft(row.id, { endDate: d ?? undefined });
-                                if (d) setRowEndOpen(null);
-                              }}
-                              disabled={(date) => v.startDate ? date < v.startDate : false}
-                              initialFocus
-                              className={cn("p-3 pointer-events-auto")}
-                            />
-                          </PopoverContent>
-                        </Popover>
+                        {isRowEditing(row.id) ? (
+                          <Popover
+                            open={rowEndOpen === row.id}
+                            onOpenChange={(o) => setRowEndOpen(o ? row.id : null)}
+                          >
+                            <PopoverTrigger asChild>
+                              <Button
+                                variant="outline"
+                                className={cn(
+                                  "h-7 w-full justify-start text-xs font-normal px-2",
+                                  !v.endDate && "text-muted-foreground"
+                                )}
+                              >
+                                <CalendarIcon className="h-3 w-3 mr-1.5" />
+                                {v.endDate ? format(v.endDate, "MM/dd/yyyy") : "Pick"}
+                              </Button>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-auto p-0" align="start">
+                              <Calendar
+                                mode="single"
+                                selected={v.endDate}
+                                onSelect={(d) => {
+                                  updateDraft(row.id, { endDate: d ?? undefined });
+                                  if (d) setRowEndOpen(null);
+                                }}
+                                disabled={(date) => v.startDate ? date < v.startDate : false}
+                                initialFocus
+                                className={cn("p-3 pointer-events-auto")}
+                              />
+                            </PopoverContent>
+                          </Popover>
+                        ) : (
+                          <span>{v.endDate ? format(v.endDate, "MM/dd/yyyy") : "—"}</span>
+                        )}
                       </TableCell>
                       <TableCell className="py-2">
-                        <Select
-                          value={v.poRcvd}
-                          onValueChange={(val) => updateDraft(row.id, { poRcvd: val })}
-                        >
-                          <SelectTrigger className="h-7 text-xs"><SelectValue /></SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="Yes">Yes</SelectItem>
-                            <SelectItem value="No">No</SelectItem>
-                          </SelectContent>
-                        </Select>
+                        {isRowEditing(row.id) ? (
+                          <Select
+                            value={v.poRcvd}
+                            onValueChange={(val) => updateDraft(row.id, { poRcvd: val })}
+                          >
+                            <SelectTrigger className="h-7 text-xs"><SelectValue /></SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="Yes">Yes</SelectItem>
+                              <SelectItem value="No">No</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        ) : (
+                          <span>{v.poRcvd}</span>
+                        )}
                       </TableCell>
                       <TableCell className="py-2">
-                        <Select
-                          value={v.confirmed}
-                          onValueChange={(val) => updateDraft(row.id, { confirmed: val })}
-                        >
-                          <SelectTrigger className="h-7 text-xs"><SelectValue /></SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="Yes">Yes</SelectItem>
-                            <SelectItem value="No">No</SelectItem>
-                          </SelectContent>
-                        </Select>
+                        {isRowEditing(row.id) ? (
+                          <Select
+                            value={v.confirmed}
+                            onValueChange={(val) => updateDraft(row.id, { confirmed: val })}
+                          >
+                            <SelectTrigger className="h-7 text-xs"><SelectValue /></SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="Yes">Yes</SelectItem>
+                              <SelectItem value="No">No</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        ) : (
+                          <span>{v.confirmed}</span>
+                        )}
                       </TableCell>
                       <TableCell className="py-2 text-right">
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          className="h-6 w-6 p-0 text-muted-foreground hover:text-destructive"
-                          onClick={() => removeAccount(row.id)}
-                          aria-label="Remove account"
-                        >
-                          <Trash2 className="h-3.5 w-3.5" />
-                        </Button>
+                        <div className="flex items-center justify-end gap-1">
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            className={cn(
+                              "h-6 w-6 p-0 text-muted-foreground hover:text-foreground",
+                              isRowEditing(row.id) && "text-foreground bg-muted"
+                            )}
+                            onClick={() => toggleRowEditing(row.id)}
+                            aria-label={isRowEditing(row.id) ? "Done editing" : "Edit account"}
+                          >
+                            <Pencil className="h-3.5 w-3.5" />
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            className="h-6 w-6 p-0 text-muted-foreground hover:text-destructive"
+                            onClick={() => removeAccount(row.id)}
+                            aria-label="Remove account"
+                          >
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </Button>
+                        </div>
                       </TableCell>
                     </TableRow>
                     );
