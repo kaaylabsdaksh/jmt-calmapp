@@ -210,9 +210,9 @@ const VehicleStandards = () => {
   const selectionCount = selectedIds.size;
 
   return (
-    <div className="min-h-screen bg-muted/20">
+    <div className="min-h-screen bg-muted/20 flex flex-col">
       <ModernTopNav />
-      <div className="max-w-[1600px] mx-auto px-6 py-4">
+      <div className="max-w-[1600px] w-full mx-auto px-6 py-4 flex-1 flex flex-col">
         {/* Header card */}
         <Card className="mb-4">
           <CardContent className="p-4">
@@ -411,8 +411,8 @@ const VehicleStandards = () => {
           </CardContent>
         </Card>
 
-        {/* Sticky footer (inside content area, respects sidebar) */}
-        <div className="sticky bottom-0 -mx-6 mt-4 border-t bg-background/95 backdrop-blur z-30">
+        {/* Footer pinned to bottom of content area */}
+        <div className="-mx-6 mt-auto border-t bg-background">
           <div className="px-6 py-2 flex flex-wrap items-center justify-between gap-3">
             <div className="text-xs text-muted-foreground">
               {filteredRows.length} of {rows.length} std{rows.length === 1 ? "" : "s"}
