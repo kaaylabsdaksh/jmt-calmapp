@@ -166,8 +166,9 @@ const OnsiteProjectDetail = () => {
     if (vehicles.some(v => v.vehicle === vehicleSelect)) return;
     const id = `${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
     setVehicles(prev => [...prev, { id, vehicle: vehicleSelect, std: "", comment: "" }]);
+    const vehicleName = vehicleSelect;
     setVehicleSelect("");
-    setEditingVehicleId(id);
+    navigate(`/onsite-projects/vehicle-standards?project=0007001&vehicle=${encodeURIComponent(vehicleName)}`);
   };
   const handleRemoveVehicle = (id: string) =>
     setVehicles(prev => prev.filter(v => v.id !== id));

@@ -14,6 +14,7 @@ import CustomerPickupView from "./pages/CustomerPickupView";
 import ShippingView from "./pages/ShippingView";
 import OnsiteProjects from "./pages/OnsiteProjects";
 import OnsiteProjectDetail from "./pages/OnsiteProjectDetail";
+import VehicleStandards from "./pages/VehicleStandards";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import { Layout } from "./components/Layout";
@@ -42,6 +43,7 @@ const App = () => {
           <Route path="/batch-details" element={<WorkOrderBatchDetailsDemo />} />
           <Route path="/onsite-projects" element={<OnsiteProjects />} />
           <Route path="/onsite-projects/new" element={<OnsiteProjectDetail />} />
+          <Route path="/onsite-projects/vehicle-standards" element={<VehicleStandards />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
