@@ -432,8 +432,12 @@ const OnsiteProjectDetail = () => {
                   accounts.map(row => (
                     <TableRow key={row.id} className="text-xs">
                       <TableCell className="py-2 font-medium">{row.acct}</TableCell>
-                      <TableCell className="py-2">{row.sr}</TableCell>
-                      <TableCell className="py-2">{row.osr}</TableCell>
+                      <TableCell className="py-2">
+                        <a href={`#sr-${row.sr}`} className="text-foreground hover:underline font-medium">{row.sr}</a>
+                      </TableCell>
+                      <TableCell className="py-2">
+                        <a href={`#osr-${row.osr}`} className="text-foreground hover:underline font-medium">{row.osr}</a>
+                      </TableCell>
                       <TableCell className="py-2">{row.jmLocation}</TableCell>
                       <TableCell className="py-2">{row.division}</TableCell>
                       <TableCell className="py-2">{row.customer}</TableCell>
