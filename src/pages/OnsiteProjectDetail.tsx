@@ -99,10 +99,8 @@ const SectionCard = ({
 }) => {
   const styles = accentStyles[accent];
   return (
-    <Card className="overflow-hidden relative">
-      {/* Accent bar */}
-      <div className={cn("absolute left-0 top-0 bottom-0 w-1", styles.bar)} aria-hidden />
-      <CardHeader className={cn("py-2.5 pl-4 pr-3 flex flex-row items-center justify-between space-y-0 border-b", styles.headerBg)}>
+    <Card className="overflow-hidden">
+      <CardHeader className={cn("py-2.5 px-3 flex flex-row items-center justify-between space-y-0 border-b", styles.headerBg)}>
         <div className="flex items-center gap-2.5 min-w-0">
           {Icon && (
             <div className={cn("h-7 w-7 rounded-md flex items-center justify-center shrink-0", styles.iconBg)}>
