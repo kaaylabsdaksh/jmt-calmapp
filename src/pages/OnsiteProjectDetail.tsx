@@ -564,6 +564,9 @@ const OnsiteProjectDetail = () => {
           {/* Technicians */}
           <SectionCard
             title="Technicians"
+            subtitle="Field staff assigned to this project"
+            icon={Users}
+            accent="rose"
             action={
               <div className="flex items-center gap-2">
                 <Select value={techSelect} onValueChange={setTechSelect}>
