@@ -134,17 +134,17 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
   });
 
   return (
-    <Card className="rounded-t-none border-t-0">
-      <CardContent className="p-6 space-y-6">
+    <Card className="rounded-t-none border-t-0 shadow-none">
+      <CardContent className="p-3 space-y-3">
         {/* Add Comment Form - Minimal Design */}
-        <div className="bg-muted/30 rounded-lg p-4">
-          <div className="flex items-end gap-3">
-            <div className="w-48 shrink-0">
-              <Label htmlFor="comment-type" className="text-xs font-medium uppercase tracking-wide text-muted-foreground mb-2 block">
+        <div className="bg-muted/30 rounded-md p-2">
+          <div className="flex items-end gap-2">
+            <div className="w-40 shrink-0">
+              <Label htmlFor="comment-type" className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground mb-1 block">
                 Type
               </Label>
               <Select value={commentType} onValueChange={setCommentType}>
-                <SelectTrigger className="h-9 bg-background border-border">
+                <SelectTrigger className="h-7 bg-background border-border text-xs">
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
                 <SelectContent className="z-50 bg-popover border">
@@ -159,7 +159,7 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
             </div>
 
             <div className="flex-1">
-              <Label htmlFor="comment-text" className="text-xs font-medium uppercase tracking-wide text-muted-foreground mb-2 block">
+              <Label htmlFor="comment-text" className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground mb-1 block">
                 Comment
               </Label>
               <Input
@@ -167,17 +167,18 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
                 value={commentText}
                 onChange={(e) => setCommentText(e.target.value)}
                 placeholder="Enter your comment..."
-                className="h-9 bg-background border-border text-sm"
+                className="h-7 bg-background border-border text-xs"
               />
             </div>
 
             <div className="shrink-0">
-              <Button 
+              <Button
                 onClick={handleAddComment}
                 disabled={!commentType || !commentText.trim()}
-                className="gap-2 h-9 px-6"
+                className="gap-1 h-7 px-3 text-xs"
+                size="sm"
               >
-                <Plus className="h-4 w-4" />
+                <Plus className="h-3 w-3" />
                 Add
               </Button>
             </div>
@@ -186,27 +187,27 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
         </div>
 
         {/* Comments History - Minimal Design */}
-        <div className="space-y-3">
+        <div className="space-y-2">
           <div className="flex items-center gap-2 px-1">
-            <h3 className="text-sm font-semibold text-foreground">
+            <h3 className="text-xs font-semibold text-foreground">
               Activity History
             </h3>
-            <Badge variant="secondary" className="h-5 px-2 text-xs">
+            <Badge variant="secondary" className="h-4 px-1.5 text-[10px]">
               {comments.length}
             </Badge>
           </div>
 
           {comments.length === 0 ? (
-            <div className="border border-dashed rounded-lg p-8 text-center bg-muted/20">
-              <MessageSquare className="h-10 w-10 text-muted-foreground/40 mx-auto mb-2" />
-              <p className="text-sm text-muted-foreground">
+            <div className="border border-dashed rounded-md p-4 text-center bg-muted/20">
+              <MessageSquare className="h-6 w-6 text-muted-foreground/40 mx-auto mb-1" />
+              <p className="text-xs text-muted-foreground">
                 No activity recorded yet
               </p>
             </div>
           ) : (
-            <div className="border border-border rounded-lg overflow-hidden bg-background">
+            <div className="border border-border rounded-md overflow-hidden bg-background">
               {/* Quick Search Filters */}
-              <div className="bg-muted/20 border-b border-border p-3">
+              <div className="bg-muted/20 border-b border-border p-2">
                 <div className="flex items-center gap-3">
                   <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground shrink-0">
                     Quick Search:
@@ -272,16 +273,16 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
                 <table className="w-full">
                   <thead>
                     <tr className="bg-muted/30 border-b border-border">
-                      <th className="text-left p-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground w-[100px]">
+                      <th className="text-left px-2 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground w-[90px]">
                         Type
                       </th>
-                      <th className="text-left p-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground w-[130px]">
+                      <th className="text-left px-2 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground w-[120px]">
                         User
                       </th>
-                      <th className="text-left p-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground w-[150px]">
+                      <th className="text-left px-2 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground w-[140px]">
                         Date
                       </th>
-                      <th className="text-left p-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                      <th className="text-left px-2 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
                         Details
                       </th>
                     </tr>
@@ -292,21 +293,21 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
                         key={comment.id}
                         className="border-b border-border last:border-b-0 hover:bg-muted/20 transition-colors"
                       >
-                        <td className="p-3">
+                        <td className="px-2 py-1.5">
                           <Badge
                             variant="outline"
-                            className={`${getTypeColor(comment.type)} text-xs`}
+                            className={`${getTypeColor(comment.type)} text-[10px] px-1.5 py-0 h-4`}
                           >
                             {comment.type}
                           </Badge>
                         </td>
-                        <td className="p-3 text-sm text-foreground">
+                        <td className="px-2 py-1.5 text-xs text-foreground">
                           {comment.user}
                         </td>
-                        <td className="p-3 text-sm text-muted-foreground font-mono">
+                        <td className="px-2 py-1.5 text-[11px] text-muted-foreground font-mono">
                           {format(comment.dateEntered, "MM/dd/yyyy hh:mm a")}
                         </td>
-                        <td className="p-3 text-sm text-foreground/90">
+                        <td className="px-2 py-1.5 text-xs text-foreground/90">
                           <div className="line-clamp-2">
                             {comment.comment}
                           </div>
