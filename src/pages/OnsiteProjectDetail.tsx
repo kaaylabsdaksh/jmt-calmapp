@@ -275,8 +275,12 @@ const OnsiteProjectDetail = () => {
       return e ? { ...a, ...e } : a;
     }));
     setDraftEdits({});
+    setEditingAcctIds(new Set());
   };
-  const cancelAccountChanges = () => setDraftEdits({});
+  const cancelAccountChanges = () => {
+    setDraftEdits({});
+    setEditingAcctIds(new Set());
+  };
 
   const [acctDialogOpen, setAcctDialogOpen] = useState(false);
   const [acctForm, setAcctForm] = useState<{
