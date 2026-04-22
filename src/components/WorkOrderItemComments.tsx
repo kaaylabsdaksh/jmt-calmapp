@@ -207,15 +207,15 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
           ) : (
             <div className="border border-border rounded-md overflow-hidden bg-background">
               {/* Quick Search Filters */}
-              <div className="bg-muted/20 border-b border-border p-2">
-                <div className="flex items-center gap-3">
-                  <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground shrink-0">
+              <div className="bg-muted/20 border-b border-border px-2 py-1.5">
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground shrink-0">
                     Quick Search:
                   </span>
-                  
-                  <div className="flex items-center gap-2 flex-1">
+
+                  <div className="flex items-center gap-1.5 flex-1">
                     <Select value={filterType} onValueChange={setFilterType}>
-                      <SelectTrigger className="h-8 w-[140px] bg-background text-xs">
+                      <SelectTrigger className="h-6 w-[110px] bg-background text-[11px] px-2">
                         <SelectValue placeholder="All Types" />
                       </SelectTrigger>
                       <SelectContent>
@@ -227,7 +227,7 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
                     </Select>
 
                     <Select value={filterUser} onValueChange={setFilterUser}>
-                      <SelectTrigger className="h-8 w-[140px] bg-background text-xs">
+                      <SelectTrigger className="h-6 w-[110px] bg-background text-[11px] px-2">
                         <SelectValue placeholder="All Users" />
                       </SelectTrigger>
                       <SelectContent>
@@ -239,7 +239,7 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
                     </Select>
 
                     <Select value={filterDate} onValueChange={setFilterDate}>
-                      <SelectTrigger className="h-8 w-[140px] bg-background text-xs">
+                      <SelectTrigger className="h-6 w-[110px] bg-background text-[11px] px-2">
                         <SelectValue placeholder="All Dates" />
                       </SelectTrigger>
                       <SelectContent>
@@ -251,17 +251,17 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
                     </Select>
 
                     {(filterType !== "all" || filterUser !== "all" || filterDate !== "all") && (
-                      <Button 
-                        variant="ghost" 
-                        size="sm" 
+                      <Button
+                        variant="ghost"
+                        size="sm"
                         onClick={() => {
                           setFilterType("all");
                           setFilterUser("all");
                           setFilterDate("all");
                         }}
-                        className="h-8 text-xs"
+                        className="h-6 px-2 text-[11px]"
                       >
-                        Clear Filters
+                        Clear
                       </Button>
                     )}
                   </div>
