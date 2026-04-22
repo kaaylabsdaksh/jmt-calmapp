@@ -688,7 +688,7 @@ const OnsiteProjectDetail = () => {
                             </PopoverContent>
                           </Popover>
                         ) : (
-                          <span>{v.startDate ? format(v.startDate, "MM/dd/yyyy") : "—"}</span>
+                          <span className={previewClass(row, "startDate")}>{v.startDate ? format(v.startDate, "MM/dd/yyyy") : "—"}</span>
                         )}
                       </TableCell>
                       <TableCell className="py-2">
