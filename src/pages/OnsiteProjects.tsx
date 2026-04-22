@@ -31,6 +31,24 @@ interface ProjectRow {
   quoteTotal: number;
 }
 
+interface EquipmentRow {
+  vehicle: string;
+  stdNo: string;
+  manufacturer: string;
+  model: string;
+  nextCalDate: string;
+}
+
+const mockEquipment: EquipmentRow[] = [
+  { vehicle: "36", stdNo: "2397", manufacturer: "HIGH VOLTAGE", model: "ALT-120/60", nextCalDate: "06/02/2026" },
+  { vehicle: "36", stdNo: "2486", manufacturer: "PHENIX TECH", model: "BK130/36", nextCalDate: "02/02/2027" },
+  { vehicle: "36", stdNo: "4152", manufacturer: "DILLON", model: "0-1000 LBS", nextCalDate: "07/07/2026" },
+  { vehicle: "36", stdNo: "4335", manufacturer: "HABOTEST", model: "HT106B", nextCalDate: "07/31/2026" },
+  { vehicle: "36", stdNo: "4336", manufacturer: "HABOTEST", model: "HT106B", nextCalDate: "07/31/2026" },
+  { vehicle: "36", stdNo: "4498", manufacturer: "AEMC", model: "6255", nextCalDate: "01/12/2027" },
+  { vehicle: "36", stdNo: "4526", manufacturer: "HD ELECTRIC", model: "DVM-80", nextCalDate: "02/28/2027" },
+];
+
 const mockProjects: ProjectRow[] = [
   { projectNumber: "0007020", status: "Completed", jmLocation: "Baton Rouge", custAcct: "2588.00", customer: "John Deere", startDate: "3/20/2023", created: "03/20/2023 07:07 AM", createdBy: "Christian B. ONeal", numCO: 0, poRcvd: "No", confirmed: "No", quoteTotal: 0.0 },
   { projectNumber: "0007051", status: "Completed", jmLocation: "Baton Rouge", custAcct: "10323.00, 10323.04", customer: "Sabal Trail Transmission LLC", startDate: "3/27/2023", created: "03/27/2023 07:54 AM", createdBy: "Jerome J. Davis", numCO: 0, poRcvd: "No", confirmed: "No", quoteTotal: 0.0 },
