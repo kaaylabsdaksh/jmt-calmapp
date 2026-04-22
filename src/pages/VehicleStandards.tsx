@@ -484,7 +484,6 @@ const VehicleStandards = () => {
           </div>
         </div>
       </div>
-      </div>
 
       {/* Confirm delete */}
       <AlertDialog open={confirmDelete} onOpenChange={setConfirmDelete}>
