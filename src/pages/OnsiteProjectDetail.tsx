@@ -774,12 +774,12 @@ const OnsiteProjectDetail = () => {
             <div>
               <span className="font-medium text-foreground">Created On: </span>
               04/30/2025 07:34 AM by{" "}
-              <a href="#" className="text-primary hover:underline">Nicole E. Seawell</a>
+              <a href="#" className="text-foreground hover:underline">Nicole E. Seawell</a>
             </div>
             <div>
               <span className="font-medium text-foreground">Modified On: </span>
               04/30/2025 07:34 AM by{" "}
-              <a href="#" className="text-primary hover:underline">Nicole E. Seawell</a>
+              <a href="#" className="text-foreground hover:underline">Nicole E. Seawell</a>
             </div>
           </div>
         </div>
