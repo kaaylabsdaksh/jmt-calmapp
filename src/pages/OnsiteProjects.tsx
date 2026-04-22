@@ -347,15 +347,18 @@ const OnsiteProjects = () => {
           </Card>
 
           {/* Results */}
-          {hasSearched && (
-            <div className="flex items-center gap-2 px-1">
-              <Badge variant="secondary" className="h-6 text-[11px] font-medium">
-                {results.length} {results.length === 1 ? "result" : "results"} found
-              </Badge>
-            </div>
-          )}
           <Card>
             <CardContent className="p-0">
+              {hasSearched && (
+                <div className="flex items-center justify-between px-3 py-2 border-b bg-muted/30">
+                  <div className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
+                    Results
+                  </div>
+                  <Badge variant="secondary" className="h-6 text-[11px] font-medium">
+                    {results.length} {results.length === 1 ? "result" : "results"} found
+                  </Badge>
+                </div>
+              )}
               <Table>
                 <TableHeader>
                   <TableRow className="hover:bg-transparent">
