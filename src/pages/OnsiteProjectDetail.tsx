@@ -175,6 +175,8 @@ const OnsiteProjectDetail = () => {
     startDate?: Date; endDate?: Date;
     poRcvd: string; confirmed: string;
   }>({ acct: "", jmLocation: "", division: "", poRcvd: "No", confirmed: "No" });
+  const [startDateOpen, setStartDateOpen] = useState(false);
+  const [endDateOpen, setEndDateOpen] = useState(false);
 
   const resetAcctForm = () =>
     setAcctForm({ acct: "", jmLocation: "", division: "", startDate: undefined, endDate: undefined, poRcvd: "No", confirmed: "No" });
