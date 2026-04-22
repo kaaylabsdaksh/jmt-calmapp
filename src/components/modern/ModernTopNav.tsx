@@ -63,7 +63,7 @@ const ModernTopNav = () => {
 
         {/* Action Buttons */}
         <div className="flex items-center gap-1 sm:gap-2 w-full sm:w-auto">
-          {location.pathname !== "/onsite-projects/new" && (
+          {location.pathname !== "/onsite-projects/new" && location.pathname !== "/onsite-projects/vehicle-standards" && (
             <Button 
               variant="outline"
               className="rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border-border text-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary bg-transparent transform hover:scale-105 text-xs sm:text-sm font-medium px-3 sm:px-4"
@@ -100,7 +100,7 @@ const ModernTopNav = () => {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-          ) : (
+          ) : location.pathname !== "/onsite-projects/vehicle-standards" ? (
             <Button
               variant="ghost"
               size="sm"
@@ -109,8 +109,8 @@ const ModernTopNav = () => {
             >
               <Download className="h-4 w-4" />
             </Button>
-          )}
-          {location.pathname !== "/onsite-projects" && (
+          ) : null}
+          {location.pathname !== "/onsite-projects" && location.pathname !== "/onsite-projects/vehicle-standards" && (
             <Button
               variant="ghost"
               size="sm"
