@@ -11,6 +11,7 @@ import {
   Package,
   AlertTriangle,
   CheckCircle2,
+  Camera,
   X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
