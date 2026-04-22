@@ -420,6 +420,52 @@ const VehicleStandards = () => {
                 )}
               </TableBody>
             </Table>
+            {selectionCount > 0 && (
+              <div className="flex flex-wrap items-center justify-between gap-2 px-3 py-2 border-t bg-muted/30">
+                <div className="text-xs">
+                  <span className="font-semibold">{selectionCount}</span> selected
+                </div>
+                <div className="flex items-center gap-2">
+                  <Select value={transferTo} onValueChange={setTransferTo}>
+                    <SelectTrigger className="h-8 w-48 text-xs">
+                      <SelectValue placeholder="Transfer to vehicle…" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {VEHICLE_OPTIONS.map((v) => (
+                        <SelectItem key={v} value={v}>
+                          {v}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-8 text-xs"
+                    disabled={!transferTo}
+                    onClick={handleTransfer}
+                  >
+                    <ArrowRightLeft className="h-3.5 w-3.5 mr-1" /> Transfer
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-8 text-xs text-destructive hover:text-destructive"
+                    onClick={() => setConfirmDelete(true)}
+                  >
+                    <Trash2 className="h-3.5 w-3.5 mr-1" /> Remove
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-8 text-xs"
+                    onClick={() => setSelectedIds(new Set())}
+                  >
+                    Clear
+                  </Button>
+                </div>
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>
@@ -440,47 +486,6 @@ const VehicleStandards = () => {
             <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => navigate(-1)}>
               <ArrowLeft className="h-3.5 w-3.5 mr-1" /> Back
             </Button>
-            {selectionCount > 0 && (
-              <>
-                <Select value={transferTo} onValueChange={setTransferTo}>
-                  <SelectTrigger className="h-8 w-48 text-xs">
-                    <SelectValue placeholder="Transfer to vehicle…" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {VEHICLE_OPTIONS.map((v) => (
-                      <SelectItem key={v} value={v}>
-                        {v}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="h-8 text-xs"
-                  disabled={!transferTo}
-                  onClick={handleTransfer}
-                >
-                  <ArrowRightLeft className="h-3.5 w-3.5 mr-1" /> Transfer
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="h-8 text-xs text-destructive hover:text-destructive"
-                  onClick={() => setConfirmDelete(true)}
-                >
-                  <Trash2 className="h-3.5 w-3.5 mr-1" /> Remove
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-8 text-xs"
-                  onClick={() => setSelectedIds(new Set())}
-                >
-                  Clear
-                </Button>
-              </>
-            )}
             <Button
               size="sm"
               className="h-8 text-xs"
