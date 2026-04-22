@@ -225,102 +225,106 @@ const OnsiteProjectDetail = () => {
           {/* Header strip: Project # + Status */}
           <Card className="overflow-hidden bg-gradient-to-r from-primary/5 to-transparent">
             <CardContent className="p-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                <div className="space-y-1">
-                  <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide flex items-center gap-1.5">
-                    <Hash className="h-3 w-3" /> Project #
-                  </Label>
-                  <Input
-                    value={projectNumber}
-                    onChange={(e) => setProjectNumber(e.target.value)}
-                    placeholder="Auto-generated"
-                    className="h-8 text-xs font-mono"
-                  />
+              <div className="space-y-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="space-y-1">
+                    <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide flex items-center gap-1.5">
+                      <Hash className="h-3 w-3" /> Project #
+                    </Label>
+                    <Input
+                      value={projectNumber}
+                      onChange={(e) => setProjectNumber(e.target.value)}
+                      placeholder="Auto-generated"
+                      className="h-8 text-xs font-mono"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
+                      Status
+                    </Label>
+                    <Select value={status} onValueChange={setStatus}>
+                      <SelectTrigger className="h-8 text-xs">
+                        <SelectValue placeholder="Select status" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="created">Created</SelectItem>
+                        <SelectItem value="checked-out">Checked Out</SelectItem>
+                        <SelectItem value="completed">Completed</SelectItem>
+                        <SelectItem value="cancelled">Cancelled</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
-                <div className="space-y-1">
-                  <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
-                    Status
-                  </Label>
-                  <Select value={status} onValueChange={setStatus}>
-                    <SelectTrigger className="h-8 text-xs">
-                      <SelectValue placeholder="Select status" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="created">Created</SelectItem>
-                      <SelectItem value="checked-out">Checked Out</SelectItem>
-                      <SelectItem value="completed">Completed</SelectItem>
-                      <SelectItem value="cancelled">Cancelled</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-1">
-                  <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
-                    Product Group
-                  </Label>
-                  <Select value={productGroup} onValueChange={setProductGroup}>
-                    <SelectTrigger className="h-8 text-xs">
-                      <SelectValue placeholder="Select product group" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="electrical">Electrical</SelectItem>
-                      <SelectItem value="mechanical">Mechanical</SelectItem>
-                      <SelectItem value="instrumentation">Instrumentation</SelectItem>
-                      <SelectItem value="safety">Safety</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-1">
-                  <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
-                    New Job
-                  </Label>
-                  <Select value={newJob} onValueChange={setNewJob}>
-                    <SelectTrigger className="h-8 text-xs">
-                      <SelectValue placeholder="Select" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="yes">Yes</SelectItem>
-                      <SelectItem value="no">No</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-1">
-                  <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
-                    Quote Amount
-                  </Label>
-                  <Input
-                    value={quoteAmount}
-                    onChange={(e) => setQuoteAmount(e.target.value)}
-                    placeholder="$0.00"
-                    className="h-8 text-xs"
-                  />
-                </div>
-                <div className="space-y-1">
-                  <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
-                    Frequency
-                  </Label>
-                  <Select value={frequency} onValueChange={setFrequency}>
-                    <SelectTrigger className="h-8 text-xs">
-                      <SelectValue placeholder="Select frequency" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="one-time">One-time</SelectItem>
-                      <SelectItem value="monthly">Monthly</SelectItem>
-                      <SelectItem value="quarterly">Quarterly</SelectItem>
-                      <SelectItem value="semi-annual">Semi-annual</SelectItem>
-                      <SelectItem value="annual">Annual</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-1">
-                  <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
-                    Mileage
-                  </Label>
-                  <Input
-                    value={mileage}
-                    onChange={(e) => setMileage(e.target.value)}
-                    placeholder="0"
-                    className="h-8 text-xs"
-                  />
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+                  <div className="space-y-1">
+                    <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
+                      Product Group
+                    </Label>
+                    <Select value={productGroup} onValueChange={setProductGroup}>
+                      <SelectTrigger className="h-8 text-xs">
+                        <SelectValue placeholder="Select product group" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="electrical">Electrical</SelectItem>
+                        <SelectItem value="mechanical">Mechanical</SelectItem>
+                        <SelectItem value="instrumentation">Instrumentation</SelectItem>
+                        <SelectItem value="safety">Safety</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-1">
+                    <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
+                      New Job
+                    </Label>
+                    <Select value={newJob} onValueChange={setNewJob}>
+                      <SelectTrigger className="h-8 text-xs">
+                        <SelectValue placeholder="Select" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="yes">Yes</SelectItem>
+                        <SelectItem value="no">No</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-1">
+                    <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
+                      Quote Amount
+                    </Label>
+                    <Input
+                      value={quoteAmount}
+                      onChange={(e) => setQuoteAmount(e.target.value)}
+                      placeholder="$0.00"
+                      className="h-8 text-xs"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
+                      Frequency
+                    </Label>
+                    <Select value={frequency} onValueChange={setFrequency}>
+                      <SelectTrigger className="h-8 text-xs">
+                        <SelectValue placeholder="Select frequency" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="one-time">One-time</SelectItem>
+                        <SelectItem value="monthly">Monthly</SelectItem>
+                        <SelectItem value="quarterly">Quarterly</SelectItem>
+                        <SelectItem value="semi-annual">Semi-annual</SelectItem>
+                        <SelectItem value="annual">Annual</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-1">
+                    <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
+                      Mileage
+                    </Label>
+                    <Input
+                      value={mileage}
+                      onChange={(e) => setMileage(e.target.value)}
+                      placeholder="0"
+                      className="h-8 text-xs"
+                    />
+                  </div>
                 </div>
               </div>
             </CardContent>
