@@ -511,7 +511,7 @@ const OnsiteProjectDetail = () => {
           </SectionCard>
 
           {/* WO Batches */}
-          <SectionCard title="Work Order Batches">
+          <SectionCard title="Work Order Batches" subtitle="Batches generated from this project" icon={ClipboardList} accent="emerald">
             <Table>
               <TableHeader>
                 <TableRow className="hover:bg-transparent">
