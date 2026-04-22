@@ -159,7 +159,7 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
             </div>
 
             <div className="flex-1">
-              <Label htmlFor="comment-text" className="text-xs font-medium uppercase tracking-wide text-muted-foreground mb-2 block">
+              <Label htmlFor="comment-text" className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground mb-1 block">
                 Comment
               </Label>
               <Input
@@ -167,17 +167,18 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
                 value={commentText}
                 onChange={(e) => setCommentText(e.target.value)}
                 placeholder="Enter your comment..."
-                className="h-9 bg-background border-border text-sm"
+                className="h-7 bg-background border-border text-xs"
               />
             </div>
 
             <div className="shrink-0">
-              <Button 
+              <Button
                 onClick={handleAddComment}
                 disabled={!commentType || !commentText.trim()}
-                className="gap-2 h-9 px-6"
+                className="gap-1 h-7 px-3 text-xs"
+                size="sm"
               >
-                <Plus className="h-4 w-4" />
+                <Plus className="h-3 w-3" />
                 Add
               </Button>
             </div>
