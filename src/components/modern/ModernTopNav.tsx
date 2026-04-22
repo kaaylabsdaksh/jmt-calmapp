@@ -100,7 +100,7 @@ const ModernTopNav = () => {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-          ) : (
+          ) : location.pathname !== "/onsite-projects/vehicle-standards" ? (
             <Button
               variant="ghost"
               size="sm"
@@ -109,8 +109,8 @@ const ModernTopNav = () => {
             >
               <Download className="h-4 w-4" />
             </Button>
-          )}
-          {location.pathname !== "/onsite-projects" && (
+          ) : null}
+          {location.pathname !== "/onsite-projects" && location.pathname !== "/onsite-projects/vehicle-standards" && (
             <Button
               variant="ghost"
               size="sm"
