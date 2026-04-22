@@ -219,6 +219,26 @@ const OnsiteProjectDetail = () => {
   const [draftEdits, setDraftEdits] = useState<Record<string, AcctEdit>>({});
   const [rowStartOpen, setRowStartOpen] = useState<string | null>(null);
   const [rowEndOpen, setRowEndOpen] = useState<string | null>(null);
+  const [editingAcctIds, setEditingAcctIds] = useState<Set<string>>(new Set());
+  const isRowEditing = (id: string) => editingAcctIds.has(id);
+  const toggleRowEditing = (id: string) => {
+    setEditingAcctIds(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+        // Discard any unsaved draft for this row when exiting edit mode
+        setDraftEdits(d => {
+          if (!d[id]) return d;
+          const c = { ...d };
+          delete c[id];
+          return c;
+        });
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
+  };
 
   const getRowValue = (row: AccountRow): AcctEdit => {
     return draftEdits[row.id] ?? {
