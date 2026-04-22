@@ -219,7 +219,20 @@ const OnsiteProjectDetail = () => {
   const [draftEdits, setDraftEdits] = useState<Record<string, AcctEdit>>({});
   const [rowStartOpen, setRowStartOpen] = useState<string | null>(null);
   const [rowEndOpen, setRowEndOpen] = useState<string | null>(null);
+  const [previewChanges, setPreviewChanges] = useState(false);
   const [editingAcctIds, setEditingAcctIds] = useState<Set<string>>(new Set());
+  const fieldChanged = (row: AccountRow, field: keyof AcctEdit) => {
+    const e = draftEdits[row.id];
+    if (!e) return false;
+    if (field === "startDate" || field === "endDate") {
+      return (e[field]?.getTime() ?? 0) !== (row[field]?.getTime() ?? 0);
+    }
+    return e[field] !== row[field];
+  };
+  const previewClass = (row: AccountRow, field: keyof AcctEdit) =>
+    previewChanges && fieldChanged(row, field)
+      ? "ring-2 ring-amber-400 dark:ring-amber-500 rounded-sm bg-amber-100/60 dark:bg-amber-950/30 px-1 -mx-1 font-semibold"
+      : "";
   const isRowEditing = (id: string) => editingAcctIds.has(id);
   const toggleRowEditing = (id: string) => {
     setEditingAcctIds(prev => {
