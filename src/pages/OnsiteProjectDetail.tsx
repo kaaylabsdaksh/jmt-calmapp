@@ -136,6 +136,11 @@ const OnsiteProjectDetail = () => {
 
   const [projectNumber, setProjectNumber] = useState("");
   const [status, setStatus] = useState("");
+  const [productGroup, setProductGroup] = useState("");
+  const [newJob, setNewJob] = useState("");
+  const [quoteAmount, setQuoteAmount] = useState("");
+  const [frequency, setFrequency] = useState("");
+  const [mileage, setMileage] = useState("");
   const [vehicleType, setVehicleType] = useState("");
   const [comment, setComment] = useState("");
   const [vehicleSelect, setVehicleSelect] = useState("");
