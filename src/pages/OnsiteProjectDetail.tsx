@@ -798,10 +798,23 @@ const OnsiteProjectDetail = () => {
               )}
               <Button
                 size="sm"
+                variant={previewChanges ? "default" : "outline"}
+                className="h-7 text-xs"
+                disabled={!hasPendingChanges}
+                onClick={() => {
+                  // Exit row editing so highlights are visible against read-only values
+                  if (!previewChanges) setEditingAcctIds(new Set());
+                  setPreviewChanges(p => !p);
+                }}
+              >
+                {previewChanges ? "Hide preview" : "Preview changes"}
+              </Button>
+              <Button
+                size="sm"
                 variant="ghost"
                 className="h-7 text-xs"
                 disabled={!hasPendingChanges}
-                onClick={cancelAccountChanges}
+                onClick={() => { setPreviewChanges(false); cancelAccountChanges(); }}
               >
                 Cancel changes
               </Button>
