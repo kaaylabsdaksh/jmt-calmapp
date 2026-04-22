@@ -756,7 +756,7 @@ const OnsiteProjectDetail = () => {
                             </SelectContent>
                           </Select>
                         ) : (
-                          <span>{v.confirmed}</span>
+                          <span className={previewClass(row, "confirmed")}>{v.confirmed}</span>
                         )}
                       </TableCell>
                       <TableCell className="py-2 text-right">
