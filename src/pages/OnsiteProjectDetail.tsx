@@ -758,12 +758,18 @@ const OnsiteProjectDetail = () => {
             <div className="p-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-muted-foreground">
                 <div>
-                  <span className="font-medium text-foreground">Created By: </span>
-                  <span>—</span>
+                  <div className="font-medium text-foreground">Created By</div>
+                  <div className="mt-0.5">
+                    <a href="#" className="text-primary hover:underline">Nicole E. Seawell</a>
+                  </div>
+                  <div className="mt-0.5">Created On: 04/30/2025 07:34 AM</div>
                 </div>
                 <div className="sm:text-right">
-                  <span className="font-medium text-foreground">Modified By: </span>
-                  <span>—</span>
+                  <div className="font-medium text-foreground">Modified By</div>
+                  <div className="mt-0.5">
+                    <a href="#" className="text-primary hover:underline">Nicole E. Seawell</a>
+                  </div>
+                  <div className="mt-0.5">Modified On: 04/30/2025 07:34 AM</div>
                 </div>
               </div>
             </div>
