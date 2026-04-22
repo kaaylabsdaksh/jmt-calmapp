@@ -210,7 +210,7 @@ const VehicleStandards = () => {
   const selectionCount = selectedIds.size;
 
   return (
-    <div className="min-h-screen bg-muted/20 pb-24">
+    <div className="min-h-screen bg-muted/20">
       <ModernTopNav />
       <div className="max-w-[1600px] mx-auto px-6 py-4">
         {/* Breadcrumb / back */}
@@ -468,38 +468,37 @@ const VehicleStandards = () => {
             )}
           </CardContent>
         </Card>
-      </div>
 
-      {/* Sticky footer */}
-      <div className="fixed bottom-0 left-0 right-0 border-t bg-background/95 backdrop-blur z-40">
-        <div className="max-w-[1600px] mx-auto px-6 py-3 flex items-center justify-between gap-3">
-          <div className="text-xs text-muted-foreground">
-            {filteredRows.length} of {rows.length} standard{rows.length === 1 ? "" : "s"}
-            {selectionCount > 0 && (
-              <>
-                {" "}
-                · <span className="text-foreground font-medium">{selectionCount} selected</span>
-              </>
-            )}
-          </div>
-          <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => navigate(-1)}>
-              <ArrowLeft className="h-3.5 w-3.5 mr-1" /> Back
-            </Button>
-            <Button
-              size="sm"
-              className="h-8 text-xs"
-              onClick={() =>
-                toast({
-                  title: "Checked in",
-                  description: `${rows.length} standard${rows.length === 1 ? "" : "s"} ready for check-in.`,
-                })
-              }
-              disabled={rows.length === 0}
-            >
-              <CheckCircle2 className="h-3.5 w-3.5 mr-1" /> Go to Checkin
-              <LogIn className="h-3.5 w-3.5 ml-1" />
-            </Button>
+        {/* Inline footer (respects sidebar layout) */}
+        <div className="sticky bottom-2 mt-4 rounded-md border bg-background/95 backdrop-blur shadow-sm">
+          <div className="px-3 py-2 flex items-center justify-between gap-3">
+            <div className="text-xs text-muted-foreground">
+              {filteredRows.length} of {rows.length} std{rows.length === 1 ? "" : "s"}
+              {selectionCount > 0 && (
+                <>
+                  {" "}
+                  · <span className="text-foreground font-medium">{selectionCount} selected</span>
+                </>
+              )}
+            </div>
+            <div className="flex items-center gap-2">
+              <Button variant="outline" size="sm" className="h-7 text-xs" onClick={() => navigate(-1)}>
+                <ArrowLeft className="h-3.5 w-3.5 mr-1" /> Back
+              </Button>
+              <Button
+                size="sm"
+                className="h-7 text-xs"
+                onClick={() =>
+                  toast({
+                    title: "Checked in",
+                    description: `${rows.length} standard${rows.length === 1 ? "" : "s"} ready for check-in.`,
+                  })
+                }
+                disabled={rows.length === 0}
+              >
+                <CheckCircle2 className="h-3.5 w-3.5 mr-1" /> Go to Checkin
+              </Button>
+            </div>
           </div>
         </div>
       </div>
