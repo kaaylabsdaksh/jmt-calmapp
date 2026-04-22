@@ -187,27 +187,27 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
         </div>
 
         {/* Comments History - Minimal Design */}
-        <div className="space-y-3">
+        <div className="space-y-2">
           <div className="flex items-center gap-2 px-1">
-            <h3 className="text-sm font-semibold text-foreground">
+            <h3 className="text-xs font-semibold text-foreground">
               Activity History
             </h3>
-            <Badge variant="secondary" className="h-5 px-2 text-xs">
+            <Badge variant="secondary" className="h-4 px-1.5 text-[10px]">
               {comments.length}
             </Badge>
           </div>
 
           {comments.length === 0 ? (
-            <div className="border border-dashed rounded-lg p-8 text-center bg-muted/20">
-              <MessageSquare className="h-10 w-10 text-muted-foreground/40 mx-auto mb-2" />
-              <p className="text-sm text-muted-foreground">
+            <div className="border border-dashed rounded-md p-4 text-center bg-muted/20">
+              <MessageSquare className="h-6 w-6 text-muted-foreground/40 mx-auto mb-1" />
+              <p className="text-xs text-muted-foreground">
                 No activity recorded yet
               </p>
             </div>
           ) : (
-            <div className="border border-border rounded-lg overflow-hidden bg-background">
+            <div className="border border-border rounded-md overflow-hidden bg-background">
               {/* Quick Search Filters */}
-              <div className="bg-muted/20 border-b border-border p-3">
+              <div className="bg-muted/20 border-b border-border p-2">
                 <div className="flex items-center gap-3">
                   <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground shrink-0">
                     Quick Search:
