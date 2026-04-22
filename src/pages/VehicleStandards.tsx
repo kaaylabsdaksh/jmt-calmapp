@@ -411,77 +411,79 @@ const VehicleStandards = () => {
           </CardContent>
         </Card>
 
-        {/* Footer pinned to bottom of content area */}
-        <div className="-mx-6 mt-auto border-t bg-background">
-          <div className="px-6 py-2 flex flex-wrap items-center justify-between gap-3">
-            <div className="text-xs text-muted-foreground">
-              {filteredRows.length} of {rows.length} std{rows.length === 1 ? "" : "s"}
-              {selectionCount > 0 && (
-                <>
-                  {" "}
-                  · <span className="text-foreground font-medium">{selectionCount} selected</span>
-                </>
-              )}
-            </div>
-            <div className="flex items-center gap-2">
-              {selectionCount > 0 && (
-                <>
-                  <Select value={transferTo} onValueChange={setTransferTo}>
-                    <SelectTrigger className="h-7 w-44 text-xs">
-                      <SelectValue placeholder="Transfer to vehicle…" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {VEHICLE_OPTIONS.map((v) => (
-                        <SelectItem key={v} value={v}>
-                          {v}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="h-7 text-xs"
-                    disabled={!transferTo}
-                    onClick={handleTransfer}
-                  >
-                    <ArrowRightLeft className="h-3.5 w-3.5 mr-1" /> Transfer
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="h-7 text-xs text-destructive hover:text-destructive"
-                    onClick={() => setConfirmDelete(true)}
-                  >
-                    <Trash2 className="h-3.5 w-3.5 mr-1" /> Remove
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="h-7 text-xs"
-                    onClick={() => setSelectedIds(new Set())}
-                  >
-                    Clear
-                  </Button>
-                  <div className="h-5 w-px bg-border mx-1" />
-                </>
-              )}
-              <Button
-                size="sm"
-                className="h-7 text-xs"
-                onClick={() =>
-                  toast({
-                    title: "Checked in",
-                    description: `${rows.length} standard${rows.length === 1 ? "" : "s"} ready for check-in.`,
-                  })
-                }
-                disabled={rows.length === 0}
-              >
-                <CheckCircle2 className="h-3.5 w-3.5 mr-1" /> Go to Checkin
-              </Button>
-            </div>
+      </div>
+
+      {/* Footer pinned to bottom, full content width */}
+      <div className="mt-auto border-t bg-background">
+        <div className="px-6 py-2 flex flex-wrap items-center justify-between gap-3">
+          <div className="text-xs text-muted-foreground">
+            {filteredRows.length} of {rows.length} std{rows.length === 1 ? "" : "s"}
+            {selectionCount > 0 && (
+              <>
+                {" "}
+                · <span className="text-foreground font-medium">{selectionCount} selected</span>
+              </>
+            )}
+          </div>
+          <div className="flex items-center gap-2">
+            {selectionCount > 0 && (
+              <>
+                <Select value={transferTo} onValueChange={setTransferTo}>
+                  <SelectTrigger className="h-7 w-44 text-xs">
+                    <SelectValue placeholder="Transfer to vehicle…" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {VEHICLE_OPTIONS.map((v) => (
+                      <SelectItem key={v} value={v}>
+                        {v}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="h-7 text-xs"
+                  disabled={!transferTo}
+                  onClick={handleTransfer}
+                >
+                  <ArrowRightLeft className="h-3.5 w-3.5 mr-1" /> Transfer
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="h-7 text-xs text-destructive hover:text-destructive"
+                  onClick={() => setConfirmDelete(true)}
+                >
+                  <Trash2 className="h-3.5 w-3.5 mr-1" /> Remove
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-7 text-xs"
+                  onClick={() => setSelectedIds(new Set())}
+                >
+                  Clear
+                </Button>
+                <div className="h-5 w-px bg-border mx-1" />
+              </>
+            )}
+            <Button
+              size="sm"
+              className="h-7 text-xs"
+              onClick={() =>
+                toast({
+                  title: "Checked in",
+                  description: `${rows.length} standard${rows.length === 1 ? "" : "s"} ready for check-in.`,
+                })
+              }
+              disabled={rows.length === 0}
+            >
+              <CheckCircle2 className="h-3.5 w-3.5 mr-1" /> Go to Checkin
+            </Button>
           </div>
         </div>
+      </div>
       </div>
 
       {/* Confirm delete */}
