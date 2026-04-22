@@ -875,24 +875,6 @@ const OnsiteProjectDetail = () => {
             </Table>
           </SectionCard>
 
-          {/* Vehicles + Comment */}
-          <SectionCard title="Vehicle & Comment" subtitle="Transport and project notes" icon={Truck} accent="amber">
-            <div className="p-4 space-y-3">
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <div className="space-y-1">
-                  <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
-                    Vehicle Type
-                  </Label>
-                  <Select value={vehicleType} onValueChange={setVehicleType}>
-                    <SelectTrigger className="h-8 text-xs">
-                      <SelectValue placeholder="Select vehicle type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="van">Van</SelectItem>
-                      <SelectItem value="truck">Truck</SelectItem>
-                      <SelectItem value="trailer">Trailer</SelectItem>
-                    </SelectContent>
-                  </Select>
           {/* Vehicles */}
           <SectionCard
             title="Vehicles"
