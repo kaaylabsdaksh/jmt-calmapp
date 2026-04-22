@@ -448,8 +448,6 @@ const OnsiteProjects = () => {
                       );
                     })
                   )}
-                    ))
-                  )}
                 </TableBody>
               </Table>
             </CardContent>
