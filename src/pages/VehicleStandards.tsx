@@ -449,15 +449,29 @@ const VehicleStandards = () => {
             <Button
               size="sm"
               className="h-7 text-xs"
-              onClick={() =>
+              onClick={() => {
+                const stamp = new Date().toLocaleString();
+                const targetIds = selectionCount > 0 ? selectedIds : new Set(rows.map((r) => r.id));
+                let count = 0;
+                setRows((prev) =>
+                  prev.map((r) => {
+                    if (targetIds.has(r.id) && r.checkedIn === "—") {
+                      count++;
+                      return { ...r, checkedIn: stamp };
+                    }
+                    return r;
+                  }),
+                );
+                if (selectionCount > 0) setSelectedIds(new Set());
                 toast({
                   title: "Checked in",
-                  description: `${rows.length} standard${rows.length === 1 ? "" : "s"} ready for check-in.`,
-                })
-              }
+                  description: `${count || rows.length} standard${(count || rows.length) === 1 ? "" : "s"} stamped at ${stamp}.`,
+                });
+              }}
               disabled={rows.length === 0}
             >
-              <CheckCircle2 className="h-3.5 w-3.5 mr-1" /> Go to Checkin
+              <CheckCircle2 className="h-3.5 w-3.5 mr-1" />{" "}
+              {selectionCount > 0 ? `Check in (${selectionCount})` : "Go to Checkin"}
             </Button>
           </div>
         </div>
