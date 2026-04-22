@@ -740,7 +740,7 @@ const OnsiteProjectDetail = () => {
                             </SelectContent>
                           </Select>
                         ) : (
-                          <span>{v.poRcvd}</span>
+                          <span className={previewClass(row, "poRcvd")}>{v.poRcvd}</span>
                         )}
                       </TableCell>
                       <TableCell className="py-2">
