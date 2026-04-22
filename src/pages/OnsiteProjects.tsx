@@ -127,6 +127,16 @@ const OnsiteProjects = () => {
 
   const [hasSearched, setHasSearched] = useState(false);
   const [results, setResults] = useState<ProjectRow[]>([]);
+  const [expandedRows, setExpandedRows] = useState<Set<string>>(new Set());
+
+  const toggleRow = (id: string) => {
+    setExpandedRows(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
 
   const handleSearch = () => {
     setResults(mockProjects);
