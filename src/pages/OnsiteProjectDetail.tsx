@@ -527,13 +527,8 @@ const OnsiteProjectDetail = () => {
           </SectionCard>
 
           {/* Vehicles + Comment */}
-          <Card>
-            <CardHeader className="py-2.5 px-3 border-b">
-              <CardTitle className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-                Vehicle & Comment
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="p-3 space-y-3">
+          <SectionCard title="Vehicle & Comment" subtitle="Transport and project notes" icon={Truck} accent="amber">
+            <div className="p-4 space-y-3">
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div className="space-y-1">
                   <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
@@ -563,8 +558,8 @@ const OnsiteProjectDetail = () => {
                   className="text-xs"
                 />
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </SectionCard>
 
           {/* Technicians */}
           <SectionCard
