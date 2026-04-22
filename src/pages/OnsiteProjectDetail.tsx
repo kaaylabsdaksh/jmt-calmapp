@@ -134,12 +134,26 @@ const EmptyRow = ({ colSpan, label = "No data to display" }: { colSpan: number; 
 
 const OnsiteProjectDetail = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const incoming = (location.state as { project?: {
+    projectNumber: string; status: string; jmLocation: string;
+    custAcct: string; customer: string; startDate: string;
+    poRcvd: string; confirmed: string; quoteTotal: number;
+  } } | null)?.project;
 
-  const [projectNumber, setProjectNumber] = useState("");
-  const [status, setStatus] = useState("");
+  const parseMDY = (s?: string): Date | undefined => {
+    if (!s) return undefined;
+    const [m, d, y] = s.split("/").map(Number);
+    if (!m || !d || !y) return undefined;
+    return new Date(y, m - 1, d);
+  };
+  const statusToValue = (s?: string) => (s ? s.toLowerCase().replace(/\s+/g, "-") : "");
+
+  const [projectNumber, setProjectNumber] = useState(incoming?.projectNumber ?? "");
+  const [status, setStatus] = useState(statusToValue(incoming?.status));
   const [productGroup, setProductGroup] = useState("");
   const [newJob, setNewJob] = useState("");
-  const [quoteAmount, setQuoteAmount] = useState("");
+  const [quoteAmount, setQuoteAmount] = useState(incoming?.quoteTotal != null ? String(incoming.quoteTotal) : "");
   const [frequency, setFrequency] = useState("");
   const [mileage, setMileage] = useState("");
   const [vehicleType, setVehicleType] = useState("");
@@ -162,7 +176,7 @@ const OnsiteProjectDetail = () => {
       {
         id: `${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
         value: techSelect,
-        name: TECH_OPTIONS[techSelect] ?? techSelect,
+        name: TECH_OPTIONS[techSelect] ?? TECH_OPTIONS[techSelect],
         role: "",
         comment: "",
       },
