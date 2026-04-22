@@ -482,9 +482,6 @@ const VehicleStandards = () => {
               )}
             </div>
             <div className="flex items-center gap-2">
-              <Button variant="outline" size="sm" className="h-7 text-xs" onClick={() => navigate(-1)}>
-                <ArrowLeft className="h-3.5 w-3.5 mr-1" /> Back
-              </Button>
               <Button
                 size="sm"
                 className="h-7 text-xs"
