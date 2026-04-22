@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search, RotateCcw, Plus, X } from "lucide-react";
+import { Search, RotateCcw, Plus, X, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
@@ -30,6 +30,24 @@ interface ProjectRow {
   confirmed: string;
   quoteTotal: number;
 }
+
+interface EquipmentRow {
+  vehicle: string;
+  stdNo: string;
+  manufacturer: string;
+  model: string;
+  nextCalDate: string;
+}
+
+const mockEquipment: EquipmentRow[] = [
+  { vehicle: "36", stdNo: "2397", manufacturer: "HIGH VOLTAGE", model: "ALT-120/60", nextCalDate: "06/02/2026" },
+  { vehicle: "36", stdNo: "2486", manufacturer: "PHENIX TECH", model: "BK130/36", nextCalDate: "02/02/2027" },
+  { vehicle: "36", stdNo: "4152", manufacturer: "DILLON", model: "0-1000 LBS", nextCalDate: "07/07/2026" },
+  { vehicle: "36", stdNo: "4335", manufacturer: "HABOTEST", model: "HT106B", nextCalDate: "07/31/2026" },
+  { vehicle: "36", stdNo: "4336", manufacturer: "HABOTEST", model: "HT106B", nextCalDate: "07/31/2026" },
+  { vehicle: "36", stdNo: "4498", manufacturer: "AEMC", model: "6255", nextCalDate: "01/12/2027" },
+  { vehicle: "36", stdNo: "4526", manufacturer: "HD ELECTRIC", model: "DVM-80", nextCalDate: "02/28/2027" },
+];
 
 const mockProjects: ProjectRow[] = [
   { projectNumber: "0007020", status: "Completed", jmLocation: "Baton Rouge", custAcct: "2588.00", customer: "John Deere", startDate: "3/20/2023", created: "03/20/2023 07:07 AM", createdBy: "Christian B. ONeal", numCO: 0, poRcvd: "No", confirmed: "No", quoteTotal: 0.0 },
@@ -109,6 +127,16 @@ const OnsiteProjects = () => {
 
   const [hasSearched, setHasSearched] = useState(false);
   const [results, setResults] = useState<ProjectRow[]>([]);
+  const [expandedRows, setExpandedRows] = useState<Set<string>>(new Set());
+
+  const toggleRow = (id: string) => {
+    setExpandedRows(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
 
   const handleSearch = () => {
     setResults(mockProjects);
@@ -324,6 +352,7 @@ const OnsiteProjects = () => {
               <Table>
                 <TableHeader>
                   <TableRow className="hover:bg-transparent">
+                    <TableHead className="w-8 px-2"></TableHead>
                     <TableHead className="text-[11px] uppercase tracking-wide">Project #</TableHead>
                     <TableHead className="text-[11px] uppercase tracking-wide">Status</TableHead>
                     <TableHead className="text-[11px] uppercase tracking-wide">JM Location</TableHead>
@@ -341,31 +370,83 @@ const OnsiteProjects = () => {
                 <TableBody>
                   {!hasSearched || results.length === 0 ? (
                     <TableRow>
-                      <TableCell colSpan={12} className="text-center text-xs text-muted-foreground py-12">
+                      <TableCell colSpan={13} className="text-center text-xs text-muted-foreground py-12">
                         No data to display
                       </TableCell>
                     </TableRow>
                   ) : (
-                    results.map((row) => (
-                      <TableRow key={row.projectNumber} className="text-xs">
-                        <TableCell className="py-2">
-                          <button className="text-blue-600 hover:underline font-medium">
-                            {row.projectNumber}
-                          </button>
-                        </TableCell>
-                        <TableCell className="py-2">{row.status}</TableCell>
-                        <TableCell className="py-2">{row.jmLocation}</TableCell>
-                        <TableCell className="py-2">{row.custAcct}</TableCell>
-                        <TableCell className="py-2">{row.customer}</TableCell>
-                        <TableCell className="py-2">{row.startDate}</TableCell>
-                        <TableCell className="py-2">{row.created}</TableCell>
-                        <TableCell className="py-2">{row.createdBy}</TableCell>
-                        <TableCell className="py-2 text-right">{row.numCO}</TableCell>
-                        <TableCell className="py-2">{row.poRcvd}</TableCell>
-                        <TableCell className="py-2">{row.confirmed}</TableCell>
-                        <TableCell className="py-2 text-right">{row.quoteTotal.toFixed(2)}</TableCell>
-                      </TableRow>
-                    ))
+                    results.map((row) => {
+                      const isExpanded = expandedRows.has(row.projectNumber);
+                      return (
+                        <>
+                          <TableRow
+                            key={row.projectNumber}
+                            className="text-xs cursor-pointer"
+                            onClick={() => toggleRow(row.projectNumber)}
+                            data-state={isExpanded ? "selected" : undefined}
+                          >
+                            <TableCell className="py-2 px-2">
+                              <ChevronRight
+                                className={`h-3.5 w-3.5 text-muted-foreground transition-transform duration-200 ${
+                                  isExpanded ? "rotate-90" : ""
+                                }`}
+                              />
+                            </TableCell>
+                            <TableCell className="py-2">
+                              <button
+                                className="text-primary hover:underline font-medium"
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                {row.projectNumber}
+                              </button>
+                            </TableCell>
+                            <TableCell className="py-2">{row.status}</TableCell>
+                            <TableCell className="py-2">{row.jmLocation}</TableCell>
+                            <TableCell className="py-2">{row.custAcct}</TableCell>
+                            <TableCell className="py-2">{row.customer}</TableCell>
+                            <TableCell className="py-2">{row.startDate}</TableCell>
+                            <TableCell className="py-2">{row.created}</TableCell>
+                            <TableCell className="py-2">{row.createdBy}</TableCell>
+                            <TableCell className="py-2 text-right">{row.numCO}</TableCell>
+                            <TableCell className="py-2">{row.poRcvd}</TableCell>
+                            <TableCell className="py-2">{row.confirmed}</TableCell>
+                            <TableCell className="py-2 text-right">{row.quoteTotal.toFixed(2)}</TableCell>
+                          </TableRow>
+                          {isExpanded && (
+                            <TableRow key={`${row.projectNumber}-details`} className="hover:bg-transparent bg-muted/30">
+                              <TableCell colSpan={13} className="p-0">
+                                <div className="px-10 py-4">
+                                  <div className="rounded-md border bg-card overflow-hidden">
+                                    <Table>
+                                      <TableHeader>
+                                        <TableRow className="hover:bg-transparent bg-muted/50">
+                                          <TableHead className="h-8 text-[10px] uppercase tracking-wide font-semibold">Vehicle</TableHead>
+                                          <TableHead className="h-8 text-[10px] uppercase tracking-wide font-semibold">Std No</TableHead>
+                                          <TableHead className="h-8 text-[10px] uppercase tracking-wide font-semibold">Manufacturer</TableHead>
+                                          <TableHead className="h-8 text-[10px] uppercase tracking-wide font-semibold">Model</TableHead>
+                                          <TableHead className="h-8 text-[10px] uppercase tracking-wide font-semibold">Next Cal Date</TableHead>
+                                        </TableRow>
+                                      </TableHeader>
+                                      <TableBody>
+                                        {mockEquipment.map((eq, idx) => (
+                                          <TableRow key={`${row.projectNumber}-eq-${idx}`} className="text-xs">
+                                            <TableCell className="py-1.5">{eq.vehicle}</TableCell>
+                                            <TableCell className="py-1.5 font-medium">{eq.stdNo}</TableCell>
+                                            <TableCell className="py-1.5">{eq.manufacturer}</TableCell>
+                                            <TableCell className="py-1.5">{eq.model}</TableCell>
+                                            <TableCell className="py-1.5">{eq.nextCalDate}</TableCell>
+                                          </TableRow>
+                                        ))}
+                                      </TableBody>
+                                    </Table>
+                                  </div>
+                                </div>
+                              </TableCell>
+                            </TableRow>
+                          )}
+                        </>
+                      );
+                    })
                   )}
                 </TableBody>
               </Table>
