@@ -347,6 +347,13 @@ const OnsiteProjects = () => {
           </Card>
 
           {/* Results */}
+          {hasSearched && (
+            <div className="flex items-center gap-2 px-1">
+              <Badge variant="secondary" className="h-6 text-[11px] font-medium">
+                {results.length} {results.length === 1 ? "result" : "results"} found
+              </Badge>
+            </div>
+          )}
           <Card>
             <CardContent className="p-0">
               <Table>
