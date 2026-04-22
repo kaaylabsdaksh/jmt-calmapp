@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { format } from "date-fns";
 import { ArrowLeft, Save, FileText, BarChart3, Plus, X, Truck, UserPlus, MessageSquare, MoreHorizontal, CalendarIcon, Trash2, Pencil, Check, Building2, FileSpreadsheet, ClipboardList, Users, Wrench, Hash } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -134,12 +134,26 @@ const EmptyRow = ({ colSpan, label = "No data to display" }: { colSpan: number; 
 
 const OnsiteProjectDetail = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const incoming = (location.state as { project?: {
+    projectNumber: string; status: string; jmLocation: string;
+    custAcct: string; customer: string; startDate: string;
+    poRcvd: string; confirmed: string; quoteTotal: number;
+  } } | null)?.project;
 
-  const [projectNumber, setProjectNumber] = useState("");
-  const [status, setStatus] = useState("");
+  const parseMDY = (s?: string): Date | undefined => {
+    if (!s) return undefined;
+    const [m, d, y] = s.split("/").map(Number);
+    if (!m || !d || !y) return undefined;
+    return new Date(y, m - 1, d);
+  };
+  const statusToValue = (s?: string) => (s ? s.toLowerCase().replace(/\s+/g, "-") : "");
+
+  const [projectNumber, setProjectNumber] = useState(incoming?.projectNumber ?? "");
+  const [status, setStatus] = useState(statusToValue(incoming?.status));
   const [productGroup, setProductGroup] = useState("");
   const [newJob, setNewJob] = useState("");
-  const [quoteAmount, setQuoteAmount] = useState("");
+  const [quoteAmount, setQuoteAmount] = useState(incoming?.quoteTotal != null ? String(incoming.quoteTotal) : "");
   const [frequency, setFrequency] = useState("");
   const [mileage, setMileage] = useState("");
   const [vehicleType, setVehicleType] = useState("");
@@ -162,7 +176,7 @@ const OnsiteProjectDetail = () => {
       {
         id: `${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
         value: techSelect,
-        name: TECH_OPTIONS[techSelect] ?? techSelect,
+        name: TECH_OPTIONS[techSelect] ?? TECH_OPTIONS[techSelect],
         role: "",
         comment: "",
       },
@@ -173,8 +187,33 @@ const OnsiteProjectDetail = () => {
     setTechnicians(prev => prev.filter(t => t.id !== id));
   const [editingTechId, setEditingTechId] = useState<string | null>(null);
 
-  // Accounts state
-  const [accounts, setAccounts] = useState<AccountRow[]>([]);
+  // Accounts state — prefill from incoming project row when available
+  const buildInitialAccounts = (): AccountRow[] => {
+    if (!incoming) return [];
+    const accts = incoming.custAcct.split(",").map(s => s.trim()).filter(Boolean);
+    const customers = incoming.customer.split(",").map(s => s.trim()).filter(Boolean);
+    const start = parseMDY(incoming.startDate);
+    return accts.map((acct, i) => {
+      const lookup = getAccountInfo(acct) ?? {
+        sr: "—", osr: "—",
+        customer: customers[i] ?? customers[0] ?? "—",
+        rep: "—", cityState: "—",
+      };
+      return {
+        id: `${Date.now()}-${i}-${Math.random().toString(36).slice(2, 6)}`,
+        acct,
+        jmLocation: incoming.jmLocation,
+        division: "",
+        startDate: start,
+        endDate: undefined,
+        poRcvd: incoming.poRcvd,
+        confirmed: incoming.confirmed,
+        ...lookup,
+        customer: customers[i] ?? lookup.customer,
+      };
+    });
+  };
+  const [accounts, setAccounts] = useState<AccountRow[]>(buildInitialAccounts);
   const [acctDialogOpen, setAcctDialogOpen] = useState(false);
   const [acctForm, setAcctForm] = useState<{
     acct: string; jmLocation: string; division: string;

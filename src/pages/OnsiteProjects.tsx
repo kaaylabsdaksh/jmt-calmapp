@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Search, RotateCcw, Plus, X, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -72,6 +73,7 @@ const searchFieldOptions = [
 ];
 
 const OnsiteProjects = () => {
+  const navigate = useNavigate();
   const [searchField, setSearchField] = useState("projectNumber");
   const [searchValue, setSearchValue] = useState("");
   const [searchChips, setSearchChips] = useState<SearchChip[]>([]);
@@ -405,7 +407,10 @@ const OnsiteProjects = () => {
                             <TableCell className="py-2">
                               <button
                                 className="text-foreground hover:underline font-medium"
-                                onClick={(e) => e.stopPropagation()}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  navigate("/onsite-projects/new", { state: { project: row } });
+                                }}
                               >
                                 {row.projectNumber}
                               </button>
