@@ -218,18 +218,18 @@ const OnsiteProjectDetail = () => {
       <main className="w-full max-w-none px-2 sm:px-4 lg:px-6 py-3 sm:py-6">
         <div className="w-full space-y-4">
           {/* Header strip: Project # + Status */}
-          <Card>
-            <CardContent className="p-3">
+          <Card className="overflow-hidden border-l-4 border-l-primary bg-gradient-to-r from-primary/5 to-transparent">
+            <CardContent className="p-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                 <div className="space-y-1">
-                  <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
-                    Project #
+                  <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide flex items-center gap-1.5">
+                    <Hash className="h-3 w-3" /> Project #
                   </Label>
                   <Input
                     value={projectNumber}
                     onChange={(e) => setProjectNumber(e.target.value)}
                     placeholder="Auto-generated"
-                    className="h-8 text-xs"
+                    className="h-8 text-xs font-mono"
                   />
                 </div>
                 <div className="space-y-1">
@@ -255,6 +255,9 @@ const OnsiteProjectDetail = () => {
           {/* Accounts grid */}
           <SectionCard
             title="Accounts"
+            subtitle="Customer accounts linked to this project"
+            icon={Building2}
+            accent="blue"
             action={
               <Button
                 size="sm"
