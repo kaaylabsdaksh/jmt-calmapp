@@ -134,17 +134,17 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
   });
 
   return (
-    <Card className="rounded-t-none border-t-0">
-      <CardContent className="p-6 space-y-6">
+    <Card className="rounded-t-none border-t-0 shadow-none">
+      <CardContent className="p-3 space-y-3">
         {/* Add Comment Form - Minimal Design */}
-        <div className="bg-muted/30 rounded-lg p-4">
-          <div className="flex items-end gap-3">
-            <div className="w-48 shrink-0">
-              <Label htmlFor="comment-type" className="text-xs font-medium uppercase tracking-wide text-muted-foreground mb-2 block">
+        <div className="bg-muted/30 rounded-md p-2">
+          <div className="flex items-end gap-2">
+            <div className="w-40 shrink-0">
+              <Label htmlFor="comment-type" className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground mb-1 block">
                 Type
               </Label>
               <Select value={commentType} onValueChange={setCommentType}>
-                <SelectTrigger className="h-9 bg-background border-border">
+                <SelectTrigger className="h-7 bg-background border-border text-xs">
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
                 <SelectContent className="z-50 bg-popover border">
