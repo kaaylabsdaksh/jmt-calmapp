@@ -904,13 +904,12 @@ const OnsiteProjectDetail = () => {
                 <TableRow className="hover:bg-transparent">
                   <TableHead className="text-[11px] uppercase tracking-wide w-48">Vehicle</TableHead>
                   <TableHead className="text-[11px] uppercase tracking-wide">Std</TableHead>
-                  <TableHead className="text-[11px] uppercase tracking-wide">Comments</TableHead>
                   <TableHead className="text-[11px] uppercase tracking-wide w-20"></TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {vehicles.length === 0 ? (
-                  <EmptyRow colSpan={4} />
+                  <EmptyRow colSpan={3} />
                 ) : (
                   vehicles.map((v) => {
                     const isEditing = editingVehicleId === v.id;
@@ -927,18 +926,6 @@ const OnsiteProjectDetail = () => {
                             />
                           ) : (
                             <span className="text-xs">{v.std || <span className="text-muted-foreground">—</span>}</span>
-                          )}
-                        </TableCell>
-                        <TableCell className="py-2">
-                          {isEditing ? (
-                            <Input
-                              value={v.comment}
-                              onChange={(e) => setVehicles(prev => prev.map(r => r.id === v.id ? { ...r, comment: e.target.value } : r))}
-                              placeholder="Comments"
-                              className="h-7 text-xs"
-                            />
-                          ) : (
-                            <span className="text-xs">{v.comment || <span className="text-muted-foreground">—</span>}</span>
                           )}
                         </TableCell>
                         <TableCell className="py-2">
