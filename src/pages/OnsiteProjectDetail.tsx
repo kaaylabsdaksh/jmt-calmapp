@@ -669,7 +669,7 @@ const OnsiteProjectDetail = () => {
                 })()}
 
                 {accounts.length === 0 && !acctDialogOpen ? (
-                  <EmptyRow colSpan={13} />
+                  <EmptyRow colSpan={9} />
                 ) : (
                   accounts.map(row => {
                     const v = getRowValue(row);
