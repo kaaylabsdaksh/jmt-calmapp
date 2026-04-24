@@ -156,6 +156,12 @@ const OnsiteProjectDetail = () => {
   const [quoteAmount, setQuoteAmount] = useState(incoming?.quoteTotal != null ? String(incoming.quoteTotal) : "");
   const [frequency, setFrequency] = useState("");
   const [mileage, setMileage] = useState("");
+  const [jmLocation, setJmLocation] = useState("");
+  const [division, setDivision] = useState("");
+  const [projectStartDate, setProjectStartDate] = useState<Date | undefined>(undefined);
+  const [projectEndDate, setProjectEndDate] = useState<Date | undefined>(undefined);
+  const [projectStartOpen, setProjectStartOpen] = useState(false);
+  const [projectEndOpen, setProjectEndOpen] = useState(false);
   const [vehicleSelect, setVehicleSelect] = useState("");
   type VehicleRow = { id: string; vehicle: string; std: string; comment: string };
   const VEHICLE_OPTIONS = ["Van 12", "Truck 7", "Trailer 3", "Service Van 4", "Box Truck 9"];
