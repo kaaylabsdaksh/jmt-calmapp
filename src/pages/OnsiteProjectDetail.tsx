@@ -594,7 +594,7 @@ const OnsiteProjectDetail = () => {
             <Table>
               <TableHeader>
                 <TableRow className="hover:bg-transparent">
-                  {["Acct #","SR #","OSR #","JM Location","Division","Customer","Rep","City, State","Start Date","End Date","PO Rcv'd","Confirmed",""].map((h, i) => (
+                  {["Acct #","SR #","OSR #","Customer","Rep","City, State","PO Rcv'd","Confirmed",""].map((h, i) => (
                     <TableHead key={`${h}-${i}`} className="text-[11px] uppercase tracking-wide">{h}</TableHead>
                   ))}
                 </TableRow>
