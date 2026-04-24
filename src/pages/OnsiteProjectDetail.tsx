@@ -686,78 +686,7 @@ const OnsiteProjectDetail = () => {
                        <TableCell className="py-2">{row.customer}</TableCell>
                       <TableCell className="py-2">{row.rep}</TableCell>
                       <TableCell className="py-2">{row.cityState}</TableCell>
-                      <TableCell className="py-2">
-                        {isRowEditing(row.id) ? (
-                          <Popover
-                            open={rowStartOpen === row.id}
-                            onOpenChange={(o) => setRowStartOpen(o ? row.id : null)}
-                          >
-                            <PopoverTrigger asChild>
-                              <Button
-                                variant="outline"
-                                className={cn(
-                                  "h-7 w-full justify-start text-xs font-normal px-2",
-                                  !v.startDate && "text-muted-foreground"
-                                )}
-                              >
-                                <CalendarIcon className="h-3 w-3 mr-1.5" />
-                                {v.startDate ? format(v.startDate, "MM/dd/yyyy") : "Pick"}
-                              </Button>
-                            </PopoverTrigger>
-                            <PopoverContent className="w-auto p-0" align="start">
-                              <Calendar
-                                mode="single"
-                                selected={v.startDate}
-                                onSelect={(d) => {
-                                  updateDraft(row.id, { startDate: d ?? undefined });
-                                  if (d) setRowStartOpen(null);
-                                }}
-                                initialFocus
-                                className={cn("p-3 pointer-events-auto")}
-                              />
-                            </PopoverContent>
-                          </Popover>
-                        ) : (
-                          <span className={previewClass(row, "startDate")}>{v.startDate ? format(v.startDate, "MM/dd/yyyy") : "—"}</span>
-                        )}
-                      </TableCell>
-                      <TableCell className="py-2">
-                        {isRowEditing(row.id) ? (
-                          <Popover
-                            open={rowEndOpen === row.id}
-                            onOpenChange={(o) => setRowEndOpen(o ? row.id : null)}
-                          >
-                            <PopoverTrigger asChild>
-                              <Button
-                                variant="outline"
-                                className={cn(
-                                  "h-7 w-full justify-start text-xs font-normal px-2",
-                                  !v.endDate && "text-muted-foreground"
-                                )}
-                              >
-                                <CalendarIcon className="h-3 w-3 mr-1.5" />
-                                {v.endDate ? format(v.endDate, "MM/dd/yyyy") : "Pick"}
-                              </Button>
-                            </PopoverTrigger>
-                            <PopoverContent className="w-auto p-0" align="start">
-                              <Calendar
-                                mode="single"
-                                selected={v.endDate}
-                                onSelect={(d) => {
-                                  updateDraft(row.id, { endDate: d ?? undefined });
-                                  if (d) setRowEndOpen(null);
-                                }}
-                                disabled={(date) => v.startDate ? date < v.startDate : false}
-                                initialFocus
-                                className={cn("p-3 pointer-events-auto")}
-                              />
-                            </PopoverContent>
-                          </Popover>
-                        ) : (
-                          <span className={previewClass(row, "endDate")}>{v.endDate ? format(v.endDate, "MM/dd/yyyy") : "—"}</span>
-                        )}
-                      </TableCell>
-                      <TableCell className="py-2">
+                       <TableCell className="py-2">
                         {isRowEditing(row.id) ? (
                           <Select
                             value={v.poRcvd}
