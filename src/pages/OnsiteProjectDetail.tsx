@@ -467,6 +467,105 @@ const OnsiteProjectDetail = () => {
                     />
                   </div>
                 </div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+                  <div className="space-y-1">
+                    <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
+                      JM Location
+                    </Label>
+                    <Select value={jmLocation} onValueChange={setJmLocation}>
+                      <SelectTrigger className="h-8 text-xs">
+                        <SelectValue placeholder="Select location" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Baton Rouge">Baton Rouge</SelectItem>
+                        <SelectItem value="Houston">Houston</SelectItem>
+                        <SelectItem value="Dallas">Dallas</SelectItem>
+                        <SelectItem value="Jackson">Jackson</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-1">
+                    <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
+                      Division
+                    </Label>
+                    <Select value={division} onValueChange={setDivision}>
+                      <SelectTrigger className="h-8 text-xs">
+                        <SelectValue placeholder="Select division" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Calibration">Calibration</SelectItem>
+                        <SelectItem value="Repair">Repair</SelectItem>
+                        <SelectItem value="Field Service">Field Service</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-1">
+                    <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
+                      Start Date
+                    </Label>
+                    <Popover open={projectStartOpen} onOpenChange={setProjectStartOpen}>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className={cn(
+                            "h-8 w-full justify-start text-xs font-normal px-2",
+                            !projectStartDate && "text-muted-foreground"
+                          )}
+                        >
+                          <CalendarIcon className="h-3 w-3 mr-1.5" />
+                          {projectStartDate ? format(projectStartDate, "MM/dd/yyyy") : "Pick date"}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={projectStartDate}
+                          onSelect={(d) => {
+                            setProjectStartDate(d ?? undefined);
+                            if (d) {
+                              setProjectStartOpen(false);
+                              setTimeout(() => setProjectEndOpen(true), 100);
+                            }
+                          }}
+                          initialFocus
+                          className={cn("p-3 pointer-events-auto")}
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  </div>
+                  <div className="space-y-1">
+                    <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
+                      End Date
+                    </Label>
+                    <Popover open={projectEndOpen} onOpenChange={setProjectEndOpen}>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className={cn(
+                            "h-8 w-full justify-start text-xs font-normal px-2",
+                            !projectEndDate && "text-muted-foreground"
+                          )}
+                        >
+                          <CalendarIcon className="h-3 w-3 mr-1.5" />
+                          {projectEndDate ? format(projectEndDate, "MM/dd/yyyy") : "Pick date"}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={projectEndDate}
+                          onSelect={(d) => {
+                            setProjectEndDate(d ?? undefined);
+                            if (d) setProjectEndOpen(false);
+                          }}
+                          disabled={(date) => projectStartDate ? date < projectStartDate : false}
+                          initialFocus
+                          className={cn("p-3 pointer-events-auto")}
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  </div>
+                </div>
               </div>
             </CardContent>
           </Card>
