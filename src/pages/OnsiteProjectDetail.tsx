@@ -329,7 +329,7 @@ const OnsiteProjectDetail = () => {
 
   const handleAddAccount = () => {
     const trimmed = acctForm.acct.trim();
-    if (!trimmed || !acctForm.jmLocation || !acctForm.division || !acctForm.startDate || !acctForm.endDate) return;
+    if (!trimmed) return;
     const lookup = getAccountInfo(trimmed) ?? {
       sr: "—", osr: "—", customer: "—", rep: "—", cityState: "—",
     };
@@ -354,9 +354,7 @@ const OnsiteProjectDetail = () => {
   const removeAccount = (id: string) =>
     setAccounts(prev => prev.filter(a => a.id !== id));
 
-  const acctFormValid =
-    !!acctForm.acct.trim() && !!acctForm.jmLocation && !!acctForm.division &&
-    !!acctForm.startDate && !!acctForm.endDate;
+  const acctFormValid = !!acctForm.acct.trim();
 
   return (
     <div className="bg-background min-h-full">
