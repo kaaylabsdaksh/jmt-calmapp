@@ -371,9 +371,67 @@ const OnsiteProjectDetail = () => {
       <ModernTopNav />
       <main className="w-full max-w-none px-2 sm:px-4 lg:px-6 py-3 sm:py-6">
         <div className="w-full space-y-4">
-          {/* Header strip: Project # + Status */}
-          <Card className="overflow-hidden bg-gradient-to-r from-primary/5 to-transparent">
-            <CardContent className="p-4">
+          {/* Header strip: Project # + Status (sticky with compact mode) */}
+          <div className="sticky top-0 z-30 -mx-2 sm:-mx-4 lg:-mx-6 px-2 sm:px-4 lg:px-6 pt-1 pb-2 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+          <Card className={cn(
+            "overflow-hidden bg-gradient-to-r from-primary/5 to-transparent transition-all duration-200",
+            isCompact && "shadow-md"
+          )}>
+            <CardContent className={cn("transition-all duration-200", isCompact ? "p-2" : "p-4")}>
+              {isCompact ? (
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs">
+                  <div className="flex items-center gap-1.5">
+                    <Hash className="h-3 w-3 text-muted-foreground" />
+                    <span className="text-muted-foreground">Project</span>
+                    <span className="font-mono font-semibold text-foreground">{projectNumber || "—"}</span>
+                  </div>
+                  <span className="h-3 w-px bg-border" />
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-muted-foreground">Status:</span>
+                    <span className="font-medium text-foreground capitalize">{status ? status.replace(/-/g, " ") : "—"}</span>
+                  </div>
+                  <span className="h-3 w-px bg-border" />
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-muted-foreground">Group:</span>
+                    <span className="font-medium text-foreground capitalize">{productGroup || "—"}</span>
+                  </div>
+                  <span className="h-3 w-px bg-border" />
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-muted-foreground">Quote:</span>
+                    <span className="font-medium text-foreground">{quoteAmount ? `$${quoteAmount}` : "—"}</span>
+                  </div>
+                  <span className="h-3 w-px bg-border" />
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-muted-foreground">Freq:</span>
+                    <span className="font-medium text-foreground capitalize">{frequency || "—"}</span>
+                  </div>
+                  <span className="h-3 w-px bg-border" />
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-muted-foreground">Loc:</span>
+                    <span className="font-medium text-foreground">{jmLocation || "—"}</span>
+                  </div>
+                  <span className="h-3 w-px bg-border" />
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-muted-foreground">Div:</span>
+                    <span className="font-medium text-foreground">{division || "—"}</span>
+                  </div>
+                  <span className="h-3 w-px bg-border" />
+                  <div className="flex items-center gap-1.5">
+                    <CalendarIcon className="h-3 w-3 text-muted-foreground" />
+                    <span className="font-medium text-foreground">
+                      {projectStartDate ? format(projectStartDate, "MM/dd/yy") : "—"} → {projectEndDate ? format(projectEndDate, "MM/dd/yy") : "—"}
+                    </span>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="ml-auto h-6 text-[11px]"
+                    onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                  >
+                    Expand
+                  </Button>
+                </div>
+              ) : (
               <div className="space-y-3">
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
                   <div className="space-y-1">
