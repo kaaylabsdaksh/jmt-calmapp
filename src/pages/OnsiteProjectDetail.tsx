@@ -156,6 +156,12 @@ const OnsiteProjectDetail = () => {
   const [quoteAmount, setQuoteAmount] = useState(incoming?.quoteTotal != null ? String(incoming.quoteTotal) : "");
   const [frequency, setFrequency] = useState("");
   const [mileage, setMileage] = useState("");
+  const [jmLocation, setJmLocation] = useState("");
+  const [division, setDivision] = useState("");
+  const [projectStartDate, setProjectStartDate] = useState<Date | undefined>(undefined);
+  const [projectEndDate, setProjectEndDate] = useState<Date | undefined>(undefined);
+  const [projectStartOpen, setProjectStartOpen] = useState(false);
+  const [projectEndOpen, setProjectEndOpen] = useState(false);
   const [vehicleSelect, setVehicleSelect] = useState("");
   type VehicleRow = { id: string; vehicle: string; std: string; comment: string };
   const VEHICLE_OPTIONS = ["Van 12", "Truck 7", "Trailer 3", "Service Van 4", "Box Truck 9"];
@@ -323,7 +329,7 @@ const OnsiteProjectDetail = () => {
 
   const handleAddAccount = () => {
     const trimmed = acctForm.acct.trim();
-    if (!trimmed || !acctForm.jmLocation || !acctForm.division || !acctForm.startDate || !acctForm.endDate) return;
+    if (!trimmed) return;
     const lookup = getAccountInfo(trimmed) ?? {
       sr: "—", osr: "—", customer: "—", rep: "—", cityState: "—",
     };
@@ -348,9 +354,7 @@ const OnsiteProjectDetail = () => {
   const removeAccount = (id: string) =>
     setAccounts(prev => prev.filter(a => a.id !== id));
 
-  const acctFormValid =
-    !!acctForm.acct.trim() && !!acctForm.jmLocation && !!acctForm.division &&
-    !!acctForm.startDate && !!acctForm.endDate;
+  const acctFormValid = !!acctForm.acct.trim();
 
   return (
     <div className="bg-background min-h-full">
@@ -461,6 +465,105 @@ const OnsiteProjectDetail = () => {
                     />
                   </div>
                 </div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+                  <div className="space-y-1">
+                    <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
+                      JM Location
+                    </Label>
+                    <Select value={jmLocation} onValueChange={setJmLocation}>
+                      <SelectTrigger className="h-8 text-xs">
+                        <SelectValue placeholder="Select location" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Baton Rouge">Baton Rouge</SelectItem>
+                        <SelectItem value="Houston">Houston</SelectItem>
+                        <SelectItem value="Dallas">Dallas</SelectItem>
+                        <SelectItem value="Jackson">Jackson</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-1">
+                    <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
+                      Division
+                    </Label>
+                    <Select value={division} onValueChange={setDivision}>
+                      <SelectTrigger className="h-8 text-xs">
+                        <SelectValue placeholder="Select division" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Calibration">Calibration</SelectItem>
+                        <SelectItem value="Repair">Repair</SelectItem>
+                        <SelectItem value="Field Service">Field Service</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-1">
+                    <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
+                      Start Date
+                    </Label>
+                    <Popover open={projectStartOpen} onOpenChange={setProjectStartOpen}>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className={cn(
+                            "h-8 w-full justify-start text-xs font-normal px-2",
+                            !projectStartDate && "text-muted-foreground"
+                          )}
+                        >
+                          <CalendarIcon className="h-3 w-3 mr-1.5" />
+                          {projectStartDate ? format(projectStartDate, "MM/dd/yyyy") : "Pick date"}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={projectStartDate}
+                          onSelect={(d) => {
+                            setProjectStartDate(d ?? undefined);
+                            if (d) {
+                              setProjectStartOpen(false);
+                              setTimeout(() => setProjectEndOpen(true), 100);
+                            }
+                          }}
+                          initialFocus
+                          className={cn("p-3 pointer-events-auto")}
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  </div>
+                  <div className="space-y-1">
+                    <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
+                      End Date
+                    </Label>
+                    <Popover open={projectEndOpen} onOpenChange={setProjectEndOpen}>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className={cn(
+                            "h-8 w-full justify-start text-xs font-normal px-2",
+                            !projectEndDate && "text-muted-foreground"
+                          )}
+                        >
+                          <CalendarIcon className="h-3 w-3 mr-1.5" />
+                          {projectEndDate ? format(projectEndDate, "MM/dd/yyyy") : "Pick date"}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={projectEndDate}
+                          onSelect={(d) => {
+                            setProjectEndDate(d ?? undefined);
+                            if (d) setProjectEndOpen(false);
+                          }}
+                          disabled={(date) => projectStartDate ? date < projectStartDate : false}
+                          initialFocus
+                          className={cn("p-3 pointer-events-auto")}
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  </div>
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -489,7 +592,7 @@ const OnsiteProjectDetail = () => {
             <Table>
               <TableHeader>
                 <TableRow className="hover:bg-transparent">
-                  {["Acct #","SR #","OSR #","JM Location","Division","Customer","Rep","City, State","Start Date","End Date","PO Rcv'd","Confirmed",""].map((h, i) => (
+                  {["Acct #","SR #","OSR #","Customer","Rep","City, State","PO Rcv'd","Confirmed",""].map((h, i) => (
                     <TableHead key={`${h}-${i}`} className="text-[11px] uppercase tracking-wide">{h}</TableHead>
                   ))}
                 </TableRow>
@@ -511,96 +614,9 @@ const OnsiteProjectDetail = () => {
                           className="h-8 text-sm px-2"
                         />
                       </TableCell>
-                      <TableCell className="py-2">
-                        <Select
-                          value={acctForm.jmLocation}
-                          onValueChange={(v) => setAcctForm(s => ({ ...s, jmLocation: v }))}
-                        >
-                          <SelectTrigger className="h-7 text-xs"><SelectValue placeholder="Select…" /></SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="Baton Rouge">Baton Rouge</SelectItem>
-                            <SelectItem value="Houston">Houston</SelectItem>
-                            <SelectItem value="Dallas">Dallas</SelectItem>
-                            <SelectItem value="Jackson">Jackson</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </TableCell>
-                      <TableCell className="py-2">
-                        <Select
-                          value={acctForm.division}
-                          onValueChange={(v) => setAcctForm(s => ({ ...s, division: v }))}
-                        >
-                          <SelectTrigger className="h-7 text-xs"><SelectValue placeholder="Select…" /></SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="Calibration">Calibration</SelectItem>
-                            <SelectItem value="Repair">Repair</SelectItem>
-                            <SelectItem value="Field Service">Field Service</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </TableCell>
                       <TableCell className="py-2 text-xs text-muted-foreground">{placeholder(lookup?.customer)}</TableCell>
                       <TableCell className="py-2 text-xs text-muted-foreground">{placeholder(lookup?.rep)}</TableCell>
                       <TableCell className="py-2 text-xs text-muted-foreground">{placeholder(lookup?.cityState)}</TableCell>
-                      <TableCell className="py-2">
-                        <Popover open={startDateOpen} onOpenChange={setStartDateOpen}>
-                          <PopoverTrigger asChild>
-                            <Button
-                              variant="outline"
-                              className={cn(
-                                "h-7 w-full justify-start text-xs font-normal px-2",
-                                !acctForm.startDate && "text-muted-foreground"
-                              )}
-                            >
-                              <CalendarIcon className="h-3 w-3 mr-1.5" />
-                              {acctForm.startDate ? format(acctForm.startDate, "MM/dd/yy") : "Pick"}
-                            </Button>
-                          </PopoverTrigger>
-                          <PopoverContent className="w-auto p-0" align="start">
-                            <Calendar
-                              mode="single"
-                              selected={acctForm.startDate}
-                              onSelect={(d) => {
-                                setAcctForm(s => ({ ...s, startDate: d ?? undefined }));
-                                if (d) {
-                                  setStartDateOpen(false);
-                                  setTimeout(() => setEndDateOpen(true), 100);
-                                }
-                              }}
-                              initialFocus
-                              className={cn("p-3 pointer-events-auto")}
-                            />
-                          </PopoverContent>
-                        </Popover>
-                      </TableCell>
-                      <TableCell className="py-2">
-                        <Popover open={endDateOpen} onOpenChange={setEndDateOpen}>
-                          <PopoverTrigger asChild>
-                            <Button
-                              variant="outline"
-                              className={cn(
-                                "h-7 w-full justify-start text-xs font-normal px-2",
-                                !acctForm.endDate && "text-muted-foreground"
-                              )}
-                            >
-                              <CalendarIcon className="h-3 w-3 mr-1.5" />
-                              {acctForm.endDate ? format(acctForm.endDate, "MM/dd/yy") : "Pick"}
-                            </Button>
-                          </PopoverTrigger>
-                          <PopoverContent className="w-auto p-0" align="start">
-                            <Calendar
-                              mode="single"
-                              selected={acctForm.endDate}
-                              onSelect={(d) => {
-                                setAcctForm(s => ({ ...s, endDate: d ?? undefined }));
-                                if (d) setEndDateOpen(false);
-                              }}
-                              disabled={(date) => acctForm.startDate ? date < acctForm.startDate : false}
-                              initialFocus
-                              className={cn("p-3 pointer-events-auto")}
-                            />
-                          </PopoverContent>
-                        </Popover>
-                      </TableCell>
                       <TableCell className="py-2">
                         <Select
                           value={acctForm.poRcvd}
@@ -651,7 +667,7 @@ const OnsiteProjectDetail = () => {
                 })()}
 
                 {accounts.length === 0 && !acctDialogOpen ? (
-                  <EmptyRow colSpan={13} />
+                  <EmptyRow colSpan={9} />
                 ) : (
                   accounts.map(row => {
                     const v = getRowValue(row);
@@ -665,83 +681,10 @@ const OnsiteProjectDetail = () => {
                       <TableCell className="py-2">
                         <a href={`#osr-${row.osr}`} className="text-foreground hover:underline font-medium">{row.osr}</a>
                       </TableCell>
-                      <TableCell className="py-2">{row.jmLocation}</TableCell>
-                      <TableCell className="py-2">{row.division}</TableCell>
-                      <TableCell className="py-2">{row.customer}</TableCell>
+                       <TableCell className="py-2">{row.customer}</TableCell>
                       <TableCell className="py-2">{row.rep}</TableCell>
                       <TableCell className="py-2">{row.cityState}</TableCell>
-                      <TableCell className="py-2">
-                        {isRowEditing(row.id) ? (
-                          <Popover
-                            open={rowStartOpen === row.id}
-                            onOpenChange={(o) => setRowStartOpen(o ? row.id : null)}
-                          >
-                            <PopoverTrigger asChild>
-                              <Button
-                                variant="outline"
-                                className={cn(
-                                  "h-7 w-full justify-start text-xs font-normal px-2",
-                                  !v.startDate && "text-muted-foreground"
-                                )}
-                              >
-                                <CalendarIcon className="h-3 w-3 mr-1.5" />
-                                {v.startDate ? format(v.startDate, "MM/dd/yyyy") : "Pick"}
-                              </Button>
-                            </PopoverTrigger>
-                            <PopoverContent className="w-auto p-0" align="start">
-                              <Calendar
-                                mode="single"
-                                selected={v.startDate}
-                                onSelect={(d) => {
-                                  updateDraft(row.id, { startDate: d ?? undefined });
-                                  if (d) setRowStartOpen(null);
-                                }}
-                                initialFocus
-                                className={cn("p-3 pointer-events-auto")}
-                              />
-                            </PopoverContent>
-                          </Popover>
-                        ) : (
-                          <span className={previewClass(row, "startDate")}>{v.startDate ? format(v.startDate, "MM/dd/yyyy") : "—"}</span>
-                        )}
-                      </TableCell>
-                      <TableCell className="py-2">
-                        {isRowEditing(row.id) ? (
-                          <Popover
-                            open={rowEndOpen === row.id}
-                            onOpenChange={(o) => setRowEndOpen(o ? row.id : null)}
-                          >
-                            <PopoverTrigger asChild>
-                              <Button
-                                variant="outline"
-                                className={cn(
-                                  "h-7 w-full justify-start text-xs font-normal px-2",
-                                  !v.endDate && "text-muted-foreground"
-                                )}
-                              >
-                                <CalendarIcon className="h-3 w-3 mr-1.5" />
-                                {v.endDate ? format(v.endDate, "MM/dd/yyyy") : "Pick"}
-                              </Button>
-                            </PopoverTrigger>
-                            <PopoverContent className="w-auto p-0" align="start">
-                              <Calendar
-                                mode="single"
-                                selected={v.endDate}
-                                onSelect={(d) => {
-                                  updateDraft(row.id, { endDate: d ?? undefined });
-                                  if (d) setRowEndOpen(null);
-                                }}
-                                disabled={(date) => v.startDate ? date < v.startDate : false}
-                                initialFocus
-                                className={cn("p-3 pointer-events-auto")}
-                              />
-                            </PopoverContent>
-                          </Popover>
-                        ) : (
-                          <span className={previewClass(row, "endDate")}>{v.endDate ? format(v.endDate, "MM/dd/yyyy") : "—"}</span>
-                        )}
-                      </TableCell>
-                      <TableCell className="py-2">
+                       <TableCell className="py-2">
                         {isRowEditing(row.id) ? (
                           <Select
                             value={v.poRcvd}
