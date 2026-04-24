@@ -365,7 +365,7 @@ const OnsiteProjectDetail = () => {
           <Card className="overflow-hidden bg-gradient-to-r from-primary/5 to-transparent">
             <CardContent className="p-4">
               <div className="space-y-3">
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
                   <div className="space-y-1">
                     <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide flex items-center gap-1.5">
                       <Hash className="h-3 w-3" /> Project #
@@ -393,8 +393,6 @@ const OnsiteProjectDetail = () => {
                       </SelectContent>
                     </Select>
                   </div>
-                </div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
                   <div className="space-y-1">
                     <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
                       Product Group
@@ -453,6 +451,8 @@ const OnsiteProjectDetail = () => {
                       </SelectContent>
                     </Select>
                   </div>
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
                   <div className="space-y-1">
                     <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
                       Mileage
@@ -464,8 +464,6 @@ const OnsiteProjectDetail = () => {
                       className="h-8 text-xs"
                     />
                   </div>
-                </div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                   <div className="space-y-1">
                     <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
                       JM Location
