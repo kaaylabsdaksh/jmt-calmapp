@@ -631,8 +631,10 @@ const OnsiteProjectDetail = () => {
                   </div>
                 </div>
               </div>
+              )}
             </CardContent>
           </Card>
+          </div>
 
           {/* Accounts grid */}
           <SectionCard
