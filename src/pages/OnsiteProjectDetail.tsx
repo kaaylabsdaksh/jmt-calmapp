@@ -616,96 +616,9 @@ const OnsiteProjectDetail = () => {
                           className="h-8 text-sm px-2"
                         />
                       </TableCell>
-                      <TableCell className="py-2">
-                        <Select
-                          value={acctForm.jmLocation}
-                          onValueChange={(v) => setAcctForm(s => ({ ...s, jmLocation: v }))}
-                        >
-                          <SelectTrigger className="h-7 text-xs"><SelectValue placeholder="Select…" /></SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="Baton Rouge">Baton Rouge</SelectItem>
-                            <SelectItem value="Houston">Houston</SelectItem>
-                            <SelectItem value="Dallas">Dallas</SelectItem>
-                            <SelectItem value="Jackson">Jackson</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </TableCell>
-                      <TableCell className="py-2">
-                        <Select
-                          value={acctForm.division}
-                          onValueChange={(v) => setAcctForm(s => ({ ...s, division: v }))}
-                        >
-                          <SelectTrigger className="h-7 text-xs"><SelectValue placeholder="Select…" /></SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="Calibration">Calibration</SelectItem>
-                            <SelectItem value="Repair">Repair</SelectItem>
-                            <SelectItem value="Field Service">Field Service</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </TableCell>
                       <TableCell className="py-2 text-xs text-muted-foreground">{placeholder(lookup?.customer)}</TableCell>
                       <TableCell className="py-2 text-xs text-muted-foreground">{placeholder(lookup?.rep)}</TableCell>
                       <TableCell className="py-2 text-xs text-muted-foreground">{placeholder(lookup?.cityState)}</TableCell>
-                      <TableCell className="py-2">
-                        <Popover open={startDateOpen} onOpenChange={setStartDateOpen}>
-                          <PopoverTrigger asChild>
-                            <Button
-                              variant="outline"
-                              className={cn(
-                                "h-7 w-full justify-start text-xs font-normal px-2",
-                                !acctForm.startDate && "text-muted-foreground"
-                              )}
-                            >
-                              <CalendarIcon className="h-3 w-3 mr-1.5" />
-                              {acctForm.startDate ? format(acctForm.startDate, "MM/dd/yy") : "Pick"}
-                            </Button>
-                          </PopoverTrigger>
-                          <PopoverContent className="w-auto p-0" align="start">
-                            <Calendar
-                              mode="single"
-                              selected={acctForm.startDate}
-                              onSelect={(d) => {
-                                setAcctForm(s => ({ ...s, startDate: d ?? undefined }));
-                                if (d) {
-                                  setStartDateOpen(false);
-                                  setTimeout(() => setEndDateOpen(true), 100);
-                                }
-                              }}
-                              initialFocus
-                              className={cn("p-3 pointer-events-auto")}
-                            />
-                          </PopoverContent>
-                        </Popover>
-                      </TableCell>
-                      <TableCell className="py-2">
-                        <Popover open={endDateOpen} onOpenChange={setEndDateOpen}>
-                          <PopoverTrigger asChild>
-                            <Button
-                              variant="outline"
-                              className={cn(
-                                "h-7 w-full justify-start text-xs font-normal px-2",
-                                !acctForm.endDate && "text-muted-foreground"
-                              )}
-                            >
-                              <CalendarIcon className="h-3 w-3 mr-1.5" />
-                              {acctForm.endDate ? format(acctForm.endDate, "MM/dd/yy") : "Pick"}
-                            </Button>
-                          </PopoverTrigger>
-                          <PopoverContent className="w-auto p-0" align="start">
-                            <Calendar
-                              mode="single"
-                              selected={acctForm.endDate}
-                              onSelect={(d) => {
-                                setAcctForm(s => ({ ...s, endDate: d ?? undefined }));
-                                if (d) setEndDateOpen(false);
-                              }}
-                              disabled={(date) => acctForm.startDate ? date < acctForm.startDate : false}
-                              initialFocus
-                              className={cn("p-3 pointer-events-auto")}
-                            />
-                          </PopoverContent>
-                        </Popover>
-                      </TableCell>
                       <TableCell className="py-2">
                         <Select
                           value={acctForm.poRcvd}
