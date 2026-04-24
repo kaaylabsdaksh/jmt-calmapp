@@ -162,6 +162,16 @@ const OnsiteProjectDetail = () => {
   const [projectEndDate, setProjectEndDate] = useState<Date | undefined>(undefined);
   const [projectStartOpen, setProjectStartOpen] = useState(false);
   const [projectEndOpen, setProjectEndOpen] = useState(false);
+  const [isCompact, setIsCompact] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsCompact(window.scrollY > 80);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
   const [vehicleSelect, setVehicleSelect] = useState("");
   type VehicleRow = { id: string; vehicle: string; std: string; comment: string };
   const VEHICLE_OPTIONS = ["Van 12", "Truck 7", "Trailer 3", "Service Van 4", "Box Truck 9"];
