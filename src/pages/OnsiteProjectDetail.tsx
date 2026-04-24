@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { format } from "date-fns";
-import { ArrowLeft, Save, FileText, BarChart3, Plus, X, Truck, UserPlus, MessageSquare, MoreHorizontal, CalendarIcon, Trash2, Pencil, Check, Building2, FileSpreadsheet, ClipboardList, Users, Wrench, Hash } from "lucide-react";
+import { ArrowLeft, Save, FileText, BarChart3, Plus, X, Truck, UserPlus, MessageSquare, MoreHorizontal, CalendarIcon, Trash2, Pencil, Check, Building2, FileSpreadsheet, ClipboardList, Users, Wrench, Hash, MapPin, DollarSign, Tag, Clock, Briefcase } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -162,6 +162,29 @@ const OnsiteProjectDetail = () => {
   const [projectEndDate, setProjectEndDate] = useState<Date | undefined>(undefined);
   const [projectStartOpen, setProjectStartOpen] = useState(false);
   const [projectEndOpen, setProjectEndOpen] = useState(false);
+  const generalRef = useRef<HTMLDivElement>(null);
+  const [showStickyBar, setShowStickyBar] = useState(false);
+  useEffect(() => {
+    const onScroll = () => {
+      const el = generalRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      setShowStickyBar(rect.bottom < 64);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  const statusPillClass = (s: string) => {
+    switch (s) {
+      case "created": return "bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-300 border-blue-200 dark:border-blue-900";
+      case "checked-out": return "bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300 border-amber-200 dark:border-amber-900";
+      case "completed": return "bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 border-emerald-200 dark:border-emerald-900";
+      case "cancelled": return "bg-rose-100 text-rose-700 dark:bg-rose-950 dark:text-rose-300 border-rose-200 dark:border-rose-900";
+      default: return "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300 border-slate-200 dark:border-slate-700";
+    }
+  };
+  const statusLabel = (s: string) => ({ "created": "Created", "checked-out": "Checked Out", "completed": "Completed", "cancelled": "Cancelled" } as Record<string,string>)[s] ?? "No status";
   const [vehicleSelect, setVehicleSelect] = useState("");
   type VehicleRow = { id: string; vehicle: string; std: string; comment: string };
   const VEHICLE_OPTIONS = ["Van 12", "Truck 7", "Trailer 3", "Service Van 4", "Box Truck 9"];
@@ -360,206 +383,263 @@ const OnsiteProjectDetail = () => {
     <div className="bg-background min-h-full">
       <ModernTopNav />
       <main className="w-full max-w-none px-2 sm:px-4 lg:px-6 py-3 sm:py-6">
+        {/* Sticky condensed context bar — appears after scroll */}
+        <div
+          className={cn(
+            "fixed top-14 left-0 right-0 z-40 border-b bg-background/95 backdrop-blur-sm transition-all duration-200",
+            showStickyBar ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 -translate-y-2 pointer-events-none"
+          )}
+        >
+          <div className="w-full max-w-none px-2 sm:px-4 lg:px-6 py-2 flex items-center gap-4 text-xs">
+            <div className="flex items-center gap-1.5 min-w-0">
+              <Hash className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
+              <span className="font-mono font-semibold truncate">{projectNumber || "New Project"}</span>
+            </div>
+            <span className={cn("inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium border shrink-0", statusPillClass(status))}>
+              {statusLabel(status)}
+            </span>
+            {jmLocation && (
+              <div className="hidden md:flex items-center gap-1.5 min-w-0 text-muted-foreground">
+                <MapPin className="h-3.5 w-3.5 shrink-0" />
+                <span className="truncate">{jmLocation}{division && ` · ${division}`}</span>
+              </div>
+            )}
+            {(projectStartDate || projectEndDate) && (
+              <div className="hidden lg:flex items-center gap-1.5 text-muted-foreground shrink-0">
+                <CalendarIcon className="h-3.5 w-3.5" />
+                <span>
+                  {projectStartDate ? format(projectStartDate, "MM/dd/yy") : "—"}
+                  {" → "}
+                  {projectEndDate ? format(projectEndDate, "MM/dd/yy") : "—"}
+                </span>
+              </div>
+            )}
+            {quoteAmount && (
+              <div className="hidden lg:flex items-center gap-1.5 text-muted-foreground shrink-0">
+                <DollarSign className="h-3.5 w-3.5" />
+                <span className="font-medium">${Number(quoteAmount).toLocaleString()}</span>
+              </div>
+            )}
+            <Button
+              size="sm"
+              variant="ghost"
+              className="ml-auto h-7 text-xs"
+              onClick={() => generalRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })}
+            >
+              Edit details
+            </Button>
+          </div>
+        </div>
+
         <div className="w-full space-y-4">
-          {/* Header strip: Project # + Status */}
-          <Card className="overflow-hidden bg-gradient-to-r from-primary/5 to-transparent">
+          {/* General — grouped fields, status pill, sticky-friendly */}
+          <Card ref={generalRef} className="overflow-hidden">
+            <div className="flex items-center justify-between px-4 pt-3 pb-2 border-b bg-gradient-to-r from-primary/5 to-transparent">
+              <div className="flex items-center gap-2.5 min-w-0">
+                <div className="h-7 w-7 rounded-md flex items-center justify-center shrink-0 bg-primary/10">
+                  <ClipboardList className="h-3.5 w-3.5 text-primary" />
+                </div>
+                <div className="min-w-0">
+                  <h2 className="text-xs font-semibold leading-tight">General</h2>
+                  <p className="text-[10px] text-muted-foreground mt-0.5">Project identity, schedule, location & financials</p>
+                </div>
+              </div>
+              <span className={cn("inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-medium border", statusPillClass(status))}>
+                <span className={cn("h-1.5 w-1.5 rounded-full mr-1.5", status === "completed" ? "bg-emerald-500" : status === "checked-out" ? "bg-amber-500" : status === "cancelled" ? "bg-rose-500" : status === "created" ? "bg-blue-500" : "bg-slate-400")} />
+                {statusLabel(status)}
+              </span>
+            </div>
             <CardContent className="p-4">
-              <div className="space-y-3">
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-                  <div className="space-y-1">
-                    <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide flex items-center gap-1.5">
-                      <Hash className="h-3 w-3" /> Project #
-                    </Label>
-                    <Input
-                      value={projectNumber}
-                      onChange={(e) => setProjectNumber(e.target.value)}
-                      placeholder="Auto-generated"
-                      className="h-8 text-xs font-mono"
-                    />
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+                {/* Group: Identity */}
+                <div className="lg:col-span-4 space-y-2">
+                  <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                    <Tag className="h-3 w-3" /> Identity
                   </div>
-                  <div className="space-y-1">
-                    <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
-                      Status
-                    </Label>
-                    <Select value={status} onValueChange={setStatus}>
-                      <SelectTrigger className="h-8 text-xs">
-                        <SelectValue placeholder="Select status" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="created">Created</SelectItem>
-                        <SelectItem value="checked-out">Checked Out</SelectItem>
-                        <SelectItem value="completed">Completed</SelectItem>
-                        <SelectItem value="cancelled">Cancelled</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-1">
-                    <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
-                      Product Group
-                    </Label>
-                    <Select value={productGroup} onValueChange={setProductGroup}>
-                      <SelectTrigger className="h-8 text-xs">
-                        <SelectValue placeholder="Select product group" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="electrical">Electrical</SelectItem>
-                        <SelectItem value="mechanical">Mechanical</SelectItem>
-                        <SelectItem value="instrumentation">Instrumentation</SelectItem>
-                        <SelectItem value="safety">Safety</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-1">
-                    <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
-                      New Job
-                    </Label>
-                    <Select value={newJob} onValueChange={setNewJob}>
-                      <SelectTrigger className="h-8 text-xs">
-                        <SelectValue placeholder="Select" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="yes">Yes</SelectItem>
-                        <SelectItem value="no">No</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-1">
-                    <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
-                      Quote Amount
-                    </Label>
-                    <Input
-                      value={quoteAmount}
-                      onChange={(e) => setQuoteAmount(e.target.value)}
-                      placeholder="$0.00"
-                      className="h-8 text-xs"
-                    />
-                  </div>
-                  <div className="space-y-1">
-                    <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
-                      Frequency
-                    </Label>
-                    <Select value={frequency} onValueChange={setFrequency}>
-                      <SelectTrigger className="h-8 text-xs">
-                        <SelectValue placeholder="Select frequency" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="one-time">One-time</SelectItem>
-                        <SelectItem value="monthly">Monthly</SelectItem>
-                        <SelectItem value="quarterly">Quarterly</SelectItem>
-                        <SelectItem value="semi-annual">Semi-annual</SelectItem>
-                        <SelectItem value="annual">Annual</SelectItem>
-                      </SelectContent>
-                    </Select>
+                  <div className="grid grid-cols-2 gap-2.5 p-2.5 rounded-md border bg-muted/20">
+                    <div className="space-y-1 col-span-2">
+                      <Label className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide flex items-center gap-1.5">
+                        <Hash className="h-3 w-3" /> Project #
+                      </Label>
+                      <Input
+                        value={projectNumber}
+                        onChange={(e) => setProjectNumber(e.target.value)}
+                        placeholder="Auto-generated"
+                        className="h-8 text-xs font-mono"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide">Status</Label>
+                      <Select value={status} onValueChange={setStatus}>
+                        <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="Select" /></SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="created">Created</SelectItem>
+                          <SelectItem value="checked-out">Checked Out</SelectItem>
+                          <SelectItem value="completed">Completed</SelectItem>
+                          <SelectItem value="cancelled">Cancelled</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide">New Job</Label>
+                      <Select value={newJob} onValueChange={setNewJob}>
+                        <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="—" /></SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="yes">Yes</SelectItem>
+                          <SelectItem value="no">No</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-1 col-span-2">
+                      <Label className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide flex items-center gap-1.5">
+                        <Briefcase className="h-3 w-3" /> Product Group
+                      </Label>
+                      <Select value={productGroup} onValueChange={setProductGroup}>
+                        <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="Select product group" /></SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="electrical">Electrical</SelectItem>
+                          <SelectItem value="mechanical">Mechanical</SelectItem>
+                          <SelectItem value="instrumentation">Instrumentation</SelectItem>
+                          <SelectItem value="safety">Safety</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
                   </div>
                 </div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-                  <div className="space-y-1">
-                    <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
-                      Mileage
-                    </Label>
-                    <Input
-                      value={mileage}
-                      onChange={(e) => setMileage(e.target.value)}
-                      placeholder="0"
-                      className="h-8 text-xs"
-                    />
+
+                {/* Group: Schedule */}
+                <div className="lg:col-span-4 space-y-2">
+                  <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                    <Clock className="h-3 w-3" /> Schedule
                   </div>
-                  <div className="space-y-1">
-                    <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
-                      JM Location
-                    </Label>
-                    <Select value={jmLocation} onValueChange={setJmLocation}>
-                      <SelectTrigger className="h-8 text-xs">
-                        <SelectValue placeholder="Select location" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="Baton Rouge">Baton Rouge</SelectItem>
-                        <SelectItem value="Houston">Houston</SelectItem>
-                        <SelectItem value="Dallas">Dallas</SelectItem>
-                        <SelectItem value="Jackson">Jackson</SelectItem>
-                      </SelectContent>
-                    </Select>
+                  <div className="grid grid-cols-2 gap-2.5 p-2.5 rounded-md border bg-muted/20">
+                    <div className="space-y-1">
+                      <Label className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide">Start Date</Label>
+                      <Popover open={projectStartOpen} onOpenChange={setProjectStartOpen}>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant="outline"
+                            className={cn("h-8 w-full justify-start text-xs font-normal px-2", !projectStartDate && "text-muted-foreground")}
+                          >
+                            <CalendarIcon className="h-3 w-3 mr-1.5" />
+                            {projectStartDate ? format(projectStartDate, "MM/dd/yyyy") : "Pick date"}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <Calendar
+                            mode="single"
+                            selected={projectStartDate}
+                            onSelect={(d) => {
+                              setProjectStartDate(d ?? undefined);
+                              if (d) {
+                                setProjectStartOpen(false);
+                                setTimeout(() => setProjectEndOpen(true), 100);
+                              }
+                            }}
+                            initialFocus
+                            className={cn("p-3 pointer-events-auto")}
+                          />
+                        </PopoverContent>
+                      </Popover>
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide">End Date</Label>
+                      <Popover open={projectEndOpen} onOpenChange={setProjectEndOpen}>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant="outline"
+                            className={cn("h-8 w-full justify-start text-xs font-normal px-2", !projectEndDate && "text-muted-foreground")}
+                          >
+                            <CalendarIcon className="h-3 w-3 mr-1.5" />
+                            {projectEndDate ? format(projectEndDate, "MM/dd/yyyy") : "Pick date"}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <Calendar
+                            mode="single"
+                            selected={projectEndDate}
+                            onSelect={(d) => {
+                              setProjectEndDate(d ?? undefined);
+                              if (d) setProjectEndOpen(false);
+                            }}
+                            disabled={(date) => projectStartDate ? date < projectStartDate : false}
+                            initialFocus
+                            className={cn("p-3 pointer-events-auto")}
+                          />
+                        </PopoverContent>
+                      </Popover>
+                    </div>
+                    <div className="space-y-1 col-span-2">
+                      <Label className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide">Frequency</Label>
+                      <Select value={frequency} onValueChange={setFrequency}>
+                        <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="Select frequency" /></SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="one-time">One-time</SelectItem>
+                          <SelectItem value="monthly">Monthly</SelectItem>
+                          <SelectItem value="quarterly">Quarterly</SelectItem>
+                          <SelectItem value="semi-annual">Semi-annual</SelectItem>
+                          <SelectItem value="annual">Annual</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    {projectStartDate && projectEndDate && (
+                      <div className="col-span-2 text-[10px] text-muted-foreground flex items-center gap-1 pt-0.5">
+                        <Clock className="h-3 w-3" />
+                        Duration: {Math.max(1, Math.ceil((projectEndDate.getTime() - projectStartDate.getTime()) / (1000 * 60 * 60 * 24)))} days
+                      </div>
+                    )}
                   </div>
-                  <div className="space-y-1">
-                    <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
-                      Division
-                    </Label>
-                    <Select value={division} onValueChange={setDivision}>
-                      <SelectTrigger className="h-8 text-xs">
-                        <SelectValue placeholder="Select division" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="Calibration">Calibration</SelectItem>
-                        <SelectItem value="Repair">Repair</SelectItem>
-                        <SelectItem value="Field Service">Field Service</SelectItem>
-                      </SelectContent>
-                    </Select>
+                </div>
+
+                {/* Group: Location & Financials */}
+                <div className="lg:col-span-4 space-y-2">
+                  <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                    <MapPin className="h-3 w-3" /> Location & Financials
                   </div>
-                  <div className="space-y-1">
-                    <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
-                      Start Date
-                    </Label>
-                    <Popover open={projectStartOpen} onOpenChange={setProjectStartOpen}>
-                      <PopoverTrigger asChild>
-                        <Button
-                          variant="outline"
-                          className={cn(
-                            "h-8 w-full justify-start text-xs font-normal px-2",
-                            !projectStartDate && "text-muted-foreground"
-                          )}
-                        >
-                          <CalendarIcon className="h-3 w-3 mr-1.5" />
-                          {projectStartDate ? format(projectStartDate, "MM/dd/yyyy") : "Pick date"}
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar
-                          mode="single"
-                          selected={projectStartDate}
-                          onSelect={(d) => {
-                            setProjectStartDate(d ?? undefined);
-                            if (d) {
-                              setProjectStartOpen(false);
-                              setTimeout(() => setProjectEndOpen(true), 100);
-                            }
-                          }}
-                          initialFocus
-                          className={cn("p-3 pointer-events-auto")}
-                        />
-                      </PopoverContent>
-                    </Popover>
-                  </div>
-                  <div className="space-y-1">
-                    <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
-                      End Date
-                    </Label>
-                    <Popover open={projectEndOpen} onOpenChange={setProjectEndOpen}>
-                      <PopoverTrigger asChild>
-                        <Button
-                          variant="outline"
-                          className={cn(
-                            "h-8 w-full justify-start text-xs font-normal px-2",
-                            !projectEndDate && "text-muted-foreground"
-                          )}
-                        >
-                          <CalendarIcon className="h-3 w-3 mr-1.5" />
-                          {projectEndDate ? format(projectEndDate, "MM/dd/yyyy") : "Pick date"}
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar
-                          mode="single"
-                          selected={projectEndDate}
-                          onSelect={(d) => {
-                            setProjectEndDate(d ?? undefined);
-                            if (d) setProjectEndOpen(false);
-                          }}
-                          disabled={(date) => projectStartDate ? date < projectStartDate : false}
-                          initialFocus
-                          className={cn("p-3 pointer-events-auto")}
-                        />
-                      </PopoverContent>
-                    </Popover>
+                  <div className="grid grid-cols-2 gap-2.5 p-2.5 rounded-md border bg-muted/20">
+                    <div className="space-y-1">
+                      <Label className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide">JM Location</Label>
+                      <Select value={jmLocation} onValueChange={setJmLocation}>
+                        <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="Select" /></SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Baton Rouge">Baton Rouge</SelectItem>
+                          <SelectItem value="Houston">Houston</SelectItem>
+                          <SelectItem value="Dallas">Dallas</SelectItem>
+                          <SelectItem value="Jackson">Jackson</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide">Division</Label>
+                      <Select value={division} onValueChange={setDivision}>
+                        <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="Select" /></SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Calibration">Calibration</SelectItem>
+                          <SelectItem value="Repair">Repair</SelectItem>
+                          <SelectItem value="Field Service">Field Service</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide">Mileage</Label>
+                      <Input
+                        value={mileage}
+                        onChange={(e) => setMileage(e.target.value)}
+                        placeholder="0"
+                        className="h-8 text-xs"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide flex items-center gap-1">
+                        <DollarSign className="h-3 w-3" /> Quote Amount
+                      </Label>
+                      <Input
+                        value={quoteAmount}
+                        onChange={(e) => setQuoteAmount(e.target.value)}
+                        placeholder="$0.00"
+                        className="h-8 text-xs"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
