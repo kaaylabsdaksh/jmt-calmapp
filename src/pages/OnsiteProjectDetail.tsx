@@ -683,9 +683,7 @@ const OnsiteProjectDetail = () => {
                       <TableCell className="py-2">
                         <a href={`#osr-${row.osr}`} className="text-foreground hover:underline font-medium">{row.osr}</a>
                       </TableCell>
-                      <TableCell className="py-2">{row.jmLocation}</TableCell>
-                      <TableCell className="py-2">{row.division}</TableCell>
-                      <TableCell className="py-2">{row.customer}</TableCell>
+                       <TableCell className="py-2">{row.customer}</TableCell>
                       <TableCell className="py-2">{row.rep}</TableCell>
                       <TableCell className="py-2">{row.cityState}</TableCell>
                       <TableCell className="py-2">
