@@ -162,6 +162,29 @@ const OnsiteProjectDetail = () => {
   const [projectEndDate, setProjectEndDate] = useState<Date | undefined>(undefined);
   const [projectStartOpen, setProjectStartOpen] = useState(false);
   const [projectEndOpen, setProjectEndOpen] = useState(false);
+  const generalRef = useRef<HTMLDivElement>(null);
+  const [showStickyBar, setShowStickyBar] = useState(false);
+  useEffect(() => {
+    const onScroll = () => {
+      const el = generalRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      setShowStickyBar(rect.bottom < 64);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  const statusPillClass = (s: string) => {
+    switch (s) {
+      case "created": return "bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-300 border-blue-200 dark:border-blue-900";
+      case "checked-out": return "bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300 border-amber-200 dark:border-amber-900";
+      case "completed": return "bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 border-emerald-200 dark:border-emerald-900";
+      case "cancelled": return "bg-rose-100 text-rose-700 dark:bg-rose-950 dark:text-rose-300 border-rose-200 dark:border-rose-900";
+      default: return "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300 border-slate-200 dark:border-slate-700";
+    }
+  };
+  const statusLabel = (s: string) => ({ "created": "Created", "checked-out": "Checked Out", "completed": "Completed", "cancelled": "Cancelled" } as Record<string,string>)[s] ?? "No status";
   const [vehicleSelect, setVehicleSelect] = useState("");
   type VehicleRow = { id: string; vehicle: string; std: string; comment: string };
   const VEHICLE_OPTIONS = ["Van 12", "Truck 7", "Trailer 3", "Service Van 4", "Box Truck 9"];
