@@ -767,6 +767,7 @@ const FormVariationsDemo = () => {
     partsDescription: "",
     partsCost: "",
     partsListPrice: "",
+    partsPriceOverride: false,
     partsQty: "",
     
     // Comments
