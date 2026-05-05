@@ -6695,10 +6695,13 @@ const FormVariationsDemo = () => {
                   onCheckedChange={(checked) => {
                     const isOverride = checked === true;
                     handleInputChange("partsPriceOverride", isOverride);
-                    if (!isOverride) {
-                      // Recalculate list price from matrix using current cost
-                      const c = parseFloat(formData.partsCost);
-                      let listPrice = "";
+                    const c = parseFloat(formData.partsCost);
+                    let listPrice = "";
+                    if (isOverride) {
+                      // Override ON: list price mirrors cost
+                      listPrice = !isNaN(c) ? c.toFixed(2) : "";
+                    } else {
+                      // Override OFF: recalc from matrix
                       if (!isNaN(c) && c > 0) {
                         let multiplier = 1.5;
                         if (c < 10) multiplier = 2.5;
@@ -6708,8 +6711,8 @@ const FormVariationsDemo = () => {
                         else multiplier = 1.3;
                         listPrice = (c * multiplier).toFixed(2);
                       }
-                      handleInputChange("partsListPrice", listPrice);
                     }
+                    handleInputChange("partsListPrice", listPrice);
                   }}
                   className="h-3 w-3"
                 />
@@ -6723,7 +6726,12 @@ const FormVariationsDemo = () => {
               onChange={(e) => {
                 const cost = e.target.value;
                 handleInputChange("partsCost", cost);
-                if (formData.partsPriceOverride) return;
+                if (formData.partsPriceOverride) {
+                  // Override mode: list price mirrors cost
+                  const c = parseFloat(cost);
+                  handleInputChange("partsListPrice", !isNaN(c) ? c.toFixed(2) : "");
+                  return;
+                }
                 // List Price matrix (markup tiers)
                 const c = parseFloat(cost);
                 let listPrice = "";
