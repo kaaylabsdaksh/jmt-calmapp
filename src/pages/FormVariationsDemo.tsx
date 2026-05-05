@@ -678,6 +678,7 @@ const FormVariationsDemo = () => {
     description: string;
     cost: string;
     qty: string;
+    listPrice?: string;
   }>>([]);
 
   const [formData, setFormData] = useState({
@@ -765,6 +766,7 @@ const FormVariationsDemo = () => {
     partsNumber: "",
     partsDescription: "",
     partsCost: "",
+    partsListPrice: "",
     partsQty: "",
     
     // Comments
@@ -1344,6 +1346,7 @@ const FormVariationsDemo = () => {
       partNumber: formData.partsNumber,
       description: formData.partsDescription,
       cost: formData.partsCost || "0.00",
+      listPrice: formData.partsListPrice || "0.00",
       qty: formData.partsQty,
     };
     
@@ -1354,6 +1357,7 @@ const FormVariationsDemo = () => {
     handleInputChange("partsNumber", "");
     handleInputChange("partsDescription", "");
     handleInputChange("partsCost", "");
+    handleInputChange("partsListPrice", "");
     handleInputChange("partsQty", "");
   };
 
@@ -6658,7 +6662,7 @@ const FormVariationsDemo = () => {
             </div>
           </div>
         )}
-        <div className={`grid grid-cols-1 md:grid-cols-6 ${isAccordion ? 'gap-2' : 'gap-3'} items-end`}>
+        <div className={`grid grid-cols-1 md:grid-cols-7 ${isAccordion ? 'gap-2' : 'gap-3'} items-end`}>
           <div className="space-y-1">
             <Label htmlFor="partsCategory" className="text-xs">Category <span className="text-destructive">*</span></Label>
             <Select value={formData.partsCategory} onValueChange={(value) => handleInputChange("partsCategory", value)} required>
@@ -6683,7 +6687,12 @@ const FormVariationsDemo = () => {
 
           <div className="space-y-1">
             <Label htmlFor="partsCost" className="text-xs">Cost</Label>
-            <Input id="partsCost" type="number" value={formData.partsCost} onChange={(e) => handleInputChange("partsCost", e.target.value)} placeholder="0.00" className={isAccordion ? "h-7 text-xs" : "h-9"} />
+            <Input id="partsCost" type="number" value={formData.partsCost} disabled placeholder="0.00" className={isAccordion ? "h-7 text-xs bg-muted" : "h-9 bg-muted"} />
+          </div>
+
+          <div className="space-y-1">
+            <Label htmlFor="partsListPrice" className="text-xs">List Price</Label>
+            <Input id="partsListPrice" type="number" value={formData.partsListPrice} disabled placeholder="0.00" className={isAccordion ? "h-7 text-xs bg-muted" : "h-9 bg-muted"} />
           </div>
 
           <div className="space-y-1">
@@ -6697,11 +6706,12 @@ const FormVariationsDemo = () => {
         </div>
 
         <div className="border rounded-lg overflow-x-auto">
-          <div className={`bg-muted grid grid-cols-7 gap-4 ${isAccordion ? 'p-1.5' : 'p-2'} text-xs font-medium min-w-[700px]`}>
+          <div className={`bg-muted grid grid-cols-8 gap-4 ${isAccordion ? 'p-1.5' : 'p-2'} text-xs font-medium min-w-[800px]`}>
             <div>Category</div>
             <div>Part Number</div>
             <div>Description</div>
             <div>Cost</div>
+            <div>List Price</div>
             <div>Qty</div>
             <div>Total</div>
             <div>Actions</div>
@@ -6713,11 +6723,12 @@ const FormVariationsDemo = () => {
                 const qty = parseInt(part.qty) || 0;
                 const total = (cost * qty).toFixed(2);
                 return (
-                  <div key={part.id} className={`grid grid-cols-7 gap-4 ${isAccordion ? 'p-2 text-xs' : 'p-3 text-sm'} min-w-[700px]`}>
+                  <div key={part.id} className={`grid grid-cols-8 gap-4 ${isAccordion ? 'p-2 text-xs' : 'p-3 text-sm'} min-w-[800px]`}>
                     <div className="capitalize">{part.category}</div>
                     <div>{part.partNumber}</div>
                     <div>{part.description}</div>
                     <div>${part.cost}</div>
+                    <div>${part.listPrice || "0.00"}</div>
                     <div>{part.qty}</div>
                     <div>${total}</div>
                     <div>
