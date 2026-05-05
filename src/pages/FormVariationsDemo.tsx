@@ -13,7 +13,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, ChevronLeft, ChevronDown, ChevronUp, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, EyeOff, Trash2, FileText, Camera, User, Shield, Wrench, Activity, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock, ExternalLink, ArrowUp, ArrowDown, ArrowLeft, Pencil, ImageIcon, Plus, Minus, MoreHorizontal, Play, Square, RefreshCw, Minimize2, Maximize2, GripVertical, RotateCcw } from "lucide-react";
+import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, ChevronLeft, ChevronDown, ChevronUp, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, EyeOff, Trash2, FileText, Camera, User, Shield, Wrench, Activity, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock, ExternalLink, ArrowUp, ArrowDown, ArrowLeft, Pencil, ImageIcon, Plus, Minus, MoreHorizontal, Play, Square, RefreshCw, Minimize2, Maximize2, GripVertical, RotateCcw, Lock as LockIcon } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
@@ -6689,35 +6689,37 @@ const FormVariationsDemo = () => {
           <div className="space-y-1">
             <div className="flex items-center justify-between">
               <Label htmlFor="partsCost" className="text-xs">Cost</Label>
-              <label className="flex items-center gap-1 text-[10px] text-muted-foreground cursor-pointer">
-                <Checkbox
-                  checked={formData.partsPriceOverride}
-                  onCheckedChange={(checked) => {
-                    const isOverride = checked === true;
-                    handleInputChange("partsPriceOverride", isOverride);
-                    const c = parseFloat(formData.partsCost);
-                    let listPrice = "";
-                    if (isOverride) {
-                      // Override ON: list price mirrors cost
-                      listPrice = !isNaN(c) ? c.toFixed(2) : "";
-                    } else {
-                      // Override OFF: recalc from matrix
-                      if (!isNaN(c) && c > 0) {
-                        let multiplier = 1.5;
-                        if (c < 10) multiplier = 2.5;
-                        else if (c < 50) multiplier = 2.0;
-                        else if (c < 250) multiplier = 1.75;
-                        else if (c < 1000) multiplier = 1.5;
-                        else multiplier = 1.3;
-                        listPrice = (c * multiplier).toFixed(2);
-                      }
-                    }
-                    handleInputChange("partsListPrice", listPrice);
-                  }}
-                  className="h-3 w-3"
-                />
+              <button
+                type="button"
+                onClick={() => {
+                  const isOverride = !formData.partsPriceOverride;
+                  handleInputChange("partsPriceOverride", isOverride);
+                  const c = parseFloat(formData.partsCost);
+                  let listPrice = "";
+                  if (isOverride) {
+                    listPrice = !isNaN(c) ? c.toFixed(2) : "";
+                  } else if (!isNaN(c) && c > 0) {
+                    let multiplier = 1.5;
+                    if (c < 10) multiplier = 2.5;
+                    else if (c < 50) multiplier = 2.0;
+                    else if (c < 250) multiplier = 1.75;
+                    else if (c < 1000) multiplier = 1.5;
+                    else multiplier = 1.3;
+                    listPrice = (c * multiplier).toFixed(2);
+                  }
+                  handleInputChange("partsListPrice", listPrice);
+                }}
+                className={cn(
+                  "inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md border text-[10px] font-medium transition-colors",
+                  formData.partsPriceOverride
+                    ? "bg-slate-900 text-white border-slate-900 hover:bg-slate-800"
+                    : "bg-background text-muted-foreground border-input hover:bg-muted"
+                )}
+                title="Override list price (skip pricing matrix)"
+              >
+                <LockIcon className="h-2.5 w-2.5" />
                 Override
-              </label>
+              </button>
             </div>
             <Input
               id="partsCost"
