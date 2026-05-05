@@ -6687,12 +6687,35 @@ const FormVariationsDemo = () => {
 
           <div className="space-y-1">
             <Label htmlFor="partsCost" className="text-xs">Cost</Label>
-            <Input id="partsCost" type="number" value={formData.partsCost} disabled placeholder="0.00" className={isAccordion ? "h-7 text-xs bg-muted" : "h-9 bg-muted"} />
+            <Input
+              id="partsCost"
+              type="number"
+              value={formData.partsCost}
+              onChange={(e) => {
+                const cost = e.target.value;
+                handleInputChange("partsCost", cost);
+                // List Price matrix (markup tiers)
+                const c = parseFloat(cost);
+                let listPrice = "";
+                if (!isNaN(c) && c > 0) {
+                  let multiplier = 1.5;
+                  if (c < 10) multiplier = 2.5;
+                  else if (c < 50) multiplier = 2.0;
+                  else if (c < 250) multiplier = 1.75;
+                  else if (c < 1000) multiplier = 1.5;
+                  else multiplier = 1.3;
+                  listPrice = (c * multiplier).toFixed(2);
+                }
+                handleInputChange("partsListPrice", listPrice);
+              }}
+              placeholder="0.00"
+              className={isAccordion ? "h-7 text-xs" : "h-9"}
+            />
           </div>
 
           <div className="space-y-1">
             <Label htmlFor="partsListPrice" className="text-xs">List Price</Label>
-            <Input id="partsListPrice" type="number" value={formData.partsListPrice} disabled placeholder="0.00" className={isAccordion ? "h-7 text-xs bg-muted" : "h-9 bg-muted"} />
+            <Input id="partsListPrice" type="number" value={formData.partsListPrice} readOnly tabIndex={-1} placeholder="0.00" className={isAccordion ? "h-7 text-xs bg-muted cursor-not-allowed" : "h-9 bg-muted cursor-not-allowed"} />
           </div>
 
           <div className="space-y-1">
