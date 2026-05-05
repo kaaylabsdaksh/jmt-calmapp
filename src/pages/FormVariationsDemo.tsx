@@ -767,6 +767,7 @@ const FormVariationsDemo = () => {
     partsDescription: "",
     partsCost: "",
     partsListPrice: "",
+    partsPriceOverride: false,
     partsQty: "",
     
     // Comments
@@ -6686,7 +6687,35 @@ const FormVariationsDemo = () => {
           </div>
 
           <div className="space-y-1">
-            <Label htmlFor="partsCost" className="text-xs">Cost</Label>
+            <div className="flex items-center justify-between">
+              <Label htmlFor="partsCost" className="text-xs">Cost</Label>
+              <label className="flex items-center gap-1 text-[10px] text-muted-foreground cursor-pointer">
+                <Checkbox
+                  checked={formData.partsPriceOverride}
+                  onCheckedChange={(checked) => {
+                    const isOverride = checked === true;
+                    handleInputChange("partsPriceOverride", isOverride);
+                    if (!isOverride) {
+                      // Recalculate list price from matrix using current cost
+                      const c = parseFloat(formData.partsCost);
+                      let listPrice = "";
+                      if (!isNaN(c) && c > 0) {
+                        let multiplier = 1.5;
+                        if (c < 10) multiplier = 2.5;
+                        else if (c < 50) multiplier = 2.0;
+                        else if (c < 250) multiplier = 1.75;
+                        else if (c < 1000) multiplier = 1.5;
+                        else multiplier = 1.3;
+                        listPrice = (c * multiplier).toFixed(2);
+                      }
+                      handleInputChange("partsListPrice", listPrice);
+                    }
+                  }}
+                  className="h-3 w-3"
+                />
+                Override
+              </label>
+            </div>
             <Input
               id="partsCost"
               type="number"
@@ -6694,6 +6723,7 @@ const FormVariationsDemo = () => {
               onChange={(e) => {
                 const cost = e.target.value;
                 handleInputChange("partsCost", cost);
+                if (formData.partsPriceOverride) return;
                 // List Price matrix (markup tiers)
                 const c = parseFloat(cost);
                 let listPrice = "";
@@ -6714,8 +6744,20 @@ const FormVariationsDemo = () => {
           </div>
 
           <div className="space-y-1">
-            <Label htmlFor="partsListPrice" className="text-xs">List Price</Label>
-            <Input id="partsListPrice" type="number" value={formData.partsListPrice} readOnly tabIndex={-1} placeholder="0.00" className={isAccordion ? "h-7 text-xs bg-muted cursor-not-allowed" : "h-9 bg-muted cursor-not-allowed"} />
+            <Label htmlFor="partsListPrice" className="text-xs">List Price {formData.partsPriceOverride && <span className="text-[10px] text-muted-foreground">(manual)</span>}</Label>
+            <Input
+              id="partsListPrice"
+              type="number"
+              value={formData.partsListPrice}
+              onChange={(e) => handleInputChange("partsListPrice", e.target.value)}
+              readOnly={!formData.partsPriceOverride}
+              tabIndex={formData.partsPriceOverride ? 0 : -1}
+              placeholder="0.00"
+              className={cn(
+                isAccordion ? "h-7 text-xs" : "h-9",
+                !formData.partsPriceOverride && "bg-muted cursor-not-allowed"
+              )}
+            />
           </div>
 
           <div className="space-y-1">
