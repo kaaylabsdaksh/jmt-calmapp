@@ -6689,37 +6689,31 @@ const FormVariationsDemo = () => {
           <div className="space-y-1">
             <div className="flex items-center justify-between">
               <Label htmlFor="partsCost" className="text-xs">Cost</Label>
-              <button
-                type="button"
-                onClick={() => {
-                  const isOverride = !formData.partsPriceOverride;
-                  handleInputChange("partsPriceOverride", isOverride);
-                  const c = parseFloat(formData.partsCost);
-                  let listPrice = "";
-                  if (isOverride) {
-                    listPrice = !isNaN(c) ? c.toFixed(2) : "";
-                  } else if (!isNaN(c) && c > 0) {
-                    let multiplier = 1.5;
-                    if (c < 10) multiplier = 2.5;
-                    else if (c < 50) multiplier = 2.0;
-                    else if (c < 250) multiplier = 1.75;
-                    else if (c < 1000) multiplier = 1.5;
-                    else multiplier = 1.3;
-                    listPrice = (c * multiplier).toFixed(2);
-                  }
-                  handleInputChange("partsListPrice", listPrice);
-                }}
-                className={cn(
-                  "inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md border text-[10px] font-medium transition-colors",
-                  formData.partsPriceOverride
-                    ? "bg-slate-900 text-white border-slate-900 hover:bg-slate-800"
-                    : "bg-background text-muted-foreground border-input hover:bg-muted"
-                )}
-                title="Override list price (skip pricing matrix)"
-              >
-                <LockIcon className="h-2.5 w-2.5" />
+              <label className="inline-flex items-center gap-1.5 cursor-pointer text-[11px] text-muted-foreground" title="Override list price (skip pricing matrix)">
+                <Checkbox
+                  checked={formData.partsPriceOverride}
+                  onCheckedChange={(checked) => {
+                    const isOverride = checked === true;
+                    handleInputChange("partsPriceOverride", isOverride);
+                    const c = parseFloat(formData.partsCost);
+                    let listPrice = "";
+                    if (isOverride) {
+                      listPrice = !isNaN(c) ? c.toFixed(2) : "";
+                    } else if (!isNaN(c) && c > 0) {
+                      let multiplier = 1.5;
+                      if (c < 10) multiplier = 2.5;
+                      else if (c < 50) multiplier = 2.0;
+                      else if (c < 250) multiplier = 1.75;
+                      else if (c < 1000) multiplier = 1.5;
+                      else multiplier = 1.3;
+                      listPrice = (c * multiplier).toFixed(2);
+                    }
+                    handleInputChange("partsListPrice", listPrice);
+                  }}
+                  className="h-3.5 w-3.5"
+                />
                 Override
-              </button>
+              </label>
             </div>
             <Input
               id="partsCost"
