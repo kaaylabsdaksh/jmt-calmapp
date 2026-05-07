@@ -2974,6 +2974,7 @@ interface WorkOrderItem {
   needByDate?: string;
   followUpDate?: string;
   labCode?: string;
+  template?: string;
   location?: string;
   operationType?: string;
   estimatedCost?: string;
