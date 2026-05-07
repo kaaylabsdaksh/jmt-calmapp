@@ -5692,74 +5692,78 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                 paginatedWorkOrderItems.map((item) => (
                   <TableRow
                     key={item.id}
-                    className="hover:bg-gray-50 cursor-pointer border-b border-gray-100 [&>td]:py-1.5 [&>td]:px-2 [&>td]:text-[11px]"
+                    className="hover:bg-gray-50 cursor-pointer border-b-2 border-gray-300 [&>td]:py-0.5 [&>td]:px-2 [&>td]:text-[11px] [&>td]:leading-tight"
                     onClick={() => openDetailsFromItem(item)}
                   >
-                    <TableCell className="font-medium text-blue-600">
-                      <div className="flex items-center gap-1.5">
-                        <button
-                          onClick={(e) => handleItemTypeClick(item, e)}
-                          className="text-gray-400 hover:text-blue-600 transition-colors"
-                        >
-                          <Pencil className="h-3.5 w-3.5" />
-                        </button>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            navigate(`/edit-batch-work-order`, {
-                              state: {
-                                workOrderId: item.workOrderId,
-                                accountNumber: "1500.00",
-                                customer: item.customer
-                              }
-                            });
-                          }}
-                          className="text-blue-600 hover:text-blue-800 hover:underline font-medium transition-colors"
-                        >
-                          {item.workOrderNumber}
-                        </button>
-                      </div>
-                    </TableCell>
-                    <TableCell className="font-mono">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          navigate(`/edit-order`);
-                        }}
-                        className="text-blue-600 hover:text-blue-800 hover:underline font-medium transition-colors"
-                      >
-                        {item.itemNumber}
-                      </button>
-                    </TableCell>
-                    <TableCell>{getItemStatusBadge(item.itemStatus)}</TableCell>
-                    <TableCell>
-                      <span className={cn("px-1.5 py-0.5 rounded-md text-[10px] font-medium",
-                        item.priority === "Critical" ? "bg-red-100 text-red-800" :
-                        item.priority === "High" ? "bg-orange-100 text-orange-800" :
-                        item.priority === "Medium" ? "bg-yellow-100 text-yellow-800" :
-                        "bg-gray-100 text-gray-800"
-                      )}>{item.priority}</span>
-                    </TableCell>
-                    <TableCell className="font-medium">{item.manufacturer}</TableCell>
-                    <TableCell className="font-mono">{item.model}</TableCell>
-                    <TableCell className="font-mono">{item.serialNumber}</TableCell>
-                    <TableCell>{item.custId}</TableCell>
-                    <TableCell>
-                      <button
-                        onClick={(e) => handleItemTypeClick(item, e)}
-                        className="text-blue-600 hover:text-blue-800 hover:underline font-medium transition-colors"
-                      >
-                        {item.itemType}
-                      </button>
-                    </TableCell>
-                    <TableCell className="font-medium">{item.customer}</TableCell>
-                    <TableCell>{item.assignedTo}</TableCell>
-                    <TableCell className="font-mono">{item.poNumber}</TableCell>
-                    <TableCell>{item.created}</TableCell>
-                    <TableCell>{item.needByDate || '—'}</TableCell>
-                    <TableCell>{item.deliverByDate}</TableCell>
-                    <TableCell>{item.division}</TableCell>
-                    <TableCell>{item.location || '—'}</TableCell>
+                    {visibleItemColumns.map((col) => {
+                      const k = col.key;
+                      let content: React.ReactNode = null;
+                      if (k === 'workOrderNumber') {
+                        content = (
+                          <div className="flex items-center gap-1.5">
+                            <button
+                              onClick={(e) => handleItemTypeClick(item, e)}
+                              className="text-gray-400 hover:text-blue-600 transition-colors"
+                            >
+                              <Pencil className="h-3.5 w-3.5" />
+                            </button>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                navigate(`/edit-batch-work-order`, {
+                                  state: {
+                                    workOrderId: item.workOrderId,
+                                    accountNumber: "1500.00",
+                                    customer: item.customer
+                                  }
+                                });
+                              }}
+                              className="text-blue-600 hover:text-blue-800 hover:underline font-medium transition-colors"
+                            >
+                              {item.workOrderNumber}
+                            </button>
+                          </div>
+                        );
+                      } else if (k === 'itemNumber') {
+                        content = (
+                          <button
+                            onClick={(e) => { e.stopPropagation(); navigate(`/edit-order`); }}
+                            className="text-blue-600 hover:text-blue-800 hover:underline font-medium transition-colors"
+                          >
+                            {item.itemNumber}
+                          </button>
+                        );
+                      } else if (k === 'itemStatus') {
+                        content = getItemStatusBadge(item.itemStatus);
+                      } else if (k === 'priority') {
+                        content = (
+                          <span className={cn("px-1.5 py-0.5 rounded-md text-[10px] font-medium",
+                            item.priority === "Critical" ? "bg-red-100 text-red-800" :
+                            item.priority === "High" ? "bg-orange-100 text-orange-800" :
+                            item.priority === "Medium" ? "bg-yellow-100 text-yellow-800" :
+                            "bg-gray-100 text-gray-800"
+                          )}>{item.priority}</span>
+                        );
+                      } else if (k === 'itemType') {
+                        content = (
+                          <button
+                            onClick={(e) => handleItemTypeClick(item, e)}
+                            className="text-blue-600 hover:text-blue-800 hover:underline font-medium transition-colors"
+                          >
+                            {item.itemType}
+                          </button>
+                        );
+                      } else {
+                        const v = (item as any)[k];
+                        content = v ?? '—';
+                      }
+                      const cellClass = (k === 'workOrderNumber' || k === 'customer') ? 'font-medium text-blue-600' :
+                        (k === 'itemNumber' || k === 'model' || k === 'serialNumber' || k === 'poNumber') ? 'font-mono' :
+                        (k === 'manufacturer') ? 'font-medium' :
+                        (k === 'labCode') ? 'font-mono text-foreground' :
+                        '';
+                      return <TableCell key={k} className={cellClass}>{content}</TableCell>;
+                    })}
                   </TableRow>
                 ))
               )}
