@@ -5361,9 +5361,69 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                     : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
                 )}
               >
-                <Grid3X3 className="h-4 w-4" />
               </Button>
             </div>
+
+            {/* Column personalization (Item view only) */}
+            {currentView === 'item' && (
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button variant="outline" size="sm" className="h-8 px-3 gap-1.5">
+                    <Settings2 className="h-4 w-4" />
+                    <span className="text-xs">Columns</span>
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent align="end" className="w-72 p-0">
+                  <div className="flex items-center justify-between px-3 py-2 border-b">
+                    <div>
+                      <div className="text-sm font-semibold text-foreground">Columns</div>
+                      <div className="text-[10px] text-muted-foreground">Saved to your profile</div>
+                    </div>
+                    <Button variant="ghost" size="sm" className="h-7 text-xs" onClick={resetColumns}>Reset</Button>
+                  </div>
+                  <div className="max-h-80 overflow-auto py-1">
+                    {(() => {
+                      const orderedKeys = [
+                        ...columnPrefs.order.filter(k => ITEM_COLUMN_DEFS.some(c => c.key === k)),
+                        ...ITEM_COLUMN_DEFS.filter(c => !columnPrefs.order.includes(c.key)).map(c => c.key),
+                      ];
+                      return orderedKeys.map((key, idx) => {
+                        const def = ITEM_COLUMN_DEFS.find(c => c.key === key)!;
+                        const visible = !columnPrefs.hidden.includes(key);
+                        return (
+                          <div key={key} className="flex items-center gap-2 px-2 py-1.5 hover:bg-muted/40">
+                            <GripVertical className="h-3.5 w-3.5 text-muted-foreground/60" />
+                            <Checkbox
+                              checked={visible}
+                              disabled={def.alwaysVisible}
+                              onCheckedChange={() => toggleColumnVisible(key)}
+                              className="h-3.5 w-3.5"
+                            />
+                            <span className={cn("flex-1 text-xs", !visible && "text-muted-foreground line-through")}>{def.label}</span>
+                            <button
+                              onClick={() => moveColumn(key, -1)}
+                              disabled={idx === 0}
+                              className="p-0.5 rounded hover:bg-muted disabled:opacity-30"
+                              title="Move up"
+                            >
+                              <ArrowUp className="h-3 w-3" />
+                            </button>
+                            <button
+                              onClick={() => moveColumn(key, 1)}
+                              disabled={idx === orderedKeys.length - 1}
+                              className="p-0.5 rounded hover:bg-muted disabled:opacity-30"
+                              title="Move down"
+                            >
+                              <ArrowDown className="h-3 w-3" />
+                            </button>
+                          </div>
+                        );
+                      });
+                    })()}
+                  </div>
+                </PopoverContent>
+              </Popover>
+            )}
           </div>
         </div>
 
