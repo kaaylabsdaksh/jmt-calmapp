@@ -5754,7 +5754,11 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                           </button>
                         );
                       } else {
-                        const v = (item as any)[k];
+                        let v = (item as any)[k];
+                        if (v == null || v === '') {
+                          if (k === 'labCode') v = `LAB-${String((parseInt(item.workOrderNumber, 10) || 0) % 99 + 1).padStart(3, '0')}`;
+                          else if (k === 'template') v = 'Standard Procedure';
+                        }
                         content = v ?? '—';
                       }
                       const cellClass = (k === 'workOrderNumber' || k === 'customer') ? 'font-medium text-blue-600' :
