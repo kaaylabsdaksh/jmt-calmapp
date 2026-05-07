@@ -7,7 +7,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { List, Grid3X3, Pencil, Search, X, ArrowUpDown, ArrowUp, ArrowDown, ChevronRight, ChevronDown, CalendarIcon } from "lucide-react";
+import { List, Grid3X3, Pencil, Search, X, ArrowUpDown, ArrowUp, ArrowDown, ChevronRight, ChevronDown, CalendarIcon, Settings2, GripVertical, Eye, EyeOff } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import WorkOrderBatchDetails from "@/components/WorkOrderBatchDetails";
@@ -2973,6 +2974,7 @@ interface WorkOrderItem {
   needByDate?: string;
   followUpDate?: string;
   labCode?: string;
+  template?: string;
   location?: string;
   operationType?: string;
   estimatedCost?: string;
@@ -4290,6 +4292,44 @@ const BatchItemsInline = ({ items, navigate }: { items: BatchItemData[]; navigat
   );
 };
 
+// Default item view column configuration. Order here defines default order.
+const ITEM_COLUMN_DEFS: { key: string; label: string; type?: 'text' | 'date'; alwaysVisible?: boolean }[] = [
+  { key: 'workOrderNumber', label: 'Work Order #', alwaysVisible: true },
+  { key: 'itemNumber', label: 'Item', alwaysVisible: true },
+  { key: 'itemStatus', label: 'Item Status' },
+  { key: 'priority', label: 'Priority' },
+  { key: 'manufacturer', label: 'Manufacturer' },
+  { key: 'model', label: 'Model' },
+  { key: 'serialNumber', label: 'Serial #' },
+  { key: 'custId', label: 'Cust ID' },
+  { key: 'itemType', label: 'Item Type' },
+  { key: 'customer', label: 'Customer' },
+  { key: 'assignedTo', label: 'Assigned To' },
+  { key: 'poNumber', label: 'PO #' },
+  { key: 'created', label: 'Created', type: 'date' },
+  { key: 'needByDate', label: 'Need By', type: 'date' },
+  { key: 'deliverByDate', label: 'Deliver By', type: 'date' },
+  { key: 'division', label: 'Division' },
+  { key: 'location', label: 'Location' },
+  { key: 'labCode', label: 'Lab Code' },
+  { key: 'template', label: 'Template' },
+];
+
+// Mock user-profile-scoped persistence. Server-side persistence will replace this
+// (key includes user id so settings travel with the user, not the browser).
+const COLUMN_PREFS_KEY = 'user:wo-item-columns:v1';
+type ColumnPrefs = { order: string[]; hidden: string[] };
+const loadColumnPrefs = (): ColumnPrefs => {
+  try {
+    const raw = localStorage.getItem(COLUMN_PREFS_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch {}
+  return { order: ITEM_COLUMN_DEFS.map(c => c.key), hidden: ['labCode', 'template'] };
+};
+const saveColumnPrefs = (p: ColumnPrefs) => {
+  try { localStorage.setItem(COLUMN_PREFS_KEY, JSON.stringify(p)); } catch {}
+};
+
 // ModernWorkOrdersTable Component - Clean version with only List/Grid toggle icons
 const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasSearched, searchViewMode = 'default' }: ModernWorkOrdersTableProps) => {
   const [selectedWorkOrder, setSelectedWorkOrder] = useState<WorkOrder | null>(null);
@@ -4303,6 +4343,40 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
   const [expandedBatches, setExpandedBatches] = useState<Set<string>>(new Set());
   const [gridVisibleCount, setGridVisibleCount] = useState(12);
   const gridLoadMoreRef = useRef<HTMLDivElement>(null);
+  const [columnPrefs, setColumnPrefs] = useState<ColumnPrefs>(() => loadColumnPrefs());
+  useEffect(() => { saveColumnPrefs(columnPrefs); }, [columnPrefs]);
+  const visibleItemColumns = columnPrefs.order
+    .map(k => ITEM_COLUMN_DEFS.find(c => c.key === k))
+    .filter((c): c is typeof ITEM_COLUMN_DEFS[number] => !!c && !columnPrefs.hidden.includes(c.key))
+    // Append any new defs that aren't yet in stored order
+    .concat(
+      ITEM_COLUMN_DEFS.filter(
+        c => !columnPrefs.order.includes(c.key) && !columnPrefs.hidden.includes(c.key)
+      )
+    );
+  const toggleColumnVisible = (key: string) => {
+    setColumnPrefs(prev => {
+      const def = ITEM_COLUMN_DEFS.find(c => c.key === key);
+      if (def?.alwaysVisible) return prev;
+      const hidden = prev.hidden.includes(key)
+        ? prev.hidden.filter(k => k !== key)
+        : [...prev.hidden, key];
+      return { ...prev, hidden };
+    });
+  };
+  const moveColumn = (key: string, dir: -1 | 1) => {
+    setColumnPrefs(prev => {
+      const order = [...prev.order];
+      // Ensure all defs are in order
+      ITEM_COLUMN_DEFS.forEach(c => { if (!order.includes(c.key)) order.push(c.key); });
+      const idx = order.indexOf(key);
+      const ni = idx + dir;
+      if (idx < 0 || ni < 0 || ni >= order.length) return prev;
+      [order[idx], order[ni]] = [order[ni], order[idx]];
+      return { ...prev, order };
+    });
+  };
+  const resetColumns = () => setColumnPrefs({ order: ITEM_COLUMN_DEFS.map(c => c.key), hidden: ['labCode', 'template'] });
   const navigate = useNavigate();
 
 
@@ -5287,9 +5361,69 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                     : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
                 )}
               >
-                <Grid3X3 className="h-4 w-4" />
               </Button>
             </div>
+
+            {/* Column personalization (Item view only) */}
+            {currentView === 'item' && (
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button variant="outline" size="sm" className="h-8 px-3 gap-1.5">
+                    <Settings2 className="h-4 w-4" />
+                    <span className="text-xs">Columns</span>
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent align="end" className="w-72 p-0">
+                  <div className="flex items-center justify-between px-3 py-2 border-b">
+                    <div>
+                      <div className="text-sm font-semibold text-foreground">Columns</div>
+                      <div className="text-[10px] text-muted-foreground">Saved to your profile</div>
+                    </div>
+                    <Button variant="ghost" size="sm" className="h-7 text-xs" onClick={resetColumns}>Reset</Button>
+                  </div>
+                  <div className="max-h-80 overflow-auto py-1">
+                    {(() => {
+                      const orderedKeys = [
+                        ...columnPrefs.order.filter(k => ITEM_COLUMN_DEFS.some(c => c.key === k)),
+                        ...ITEM_COLUMN_DEFS.filter(c => !columnPrefs.order.includes(c.key)).map(c => c.key),
+                      ];
+                      return orderedKeys.map((key, idx) => {
+                        const def = ITEM_COLUMN_DEFS.find(c => c.key === key)!;
+                        const visible = !columnPrefs.hidden.includes(key);
+                        return (
+                          <div key={key} className="flex items-center gap-2 px-2 py-1.5 hover:bg-muted/40">
+                            <GripVertical className="h-3.5 w-3.5 text-muted-foreground/60" />
+                            <Checkbox
+                              checked={visible}
+                              disabled={def.alwaysVisible}
+                              onCheckedChange={() => toggleColumnVisible(key)}
+                              className="h-3.5 w-3.5"
+                            />
+                            <span className={cn("flex-1 text-xs", !visible && "text-muted-foreground line-through")}>{def.label}</span>
+                            <button
+                              onClick={() => moveColumn(key, -1)}
+                              disabled={idx === 0}
+                              className="p-0.5 rounded hover:bg-muted disabled:opacity-30"
+                              title="Move up"
+                            >
+                              <ArrowUp className="h-3 w-3" />
+                            </button>
+                            <button
+                              onClick={() => moveColumn(key, 1)}
+                              disabled={idx === orderedKeys.length - 1}
+                              className="p-0.5 rounded hover:bg-muted disabled:opacity-30"
+                              title="Move down"
+                            >
+                              <ArrowDown className="h-3 w-3" />
+                            </button>
+                          </div>
+                        );
+                      });
+                    })()}
+                  </div>
+                </PopoverContent>
+              </Popover>
+            )}
           </div>
         </div>
 
@@ -5335,26 +5469,8 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                 ) : (
                   // Item View Headers
                   <>
-                    {[
-                      { key: 'workOrderNumber', label: 'Work Order #' },
-                      { key: 'itemNumber', label: 'Item' },
-                      { key: 'itemStatus', label: 'Item Status' },
-                      { key: 'priority', label: 'Priority' },
-                      { key: 'manufacturer', label: 'Manufacturer' },
-                      { key: 'model', label: 'Model' },
-                      { key: 'serialNumber', label: 'Serial #' },
-                      { key: 'custId', label: 'Cust ID' },
-                      { key: 'itemType', label: 'Item Type' },
-                      { key: 'customer', label: 'Customer' },
-                      { key: 'assignedTo', label: 'Assigned To' },
-                      { key: 'poNumber', label: 'PO #' },
-                      { key: 'created', label: 'Created' },
-                      { key: 'needByDate', label: 'Need By' },
-                      { key: 'deliverByDate', label: 'Deliver By' },
-                      { key: 'division', label: 'Division' },
-                      { key: 'location', label: 'Location' },
-                    ].map(col => (
-                      <TableHead key={col.key} className="font-semibold text-gray-900 text-[11px] py-1.5 px-2 whitespace-nowrap">
+                    {visibleItemColumns.map(col => (
+                      <TableHead key={col.key} className="font-semibold text-gray-900 text-[11px] py-1 px-2 whitespace-nowrap">
                         <div className="flex items-center gap-1">
                           <span>{col.label}</span>
                           <button
@@ -5446,26 +5562,8 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                   </>
                 ) : (
                   <>
-                    {[
-                      { key: 'workOrderNumber', placeholder: '', type: 'text' },
-                      { key: 'itemNumber', placeholder: '', type: 'text' },
-                      { key: 'itemStatus', placeholder: '', type: 'text' },
-                      { key: 'priority', placeholder: '', type: 'text' },
-                      { key: 'manufacturer', placeholder: '', type: 'text' },
-                      { key: 'model', placeholder: '', type: 'text' },
-                      { key: 'serialNumber', placeholder: '', type: 'text' },
-                      { key: 'custId', placeholder: '', type: 'text' },
-                      { key: 'itemType', placeholder: '', type: 'text' },
-                      { key: 'customer', placeholder: '', type: 'text' },
-                      { key: 'assignedTo', placeholder: '', type: 'text' },
-                      { key: 'poNumber', placeholder: '', type: 'text' },
-                      { key: 'created', placeholder: '', type: 'date' },
-                      { key: 'needByDate', placeholder: '', type: 'date' },
-                      { key: 'deliverByDate', placeholder: '', type: 'date' },
-                      { key: 'division', placeholder: '', type: 'text' },
-                      { key: 'location', placeholder: '', type: 'text' },
-                    ].map((col) => (
-                      <TableHead key={col.key} className="py-1 px-1.5">
+                    {visibleItemColumns.map((col) => (
+                      <TableHead key={col.key} className="py-0.5 px-1.5">
                         <div className="relative">
                           {col.type === 'date' ? (
                             <DateColumnFilter
@@ -5477,7 +5575,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                             <>
                               <Search className="absolute left-1.5 top-1/2 -translate-y-1/2 h-2.5 w-2.5 text-muted-foreground/50" />
                               <Input
-                                placeholder={col.placeholder}
+                                placeholder=""
                                 value={columnFilters[col.key] || ''}
                                 onChange={(e) => setColumnFilters(prev => ({ ...prev, [col.key]: e.target.value }))}
                                 className="h-6 text-[10px] pl-5 pr-5 border-muted bg-muted/30 rounded-md placeholder:text-muted-foreground/40 focus:bg-background focus:border-primary/30 transition-colors"
@@ -5502,7 +5600,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
             <TableBody>
               {!hasSearched ? (
                 <TableRow>
-                  <TableCell colSpan={currentView === 'batch' ? (searchViewMode === 'csa' ? 14 : 8) : 17} className="text-center py-12">
+                  <TableCell colSpan={currentView === 'batch' ? (searchViewMode === 'csa' ? 14 : 8) : visibleItemColumns.length} className="text-center py-12">
                     <p className="text-muted-foreground text-lg">
                       Please enter search criteria in the Work Order Search above to view results
                     </p>
@@ -5594,74 +5692,82 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                 paginatedWorkOrderItems.map((item) => (
                   <TableRow
                     key={item.id}
-                    className="hover:bg-gray-50 cursor-pointer border-b border-gray-100 [&>td]:py-1.5 [&>td]:px-2 [&>td]:text-[11px]"
+                    className="hover:bg-gray-50 cursor-pointer border-b-2 border-gray-300 [&>td]:py-0.5 [&>td]:px-2 [&>td]:text-[11px] [&>td]:leading-tight"
                     onClick={() => openDetailsFromItem(item)}
                   >
-                    <TableCell className="font-medium text-blue-600">
-                      <div className="flex items-center gap-1.5">
-                        <button
-                          onClick={(e) => handleItemTypeClick(item, e)}
-                          className="text-gray-400 hover:text-blue-600 transition-colors"
-                        >
-                          <Pencil className="h-3.5 w-3.5" />
-                        </button>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            navigate(`/edit-batch-work-order`, {
-                              state: {
-                                workOrderId: item.workOrderId,
-                                accountNumber: "1500.00",
-                                customer: item.customer
-                              }
-                            });
-                          }}
-                          className="text-blue-600 hover:text-blue-800 hover:underline font-medium transition-colors"
-                        >
-                          {item.workOrderNumber}
-                        </button>
-                      </div>
-                    </TableCell>
-                    <TableCell className="font-mono">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          navigate(`/edit-order`);
-                        }}
-                        className="text-blue-600 hover:text-blue-800 hover:underline font-medium transition-colors"
-                      >
-                        {item.itemNumber}
-                      </button>
-                    </TableCell>
-                    <TableCell>{getItemStatusBadge(item.itemStatus)}</TableCell>
-                    <TableCell>
-                      <span className={cn("px-1.5 py-0.5 rounded-md text-[10px] font-medium",
-                        item.priority === "Critical" ? "bg-red-100 text-red-800" :
-                        item.priority === "High" ? "bg-orange-100 text-orange-800" :
-                        item.priority === "Medium" ? "bg-yellow-100 text-yellow-800" :
-                        "bg-gray-100 text-gray-800"
-                      )}>{item.priority}</span>
-                    </TableCell>
-                    <TableCell className="font-medium">{item.manufacturer}</TableCell>
-                    <TableCell className="font-mono">{item.model}</TableCell>
-                    <TableCell className="font-mono">{item.serialNumber}</TableCell>
-                    <TableCell>{item.custId}</TableCell>
-                    <TableCell>
-                      <button
-                        onClick={(e) => handleItemTypeClick(item, e)}
-                        className="text-blue-600 hover:text-blue-800 hover:underline font-medium transition-colors"
-                      >
-                        {item.itemType}
-                      </button>
-                    </TableCell>
-                    <TableCell className="font-medium">{item.customer}</TableCell>
-                    <TableCell>{item.assignedTo}</TableCell>
-                    <TableCell className="font-mono">{item.poNumber}</TableCell>
-                    <TableCell>{item.created}</TableCell>
-                    <TableCell>{item.needByDate || '—'}</TableCell>
-                    <TableCell>{item.deliverByDate}</TableCell>
-                    <TableCell>{item.division}</TableCell>
-                    <TableCell>{item.location || '—'}</TableCell>
+                    {visibleItemColumns.map((col) => {
+                      const k = col.key;
+                      let content: React.ReactNode = null;
+                      if (k === 'workOrderNumber') {
+                        content = (
+                          <div className="flex items-center gap-1.5">
+                            <button
+                              onClick={(e) => handleItemTypeClick(item, e)}
+                              className="text-gray-400 hover:text-blue-600 transition-colors"
+                            >
+                              <Pencil className="h-3.5 w-3.5" />
+                            </button>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                navigate(`/edit-batch-work-order`, {
+                                  state: {
+                                    workOrderId: item.workOrderId,
+                                    accountNumber: "1500.00",
+                                    customer: item.customer
+                                  }
+                                });
+                              }}
+                              className="text-blue-600 hover:text-blue-800 hover:underline font-medium transition-colors"
+                            >
+                              {item.workOrderNumber}
+                            </button>
+                          </div>
+                        );
+                      } else if (k === 'itemNumber') {
+                        content = (
+                          <button
+                            onClick={(e) => { e.stopPropagation(); navigate(`/edit-order`); }}
+                            className="text-blue-600 hover:text-blue-800 hover:underline font-medium transition-colors"
+                          >
+                            {item.itemNumber}
+                          </button>
+                        );
+                      } else if (k === 'itemStatus') {
+                        content = getItemStatusBadge(item.itemStatus);
+                      } else if (k === 'priority') {
+                        content = (
+                          <span className={cn("px-1.5 py-0.5 rounded-md text-[10px] font-medium",
+                            item.priority === "Critical" ? "bg-red-100 text-red-800" :
+                            item.priority === "High" ? "bg-orange-100 text-orange-800" :
+                            item.priority === "Medium" ? "bg-yellow-100 text-yellow-800" :
+                            "bg-gray-100 text-gray-800"
+                          )}>{item.priority}</span>
+                        );
+                      } else if (k === 'itemType') {
+                        content = (
+                          <button
+                            onClick={(e) => handleItemTypeClick(item, e)}
+                            className="text-blue-600 hover:text-blue-800 hover:underline font-medium transition-colors"
+                          >
+                            {item.itemType}
+                          </button>
+                        );
+                      } else {
+                        let v = (item as any)[k];
+                        if (v == null || v === '') {
+                          if (k === 'labCode') v = `LAB-${String((parseInt(item.workOrderNumber, 10) || 0) % 99 + 1).padStart(3, '0')}`;
+                          else if (k === 'template') v = 'Standard Procedure';
+                        }
+                        content = v ?? '—';
+                      }
+                      const cellClass = (k === 'workOrderNumber' || k === 'customer') ? 'font-medium text-blue-600' :
+                        (k === 'itemNumber' || k === 'model' || k === 'serialNumber' || k === 'poNumber') ? 'font-mono' :
+                        (k === 'manufacturer') ? 'font-medium' :
+                        (k === 'labCode') ? 'font-mono text-foreground' :
+                        '';
+                      return <TableCell key={k} className={cellClass}>{content}</TableCell>;
+                    })}
                   </TableRow>
                 ))
               )}
