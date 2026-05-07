@@ -4292,6 +4292,44 @@ const BatchItemsInline = ({ items, navigate }: { items: BatchItemData[]; navigat
   );
 };
 
+// Default item view column configuration. Order here defines default order.
+const ITEM_COLUMN_DEFS: { key: string; label: string; type?: 'text' | 'date'; alwaysVisible?: boolean }[] = [
+  { key: 'workOrderNumber', label: 'Work Order #', alwaysVisible: true },
+  { key: 'itemNumber', label: 'Item', alwaysVisible: true },
+  { key: 'itemStatus', label: 'Item Status' },
+  { key: 'priority', label: 'Priority' },
+  { key: 'manufacturer', label: 'Manufacturer' },
+  { key: 'model', label: 'Model' },
+  { key: 'serialNumber', label: 'Serial #' },
+  { key: 'custId', label: 'Cust ID' },
+  { key: 'itemType', label: 'Item Type' },
+  { key: 'customer', label: 'Customer' },
+  { key: 'assignedTo', label: 'Assigned To' },
+  { key: 'poNumber', label: 'PO #' },
+  { key: 'created', label: 'Created', type: 'date' },
+  { key: 'needByDate', label: 'Need By', type: 'date' },
+  { key: 'deliverByDate', label: 'Deliver By', type: 'date' },
+  { key: 'division', label: 'Division' },
+  { key: 'location', label: 'Location' },
+  { key: 'labCode', label: 'Lab Code' },
+  { key: 'template', label: 'Template' },
+];
+
+// Mock user-profile-scoped persistence. Server-side persistence will replace this
+// (key includes user id so settings travel with the user, not the browser).
+const COLUMN_PREFS_KEY = 'user:wo-item-columns:v1';
+type ColumnPrefs = { order: string[]; hidden: string[] };
+const loadColumnPrefs = (): ColumnPrefs => {
+  try {
+    const raw = localStorage.getItem(COLUMN_PREFS_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch {}
+  return { order: ITEM_COLUMN_DEFS.map(c => c.key), hidden: ['labCode', 'template'] };
+};
+const saveColumnPrefs = (p: ColumnPrefs) => {
+  try { localStorage.setItem(COLUMN_PREFS_KEY, JSON.stringify(p)); } catch {}
+};
+
 // ModernWorkOrdersTable Component - Clean version with only List/Grid toggle icons
 const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasSearched, searchViewMode = 'default' }: ModernWorkOrdersTableProps) => {
   const [selectedWorkOrder, setSelectedWorkOrder] = useState<WorkOrder | null>(null);
