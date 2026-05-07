@@ -5469,26 +5469,8 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                 ) : (
                   // Item View Headers
                   <>
-                    {[
-                      { key: 'workOrderNumber', label: 'Work Order #' },
-                      { key: 'itemNumber', label: 'Item' },
-                      { key: 'itemStatus', label: 'Item Status' },
-                      { key: 'priority', label: 'Priority' },
-                      { key: 'manufacturer', label: 'Manufacturer' },
-                      { key: 'model', label: 'Model' },
-                      { key: 'serialNumber', label: 'Serial #' },
-                      { key: 'custId', label: 'Cust ID' },
-                      { key: 'itemType', label: 'Item Type' },
-                      { key: 'customer', label: 'Customer' },
-                      { key: 'assignedTo', label: 'Assigned To' },
-                      { key: 'poNumber', label: 'PO #' },
-                      { key: 'created', label: 'Created' },
-                      { key: 'needByDate', label: 'Need By' },
-                      { key: 'deliverByDate', label: 'Deliver By' },
-                      { key: 'division', label: 'Division' },
-                      { key: 'location', label: 'Location' },
-                    ].map(col => (
-                      <TableHead key={col.key} className="font-semibold text-gray-900 text-[11px] py-1.5 px-2 whitespace-nowrap">
+                    {visibleItemColumns.map(col => (
+                      <TableHead key={col.key} className="font-semibold text-gray-900 text-[11px] py-1 px-2 whitespace-nowrap">
                         <div className="flex items-center gap-1">
                           <span>{col.label}</span>
                           <button
