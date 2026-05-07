@@ -5562,26 +5562,8 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                   </>
                 ) : (
                   <>
-                    {[
-                      { key: 'workOrderNumber', placeholder: '', type: 'text' },
-                      { key: 'itemNumber', placeholder: '', type: 'text' },
-                      { key: 'itemStatus', placeholder: '', type: 'text' },
-                      { key: 'priority', placeholder: '', type: 'text' },
-                      { key: 'manufacturer', placeholder: '', type: 'text' },
-                      { key: 'model', placeholder: '', type: 'text' },
-                      { key: 'serialNumber', placeholder: '', type: 'text' },
-                      { key: 'custId', placeholder: '', type: 'text' },
-                      { key: 'itemType', placeholder: '', type: 'text' },
-                      { key: 'customer', placeholder: '', type: 'text' },
-                      { key: 'assignedTo', placeholder: '', type: 'text' },
-                      { key: 'poNumber', placeholder: '', type: 'text' },
-                      { key: 'created', placeholder: '', type: 'date' },
-                      { key: 'needByDate', placeholder: '', type: 'date' },
-                      { key: 'deliverByDate', placeholder: '', type: 'date' },
-                      { key: 'division', placeholder: '', type: 'text' },
-                      { key: 'location', placeholder: '', type: 'text' },
-                    ].map((col) => (
-                      <TableHead key={col.key} className="py-1 px-1.5">
+                    {visibleItemColumns.map((col) => (
+                      <TableHead key={col.key} className="py-0.5 px-1.5">
                         <div className="relative">
                           {col.type === 'date' ? (
                             <DateColumnFilter
@@ -5593,7 +5575,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                             <>
                               <Search className="absolute left-1.5 top-1/2 -translate-y-1/2 h-2.5 w-2.5 text-muted-foreground/50" />
                               <Input
-                                placeholder={col.placeholder}
+                                placeholder=""
                                 value={columnFilters[col.key] || ''}
                                 onChange={(e) => setColumnFilters(prev => ({ ...prev, [col.key]: e.target.value }))}
                                 className="h-6 text-[10px] pl-5 pr-5 border-muted bg-muted/30 rounded-md placeholder:text-muted-foreground/40 focus:bg-background focus:border-primary/30 transition-colors"
