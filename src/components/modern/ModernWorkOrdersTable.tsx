@@ -4343,6 +4343,40 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
   const [expandedBatches, setExpandedBatches] = useState<Set<string>>(new Set());
   const [gridVisibleCount, setGridVisibleCount] = useState(12);
   const gridLoadMoreRef = useRef<HTMLDivElement>(null);
+  const [columnPrefs, setColumnPrefs] = useState<ColumnPrefs>(() => loadColumnPrefs());
+  useEffect(() => { saveColumnPrefs(columnPrefs); }, [columnPrefs]);
+  const visibleItemColumns = columnPrefs.order
+    .map(k => ITEM_COLUMN_DEFS.find(c => c.key === k))
+    .filter((c): c is typeof ITEM_COLUMN_DEFS[number] => !!c && !columnPrefs.hidden.includes(c.key))
+    // Append any new defs that aren't yet in stored order
+    .concat(
+      ITEM_COLUMN_DEFS.filter(
+        c => !columnPrefs.order.includes(c.key) && !columnPrefs.hidden.includes(c.key)
+      )
+    );
+  const toggleColumnVisible = (key: string) => {
+    setColumnPrefs(prev => {
+      const def = ITEM_COLUMN_DEFS.find(c => c.key === key);
+      if (def?.alwaysVisible) return prev;
+      const hidden = prev.hidden.includes(key)
+        ? prev.hidden.filter(k => k !== key)
+        : [...prev.hidden, key];
+      return { ...prev, hidden };
+    });
+  };
+  const moveColumn = (key: string, dir: -1 | 1) => {
+    setColumnPrefs(prev => {
+      const order = [...prev.order];
+      // Ensure all defs are in order
+      ITEM_COLUMN_DEFS.forEach(c => { if (!order.includes(c.key)) order.push(c.key); });
+      const idx = order.indexOf(key);
+      const ni = idx + dir;
+      if (idx < 0 || ni < 0 || ni >= order.length) return prev;
+      [order[idx], order[ni]] = [order[ni], order[idx]];
+      return { ...prev, order };
+    });
+  };
+  const resetColumns = () => setColumnPrefs({ order: ITEM_COLUMN_DEFS.map(c => c.key), hidden: ['labCode', 'template'] });
   const navigate = useNavigate();
 
 
