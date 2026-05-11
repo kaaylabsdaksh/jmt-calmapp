@@ -5,6 +5,7 @@ import ModernWorkOrderManagement from "./pages/ModernWorkOrderManagement";
 import AddNewWorkOrder from "./pages/AddNewWorkOrder";
 import EditBatchWorkOrder from "./pages/EditBatchWorkOrder";
 import FormVariationsDemo from "./pages/FormVariationsDemo";
+import ESLItemDemo from "./pages/ESLItemDemo";
 import EditOrder from "./pages/EditOrder";
 import UnusedItemsManagement from "./pages/UnusedItemsManagement";
 import WorkOrderBatchDetailsDemo from "./pages/WorkOrderBatchDetailsDemo";
@@ -33,6 +34,7 @@ const App = () => {
           <Route path="/edit-batch-work-order" element={<EditBatchWorkOrder />} />
           <Route path="/unused-items" element={<UnusedItemsManagement />} />
           <Route path="/form-variations" element={<FormVariationsDemo />} />
+          <Route path="/esl-items" element={<ESLItemDemo />} />
           <Route path="/edit-order" element={<EditOrder />} />
           <Route path="/work-orders-v2" element={<WorkOrderSearchV2 />} />
           <Route path="/work-order/:id" element={<WorkOrderDetail />} />
