@@ -359,6 +359,11 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
   }) || dateFrom || dateTo || dateType;
 
   const selectTriggerClass = "bg-white border border-gray-200 rounded-md h-6 min-h-0 text-[11px] px-1.5 py-0 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all [&>svg]:h-3 [&>svg]:w-3";
+  const activeSelectClass = "border-slate-700 bg-slate-100 text-slate-900 font-semibold";
+  const triggerCls = (value: any) => {
+    const isActive = Array.isArray(value) ? value.length > 0 : value && value !== 'all' && value !== '';
+    return cn(selectTriggerClass, isActive && activeSelectClass);
+  };
   const selectContentClass = "bg-white border border-gray-200 shadow-xl rounded-md z-[9999] text-[11px]";
 
   return (
@@ -498,7 +503,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                 />
 
                 <Select value={searchValues.location || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, location: value === 'all' ? '' : value }))}>
-                  <SelectTrigger className={selectTriggerClass}>
+                  <SelectTrigger className={triggerCls(searchValues.location)}>
                     <SelectValue placeholder="All Location" />
                   </SelectTrigger>
                   <SelectContent className={selectContentClass}>
@@ -511,7 +516,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                 </Select>
 
                 <Select value={searchValues.division || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, division: value === 'all' ? '' : value }))}>
-                  <SelectTrigger className={selectTriggerClass}>
+                  <SelectTrigger className={triggerCls(searchValues.division)}>
                     <SelectValue placeholder="All Division" />
                   </SelectTrigger>
                   <SelectContent className={selectContentClass}>
@@ -529,7 +534,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                 <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1">Status</h3>
 
                 <Select value={searchValues.status || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, status: value === 'all' ? '' : value }))}>
-                  <SelectTrigger className={selectTriggerClass}>
+                  <SelectTrigger className={triggerCls(searchValues.status)}>
                     <SelectValue placeholder="All WO Status" />
                   </SelectTrigger>
                   <SelectContent className={selectContentClass}>
@@ -583,7 +588,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                 </Select>
 
                 <Select value={searchValues.workOrderItemStatus || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, workOrderItemStatus: value === 'all' ? '' : value }))}>
-                  <SelectTrigger className={selectTriggerClass}>
+                  <SelectTrigger className={triggerCls(searchValues.workOrderItemStatus)}>
                     <SelectValue placeholder="All WO Item Status" />
                   </SelectTrigger>
                   <SelectContent className={selectContentClass}>
@@ -595,7 +600,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                 </Select>
 
                 <Select value={searchValues.woType || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, woType: value === 'all' ? '' : value }))}>
-                  <SelectTrigger className={selectTriggerClass}>
+                  <SelectTrigger className={triggerCls(searchValues.woType)}>
                     <SelectValue placeholder="All WO Type" />
                   </SelectTrigger>
                   <SelectContent className={selectContentClass}>
@@ -606,7 +611,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                 </Select>
 
                 <Select value={searchValues.workOrderItemType || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, workOrderItemType: value === 'all' ? '' : value }))}>
-                  <SelectTrigger className={selectTriggerClass}>
+                  <SelectTrigger className={triggerCls(searchValues.workOrderItemType)}>
                     <SelectValue placeholder="All WO Item Type" />
                   </SelectTrigger>
                   <SelectContent className={selectContentClass}>
@@ -624,7 +629,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                 <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1">Assignment</h3>
 
                 <Select value={searchValues.assignee || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, assignee: value === 'all' ? '' : value }))}>
-                  <SelectTrigger className={selectTriggerClass}>
+                  <SelectTrigger className={triggerCls(searchValues.assignee)}>
                     <SelectValue placeholder="All Assignee" />
                   </SelectTrigger>
                   <SelectContent className={selectContentClass}>
@@ -638,7 +643,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                 </Select>
 
                 <Select value={searchValues.salesperson || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, salesperson: value === 'all' ? '' : value }))}>
-                  <SelectTrigger className={selectTriggerClass}>
+                  <SelectTrigger className={triggerCls(searchValues.salesperson)}>
                     <SelectValue placeholder="All Salesperson" />
                   </SelectTrigger>
                   <SelectContent className={selectContentClass}>
@@ -650,7 +655,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                 </Select>
 
                 <Select value={searchValues.actionCode || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, actionCode: value === 'all' ? '' : value }))}>
-                  <SelectTrigger className={selectTriggerClass}>
+                  <SelectTrigger className={triggerCls(searchValues.actionCode)}>
                     <SelectValue placeholder="All Action Code" />
                   </SelectTrigger>
                   <SelectContent className={selectContentClass}>
@@ -663,7 +668,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                 </Select>
 
                 <Select value={searchValues.labCode || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, labCode: value === 'all' ? '' : value }))}>
-                  <SelectTrigger className={selectTriggerClass}>
+                  <SelectTrigger className={triggerCls(searchValues.labCode)}>
                     <SelectValue placeholder="All Lab Code" />
                   </SelectTrigger>
                   <SelectContent className={selectContentClass}>
@@ -685,7 +690,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                   <PopoverTrigger asChild>
                     <Button
                       variant="outline"
-                      className={cn(selectTriggerClass, "w-full justify-start text-left font-normal")}
+                      className={cn(triggerCls(searchValues.priority), "w-full justify-start text-left font-normal")}
                     >
                       {searchValues.priority.length > 0
                         ? `Priority (${searchValues.priority.length})`
@@ -720,7 +725,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                 </Popover>
 
                 <Select value={searchValues.rotationManagement || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, rotationManagement: value === 'all' ? '' : value }))}>
-                  <SelectTrigger className={selectTriggerClass}>
+                  <SelectTrigger className={triggerCls(searchValues.rotationManagement)}>
                     <SelectValue placeholder="All Rotation Management" />
                   </SelectTrigger>
                   <SelectContent className={selectContentClass}>
@@ -731,7 +736,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                 </Select>
 
                 <Select value={searchValues.invoiceStatus || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, invoiceStatus: value === 'all' ? '' : value }))}>
-                  <SelectTrigger className={selectTriggerClass}>
+                  <SelectTrigger className={triggerCls(searchValues.invoiceStatus)}>
                     <SelectValue placeholder="All Invoice Status" />
                   </SelectTrigger>
                   <SelectContent className={selectContentClass}>
@@ -744,7 +749,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                 </Select>
 
                 <Select value={searchValues.departureType || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, departureType: value === 'all' ? '' : value }))}>
-                  <SelectTrigger className={selectTriggerClass}>
+                  <SelectTrigger className={triggerCls(searchValues.departureType)}>
                     <SelectValue placeholder="All Departure Type" />
                   </SelectTrigger>
                   <SelectContent className={selectContentClass}>
