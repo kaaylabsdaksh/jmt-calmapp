@@ -5376,6 +5376,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                     : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
                 )}
               >
+                <Grid3X3 className="h-3.5 w-3.5" />
               </Button>
             </div>
 
