@@ -4391,6 +4391,20 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
       return { ...prev, order };
     });
   };
+  const reorderColumn = (fromKey: string, toKey: string) => {
+    if (fromKey === toKey) return;
+    setColumnPrefs(prev => {
+      const order = [...prev.order];
+      ITEM_COLUMN_DEFS.forEach(c => { if (!order.includes(c.key)) order.push(c.key); });
+      const fromIdx = order.indexOf(fromKey);
+      const toIdx = order.indexOf(toKey);
+      if (fromIdx < 0 || toIdx < 0) return prev;
+      const [moved] = order.splice(fromIdx, 1);
+      order.splice(toIdx, 0, moved);
+      return { ...prev, order };
+    });
+  };
+  const [draggedColumnKey, setDraggedColumnKey] = useState<string | null>(null);
   const resetColumns = () => setColumnPrefs({ order: ITEM_COLUMN_DEFS.map(c => c.key), hidden: ['labCode', 'template'] });
   const navigate = useNavigate();
 
@@ -5406,8 +5420,19 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                         const def = ITEM_COLUMN_DEFS.find(c => c.key === key)!;
                         const visible = !columnPrefs.hidden.includes(key);
                         return (
-                          <div key={key} className="flex items-center gap-2 px-2 py-1.5 hover:bg-muted/40">
-                            <GripVertical className="h-3.5 w-3.5 text-muted-foreground/60" />
+                          <div
+                            key={key}
+                            draggable
+                            onDragStart={(e) => { setDraggedColumnKey(key); e.dataTransfer.effectAllowed = 'move'; }}
+                            onDragOver={(e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; }}
+                            onDrop={(e) => { e.preventDefault(); if (draggedColumnKey) reorderColumn(draggedColumnKey, key); setDraggedColumnKey(null); }}
+                            onDragEnd={() => setDraggedColumnKey(null)}
+                            className={cn(
+                              "flex items-center gap-2 px-2 py-1.5 hover:bg-muted/40",
+                              draggedColumnKey === key && "opacity-50"
+                            )}
+                          >
+                            <GripVertical className="h-3.5 w-3.5 text-muted-foreground/60 cursor-grab active:cursor-grabbing" />
                             <Checkbox
                               checked={visible}
                               disabled={def.alwaysVisible}
