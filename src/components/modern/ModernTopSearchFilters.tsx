@@ -523,10 +523,8 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                   <SelectItem value="od">OD - Odessa</SelectItem>
                 </SelectContent>
               </Select>
-            </div>
 
-            {/* Row: WO Status, WO Type, Assignee, Action Code, Lab Code */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-1">
+              {/* WO Status, WO Type, Assignee, Action Code, Lab Code */}
               <Select value={searchValues.status || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, status: value === 'all' ? '' : value }))}>
                 <SelectTrigger className={selectTriggerClass}>
                   <SelectValue placeholder="All WO Status" />
