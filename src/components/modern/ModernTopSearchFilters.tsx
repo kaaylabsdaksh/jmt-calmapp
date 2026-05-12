@@ -425,6 +425,8 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
           <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 gap-1">
             {searchTypeOptions.map((option) => {
               const fieldValue = fieldValues[option.value] || '';
+              const activeChip = searchChips.find(c => c.type === option.value);
+              const isActive = !!activeChip;
               const commitField = () => {
                 const v = fieldValue.trim();
                 if (!v) return;
@@ -443,18 +445,26 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                 fireSearch(updatedChips);
               };
               return (
-                <Input
-                  key={option.value}
-                  value={fieldValue}
-                  onChange={(e) => setFieldValues(prev => ({ ...prev, [option.value]: e.target.value }))}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') { e.preventDefault(); commitField(); }
-                  }}
-                  onBlur={commitField}
-                  placeholder={option.label}
-                  title={option.label}
-                  className="h-6 text-[11px] px-1.5 placeholder:text-[10px] placeholder:text-muted-foreground/70"
-                />
+                <div key={option.value} className="relative">
+                  <Input
+                    value={fieldValue}
+                    onChange={(e) => setFieldValues(prev => ({ ...prev, [option.value]: e.target.value }))}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') { e.preventDefault(); commitField(); }
+                    }}
+                    onBlur={commitField}
+                    placeholder={isActive ? activeChip!.value : option.label}
+                    title={isActive ? `${option.label}: ${activeChip!.value}` : option.label}
+                    className={`h-6 text-[11px] px-1.5 placeholder:text-[10px] ${
+                      isActive
+                        ? 'border-primary bg-primary/10 placeholder:text-foreground placeholder:font-medium pr-5'
+                        : 'placeholder:text-muted-foreground/70'
+                    }`}
+                  />
+                  {isActive && (
+                    <Check className="absolute right-1 top-1/2 -translate-y-1/2 h-3 w-3 text-primary pointer-events-none" />
+                  )}
+                </div>
               );
             })}
           </div>
