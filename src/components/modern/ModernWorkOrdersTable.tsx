@@ -5996,9 +5996,17 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                           {item.itemType}
                         </button>
                       </div>
-                      <div className="col-span-2">
+                      <div>
+                        <span className="text-gray-500">Lab Code:</span>
+                        <div className="font-medium text-xs">{item.labCode}</div>
+                      </div>
+                      <div>
                         <span className="text-gray-500">Assigned To:</span>
                         <div className="font-medium text-xs">{item.assignedTo}</div>
+                      </div>
+                      <div className="col-span-2">
+                        <span className="text-gray-500">Template:</span>
+                        <div className="font-medium text-xs truncate" title={item.template}>{item.template}</div>
                       </div>
                     </div>
                   </div>
