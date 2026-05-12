@@ -466,9 +466,12 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
 
         {viewMode === 'default' ? (
           <>
-            {/* Date Row: Date Range (with type) + WO Item Status + Division + Location */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-1">
-              <div className="col-span-2 lg:col-span-2">
+            {/* Grouped Filter Sections — 4 semantic columns */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-3 pt-1">
+
+              {/* Group 1: Timeline */}
+              <div className="space-y-1.5">
+                <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1">Timeline & Location</h3>
                 <DateRangePicker
                   dateFrom={dateFrom}
                   dateTo={dateTo}
