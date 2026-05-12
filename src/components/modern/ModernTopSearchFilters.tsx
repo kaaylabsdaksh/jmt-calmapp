@@ -468,23 +468,25 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
           <>
             {/* Date Row: Date Range (with type) + WO Item Status + Division + Location */}
             <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-1">
-              <DateRangePicker
-                dateFrom={dateFrom}
-                dateTo={dateTo}
-                onDateFromChange={setDateFrom}
-                onDateToChange={setDateTo}
-                dateType={dateType}
-                onDateTypeChange={setDateType}
-                dateTypeOptions={[
-                  { value: "created", label: "Created" },
-                  { value: "arrival", label: "Arrival" },
-                  { value: "need-by", label: "Need By" },
-                  { value: "status-date", label: "Status Date" },
-                  { value: "last-comment", label: "Last Comment" },
-                  { value: "departure-date", label: "Departure Date" },
-                  { value: "samsara-doc-submit", label: "Samsara Doc Submit" },
-                ]}
-              />
+              <div className="col-span-2 lg:col-span-2">
+                <DateRangePicker
+                  dateFrom={dateFrom}
+                  dateTo={dateTo}
+                  onDateFromChange={setDateFrom}
+                  onDateToChange={setDateTo}
+                  dateType={dateType}
+                  onDateTypeChange={setDateType}
+                  dateTypeOptions={[
+                    { value: "created", label: "Created" },
+                    { value: "arrival", label: "Arrival" },
+                    { value: "need-by", label: "Need By" },
+                    { value: "status-date", label: "Status Date" },
+                    { value: "last-comment", label: "Last Comment" },
+                    { value: "departure-date", label: "Departure Date" },
+                    { value: "samsara-doc-submit", label: "Samsara Doc Submit" },
+                  ]}
+                />
+              </div>
 
               <Select value={searchValues.workOrderItemStatus || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, workOrderItemStatus: value === 'all' ? '' : value }))}>
                 <SelectTrigger className={selectTriggerClass}>
