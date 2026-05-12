@@ -3906,9 +3906,23 @@ const getItemStatusBadge = (status: WorkOrderItem["itemStatus"]) => {
   };
   
   return (
-    <Badge className={cn("text-xs font-medium border", variants[status] || "bg-gray-100 text-gray-800 border-gray-200")}>
-      {status}
-    </Badge>
+    <TooltipProvider delayDuration={150}>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Badge
+            className={cn(
+              "max-w-[110px] truncate whitespace-nowrap rounded-full px-2 py-0 text-[11px] font-medium leading-[18px] border",
+              variants[status] || "bg-gray-100 text-gray-800 border-gray-200"
+            )}
+          >
+            {status}
+          </Badge>
+        </TooltipTrigger>
+        <TooltipContent side="top" className="text-xs py-1 px-2">
+          {status}
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 };
 
