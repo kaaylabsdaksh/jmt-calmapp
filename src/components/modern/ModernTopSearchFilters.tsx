@@ -361,7 +361,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
     return value && value !== 'all';
   }) || dateFrom || dateTo || dateType;
 
-  const selectTriggerClass = "bg-white border border-gray-200 rounded-md h-7 text-[11px] px-2 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all";
+  const selectTriggerClass = "bg-white border border-gray-200 rounded-md h-6 min-h-0 text-[11px] px-1.5 py-0 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all [&>svg]:h-3 [&>svg]:w-3";
   const selectContentClass = "bg-white border border-gray-200 shadow-xl rounded-md z-[9999] text-[11px]";
 
   return (
