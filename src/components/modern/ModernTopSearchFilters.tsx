@@ -425,7 +425,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
           )}
 
           {/* Individual field inputs - one per criterion */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-1.5">
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 gap-1">
             {searchTypeOptions.map((option) => {
               const fieldValue = fieldValues[option.value] || '';
               const commitField = () => {
@@ -446,21 +446,18 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                 fireSearch(updatedChips);
               };
               return (
-                <div key={option.value} className="flex flex-col gap-0.5">
-                  <label className="text-[10px] font-medium text-muted-foreground truncate" title={option.label}>
-                    {option.label}
-                  </label>
-                  <Input
-                    value={fieldValue}
-                    onChange={(e) => setFieldValues(prev => ({ ...prev, [option.value]: e.target.value }))}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') { e.preventDefault(); commitField(); }
-                    }}
-                    onBlur={commitField}
-                    placeholder="Enter value..."
-                    className="h-7 text-xs"
-                  />
-                </div>
+                <Input
+                  key={option.value}
+                  value={fieldValue}
+                  onChange={(e) => setFieldValues(prev => ({ ...prev, [option.value]: e.target.value }))}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') { e.preventDefault(); commitField(); }
+                  }}
+                  onBlur={commitField}
+                  placeholder={option.label}
+                  title={option.label}
+                  className="h-6 text-[11px] px-1.5 placeholder:text-[10px] placeholder:text-muted-foreground/70"
+                />
               );
             })}
           </div>
