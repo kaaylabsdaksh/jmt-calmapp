@@ -5420,8 +5420,19 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                         const def = ITEM_COLUMN_DEFS.find(c => c.key === key)!;
                         const visible = !columnPrefs.hidden.includes(key);
                         return (
-                          <div key={key} className="flex items-center gap-2 px-2 py-1.5 hover:bg-muted/40">
-                            <GripVertical className="h-3.5 w-3.5 text-muted-foreground/60" />
+                          <div
+                            key={key}
+                            draggable
+                            onDragStart={(e) => { setDraggedColumnKey(key); e.dataTransfer.effectAllowed = 'move'; }}
+                            onDragOver={(e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; }}
+                            onDrop={(e) => { e.preventDefault(); if (draggedColumnKey) reorderColumn(draggedColumnKey, key); setDraggedColumnKey(null); }}
+                            onDragEnd={() => setDraggedColumnKey(null)}
+                            className={cn(
+                              "flex items-center gap-2 px-2 py-1.5 hover:bg-muted/40",
+                              draggedColumnKey === key && "opacity-50"
+                            )}
+                          >
+                            <GripVertical className="h-3.5 w-3.5 text-muted-foreground/60 cursor-grab active:cursor-grabbing" />
                             <Checkbox
                               checked={visible}
                               disabled={def.alwaysVisible}
