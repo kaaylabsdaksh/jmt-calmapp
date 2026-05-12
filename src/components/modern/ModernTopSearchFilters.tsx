@@ -423,80 +423,45 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
             </div>
           )}
 
-          {/* Search Bar */}
-          <div className="flex gap-2">
-            <div className="relative flex-1">
-              <div className="flex items-center bg-background border rounded-lg h-8 focus-within:ring-2 focus-within:ring-primary/20 focus-within:border-primary transition-all">
-                <Select value={selectedSearchType} onValueChange={setSelectedSearchType}>
-                  <SelectTrigger className="w-[130px] sm:w-[160px] border-0 border-r rounded-l-lg rounded-r-none h-full text-xs bg-transparent hover:bg-muted focus:ring-0 focus:ring-offset-0">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className={selectContentClass}>
-                    {searchTypeOptions.map((option) => (
-                      <SelectItem key={option.value} value={option.value}>
-                        {option.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <div className="relative flex-1 flex items-center">
-                  <Search className="absolute left-2.5 h-3.5 w-3.5 text-muted-foreground" />
+          {/* Individual field inputs - one per criterion */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-1.5">
+            {searchTypeOptions.map((option) => {
+              const fieldValue = fieldValues[option.value] || '';
+              const commitField = () => {
+                const v = fieldValue.trim();
+                if (!v) return;
+                const newChip: SearchChip = {
+                  id: `${option.value}-${Date.now()}`,
+                  type: option.value,
+                  value: v,
+                  label: option.label,
+                };
+                const updatedChips = [
+                  ...searchChips.filter(c => c.type !== option.value),
+                  newChip,
+                ];
+                setSearchChips(updatedChips);
+                setFieldValues(prev => ({ ...prev, [option.value]: '' }));
+                fireSearch(updatedChips);
+              };
+              return (
+                <div key={option.value} className="flex flex-col gap-0.5">
+                  <label className="text-[10px] font-medium text-muted-foreground truncate" title={option.label}>
+                    {option.label}
+                  </label>
                   <Input
-                    placeholder="Enter value and press Enter or click Add..."
-                    value={searchInput}
-                    onChange={(e) => handleInputChange(e.target.value)}
-                    onKeyDown={handleKeyDown}
-                    onFocus={handleInputFocus}
-                    className="pl-8 border-0 h-full text-xs placeholder:text-muted-foreground focus-visible:ring-0 focus-visible:ring-offset-0 bg-transparent"
+                    value={fieldValue}
+                    onChange={(e) => setFieldValues(prev => ({ ...prev, [option.value]: e.target.value }))}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') { e.preventDefault(); commitField(); }
+                    }}
+                    onBlur={commitField}
+                    placeholder="Enter value..."
+                    className="h-7 text-xs"
                   />
                 </div>
-              </div>
-
-              {/* Recent Searches Dropdown */}
-              {showRecentSearches && recentSearches.length > 0 && !searchInput.trim() && (
-                <div className="absolute left-0 right-0 top-[calc(100%+4px)] z-50 bg-popover border rounded-lg shadow-lg overflow-hidden animate-in fade-in-50 slide-in-from-top-2">
-                  <div className="px-3 py-2 border-b bg-muted/30 flex items-center justify-between">
-                    <span className="text-xs font-medium text-muted-foreground flex items-center gap-1.5">
-                      <Clock className="h-3 w-3" />
-                      Recent Searches
-                    </span>
-                    <button 
-                      onClick={() => { setRecentSearches([]); saveRecentSearches([]); }}
-                      className="text-xs text-muted-foreground hover:text-foreground transition-colors"
-                    >
-                      Clear all
-                    </button>
-                  </div>
-                  {recentSearches.map((recent) => (
-                    <button
-                      key={recent.id}
-                      onClick={() => applyRecentSearch(recent)}
-                      className="w-full flex items-center gap-3 px-3 py-2.5 text-left hover:bg-accent transition-colors border-b border-border/50 last:border-0 group"
-                    >
-                      <Clock className="h-3.5 w-3.5 text-muted-foreground flex-shrink-0" />
-                      <div className="flex-1 min-w-0">
-                        <div className="text-sm text-foreground truncate">{recent.label}</div>
-                        <div className="text-xs text-muted-foreground">{formatTimeAgo(recent.timestamp)}</div>
-                      </div>
-                      <button
-                        onClick={(e) => removeRecentSearch(recent.id, e)}
-                        className="opacity-0 group-hover:opacity-100 p-1 hover:bg-muted rounded transition-all"
-                      >
-                        <X className="h-3 w-3 text-muted-foreground" />
-                      </button>
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-            <Button 
-              onClick={() => addSearchChip()}
-              variant="outline"
-              className="h-8 px-3 text-xs"
-            >
-              <Plus className="h-3.5 w-3.5 mr-1" />
-              Add
-            </Button>
+              );
+            })}
           </div>
         </div>
         )}
