@@ -692,10 +692,8 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                   <SelectItem value="repair">Repair</SelectItem>
                 </SelectContent>
               </Select>
-            </div>
 
-            {/* Row: Priority */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-1">
+              {/* Priority */}
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
