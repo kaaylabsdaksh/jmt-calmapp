@@ -5313,20 +5313,20 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
         {/* Desktop/Tablet Layout - Horizontal */}
         <div className="hidden lg:flex items-center justify-between">
           <div>
-            <h2 className="text-xl font-bold text-gray-900">Work Orders</h2>
+            <h2 className="text-base font-bold text-gray-900">Work Orders</h2>
           </div>
           
           {/* View Toggle Buttons */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             {/* Item/Batch Toggle - hidden in CSA mode */}
             {searchViewMode !== 'csa' && (
-            <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-lg">
+            <div className="flex items-center gap-0.5 bg-gray-100 p-0.5 rounded-md">
               <Button
                 variant={currentView === 'item' ? 'default' : 'ghost'}
                 size="sm"
                 onClick={() => setCurrentView('item')}
                 className={cn(
-                  "h-8 px-3 rounded-md transition-all",
+                  "h-6 px-2 text-xs rounded transition-all",
                   currentView === 'item' 
                     ? "bg-white shadow-sm text-gray-900" 
                     : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
@@ -5339,7 +5339,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                 size="sm"
                 onClick={() => setCurrentView('batch')}
                 className={cn(
-                  "h-8 px-3 rounded-md transition-all",
+                  "h-6 px-2 text-xs rounded transition-all",
                   currentView === 'batch' 
                     ? "bg-white shadow-sm text-gray-900" 
                     : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
@@ -5351,26 +5351,26 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
             )}
 
             {/* List/Grid Toggle */}
-            <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-lg">
+            <div className="flex items-center gap-0.5 bg-gray-100 p-0.5 rounded-md">
               <Button
                 variant={viewMode === 'list' ? 'default' : 'ghost'}
                 size="sm"
                 onClick={() => onViewModeChange('list')}
                 className={cn(
-                  "h-8 px-3 rounded-md transition-all",
+                  "h-6 w-6 p-0 rounded transition-all",
                   viewMode === 'list' 
                     ? "bg-white shadow-sm text-gray-900" 
                     : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
                 )}
               >
-                <List className="h-4 w-4" />
+                <List className="h-3.5 w-3.5" />
               </Button>
               <Button
                 variant={viewMode === 'grid' ? 'default' : 'ghost'}
                 size="sm"
                 onClick={() => onViewModeChange('grid')}
                 className={cn(
-                  "h-8 px-3 rounded-md transition-all",
+                  "h-6 w-6 p-0 rounded transition-all",
                   viewMode === 'grid' 
                     ? "bg-white shadow-sm text-gray-900" 
                     : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
@@ -5383,8 +5383,8 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
             {currentView === 'item' && (
               <Popover>
                 <PopoverTrigger asChild>
-                  <Button variant="outline" size="sm" className="h-8 w-8 p-0" title="Column settings" aria-label="Column settings">
-                    <Settings2 className="h-4 w-4" />
+                  <Button variant="outline" size="sm" className="h-6 w-6 p-0" title="Column settings" aria-label="Column settings">
+                    <Settings2 className="h-3.5 w-3.5" />
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent align="end" className="w-72 p-0">
