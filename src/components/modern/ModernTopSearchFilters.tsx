@@ -359,6 +359,11 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
   }) || dateFrom || dateTo || dateType;
 
   const selectTriggerClass = "bg-white border border-gray-200 rounded-md h-6 min-h-0 text-[11px] px-1.5 py-0 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all [&>svg]:h-3 [&>svg]:w-3";
+  const activeSelectClass = "border-slate-700 bg-slate-100 text-slate-900 font-semibold";
+  const triggerCls = (value: any) => {
+    const isActive = Array.isArray(value) ? value.length > 0 : value && value !== 'all' && value !== '';
+    return cn(selectTriggerClass, isActive && activeSelectClass);
+  };
   const selectContentClass = "bg-white border border-gray-200 shadow-xl rounded-md z-[9999] text-[11px]";
 
   return (
