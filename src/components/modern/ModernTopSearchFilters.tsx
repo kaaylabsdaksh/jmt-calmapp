@@ -467,7 +467,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
         {viewMode === 'default' ? (
           <>
             {/* Date Row: Date Range (with type) + WO Item Status + Division + Location */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-1.5">
+            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-1">
               <DateRangePicker
                 dateFrom={dateFrom}
                 dateTo={dateTo}
@@ -526,7 +526,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
             </div>
 
             {/* Row: WO Status, WO Type, Assignee, Action Code, Lab Code */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-1.5">
+            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-1">
               <Select value={searchValues.status || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, status: value === 'all' ? '' : value }))}>
                 <SelectTrigger className={selectTriggerClass}>
                   <SelectValue placeholder="All WO Status" />
@@ -635,7 +635,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
             </div>
 
             {/* Row: Rotation Management, Invoice Status, Departure Type, Salesperson, WO Item Type */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-1.5">
+            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-1">
               <Select value={searchValues.rotationManagement || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, rotationManagement: value === 'all' ? '' : value }))}>
                 <SelectTrigger className={selectTriggerClass}>
                   <SelectValue placeholder="All Rotation Management" />
@@ -699,7 +699,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
             </div>
 
             {/* Row: Priority */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-1.5">
+            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-1">
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
