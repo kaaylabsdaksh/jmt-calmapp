@@ -5440,22 +5440,6 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                               className="h-3.5 w-3.5"
                             />
                             <span className={cn("flex-1 text-xs", !visible && "text-muted-foreground line-through")}>{def.label}</span>
-                            <button
-                              onClick={() => moveColumn(key, -1)}
-                              disabled={idx === 0}
-                              className="p-0.5 rounded hover:bg-muted disabled:opacity-30"
-                              title="Move up"
-                            >
-                              <ArrowUp className="h-3 w-3" />
-                            </button>
-                            <button
-                              onClick={() => moveColumn(key, 1)}
-                              disabled={idx === orderedKeys.length - 1}
-                              className="p-0.5 rounded hover:bg-muted disabled:opacity-30"
-                              title="Move down"
-                            >
-                              <ArrowDown className="h-3 w-3" />
-                            </button>
                           </div>
                         );
                       });
