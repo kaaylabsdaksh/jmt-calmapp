@@ -457,12 +457,12 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                     title={isActive ? `${option.label}: ${activeChip!.value}` : option.label}
                     className={`h-6 text-[11px] px-1.5 placeholder:text-[10px] ${
                       isActive
-                        ? 'border-primary bg-primary/10 placeholder:text-foreground placeholder:font-medium pr-5'
+                        ? 'border-slate-700 bg-slate-100 placeholder:text-slate-900 placeholder:font-medium pr-5'
                         : 'placeholder:text-muted-foreground/70'
                     }`}
                   />
                   {isActive && (
-                    <Check className="absolute right-1 top-1/2 -translate-y-1/2 h-3 w-3 text-primary pointer-events-none" />
+                    <Check className="absolute right-1 top-1/2 -translate-y-1/2 h-3 w-3 text-slate-700 pointer-events-none" />
                   )}
                 </div>
               );
