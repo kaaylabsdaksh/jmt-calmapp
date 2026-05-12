@@ -396,6 +396,11 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
         {/* Search Criteria Section - Default view only */}
         {viewMode === 'default' && (
         <div ref={searchContainerRef}>
+          <div className="flex items-center justify-between mb-1.5">
+            <span className="text-xs font-medium text-muted-foreground">Search Criteria</span>
+            <span className="text-[10px] text-muted-foreground/60">Add search criteria by selecting a field and value</span>
+          </div>
+
           {/* Active Search Chips */}
           {searchChips.length > 0 && (
             <div className="mb-2 flex flex-wrap gap-1.5">
@@ -466,7 +471,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
 
               {/* Group 1: Timeline */}
               <div className="space-y-1.5">
-                
+                <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1">Timeline & Location</h3>
                 <DateRangePicker
                   dateFrom={dateFrom}
                   dateTo={dateTo}
@@ -747,7 +752,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
 
             {/* Additional Filters - Checkboxes */}
             <div className="pt-2.5 border-t border-gray-100">
-              
+              <h3 className="text-xs font-semibold text-gray-700 mb-2">Additional Filters</h3>
               <div className="flex flex-wrap gap-x-3 gap-y-1.5">
                 {[
                   { id: 'newEquip', label: 'New Equip', key: 'newEquip' as const },
