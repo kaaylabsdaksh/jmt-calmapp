@@ -121,6 +121,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
   const [searchChips, setSearchChips] = useState<SearchChip[]>([]);
   const [selectedSearchType, setSelectedSearchType] = useState('workOrderNumber');
   const [searchInput, setSearchInput] = useState('');
+  const [fieldValues, setFieldValues] = useState<Record<string, string>>({});
   const [showRecentSearches, setShowRecentSearches] = useState(false);
   const [recentSearches, setRecentSearches] = useState<RecentSearch[]>(loadRecentSearches);
   
