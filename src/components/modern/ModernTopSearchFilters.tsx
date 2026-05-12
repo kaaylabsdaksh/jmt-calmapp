@@ -462,7 +462,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                     }`}
                   />
                   {isActive && (
-                    <Check className="absolute right-1 top-1/2 -translate-y-1/2 h-3 w-3 text-primary pointer-events-none" />
+                    <Check className="absolute right-1 top-1/2 -translate-y-1/2 h-3 w-3 text-slate-700 pointer-events-none" />
                   )}
                 </div>
               );
