@@ -307,7 +307,15 @@ const MinimalWorkOrderSearch = ({ onSearch }: MinimalWorkOrderSearchProps) => {
               </SelectTrigger>
               <SelectContent className="bg-popover border shadow-lg z-50">
                 {searchTypeOptions.map((option) => (
-                  <SelectItem key={option.value} value={option.value}>
+                  <SelectItem
+                    key={option.value}
+                    value={option.value}
+                    className={
+                      selectedSearchType === option.value
+                        ? 'bg-slate-900 text-white font-semibold focus:bg-slate-900 focus:text-white data-[highlighted]:bg-slate-800 data-[highlighted]:text-white'
+                        : ''
+                    }
+                  >
                     {option.label}
                   </SelectItem>
                 ))}
