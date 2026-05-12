@@ -4391,6 +4391,20 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
       return { ...prev, order };
     });
   };
+  const reorderColumn = (fromKey: string, toKey: string) => {
+    if (fromKey === toKey) return;
+    setColumnPrefs(prev => {
+      const order = [...prev.order];
+      ITEM_COLUMN_DEFS.forEach(c => { if (!order.includes(c.key)) order.push(c.key); });
+      const fromIdx = order.indexOf(fromKey);
+      const toIdx = order.indexOf(toKey);
+      if (fromIdx < 0 || toIdx < 0) return prev;
+      const [moved] = order.splice(fromIdx, 1);
+      order.splice(toIdx, 0, moved);
+      return { ...prev, order };
+    });
+  };
+  const [draggedColumnKey, setDraggedColumnKey] = useState<string | null>(null);
   const resetColumns = () => setColumnPrefs({ order: ITEM_COLUMN_DEFS.map(c => c.key), hidden: ['labCode', 'template'] });
   const navigate = useNavigate();
 
