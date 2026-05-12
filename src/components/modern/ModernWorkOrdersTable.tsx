@@ -5368,9 +5368,8 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
             {currentView === 'item' && (
               <Popover>
                 <PopoverTrigger asChild>
-                  <Button variant="outline" size="sm" className="h-8 px-3 gap-1.5">
+                  <Button variant="outline" size="sm" className="h-8 w-8 p-0" title="Column settings" aria-label="Column settings">
                     <Settings2 className="h-4 w-4" />
-                    <span className="text-xs">Columns</span>
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent align="end" className="w-72 p-0">
