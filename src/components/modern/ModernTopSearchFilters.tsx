@@ -20,20 +20,17 @@ interface SearchChip {
 }
 
 const searchTypeOptions = [
-  { value: 'workOrderNumber', label: 'Work Order Number' },
-  { value: 'workOrderItemNumber', label: 'Work Order Item Number' },
+  { value: 'workOrderNumber', label: 'WO #' },
   { value: 'accountNumber', label: 'Account Number' },
   { value: 'customerName', label: 'Customer Name' },
   { value: 'onsiteProjectNumber', label: 'Onsite Project Number' },
   { value: 'poNumber', label: 'PO Number' },
   { value: 'toFactoryPONumber', label: 'To Factory PO Number' },
-  { value: 'serialNumber', label: 'Serial Number' },
   { value: 'custID', label: 'Cust ID' },
   { value: 'mfgSerial', label: 'MFG Serial' },
   { value: 'modelNumber', label: 'Model Number' },
   { value: 'manufacturer', label: 'Manufacturer' },
   { value: 'productDescription', label: 'Product Description' },
-  { value: 'eslID', label: 'ESL ID' },
   { value: 'rfid', label: 'RFID' },
   { value: 'quoteNumber', label: 'Quote Number' },
   { value: 'vendorRMANumber', label: 'Vendor RMA Number' },
