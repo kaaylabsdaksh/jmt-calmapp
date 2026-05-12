@@ -690,7 +690,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                   <PopoverTrigger asChild>
                     <Button
                       variant="outline"
-                      className={cn(selectTriggerClass, "w-full justify-start text-left font-normal")}
+                      className={cn(triggerCls(searchValues.priority), "w-full justify-start text-left font-normal")}
                     >
                       {searchValues.priority.length > 0
                         ? `Priority (${searchValues.priority.length})`
