@@ -36,6 +36,8 @@ import { Toaster } from "@/components/ui/toaster";
 
 const FormVariationsDemo = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const isEslPage = location.pathname === "/esl-items";
   const { toast } = useToast();
   
   // Layout variant state
