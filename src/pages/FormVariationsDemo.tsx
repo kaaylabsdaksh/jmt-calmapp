@@ -9112,7 +9112,7 @@ const FormVariationsDemo = () => {
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="v3-arrival-date">Arrival Date</Label>
-              <Input id="v3-arrival-date" type="date" value={formData.arrivalDate} onChange={(e) => handleInputChange("arrivalDate", e.target.value)} />
+              <ModernDatePicker id="v3-arrival-date" size="md" value={formData.arrivalDate || undefined} onChange={(date) => handleInputChange("arrivalDate", date ? date.toISOString().split(chr(39)+"T"+chr(39))[0] : "")} />
             </div>
             <div className="space-y-2">
               <Label htmlFor="v3-arrival-type">Arrival Type</Label>
@@ -9336,7 +9336,7 @@ const FormVariationsDemo = () => {
           </div>
           <div className="space-y-2">
             <Label htmlFor="v3-deliver-by">Deliver By Date</Label>
-            <Input id="v3-deliver-by" type="date" value={formData.deliverByDate} onChange={(e) => handleInputChange("deliverByDate", e.target.value)} />
+            <ModernDatePicker id="v3-deliver-by" size="md" value={formData.deliverByDate || undefined} onChange={(date) => handleInputChange("deliverByDate", date ? date.toISOString().split(chr(39)+"T"+chr(39))[0] : "")} />
           </div>
         </CardContent>
       </Card>
