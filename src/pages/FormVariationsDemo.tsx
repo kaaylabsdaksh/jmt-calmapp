@@ -1550,7 +1550,7 @@ const FormVariationsDemo = () => {
           <Accordion type="multiple" value={eslGeneralOpen} onValueChange={setEslGeneralOpen} className="space-y-0">
           {eslGeneralOrder.filter(id => !eslGeneralHidden.includes(id)).map((sectionId) => {
             const items: Record<string, React.ReactNode> = {
-            <AccordionItem value="general-info" className="border-b border-border">
+            'general-info': (<AccordionItem value="general-info" className="border-b border-border">
               <AccordionTrigger className="hover:no-underline py-3 text-sm font-medium">
                 General Information
               </AccordionTrigger>
@@ -1693,9 +1693,9 @@ const FormVariationsDemo = () => {
                 </CardContent>
               </Card>
               </AccordionContent>
-            </AccordionItem>
+            </AccordionItem>),
 
-            <AccordionItem value="arrival-info" className="border-b border-border">
+            'arrival-info': (<AccordionItem value="arrival-info" className="border-b border-border">
               <AccordionTrigger className="hover:no-underline py-3 text-sm font-medium">
                 Arrival Information
               </AccordionTrigger>
@@ -1728,9 +1728,9 @@ const FormVariationsDemo = () => {
                   </div>
                 </div>
               </AccordionContent>
-            </AccordionItem>
+            </AccordionItem>),
 
-            <AccordionItem value="departure-info" className="border-b border-border">
+            'departure-info': (<AccordionItem value="departure-info" className="border-b border-border">
               <AccordionTrigger className="hover:no-underline py-3 text-sm font-medium">
                 Departure Information
               </AccordionTrigger>
@@ -1835,9 +1835,9 @@ const FormVariationsDemo = () => {
                   )}
                 </div>
               </AccordionContent>
-            </AccordionItem>
+            </AccordionItem>),
 
-            <AccordionItem value="delivery-status" className="border-b border-border">
+            'delivery-status': (<AccordionItem value="delivery-status" className="border-b border-border">
               <AccordionTrigger className="hover:no-underline py-3 text-sm font-medium">
                 Delivery Status
               </AccordionTrigger>
@@ -1851,9 +1851,9 @@ const FormVariationsDemo = () => {
                   />
                 </div>
               </AccordionContent>
-            </AccordionItem>
+            </AccordionItem>),
 
-            <AccordionItem value="other-info" className="border-b border-border">
+            'other-info': (<AccordionItem value="other-info" className="border-b border-border">
               <AccordionTrigger className="hover:no-underline py-3 text-sm font-medium">
                 Other Information
               </AccordionTrigger>
@@ -1945,9 +1945,9 @@ const FormVariationsDemo = () => {
                   </div>
                 </div>
               </AccordionContent>
-            </AccordionItem>
+            </AccordionItem>),
 
-            <AccordionItem value="misc-info" className="border-b border-border">
+            'misc-info': (<AccordionItem value="misc-info" className="border-b border-border">
               <AccordionTrigger className="hover:no-underline py-3 text-sm font-medium">
                 Misc. Information
               </AccordionTrigger>
@@ -1963,9 +1963,9 @@ const FormVariationsDemo = () => {
                 </CardContent>
               </Card>
               </AccordionContent>
-            </AccordionItem>
+            </AccordionItem>),
 
-            <AccordionItem value="cost-info" className="border-b border-border">
+            'cost-info': (<AccordionItem value="cost-info" className="border-b border-border">
               <AccordionTrigger className="hover:no-underline py-3 text-sm font-medium">
                 Cost Information
               </AccordionTrigger>
@@ -1976,9 +1976,9 @@ const FormVariationsDemo = () => {
                 </CardContent>
               </Card>
               </AccordionContent>
-            </AccordionItem>
+            </AccordionItem>),
 
-            <AccordionItem value="accessories" className="border-b border-border">
+            'accessories': (<AccordionItem value="accessories" className="border-b border-border">
               <AccordionTrigger className="hover:no-underline py-3 text-sm font-medium">
                 Accessories
               </AccordionTrigger>
@@ -2103,9 +2103,9 @@ const FormVariationsDemo = () => {
                 </CardContent>
               </Card>
               </AccordionContent>
-            </AccordionItem>
+            </AccordionItem>),
 
-            <AccordionItem value="comments" className="border-b border-border last:border-b-0">
+            'comments': (<AccordionItem value="comments" className="border-b border-border last:border-b-0">
               <AccordionTrigger className="hover:no-underline py-3 text-sm font-medium">
                 Comments
               </AccordionTrigger>
@@ -2182,7 +2182,10 @@ const FormVariationsDemo = () => {
                 </CardContent>
               </Card>
               </AccordionContent>
-            </AccordionItem>
+            </AccordionItem>),
+            };
+            return <React.Fragment key={sectionId}>{items[sectionId]}</React.Fragment>;
+          })}
           </Accordion>
         </div>
       );
