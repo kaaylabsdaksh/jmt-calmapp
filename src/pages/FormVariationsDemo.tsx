@@ -4536,29 +4536,11 @@ const FormVariationsDemo = () => {
               <div className="space-y-2">
                 <div className="space-y-1.5">
                   <Label className="text-xs font-medium text-muted-foreground">Start Date <span className="text-destructive">*</span></Label>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant="outline"
-                        className={cn(
-                          "h-9 w-full justify-start text-left font-normal bg-background",
-                          !workStatusData.startDate && "text-muted-foreground"
-                        )}
-                      >
-                        <CalendarIcon className="mr-2 h-4 w-4" />
-                        {workStatusData.startDate ? format(workStatusData.startDate, "dd/MM/yyyy") : <span>dd/mm/yyyy</span>}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0 bg-popover border z-50" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={workStatusData.startDate}
-                        onSelect={(date) => handleWorkStatusChange('startDate', date)}
-                        initialFocus
-                        className="p-3 pointer-events-auto"
-                      />
-                    </PopoverContent>
-                  </Popover>
+                  <ModernDatePicker
+                    size="lg"
+                    value={workStatusData.startDate}
+                    onChange={(date) => handleWorkStatusChange('startDate', date)}
+                  />
                 </div>
                 <Popover>
                   <PopoverTrigger asChild>
