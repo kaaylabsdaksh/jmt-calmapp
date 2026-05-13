@@ -2093,13 +2093,13 @@ const FormVariationsDemo = () => {
               <Card className="border-0 shadow-sm">
                 <CardContent className="p-3">
                   {(() => {
-                    const rows = [
+                    const rows: Array<{ key: string; label: string; qty: number; costField: string; editable: boolean; hideQty?: boolean; defaultCost?: string }> = [
                       { key: 'testing', label: 'Testing', qty: 0, costField: 'eslTestCost', editable: false },
                       { key: 'expedite', label: 'Expedite', qty: 0, costField: 'expediteCost', editable: false, hideQty: true },
                       { key: 'emergency', label: 'Emergency', qty: 0, costField: 'emergencyCost', editable: false, hideQty: true },
                       { key: 'replacement', label: 'Replacement', qty: 0, costField: 'repairCostTotal', editable: true },
                       { key: 'newSales', label: 'New Sales', qty: 0, costField: 'partsCostTotal', editable: true, defaultCost: '100.00' },
-                    ] as const;
+                    ];
                     const parse = (v: string) => parseFloat(v || '0') || 0;
                     const totalQty = rows.reduce((s, r) => s + (r.hideQty ? 0 : r.qty), 0);
                     const totalCost = rows.reduce((s, r) => {
