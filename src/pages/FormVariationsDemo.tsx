@@ -3519,10 +3519,7 @@ const FormVariationsDemo = () => {
         <div className="p-3 grid grid-cols-1 lg:grid-cols-12 gap-3">
           {/* Product Specifications */}
           <div className="lg:col-span-8 space-y-2.5">
-            <div className="flex items-center gap-2">
-              <div className="h-3 w-1 bg-foreground/80 rounded-full"></div>
-              <div className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">Product Specifications</div>
-            </div>
+            <div className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">Product Specifications</div>
 
             <div className="grid grid-cols-2 gap-2">
               <div className="space-y-0.5">
