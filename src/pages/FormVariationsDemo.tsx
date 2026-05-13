@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -36,6 +36,8 @@ import { Toaster } from "@/components/ui/toaster";
 
 const FormVariationsDemo = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const isEslPage = location.pathname === "/esl-items";
   const { toast } = useToast();
   
   // Layout variant state
@@ -7568,7 +7570,7 @@ const FormVariationsDemo = () => {
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
                 <SelectContent className="max-h-48 overflow-y-auto z-50">
-                  <SelectItem value="single">Single</SelectItem>
+                  {!isEslPage && <SelectItem value="single">Single</SelectItem>}
                   <SelectItem value="esl-blankets">ESL - Blankets</SelectItem>
                   <SelectItem value="esl-coverups">ESL - CoverUps</SelectItem>
                   <SelectItem value="esl-footwear">ESL - Footwear</SelectItem>
@@ -7770,7 +7772,7 @@ const FormVariationsDemo = () => {
                     <SelectValue placeholder="Select type" />
                   </SelectTrigger>
                   <SelectContent className="max-h-48 overflow-y-auto z-50">
-                    <SelectItem value="single">Single</SelectItem>
+                    {!isEslPage && <SelectItem value="single">Single</SelectItem>}
                     <SelectItem value="esl-blankets">ESL - Blankets</SelectItem>
                     <SelectItem value="esl-coverups">ESL - CoverUps</SelectItem>
                     <SelectItem value="esl-footwear">ESL - Footwear</SelectItem>
@@ -8135,7 +8137,7 @@ const FormVariationsDemo = () => {
                 <SelectValue placeholder="Select type" />
               </SelectTrigger>
               <SelectContent className="max-h-48 overflow-y-auto z-50 bg-popover">
-                <SelectItem value="single">Single</SelectItem>
+                {!isEslPage && <SelectItem value="single">Single</SelectItem>}
                 <SelectItem value="esl-blankets">ESL - Blankets</SelectItem>
                 <SelectItem value="esl-coverups">ESL - CoverUps</SelectItem>
                 <SelectItem value="esl-footwear">ESL - Footwear</SelectItem>
