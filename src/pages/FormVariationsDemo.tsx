@@ -11352,7 +11352,6 @@ const FormVariationsDemo = () => {
                     </SelectContent>
                   </Select>
                 </div>
-                </div>
                 <Button 
                   variant="outline" 
                   className="border-border bg-background text-foreground hover:bg-muted font-medium h-9 px-4"
