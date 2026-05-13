@@ -3717,6 +3717,8 @@ const FormVariationsDemo = () => {
                 <TableHead className="w-6 text-center px-1 py-1 h-7">
                   <Checkbox className="h-3 w-3" />
                 </TableHead>
+                <TableHead className="text-[10px] font-medium px-1.5 py-1 h-7">E</TableHead>
+                <TableHead className="text-[10px] font-medium px-1.5 py-1 h-7">F</TableHead>
                 <TableHead className="text-[10px] font-medium px-1.5 py-1 h-7">Sort</TableHead>
                 <TableHead className="text-[10px] font-medium px-1.5 py-1 h-7">Manufacturer</TableHead>
                 <TableHead className="text-[10px] font-medium px-1.5 py-1 h-7">Class</TableHead>
@@ -3746,6 +3748,7 @@ const FormVariationsDemo = () => {
               {/* Filter Row */}
               <TableRow className="bg-background h-6">
                 <TableCell className="px-1 py-0.5"></TableCell>
+                <TableCell className="px-1 py-0.5"><Input className="h-5 text-[10px] w-8" /></TableCell>
                 <TableCell className="px-1 py-0.5"><Input className="h-5 text-[10px] w-10" /></TableCell>
                 <TableCell className="px-1 py-0.5"><Input className="h-5 text-[10px] w-16" /></TableCell>
                 <TableCell className="px-1 py-0.5"><Input className="h-5 text-[10px] w-10" /></TableCell>
@@ -3773,6 +3776,8 @@ const FormVariationsDemo = () => {
               {/* Data Rows */}
               <TableRow className="hover:bg-muted/30 h-6">
                 <TableCell className="text-center px-1 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">E</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">F</TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5">1</TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5">MSA Safety</TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5">I</TableCell>
@@ -3799,6 +3804,8 @@ const FormVariationsDemo = () => {
               </TableRow>
               <TableRow className="hover:bg-muted/30 h-6">
                 <TableCell className="text-center px-1 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">E</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">F</TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5">2</TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5">3M Scott</TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5">II</TableCell>
@@ -3825,6 +3832,8 @@ const FormVariationsDemo = () => {
               </TableRow>
               <TableRow className="hover:bg-muted/30 h-6">
                 <TableCell className="text-center px-1 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">E</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">F</TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5">3</TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5">Honeywell</TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5">I</TableCell>
@@ -3851,6 +3860,8 @@ const FormVariationsDemo = () => {
               </TableRow>
               <TableRow className="hover:bg-muted/30 h-6">
                 <TableCell className="text-center px-1 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">E</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">F</TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5">4</TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5">Draeger</TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5">III</TableCell>
@@ -3877,6 +3888,8 @@ const FormVariationsDemo = () => {
               </TableRow>
               <TableRow className="hover:bg-muted/30 h-6">
                 <TableCell className="text-center px-1 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">E</TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5">F</TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5">5</TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5">MSA Safety</TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5">II</TableCell>
