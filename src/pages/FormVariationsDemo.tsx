@@ -973,6 +973,26 @@ const FormVariationsDemo = () => {
 
   // Dynamic tabs based on type selection
   const isESLType = formData.type && (formData.type.startsWith('esl-') || formData.type.startsWith('itl-'));
+
+  // ESL General Section mandatory completion gate — locks other tabs until filled
+  const isEslGeneralComplete = Boolean(
+    formData.reportNumber &&
+    formData.itemStatus &&
+    formData.calFreq &&
+    formData.priority &&
+    formData.location &&
+    formData.division &&
+    formData.actionCode &&
+    formData.poNumber &&
+    formData.needBy
+  );
+
+  // Force back to General tab if other tab becomes locked
+  useEffect(() => {
+    if (isESLType && !isEslGeneralComplete && activeEslTab !== 'general') {
+      setActiveEslTab('general');
+    }
+  }, [isEslGeneralComplete, isESLType, activeEslTab]);
   
   // Measure footer height dynamically
   useEffect(() => {
@@ -7970,19 +7990,19 @@ const FormVariationsDemo = () => {
                       <AlertCircle className="h-4 w-4 text-destructive" />
                     )}
                   </TabsTrigger>
-                  <TabsTrigger value="details" className="flex-1 gap-2">
+                  <TabsTrigger value="details" disabled={!isEslGeneralComplete} className="flex-1 gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
                     <FileText className="h-4 w-4" />
                     Details
                   </TabsTrigger>
-                  <TabsTrigger value="testing" className="flex-1 gap-2">
+                  <TabsTrigger value="testing" disabled={!isEslGeneralComplete} className="flex-1 gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
                     <Settings className="h-4 w-4" />
                     Testing
                   </TabsTrigger>
-                  <TabsTrigger value="work-status" className="flex-1 gap-2">
+                  <TabsTrigger value="work-status" disabled={!isEslGeneralComplete} className="flex-1 gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
                     <Clock className="h-4 w-4" />
                     Work Status
                   </TabsTrigger>
-                  <TabsTrigger value="transit" className="flex-1 gap-2">
+                  <TabsTrigger value="transit" disabled={!isEslGeneralComplete} className="flex-1 gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
                     <Truck className="h-4 w-4" />
                     Transit
                   </TabsTrigger>
