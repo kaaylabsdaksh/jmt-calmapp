@@ -1733,12 +1733,10 @@ const FormVariationsDemo = () => {
                           <Label htmlFor="arrivalDate" className="text-xs font-medium">
                             Date <span className="text-destructive">*</span>
                           </Label>
-                          <Input
-                            id="arrivalDate"
-                            type="date"
-                            value={formData.arrivalDate}
-                            onChange={(e) => handleInputChange("arrivalDate", e.target.value)}
-                            className="h-8 text-sm"
+                          <ModernDatePicker id="arrivalDate"
+                            size="md"
+                            value={formData.arrivalDate || undefined}
+                            onChange={(date) => handleInputChange("arrivalDate", date ? date.toISOString().split('T')[0] : "")}
                           />
                         </div>
                         <div className="space-y-1.5">
@@ -1784,12 +1782,11 @@ const FormVariationsDemo = () => {
                               </div>
                               <div className="space-y-1.5">
                                 <Label className="text-xs font-medium">Pickup Date</Label>
-                                <Input
-                                  type="date"
-                                  value={formData.arrivalPickupDate || ""}
-                                  onChange={(e) => handleInputChange("arrivalPickupDate", e.target.value)}
-                                  className="h-8 text-sm"
-                                />
+                                <ModernDatePicker
+                            size="md"
+                            value={formData.arrivalPickupDate || "" || undefined}
+                            onChange={(date) => handleInputChange("arrivalPickupDate", date ? date.toISOString().split('T')[0] : "")}
+                          />
                               </div>
                             </>
                           )}
@@ -1858,11 +1855,10 @@ const FormVariationsDemo = () => {
                       <div className="grid grid-cols-2 gap-3">
                         <div className="space-y-1.5">
                           <Label className="text-xs font-medium">Date</Label>
-                          <Input
-                            type="date"
-                            value={formData.departureDate || ""}
-                            onChange={(e) => handleInputChange("departureDate", e.target.value)}
-                            className="h-8 text-sm"
+                          <ModernDatePicker
+                            size="md"
+                            value={formData.departureDate || "" || undefined}
+                            onChange={(date) => handleInputChange("departureDate", date ? date.toISOString().split('T')[0] : "")}
                           />
                         </div>
                         <div className="space-y-1.5">
@@ -1995,33 +1991,30 @@ const FormVariationsDemo = () => {
                     </div>
                     <div className="space-y-1.5">
                       <Label className="text-xs font-medium">Need By <span className="text-destructive">*</span></Label>
-                      <Input
-                        type="date"
-                        value={formData.needBy}
-                        onChange={(e) => handleInputChange("needBy", e.target.value)}
-                        className="h-8 text-sm"
-                      />
+                      <ModernDatePicker
+                            size="md"
+                            value={formData.needBy || undefined}
+                            onChange={(date) => handleInputChange("needBy", date ? date.toISOString().split('T')[0] : "")}
+                          />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <div className="space-y-1.5">
                       <Label className="text-xs font-medium">Deliver By Date</Label>
-                      <Input
-                        type="date"
-                        value={formData.deliverByDate}
-                        onChange={(e) => handleInputChange("deliverByDate", e.target.value)}
-                        className="h-8 text-sm"
-                      />
+                      <ModernDatePicker
+                            size="md"
+                            value={formData.deliverByDate || undefined}
+                            onChange={(date) => handleInputChange("deliverByDate", date ? date.toISOString().split('T')[0] : "")}
+                          />
                     </div>
                     <div className="space-y-1.5">
                       <Label className="text-xs font-medium">Date Tested</Label>
-                      <Input
-                        type="date"
-                        value={formData.dateTested}
-                        onChange={(e) => handleInputChange("dateTested", e.target.value)}
-                        className="h-8 text-sm"
-                      />
+                      <ModernDatePicker
+                            size="md"
+                            value={formData.dateTested || undefined}
+                            onChange={(date) => handleInputChange("dateTested", date ? date.toISOString().split('T')[0] : "")}
+                          />
                     </div>
                     <div className="space-y-1.5">
                       <Label className="text-xs font-medium">Transit Qty</Label>
@@ -3332,11 +3325,11 @@ const FormVariationsDemo = () => {
             <div className="grid grid-cols-2 gap-2">
               <div className="space-y-1">
                 <Label htmlFor="needBy" className="text-xs">Need By <span className="text-destructive">*</span></Label>
-                <Input id="needBy" type="date" value={formData.needBy} onChange={(e) => handleInputChange("needBy", e.target.value)} className="h-8 text-sm" />
+                <ModernDatePicker id="needBy" size="md" value={formData.needBy || undefined} onChange={(date) => handleInputChange("needBy", date ? date.toISOString().split('T')[0] : "")} />
               </div>
               <div className="space-y-1">
                 <Label htmlFor="deliverByDate" className="text-xs">Deliver By Date</Label>
-                <Input id="deliverByDate" type="date" value={formData.deliverByDate} onChange={(e) => handleInputChange("deliverByDate", e.target.value)} className="h-8 text-sm" />
+                <ModernDatePicker id="deliverByDate" size="md" value={formData.deliverByDate || undefined} onChange={(date) => handleInputChange("deliverByDate", date ? date.toISOString().split('T')[0] : "")} />
               </div>
             </div>
           </div>
@@ -3401,11 +3394,11 @@ const FormVariationsDemo = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="needBy" className="text-sm font-medium">Need By <span className="text-destructive">*</span></Label>
-                    <Input id="needBy" type="date" value={formData.needBy} onChange={(e) => handleInputChange("needBy", e.target.value)} className="h-11" placeholder="Enter need by date" />
+                    <ModernDatePicker id="needBy" size="lg" value={formData.needBy || undefined} onChange={(date) => handleInputChange("needBy", date ? date.toISOString().split('T')[0] : "")} />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="deliverByDate" className="text-sm font-medium">Deliver By Date</Label>
-                    <Input id="deliverByDate" type="date" value={formData.deliverByDate} onChange={(e) => handleInputChange("deliverByDate", e.target.value)} className="h-11" />
+                    <ModernDatePicker id="deliverByDate" size="lg" value={formData.deliverByDate || undefined} onChange={(date) => handleInputChange("deliverByDate", date ? date.toISOString().split('T')[0] : "")} />
                   </div>
                 </div>
               </CardContent>
@@ -5043,24 +5036,20 @@ const FormVariationsDemo = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <Label htmlFor="certificationDate" className="text-sm font-medium text-foreground/90">Certification Date</Label>
-                  <Input
-                    id="certificationDate"
-                    type="date"
-                    value={formData.certificationDate}
-                    onChange={(e) => handleInputChange("certificationDate", e.target.value)}
-                    className="h-11 border-border/50 hover:border-border transition-colors"
-                  />
+                  <ModernDatePicker id="certificationDate"
+                            size="lg"
+                            value={formData.certificationDate || undefined}
+                            onChange={(date) => handleInputChange("certificationDate", date ? date.toISOString().split('T')[0] : "")}
+                          />
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="recalibrationDate" className="text-sm font-medium text-foreground/90">Recalibration Date</Label>
-                  <Input
-                    id="recalibrationDate"
-                    type="date"
-                    value={formData.recalibrationDate}
-                    onChange={(e) => handleInputChange("recalibrationDate", e.target.value)}
-                    className="h-11 border-border/50 hover:border-border transition-colors"
-                  />
+                  <ModernDatePicker id="recalibrationDate"
+                            size="lg"
+                            value={formData.recalibrationDate || undefined}
+                            onChange={(date) => handleInputChange("recalibrationDate", date ? date.toISOString().split('T')[0] : "")}
+                          />
                 </div>
               </div>
             </div>
@@ -5368,13 +5357,11 @@ const FormVariationsDemo = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <Label htmlFor="completionDate" className="text-sm font-medium text-foreground/90">Completion Date:</Label>
-                <Input
-                  id="completionDate"
-                  type="date"
-                  value={formData.completionDate || "2025-09-22"}
-                  onChange={(e) => handleInputChange("completionDate", e.target.value)}
-                  className="h-11 border-border/50 hover:border-border transition-colors"
-                />
+                <ModernDatePicker id="completionDate"
+                            size="lg"
+                            value={formData.completionDate || "2025-09-22" || undefined}
+                            onChange={(date) => handleInputChange("completionDate", date ? date.toISOString().split('T')[0] : "")}
+                          />
               </div>
             </div>
 
@@ -5544,24 +5531,20 @@ const FormVariationsDemo = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <Label htmlFor="certificationDate" className="text-sm font-medium text-foreground/90">Certification Date:</Label>
-                <Input
-                  id="certificationDate"
-                  type="date"
-                  value={formData.certificationDate || "2025-09-22"}
-                  onChange={(e) => handleInputChange("certificationDate", e.target.value)}
-                  className="h-11"
-                />
+                <ModernDatePicker id="certificationDate"
+                            size="lg"
+                            value={formData.certificationDate || "2025-09-22" || undefined}
+                            onChange={(date) => handleInputChange("certificationDate", date ? date.toISOString().split('T')[0] : "")}
+                          />
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="recalibrationDate" className="text-sm font-medium text-foreground/90">Recalibration Date:</Label>
-                <Input
-                  id="recalibrationDate"
-                  type="date"
-                  value={formData.recalibrationDate}
-                  onChange={(e) => handleInputChange("recalibrationDate", e.target.value)}
-                  className="h-11"
-                />
+                <ModernDatePicker id="recalibrationDate"
+                            size="lg"
+                            value={formData.recalibrationDate || undefined}
+                            onChange={(date) => handleInputChange("recalibrationDate", date ? date.toISOString().split('T')[0] : "")}
+                          />
               </div>
             </div>
 
@@ -5805,24 +5788,20 @@ const FormVariationsDemo = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <Label htmlFor="testDate" className="text-sm font-medium text-foreground/90">Test Date:</Label>
-                <Input
-                  id="testDate"
-                  type="date"
-                  value={formData.testDate || "2025-09-22"}
-                  onChange={(e) => handleInputChange("testDate", e.target.value)}
-                  className="h-11 border-border/50 hover:border-border transition-colors"
-                />
+                <ModernDatePicker id="testDate"
+                            size="lg"
+                            value={formData.testDate || "2025-09-22" || undefined}
+                            onChange={(date) => handleInputChange("testDate", date ? date.toISOString().split('T')[0] : "")}
+                          />
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="retestDate" className="text-sm font-medium text-foreground/90">Retest Date:</Label>
-                <Input
-                  id="retestDate"
-                  type="date"
-                  value={formData.retestDate}
-                  onChange={(e) => handleInputChange("retestDate", e.target.value)}
-                  className="h-11 border-border/50 hover:border-border transition-colors"
-                />
+                <ModernDatePicker id="retestDate"
+                            size="lg"
+                            value={formData.retestDate || undefined}
+                            onChange={(date) => handleInputChange("retestDate", date ? date.toISOString().split('T')[0] : "")}
+                          />
               </div>
             </div>
 
@@ -6080,13 +6059,11 @@ const FormVariationsDemo = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <Label htmlFor="completionDate" className="text-sm font-medium text-foreground/90">Completion Date:</Label>
-                <Input
-                  id="completionDate"
-                  type="date"
-                  value={formData.completionDate || "2025-09-22"}
-                  onChange={(e) => handleInputChange("completionDate", e.target.value)}
-                  className="h-11 border-border/50 hover:border-border transition-colors"
-                />
+                <ModernDatePicker id="completionDate"
+                            size="lg"
+                            value={formData.completionDate || "2025-09-22" || undefined}
+                            onChange={(date) => handleInputChange("completionDate", date ? date.toISOString().split('T')[0] : "")}
+                          />
               </div>
             </div>
 
@@ -6257,24 +6234,20 @@ const FormVariationsDemo = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <Label htmlFor="certificationDate" className="text-sm font-medium text-foreground/90">Certification Date:</Label>
-                  <Input
-                    id="certificationDate"
-                    type="date"
-                    value={formData.certificationDate || "2025-09-22"}
-                    onChange={(e) => handleInputChange("certificationDate", e.target.value)}
-                    className="h-11 border-border/50 hover:border-border transition-colors"
-                  />
+                  <ModernDatePicker id="certificationDate"
+                            size="lg"
+                            value={formData.certificationDate || "2025-09-22" || undefined}
+                            onChange={(date) => handleInputChange("certificationDate", date ? date.toISOString().split('T')[0] : "")}
+                          />
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="recalibrationDate" className="text-sm font-medium text-foreground/90">Recalibration Date:</Label>
-                  <Input
-                    id="recalibrationDate"
-                    type="date"
-                    value={formData.recalibrationDate}
-                    onChange={(e) => handleInputChange("recalibrationDate", e.target.value)}
-                    className="h-11 border-border/50 hover:border-border transition-colors"
-                  />
+                  <ModernDatePicker id="recalibrationDate"
+                            size="lg"
+                            value={formData.recalibrationDate || undefined}
+                            onChange={(date) => handleInputChange("recalibrationDate", date ? date.toISOString().split('T')[0] : "")}
+                          />
                 </div>
               </div>
             </div>
@@ -9139,7 +9112,7 @@ const FormVariationsDemo = () => {
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="v3-arrival-date">Arrival Date</Label>
-              <Input id="v3-arrival-date" type="date" value={formData.arrivalDate} onChange={(e) => handleInputChange("arrivalDate", e.target.value)} />
+              <ModernDatePicker id="v3-arrival-date" size="md" value={formData.arrivalDate || undefined} onChange={(date) => handleInputChange("arrivalDate", date ? date.toISOString().split('T')[0] : "")} />
             </div>
             <div className="space-y-2">
               <Label htmlFor="v3-arrival-type">Arrival Type</Label>
@@ -9363,7 +9336,7 @@ const FormVariationsDemo = () => {
           </div>
           <div className="space-y-2">
             <Label htmlFor="v3-deliver-by">Deliver By Date</Label>
-            <Input id="v3-deliver-by" type="date" value={formData.deliverByDate} onChange={(e) => handleInputChange("deliverByDate", e.target.value)} />
+            <ModernDatePicker id="v3-deliver-by" size="md" value={formData.deliverByDate || undefined} onChange={(date) => handleInputChange("deliverByDate", date ? date.toISOString().split('T')[0] : "")} />
           </div>
         </CardContent>
       </Card>
