@@ -7570,7 +7570,7 @@ const FormVariationsDemo = () => {
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
                 <SelectContent className="max-h-48 overflow-y-auto z-50">
-                  <SelectItem value="single">Single</SelectItem>
+                  {!isEslPage && <SelectItem value="single">Single</SelectItem>}
                   <SelectItem value="esl-blankets">ESL - Blankets</SelectItem>
                   <SelectItem value="esl-coverups">ESL - CoverUps</SelectItem>
                   <SelectItem value="esl-footwear">ESL - Footwear</SelectItem>
@@ -7772,7 +7772,7 @@ const FormVariationsDemo = () => {
                     <SelectValue placeholder="Select type" />
                   </SelectTrigger>
                   <SelectContent className="max-h-48 overflow-y-auto z-50">
-                    <SelectItem value="single">Single</SelectItem>
+                    {!isEslPage && <SelectItem value="single">Single</SelectItem>}
                     <SelectItem value="esl-blankets">ESL - Blankets</SelectItem>
                     <SelectItem value="esl-coverups">ESL - CoverUps</SelectItem>
                     <SelectItem value="esl-footwear">ESL - Footwear</SelectItem>
@@ -8137,7 +8137,7 @@ const FormVariationsDemo = () => {
                 <SelectValue placeholder="Select type" />
               </SelectTrigger>
               <SelectContent className="max-h-48 overflow-y-auto z-50 bg-popover">
-                <SelectItem value="single">Single</SelectItem>
+                {!isEslPage && <SelectItem value="single">Single</SelectItem>}
                 <SelectItem value="esl-blankets">ESL - Blankets</SelectItem>
                 <SelectItem value="esl-coverups">ESL - CoverUps</SelectItem>
                 <SelectItem value="esl-footwear">ESL - Footwear</SelectItem>
