@@ -11352,13 +11352,7 @@ const FormVariationsDemo = () => {
                     </SelectContent>
                   </Select>
                 </div>
-                <Button 
-                  variant="outline" 
-                  onClick={handleCancel}
-                  className="border-border bg-background text-foreground hover:bg-muted font-medium h-9 px-4"
-                >
-                  Cancel WO
-                </Button>
+                </div>
                 <Button 
                   variant="outline" 
                   className="border-border bg-background text-foreground hover:bg-muted font-medium h-9 px-4"
