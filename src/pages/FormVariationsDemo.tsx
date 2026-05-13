@@ -7990,19 +7990,19 @@ const FormVariationsDemo = () => {
                       <AlertCircle className="h-4 w-4 text-destructive" />
                     )}
                   </TabsTrigger>
-                  <TabsTrigger value="details" className="flex-1 gap-2">
+                  <TabsTrigger value="details" disabled={!isEslGeneralComplete} className="flex-1 gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
                     <FileText className="h-4 w-4" />
                     Details
                   </TabsTrigger>
-                  <TabsTrigger value="testing" className="flex-1 gap-2">
+                  <TabsTrigger value="testing" disabled={!isEslGeneralComplete} className="flex-1 gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
                     <Settings className="h-4 w-4" />
                     Testing
                   </TabsTrigger>
-                  <TabsTrigger value="work-status" className="flex-1 gap-2">
+                  <TabsTrigger value="work-status" disabled={!isEslGeneralComplete} className="flex-1 gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
                     <Clock className="h-4 w-4" />
                     Work Status
                   </TabsTrigger>
-                  <TabsTrigger value="transit" className="flex-1 gap-2">
+                  <TabsTrigger value="transit" disabled={!isEslGeneralComplete} className="flex-1 gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
                     <Truck className="h-4 w-4" />
                     Transit
                   </TabsTrigger>
