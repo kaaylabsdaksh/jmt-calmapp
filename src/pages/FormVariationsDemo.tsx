@@ -7558,7 +7558,12 @@ const FormVariationsDemo = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="type" className="text-sm font-medium">Type *</Label>
-              <Select value={formData.type} onValueChange={(value) => handleInputChange("type", value)}>
+              <Select value={formData.type} onValueChange={(value) => {
+                handleInputChange("type", value);
+                if (value.startsWith("esl-")) {
+                  navigate("/esl-items");
+                }
+              }}>
                 <SelectTrigger className="h-11">
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
