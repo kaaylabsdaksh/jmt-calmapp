@@ -984,7 +984,9 @@ const FormVariationsDemo = () => {
     formData.division &&
     formData.actionCode &&
     formData.poNumber &&
-    formData.needBy
+    formData.needBy &&
+    formData.arrivalDate &&
+    formData.arrivalType
   );
 
   // Force back to General tab if other tab becomes locked
