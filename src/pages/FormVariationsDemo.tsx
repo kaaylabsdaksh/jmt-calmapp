@@ -3672,6 +3672,33 @@ const FormVariationsDemo = () => {
         </div>
       </div>
 
+      {/* Customer Other Fields */}
+      <div className="border border-border rounded-lg overflow-hidden">
+        <div className="bg-muted/50 px-3 py-1.5 border-b text-center">
+          <span className="text-[11px] font-semibold text-muted-foreground">Customer Other Fields</span>
+        </div>
+        <div className="p-3 space-y-2">
+          <div className="grid grid-cols-[120px_1fr] items-center gap-2">
+            <Label htmlFor="modelRefNum" className="text-xs text-right">Model Ref #:</Label>
+            <Input
+              id="modelRefNum"
+              value={(formData as any).modelRefNum || ""}
+              onChange={(e) => handleInputChange("modelRefNum", e.target.value)}
+              className="h-7 text-xs"
+            />
+          </div>
+          <div className="grid grid-cols-[120px_1fr] items-center gap-2">
+            <Label htmlFor="truckNum" className="text-xs text-right">Truck #:</Label>
+            <Input
+              id="truckNum"
+              value={(formData as any).truckNum || ""}
+              onChange={(e) => handleInputChange("truckNum", e.target.value)}
+              className="h-7 text-xs"
+            />
+          </div>
+        </div>
+      </div>
+
       {/* Items Data Table */}
       <div className="border rounded-lg overflow-hidden">
         <div className="bg-muted/50 px-3 py-1.5 border-b">
