@@ -3082,29 +3082,11 @@ const FormVariationsDemo = () => {
                   <Label htmlFor="puDate" className="text-xs font-medium">
                     PU Date <span className="text-destructive">*</span>
                   </Label>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant="outline"
-                        className={cn(
-                          "w-full justify-start text-left font-normal h-8 text-sm",
-                          !formData.puDate && "text-muted-foreground"
-                        )}
-                      >
-                        <CalendarIcon className="mr-2 h-3 w-3" />
-                        {formData.puDate ? formData.puDate : "dd/mm/yyyy"}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={formData.puDate ? new Date(formData.puDate) : undefined}
-                        onSelect={(date) => handleInputChange("puDate", date ? date.toISOString().split('T')[0] : "")}
-                        initialFocus
-                        className="p-3 pointer-events-auto"
-                      />
-                    </PopoverContent>
-                  </Popover>
+                  <ModernDatePicker
+                    size="md"
+                    value={formData.puDate || undefined}
+                    onChange={(date) => handleInputChange("puDate", date ? date.toISOString().split('T')[0] : "")}
+                  />
                 </div>
               </>
             )}
