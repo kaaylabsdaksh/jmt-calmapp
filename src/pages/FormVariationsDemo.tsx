@@ -194,6 +194,19 @@ const FormVariationsDemo = () => {
   
   // ESL Tab state - track which tab is active for footer visibility
   const [activeEslTab, setActiveEslTab] = useState<string>('general');
+
+  // ESL General Section mandatory completion gate — controls whether other tabs are unlocked
+  const isEslGeneralComplete = Boolean(
+    formData.reportNumber &&
+    formData.itemStatus &&
+    formData.testFreq &&
+    formData.priority &&
+    formData.location &&
+    formData.division &&
+    formData.actionCode &&
+    formData.poNumber &&
+    formData.needBy
+  );
   
   // Scroll to top button state
   const [showScrollTop, setShowScrollTop] = useState(false);
