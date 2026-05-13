@@ -1709,152 +1709,159 @@ const FormVariationsDemo = () => {
               </AccordionTrigger>
               <AccordionContent className="pb-3">
                 <div className="p-3 space-y-5">
-                  {/* Arrival */}
-                  <div className="space-y-2">
-                    <div className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground border-b border-border pb-1">
-                      Arrival
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="space-y-1.5">
-                        <Label htmlFor="arrivalDate" className="text-xs font-medium">Date</Label>
-                        <Input
-                          id="arrivalDate"
-                          type="date"
-                          value={formData.arrivalDate}
-                          onChange={(e) => handleInputChange("arrivalDate", e.target.value)}
-                          className="h-8 text-sm"
-                        />
+                  {/* 1:2 Phase split – Arrival | Departure */}
+                  <div className="grid grid-cols-12 gap-4">
+                    {/* Arrival */}
+                    <div className="col-span-12 lg:col-span-4 space-y-2">
+                      <div className="flex items-center gap-2 pb-1">
+                        <span className="w-1.5 h-1.5 rounded-full bg-slate-500" />
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Arrival</span>
                       </div>
-                      <div className="space-y-1.5">
-                        <Label htmlFor="arrivalType" className="text-xs font-medium">Type</Label>
-                        <Select value={formData.arrivalType} onValueChange={(value) => handleInputChange("arrivalType", value)}>
-                          <SelectTrigger className="h-8 text-sm">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent className="bg-popover border z-50">
-                            <SelectItem value="jm-driver-pickup">JM Driver Pickup</SelectItem>
-                            <SelectItem value="customer-dropoff">Customer Drop Off</SelectItem>
-                            <SelectItem value="shipped">Shipped</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Departure */}
-                  <div className="space-y-2">
-                    <div className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground border-b border-border pb-1">
-                      Departure
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                      <div className="space-y-1.5">
-                        <Label className="text-xs font-medium">Date</Label>
-                        <Input
-                          type="date"
-                          value={formData.departureDate || ""}
-                          onChange={(e) => handleInputChange("departureDate", e.target.value)}
-                          className="h-8 text-sm"
-                        />
-                      </div>
-                      <div className="space-y-1.5">
-                        <Label className="text-xs font-medium">Type</Label>
-                        <Select value={formData.departureType} onValueChange={(value) => handleInputChange("departureType", value)}>
-                          <SelectTrigger className="h-8 text-sm">
-                            <SelectValue placeholder="Select type" />
-                          </SelectTrigger>
-                          <SelectContent className="bg-popover border z-50">
-                            <SelectItem value="shipped">Shipped</SelectItem>
-                            <SelectItem value="customer-pickup">Customer Pickup</SelectItem>
-                            <SelectItem value="customer-surplus">Customer Surplus</SelectItem>
-                            <SelectItem value="jm-driver-dropoff">JM Driver Dropoff</SelectItem>
-                            <SelectItem value="scrapped-at-jm">Scrapped at JM</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div className="space-y-1.5">
-                        <Label className="text-xs font-medium">Inv #</Label>
-                        <Input
-                          value={formData.invNumber || ""}
-                          readOnly
-                          className="h-8 text-sm bg-muted/50"
-                        />
-                      </div>
-                    </div>
-
-                    {formData.departureType === "shipped" && (
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                      <div className="grid grid-cols-1 gap-3 p-3 bg-muted/30 border border-border rounded-md">
                         <div className="space-y-1.5">
-                          <Label className="text-xs font-medium">Ship Type</Label>
-                          <Select value={formData.shipType} onValueChange={(value) => handleInputChange("shipType", value)}>
+                          <Label htmlFor="arrivalDate" className="text-xs font-medium">Date</Label>
+                          <Input
+                            id="arrivalDate"
+                            type="date"
+                            value={formData.arrivalDate}
+                            onChange={(e) => handleInputChange("arrivalDate", e.target.value)}
+                            className="h-8 text-sm"
+                          />
+                        </div>
+                        <div className="space-y-1.5">
+                          <Label htmlFor="arrivalType" className="text-xs font-medium">Type</Label>
+                          <Select value={formData.arrivalType} onValueChange={(value) => handleInputChange("arrivalType", value)}>
                             <SelectTrigger className="h-8 text-sm">
-                              <SelectValue placeholder="Select ship type" />
+                              <SelectValue />
                             </SelectTrigger>
                             <SelectContent className="bg-popover border z-50">
-                              <SelectItem value="fedex">FedEx</SelectItem>
-                              <SelectItem value="ups">UPS</SelectItem>
-                              <SelectItem value="usps">USPS</SelectItem>
-                              <SelectItem value="freight">Freight</SelectItem>
+                              <SelectItem value="jm-driver-pickup">JM Driver Pickup</SelectItem>
+                              <SelectItem value="customer-dropoff">Customer Drop Off</SelectItem>
+                              <SelectItem value="shipped">Shipped</SelectItem>
                             </SelectContent>
                           </Select>
                         </div>
-                        <div className="space-y-1.5">
-                          <Label className="text-xs font-medium">Coll Acct</Label>
-                          <Input
-                            value={formData.collAcct || ""}
-                            onChange={(e) => handleInputChange("collAcct", e.target.value)}
-                            className="h-8 text-sm"
-                          />
-                        </div>
-                        <div className="space-y-1.5">
-                          <Label className="text-xs font-medium">Tracking #</Label>
-                          <Input
-                            value={formData.trackingNumber || ""}
-                            onChange={(e) => handleInputChange("trackingNumber", e.target.value)}
-                            className="h-8 text-sm"
-                          />
-                        </div>
                       </div>
-                    )}
+                    </div>
 
-                    {formData.departureType === "customer-pickup" && (
-                      <div className="space-y-1.5">
-                        <Label className="text-xs font-medium">Name</Label>
-                        <Input
-                          value={formData.pickupName || ""}
-                          onChange={(e) => handleInputChange("pickupName", e.target.value)}
-                          placeholder="Enter name"
-                          className="h-8 text-sm"
-                        />
+                    {/* Departure */}
+                    <div className="col-span-12 lg:col-span-8 space-y-2">
+                      <div className="flex items-center gap-2 pb-1">
+                        <span className="w-1.5 h-1.5 rounded-full bg-slate-900" />
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Departure</span>
                       </div>
-                    )}
+                      <div className="p-3 border border-border rounded-md bg-background space-y-3">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                          <div className="space-y-1.5">
+                            <Label className="text-xs font-medium">Date</Label>
+                            <Input
+                              type="date"
+                              value={formData.departureDate || ""}
+                              onChange={(e) => handleInputChange("departureDate", e.target.value)}
+                              className="h-8 text-sm"
+                            />
+                          </div>
+                          <div className="space-y-1.5">
+                            <Label className="text-xs font-medium">Type</Label>
+                            <Select value={formData.departureType} onValueChange={(value) => handleInputChange("departureType", value)}>
+                              <SelectTrigger className="h-8 text-sm">
+                                <SelectValue placeholder="Select type" />
+                              </SelectTrigger>
+                              <SelectContent className="bg-popover border z-50">
+                                <SelectItem value="shipped">Shipped</SelectItem>
+                                <SelectItem value="customer-pickup">Customer Pickup</SelectItem>
+                                <SelectItem value="customer-surplus">Customer Surplus</SelectItem>
+                                <SelectItem value="jm-driver-dropoff">JM Driver Dropoff</SelectItem>
+                                <SelectItem value="scrapped-at-jm">Scrapped at JM</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                          <div className="space-y-1.5">
+                            <Label className="text-xs font-medium">Inv #</Label>
+                            <Input
+                              value={formData.invNumber || ""}
+                              readOnly
+                              className="h-8 text-sm bg-muted/50 font-mono"
+                            />
+                          </div>
+                        </div>
 
-                    {formData.departureType === "jm-driver-dropoff" && (
-                      <div className="space-y-1.5">
-                        <Label className="text-xs font-medium">Driver</Label>
-                        <Select value={formData.driver} onValueChange={(value) => handleInputChange("driver", value)}>
-                          <SelectTrigger className="h-8 text-sm">
-                            <SelectValue placeholder="Select driver" />
-                          </SelectTrigger>
-                          <SelectContent className="bg-popover border z-50">
-                            <SelectItem value="aaron-briles">Aaron L Briles</SelectItem>
-                            <SelectItem value="john-smith">John Smith</SelectItem>
-                            <SelectItem value="mike-johnson">Mike Johnson</SelectItem>
-                          </SelectContent>
-                        </Select>
+                        {formData.departureType === "shipped" && (
+                          <div className="pt-3 mt-1 border-t border-border grid grid-cols-1 md:grid-cols-3 gap-3">
+                            <div className="space-y-1.5">
+                              <Label className="text-xs font-medium">Ship Type</Label>
+                              <Select value={formData.shipType} onValueChange={(value) => handleInputChange("shipType", value)}>
+                                <SelectTrigger className="h-8 text-sm">
+                                  <SelectValue placeholder="Select ship type" />
+                                </SelectTrigger>
+                                <SelectContent className="bg-popover border z-50">
+                                  <SelectItem value="fedex">FedEx</SelectItem>
+                                  <SelectItem value="ups">UPS</SelectItem>
+                                  <SelectItem value="usps">USPS</SelectItem>
+                                  <SelectItem value="freight">Freight</SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </div>
+                            <div className="space-y-1.5">
+                              <Label className="text-xs font-medium">Coll Acct</Label>
+                              <Input
+                                value={formData.collAcct || ""}
+                                onChange={(e) => handleInputChange("collAcct", e.target.value)}
+                                className="h-8 text-sm"
+                              />
+                            </div>
+                            <div className="space-y-1.5">
+                              <Label className="text-xs font-medium">Tracking #</Label>
+                              <Input
+                                value={formData.trackingNumber || ""}
+                                onChange={(e) => handleInputChange("trackingNumber", e.target.value)}
+                                className="h-8 text-sm"
+                              />
+                            </div>
+                          </div>
+                        )}
+
+                        {formData.departureType === "customer-pickup" && (
+                          <div className="pt-3 mt-1 border-t border-border space-y-1.5">
+                            <Label className="text-xs font-medium">Name</Label>
+                            <Input
+                              value={formData.pickupName || ""}
+                              onChange={(e) => handleInputChange("pickupName", e.target.value)}
+                              placeholder="Enter name"
+                              className="h-8 text-sm"
+                            />
+                          </div>
+                        )}
+
+                        {formData.departureType === "jm-driver-dropoff" && (
+                          <div className="pt-3 mt-1 border-t border-border space-y-1.5">
+                            <Label className="text-xs font-medium">Driver</Label>
+                            <Select value={formData.driver} onValueChange={(value) => handleInputChange("driver", value)}>
+                              <SelectTrigger className="h-8 text-sm">
+                                <SelectValue placeholder="Select driver" />
+                              </SelectTrigger>
+                              <SelectContent className="bg-popover border z-50">
+                                <SelectItem value="aaron-briles">Aaron L Briles</SelectItem>
+                                <SelectItem value="john-smith">John Smith</SelectItem>
+                                <SelectItem value="mike-johnson">Mike Johnson</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                        )}
                       </div>
-                    )}
+                    </div>
                   </div>
 
                   {/* Delivery Status */}
                   <div className="space-y-2">
-                    <div className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground border-b border-border pb-1">
-                      Delivery Status
+                    <div className="flex items-center gap-2 pb-1">
+                      <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Delivery Status</span>
                     </div>
                     <Textarea
                       value={formData.deliveryStatus}
                       onChange={(e) => handleInputChange("deliveryStatus", e.target.value)}
                       placeholder="Enter delivery status..."
-                      className="min-h-[100px] text-sm resize-none"
+                      className="min-h-[90px] text-sm resize-none"
                     />
                   </div>
                 </div>
