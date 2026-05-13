@@ -3747,7 +3747,7 @@ const FormVariationsDemo = () => {
             <TableBody>
               {/* Filter Row */}
               <TableRow className="bg-background h-6">
-                <TableCell className="px-1 py-0.5"><Input className="h-5 text-[10px] w-8" /></TableCell>
+                <TableCell className="px-1 py-0.5"></TableCell>
                 <TableCell className="px-1 py-0.5"><Input className="h-5 text-[10px] w-8" /></TableCell>
                 <TableCell className="px-1 py-0.5"><Input className="h-5 text-[10px] w-10" /></TableCell>
                 <TableCell className="px-1 py-0.5"><Input className="h-5 text-[10px] w-16" /></TableCell>
