@@ -1464,8 +1464,92 @@ const FormVariationsDemo = () => {
     if (isESLType) {
       return (
         <div className="space-y-3">
+          {/* Expand/Collapse + Show/Hide controls */}
+          <div className="flex justify-end gap-2 mb-2 items-center">
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="ghost" size="sm" className="text-xs text-muted-foreground hover:text-foreground">
+                  <Settings className="h-3.5 w-3.5 mr-1" />
+                  ({eslGeneralIds.length - eslGeneralHidden.length}/{eslGeneralIds.length})
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-60 p-3" align="end">
+                <div className="space-y-1">
+                  <div className="flex items-center justify-between mb-2">
+                    <p className="text-xs font-medium text-muted-foreground">Show / hide sections</p>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <button
+                          onClick={() => { setEslGeneralHidden([]); setEslGeneralOrder([...eslGeneralIds]); }}
+                          className="p-1 rounded-md hover:bg-muted transition-colors"
+                        >
+                          <RotateCcw className="h-3 w-3 text-muted-foreground" />
+                        </button>
+                      </TooltipTrigger>
+                      <TooltipContent side="bottom" className="text-xs">Reset</TooltipContent>
+                    </Tooltip>
+                  </div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <Button variant="outline" size="sm" className="text-[10px] h-6 px-2" onClick={() => setEslGeneralHidden([])}>All</Button>
+                    <Button variant="outline" size="sm" className="text-[10px] h-6 px-2" onClick={() => setEslGeneralHidden([...eslGeneralIds])}>None</Button>
+                  </div>
+                  {eslGeneralOrder.map((val) => (
+                    <div
+                      key={val}
+                      draggable
+                      onDragStart={(e) => handleEslDragStart(e, val)}
+                      onDragOver={(e) => handleEslDragOver(e, val)}
+                      onDragLeave={handleEslDragLeave}
+                      onDrop={(e) => handleEslDrop(e, val)}
+                      onDragEnd={handleEslDragEnd}
+                      className={cn(
+                        "flex items-center gap-1.5 py-1 px-1 rounded-md transition-all",
+                        eslDraggedSection === val && "opacity-40",
+                        eslDragOverSection === val && "border-t-2 border-primary"
+                      )}
+                    >
+                      <GripVertical className="h-3 w-3 text-muted-foreground cursor-grab active:cursor-grabbing shrink-0" />
+                      <Checkbox
+                        id={`esl-gen-${val}`}
+                        checked={!eslGeneralHidden.includes(val)}
+                        onCheckedChange={(checked) => {
+                          setEslGeneralHidden(prev => checked ? prev.filter(v => v !== val) : [...prev, val]);
+                        }}
+                      />
+                      <label htmlFor={`esl-gen-${val}`} className="text-xs cursor-pointer flex-1">{eslGeneralLabels[val]}</label>
+                      {eslGeneralHidden.includes(val) ? (
+                        <EyeOff className="h-3 w-3 text-muted-foreground" />
+                      ) : (
+                        <Eye className="h-3 w-3 text-muted-foreground" />
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </PopoverContent>
+            </Popover>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-xs text-muted-foreground hover:text-foreground"
+              onClick={() => setEslGeneralOpen(eslGeneralIds.filter(id => !eslGeneralHidden.includes(id)))}
+            >
+              <Maximize2 className="h-3.5 w-3.5 mr-1" />
+              Expand
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-xs text-muted-foreground hover:text-foreground"
+              onClick={() => setEslGeneralOpen([])}
+            >
+              <Minimize2 className="h-3.5 w-3.5 mr-1" />
+              Collapse
+            </Button>
+          </div>
           {/* Sub-accordions for ESL General Section */}
-          <Accordion type="multiple" defaultValue={["general-info"]} className="space-y-0">
+          <Accordion type="multiple" value={eslGeneralOpen} onValueChange={setEslGeneralOpen} className="space-y-0">
+          {eslGeneralOrder.filter(id => !eslGeneralHidden.includes(id)).map((sectionId) => {
+            const items: Record<string, React.ReactNode> = {
             <AccordionItem value="general-info" className="border-b border-border">
               <AccordionTrigger className="hover:no-underline py-3 text-sm font-medium">
                 General Information
