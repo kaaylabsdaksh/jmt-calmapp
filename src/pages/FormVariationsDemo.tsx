@@ -1741,7 +1741,9 @@ const FormVariationsDemo = () => {
                       </div>
                       <div className="grid grid-cols-1 gap-3 p-3 bg-muted/30 border border-border rounded-md">
                         <div className="space-y-1.5">
-                          <Label htmlFor="arrivalDate" className="text-xs font-medium">Date</Label>
+                          <Label htmlFor="arrivalDate" className="text-xs font-medium">
+                            Date <span className="text-destructive">*</span>
+                          </Label>
                           <Input
                             id="arrivalDate"
                             type="date"
@@ -1751,18 +1753,102 @@ const FormVariationsDemo = () => {
                           />
                         </div>
                         <div className="space-y-1.5">
-                          <Label htmlFor="arrivalType" className="text-xs font-medium">Type</Label>
+                          <Label htmlFor="arrivalType" className="text-xs font-medium">
+                            Type <span className="text-destructive">*</span>
+                          </Label>
                           <Select value={formData.arrivalType} onValueChange={(value) => handleInputChange("arrivalType", value)}>
                             <SelectTrigger className="h-8 text-sm">
-                              <SelectValue />
+                              <SelectValue placeholder="Select type" />
                             </SelectTrigger>
                             <SelectContent className="bg-popover border z-50">
                               <SelectItem value="jm-driver-pickup">JM Driver Pickup</SelectItem>
-                              <SelectItem value="customer-dropoff">Customer Drop Off</SelectItem>
+                              <SelectItem value="customer-dropoff">Customer Dropoff</SelectItem>
                               <SelectItem value="shipped">Shipped</SelectItem>
+                              <SelectItem value="surplus">Surplus</SelectItem>
                             </SelectContent>
                           </Select>
                         </div>
+
+                        {formData.arrivalType === "jm-driver-pickup" && (
+                          <div className="pt-3 mt-1 border-t border-border space-y-3">
+                            <div className="space-y-1.5">
+                              <Label className="text-xs font-medium">Driver</Label>
+                              <Select
+                                value={formData.arrivalDriver || ""}
+                                onValueChange={(value) => handleInputChange("arrivalDriver", value)}
+                              >
+                                <SelectTrigger className="h-8 text-sm">
+                                  <SelectValue placeholder="Select driver" />
+                                </SelectTrigger>
+                                <SelectContent className="bg-popover border z-50">
+                                  <SelectItem value="driver-1">Driver 1</SelectItem>
+                                  <SelectItem value="driver-2">Driver 2</SelectItem>
+                                  <SelectItem value="driver-3">Driver 3</SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </div>
+                            <div className="space-y-1.5">
+                              <Label className="text-xs font-medium">Pickup Date</Label>
+                              <Input
+                                type="date"
+                                value={formData.arrivalPickupDate || ""}
+                                onChange={(e) => handleInputChange("arrivalPickupDate", e.target.value)}
+                                className="h-8 text-sm"
+                              />
+                            </div>
+                          </div>
+                        )}
+
+                        {formData.arrivalType === "customer-dropoff" && (
+                          <div className="pt-3 mt-1 border-t border-border space-y-1.5">
+                            <Label className="text-xs font-medium">Name</Label>
+                            <Input
+                              value={formData.arrivalName || ""}
+                              onChange={(e) => handleInputChange("arrivalName", e.target.value)}
+                              placeholder="Enter name"
+                              className="h-8 text-sm"
+                            />
+                          </div>
+                        )}
+
+                        {formData.arrivalType === "shipped" && (
+                          <div className="pt-3 mt-1 border-t border-border space-y-1.5">
+                            <Label className="text-xs font-medium">Ship Type</Label>
+                            <Select
+                              value={formData.arrivalShipType || ""}
+                              onValueChange={(value) => handleInputChange("arrivalShipType", value)}
+                            >
+                              <SelectTrigger className="h-8 text-sm">
+                                <SelectValue placeholder="Select ship type" />
+                              </SelectTrigger>
+                              <SelectContent className="bg-popover border z-50">
+                                <SelectItem value="fedex">FedEx</SelectItem>
+                                <SelectItem value="ups">UPS</SelectItem>
+                                <SelectItem value="usps">USPS</SelectItem>
+                                <SelectItem value="freight">Freight</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                        )}
+
+                        {formData.arrivalType === "surplus" && (
+                          <div className="pt-3 mt-1 border-t border-border space-y-1.5">
+                            <Label className="text-xs font-medium">Location</Label>
+                            <Select
+                              value={formData.arrivalSurplusLocation || ""}
+                              onValueChange={(value) => handleInputChange("arrivalSurplusLocation", value)}
+                            >
+                              <SelectTrigger className="h-8 text-sm">
+                                <SelectValue placeholder="Select location" />
+                              </SelectTrigger>
+                              <SelectContent className="bg-popover border z-50">
+                                <SelectItem value="warehouse-a">Warehouse A</SelectItem>
+                                <SelectItem value="warehouse-b">Warehouse B</SelectItem>
+                                <SelectItem value="yard">Yard</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                        )}
                       </div>
                     </div>
 
