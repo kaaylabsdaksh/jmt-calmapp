@@ -3717,6 +3717,8 @@ const FormVariationsDemo = () => {
                 <TableHead className="w-6 text-center px-1 py-1 h-7">
                   <Checkbox className="h-3 w-3" />
                 </TableHead>
+                <TableHead className="text-[10px] font-medium px-1.5 py-1 h-7">E</TableHead>
+                <TableHead className="text-[10px] font-medium px-1.5 py-1 h-7">F</TableHead>
                 <TableHead className="text-[10px] font-medium px-1.5 py-1 h-7">Sort</TableHead>
                 <TableHead className="text-[10px] font-medium px-1.5 py-1 h-7">Manufacturer</TableHead>
                 <TableHead className="text-[10px] font-medium px-1.5 py-1 h-7">Class</TableHead>
