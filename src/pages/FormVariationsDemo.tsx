@@ -61,6 +61,50 @@ const FormVariationsDemo = () => {
   const [draggedSection, setDraggedSection] = useState<string | null>(null);
   const [dragOverSection, setDragOverSection] = useState<string | null>(null);
 
+  // ESL General Section accordion controls
+  const eslGeneralIds = ['general-info','arrival-info','departure-info','delivery-status','other-info','misc-info','cost-info','accessories','comments'];
+  const eslGeneralLabels: Record<string,string> = {
+    'general-info': 'General Information',
+    'arrival-info': 'Arrival Information',
+    'departure-info': 'Departure Information',
+    'delivery-status': 'Delivery Status',
+    'other-info': 'Other Information',
+    'misc-info': 'Misc Information',
+    'cost-info': 'Cost Information',
+    'accessories': 'Accessories',
+    'comments': 'Comments',
+  };
+  const [eslGeneralOpen, setEslGeneralOpen] = useState<string[]>(['general-info']);
+  const [eslGeneralHidden, setEslGeneralHidden] = useState<string[]>([]);
+  const [eslGeneralOrder, setEslGeneralOrder] = useState<string[]>([...eslGeneralIds]);
+  const [eslDraggedSection, setEslDraggedSection] = useState<string | null>(null);
+  const [eslDragOverSection, setEslDragOverSection] = useState<string | null>(null);
+  const handleEslDragStart = (e: React.DragEvent, id: string) => {
+    setEslDraggedSection(id);
+    e.dataTransfer.effectAllowed = 'move';
+  };
+  const handleEslDragOver = (e: React.DragEvent, id: string) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    if (id !== eslDraggedSection) setEslDragOverSection(id);
+  };
+  const handleEslDragLeave = () => setEslDragOverSection(null);
+  const handleEslDrop = (e: React.DragEvent, targetId: string) => {
+    e.preventDefault();
+    setEslDragOverSection(null);
+    if (!eslDraggedSection || eslDraggedSection === targetId) return;
+    setEslGeneralOrder(prev => {
+      const next = [...prev];
+      const fromIdx = next.indexOf(eslDraggedSection);
+      const toIdx = next.indexOf(targetId);
+      next.splice(fromIdx, 1);
+      next.splice(toIdx, 0, eslDraggedSection);
+      return next;
+    });
+    setEslDraggedSection(null);
+  };
+  const handleEslDragEnd = () => { setEslDraggedSection(null); setEslDragOverSection(null); };
+
   const moveSectionUp = (index: number) => {
     if (index === 0) return;
     setSectionOrder(prev => {
