@@ -973,6 +973,26 @@ const FormVariationsDemo = () => {
 
   // Dynamic tabs based on type selection
   const isESLType = formData.type && (formData.type.startsWith('esl-') || formData.type.startsWith('itl-'));
+
+  // ESL General Section mandatory completion gate — locks other tabs until filled
+  const isEslGeneralComplete = Boolean(
+    formData.reportNumber &&
+    formData.itemStatus &&
+    formData.calFreq &&
+    formData.priority &&
+    formData.location &&
+    formData.division &&
+    formData.actionCode &&
+    formData.poNumber &&
+    formData.needBy
+  );
+
+  // Force back to General tab if other tab becomes locked
+  useEffect(() => {
+    if (isESLType && !isEslGeneralComplete && activeEslTab !== 'general') {
+      setActiveEslTab('general');
+    }
+  }, [isEslGeneralComplete, isESLType, activeEslTab]);
   
   // Measure footer height dynamically
   useEffect(() => {
