@@ -61,6 +61,50 @@ const FormVariationsDemo = () => {
   const [draggedSection, setDraggedSection] = useState<string | null>(null);
   const [dragOverSection, setDragOverSection] = useState<string | null>(null);
 
+  // ESL General Section accordion controls
+  const eslGeneralIds = ['general-info','arrival-info','departure-info','delivery-status','other-info','misc-info','cost-info','accessories','comments'];
+  const eslGeneralLabels: Record<string,string> = {
+    'general-info': 'General Information',
+    'arrival-info': 'Arrival Information',
+    'departure-info': 'Departure Information',
+    'delivery-status': 'Delivery Status',
+    'other-info': 'Other Information',
+    'misc-info': 'Misc Information',
+    'cost-info': 'Cost Information',
+    'accessories': 'Accessories',
+    'comments': 'Comments',
+  };
+  const [eslGeneralOpen, setEslGeneralOpen] = useState<string[]>(['general-info']);
+  const [eslGeneralHidden, setEslGeneralHidden] = useState<string[]>([]);
+  const [eslGeneralOrder, setEslGeneralOrder] = useState<string[]>([...eslGeneralIds]);
+  const [eslDraggedSection, setEslDraggedSection] = useState<string | null>(null);
+  const [eslDragOverSection, setEslDragOverSection] = useState<string | null>(null);
+  const handleEslDragStart = (e: React.DragEvent, id: string) => {
+    setEslDraggedSection(id);
+    e.dataTransfer.effectAllowed = 'move';
+  };
+  const handleEslDragOver = (e: React.DragEvent, id: string) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    if (id !== eslDraggedSection) setEslDragOverSection(id);
+  };
+  const handleEslDragLeave = () => setEslDragOverSection(null);
+  const handleEslDrop = (e: React.DragEvent, targetId: string) => {
+    e.preventDefault();
+    setEslDragOverSection(null);
+    if (!eslDraggedSection || eslDraggedSection === targetId) return;
+    setEslGeneralOrder(prev => {
+      const next = [...prev];
+      const fromIdx = next.indexOf(eslDraggedSection);
+      const toIdx = next.indexOf(targetId);
+      next.splice(fromIdx, 1);
+      next.splice(toIdx, 0, eslDraggedSection);
+      return next;
+    });
+    setEslDraggedSection(null);
+  };
+  const handleEslDragEnd = () => { setEslDraggedSection(null); setEslDragOverSection(null); };
+
   const moveSectionUp = (index: number) => {
     if (index === 0) return;
     setSectionOrder(prev => {
@@ -1420,9 +1464,93 @@ const FormVariationsDemo = () => {
     if (isESLType) {
       return (
         <div className="space-y-3">
+          {/* Expand/Collapse + Show/Hide controls */}
+          <div className="flex justify-end gap-2 mb-2 items-center">
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="ghost" size="sm" className="text-xs text-muted-foreground hover:text-foreground">
+                  <Settings className="h-3.5 w-3.5 mr-1" />
+                  ({eslGeneralIds.length - eslGeneralHidden.length}/{eslGeneralIds.length})
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-60 p-3" align="end">
+                <div className="space-y-1">
+                  <div className="flex items-center justify-between mb-2">
+                    <p className="text-xs font-medium text-muted-foreground">Show / hide sections</p>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <button
+                          onClick={() => { setEslGeneralHidden([]); setEslGeneralOrder([...eslGeneralIds]); }}
+                          className="p-1 rounded-md hover:bg-muted transition-colors"
+                        >
+                          <RotateCcw className="h-3 w-3 text-muted-foreground" />
+                        </button>
+                      </TooltipTrigger>
+                      <TooltipContent side="bottom" className="text-xs">Reset</TooltipContent>
+                    </Tooltip>
+                  </div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <Button variant="outline" size="sm" className="text-[10px] h-6 px-2" onClick={() => setEslGeneralHidden([])}>All</Button>
+                    <Button variant="outline" size="sm" className="text-[10px] h-6 px-2" onClick={() => setEslGeneralHidden([...eslGeneralIds])}>None</Button>
+                  </div>
+                  {eslGeneralOrder.map((val) => (
+                    <div
+                      key={val}
+                      draggable
+                      onDragStart={(e) => handleEslDragStart(e, val)}
+                      onDragOver={(e) => handleEslDragOver(e, val)}
+                      onDragLeave={handleEslDragLeave}
+                      onDrop={(e) => handleEslDrop(e, val)}
+                      onDragEnd={handleEslDragEnd}
+                      className={cn(
+                        "flex items-center gap-1.5 py-1 px-1 rounded-md transition-all",
+                        eslDraggedSection === val && "opacity-40",
+                        eslDragOverSection === val && "border-t-2 border-primary"
+                      )}
+                    >
+                      <GripVertical className="h-3 w-3 text-muted-foreground cursor-grab active:cursor-grabbing shrink-0" />
+                      <Checkbox
+                        id={`esl-gen-${val}`}
+                        checked={!eslGeneralHidden.includes(val)}
+                        onCheckedChange={(checked) => {
+                          setEslGeneralHidden(prev => checked ? prev.filter(v => v !== val) : [...prev, val]);
+                        }}
+                      />
+                      <label htmlFor={`esl-gen-${val}`} className="text-xs cursor-pointer flex-1">{eslGeneralLabels[val]}</label>
+                      {eslGeneralHidden.includes(val) ? (
+                        <EyeOff className="h-3 w-3 text-muted-foreground" />
+                      ) : (
+                        <Eye className="h-3 w-3 text-muted-foreground" />
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </PopoverContent>
+            </Popover>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-xs text-muted-foreground hover:text-foreground"
+              onClick={() => setEslGeneralOpen(eslGeneralIds.filter(id => !eslGeneralHidden.includes(id)))}
+            >
+              <Maximize2 className="h-3.5 w-3.5 mr-1" />
+              Expand
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-xs text-muted-foreground hover:text-foreground"
+              onClick={() => setEslGeneralOpen([])}
+            >
+              <Minimize2 className="h-3.5 w-3.5 mr-1" />
+              Collapse
+            </Button>
+          </div>
           {/* Sub-accordions for ESL General Section */}
-          <Accordion type="multiple" defaultValue={["general-info"]} className="space-y-0">
-            <AccordionItem value="general-info" className="border-b border-border">
+          <Accordion type="multiple" value={eslGeneralOpen} onValueChange={setEslGeneralOpen} className="space-y-0">
+          {eslGeneralOrder.filter(id => !eslGeneralHidden.includes(id)).map((sectionId) => {
+            const items: Record<string, React.ReactNode> = {
+            'general-info': (<AccordionItem value="general-info" className="border-b border-border">
               <AccordionTrigger className="hover:no-underline py-3 text-sm font-medium">
                 General Information
               </AccordionTrigger>
@@ -1565,9 +1693,9 @@ const FormVariationsDemo = () => {
                 </CardContent>
               </Card>
               </AccordionContent>
-            </AccordionItem>
+            </AccordionItem>),
 
-            <AccordionItem value="arrival-info" className="border-b border-border">
+            'arrival-info': (<AccordionItem value="arrival-info" className="border-b border-border">
               <AccordionTrigger className="hover:no-underline py-3 text-sm font-medium">
                 Arrival Information
               </AccordionTrigger>
@@ -1600,9 +1728,9 @@ const FormVariationsDemo = () => {
                   </div>
                 </div>
               </AccordionContent>
-            </AccordionItem>
+            </AccordionItem>),
 
-            <AccordionItem value="departure-info" className="border-b border-border">
+            'departure-info': (<AccordionItem value="departure-info" className="border-b border-border">
               <AccordionTrigger className="hover:no-underline py-3 text-sm font-medium">
                 Departure Information
               </AccordionTrigger>
@@ -1707,9 +1835,9 @@ const FormVariationsDemo = () => {
                   )}
                 </div>
               </AccordionContent>
-            </AccordionItem>
+            </AccordionItem>),
 
-            <AccordionItem value="delivery-status" className="border-b border-border">
+            'delivery-status': (<AccordionItem value="delivery-status" className="border-b border-border">
               <AccordionTrigger className="hover:no-underline py-3 text-sm font-medium">
                 Delivery Status
               </AccordionTrigger>
@@ -1723,9 +1851,9 @@ const FormVariationsDemo = () => {
                   />
                 </div>
               </AccordionContent>
-            </AccordionItem>
+            </AccordionItem>),
 
-            <AccordionItem value="other-info" className="border-b border-border">
+            'other-info': (<AccordionItem value="other-info" className="border-b border-border">
               <AccordionTrigger className="hover:no-underline py-3 text-sm font-medium">
                 Other Information
               </AccordionTrigger>
@@ -1817,9 +1945,9 @@ const FormVariationsDemo = () => {
                   </div>
                 </div>
               </AccordionContent>
-            </AccordionItem>
+            </AccordionItem>),
 
-            <AccordionItem value="misc-info" className="border-b border-border">
+            'misc-info': (<AccordionItem value="misc-info" className="border-b border-border">
               <AccordionTrigger className="hover:no-underline py-3 text-sm font-medium">
                 Misc. Information
               </AccordionTrigger>
@@ -1835,9 +1963,9 @@ const FormVariationsDemo = () => {
                 </CardContent>
               </Card>
               </AccordionContent>
-            </AccordionItem>
+            </AccordionItem>),
 
-            <AccordionItem value="cost-info" className="border-b border-border">
+            'cost-info': (<AccordionItem value="cost-info" className="border-b border-border">
               <AccordionTrigger className="hover:no-underline py-3 text-sm font-medium">
                 Cost Information
               </AccordionTrigger>
@@ -1848,9 +1976,9 @@ const FormVariationsDemo = () => {
                 </CardContent>
               </Card>
               </AccordionContent>
-            </AccordionItem>
+            </AccordionItem>),
 
-            <AccordionItem value="accessories" className="border-b border-border">
+            'accessories': (<AccordionItem value="accessories" className="border-b border-border">
               <AccordionTrigger className="hover:no-underline py-3 text-sm font-medium">
                 Accessories
               </AccordionTrigger>
@@ -1975,9 +2103,9 @@ const FormVariationsDemo = () => {
                 </CardContent>
               </Card>
               </AccordionContent>
-            </AccordionItem>
+            </AccordionItem>),
 
-            <AccordionItem value="comments" className="border-b border-border last:border-b-0">
+            'comments': (<AccordionItem value="comments" className="border-b border-border last:border-b-0">
               <AccordionTrigger className="hover:no-underline py-3 text-sm font-medium">
                 Comments
               </AccordionTrigger>
@@ -2054,7 +2182,10 @@ const FormVariationsDemo = () => {
                 </CardContent>
               </Card>
               </AccordionContent>
-            </AccordionItem>
+            </AccordionItem>),
+            };
+            return <React.Fragment key={sectionId}>{items[sectionId]}</React.Fragment>;
+          })}
           </Accordion>
         </div>
       );
