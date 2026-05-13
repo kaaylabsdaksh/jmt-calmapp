@@ -2092,7 +2092,63 @@ const FormVariationsDemo = () => {
               <AccordionContent className="pb-3">
               <Card className="border-0 shadow-sm">
                 <CardContent className="p-3">
-                  {renderTestingSection()}
+                  {(() => {
+                    const rows = [
+                      { key: 'testing', label: 'Testing', qty: 0, costField: 'eslTestCost', editable: false },
+                      { key: 'expedite', label: 'Expedite', qty: 0, costField: 'expediteCost', editable: false, hideQty: true },
+                      { key: 'emergency', label: 'Emergency', qty: 0, costField: 'emergencyCost', editable: false, hideQty: true },
+                      { key: 'replacement', label: 'Replacement', qty: 0, costField: 'repairCostTotal', editable: true },
+                      { key: 'newSales', label: 'New Sales', qty: 0, costField: 'partsCostTotal', editable: true, defaultCost: '100.00' },
+                    ] as const;
+                    const parse = (v: string) => parseFloat(v || '0') || 0;
+                    const totalQty = rows.reduce((s, r) => s + (r.hideQty ? 0 : r.qty), 0);
+                    const totalCost = rows.reduce((s, r) => {
+                      const v = (formData as any)[r.costField] ?? r.defaultCost ?? '0';
+                      return s + parse(v);
+                    }, 0);
+                    return (
+                      <div className="rounded-lg border border-border bg-card overflow-hidden max-w-md">
+                        <div className="grid grid-cols-[1fr_80px_120px] items-center bg-muted/40 px-4 py-2 text-[11px] font-medium text-muted-foreground">
+                          <div></div>
+                          <div className="text-center">Qty</div>
+                          <div className="text-right">Cost</div>
+                        </div>
+                        <div className="divide-y divide-border">
+                          {rows.map((r) => {
+                            const value = (formData as any)[r.costField] ?? r.defaultCost ?? '0.00';
+                            return (
+                              <div key={r.key} className="grid grid-cols-[1fr_80px_120px] items-center px-4 py-2">
+                                <Label className="text-xs font-medium text-foreground">{r.label}</Label>
+                                <div className="text-center text-xs text-muted-foreground tabular-nums">
+                                  {r.hideQty ? '' : r.qty}
+                                </div>
+                                <div className="flex justify-end">
+                                  <div className="relative w-24">
+                                    <span className="absolute left-2 top-1/2 -translate-y-1/2 text-[11px] text-muted-foreground pointer-events-none">$</span>
+                                    <Input
+                                      type="text"
+                                      inputMode="decimal"
+                                      value={value}
+                                      disabled={!r.editable}
+                                      onChange={(e) => handleInputChange(r.costField, e.target.value)}
+                                      className="h-7 pl-5 pr-2 text-xs text-right tabular-nums disabled:bg-muted/30 disabled:text-muted-foreground"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            );
+                          })}
+                          <div className="grid grid-cols-[1fr_80px_120px] items-center bg-muted/30 px-4 py-2.5">
+                            <div className="text-xs font-semibold text-foreground">Total</div>
+                            <div className="text-center text-xs font-semibold text-foreground tabular-nums">{totalQty}</div>
+                            <div className="text-right text-sm font-bold text-foreground tabular-nums pr-2">
+                              ${totalCost.toFixed(2)}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })()}
                 </CardContent>
               </Card>
               </AccordionContent>
