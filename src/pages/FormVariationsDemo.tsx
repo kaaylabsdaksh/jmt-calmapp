@@ -26,6 +26,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Calendar } from "@/components/ui/calendar";
+import { ModernDatePicker } from "@/components/ui/modern-date-picker";
 import { FixedActionFooter } from "@/components/FixedActionFooter";
 import { EstimateDetails } from "@/components/EstimateDetails";
 import { QF3Dialog } from "@/components/QF3Dialog";
