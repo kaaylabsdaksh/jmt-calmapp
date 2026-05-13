@@ -772,6 +772,11 @@ const FormVariationsDemo = () => {
     // Logistics Information
     arrivalDate: "",
     arrivalType: "",
+    arrivalDriver: "",
+    arrivalPickupDate: "",
+    arrivalName: "",
+    arrivalShipType: "",
+    arrivalSurplusLocation: "",
     arrivalLocation: "",
     driver: "",
     puDate: "",
