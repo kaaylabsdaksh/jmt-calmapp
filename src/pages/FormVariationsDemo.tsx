@@ -7595,55 +7595,50 @@ const FormVariationsDemo = () => {
 
   // Render work order header (default style)
   const renderWorkOrderHeader = () => (
-    <div className="bg-card border border-border rounded-lg p-4 sm:p-6 mb-4 sm:mb-6 mt-4 sm:mt-6">
-      <div className="flex flex-col gap-4">
-        
-        {/* Header Fields */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-min">
-          <div>
-            <Label className="text-sm font-medium text-muted-foreground">Work Order #</Label>
-            <Input
-              value={formData.workOrderNumber}
-              onChange={(e) => handleInputChange("workOrderNumber", e.target.value)}
-              className="mt-1 font-semibold text-lg"
-            />
+    <div className="bg-card border border-border rounded-lg px-4 py-3 mb-3 mt-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 auto-rows-min">
+        <div>
+          <Label className="text-xs font-medium text-muted-foreground">Work Order #</Label>
+          <Input
+            value={formData.workOrderNumber}
+            onChange={(e) => handleInputChange("workOrderNumber", e.target.value)}
+            className="mt-1 h-8 font-semibold text-sm"
+          />
+        </div>
+        <div>
+          <Label className="text-xs font-medium text-muted-foreground">SR Doc</Label>
+          <div className="text-sm px-2 bg-muted rounded border mt-1 h-8 flex items-center">
+            {formData.srDoc ? (
+              <a
+                href="#"
+                className="text-black hover:opacity-70 transition-opacity inline-flex items-center gap-1"
+                onClick={(e) => {
+                  e.preventDefault();
+                  console.log('Opening SR Document:', formData.srDoc);
+                }}
+              >
+                {formData.srDoc}
+                <ExternalLink className="h-3 w-3" />
+              </a>
+            ) : (
+              <span className="text-muted-foreground">-</span>
+            )}
           </div>
-          <div>
-            <Label className="text-sm font-medium text-muted-foreground">SR Doc</Label>
-            <div className="text-sm p-2 bg-muted rounded border mt-1 h-9 flex items-center">
-              {formData.srDoc ? (
-                <a 
-                  href="#"
-                  className="text-black hover:opacity-70 transition-opacity inline-flex items-center gap-1"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    console.log('Opening SR Document:', formData.srDoc);
-                    // TODO: Navigate to SR document or open in modal
-                  }}
-                >
-                  {formData.srDoc}
-                  <ExternalLink className="h-3 w-3" />
-                </a>
-              ) : (
-                <span className="text-muted-foreground">-</span>
-              )}
-            </div>
+        </div>
+        <div>
+          <Label className="text-xs font-medium text-muted-foreground">Salesperson</Label>
+          <div className="text-sm px-2 bg-muted rounded border mt-1 h-8 flex items-center">
+            {formData.salesperson || <span className="text-muted-foreground">Not assigned</span>}
           </div>
-          <div>
-            <Label className="text-sm font-medium text-muted-foreground">Salesperson</Label>
-            <div className="text-sm p-2 bg-muted rounded border mt-1 h-9 flex items-center">
-              {formData.salesperson || <span className="text-muted-foreground">Not assigned</span>}
-            </div>
-          </div>
-          <div>
-            <Label className="text-sm font-medium text-muted-foreground">Contact</Label>
-            <Input
-              value={formData.contact}
-              onChange={(e) => handleInputChange("contact", e.target.value)}
-              placeholder="Contact information"
-              className="mt-1"
-            />
-          </div>
+        </div>
+        <div>
+          <Label className="text-xs font-medium text-muted-foreground">Contact</Label>
+          <Input
+            value={formData.contact}
+            onChange={(e) => handleInputChange("contact", e.target.value)}
+            placeholder="Contact information"
+            className="mt-1 h-8 text-sm"
+          />
         </div>
       </div>
     </div>
