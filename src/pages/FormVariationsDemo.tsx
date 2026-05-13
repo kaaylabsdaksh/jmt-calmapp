@@ -3494,176 +3494,185 @@ const FormVariationsDemo = () => {
         </div>
       </div>
 
-      {/* Product Information and ID Information - Two Column Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Product Information */}
-        <div className="border border-border rounded-lg p-4 space-y-3">
-          <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Product Information</div>
-          
-          <div className="grid grid-cols-2 gap-3">
+      {/* Integrated Command Panel: ID header + Product specs + Accessories side panel */}
+      <div className="border border-border rounded-lg overflow-hidden bg-card">
+        {/* ID Information Header Bar */}
+        <div className="bg-muted/40 border-b border-border px-4 py-3">
+          <div className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-2">Identification</div>
+          <div className="grid grid-cols-3 gap-3">
             <div className="space-y-1">
-              <Label htmlFor="detailsManufacturer" className="text-xs">Manufacturer</Label>
-              <Select value={formData.manufacturer} onValueChange={(value) => handleInputChange("manufacturer", value)}>
-                <SelectTrigger className="h-8 text-xs">
-                  <SelectValue placeholder="Select manufacturer" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="3m">3M</SelectItem>
-                  <SelectItem value="salisbury">Salisbury</SelectItem>
-                  <SelectItem value="chance">Chance</SelectItem>
-                  <SelectItem value="cementex">Cementex</SelectItem>
-                  <SelectItem value="novax">Novax</SelectItem>
-                </SelectContent>
-              </Select>
+              <Label htmlFor="eslId" className="text-xs">ESL ID</Label>
+              <Input id="eslId" value={formData.eslId} onChange={(e) => handleInputChange("eslId", e.target.value)} placeholder="ESL ID" className="h-8 text-xs bg-background" />
             </div>
-
             <div className="space-y-1">
-              <Label htmlFor="detailsClass" className="text-xs">Class</Label>
-              <Select value={formData.itemClass} onValueChange={(value) => handleInputChange("itemClass", value)}>
-                <SelectTrigger className="h-8 text-xs">
-                  <SelectValue placeholder="Select class" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="class-0">Class 0</SelectItem>
-                  <SelectItem value="class-1">Class 1</SelectItem>
-                  <SelectItem value="class-2">Class 2</SelectItem>
-                  <SelectItem value="class-3">Class 3</SelectItem>
-                  <SelectItem value="class-4">Class 4</SelectItem>
-                </SelectContent>
-              </Select>
+              <Label htmlFor="custIdDetail" className="text-xs">Cust ID</Label>
+              <Input id="custIdDetail" value={formData.custIdDetail} onChange={(e) => handleInputChange("custIdDetail", e.target.value)} placeholder="Cust ID" className="h-8 text-xs bg-background" />
             </div>
-
             <div className="space-y-1">
-              <Label htmlFor="detailsSize" className="text-xs">Size</Label>
-              <Select value={formData.size} onValueChange={(value) => handleInputChange("size", value)}>
-                <SelectTrigger className="h-8 text-xs">
-                  <SelectValue placeholder="Select size" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="xs">XS</SelectItem>
-                  <SelectItem value="s">S</SelectItem>
-                  <SelectItem value="m">M</SelectItem>
-                  <SelectItem value="l">L</SelectItem>
-                  <SelectItem value="xl">XL</SelectItem>
-                  <SelectItem value="xxl">XXL</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-1">
-              <Label htmlFor="detailsColor" className="text-xs">Color</Label>
-              <Select value={formData.color} onValueChange={(value) => handleInputChange("color", value)}>
-                <SelectTrigger className="h-8 text-xs">
-                  <SelectValue placeholder="Select color" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="black">Black</SelectItem>
-                  <SelectItem value="red">Red</SelectItem>
-                  <SelectItem value="yellow">Yellow</SelectItem>
-                  <SelectItem value="orange">Orange</SelectItem>
-                  <SelectItem value="green">Green</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-
-          {/* Product Options Checkboxes */}
-          <div className="pt-3 border-t flex flex-wrap gap-4">
-            <div className="flex items-center space-x-2">
-              <Checkbox id="detailsNew" checked={formData.newEquip} onCheckedChange={(checked) => handleInputChange("newEquip", checked)} className="h-4 w-4" />
-              <Label htmlFor="detailsNew" className="text-xs cursor-pointer">New</Label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Checkbox id="detailsSlot" checked={formData.slot} onCheckedChange={(checked) => handleInputChange("slot", checked)} className="h-4 w-4" />
-              <Label htmlFor="detailsSlot" className="text-xs cursor-pointer">Slot</Label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Checkbox id="detailsEyelets" checked={formData.eyelets} onCheckedChange={(checked) => handleInputChange("eyelets", checked)} className="h-4 w-4" />
-              <Label htmlFor="detailsEyelets" className="text-xs cursor-pointer">Eyelets</Label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Checkbox id="detailsZip" checked={formData.zip} onCheckedChange={(checked) => handleInputChange("zip", checked)} className="h-4 w-4" />
-              <Label htmlFor="detailsZip" className="text-xs cursor-pointer">Zip</Label>
+              <Label htmlFor="tagNumber" className="text-xs">Tag #</Label>
+              <Input id="tagNumber" value={formData.tagNumber} onChange={(e) => handleInputChange("tagNumber", e.target.value)} placeholder="Tag #" className="h-8 text-xs bg-background" />
             </div>
           </div>
         </div>
 
-        {/* ID Information */}
-        <div className="space-y-4">
-          <div className="border border-border rounded-lg p-4 space-y-3">
-            <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">ID Information</div>
-            
-            <div className="grid grid-cols-3 gap-3">
+        {/* Body: Product specs (left) + Accessories (right) */}
+        <div className="p-4 grid grid-cols-1 lg:grid-cols-12 gap-6">
+          {/* Product Specifications */}
+          <div className="lg:col-span-8 space-y-4">
+            <div className="flex items-center gap-2">
+              <div className="h-3.5 w-1 bg-foreground/80 rounded-full"></div>
+              <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Product Specifications</div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3">
               <div className="space-y-1">
-                <Label htmlFor="eslId" className="text-xs">ESL ID:</Label>
-                <Input id="eslId" value={formData.eslId} onChange={(e) => handleInputChange("eslId", e.target.value)} placeholder="ESL ID" className="h-8 text-xs" />
+                <Label htmlFor="detailsManufacturer" className="text-xs">Manufacturer</Label>
+                <Select value={formData.manufacturer} onValueChange={(value) => handleInputChange("manufacturer", value)}>
+                  <SelectTrigger className="h-8 text-xs">
+                    <SelectValue placeholder="Select manufacturer" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="3m">3M</SelectItem>
+                    <SelectItem value="salisbury">Salisbury</SelectItem>
+                    <SelectItem value="chance">Chance</SelectItem>
+                    <SelectItem value="cementex">Cementex</SelectItem>
+                    <SelectItem value="novax">Novax</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
-              
+
               <div className="space-y-1">
-                <Label htmlFor="custIdDetail" className="text-xs">Cust ID:</Label>
-                <Input id="custIdDetail" value={formData.custIdDetail} onChange={(e) => handleInputChange("custIdDetail", e.target.value)} placeholder="Cust ID" className="h-8 text-xs" />
+                <Label htmlFor="detailsClass" className="text-xs">Class</Label>
+                <Select value={formData.itemClass} onValueChange={(value) => handleInputChange("itemClass", value)}>
+                  <SelectTrigger className="h-8 text-xs">
+                    <SelectValue placeholder="Select class" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="class-0">Class 0</SelectItem>
+                    <SelectItem value="class-1">Class 1</SelectItem>
+                    <SelectItem value="class-2">Class 2</SelectItem>
+                    <SelectItem value="class-3">Class 3</SelectItem>
+                    <SelectItem value="class-4">Class 4</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
-              
+
               <div className="space-y-1">
-                <Label htmlFor="tagNumber" className="text-xs">Tag #:</Label>
-                <Input id="tagNumber" value={formData.tagNumber} onChange={(e) => handleInputChange("tagNumber", e.target.value)} placeholder="Tag #" className="h-8 text-xs" />
+                <Label htmlFor="detailsSize" className="text-xs">Size</Label>
+                <Select value={formData.size} onValueChange={(value) => handleInputChange("size", value)}>
+                  <SelectTrigger className="h-8 text-xs">
+                    <SelectValue placeholder="Select size" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="xs">XS</SelectItem>
+                    <SelectItem value="s">S</SelectItem>
+                    <SelectItem value="m">M</SelectItem>
+                    <SelectItem value="l">L</SelectItem>
+                    <SelectItem value="xl">XL</SelectItem>
+                    <SelectItem value="xxl">XXL</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-1">
+                <Label htmlFor="detailsColor" className="text-xs">Color</Label>
+                <Select value={formData.color} onValueChange={(value) => handleInputChange("color", value)}>
+                  <SelectTrigger className="h-8 text-xs">
+                    <SelectValue placeholder="Select color" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="black">Black</SelectItem>
+                    <SelectItem value="red">Red</SelectItem>
+                    <SelectItem value="yellow">Yellow</SelectItem>
+                    <SelectItem value="orange">Orange</SelectItem>
+                    <SelectItem value="green">Green</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
             </div>
-          </div>
 
-        </div>
-      </div>
-
-      {/* Accessories Section - Full Width at Bottom */}
-      <div className="border border-border rounded-lg p-4 space-y-3">
-        <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Accessories</div>
-        
-        <div className="space-y-2">
-          {accessoriesList.map((item) => (
-            <div key={item.id} className="flex items-center gap-2">
-              <Select value={item.accessory} onValueChange={(value) => handleAccessoryChange(item.id, 'accessory', value)}>
-                <SelectTrigger className="h-8 text-xs flex-1">
-                  <SelectValue placeholder="Select accessory" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="protector">Protector</SelectItem>
-                  <SelectItem value="bag">Bag</SelectItem>
-                  <SelectItem value="case">Case</SelectItem>
-                  <SelectItem value="strap">Strap</SelectItem>
-                  <SelectItem value="clip">Clip</SelectItem>
-                </SelectContent>
-              </Select>
-              <Input 
-                type="number" 
-                placeholder="Qty" 
-                className="h-8 text-xs w-20 text-center" 
-                min="0"
-                value={item.qty}
-                onChange={(e) => handleAccessoryChange(item.id, 'qty', e.target.value)}
-              />
-              {accessoriesList.length > 1 && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-8 w-8 p-0 text-destructive hover:text-destructive"
-                  onClick={() => handleRemoveAccessory(item.id)}
+            {/* Product Option Chips */}
+            <div className="pt-3 border-t flex flex-wrap gap-2">
+              {[
+                { id: "detailsNew", key: "newEquip", label: "New" },
+                { id: "detailsSlot", key: "slot", label: "Slot" },
+                { id: "detailsEyelets", key: "eyelets", label: "Eyelets" },
+                { id: "detailsZip", key: "zip", label: "Zip" },
+              ].map((opt) => (
+                <label
+                  key={opt.id}
+                  htmlFor={opt.id}
+                  className="cursor-pointer flex items-center gap-2 px-3 py-1.5 bg-muted/40 border border-border rounded-md hover:border-foreground/40 transition-colors"
                 >
-                  <Trash2 className="h-4 w-4" />
-                </Button>
-              )}
+                  <Checkbox
+                    id={opt.id}
+                    checked={(formData as any)[opt.key]}
+                    onCheckedChange={(checked) => handleInputChange(opt.key, checked)}
+                    className="h-4 w-4"
+                  />
+                  <span className="text-xs font-medium">{opt.label}</span>
+                </label>
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
 
-        <Button
-          variant="ghost"
-          size="sm"
-          className="h-8 text-xs gap-1 text-muted-foreground hover:bg-transparent hover:opacity-70"
-          onClick={handleAddAccessory}
-        >
-          <Plus className="h-4 w-4" />
-          Add Accessory
-        </Button>
+          {/* Accessories Side Panel */}
+          <div className="lg:col-span-4 bg-muted/30 rounded-lg border border-border p-4 space-y-3">
+            <div className="flex items-center justify-between">
+              <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Accessories</div>
+              <span className="text-[10px] bg-muted text-muted-foreground px-1.5 py-0.5 rounded font-bold">
+                {accessoriesList.length} Total
+              </span>
+            </div>
+
+            <div className="space-y-2">
+              {accessoriesList.map((item) => (
+                <div key={item.id} className="flex items-center gap-2">
+                  <Select value={item.accessory} onValueChange={(value) => handleAccessoryChange(item.id, 'accessory', value)}>
+                    <SelectTrigger className="h-8 text-xs flex-1 bg-background">
+                      <SelectValue placeholder="Select accessory" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="protector">Protector</SelectItem>
+                      <SelectItem value="bag">Bag</SelectItem>
+                      <SelectItem value="case">Case</SelectItem>
+                      <SelectItem value="strap">Strap</SelectItem>
+                      <SelectItem value="clip">Clip</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Input
+                    type="number"
+                    placeholder="Qty"
+                    className="h-8 text-xs w-16 text-center bg-background"
+                    min="0"
+                    value={item.qty}
+                    onChange={(e) => handleAccessoryChange(item.id, 'qty', e.target.value)}
+                  />
+                  {accessoriesList.length > 1 && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-8 w-8 p-0 text-destructive hover:text-destructive"
+                      onClick={() => handleRemoveAccessory(item.id)}
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-full h-8 text-xs gap-1 border-dashed"
+              onClick={handleAddAccessory}
+            >
+              <Plus className="h-3.5 w-3.5" />
+              Add Accessory
+            </Button>
+          </div>
+        </div>
       </div>
 
       {/* Items Data Table */}
