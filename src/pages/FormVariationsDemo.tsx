@@ -75,6 +75,16 @@ const FormVariationsDemo = () => {
   const [eslGeneralOpen, setEslGeneralOpen] = useState<string[]>(['general-info']);
   const [eslGeneralHidden, setEslGeneralHidden] = useState<string[]>([]);
   const [eslGeneralOrder, setEslGeneralOrder] = useState<string[]>([...eslGeneralIds]);
+  // Reconcile order if section IDs change (e.g. after refactors)
+  useEffect(() => {
+    const valid = eslGeneralOrder.filter(id => eslGeneralIds.includes(id));
+    const missing = eslGeneralIds.filter(id => !valid.includes(id));
+    if (valid.length !== eslGeneralOrder.length || missing.length > 0) {
+      setEslGeneralOrder([...valid, ...missing]);
+    }
+    setEslGeneralHidden(prev => prev.filter(id => eslGeneralIds.includes(id)));
+    setEslGeneralOpen(prev => prev.filter(id => eslGeneralIds.includes(id)));
+  }, []);
   const [eslDraggedSection, setEslDraggedSection] = useState<string | null>(null);
   const [eslDragOverSection, setEslDragOverSection] = useState<string | null>(null);
   const handleEslDragStart = (e: React.DragEvent, id: string) => {
