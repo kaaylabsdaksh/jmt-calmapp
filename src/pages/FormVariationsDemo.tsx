@@ -3673,7 +3673,6 @@ const FormVariationsDemo = () => {
             </Button>
           </div>
         </div>
-        </div>
       </div>
 
       {/* Items Data Table */}
