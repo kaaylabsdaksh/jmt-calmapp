@@ -138,6 +138,10 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
   const [fieldValues, setFieldValues] = useState<Record<string, string>>({});
   const [showRecentSearches, setShowRecentSearches] = useState(false);
   const [recentSearches, setRecentSearches] = useState<RecentSearch[]>(loadRecentSearches);
+  const [savedFilters, setSavedFilters] = useState<SavedFilter[]>(loadSavedFilters);
+  const [saveFilterOpen, setSaveFilterOpen] = useState(false);
+  const [savedFiltersOpen, setSavedFiltersOpen] = useState(false);
+  const [filterName, setFilterName] = useState('');
   
   const [resultCount, setResultCount] = useState<number | null>(null);
   const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
