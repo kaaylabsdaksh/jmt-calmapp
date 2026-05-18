@@ -4492,239 +4492,271 @@ const FormVariationsDemo = () => {
             </Button>
           </div>
 
-          {/* Form Grid */}
-          <div className="space-y-4">
-            {/* Row 1: Work Type, Sort Numbers, Dates */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {/* Work Type, Technician & Status stacked vertically */}
-              <div className="space-y-2">
-                <div className="space-y-1.5">
-                  <Label className="text-xs font-medium text-muted-foreground">Work Type <span className="text-destructive">*</span></Label>
-                  <Select value={workStatusData.workType} onValueChange={(v) => handleWorkStatusChange('workType', v)}>
-                    <SelectTrigger className="h-9 bg-background border-input">
-                      <SelectValue placeholder="Select type..." />
-                    </SelectTrigger>
-                    <SelectContent className="bg-popover border z-50">
-                      <SelectItem value="calibration">Calibration</SelectItem>
-                      <SelectItem value="repair">Repair</SelectItem>
-                      <SelectItem value="inspection">Inspection</SelectItem>
-                      <SelectItem value="maintenance">Maintenance</SelectItem>
-                      <SelectItem value="adjustment">Adjustment</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-1.5">
-                  <Label className="text-xs font-medium text-muted-foreground">Technician <span className="text-destructive">*</span></Label>
-                  <Select value={workStatusData.technician} onValueChange={(v) => handleWorkStatusChange('technician', v)}>
-                    <SelectTrigger className="h-9 bg-background border-input">
-                      <SelectValue placeholder="Select technician..." />
-                    </SelectTrigger>
-                    <SelectContent className="bg-popover border z-50">
-                      <SelectItem value="lorraine-stepp-jenkins">Lorraine Stepp-Jenkins</SelectItem>
-                      <SelectItem value="john-smith">John Smith</SelectItem>
-                      <SelectItem value="jane-doe">Jane Doe</SelectItem>
-                      <SelectItem value="mike-wilson">Mike Wilson</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-1.5">
-                  <Label className="text-xs font-medium text-muted-foreground">Status <span className="text-destructive">*</span></Label>
-                  <Select value={workStatusData.status} onValueChange={(v) => handleWorkStatusChange('status', v)}>
-                    <SelectTrigger className="h-9 bg-background border-input">
-                      <SelectValue placeholder="Select status..." />
-                    </SelectTrigger>
-                    <SelectContent className="bg-popover border z-50">
-                      <SelectItem value="started">Started</SelectItem>
-                      <SelectItem value="in-progress">In Progress</SelectItem>
-                      <SelectItem value="paused">Paused</SelectItem>
-                      <SelectItem value="completed">Completed</SelectItem>
-                    </SelectContent>
-                  </Select>
+          {/* Form Grid - Grouped Timeline Layout */}
+          <div className="space-y-6">
+            {/* Section 1: Core Assignment & Sorting */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* Assignment Block */}
+              <div className="lg:col-span-2 space-y-3">
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-1">
+                    <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-tight">Work Type <span className="text-destructive">*</span></Label>
+                    <Select value={workStatusData.workType} onValueChange={(v) => handleWorkStatusChange('workType', v)}>
+                      <SelectTrigger className="h-8 text-xs bg-background border-input">
+                        <SelectValue placeholder="Select type..." />
+                      </SelectTrigger>
+                      <SelectContent className="bg-popover border z-50">
+                        <SelectItem value="calibration">Calibration</SelectItem>
+                        <SelectItem value="repair">Repair</SelectItem>
+                        <SelectItem value="inspection">Inspection</SelectItem>
+                        <SelectItem value="maintenance">Maintenance</SelectItem>
+                        <SelectItem value="adjustment">Adjustment</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-1">
+                    <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-tight">Technician <span className="text-destructive">*</span></Label>
+                    <Select value={workStatusData.technician} onValueChange={(v) => handleWorkStatusChange('technician', v)}>
+                      <SelectTrigger className="h-8 text-xs bg-background border-input">
+                        <SelectValue placeholder="Select technician..." />
+                      </SelectTrigger>
+                      <SelectContent className="bg-popover border z-50">
+                        <SelectItem value="lorraine-stepp-jenkins">Lorraine Stepp-Jenkins</SelectItem>
+                        <SelectItem value="john-smith">John Smith</SelectItem>
+                        <SelectItem value="jane-doe">Jane Doe</SelectItem>
+                        <SelectItem value="mike-wilson">Mike Wilson</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-1">
+                    <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-tight">Status <span className="text-destructive">*</span></Label>
+                    <Select value={workStatusData.status} onValueChange={(v) => handleWorkStatusChange('status', v)}>
+                      <SelectTrigger className="h-8 text-xs bg-background border-input">
+                        <SelectValue placeholder="Select status..." />
+                      </SelectTrigger>
+                      <SelectContent className="bg-popover border z-50">
+                        <SelectItem value="started">Started</SelectItem>
+                        <SelectItem value="in-progress">In Progress</SelectItem>
+                        <SelectItem value="paused">Paused</SelectItem>
+                        <SelectItem value="completed">Completed</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-1">
+                    <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-tight">Qty <span className="text-destructive">*</span></Label>
+                    <Input 
+                      className="h-8 text-xs bg-background"
+                      value={workStatusData.qty}
+                      onChange={(e) => handleWorkStatusChange('qty', e.target.value)}
+                      placeholder="0"
+                      required
+                    />
+                  </div>
                 </div>
               </div>
 
-              {/* Start Sort #, Stop Sort #, Qty stacked vertically */}
-              <div className="space-y-2">
-                <div className="space-y-1.5">
-                  <Label className="text-xs font-medium text-muted-foreground">Start Sort # <span className="text-destructive">*</span></Label>
+              {/* Sorting Block */}
+              <div className="space-y-3 lg:border-l lg:border-border lg:pl-6">
+                <div className="space-y-1">
+                  <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-tight">Start Sort # <span className="text-destructive">*</span></Label>
                   <Input 
-                    className="h-9 bg-background"
+                    className="h-8 text-xs bg-background"
                     value={workStatusData.startSort}
                     onChange={(e) => handleWorkStatusChange('startSort', e.target.value)}
                     placeholder="Enter..."
                     required
                   />
                 </div>
-                <div className="space-y-1.5">
-                  <Label className="text-xs font-medium text-muted-foreground">Stop Sort # <span className="text-destructive">*</span></Label>
+                <div className="space-y-1">
+                  <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-tight">Stop Sort # <span className="text-destructive">*</span></Label>
                   <Input 
-                    className="h-9 bg-background"
+                    className="h-8 text-xs bg-background"
                     value={workStatusData.stopSort}
                     onChange={(e) => handleWorkStatusChange('stopSort', e.target.value)}
                     placeholder="Enter..."
                     required
                   />
                 </div>
-                <div className="space-y-1.5">
-                  <Label className="text-xs font-medium text-muted-foreground">Qty <span className="text-destructive">*</span></Label>
-                  <Input 
-                    className="h-9 bg-background"
-                    value={workStatusData.qty}
-                    onChange={(e) => handleWorkStatusChange('qty', e.target.value)}
-                    placeholder="0"
-                    required
-                  />
-                </div>
-              </div>
-
-              {/* Start Date & Time with Start Button */}
-              <div className="space-y-2">
-                <div className="space-y-1.5">
-                  <Label className="text-xs font-medium text-muted-foreground">Start Date <span className="text-destructive">*</span></Label>
-                  <ModernDatePicker
-                    size="lg"
-                    value={workStatusData.startDate}
-                    onChange={(date) => handleWorkStatusChange('startDate', date)}
-                  />
-                </div>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className={cn(
-                        "h-9 w-full justify-start text-left font-normal bg-background",
-                        !workStatusData.startTime && "text-muted-foreground"
-                      )}
-                    >
-                      <Clock className="mr-2 h-4 w-4" />
-                      {workStatusData.startTime || <span>--:-- --</span>}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-3 bg-popover border z-50" align="start">
-                    <div className="flex gap-2">
-                      <Select 
-                        value={workStatusData.startTime.split(':')[0] || ''} 
-                        onValueChange={(hour) => {
-                          const mins = workStatusData.startTime.split(':')[1] || '00';
-                          handleWorkStatusChange('startTime', `${hour}:${mins}`);
-                        }}
-                      >
-                        <SelectTrigger className="w-20 h-9">
-                          <SelectValue placeholder="HH" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-popover border z-50 max-h-48">
-                          {Array.from({ length: 24 }, (_, i) => i.toString().padStart(2, '0')).map((hour) => (
-                            <SelectItem key={hour} value={hour}>{hour}</SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      <span className="flex items-center text-lg">:</span>
-                      <Select 
-                        value={workStatusData.startTime.split(':')[1] || ''} 
-                        onValueChange={(mins) => {
-                          const hour = workStatusData.startTime.split(':')[0] || '00';
-                          handleWorkStatusChange('startTime', `${hour}:${mins}`);
-                        }}
-                      >
-                        <SelectTrigger className="w-20 h-9">
-                          <SelectValue placeholder="MM" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-popover border z-50 max-h-48">
-                          {Array.from({ length: 60 }, (_, i) => i.toString().padStart(2, '0')).map((min) => (
-                            <SelectItem key={min} value={min}>{min}</SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </PopoverContent>
-                </Popover>
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  className="h-9 w-full border-border hover:bg-muted"
-                >
-                  <Play className="h-3 w-3 mr-1" />
-                  Start
-                </Button>
-              </div>
-
-              {/* Stop Date & Time with Stop Button */}
-              <div className="space-y-2">
-                <div className="space-y-1.5">
-                  <Label className="text-xs font-medium text-muted-foreground">Stop Date <span className="text-destructive">*</span></Label>
-                  <ModernDatePicker
-                    size="lg"
-                    value={workStatusData.stopDate}
-                    onChange={(date) => handleWorkStatusChange('stopDate', date)}
-                  />
-                </div>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className={cn(
-                        "h-9 w-full justify-start text-left font-normal bg-background",
-                        !workStatusData.stopTime && "text-muted-foreground"
-                      )}
-                    >
-                      <Clock className="mr-2 h-4 w-4" />
-                      {workStatusData.stopTime || <span>--:-- --</span>}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-3 bg-popover border z-50" align="start">
-                    <div className="flex gap-2">
-                      <Select 
-                        value={workStatusData.stopTime.split(':')[0] || ''} 
-                        onValueChange={(hour) => {
-                          const mins = workStatusData.stopTime.split(':')[1] || '00';
-                          handleWorkStatusChange('stopTime', `${hour}:${mins}`);
-                        }}
-                      >
-                        <SelectTrigger className="w-20 h-9">
-                          <SelectValue placeholder="HH" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-popover border z-50 max-h-48">
-                          {Array.from({ length: 24 }, (_, i) => i.toString().padStart(2, '0')).map((hour) => (
-                            <SelectItem key={hour} value={hour}>{hour}</SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      <span className="flex items-center text-lg">:</span>
-                      <Select 
-                        value={workStatusData.stopTime.split(':')[1] || ''} 
-                        onValueChange={(mins) => {
-                          const hour = workStatusData.stopTime.split(':')[0] || '00';
-                          handleWorkStatusChange('stopTime', `${hour}:${mins}`);
-                        }}
-                      >
-                        <SelectTrigger className="w-20 h-9">
-                          <SelectValue placeholder="MM" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-popover border z-50 max-h-48">
-                          {Array.from({ length: 60 }, (_, i) => i.toString().padStart(2, '0')).map((min) => (
-                            <SelectItem key={min} value={min}>{min}</SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </PopoverContent>
-                </Popover>
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  className="h-9 w-full border-border hover:bg-muted"
-                >
-                  <Square className="h-3 w-3 mr-1" />
-                  Stop
-                </Button>
               </div>
             </div>
 
-            {/* Row 3: Comments */}
+            {/* Section 2: Timeline Events */}
+            <div className="bg-muted/30 rounded-xl border border-border p-5">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative">
+                {/* Connector line for desktop */}
+                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-px bg-border hidden md:block" />
+
+                {/* Start Action */}
+                <div className="flex flex-col gap-3 bg-card p-4 rounded-lg border border-border shadow-sm">
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800">
+                      <Play className="h-3.5 w-3.5 ml-0.5" />
+                    </div>
+                    <p className="text-sm font-semibold text-foreground">Work Start</p>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="space-y-1">
+                      <Label className="text-[10px] font-bold uppercase text-muted-foreground">Start Date <span className="text-destructive">*</span></Label>
+                      <ModernDatePicker
+                        size="sm"
+                        value={workStatusData.startDate}
+                        onChange={(date) => handleWorkStatusChange('startDate', date)}
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-[10px] font-bold uppercase text-muted-foreground">Time</Label>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant="outline"
+                            className={cn(
+                              "h-7 w-full justify-start text-left font-normal bg-background text-xs",
+                              !workStatusData.startTime && "text-muted-foreground"
+                            )}
+                          >
+                            <Clock className="mr-1.5 h-3 w-3" />
+                            {workStatusData.startTime || <span>--:--</span>}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-2 bg-popover border z-50" align="start">
+                          <div className="flex gap-2">
+                            <Select 
+                              value={workStatusData.startTime.split(':')[0] || ''} 
+                              onValueChange={(hour) => {
+                                const mins = workStatusData.startTime.split(':')[1] || '00';
+                                handleWorkStatusChange('startTime', `${hour}:${mins}`);
+                              }}
+                            >
+                              <SelectTrigger className="w-16 h-7 text-xs">
+                                <SelectValue placeholder="HH" />
+                              </SelectTrigger>
+                              <SelectContent className="bg-popover border z-50 max-h-48">
+                                {Array.from({ length: 24 }, (_, i) => i.toString().padStart(2, '0')).map((hour) => (
+                                  <SelectItem key={hour} value={hour} className="text-xs">{hour}</SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                            <span className="flex items-center text-sm">:</span>
+                            <Select 
+                              value={workStatusData.startTime.split(':')[1] || ''} 
+                              onValueChange={(mins) => {
+                                const hour = workStatusData.startTime.split(':')[0] || '00';
+                                handleWorkStatusChange('startTime', `${hour}:${mins}`);
+                              }}
+                            >
+                              <SelectTrigger className="w-16 h-7 text-xs">
+                                <SelectValue placeholder="MM" />
+                              </SelectTrigger>
+                              <SelectContent className="bg-popover border z-50 max-h-48">
+                                {Array.from({ length: 60 }, (_, i) => i.toString().padStart(2, '0')).map((min) => (
+                                  <SelectItem key={min} value={min} className="text-xs">{min}</SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                          </div>
+                        </PopoverContent>
+                      </Popover>
+                    </div>
+                  </div>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    className="h-8 w-full border-border hover:bg-muted text-xs font-semibold"
+                  >
+                    <Play className="h-3 w-3 mr-1" />
+                    Start
+                  </Button>
+                </div>
+
+                {/* Stop Action */}
+                <div className="flex flex-col gap-3 bg-card p-4 rounded-lg border border-border shadow-sm">
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center text-red-600 dark:text-red-400 border border-red-200 dark:border-red-800">
+                      <Square className="h-3 w-3" />
+                    </div>
+                    <p className="text-sm font-semibold text-foreground">Work Stop</p>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="space-y-1">
+                      <Label className="text-[10px] font-bold uppercase text-muted-foreground">Stop Date <span className="text-destructive">*</span></Label>
+                      <ModernDatePicker
+                        size="sm"
+                        value={workStatusData.stopDate}
+                        onChange={(date) => handleWorkStatusChange('stopDate', date)}
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-[10px] font-bold uppercase text-muted-foreground">Time</Label>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant="outline"
+                            className={cn(
+                              "h-7 w-full justify-start text-left font-normal bg-background text-xs",
+                              !workStatusData.stopTime && "text-muted-foreground"
+                            )}
+                          >
+                            <Clock className="mr-1.5 h-3 w-3" />
+                            {workStatusData.stopTime || <span>--:--</span>}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-2 bg-popover border z-50" align="start">
+                          <div className="flex gap-2">
+                            <Select 
+                              value={workStatusData.stopTime.split(':')[0] || ''} 
+                              onValueChange={(hour) => {
+                                const mins = workStatusData.stopTime.split(':')[1] || '00';
+                                handleWorkStatusChange('stopTime', `${hour}:${mins}`);
+                              }}
+                            >
+                              <SelectTrigger className="w-16 h-7 text-xs">
+                                <SelectValue placeholder="HH" />
+                              </SelectTrigger>
+                              <SelectContent className="bg-popover border z-50 max-h-48">
+                                {Array.from({ length: 24 }, (_, i) => i.toString().padStart(2, '0')).map((hour) => (
+                                  <SelectItem key={hour} value={hour} className="text-xs">{hour}</SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                            <span className="flex items-center text-sm">:</span>
+                            <Select 
+                              value={workStatusData.stopTime.split(':')[1] || ''} 
+                              onValueChange={(mins) => {
+                                const hour = workStatusData.stopTime.split(':')[0] || '00';
+                                handleWorkStatusChange('stopTime', `${hour}:${mins}`);
+                              }}
+                            >
+                              <SelectTrigger className="w-16 h-7 text-xs">
+                                <SelectValue placeholder="MM" />
+                              </SelectTrigger>
+                              <SelectContent className="bg-popover border z-50 max-h-48">
+                                {Array.from({ length: 60 }, (_, i) => i.toString().padStart(2, '0')).map((min) => (
+                                  <SelectItem key={min} value={min} className="text-xs">{min}</SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                          </div>
+                        </PopoverContent>
+                      </Popover>
+                    </div>
+                  </div>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    className="h-8 w-full border-border hover:bg-muted text-xs font-semibold"
+                  >
+                    <Square className="h-3 w-3 mr-1" />
+                    Stop
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            {/* Section 3: Comments */}
             <div className="space-y-1.5">
-              <Label className="text-xs font-medium text-muted-foreground">Comments</Label>
+              <Label className="text-[11px] font-medium text-muted-foreground uppercase tracking-tight">Comments</Label>
               <Textarea 
-                className="min-h-[100px] bg-background resize-y"
+                className="min-h-[80px] bg-background resize-y text-sm"
                 value={workStatusData.comments}
                 onChange={(e) => handleWorkStatusChange('comments', e.target.value)}
                 placeholder="Enter any comments or notes..."
@@ -4735,14 +4767,14 @@ const FormVariationsDemo = () => {
             <div className="flex items-center justify-end gap-2 pt-2">
               <Button 
                 variant="outline"
-                className="border-border hover:bg-muted font-medium"
+                className="border-border hover:bg-muted font-medium text-xs h-8"
               >
                 Add Only
               </Button>
               <Button 
-                className="bg-primary text-primary-foreground hover:bg-primary/90 font-medium"
+                className="bg-primary text-primary-foreground hover:bg-primary/90 font-medium text-xs h-8"
               >
-                <Plus className="h-4 w-4 mr-1" />
+                <Plus className="h-3.5 w-3.5 mr-1" />
                 Add/Completed
               </Button>
             </div>
