@@ -8,7 +8,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Calendar as CalendarIcon, Search, X, Filter, Plus, Check, Clock, RotateCcw } from "lucide-react";
+import { Calendar as CalendarIcon, Search, X, Filter, Plus, Check, Clock, RotateCcw, Bookmark, Trash2 } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 
