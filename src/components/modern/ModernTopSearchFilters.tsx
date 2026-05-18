@@ -101,6 +101,22 @@ function saveRecentSearches(searches: RecentSearch[]) {
   catch {}
 }
 
+interface SavedFilter {
+  id: string;
+  name: string;
+  state: any;
+  timestamp: number;
+}
+const SAVED_FILTERS_KEY = 'wo-modern-saved-filters';
+function loadSavedFilters(): SavedFilter[] {
+  try { return JSON.parse(localStorage.getItem(SAVED_FILTERS_KEY) || '[]'); }
+  catch { return []; }
+}
+function persistSavedFilters(filters: SavedFilter[]) {
+  try { localStorage.setItem(SAVED_FILTERS_KEY, JSON.stringify(filters)); }
+  catch {}
+}
+
 const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopSearchFiltersProps) => {
   const [viewMode, setViewMode] = useState<'default' | 'csa'>('default');
   const [locationSearch, setLocationSearch] = useState('');
