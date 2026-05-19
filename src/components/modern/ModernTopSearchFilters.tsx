@@ -945,24 +945,53 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
         {/* Search & Clear Buttons - Default view only */}
         {viewMode === 'default' && (
           <div className="flex justify-between items-center gap-2 pt-1.5">
-            <div className="flex items-center gap-3">
-              {/* Split: Saved Filters dropdown + Save (+) action */}
+            {/* Left: quick-access recent chips only (compact) */}
+            <div className="flex items-center gap-1.5 min-h-[2rem]">
+              {savedFilters.length > 0 && (
+                <>
+                  <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider mr-1">Recent</span>
+                  {savedFilters.slice(0, 3).map((sf) => (
+                    <button
+                      key={sf.id}
+                      onClick={() => {
+                        const s = sf.state || {};
+                        setSearchValues(s.searchValues ?? searchValues);
+                        setSelectedLocations(s.selectedLocations ?? []);
+                        setDateFrom(s.dateFrom ? new Date(s.dateFrom) : undefined);
+                        setDateTo(s.dateTo ? new Date(s.dateTo) : undefined);
+                        setDateType(s.dateType ?? '');
+                        setSearchChips(s.searchChips ?? []);
+                        toast({ title: 'Filter applied', description: sf.name });
+                      }}
+                      className="h-7 px-2.5 rounded-full border border-border bg-muted/40 text-[12px] font-medium text-foreground/80 hover:border-input hover:bg-background hover:shadow-sm transition-all max-w-[160px] truncate"
+                      title={sf.name}
+                    >
+                      {sf.name}
+                    </button>
+                  ))}
+                </>
+              )}
+            </div>
+
+            {/* Right: toolbar with saved filters menu + actions */}
+            <div className="flex items-center gap-2">
+              {/* Saved Filters - compact icon split button */}
               <div className="inline-flex items-center shadow-sm">
                 <Popover open={savedFiltersOpen} onOpenChange={setSavedFiltersOpen}>
                   <PopoverTrigger asChild>
                     <button
                       type="button"
-                      className="flex items-center h-8 gap-2 px-3 border border-input bg-background rounded-l-md text-xs font-medium text-foreground hover:bg-muted/60 active:bg-muted transition-colors"
+                      title="Saved filters"
+                      className="flex items-center h-8 gap-1.5 px-2.5 border border-input bg-background rounded-l-md text-xs font-medium text-foreground hover:bg-muted/60 active:bg-muted transition-colors"
                     >
                       <Bookmark className="h-3.5 w-3.5 text-muted-foreground" />
-                      Saved Filters
                       {savedFilters.length > 0 && (
-                        <Badge variant="secondary" className="ml-0.5 h-4 px-1.5 text-[10px]">{savedFilters.length}</Badge>
+                        <Badge variant="secondary" className="h-4 px-1.5 text-[10px]">{savedFilters.length}</Badge>
                       )}
-                      <ChevronDown className="h-3 w-3 text-muted-foreground ml-0.5" />
+                      <ChevronDown className="h-3 w-3 text-muted-foreground" />
                     </button>
                   </PopoverTrigger>
-                  <PopoverContent className="w-72 p-0 bg-popover border shadow-xl rounded-lg z-[60]" align="start">
+                  <PopoverContent className="w-72 p-0 bg-popover border shadow-xl rounded-lg z-[60]" align="end">
                     <div className="p-2.5 border-b">
                       <p className="text-xs font-semibold text-foreground">Saved Filters</p>
                       <p className="text-[11px] text-muted-foreground">Apply a previously saved filter</p>
@@ -1022,7 +1051,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                       <Plus className="h-4 w-4" />
                     </button>
                   </PopoverTrigger>
-                  <PopoverContent className="w-72 p-3 bg-popover border shadow-xl rounded-lg z-[60]" align="start">
+                  <PopoverContent className="w-72 p-3 bg-popover border shadow-xl rounded-lg z-[60]" align="end">
                     <p className="text-xs font-semibold text-foreground mb-1">Save current filters</p>
                     <p className="text-[11px] text-muted-foreground mb-2.5">Give this filter set a name so you can reapply it later.</p>
                     <Input
@@ -1078,43 +1107,9 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                 </Popover>
               </div>
 
-              {/* Recent quick-access chips */}
-              {savedFilters.length > 0 && (
-                <div className="flex items-center gap-1.5 border-l border-border pl-3">
-                  <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider mr-1">Recent</span>
-                  {savedFilters.slice(0, 2).map((sf) => (
-                    <button
-                      key={sf.id}
-                      onClick={() => {
-                        const s = sf.state || {};
-                        setSearchValues(s.searchValues ?? searchValues);
-                        setSelectedLocations(s.selectedLocations ?? []);
-                        setDateFrom(s.dateFrom ? new Date(s.dateFrom) : undefined);
-                        setDateTo(s.dateTo ? new Date(s.dateTo) : undefined);
-                        setDateType(s.dateType ?? '');
-                        setSearchChips(s.searchChips ?? []);
-                        toast({ title: 'Filter applied', description: sf.name });
-                      }}
-                      className="h-7 px-2.5 rounded-full border border-border bg-muted/40 text-[12px] font-medium text-foreground/80 hover:border-input hover:bg-background hover:shadow-sm transition-all max-w-[160px] truncate"
-                      title={sf.name}
-                    >
-                      {sf.name}
-                    </button>
-                  ))}
-                  <button
-                    onClick={() => setSavedFiltersOpen(true)}
-                    title="Manage all presets"
-                    className="h-7 w-7 flex items-center justify-center rounded-full border border-dashed border-border bg-transparent text-muted-foreground hover:border-input hover:text-foreground transition-all"
-                  >
-                    <MoreHorizontal className="h-3 w-3" />
-                  </button>
-                </div>
-              )}
-            </div>
+              <div className="h-6 w-px bg-border mx-1" />
 
-
-            <div className="flex gap-2">
-              <Button 
+              <Button
                 variant="outline"
                 onClick={clearAllFilters}
                 className="rounded-lg h-8 px-4 text-xs font-medium border-destructive text-destructive hover:bg-destructive/10 hover:text-destructive"
@@ -1122,7 +1117,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                 <RotateCcw className="h-3.5 w-3.5 mr-1.5" />
                 Clear All
               </Button>
-              <Button 
+              <Button
                 onClick={handleSearch}
                 className="rounded-lg h-8 px-5 text-xs font-medium bg-blue-600 hover:bg-blue-700 text-white shadow-sm"
               >
