@@ -2706,7 +2706,7 @@ const AddNewWorkOrder = () => {
                            <PlusCircle className="w-3.5 h-3.5" />
                            <span>Add New Item w/RFID</span>
                          </Button>
-                         <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium flex items-center justify-center gap-1.5 h-8 px-3 rounded-md shadow-sm transition-all duration-200 hover:shadow text-xs w-full">
+                         <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium flex items-center justify-center gap-1.5 h-8 px-3 rounded-md shadow-sm transition-all duration-200 hover:shadow text-xs">
                            <QrCode className="w-3.5 h-3.5" />
                            <span>Print QR</span>
                          </Button>
