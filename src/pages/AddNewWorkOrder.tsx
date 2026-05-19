@@ -2689,71 +2689,76 @@ const AddNewWorkOrder = () => {
                         </Button>
                       </div>
                      ) : (
-                       <div className="flex gap-2 sm:gap-3 flex-nowrap overflow-x-auto">
+                       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
                          <Button
+                           size="sm"
                            onClick={() => navigate("/form-variations")}
-                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm flex-1 min-w-fit"
+                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium flex items-center justify-center gap-1.5 h-8 px-3 rounded-md shadow-sm transition-all duration-200 hover:shadow text-xs w-full"
                          >
-                          <Plus className="w-3 h-3 sm:w-4 sm:h-4" />
-                          <span>Add New Item</span>
-                        </Button>
-                        <Button 
-                          onClick={() => setIsRFIDDialogOpen(true)}
-                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm flex-1 min-w-fit"
-                        >
-                          <PlusCircle className="w-3 h-3 sm:w-4 sm:h-4" />
-                          <span>Add New Item w/RFID</span>
-                        </Button>
-                        <Button className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm flex-1 min-w-fit">
-                          <QrCode className="w-3 h-3 sm:w-4 sm:h-4" />
-                          <span>Print QR Sheet</span>
-                        </Button>
-                        <Button
-                          onClick={() => {
-                            const newState = !isCreateUnusedItemsExpanded;
-                            setIsCreateUnusedItemsExpanded(newState);
-                            if (newState) {
-                              setIsCopyFromWOExpanded(false);
-                              setIsSpecialActionExpanded(false);
-                              setTimeout(() => document.getElementById('create-unused-items-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
-                            }
-                          }}
-                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm flex-1 min-w-fit"
-                        >
-                          <PackagePlus className="w-3 h-3 sm:w-4 sm:h-4" />
-                          <span>Create Unused Items</span>
-                        </Button>
-                        <Button 
-                          onClick={() => {
-                            const newState = !isCopyFromWOExpanded;
-                            setIsCopyFromWOExpanded(newState);
-                            if (newState) {
-                              setIsSpecialActionExpanded(false);
-                              setIsCreateUnusedItemsExpanded(false);
-                              setTimeout(() => document.getElementById('copy-from-other-wo')?.scrollIntoView({ behavior: 'smooth' }), 100);
-                            }
-                          }}
-                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm flex-1 min-w-fit"
-                        >
-                          <Copy className="w-3 h-3 sm:w-4 sm:h-4" />
-                          <span>Copy From Other Work Order</span>
-                        </Button>
-                        <Button 
-                          onClick={() => {
-                            const newState = !isSpecialActionExpanded;
-                            setIsSpecialActionExpanded(newState);
-                            if (newState) {
-                              setIsCopyFromWOExpanded(false);
-                              setIsCreateUnusedItemsExpanded(false);
-                              setTimeout(() => document.getElementById('special-action-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
-                            }
-                          }}
-                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm flex-1 min-w-fit"
-                        >
-                          <Wand2 className="w-3 h-3 sm:w-4 sm:h-4" />
-                          <span>Special Action</span>
-                        </Button>
-                      </div>
+                           <Plus className="w-3.5 h-3.5" />
+                           <span>Add New Item</span>
+                         </Button>
+                         <Button
+                           size="sm"
+                           onClick={() => setIsRFIDDialogOpen(true)}
+                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium flex items-center justify-center gap-1.5 h-8 px-3 rounded-md shadow-sm transition-all duration-200 hover:shadow text-xs w-full"
+                         >
+                           <PlusCircle className="w-3.5 h-3.5" />
+                           <span>Add New Item w/RFID</span>
+                         </Button>
+                         <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium flex items-center justify-center gap-1.5 h-8 px-3 rounded-md shadow-sm transition-all duration-200 hover:shadow text-xs w-full">
+                           <QrCode className="w-3.5 h-3.5" />
+                           <span>Print QR Sheet</span>
+                         </Button>
+                         <Button
+                           size="sm"
+                           onClick={() => {
+                             const newState = !isCreateUnusedItemsExpanded;
+                             setIsCreateUnusedItemsExpanded(newState);
+                             if (newState) {
+                               setIsCopyFromWOExpanded(false);
+                               setIsSpecialActionExpanded(false);
+                               setTimeout(() => document.getElementById('create-unused-items-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
+                             }
+                           }}
+                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium flex items-center justify-center gap-1.5 h-8 px-3 rounded-md shadow-sm transition-all duration-200 hover:shadow text-xs w-full"
+                         >
+                           <PackagePlus className="w-3.5 h-3.5" />
+                           <span>Create Unused Items</span>
+                         </Button>
+                         <Button
+                           size="sm"
+                           onClick={() => {
+                             const newState = !isCopyFromWOExpanded;
+                             setIsCopyFromWOExpanded(newState);
+                             if (newState) {
+                               setIsSpecialActionExpanded(false);
+                               setIsCreateUnusedItemsExpanded(false);
+                               setTimeout(() => document.getElementById('copy-from-other-wo')?.scrollIntoView({ behavior: 'smooth' }), 100);
+                             }
+                           }}
+                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium flex items-center justify-center gap-1.5 h-8 px-3 rounded-md shadow-sm transition-all duration-200 hover:shadow text-xs w-full"
+                         >
+                           <Copy className="w-3.5 h-3.5" />
+                           <span>Copy From Other Work Order</span>
+                         </Button>
+                         <Button
+                           size="sm"
+                           onClick={() => {
+                             const newState = !isSpecialActionExpanded;
+                             setIsSpecialActionExpanded(newState);
+                             if (newState) {
+                               setIsCopyFromWOExpanded(false);
+                               setIsCreateUnusedItemsExpanded(false);
+                               setTimeout(() => document.getElementById('special-action-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
+                             }
+                           }}
+                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium flex items-center justify-center gap-1.5 h-8 px-3 rounded-md shadow-sm transition-all duration-200 hover:shadow text-xs w-full"
+                         >
+                           <Wand2 className="w-3.5 h-3.5" />
+                           <span>Special Action</span>
+                         </Button>
+                       </div>
                     )}
 
 
