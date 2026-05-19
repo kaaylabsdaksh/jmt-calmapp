@@ -2630,7 +2630,7 @@ const AddNewWorkOrder = () => {
                   <div className="space-y-4 sm:space-y-6">
                      {/* Action Buttons */}
                      {viewMode === 'receiving' ? (
-                       <div className="flex flex-wrap gap-2">
+                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                         <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium flex items-center gap-1.5 h-8 px-3 rounded-md shadow-sm transition-all duration-200 hover:shadow text-xs">
                           <QrCode className="w-3.5 h-3.5" />
                           <span className="hidden sm:inline">Print QR Sheet</span>
