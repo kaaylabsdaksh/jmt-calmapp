@@ -2630,13 +2630,14 @@ const AddNewWorkOrder = () => {
                   <div className="space-y-4 sm:space-y-6">
                      {/* Action Buttons */}
                      {viewMode === 'receiving' ? (
-                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
-                        <Button className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm">
-                          <QrCode className="w-3 h-3 sm:w-4 sm:h-4" />
+                       <div className="flex flex-wrap gap-2">
+                        <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium flex items-center gap-1.5 h-8 px-3 rounded-md shadow-sm transition-all duration-200 hover:shadow text-xs">
+                          <QrCode className="w-3.5 h-3.5" />
                           <span className="hidden sm:inline">Print QR Sheet</span>
                           <span className="sm:hidden">QR Sheet</span>
                         </Button>
                         <Button 
+                          size="sm"
                           onClick={() => {
                             const newState = !isCreateUnusedItemsExpanded;
                             setIsCreateUnusedItemsExpanded(newState);
@@ -2646,13 +2647,14 @@ const AddNewWorkOrder = () => {
                               setTimeout(() => document.getElementById('create-unused-items-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
                             }
                           }}
-                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
+                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium flex items-center gap-1.5 h-8 px-3 rounded-md shadow-sm transition-all duration-200 hover:shadow text-xs"
                         >
-                          <PackagePlus className="w-3 h-3 sm:w-4 sm:h-4" />
+                          <PackagePlus className="w-3.5 h-3.5" />
                           <span className="hidden sm:inline">Create Unused Items</span>
                           <span className="sm:hidden">Unused Items</span>
                         </Button>
                         <Button 
+                          size="sm"
                           onClick={() => {
                             const newState = !isCopyFromWOExpanded;
                             setIsCopyFromWOExpanded(newState);
@@ -2662,13 +2664,14 @@ const AddNewWorkOrder = () => {
                               setTimeout(() => document.getElementById('copy-from-other-wo')?.scrollIntoView({ behavior: 'smooth' }), 100);
                             }
                           }}
-                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
+                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium flex items-center gap-1.5 h-8 px-3 rounded-md shadow-sm transition-all duration-200 hover:shadow text-xs"
                         >
-                          <Copy className="w-3 h-3 sm:w-4 sm:h-4" />
+                          <Copy className="w-3.5 h-3.5" />
                           <span className="hidden sm:inline">Copy From Other Work Order</span>
                           <span className="sm:hidden">Copy WO</span>
                         </Button>
                         <Button 
+                          size="sm"
                           onClick={() => {
                             const newState = !isSpecialActionExpanded;
                             setIsSpecialActionExpanded(newState);
@@ -2678,9 +2681,9 @@ const AddNewWorkOrder = () => {
                               setTimeout(() => document.getElementById('special-action-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
                             }
                           }}
-                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center justify-center gap-2 h-10 sm:h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md text-sm"
+                          className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium flex items-center gap-1.5 h-8 px-3 rounded-md shadow-sm transition-all duration-200 hover:shadow text-xs"
                         >
-                          <Wand2 className="w-3 h-3 sm:w-4 sm:h-4" />
+                          <Wand2 className="w-3.5 h-3.5" />
                           <span className="hidden sm:inline">Special Action</span>
                           <span className="sm:hidden">Action</span>
                         </Button>
