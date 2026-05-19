@@ -390,10 +390,10 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
   return (
     <div className="bg-card rounded-xl shadow-sm border mb-6">
       {/* Header Row */}
-      <div className="flex items-center justify-between px-5 pt-5 pb-3">
-        <div className="flex items-center gap-3">
+      <div className="flex items-center justify-between px-5 pt-5 pb-3 gap-3">
+        <div className="flex items-center gap-3 min-w-0">
           {viewMode !== 'csa' && (
-            <h2 className="text-lg font-semibold text-foreground">Work Order Search</h2>
+            <h2 className="text-lg font-semibold text-foreground whitespace-nowrap">Work Order Search</h2>
           )}
           {/* Live Result Count */}
           {resultCount !== null && (
@@ -403,15 +403,182 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
             </Badge>
           )}
         </div>
-        <Select value={viewMode} onValueChange={(val: 'default' | 'csa') => handleViewModeChange(val)}>
-          <SelectTrigger className="w-[130px] h-7 text-xs px-2 gap-1">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent className="bg-popover border shadow-lg z-50 min-w-[120px]">
-            <SelectItem value="default" className="text-xs py-1.5">Default View</SelectItem>
-            <SelectItem value="csa" className="text-xs py-1.5">CSA View</SelectItem>
-          </SelectContent>
-        </Select>
+
+        <div className="flex items-center gap-2 min-w-0">
+          {/* Saved Filters toolbar - moved to top */}
+          {viewMode === 'default' && (
+            <>
+              {savedFilters.length > 0 && (
+                <div className="hidden md:flex items-center gap-1.5 min-w-0">
+                  <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider">Recent</span>
+                  {savedFilters.slice(0, 2).map((sf) => (
+                    <button
+                      key={sf.id}
+                      onClick={() => {
+                        const s = sf.state || {};
+                        setSearchValues(s.searchValues ?? searchValues);
+                        setSelectedLocations(s.selectedLocations ?? []);
+                        setDateFrom(s.dateFrom ? new Date(s.dateFrom) : undefined);
+                        setDateTo(s.dateTo ? new Date(s.dateTo) : undefined);
+                        setDateType(s.dateType ?? '');
+                        setSearchChips(s.searchChips ?? []);
+                        toast({ title: 'Filter applied', description: sf.name });
+                      }}
+                      className="h-7 px-2.5 rounded-full border border-border bg-muted/40 text-[12px] font-medium text-foreground/80 hover:border-input hover:bg-background hover:shadow-sm transition-all max-w-[140px] truncate"
+                      title={sf.name}
+                    >
+                      {sf.name}
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              <div className="inline-flex items-center shadow-sm">
+                <Popover open={savedFiltersOpen} onOpenChange={setSavedFiltersOpen}>
+                  <PopoverTrigger asChild>
+                    <button
+                      type="button"
+                      title="Saved filters"
+                      className="flex items-center h-7 gap-1.5 px-2.5 border border-input bg-background rounded-l-md text-xs font-medium text-foreground hover:bg-muted/60 active:bg-muted transition-colors"
+                    >
+                      <Bookmark className="h-3.5 w-3.5 text-muted-foreground" />
+                      <span className="hidden lg:inline">Saved</span>
+                      {savedFilters.length > 0 && (
+                        <Badge variant="secondary" className="h-4 px-1.5 text-[10px]">{savedFilters.length}</Badge>
+                      )}
+                      <ChevronDown className="h-3 w-3 text-muted-foreground" />
+                    </button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-72 p-0 bg-popover border shadow-xl rounded-lg z-[60]" align="end">
+                    <div className="p-2.5 border-b">
+                      <p className="text-xs font-semibold text-foreground">Saved Filters</p>
+                      <p className="text-[11px] text-muted-foreground">Apply a previously saved filter</p>
+                    </div>
+                    <div className="max-h-64 overflow-y-auto p-1">
+                      {savedFilters.length === 0 ? (
+                        <p className="text-xs text-muted-foreground text-center py-4 px-3">
+                          No saved filters yet. Configure filters and click the + to save.
+                        </p>
+                      ) : (
+                        savedFilters.map((sf) => (
+                          <div key={sf.id} className="flex items-center gap-1 group">
+                            <button
+                              onClick={() => {
+                                const s = sf.state || {};
+                                setSearchValues(s.searchValues ?? searchValues);
+                                setSelectedLocations(s.selectedLocations ?? []);
+                                setDateFrom(s.dateFrom ? new Date(s.dateFrom) : undefined);
+                                setDateTo(s.dateTo ? new Date(s.dateTo) : undefined);
+                                setDateType(s.dateType ?? '');
+                                setSearchChips(s.searchChips ?? []);
+                                setSavedFiltersOpen(false);
+                                toast({ title: 'Filter applied', description: sf.name });
+                              }}
+                              className="flex-1 text-left px-2.5 py-2 rounded-md text-xs hover:bg-muted transition-colors"
+                            >
+                              <div className="font-medium text-foreground">{sf.name}</div>
+                              <div className="text-[10px] text-muted-foreground">
+                                {new Date(sf.timestamp).toLocaleDateString()}
+                              </div>
+                            </button>
+                            <button
+                              onClick={() => {
+                                const updated = savedFilters.filter(f => f.id !== sf.id);
+                                setSavedFilters(updated);
+                                persistSavedFilters(updated);
+                              }}
+                              className="opacity-0 group-hover:opacity-100 p-1.5 rounded hover:bg-destructive/10 text-muted-foreground hover:text-destructive transition-all"
+                              aria-label="Delete saved filter"
+                            >
+                              <Trash2 className="h-3.5 w-3.5" />
+                            </button>
+                          </div>
+                        ))
+                      )}
+                    </div>
+                  </PopoverContent>
+                </Popover>
+
+                <Popover open={saveFilterOpen} onOpenChange={(o) => { setSaveFilterOpen(o); if (!o) setFilterName(''); }}>
+                  <PopoverTrigger asChild>
+                    <button
+                      type="button"
+                      title="Save current filter"
+                      className="flex items-center justify-center h-7 w-7 border border-l-0 border-input bg-background rounded-r-md text-muted-foreground hover:bg-muted/60 hover:text-foreground transition-colors"
+                    >
+                      <Plus className="h-4 w-4" />
+                    </button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-72 p-3 bg-popover border shadow-xl rounded-lg z-[60]" align="end">
+                    <p className="text-xs font-semibold text-foreground mb-1">Save current filters</p>
+                    <p className="text-[11px] text-muted-foreground mb-2.5">Give this filter set a name so you can reapply it later.</p>
+                    <Input
+                      autoFocus
+                      value={filterName}
+                      onChange={(e) => setFilterName(e.target.value)}
+                      placeholder="e.g. Lab — In Lab, Paid"
+                      className="h-8 text-xs"
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' && filterName.trim()) {
+                          const entry: SavedFilter = {
+                            id: `sf-${Date.now()}`,
+                            name: filterName.trim(),
+                            timestamp: Date.now(),
+                            state: { searchValues, selectedLocations, dateFrom, dateTo, dateType, searchChips },
+                          };
+                          const updated = [entry, ...savedFilters.filter(f => f.name !== entry.name)];
+                          setSavedFilters(updated);
+                          persistSavedFilters(updated);
+                          setFilterName('');
+                          setSaveFilterOpen(false);
+                          toast({ title: 'Filter saved', description: entry.name });
+                        }
+                      }}
+                    />
+                    <div className="flex justify-end gap-2 mt-3">
+                      <Button variant="ghost" size="sm" className="h-7 text-xs" onClick={() => { setSaveFilterOpen(false); setFilterName(''); }}>
+                        Cancel
+                      </Button>
+                      <Button
+                        size="sm"
+                        className="h-7 text-xs bg-blue-600 hover:bg-blue-700 text-white"
+                        disabled={!filterName.trim()}
+                        onClick={() => {
+                          const entry: SavedFilter = {
+                            id: `sf-${Date.now()}`,
+                            name: filterName.trim(),
+                            timestamp: Date.now(),
+                            state: { searchValues, selectedLocations, dateFrom, dateTo, dateType, searchChips },
+                          };
+                          const updated = [entry, ...savedFilters.filter(f => f.name !== entry.name)];
+                          setSavedFilters(updated);
+                          persistSavedFilters(updated);
+                          setFilterName('');
+                          setSaveFilterOpen(false);
+                          toast({ title: 'Filter saved', description: entry.name });
+                        }}
+                      >
+                        Save
+                      </Button>
+                    </div>
+                  </PopoverContent>
+                </Popover>
+              </div>
+
+              <div className="h-6 w-px bg-border" />
+            </>
+          )}
+
+          <Select value={viewMode} onValueChange={(val: 'default' | 'csa') => handleViewModeChange(val)}>
+            <SelectTrigger className="w-[130px] h-7 text-xs px-2 gap-1">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent className="bg-popover border shadow-lg z-50 min-w-[120px]">
+              <SelectItem value="default" className="text-xs py-1.5">Default View</SelectItem>
+              <SelectItem value="csa" className="text-xs py-1.5">CSA View</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
       <div className="mx-5 mb-4 border-b" />
 
