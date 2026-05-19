@@ -2554,23 +2554,23 @@ const AddNewWorkOrder = () => {
                     <div className="flex items-center gap-2 w-full sm:w-auto flex-wrap">
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <Button variant="outline" className="flex items-center gap-2 bg-background text-sm">
-                            {viewMode === 'receiving' ? 'Receiving View' : 'Default View'}
-                            <ChevronDown className="w-4 h-4" />
+                          <Button variant="outline" size="sm" className="flex items-center gap-1.5 bg-background text-xs h-7 px-2.5">
+                            {viewMode === 'receiving' ? 'Receiving' : 'Default'}
+                            <ChevronDown className="w-3.5 h-3.5" />
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className="bg-background border shadow-lg z-50" align="end">
                           <DropdownMenuItem 
                             onClick={() => setViewMode('cards')}
-                            className={`cursor-pointer ${viewMode === 'cards' || viewMode === 'table' ? 'bg-muted' : ''}`}
+                            className={`cursor-pointer text-xs ${viewMode === 'cards' || viewMode === 'table' ? 'bg-muted' : ''}`}
                           >
                             Default View
                           </DropdownMenuItem>
                           <DropdownMenuItem 
                             onClick={() => setViewMode('receiving')}
-                            className={`cursor-pointer ${viewMode === 'receiving' ? 'bg-muted' : ''}`}
+                            className={`cursor-pointer text-xs ${viewMode === 'receiving' ? 'bg-muted' : ''}`}
                           >
-                            <Package className="w-4 h-4 mr-2" />
+                            <Package className="w-3.5 h-3.5 mr-1.5" />
                             Receiving View
                           </DropdownMenuItem>
                         </DropdownMenuContent>
@@ -2590,9 +2590,9 @@ const AddNewWorkOrder = () => {
                                   duration: 1500,
                                 });
                               }}
-                              className="h-8 w-8 p-0"
+                              className="h-7 w-7 p-0"
                             >
-                              <BookmarkCheck className="w-4 h-4" />
+                              <BookmarkCheck className="w-3.5 h-3.5" />
                             </Button>
                           </TooltipTrigger>
                           <TooltipContent>
@@ -2602,23 +2602,23 @@ const AddNewWorkOrder = () => {
                       </TooltipProvider>
 
                       {(viewMode === 'table' || viewMode === 'cards') && (
-                        <div className="flex items-center gap-1 bg-muted rounded-lg p-1">
+                        <div className="flex items-center gap-0.5 bg-muted rounded-md p-0.5">
                           <Button
                             variant={viewMode === 'table' ? 'default' : 'ghost'}
                             size="sm"
                             onClick={() => setViewMode('table')}
-                            className="flex items-center gap-1.5 h-8 px-3"
+                            className="flex items-center gap-1 h-7 px-2 text-xs"
                           >
-                            <TableIcon className="w-4 h-4" />
+                            <TableIcon className="w-3.5 h-3.5" />
                             <span className="hidden sm:inline">Table</span>
                           </Button>
                           <Button
                             variant={viewMode === 'cards' ? 'default' : 'ghost'}
                             size="sm"
                             onClick={() => setViewMode('cards')}
-                            className="flex items-center gap-1.5 h-8 px-3"
+                            className="flex items-center gap-1 h-7 px-2 text-xs"
                           >
-                            <LayoutGrid className="w-4 h-4" />
+                            <LayoutGrid className="w-3.5 h-3.5" />
                             <span className="hidden sm:inline">Grid</span>
                           </Button>
                         </div>
