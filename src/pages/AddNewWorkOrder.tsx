@@ -2708,7 +2708,7 @@ const AddNewWorkOrder = () => {
                          </Button>
                          <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium flex items-center justify-center gap-1.5 h-8 px-3 rounded-md shadow-sm transition-all duration-200 hover:shadow text-xs w-full">
                            <QrCode className="w-3.5 h-3.5" />
-                           <span>Print QR Sheet</span>
+                           <span>Print QR</span>
                          </Button>
                          <Button
                            size="sm"
