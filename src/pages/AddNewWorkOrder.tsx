@@ -2689,7 +2689,7 @@ const AddNewWorkOrder = () => {
                         </Button>
                       </div>
                      ) : (
-                       <div className="flex flex-wrap gap-2">
+                       <div className="flex flex-nowrap items-center gap-2 overflow-x-auto">
                          <Button
                            size="sm"
                            onClick={() => navigate("/form-variations")}
