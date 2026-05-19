@@ -2689,11 +2689,11 @@ const AddNewWorkOrder = () => {
                         </Button>
                       </div>
                      ) : (
-                       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+                       <div className="flex flex-wrap gap-2">
                          <Button
                            size="sm"
                            onClick={() => navigate("/form-variations")}
-                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium flex items-center justify-center gap-1.5 h-8 px-3 rounded-md shadow-sm transition-all duration-200 hover:shadow text-xs w-full"
+                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium flex items-center justify-center gap-1.5 h-8 px-3 rounded-md shadow-sm transition-all duration-200 hover:shadow text-xs"
                          >
                            <Plus className="w-3.5 h-3.5" />
                            <span>Add New Item</span>
@@ -2701,7 +2701,7 @@ const AddNewWorkOrder = () => {
                          <Button
                            size="sm"
                            onClick={() => setIsRFIDDialogOpen(true)}
-                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium flex items-center justify-center gap-1.5 h-8 px-3 rounded-md shadow-sm transition-all duration-200 hover:shadow text-xs w-full"
+                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium flex items-center justify-center gap-1.5 h-8 px-3 rounded-md shadow-sm transition-all duration-200 hover:shadow text-xs"
                          >
                            <PlusCircle className="w-3.5 h-3.5" />
                            <span>Add New Item w/RFID</span>
@@ -2721,7 +2721,7 @@ const AddNewWorkOrder = () => {
                                setTimeout(() => document.getElementById('create-unused-items-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
                              }
                            }}
-                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium flex items-center justify-center gap-1.5 h-8 px-3 rounded-md shadow-sm transition-all duration-200 hover:shadow text-xs w-full"
+                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium flex items-center justify-center gap-1.5 h-8 px-3 rounded-md shadow-sm transition-all duration-200 hover:shadow text-xs"
                          >
                            <PackagePlus className="w-3.5 h-3.5" />
                            <span>Create Unused Items</span>
@@ -2737,7 +2737,7 @@ const AddNewWorkOrder = () => {
                                setTimeout(() => document.getElementById('copy-from-other-wo')?.scrollIntoView({ behavior: 'smooth' }), 100);
                              }
                            }}
-                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium flex items-center justify-center gap-1.5 h-8 px-3 rounded-md shadow-sm transition-all duration-200 hover:shadow text-xs w-full"
+                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium flex items-center justify-center gap-1.5 h-8 px-3 rounded-md shadow-sm transition-all duration-200 hover:shadow text-xs"
                          >
                            <Copy className="w-3.5 h-3.5" />
                            <span>Copy From Other Work Order</span>
@@ -2753,7 +2753,7 @@ const AddNewWorkOrder = () => {
                                setTimeout(() => document.getElementById('special-action-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
                              }
                            }}
-                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium flex items-center justify-center gap-1.5 h-8 px-3 rounded-md shadow-sm transition-all duration-200 hover:shadow text-xs w-full"
+                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium flex items-center justify-center gap-1.5 h-8 px-3 rounded-md shadow-sm transition-all duration-200 hover:shadow text-xs"
                          >
                            <Wand2 className="w-3.5 h-3.5" />
                            <span>Special Action</span>
