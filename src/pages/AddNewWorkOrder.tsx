@@ -1090,7 +1090,7 @@ const AddNewWorkOrder = () => {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <TabsList className="h-auto p-0 bg-transparent gap-2 sm:gap-3 flex flex-wrap justify-start">
+              <TabsList className="h-auto p-0 bg-transparent gap-1.5 flex flex-nowrap justify-start w-full overflow-x-auto">
                 {tabs.map((tab) => {
                   const IconComponent = tab.icon;
                   const disabled = isTabDisabled(tab.value);
@@ -1099,15 +1099,14 @@ const AddNewWorkOrder = () => {
                       key={tab.value}
                       value={tab.value}
                       disabled={disabled}
-                      className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 sm:py-3 bg-card border rounded-lg text-xs sm:text-sm font-medium transition-all shadow-sm ${
+                      className={`flex items-center gap-1 px-2 py-1.5 bg-card border rounded-md text-[11px] font-medium transition-all shadow-sm whitespace-nowrap min-w-0 ${
                         disabled 
                           ? 'opacity-50 cursor-not-allowed hover:bg-card data-[state=active]:bg-card data-[state=active]:text-foreground'
                           : 'hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground'
                       }`}
                     >
-                      <IconComponent className="w-3 h-3 sm:w-4 sm:h-4" />
-                      <span className="hidden sm:inline">{tab.label}</span>
-                      <span className="sm:hidden">{tab.shortLabel}</span>
+                      <IconComponent className="w-3 h-3" />
+                      <span>{tab.label}</span>
                     </TabsTrigger>
                   );
                 })}
