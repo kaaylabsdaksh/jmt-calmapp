@@ -3494,8 +3494,8 @@ const FormVariationsDemo = () => {
         </div>
       </div>
 
-      {/* Identification + Product Specifications - side by side */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+      {/* Identification + Product Specifications + Accessories - side by side */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
         {/* Identification */}
         <div className="border border-border rounded-lg overflow-hidden bg-card flex flex-col">
           <div className="bg-muted/50 px-3 py-1.5 border-b">
