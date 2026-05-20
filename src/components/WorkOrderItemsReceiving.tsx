@@ -430,14 +430,15 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
 
   return (
     <div className="border rounded-lg overflow-hidden flex flex-col">
-      <div className="flex justify-between items-center p-3 bg-muted/20 border-b">
+      <div className="flex justify-between items-center px-2 py-1.5 bg-muted/20 border-b">
         <div className="flex items-center gap-2">
           <Button 
             variant="default" 
-            className="flex items-center gap-2"
+            size="sm"
+            className="flex items-center gap-1.5 h-7 text-xs"
             onClick={handleAddNewItem}
           >
-            <Plus className="w-4 h-4" />
+            <Plus className="w-3 h-3" />
             Receive Item
           </Button>
         </div>
@@ -456,63 +457,63 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
               <table className="w-full min-w-[2400px]">
                 <thead className="bg-muted/20">
                   <tr className="border-b">
-                    <th className="text-right p-2 text-xs font-medium text-muted-foreground w-12">
+                    <th className="text-right px-2 py-1 text-[11px] font-medium text-muted-foreground w-12">
                       <CollapsibleTrigger asChild>
                         <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
                           {isSearchBarOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
                         </Button>
                       </CollapsibleTrigger>
                     </th>
-                    <th className="text-left p-2 text-xs font-medium text-muted-foreground w-8">
+                    <th className="text-left px-2 py-1 text-[11px] font-medium text-muted-foreground w-8">
                       <Checkbox 
                         checked={isAllSelected}
                         onCheckedChange={handleSelectAll}
                       />
                     </th>
-                    <th className="text-left p-2 text-xs font-medium text-muted-foreground w-20">ItemNum</th>
-                  <th className="text-left p-2 text-xs font-medium text-muted-foreground w-16">Cal Freq</th>
-                  <th className="text-left p-2 text-xs font-medium text-muted-foreground w-16">Action Code</th>
-                  <th className="text-left p-2 text-xs font-medium text-muted-foreground w-16">Priority</th>
-                  <th className="text-left p-2 text-xs font-medium text-muted-foreground w-24">Manufacturer<span className="text-red-500 ml-1">*</span></th>
-                  <th className="text-left p-2 text-xs font-medium text-muted-foreground w-16">Model<span className="text-red-500 ml-1">*</span></th>
-                  <th className="text-left p-2 text-xs font-medium text-muted-foreground w-32">Description</th>
-                  <th className="text-left p-2 text-xs font-medium text-muted-foreground w-12">TF</th>
-                  <th className="text-left p-2 text-xs font-medium text-muted-foreground w-32">Capable Locations</th>
-                  <th className="text-left p-2 text-xs font-medium text-muted-foreground w-20">Mfg Serial<span className="text-red-500 ml-1">*</span></th>
-                  <th className="text-left p-2 text-xs font-medium text-muted-foreground w-16">CustID<span className="text-red-500 ml-1">*</span></th>
-                  <th className="text-left p-2 text-xs font-medium text-muted-foreground w-16">CustSN<span className="text-red-500 ml-1">*</span></th>
-                  <th className="text-left p-2 text-xs font-medium text-muted-foreground w-20">Asset Number</th>
-                  <th className="text-left p-2 text-xs font-medium text-muted-foreground w-12">17025</th>
-                  <th className="text-left p-2 text-xs font-medium text-muted-foreground w-16">Estimate</th>
-                  <th className="text-left p-2 text-xs font-medium text-muted-foreground w-16">New Equip</th>
-                  <th className="text-left p-2 text-xs font-medium text-muted-foreground w-24">Need By Date</th>
-                  <th className="text-left p-2 text-xs font-medium text-muted-foreground w-16">C/C Cost</th>
-                  <th className="text-left p-2 text-xs font-medium text-muted-foreground w-32">Action</th>
+                    <th className="text-left px-2 py-1 text-[11px] font-medium text-muted-foreground w-20">ItemNum</th>
+                  <th className="text-left px-2 py-1 text-[11px] font-medium text-muted-foreground w-16">Cal Freq</th>
+                  <th className="text-left px-2 py-1 text-[11px] font-medium text-muted-foreground w-16">Action Code</th>
+                  <th className="text-left px-2 py-1 text-[11px] font-medium text-muted-foreground w-16">Priority</th>
+                  <th className="text-left px-2 py-1 text-[11px] font-medium text-muted-foreground w-24">Manufacturer<span className="text-red-500 ml-1">*</span></th>
+                  <th className="text-left px-2 py-1 text-[11px] font-medium text-muted-foreground w-16">Model<span className="text-red-500 ml-1">*</span></th>
+                  <th className="text-left px-2 py-1 text-[11px] font-medium text-muted-foreground w-32">Description</th>
+                  <th className="text-left px-2 py-1 text-[11px] font-medium text-muted-foreground w-12">TF</th>
+                  <th className="text-left px-2 py-1 text-[11px] font-medium text-muted-foreground w-32">Capable Locations</th>
+                  <th className="text-left px-2 py-1 text-[11px] font-medium text-muted-foreground w-20">Mfg Serial<span className="text-red-500 ml-1">*</span></th>
+                  <th className="text-left px-2 py-1 text-[11px] font-medium text-muted-foreground w-16">CustID<span className="text-red-500 ml-1">*</span></th>
+                  <th className="text-left px-2 py-1 text-[11px] font-medium text-muted-foreground w-16">CustSN<span className="text-red-500 ml-1">*</span></th>
+                  <th className="text-left px-2 py-1 text-[11px] font-medium text-muted-foreground w-20">Asset Number</th>
+                  <th className="text-left px-2 py-1 text-[11px] font-medium text-muted-foreground w-12">17025</th>
+                  <th className="text-left px-2 py-1 text-[11px] font-medium text-muted-foreground w-16">Estimate</th>
+                  <th className="text-left px-2 py-1 text-[11px] font-medium text-muted-foreground w-16">New Equip</th>
+                  <th className="text-left px-2 py-1 text-[11px] font-medium text-muted-foreground w-24">Need By Date</th>
+                  <th className="text-left px-2 py-1 text-[11px] font-medium text-muted-foreground w-16">C/C Cost</th>
+                  <th className="text-left px-2 py-1 text-[11px] font-medium text-muted-foreground w-32">Action</th>
                 </tr>
                 {/* Quick Search Row */}
                 <CollapsibleContent asChild>
                   <tr className="bg-muted/30 border-b-2">
-                  <th className="p-2"></th>
-                  <th className="p-2"></th>
-                  <th className="p-2">
+                  <th className="px-2 py-1"></th>
+                  <th className="px-2 py-1"></th>
+                  <th className="px-2 py-1">
                     <Input 
                       placeholder="Search..."
                       value={columnFilters.itemNumber}
                       onChange={(e) => handleFilterChange('itemNumber', e.target.value)}
-                      className="h-8 text-xs bg-background"
+                      className="h-6 text-[11px] bg-background"
                     />
                   </th>
-                  <th className="p-2">
+                  <th className="px-2 py-1">
                     <Input 
                       placeholder="Search..."
                       value={columnFilters.calFreq}
                       onChange={(e) => handleFilterChange('calFreq', e.target.value)}
-                      className="h-8 text-xs bg-background"
+                      className="h-6 text-[11px] bg-background"
                     />
                   </th>
-                  <th className="p-2">
+                  <th className="px-2 py-1">
                     <Select value={columnFilters.actionCode || "all"} onValueChange={(value) => handleFilterChange('actionCode', value === "all" ? "" : value)}>
-                      <SelectTrigger className="h-8 text-xs bg-background">
+                      <SelectTrigger className="h-6 text-[11px] bg-background">
                         <SelectValue placeholder="All" />
                       </SelectTrigger>
                       <SelectContent>
@@ -526,9 +527,9 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                       </SelectContent>
                     </Select>
                   </th>
-                  <th className="p-2">
+                  <th className="px-2 py-1">
                     <Select value={columnFilters.priority || "all"} onValueChange={(value) => handleFilterChange('priority', value === "all" ? "" : value)}>
-                      <SelectTrigger className="h-8 text-xs bg-background">
+                      <SelectTrigger className="h-6 text-[11px] bg-background">
                         <SelectValue placeholder="All" />
                       </SelectTrigger>
                       <SelectContent>
@@ -541,9 +542,9 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                       </SelectContent>
                     </Select>
                   </th>
-                  <th className="p-2">
+                  <th className="px-2 py-1">
                     <Select value={columnFilters.manufacturer || "all"} onValueChange={(value) => handleFilterChange('manufacturer', value === "all" ? "" : value)}>
-                      <SelectTrigger className="h-8 text-xs bg-background">
+                      <SelectTrigger className="h-6 text-[11px] bg-background">
                         <SelectValue placeholder="All" />
                       </SelectTrigger>
                       <SelectContent>
@@ -556,73 +557,73 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                       </SelectContent>
                     </Select>
                   </th>
-                  <th className="p-2">
+                  <th className="px-2 py-1">
                     <Input 
                       placeholder="Search..."
                       value={columnFilters.model}
                       onChange={(e) => handleFilterChange('model', e.target.value)}
-                      className="h-8 text-xs bg-background"
+                      className="h-6 text-[11px] bg-background"
                     />
                   </th>
-                  <th className="p-2">
+                  <th className="px-2 py-1">
                     <Input 
                       placeholder="Search..."
                       value={columnFilters.description}
                       onChange={(e) => handleFilterChange('description', e.target.value)}
-                      className="h-8 text-xs bg-background"
+                      className="h-6 text-[11px] bg-background"
                     />
                   </th>
-                  <th className="p-2">
+                  <th className="px-2 py-1">
                     <Input 
                       placeholder="Search..."
                       value={columnFilters.tf}
                       onChange={(e) => handleFilterChange('tf', e.target.value)}
-                      className="h-8 text-xs bg-background"
+                      className="h-6 text-[11px] bg-background"
                     />
                   </th>
-                  <th className="p-2">
+                  <th className="px-2 py-1">
                     <Input 
                       placeholder="Search..."
                       value={columnFilters.capableLocations}
                       onChange={(e) => handleFilterChange('capableLocations', e.target.value)}
-                      className="h-8 text-xs bg-background"
+                      className="h-6 text-[11px] bg-background"
                     />
                   </th>
-                  <th className="p-2">
+                  <th className="px-2 py-1">
                     <Input 
                       placeholder="Search..."
                       value={columnFilters.mfgSerial}
                       onChange={(e) => handleFilterChange('mfgSerial', e.target.value)}
-                      className="h-8 text-xs bg-background"
+                      className="h-6 text-[11px] bg-background"
                     />
                   </th>
-                  <th className="p-2">
+                  <th className="px-2 py-1">
                     <Input 
                       placeholder="Search..."
                       value={columnFilters.custId}
                       onChange={(e) => handleFilterChange('custId', e.target.value)}
-                      className="h-8 text-xs bg-background"
+                      className="h-6 text-[11px] bg-background"
                     />
                   </th>
-                  <th className="p-2">
+                  <th className="px-2 py-1">
                     <Input 
                       placeholder="Search..."
                       value={columnFilters.custSN}
                       onChange={(e) => handleFilterChange('custSN', e.target.value)}
-                      className="h-8 text-xs bg-background"
+                      className="h-6 text-[11px] bg-background"
                     />
                   </th>
-                  <th className="p-2">
+                  <th className="px-2 py-1">
                     <Input 
                       placeholder="Search..."
                       value={columnFilters.assetNumber}
                       onChange={(e) => handleFilterChange('assetNumber', e.target.value)}
-                      className="h-8 text-xs bg-background"
+                      className="h-6 text-[11px] bg-background"
                     />
                   </th>
-                  <th className="p-2">
+                  <th className="px-2 py-1">
                     <Select value={columnFilters.iso17025 || "all"} onValueChange={(value) => handleFilterChange('iso17025', value === "all" ? "" : value)}>
-                      <SelectTrigger className="h-8 text-xs bg-background">
+                      <SelectTrigger className="h-6 text-[11px] bg-background">
                         <SelectValue placeholder="All" />
                       </SelectTrigger>
                       <SelectContent>
@@ -632,9 +633,9 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                       </SelectContent>
                     </Select>
                   </th>
-                  <th className="p-2">
+                  <th className="px-2 py-1">
                     <Select value={columnFilters.estimate || "all"} onValueChange={(value) => handleFilterChange('estimate', value === "all" ? "" : value)}>
-                      <SelectTrigger className="h-8 text-xs bg-background">
+                      <SelectTrigger className="h-6 text-[11px] bg-background">
                         <SelectValue placeholder="All" />
                       </SelectTrigger>
                       <SelectContent>
@@ -644,9 +645,9 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                       </SelectContent>
                     </Select>
                   </th>
-                  <th className="p-2">
+                  <th className="px-2 py-1">
                     <Select value={columnFilters.newEquip || "all"} onValueChange={(value) => handleFilterChange('newEquip', value === "all" ? "" : value)}>
-                      <SelectTrigger className="h-8 text-xs bg-background">
+                      <SelectTrigger className="h-6 text-[11px] bg-background">
                         <SelectValue placeholder="All" />
                       </SelectTrigger>
                       <SelectContent>
@@ -656,23 +657,23 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                       </SelectContent>
                     </Select>
                   </th>
-                  <th className="p-2">
+                  <th className="px-2 py-1">
                     <Input 
                       placeholder="Search..."
                       value={columnFilters.needByDate}
                       onChange={(e) => handleFilterChange('needByDate', e.target.value)}
-                      className="h-8 text-xs bg-background"
+                      className="h-6 text-[11px] bg-background"
                     />
                   </th>
-                  <th className="p-2">
+                  <th className="px-2 py-1">
                     <Input 
                       placeholder="Search..."
                       value={columnFilters.ccCost}
                       onChange={(e) => handleFilterChange('ccCost', e.target.value)}
-                      className="h-8 text-xs bg-background"
+                      className="h-6 text-[11px] bg-background"
                     />
                   </th>
-                  <th className="p-2"></th>
+                  <th className="px-2 py-1"></th>
                 </tr>
                 </CollapsibleContent>
               </thead>
@@ -1102,7 +1103,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                 ))}
                 {paginatedItems.map((item, index) => (
                   <tr key={item.id} className="border-b hover:bg-muted/10">
-                    <td className="p-2">
+                    <td className="px-2 py-1">
                       <div className="flex items-center justify-end gap-1">
                         {editingItemId === item.id ? (
                           <>
@@ -1129,19 +1130,19 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                         )}
                       </div>
                     </td>
-                    <td className="p-2">
+                    <td className="px-2 py-1">
                       <Checkbox 
                         checked={selectedItems.includes(item.id)}
                         onCheckedChange={(checked) => handleItemSelect(item.id, checked as boolean)}
                       />
                     </td>
-                    <td className="p-2 text-xs">
+                    <td className="px-2 py-1 text-[11px]">
                       {editingItemId === item.id ? (
                         <Input 
                           placeholder="Item #"
                           value={item.itemNumber}
                           onChange={(e) => updateItem(item.id, 'itemNumber', e.target.value)}
-                          className="h-6 text-xs"
+                          className="h-6 text-[11px]"
                         />
                       ) : (
                         <Link 
@@ -1153,13 +1154,13 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                         </Link>
                       )}
                     </td>
-                    <td className="p-2 text-xs">
+                    <td className="px-2 py-1 text-[11px]">
                       {editingItemId === item.id ? (
                         <Input 
                           type="number"
                           value={item.calFreq}
                           onChange={(e) => updateItem(item.id, 'calFreq', e.target.value)}
-                          className="h-6 text-xs border-2 focus:border-primary"
+                          className="h-6 text-[11px] border-2 focus:border-primary"
                           autoComplete="off"
                         />
                       ) : (
@@ -1168,10 +1169,10 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                         </div>
                       )}
                     </td>
-                    <td className="p-2 text-xs">
+                    <td className="px-2 py-1 text-[11px]">
                       {editingItemId === item.id ? (
                         <Select value={item.actionCode} onValueChange={(value) => updateItem(item.id, 'actionCode', value)}>
-                          <SelectTrigger className="h-6 text-xs">
+                          <SelectTrigger className="h-6 text-[11px]">
                             <SelectValue placeholder="Select..." />
                           </SelectTrigger>
                           <SelectContent>
@@ -1189,10 +1190,10 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                         </div>
                       )}
                     </td>
-                    <td className="p-2 text-xs">
+                    <td className="px-2 py-1 text-[11px]">
                       {editingItemId === item.id ? (
                         <Select value={item.priority} onValueChange={(value) => updateItem(item.id, 'priority', value)}>
-                          <SelectTrigger className="h-6 text-xs">
+                          <SelectTrigger className="h-6 text-[11px]">
                             <SelectValue placeholder="Select..." />
                           </SelectTrigger>
                           <SelectContent>
@@ -1209,7 +1210,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                         </div>
                       )}
                     </td>
-                    <td className="p-2 text-xs">
+                    <td className="px-2 py-1 text-[11px]">
                       {editingItemId === item.id ? (
                         <Popover 
                           open={editManufacturerPopoverOpen[item.id] || false} 
@@ -1257,7 +1258,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                         </div>
                       )}
                     </td>
-                    <td className="p-2 text-xs">
+                    <td className="px-2 py-1 text-[11px]">
                       {editingItemId === item.id ? (
                         <Popover 
                           open={editModelPopoverOpen[item.id] || false} 
@@ -1305,7 +1306,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                         </div>
                       )}
                     </td>
-                    <td className="p-2 text-xs">
+                    <td className="px-2 py-1 text-[11px]">
                       {editingItemId === item.id ? (
                         <Textarea 
                           placeholder="Description"
@@ -1328,7 +1329,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                         </TooltipProvider>
                       )}
                     </td>
-                    <td className="p-2 text-xs">
+                    <td className="px-2 py-1 text-[11px]">
                       {editingItemId === item.id ? (
                         <Tabs value={item.tf} onValueChange={(value) => updateItem(item.id, 'tf', value)}>
                           <TabsList className="grid w-full grid-cols-2 h-6">
@@ -1342,13 +1343,13 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                         </div>
                       )}
                     </td>
-                    <td className="p-2 text-xs">
+                    <td className="px-2 py-1 text-[11px]">
                       {editingItemId === item.id ? (
                         <Input 
                           placeholder="Capable Locations"
                           value={item.capableLocations}
                           onChange={(e) => updateItem(item.id, 'capableLocations', e.target.value)}
-                          className="h-6 text-xs"
+                          className="h-6 text-[11px]"
                         />
                       ) : (
                         <div className="truncate" title={item.capableLocations}>
@@ -1356,13 +1357,13 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                         </div>
                       )}
                     </td>
-                    <td className="p-2 text-xs">
+                    <td className="px-2 py-1 text-[11px]">
                       {editingItemId === item.id ? (
                         <Input 
                           placeholder="Mfg Serial"
                           value={item.mfgSerial}
                           onChange={(e) => updateItem(item.id, 'mfgSerial', e.target.value)}
-                          className="h-6 text-xs"
+                          className="h-6 text-[11px]"
                         />
                       ) : (
                         <div className="truncate" title={item.mfgSerial}>
@@ -1370,13 +1371,13 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                         </div>
                       )}
                     </td>
-                    <td className="p-2 text-xs">
+                    <td className="px-2 py-1 text-[11px]">
                       {editingItemId === item.id ? (
                         <Input 
                           placeholder="CustID"
                           value={item.custId}
                           onChange={(e) => updateItem(item.id, 'custId', e.target.value)}
-                          className="h-6 text-xs"
+                          className="h-6 text-[11px]"
                         />
                       ) : (
                         <div className="truncate" title={item.custId}>
@@ -1384,13 +1385,13 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                         </div>
                       )}
                     </td>
-                    <td className="p-2 text-xs">
+                    <td className="px-2 py-1 text-[11px]">
                       {editingItemId === item.id ? (
                         <Input 
                           placeholder="CustSN"
                           value={item.custSN}
                           onChange={(e) => updateItem(item.id, 'custSN', e.target.value)}
-                          className="h-6 text-xs"
+                          className="h-6 text-[11px]"
                         />
                       ) : (
                         <div className="truncate" title={item.custSN}>
@@ -1398,13 +1399,13 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                         </div>
                       )}
                     </td>
-                    <td className="p-2 text-xs">
+                    <td className="px-2 py-1 text-[11px]">
                       {editingItemId === item.id ? (
                         <Input 
                           placeholder="Asset Number"
                           value={item.assetNumber}
                           onChange={(e) => updateItem(item.id, 'assetNumber', e.target.value)}
-                          className="h-6 text-xs"
+                          className="h-6 text-[11px]"
                         />
                       ) : (
                         <div className="truncate" title={item.assetNumber}>
@@ -1412,7 +1413,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                         </div>
                       )}
                     </td>
-                    <td className="p-2 text-xs">
+                    <td className="px-2 py-1 text-[11px]">
                       <div className="flex justify-center">
                         <Checkbox 
                           checked={item.iso17025 === "yes"}
@@ -1420,13 +1421,13 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                         />
                       </div>
                     </td>
-                    <td className="p-2 text-xs">
+                    <td className="px-2 py-1 text-[11px]">
                       {editingItemId === item.id ? (
                         <Input 
                           placeholder="Estimate"
                           value={item.estimate}
                           onChange={(e) => updateItem(item.id, 'estimate', e.target.value)}
-                          className="h-6 text-xs"
+                          className="h-6 text-[11px]"
                         />
                       ) : (
                         <div className="flex justify-center">
@@ -1437,7 +1438,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                         </div>
                       )}
                     </td>
-                    <td className="p-2 text-xs">
+                    <td className="px-2 py-1 text-[11px]">
                       <div className="flex justify-center">
                         <Checkbox 
                           checked={item.newEquip === "yes"}
@@ -1445,13 +1446,13 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                         />
                       </div>
                     </td>
-                    <td className="p-2 text-xs">
+                    <td className="px-2 py-1 text-[11px]">
                       {editingItemId === item.id ? (
                         <Input 
                           type="date"
                           value={item.needByDate}
                           onChange={(e) => updateItem(item.id, 'needByDate', e.target.value)}
-                          className="h-6 text-xs"
+                          className="h-6 text-[11px]"
                         />
                       ) : (
                         <div className="truncate" title={item.needByDate}>
@@ -1459,13 +1460,13 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                         </div>
                       )}
                     </td>
-                    <td className="p-2 text-xs">
+                    <td className="px-2 py-1 text-[11px]">
                       {editingItemId === item.id ? (
                         <Input 
                           placeholder="C/C Cost"
                           value={item.ccCost}
                           onChange={(e) => updateItem(item.id, 'ccCost', e.target.value)}
-                          className="h-6 text-xs"
+                          className="h-6 text-[11px]"
                         />
                       ) : (
                         <div className="truncate" title={item.ccCost}>
@@ -1473,7 +1474,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                         </div>
                       )}
                      </td>
-                     <td className="p-2 text-xs">
+                     <td className="px-2 py-1 text-[11px]">
                        <Button 
                          size="sm" 
                          variant="outline"
@@ -1495,21 +1496,21 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
             <table className="w-full min-w-[800px]">
               <thead className="bg-muted/20 border-b">
                 <tr>
-                  <th className="text-right p-2 text-xs font-medium text-muted-foreground w-12"></th>
-                  <th className="text-left p-2 text-xs font-medium text-muted-foreground w-8">
+                  <th className="text-right px-2 py-1 text-[11px] font-medium text-muted-foreground w-12"></th>
+                  <th className="text-left px-2 py-1 text-[11px] font-medium text-muted-foreground w-8">
                     <Checkbox 
                       checked={isAllSelected}
                       onCheckedChange={handleSelectAll}
                     />
                   </th>
-                  <th className="text-left p-2 text-xs font-medium text-muted-foreground">Item #</th>
-                  <th className="text-left p-2 text-xs font-medium text-muted-foreground">Action Code</th>
-                  <th className="text-left p-2 text-xs font-medium text-muted-foreground">Priority</th>
-                  <th className="text-left p-2 text-xs font-medium text-muted-foreground">Manufacturer</th>
-                  <th className="text-left p-2 text-xs font-medium text-muted-foreground">Model</th>
-                  <th className="text-left p-2 text-xs font-medium text-muted-foreground">Description</th>
-                  <th className="text-left p-2 text-xs font-medium text-muted-foreground">Need By</th>
-                  <th className="text-left p-2 text-xs font-medium text-muted-foreground">Action</th>
+                  <th className="text-left px-2 py-1 text-[11px] font-medium text-muted-foreground">Item #</th>
+                  <th className="text-left px-2 py-1 text-[11px] font-medium text-muted-foreground">Action Code</th>
+                  <th className="text-left px-2 py-1 text-[11px] font-medium text-muted-foreground">Priority</th>
+                  <th className="text-left px-2 py-1 text-[11px] font-medium text-muted-foreground">Manufacturer</th>
+                  <th className="text-left px-2 py-1 text-[11px] font-medium text-muted-foreground">Model</th>
+                  <th className="text-left px-2 py-1 text-[11px] font-medium text-muted-foreground">Description</th>
+                  <th className="text-left px-2 py-1 text-[11px] font-medium text-muted-foreground">Need By</th>
+                  <th className="text-left px-2 py-1 text-[11px] font-medium text-muted-foreground">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -1630,7 +1631,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                  ))}
                  {paginatedItems.map((item) => (
                    <tr key={item.id} className="border-b hover:bg-muted/10">
-                     <td className="p-2">
+                     <td className="px-2 py-1">
                        <div className="flex items-center justify-end gap-1">
                          <Button 
                            size="sm" 
@@ -1642,7 +1643,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                          </Button>
                        </div>
                      </td>
-                     <td className="p-2">
+                     <td className="px-2 py-1">
                        <Checkbox 
                          checked={selectedItems.includes(item.id)}
                          onCheckedChange={(checked) => handleItemSelect(item.id, checked as boolean)}
@@ -1655,9 +1656,9 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                     </td>
                     <td className="p-2 text-xs uppercase">{item.actionCode || "—"}</td>
                     <td className="p-2 text-xs capitalize">{item.priority || "—"}</td>
-                    <td className="p-2 text-xs">{item.manufacturer || "—"}</td>
-                    <td className="p-2 text-xs">{item.model || "—"}</td>
-                    <td className="p-2 text-xs">
+                    <td className="px-2 py-1 text-[11px]">{item.manufacturer || "—"}</td>
+                    <td className="px-2 py-1 text-[11px]">{item.model || "—"}</td>
+                    <td className="px-2 py-1 text-[11px]">
                       <TooltipProvider>
                         <Tooltip>
                           <TooltipTrigger asChild>
@@ -1671,8 +1672,8 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                         </Tooltip>
                       </TooltipProvider>
                      </td>
-                      <td className="p-2 text-xs">{item.needByDate || "—"}</td>
-                      <td className="p-2 text-xs">
+                      <td className="px-2 py-1 text-[11px]">{item.needByDate || "—"}</td>
+                      <td className="px-2 py-1 text-[11px]">
                         <Button 
                           size="sm" 
                           variant="outline"
@@ -1787,14 +1788,14 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
 
       {/* Pagination and Action Buttons */}
       {items.length > 0 && (
-        <div className="bg-card border-t p-4">
-          <div className="flex flex-col lg:flex-row justify-between items-center gap-4">
+        <div className="bg-card border-t px-2 py-1.5">
+          <div className="flex flex-col lg:flex-row justify-between items-center gap-2">
             {/* Left side: Pagination controls */}
-            <div className="flex items-center gap-4 flex-wrap">
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-muted-foreground">Show:</span>
+            <div className="flex items-center gap-3 flex-wrap">
+              <div className="flex items-center gap-1.5">
+                <span className="text-xs text-muted-foreground">Show:</span>
                 <Select value={itemsPerPage.toString()} onValueChange={handleItemsPerPageChange}>
-                  <SelectTrigger className="h-9 w-24">
+                  <SelectTrigger className="h-7 w-20 text-xs">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -1807,7 +1808,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                 </Select>
               </div>
 
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <div className="flex items-center gap-2 text-xs text-muted-foreground">
                 <span>{totalSavedItems} items</span>
               </div>
 
@@ -1815,6 +1816,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                 <Button
                   variant="outline"
                   size="sm"
+                  className="h-7 text-xs px-2"
                   onClick={() => handlePageChange(currentPage - 1)}
                   disabled={currentPage === 1}
                 >
@@ -1827,14 +1829,14 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                     variant={currentPage === page ? "default" : "outline"}
                     size="sm"
                     onClick={() => handlePageChange(page)}
-                    className={currentPage === page ? "bg-primary hover:bg-primary/90 text-primary-foreground" : ""}
+                    className={`h-7 text-xs px-2 min-w-7 ${currentPage === page ? "bg-primary hover:bg-primary/90 text-primary-foreground" : ""}`}
                   >
                     {page}
                   </Button>
                 ))}
                 
                 {totalPages > 4 && currentPage < totalPages - 1 && (
-                  <span className="px-2 text-muted-foreground">...</span>
+                  <span className="px-1 text-xs text-muted-foreground">...</span>
                 )}
                 
                 {totalPages > 4 && currentPage < totalPages && (
@@ -1842,7 +1844,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                     variant={currentPage === totalPages ? "default" : "outline"}
                     size="sm"
                     onClick={() => handlePageChange(totalPages)}
-                    className={currentPage === totalPages ? "bg-primary hover:bg-primary/90 text-primary-foreground" : ""}
+                    className={`h-7 text-xs px-2 min-w-7 ${currentPage === totalPages ? "bg-primary hover:bg-primary/90 text-primary-foreground" : ""}`}
                   >
                     {totalPages}
                   </Button>
@@ -1851,6 +1853,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                 <Button
                   variant="outline"
                   size="sm"
+                  className="h-7 text-xs px-2"
                   onClick={() => handlePageChange(currentPage + 1)}
                   disabled={currentPage === totalPages}
                 >
@@ -1863,7 +1866,8 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
             <div className="flex items-center gap-2">
               <Button 
                 variant="outline" 
-                size="default"
+                size="sm"
+                className="h-7 text-xs"
                 onClick={handlePreviewChanges}
                 disabled={newItems.length === 0}
               >
@@ -1871,13 +1875,15 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
               </Button>
               <Button 
                 variant="outline" 
-                size="default"
+                size="sm"
+                className="h-7 text-xs"
               >
                 Cancel Changes
               </Button>
               <Button 
                 variant="default" 
-                size="default"
+                size="sm"
+                className="h-7 text-xs"
               >
                 Save Changes
               </Button>
