@@ -8014,13 +8014,13 @@ const FormVariationsDemo = () => {
       {/* Sticky section containing Type/Report Number */}
       <div className="sticky top-[57px] z-30 bg-background shadow-sm">
         {/* Type and Report Number fields */}
-        <div className="bg-card px-4 py-2 border-b rounded-t-lg">
-          <div className="flex flex-col md:flex-row md:items-end gap-3">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 flex-1">
-              <div className="space-y-1">
-                <Label htmlFor="type" className="text-xs font-medium">Type *</Label>
+        <div className="bg-card px-3 py-1.5 border-b rounded-t-lg">
+          <div className="flex flex-col md:flex-row md:items-end gap-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 flex-1">
+              <div className="space-y-0.5">
+                <Label htmlFor="type" className="text-[10px] font-medium">Type *</Label>
                 <Select value={formData.type} onValueChange={(value) => handleInputChange("type", value)}>
-                  <SelectTrigger className="h-8 text-xs">
+                  <SelectTrigger className="h-6 text-[11px] px-2">
                     <SelectValue placeholder="Select type" />
                   </SelectTrigger>
                   <SelectContent className="max-h-48 overflow-y-auto z-50">
@@ -8042,20 +8042,20 @@ const FormVariationsDemo = () => {
                 </Select>
               </div>
 
-              <div className="space-y-1">
-                <Label htmlFor="reportNumber" className="text-xs font-medium">Report Number *</Label>
+              <div className="space-y-0.5">
+                <Label htmlFor="reportNumber" className="text-[10px] font-medium">Report Number *</Label>
                 <Input
                   id="reportNumber"
                   value={formData.reportNumber}
                   onChange={(e) => handleInputChange("reportNumber", e.target.value)}
                   placeholder="0152.01-802930-001"
-                  className="h-8 text-xs"
+                  className="h-6 text-[11px] px-2"
                   readOnly
                 />
               </div>
             </div>
             
-            <div className="flex flex-col text-[10px] text-muted-foreground pb-1">
+            <div className="flex flex-col text-[9px] text-muted-foreground pb-0.5 leading-tight">
               <span><span className="font-medium">Created:</span> 09/09/2025 by Admin</span>
               <span><span className="font-medium">Modified:</span> 09/09/2025 by Admin</span>
             </div>
