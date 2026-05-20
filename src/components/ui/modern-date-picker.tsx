@@ -17,8 +17,8 @@ export interface ModernDatePickerProps {
   className?: string;
   inputClassName?: string;
   disabled?: boolean;
-  /** Compact heights: sm = h-7, md = h-8, lg = h-9. Default md. */
-  size?: "sm" | "md" | "lg";
+  /** Compact heights: xs = h-6, sm = h-7, md = h-8, lg = h-9. Default md. */
+  size?: "xs" | "sm" | "md" | "lg";
   id?: string;
   name?: string;
 }
@@ -33,6 +33,7 @@ const toDate = (v?: Date | string): Date | undefined => {
 };
 
 const sizeMap = {
+  xs: { input: "h-6 text-[11px] pr-6", btn: "h-6 w-6", icon: "h-3 w-3" },
   sm: { input: "h-7 text-xs pr-7", btn: "h-7 w-7", icon: "h-3 w-3" },
   md: { input: "h-8 text-sm pr-8", btn: "h-8 w-8", icon: "h-3.5 w-3.5" },
   lg: { input: "h-10 text-sm pr-10", btn: "h-10 w-10", icon: "h-4 w-4" },
