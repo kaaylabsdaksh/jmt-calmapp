@@ -1115,8 +1115,8 @@ const AddNewWorkOrder = () => {
 
             <TabsContent value="general" className="space-y-3">
               <Card>
-                <CardContent className="p-3 sm:p-4">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
+                <CardContent className="p-2 sm:p-3">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-2">
                     {/* Account Number */}
                     <div className="space-y-1 relative" ref={inputRef}>
                       <Label htmlFor="accountNumber" className="text-xs font-medium">
