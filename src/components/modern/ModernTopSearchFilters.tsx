@@ -615,7 +615,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
           )}
 
           {/* Individual field inputs - one per criterion */}
-          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 gap-1">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1">
             {searchTypeOptions.map((option) => {
               const fieldValue = fieldValues[option.value] || '';
               const activeChip = searchChips.find(c => c.type === option.value);
