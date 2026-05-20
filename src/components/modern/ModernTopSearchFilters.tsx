@@ -568,6 +568,8 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                             </div>
                           );
                         })
+                      )}
+                    </div>
                   </PopoverContent>
                 </Popover>
 
