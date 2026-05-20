@@ -2693,7 +2693,7 @@ const AddNewWorkOrder = () => {
                          <Button
                            size="sm"
                            onClick={() => navigate("/form-variations")}
-                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium flex flex-1 items-center justify-center gap-1.5 h-8 px-3 rounded-md shadow-sm transition-all duration-200 hover:shadow text-xs"
+                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium flex flex-1 items-center justify-center gap-1 h-7 px-2 rounded-md shadow-sm transition-all duration-200 hover:shadow text-[11px] whitespace-nowrap min-w-0"
                          >
                            <Plus className="w-3.5 h-3.5" />
                            <span>Add New Item</span>
@@ -2701,12 +2701,12 @@ const AddNewWorkOrder = () => {
                          <Button
                            size="sm"
                            onClick={() => setIsRFIDDialogOpen(true)}
-                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium flex flex-1 items-center justify-center gap-1.5 h-8 px-3 rounded-md shadow-sm transition-all duration-200 hover:shadow text-xs"
+                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium flex flex-1 items-center justify-center gap-1 h-7 px-2 rounded-md shadow-sm transition-all duration-200 hover:shadow text-[11px] whitespace-nowrap min-w-0"
                          >
                            <PlusCircle className="w-3.5 h-3.5" />
                            <span>Add New Item w/RFID</span>
                          </Button>
-                         <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium flex flex-1 items-center justify-center gap-1.5 h-8 px-3 rounded-md shadow-sm transition-all duration-200 hover:shadow text-xs">
+                         <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium flex flex-1 items-center justify-center gap-1 h-7 px-2 rounded-md shadow-sm transition-all duration-200 hover:shadow text-[11px] whitespace-nowrap min-w-0">
                            <QrCode className="w-3.5 h-3.5" />
                            <span>Print QR</span>
                          </Button>
@@ -2721,7 +2721,7 @@ const AddNewWorkOrder = () => {
                                setTimeout(() => document.getElementById('create-unused-items-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
                              }
                            }}
-                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium flex flex-1 items-center justify-center gap-1.5 h-8 px-3 rounded-md shadow-sm transition-all duration-200 hover:shadow text-xs"
+                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium flex flex-1 items-center justify-center gap-1 h-7 px-2 rounded-md shadow-sm transition-all duration-200 hover:shadow text-[11px] whitespace-nowrap min-w-0"
                          >
                            <PackagePlus className="w-3.5 h-3.5" />
                            <span>Create Unused Items</span>
@@ -2737,7 +2737,7 @@ const AddNewWorkOrder = () => {
                                setTimeout(() => document.getElementById('copy-from-other-wo')?.scrollIntoView({ behavior: 'smooth' }), 100);
                              }
                            }}
-                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium flex flex-1 items-center justify-center gap-1.5 h-8 px-3 rounded-md shadow-sm transition-all duration-200 hover:shadow text-xs"
+                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium flex flex-1 items-center justify-center gap-1 h-7 px-2 rounded-md shadow-sm transition-all duration-200 hover:shadow text-[11px] whitespace-nowrap min-w-0"
                          >
                            <Copy className="w-3.5 h-3.5" />
                            <span>Copy From Other Work Order</span>
@@ -2753,7 +2753,7 @@ const AddNewWorkOrder = () => {
                                setTimeout(() => document.getElementById('special-action-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
                              }
                            }}
-                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium flex flex-1 items-center justify-center gap-1.5 h-8 px-3 rounded-md shadow-sm transition-all duration-200 hover:shadow text-xs"
+                           className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium flex flex-1 items-center justify-center gap-1 h-7 px-2 rounded-md shadow-sm transition-all duration-200 hover:shadow text-[11px] whitespace-nowrap min-w-0"
                          >
                            <Wand2 className="w-3.5 h-3.5" />
                            <span>Special Action</span>
