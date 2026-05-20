@@ -213,7 +213,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
 
   const SortableHeader = ({ label, sortKeyName }: { label: string; sortKeyName: SortKey }) => (
     <th 
-      className="text-left p-3 font-medium cursor-pointer hover:bg-muted/80 select-none"
+      className="text-left px-2 py-1.5 font-medium cursor-pointer hover:bg-muted/80 select-none"
       onClick={() => handleSort(sortKeyName)}
     >
       <div className="flex items-center gap-1">
