@@ -430,14 +430,15 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
 
   return (
     <div className="border rounded-lg overflow-hidden flex flex-col">
-      <div className="flex justify-between items-center p-3 bg-muted/20 border-b">
+      <div className="flex justify-between items-center px-2 py-1.5 bg-muted/20 border-b">
         <div className="flex items-center gap-2">
           <Button 
             variant="default" 
-            className="flex items-center gap-2"
+            size="sm"
+            className="flex items-center gap-1.5 h-7 text-xs"
             onClick={handleAddNewItem}
           >
-            <Plus className="w-4 h-4" />
+            <Plus className="w-3 h-3" />
             Receive Item
           </Button>
         </div>
