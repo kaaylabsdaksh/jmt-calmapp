@@ -1788,14 +1788,14 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
 
       {/* Pagination and Action Buttons */}
       {items.length > 0 && (
-        <div className="bg-card border-t p-4">
-          <div className="flex flex-col lg:flex-row justify-between items-center gap-4">
+        <div className="bg-card border-t px-2 py-1.5">
+          <div className="flex flex-col lg:flex-row justify-between items-center gap-2">
             {/* Left side: Pagination controls */}
-            <div className="flex items-center gap-4 flex-wrap">
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-muted-foreground">Show:</span>
+            <div className="flex items-center gap-3 flex-wrap">
+              <div className="flex items-center gap-1.5">
+                <span className="text-xs text-muted-foreground">Show:</span>
                 <Select value={itemsPerPage.toString()} onValueChange={handleItemsPerPageChange}>
-                  <SelectTrigger className="h-9 w-24">
+                  <SelectTrigger className="h-7 w-20 text-xs">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -1808,7 +1808,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                 </Select>
               </div>
 
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <div className="flex items-center gap-2 text-xs text-muted-foreground">
                 <span>{totalSavedItems} items</span>
               </div>
 
@@ -1816,6 +1816,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                 <Button
                   variant="outline"
                   size="sm"
+                  className="h-7 text-xs px-2"
                   onClick={() => handlePageChange(currentPage - 1)}
                   disabled={currentPage === 1}
                 >
@@ -1828,14 +1829,14 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                     variant={currentPage === page ? "default" : "outline"}
                     size="sm"
                     onClick={() => handlePageChange(page)}
-                    className={currentPage === page ? "bg-primary hover:bg-primary/90 text-primary-foreground" : ""}
+                    className={`h-7 text-xs px-2 min-w-7 ${currentPage === page ? "bg-primary hover:bg-primary/90 text-primary-foreground" : ""}`}
                   >
                     {page}
                   </Button>
                 ))}
                 
                 {totalPages > 4 && currentPage < totalPages - 1 && (
-                  <span className="px-2 text-muted-foreground">...</span>
+                  <span className="px-1 text-xs text-muted-foreground">...</span>
                 )}
                 
                 {totalPages > 4 && currentPage < totalPages && (
@@ -1843,7 +1844,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                     variant={currentPage === totalPages ? "default" : "outline"}
                     size="sm"
                     onClick={() => handlePageChange(totalPages)}
-                    className={currentPage === totalPages ? "bg-primary hover:bg-primary/90 text-primary-foreground" : ""}
+                    className={`h-7 text-xs px-2 min-w-7 ${currentPage === totalPages ? "bg-primary hover:bg-primary/90 text-primary-foreground" : ""}`}
                   >
                     {totalPages}
                   </Button>
@@ -1852,6 +1853,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                 <Button
                   variant="outline"
                   size="sm"
+                  className="h-7 text-xs px-2"
                   onClick={() => handlePageChange(currentPage + 1)}
                   disabled={currentPage === totalPages}
                 >
@@ -1864,7 +1866,8 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
             <div className="flex items-center gap-2">
               <Button 
                 variant="outline" 
-                size="default"
+                size="sm"
+                className="h-7 text-xs"
                 onClick={handlePreviewChanges}
                 disabled={newItems.length === 0}
               >
@@ -1872,13 +1875,15 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
               </Button>
               <Button 
                 variant="outline" 
-                size="default"
+                size="sm"
+                className="h-7 text-xs"
               >
                 Cancel Changes
               </Button>
               <Button 
                 variant="default" 
-                size="default"
+                size="sm"
+                className="h-7 text-xs"
               >
                 Save Changes
               </Button>
