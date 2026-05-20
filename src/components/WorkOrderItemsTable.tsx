@@ -376,34 +376,34 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
                 key={item.id} 
                 className={`border-t hover:bg-muted/50 ${selectedItems.includes(item.id) ? 'bg-primary/10' : ''}`}
               >
-                <td className="px-2 py-1">
+                <td className="px-1.5 py-0.5">
                   <Button 
                     variant="outline" 
                     size="sm"
                     onClick={() => navigate("/form-variations")}
-                    className="h-6 w-6 p-0 bg-primary hover:bg-primary/90 text-primary-foreground border-primary"
+                    className="h-5 w-5 p-0 bg-primary hover:bg-primary/90 text-primary-foreground border-primary"
                   >
                     <Edit className="w-3 h-3" />
                   </Button>
                 </td>
-                <td className="px-2 py-1">
+                <td className="px-1.5 py-0.5">
                   <Checkbox 
                     checked={selectedItems.includes(item.id)}
                     onCheckedChange={(checked) => handleSelectItem(item.id, checked as boolean)}
                   />
                 </td>
-                <td className="px-2 py-1">{accountNumber}-{workOrderNumber}-{item.itemNumber}</td>
-                <td className="px-2 py-1">{item.manufacturer}</td>
-                <td className="px-2 py-1">{item.model}</td>
-                <td className="px-2 py-1">{(item as any).mfgSerial || (item as any).serialNumber}</td>
-                <td className="px-2 py-1">{item.created || ""}</td>
-                <td className="px-2 py-1">{item.departure || ""}</td>
-                <td className="px-2 py-1">{item.itemStatus || ""}</td>
-                <td className="px-2 py-1">{item.itemType || ""}</td>
-                <td className="px-2 py-1">{item.deliverByDate || ""}</td>
-                <td className="px-2 py-1">{selectedPoNumber}</td>
-                <td className="px-2 py-1">
-                  <Button variant="link" className="text-blue-600 hover:text-blue-700 text-xs p-0 h-auto">
+                <td className="px-1.5 py-0.5">{accountNumber}-{workOrderNumber}-{item.itemNumber}</td>
+                <td className="px-1.5 py-0.5">{item.manufacturer}</td>
+                <td className="px-1.5 py-0.5">{item.model}</td>
+                <td className="px-1.5 py-0.5">{(item as any).mfgSerial || (item as any).serialNumber}</td>
+                <td className="px-1.5 py-0.5">{item.created || ""}</td>
+                <td className="px-1.5 py-0.5">{item.departure || ""}</td>
+                <td className="px-1.5 py-0.5">{item.itemStatus || ""}</td>
+                <td className="px-1.5 py-0.5">{item.itemType || ""}</td>
+                <td className="px-1.5 py-0.5">{item.deliverByDate || ""}</td>
+                <td className="px-1.5 py-0.5">{selectedPoNumber}</td>
+                <td className="px-1.5 py-0.5">
+                  <Button variant="link" className="text-blue-600 hover:text-blue-700 text-[11px] p-0 h-auto">
                     View
                   </Button>
                 </td>
