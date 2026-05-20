@@ -3522,35 +3522,37 @@ const FormVariationsDemo = () => {
           <div className="bg-muted/50 px-3 py-1.5 border-b">
             <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide">Product Specifications</span>
           </div>
-          <div className="p-3 space-y-1 flex-1">
-            {[
-              { id: "detailsManufacturer", label: "Manufacturer", key: "manufacturer", options: [["3m","3M"],["salisbury","Salisbury"],["chance","Chance"],["cementex","Cementex"],["novax","Novax"]] },
-              { id: "detailsClass", label: "Class", key: "itemClass", options: [["class-0","Class 0"],["class-1","Class 1"],["class-2","Class 2"],["class-3","Class 3"],["class-4","Class 4"]] },
-              { id: "detailsSize", label: "Size", key: "size", options: [["xs","XS"],["s","S"],["m","M"],["l","L"],["xl","XL"],["xxl","XXL"]] },
-              { id: "detailsLength", label: "Length", key: "length", options: [["11","11\""],["14","14\""],["16","16\""],["18","18\""]] },
-              { id: "detailsColorIn", label: "Color In", key: "colorIn", options: [["black","Black"],["red","Red"],["yellow","Yellow"],["orange","Orange"],["green","Green"]] },
-              { id: "detailsColorOut", label: "Color Out", key: "colorOut", options: [["black","Black"],["red","Red"],["yellow","Yellow"],["orange","Orange"],["green","Green"]] },
-              { id: "detailsCuffType", label: "Cuff Type", key: "cuffType", options: [["straight","Straight"],["bell","Bell"],["contour","Contour"]] },
-            ].map((f) => (
-              <div key={f.id} className="grid grid-cols-[90px_1fr] items-center gap-2">
-                <Label htmlFor={f.id} className="text-[11px] text-right font-semibold">{f.label}:</Label>
-                <Select value={(formData as any)[f.key] || ""} onValueChange={(value) => handleInputChange(f.key, value)}>
-                  <SelectTrigger id={f.id} className="h-6 text-[11px] px-2">
-                    <SelectValue placeholder="" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {f.options.map(([v, l]) => (
-                      <SelectItem key={v} value={v}>{l}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            ))}
+          <div className="p-3 flex-1">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-2 gap-y-1.5">
+              {[
+                { id: "detailsManufacturer", label: "Manufacturer", key: "manufacturer", options: [["3m","3M"],["salisbury","Salisbury"],["chance","Chance"],["cementex","Cementex"],["novax","Novax"]] },
+                { id: "detailsClass", label: "Class", key: "itemClass", options: [["class-0","Class 0"],["class-1","Class 1"],["class-2","Class 2"],["class-3","Class 3"],["class-4","Class 4"]] },
+                { id: "detailsSize", label: "Size", key: "size", options: [["xs","XS"],["s","S"],["m","M"],["l","L"],["xl","XL"],["xxl","XXL"]] },
+                { id: "detailsLength", label: "Length", key: "length", options: [["11","11\""],["14","14\""],["16","16\""],["18","18\""]] },
+                { id: "detailsColorIn", label: "Color In", key: "colorIn", options: [["black","Black"],["red","Red"],["yellow","Yellow"],["orange","Orange"],["green","Green"]] },
+                { id: "detailsColorOut", label: "Color Out", key: "colorOut", options: [["black","Black"],["red","Red"],["yellow","Yellow"],["orange","Orange"],["green","Green"]] },
+                { id: "detailsCuffType", label: "Cuff Type", key: "cuffType", options: [["straight","Straight"],["bell","Bell"],["contour","Contour"]] },
+              ].map((f) => (
+                <div key={f.id} className="space-y-0.5">
+                  <Label htmlFor={f.id} className="text-[11px] font-semibold">{f.label}</Label>
+                  <Select value={(formData as any)[f.key] || ""} onValueChange={(value) => handleInputChange(f.key, value)}>
+                    <SelectTrigger id={f.id} className="h-6 text-[11px] px-2">
+                      <SelectValue placeholder="" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {f.options.map(([v, l]) => (
+                        <SelectItem key={v} value={v}>{l}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              ))}
+            </div>
 
             {/* State checkboxes */}
-            <div className="grid grid-cols-[90px_1fr] items-start gap-2 pt-1">
-              <Label className="text-[11px] text-right font-semibold pt-0.5">State:</Label>
-              <div className="grid grid-cols-2 gap-x-3 gap-y-1">
+            <div className="mt-2 pt-2 border-t space-y-1">
+              <Label className="text-[11px] font-semibold">State</Label>
+              <div className="flex flex-wrap gap-x-4 gap-y-1">
                 {[
                   { id: "stateOddLeft", key: "oddLeft", label: "Odd Left" },
                   { id: "stateOddRight", key: "oddRight", label: "Odd Right" },
