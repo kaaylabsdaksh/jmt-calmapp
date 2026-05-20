@@ -7706,19 +7706,19 @@ const FormVariationsDemo = () => {
 
   // Render work order header (default style)
   const renderWorkOrderHeader = () => (
-    <div className="bg-card border border-border rounded-lg px-4 py-3 mb-3 mt-3">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 auto-rows-min">
+    <div className="bg-card border border-border rounded-lg px-2.5 py-1.5 mb-2 mt-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-2 gap-y-1 auto-rows-min">
         <div>
-          <Label className="text-xs font-medium text-muted-foreground">Work Order #</Label>
+          <Label className="text-[10px] font-medium text-muted-foreground">Work Order #</Label>
           <Input
             value={formData.workOrderNumber}
             onChange={(e) => handleInputChange("workOrderNumber", e.target.value)}
-            className="mt-1 h-8 font-semibold text-sm"
+            className="mt-0.5 h-6 font-semibold text-[11px] px-2"
           />
         </div>
         <div>
-          <Label className="text-xs font-medium text-muted-foreground">SR Doc</Label>
-          <div className="text-sm px-2 bg-muted rounded border mt-1 h-8 flex items-center">
+          <Label className="text-[10px] font-medium text-muted-foreground">SR Doc</Label>
+          <div className="text-[11px] px-2 bg-muted rounded border mt-0.5 h-6 flex items-center">
             {formData.srDoc ? (
               <a
                 href="#"
@@ -7737,18 +7737,18 @@ const FormVariationsDemo = () => {
           </div>
         </div>
         <div>
-          <Label className="text-xs font-medium text-muted-foreground">Salesperson</Label>
-          <div className="text-sm px-2 bg-muted rounded border mt-1 h-8 flex items-center">
+          <Label className="text-[10px] font-medium text-muted-foreground">Salesperson</Label>
+          <div className="text-[11px] px-2 bg-muted rounded border mt-0.5 h-6 flex items-center">
             {formData.salesperson || <span className="text-muted-foreground">Not assigned</span>}
           </div>
         </div>
         <div>
-          <Label className="text-xs font-medium text-muted-foreground">Contact</Label>
+          <Label className="text-[10px] font-medium text-muted-foreground">Contact</Label>
           <Input
             value={formData.contact}
             onChange={(e) => handleInputChange("contact", e.target.value)}
             placeholder="Contact information"
-            className="mt-1 h-8 text-sm"
+            className="mt-0.5 h-6 text-[11px] px-2"
           />
         </div>
       </div>
@@ -8014,13 +8014,13 @@ const FormVariationsDemo = () => {
       {/* Sticky section containing Type/Report Number */}
       <div className="sticky top-[57px] z-30 bg-background shadow-sm">
         {/* Type and Report Number fields */}
-        <div className="bg-card px-4 py-2 border-b rounded-t-lg">
-          <div className="flex flex-col md:flex-row md:items-end gap-3">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 flex-1">
-              <div className="space-y-1">
-                <Label htmlFor="type" className="text-xs font-medium">Type *</Label>
+        <div className="bg-card px-3 py-1.5 border-b rounded-t-lg">
+          <div className="flex flex-col md:flex-row md:items-end gap-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 flex-1">
+              <div className="space-y-0.5">
+                <Label htmlFor="type" className="text-[10px] font-medium">Type *</Label>
                 <Select value={formData.type} onValueChange={(value) => handleInputChange("type", value)}>
-                  <SelectTrigger className="h-8 text-xs">
+                  <SelectTrigger className="h-6 text-[11px] px-2">
                     <SelectValue placeholder="Select type" />
                   </SelectTrigger>
                   <SelectContent className="max-h-48 overflow-y-auto z-50">
@@ -8042,20 +8042,20 @@ const FormVariationsDemo = () => {
                 </Select>
               </div>
 
-              <div className="space-y-1">
-                <Label htmlFor="reportNumber" className="text-xs font-medium">Report Number *</Label>
+              <div className="space-y-0.5">
+                <Label htmlFor="reportNumber" className="text-[10px] font-medium">Report Number *</Label>
                 <Input
                   id="reportNumber"
                   value={formData.reportNumber}
                   onChange={(e) => handleInputChange("reportNumber", e.target.value)}
                   placeholder="0152.01-802930-001"
-                  className="h-8 text-xs"
+                  className="h-6 text-[11px] px-2"
                   readOnly
                 />
               </div>
             </div>
             
-            <div className="flex flex-col text-[10px] text-muted-foreground pb-1">
+            <div className="flex flex-col text-[9px] text-muted-foreground pb-0.5 leading-tight">
               <span><span className="font-medium">Created:</span> 09/09/2025 by Admin</span>
               <span><span className="font-medium">Modified:</span> 09/09/2025 by Admin</span>
             </div>
@@ -9705,12 +9705,12 @@ const FormVariationsDemo = () => {
             )}
           </div>
         ) : (
-          <div className="sticky top-0 z-40 bg-background py-3 -mx-3 sm:-mx-4 lg:-mx-6 px-3 sm:px-4 lg:px-6">
-            <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-3 overflow-x-auto">
+          <div className="sticky top-0 z-40 bg-background py-1.5 -mx-3 sm:-mx-4 lg:-mx-6 px-3 sm:px-4 lg:px-6">
+            <div className="flex flex-wrap sm:flex-nowrap items-center gap-1.5 overflow-x-auto">
               <Button
                 variant="ghost"
                 onClick={() => setActiveSection('work-order-items')}
-                className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all border ${
+                className={`flex items-center gap-2 h-7 px-2.5 py-1 rounded-md text-xs font-medium transition-all border ${
                   activeSection === 'work-order-items'
                     ? 'bg-primary text-primary-foreground shadow-sm border-primary'
                     : 'bg-background text-muted-foreground hover:text-foreground border-border hover:border-border/80'
@@ -9724,7 +9724,7 @@ const FormVariationsDemo = () => {
                   <Button
                     variant="ghost"
                     onClick={() => setActiveSection('estimate')}
-                    className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all border ${
+                    className={`flex items-center gap-2 h-7 px-2.5 py-1 rounded-md text-xs font-medium transition-all border ${
                       activeSection === 'estimate'
                         ? 'bg-primary text-primary-foreground shadow-sm border-primary'
                         : 'bg-background text-muted-foreground hover:text-foreground border-border hover:border-border/80'
@@ -9736,7 +9736,7 @@ const FormVariationsDemo = () => {
                   <Button
                     variant="ghost"
                     onClick={() => setActiveSection('qf3')}
-                    className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all border ${
+                    className={`flex items-center gap-2 h-7 px-2.5 py-1 rounded-md text-xs font-medium transition-all border ${
                       activeSection === 'qf3'
                         ? 'bg-primary text-primary-foreground shadow-sm border-primary'
                         : 'bg-background text-muted-foreground hover:text-foreground border-border hover:border-border/80'
@@ -9750,7 +9750,7 @@ const FormVariationsDemo = () => {
               <Button
                 variant="ghost"
                 onClick={() => setActiveSection('external-files')}
-                className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all border ${
+                className={`flex items-center gap-2 h-7 px-2.5 py-1 rounded-md text-xs font-medium transition-all border ${
                   activeSection === 'external-files'
                     ? 'bg-primary text-primary-foreground shadow-sm border-primary'
                     : 'bg-background text-muted-foreground hover:text-foreground border-border hover:border-border/80'
@@ -9762,7 +9762,7 @@ const FormVariationsDemo = () => {
               <Button
                 variant="ghost"
                 onClick={() => setActiveSection('fail-log')}
-                className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all border ${
+                className={`flex items-center gap-2 h-7 px-2.5 py-1 rounded-md text-xs font-medium transition-all border ${
                   activeSection === 'fail-log'
                     ? 'bg-primary text-primary-foreground shadow-sm border-primary'
                     : 'bg-background text-muted-foreground hover:text-foreground border-border hover:border-border/80'
@@ -9775,7 +9775,7 @@ const FormVariationsDemo = () => {
                 <Button
                   variant="ghost"
                   onClick={() => setActiveSection('cert-files')}
-                  className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all border ${
+                  className={`flex items-center gap-2 h-7 px-2.5 py-1 rounded-md text-xs font-medium transition-all border ${
                     activeSection === 'cert-files'
                       ? 'bg-primary text-primary-foreground shadow-sm border-primary'
                       : 'bg-background text-muted-foreground hover:text-foreground border-border hover:border-border/80'
