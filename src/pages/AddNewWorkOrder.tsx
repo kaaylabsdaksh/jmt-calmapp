@@ -1177,7 +1177,7 @@ const AddNewWorkOrder = () => {
                           onChange={handleRmaSearchChange}
                           onKeyDown={handleRmaSearchKeyDown}
                           disabled={isSaved}
-                          className="h-7 text-xs"
+                          className="h-6 text-[11px]"
                         />
                         {/* RMA Suggestions Dropdown */}
                         {showRmaSuggestions && rmaSearchSuggestions.length > 0 && (
@@ -1218,7 +1218,7 @@ const AddNewWorkOrder = () => {
                         onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, contact: value === "no-contact" ? "" : value }))}
                         disabled={isSaved}
                       >
-                        <SelectTrigger className="h-7 text-xs">
+                        <SelectTrigger className="h-6 text-[11px]">
                           <SelectValue placeholder="Select contact" />
                         </SelectTrigger>
                         <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-[60] max-h-60 overflow-y-auto">
@@ -1264,7 +1264,7 @@ const AddNewWorkOrder = () => {
                         value={workOrderData.workOrderNumber}
                         onChange={(e) => setWorkOrderData(prev => ({ ...prev, workOrderNumber: e.target.value }))}
                         disabled={isSaved}
-                        className="h-7 text-xs"
+                        className="h-6 text-[11px]"
                       />
                     </div>
 
@@ -1272,7 +1272,7 @@ const AddNewWorkOrder = () => {
                     <div className="space-y-1">
                       <Label className="text-xs font-medium">Work Order Status</Label>
                       <Select value={workOrderData.workOrderStatus} onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, workOrderStatus: value }))} disabled={isSaved}>
-                        <SelectTrigger className="h-7 text-xs">
+                        <SelectTrigger className="h-6 text-[11px]">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -1288,7 +1288,7 @@ const AddNewWorkOrder = () => {
                     <div className="space-y-1">
                       <Label className="text-xs font-medium">Work Order Type</Label>
                       <Select value={workOrderData.workOrderType} onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, workOrderType: value }))} disabled={isSaved}>
-                        <SelectTrigger className="h-7 text-xs">
+                        <SelectTrigger className="h-6 text-[11px]">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -1307,7 +1307,7 @@ const AddNewWorkOrder = () => {
                         value={workOrderData.customer}
                         onChange={(e) => setWorkOrderData(prev => ({ ...prev, customer: e.target.value }))}
                         disabled={isSaved}
-                        className="h-7 text-xs"
+                        className="h-6 text-[11px]"
                       />
                     </div>
                   </div>
@@ -3347,7 +3347,7 @@ const AddNewWorkOrder = () => {
                                   onValueChange={(value) => setQuickAddData({...quickAddData, type: value})}
                                   disabled={areOtherFieldsDisabled()}
                                 >
-                                  <SelectTrigger id="qa-type" className="h-7 text-xs">
+                                  <SelectTrigger id="qa-type" className="h-6 text-[11px]">
                                     <SelectValue />
                                   </SelectTrigger>
                                   <SelectContent className="bg-background border shadow-lg z-50">
@@ -3368,7 +3368,7 @@ const AddNewWorkOrder = () => {
                                   onChange={(e) => setQuickAddData({...quickAddData, calFreq: e.target.value})}
                                   placeholder="Enter value"
                                   disabled={areOtherFieldsDisabled()}
-                                  className="h-7 text-xs"
+                                  className="h-6 text-[11px]"
                                 />
                               </div>
 
@@ -3379,7 +3379,7 @@ const AddNewWorkOrder = () => {
                                   onValueChange={(value) => setQuickAddData({...quickAddData, priority: value})}
                                   disabled={areOtherFieldsDisabled()}
                                 >
-                                  <SelectTrigger id="qa-priority" className="h-7 text-xs">
+                                  <SelectTrigger id="qa-priority" className="h-6 text-[11px]">
                                     <SelectValue />
                                   </SelectTrigger>
                                   <SelectContent className="bg-background border shadow-lg z-50">
@@ -3399,7 +3399,7 @@ const AddNewWorkOrder = () => {
                                   onValueChange={(value) => setQuickAddData({...quickAddData, location: value})}
                                   disabled={areOtherFieldsDisabled()}
                                 >
-                                  <SelectTrigger id="qa-location" className="h-7 text-xs">
+                                  <SelectTrigger id="qa-location" className="h-6 text-[11px]">
                                     <SelectValue />
                                   </SelectTrigger>
                                   <SelectContent className="bg-background border shadow-lg z-50">
@@ -3419,7 +3419,7 @@ const AddNewWorkOrder = () => {
                                   onValueChange={(value) => setQuickAddData({...quickAddData, division: value})}
                                   disabled={areOtherFieldsDisabled()}
                                 >
-                                  <SelectTrigger id="qa-division" className="h-7 text-xs">
+                                  <SelectTrigger id="qa-division" className="h-6 text-[11px]">
                                     <SelectValue />
                                   </SelectTrigger>
                                   <SelectContent className="bg-background border shadow-lg z-50">
@@ -3439,7 +3439,7 @@ const AddNewWorkOrder = () => {
                                   onValueChange={(value) => setQuickAddData({...quickAddData, actionCode: value})}
                                   disabled={areOtherFieldsDisabled()}
                                 >
-                                  <SelectTrigger id="qa-actionCode" className="h-7 text-xs">
+                                  <SelectTrigger id="qa-actionCode" className="h-6 text-[11px]">
                                     <SelectValue placeholder="Select..." />
                                   </SelectTrigger>
                                   <SelectContent className="bg-background border shadow-lg z-50">
@@ -3500,7 +3500,7 @@ const AddNewWorkOrder = () => {
                                   onValueChange={(value) => setQuickAddData({...quickAddData, arrivalType: value})}
                                   disabled={areOtherFieldsDisabled()}
                                 >
-                                  <SelectTrigger id="qa-arrivalType" className="h-7 text-xs">
+                                  <SelectTrigger id="qa-arrivalType" className="h-6 text-[11px]">
                                     <SelectValue placeholder="Select..." />
                                   </SelectTrigger>
                                   <SelectContent className="bg-background border shadow-lg z-50">
@@ -3527,7 +3527,7 @@ const AddNewWorkOrder = () => {
                                     onChange={(e) => setQuickAddData({...quickAddData, arrivalLocation: e.target.value})}
                                     placeholder="Enter location"
                                     disabled={areOtherFieldsDisabled()}
-                                    className="h-7 text-xs"
+                                    className="h-6 text-[11px]"
                                   />
                                 </div>
                               )}
@@ -3542,7 +3542,7 @@ const AddNewWorkOrder = () => {
                                     onValueChange={(value) => setQuickAddData({...quickAddData, shipType: value})}
                                     disabled={areOtherFieldsDisabled()}
                                   >
-                                    <SelectTrigger id="qa-shipType" className="h-7 text-xs">
+                                    <SelectTrigger id="qa-shipType" className="h-6 text-[11px]">
                                       <SelectValue placeholder="Select..." />
                                     </SelectTrigger>
                                     <SelectContent className="bg-background border shadow-lg z-50">
@@ -3566,7 +3566,7 @@ const AddNewWorkOrder = () => {
                                     onChange={(e) => setQuickAddData({...quickAddData, customerName: e.target.value})}
                                     placeholder="Enter name"
                                     disabled={areOtherFieldsDisabled()}
-                                    className="h-7 text-xs"
+                                    className="h-6 text-[11px]"
                                   />
                                 </div>
                               )}
@@ -3582,7 +3582,7 @@ const AddNewWorkOrder = () => {
                                       onValueChange={(value) => setQuickAddData({...quickAddData, driver: value})}
                                       disabled={areOtherFieldsDisabled()}
                                     >
-                                      <SelectTrigger id="qa-driver" className="h-7 text-xs">
+                                      <SelectTrigger id="qa-driver" className="h-6 text-[11px]">
                                         <SelectValue placeholder="Select driver" />
                                       </SelectTrigger>
                                       <SelectContent className="bg-background border shadow-lg z-50">
@@ -3645,7 +3645,7 @@ const AddNewWorkOrder = () => {
                                   onChange={(e) => setQuickAddData({...quickAddData, poNumber: e.target.value})}
                                   placeholder="Enter value"
                                   disabled={areOtherFieldsDisabled()}
-                                  className="h-7 text-xs"
+                                  className="h-6 text-[11px]"
                                 />
                               </div>
 
@@ -3719,7 +3719,7 @@ const AddNewWorkOrder = () => {
                                   onChange={(e) => setQuickAddData({...quickAddData, soNumber: e.target.value})}
                                   placeholder="Enter value"
                                   disabled={areOtherFieldsDisabled()}
-                                  className="h-7 text-xs"
+                                  className="h-6 text-[11px]"
                                 />
                               </div>
                             </div>

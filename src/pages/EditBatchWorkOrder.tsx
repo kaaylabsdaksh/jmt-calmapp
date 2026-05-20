@@ -1233,12 +1233,12 @@ const EditBatchWorkOrder = () => {
                               <div className="space-y-1.5">
                                 <div className="flex items-center gap-1.5">
                                   <Label className="text-xs whitespace-nowrap min-w-[70px]">Cal Freq:</Label>
-                                  <Input type="number" value={quoteData[selectedQuote].received.calFreq} className="h-7 text-xs" readOnly />
+                                  <Input type="number" value={quoteData[selectedQuote].received.calFreq} className="h-6 text-[11px]" readOnly />
                                 </div>
                                 <div className="flex items-center gap-1.5">
                                   <Label className="text-xs whitespace-nowrap min-w-[70px]">Location:</Label>
                                   <Select value={quoteData[selectedQuote].received.location}>
-                                    <SelectTrigger className="h-7 text-xs">
+                                    <SelectTrigger className="h-6 text-[11px]">
                                       <SelectValue />
                                     </SelectTrigger>
                                     <SelectContent className="bg-popover border shadow-lg z-50">
@@ -1251,7 +1251,7 @@ const EditBatchWorkOrder = () => {
                                 <div className="flex items-center gap-1.5">
                                   <Label className="text-xs whitespace-nowrap min-w-[70px]">Division:</Label>
                                   <Select value={quoteData[selectedQuote].received.division}>
-                                    <SelectTrigger className="h-7 text-xs">
+                                    <SelectTrigger className="h-6 text-[11px]">
                                       <SelectValue />
                                     </SelectTrigger>
                                     <SelectContent className="bg-popover border shadow-lg z-50">
@@ -1262,7 +1262,7 @@ const EditBatchWorkOrder = () => {
                                 </div>
                                 <div className="flex items-center gap-1.5">
                                   <Label className="text-xs whitespace-nowrap min-w-[70px]">PO #:</Label>
-                                  <Input value={quoteData[selectedQuote].received.poNumber} className="h-7 text-xs" readOnly />
+                                  <Input value={quoteData[selectedQuote].received.poNumber} className="h-6 text-[11px]" readOnly />
                                 </div>
                               </div>
                             </div>
@@ -1314,7 +1314,7 @@ const EditBatchWorkOrder = () => {
                                       }));
                                     }}
                                   >
-                                    <SelectTrigger className="h-7 text-xs">
+                                    <SelectTrigger className="h-6 text-[11px]">
                                       <SelectValue placeholder="Select..." />
                                     </SelectTrigger>
                                     <SelectContent className="bg-background border shadow-lg z-50">
@@ -1335,7 +1335,7 @@ const EditBatchWorkOrder = () => {
                                     <Label className="text-xs whitespace-nowrap min-w-[55px]">Location:</Label>
                                     <Input 
                                       placeholder="Enter location"
-                                      className="h-7 text-xs"
+                                      className="h-6 text-[11px]"
                                     />
                                   </div>
                                 )}
@@ -1344,7 +1344,7 @@ const EditBatchWorkOrder = () => {
                                   <div className="flex items-center gap-1.5">
                                     <Label className="text-xs whitespace-nowrap min-w-[55px]">Ship Type:</Label>
                                     <Select>
-                                      <SelectTrigger className="h-7 text-xs">
+                                      <SelectTrigger className="h-6 text-[11px]">
                                         <SelectValue placeholder="Select..." />
                                       </SelectTrigger>
                                       <SelectContent className="bg-background border shadow-lg z-50">
@@ -1362,7 +1362,7 @@ const EditBatchWorkOrder = () => {
                                     <Label className="text-xs whitespace-nowrap min-w-[55px]">Name:</Label>
                                     <Input 
                                       placeholder="Enter name"
-                                      className="h-7 text-xs"
+                                      className="h-6 text-[11px]"
                                     />
                                   </div>
                                 )}
@@ -1372,7 +1372,7 @@ const EditBatchWorkOrder = () => {
                                     <div className="flex items-center gap-1.5">
                                       <Label className="text-xs whitespace-nowrap min-w-[55px]">Driver:</Label>
                                       <Select>
-                                        <SelectTrigger className="h-7 text-xs">
+                                        <SelectTrigger className="h-6 text-[11px]">
                                           <SelectValue placeholder="Select driver" />
                                         </SelectTrigger>
                                         <SelectContent className="bg-background border shadow-lg z-50">
@@ -1418,7 +1418,7 @@ const EditBatchWorkOrder = () => {
                                 <div className="flex items-center gap-1.5">
                                   <Label className="text-xs whitespace-nowrap min-w-[60px]">Priority:</Label>
                                   <Select value={quoteData[selectedQuote].received.priority}>
-                                    <SelectTrigger className="h-7 text-xs">
+                                    <SelectTrigger className="h-6 text-[11px]">
                                       <SelectValue />
                                     </SelectTrigger>
                                     <SelectContent className="bg-popover border shadow-lg z-50">
@@ -1430,7 +1430,7 @@ const EditBatchWorkOrder = () => {
                                 </div>
                                 <div className="flex items-center gap-1.5">
                                   <Label className="text-xs whitespace-nowrap min-w-[60px]">Need By:</Label>
-                                  <Input type="date" value={quoteData[selectedQuote].received.needByDate} className="h-7 text-xs" readOnly />
+                                  <Input type="date" value={quoteData[selectedQuote].received.needByDate} className="h-6 text-[11px]" readOnly />
                                 </div>
                               </div>
                             </div>
@@ -2621,7 +2621,7 @@ const EditBatchWorkOrder = () => {
                                   onValueChange={(value) => setQuickAddData({...quickAddData, type: value})}
                                   disabled={areOtherFieldsDisabled()}
                                 >
-                                  <SelectTrigger id="qa-type" className="h-7 text-xs">
+                                  <SelectTrigger id="qa-type" className="h-6 text-[11px]">
                                     <SelectValue />
                                   </SelectTrigger>
                                   <SelectContent className="bg-background border shadow-lg z-50">
@@ -2642,7 +2642,7 @@ const EditBatchWorkOrder = () => {
                                   onChange={(e) => setQuickAddData({...quickAddData, calFreq: e.target.value})}
                                   placeholder="Enter value"
                                   disabled={areOtherFieldsDisabled()}
-                                  className="h-7 text-xs"
+                                  className="h-6 text-[11px]"
                                 />
                               </div>
 
@@ -2653,7 +2653,7 @@ const EditBatchWorkOrder = () => {
                                   onValueChange={(value) => setQuickAddData({...quickAddData, priority: value})}
                                   disabled={areOtherFieldsDisabled()}
                                 >
-                                  <SelectTrigger id="qa-priority" className="h-7 text-xs">
+                                  <SelectTrigger id="qa-priority" className="h-6 text-[11px]">
                                     <SelectValue />
                                   </SelectTrigger>
                                   <SelectContent className="bg-background border shadow-lg z-50">
@@ -2673,7 +2673,7 @@ const EditBatchWorkOrder = () => {
                                   onValueChange={(value) => setQuickAddData({...quickAddData, location: value})}
                                   disabled={areOtherFieldsDisabled()}
                                 >
-                                  <SelectTrigger id="qa-location" className="h-7 text-xs">
+                                  <SelectTrigger id="qa-location" className="h-6 text-[11px]">
                                     <SelectValue />
                                   </SelectTrigger>
                                   <SelectContent className="bg-background border shadow-lg z-50">
@@ -2693,7 +2693,7 @@ const EditBatchWorkOrder = () => {
                                   onValueChange={(value) => setQuickAddData({...quickAddData, division: value})}
                                   disabled={areOtherFieldsDisabled()}
                                 >
-                                  <SelectTrigger id="qa-division" className="h-7 text-xs">
+                                  <SelectTrigger id="qa-division" className="h-6 text-[11px]">
                                     <SelectValue />
                                   </SelectTrigger>
                                   <SelectContent className="bg-background border shadow-lg z-50">
@@ -2713,7 +2713,7 @@ const EditBatchWorkOrder = () => {
                                   onValueChange={(value) => setQuickAddData({...quickAddData, actionCode: value})}
                                   disabled={areOtherFieldsDisabled()}
                                 >
-                                  <SelectTrigger id="qa-actionCode" className="h-7 text-xs">
+                                  <SelectTrigger id="qa-actionCode" className="h-6 text-[11px]">
                                     <SelectValue placeholder="Select..." />
                                   </SelectTrigger>
                                   <SelectContent className="bg-background border shadow-lg z-50">
@@ -2774,7 +2774,7 @@ const EditBatchWorkOrder = () => {
                                   onValueChange={(value) => setQuickAddData({...quickAddData, arrivalType: value})}
                                   disabled={areOtherFieldsDisabled()}
                                 >
-                                  <SelectTrigger id="qa-arrivalType" className="h-7 text-xs">
+                                  <SelectTrigger id="qa-arrivalType" className="h-6 text-[11px]">
                                     <SelectValue placeholder="Select..." />
                                   </SelectTrigger>
                                   <SelectContent className="bg-background border shadow-lg z-50">
@@ -2801,7 +2801,7 @@ const EditBatchWorkOrder = () => {
                                     onChange={(e) => setQuickAddData({...quickAddData, arrivalLocation: e.target.value})}
                                     placeholder="Enter location"
                                     disabled={areOtherFieldsDisabled()}
-                                    className="h-7 text-xs"
+                                    className="h-6 text-[11px]"
                                   />
                                 </div>
                               )}
@@ -2816,7 +2816,7 @@ const EditBatchWorkOrder = () => {
                                     onValueChange={(value) => setQuickAddData({...quickAddData, shipType: value})}
                                     disabled={areOtherFieldsDisabled()}
                                   >
-                                    <SelectTrigger id="qa-shipType" className="h-7 text-xs">
+                                    <SelectTrigger id="qa-shipType" className="h-6 text-[11px]">
                                       <SelectValue placeholder="Select..." />
                                     </SelectTrigger>
                                     <SelectContent className="bg-background border shadow-lg z-50">
@@ -2840,7 +2840,7 @@ const EditBatchWorkOrder = () => {
                                     onChange={(e) => setQuickAddData({...quickAddData, customerName: e.target.value})}
                                     placeholder="Enter name"
                                     disabled={areOtherFieldsDisabled()}
-                                    className="h-7 text-xs"
+                                    className="h-6 text-[11px]"
                                   />
                                 </div>
                               )}
@@ -2856,7 +2856,7 @@ const EditBatchWorkOrder = () => {
                                       onValueChange={(value) => setQuickAddData({...quickAddData, driver: value})}
                                       disabled={areOtherFieldsDisabled()}
                                     >
-                                      <SelectTrigger id="qa-driver" className="h-7 text-xs">
+                                      <SelectTrigger id="qa-driver" className="h-6 text-[11px]">
                                         <SelectValue placeholder="Select driver" />
                                       </SelectTrigger>
                                       <SelectContent className="bg-background border shadow-lg z-50">
@@ -2919,7 +2919,7 @@ const EditBatchWorkOrder = () => {
                                   onChange={(e) => setQuickAddData({...quickAddData, poNumber: e.target.value})}
                                   placeholder="Enter value"
                                   disabled={areOtherFieldsDisabled()}
-                                  className="h-7 text-xs"
+                                  className="h-6 text-[11px]"
                                 />
                               </div>
 
@@ -2993,7 +2993,7 @@ const EditBatchWorkOrder = () => {
                                   onChange={(e) => setQuickAddData({...quickAddData, soNumber: e.target.value})}
                                   placeholder="Enter value"
                                   disabled={areOtherFieldsDisabled()}
-                                  className="h-7 text-xs"
+                                  className="h-6 text-[11px]"
                                 />
                               </div>
                             </div>
@@ -3054,7 +3054,7 @@ const EditBatchWorkOrder = () => {
                           <div className="flex justify-end gap-2">
                             <Button 
                               variant="outline"
-                              className="h-7 text-xs"
+                              className="h-6 text-[11px]"
                               onClick={() => {
                                 setQuickAddData({
                                   type: "SINGLE",
