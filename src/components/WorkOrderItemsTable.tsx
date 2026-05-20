@@ -249,17 +249,17 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
         </div>
       )}
       <Collapsible open={isSearchBarOpen} onOpenChange={setIsSearchBarOpen}>
-        <table className="w-full text-sm">
+        <table className="w-full text-xs">
           <thead className="bg-muted">
             <tr>
-              <th className="text-left p-3 w-12">
+              <th className="text-left px-2 py-1.5 w-10">
                 <CollapsibleTrigger asChild>
-                  <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
-                    {isSearchBarOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                  <Button variant="ghost" size="sm" className="h-5 w-5 p-0">
+                    {isSearchBarOpen ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
                   </Button>
                 </CollapsibleTrigger>
               </th>
-              <th className="text-left p-3 w-12">
+              <th className="text-left px-2 py-1.5 w-10">
                 <Checkbox 
                   checked={isAllSelected}
                   ref={(el) => {
@@ -279,8 +279,8 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
               <SortableHeader label="Item Status" sortKeyName="itemStatus" />
               <SortableHeader label="Item Type" sortKeyName="itemType" />
               <SortableHeader label="Deliver By Date" sortKeyName="deliverByDate" />
-              <th className="text-left p-3 font-medium">PO #</th>
-              <th className="text-left p-3 font-medium">Open PO/CO</th>
+              <th className="text-left px-2 py-1.5 font-medium">PO #</th>
+              <th className="text-left px-2 py-1.5 font-medium">Open PO/CO</th>
             </tr>
             <CollapsibleContent asChild>
               <tr className="bg-secondary/50 border-t">
