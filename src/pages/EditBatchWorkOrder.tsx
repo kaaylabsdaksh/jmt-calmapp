@@ -2609,13 +2609,13 @@ const EditBatchWorkOrder = () => {
                       <div className="grid grid-cols-1 lg:grid-cols-[2fr_1.5fr_1.5fr] gap-2">
                         {/* GENERAL INFORMATION Card */}
                         <Card className="shadow-none">
-                          <CardHeader className="px-2.5 py-1.5 pb-1">
-                            <h4 className="text-[10px] font-semibold text-muted-foreground uppercase">General Information</h4>
+                          <CardHeader className="px-2 py-1 pb-0.5">
+                            <h4 className="text-[9px] font-semibold text-muted-foreground uppercase tracking-wide">General Information</h4>
                           </CardHeader>
-                          <CardContent className="px-2.5 py-1.5 pt-0">
-                            <div className="grid grid-cols-2 gap-2">
-                              <div className="space-y-0.5">
-                                <Label htmlFor="qa-type" className="text-[11px] font-medium">Type</Label>
+                          <CardContent className="px-2 py-1 pt-0">
+                            <div className="grid grid-cols-2 gap-x-2 gap-y-1">
+                              <div className="space-y-0">
+                                <Label htmlFor="qa-type" className="text-[10px] font-medium">Type</Label>
                                 <Select 
                                   value={quickAddData.type} 
                                   onValueChange={(value) => setQuickAddData({...quickAddData, type: value})}
@@ -2632,8 +2632,8 @@ const EditBatchWorkOrder = () => {
                                 </Select>
                               </div>
 
-                              <div className="space-y-0.5">
-                                <Label htmlFor="qa-calFreq" className="text-[11px] font-medium">
+                              <div className="space-y-0">
+                                <Label htmlFor="qa-calFreq" className="text-[10px] font-medium">
                                   Cal Freq <span className="text-destructive">*</span>
                                 </Label>
                                 <Input 
@@ -2646,8 +2646,8 @@ const EditBatchWorkOrder = () => {
                                 />
                               </div>
 
-                              <div className="space-y-0.5">
-                                <Label htmlFor="qa-priority" className="text-[11px] font-medium">Priority</Label>
+                              <div className="space-y-0">
+                                <Label htmlFor="qa-priority" className="text-[10px] font-medium">Priority</Label>
                                 <Select 
                                   value={quickAddData.priority} 
                                   onValueChange={(value) => setQuickAddData({...quickAddData, priority: value})}
@@ -2664,8 +2664,8 @@ const EditBatchWorkOrder = () => {
                                 </Select>
                               </div>
 
-                              <div className="space-y-0.5">
-                                <Label htmlFor="qa-location" className="text-[11px] font-medium">
+                              <div className="space-y-0">
+                                <Label htmlFor="qa-location" className="text-[10px] font-medium">
                                   Location <span className="text-destructive">*</span>
                                 </Label>
                                 <Select 
@@ -2684,8 +2684,8 @@ const EditBatchWorkOrder = () => {
                                 </Select>
                               </div>
 
-                              <div className="space-y-0.5">
-                                <Label htmlFor="qa-division" className="text-[11px] font-medium">
+                              <div className="space-y-0">
+                                <Label htmlFor="qa-division" className="text-[10px] font-medium">
                                   Division <span className="text-destructive">*</span>
                                 </Label>
                                 <Select 
@@ -2704,8 +2704,8 @@ const EditBatchWorkOrder = () => {
                                 </Select>
                               </div>
 
-                              <div className="space-y-0.5">
-                                <Label htmlFor="qa-actionCode" className="text-[11px] font-medium">
+                              <div className="space-y-0">
+                                <Label htmlFor="qa-actionCode" className="text-[10px] font-medium">
                                   Action Code <span className="text-destructive">*</span>
                                 </Label>
                                 <Select 
@@ -2729,13 +2729,13 @@ const EditBatchWorkOrder = () => {
 
                         {/* ARRIVAL INFORMATION Card */}
                         <Card className="shadow-none">
-                          <CardHeader className="px-2.5 py-1.5 pb-1">
-                            <h4 className="text-[10px] font-semibold text-muted-foreground uppercase">Arrival Information</h4>
+                          <CardHeader className="px-2 py-1 pb-0.5">
+                            <h4 className="text-[9px] font-semibold text-muted-foreground uppercase tracking-wide">Arrival Information</h4>
                           </CardHeader>
-                          <CardContent className="px-2.5 py-1.5 pt-0">
-                            <div className="grid grid-cols-2 gap-2">
-                              <div className="space-y-0.5">
-                                <Label htmlFor="qa-arrivalDate" className="text-[11px] font-medium">
+                          <CardContent className="px-2 py-1 pt-0">
+                            <div className="grid grid-cols-2 gap-x-2 gap-y-1">
+                              <div className="space-y-0">
+                                <Label htmlFor="qa-arrivalDate" className="text-[10px] font-medium">
                                   Date <span className="text-destructive">*</span>
                                 </Label>
                                 <Popover>
@@ -2765,8 +2765,8 @@ const EditBatchWorkOrder = () => {
                                 </Popover>
                               </div>
 
-                              <div className="space-y-0.5">
-                                <Label htmlFor="qa-arrivalType" className="text-[11px] font-medium">
+                              <div className="space-y-0">
+                                <Label htmlFor="qa-arrivalType" className="text-[10px] font-medium">
                                   Type <span className="text-destructive">*</span>
                                 </Label>
                                 <Select 
@@ -2791,8 +2791,8 @@ const EditBatchWorkOrder = () => {
 
                               {/* Conditional fields based on arrival type */}
                               {quickAddData.arrivalType === "surplus" && (
-                                <div className="space-y-0.5">
-                                  <Label htmlFor="qa-arrivalLocation" className="text-[11px] font-medium">
+                                <div className="space-y-0">
+                                  <Label htmlFor="qa-arrivalLocation" className="text-[10px] font-medium">
                                     Location <span className="text-destructive">*</span>
                                   </Label>
                                   <Input 
@@ -2807,8 +2807,8 @@ const EditBatchWorkOrder = () => {
                               )}
 
                               {quickAddData.arrivalType === "shipped" && (
-                                <div className="space-y-0.5">
-                                  <Label htmlFor="qa-shipType" className="text-[11px] font-medium">
+                                <div className="space-y-0">
+                                  <Label htmlFor="qa-shipType" className="text-[10px] font-medium">
                                     Ship Type <span className="text-destructive">*</span>
                                   </Label>
                                   <Select 
@@ -2830,8 +2830,8 @@ const EditBatchWorkOrder = () => {
                               )}
 
                               {quickAddData.arrivalType === "customer-dropoff" && (
-                                <div className="space-y-0.5">
-                                  <Label htmlFor="qa-customerName" className="text-[11px] font-medium">
+                                <div className="space-y-0">
+                                  <Label htmlFor="qa-customerName" className="text-[10px] font-medium">
                                     Name <span className="text-destructive">*</span>
                                   </Label>
                                   <Input 
@@ -2847,8 +2847,8 @@ const EditBatchWorkOrder = () => {
 
                               {quickAddData.arrivalType === "jm-driver-pickup" && (
                                 <>
-                                  <div className="space-y-0.5">
-                                    <Label htmlFor="qa-driver" className="text-[11px] font-medium">
+                                  <div className="space-y-0">
+                                    <Label htmlFor="qa-driver" className="text-[10px] font-medium">
                                       Driver <span className="text-destructive">*</span>
                                     </Label>
                                     <Select 
@@ -2866,8 +2866,8 @@ const EditBatchWorkOrder = () => {
                                       </SelectContent>
                                     </Select>
                                   </div>
-                                  <div className="space-y-0.5">
-                                    <Label htmlFor="qa-puDate" className="text-[11px] font-medium">
+                                  <div className="space-y-0">
+                                    <Label htmlFor="qa-puDate" className="text-[10px] font-medium">
                                       PU Date <span className="text-destructive">*</span>
                                     </Label>
                                     <Popover>
@@ -2904,13 +2904,13 @@ const EditBatchWorkOrder = () => {
 
                         {/* OTHER INFORMATION Card */}
                         <Card className="shadow-none">
-                          <CardHeader className="px-2.5 py-1.5 pb-1">
-                            <h4 className="text-[10px] font-semibold text-muted-foreground uppercase">Other Information</h4>
+                          <CardHeader className="px-2 py-1 pb-0.5">
+                            <h4 className="text-[9px] font-semibold text-muted-foreground uppercase tracking-wide">Other Information</h4>
                           </CardHeader>
-                          <CardContent className="px-2.5 py-1.5 pt-0 space-y-2">
-                            <div className="grid grid-cols-2 gap-2">
-                              <div className="space-y-0.5">
-                                <Label htmlFor="qa-poNumber" className="text-[11px] font-medium">
+                          <CardContent className="px-2 py-1 pt-0 space-y-2">
+                            <div className="grid grid-cols-2 gap-x-2 gap-y-1">
+                              <div className="space-y-0">
+                                <Label htmlFor="qa-poNumber" className="text-[10px] font-medium">
                                   PO Number <span className="text-destructive">*</span>
                                 </Label>
                                 <Input 
@@ -2923,8 +2923,8 @@ const EditBatchWorkOrder = () => {
                                 />
                               </div>
 
-                              <div className="space-y-0.5">
-                                <Label htmlFor="qa-needByDate" className="text-[11px] font-medium">
+                              <div className="space-y-0">
+                                <Label htmlFor="qa-needByDate" className="text-[10px] font-medium">
                                   Need by date <span className="text-destructive">*</span>
                                 </Label>
                                 <Popover>
@@ -2954,8 +2954,8 @@ const EditBatchWorkOrder = () => {
                                 </Popover>
                               </div>
 
-                              <div className="space-y-0.5">
-                                <Label htmlFor="qa-deliverBy" className="text-[11px] font-medium">
+                              <div className="space-y-0">
+                                <Label htmlFor="qa-deliverBy" className="text-[10px] font-medium">
                                   Deliver By Date
                                 </Label>
                                 <Popover>
