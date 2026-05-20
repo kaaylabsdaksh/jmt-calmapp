@@ -462,42 +462,112 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                           No saved filters yet. Configure filters and click the + to save.
                         </p>
                       ) : (
-                        savedFilters.map((sf) => (
-                          <div key={sf.id} className="flex items-center gap-1 group">
-                            <button
-                              onClick={() => {
-                                const s = sf.state || {};
-                                setSearchValues(s.searchValues ?? searchValues);
-                                setSelectedLocations(s.selectedLocations ?? []);
-                                setDateFrom(s.dateFrom ? new Date(s.dateFrom) : undefined);
-                                setDateTo(s.dateTo ? new Date(s.dateTo) : undefined);
-                                setDateType(s.dateType ?? '');
-                                setSearchChips(s.searchChips ?? []);
-                                setSavedFiltersOpen(false);
-                                toast({ title: 'Filter applied', description: sf.name });
-                              }}
-                              className="flex-1 text-left px-2.5 py-2 rounded-md text-xs hover:bg-muted transition-colors"
-                            >
-                              <div className="font-medium text-foreground">{sf.name}</div>
-                              <div className="text-[10px] text-muted-foreground">
-                                {new Date(sf.timestamp).toLocaleDateString()}
-                              </div>
-                            </button>
-                            <button
-                              onClick={() => {
-                                const updated = savedFilters.filter(f => f.id !== sf.id);
-                                setSavedFilters(updated);
-                                persistSavedFilters(updated);
-                              }}
-                              className="opacity-0 group-hover:opacity-100 p-1.5 rounded hover:bg-destructive/10 text-muted-foreground hover:text-destructive transition-all"
-                              aria-label="Delete saved filter"
-                            >
-                              <Trash2 className="h-3.5 w-3.5" />
-                            </button>
-                          </div>
-                        ))
-                      )}
-                    </div>
+                        savedFilters.map((sf) => {
+                          const isEditing = editingFilterId === sf.id;
+                          const commitRename = () => {
+                            const name = editingFilterName.trim();
+                            if (!name) { setEditingFilterId(null); return; }
+                            const updated = savedFilters.map(f => f.id === sf.id ? { ...f, name } : f);
+                            setSavedFilters(updated);
+                            persistSavedFilters(updated);
+                            setEditingFilterId(null);
+                            setEditingFilterName('');
+                            toast({ title: 'Filter renamed', description: name });
+                          };
+                          return (
+                            <div key={sf.id} className="flex items-center gap-1 group">
+                              {isEditing ? (
+                                <div className="flex-1 px-2 py-1.5 flex items-center gap-1">
+                                  <Input
+                                    autoFocus
+                                    value={editingFilterName}
+                                    onChange={(e) => setEditingFilterName(e.target.value)}
+                                    onKeyDown={(e) => {
+                                      if (e.key === 'Enter') { e.preventDefault(); commitRename(); }
+                                      if (e.key === 'Escape') { setEditingFilterId(null); setEditingFilterName(''); }
+                                    }}
+                                    className="h-7 text-xs"
+                                  />
+                                  <button
+                                    onClick={commitRename}
+                                    className="p-1 rounded text-green-600 hover:bg-green-50"
+                                    aria-label="Save name"
+                                  >
+                                    <Check className="h-3.5 w-3.5" />
+                                  </button>
+                                  <button
+                                    onClick={() => { setEditingFilterId(null); setEditingFilterName(''); }}
+                                    className="p-1 rounded text-muted-foreground hover:bg-muted"
+                                    aria-label="Cancel rename"
+                                  >
+                                    <X className="h-3.5 w-3.5" />
+                                  </button>
+                                </div>
+                              ) : (
+                                <>
+                                  <button
+                                    onClick={() => {
+                                      const s = sf.state || {};
+                                      setSearchValues(s.searchValues ?? searchValues);
+                                      setSelectedLocations(s.selectedLocations ?? []);
+                                      setDateFrom(s.dateFrom ? new Date(s.dateFrom) : undefined);
+                                      setDateTo(s.dateTo ? new Date(s.dateTo) : undefined);
+                                      setDateType(s.dateType ?? '');
+                                      setSearchChips(s.searchChips ?? []);
+                                      setSavedFiltersOpen(false);
+                                      toast({ title: 'Filter applied', description: sf.name });
+                                    }}
+                                    className="flex-1 text-left px-2.5 py-2 rounded-md text-xs hover:bg-muted transition-colors"
+                                  >
+                                    <div className="font-medium text-foreground">{sf.name}</div>
+                                    <div className="text-[10px] text-muted-foreground">
+                                      {new Date(sf.timestamp).toLocaleDateString()}
+                                    </div>
+                                  </button>
+                                  <button
+                                    onClick={() => {
+                                      setEditingFilterId(sf.id);
+                                      setEditingFilterName(sf.name);
+                                    }}
+                                    className="opacity-0 group-hover:opacity-100 p-1.5 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-all"
+                                    aria-label="Rename saved filter"
+                                    title="Rename"
+                                  >
+                                    <Pencil className="h-3.5 w-3.5" />
+                                  </button>
+                                  <button
+                                    onClick={() => {
+                                      const updated = savedFilters.map(f => f.id === sf.id ? {
+                                        ...f,
+                                        timestamp: Date.now(),
+                                        state: { searchValues, selectedLocations, dateFrom, dateTo, dateType, searchChips },
+                                      } : f);
+                                      setSavedFilters(updated);
+                                      persistSavedFilters(updated);
+                                      toast({ title: 'Filter updated', description: sf.name });
+                                    }}
+                                    className="opacity-0 group-hover:opacity-100 p-1.5 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-all"
+                                    aria-label="Update saved filter with current criteria"
+                                    title="Update with current filters"
+                                  >
+                                    <RefreshCw className="h-3.5 w-3.5" />
+                                  </button>
+                                  <button
+                                    onClick={() => {
+                                      const updated = savedFilters.filter(f => f.id !== sf.id);
+                                      setSavedFilters(updated);
+                                      persistSavedFilters(updated);
+                                    }}
+                                    className="opacity-0 group-hover:opacity-100 p-1.5 rounded hover:bg-destructive/10 text-muted-foreground hover:text-destructive transition-all"
+                                    aria-label="Delete saved filter"
+                                  >
+                                    <Trash2 className="h-3.5 w-3.5" />
+                                  </button>
+                                </>
+                              )}
+                            </div>
+                          );
+                        })
                   </PopoverContent>
                 </Popover>
 
