@@ -9710,7 +9710,7 @@ const FormVariationsDemo = () => {
               <Button
                 variant="ghost"
                 onClick={() => setActiveSection('work-order-items')}
-                className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all border ${
+                className={`flex items-center gap-2 px-2.5 py-1.5 rounded-md text-xs font-medium transition-all border ${
                   activeSection === 'work-order-items'
                     ? 'bg-primary text-primary-foreground shadow-sm border-primary'
                     : 'bg-background text-muted-foreground hover:text-foreground border-border hover:border-border/80'
@@ -9724,7 +9724,7 @@ const FormVariationsDemo = () => {
                   <Button
                     variant="ghost"
                     onClick={() => setActiveSection('estimate')}
-                    className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all border ${
+                    className={`flex items-center gap-2 px-2.5 py-1.5 rounded-md text-xs font-medium transition-all border ${
                       activeSection === 'estimate'
                         ? 'bg-primary text-primary-foreground shadow-sm border-primary'
                         : 'bg-background text-muted-foreground hover:text-foreground border-border hover:border-border/80'
@@ -9736,7 +9736,7 @@ const FormVariationsDemo = () => {
                   <Button
                     variant="ghost"
                     onClick={() => setActiveSection('qf3')}
-                    className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all border ${
+                    className={`flex items-center gap-2 px-2.5 py-1.5 rounded-md text-xs font-medium transition-all border ${
                       activeSection === 'qf3'
                         ? 'bg-primary text-primary-foreground shadow-sm border-primary'
                         : 'bg-background text-muted-foreground hover:text-foreground border-border hover:border-border/80'
@@ -9750,7 +9750,7 @@ const FormVariationsDemo = () => {
               <Button
                 variant="ghost"
                 onClick={() => setActiveSection('external-files')}
-                className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all border ${
+                className={`flex items-center gap-2 px-2.5 py-1.5 rounded-md text-xs font-medium transition-all border ${
                   activeSection === 'external-files'
                     ? 'bg-primary text-primary-foreground shadow-sm border-primary'
                     : 'bg-background text-muted-foreground hover:text-foreground border-border hover:border-border/80'
@@ -9762,7 +9762,7 @@ const FormVariationsDemo = () => {
               <Button
                 variant="ghost"
                 onClick={() => setActiveSection('fail-log')}
-                className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all border ${
+                className={`flex items-center gap-2 px-2.5 py-1.5 rounded-md text-xs font-medium transition-all border ${
                   activeSection === 'fail-log'
                     ? 'bg-primary text-primary-foreground shadow-sm border-primary'
                     : 'bg-background text-muted-foreground hover:text-foreground border-border hover:border-border/80'
@@ -9775,7 +9775,7 @@ const FormVariationsDemo = () => {
                 <Button
                   variant="ghost"
                   onClick={() => setActiveSection('cert-files')}
-                  className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all border ${
+                  className={`flex items-center gap-2 px-2.5 py-1.5 rounded-md text-xs font-medium transition-all border ${
                     activeSection === 'cert-files'
                       ? 'bg-primary text-primary-foreground shadow-sm border-primary'
                       : 'bg-background text-muted-foreground hover:text-foreground border-border hover:border-border/80'
