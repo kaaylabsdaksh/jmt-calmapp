@@ -1718,11 +1718,11 @@ const FormVariationsDemo = () => {
                 Logistics & Delivery
               </AccordionTrigger>
               <AccordionContent className="pb-3">
-                <div className="p-3 space-y-5">
+                <div className="p-2 space-y-3">
                   {/* Balanced peer columns – Arrival | Departure */}
                   <div className="grid grid-cols-1 md:grid-cols-2 md:divide-x divide-border rounded-md border border-border bg-background overflow-hidden">
                     {/* Arrival */}
-                    <div className="p-4 space-y-4">
+                    <div className="p-2.5 space-y-2">
                       <div className="flex items-center gap-2">
                         <span className="w-2 h-2 rounded-full bg-slate-500" />
                         <span className="text-[11px] font-bold uppercase tracking-widest text-muted-foreground">Arrival</span>
@@ -1761,7 +1761,7 @@ const FormVariationsDemo = () => {
                         formData.arrivalType === "customer-dropoff" ||
                         formData.arrivalType === "shipped" ||
                         formData.arrivalType === "surplus") && (
-                        <div className="pt-4 border-t border-dashed border-border grid grid-cols-2 gap-3">
+                        <div className="pt-2 border-t border-dashed border-border grid grid-cols-2 gap-2">
                           {formData.arrivalType === "jm-driver-pickup" && (
                             <>
                               <div className="space-y-1.5">
@@ -1846,7 +1846,7 @@ const FormVariationsDemo = () => {
                     </div>
 
                     {/* Departure */}
-                    <div className="p-4 space-y-4">
+                    <div className="p-2.5 space-y-2">
                       <div className="flex items-center gap-2">
                         <span className="w-2 h-2 rounded-full bg-slate-900" />
                         <span className="text-[11px] font-bold uppercase tracking-widest text-muted-foreground">Departure</span>
@@ -1878,7 +1878,7 @@ const FormVariationsDemo = () => {
                         </div>
                       </div>
 
-                      <div className="pt-4 border-t border-dashed border-border space-y-3">
+                      <div className="pt-2 border-t border-dashed border-border space-y-2">
                         <div className="space-y-1.5">
                           <Label className="text-xs font-medium">Inv #</Label>
                           <Input
@@ -2067,12 +2067,12 @@ const FormVariationsDemo = () => {
               </AccordionTrigger>
               <AccordionContent className="pb-3">
               <Card className="border-0 shadow-sm">
-                <CardContent className="p-3">
+                <CardContent className="p-2">
                   <Textarea
                     value={formData.miscInformation}
                     onChange={(e) => handleInputChange("miscInformation", e.target.value)}
                     placeholder="Enter miscellaneous information..."
-                    className="min-h-[150px] text-xs"
+                    className="min-h-[70px] text-xs"
                   />
                 </CardContent>
               </Card>
@@ -2085,7 +2085,7 @@ const FormVariationsDemo = () => {
               </AccordionTrigger>
               <AccordionContent className="pb-3">
               <Card className="border-0 shadow-sm">
-                <CardContent className="p-3">
+                <CardContent className="p-2">
                   {(() => {
                     const rows: Array<{ key: string; label: string; qty: number; costField: string; editable: boolean; hideQty?: boolean; defaultCost?: string }> = [
                       { key: 'testing', label: 'Testing', qty: 0, costField: 'eslTestCost', editable: false },
@@ -2102,7 +2102,7 @@ const FormVariationsDemo = () => {
                     }, 0);
                     return (
                       <div className="rounded-lg border border-border bg-card overflow-hidden max-w-md">
-                        <div className="grid grid-cols-[1fr_80px_120px] items-center bg-muted/40 px-4 py-2 text-[11px] font-medium text-muted-foreground">
+                        <div className="grid grid-cols-[1fr_70px_110px] items-center bg-muted/40 px-3 py-1 text-[10px] font-medium text-muted-foreground">
                           <div></div>
                           <div className="text-center">Qty</div>
                           <div className="text-right">Cost</div>
@@ -2111,31 +2111,31 @@ const FormVariationsDemo = () => {
                           {rows.map((r) => {
                             const value = (formData as any)[r.costField] ?? r.defaultCost ?? '0.00';
                             return (
-                              <div key={r.key} className="grid grid-cols-[1fr_80px_120px] items-center px-4 py-2">
-                                <Label className="text-xs font-medium text-foreground">{r.label}</Label>
-                                <div className="text-center text-xs text-muted-foreground tabular-nums">
+                              <div key={r.key} className="grid grid-cols-[1fr_70px_110px] items-center px-3 py-1">
+                                <Label className="text-[11px] font-medium text-foreground">{r.label}</Label>
+                                <div className="text-center text-[11px] text-muted-foreground tabular-nums">
                                   {r.hideQty ? '' : r.qty}
                                 </div>
                                 <div className="flex justify-end">
-                                  <div className="relative w-24">
-                                    <span className="absolute left-2 top-1/2 -translate-y-1/2 text-[11px] text-muted-foreground pointer-events-none">$</span>
+                                  <div className="relative w-20">
+                                    <span className="absolute left-1.5 top-1/2 -translate-y-1/2 text-[10px] text-muted-foreground pointer-events-none">$</span>
                                     <Input
                                       type="text"
                                       inputMode="decimal"
                                       value={value}
                                       disabled={!r.editable}
                                       onChange={(e) => handleInputChange(r.costField, e.target.value)}
-                                      className="h-7 pl-5 pr-2 text-xs text-right tabular-nums disabled:bg-muted/30 disabled:text-muted-foreground"
+                                      className="h-6 pl-4 pr-1.5 text-[11px] text-right tabular-nums disabled:bg-muted/30 disabled:text-muted-foreground"
                                     />
                                   </div>
                                 </div>
                               </div>
                             );
                           })}
-                          <div className="grid grid-cols-[1fr_80px_120px] items-center bg-muted/30 px-4 py-2.5">
-                            <div className="text-xs font-semibold text-foreground">Total</div>
-                            <div className="text-center text-xs font-semibold text-foreground tabular-nums">{totalQty}</div>
-                            <div className="text-right text-xs font-bold text-foreground tabular-nums pr-2">
+                          <div className="grid grid-cols-[1fr_70px_110px] items-center bg-muted/30 px-3 py-1.5">
+                            <div className="text-[11px] font-semibold text-foreground">Total</div>
+                            <div className="text-center text-[11px] font-semibold text-foreground tabular-nums">{totalQty}</div>
+                            <div className="text-right text-[11px] font-bold text-foreground tabular-nums pr-1.5">
                               ${totalCost.toFixed(2)}
                             </div>
                           </div>
@@ -2154,8 +2154,8 @@ const FormVariationsDemo = () => {
               </AccordionTrigger>
               <AccordionContent className="pb-3">
               <Card className="border-0 shadow-sm">
-                <CardContent className="p-3 space-y-3">
-                  <div className="grid grid-cols-1 md:grid-cols-6 gap-2 items-end">
+                <CardContent className="p-2 space-y-2">
+                  <div className="grid grid-cols-2 md:grid-cols-6 gap-1.5 items-end">
                     <div className="space-y-1">
                       <Label className="text-xs font-medium">Type <span className="text-destructive">*</span></Label>
                       <Select value={formData.accessoryType} onValueChange={(value) => handleInputChange("accessoryType", value)}>
