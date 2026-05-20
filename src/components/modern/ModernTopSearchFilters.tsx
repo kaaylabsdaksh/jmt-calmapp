@@ -648,9 +648,9 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                     onBlur={commitField}
                     placeholder={isActive ? activeChip!.value : option.label}
                     title={isActive ? `${option.label}: ${activeChip!.value}` : option.label}
-                    className={`h-6 text-[11px] px-1.5 placeholder:text-[10px] bg-white text-black ${
+                    className={`h-6 text-[11px] px-1.5 placeholder:text-[10px] bg-white text-black border-slate-700 ${
                       isActive
-                        ? 'border-slate-700 placeholder:text-black placeholder:font-medium pr-5'
+                        ? 'placeholder:text-black placeholder:font-medium pr-5'
                         : 'placeholder:text-black'
                     }`}
                   />
