@@ -1278,7 +1278,7 @@ const EditBatchWorkOrder = () => {
                                       <Button
                                         variant="outline"
                                         className={cn(
-                                          "w-full justify-start text-left font-normal h-7 text-xs",
+                                          "w-full justify-start text-left font-normal h-6 text-[11px]",
                                           !quoteData[selectedQuote].received.arrivalDate && "text-muted-foreground"
                                         )}
                                       >
@@ -1389,7 +1389,7 @@ const EditBatchWorkOrder = () => {
                                           <Button
                                             variant="outline"
                                             className={cn(
-                                              "w-full justify-start text-left font-normal h-7 text-xs",
+                                              "w-full justify-start text-left font-normal h-6 text-[11px]",
                                               "text-muted-foreground"
                                             )}
                                           >
@@ -2744,7 +2744,7 @@ const EditBatchWorkOrder = () => {
                                       variant="outline"
                                       disabled={areOtherFieldsDisabled()}
                                       className={cn(
-                                        "w-full justify-start text-left font-normal h-7 text-xs",
+                                        "w-full justify-start text-left font-normal h-6 text-[11px]",
                                         !quickAddData.arrivalDate && "text-muted-foreground"
                                       )}
                                     >
@@ -2876,7 +2876,7 @@ const EditBatchWorkOrder = () => {
                                           variant="outline"
                                           disabled={areOtherFieldsDisabled()}
                                           className={cn(
-                                            "w-full justify-start text-left font-normal h-7 text-xs",
+                                            "w-full justify-start text-left font-normal h-6 text-[11px]",
                                             !quickAddData.puDate && "text-muted-foreground"
                                           )}
                                         >
@@ -2933,7 +2933,7 @@ const EditBatchWorkOrder = () => {
                                       variant="outline"
                                       disabled={areOtherFieldsDisabled()}
                                       className={cn(
-                                        "w-full justify-start text-left font-normal h-7 text-xs",
+                                        "w-full justify-start text-left font-normal h-6 text-[11px]",
                                         !quickAddData.needByDate && "text-muted-foreground"
                                       )}
                                     >
@@ -2964,7 +2964,7 @@ const EditBatchWorkOrder = () => {
                                       variant="outline"
                                       disabled={areOtherFieldsDisabled()}
                                       className={cn(
-                                        "w-full justify-start text-left font-normal h-7 text-xs",
+                                        "w-full justify-start text-left font-normal h-6 text-[11px]",
                                         !quickAddData.deliverByDate && "text-muted-foreground"
                                       )}
                                     >
