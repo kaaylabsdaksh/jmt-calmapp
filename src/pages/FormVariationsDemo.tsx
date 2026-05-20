@@ -1734,7 +1734,7 @@ const FormVariationsDemo = () => {
                             Date <span className="text-destructive">*</span>
                           </Label>
                           <ModernDatePicker id="arrivalDate"
-                            size="md"
+                            size="xs"
                             value={formData.arrivalDate || undefined}
                             onChange={(date) => handleInputChange("arrivalDate", date ? date.toISOString().split('T')[0] : "")}
                           />
@@ -1783,7 +1783,7 @@ const FormVariationsDemo = () => {
                               <div className="space-y-0.5">
                                 <Label className="text-[11px] font-medium">Pickup Date</Label>
                                 <ModernDatePicker
-                            size="md"
+                            size="xs"
                             value={formData.arrivalPickupDate || "" || undefined}
                             onChange={(date) => handleInputChange("arrivalPickupDate", date ? date.toISOString().split('T')[0] : "")}
                           />
@@ -1856,7 +1856,7 @@ const FormVariationsDemo = () => {
                         <div className="space-y-0.5">
                           <Label className="text-[11px] font-medium">Date</Label>
                           <ModernDatePicker
-                            size="md"
+                            size="xs"
                             value={formData.departureDate || "" || undefined}
                             onChange={(date) => handleInputChange("departureDate", date ? date.toISOString().split('T')[0] : "")}
                           />
@@ -1992,7 +1992,7 @@ const FormVariationsDemo = () => {
                     <div className="space-y-0.5">
                       <Label className="text-[11px] font-medium">Need By <span className="text-destructive">*</span></Label>
                       <ModernDatePicker
-                            size="md"
+                            size="xs"
                             value={formData.needBy || undefined}
                             onChange={(date) => handleInputChange("needBy", date ? date.toISOString().split('T')[0] : "")}
                           />
@@ -2003,7 +2003,7 @@ const FormVariationsDemo = () => {
                     <div className="space-y-0.5">
                       <Label className="text-[11px] font-medium">Deliver By Date</Label>
                       <ModernDatePicker
-                            size="md"
+                            size="xs"
                             value={formData.deliverByDate || undefined}
                             onChange={(date) => handleInputChange("deliverByDate", date ? date.toISOString().split('T')[0] : "")}
                           />
@@ -2011,7 +2011,7 @@ const FormVariationsDemo = () => {
                     <div className="space-y-0.5">
                       <Label className="text-[11px] font-medium">Date Tested</Label>
                       <ModernDatePicker
-                            size="md"
+                            size="xs"
                             value={formData.dateTested || undefined}
                             onChange={(date) => handleInputChange("dateTested", date ? date.toISOString().split('T')[0] : "")}
                           />
