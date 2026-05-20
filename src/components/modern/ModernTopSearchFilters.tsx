@@ -142,6 +142,8 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
   const [saveFilterOpen, setSaveFilterOpen] = useState(false);
   const [savedFiltersOpen, setSavedFiltersOpen] = useState(false);
   const [filterName, setFilterName] = useState('');
+  const [editingFilterId, setEditingFilterId] = useState<string | null>(null);
+  const [editingFilterName, setEditingFilterName] = useState('');
   
   const [resultCount, setResultCount] = useState<number | null>(null);
   const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
