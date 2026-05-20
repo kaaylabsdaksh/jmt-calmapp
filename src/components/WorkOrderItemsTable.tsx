@@ -249,17 +249,17 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
         </div>
       )}
       <Collapsible open={isSearchBarOpen} onOpenChange={setIsSearchBarOpen}>
-        <table className="w-full text-xs">
+        <table className="w-full text-[11px]">
           <thead className="bg-muted">
             <tr>
-              <th className="text-left px-2 py-1.5 w-10">
+              <th className="text-left px-2 py-1 w-8">
                 <CollapsibleTrigger asChild>
                   <Button variant="ghost" size="sm" className="h-5 w-5 p-0">
                     {isSearchBarOpen ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
                   </Button>
                 </CollapsibleTrigger>
               </th>
-              <th className="text-left px-2 py-1.5 w-10">
+              <th className="text-left px-2 py-1 w-8">
                 <Checkbox 
                   checked={isAllSelected}
                   ref={(el) => {
@@ -279,94 +279,94 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
               <SortableHeader label="Item Status" sortKeyName="itemStatus" />
               <SortableHeader label="Item Type" sortKeyName="itemType" />
               <SortableHeader label="Deliver By Date" sortKeyName="deliverByDate" />
-              <th className="text-left px-2 py-1.5 font-medium">PO #</th>
-              <th className="text-left px-2 py-1.5 font-medium">Open PO/CO</th>
+              <th className="text-left px-2 py-1 font-medium text-[11px]">PO #</th>
+              <th className="text-left px-2 py-1 font-medium text-[11px]">Open PO/CO</th>
             </tr>
             <CollapsibleContent asChild>
               <tr className="bg-secondary/50 border-t">
-                <td className="px-2 py-1"></td>
-                <td className="px-2 py-1"></td>
-                <td className="px-2 py-1">
+                <td className="px-1.5 py-0.5"></td>
+                <td className="px-1.5 py-0.5"></td>
+                <td className="px-1.5 py-0.5">
                   <Input
                     placeholder="Search"
                     value={columnFilters.itemNumber}
                     onChange={(e) => handleFilterChange('itemNumber', e.target.value)}
-                    className="h-6 text-xs"
+                    className="h-5 text-[11px] px-1.5 py-0"
                   />
                 </td>
-                <td className="px-2 py-1">
+                <td className="px-1.5 py-0.5">
                   <Input
                     placeholder="Search"
                     value={columnFilters.manufacturer}
                     onChange={(e) => handleFilterChange('manufacturer', e.target.value)}
-                    className="h-6 text-xs"
+                    className="h-5 text-[11px] px-1.5 py-0"
                   />
                 </td>
-                <td className="px-2 py-1">
+                <td className="px-1.5 py-0.5">
                   <Input
                     placeholder="Search"
                     value={columnFilters.model}
                     onChange={(e) => handleFilterChange('model', e.target.value)}
-                    className="h-6 text-xs"
+                    className="h-5 text-[11px] px-1.5 py-0"
                   />
                 </td>
-                <td className="px-2 py-1">
+                <td className="px-1.5 py-0.5">
                   <Input
                     placeholder="Search"
                     value={columnFilters.serialNumber}
                     onChange={(e) => handleFilterChange('serialNumber', e.target.value)}
-                    className="h-6 text-xs"
+                    className="h-5 text-[11px] px-1.5 py-0"
                   />
                 </td>
-                <td className="px-2 py-1">
+                <td className="px-1.5 py-0.5">
                   <Input
                     placeholder="Search"
                     value={columnFilters.created}
                     onChange={(e) => handleFilterChange('created', e.target.value)}
-                    className="h-6 text-xs"
+                    className="h-5 text-[11px] px-1.5 py-0"
                   />
                 </td>
-                <td className="px-2 py-1">
+                <td className="px-1.5 py-0.5">
                   <Input
                     placeholder="Search"
                     value={columnFilters.departure}
                     onChange={(e) => handleFilterChange('departure', e.target.value)}
-                    className="h-6 text-xs"
+                    className="h-5 text-[11px] px-1.5 py-0"
                   />
                 </td>
-                <td className="px-2 py-1">
+                <td className="px-1.5 py-0.5">
                   <Input
                     placeholder="Search"
                     value={columnFilters.itemStatus}
                     onChange={(e) => handleFilterChange('itemStatus', e.target.value)}
-                    className="h-6 text-xs"
+                    className="h-5 text-[11px] px-1.5 py-0"
                   />
                 </td>
-                <td className="px-2 py-1">
+                <td className="px-1.5 py-0.5">
                   <Input
                     placeholder="Search"
                     value={columnFilters.itemType}
                     onChange={(e) => handleFilterChange('itemType', e.target.value)}
-                    className="h-6 text-xs"
+                    className="h-5 text-[11px] px-1.5 py-0"
                   />
                 </td>
-                <td className="px-2 py-1">
+                <td className="px-1.5 py-0.5">
                   <Input
                     placeholder="Search"
                     value={columnFilters.deliverByDate}
                     onChange={(e) => handleFilterChange('deliverByDate', e.target.value)}
-                    className="h-6 text-xs"
+                    className="h-5 text-[11px] px-1.5 py-0"
                   />
                 </td>
-                <td className="px-2 py-1">
+                <td className="px-1.5 py-0.5">
                   <Input
                     placeholder="Search"
                     value={columnFilters.poNumber}
                     onChange={(e) => handleFilterChange('poNumber', e.target.value)}
-                    className="h-6 text-xs"
+                    className="h-5 text-[11px] px-1.5 py-0"
                   />
                 </td>
-                <td className="px-2 py-1"></td>
+                <td className="px-1.5 py-0.5"></td>
               </tr>
             </CollapsibleContent>
           </thead>
