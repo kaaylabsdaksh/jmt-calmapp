@@ -1569,7 +1569,7 @@ const FormVariationsDemo = () => {
           {eslGeneralOrder.filter(id => !eslGeneralHidden.includes(id)).map((sectionId) => {
             const items: Record<string, React.ReactNode> = {
             'general-info': (<AccordionItem value="general-info" className="border-b border-border">
-              <AccordionTrigger className="hover:no-underline py-3 text-sm font-medium">
+              <AccordionTrigger className="hover:no-underline py-2 text-xs font-semibold">
                 General Information
               </AccordionTrigger>
               <AccordionContent className="pb-3">
@@ -1714,7 +1714,7 @@ const FormVariationsDemo = () => {
             </AccordionItem>),
 
             'logistics-delivery': (<AccordionItem value="logistics-delivery" className="border-b border-border">
-              <AccordionTrigger className="hover:no-underline py-3 text-sm font-medium">
+              <AccordionTrigger className="hover:no-underline py-2 text-xs font-semibold">
                 Logistics & Delivery
               </AccordionTrigger>
               <AccordionContent className="pb-3">
@@ -1744,7 +1744,7 @@ const FormVariationsDemo = () => {
                             Type <span className="text-destructive">*</span>
                           </Label>
                           <Select value={formData.arrivalType} onValueChange={(value) => handleInputChange("arrivalType", value)}>
-                            <SelectTrigger className="h-8 text-sm">
+                            <SelectTrigger className="h-7 text-xs">
                               <SelectValue placeholder="Select type" />
                             </SelectTrigger>
                             <SelectContent className="bg-popover border z-50">
@@ -1770,7 +1770,7 @@ const FormVariationsDemo = () => {
                                   value={formData.arrivalDriver || ""}
                                   onValueChange={(value) => handleInputChange("arrivalDriver", value)}
                                 >
-                                  <SelectTrigger className="h-8 text-sm">
+                                  <SelectTrigger className="h-7 text-xs">
                                     <SelectValue placeholder="Select driver" />
                                   </SelectTrigger>
                                   <SelectContent className="bg-popover border z-50">
@@ -1798,7 +1798,7 @@ const FormVariationsDemo = () => {
                                 value={formData.arrivalName || ""}
                                 onChange={(e) => handleInputChange("arrivalName", e.target.value)}
                                 placeholder="Enter name"
-                                className="h-8 text-sm"
+                                className="h-7 text-xs"
                               />
                             </div>
                           )}
@@ -1810,7 +1810,7 @@ const FormVariationsDemo = () => {
                                 value={formData.arrivalShipType || ""}
                                 onValueChange={(value) => handleInputChange("arrivalShipType", value)}
                               >
-                                <SelectTrigger className="h-8 text-sm">
+                                <SelectTrigger className="h-7 text-xs">
                                   <SelectValue placeholder="Select ship type" />
                                 </SelectTrigger>
                                 <SelectContent className="bg-popover border z-50">
@@ -1830,7 +1830,7 @@ const FormVariationsDemo = () => {
                                 value={formData.arrivalSurplusLocation || ""}
                                 onValueChange={(value) => handleInputChange("arrivalSurplusLocation", value)}
                               >
-                                <SelectTrigger className="h-8 text-sm">
+                                <SelectTrigger className="h-7 text-xs">
                                   <SelectValue placeholder="Select location" />
                                 </SelectTrigger>
                                 <SelectContent className="bg-popover border z-50">
@@ -1864,7 +1864,7 @@ const FormVariationsDemo = () => {
                         <div className="space-y-1.5">
                           <Label className="text-xs font-medium">Type</Label>
                           <Select value={formData.departureType} onValueChange={(value) => handleInputChange("departureType", value)}>
-                            <SelectTrigger className="h-8 text-sm">
+                            <SelectTrigger className="h-7 text-xs">
                               <SelectValue placeholder="Select type" />
                             </SelectTrigger>
                             <SelectContent className="bg-popover border z-50">
@@ -1884,7 +1884,7 @@ const FormVariationsDemo = () => {
                           <Input
                             value={formData.invNumber || ""}
                             readOnly
-                            className="h-8 text-sm bg-muted/50 font-mono"
+                            className="h-7 text-xs bg-muted/50 font-mono"
                           />
                         </div>
 
@@ -1893,7 +1893,7 @@ const FormVariationsDemo = () => {
                             <div className="space-y-1.5">
                               <Label className="text-xs font-medium">Ship Type</Label>
                               <Select value={formData.shipType} onValueChange={(value) => handleInputChange("shipType", value)}>
-                                <SelectTrigger className="h-8 text-sm">
+                                <SelectTrigger className="h-7 text-xs">
                                   <SelectValue placeholder="Select ship type" />
                                 </SelectTrigger>
                                 <SelectContent className="bg-popover border z-50">
@@ -1909,7 +1909,7 @@ const FormVariationsDemo = () => {
                               <Input
                                 value={formData.collAcct || ""}
                                 onChange={(e) => handleInputChange("collAcct", e.target.value)}
-                                className="h-8 text-sm"
+                                className="h-7 text-xs"
                               />
                             </div>
                             <div className="space-y-1.5">
@@ -1917,7 +1917,7 @@ const FormVariationsDemo = () => {
                               <Input
                                 value={formData.trackingNumber || ""}
                                 onChange={(e) => handleInputChange("trackingNumber", e.target.value)}
-                                className="h-8 text-sm"
+                                className="h-7 text-xs"
                               />
                             </div>
                           </div>
@@ -1930,7 +1930,7 @@ const FormVariationsDemo = () => {
                               value={formData.pickupName || ""}
                               onChange={(e) => handleInputChange("pickupName", e.target.value)}
                               placeholder="Enter name"
-                              className="h-8 text-sm"
+                              className="h-7 text-xs"
                             />
                           </div>
                         )}
@@ -1939,7 +1939,7 @@ const FormVariationsDemo = () => {
                           <div className="space-y-1.5">
                             <Label className="text-xs font-medium">Driver</Label>
                             <Select value={formData.driver} onValueChange={(value) => handleInputChange("driver", value)}>
-                              <SelectTrigger className="h-8 text-sm">
+                              <SelectTrigger className="h-7 text-xs">
                                 <SelectValue placeholder="Select driver" />
                               </SelectTrigger>
                               <SelectContent className="bg-popover border z-50">
@@ -1963,7 +1963,7 @@ const FormVariationsDemo = () => {
                       value={formData.deliveryStatus}
                       onChange={(e) => handleInputChange("deliveryStatus", e.target.value)}
                       placeholder="Enter delivery status..."
-                      className="min-h-[90px] text-sm resize-none"
+                      className="min-h-[60px] text-xs resize-none"
                     />
                   </div>
                 </div>
@@ -1971,7 +1971,7 @@ const FormVariationsDemo = () => {
             </AccordionItem>),
 
             'other-info': (<AccordionItem value="other-info" className="border-b border-border">
-              <AccordionTrigger className="hover:no-underline py-3 text-sm font-medium">
+              <AccordionTrigger className="hover:no-underline py-2 text-xs font-semibold">
                 Other Information
               </AccordionTrigger>
               <AccordionContent className="pb-3">
@@ -1979,15 +1979,15 @@ const FormVariationsDemo = () => {
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <div className="space-y-1.5">
                       <Label className="text-xs font-medium">PO Number <span className="text-destructive">*</span></Label>
-                      <Input value={formData.poNumber} onChange={(e) => handleInputChange("poNumber", e.target.value)} className="h-8 text-sm" />
+                      <Input value={formData.poNumber} onChange={(e) => handleInputChange("poNumber", e.target.value)} className="h-7 text-xs" />
                     </div>
                     <div className="space-y-1.5">
                       <Label className="text-xs font-medium">JM Parts PO #</Label>
-                      <Input value={formData.jmPartsPoNumber} onChange={(e) => handleInputChange("jmPartsPoNumber", e.target.value)} className="h-8 text-sm" />
+                      <Input value={formData.jmPartsPoNumber} onChange={(e) => handleInputChange("jmPartsPoNumber", e.target.value)} className="h-7 text-xs" />
                     </div>
                     <div className="space-y-1.5">
                       <Label className="text-xs font-medium">SO Number</Label>
-                      <Input value={formData.soNumber} onChange={(e) => handleInputChange("soNumber", e.target.value)} className="h-8 text-sm" />
+                      <Input value={formData.soNumber} onChange={(e) => handleInputChange("soNumber", e.target.value)} className="h-7 text-xs" />
                     </div>
                     <div className="space-y-1.5">
                       <Label className="text-xs font-medium">Need By <span className="text-destructive">*</span></Label>
@@ -2018,12 +2018,12 @@ const FormVariationsDemo = () => {
                     </div>
                     <div className="space-y-1.5">
                       <Label className="text-xs font-medium">Transit Qty</Label>
-                      <Input value={formData.transitQty} onChange={(e) => handleInputChange("transitQty", e.target.value)} className="h-8 text-sm" />
+                      <Input value={formData.transitQty} onChange={(e) => handleInputChange("transitQty", e.target.value)} className="h-7 text-xs" />
                     </div>
                     <div className="space-y-1.5">
                       <Label className="text-xs font-medium">Lead Technician</Label>
                       <Select value={formData.leadTechnician} onValueChange={(value) => handleInputChange("leadTechnician", value)}>
-                        <SelectTrigger className="h-8 text-sm">
+                        <SelectTrigger className="h-7 text-xs">
                           <SelectValue placeholder="Select technician" />
                         </SelectTrigger>
                         <SelectContent className="bg-popover border z-50">
@@ -2038,23 +2038,23 @@ const FormVariationsDemo = () => {
                   <div className="grid grid-cols-2 md:grid-cols-5 gap-3 pt-2">
                     <div className="flex items-center gap-2">
                       <Checkbox id="newEquip" checked={formData.newEquip as boolean} onCheckedChange={(checked) => handleInputChange("newEquip", checked)} className="h-4 w-4" />
-                      <Label htmlFor="newEquip" className="text-sm cursor-pointer">New</Label>
+                      <Label htmlFor="newEquip" className="text-xs cursor-pointer">New</Label>
                     </div>
                     <div className="flex items-center gap-2">
                       <Checkbox id="hotList" checked={formData.hotList as boolean} onCheckedChange={(checked) => handleInputChange("hotList", checked)} className="h-4 w-4" />
-                      <Label htmlFor="hotList" className="text-sm cursor-pointer">Hot List</Label>
+                      <Label htmlFor="hotList" className="text-xs cursor-pointer">Hot List</Label>
                     </div>
                     <div className="flex items-center gap-2">
                       <Checkbox id="toShipping" checked={formData.toShipping as boolean} onCheckedChange={(checked) => handleInputChange("toShipping", checked)} className="h-4 w-4" />
-                      <Label htmlFor="toShipping" className="text-sm cursor-pointer">To Shipping</Label>
+                      <Label htmlFor="toShipping" className="text-xs cursor-pointer">To Shipping</Label>
                     </div>
                     <div className="flex items-center gap-2">
                       <Checkbox id="readyToBill" checked={formData.readyToBill as boolean} onCheckedChange={(checked) => handleInputChange("readyToBill", checked)} className="h-4 w-4" />
-                      <Label htmlFor="readyToBill" className="text-sm cursor-pointer">Ready to Bill</Label>
+                      <Label htmlFor="readyToBill" className="text-xs cursor-pointer">Ready to Bill</Label>
                     </div>
                     <div className="flex items-center gap-2">
                       <Checkbox id="lostEquipment" checked={formData.lostEquipment as boolean} onCheckedChange={(checked) => handleInputChange("lostEquipment", checked)} className="h-4 w-4" />
-                      <Label htmlFor="lostEquipment" className="text-sm cursor-pointer">Lost Equipment</Label>
+                      <Label htmlFor="lostEquipment" className="text-xs cursor-pointer">Lost Equipment</Label>
                     </div>
                   </div>
                 </div>
@@ -2062,7 +2062,7 @@ const FormVariationsDemo = () => {
             </AccordionItem>),
 
             'misc-info': (<AccordionItem value="misc-info" className="border-b border-border">
-              <AccordionTrigger className="hover:no-underline py-3 text-sm font-medium">
+              <AccordionTrigger className="hover:no-underline py-2 text-xs font-semibold">
                 Misc. Information
               </AccordionTrigger>
               <AccordionContent className="pb-3">
@@ -2080,7 +2080,7 @@ const FormVariationsDemo = () => {
             </AccordionItem>),
 
             'cost-info': (<AccordionItem value="cost-info" className="border-b border-border">
-              <AccordionTrigger className="hover:no-underline py-3 text-sm font-medium">
+              <AccordionTrigger className="hover:no-underline py-2 text-xs font-semibold">
                 Cost Information
               </AccordionTrigger>
               <AccordionContent className="pb-3">
@@ -2135,7 +2135,7 @@ const FormVariationsDemo = () => {
                           <div className="grid grid-cols-[1fr_80px_120px] items-center bg-muted/30 px-4 py-2.5">
                             <div className="text-xs font-semibold text-foreground">Total</div>
                             <div className="text-center text-xs font-semibold text-foreground tabular-nums">{totalQty}</div>
-                            <div className="text-right text-sm font-bold text-foreground tabular-nums pr-2">
+                            <div className="text-right text-xs font-bold text-foreground tabular-nums pr-2">
                               ${totalCost.toFixed(2)}
                             </div>
                           </div>
@@ -2149,7 +2149,7 @@ const FormVariationsDemo = () => {
             </AccordionItem>),
 
             'accessories': (<AccordionItem value="accessories" className="border-b border-border">
-              <AccordionTrigger className="hover:no-underline py-3 text-sm font-medium">
+              <AccordionTrigger className="hover:no-underline py-2 text-xs font-semibold">
                 Accessories
               </AccordionTrigger>
               <AccordionContent className="pb-3">
@@ -2276,7 +2276,7 @@ const FormVariationsDemo = () => {
             </AccordionItem>),
 
             'comments': (<AccordionItem value="comments" className="border-b border-border last:border-b-0">
-              <AccordionTrigger className="hover:no-underline py-3 text-sm font-medium">
+              <AccordionTrigger className="hover:no-underline py-2 text-xs font-semibold">
                 Comments
               </AccordionTrigger>
               <AccordionContent className="pb-3">
