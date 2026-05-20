@@ -996,15 +996,15 @@ const AddNewWorkOrder = () => {
         <div className="w-full space-y-4 sm:space-y-6">
           {/* Header Info Card */}
           <Card>
-            <CardContent className="p-4 sm:p-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-6">
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-foreground">Work Order #</Label>
-                  <div className="text-base sm:text-lg font-bold text-foreground">{workOrderData.workOrderNumber}</div>
+            <CardContent className="p-2 sm:p-3">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
+                <div className="space-y-1">
+                  <Label className="text-xs font-medium text-foreground">Work Order #</Label>
+                  <div className="text-sm font-bold text-foreground">{workOrderData.workOrderNumber}</div>
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="srDocument" className="text-sm font-medium text-foreground">SR Doc</Label>
-                  <div className="text-sm text-foreground p-2 bg-muted rounded border h-9 sm:h-10 flex items-center">
+                <div className="space-y-1">
+                  <Label htmlFor="srDocument" className="text-xs font-medium text-foreground">SR Doc</Label>
+                  <div className="text-xs text-foreground px-2 bg-muted rounded border h-7 flex items-center">
                     {workOrderData.srDocument ? (
                       <a 
                         href="#"
@@ -1012,7 +1012,6 @@ const AddNewWorkOrder = () => {
                         onClick={(e) => {
                           e.preventDefault();
                           console.log('Opening SR Document:', workOrderData.srDocument);
-                          // TODO: Navigate to SR document or open in modal
                         }}
                       >
                         {workOrderData.srDocument}
@@ -1023,24 +1022,23 @@ const AddNewWorkOrder = () => {
                     )}
                   </div>
                 </div>
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-foreground">Salesperson</Label>
-                  <div className="text-sm text-foreground p-2 bg-muted rounded border">{workOrderData.salesperson}</div>
+                <div className="space-y-1">
+                  <Label className="text-xs font-medium text-foreground">Salesperson</Label>
+                  <div className="text-xs text-foreground px-2 bg-muted rounded border h-7 flex items-center">{workOrderData.salesperson}</div>
                 </div>
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-foreground">Contact</Label>
-                  <div className="text-sm text-foreground p-2 bg-muted rounded border">{workOrderData.contact || "Not assigned"}</div>
+                <div className="space-y-1">
+                  <Label className="text-xs font-medium text-foreground">Contact</Label>
+                  <div className="text-xs text-foreground px-2 bg-muted rounded border h-7 flex items-center">{workOrderData.contact || "Not assigned"}</div>
                 </div>
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-foreground">&nbsp;</Label>
-                  <div className="text-sm text-foreground p-2 bg-muted rounded border h-9 sm:h-10 flex items-center">
+                <div className="space-y-1">
+                  <Label className="text-xs font-medium text-foreground">&nbsp;</Label>
+                  <div className="text-xs text-foreground px-2 bg-muted rounded border h-7 flex items-center">
                     <a 
                       href="#"
                       className="text-foreground underline hover:opacity-80 transition-opacity"
                       onClick={(e) => {
                         e.preventDefault();
                         console.log('Navigate to Misc Labor Parts and Pricing');
-                        // TODO: Add navigation or modal for Misc Labor Parts and Pricing
                       }}
                     >
                       Misc Labor Parts and Pricing
