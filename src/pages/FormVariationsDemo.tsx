@@ -1574,21 +1574,21 @@ const FormVariationsDemo = () => {
               </AccordionTrigger>
               <AccordionContent className="pb-3">
               <Card className="border-0 shadow-sm">
-                <CardContent className="p-3 space-y-2">
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                    <div className="space-y-1">
-                      <Label className="text-xs font-medium">Report # <span className="text-destructive">*</span></Label>
+                <CardContent className="p-2 space-y-1.5">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-1.5">
+                    <div className="space-y-0.5">
+                      <Label className="text-[11px] font-medium">Report # <span className="text-destructive">*</span></Label>
                       <Input 
                         value={formData.reportNumber} 
                         readOnly 
-                        className="h-7 bg-muted/50 cursor-not-allowed text-xs"
+                        className="h-6 bg-muted/50 cursor-not-allowed text-[11px]"
                       />
                     </div>
 
-                    <div className="space-y-1">
-                      <Label htmlFor="itemStatus" className="text-xs font-medium">Item Status <span className="text-destructive">*</span></Label>
+                    <div className="space-y-0.5">
+                      <Label htmlFor="itemStatus" className="text-[11px] font-medium">Item Status <span className="text-destructive">*</span></Label>
                       <Select value={formData.itemStatus} onValueChange={handleStatusChangeAttempt}>
-                        <SelectTrigger className="h-7 text-xs">
+                        <SelectTrigger className="h-6 text-[11px]">
                           <SelectValue placeholder="Select status" />
                         </SelectTrigger>
                         <SelectContent className="bg-popover border z-50 max-h-48 overflow-y-auto">
@@ -1624,10 +1624,10 @@ const FormVariationsDemo = () => {
                       </Select>
                     </div>
 
-                    <div className="space-y-1">
-                      <Label htmlFor="assignedTo" className="text-xs font-medium">Assigned To</Label>
+                    <div className="space-y-0.5">
+                      <Label htmlFor="assignedTo" className="text-[11px] font-medium">Assigned To</Label>
                       <Select value={formData.assignedTo} onValueChange={(value) => handleInputChange("assignedTo", value)}>
-                        <SelectTrigger className="h-7 text-xs">
+                        <SelectTrigger className="h-6 text-[11px]">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent className="bg-popover border z-50">
@@ -1638,23 +1638,23 @@ const FormVariationsDemo = () => {
                       </Select>
                     </div>
 
-                    <div className="space-y-1">
-                      <Label htmlFor="testFreq" className="text-xs font-medium">Test Freq <span className="text-destructive">*</span></Label>
+                    <div className="space-y-0.5">
+                      <Label htmlFor="testFreq" className="text-[11px] font-medium">Test Freq <span className="text-destructive">*</span></Label>
                       <Input
                         id="testFreq"
                         value={formData.calFreq}
                         onChange={(e) => handleInputChange("calFreq", e.target.value)}
-                        className="h-7 text-xs"
+                        className="h-6 text-[11px]"
                       />
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-1.5">
 
-                    <div className="space-y-1">
-                      <Label htmlFor="priority" className="text-xs font-medium">Priority <span className="text-destructive">*</span></Label>
+                    <div className="space-y-0.5">
+                      <Label htmlFor="priority" className="text-[11px] font-medium">Priority <span className="text-destructive">*</span></Label>
                       <Select value={formData.priority} onValueChange={(value) => handleInputChange("priority", value)}>
-                        <SelectTrigger className="h-7 text-xs">
+                        <SelectTrigger className="h-6 text-[11px]">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent className="bg-popover border z-50">
@@ -1666,10 +1666,10 @@ const FormVariationsDemo = () => {
                       </Select>
                     </div>
 
-                    <div className="space-y-1">
-                      <Label htmlFor="location" className="text-xs font-medium">Location <span className="text-destructive">*</span></Label>
+                    <div className="space-y-0.5">
+                      <Label htmlFor="location" className="text-[11px] font-medium">Location <span className="text-destructive">*</span></Label>
                       <Select value={formData.location} onValueChange={(value) => handleInputChange("location", value)}>
-                        <SelectTrigger className="h-7 text-xs">
+                        <SelectTrigger className="h-6 text-[11px]">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent className="bg-popover border z-50 max-h-48 overflow-y-auto">
@@ -1680,10 +1680,10 @@ const FormVariationsDemo = () => {
                       </Select>
                     </div>
 
-                    <div className="space-y-1">
-                      <Label htmlFor="division" className="text-xs font-medium">Division <span className="text-destructive">*</span></Label>
+                    <div className="space-y-0.5">
+                      <Label htmlFor="division" className="text-[11px] font-medium">Division <span className="text-destructive">*</span></Label>
                       <Select value={formData.division} onValueChange={(value) => handleInputChange("division", value)}>
-                        <SelectTrigger className="h-7 text-xs">
+                        <SelectTrigger className="h-6 text-[11px]">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent className="bg-popover border z-50">
@@ -1694,10 +1694,10 @@ const FormVariationsDemo = () => {
                       </Select>
                     </div>
 
-                    <div className="space-y-1">
-                      <Label htmlFor="actionCode" className="text-xs font-medium">Action Code <span className="text-destructive">*</span></Label>
+                    <div className="space-y-0.5">
+                      <Label htmlFor="actionCode" className="text-[11px] font-medium">Action Code <span className="text-destructive">*</span></Label>
                       <Select value={formData.actionCode} onValueChange={(value) => handleInputChange("actionCode", value)}>
-                        <SelectTrigger className="h-7 text-xs">
+                        <SelectTrigger className="h-6 text-[11px]">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent className="bg-popover border z-50">
