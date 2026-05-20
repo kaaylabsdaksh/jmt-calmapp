@@ -1115,8 +1115,8 @@ const AddNewWorkOrder = () => {
 
             <TabsContent value="general" className="space-y-3">
               <Card>
-                <CardContent className="p-3 sm:p-4">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
+                <CardContent className="p-2 sm:p-3">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-2">
                     {/* Account Number */}
                     <div className="space-y-1 relative" ref={inputRef}>
                       <Label htmlFor="accountNumber" className="text-xs font-medium">
@@ -1131,7 +1131,7 @@ const AddNewWorkOrder = () => {
                           onKeyDown={handleKeyDown}
                           maxLength={7}
                           disabled={isSaved}
-                          className={`h-8 ${!workOrderData.accountNumber ? "border-destructive" : ""}`}
+                          className={`h-7 text-xs ${!workOrderData.accountNumber ? "border-destructive" : ""}`}
                         />
                         {!workOrderData.accountNumber && (
                           <div className="absolute right-3 top-1/2 -translate-y-1/2 w-2 h-2 bg-destructive rounded-full"></div>
@@ -1179,7 +1179,7 @@ const AddNewWorkOrder = () => {
                           onChange={handleRmaSearchChange}
                           onKeyDown={handleRmaSearchKeyDown}
                           disabled={isSaved}
-                          className="h-8"
+                          className="h-7 text-xs"
                         />
                         {/* RMA Suggestions Dropdown */}
                         {showRmaSuggestions && rmaSearchSuggestions.length > 0 && (
@@ -1220,7 +1220,7 @@ const AddNewWorkOrder = () => {
                         onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, contact: value === "no-contact" ? "" : value }))}
                         disabled={isSaved}
                       >
-                        <SelectTrigger className="h-8">
+                        <SelectTrigger className="h-7 text-xs">
                           <SelectValue placeholder="Select contact" />
                         </SelectTrigger>
                         <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-lg z-[60] max-h-60 overflow-y-auto">
@@ -1266,7 +1266,7 @@ const AddNewWorkOrder = () => {
                         value={workOrderData.workOrderNumber}
                         onChange={(e) => setWorkOrderData(prev => ({ ...prev, workOrderNumber: e.target.value }))}
                         disabled={isSaved}
-                        className="h-8"
+                        className="h-7 text-xs"
                       />
                     </div>
 
@@ -1274,7 +1274,7 @@ const AddNewWorkOrder = () => {
                     <div className="space-y-1">
                       <Label className="text-xs font-medium">Work Order Status</Label>
                       <Select value={workOrderData.workOrderStatus} onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, workOrderStatus: value }))} disabled={isSaved}>
-                        <SelectTrigger className="h-8">
+                        <SelectTrigger className="h-7 text-xs">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -1290,7 +1290,7 @@ const AddNewWorkOrder = () => {
                     <div className="space-y-1">
                       <Label className="text-xs font-medium">Work Order Type</Label>
                       <Select value={workOrderData.workOrderType} onValueChange={(value) => setWorkOrderData(prev => ({ ...prev, workOrderType: value }))} disabled={isSaved}>
-                        <SelectTrigger className="h-8">
+                        <SelectTrigger className="h-7 text-xs">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -1309,7 +1309,7 @@ const AddNewWorkOrder = () => {
                         value={workOrderData.customer}
                         onChange={(e) => setWorkOrderData(prev => ({ ...prev, customer: e.target.value }))}
                         disabled={isSaved}
-                        className="h-8"
+                        className="h-7 text-xs"
                       />
                     </div>
                   </div>
