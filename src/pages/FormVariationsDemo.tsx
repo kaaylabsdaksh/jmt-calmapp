@@ -3494,8 +3494,8 @@ const FormVariationsDemo = () => {
         </div>
       </div>
 
-      {/* Identification + Product Specifications - side by side */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+      {/* Identification + Product Specifications + Accessories - side by side */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
         {/* Identification */}
         <div className="border border-border rounded-lg overflow-hidden bg-card flex flex-col">
           <div className="bg-muted/50 px-3 py-1.5 border-b">
@@ -3573,63 +3573,63 @@ const FormVariationsDemo = () => {
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Accessories */}
-      <div className="border border-border rounded-lg overflow-hidden flex flex-col">
-        <div className="bg-muted/50 px-3 py-1.5 border-b flex items-center justify-between">
-          <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide">Accessories</span>
-          <span className="text-[10px] bg-muted text-muted-foreground px-1.5 py-0.5 rounded font-bold">
-            {accessoriesList.length} Total
-          </span>
-        </div>
-        <div className="p-3 space-y-2 flex-1">
-          <div className="space-y-1.5">
-            {accessoriesList.map((item) => (
-              <div key={item.id} className="flex items-center gap-1.5">
-                <Select value={item.accessory} onValueChange={(value) => handleAccessoryChange(item.id, 'accessory', value)}>
-                  <SelectTrigger className="h-7 text-xs flex-1">
-                    <SelectValue placeholder="Select accessory" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="protector">Protector</SelectItem>
-                    <SelectItem value="bag">Bag</SelectItem>
-                    <SelectItem value="case">Case</SelectItem>
-                    <SelectItem value="strap">Strap</SelectItem>
-                    <SelectItem value="clip">Clip</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Input
-                  type="number"
-                  placeholder="Qty"
-                  className="h-7 text-xs w-14 text-center"
-                  min="0"
-                  value={item.qty}
-                  onChange={(e) => handleAccessoryChange(item.id, 'qty', e.target.value)}
-                />
-                {accessoriesList.length > 1 && (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="h-7 w-7 p-0 text-destructive hover:text-destructive"
-                    onClick={() => handleRemoveAccessory(item.id)}
-                  >
-                    <Trash2 className="h-3.5 w-3.5" />
-                  </Button>
-                )}
-              </div>
-            ))}
+        {/* Accessories */}
+        <div className="border border-border rounded-lg overflow-hidden flex flex-col">
+          <div className="bg-muted/50 px-3 py-1.5 border-b flex items-center justify-between">
+            <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide">Accessories</span>
+            <span className="text-[10px] bg-muted text-muted-foreground px-1.5 py-0.5 rounded font-bold">
+              {accessoriesList.length} Total
+            </span>
           </div>
+          <div className="p-3 space-y-2 flex-1">
+            <div className="space-y-1.5">
+              {accessoriesList.map((item) => (
+                <div key={item.id} className="flex items-center gap-1.5">
+                  <Select value={item.accessory} onValueChange={(value) => handleAccessoryChange(item.id, 'accessory', value)}>
+                    <SelectTrigger className="h-7 text-xs flex-1">
+                      <SelectValue placeholder="Select accessory" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="protector">Protector</SelectItem>
+                      <SelectItem value="bag">Bag</SelectItem>
+                      <SelectItem value="case">Case</SelectItem>
+                      <SelectItem value="strap">Strap</SelectItem>
+                      <SelectItem value="clip">Clip</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Input
+                    type="number"
+                    placeholder="Qty"
+                    className="h-7 text-xs w-14 text-center"
+                    min="0"
+                    value={item.qty}
+                    onChange={(e) => handleAccessoryChange(item.id, 'qty', e.target.value)}
+                  />
+                  {accessoriesList.length > 1 && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-7 w-7 p-0 text-destructive hover:text-destructive"
+                      onClick={() => handleRemoveAccessory(item.id)}
+                    >
+                      <Trash2 className="h-3.5 w-3.5" />
+                    </Button>
+                  )}
+                </div>
+              ))}
+            </div>
 
-          <Button
-            variant="outline"
-            size="sm"
-            className="w-full h-7 text-[11px] gap-1 border-dashed"
-            onClick={handleAddAccessory}
-          >
-            <Plus className="h-3 w-3" />
-            Add Accessory
-          </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-full h-7 text-[11px] gap-1 border-dashed"
+              onClick={handleAddAccessory}
+            >
+              <Plus className="h-3 w-3" />
+              Add Accessory
+            </Button>
+          </div>
         </div>
       </div>
 
