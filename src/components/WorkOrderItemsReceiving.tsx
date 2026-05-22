@@ -685,7 +685,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                   <tr 
                     key={newItem.id} 
                     data-new-item="true"
-                    className="border-b bg-blue-50"
+                    className="border-b-2 border-foreground/40 bg-blue-50"
                   >
                      <td className="px-1 py-0 sticky left-0 bg-blue-50 z-10">
                       <div className="flex items-center justify-end gap-2">
@@ -1104,7 +1104,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                   </tr>
                 ))}
                 {paginatedItems.map((item, index) => (
-                  <tr key={item.id} className="border-b hover:bg-muted/10">
+                  <tr key={item.id} className="border-b-2 border-foreground/40 hover:bg-muted/10">
                     <td className="px-1 py-0">
                       <div className="flex items-center justify-end gap-1">
                         {editingItemId === item.id ? (
@@ -1521,7 +1521,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                   <tr 
                     key={newItem.id} 
                     data-new-item="true"
-                    className="border-b bg-blue-50"
+                    className="border-b-2 border-foreground/40 bg-blue-50"
                   >
                     <td className="p-3">
                       <div className="flex items-center justify-end gap-2">
@@ -1632,7 +1632,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                   </tr>
                  ))}
                  {paginatedItems.map((item) => (
-                   <tr key={item.id} className="border-b hover:bg-muted/10">
+                   <tr key={item.id} className="border-b-2 border-foreground/40 hover:bg-muted/10">
                      <td className="px-1 py-0">
                        <div className="flex items-center justify-end gap-1">
                          <Button 
