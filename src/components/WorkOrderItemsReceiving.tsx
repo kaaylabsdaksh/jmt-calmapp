@@ -474,11 +474,11 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                   <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-16">Cal Freq</th>
                   <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-16">Action Code</th>
                   <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-16">Priority</th>
-                  <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-24">Manufacturer<span className="text-red-500 ml-1">*</span></th>
+                  <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-20">Manufacturer<span className="text-red-500 ml-1">*</span></th>
                   <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-16">Model<span className="text-red-500 ml-1">*</span></th>
-                  <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-32">Description</th>
+                  <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-20">Description</th>
                   <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-12">TF</th>
-                  <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-32">Capable Locations</th>
+                  <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-20">Capable Locations</th>
                   <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-20">Mfg Serial<span className="text-red-500 ml-1">*</span></th>
                   <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-16">CustID<span className="text-red-500 ml-1">*</span></th>
                   <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-16">CustSN<span className="text-red-500 ml-1">*</span></th>
@@ -486,9 +486,9 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                   <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-12">17025</th>
                   <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-16">Estimate</th>
                   <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-16">New Equip</th>
-                  <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-24">Need By Date</th>
+                  <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-20">Need By Date</th>
                   <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-16">C/C Cost</th>
-                  <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-32">Action</th>
+                  <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-20">Action</th>
                 </tr>
                 {/* Quick Search Row */}
                 <CollapsibleContent asChild>
@@ -500,7 +500,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                       placeholder=""
                       value={columnFilters.itemNumber}
                       onChange={(e) => handleFilterChange('itemNumber', e.target.value)}
-                      className="h-6 text-[11px] bg-background"
+                      className="h-6 text-[11px] bg-background px-1"
                     />
                   </th>
                   <th className="px-1 py-0.5">
@@ -508,12 +508,12 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                       placeholder=""
                       value={columnFilters.calFreq}
                       onChange={(e) => handleFilterChange('calFreq', e.target.value)}
-                      className="h-6 text-[11px] bg-background"
+                      className="h-6 text-[11px] bg-background px-1"
                     />
                   </th>
                   <th className="px-1 py-0.5">
                     <Select value={columnFilters.actionCode || "all"} onValueChange={(value) => handleFilterChange('actionCode', value === "all" ? "" : value)}>
-                      <SelectTrigger className="h-6 text-[11px] bg-background">
+                      <SelectTrigger className="h-6 text-[11px] bg-background px-1">
                         <SelectValue placeholder="All" />
                       </SelectTrigger>
                       <SelectContent>
@@ -529,7 +529,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                   </th>
                   <th className="px-1 py-0.5">
                     <Select value={columnFilters.priority || "all"} onValueChange={(value) => handleFilterChange('priority', value === "all" ? "" : value)}>
-                      <SelectTrigger className="h-6 text-[11px] bg-background">
+                      <SelectTrigger className="h-6 text-[11px] bg-background px-1">
                         <SelectValue placeholder="All" />
                       </SelectTrigger>
                       <SelectContent>
@@ -544,7 +544,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                   </th>
                   <th className="px-1 py-0.5">
                     <Select value={columnFilters.manufacturer || "all"} onValueChange={(value) => handleFilterChange('manufacturer', value === "all" ? "" : value)}>
-                      <SelectTrigger className="h-6 text-[11px] bg-background">
+                      <SelectTrigger className="h-6 text-[11px] bg-background px-1">
                         <SelectValue placeholder="All" />
                       </SelectTrigger>
                       <SelectContent>
@@ -562,7 +562,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                       placeholder=""
                       value={columnFilters.model}
                       onChange={(e) => handleFilterChange('model', e.target.value)}
-                      className="h-6 text-[11px] bg-background"
+                      className="h-6 text-[11px] bg-background px-1"
                     />
                   </th>
                   <th className="px-1 py-0.5">
@@ -570,7 +570,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                       placeholder=""
                       value={columnFilters.description}
                       onChange={(e) => handleFilterChange('description', e.target.value)}
-                      className="h-6 text-[11px] bg-background"
+                      className="h-6 text-[11px] bg-background px-1"
                     />
                   </th>
                   <th className="px-1 py-0.5">
@@ -578,7 +578,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                       placeholder=""
                       value={columnFilters.tf}
                       onChange={(e) => handleFilterChange('tf', e.target.value)}
-                      className="h-6 text-[11px] bg-background"
+                      className="h-6 text-[11px] bg-background px-1"
                     />
                   </th>
                   <th className="px-1 py-0.5">
@@ -586,7 +586,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                       placeholder=""
                       value={columnFilters.capableLocations}
                       onChange={(e) => handleFilterChange('capableLocations', e.target.value)}
-                      className="h-6 text-[11px] bg-background"
+                      className="h-6 text-[11px] bg-background px-1"
                     />
                   </th>
                   <th className="px-1 py-0.5">
@@ -594,7 +594,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                       placeholder=""
                       value={columnFilters.mfgSerial}
                       onChange={(e) => handleFilterChange('mfgSerial', e.target.value)}
-                      className="h-6 text-[11px] bg-background"
+                      className="h-6 text-[11px] bg-background px-1"
                     />
                   </th>
                   <th className="px-1 py-0.5">
@@ -602,7 +602,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                       placeholder=""
                       value={columnFilters.custId}
                       onChange={(e) => handleFilterChange('custId', e.target.value)}
-                      className="h-6 text-[11px] bg-background"
+                      className="h-6 text-[11px] bg-background px-1"
                     />
                   </th>
                   <th className="px-1 py-0.5">
@@ -610,7 +610,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                       placeholder=""
                       value={columnFilters.custSN}
                       onChange={(e) => handleFilterChange('custSN', e.target.value)}
-                      className="h-6 text-[11px] bg-background"
+                      className="h-6 text-[11px] bg-background px-1"
                     />
                   </th>
                   <th className="px-1 py-0.5">
@@ -618,12 +618,12 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                       placeholder=""
                       value={columnFilters.assetNumber}
                       onChange={(e) => handleFilterChange('assetNumber', e.target.value)}
-                      className="h-6 text-[11px] bg-background"
+                      className="h-6 text-[11px] bg-background px-1"
                     />
                   </th>
                   <th className="px-1 py-0.5">
                     <Select value={columnFilters.iso17025 || "all"} onValueChange={(value) => handleFilterChange('iso17025', value === "all" ? "" : value)}>
-                      <SelectTrigger className="h-6 text-[11px] bg-background">
+                      <SelectTrigger className="h-6 text-[11px] bg-background px-1">
                         <SelectValue placeholder="All" />
                       </SelectTrigger>
                       <SelectContent>
@@ -635,7 +635,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                   </th>
                   <th className="px-1 py-0.5">
                     <Select value={columnFilters.estimate || "all"} onValueChange={(value) => handleFilterChange('estimate', value === "all" ? "" : value)}>
-                      <SelectTrigger className="h-6 text-[11px] bg-background">
+                      <SelectTrigger className="h-6 text-[11px] bg-background px-1">
                         <SelectValue placeholder="All" />
                       </SelectTrigger>
                       <SelectContent>
@@ -647,7 +647,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                   </th>
                   <th className="px-1 py-0.5">
                     <Select value={columnFilters.newEquip || "all"} onValueChange={(value) => handleFilterChange('newEquip', value === "all" ? "" : value)}>
-                      <SelectTrigger className="h-6 text-[11px] bg-background">
+                      <SelectTrigger className="h-6 text-[11px] bg-background px-1">
                         <SelectValue placeholder="All" />
                       </SelectTrigger>
                       <SelectContent>
@@ -662,7 +662,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                       placeholder=""
                       value={columnFilters.needByDate}
                       onChange={(e) => handleFilterChange('needByDate', e.target.value)}
-                      className="h-6 text-[11px] bg-background"
+                      className="h-6 text-[11px] bg-background px-1"
                     />
                   </th>
                   <th className="px-1 py-0.5">
@@ -670,7 +670,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                       placeholder=""
                       value={columnFilters.ccCost}
                       onChange={(e) => handleFilterChange('ccCost', e.target.value)}
-                      className="h-6 text-[11px] bg-background"
+                      className="h-6 text-[11px] bg-background px-1"
                     />
                   </th>
                   <th className="px-1 py-0.5"></th>
