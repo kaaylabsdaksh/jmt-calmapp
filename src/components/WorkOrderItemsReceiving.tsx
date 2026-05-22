@@ -719,7 +719,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                          value={newItem.itemNumber}
                          onChange={(e) => updateNewItem(newItem.id, 'itemNumber', e.target.value)}
                          className={cn(
-                           "h-12 text-base font-medium border-2 focus:border-primary transition-all duration-300",
+                           "h-7 text-[11px] font-medium border focus:border-primary transition-all duration-300",
                            highlightNewItems && newItem.itemNumber && "ring-2 ring-primary bg-primary/5"
                          )}
                          onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
@@ -733,7 +733,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                          value={newItem.calFreq}
                          onChange={(e) => updateNewItem(newItem.id, 'calFreq', e.target.value)}
                          className={cn(
-                           "h-12 text-base font-medium border-2 focus:border-primary transition-all duration-300",
+                           "h-7 text-[11px] font-medium border focus:border-primary transition-all duration-300",
                            highlightNewItems && newItem.calFreq && "ring-2 ring-primary bg-primary/5"
                          )}
                          onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
@@ -744,7 +744,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                        <Select value={newItem.actionCode} onValueChange={(value) => updateNewItem(newItem.id, 'actionCode', value)}>
                          <SelectTrigger 
                            className={cn(
-                             "h-12 text-base border-2 focus:border-primary transition-all duration-300",
+                             "h-7 text-[11px] border focus:border-primary transition-all duration-300",
                              highlightNewItems && newItem.actionCode && "ring-2 ring-primary bg-primary/5"
                            )}
                            onFocus={(e) => e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
@@ -765,7 +765,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                        <Select value={newItem.priority} onValueChange={(value) => updateNewItem(newItem.id, 'priority', value)}>
                          <SelectTrigger 
                            className={cn(
-                             "h-12 text-base border-2 focus:border-primary transition-all duration-300",
+                             "h-7 text-[11px] border focus:border-primary transition-all duration-300",
                              highlightNewItems && newItem.priority && "ring-2 ring-primary bg-primary/5"
                            )}
                            onFocus={(e) => e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
@@ -914,7 +914,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                       <td className="px-1 py-0">
                         <Select value={newItem.tf} onValueChange={(value) => updateNewItem(newItem.id, 'tf', value)}>
                           <SelectTrigger 
-                            className="h-12 text-base border-2 focus:border-primary"
+                            className="h-7 text-[11px] border focus:border-primary"
                             onFocus={(e) => e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
                           >
                             <SelectValue placeholder="Select..." />
@@ -930,7 +930,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                           placeholder="Capable Locations"
                           value={newItem.capableLocations}
                           onChange={(e) => updateNewItem(newItem.id, 'capableLocations', e.target.value)}
-                          className="h-12 text-base font-medium border-2 focus:border-primary"
+                          className="h-7 text-[11px] font-medium border focus:border-primary"
                           onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
                           autoComplete="off"
                         />
@@ -954,7 +954,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                              }
                            }}
                            className={cn(
-                             "h-12 text-base font-medium border-2 transition-all duration-300",
+                             "h-7 text-[11px] font-medium border transition-all duration-300",
                              validationErrors[newItem.id]?.includes('mfgSerial') ? "border-destructive focus:border-destructive" : "focus:border-primary",
                              highlightNewItems && newItem.mfgSerial && "ring-2 ring-primary bg-primary/5"
                            )}
@@ -984,7 +984,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                            }
                          }}
                          className={cn(
-                           "h-12 text-base font-medium border-2 transition-all duration-300",
+                           "h-7 text-[11px] font-medium border transition-all duration-300",
                            validationErrors[newItem.id]?.includes('custId') ? "border-destructive focus:border-destructive" : "focus:border-primary",
                            highlightNewItems && newItem.custId && "ring-2 ring-primary bg-primary/5"
                          )}
@@ -1014,7 +1014,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                            }
                          }}
                          className={cn(
-                           "h-12 text-base font-medium border-2 transition-all duration-300",
+                           "h-7 text-[11px] font-medium border transition-all duration-300",
                            validationErrors[newItem.id]?.includes('custSN') ? "border-destructive focus:border-destructive" : "focus:border-primary",
                            highlightNewItems && newItem.custSN && "ring-2 ring-primary bg-primary/5"
                          )}
@@ -1030,7 +1030,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                          placeholder="Asset Number"
                          value={newItem.assetNumber}
                          onChange={(e) => updateNewItem(newItem.id, 'assetNumber', e.target.value)}
-                         className="h-12 text-base font-medium border-2 focus:border-primary"
+                         className="h-7 text-[11px] font-medium border focus:border-primary"
                          onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
                          autoComplete="off"
                        />
@@ -1064,7 +1064,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                          type="date"
                          value={newItem.needByDate}
                          onChange={(e) => updateNewItem(newItem.id, 'needByDate', e.target.value)}
-                         className="h-12 text-base border-2 focus:border-primary"
+                         className="h-7 text-[11px] border focus:border-primary"
                          onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
                        />
                      </td>
@@ -1073,7 +1073,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                           placeholder="C/C Cost"
                           value={newItem.ccCost}
                           onChange={(e) => updateNewItem(newItem.id, 'ccCost', e.target.value)}
-                          className="h-12 text-base font-medium border-2 focus:border-primary"
+                          className="h-7 text-[11px] font-medium border focus:border-primary"
                           onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
                           autoComplete="off"
                         />
