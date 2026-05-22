@@ -456,7 +456,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
           {/* Desktop Table View */}
           <div className="hidden lg:block border rounded-lg overflow-x-auto scroll-smooth">
             <Collapsible open={isSearchBarOpen} onOpenChange={setIsSearchBarOpen}>
-              <table className="w-full min-w-[2400px]">
+              <table className="w-full ">
                 <thead className="bg-muted/20">
                   <tr className="border-b">
                     <th className="text-right px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-12">
@@ -687,7 +687,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                     data-new-item="true"
                     className="border-b bg-blue-50"
                   >
-                     <td className="p-4 sticky left-0 bg-blue-50 z-10">
+                     <td className="px-1 py-0.5 sticky left-0 bg-blue-50 z-10">
                       <div className="flex items-center justify-end gap-2">
                         <Button 
                           size="sm" 
@@ -707,13 +707,13 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                         </Button>
                       </div>
                      </td>
-                     <td className="p-4 sticky left-20 bg-blue-50 z-10">
+                     <td className="px-1 py-0.5 sticky left-20 bg-blue-50 z-10">
                        <Checkbox 
                          checked={selectedItems.includes(newItem.id)}
                          onCheckedChange={(checked) => handleItemSelect(newItem.id, checked as boolean)}
                        />
                      </td>
-                     <td className="p-4 min-w-[150px]">
+                     <td className="px-1 py-0.5">
                        <Input 
                          placeholder="Item #"
                          value={newItem.itemNumber}
@@ -726,7 +726,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                          autoComplete="off"
                         />
                      </td>
-                     <td className="p-4 min-w-[140px]">
+                     <td className="px-1 py-0.5">
                        <Input 
                          type="number"
                          placeholder="Cal Freq"
@@ -740,7 +740,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                          autoComplete="off"
                        />
                      </td>
-                     <td className="p-4 min-w-[160px]">
+                     <td className="px-1 py-0.5">
                        <Select value={newItem.actionCode} onValueChange={(value) => updateNewItem(newItem.id, 'actionCode', value)}>
                          <SelectTrigger 
                            className={cn(
@@ -761,7 +761,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                         </SelectContent>
                       </Select>
                     </td>
-                     <td className="p-4 min-w-[140px]">
+                     <td className="px-1 py-0.5">
                        <Select value={newItem.priority} onValueChange={(value) => updateNewItem(newItem.id, 'priority', value)}>
                          <SelectTrigger 
                            className={cn(
@@ -781,7 +781,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                         </SelectContent>
                       </Select>
                      </td>
-                     <td className="p-4 min-w-[180px]">
+                     <td className="px-1 py-0.5">
                        <Popover 
                          open={manufacturerPopoverOpen[newItem.id] || false} 
                          onOpenChange={(open) => setManufacturerPopoverOpen(prev => ({...prev, [newItem.id]: open}))}
@@ -840,7 +840,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                          <p className="text-xs text-destructive mt-1">Required field</p>
                        )}
                     </td>
-                     <td className="p-4 min-w-[140px]">
+                     <td className="px-1 py-0.5">
                        <Popover 
                          open={modelPopoverOpen[newItem.id] || false} 
                          onOpenChange={(open) => setModelPopoverOpen(prev => ({...prev, [newItem.id]: open}))}
@@ -899,7 +899,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                          <p className="text-xs text-destructive mt-1">Required field</p>
                        )}
                      </td>
-                       <td className="p-4 min-w-[200px]">
+                       <td className="px-1 py-0.5">
                          <Textarea 
                            placeholder="Description"
                            value={newItem.description}
@@ -911,7 +911,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                            onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
                          />
                        </td>
-                      <td className="p-4 min-w-[120px]">
+                      <td className="px-1 py-0.5">
                         <Select value={newItem.tf} onValueChange={(value) => updateNewItem(newItem.id, 'tf', value)}>
                           <SelectTrigger 
                             className="h-12 text-base border-2 focus:border-primary"
@@ -925,7 +925,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                           </SelectContent>
                         </Select>
                       </td>
-                      <td className="p-4 min-w-[200px]">
+                      <td className="px-1 py-0.5">
                         <Input 
                           placeholder="Capable Locations"
                           value={newItem.capableLocations}
@@ -935,7 +935,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                           autoComplete="off"
                         />
                       </td>
-                       <td className="p-4 min-w-[150px]">
+                       <td className="px-1 py-0.5">
                          <Input 
                            placeholder="Mfg Serial"
                            value={newItem.mfgSerial}
@@ -965,7 +965,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                            <p className="text-xs text-destructive mt-1">Required field</p>
                          )}
                        </td>
-                     <td className="p-4 min-w-[120px]">
+                     <td className="px-1 py-0.5">
                        <Input 
                          placeholder="CustID"
                          value={newItem.custId}
@@ -995,7 +995,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                          <p className="text-xs text-destructive mt-1">Required field</p>
                        )}
                      </td>
-                     <td className="p-4 min-w-[120px]">
+                     <td className="px-1 py-0.5">
                        <Input 
                          placeholder="CustSN"
                          value={newItem.custSN}
@@ -1025,7 +1025,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                          <p className="text-xs text-destructive mt-1">Required field</p>
                        )}
                      </td>
-                     <td className="p-4 min-w-[150px]">
+                     <td className="px-1 py-0.5">
                        <Input 
                          placeholder="Asset Number"
                          value={newItem.assetNumber}
@@ -1035,7 +1035,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                          autoComplete="off"
                        />
                      </td>
-                     <td className="p-4 min-w-[120px]">
+                     <td className="px-1 py-0.5">
                        <div className="flex justify-center items-center h-12">
                          <Checkbox 
                            checked={newItem.iso17025 === "yes"}
@@ -1043,7 +1043,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                          />
                        </div>
                      </td>
-                     <td className="p-4 min-w-[130px]">
+                     <td className="px-1 py-0.5">
                        <div className="flex justify-center items-center h-12">
                          <Checkbox 
                            checked={!!newItem.estimate && newItem.estimate !== "—"}
@@ -1051,7 +1051,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                          />
                        </div>
                      </td>
-                     <td className="p-4 min-w-[130px]">
+                     <td className="px-1 py-0.5">
                        <div className="flex justify-center items-center h-12">
                          <Checkbox 
                            checked={newItem.newEquip === "yes"}
@@ -1059,7 +1059,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                          />
                        </div>
                      </td>
-                     <td className="p-4 min-w-[150px]">
+                     <td className="px-1 py-0.5">
                        <Input 
                          type="date"
                          value={newItem.needByDate}
@@ -1068,7 +1068,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                          onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
                        />
                      </td>
-                     <td className="p-4 min-w-[130px]">
+                     <td className="px-1 py-0.5">
                         <Input 
                           placeholder="C/C Cost"
                           value={newItem.ccCost}
@@ -1078,7 +1078,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                           autoComplete="off"
                         />
                      </td>
-                     <td className="p-4 min-w-[130px]">
+                     <td className="px-1 py-0.5">
                        {/* Empty Action column for new items */}
                      </td>
                      <td className="p-3">
