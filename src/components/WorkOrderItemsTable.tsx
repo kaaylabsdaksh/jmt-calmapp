@@ -285,9 +285,9 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
             </tr>
             <CollapsibleContent asChild>
               <tr className="bg-secondary/50 border-t">
-                <td className="px-1 py-0.5"></td>
-                <td className="px-1 py-0.5"></td>
-                <td className="px-1 py-0.5">
+                <td className="px-1 py-0"></td>
+                <td className="px-1 py-0"></td>
+                <td className="px-1 py-0">
                   <Input
                     placeholder=""
                     value={columnFilters.itemNumber}
@@ -295,7 +295,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
                     className={quickSearchInputClass}
                   />
                 </td>
-                <td className="px-1 py-0.5">
+                <td className="px-1 py-0">
                   <Input
                     placeholder=""
                     value={columnFilters.manufacturer}
@@ -303,7 +303,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
                     className={quickSearchInputClass}
                   />
                 </td>
-                <td className="px-1 py-0.5">
+                <td className="px-1 py-0">
                   <Input
                     placeholder=""
                     value={columnFilters.model}
@@ -311,7 +311,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
                     className={quickSearchInputClass}
                   />
                 </td>
-                <td className="px-1 py-0.5">
+                <td className="px-1 py-0">
                   <Input
                     placeholder=""
                     value={columnFilters.serialNumber}
@@ -319,7 +319,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
                     className={quickSearchInputClass}
                   />
                 </td>
-                <td className="px-1 py-0.5">
+                <td className="px-1 py-0">
                   <Input
                     placeholder=""
                     value={columnFilters.created}
@@ -327,7 +327,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
                     className={quickSearchInputClass}
                   />
                 </td>
-                <td className="px-1 py-0.5">
+                <td className="px-1 py-0">
                   <Input
                     placeholder=""
                     value={columnFilters.departure}
@@ -335,7 +335,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
                     className={quickSearchInputClass}
                   />
                 </td>
-                <td className="px-1 py-0.5">
+                <td className="px-1 py-0">
                   <Input
                     placeholder=""
                     value={columnFilters.itemStatus}
@@ -343,7 +343,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
                     className={quickSearchInputClass}
                   />
                 </td>
-                <td className="px-1 py-0.5">
+                <td className="px-1 py-0">
                   <Input
                     placeholder=""
                     value={columnFilters.itemType}
@@ -351,7 +351,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
                     className={quickSearchInputClass}
                   />
                 </td>
-                <td className="px-1 py-0.5">
+                <td className="px-1 py-0">
                   <Input
                     placeholder=""
                     value={columnFilters.deliverByDate}
@@ -359,7 +359,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
                     className={quickSearchInputClass}
                   />
                 </td>
-                <td className="px-1 py-0.5">
+                <td className="px-1 py-0">
                   <Input
                     placeholder=""
                     value={columnFilters.poNumber}
@@ -367,7 +367,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
                     className={quickSearchInputClass}
                   />
                 </td>
-                <td className="px-1 py-0.5"></td>
+                <td className="px-1 py-0"></td>
               </tr>
             </CollapsibleContent>
           </thead>
@@ -377,7 +377,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
                 key={item.id} 
                 className={`border-t hover:bg-muted/50 ${selectedItems.includes(item.id) ? 'bg-primary/10' : ''}`}
               >
-                <td className="px-1 py-0.5">
+                <td className="px-1 py-0">
                   <Button 
                     variant="outline" 
                     size="sm"
@@ -387,23 +387,23 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
                     <Edit className="w-3 h-3" />
                   </Button>
                 </td>
-                <td className="px-1 py-0.5">
+                <td className="px-1 py-0">
                   <Checkbox 
                     checked={selectedItems.includes(item.id)}
                     onCheckedChange={(checked) => handleSelectItem(item.id, checked as boolean)}
                   />
                 </td>
-                <td className="px-1 py-0.5">{accountNumber}-{workOrderNumber}-{item.itemNumber}</td>
-                <td className="px-1 py-0.5">{item.manufacturer}</td>
-                <td className="px-1 py-0.5">{item.model}</td>
-                <td className="px-1 py-0.5">{(item as any).mfgSerial || (item as any).serialNumber}</td>
-                <td className="px-1 py-0.5">{item.created || ""}</td>
-                <td className="px-1 py-0.5">{item.departure || ""}</td>
-                <td className="px-1 py-0.5">{item.itemStatus || ""}</td>
-                <td className="px-1 py-0.5">{item.itemType || ""}</td>
-                <td className="px-1 py-0.5">{item.deliverByDate || ""}</td>
-                <td className="px-1 py-0.5">{selectedPoNumber}</td>
-                <td className="px-1 py-0.5">
+                <td className="px-1 py-0">{accountNumber}-{workOrderNumber}-{item.itemNumber}</td>
+                <td className="px-1 py-0">{item.manufacturer}</td>
+                <td className="px-1 py-0">{item.model}</td>
+                <td className="px-1 py-0">{(item as any).mfgSerial || (item as any).serialNumber}</td>
+                <td className="px-1 py-0">{item.created || ""}</td>
+                <td className="px-1 py-0">{item.departure || ""}</td>
+                <td className="px-1 py-0">{item.itemStatus || ""}</td>
+                <td className="px-1 py-0">{item.itemType || ""}</td>
+                <td className="px-1 py-0">{item.deliverByDate || ""}</td>
+                <td className="px-1 py-0">{selectedPoNumber}</td>
+                <td className="px-1 py-0">
                   <Button variant="link" className="text-blue-600 hover:text-blue-700 text-[11px] p-0 h-auto">
                     View
                   </Button>
