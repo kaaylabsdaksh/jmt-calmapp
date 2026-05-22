@@ -153,6 +153,8 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
     ccCost: "",
   });
   const [isSearchBarOpen, setIsSearchBarOpen] = useState(true);
+  const quickSearchInputClass = "h-5 w-14 max-w-full text-[10px] bg-background px-1 py-0";
+  const quickSearchSelectClass = "h-5 w-16 max-w-full text-[10px] bg-background px-1 py-0";
 
   // Handle individual item selection
   const handleItemSelect = (itemId: string, checked: boolean) => {
@@ -500,7 +502,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                       placeholder=""
                       value={columnFilters.itemNumber}
                       onChange={(e) => handleFilterChange('itemNumber', e.target.value)}
-                      className="h-5 text-[10px] bg-background px-1"
+                      className={quickSearchInputClass}
                     />
                   </th>
                   <th className="px-1 py-0.5">
@@ -508,12 +510,12 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                       placeholder=""
                       value={columnFilters.calFreq}
                       onChange={(e) => handleFilterChange('calFreq', e.target.value)}
-                      className="h-5 text-[10px] bg-background px-1"
+                      className={quickSearchInputClass}
                     />
                   </th>
                   <th className="px-1 py-0.5">
                     <Select value={columnFilters.actionCode || "all"} onValueChange={(value) => handleFilterChange('actionCode', value === "all" ? "" : value)}>
-                      <SelectTrigger className="h-5 text-[10px] bg-background px-1">
+                      <SelectTrigger className={quickSearchSelectClass}>
                         <SelectValue placeholder="All" />
                       </SelectTrigger>
                       <SelectContent>
@@ -529,7 +531,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                   </th>
                   <th className="px-1 py-0.5">
                     <Select value={columnFilters.priority || "all"} onValueChange={(value) => handleFilterChange('priority', value === "all" ? "" : value)}>
-                      <SelectTrigger className="h-5 text-[10px] bg-background px-1">
+                      <SelectTrigger className={quickSearchSelectClass}>
                         <SelectValue placeholder="All" />
                       </SelectTrigger>
                       <SelectContent>
@@ -544,7 +546,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                   </th>
                   <th className="px-1 py-0.5">
                     <Select value={columnFilters.manufacturer || "all"} onValueChange={(value) => handleFilterChange('manufacturer', value === "all" ? "" : value)}>
-                      <SelectTrigger className="h-5 text-[10px] bg-background px-1">
+                      <SelectTrigger className={quickSearchSelectClass}>
                         <SelectValue placeholder="All" />
                       </SelectTrigger>
                       <SelectContent>
@@ -562,7 +564,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                       placeholder=""
                       value={columnFilters.model}
                       onChange={(e) => handleFilterChange('model', e.target.value)}
-                      className="h-5 text-[10px] bg-background px-1"
+                      className={quickSearchInputClass}
                     />
                   </th>
                   <th className="px-1 py-0.5">
@@ -570,7 +572,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                       placeholder=""
                       value={columnFilters.description}
                       onChange={(e) => handleFilterChange('description', e.target.value)}
-                      className="h-5 text-[10px] bg-background px-1"
+                      className={quickSearchInputClass}
                     />
                   </th>
                   <th className="px-1 py-0.5">
@@ -578,7 +580,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                       placeholder=""
                       value={columnFilters.tf}
                       onChange={(e) => handleFilterChange('tf', e.target.value)}
-                      className="h-5 text-[10px] bg-background px-1"
+                      className={quickSearchInputClass}
                     />
                   </th>
                   <th className="px-1 py-0.5">
@@ -586,7 +588,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                       placeholder=""
                       value={columnFilters.capableLocations}
                       onChange={(e) => handleFilterChange('capableLocations', e.target.value)}
-                      className="h-5 text-[10px] bg-background px-1"
+                      className={quickSearchInputClass}
                     />
                   </th>
                   <th className="px-1 py-0.5">
@@ -594,7 +596,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                       placeholder=""
                       value={columnFilters.mfgSerial}
                       onChange={(e) => handleFilterChange('mfgSerial', e.target.value)}
-                      className="h-5 text-[10px] bg-background px-1"
+                      className={quickSearchInputClass}
                     />
                   </th>
                   <th className="px-1 py-0.5">
@@ -602,7 +604,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                       placeholder=""
                       value={columnFilters.custId}
                       onChange={(e) => handleFilterChange('custId', e.target.value)}
-                      className="h-5 text-[10px] bg-background px-1"
+                      className={quickSearchInputClass}
                     />
                   </th>
                   <th className="px-1 py-0.5">
@@ -610,7 +612,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                       placeholder=""
                       value={columnFilters.custSN}
                       onChange={(e) => handleFilterChange('custSN', e.target.value)}
-                      className="h-5 text-[10px] bg-background px-1"
+                      className={quickSearchInputClass}
                     />
                   </th>
                   <th className="px-1 py-0.5">
@@ -623,7 +625,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                   </th>
                   <th className="px-1 py-0.5">
                     <Select value={columnFilters.iso17025 || "all"} onValueChange={(value) => handleFilterChange('iso17025', value === "all" ? "" : value)}>
-                      <SelectTrigger className="h-5 text-[10px] bg-background px-1">
+                      <SelectTrigger className={quickSearchSelectClass}>
                         <SelectValue placeholder="All" />
                       </SelectTrigger>
                       <SelectContent>
@@ -635,7 +637,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                   </th>
                   <th className="px-1 py-0.5">
                     <Select value={columnFilters.estimate || "all"} onValueChange={(value) => handleFilterChange('estimate', value === "all" ? "" : value)}>
-                      <SelectTrigger className="h-5 text-[10px] bg-background px-1">
+                      <SelectTrigger className={quickSearchSelectClass}>
                         <SelectValue placeholder="All" />
                       </SelectTrigger>
                       <SelectContent>
@@ -647,7 +649,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                   </th>
                   <th className="px-1 py-0.5">
                     <Select value={columnFilters.newEquip || "all"} onValueChange={(value) => handleFilterChange('newEquip', value === "all" ? "" : value)}>
-                      <SelectTrigger className="h-5 text-[10px] bg-background px-1">
+                      <SelectTrigger className={quickSearchSelectClass}>
                         <SelectValue placeholder="All" />
                       </SelectTrigger>
                       <SelectContent>
@@ -662,7 +664,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                       placeholder=""
                       value={columnFilters.needByDate}
                       onChange={(e) => handleFilterChange('needByDate', e.target.value)}
-                      className="h-5 text-[10px] bg-background px-1"
+                      className={quickSearchInputClass}
                     />
                   </th>
                   <th className="px-1 py-0.5">
@@ -670,7 +672,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                       placeholder=""
                       value={columnFilters.ccCost}
                       onChange={(e) => handleFilterChange('ccCost', e.target.value)}
-                      className="h-5 text-[10px] bg-background px-1"
+                      className={quickSearchInputClass}
                     />
                   </th>
                   <th className="px-1 py-0.5"></th>
