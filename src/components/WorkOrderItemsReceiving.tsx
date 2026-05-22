@@ -687,7 +687,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                     data-new-item="true"
                     className="border-b bg-blue-50"
                   >
-                     <td className="p-4 sticky left-0 bg-blue-50 z-10">
+                     <td className="px-1 py-0.5 sticky left-0 bg-blue-50 z-10">
                       <div className="flex items-center justify-end gap-2">
                         <Button 
                           size="sm" 
@@ -707,7 +707,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                         </Button>
                       </div>
                      </td>
-                     <td className="p-4 sticky left-20 bg-blue-50 z-10">
+                     <td className="px-1 py-0.5 sticky left-20 bg-blue-50 z-10">
                        <Checkbox 
                          checked={selectedItems.includes(newItem.id)}
                          onCheckedChange={(checked) => handleItemSelect(newItem.id, checked as boolean)}
