@@ -284,89 +284,89 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
             </tr>
             <CollapsibleContent asChild>
               <tr className="bg-secondary/50 border-t">
-                <td className="px-1.5 py-0.5"></td>
-                <td className="px-1.5 py-0.5"></td>
-                <td className="px-1.5 py-0.5">
+                <td className="px-1 py-0.5"></td>
+                <td className="px-1 py-0.5"></td>
+                <td className="px-1 py-0.5">
                   <Input
-                    placeholder="Search"
+                    placeholder=""
                     value={columnFilters.itemNumber}
                     onChange={(e) => handleFilterChange('itemNumber', e.target.value)}
                     className="h-5 text-[11px] px-1.5 py-0"
                   />
                 </td>
-                <td className="px-1.5 py-0.5">
+                <td className="px-1 py-0.5">
                   <Input
-                    placeholder="Search"
+                    placeholder=""
                     value={columnFilters.manufacturer}
                     onChange={(e) => handleFilterChange('manufacturer', e.target.value)}
                     className="h-5 text-[11px] px-1.5 py-0"
                   />
                 </td>
-                <td className="px-1.5 py-0.5">
+                <td className="px-1 py-0.5">
                   <Input
-                    placeholder="Search"
+                    placeholder=""
                     value={columnFilters.model}
                     onChange={(e) => handleFilterChange('model', e.target.value)}
                     className="h-5 text-[11px] px-1.5 py-0"
                   />
                 </td>
-                <td className="px-1.5 py-0.5">
+                <td className="px-1 py-0.5">
                   <Input
-                    placeholder="Search"
+                    placeholder=""
                     value={columnFilters.serialNumber}
                     onChange={(e) => handleFilterChange('serialNumber', e.target.value)}
                     className="h-5 text-[11px] px-1.5 py-0"
                   />
                 </td>
-                <td className="px-1.5 py-0.5">
+                <td className="px-1 py-0.5">
                   <Input
-                    placeholder="Search"
+                    placeholder=""
                     value={columnFilters.created}
                     onChange={(e) => handleFilterChange('created', e.target.value)}
                     className="h-5 text-[11px] px-1.5 py-0"
                   />
                 </td>
-                <td className="px-1.5 py-0.5">
+                <td className="px-1 py-0.5">
                   <Input
-                    placeholder="Search"
+                    placeholder=""
                     value={columnFilters.departure}
                     onChange={(e) => handleFilterChange('departure', e.target.value)}
                     className="h-5 text-[11px] px-1.5 py-0"
                   />
                 </td>
-                <td className="px-1.5 py-0.5">
+                <td className="px-1 py-0.5">
                   <Input
-                    placeholder="Search"
+                    placeholder=""
                     value={columnFilters.itemStatus}
                     onChange={(e) => handleFilterChange('itemStatus', e.target.value)}
                     className="h-5 text-[11px] px-1.5 py-0"
                   />
                 </td>
-                <td className="px-1.5 py-0.5">
+                <td className="px-1 py-0.5">
                   <Input
-                    placeholder="Search"
+                    placeholder=""
                     value={columnFilters.itemType}
                     onChange={(e) => handleFilterChange('itemType', e.target.value)}
                     className="h-5 text-[11px] px-1.5 py-0"
                   />
                 </td>
-                <td className="px-1.5 py-0.5">
+                <td className="px-1 py-0.5">
                   <Input
-                    placeholder="Search"
+                    placeholder=""
                     value={columnFilters.deliverByDate}
                     onChange={(e) => handleFilterChange('deliverByDate', e.target.value)}
                     className="h-5 text-[11px] px-1.5 py-0"
                   />
                 </td>
-                <td className="px-1.5 py-0.5">
+                <td className="px-1 py-0.5">
                   <Input
-                    placeholder="Search"
+                    placeholder=""
                     value={columnFilters.poNumber}
                     onChange={(e) => handleFilterChange('poNumber', e.target.value)}
                     className="h-5 text-[11px] px-1.5 py-0"
                   />
                 </td>
-                <td className="px-1.5 py-0.5"></td>
+                <td className="px-1 py-0.5"></td>
               </tr>
             </CollapsibleContent>
           </thead>
@@ -376,7 +376,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
                 key={item.id} 
                 className={`border-t hover:bg-muted/50 ${selectedItems.includes(item.id) ? 'bg-primary/10' : ''}`}
               >
-                <td className="px-1.5 py-0.5">
+                <td className="px-1 py-0.5">
                   <Button 
                     variant="outline" 
                     size="sm"
@@ -386,23 +386,23 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
                     <Edit className="w-3 h-3" />
                   </Button>
                 </td>
-                <td className="px-1.5 py-0.5">
+                <td className="px-1 py-0.5">
                   <Checkbox 
                     checked={selectedItems.includes(item.id)}
                     onCheckedChange={(checked) => handleSelectItem(item.id, checked as boolean)}
                   />
                 </td>
-                <td className="px-1.5 py-0.5">{accountNumber}-{workOrderNumber}-{item.itemNumber}</td>
-                <td className="px-1.5 py-0.5">{item.manufacturer}</td>
-                <td className="px-1.5 py-0.5">{item.model}</td>
-                <td className="px-1.5 py-0.5">{(item as any).mfgSerial || (item as any).serialNumber}</td>
-                <td className="px-1.5 py-0.5">{item.created || ""}</td>
-                <td className="px-1.5 py-0.5">{item.departure || ""}</td>
-                <td className="px-1.5 py-0.5">{item.itemStatus || ""}</td>
-                <td className="px-1.5 py-0.5">{item.itemType || ""}</td>
-                <td className="px-1.5 py-0.5">{item.deliverByDate || ""}</td>
-                <td className="px-1.5 py-0.5">{selectedPoNumber}</td>
-                <td className="px-1.5 py-0.5">
+                <td className="px-1 py-0.5">{accountNumber}-{workOrderNumber}-{item.itemNumber}</td>
+                <td className="px-1 py-0.5">{item.manufacturer}</td>
+                <td className="px-1 py-0.5">{item.model}</td>
+                <td className="px-1 py-0.5">{(item as any).mfgSerial || (item as any).serialNumber}</td>
+                <td className="px-1 py-0.5">{item.created || ""}</td>
+                <td className="px-1 py-0.5">{item.departure || ""}</td>
+                <td className="px-1 py-0.5">{item.itemStatus || ""}</td>
+                <td className="px-1 py-0.5">{item.itemType || ""}</td>
+                <td className="px-1 py-0.5">{item.deliverByDate || ""}</td>
+                <td className="px-1 py-0.5">{selectedPoNumber}</td>
+                <td className="px-1 py-0.5">
                   <Button variant="link" className="text-blue-600 hover:text-blue-700 text-[11px] p-0 h-auto">
                     View
                   </Button>
