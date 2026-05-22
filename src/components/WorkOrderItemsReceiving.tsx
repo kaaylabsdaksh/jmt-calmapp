@@ -153,7 +153,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
     ccCost: "",
   });
   const [isSearchBarOpen, setIsSearchBarOpen] = useState(true);
-  const quickSearchInputClass = "h-5 w-14 max-w-full text-[10px] bg-background px-1 py-0";
+  const quickSearchInputClass = "h-5 w-12 max-w-full text-[10px] bg-background px-1 py-0";
   const quickSearchSelectClass = "h-5 w-16 max-w-full text-[10px] bg-background px-1 py-0";
 
   // Handle individual item selection
@@ -459,38 +459,38 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
               <table className="w-full ">
                 <thead className="bg-muted/20">
                   <tr className="border-b">
-                    <th className="text-right px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-12">
+                    <th className="text-right px-1 py-0.5 text-[10px] font-medium text-muted-foreground w-10 leading-tight whitespace-normal">
                       <CollapsibleTrigger asChild>
                         <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
                           {isSearchBarOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
                         </Button>
                       </CollapsibleTrigger>
                     </th>
-                    <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-8">
+                    <th className="text-left px-1 py-0.5 text-[10px] font-medium text-muted-foreground w-7 leading-tight whitespace-normal">
                       <Checkbox 
                         checked={isAllSelected}
                         onCheckedChange={handleSelectAll}
                       />
                     </th>
-                    <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-20">ItemNum</th>
-                  <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-16">Cal Freq</th>
-                  <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-16">Action Code</th>
-                  <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-16">Priority</th>
-                  <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-20">Manufacturer<span className="text-red-500 ml-1">*</span></th>
-                  <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-16">Model<span className="text-red-500 ml-1">*</span></th>
-                  <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-20">Description</th>
-                  <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-12">TF</th>
-                  <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-20">Capable Locations</th>
-                  <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-20">Mfg Serial<span className="text-red-500 ml-1">*</span></th>
-                  <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-16">CustID<span className="text-red-500 ml-1">*</span></th>
-                  <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-16">CustSN<span className="text-red-500 ml-1">*</span></th>
-                  <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-20">Asset Number</th>
-                  <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-12">17025</th>
-                  <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-16">Estimate</th>
-                  <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-16">New Equip</th>
-                  <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-20">Need By Date</th>
-                  <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-16">C/C Cost</th>
-                  <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-20">Action</th>
+                    <th className="text-left px-1 py-0.5 text-[10px] font-medium text-muted-foreground w-14 leading-tight whitespace-normal">ItemNum</th>
+                  <th className="text-left px-1 py-0.5 text-[10px] font-medium text-muted-foreground w-12 leading-tight whitespace-normal">Cal Freq</th>
+                  <th className="text-left px-1 py-0.5 text-[10px] font-medium text-muted-foreground w-12 leading-tight whitespace-normal">Action Code</th>
+                  <th className="text-left px-1 py-0.5 text-[10px] font-medium text-muted-foreground w-12 leading-tight whitespace-normal">Priority</th>
+                  <th className="text-left px-1 py-0.5 text-[10px] font-medium text-muted-foreground w-14 leading-tight whitespace-normal">Manufacturer<span className="text-red-500 ml-1">*</span></th>
+                  <th className="text-left px-1 py-0.5 text-[10px] font-medium text-muted-foreground w-12 leading-tight whitespace-normal">Model<span className="text-red-500 ml-1">*</span></th>
+                  <th className="text-left px-1 py-0.5 text-[10px] font-medium text-muted-foreground w-14 leading-tight whitespace-normal">Description</th>
+                  <th className="text-left px-1 py-0.5 text-[10px] font-medium text-muted-foreground w-10 leading-tight whitespace-normal">TF</th>
+                  <th className="text-left px-1 py-0.5 text-[10px] font-medium text-muted-foreground w-14 leading-tight whitespace-normal">Capable Locations</th>
+                  <th className="text-left px-1 py-0.5 text-[10px] font-medium text-muted-foreground w-14 leading-tight whitespace-normal">Mfg Serial<span className="text-red-500 ml-1">*</span></th>
+                  <th className="text-left px-1 py-0.5 text-[10px] font-medium text-muted-foreground w-12 leading-tight whitespace-normal">CustID<span className="text-red-500 ml-1">*</span></th>
+                  <th className="text-left px-1 py-0.5 text-[10px] font-medium text-muted-foreground w-12 leading-tight whitespace-normal">CustSN<span className="text-red-500 ml-1">*</span></th>
+                  <th className="text-left px-1 py-0.5 text-[10px] font-medium text-muted-foreground w-14 leading-tight whitespace-normal">Asset Number</th>
+                  <th className="text-left px-1 py-0.5 text-[10px] font-medium text-muted-foreground w-10 leading-tight whitespace-normal">17025</th>
+                  <th className="text-left px-1 py-0.5 text-[10px] font-medium text-muted-foreground w-12 leading-tight whitespace-normal">Estimate</th>
+                  <th className="text-left px-1 py-0.5 text-[10px] font-medium text-muted-foreground w-12 leading-tight whitespace-normal">New Equip</th>
+                  <th className="text-left px-1 py-0.5 text-[10px] font-medium text-muted-foreground w-14 leading-tight whitespace-normal">Need By Date</th>
+                  <th className="text-left px-1 py-0.5 text-[10px] font-medium text-muted-foreground w-12 leading-tight whitespace-normal">C/C Cost</th>
+                  <th className="text-left px-1 py-0.5 text-[10px] font-medium text-muted-foreground w-14 leading-tight whitespace-normal">Action</th>
                 </tr>
                 {/* Quick Search Row */}
                 <CollapsibleContent asChild>
@@ -1498,8 +1498,8 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
             <table className="w-full min-w-[800px]">
               <thead className="bg-muted/20 border-b">
                 <tr>
-                  <th className="text-right px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-12"></th>
-                  <th className="text-left px-1 py-0.5 text-[11px] font-medium text-muted-foreground w-8">
+                  <th className="text-right px-1 py-0.5 text-[10px] font-medium text-muted-foreground w-10 leading-tight whitespace-normal"></th>
+                  <th className="text-left px-1 py-0.5 text-[10px] font-medium text-muted-foreground w-7 leading-tight whitespace-normal">
                     <Checkbox 
                       checked={isAllSelected}
                       onCheckedChange={handleSelectAll}
