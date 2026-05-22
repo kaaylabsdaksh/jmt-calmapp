@@ -792,7 +792,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                               role="combobox"
                               aria-expanded={manufacturerPopoverOpen[newItem.id] || false}
                               className={cn(
-                                "h-12 w-full justify-between text-base border-2 transition-all duration-300",
+                                "h-7 w-full justify-between text-[11px] border transition-all duration-300",
                                 validationErrors[newItem.id]?.includes('manufacturer') ? "border-destructive focus:border-destructive" : "focus:border-primary",
                                 highlightNewItems && newItem.manufacturer && "ring-2 ring-primary bg-primary/5"
                               )}
@@ -851,7 +851,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                               role="combobox"
                               aria-expanded={modelPopoverOpen[newItem.id] || false}
                               className={cn(
-                                "h-12 w-full justify-between text-base border-2 transition-all duration-300",
+                                "h-7 w-full justify-between text-[11px] border transition-all duration-300",
                                 validationErrors[newItem.id]?.includes('model') ? "border-destructive focus:border-destructive" : "focus:border-primary",
                                 highlightNewItems && newItem.model && "ring-2 ring-primary bg-primary/5"
                               )}
@@ -905,7 +905,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                            value={newItem.description}
                            onChange={(e) => updateNewItem(newItem.id, 'description', e.target.value)}
                            className={cn(
-                             "h-12 min-h-12 text-base resize-none border-2 focus:border-primary transition-all duration-300",
+                             "h-7 min-h-7 text-[11px] resize-none border focus:border-primary transition-all duration-300",
                              highlightNewItems && newItem.description && "ring-2 ring-primary bg-primary/5"
                            )}
                            onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })}
@@ -1036,7 +1036,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                        />
                      </td>
                      <td className="px-1 py-0">
-                       <div className="flex justify-center items-center h-12">
+                       <div className="flex justify-center items-center h-7">
                          <Checkbox 
                            checked={newItem.iso17025 === "yes"}
                            onCheckedChange={(checked) => updateNewItem(newItem.id, 'iso17025', checked ? "yes" : "no")}
@@ -1044,7 +1044,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                        </div>
                      </td>
                      <td className="px-1 py-0">
-                       <div className="flex justify-center items-center h-12">
+                       <div className="flex justify-center items-center h-7">
                          <Checkbox 
                            checked={!!newItem.estimate && newItem.estimate !== "—"}
                            onCheckedChange={(checked) => updateNewItem(newItem.id, 'estimate', checked ? "yes" : "")}
@@ -1052,7 +1052,7 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
                        </div>
                      </td>
                      <td className="px-1 py-0">
-                       <div className="flex justify-center items-center h-12">
+                       <div className="flex justify-center items-center h-7">
                          <Checkbox 
                            checked={newItem.newEquip === "yes"}
                            onCheckedChange={(checked) => updateNewItem(newItem.id, 'newEquip', checked ? "yes" : "no")}
