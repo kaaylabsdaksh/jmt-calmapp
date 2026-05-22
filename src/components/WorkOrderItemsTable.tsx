@@ -375,7 +375,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
             {filteredAndSortedData.map((item) => (
               <tr 
                 key={item.id} 
-                className={`border-t hover:bg-muted/50 ${selectedItems.includes(item.id) ? 'bg-primary/10' : ''}`}
+                className={`border-t-2 border-foreground/40 hover:bg-muted/50 ${selectedItems.includes(item.id) ? 'bg-primary/10' : ''}`}
               >
                 <td className="px-1 py-0">
                   <Button 
