@@ -382,7 +382,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
                     variant="outline" 
                     size="sm"
                     onClick={() => navigate("/form-variations")}
-                    className="h-5 w-5 p-0 bg-primary hover:bg-primary/90 text-primary-foreground border-primary"
+                    className="h-5 w-5 p-0"
                   >
                     <Edit className="w-3 h-3" />
                   </Button>
