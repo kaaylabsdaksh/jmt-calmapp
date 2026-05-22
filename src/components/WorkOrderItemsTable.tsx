@@ -214,19 +214,19 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
 
   const SortableHeader = ({ label, sortKeyName }: { label: string; sortKeyName: SortKey }) => (
     <th 
-      className="text-left px-2 py-1 font-medium cursor-pointer hover:bg-muted/80 select-none text-[11px]"
+      className="text-left px-1 py-1 font-medium cursor-pointer hover:bg-muted/80 select-none text-[10px] leading-tight whitespace-normal align-bottom max-w-[80px]"
       onClick={() => handleSort(sortKeyName)}
     >
-      <div className="flex items-center gap-1">
-        {label}
+      <div className="flex items-start gap-1">
+        <span className="break-words">{label}</span>
         {sortKey === sortKeyName ? (
           sortDirection === 'asc' ? (
-            <ArrowUp className="w-3 h-3" />
+            <ArrowUp className="w-3 h-3 shrink-0" />
           ) : (
-            <ArrowDown className="w-3 h-3" />
+            <ArrowDown className="w-3 h-3 shrink-0" />
           )
         ) : (
-          <ArrowUpDown className="w-3 h-3 opacity-40" />
+          <ArrowUpDown className="w-3 h-3 opacity-40 shrink-0" />
         )}
       </div>
     </th>
