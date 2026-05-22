@@ -129,6 +129,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
     deliverByDate: "",
     poNumber: "",
   });
+  const quickSearchInputClass = "h-5 w-14 max-w-full text-[10px] px-1 py-0";
   
   // Use items prop if provided, otherwise fall back to mock data based on showMockData
   const displayData = items.length > 0 ? items : (showMockData ? mockData : []);
@@ -291,7 +292,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
                     placeholder=""
                     value={columnFilters.itemNumber}
                     onChange={(e) => handleFilterChange('itemNumber', e.target.value)}
-                    className="h-5 text-[11px] px-1.5 py-0"
+                    className={quickSearchInputClass}
                   />
                 </td>
                 <td className="px-1 py-0.5">
@@ -299,7 +300,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
                     placeholder=""
                     value={columnFilters.manufacturer}
                     onChange={(e) => handleFilterChange('manufacturer', e.target.value)}
-                    className="h-5 text-[11px] px-1.5 py-0"
+                    className={quickSearchInputClass}
                   />
                 </td>
                 <td className="px-1 py-0.5">
@@ -307,7 +308,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
                     placeholder=""
                     value={columnFilters.model}
                     onChange={(e) => handleFilterChange('model', e.target.value)}
-                    className="h-5 text-[11px] px-1.5 py-0"
+                    className={quickSearchInputClass}
                   />
                 </td>
                 <td className="px-1 py-0.5">
@@ -315,7 +316,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
                     placeholder=""
                     value={columnFilters.serialNumber}
                     onChange={(e) => handleFilterChange('serialNumber', e.target.value)}
-                    className="h-5 text-[11px] px-1.5 py-0"
+                    className={quickSearchInputClass}
                   />
                 </td>
                 <td className="px-1 py-0.5">
@@ -323,7 +324,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
                     placeholder=""
                     value={columnFilters.created}
                     onChange={(e) => handleFilterChange('created', e.target.value)}
-                    className="h-5 text-[11px] px-1.5 py-0"
+                    className={quickSearchInputClass}
                   />
                 </td>
                 <td className="px-1 py-0.5">
@@ -331,7 +332,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
                     placeholder=""
                     value={columnFilters.departure}
                     onChange={(e) => handleFilterChange('departure', e.target.value)}
-                    className="h-5 text-[11px] px-1.5 py-0"
+                    className={quickSearchInputClass}
                   />
                 </td>
                 <td className="px-1 py-0.5">
@@ -339,7 +340,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
                     placeholder=""
                     value={columnFilters.itemStatus}
                     onChange={(e) => handleFilterChange('itemStatus', e.target.value)}
-                    className="h-5 text-[11px] px-1.5 py-0"
+                    className={quickSearchInputClass}
                   />
                 </td>
                 <td className="px-1 py-0.5">
@@ -347,7 +348,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
                     placeholder=""
                     value={columnFilters.itemType}
                     onChange={(e) => handleFilterChange('itemType', e.target.value)}
-                    className="h-5 text-[11px] px-1.5 py-0"
+                    className={quickSearchInputClass}
                   />
                 </td>
                 <td className="px-1 py-0.5">
@@ -355,7 +356,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
                     placeholder=""
                     value={columnFilters.deliverByDate}
                     onChange={(e) => handleFilterChange('deliverByDate', e.target.value)}
-                    className="h-5 text-[11px] px-1.5 py-0"
+                    className={quickSearchInputClass}
                   />
                 </td>
                 <td className="px-1 py-0.5">
@@ -363,7 +364,7 @@ export const WorkOrderItemsTable = ({ selectedPoNumber = "4510114092", showMockD
                     placeholder=""
                     value={columnFilters.poNumber}
                     onChange={(e) => handleFilterChange('poNumber', e.target.value)}
-                    className="h-5 text-[11px] px-1.5 py-0"
+                    className={quickSearchInputClass}
                   />
                 </td>
                 <td className="px-1 py-0.5"></td>
