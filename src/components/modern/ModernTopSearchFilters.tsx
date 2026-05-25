@@ -563,6 +563,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                                       const updated = savedFilters.filter(f => f.id !== sf.id);
                                       setSavedFilters(updated);
                                       persistSavedFilters(updated);
+                                      if (activeSavedFilterId === sf.id) setActiveSavedFilterId(null);
                                     }}
                                     className="opacity-0 group-hover:opacity-100 p-1.5 rounded hover:bg-destructive/10 text-muted-foreground hover:text-destructive transition-all"
                                     aria-label="Delete saved filter"
