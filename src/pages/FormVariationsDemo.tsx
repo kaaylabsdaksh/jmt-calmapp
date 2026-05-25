@@ -4568,8 +4568,8 @@ const FormVariationsDemo = () => {
               <div className="p-6 space-y-5">
                 <DialogHeader className="space-y-2">
                   <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
-                      <Shield className="h-5 w-5 text-primary" />
+                    <div className="h-10 w-10 rounded-full bg-green-100 dark:bg-green-950 flex items-center justify-center">
+                      <Shield className="h-5 w-5 text-green-600 dark:text-green-400" />
                     </div>
                     <div>
                       <DialogTitle className="text-base font-semibold">Stamp Inspector Login</DialogTitle>
