@@ -451,7 +451,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                         }}
                         className={`h-7 px-2.5 rounded-full border text-[12px] font-medium transition-all max-w-[140px] truncate ${
                           isActive
-                            ? 'border-primary bg-primary/10 text-primary shadow-sm'
+                            ? 'border-slate-900 bg-slate-900 text-white shadow-sm'
                             : 'border-border bg-muted/40 text-foreground/80 hover:border-input hover:bg-background hover:shadow-sm'
                         }`}
                         title={sf.name}
