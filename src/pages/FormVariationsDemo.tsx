@@ -8000,10 +8000,6 @@ const FormVariationsDemo = () => {
                 <TabsContent value="work-status" className="mt-0 space-y-6 animate-fade-in">
                   {renderWorkStatusSection()}
                 </TabsContent>
-
-                <TabsContent value="transit" className="mt-0 space-y-6 animate-fade-in">
-                  {renderTransitSection(true, true)}
-                </TabsContent>
               </>
             ) : (
               <>
