@@ -3661,7 +3661,7 @@ const FormVariationsDemo = () => {
 
       {/* ESL Quick Edit Bar — shown above the table when an E link is clicked */}
       {expandedEslRow && (
-        <div className="border rounded-lg bg-muted/20 p-2 mb-2 flex flex-wrap items-end gap-2">
+        <div className="border rounded-lg bg-muted/20 p-2 mb-2 flex flex-wrap items-end justify-center gap-2">
           <div className="flex items-center gap-1 mr-1 mb-1.5">
             <Button
               size="sm"
@@ -3701,7 +3701,7 @@ const FormVariationsDemo = () => {
               </Select>
             </div>
           ))}
-          <div className="flex items-center gap-1.5 ml-auto">
+          <div className="flex items-center gap-1.5">
             <Button
               size="sm"
               variant="destructive"
