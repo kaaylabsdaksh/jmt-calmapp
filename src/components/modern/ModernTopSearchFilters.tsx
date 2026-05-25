@@ -504,7 +504,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                           };
                           const isActive = sf.id === activeSavedFilterId;
                           return (
-                            <div key={sf.id} className={`flex items-center gap-1 group rounded-md border ${isActive ? 'border-primary bg-primary/10 shadow-sm' : 'border-transparent'}`}>
+                            <div key={sf.id} className={`flex items-center gap-1 group rounded-md border ${isActive ? 'border-slate-900 bg-slate-900/5 shadow-sm' : 'border-transparent'}`}>
                               {isEditing ? (
                                 <div className="flex-1 px-2 py-1.5 flex items-center gap-1">
                                   <Input
