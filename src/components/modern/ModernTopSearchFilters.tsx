@@ -635,6 +635,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                           const updated = [entry, ...savedFilters.filter(f => f.name !== entry.name)];
                           setSavedFilters(updated);
                           persistSavedFilters(updated);
+                          setActiveSavedFilterId(entry.id);
                           setFilterName('');
                           setSaveFilterOpen(false);
                           toast({ title: 'Filter saved', description: entry.name });
