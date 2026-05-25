@@ -202,6 +202,24 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // Auto-apply default saved filter on mount (persists across logout/login)
+  useEffect(() => {
+    if (didApplyDefaultRef.current) return;
+    if (!defaultFilterId) return;
+    const sf = savedFilters.find(f => f.id === defaultFilterId);
+    if (!sf) return;
+    didApplyDefaultRef.current = true;
+    const s = sf.state || {};
+    setSearchValues(s.searchValues ?? searchValues);
+    setSelectedLocations(s.selectedLocations ?? []);
+    setDateFrom(s.dateFrom ? new Date(s.dateFrom) : undefined);
+    setDateTo(s.dateTo ? new Date(s.dateTo) : undefined);
+    setDateType(s.dateType ?? '');
+    setSearchChips(s.searchChips ?? []);
+    setActiveSavedFilterId(sf.id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
 
   // Live result count
   useEffect(() => {
