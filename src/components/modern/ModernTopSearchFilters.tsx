@@ -480,7 +480,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                   <PopoverContent className="w-72 p-0 bg-popover border shadow-xl rounded-lg z-[60]" align="end">
                     <div className="p-2.5 border-b">
                       <p className="text-xs font-semibold text-foreground">Saved Filters</p>
-                      <p className="text-[11px] text-muted-foreground">Apply a previously saved filter</p>
+                      <p className="text-[11px] text-muted-foreground">Apply a saved filter. Star one to set as default — it loads automatically next time you sign in.</p>
                     </div>
                     <div className="max-h-64 overflow-y-auto p-1">
                       {savedFilters.length === 0 ? (
