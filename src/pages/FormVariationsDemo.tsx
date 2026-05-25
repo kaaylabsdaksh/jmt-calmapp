@@ -76,7 +76,7 @@ const FormVariationsDemo = () => {
   };
   const [eslGeneralOpen, setEslGeneralOpen] = useState<string[]>(['general-info']);
   // ESL Edit (E) dialog — dropdown values that the user can extend
-  const [eslEditOpen, setEslEditOpen] = useState(false);
+  const [expandedEslRow, setExpandedEslRow] = useState<string | null>(null);
   const [eslFieldValues, setEslFieldValues] = useState<Record<string, string>>({
     clean: '', test: '', vi: '', stamp: '', boxOrder: '',
   });
