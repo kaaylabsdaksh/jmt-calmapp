@@ -11586,41 +11586,49 @@ const FormVariationsDemo = () => {
                   <SelectTrigger className="h-9">
                     <SelectValue placeholder={`Select ${eslFieldLabels[key].toLowerCase()}...`} />
                   </SelectTrigger>
-                  <SelectContent className="bg-popover">
+                  <SelectContent className="bg-popover z-50">
                     {eslFieldOptions[key].map(opt => (
                       <SelectItem key={opt} value={opt}>{opt}</SelectItem>
                     ))}
-                    <div className="border-t mt-1 pt-2 px-2 pb-1">
-                      <p className="text-[10px] text-muted-foreground mb-1.5">Add new option</p>
-                      <div className="flex gap-1.5">
-                        <Input
-                          value={eslNewOption[key]}
-                          onChange={(e) => setEslNewOption(prev => ({ ...prev, [key]: e.target.value }))}
-                          onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); addEslOption(key); } }}
-                          onPointerDown={(e) => e.stopPropagation()}
-                          placeholder="New value..."
-                          className="h-7 text-xs"
-                        />
-                        <Button
-                          type="button"
-                          size="sm"
-                          className="h-7 px-2"
-                          onClick={(e) => { e.preventDefault(); addEslOption(key); }}
-                        >
-                          <Plus className="h-3 w-3" />
-                        </Button>
-                      </div>
-                    </div>
                   </SelectContent>
                 </Select>
+                <div className="flex gap-1.5">
+                  <Input
+                    value={eslNewOption[key]}
+                    onChange={(e) => setEslNewOption(prev => ({ ...prev, [key]: e.target.value }))}
+                    onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); addEslOption(key); } }}
+                    placeholder="Add new option..."
+                    className="h-7 text-xs"
+                  />
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant="outline"
+                    className="h-7 px-2"
+                    onClick={(e) => { e.preventDefault(); addEslOption(key); }}
+                  >
+                    <Plus className="h-3 w-3" />
+                  </Button>
+                </div>
               </div>
             ))}
           </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setEslEditOpen(false)}>Cancel</Button>
-            <Button onClick={() => setEslEditOpen(false)}>
-              <Save className="h-4 w-4 mr-2" />Save Item
+          <DialogFooter className="sm:justify-between">
+            <Button
+              variant="destructive"
+              onClick={() => {
+                setEslFieldValues(prev => Object.keys(prev).reduce((acc, k) => ({ ...acc, [k]: 'Cancelled' }), {} as Record<string, string>));
+                setEslEditOpen(false);
+              }}
+            >
+              Set Cancelled
             </Button>
+            <div className="flex gap-2">
+              <Button variant="outline" onClick={() => setEslEditOpen(false)}>Cancel</Button>
+              <Button onClick={() => setEslEditOpen(false)}>
+                <Save className="h-4 w-4 mr-2" />Save Item
+              </Button>
+            </div>
           </DialogFooter>
         </DialogContent>
       </Dialog>
