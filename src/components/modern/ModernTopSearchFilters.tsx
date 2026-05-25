@@ -413,12 +413,12 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
             const active = savedFilters.find(f => f.id === activeSavedFilterId);
             if (!active) return null;
             return (
-              <div className="hidden md:inline-flex items-center gap-1.5 h-7 pl-2 pr-1 rounded-full border border-primary/40 bg-primary/10 text-primary text-[11px] font-semibold max-w-[200px]">
+              <div className="hidden md:inline-flex items-center gap-1.5 h-7 pl-2 pr-1 rounded-full border border-slate-800 bg-slate-900 text-white text-[11px] font-semibold max-w-[200px]">
                 <Bookmark className="h-3 w-3 fill-current" />
                 <span className="truncate" title={active.name}>{active.name}</span>
                 <button
                   onClick={() => setActiveSavedFilterId(null)}
-                  className="ml-0.5 p-0.5 rounded-full hover:bg-primary/20 transition-colors"
+                  className="ml-0.5 p-0.5 rounded-full hover:bg-white/15 transition-colors"
                   aria-label="Clear active filter"
                 >
                   <X className="h-3 w-3" />
@@ -451,7 +451,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                         }}
                         className={`h-7 px-2.5 rounded-full border text-[12px] font-medium transition-all max-w-[140px] truncate ${
                           isActive
-                            ? 'border-primary bg-primary/10 text-primary shadow-sm'
+                            ? 'border-slate-900 bg-slate-900 text-white shadow-sm'
                             : 'border-border bg-muted/40 text-foreground/80 hover:border-input hover:bg-background hover:shadow-sm'
                         }`}
                         title={sf.name}
@@ -471,7 +471,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                       title="Saved filters"
                       className="flex items-center h-7 gap-1.5 px-2.5 border border-input bg-background rounded-l-md text-xs font-medium text-foreground hover:bg-muted/60 active:bg-muted transition-colors"
                     >
-                      <Bookmark className={`h-3.5 w-3.5 ${activeSavedFilterId ? 'text-primary fill-primary' : 'text-muted-foreground'}`} />
+                      <Bookmark className={`h-3.5 w-3.5 ${activeSavedFilterId ? 'text-slate-900 fill-slate-900' : 'text-muted-foreground'}`} />
                       <span className="hidden lg:inline">Saved</span>
                       {savedFilters.length > 0 && (
                         <Badge variant="secondary" className="h-4 px-1.5 text-[10px]">{savedFilters.length}</Badge>
@@ -504,7 +504,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                           };
                           const isActive = sf.id === activeSavedFilterId;
                           return (
-                            <div key={sf.id} className={`flex items-center gap-1 group rounded-md border ${isActive ? 'border-primary bg-primary/10 shadow-sm' : 'border-transparent'}`}>
+                            <div key={sf.id} className={`flex items-center gap-1 group rounded-md border ${isActive ? 'border-slate-900 bg-slate-900/5 shadow-sm' : 'border-transparent'}`}>
                               {isEditing ? (
                                 <div className="flex-1 px-2 py-1.5 flex items-center gap-1">
                                   <Input
@@ -535,7 +535,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                               ) : (
                                 <>
                                   {isActive && (
-                                    <div className="w-1 self-stretch rounded-l-md bg-primary" aria-hidden />
+                                    <div className="w-1 self-stretch rounded-l-md bg-slate-900" aria-hidden />
                                   )}
                                   <button
                                     onClick={() => {
@@ -553,18 +553,18 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                                     className={`flex-1 text-left px-2.5 py-2 rounded-md text-xs transition-colors ${isActive ? '' : 'hover:bg-muted'}`}
                                   >
                                     <div className="flex items-center justify-between gap-2">
-                                      <div className={`font-medium flex items-center gap-1.5 ${isActive ? 'text-primary' : 'text-foreground'}`}>
+                                      <div className={`font-medium flex items-center gap-1.5 ${isActive ? 'text-slate-900' : 'text-foreground'}`}>
                                         {isActive && <Check className="h-3.5 w-3.5" />}
                                         {sf.name}
                                       </div>
                                       {isActive && (
-                                        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-primary text-primary-foreground text-[9px] font-bold uppercase tracking-wider">
-                                          <span className="h-1.5 w-1.5 rounded-full bg-primary-foreground animate-pulse" />
+                                        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-slate-900 text-white text-[9px] font-bold uppercase tracking-wider">
+                                          <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
                                           Active
                                         </span>
                                       )}
                                     </div>
-                                    <div className={`text-[10px] ${isActive ? 'text-primary/70 font-medium' : 'text-muted-foreground'}`}>
+                                    <div className={`text-[10px] ${isActive ? 'text-slate-600 font-medium' : 'text-muted-foreground'}`}>
                                       {isActive ? 'Currently applied to results' : new Date(sf.timestamp).toLocaleDateString()}
                                     </div>
                                   </button>
