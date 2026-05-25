@@ -76,7 +76,7 @@ const FormVariationsDemo = () => {
   };
   const [eslGeneralOpen, setEslGeneralOpen] = useState<string[]>(['general-info']);
   // ESL Edit (E) dialog — dropdown values that the user can extend
-  const [eslEditOpen, setEslEditOpen] = useState(false);
+  const [expandedEslRow, setExpandedEslRow] = useState<string | null>(null);
   const [eslFieldValues, setEslFieldValues] = useState<Record<string, string>>({
     clean: '', test: '', vi: '', stamp: '', boxOrder: '',
   });
@@ -3730,7 +3730,7 @@ const FormVariationsDemo = () => {
               {/* Data Rows */}
               <TableRow className="hover:bg-muted/30 h-6">
                 <TableCell className="text-center px-1 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" onClick={() => setEslEditOpen(true)} className="text-foreground underline-offset-2 hover:underline">E</button></TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" onClick={() => setExpandedEslRow(expandedEslRow === "1" ? null : "1")} className="text-foreground underline-offset-2 hover:underline">E</button></TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" className="text-foreground underline-offset-2 hover:underline">F</button></TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5">1</TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5">MSA Safety</TableCell>
@@ -3756,9 +3756,52 @@ const FormVariationsDemo = () => {
                 <TableCell className="text-[10px] px-1.5 py-0.5">A-12</TableCell>
                 <TableCell className="text-[10px] text-green-600 font-medium px-1.5 py-0.5">Complete</TableCell>
               </TableRow>
+              {expandedEslRow === "1" && (
+                <TableRow className="bg-muted/20">
+                  <TableCell colSpan={25} className="p-3">
+                    <div className="flex flex-wrap items-end gap-3">
+                      {(['clean','test','vi','stamp','boxOrder'] as const).map((key) => (
+                        <div key={key} className="space-y-1 min-w-[140px] flex-1">
+                          <Label className="text-[10px] font-medium">{eslFieldLabels[key]}</Label>
+                          <Select
+                            value={eslFieldValues[key]}
+                            onValueChange={(v) => setEslFieldValues(prev => ({ ...prev, [key]: v }))}
+                          >
+                            <SelectTrigger className="h-8 text-xs">
+                              <SelectValue placeholder={`Select...`} />
+                            </SelectTrigger>
+                            <SelectContent className="bg-popover z-50">
+                              {eslFieldOptions[key].map(opt => (
+                                <SelectItem key={opt} value={opt}>{opt}</SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      ))}
+                      <div className="flex items-center gap-2 ml-auto">
+                        <Button
+                          size="sm"
+                          variant="destructive"
+                          className="h-8"
+                          onClick={() => {
+                            setEslFieldValues(prev => Object.keys(prev).reduce((acc, k) => ({ ...acc, [k]: 'Cancelled' }), {} as Record<string, string>));
+                            setExpandedEslRow(null);
+                          }}
+                        >
+                          Set Cancelled
+                        </Button>
+                        <Button size="sm" variant="outline" className="h-8" onClick={() => setExpandedEslRow(null)}>Cancel</Button>
+                        <Button size="sm" className="h-8" onClick={() => setExpandedEslRow(null)}>
+                          <Save className="h-3 w-3 mr-1" />Save
+                        </Button>
+                      </div>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              )}
               <TableRow className="hover:bg-muted/30 h-6">
                 <TableCell className="text-center px-1 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" onClick={() => setEslEditOpen(true)} className="text-foreground underline-offset-2 hover:underline">E</button></TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" onClick={() => setExpandedEslRow(expandedEslRow === "2" ? null : "2")} className="text-foreground underline-offset-2 hover:underline">E</button></TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" className="text-foreground underline-offset-2 hover:underline">F</button></TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5">2</TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5">3M Scott</TableCell>
@@ -3784,9 +3827,52 @@ const FormVariationsDemo = () => {
                 <TableCell className="text-[10px] px-1.5 py-0.5">A-15</TableCell>
                 <TableCell className="text-[10px] text-yellow-600 font-medium px-1.5 py-0.5">In Progress</TableCell>
               </TableRow>
+              {expandedEslRow === "2" && (
+                <TableRow className="bg-muted/20">
+                  <TableCell colSpan={25} className="p-3">
+                    <div className="flex flex-wrap items-end gap-3">
+                      {(['clean','test','vi','stamp','boxOrder'] as const).map((key) => (
+                        <div key={key} className="space-y-1 min-w-[140px] flex-1">
+                          <Label className="text-[10px] font-medium">{eslFieldLabels[key]}</Label>
+                          <Select
+                            value={eslFieldValues[key]}
+                            onValueChange={(v) => setEslFieldValues(prev => ({ ...prev, [key]: v }))}
+                          >
+                            <SelectTrigger className="h-8 text-xs">
+                              <SelectValue placeholder={`Select...`} />
+                            </SelectTrigger>
+                            <SelectContent className="bg-popover z-50">
+                              {eslFieldOptions[key].map(opt => (
+                                <SelectItem key={opt} value={opt}>{opt}</SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      ))}
+                      <div className="flex items-center gap-2 ml-auto">
+                        <Button
+                          size="sm"
+                          variant="destructive"
+                          className="h-8"
+                          onClick={() => {
+                            setEslFieldValues(prev => Object.keys(prev).reduce((acc, k) => ({ ...acc, [k]: 'Cancelled' }), {} as Record<string, string>));
+                            setExpandedEslRow(null);
+                          }}
+                        >
+                          Set Cancelled
+                        </Button>
+                        <Button size="sm" variant="outline" className="h-8" onClick={() => setExpandedEslRow(null)}>Cancel</Button>
+                        <Button size="sm" className="h-8" onClick={() => setExpandedEslRow(null)}>
+                          <Save className="h-3 w-3 mr-1" />Save
+                        </Button>
+                      </div>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              )}
               <TableRow className="hover:bg-muted/30 h-6">
                 <TableCell className="text-center px-1 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" onClick={() => setEslEditOpen(true)} className="text-foreground underline-offset-2 hover:underline">E</button></TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" onClick={() => setExpandedEslRow(expandedEslRow === "3" ? null : "3")} className="text-foreground underline-offset-2 hover:underline">E</button></TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" className="text-foreground underline-offset-2 hover:underline">F</button></TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5">3</TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5">Honeywell</TableCell>
@@ -3812,9 +3898,52 @@ const FormVariationsDemo = () => {
                 <TableCell className="text-[10px] px-1.5 py-0.5">B-22</TableCell>
                 <TableCell className="text-[10px] text-green-600 font-medium px-1.5 py-0.5">Complete</TableCell>
               </TableRow>
+              {expandedEslRow === "3" && (
+                <TableRow className="bg-muted/20">
+                  <TableCell colSpan={25} className="p-3">
+                    <div className="flex flex-wrap items-end gap-3">
+                      {(['clean','test','vi','stamp','boxOrder'] as const).map((key) => (
+                        <div key={key} className="space-y-1 min-w-[140px] flex-1">
+                          <Label className="text-[10px] font-medium">{eslFieldLabels[key]}</Label>
+                          <Select
+                            value={eslFieldValues[key]}
+                            onValueChange={(v) => setEslFieldValues(prev => ({ ...prev, [key]: v }))}
+                          >
+                            <SelectTrigger className="h-8 text-xs">
+                              <SelectValue placeholder={`Select...`} />
+                            </SelectTrigger>
+                            <SelectContent className="bg-popover z-50">
+                              {eslFieldOptions[key].map(opt => (
+                                <SelectItem key={opt} value={opt}>{opt}</SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      ))}
+                      <div className="flex items-center gap-2 ml-auto">
+                        <Button
+                          size="sm"
+                          variant="destructive"
+                          className="h-8"
+                          onClick={() => {
+                            setEslFieldValues(prev => Object.keys(prev).reduce((acc, k) => ({ ...acc, [k]: 'Cancelled' }), {} as Record<string, string>));
+                            setExpandedEslRow(null);
+                          }}
+                        >
+                          Set Cancelled
+                        </Button>
+                        <Button size="sm" variant="outline" className="h-8" onClick={() => setExpandedEslRow(null)}>Cancel</Button>
+                        <Button size="sm" className="h-8" onClick={() => setExpandedEslRow(null)}>
+                          <Save className="h-3 w-3 mr-1" />Save
+                        </Button>
+                      </div>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              )}
               <TableRow className="hover:bg-muted/30 h-6">
                 <TableCell className="text-center px-1 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" onClick={() => setEslEditOpen(true)} className="text-foreground underline-offset-2 hover:underline">E</button></TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" onClick={() => setExpandedEslRow(expandedEslRow === "4" ? null : "4")} className="text-foreground underline-offset-2 hover:underline">E</button></TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" className="text-foreground underline-offset-2 hover:underline">F</button></TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5">4</TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5">Draeger</TableCell>
@@ -3840,9 +3969,52 @@ const FormVariationsDemo = () => {
                 <TableCell className="text-[10px] px-1.5 py-0.5">C-08</TableCell>
                 <TableCell className="text-[10px] text-blue-600 font-medium px-1.5 py-0.5">New</TableCell>
               </TableRow>
+              {expandedEslRow === "4" && (
+                <TableRow className="bg-muted/20">
+                  <TableCell colSpan={25} className="p-3">
+                    <div className="flex flex-wrap items-end gap-3">
+                      {(['clean','test','vi','stamp','boxOrder'] as const).map((key) => (
+                        <div key={key} className="space-y-1 min-w-[140px] flex-1">
+                          <Label className="text-[10px] font-medium">{eslFieldLabels[key]}</Label>
+                          <Select
+                            value={eslFieldValues[key]}
+                            onValueChange={(v) => setEslFieldValues(prev => ({ ...prev, [key]: v }))}
+                          >
+                            <SelectTrigger className="h-8 text-xs">
+                              <SelectValue placeholder={`Select...`} />
+                            </SelectTrigger>
+                            <SelectContent className="bg-popover z-50">
+                              {eslFieldOptions[key].map(opt => (
+                                <SelectItem key={opt} value={opt}>{opt}</SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      ))}
+                      <div className="flex items-center gap-2 ml-auto">
+                        <Button
+                          size="sm"
+                          variant="destructive"
+                          className="h-8"
+                          onClick={() => {
+                            setEslFieldValues(prev => Object.keys(prev).reduce((acc, k) => ({ ...acc, [k]: 'Cancelled' }), {} as Record<string, string>));
+                            setExpandedEslRow(null);
+                          }}
+                        >
+                          Set Cancelled
+                        </Button>
+                        <Button size="sm" variant="outline" className="h-8" onClick={() => setExpandedEslRow(null)}>Cancel</Button>
+                        <Button size="sm" className="h-8" onClick={() => setExpandedEslRow(null)}>
+                          <Save className="h-3 w-3 mr-1" />Save
+                        </Button>
+                      </div>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              )}
               <TableRow className="hover:bg-muted/30 h-6">
                 <TableCell className="text-center px-1 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" onClick={() => setEslEditOpen(true)} className="text-foreground underline-offset-2 hover:underline">E</button></TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" onClick={() => setExpandedEslRow(expandedEslRow === "5" ? null : "5")} className="text-foreground underline-offset-2 hover:underline">E</button></TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" className="text-foreground underline-offset-2 hover:underline">F</button></TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5">5</TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5">MSA Safety</TableCell>
@@ -3868,6 +4040,49 @@ const FormVariationsDemo = () => {
                 <TableCell className="text-[10px] px-1.5 py-0.5">A-30</TableCell>
                 <TableCell className="text-[10px] text-green-600 font-medium px-1.5 py-0.5">Complete</TableCell>
               </TableRow>
+              {expandedEslRow === "5" && (
+                <TableRow className="bg-muted/20">
+                  <TableCell colSpan={25} className="p-3">
+                    <div className="flex flex-wrap items-end gap-3">
+                      {(['clean','test','vi','stamp','boxOrder'] as const).map((key) => (
+                        <div key={key} className="space-y-1 min-w-[140px] flex-1">
+                          <Label className="text-[10px] font-medium">{eslFieldLabels[key]}</Label>
+                          <Select
+                            value={eslFieldValues[key]}
+                            onValueChange={(v) => setEslFieldValues(prev => ({ ...prev, [key]: v }))}
+                          >
+                            <SelectTrigger className="h-8 text-xs">
+                              <SelectValue placeholder={`Select...`} />
+                            </SelectTrigger>
+                            <SelectContent className="bg-popover z-50">
+                              {eslFieldOptions[key].map(opt => (
+                                <SelectItem key={opt} value={opt}>{opt}</SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      ))}
+                      <div className="flex items-center gap-2 ml-auto">
+                        <Button
+                          size="sm"
+                          variant="destructive"
+                          className="h-8"
+                          onClick={() => {
+                            setEslFieldValues(prev => Object.keys(prev).reduce((acc, k) => ({ ...acc, [k]: 'Cancelled' }), {} as Record<string, string>));
+                            setExpandedEslRow(null);
+                          }}
+                        >
+                          Set Cancelled
+                        </Button>
+                        <Button size="sm" variant="outline" className="h-8" onClick={() => setExpandedEslRow(null)}>Cancel</Button>
+                        <Button size="sm" className="h-8" onClick={() => setExpandedEslRow(null)}>
+                          <Save className="h-3 w-3 mr-1" />Save
+                        </Button>
+                      </div>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              )}
             </TableBody>
           </Table>
         </div>
@@ -11571,51 +11786,6 @@ const FormVariationsDemo = () => {
         </div>
       )}
       {/* ESL Item E (Edit) Dialog — dropdowns with inline "add option" */}
-      <Sheet open={eslEditOpen} onOpenChange={setEslEditOpen}>
-        <SheetContent side="bottom" className="max-h-[80vh] overflow-y-auto">
-          <SheetHeader>
-            <SheetTitle>Edit ESL Item</SheetTitle>
-          </SheetHeader>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 py-4">
-            {(['clean','test','vi','stamp','boxOrder'] as const).map((key) => (
-              <div key={key} className="space-y-1.5">
-                <Label className="text-xs font-medium">{eslFieldLabels[key]}</Label>
-                <Select
-                  value={eslFieldValues[key]}
-                  onValueChange={(v) => setEslFieldValues(prev => ({ ...prev, [key]: v }))}
-                >
-                  <SelectTrigger className="h-9">
-                    <SelectValue placeholder={`Select ${eslFieldLabels[key].toLowerCase()}...`} />
-                  </SelectTrigger>
-                  <SelectContent className="bg-popover z-50">
-                    {eslFieldOptions[key].map(opt => (
-                      <SelectItem key={opt} value={opt}>{opt}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            ))}
-          </div>
-          <SheetFooter className="sm:justify-between gap-2">
-            <Button
-              variant="destructive"
-              onClick={() => {
-                setEslFieldValues(prev => Object.keys(prev).reduce((acc, k) => ({ ...acc, [k]: 'Cancelled' }), {} as Record<string, string>));
-                setEslEditOpen(false);
-              }}
-            >
-              Set Cancelled
-            </Button>
-            <div className="flex gap-2">
-              <Button variant="outline" onClick={() => setEslEditOpen(false)}>Cancel</Button>
-              <Button onClick={() => setEslEditOpen(false)}>
-                <Save className="h-4 w-4 mr-2" />Save Item
-              </Button>
-            </div>
-          </SheetFooter>
-        </SheetContent>
-      </Sheet>
-
       <Toaster />
     </div>
   );
