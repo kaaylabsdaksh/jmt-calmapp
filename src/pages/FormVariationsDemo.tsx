@@ -4564,53 +4564,72 @@ const FormVariationsDemo = () => {
           </div>
 
           <Dialog open={stampInspectorOpen} onOpenChange={setStampInspectorOpen}>
-            <DialogContent className="p-0 max-w-md border-2 border-border overflow-hidden">
-              <div className="bg-[#c4c97a] p-8">
-                <div className="text-center mb-6">
-                  <h3 className="text-base font-normal text-foreground">Stamp Inspector Login</h3>
-                </div>
-                <div className="space-y-4 max-w-xs mx-auto">
+            <DialogContent className="p-0 max-w-md overflow-hidden">
+              <div className="p-6 space-y-5">
+                <DialogHeader className="space-y-2">
                   <div className="flex items-center gap-3">
-                    <Label className="text-sm font-bold text-foreground w-24 text-right">Login:</Label>
+                    <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
+                      <Shield className="h-5 w-5 text-primary" />
+                    </div>
+                    <div>
+                      <DialogTitle className="text-base font-semibold">Stamp Inspector Login</DialogTitle>
+                      <p className="text-xs text-muted-foreground mt-0.5">Confirm credentials to complete inspection</p>
+                    </div>
+                  </div>
+                </DialogHeader>
+
+                <div className="space-y-3">
+                  <div className="space-y-1.5">
+                    <Label htmlFor="stamp-login" className="text-xs font-medium text-muted-foreground uppercase tracking-tight">Login</Label>
                     <Input
+                      id="stamp-login"
                       value={stampLogin}
                       onChange={(e) => setStampLogin(e.target.value)}
-                      className="h-8 bg-white border border-foreground rounded-none flex-1"
+                      placeholder="Enter your login"
+                      className="h-9"
                     />
                   </div>
-                  <div className="flex items-center gap-3">
-                    <Label className="text-sm font-bold text-foreground w-24 text-right">Password:</Label>
+                  <div className="space-y-1.5">
+                    <Label htmlFor="stamp-password" className="text-xs font-medium text-muted-foreground uppercase tracking-tight">Password</Label>
                     <Input
+                      id="stamp-password"
                       type="password"
                       value={stampPassword}
                       onChange={(e) => setStampPassword(e.target.value)}
-                      className="h-8 bg-white border border-foreground rounded-none flex-1"
+                      placeholder="Enter your password"
+                      className="h-9"
                     />
                   </div>
                 </div>
-                <div className="flex justify-center gap-3 mt-8">
-                  <Button
-                    type="button"
-                    onClick={() => setStampInspectorOpen(false)}
-                    className="bg-gradient-to-b from-gray-100 to-gray-300 hover:from-gray-200 hover:to-gray-400 text-foreground border border-foreground rounded-sm px-6 h-8 text-sm font-normal shadow-sm"
-                  >
-                    Login
-                  </Button>
+
+                <div className="flex items-start gap-2 rounded-md border border-destructive/30 bg-destructive/5 p-3">
+                  <AlertCircle className="h-4 w-4 text-destructive mt-0.5 shrink-0" />
+                  <p className="text-xs text-destructive font-medium">
+                    You cannot stamp inspect while you're already logged in.
+                  </p>
+                </div>
+
+                <DialogFooter className="gap-2 sm:gap-2">
                   <Button
                     type="button"
                     variant="outline"
                     onClick={() => setStampInspectorOpen(false)}
-                    className="bg-gradient-to-b from-gray-100 to-gray-300 hover:from-gray-200 hover:to-gray-400 text-foreground border border-foreground rounded-sm px-6 h-8 text-sm font-normal shadow-sm"
                   >
                     Cancel
                   </Button>
-                </div>
-                <p className="text-center text-sm font-bold text-red-600 mt-6">
-                  You cannot stamp inspect while your already logged in.
-                </p>
+                  <Button
+                    type="button"
+                    onClick={() => setStampInspectorOpen(false)}
+                    className="bg-green-600 hover:bg-green-700 text-white"
+                  >
+                    <CheckCircle className="h-4 w-4 mr-2" />
+                    Confirm & Stamp
+                  </Button>
+                </DialogFooter>
               </div>
             </DialogContent>
           </Dialog>
+
 
 
           {/* Form Grid - Grouped Timeline Layout */}
