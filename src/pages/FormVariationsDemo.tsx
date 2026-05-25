@@ -11591,9 +11591,9 @@ const FormVariationsDemo = () => {
                       <SelectItem key={opt} value={opt}>{opt}</SelectItem>
                     ))}
                   </SelectContent>
+                </Select>
               </div>
             ))}
-
           </div>
           <DialogFooter className="sm:justify-between">
             <Button
