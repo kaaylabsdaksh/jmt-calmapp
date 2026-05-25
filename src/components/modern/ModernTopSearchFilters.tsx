@@ -413,12 +413,12 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
             const active = savedFilters.find(f => f.id === activeSavedFilterId);
             if (!active) return null;
             return (
-              <div className="hidden md:inline-flex items-center gap-1.5 h-7 pl-2 pr-1 rounded-full border border-primary/40 bg-primary/10 text-primary text-[11px] font-semibold max-w-[200px]">
+              <div className="hidden md:inline-flex items-center gap-1.5 h-7 pl-2 pr-1 rounded-full border border-slate-800 bg-slate-900 text-white text-[11px] font-semibold max-w-[200px]">
                 <Bookmark className="h-3 w-3 fill-current" />
                 <span className="truncate" title={active.name}>{active.name}</span>
                 <button
                   onClick={() => setActiveSavedFilterId(null)}
-                  className="ml-0.5 p-0.5 rounded-full hover:bg-primary/20 transition-colors"
+                  className="ml-0.5 p-0.5 rounded-full hover:bg-white/15 transition-colors"
                   aria-label="Clear active filter"
                 >
                   <X className="h-3 w-3" />
