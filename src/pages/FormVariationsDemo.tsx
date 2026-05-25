@@ -4556,11 +4556,62 @@ const FormVariationsDemo = () => {
             <Button 
               variant="outline" 
               className="border-amber-500 text-amber-700 hover:bg-amber-50 dark:hover:bg-amber-950 font-medium"
+              onClick={() => setStampInspectorOpen(true)}
             >
               <CheckCircle className="h-4 w-4 mr-2" />
               Complete Inspection
             </Button>
           </div>
+
+          <Dialog open={stampInspectorOpen} onOpenChange={setStampInspectorOpen}>
+            <DialogContent className="p-0 max-w-md border-2 border-border overflow-hidden">
+              <div className="bg-[#c4c97a] p-8">
+                <div className="text-center mb-6">
+                  <h3 className="text-base font-normal text-foreground">Stamp Inspector Login</h3>
+                </div>
+                <div className="space-y-4 max-w-xs mx-auto">
+                  <div className="flex items-center gap-3">
+                    <Label className="text-sm font-bold text-foreground w-24 text-right">Login:</Label>
+                    <Input
+                      value={stampLogin}
+                      onChange={(e) => setStampLogin(e.target.value)}
+                      className="h-8 bg-white border border-foreground rounded-none flex-1"
+                    />
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Label className="text-sm font-bold text-foreground w-24 text-right">Password:</Label>
+                    <Input
+                      type="password"
+                      value={stampPassword}
+                      onChange={(e) => setStampPassword(e.target.value)}
+                      className="h-8 bg-white border border-foreground rounded-none flex-1"
+                    />
+                  </div>
+                </div>
+                <div className="flex justify-center gap-3 mt-8">
+                  <Button
+                    type="button"
+                    onClick={() => setStampInspectorOpen(false)}
+                    className="bg-gradient-to-b from-gray-100 to-gray-300 hover:from-gray-200 hover:to-gray-400 text-foreground border border-foreground rounded-sm px-6 h-8 text-sm font-normal shadow-sm"
+                  >
+                    Login
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => setStampInspectorOpen(false)}
+                    className="bg-gradient-to-b from-gray-100 to-gray-300 hover:from-gray-200 hover:to-gray-400 text-foreground border border-foreground rounded-sm px-6 h-8 text-sm font-normal shadow-sm"
+                  >
+                    Cancel
+                  </Button>
+                </div>
+                <p className="text-center text-sm font-bold text-red-600 mt-6">
+                  You cannot stamp inspect while your already logged in.
+                </p>
+              </div>
+            </DialogContent>
+          </Dialog>
+
 
           {/* Form Grid - Grouped Timeline Layout */}
           <div className="space-y-6">
