@@ -116,6 +116,16 @@ function persistSavedFilters(filters: SavedFilter[]) {
   try { localStorage.setItem(SAVED_FILTERS_KEY, JSON.stringify(filters)); }
   catch {}
 }
+const DEFAULT_FILTER_KEY = 'wo-modern-default-filter-id';
+function loadDefaultFilterId(): string | null {
+  try { return localStorage.getItem(DEFAULT_FILTER_KEY); } catch { return null; }
+}
+function persistDefaultFilterId(id: string | null) {
+  try {
+    if (id) localStorage.setItem(DEFAULT_FILTER_KEY, id);
+    else localStorage.removeItem(DEFAULT_FILTER_KEY);
+  } catch {}
+}
 
 const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopSearchFiltersProps) => {
   const [viewMode, setViewMode] = useState<'default' | 'csa'>('default');
