@@ -123,3 +123,46 @@
     @apply border-gray-400;
   }
 }
+
+@layer utilities {
+  /* ---------- Mobile responsiveness safety net ----------
+     These rules apply globally on small screens so the existing
+     desktop-first markup remains usable on phones without having
+     to touch every component. */
+  @media (max-width: 767px) {
+    /* Any wide table gets horizontal scroll instead of breaking the page */
+    main table {
+      display: block;
+      overflow-x: auto;
+      max-width: 100%;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* Cap any element using fixed min-width so it can shrink on phones */
+    main [class*="min-w-["] {
+      min-width: 0 !important;
+    }
+
+    /* Make Radix dialogs/sheets fit the viewport */
+    [role="dialog"][data-state="open"] {
+      max-width: 95vw !important;
+    }
+
+    /* Tab strips scroll horizontally instead of overflowing */
+    [role="tablist"] {
+      overflow-x: auto;
+      flex-wrap: nowrap;
+      scrollbar-width: none;
+    }
+    [role="tablist"]::-webkit-scrollbar { display: none; }
+
+    /* Tighten heavy desktop horizontal padding on top-level page wrappers */
+    main > div > .px-8,
+    main > div > .px-6,
+    main > .px-8,
+    main > .px-6 {
+      padding-left: 0.75rem !important;
+      padding-right: 0.75rem !important;
+    }
+  }
+}

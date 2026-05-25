@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
+import MobileTopBar from "@/components/MobileTopBar";
 
 interface SidebarLayoutProps {
   children: ReactNode;
@@ -12,6 +13,7 @@ const SidebarLayout = ({ children }: SidebarLayoutProps) => {
       <div className="flex min-h-screen w-full overflow-x-hidden">
         <AppSidebar />
         <div className="flex-1 flex flex-col min-w-0">
+          <MobileTopBar />
           <main className="flex-1 overflow-x-hidden">
             {children}
           </main>
