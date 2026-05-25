@@ -3662,7 +3662,27 @@ const FormVariationsDemo = () => {
       {/* ESL Quick Edit Bar — shown above the table when an E link is clicked */}
       {expandedEslRow && (
         <div className="border rounded-lg bg-muted/20 p-2 mb-2 flex flex-wrap items-end gap-2">
-          <span className="text-[11px] font-semibold text-muted-foreground mr-1 mb-1.5">Editing Item #{expandedEslRow}</span>
+          <div className="flex items-center gap-1 mr-1 mb-1.5">
+            <Button
+              size="sm"
+              variant="outline"
+              className="h-7 w-7 p-0"
+              disabled={Number(expandedEslRow) <= 1}
+              onClick={() => setExpandedEslRow(String(Math.max(1, Number(expandedEslRow) - 1)))}
+            >
+              <ChevronLeft className="h-3 w-3" />
+            </Button>
+            <span className="text-[11px] font-semibold text-muted-foreground px-1 whitespace-nowrap">Item #{expandedEslRow} of 5</span>
+            <Button
+              size="sm"
+              variant="outline"
+              className="h-7 w-7 p-0"
+              disabled={Number(expandedEslRow) >= 5}
+              onClick={() => setExpandedEslRow(String(Math.min(5, Number(expandedEslRow) + 1)))}
+            >
+              <ChevronRight className="h-3 w-3" />
+            </Button>
+          </div>
           {(['clean','test','vi','stamp','boxOrder'] as const).map((key) => (
             <div key={key} className="flex items-center gap-1.5">
               <Label className="text-[10px] font-medium whitespace-nowrap">{eslFieldLabels[key]}</Label>
