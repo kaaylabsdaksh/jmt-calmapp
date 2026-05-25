@@ -4555,15 +4555,14 @@ const FormVariationsDemo = () => {
             <h3 className="text-lg font-semibold">Work Status</h3>
             <Button
               size="sm"
-              className="group relative h-9 bg-green-600 hover:bg-green-700 text-white font-medium shadow-sm hover:shadow-md transition-all gap-2 pr-3"
+              className="group h-7 px-2.5 bg-green-600 hover:bg-green-700 text-white text-xs font-medium shadow-sm gap-1.5"
               onClick={() => setStampInspectorOpen(true)}
             >
-              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white/20">
-                <CheckCircle className="h-3.5 w-3.5" />
-              </span>
+              <CheckCircle className="h-3.5 w-3.5" />
               Complete Inspection
-              <ChevronRight className="h-4 w-4 opacity-70 transition-transform group-hover:translate-x-0.5" />
+              <ChevronRight className="h-3 w-3 opacity-70 transition-transform group-hover:translate-x-0.5" />
             </Button>
+
 
           </div>
 
