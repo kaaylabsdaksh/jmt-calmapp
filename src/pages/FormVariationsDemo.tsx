@@ -8159,7 +8159,6 @@ const FormVariationsDemo = () => {
 
                 <TabsContent value="general" className="mt-0 space-y-6">
                   {renderGeneralSection(accordionDensity === 'compact')}
-                  {renderTransitSection(true, true)}
                 </TabsContent>
 
                 <TabsContent value="details" className="mt-0">
