@@ -1153,11 +1153,11 @@ const FormVariationsDemo = () => {
 
     // Define explicit tab order for non-ESL types
     const tabOrder = isESLType 
-      ? ['general', 'details', 'testing', 'work-status', 'transit']
+      ? ['general', 'details', 'testing', 'work-status']
       : ['general', 'cost', 'factory-config', 'transit', 'parts', 'options', 'activity-log'];
 
     const tabLabels: Record<string, string> = isESLType
-      ? { 'general': 'General', 'details': 'Details', 'testing': 'Testing', 'work-status': 'Work Status', 'transit': 'Transit' }
+      ? { 'general': 'General', 'details': 'Details', 'testing': 'Testing', 'work-status': 'Work Status' }
       : { 'general': 'General', 'cost': 'Cost', 'factory-config': 'Factory', 'transit': 'Transit', 'parts': 'Parts', 'options': 'Additional', 'activity-log': 'Comments' };
 
     const handleAutoTabScroll = () => {
