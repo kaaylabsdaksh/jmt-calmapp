@@ -8,7 +8,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Calendar as CalendarIcon, Search, X, Filter, Plus, Check, Clock, RotateCcw, Bookmark, Trash2, ChevronDown, MoreHorizontal, Pencil, RefreshCw } from "lucide-react";
+import { Calendar as CalendarIcon, Search, X, Filter, Plus, Check, Clock, RotateCcw, Bookmark, Trash2, ChevronDown, MoreHorizontal, Pencil, RefreshCw, Star } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
@@ -116,6 +116,16 @@ function persistSavedFilters(filters: SavedFilter[]) {
   try { localStorage.setItem(SAVED_FILTERS_KEY, JSON.stringify(filters)); }
   catch {}
 }
+const DEFAULT_FILTER_KEY = 'wo-modern-default-filter-id';
+function loadDefaultFilterId(): string | null {
+  try { return localStorage.getItem(DEFAULT_FILTER_KEY); } catch { return null; }
+}
+function persistDefaultFilterId(id: string | null) {
+  try {
+    if (id) localStorage.setItem(DEFAULT_FILTER_KEY, id);
+    else localStorage.removeItem(DEFAULT_FILTER_KEY);
+  } catch {}
+}
 
 const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopSearchFiltersProps) => {
   const [viewMode, setViewMode] = useState<'default' | 'csa'>('default');
@@ -145,6 +155,8 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
   const [editingFilterId, setEditingFilterId] = useState<string | null>(null);
   const [editingFilterName, setEditingFilterName] = useState('');
   const [activeSavedFilterId, setActiveSavedFilterId] = useState<string | null>(null);
+  const [defaultFilterId, setDefaultFilterId] = useState<string | null>(loadDefaultFilterId);
+  const didApplyDefaultRef = useRef(false);
   
   const [resultCount, setResultCount] = useState<number | null>(null);
   const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
@@ -188,6 +200,24 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  // Auto-apply default saved filter on mount (persists across logout/login)
+  useEffect(() => {
+    if (didApplyDefaultRef.current) return;
+    if (!defaultFilterId) return;
+    const sf = savedFilters.find(f => f.id === defaultFilterId);
+    if (!sf) return;
+    didApplyDefaultRef.current = true;
+    const s = sf.state || {};
+    setSearchValues(s.searchValues ?? searchValues);
+    setSelectedLocations(s.selectedLocations ?? []);
+    setDateFrom(s.dateFrom ? new Date(s.dateFrom) : undefined);
+    setDateTo(s.dateTo ? new Date(s.dateTo) : undefined);
+    setDateType(s.dateType ?? '');
+    setSearchChips(s.searchChips ?? []);
+    setActiveSavedFilterId(sf.id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 
@@ -450,7 +480,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                   <PopoverContent className="w-72 p-0 bg-popover border shadow-xl rounded-lg z-[60]" align="end">
                     <div className="p-2.5 border-b">
                       <p className="text-xs font-semibold text-foreground">Saved Filters</p>
-                      <p className="text-[11px] text-muted-foreground">Apply a previously saved filter</p>
+                      <p className="text-[11px] text-muted-foreground">Apply a saved filter. Star one to set as default — it loads automatically next time you sign in.</p>
                     </div>
                     <div className="max-h-64 overflow-y-auto p-1">
                       {savedFilters.length === 0 ? (
@@ -525,25 +555,58 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                                         {isActive && <Check className="h-3.5 w-3.5" />}
                                         {sf.name}
                                       </div>
-                                      {isActive && (
-                                        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-slate-900 text-white text-[9px] font-bold uppercase tracking-wider">
-                                          <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
-                                          Active
-                                        </span>
-                                      )}
+                                      <div className="flex items-center gap-1">
+                                        {sf.id === defaultFilterId && (
+                                          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full border border-slate-300 bg-white text-slate-700 text-[9px] font-bold uppercase tracking-wider">
+                                            <Star className="h-2.5 w-2.5 fill-slate-700" />
+                                            Default
+                                          </span>
+                                        )}
+                                        {isActive && (
+                                          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-slate-900 text-white text-[9px] font-bold uppercase tracking-wider">
+                                            <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
+                                            Active
+                                          </span>
+                                        )}
+                                      </div>
                                     </div>
                                     <div className={`text-[10px] ${isActive ? 'text-slate-600 font-medium' : 'text-muted-foreground'}`}>
                                       {isActive ? 'Currently applied to results' : new Date(sf.timestamp).toLocaleDateString()}
                                     </div>
                                   </button>
                                   
-                                  
+                                  <button
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      const next = defaultFilterId === sf.id ? null : sf.id;
+                                      setDefaultFilterId(next);
+                                      persistDefaultFilterId(next);
+                                      toast({
+                                        title: next ? 'Default filter set' : 'Default cleared',
+                                        description: next ? `${sf.name} will load on sign in` : undefined,
+                                      });
+                                    }}
+                                    className={`p-1.5 rounded transition-all ${
+                                      defaultFilterId === sf.id
+                                        ? 'opacity-100 text-slate-900 hover:bg-slate-100'
+                                        : 'opacity-0 group-hover:opacity-100 text-muted-foreground hover:bg-muted hover:text-slate-900'
+                                    }`}
+                                    aria-label={defaultFilterId === sf.id ? 'Unset as default' : 'Set as default'}
+                                    title={defaultFilterId === sf.id ? 'Unset as default' : 'Set as default'}
+                                  >
+                                    <Star className={`h-3.5 w-3.5 ${defaultFilterId === sf.id ? 'fill-slate-900' : ''}`} />
+                                  </button>
+
                                   <button
                                     onClick={() => {
                                       const updated = savedFilters.filter(f => f.id !== sf.id);
                                       setSavedFilters(updated);
                                       persistSavedFilters(updated);
                                       if (activeSavedFilterId === sf.id) setActiveSavedFilterId(null);
+                                      if (defaultFilterId === sf.id) {
+                                        setDefaultFilterId(null);
+                                        persistDefaultFilterId(null);
+                                      }
                                     }}
                                     className="opacity-0 group-hover:opacity-100 p-1.5 rounded hover:bg-destructive/10 text-muted-foreground hover:text-destructive transition-all"
                                     aria-label="Delete saved filter"
