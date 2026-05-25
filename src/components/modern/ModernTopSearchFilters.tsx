@@ -430,38 +430,6 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
           {/* Saved Filters toolbar - moved to top */}
           {viewMode === 'default' && (
             <>
-              {savedFilters.length > 0 && (
-                <div className="hidden md:flex items-center gap-1.5 min-w-0">
-                  <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider">Recent</span>
-                  {savedFilters.slice(0, 2).map((sf) => {
-                    const isActive = sf.id === activeSavedFilterId;
-                    return (
-                      <button
-                        key={sf.id}
-                        onClick={() => {
-                          const s = sf.state || {};
-                          setSearchValues(s.searchValues ?? searchValues);
-                          setSelectedLocations(s.selectedLocations ?? []);
-                          setDateFrom(s.dateFrom ? new Date(s.dateFrom) : undefined);
-                          setDateTo(s.dateTo ? new Date(s.dateTo) : undefined);
-                          setDateType(s.dateType ?? '');
-                          setSearchChips(s.searchChips ?? []);
-                          setActiveSavedFilterId(sf.id);
-                          toast({ title: 'Filter applied', description: sf.name });
-                        }}
-                        className={`h-7 px-2.5 rounded-full border text-[12px] font-medium transition-all max-w-[140px] truncate ${
-                          isActive
-                            ? 'border-slate-900 bg-slate-900 text-white shadow-sm'
-                            : 'border-border bg-muted/40 text-foreground/80 hover:border-input hover:bg-background hover:shadow-sm'
-                        }`}
-                        title={sf.name}
-                      >
-                        {sf.name}
-                      </button>
-                    );
-                  })}
-                </div>
-              )}
 
               <div className="inline-flex items-center shadow-sm">
                 <Popover open={savedFiltersOpen} onOpenChange={setSavedFiltersOpen}>
