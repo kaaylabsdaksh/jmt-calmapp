@@ -11571,12 +11571,12 @@ const FormVariationsDemo = () => {
         </div>
       )}
       {/* ESL Item E (Edit) Dialog — dropdowns with inline "add option" */}
-      <Dialog open={eslEditOpen} onOpenChange={setEslEditOpen}>
-        <DialogContent className="max-w-2xl">
-          <DialogHeader>
-            <DialogTitle>Edit ESL Item</DialogTitle>
-          </DialogHeader>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 py-2">
+      <Sheet open={eslEditOpen} onOpenChange={setEslEditOpen}>
+        <SheetContent side="bottom" className="max-h-[80vh] overflow-y-auto">
+          <SheetHeader>
+            <SheetTitle>Edit ESL Item</SheetTitle>
+          </SheetHeader>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 py-4">
             {(['clean','test','vi','stamp','boxOrder'] as const).map((key) => (
               <div key={key} className="space-y-1.5">
                 <Label className="text-xs font-medium">{eslFieldLabels[key]}</Label>
@@ -11596,7 +11596,7 @@ const FormVariationsDemo = () => {
               </div>
             ))}
           </div>
-          <DialogFooter className="sm:justify-between">
+          <SheetFooter className="sm:justify-between gap-2">
             <Button
               variant="destructive"
               onClick={() => {
@@ -11612,9 +11612,9 @@ const FormVariationsDemo = () => {
                 <Save className="h-4 w-4 mr-2" />Save Item
               </Button>
             </div>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+          </SheetFooter>
+        </SheetContent>
+      </Sheet>
 
       <Toaster />
     </div>
