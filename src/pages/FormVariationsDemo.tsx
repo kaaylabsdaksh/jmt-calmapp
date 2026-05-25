@@ -4724,24 +4724,24 @@ const FormVariationsDemo = () => {
             </div>
 
             {/* Section 2: Timeline Events */}
-            <div className="bg-muted/30 rounded-xl border border-border p-5">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative">
+            <div className="bg-muted/30 rounded-lg border border-border p-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 relative">
                 {/* Connector line for desktop */}
-                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-px bg-border hidden md:block" />
+                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-px bg-border hidden md:block" />
 
                 {/* Start Action */}
-                <div className="flex flex-col gap-3 bg-card p-4 rounded-lg border border-border shadow-sm">
-                  <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800">
-                      <Play className="h-3.5 w-3.5 ml-0.5" />
+                <div className="flex flex-col gap-2 bg-card p-2.5 rounded-md border border-border shadow-sm">
+                  <div className="flex items-center gap-1.5">
+                    <div className="w-5 h-5 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800">
+                      <Play className="h-2.5 w-2.5 ml-0.5" />
                     </div>
-                    <p className="text-sm font-semibold text-foreground">Work Start</p>
+                    <p className="text-xs font-semibold text-foreground">Work Start</p>
                   </div>
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-2 gap-2">
                     <div className="space-y-1">
                       <Label className="text-[10px] font-bold uppercase text-muted-foreground">Start Date <span className="text-destructive">*</span></Label>
                       <ModernDatePicker
-                        size="sm"
+                        size="xs"
                         value={workStatusData.startDate}
                         onChange={(date) => handleWorkStatusChange('startDate', date)}
                       />
@@ -4753,11 +4753,11 @@ const FormVariationsDemo = () => {
                           <Button
                             variant="outline"
                             className={cn(
-                              "h-7 w-full justify-start text-left font-normal bg-background text-xs",
+                              "h-6 w-full justify-start text-left font-normal bg-background text-[11px] px-2",
                               !workStatusData.startTime && "text-muted-foreground"
                             )}
                           >
-                            <Clock className="mr-1.5 h-3 w-3" />
+                            <Clock className="mr-1 h-3 w-3" />
                             {workStatusData.startTime || <span>--:--</span>}
                           </Button>
                         </PopoverTrigger>
@@ -4804,26 +4804,26 @@ const FormVariationsDemo = () => {
                   <Button 
                     variant="outline" 
                     size="sm"
-                    className="h-8 w-full border-border hover:bg-muted text-xs font-semibold"
+                    className="h-6 w-full border-border hover:bg-muted text-[11px] font-semibold"
                   >
-                    <Play className="h-3 w-3 mr-1" />
+                    <Play className="h-2.5 w-2.5 mr-1" />
                     Start
                   </Button>
                 </div>
 
                 {/* Stop Action */}
-                <div className="flex flex-col gap-3 bg-card p-4 rounded-lg border border-border shadow-sm">
-                  <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center text-red-600 dark:text-red-400 border border-red-200 dark:border-red-800">
-                      <Square className="h-3 w-3" />
+                <div className="flex flex-col gap-2 bg-card p-2.5 rounded-md border border-border shadow-sm">
+                  <div className="flex items-center gap-1.5">
+                    <div className="w-5 h-5 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center text-red-600 dark:text-red-400 border border-red-200 dark:border-red-800">
+                      <Square className="h-2.5 w-2.5" />
                     </div>
-                    <p className="text-sm font-semibold text-foreground">Work Stop</p>
+                    <p className="text-xs font-semibold text-foreground">Work Stop</p>
                   </div>
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-2 gap-2">
                     <div className="space-y-1">
                       <Label className="text-[10px] font-bold uppercase text-muted-foreground">Stop Date <span className="text-destructive">*</span></Label>
                       <ModernDatePicker
-                        size="sm"
+                        size="xs"
                         value={workStatusData.stopDate}
                         onChange={(date) => handleWorkStatusChange('stopDate', date)}
                       />
@@ -4835,11 +4835,11 @@ const FormVariationsDemo = () => {
                           <Button
                             variant="outline"
                             className={cn(
-                              "h-7 w-full justify-start text-left font-normal bg-background text-xs",
+                              "h-6 w-full justify-start text-left font-normal bg-background text-[11px] px-2",
                               !workStatusData.stopTime && "text-muted-foreground"
                             )}
                           >
-                            <Clock className="mr-1.5 h-3 w-3" />
+                            <Clock className="mr-1 h-3 w-3" />
                             {workStatusData.stopTime || <span>--:--</span>}
                           </Button>
                         </PopoverTrigger>
@@ -4886,9 +4886,9 @@ const FormVariationsDemo = () => {
                   <Button 
                     variant="outline" 
                     size="sm"
-                    className="h-8 w-full border-border hover:bg-muted text-xs font-semibold"
+                    className="h-6 w-full border-border hover:bg-muted text-[11px] font-semibold"
                   >
-                    <Square className="h-3 w-3 mr-1" />
+                    <Square className="h-2.5 w-2.5 mr-1" />
                     Stop
                   </Button>
                 </div>
