@@ -3818,7 +3818,7 @@ const FormVariationsDemo = () => {
                 <TableCell className="px-1 py-0.5"><Input className="h-5 text-[10px] w-12" /></TableCell>
               </TableRow>
               {/* Data Rows */}
-              <TableRow className={`h-6 ${expandedEslRow === "1" ? "bg-primary/20 hover:bg-primary/25 border-l-2 border-l-primary text-muted-foreground opacity-60" : "hover:bg-muted/30"}`}>
+              <TableRow className={`h-6 ${expandedEslRow ? (expandedEslRow === "1" ? "bg-primary/20 hover:bg-primary/25 border-l-2 border-l-primary text-muted-foreground opacity-70" : "text-muted-foreground opacity-50") : "hover:bg-muted/30"}`}>
                 <TableCell className="text-center px-1 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" onClick={() => setExpandedEslRow(expandedEslRow === "1" ? null : "1")} className="text-foreground underline-offset-2 hover:underline">E</button></TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" className="text-foreground underline-offset-2 hover:underline">F</button></TableCell>
@@ -3846,7 +3846,7 @@ const FormVariationsDemo = () => {
                 <TableCell className="text-[10px] px-1.5 py-0.5">A-12</TableCell>
                 <TableCell className="text-[10px] text-green-600 font-medium px-1.5 py-0.5">Complete</TableCell>
               </TableRow>
-              <TableRow className={`h-6 ${expandedEslRow === "2" ? "bg-primary/20 hover:bg-primary/25 border-l-2 border-l-primary text-muted-foreground opacity-60" : "hover:bg-muted/30"}`}>
+              <TableRow className={`h-6 ${expandedEslRow ? (expandedEslRow === "2" ? "bg-primary/20 hover:bg-primary/25 border-l-2 border-l-primary text-muted-foreground opacity-70" : "text-muted-foreground opacity-50") : "hover:bg-muted/30"}`}>
                 <TableCell className="text-center px-1 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" onClick={() => setExpandedEslRow(expandedEslRow === "2" ? null : "2")} className="text-foreground underline-offset-2 hover:underline">E</button></TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" className="text-foreground underline-offset-2 hover:underline">F</button></TableCell>
@@ -3874,7 +3874,7 @@ const FormVariationsDemo = () => {
                 <TableCell className="text-[10px] px-1.5 py-0.5">A-15</TableCell>
                 <TableCell className="text-[10px] text-yellow-600 font-medium px-1.5 py-0.5">In Progress</TableCell>
               </TableRow>
-              <TableRow className={`h-6 ${expandedEslRow === "3" ? "bg-primary/20 hover:bg-primary/25 border-l-2 border-l-primary text-muted-foreground opacity-60" : "hover:bg-muted/30"}`}>
+              <TableRow className={`h-6 ${expandedEslRow ? (expandedEslRow === "3" ? "bg-primary/20 hover:bg-primary/25 border-l-2 border-l-primary text-muted-foreground opacity-70" : "text-muted-foreground opacity-50") : "hover:bg-muted/30"}`}>
                 <TableCell className="text-center px-1 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" onClick={() => setExpandedEslRow(expandedEslRow === "3" ? null : "3")} className="text-foreground underline-offset-2 hover:underline">E</button></TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" className="text-foreground underline-offset-2 hover:underline">F</button></TableCell>
@@ -3902,7 +3902,7 @@ const FormVariationsDemo = () => {
                 <TableCell className="text-[10px] px-1.5 py-0.5">B-22</TableCell>
                 <TableCell className="text-[10px] text-green-600 font-medium px-1.5 py-0.5">Complete</TableCell>
               </TableRow>
-              <TableRow className={`h-6 ${expandedEslRow === "4" ? "bg-primary/20 hover:bg-primary/25 border-l-2 border-l-primary text-muted-foreground opacity-60" : "hover:bg-muted/30"}`}>
+              <TableRow className={`h-6 ${expandedEslRow ? (expandedEslRow === "4" ? "bg-primary/20 hover:bg-primary/25 border-l-2 border-l-primary text-muted-foreground opacity-70" : "text-muted-foreground opacity-50") : "hover:bg-muted/30"}`}>
                 <TableCell className="text-center px-1 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" onClick={() => setExpandedEslRow(expandedEslRow === "4" ? null : "4")} className="text-foreground underline-offset-2 hover:underline">E</button></TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" className="text-foreground underline-offset-2 hover:underline">F</button></TableCell>
@@ -3930,7 +3930,7 @@ const FormVariationsDemo = () => {
                 <TableCell className="text-[10px] px-1.5 py-0.5">C-08</TableCell>
                 <TableCell className="text-[10px] text-blue-600 font-medium px-1.5 py-0.5">New</TableCell>
               </TableRow>
-              <TableRow className={`h-6 ${expandedEslRow === "5" ? "bg-primary/20 hover:bg-primary/25 border-l-2 border-l-primary text-muted-foreground opacity-60" : "hover:bg-muted/30"}`}>
+              <TableRow className={`h-6 ${expandedEslRow ? (expandedEslRow === "5" ? "bg-primary/20 hover:bg-primary/25 border-l-2 border-l-primary text-muted-foreground opacity-70" : "text-muted-foreground opacity-50") : "hover:bg-muted/30"}`}>
                 <TableCell className="text-center px-1 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" onClick={() => setExpandedEslRow(expandedEslRow === "5" ? null : "5")} className="text-foreground underline-offset-2 hover:underline">E</button></TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" className="text-foreground underline-offset-2 hover:underline">F</button></TableCell>
