@@ -3659,6 +3659,48 @@ const FormVariationsDemo = () => {
         </div>
       </div>
 
+      {/* ESL Quick Edit Bar — shown above the table when an E link is clicked */}
+      {expandedEslRow && (
+        <div className="border rounded-lg bg-muted/20 p-2 mb-2 flex flex-wrap items-end gap-2">
+          <span className="text-[11px] font-semibold text-muted-foreground mr-1 mb-1.5">Editing Item #{expandedEslRow}</span>
+          {(['clean','test','vi','stamp','boxOrder'] as const).map((key) => (
+            <div key={key} className="flex items-center gap-1.5">
+              <Label className="text-[10px] font-medium whitespace-nowrap">{eslFieldLabels[key]}</Label>
+              <Select
+                value={eslFieldValues[key]}
+                onValueChange={(v) => setEslFieldValues(prev => ({ ...prev, [key]: v }))}
+              >
+                <SelectTrigger className="h-7 text-xs w-[110px]">
+                  <SelectValue placeholder="Select..." />
+                </SelectTrigger>
+                <SelectContent className="bg-popover z-50">
+                  {eslFieldOptions[key].map(opt => (
+                    <SelectItem key={opt} value={opt}>{opt}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          ))}
+          <div className="flex items-center gap-1.5 ml-auto">
+            <Button
+              size="sm"
+              variant="destructive"
+              className="h-7 text-xs"
+              onClick={() => {
+                setEslFieldValues(prev => Object.keys(prev).reduce((acc, k) => ({ ...acc, [k]: 'Cancelled' }), {} as Record<string, string>));
+                setExpandedEslRow(null);
+              }}
+            >
+              Set Cancelled
+            </Button>
+            <Button size="sm" variant="outline" className="h-7 text-xs" onClick={() => setExpandedEslRow(null)}>Cancel</Button>
+            <Button size="sm" className="h-7 text-xs" onClick={() => setExpandedEslRow(null)}>
+              <Save className="h-3 w-3 mr-1" />Save
+            </Button>
+          </div>
+        </div>
+      )}
+
       {/* Items Data Table */}
       <div className="border rounded-lg overflow-hidden">
         <div className="bg-muted/50 px-3 py-1.5 border-b">
