@@ -535,7 +535,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                               ) : (
                                 <>
                                   {isActive && (
-                                    <div className="w-1 self-stretch rounded-l-md bg-primary" aria-hidden />
+                                    <div className="w-1 self-stretch rounded-l-md bg-slate-900" aria-hidden />
                                   )}
                                   <button
                                     onClick={() => {
@@ -553,18 +553,18 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                                     className={`flex-1 text-left px-2.5 py-2 rounded-md text-xs transition-colors ${isActive ? '' : 'hover:bg-muted'}`}
                                   >
                                     <div className="flex items-center justify-between gap-2">
-                                      <div className={`font-medium flex items-center gap-1.5 ${isActive ? 'text-primary' : 'text-foreground'}`}>
+                                      <div className={`font-medium flex items-center gap-1.5 ${isActive ? 'text-slate-900' : 'text-foreground'}`}>
                                         {isActive && <Check className="h-3.5 w-3.5" />}
                                         {sf.name}
                                       </div>
                                       {isActive && (
-                                        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-primary text-primary-foreground text-[9px] font-bold uppercase tracking-wider">
-                                          <span className="h-1.5 w-1.5 rounded-full bg-primary-foreground animate-pulse" />
+                                        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-slate-900 text-white text-[9px] font-bold uppercase tracking-wider">
+                                          <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
                                           Active
                                         </span>
                                       )}
                                     </div>
-                                    <div className={`text-[10px] ${isActive ? 'text-primary/70 font-medium' : 'text-muted-foreground'}`}>
+                                    <div className={`text-[10px] ${isActive ? 'text-slate-600 font-medium' : 'text-muted-foreground'}`}>
                                       {isActive ? 'Currently applied to results' : new Date(sf.timestamp).toLocaleDateString()}
                                     </div>
                                   </button>
