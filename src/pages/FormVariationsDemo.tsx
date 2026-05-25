@@ -74,6 +74,31 @@ const FormVariationsDemo = () => {
     'comments': 'Comments',
   };
   const [eslGeneralOpen, setEslGeneralOpen] = useState<string[]>(['general-info']);
+  // ESL Edit (E) dialog — dropdown values that the user can extend
+  const [eslEditOpen, setEslEditOpen] = useState(false);
+  const [eslFieldValues, setEslFieldValues] = useState<Record<string, string>>({
+    clean: '', test: '', vi: '', stamp: '', boxOrder: '',
+  });
+  const [eslFieldOptions, setEslFieldOptions] = useState<Record<string, string[]>>({
+    clean: ['Clean', 'Not Clean', 'Needs Cleaning'],
+    test: ['Pass', 'Fail', 'Retest'],
+    vi: ['OK', 'Defect', 'N/A'],
+    stamp: ['Applied', 'Pending', 'Not Required'],
+    boxOrder: ['A-12', 'B-101', 'C-23'],
+  });
+  const [eslNewOption, setEslNewOption] = useState<Record<string, string>>({
+    clean: '', test: '', vi: '', stamp: '', boxOrder: '',
+  });
+  const eslFieldLabels: Record<string, string> = {
+    clean: 'Clean', test: 'Test', vi: 'Visual Inspection', stamp: 'Stamp', boxOrder: 'Box Order',
+  };
+  const addEslOption = (key: string) => {
+    const val = (eslNewOption[key] || '').trim();
+    if (!val) return;
+    setEslFieldOptions(prev => prev[key].includes(val) ? prev : { ...prev, [key]: [...prev[key], val] });
+    setEslFieldValues(prev => ({ ...prev, [key]: val }));
+    setEslNewOption(prev => ({ ...prev, [key]: '' }));
+  };
   const [eslGeneralHidden, setEslGeneralHidden] = useState<string[]>([]);
   const [eslGeneralOrder, setEslGeneralOrder] = useState<string[]>([...eslGeneralIds]);
   // Reconcile order if section IDs change (e.g. after refactors)
