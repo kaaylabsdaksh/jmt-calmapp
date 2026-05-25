@@ -8141,10 +8141,6 @@ const FormVariationsDemo = () => {
                     <Clock className="h-4 w-4" />
                     Work Status
                   </TabsTrigger>
-                  <TabsTrigger value="transit" disabled={!isEslGeneralComplete} className="flex-1 gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
-                    <Truck className="h-4 w-4" />
-                    Transit
-                  </TabsTrigger>
                 </TabsList>
 
                 <TabsContent value="general" className="mt-0">
