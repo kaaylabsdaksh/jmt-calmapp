@@ -20,6 +20,7 @@ import { Switch } from "@/components/ui/switch";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from "@/components/ui/sheet";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -11570,12 +11571,12 @@ const FormVariationsDemo = () => {
         </div>
       )}
       {/* ESL Item E (Edit) Dialog — dropdowns with inline "add option" */}
-      <Dialog open={eslEditOpen} onOpenChange={setEslEditOpen}>
-        <DialogContent className="max-w-2xl">
-          <DialogHeader>
-            <DialogTitle>Edit ESL Item</DialogTitle>
-          </DialogHeader>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 py-2">
+      <Sheet open={eslEditOpen} onOpenChange={setEslEditOpen}>
+        <SheetContent side="bottom" className="max-h-[80vh] overflow-y-auto">
+          <SheetHeader>
+            <SheetTitle>Edit ESL Item</SheetTitle>
+          </SheetHeader>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 py-4">
             {(['clean','test','vi','stamp','boxOrder'] as const).map((key) => (
               <div key={key} className="space-y-1.5">
                 <Label className="text-xs font-medium">{eslFieldLabels[key]}</Label>
@@ -11595,7 +11596,7 @@ const FormVariationsDemo = () => {
               </div>
             ))}
           </div>
-          <DialogFooter className="sm:justify-between">
+          <SheetFooter className="sm:justify-between gap-2">
             <Button
               variant="destructive"
               onClick={() => {
@@ -11611,9 +11612,9 @@ const FormVariationsDemo = () => {
                 <Save className="h-4 w-4 mr-2" />Save Item
               </Button>
             </div>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+          </SheetFooter>
+        </SheetContent>
+      </Sheet>
 
       <Toaster />
     </div>
