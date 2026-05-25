@@ -555,25 +555,58 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                                         {isActive && <Check className="h-3.5 w-3.5" />}
                                         {sf.name}
                                       </div>
-                                      {isActive && (
-                                        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-slate-900 text-white text-[9px] font-bold uppercase tracking-wider">
-                                          <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
-                                          Active
-                                        </span>
-                                      )}
+                                      <div className="flex items-center gap-1">
+                                        {sf.id === defaultFilterId && (
+                                          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full border border-slate-300 bg-white text-slate-700 text-[9px] font-bold uppercase tracking-wider">
+                                            <Star className="h-2.5 w-2.5 fill-slate-700" />
+                                            Default
+                                          </span>
+                                        )}
+                                        {isActive && (
+                                          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-slate-900 text-white text-[9px] font-bold uppercase tracking-wider">
+                                            <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
+                                            Active
+                                          </span>
+                                        )}
+                                      </div>
                                     </div>
                                     <div className={`text-[10px] ${isActive ? 'text-slate-600 font-medium' : 'text-muted-foreground'}`}>
                                       {isActive ? 'Currently applied to results' : new Date(sf.timestamp).toLocaleDateString()}
                                     </div>
                                   </button>
                                   
-                                  
+                                  <button
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      const next = defaultFilterId === sf.id ? null : sf.id;
+                                      setDefaultFilterId(next);
+                                      persistDefaultFilterId(next);
+                                      toast({
+                                        title: next ? 'Default filter set' : 'Default cleared',
+                                        description: next ? `${sf.name} will load on sign in` : undefined,
+                                      });
+                                    }}
+                                    className={`p-1.5 rounded transition-all ${
+                                      defaultFilterId === sf.id
+                                        ? 'opacity-100 text-slate-900 hover:bg-slate-100'
+                                        : 'opacity-0 group-hover:opacity-100 text-muted-foreground hover:bg-muted hover:text-slate-900'
+                                    }`}
+                                    aria-label={defaultFilterId === sf.id ? 'Unset as default' : 'Set as default'}
+                                    title={defaultFilterId === sf.id ? 'Unset as default' : 'Set as default'}
+                                  >
+                                    <Star className={`h-3.5 w-3.5 ${defaultFilterId === sf.id ? 'fill-slate-900' : ''}`} />
+                                  </button>
+
                                   <button
                                     onClick={() => {
                                       const updated = savedFilters.filter(f => f.id !== sf.id);
                                       setSavedFilters(updated);
                                       persistSavedFilters(updated);
                                       if (activeSavedFilterId === sf.id) setActiveSavedFilterId(null);
+                                      if (defaultFilterId === sf.id) {
+                                        setDefaultFilterId(null);
+                                        persistDefaultFilterId(null);
+                                      }
                                     }}
                                     className="opacity-0 group-hover:opacity-100 p-1.5 rounded hover:bg-destructive/10 text-muted-foreground hover:text-destructive transition-all"
                                     aria-label="Delete saved filter"
