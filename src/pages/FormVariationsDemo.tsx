@@ -64,7 +64,7 @@ const FormVariationsDemo = () => {
   const [dragOverSection, setDragOverSection] = useState<string | null>(null);
 
   // ESL General Section accordion controls
-  const eslGeneralIds = ['general-info','logistics-delivery','other-info','misc-info','cost-info','accessories','comments'];
+  const eslGeneralIds = ['general-info','logistics-delivery','other-info','misc-info','cost-info','accessories','transit','comments'];
   const eslGeneralLabels: Record<string,string> = {
     'general-info': 'General Information',
     'logistics-delivery': 'Logistics & Delivery',
@@ -72,6 +72,7 @@ const FormVariationsDemo = () => {
     'misc-info': 'Misc Information',
     'cost-info': 'Cost Information',
     'accessories': 'Accessories',
+    'transit': 'Transit',
     'comments': 'Comments',
   };
   const [eslGeneralOpen, setEslGeneralOpen] = useState<string[]>(['general-info']);
