@@ -7983,6 +7983,7 @@ const FormVariationsDemo = () => {
                   {renderLogisticsSection()}
                 </>
               )}
+              {isESLType && renderTransitSection(true, true)}
             </TabsContent>
 
             {isESLType ? (
