@@ -74,6 +74,31 @@ const FormVariationsDemo = () => {
     'comments': 'Comments',
   };
   const [eslGeneralOpen, setEslGeneralOpen] = useState<string[]>(['general-info']);
+  // ESL Edit (E) dialog — dropdown values that the user can extend
+  const [eslEditOpen, setEslEditOpen] = useState(false);
+  const [eslFieldValues, setEslFieldValues] = useState<Record<string, string>>({
+    clean: '', test: '', vi: '', stamp: '', boxOrder: '',
+  });
+  const [eslFieldOptions, setEslFieldOptions] = useState<Record<string, string[]>>({
+    clean: ['Clean', 'Not Clean', 'Needs Cleaning'],
+    test: ['Pass', 'Fail', 'Retest'],
+    vi: ['OK', 'Defect', 'N/A'],
+    stamp: ['Applied', 'Pending', 'Not Required'],
+    boxOrder: ['A-12', 'B-101', 'C-23'],
+  });
+  const [eslNewOption, setEslNewOption] = useState<Record<string, string>>({
+    clean: '', test: '', vi: '', stamp: '', boxOrder: '',
+  });
+  const eslFieldLabels: Record<string, string> = {
+    clean: 'Clean', test: 'Test', vi: 'Visual Inspection', stamp: 'Stamp', boxOrder: 'Box Order',
+  };
+  const addEslOption = (key: string) => {
+    const val = (eslNewOption[key] || '').trim();
+    if (!val) return;
+    setEslFieldOptions(prev => prev[key].includes(val) ? prev : { ...prev, [key]: [...prev[key], val] });
+    setEslFieldValues(prev => ({ ...prev, [key]: val }));
+    setEslNewOption(prev => ({ ...prev, [key]: '' }));
+  };
   const [eslGeneralHidden, setEslGeneralHidden] = useState<string[]>([]);
   const [eslGeneralOrder, setEslGeneralOrder] = useState<string[]>([...eslGeneralIds]);
   // Reconcile order if section IDs change (e.g. after refactors)
@@ -3704,7 +3729,7 @@ const FormVariationsDemo = () => {
               {/* Data Rows */}
               <TableRow className="hover:bg-muted/30 h-6">
                 <TableCell className="text-center px-1 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" className="text-primary underline-offset-2 hover:underline">E</button></TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" onClick={() => setEslEditOpen(true)} className="text-primary underline-offset-2 hover:underline">E</button></TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" className="text-primary underline-offset-2 hover:underline">F</button></TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5">1</TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5">MSA Safety</TableCell>
@@ -3732,7 +3757,7 @@ const FormVariationsDemo = () => {
               </TableRow>
               <TableRow className="hover:bg-muted/30 h-6">
                 <TableCell className="text-center px-1 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" className="text-primary underline-offset-2 hover:underline">E</button></TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" onClick={() => setEslEditOpen(true)} className="text-primary underline-offset-2 hover:underline">E</button></TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" className="text-primary underline-offset-2 hover:underline">F</button></TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5">2</TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5">3M Scott</TableCell>
@@ -3760,7 +3785,7 @@ const FormVariationsDemo = () => {
               </TableRow>
               <TableRow className="hover:bg-muted/30 h-6">
                 <TableCell className="text-center px-1 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" className="text-primary underline-offset-2 hover:underline">E</button></TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" onClick={() => setEslEditOpen(true)} className="text-primary underline-offset-2 hover:underline">E</button></TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" className="text-primary underline-offset-2 hover:underline">F</button></TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5">3</TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5">Honeywell</TableCell>
@@ -3788,7 +3813,7 @@ const FormVariationsDemo = () => {
               </TableRow>
               <TableRow className="hover:bg-muted/30 h-6">
                 <TableCell className="text-center px-1 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" className="text-primary underline-offset-2 hover:underline">E</button></TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" onClick={() => setEslEditOpen(true)} className="text-primary underline-offset-2 hover:underline">E</button></TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" className="text-primary underline-offset-2 hover:underline">F</button></TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5">4</TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5">Draeger</TableCell>
@@ -3816,7 +3841,7 @@ const FormVariationsDemo = () => {
               </TableRow>
               <TableRow className="hover:bg-muted/30 h-6">
                 <TableCell className="text-center px-1 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" className="text-primary underline-offset-2 hover:underline">E</button></TableCell>
+                <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" onClick={() => setEslEditOpen(true)} className="text-primary underline-offset-2 hover:underline">E</button></TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" className="text-primary underline-offset-2 hover:underline">F</button></TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5">5</TableCell>
                 <TableCell className="text-[10px] px-1.5 py-0.5">MSA Safety</TableCell>
@@ -11544,6 +11569,62 @@ const FormVariationsDemo = () => {
           </div>
         </div>
       )}
+      {/* ESL Item E (Edit) Dialog — dropdowns with inline "add option" */}
+      <Dialog open={eslEditOpen} onOpenChange={setEslEditOpen}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Edit ESL Item</DialogTitle>
+          </DialogHeader>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 py-2">
+            {(['clean','test','vi','stamp','boxOrder'] as const).map((key) => (
+              <div key={key} className="space-y-1.5">
+                <Label className="text-xs font-medium">{eslFieldLabels[key]}</Label>
+                <Select
+                  value={eslFieldValues[key]}
+                  onValueChange={(v) => setEslFieldValues(prev => ({ ...prev, [key]: v }))}
+                >
+                  <SelectTrigger className="h-9">
+                    <SelectValue placeholder={`Select ${eslFieldLabels[key].toLowerCase()}...`} />
+                  </SelectTrigger>
+                  <SelectContent className="bg-popover">
+                    {eslFieldOptions[key].map(opt => (
+                      <SelectItem key={opt} value={opt}>{opt}</SelectItem>
+                    ))}
+                    <div className="border-t mt-1 pt-2 px-2 pb-1">
+                      <p className="text-[10px] text-muted-foreground mb-1.5">Add new option</p>
+                      <div className="flex gap-1.5">
+                        <Input
+                          value={eslNewOption[key]}
+                          onChange={(e) => setEslNewOption(prev => ({ ...prev, [key]: e.target.value }))}
+                          onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); addEslOption(key); } }}
+                          onPointerDown={(e) => e.stopPropagation()}
+                          placeholder="New value..."
+                          className="h-7 text-xs"
+                        />
+                        <Button
+                          type="button"
+                          size="sm"
+                          className="h-7 px-2"
+                          onClick={(e) => { e.preventDefault(); addEslOption(key); }}
+                        >
+                          <Plus className="h-3 w-3" />
+                        </Button>
+                      </div>
+                    </div>
+                  </SelectContent>
+                </Select>
+              </div>
+            ))}
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setEslEditOpen(false)}>Cancel</Button>
+            <Button onClick={() => setEslEditOpen(false)}>
+              <Save className="h-4 w-4 mr-2" />Save Item
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       <Toaster />
     </div>
   );
