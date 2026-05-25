@@ -557,14 +557,14 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                                       </div>
                                       <div className="flex items-center gap-1">
                                         {sf.id === defaultFilterId && (
-                                          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full border border-slate-300 bg-white text-slate-700 text-[9px] font-bold uppercase tracking-wider">
-                                            <Star className="h-2.5 w-2.5 fill-slate-700" />
+                                          <span className="inline-flex items-center gap-0.5 px-1 py-0 rounded-sm border border-slate-300 bg-white text-slate-700 text-[8px] font-semibold uppercase tracking-tight leading-none h-3.5">
+                                            <Star className="h-2 w-2 fill-slate-700" />
                                             Default
                                           </span>
                                         )}
                                         {isActive && (
-                                          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-slate-900 text-white text-[9px] font-bold uppercase tracking-wider">
-                                            <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
+                                          <span className="inline-flex items-center gap-0.5 px-1 py-0 rounded-sm bg-slate-900 text-white text-[8px] font-semibold uppercase tracking-tight leading-none h-3.5">
+                                            <span className="h-1 w-1 rounded-full bg-white" />
                                             Active
                                           </span>
                                         )}
