@@ -452,7 +452,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                       className="flex items-center h-7 gap-1.5 px-2.5 border border-input bg-background rounded-l-md text-xs font-medium text-foreground hover:bg-muted/60 active:bg-muted transition-colors"
                     >
                       <Bookmark className={`h-3.5 w-3.5 ${activeSavedFilterId ? 'text-slate-900 fill-slate-900' : 'text-muted-foreground'}`} />
-                      <span className="hidden lg:inline">Saved</span>
+                      
                       {savedFilters.length > 0 && (
                         <Badge variant="secondary" className="h-4 px-1.5 text-[10px]">{savedFilters.length}</Badge>
                       )}
