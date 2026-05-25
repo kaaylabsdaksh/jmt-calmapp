@@ -62,6 +62,11 @@ const FormVariationsDemo = () => {
   const [hiddenSections, setHiddenSections] = useState<string[]>([]);
   const [draggedSection, setDraggedSection] = useState<string | null>(null);
   const [dragOverSection, setDragOverSection] = useState<string | null>(null);
+  const [stampInspectorOpen, setStampInspectorOpen] = useState(false);
+  const [stampLogin, setStampLogin] = useState("admin");
+  const [stampPassword, setStampPassword] = useState("");
+
+
 
   // ESL General Section accordion controls
   const eslGeneralIds = ['general-info','logistics-delivery','other-info','misc-info','cost-info','accessories','transit','comments'];
