@@ -408,31 +408,58 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
         </div>
 
         <div className="flex items-center gap-2 min-w-0">
+          {/* Active saved filter indicator */}
+          {viewMode === 'default' && activeSavedFilterId && (() => {
+            const active = savedFilters.find(f => f.id === activeSavedFilterId);
+            if (!active) return null;
+            return (
+              <div className="hidden md:inline-flex items-center gap-1.5 h-7 pl-2 pr-1 rounded-full border border-primary/40 bg-primary/10 text-primary text-[11px] font-semibold max-w-[200px]">
+                <Bookmark className="h-3 w-3 fill-current" />
+                <span className="truncate" title={active.name}>{active.name}</span>
+                <button
+                  onClick={() => setActiveSavedFilterId(null)}
+                  className="ml-0.5 p-0.5 rounded-full hover:bg-primary/20 transition-colors"
+                  aria-label="Clear active filter"
+                >
+                  <X className="h-3 w-3" />
+                </button>
+              </div>
+            );
+          })()}
+
           {/* Saved Filters toolbar - moved to top */}
           {viewMode === 'default' && (
             <>
               {savedFilters.length > 0 && (
                 <div className="hidden md:flex items-center gap-1.5 min-w-0">
                   <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider">Recent</span>
-                  {savedFilters.slice(0, 2).map((sf) => (
-                    <button
-                      key={sf.id}
-                      onClick={() => {
-                        const s = sf.state || {};
-                        setSearchValues(s.searchValues ?? searchValues);
-                        setSelectedLocations(s.selectedLocations ?? []);
-                        setDateFrom(s.dateFrom ? new Date(s.dateFrom) : undefined);
-                        setDateTo(s.dateTo ? new Date(s.dateTo) : undefined);
-                        setDateType(s.dateType ?? '');
-                        setSearchChips(s.searchChips ?? []);
-                        toast({ title: 'Filter applied', description: sf.name });
-                      }}
-                      className="h-7 px-2.5 rounded-full border border-border bg-muted/40 text-[12px] font-medium text-foreground/80 hover:border-input hover:bg-background hover:shadow-sm transition-all max-w-[140px] truncate"
-                      title={sf.name}
-                    >
-                      {sf.name}
-                    </button>
-                  ))}
+                  {savedFilters.slice(0, 2).map((sf) => {
+                    const isActive = sf.id === activeSavedFilterId;
+                    return (
+                      <button
+                        key={sf.id}
+                        onClick={() => {
+                          const s = sf.state || {};
+                          setSearchValues(s.searchValues ?? searchValues);
+                          setSelectedLocations(s.selectedLocations ?? []);
+                          setDateFrom(s.dateFrom ? new Date(s.dateFrom) : undefined);
+                          setDateTo(s.dateTo ? new Date(s.dateTo) : undefined);
+                          setDateType(s.dateType ?? '');
+                          setSearchChips(s.searchChips ?? []);
+                          setActiveSavedFilterId(sf.id);
+                          toast({ title: 'Filter applied', description: sf.name });
+                        }}
+                        className={`h-7 px-2.5 rounded-full border text-[12px] font-medium transition-all max-w-[140px] truncate ${
+                          isActive
+                            ? 'border-primary bg-primary/10 text-primary shadow-sm'
+                            : 'border-border bg-muted/40 text-foreground/80 hover:border-input hover:bg-background hover:shadow-sm'
+                        }`}
+                        title={sf.name}
+                      >
+                        {sf.name}
+                      </button>
+                    );
+                  })}
                 </div>
               )}
 
@@ -444,7 +471,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                       title="Saved filters"
                       className="flex items-center h-7 gap-1.5 px-2.5 border border-input bg-background rounded-l-md text-xs font-medium text-foreground hover:bg-muted/60 active:bg-muted transition-colors"
                     >
-                      <Bookmark className="h-3.5 w-3.5 text-muted-foreground" />
+                      <Bookmark className={`h-3.5 w-3.5 ${activeSavedFilterId ? 'text-primary fill-primary' : 'text-muted-foreground'}`} />
                       <span className="hidden lg:inline">Saved</span>
                       {savedFilters.length > 0 && (
                         <Badge variant="secondary" className="h-4 px-1.5 text-[10px]">{savedFilters.length}</Badge>
