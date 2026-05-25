@@ -11592,24 +11592,6 @@ const FormVariationsDemo = () => {
                     ))}
                   </SelectContent>
                 </Select>
-                <div className="flex gap-1.5">
-                  <Input
-                    value={eslNewOption[key]}
-                    onChange={(e) => setEslNewOption(prev => ({ ...prev, [key]: e.target.value }))}
-                    onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); addEslOption(key); } }}
-                    placeholder="Add new option..."
-                    className="h-7 text-xs"
-                  />
-                  <Button
-                    type="button"
-                    size="sm"
-                    variant="outline"
-                    className="h-7 px-2"
-                    onClick={(e) => { e.preventDefault(); addEslOption(key); }}
-                  >
-                    <Plus className="h-3 w-3" />
-                  </Button>
-                </div>
               </div>
             ))}
           </div>
