@@ -2301,6 +2301,19 @@ const FormVariationsDemo = () => {
               </AccordionContent>
             </AccordionItem>),
 
+            'transit': (<AccordionItem value="transit" className="border-b border-border">
+              <AccordionTrigger className="hover:no-underline py-2 text-xs font-semibold">
+                Transit
+              </AccordionTrigger>
+              <AccordionContent className="pb-3">
+                <Card className="border-0 shadow-sm">
+                  <CardContent className="p-3">
+                    {renderTransitSection(true, true)}
+                  </CardContent>
+                </Card>
+              </AccordionContent>
+            </AccordionItem>),
+
             'comments': (<AccordionItem value="comments" className="border-b border-border last:border-b-0">
               <AccordionTrigger className="hover:no-underline py-2 text-xs font-semibold">
                 Comments
