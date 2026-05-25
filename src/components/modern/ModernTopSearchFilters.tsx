@@ -524,34 +524,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                                       {new Date(sf.timestamp).toLocaleDateString()}
                                     </div>
                                   </button>
-                                  <button
-                                    onClick={() => {
-                                      setEditingFilterId(sf.id);
-                                      setEditingFilterName(sf.name);
-                                    }}
-                                    className="opacity-0 group-hover:opacity-100 p-1.5 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-all"
-                                    aria-label="Rename saved filter"
-                                    title="Rename"
-                                  >
-                                    <Pencil className="h-3.5 w-3.5" />
-                                  </button>
-                                  <button
-                                    onClick={() => {
-                                      const updated = savedFilters.map(f => f.id === sf.id ? {
-                                        ...f,
-                                        timestamp: Date.now(),
-                                        state: { searchValues, selectedLocations, dateFrom, dateTo, dateType, searchChips },
-                                      } : f);
-                                      setSavedFilters(updated);
-                                      persistSavedFilters(updated);
-                                      toast({ title: 'Filter updated', description: sf.name });
-                                    }}
-                                    className="opacity-0 group-hover:opacity-100 p-1.5 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-all"
-                                    aria-label="Update saved filter with current criteria"
-                                    title="Update with current filters"
-                                  >
-                                    <RefreshCw className="h-3.5 w-3.5" />
-                                  </button>
+                                  
                                   <button
                                     onClick={() => {
                                       const updated = savedFilters.filter(f => f.id !== sf.id);
