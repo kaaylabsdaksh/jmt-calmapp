@@ -3701,7 +3701,7 @@ const FormVariationsDemo = () => {
               </Select>
             </div>
           ))}
-          <div className="flex items-center gap-1.5 ml-auto">
+          <div className="flex items-center gap-1.5">
             <Button
               size="sm"
               variant="destructive"
