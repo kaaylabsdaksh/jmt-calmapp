@@ -8143,8 +8143,9 @@ const FormVariationsDemo = () => {
                   </TabsTrigger>
                 </TabsList>
 
-                <TabsContent value="general" className="mt-0">
+                <TabsContent value="general" className="mt-0 space-y-6">
                   {renderGeneralSection(accordionDensity === 'compact')}
+                  {renderTransitSection(true, true)}
                 </TabsContent>
 
                 <TabsContent value="details" className="mt-0">
@@ -8157,10 +8158,6 @@ const FormVariationsDemo = () => {
 
                 <TabsContent value="work-status" className="mt-0">
                   {renderWorkStatusSection()}
-                </TabsContent>
-
-                <TabsContent value="transit" className="mt-0">
-                  {renderTransitSection(true, true)}
                 </TabsContent>
               </Tabs>
             ) : (
