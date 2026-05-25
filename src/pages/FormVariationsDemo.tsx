@@ -11569,6 +11569,62 @@ const FormVariationsDemo = () => {
           </div>
         </div>
       )}
+      {/* ESL Item E (Edit) Dialog — dropdowns with inline "add option" */}
+      <Dialog open={eslEditOpen} onOpenChange={setEslEditOpen}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Edit ESL Item</DialogTitle>
+          </DialogHeader>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 py-2">
+            {(['clean','test','vi','stamp','boxOrder'] as const).map((key) => (
+              <div key={key} className="space-y-1.5">
+                <Label className="text-xs font-medium">{eslFieldLabels[key]}</Label>
+                <Select
+                  value={eslFieldValues[key]}
+                  onValueChange={(v) => setEslFieldValues(prev => ({ ...prev, [key]: v }))}
+                >
+                  <SelectTrigger className="h-9">
+                    <SelectValue placeholder={`Select ${eslFieldLabels[key].toLowerCase()}...`} />
+                  </SelectTrigger>
+                  <SelectContent className="bg-popover">
+                    {eslFieldOptions[key].map(opt => (
+                      <SelectItem key={opt} value={opt}>{opt}</SelectItem>
+                    ))}
+                    <div className="border-t mt-1 pt-2 px-2 pb-1">
+                      <p className="text-[10px] text-muted-foreground mb-1.5">Add new option</p>
+                      <div className="flex gap-1.5">
+                        <Input
+                          value={eslNewOption[key]}
+                          onChange={(e) => setEslNewOption(prev => ({ ...prev, [key]: e.target.value }))}
+                          onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); addEslOption(key); } }}
+                          onPointerDown={(e) => e.stopPropagation()}
+                          placeholder="New value..."
+                          className="h-7 text-xs"
+                        />
+                        <Button
+                          type="button"
+                          size="sm"
+                          className="h-7 px-2"
+                          onClick={(e) => { e.preventDefault(); addEslOption(key); }}
+                        >
+                          <Plus className="h-3 w-3" />
+                        </Button>
+                      </div>
+                    </div>
+                  </SelectContent>
+                </Select>
+              </div>
+            ))}
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setEslEditOpen(false)}>Cancel</Button>
+            <Button onClick={() => setEslEditOpen(false)}>
+              <Save className="h-4 w-4 mr-2" />Save Item
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       <Toaster />
     </div>
   );
