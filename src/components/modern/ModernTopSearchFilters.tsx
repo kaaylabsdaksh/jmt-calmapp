@@ -502,8 +502,9 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                             setEditingFilterName('');
                             toast({ title: 'Filter renamed', description: name });
                           };
+                          const isActive = sf.id === activeSavedFilterId;
                           return (
-                            <div key={sf.id} className="flex items-center gap-1 group">
+                            <div key={sf.id} className={`flex items-center gap-1 group rounded-md ${isActive ? 'bg-primary/10' : ''}`}>
                               {isEditing ? (
                                 <div className="flex-1 px-2 py-1.5 flex items-center gap-1">
                                   <Input
@@ -542,14 +543,18 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                                       setDateTo(s.dateTo ? new Date(s.dateTo) : undefined);
                                       setDateType(s.dateType ?? '');
                                       setSearchChips(s.searchChips ?? []);
+                                      setActiveSavedFilterId(sf.id);
                                       setSavedFiltersOpen(false);
                                       toast({ title: 'Filter applied', description: sf.name });
                                     }}
                                     className="flex-1 text-left px-2.5 py-2 rounded-md text-xs hover:bg-muted transition-colors"
                                   >
-                                    <div className="font-medium text-foreground">{sf.name}</div>
+                                    <div className={`font-medium flex items-center gap-1.5 ${isActive ? 'text-primary' : 'text-foreground'}`}>
+                                      {isActive && <Check className="h-3 w-3" />}
+                                      {sf.name}
+                                    </div>
                                     <div className="text-[10px] text-muted-foreground">
-                                      {new Date(sf.timestamp).toLocaleDateString()}
+                                      {isActive ? 'Currently applied' : new Date(sf.timestamp).toLocaleDateString()}
                                     </div>
                                   </button>
                                   
