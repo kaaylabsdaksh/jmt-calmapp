@@ -8263,7 +8263,7 @@ const FormVariationsDemo = () => {
                 </TabsContent>
 
                 <TabsContent value="details" className="mt-0">
-                  {formData.type === 'esl-blankets' ? <BlanketDetailsSection /> : renderDetailsSection()}
+                  {renderDetailsSection()}
                 </TabsContent>
 
                 <TabsContent value="testing" className="mt-0">
