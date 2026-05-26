@@ -3702,6 +3702,46 @@ const FormVariationsDemo = () => {
         </div>
       </div>
 
+      {/* Blankets — Created/Modified + Add Item/Cancel */}
+      {formData.type === 'esl-blankets' && (
+        <div className="flex flex-col items-center gap-2 py-2">
+          <div className="text-[11px] text-muted-foreground space-y-0.5 text-center">
+            <div><span className="font-medium">Created:</span> —</div>
+            <div><span className="font-medium">Modified:</span> —</div>
+          </div>
+          <div className="flex items-center gap-2">
+            <Button size="sm" className="h-8 text-xs px-4">Add Item</Button>
+            <Button size="sm" variant="outline" className="h-8 text-xs px-4">Cancel</Button>
+          </div>
+        </div>
+      )}
+
+      {/* Blankets — Batch action button row */}
+      {formData.type === 'esl-blankets' && (
+        <div className="flex flex-wrap items-end justify-center gap-2 py-3 border-y">
+          <Button variant="outline" size="sm" className="h-8 text-xs">Print WO</Button>
+          <Button variant="outline" size="sm" className="h-8 text-xs">Print Label</Button>
+          <div className="flex flex-col gap-1">
+            <Button variant="outline" size="sm" className="h-8 text-xs">Print Batch Sheet</Button>
+            <div className="flex items-center gap-1.5">
+              <Select defaultValue="default">
+                <SelectTrigger className="h-7 text-[11px] w-32"><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="default">[Default]</SelectItem>
+                  <SelectItem value="detailed">Detailed</SelectItem>
+                  <SelectItem value="summary">Summary</SelectItem>
+                </SelectContent>
+              </Select>
+              <Input type="number" placeholder="Qty" className="h-7 text-[11px] w-14" />
+            </div>
+          </div>
+          <Button variant="outline" size="sm" className="h-8 text-xs">Print Pick Sheet</Button>
+          <Button variant="outline" size="sm" className="h-8 text-xs">Assign by Class</Button>
+          <Button variant="outline" size="sm" className="h-8 text-xs">Assign by Size</Button>
+          <Button variant="outline" size="sm" className="h-8 text-xs">Add from Inventory</Button>
+        </div>
+      )}
+
       {/* ESL Quick Edit Bar — stacked groups: top control row + field grid */}
       {expandedEslRow && (
         <div className="border rounded-lg bg-card shadow-sm overflow-hidden mb-2">
