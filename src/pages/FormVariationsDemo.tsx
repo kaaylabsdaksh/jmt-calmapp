@@ -8266,17 +8266,13 @@ const FormVariationsDemo = () => {
                   {formData.type === 'esl-blankets' ? <BlanketDetailsSection /> : renderDetailsSection()}
                 </TabsContent>
 
-                {formData.type !== 'esl-blankets' && (
-                  <>
-                    <TabsContent value="testing" className="mt-0">
-                      {renderTestingSection()}
-                    </TabsContent>
+                <TabsContent value="testing" className="mt-0">
+                  {renderTestingSection()}
+                </TabsContent>
 
-                    <TabsContent value="work-status" className="mt-0">
-                      {renderWorkStatusSection()}
-                    </TabsContent>
-                  </>
-                )}
+                <TabsContent value="work-status" className="mt-0">
+                  {renderWorkStatusSection()}
+                </TabsContent>
               </Tabs>
             ) : (
               // SINGLE Type Accordion (expanded sections)
