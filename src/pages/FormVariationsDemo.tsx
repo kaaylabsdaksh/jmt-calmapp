@@ -8248,18 +8248,14 @@ const FormVariationsDemo = () => {
                     <FileText className="h-4 w-4" />
                     Details
                   </TabsTrigger>
-                  {formData.type !== 'esl-blankets' && (
-                    <>
-                      <TabsTrigger value="testing" disabled={!isEslGeneralComplete} className="flex-1 gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
-                        <Settings className="h-4 w-4" />
-                        Testing
-                      </TabsTrigger>
-                      <TabsTrigger value="work-status" disabled={!isEslGeneralComplete} className="flex-1 gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
-                        <Clock className="h-4 w-4" />
-                        Work Status
-                      </TabsTrigger>
-                    </>
-                  )}
+                  <TabsTrigger value="testing" disabled={!isEslGeneralComplete} className="flex-1 gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                    <Settings className="h-4 w-4" />
+                    Testing
+                  </TabsTrigger>
+                  <TabsTrigger value="work-status" disabled={!isEslGeneralComplete} className="flex-1 gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                    <Clock className="h-4 w-4" />
+                    Work Status
+                  </TabsTrigger>
                 </TabsList>
 
                 <TabsContent value="general" className="mt-0 space-y-6">
@@ -8270,17 +8266,13 @@ const FormVariationsDemo = () => {
                   {formData.type === 'esl-blankets' ? <BlanketDetailsSection /> : renderDetailsSection()}
                 </TabsContent>
 
-                {formData.type !== 'esl-blankets' && (
-                  <>
-                    <TabsContent value="testing" className="mt-0">
-                      {renderTestingSection()}
-                    </TabsContent>
+                <TabsContent value="testing" className="mt-0">
+                  {renderTestingSection()}
+                </TabsContent>
 
-                    <TabsContent value="work-status" className="mt-0">
-                      {renderWorkStatusSection()}
-                    </TabsContent>
-                  </>
-                )}
+                <TabsContent value="work-status" className="mt-0">
+                  {renderWorkStatusSection()}
+                </TabsContent>
               </Tabs>
             ) : (
               // SINGLE Type Accordion (expanded sections)
