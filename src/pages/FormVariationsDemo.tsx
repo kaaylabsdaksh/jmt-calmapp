@@ -11666,25 +11666,40 @@ const FormVariationsDemo = () => {
           </div>
         )
       ) : isESLType && activeEslTab === 'details' ? (
-        // Details tab footer - Cancel and Save Item buttons centered
+        // Details tab footer
         <div ref={footerRef} className="fixed bottom-0 left-[256px] right-0 bg-background border-t border-border shadow-lg z-10 py-3 px-6">
-          <div className="flex items-center justify-center gap-0 max-w-[1400px] mx-auto">
-            <Button 
-              variant="outline" 
-              onClick={handleCancel}
-              className="h-10 px-6 rounded-r-none border-r-0"
-            >
-              <X className="h-4 w-4 mr-2" />
-              Cancel
-            </Button>
-            <Button 
-              className="h-10 px-6 rounded-l-none bg-emerald-500 hover:bg-emerald-600 text-white border-emerald-500"
-            >
-              <Save className="h-4 w-4 mr-2" />
-              Save Item
-            </Button>
+          <div className="flex items-center justify-between gap-4 max-w-[1400px] mx-auto">
+            {formData.type === 'esl-blankets' ? (
+              <div className="flex items-center gap-2">
+                <Button variant="outline" size="sm" className="h-9 text-xs">Clear Filters</Button>
+                <Button variant="outline" size="sm" className="h-9 text-xs gap-1.5">
+                  <Printer className="h-3.5 w-3.5" /> Print Test Report
+                </Button>
+                <Button variant="outline" size="sm" className="h-9 text-xs gap-1.5">
+                  <FileText className="h-3.5 w-3.5" /> Bulk Update
+                </Button>
+                <Button variant="outline" size="sm" className="h-9 text-xs gap-1.5" onClick={() => navigate(-1)}>
+                  <ArrowLeft className="h-3.5 w-3.5" /> Back
+                </Button>
+              </div>
+            ) : <div />}
+            <div className="flex items-center gap-0">
+              <Button
+                variant="outline"
+                onClick={handleCancel}
+                className="h-10 px-6 rounded-r-none border-r-0"
+              >
+                <X className="h-4 w-4 mr-2" />
+                Cancel
+              </Button>
+              <Button className="h-10 px-6 rounded-l-none bg-emerald-500 hover:bg-emerald-600 text-white border-emerald-500">
+                <Save className="h-4 w-4 mr-2" />
+                Save Item
+              </Button>
+            </div>
           </div>
         </div>
+
       ) : activeSection === 'fail-log' ? (
         <div ref={footerRef} className="fixed bottom-0 left-[256px] right-0 bg-background border-t border-border shadow-lg z-10 py-3 px-6">
           <div className="flex items-center justify-between gap-4 max-w-[1400px] mx-auto">
