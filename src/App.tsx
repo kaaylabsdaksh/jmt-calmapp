@@ -6,6 +6,11 @@ import AddNewWorkOrder from "./pages/AddNewWorkOrder";
 import EditBatchWorkOrder from "./pages/EditBatchWorkOrder";
 import FormVariationsDemo from "./pages/FormVariationsDemo";
 import ESLItemDemo from "./pages/ESLItemDemo";
+import EslBlankets from "./pages/esl/EslBlankets";
+import EslCoverUps from "./pages/esl/EslCoverUps";
+import EslFootwear from "./pages/esl/EslFootwear";
+import EslGloves from "./pages/esl/EslGloves";
+import EslGrounds from "./pages/esl/EslGrounds";
 import EditOrder from "./pages/EditOrder";
 import UnusedItemsManagement from "./pages/UnusedItemsManagement";
 import WorkOrderBatchDetailsDemo from "./pages/WorkOrderBatchDetailsDemo";
@@ -35,6 +40,11 @@ const App = () => {
           <Route path="/unused-items" element={<UnusedItemsManagement />} />
           <Route path="/form-variations" element={<FormVariationsDemo />} />
           <Route path="/esl-items" element={<ESLItemDemo />} />
+          <Route path="/esl/blankets" element={<EslBlankets />} />
+          <Route path="/esl/coverups" element={<EslCoverUps />} />
+          <Route path="/esl/footwear" element={<EslFootwear />} />
+          <Route path="/esl/gloves" element={<EslGloves />} />
+          <Route path="/esl/grounds" element={<EslGrounds />} />
           <Route path="/edit-order" element={<EditOrder />} />
           <Route path="/work-orders-v2" element={<WorkOrderSearchV2 />} />
           <Route path="/work-order/:id" element={<WorkOrderDetail />} />
