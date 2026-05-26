@@ -3577,15 +3577,23 @@ const FormVariationsDemo = () => {
           </div>
           <div className="p-3 flex-1">
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-2 gap-y-1.5">
-              {[
-                { id: "detailsManufacturer", label: "Manufacturer", key: "manufacturer", options: [["3m","3M"],["salisbury","Salisbury"],["chance","Chance"],["cementex","Cementex"],["novax","Novax"]] },
-                { id: "detailsClass", label: "Class", key: "itemClass", options: [["class-0","Class 0"],["class-1","Class 1"],["class-2","Class 2"],["class-3","Class 3"],["class-4","Class 4"]] },
-                { id: "detailsSize", label: "Size", key: "size", options: [["xs","XS"],["s","S"],["m","M"],["l","L"],["xl","XL"],["xxl","XXL"]] },
-                { id: "detailsLength", label: "Length", key: "length", options: [["11","11\""],["14","14\""],["16","16\""],["18","18\""]] },
-                { id: "detailsColorIn", label: "Color In", key: "colorIn", options: [["black","Black"],["red","Red"],["yellow","Yellow"],["orange","Orange"],["green","Green"]] },
-                { id: "detailsColorOut", label: "Color Out", key: "colorOut", options: [["black","Black"],["red","Red"],["yellow","Yellow"],["orange","Orange"],["green","Green"]] },
-                { id: "detailsCuffType", label: "Cuff Type", key: "cuffType", options: [["straight","Straight"],["bell","Bell"],["contour","Contour"]] },
-              ].map((f) => (
+              {(formData.type === 'esl-blankets'
+                ? [
+                    { id: "detailsManufacturer", label: "Manufacturer", key: "manufacturer", options: [["3m","3M"],["salisbury","Salisbury"],["chance","Chance"],["cementex","Cementex"],["novax","Novax"]] },
+                    { id: "detailsClass", label: "Class", key: "itemClass", options: [["class-0","Class 0"],["class-1","Class 1"],["class-2","Class 2"],["class-3","Class 3"],["class-4","Class 4"]] },
+                    { id: "detailsSize", label: "Size", key: "size", options: [["18x18","18x18"],["22x22","22x22"],["36x36","36x36"]] },
+                    { id: "detailsColor", label: "Color", key: "colorIn", options: [["black","Black"],["yellow","Yellow"],["orange","Orange"],["red","Red"]] },
+                  ]
+                : [
+                    { id: "detailsManufacturer", label: "Manufacturer", key: "manufacturer", options: [["3m","3M"],["salisbury","Salisbury"],["chance","Chance"],["cementex","Cementex"],["novax","Novax"]] },
+                    { id: "detailsClass", label: "Class", key: "itemClass", options: [["class-0","Class 0"],["class-1","Class 1"],["class-2","Class 2"],["class-3","Class 3"],["class-4","Class 4"]] },
+                    { id: "detailsSize", label: "Size", key: "size", options: [["xs","XS"],["s","S"],["m","M"],["l","L"],["xl","XL"],["xxl","XXL"]] },
+                    { id: "detailsLength", label: "Length", key: "length", options: [["11","11\""],["14","14\""],["16","16\""],["18","18\""]] },
+                    { id: "detailsColorIn", label: "Color In", key: "colorIn", options: [["black","Black"],["red","Red"],["yellow","Yellow"],["orange","Orange"],["green","Green"]] },
+                    { id: "detailsColorOut", label: "Color Out", key: "colorOut", options: [["black","Black"],["red","Red"],["yellow","Yellow"],["orange","Orange"],["green","Green"]] },
+                    { id: "detailsCuffType", label: "Cuff Type", key: "cuffType", options: [["straight","Straight"],["bell","Bell"],["contour","Contour"]] },
+                  ]
+              ).map((f) => (
                 <div key={f.id} className="space-y-0.5">
                   <Label htmlFor={f.id} className="text-[11px] font-semibold">{f.label}</Label>
                   <Select value={(formData as any)[f.key] || ""} onValueChange={(value) => handleInputChange(f.key, value)}>
@@ -3606,12 +3614,20 @@ const FormVariationsDemo = () => {
             <div className="mt-2 pt-2 border-t space-y-1">
               <Label className="text-[11px] font-semibold">State</Label>
               <div className="flex flex-wrap gap-x-4 gap-y-1">
-                {[
-                  { id: "stateOddLeft", key: "oddLeft", label: "Odd Left" },
-                  { id: "stateOddRight", key: "oddRight", label: "Odd Right" },
-                  { id: "stateNew", key: "newEquip", label: "New" },
-                  { id: "stateMitten", key: "mitten", label: "Mitten" },
-                ].map((opt) => (
+                {(formData.type === 'esl-blankets'
+                  ? [
+                      { id: "stateNew", key: "newEquip", label: "New" },
+                      { id: "stateSlot", key: "slot", label: "Slot" },
+                      { id: "stateEyelets", key: "eyelets", label: "Eyelets" },
+                      { id: "stateZip", key: "zip", label: "Zip" },
+                    ]
+                  : [
+                      { id: "stateOddLeft", key: "oddLeft", label: "Odd Left" },
+                      { id: "stateOddRight", key: "oddRight", label: "Odd Right" },
+                      { id: "stateNew", key: "newEquip", label: "New" },
+                      { id: "stateMitten", key: "mitten", label: "Mitten" },
+                    ]
+                ).map((opt) => (
                   <label key={opt.id} htmlFor={opt.id} className="flex items-center gap-1.5 cursor-pointer">
                     <Checkbox
                       id={opt.id}
@@ -3685,6 +3701,46 @@ const FormVariationsDemo = () => {
           </div>
         </div>
       </div>
+
+      {/* Blankets — Created/Modified + Add Item/Cancel */}
+      {formData.type === 'esl-blankets' && (
+        <div className="flex flex-col items-center gap-2 py-2">
+          <div className="text-[11px] text-muted-foreground space-y-0.5 text-center">
+            <div><span className="font-medium">Created:</span> —</div>
+            <div><span className="font-medium">Modified:</span> —</div>
+          </div>
+          <div className="flex items-center gap-2">
+            <Button size="sm" className="h-8 text-xs px-4">Add Item</Button>
+            <Button size="sm" variant="outline" className="h-8 text-xs px-4">Cancel</Button>
+          </div>
+        </div>
+      )}
+
+      {/* Blankets — Batch action button row */}
+      {formData.type === 'esl-blankets' && (
+        <div className="flex flex-wrap items-end justify-center gap-2 py-3 border-y">
+          <Button variant="outline" size="sm" className="h-8 text-xs">Print WO</Button>
+          <Button variant="outline" size="sm" className="h-8 text-xs">Print Label</Button>
+          <div className="flex flex-col gap-1">
+            <Button variant="outline" size="sm" className="h-8 text-xs">Print Batch Sheet</Button>
+            <div className="flex items-center gap-1.5">
+              <Select defaultValue="default">
+                <SelectTrigger className="h-7 text-[11px] w-32"><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="default">[Default]</SelectItem>
+                  <SelectItem value="detailed">Detailed</SelectItem>
+                  <SelectItem value="summary">Summary</SelectItem>
+                </SelectContent>
+              </Select>
+              <Input type="number" placeholder="Qty" className="h-7 text-[11px] w-14" />
+            </div>
+          </div>
+          <Button variant="outline" size="sm" className="h-8 text-xs">Print Pick Sheet</Button>
+          <Button variant="outline" size="sm" className="h-8 text-xs">Assign by Class</Button>
+          <Button variant="outline" size="sm" className="h-8 text-xs">Assign by Size</Button>
+          <Button variant="outline" size="sm" className="h-8 text-xs">Add from Inventory</Button>
+        </div>
+      )}
 
       {/* ESL Quick Edit Bar — stacked groups: top control row + field grid */}
       {expandedEslRow && (
@@ -3989,23 +4045,60 @@ const FormVariationsDemo = () => {
           </Table>
         </div>
         {/* Pagination Footer */}
-        <div className="bg-muted/50 px-4 py-2 border-t flex items-center justify-end">
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-muted-foreground">:</span>
-            <Select defaultValue="10">
-              <SelectTrigger className="h-7 w-16 text-xs border-border">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className="bg-background border-border">
-                <SelectItem value="10" className="text-xs">10</SelectItem>
-                <SelectItem value="25" className="text-xs">25</SelectItem>
-                <SelectItem value="50" className="text-xs">50</SelectItem>
-                <SelectItem value="100" className="text-xs">100</SelectItem>
-                <SelectItem value="250" className="text-xs">250</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+        <div className="bg-muted/50 px-4 py-2 border-t flex items-center justify-between gap-2 flex-wrap">
+          {formData.type === 'esl-blankets' ? (
+            <>
+              <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                <span>Page 1 of 27 (262 items)</span>
+                <Button variant="ghost" size="sm" className="h-6 w-6 p-0"><ChevronLeft className="h-3.5 w-3.5" /></Button>
+                {[1,2,3,4,5,6,7].map(n => (
+                  <button key={n} type="button" className={`h-6 w-6 rounded text-xs ${n === 1 ? 'bg-foreground text-background font-semibold' : 'hover:bg-muted'}`}>{n}</button>
+                ))}
+                <span>…</span>
+                {[25,26,27].map(n => (
+                  <button key={n} type="button" className="h-6 w-6 rounded text-xs hover:bg-muted">{n}</button>
+                ))}
+                <Button variant="ghost" size="sm" className="h-6 w-6 p-0"><ChevronRight className="h-3.5 w-3.5" /></Button>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-muted-foreground">Page size:</span>
+                <Select defaultValue="10">
+                  <SelectTrigger className="h-7 w-16 text-xs border-border"><SelectValue /></SelectTrigger>
+                  <SelectContent className="bg-background border-border">
+                    <SelectItem value="10" className="text-xs">10</SelectItem>
+                    <SelectItem value="25" className="text-xs">25</SelectItem>
+                    <SelectItem value="50" className="text-xs">50</SelectItem>
+                    <SelectItem value="100" className="text-xs">100</SelectItem>
+                    <SelectItem value="250" className="text-xs">250</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </>
+          ) : (
+            <div className="flex items-center gap-2 ml-auto">
+              <span className="text-xs text-muted-foreground">:</span>
+              <Select defaultValue="10">
+                <SelectTrigger className="h-7 w-16 text-xs border-border"><SelectValue /></SelectTrigger>
+                <SelectContent className="bg-background border-border">
+                  <SelectItem value="10" className="text-xs">10</SelectItem>
+                  <SelectItem value="25" className="text-xs">25</SelectItem>
+                  <SelectItem value="50" className="text-xs">50</SelectItem>
+                  <SelectItem value="100" className="text-xs">100</SelectItem>
+                  <SelectItem value="250" className="text-xs">250</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          )}
         </div>
+
+        {/* Blankets — Preview/Save/Cancel changes inline footer */}
+        {formData.type === 'esl-blankets' && (
+          <div className="bg-muted/30 px-4 py-2 border-t flex items-center justify-end gap-2">
+            <Button variant="outline" size="sm" className="h-8 text-xs" disabled>Preview changes</Button>
+            <Button variant="outline" size="sm" className="h-8 text-xs" disabled>Save changes</Button>
+            <Button variant="outline" size="sm" className="h-8 text-xs" disabled>Cancel changes</Button>
+          </div>
+        )}
       </div>
 
       {/* Spacer for fixed footer */}
