@@ -3614,12 +3614,20 @@ const FormVariationsDemo = () => {
             <div className="mt-2 pt-2 border-t space-y-1">
               <Label className="text-[11px] font-semibold">State</Label>
               <div className="flex flex-wrap gap-x-4 gap-y-1">
-                {[
-                  { id: "stateOddLeft", key: "oddLeft", label: "Odd Left" },
-                  { id: "stateOddRight", key: "oddRight", label: "Odd Right" },
-                  { id: "stateNew", key: "newEquip", label: "New" },
-                  { id: "stateMitten", key: "mitten", label: "Mitten" },
-                ].map((opt) => (
+                {(formData.type === 'esl-blankets'
+                  ? [
+                      { id: "stateNew", key: "newEquip", label: "New" },
+                      { id: "stateSlot", key: "slot", label: "Slot" },
+                      { id: "stateEyelets", key: "eyelets", label: "Eyelets" },
+                      { id: "stateZip", key: "zip", label: "Zip" },
+                    ]
+                  : [
+                      { id: "stateOddLeft", key: "oddLeft", label: "Odd Left" },
+                      { id: "stateOddRight", key: "oddRight", label: "Odd Right" },
+                      { id: "stateNew", key: "newEquip", label: "New" },
+                      { id: "stateMitten", key: "mitten", label: "Mitten" },
+                    ]
+                ).map((opt) => (
                   <label key={opt.id} htmlFor={opt.id} className="flex items-center gap-1.5 cursor-pointer">
                     <Checkbox
                       id={opt.id}
