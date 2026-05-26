@@ -441,21 +441,6 @@ export const BlanketDetailsSection = () => {
             <Button variant="outline" size="sm" className="h-9 gap-1.5 text-xs">
               <Filter className="h-3.5 w-3.5" /> Filters
             </Button>
-            <Button variant="outline" size="sm" className="h-9 gap-1.5 text-xs">
-              <Printer className="h-3.5 w-3.5" /> Print Test Report
-            </Button>
-            <Button
-              size="sm"
-              className="h-9 gap-1.5 text-xs"
-              disabled={selected.size === 0}
-            >
-              <FileEdit className="h-3.5 w-3.5" /> Bulk Update
-              {selected.size > 0 && (
-                <Badge variant="secondary" className="ml-1 h-5 text-[10px]">
-                  {selected.size}
-                </Badge>
-              )}
-            </Button>
           </div>
         </div>
 
