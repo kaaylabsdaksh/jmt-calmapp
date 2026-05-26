@@ -8168,7 +8168,11 @@ const FormVariationsDemo = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2 flex-1">
               <div className="space-y-0.5">
                 <Label htmlFor="type" className="text-[10px] font-medium">Type *</Label>
-                <Select value={formData.type} onValueChange={(value) => handleInputChange("type", value)}>
+                <Select value={formData.type} onValueChange={(value) => {
+                  handleInputChange("type", value);
+                  const m: Record<string, string> = { "esl-blankets":"/esl/blankets","esl-coverups":"/esl/coverups","esl-footwear":"/esl/footwear","esl-gloves":"/esl/gloves","esl-grounds":"/esl/grounds" };
+                  if (m[value]) navigate(m[value]);
+                }}>
                   <SelectTrigger className="h-6 text-[11px] px-2">
                     <SelectValue placeholder="Select type" />
                   </SelectTrigger>
@@ -8525,7 +8529,11 @@ const FormVariationsDemo = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
             <Label htmlFor="bento-type" className="text-sm font-medium">Type *</Label>
-            <Select value={formData.type} onValueChange={(value) => handleInputChange("type", value)}>
+            <Select value={formData.type} onValueChange={(value) => {
+              handleInputChange("type", value);
+              const m: Record<string, string> = { "esl-blankets":"/esl/blankets","esl-coverups":"/esl/coverups","esl-footwear":"/esl/footwear","esl-gloves":"/esl/gloves","esl-grounds":"/esl/grounds" };
+              if (m[value]) navigate(m[value]);
+            }}>
               <SelectTrigger className="h-10">
                 <SelectValue placeholder="Select type" />
               </SelectTrigger>
