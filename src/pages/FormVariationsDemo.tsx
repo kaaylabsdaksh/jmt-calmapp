@@ -28,6 +28,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Calendar } from "@/components/ui/calendar";
 import { ModernDatePicker } from "@/components/ui/modern-date-picker";
+import { BlanketDetailsSection } from "./esl/components/BlanketDetailsSection";
 import { FixedActionFooter } from "@/components/FixedActionFooter";
 import { EstimateDetails } from "@/components/EstimateDetails";
 import { QF3Dialog } from "@/components/QF3Dialog";
@@ -8104,8 +8105,9 @@ const FormVariationsDemo = () => {
               <>
                 {/* ESL-specific tabs */}
                 <TabsContent value="details" className="mt-0 space-y-6 animate-fade-in">
-                  {renderDetailsSection()}
+                  {formData.type === 'esl-blankets' ? <BlanketDetailsSection /> : renderDetailsSection()}
                 </TabsContent>
+
 
                 <TabsContent value="testing" className="mt-0 space-y-6 animate-fade-in">
                   {renderTestingSection()}
@@ -8270,7 +8272,7 @@ const FormVariationsDemo = () => {
                 </TabsContent>
 
                 <TabsContent value="details" className="mt-0">
-                  {renderDetailsSection()}
+                  {formData.type === 'esl-blankets' ? <BlanketDetailsSection /> : renderDetailsSection()}
                 </TabsContent>
 
                 {formData.type !== 'esl-blankets' && (
