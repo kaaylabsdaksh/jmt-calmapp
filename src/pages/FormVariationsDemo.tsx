@@ -39,7 +39,15 @@ import { Toaster } from "@/components/ui/toaster";
 const FormVariationsDemo = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const isEslPage = location.pathname === "/esl-items";
+  const eslRouteTypeMap: Record<string, string> = {
+    "/esl/blankets": "esl-blankets",
+    "/esl/coverups": "esl-coverups",
+    "/esl/footwear": "esl-footwear",
+    "/esl/gloves": "esl-gloves",
+    "/esl/grounds": "esl-grounds",
+  };
+  const routePresetType = eslRouteTypeMap[location.pathname];
+  const isEslPage = location.pathname === "/esl-items" || !!routePresetType;
   const { toast } = useToast();
   
   // Layout variant state
@@ -776,7 +784,7 @@ const FormVariationsDemo = () => {
     contact: "",
     
     // General Information
-    type: "",
+    type: routePresetType || "",
     reportNumber: "",
     itemStatus: "in-lab",
     rotationSubStatus: "",
