@@ -4070,30 +4070,47 @@ const FormVariationsDemo = () => {
         <div className="px-4 py-3">
           <div className="flex items-center justify-between gap-3">
             {/* Left side - Action buttons */}
-            <div className="flex flex-wrap items-center gap-2">
-              <Button variant="outline" size="sm" className="h-9 text-sm px-3">
-                <Printer className="h-4 w-4 mr-1.5" /> Print WO
-              </Button>
+            <div className="flex flex-wrap items-center gap-1.5">
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button variant="outline" size="icon" className="h-9 w-9">
+                    <Printer className="h-4 w-4" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="top" className="text-xs">Print WO</TooltipContent>
+              </Tooltip>
+
               <div className="flex items-center">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="h-9 text-sm px-3 rounded-r-none border-r-0"
-                  onClick={() => setPrintLabelDialogOpen(true)}
-                >
-                  <Printer className="h-4 w-4 mr-1.5" /> Print Label
-                </Button>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      className="h-9 w-9 rounded-r-none border-r-0"
+                      onClick={() => setPrintLabelDialogOpen(true)}
+                    >
+                      <Printer className="h-4 w-4" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent side="top" className="text-xs">Print Label</TooltipContent>
+                </Tooltip>
                 <Input type="number" placeholder="Qty" className="h-9 text-xs w-16 rounded-l-none" />
               </div>
+
               <div className="flex items-center">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="h-9 text-sm px-3 rounded-r-none border-r-0"
-                  onClick={() => setPrintBatchSheetDialogOpen(true)}
-                >
-                  <Printer className="h-4 w-4 mr-1.5" /> Print Batch Sheet
-                </Button>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      className="h-9 w-9 rounded-r-none border-r-0"
+                      onClick={() => setPrintBatchSheetDialogOpen(true)}
+                    >
+                      <Printer className="h-4 w-4" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent side="top" className="text-xs">Print Batch Sheet</TooltipContent>
+                </Tooltip>
                 <Select defaultValue="default">
                   <SelectTrigger className="h-9 text-xs w-28 rounded-l-none"><SelectValue /></SelectTrigger>
                   <SelectContent>
@@ -4103,18 +4120,32 @@ const FormVariationsDemo = () => {
                   </SelectContent>
                 </Select>
               </div>
-              <Button variant="outline" size="sm" className="h-9 text-sm px-3">
-                <Printer className="h-4 w-4 mr-1.5" /> Print Pick Sheet
-              </Button>
+
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button variant="outline" size="icon" className="h-9 w-9">
+                    <Printer className="h-4 w-4" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="top" className="text-xs">Print Pick Sheet</TooltipContent>
+              </Tooltip>
+
+              <div className="w-px h-6 bg-border mx-1" />
+
               <Button variant="outline" size="sm" className="h-9 text-sm px-3">
                 Assign by Class
               </Button>
               <Button variant="outline" size="sm" className="h-9 text-sm px-3">
                 Assign by Size
               </Button>
-              <Button variant="outline" size="sm" className="h-9 text-sm px-3">
-                <Package className="h-4 w-4 mr-1.5" /> Add from Inventory
-              </Button>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button variant="outline" size="icon" className="h-9 w-9">
+                    <Package className="h-4 w-4" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="top" className="text-xs">Add from Inventory</TooltipContent>
+              </Tooltip>
             </div>
 
             {/* Right side - Save and Cancel */}
