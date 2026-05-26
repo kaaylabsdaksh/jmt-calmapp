@@ -4045,23 +4045,60 @@ const FormVariationsDemo = () => {
           </Table>
         </div>
         {/* Pagination Footer */}
-        <div className="bg-muted/50 px-4 py-2 border-t flex items-center justify-end">
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-muted-foreground">:</span>
-            <Select defaultValue="10">
-              <SelectTrigger className="h-7 w-16 text-xs border-border">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className="bg-background border-border">
-                <SelectItem value="10" className="text-xs">10</SelectItem>
-                <SelectItem value="25" className="text-xs">25</SelectItem>
-                <SelectItem value="50" className="text-xs">50</SelectItem>
-                <SelectItem value="100" className="text-xs">100</SelectItem>
-                <SelectItem value="250" className="text-xs">250</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+        <div className="bg-muted/50 px-4 py-2 border-t flex items-center justify-between gap-2 flex-wrap">
+          {formData.type === 'esl-blankets' ? (
+            <>
+              <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                <span>Page 1 of 27 (262 items)</span>
+                <Button variant="ghost" size="sm" className="h-6 w-6 p-0"><ChevronLeft className="h-3.5 w-3.5" /></Button>
+                {[1,2,3,4,5,6,7].map(n => (
+                  <button key={n} type="button" className={`h-6 w-6 rounded text-xs ${n === 1 ? 'bg-foreground text-background font-semibold' : 'hover:bg-muted'}`}>{n}</button>
+                ))}
+                <span>…</span>
+                {[25,26,27].map(n => (
+                  <button key={n} type="button" className="h-6 w-6 rounded text-xs hover:bg-muted">{n}</button>
+                ))}
+                <Button variant="ghost" size="sm" className="h-6 w-6 p-0"><ChevronRight className="h-3.5 w-3.5" /></Button>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-muted-foreground">Page size:</span>
+                <Select defaultValue="10">
+                  <SelectTrigger className="h-7 w-16 text-xs border-border"><SelectValue /></SelectTrigger>
+                  <SelectContent className="bg-background border-border">
+                    <SelectItem value="10" className="text-xs">10</SelectItem>
+                    <SelectItem value="25" className="text-xs">25</SelectItem>
+                    <SelectItem value="50" className="text-xs">50</SelectItem>
+                    <SelectItem value="100" className="text-xs">100</SelectItem>
+                    <SelectItem value="250" className="text-xs">250</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </>
+          ) : (
+            <div className="flex items-center gap-2 ml-auto">
+              <span className="text-xs text-muted-foreground">:</span>
+              <Select defaultValue="10">
+                <SelectTrigger className="h-7 w-16 text-xs border-border"><SelectValue /></SelectTrigger>
+                <SelectContent className="bg-background border-border">
+                  <SelectItem value="10" className="text-xs">10</SelectItem>
+                  <SelectItem value="25" className="text-xs">25</SelectItem>
+                  <SelectItem value="50" className="text-xs">50</SelectItem>
+                  <SelectItem value="100" className="text-xs">100</SelectItem>
+                  <SelectItem value="250" className="text-xs">250</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          )}
         </div>
+
+        {/* Blankets — Preview/Save/Cancel changes inline footer */}
+        {formData.type === 'esl-blankets' && (
+          <div className="bg-muted/30 px-4 py-2 border-t flex items-center justify-end gap-2">
+            <Button variant="outline" size="sm" className="h-8 text-xs" disabled>Preview changes</Button>
+            <Button variant="outline" size="sm" className="h-8 text-xs" disabled>Save changes</Button>
+            <Button variant="outline" size="sm" className="h-8 text-xs" disabled>Cancel changes</Button>
+          </div>
+        )}
       </div>
 
       {/* Spacer for fixed footer */}
