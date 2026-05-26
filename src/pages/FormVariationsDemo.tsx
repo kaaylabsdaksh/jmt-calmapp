@@ -11678,10 +11678,8 @@ const FormVariationsDemo = () => {
                 <Button variant="outline" size="sm" className="h-9 text-xs gap-1.5">
                   <FileText className="h-3.5 w-3.5" /> Bulk Update
                 </Button>
-                <Button variant="outline" size="sm" className="h-9 text-xs gap-1.5" onClick={() => navigate(-1)}>
-                  <ArrowLeft className="h-3.5 w-3.5" /> Back
-                </Button>
               </div>
+
             ) : <div />}
             <div className="flex items-center gap-0">
               <Button
