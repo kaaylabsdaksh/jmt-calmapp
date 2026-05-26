@@ -398,51 +398,77 @@ export const BlanketDetailsSection = () => {
 
       {/* ============ ITEMS TABLE ============ */}
       <div className="rounded-xl border bg-card shadow-sm overflow-hidden">
-        <div className="flex flex-col gap-3 px-5 py-3 border-b bg-muted/30 lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex flex-col gap-3 px-6 py-3.5 border-b lg:flex-row lg:items-center lg:justify-between">
+          {/* Left: identity */}
           <div className="flex items-center gap-3">
-            <h3 className="text-sm font-semibold">Blanket Items</h3>
-            <Badge variant="secondary" className="text-[10px]">{filtered.length} items</Badge>
+            <h3 className="text-[15px] font-semibold tracking-tight">Blanket Items</h3>
+            <span className="rounded-full border border-border bg-muted px-2 py-0.5 text-[11px] font-medium text-muted-foreground">
+              {filtered.length} items
+            </span>
             {selected.size > 0 && (
-              <Badge className="text-[10px] bg-primary text-primary-foreground">
+              <span className="rounded-full bg-foreground text-background px-2 py-0.5 text-[11px] font-medium">
                 {selected.size} selected
-              </Badge>
+              </span>
             )}
           </div>
-          <div className="flex flex-wrap items-center gap-2">
-            <div className="relative">
-              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
+
+          {/* Right: functional controls */}
+          <div className="flex items-center gap-6">
+            {/* Search */}
+            <div className="relative w-72">
+              <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search items…"
-                className="h-9 pl-8 w-56 text-xs"
+                className="h-9 w-full pl-9 pr-4 text-xs bg-muted/40 border-border rounded-lg focus-visible:ring-1 focus-visible:ring-ring focus-visible:bg-background"
               />
             </div>
-            <ToggleGroup
-              type="single"
-              value={view}
-              onValueChange={(v) => v && setView(v as "basic" | "extended")}
-              className="rounded-md border bg-background h-9 p-0.5"
-            >
-              <ToggleGroupItem value="basic" className="h-8 px-3 text-xs data-[state=on]:bg-muted">
-                Basic
-              </ToggleGroupItem>
-              <ToggleGroupItem value="extended" className="h-8 px-3 text-xs data-[state=on]:bg-muted">
-                Extended
-              </ToggleGroupItem>
-            </ToggleGroup>
-            <CheckboxField
-              id="showCancelled"
-              label="Show Cancelled"
-              checked={showCancelled}
-              onCheckedChange={(v) => setShowCancelled(!!v)}
-              compact
-            />
-            <Button variant="outline" size="sm" className="h-9 gap-1.5 text-xs">
-              <Filter className="h-3.5 w-3.5" /> Filters
-            </Button>
+
+            {/* Grouped actions */}
+            <div className="flex items-center gap-5">
+              <ToggleGroup
+                type="single"
+                value={view}
+                onValueChange={(v) => v && setView(v as "basic" | "extended")}
+                className="flex p-1 bg-muted rounded-lg gap-0"
+              >
+                <ToggleGroupItem
+                  value="basic"
+                  className="h-7 px-3 text-[11px] font-semibold rounded-md text-muted-foreground data-[state=on]:bg-background data-[state=on]:text-foreground data-[state=on]:shadow-sm data-[state=on]:ring-1 data-[state=on]:ring-black/5"
+                >
+                  Basic
+                </ToggleGroupItem>
+                <ToggleGroupItem
+                  value="extended"
+                  className="h-7 px-3 text-[11px] font-medium rounded-md text-muted-foreground data-[state=on]:bg-background data-[state=on]:text-foreground data-[state=on]:shadow-sm data-[state=on]:ring-1 data-[state=on]:ring-black/5"
+                >
+                  Extended
+                </ToggleGroupItem>
+              </ToggleGroup>
+
+              <label className="group flex cursor-pointer items-center gap-2.5 select-none">
+                <Checkbox
+                  checked={showCancelled}
+                  onCheckedChange={(v) => setShowCancelled(!!v)}
+                  className="h-4 w-4 rounded border-border data-[state=checked]:bg-foreground data-[state=checked]:border-foreground data-[state=checked]:text-background"
+                />
+                <span className="text-[12px] text-muted-foreground transition-colors group-hover:text-foreground">
+                  Show Cancelled
+                </span>
+              </label>
+
+              <Button
+                size="sm"
+                className="h-9 gap-2 rounded-lg bg-primary px-4 text-[12px] font-semibold text-primary-foreground shadow-sm border border-black/5 hover:bg-primary/90 active:scale-95 transition-all"
+              >
+                <Filter className="h-3.5 w-3.5" /> Filters
+              </Button>
+            </div>
           </div>
         </div>
+
+
 
         <div className="overflow-x-auto">
           <table className="w-full text-xs">
