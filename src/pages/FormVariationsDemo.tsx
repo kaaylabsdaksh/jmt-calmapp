@@ -8025,7 +8025,7 @@ const FormVariationsDemo = () => {
             <TabsList 
               className={cn(
                 "grid h-10 sm:h-11 items-center rounded-md bg-muted p-1 text-muted-foreground w-full gap-1",
-                isESLType ? "grid-cols-4" : "grid-cols-7"
+                isESLType ? (firstRowTabs.length === 2 ? "grid-cols-2" : "grid-cols-4") : "grid-cols-7"
               )}
               onKeyDown={handleTabKeyDown}
             >
