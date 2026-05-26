@@ -7957,7 +7957,16 @@ const FormVariationsDemo = () => {
               <Label htmlFor="type" className="text-sm font-medium">Type *</Label>
               <Select value={formData.type} onValueChange={(value) => {
                 handleInputChange("type", value);
-                if (value.startsWith("esl-")) {
+                const eslRouteMap: Record<string, string> = {
+                  "esl-blankets": "/esl/blankets",
+                  "esl-coverups": "/esl/coverups",
+                  "esl-footwear": "/esl/footwear",
+                  "esl-gloves": "/esl/gloves",
+                  "esl-grounds": "/esl/grounds",
+                };
+                if (eslRouteMap[value]) {
+                  navigate(eslRouteMap[value]);
+                } else if (value.startsWith("esl-")) {
                   navigate("/esl-items");
                 }
               }}>
