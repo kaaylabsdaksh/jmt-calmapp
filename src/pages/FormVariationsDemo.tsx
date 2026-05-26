@@ -4341,6 +4341,77 @@ const FormVariationsDemo = () => {
         {/* Testing Results Table */}
         <div className="border border-border rounded-lg overflow-hidden">
           <div className="overflow-x-auto">
+            {formData.type === 'esl-blankets' ? (
+              <table className="w-full text-[10px]">
+                <thead>
+                  <tr className="bg-muted/50 border-b border-border">
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-12">ID</th>
+                    <th className="px-1.5 py-1 text-center font-medium text-muted-foreground w-8">
+                      <Checkbox className="h-3 w-3" />
+                    </th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-8">Sort</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground">Manufacturer</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-14">Class</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-12">Size</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-14">Color</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-8">Slot</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-10">Eyelets</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-8">Zip</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-8">New</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground">Cust ID</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-14">ESL ID</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-16">Tag</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-12">Result</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-10">Procs</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-14">Stds</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-10"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    { id: '260672', sort: 1, manufacturer: 'SALISBURY', class: 'CLASS 2', size: '36x36', color: 'Black', slot: 'No', eyelets: 'No', zip: 'No', new: 'No', custId: 'AC-1 / 171128', eslId: '', tag: '', result: 'PASS', procs: 'F479', stds: '751, 4455' },
+                    { id: '260673', sort: 2, manufacturer: 'SALISBURY', class: 'CLASS 2', size: '36x36', color: 'Black', slot: 'No', eyelets: 'No', zip: 'No', new: 'No', custId: 'AC-2 / 171129', eslId: '', tag: 'Repl Pending', result: 'FAIL', procs: 'F479', stds: '751, 4455' },
+                    { id: '260674', sort: 3, manufacturer: 'SALISBURY', class: 'CLASS 4', size: '36x36', color: 'Orange', slot: 'No', eyelets: 'No', zip: 'No', new: 'No', custId: 'N/A', eslId: '', tag: '', result: 'PASS', procs: 'F479', stds: '751, 4455' },
+                    { id: '260675', sort: 4, manufacturer: 'SALISBURY', class: 'CLASS 4', size: '36x36', color: 'Orange', slot: 'No', eyelets: 'No', zip: 'No', new: 'No', custId: 'N/A', eslId: '', tag: '', result: 'PASS', procs: 'F479', stds: '751, 4455' },
+                    { id: '260676', sort: 5, manufacturer: 'SALISBURY', class: 'CLASS 4', size: '36x36', color: 'Orange', slot: 'No', eyelets: 'No', zip: 'No', new: 'No', custId: 'N/A', eslId: '', tag: '', result: 'PASS', procs: 'F479', stds: '751, 4455' },
+                    { id: '260677', sort: 6, manufacturer: 'SALISBURY', class: 'CLASS 4', size: '36x36', color: 'Orange', slot: 'No', eyelets: 'No', zip: 'No', new: 'No', custId: 'N/A', eslId: '', tag: '', result: 'PASS', procs: 'F479', stds: '751, 4455' },
+                  ].map((row, index) => (
+                    <tr key={row.id} className={`border-b border-border hover:bg-muted/30 h-6 ${index % 2 === 0 ? 'bg-background' : 'bg-muted/10'}`}>
+                      <td className="px-1.5 py-0.5 text-[10px] font-medium text-foreground">{row.id}</td>
+                      <td className="px-1.5 py-0.5 text-center"><Checkbox className="h-3 w-3" /></td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.sort}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.manufacturer}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.class}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.size}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.color}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.slot}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.eyelets}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.zip}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.new}</td>
+                      <td className="px-1.5 py-0.5 text-[10px] truncate max-w-[150px]" title={row.custId}>{row.custId}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.eslId}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.tag}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">
+                        {row.result === 'PASS' && <span className="text-green-600 font-medium">PASS</span>}
+                        {row.result === 'FAIL' && <span className="text-red-600 font-medium">FAIL</span>}
+                      </td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.procs}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.stds}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">
+                        <Button
+                          variant="link"
+                          size="sm"
+                          className="h-5 px-1 text-[10px] text-foreground hover:text-foreground/80"
+                          onClick={() => handleOpenTestingEdit(row as any)}
+                        >
+                          Edit
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
             <table className="w-full text-[10px]">
               <thead>
                 <tr className="bg-muted/50 border-b border-border">
@@ -4423,6 +4494,7 @@ const FormVariationsDemo = () => {
                 ))}
               </tbody>
             </table>
+            )}
           </div>
         </div>
 
