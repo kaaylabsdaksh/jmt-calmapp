@@ -8100,7 +8100,7 @@ const FormVariationsDemo = () => {
               <>
                 {/* ESL-specific tabs */}
                 <TabsContent value="details" className="mt-0 space-y-6 animate-fade-in">
-                  {formData.type === 'esl-blankets' ? <BlanketDetailsSection /> : renderDetailsSection()}
+                  {renderDetailsSection()}
                 </TabsContent>
 
 
