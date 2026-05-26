@@ -4070,32 +4070,32 @@ const FormVariationsDemo = () => {
         <div className="px-4 py-3">
           <div className="flex items-center justify-between gap-3">
             {/* Left side - Action buttons */}
-            <div className="flex flex-wrap items-end gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <Button variant="outline" size="sm" className="h-9 text-sm px-3">
                 <Printer className="h-4 w-4 mr-1.5" /> Print WO
               </Button>
-              <div className="flex flex-col gap-1">
+              <div className="flex items-center">
                 <Button
                   variant="outline"
                   size="sm"
-                  className="h-9 text-sm px-3"
+                  className="h-9 text-sm px-3 rounded-r-none border-r-0"
                   onClick={() => setPrintLabelDialogOpen(true)}
                 >
                   <Printer className="h-4 w-4 mr-1.5" /> Print Label
                 </Button>
-                <Input type="number" placeholder="Qty" className="h-7 text-[11px] w-full" />
+                <Input type="number" placeholder="Qty" className="h-9 text-xs w-16 rounded-l-none" />
               </div>
-              <div className="flex flex-col gap-1">
+              <div className="flex items-center">
                 <Button
                   variant="outline"
                   size="sm"
-                  className="h-9 text-sm px-3"
+                  className="h-9 text-sm px-3 rounded-r-none border-r-0"
                   onClick={() => setPrintBatchSheetDialogOpen(true)}
                 >
                   <Printer className="h-4 w-4 mr-1.5" /> Print Batch Sheet
                 </Button>
                 <Select defaultValue="default">
-                  <SelectTrigger className="h-7 text-[11px] w-full"><SelectValue /></SelectTrigger>
+                  <SelectTrigger className="h-9 text-xs w-28 rounded-l-none"><SelectValue /></SelectTrigger>
                   <SelectContent>
                     <SelectItem value="default">[Default]</SelectItem>
                     <SelectItem value="detailed">Detailed</SelectItem>
