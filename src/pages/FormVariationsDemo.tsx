@@ -4321,46 +4321,74 @@ const FormVariationsDemo = () => {
                 </Select>
               </div>
 
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button variant="outline" size="icon" className="h-9 w-9">
-                    <Printer className="h-4 w-4" />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent side="top" className="text-xs">Print Pick Sheet</TooltipContent>
-              </Tooltip>
+              {formData.type !== 'esl-footwear' && (
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button variant="outline" size="icon" className="h-9 w-9">
+                      <Printer className="h-4 w-4" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent side="top" className="text-xs">Print Pick Sheet</TooltipContent>
+                </Tooltip>
+              )}
 
               <div className="w-px h-6 bg-border mx-1" />
 
-              <Button variant="outline" size="sm" className="h-9 text-sm px-3">
-                Assign by Class
-              </Button>
-              <Button variant="outline" size="sm" className="h-9 text-sm px-3">
-                Assign by Size
-              </Button>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button variant="outline" size="icon" className="h-9 w-9">
-                    <Package className="h-4 w-4" />
+              {formData.type === 'esl-footwear' ? (
+                <Button variant="outline" size="sm" className="h-9 text-sm px-3">
+                  Assign by Manufacturer
+                </Button>
+              ) : (
+                <>
+                  <Button variant="outline" size="sm" className="h-9 text-sm px-3">
+                    Assign by Class
                   </Button>
-                </TooltipTrigger>
-                <TooltipContent side="top" className="text-xs">Add from Inventory</TooltipContent>
-              </Tooltip>
+                  <Button variant="outline" size="sm" className="h-9 text-sm px-3">
+                    Assign by Size
+                  </Button>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button variant="outline" size="icon" className="h-9 w-9">
+                        <Package className="h-4 w-4" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent side="top" className="text-xs">Add from Inventory</TooltipContent>
+                  </Tooltip>
+                </>
+              )}
             </div>
 
-            {/* Right side - Save and Cancel */}
+            {/* Right side - Save/Cancel or Add Item/Cancel */}
             <div className="flex items-center gap-3">
-              <Button variant="outline" size="default" className="h-9 text-sm px-4" onClick={handleCancel}>
-                Cancel
-              </Button>
-              <Button 
-                size="default"
-                onClick={handleSave}
-                className="h-9 text-sm px-4 bg-primary text-primary-foreground hover:bg-primary/90"
-              >
-                <Save className="h-4 w-4 mr-2" />
-                Save
-              </Button>
+              {formData.type === 'esl-footwear' ? (
+                <>
+                  <Button
+                    size="default"
+                    onClick={() => toast({ title: "Item added", description: "Details saved to the work order." })}
+                    className="h-9 text-sm px-4 bg-primary text-primary-foreground hover:bg-primary/90"
+                  >
+                    <Plus className="h-4 w-4 mr-1" />
+                    Add Item
+                  </Button>
+                  <Button variant="outline" size="default" className="h-9 text-sm px-4" onClick={handleCancel}>
+                    Cancel
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button variant="outline" size="default" className="h-9 text-sm px-4" onClick={handleCancel}>
+                    Cancel
+                  </Button>
+                  <Button
+                    size="default"
+                    onClick={handleSave}
+                    className="h-9 text-sm px-4 bg-primary text-primary-foreground hover:bg-primary/90"
+                  >
+                    <Save className="h-4 w-4 mr-2" />
+                    Save
+                  </Button>
+                </>
+              )}
             </div>
           </div>
         </div>
