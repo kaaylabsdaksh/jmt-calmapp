@@ -3871,6 +3871,9 @@ const FormVariationsDemo = () => {
             <table className="w-full text-[10px]">
               <thead>
                 <tr className="bg-muted/50 border-b border-border">
+                  <th className="px-1.5 py-1 text-center font-medium text-muted-foreground w-8">
+                    <Checkbox className="h-3 w-3" />
+                  </th>
                   <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-10"></th>
                   <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-8">Sort</th>
                   <th className="px-1.5 py-1 text-left font-medium text-muted-foreground">Manufacturer</th>
@@ -3903,6 +3906,7 @@ const FormVariationsDemo = () => {
                   { sort: 4, manufacturer: 'CHANCE', class: 'CLASS 4', size: '6" x 48"', type: 'Pole Cover', model: 'C4060550', color: 'Orange', new: 'Yes', eslId: '', custId: 'N/A', tag: 'NEW PURCHASE', systemTag: '', stage: 'C. Dunaway', acc: 'N' },
                 ].map((row, index) => (
                   <tr key={row.sort} className={`border-b border-border h-6 ${expandedEslRow ? (expandedEslRow === String(row.sort) ? "bg-primary/20 hover:bg-primary/25 border-l-2 border-l-primary" : "text-muted-foreground opacity-50") : `hover:bg-muted/30 ${index === 0 ? 'bg-yellow-50/60' : index % 2 === 0 ? 'bg-background' : 'bg-muted/10'}`}`}>
+                    <td className="px-1.5 py-0.5 text-center"><Checkbox className="h-3 w-3" /></td>
                     <td className="px-1.5 py-0.5 text-[10px]">
                       <div className="flex gap-1">
                         <button
