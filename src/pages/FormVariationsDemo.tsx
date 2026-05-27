@@ -3528,8 +3528,8 @@ const FormVariationsDemo = () => {
       <div className="border border-primary/20 rounded-lg p-4 space-y-3">
         <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Quick Prefill</div>
         
-        <div className={`grid grid-cols-1 ${formData.type === 'esl-grounds' ? 'md:grid-cols-3' : 'md:grid-cols-2'} gap-4`}>
-          {formData.type === 'esl-grounds' && (
+        <div className={`grid grid-cols-1 ${formData.type === 'esl-grounds' || formData.type === 'esl-hotsticks' ? 'md:grid-cols-3' : 'md:grid-cols-2'} gap-4`}>
+          {(formData.type === 'esl-grounds' || formData.type === 'esl-hotsticks') && (
             <div className="flex items-end gap-2">
               <div className="flex-1 space-y-1">
                 <Label htmlFor="prefillRfid" className="text-xs">Prefill w/RFID:</Label>
@@ -3565,7 +3565,7 @@ const FormVariationsDemo = () => {
             <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide">Identification</span>
           </div>
           <div className="p-3 grid grid-cols-3 gap-2 flex-1">
-            {formData.type === 'esl-grounds' && (
+            {(formData.type === 'esl-grounds' || formData.type === 'esl-hotsticks') && (
               <div className="space-y-0.5">
                 <Label htmlFor="rfidDetail" className="text-[11px]">RFID</Label>
                 <Input id="rfidDetail" placeholder="RFID" className="h-7 text-xs" />
@@ -3629,6 +3629,16 @@ const FormVariationsDemo = () => {
                     { id: "detailsWireSize", label: "Wire Size", key: "wireSize", options: [["2/0","2/0"],["1/0","1/0"],["#2","#2"],["#4","#4"],["#6","#6"]] },
                     { id: "detailsColor", label: "Color", key: "colorIn", options: [["black","Black"],["yellow","Yellow"],["orange","Orange"],["red","Red"],["green","Green"]] },
                     { id: "detailsGroundType", label: "Ground Type", key: "groundType", options: [["personal","Personal"],["cluster","Cluster"],["jumper","Jumper"],["chain","Chain"]] },
+                  ]
+                : formData.type === 'esl-hotsticks'
+                ? [
+                    { id: "detailsManufacturer", label: "Manufacturer", key: "manufacturer", options: [["3m","3M"],["salisbury","Salisbury"],["chance","Chance"],["hastings","Hastings"],["novax","Novax"]] },
+                    { id: "detailsHotstickType", label: "Hotstick Type", key: "hotstickType", options: [["shotgun","Shotgun"],["telescoping","Telescoping"],["universal","Universal"],["switch","Switch"],["measuring","Measuring"]] },
+                    { id: "detailsModel", label: "Model", key: "model", options: [["m-100","M-100"],["m-200","M-200"],["m-300","M-300"]] },
+                    { id: "detailsDescription", label: "Description", key: "description", options: [["std","Standard"],["hd","Heavy Duty"],["lw","Lightweight"]] },
+                    { id: "detailsTestedTo", label: "Tested To", key: "testedTo", options: [["75kv-ft","75kV/ft"],["100kv-ft","100kV/ft"],["50kv-ft","50kV/ft"]] },
+                    { id: "detailsLength", label: "Length", key: "length", options: [["4","4'"],["6","6'"],["8","8'"],["10","10'"],["12","12'"]] },
+                    { id: "detailsColor", label: "Color", key: "colorIn", options: [["orange","Orange"],["yellow","Yellow"],["white","White"],["black","Black"]] },
                   ]
                 : [
                     { id: "detailsManufacturer", label: "Manufacturer", key: "manufacturer", options: [["3m","3M"],["salisbury","Salisbury"],["chance","Chance"],["cementex","Cementex"],["novax","Novax"]] },
@@ -3694,7 +3704,7 @@ const FormVariationsDemo = () => {
                       { id: "stateNew", key: "newEquip", label: "New" },
                       { id: "stateSurplusReplacement", key: "surplusReplacement", label: "Surplus Replacement For" },
                     ]
-                  : formData.type === 'esl-grounds'
+                  : formData.type === 'esl-grounds' || formData.type === 'esl-hotsticks'
                   ? [
                       { id: "stateNew", key: "newEquip", label: "New" },
                     ]
