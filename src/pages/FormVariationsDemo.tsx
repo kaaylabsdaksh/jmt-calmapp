@@ -4177,6 +4177,7 @@ const FormVariationsDemo = () => {
           </div>
         )}
       </div>
+      )}
 
       {/* Spacer for fixed footer */}
       <div className="h-14" />
