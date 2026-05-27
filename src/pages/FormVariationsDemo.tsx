@@ -3565,6 +3565,12 @@ const FormVariationsDemo = () => {
             <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide">Identification</span>
           </div>
           <div className="p-3 grid grid-cols-3 gap-2 flex-1">
+            {formData.type === 'esl-grounds' && (
+              <div className="space-y-0.5">
+                <Label htmlFor="rfidDetail" className="text-[11px]">RFID</Label>
+                <Input id="rfidDetail" placeholder="RFID" className="h-7 text-xs" />
+              </div>
+            )}
             <div className="space-y-0.5">
               <Label htmlFor="eslId" className="text-[11px]">ESL ID</Label>
               <Input id="eslId" value={formData.eslId} onChange={(e) => handleInputChange("eslId", e.target.value)} placeholder="ESL ID" className="h-7 text-xs" />
@@ -3577,7 +3583,14 @@ const FormVariationsDemo = () => {
               <Label htmlFor="tagNumber" className="text-[11px]">Tag #</Label>
               <Input id="tagNumber" value={formData.tagNumber} onChange={(e) => handleInputChange("tagNumber", e.target.value)} placeholder="Tag #" className="h-7 text-xs" />
             </div>
+            {formData.type === 'esl-grounds' && (
+              <div className="space-y-0.5">
+                <Label htmlFor="qtyDetail" className="text-[11px]">Qty</Label>
+                <Input id="qtyDetail" type="number" placeholder="Qty" className="h-7 text-xs" />
+              </div>
+            )}
           </div>
+
         </div>
 
         {/* Product Specifications */}
