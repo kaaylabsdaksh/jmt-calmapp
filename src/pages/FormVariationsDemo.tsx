@@ -3627,6 +3627,20 @@ const FormVariationsDemo = () => {
               ))}
             </div>
 
+            {formData.type === 'esl-footwear' && (
+              <div className="mt-2 pt-2 border-t grid grid-cols-2 gap-x-2 gap-y-1">
+                <div className="flex items-baseline gap-1.5">
+                  <Label className="text-[11px] font-semibold">Class:</Label>
+                  <span className="text-[11px] text-foreground">2</span>
+                </div>
+                <div className="flex items-baseline gap-1.5">
+                  <Label className="text-[11px] font-semibold">Mfr Description:</Label>
+                  <span className="text-[11px] text-muted-foreground">—</span>
+                </div>
+              </div>
+            )}
+
+
             {/* State checkboxes */}
             <div className="mt-2 pt-2 border-t space-y-1">
               <Label className="text-[11px] font-semibold">State</Label>
