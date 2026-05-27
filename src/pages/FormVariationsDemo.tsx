@@ -4382,6 +4382,7 @@ const FormVariationsDemo = () => {
               ) : (
                 <>
                   <Button variant="outline" size="default" className="h-9 text-sm px-4" onClick={handleCancel}>
+                    <X className="h-4 w-4 mr-1" />
                     Cancel
                   </Button>
                   <Button
@@ -4389,8 +4390,8 @@ const FormVariationsDemo = () => {
                     onClick={handleSave}
                     className="h-9 text-sm px-4 bg-primary text-primary-foreground hover:bg-primary/90"
                   >
-                    <Save className="h-4 w-4 mr-2" />
-                    Save
+                    <Save className="h-4 w-4 mr-1" />
+                    Save Item
                   </Button>
                 </>
               )}
