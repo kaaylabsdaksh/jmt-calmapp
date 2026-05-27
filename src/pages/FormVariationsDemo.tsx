@@ -3528,8 +3528,8 @@ const FormVariationsDemo = () => {
       <div className="border border-primary/20 rounded-lg p-4 space-y-3">
         <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Quick Prefill</div>
         
-        <div className={`grid grid-cols-1 ${formData.type === 'esl-grounds' ? 'md:grid-cols-3' : 'md:grid-cols-2'} gap-4`}>
-          {formData.type === 'esl-grounds' && (
+        <div className={`grid grid-cols-1 ${formData.type === 'esl-grounds' || formData.type === 'esl-hotsticks' ? 'md:grid-cols-3' : 'md:grid-cols-2'} gap-4`}>
+          {(formData.type === 'esl-grounds' || formData.type === 'esl-hotsticks') && (
             <div className="flex items-end gap-2">
               <div className="flex-1 space-y-1">
                 <Label htmlFor="prefillRfid" className="text-xs">Prefill w/RFID:</Label>
