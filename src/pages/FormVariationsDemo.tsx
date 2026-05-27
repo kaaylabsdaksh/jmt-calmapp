@@ -4688,6 +4688,89 @@ const FormVariationsDemo = () => {
                   ))}
                 </tbody>
               </table>
+            ) : formData.type === 'esl-grounds' ? (
+              <table className="w-full text-[10px]">
+                <thead>
+                  <tr className="bg-muted/50 border-b border-border">
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-12">ID</th>
+                    <th className="px-1.5 py-1 text-center font-medium text-muted-foreground w-8">
+                      <Checkbox className="h-3 w-3" />
+                    </th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-8">Sort</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground">Manufacturer</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-14">Wire Size</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-14">Color</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-10">Type</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-14">Length A</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-14">Length B</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-14">Length C</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-14">Mat Size</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-8">New</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-14">Cust ID</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-16">ESL ID</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground">Tag</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-12">Result</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-12">Rep Hrs</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-14">mΩ A/Mat</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-12">mΩ B</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-12">mΩ C</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-10">Procs</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-10">Stds</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-10"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    { id: '214553', sort: 1, manufacturer: 'CAROL', wireSize: '1/0', color: 'Orange', type: 'S', lengthA: "6'", lengthB: '', lengthC: '', matSize: '', new: 'No', custId: 'N/A', eslId: '755537', tag: '', result: '', repHrs: '', mohmA: '', mohmB: '', mohmC: '', procs: '', stds: '' },
+                    { id: '214559', sort: 2, manufacturer: 'SALISBURY', wireSize: '1/0', color: 'Yellow', type: 'S', lengthA: "6'", lengthB: '', lengthC: '', matSize: '', new: 'No', custId: 'N/A', eslId: '3006827', tag: '', result: '', repHrs: '', mohmA: '', mohmB: '', mohmC: '', procs: '', stds: '' },
+                    { id: '214560', sort: 3, manufacturer: 'SALISBURY', wireSize: '1/0', color: 'Yellow', type: 'S', lengthA: "6'", lengthB: '', lengthC: '', matSize: '', new: 'No', custId: 'N/A', eslId: '3006828', tag: '', result: '', repHrs: '', mohmA: '', mohmB: '', mohmC: '', procs: '', stds: '' },
+                    { id: '214558', sort: 4, manufacturer: 'SALISBURY', wireSize: '1/0', color: 'Yellow', type: 'S', lengthA: "6'", lengthB: '', lengthC: '', matSize: '', new: 'No', custId: 'N/A', eslId: '3006826', tag: '', result: '', repHrs: '', mohmA: '', mohmB: '', mohmC: '', procs: '', stds: '' },
+                    { id: '214557', sort: 5, manufacturer: 'SALISBURY', wireSize: '1/0', color: 'Yellow', type: 'S', lengthA: "6'", lengthB: '', lengthC: '', matSize: '', new: 'No', custId: 'N/A', eslId: '3006825', tag: '', result: '', repHrs: '', mohmA: '', mohmB: '', mohmC: '', procs: '', stds: '' },
+                    { id: '214561', sort: 6, manufacturer: 'UNKNOWN', wireSize: '1/0', color: 'Yellow', type: 'S', lengthA: "6'", lengthB: '', lengthC: '', matSize: '', new: 'No', custId: 'N/A', eslId: '3006829', tag: '', result: '', repHrs: '', mohmA: '', mohmB: '', mohmC: '', procs: '', stds: '' },
+                    { id: '214562', sort: 7, manufacturer: 'AMERCABLE', wireSize: '2/0', color: 'Clear', type: 'S', lengthA: "4'", lengthB: '', lengthC: '', matSize: '', new: 'No', custId: 'N/A', eslId: '3006830', tag: '', result: '', repHrs: '', mohmA: '', mohmB: '', mohmC: '', procs: '', stds: '' },
+                    { id: '214565', sort: 8, manufacturer: 'HASTINGS', wireSize: '2/0', color: 'Yellow', type: 'S', lengthA: "10'", lengthB: '', lengthC: '', matSize: '', new: 'No', custId: 'N/A', eslId: '3006833', tag: 'ATTACHED TO CUTTER', result: '', repHrs: '', mohmA: '', mohmB: '', mohmC: '', procs: '', stds: '' },
+                    { id: '214564', sort: 9, manufacturer: 'SALISBURY', wireSize: '2/0', color: 'Clear', type: 'S', lengthA: "8'", lengthB: '', lengthC: '', matSize: '', new: 'No', custId: 'N/A', eslId: '3006832', tag: '', result: '', repHrs: '', mohmA: '', mohmB: '', mohmC: '', procs: '', stds: '' },
+                    { id: '214556', sort: 10, manufacturer: 'SALISBURY', wireSize: '2/0', color: 'Yellow', type: 'S', lengthA: "6'", lengthB: '', lengthC: '', matSize: '', new: 'No', custId: 'N/A', eslId: '755530', tag: '', result: '', repHrs: '', mohmA: '', mohmB: '', mohmC: '', procs: '', stds: '' },
+                    { id: '214550', sort: 11, manufacturer: 'SALISBURY', wireSize: '2/0', color: 'Yellow', type: 'S', lengthA: "6'", lengthB: '', lengthC: '', matSize: '', new: 'No', custId: 'N/A', eslId: '755526', tag: '', result: '', repHrs: '', mohmA: '', mohmB: '', mohmC: '', procs: '', stds: '' },
+                    { id: '214551', sort: 12, manufacturer: 'SALISBURY', wireSize: '2/0', color: 'Yellow', type: 'S', lengthA: "6'", lengthB: '', lengthC: '', matSize: '', new: 'No', custId: 'N/A', eslId: '755527', tag: '', result: '', repHrs: '', mohmA: '', mohmB: '', mohmC: '', procs: '', stds: '' },
+                  ].map((row, index) => (
+                    <tr key={row.id} className={`border-b border-border hover:bg-muted/30 h-6 ${index % 2 === 0 ? 'bg-background' : 'bg-muted/10'}`}>
+                      <td className="px-1.5 py-0.5 text-[10px] font-medium text-foreground">{row.id}</td>
+                      <td className="px-1.5 py-0.5 text-center"><Checkbox className="h-3 w-3" /></td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.sort}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.manufacturer}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.wireSize}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.color}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.type}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.lengthA}</td>
+                      <td className="px-1.5 py-0.5 text-[10px] bg-muted/40">{row.lengthB}</td>
+                      <td className="px-1.5 py-0.5 text-[10px] bg-muted/40">{row.lengthC}</td>
+                      <td className="px-1.5 py-0.5 text-[10px] bg-muted/40">{row.matSize}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.new}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.custId}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.eslId}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.tag}</td>
+                      <td className="px-1.5 py-0.5 text-[10px] bg-muted/40">{row.result}</td>
+                      <td className="px-1.5 py-0.5 text-[10px] bg-muted/40">{row.repHrs}</td>
+                      <td className="px-1.5 py-0.5 text-[10px] bg-muted/40">{row.mohmA}</td>
+                      <td className="px-1.5 py-0.5 text-[10px] bg-muted/40">{row.mohmB}</td>
+                      <td className="px-1.5 py-0.5 text-[10px] bg-muted/40">{row.mohmC}</td>
+                      <td className="px-1.5 py-0.5 text-[10px] bg-muted/40">{row.procs}</td>
+                      <td className="px-1.5 py-0.5 text-[10px] bg-muted/40">{row.stds}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">
+                        <Button
+                          variant="link"
+                          size="sm"
+                          className="h-5 px-1 text-[10px] text-foreground hover:text-foreground/80"
+                          onClick={() => handleOpenTestingEdit(row as any)}
+                        >
+                          Edit
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             ) : (
             <table className="w-full text-[10px]">
               <thead>
