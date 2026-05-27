@@ -3704,7 +3704,7 @@ const FormVariationsDemo = () => {
                       { id: "stateNew", key: "newEquip", label: "New" },
                       { id: "stateSurplusReplacement", key: "surplusReplacement", label: "Surplus Replacement For" },
                     ]
-                  : formData.type === 'esl-grounds'
+                  : formData.type === 'esl-grounds' || formData.type === 'esl-hotsticks'
                   ? [
                       { id: "stateNew", key: "newEquip", label: "New" },
                     ]
