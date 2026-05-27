@@ -3630,6 +3630,16 @@ const FormVariationsDemo = () => {
                     { id: "detailsColor", label: "Color", key: "colorIn", options: [["black","Black"],["yellow","Yellow"],["orange","Orange"],["red","Red"],["green","Green"]] },
                     { id: "detailsGroundType", label: "Ground Type", key: "groundType", options: [["personal","Personal"],["cluster","Cluster"],["jumper","Jumper"],["chain","Chain"]] },
                   ]
+                : formData.type === 'esl-hotsticks'
+                ? [
+                    { id: "detailsManufacturer", label: "Manufacturer", key: "manufacturer", options: [["3m","3M"],["salisbury","Salisbury"],["chance","Chance"],["hastings","Hastings"],["novax","Novax"]] },
+                    { id: "detailsHotstickType", label: "Hotstick Type", key: "hotstickType", options: [["shotgun","Shotgun"],["telescoping","Telescoping"],["universal","Universal"],["switch","Switch"],["measuring","Measuring"]] },
+                    { id: "detailsModel", label: "Model", key: "model", options: [["m-100","M-100"],["m-200","M-200"],["m-300","M-300"]] },
+                    { id: "detailsDescription", label: "Description", key: "description", options: [["std","Standard"],["hd","Heavy Duty"],["lw","Lightweight"]] },
+                    { id: "detailsTestedTo", label: "Tested To", key: "testedTo", options: [["75kv-ft","75kV/ft"],["100kv-ft","100kV/ft"],["50kv-ft","50kV/ft"]] },
+                    { id: "detailsLength", label: "Length", key: "length", options: [["4","4'"],["6","6'"],["8","8'"],["10","10'"],["12","12'"]] },
+                    { id: "detailsColor", label: "Color", key: "colorIn", options: [["orange","Orange"],["yellow","Yellow"],["white","White"],["black","Black"]] },
+                  ]
                 : [
                     { id: "detailsManufacturer", label: "Manufacturer", key: "manufacturer", options: [["3m","3M"],["salisbury","Salisbury"],["chance","Chance"],["cementex","Cementex"],["novax","Novax"]] },
                     { id: "detailsClass", label: "Class", key: "itemClass", options: [["class-0","Class 0"],["class-1","Class 1"],["class-2","Class 2"],["class-3","Class 3"],["class-4","Class 4"]] },
