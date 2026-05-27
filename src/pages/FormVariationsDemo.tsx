@@ -3584,6 +3584,15 @@ const FormVariationsDemo = () => {
                     { id: "detailsSize", label: "Size", key: "size", options: [["18x18","18x18"],["22x22","22x22"],["36x36","36x36"]] },
                     { id: "detailsColor", label: "Color", key: "colorIn", options: [["black","Black"],["yellow","Yellow"],["orange","Orange"],["red","Red"]] },
                   ]
+                : formData.type === 'esl-coverups'
+                ? [
+                    { id: "detailsManufacturer", label: "Manufacturer", key: "manufacturer", options: [["3m","3M"],["salisbury","Salisbury"],["chance","Chance"],["cementex","Cementex"],["novax","Novax"]] },
+                    { id: "detailsClass", label: "Class", key: "itemClass", options: [["class-0","Class 0"],["class-1","Class 1"],["class-2","Class 2"],["class-3","Class 3"],["class-4","Class 4"]] },
+                    { id: "detailsSize", label: "Size", key: "size", options: [["small","Small"],["medium","Medium"],["large","Large"]] },
+                    { id: "detailsCoverupType", label: "Type", key: "coverupType", options: [["line-hose","Line Hose"],["insulator-cover","Insulator Cover"],["dead-end","Dead End"],["pole-cover","Pole Cover"],["crossarm-cover","Crossarm Cover"]] },
+                    { id: "detailsModelNumber", label: "Model #", key: "model", options: [["m-100","M-100"],["m-200","M-200"],["m-300","M-300"]] },
+                    { id: "detailsColor", label: "Color", key: "colorIn", options: [["black","Black"],["yellow","Yellow"],["orange","Orange"],["red","Red"],["green","Green"]] },
+                  ]
                 : [
                     { id: "detailsManufacturer", label: "Manufacturer", key: "manufacturer", options: [["3m","3M"],["salisbury","Salisbury"],["chance","Chance"],["cementex","Cementex"],["novax","Novax"]] },
                     { id: "detailsClass", label: "Class", key: "itemClass", options: [["class-0","Class 0"],["class-1","Class 1"],["class-2","Class 2"],["class-3","Class 3"],["class-4","Class 4"]] },
@@ -3594,6 +3603,7 @@ const FormVariationsDemo = () => {
                     { id: "detailsCuffType", label: "Cuff Type", key: "cuffType", options: [["straight","Straight"],["bell","Bell"],["contour","Contour"]] },
                   ]
               ).map((f) => (
+
                 <div key={f.id} className="space-y-0.5">
                   <Label htmlFor={f.id} className="text-[11px] font-semibold">{f.label}</Label>
                   <Select value={(formData as any)[f.key] || ""} onValueChange={(value) => handleInputChange(f.key, value)}>
