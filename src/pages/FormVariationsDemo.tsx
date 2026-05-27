@@ -3528,7 +3528,16 @@ const FormVariationsDemo = () => {
       <div className="border border-primary/20 rounded-lg p-4 space-y-3">
         <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Quick Prefill</div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className={`grid grid-cols-1 ${formData.type === 'esl-grounds' ? 'md:grid-cols-3' : 'md:grid-cols-2'} gap-4`}>
+          {formData.type === 'esl-grounds' && (
+            <div className="flex items-end gap-2">
+              <div className="flex-1 space-y-1">
+                <Label htmlFor="prefillRfid" className="text-xs">Prefill w/RFID:</Label>
+                <Input id="prefillRfid" placeholder="Enter RFID" className="h-8 text-xs" />
+              </div>
+              <Button variant="default" size="sm" className="h-8 text-xs px-4">Prefill</Button>
+            </div>
+          )}
           <div className="flex items-end gap-2">
             <div className="flex-1 space-y-1">
               <Label htmlFor="prefillEslId" className="text-xs">Prefill w/ESL ID:</Label>
@@ -3547,6 +3556,7 @@ const FormVariationsDemo = () => {
         </div>
       </div>
 
+
       {/* Identification + Product Specifications + Accessories - side by side */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
         {/* Identification */}
@@ -3555,6 +3565,12 @@ const FormVariationsDemo = () => {
             <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide">Identification</span>
           </div>
           <div className="p-3 grid grid-cols-3 gap-2 flex-1">
+            {formData.type === 'esl-grounds' && (
+              <div className="space-y-0.5">
+                <Label htmlFor="rfidDetail" className="text-[11px]">RFID</Label>
+                <Input id="rfidDetail" placeholder="RFID" className="h-7 text-xs" />
+              </div>
+            )}
             <div className="space-y-0.5">
               <Label htmlFor="eslId" className="text-[11px]">ESL ID</Label>
               <Input id="eslId" value={formData.eslId} onChange={(e) => handleInputChange("eslId", e.target.value)} placeholder="ESL ID" className="h-7 text-xs" />
@@ -3567,7 +3583,14 @@ const FormVariationsDemo = () => {
               <Label htmlFor="tagNumber" className="text-[11px]">Tag #</Label>
               <Input id="tagNumber" value={formData.tagNumber} onChange={(e) => handleInputChange("tagNumber", e.target.value)} placeholder="Tag #" className="h-7 text-xs" />
             </div>
+            {formData.type === 'esl-grounds' && (
+              <div className="space-y-0.5">
+                <Label htmlFor="qtyDetail" className="text-[11px]">Qty</Label>
+                <Input id="qtyDetail" type="number" placeholder="Qty" className="h-7 text-xs" />
+              </div>
+            )}
           </div>
+
         </div>
 
         {/* Product Specifications */}
@@ -3599,6 +3622,13 @@ const FormVariationsDemo = () => {
                     { id: "detailsModelNumber", label: "Model", key: "model", options: [["m-100","M-100"],["m-200","M-200"],["m-300","M-300"]] },
                     { id: "detailsSize", label: "Size", key: "size", options: [["7","7"],["8","8"],["9","9"],["10","10"],["11","11"],["12","12"],["13","13"]] },
                     { id: "detailsColor", label: "Color", key: "colorIn", options: [["black","Black"],["brown","Brown"],["tan","Tan"]] },
+                  ]
+                : formData.type === 'esl-grounds'
+                ? [
+                    { id: "detailsManufacturer", label: "Manufacturer", key: "manufacturer", options: [["3m","3M"],["salisbury","Salisbury"],["chance","Chance"],["cementex","Cementex"],["novax","Novax"]] },
+                    { id: "detailsWireSize", label: "Wire Size", key: "wireSize", options: [["2/0","2/0"],["1/0","1/0"],["#2","#2"],["#4","#4"],["#6","#6"]] },
+                    { id: "detailsColor", label: "Color", key: "colorIn", options: [["black","Black"],["yellow","Yellow"],["orange","Orange"],["red","Red"],["green","Green"]] },
+                    { id: "detailsGroundType", label: "Ground Type", key: "groundType", options: [["personal","Personal"],["cluster","Cluster"],["jumper","Jumper"],["chain","Chain"]] },
                   ]
                 : [
                     { id: "detailsManufacturer", label: "Manufacturer", key: "manufacturer", options: [["3m","3M"],["salisbury","Salisbury"],["chance","Chance"],["cementex","Cementex"],["novax","Novax"]] },
@@ -3663,6 +3693,10 @@ const FormVariationsDemo = () => {
                       { id: "stateOddRight", key: "oddRight", label: "Odd Right" },
                       { id: "stateNew", key: "newEquip", label: "New" },
                       { id: "stateSurplusReplacement", key: "surplusReplacement", label: "Surplus Replacement For" },
+                    ]
+                  : formData.type === 'esl-grounds'
+                  ? [
+                      { id: "stateNew", key: "newEquip", label: "New" },
                     ]
                   : [
                       { id: "stateOddLeft", key: "oddLeft", label: "Odd Left" },
