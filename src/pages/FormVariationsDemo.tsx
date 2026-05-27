@@ -3718,6 +3718,82 @@ const FormVariationsDemo = () => {
         </div>
       </div>
 
+      {/* CoverUps Items Table */}
+      {formData.type === 'esl-coverups' && (
+        <div className="mt-4 border border-border rounded-lg overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full text-[10px]">
+              <thead>
+                <tr className="bg-muted/50 border-b border-border">
+                  <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-10"></th>
+                  <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-8">Sort</th>
+                  <th className="px-1.5 py-1 text-left font-medium text-muted-foreground">Manufacturer</th>
+                  <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-14">Class</th>
+                  <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-14">Size</th>
+                  <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-20">Type</th>
+                  <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-20">Model #</th>
+                  <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-14">Color</th>
+                  <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-8">New</th>
+                  <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-14">ESL ID</th>
+                  <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-14">Cust ID</th>
+                  <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-20">Tag</th>
+                  <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-16">System Tag</th>
+                  <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-16">Stage</th>
+                  <th className="px-1.5 py-1 text-center font-medium text-muted-foreground w-8">Clean</th>
+                  <th className="px-1.5 py-1 text-center font-medium text-muted-foreground w-8">Test</th>
+                  <th className="px-1.5 py-1 text-center font-medium text-muted-foreground w-8">VI</th>
+                  <th className="px-1.5 py-1 text-center font-medium text-muted-foreground w-10">Stamp</th>
+                  <th className="px-1.5 py-1 text-center font-medium text-muted-foreground w-14">Stamp Insp</th>
+                  <th className="px-1.5 py-1 text-center font-medium text-muted-foreground w-14">Box Order</th>
+                  <th className="px-1.5 py-1 text-center font-medium text-muted-foreground w-8">Acc</th>
+                  <th className="px-1.5 py-1 text-center font-medium text-muted-foreground w-10">Cancel</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  { sort: 1, manufacturer: 'CHANCE', class: 'CLASS 4', size: '6" x 48"', type: 'Pole Cover', model: 'C4060550', color: 'Orange', new: 'Yes', eslId: '', custId: 'N/A', tag: 'NEW PURCHASE', systemTag: '', stage: 'C. Dunaway', acc: 'N' },
+                  { sort: 2, manufacturer: 'CHANCE', class: 'CLASS 4', size: '6" x 48"', type: 'Pole Cover', model: 'C4060550', color: 'Orange', new: 'Yes', eslId: '', custId: 'N/A', tag: 'NEW PURCHASE', systemTag: '', stage: 'C. Dunaway', acc: 'N' },
+                  { sort: 3, manufacturer: 'CHANCE', class: 'CLASS 4', size: '6" x 48"', type: 'Pole Cover', model: 'C4060550', color: 'Orange', new: 'Yes', eslId: '', custId: 'N/A', tag: 'NEW PURCHASE', systemTag: '', stage: 'C. Dunaway', acc: 'N' },
+                  { sort: 4, manufacturer: 'CHANCE', class: 'CLASS 4', size: '6" x 48"', type: 'Pole Cover', model: 'C4060550', color: 'Orange', new: 'Yes', eslId: '', custId: 'N/A', tag: 'NEW PURCHASE', systemTag: '', stage: 'C. Dunaway', acc: 'N' },
+                ].map((row, index) => (
+                  <tr key={row.sort} className={`border-b border-border hover:bg-muted/30 h-6 ${index === 0 ? 'bg-yellow-50/60' : index % 2 === 0 ? 'bg-background' : 'bg-muted/10'}`}>
+                    <td className="px-1.5 py-0.5 text-[10px]">
+                      <div className="flex gap-1">
+                        <button className="text-blue-600 hover:underline font-medium">E</button>
+                        <button className="text-blue-600 hover:underline font-medium">F</button>
+                      </div>
+                    </td>
+                    <td className="px-1.5 py-0.5 text-[10px]">{row.sort}</td>
+                    <td className="px-1.5 py-0.5 text-[10px]">{row.manufacturer}</td>
+                    <td className="px-1.5 py-0.5 text-[10px]">{row.class}</td>
+                    <td className="px-1.5 py-0.5 text-[10px]">{row.size}</td>
+                    <td className="px-1.5 py-0.5 text-[10px]">{row.type}</td>
+                    <td className="px-1.5 py-0.5 text-[10px]">{row.model}</td>
+                    <td className="px-1.5 py-0.5 text-[10px]">{row.color}</td>
+                    <td className="px-1.5 py-0.5 text-[10px]">{row.new}</td>
+                    <td className="px-1.5 py-0.5 text-[10px]">{row.eslId}</td>
+                    <td className="px-1.5 py-0.5 text-[10px]">{row.custId}</td>
+                    <td className="px-1.5 py-0.5 text-[10px]">{row.tag}</td>
+                    <td className="px-1.5 py-0.5 text-[10px]">{row.systemTag}</td>
+                    <td className="px-1.5 py-0.5 text-[10px]">{row.stage}</td>
+                    <td className="px-1.5 py-0.5 text-center"><Checkbox className="h-3 w-3" /></td>
+                    <td className="px-1.5 py-0.5 text-center"><Checkbox className="h-3 w-3" /></td>
+                    <td className="px-1.5 py-0.5 text-center"><Checkbox className="h-3 w-3" /></td>
+                    <td className="px-1.5 py-0.5 text-center"><Checkbox className="h-3 w-3" /></td>
+                    <td className="px-1.5 py-0.5 text-center"><Checkbox className="h-3 w-3" /></td>
+                    <td className="px-1.5 py-0.5 text-center"><Checkbox className="h-3 w-3" /></td>
+                    <td className="px-1.5 py-0.5 text-[10px] text-center">{row.acc}</td>
+                    <td className="px-1.5 py-0.5 text-center"><Checkbox className="h-3 w-3" /></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+
+
       {/* Add Item / Cancel actions — section footer bar (right-aligned) */}
       <div className="-mx-5 -mb-5 mt-2 px-6 py-3 bg-muted/40 border-t flex items-center justify-end gap-3 rounded-b-lg">
         <Button
