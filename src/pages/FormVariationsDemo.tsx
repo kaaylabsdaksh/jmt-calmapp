@@ -4368,11 +4368,11 @@ const FormVariationsDemo = () => {
                 <>
                   <Button
                     size="default"
-                    onClick={() => toast({ title: "Item added", description: "Details saved to the work order." })}
+                    onClick={() => toast({ title: "Item saved", description: "Details saved to the work order." })}
                     className="h-9 text-sm px-4 bg-primary text-primary-foreground hover:bg-primary/90"
                   >
-                    <Plus className="h-4 w-4 mr-1" />
-                    Add Item
+                    <Save className="h-4 w-4 mr-1" />
+                    Save Item
                   </Button>
                   <Button variant="outline" size="default" className="h-9 text-sm px-4" onClick={handleCancel}>
                     Cancel
