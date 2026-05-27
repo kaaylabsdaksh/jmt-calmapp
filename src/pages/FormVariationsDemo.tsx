@@ -3623,6 +3623,13 @@ const FormVariationsDemo = () => {
                     { id: "detailsSize", label: "Size", key: "size", options: [["7","7"],["8","8"],["9","9"],["10","10"],["11","11"],["12","12"],["13","13"]] },
                     { id: "detailsColor", label: "Color", key: "colorIn", options: [["black","Black"],["brown","Brown"],["tan","Tan"]] },
                   ]
+                : formData.type === 'esl-grounds'
+                ? [
+                    { id: "detailsManufacturer", label: "Manufacturer", key: "manufacturer", options: [["3m","3M"],["salisbury","Salisbury"],["chance","Chance"],["cementex","Cementex"],["novax","Novax"]] },
+                    { id: "detailsWireSize", label: "Wire Size", key: "wireSize", options: [["2/0","2/0"],["1/0","1/0"],["#2","#2"],["#4","#4"],["#6","#6"]] },
+                    { id: "detailsColor", label: "Color", key: "colorIn", options: [["black","Black"],["yellow","Yellow"],["orange","Orange"],["red","Red"],["green","Green"]] },
+                    { id: "detailsGroundType", label: "Ground Type", key: "groundType", options: [["personal","Personal"],["cluster","Cluster"],["jumper","Jumper"],["chain","Chain"]] },
+                  ]
                 : [
                     { id: "detailsManufacturer", label: "Manufacturer", key: "manufacturer", options: [["3m","3M"],["salisbury","Salisbury"],["chance","Chance"],["cementex","Cementex"],["novax","Novax"]] },
                     { id: "detailsClass", label: "Class", key: "itemClass", options: [["class-0","Class 0"],["class-1","Class 1"],["class-2","Class 2"],["class-3","Class 3"],["class-4","Class 4"]] },
