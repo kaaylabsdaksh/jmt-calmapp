@@ -4365,7 +4365,7 @@ const FormVariationsDemo = () => {
                 </Select>
               </div>
 
-              {formData.type !== 'esl-footwear' && formData.type !== 'esl-coverups' && formData.type !== 'esl-grounds' && (
+              {formData.type !== 'esl-footwear' && formData.type !== 'esl-coverups' && formData.type !== 'esl-grounds' && formData.type !== 'esl-hotsticks' && (
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button variant="outline" size="icon" className="h-9 w-9">
