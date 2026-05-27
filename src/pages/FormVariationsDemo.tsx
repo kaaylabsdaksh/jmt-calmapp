@@ -3718,6 +3718,61 @@ const FormVariationsDemo = () => {
         </div>
       </div>
 
+      {/* CoverUps Quick Edit Bar (above table) */}
+      {expandedEslRow && formData.type === 'esl-coverups' && (
+        <div className="mt-4 border rounded-lg bg-card shadow-sm overflow-hidden mb-2">
+          <div className="flex flex-wrap items-center justify-between gap-3 px-3 py-2 border-b bg-muted/30">
+            <div className="flex items-center gap-2">
+              <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-tight whitespace-nowrap">
+                Item #{expandedEslRow} of 5
+              </span>
+              <div className="flex gap-1">
+                <Button size="sm" variant="outline" className="h-7 w-7 p-0" disabled={Number(expandedEslRow) <= 1} onClick={() => setExpandedEslRow(String(Math.max(1, Number(expandedEslRow) - 1)))}>
+                  <ChevronLeft className="h-3.5 w-3.5" />
+                </Button>
+                <Button size="sm" variant="outline" className="h-7 w-7 p-0" disabled={Number(expandedEslRow) >= 5} onClick={() => setExpandedEslRow(String(Math.min(5, Number(expandedEslRow) + 1)))}>
+                  <ChevronRight className="h-3.5 w-3.5" />
+                </Button>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <Button size="sm" variant="destructive" className="h-7 text-xs" onClick={() => { setEslFieldValues(prev => Object.keys(prev).reduce((acc, k) => ({ ...acc, [k]: 'Cancelled' }), {} as Record<string, string>)); setExpandedEslRow(null); }}>
+                Set Cancelled
+              </Button>
+              <div className="h-4 w-px bg-border mx-0.5" />
+              <Button size="sm" variant="outline" className="h-7 text-xs" onClick={() => setExpandedEslRow(null)}>Cancel</Button>
+              <Button size="sm" className="h-7 text-xs" onClick={() => setExpandedEslRow(null)}>
+                <Save className="h-3.5 w-3.5 mr-1" />Save
+              </Button>
+            </div>
+          </div>
+          <div className="p-3">
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+              {(['clean','test','vi','stamp','boxOrder'] as const).map((key, idx) => (
+                <div key={key} className={`space-y-1 ${idx === 4 ? 'col-span-2 md:col-span-1' : ''}`}>
+                  <Label className="text-[10px] font-bold text-muted-foreground uppercase tracking-wide ml-0.5">
+                    {eslFieldLabels[key]}
+                  </Label>
+                  <Select value={eslFieldValues[key]} onValueChange={(v) => setEslFieldValues(prev => ({ ...prev, [key]: v }))}>
+                    <SelectTrigger className="h-8 text-xs bg-muted/30">
+                      <SelectValue placeholder="Select..." />
+                    </SelectTrigger>
+                    <SelectContent className="bg-popover z-50">
+                      {eslFieldOptions[key].map(opt => (
+                        <SelectItem key={opt} value={opt}>{opt}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="h-1 bg-muted">
+            <div className="h-full bg-primary transition-all" style={{ width: `${(Number(expandedEslRow) / 5) * 100}%` }} />
+          </div>
+        </div>
+      )}
+
       {/* CoverUps Items Table */}
       {formData.type === 'esl-coverups' && (
         <div className="mt-4 border border-border rounded-lg overflow-hidden">
@@ -3819,7 +3874,7 @@ const FormVariationsDemo = () => {
       </div>
 
       {/* ESL Quick Edit Bar — stacked groups: top control row + field grid */}
-      {expandedEslRow && (
+      {expandedEslRow && formData.type !== 'esl-coverups' && (
         <div className="border rounded-lg bg-card shadow-sm overflow-hidden mb-2">
           {/* Top Control Bar: navigation (left) + actions (right) */}
           <div className="flex flex-wrap items-center justify-between gap-3 px-3 py-2 border-b bg-muted/30">
