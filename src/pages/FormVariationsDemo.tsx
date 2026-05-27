@@ -4388,7 +4388,7 @@ const FormVariationsDemo = () => {
                   <Button
                     size="default"
                     onClick={handleSave}
-                    className="h-9 text-sm px-4 bg-primary text-primary-foreground hover:bg-primary/90"
+                    className="h-9 text-sm px-4 bg-success text-success-foreground hover:bg-success/90"
                   >
                     <Save className="h-4 w-4 mr-1" />
                     Save Item
