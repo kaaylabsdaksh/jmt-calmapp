@@ -4395,6 +4395,18 @@ const FormVariationsDemo = () => {
                     Assign by Ground Type
                   </Button>
                 </>
+              ) : formData.type === 'esl-hotsticks' ? (
+                <>
+                  <Button variant="outline" size="sm" className="h-9 text-sm px-3">
+                    Assign by Manufacturer
+                  </Button>
+                  <Button variant="outline" size="sm" className="h-9 text-sm px-3">
+                    Assign by Hotstick Type
+                  </Button>
+                  <Button variant="outline" size="sm" className="h-9 text-sm px-3">
+                    Create Partial
+                  </Button>
+                </>
               ) : (
                 <>
                   <Button variant="outline" size="sm" className="h-9 text-sm px-3">
