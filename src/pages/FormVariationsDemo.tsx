@@ -4922,6 +4922,9 @@ const FormVariationsDemo = () => {
               <table className="w-full text-[10px]">
                 <thead>
                   <tr className="bg-muted/50 border-b border-border">
+                    <th className="px-1.5 py-1 text-center font-medium text-muted-foreground w-8">
+                      <Checkbox className="h-3 w-3" />
+                    </th>
                     <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-8">#</th>
                     <th className="px-1.5 py-1 text-left font-medium text-muted-foreground">Manufacturer</th>
                     <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-16">Type</th>
