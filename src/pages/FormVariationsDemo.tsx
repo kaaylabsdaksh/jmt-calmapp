@@ -4906,6 +4906,87 @@ const FormVariationsDemo = () => {
                   ))}
                 </tbody>
               </table>
+            ) : formData.type === 'esl-hotsticks' ? (
+              <table className="w-full text-[10px]">
+                <thead>
+                  <tr className="bg-muted/50 border-b border-border">
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-8">#</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground">Manufacturer</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-16">Type</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-20">Model</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-14">Tested To</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-10">Lgth</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-10">Sect</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-12">Wi Sz</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-14">Wi Lgth</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-14">Color</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-10">New</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-14">RFID</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-16">ESL ID</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-14">Cust ID</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-14">Tag</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-32">System Tag</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-20">Stage</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-16">Clean/VI</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-16">Test/Stamp</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-16">Stamp Insp</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-16">Box Order</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-8">Acc</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-10">Cancel</th>
+                    <th className="px-1.5 py-1 text-center font-medium text-muted-foreground w-12">Partial</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-14"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    { num: 1, manufacturer: 'CHANCE', type: 'Shotgun', model: 'C4030293A', testedTo: '75kV/ft', lgth: "8'", sect: '', wiSz: '', wiLgth: '', color: 'Orange', new: 'No', rfid: '', eslId: '918207', custId: 'N/A', tag: '', systemTag: 'Repair/Repl Pending', stage: 'C Dunaway', cleanVi: 'N Lang', testStamp: 'N Lang', stampInsp: '', boxOrder: 'N Lang', acc: 'Y', cancel: '' },
+                    { num: 2, manufacturer: 'HASTINGS', type: 'Telescopic', model: 'ST-240', testedTo: '75kV/ft', lgth: "40'", sect: '9', wiSz: '', wiLgth: '', color: 'Yellow', new: 'No', rfid: '', eslId: '2770473', custId: 'N/A', tag: '', systemTag: 'Repair/Repl Pending', stage: 'C Dunaway', cleanVi: 'N Lang', testStamp: 'N Lang', stampInsp: '', boxOrder: 'N Lang', acc: 'Y', cancel: '' },
+                  ].map((row, index) => (
+                    <tr key={row.num} className={`border-b border-border hover:bg-muted/30 h-6 ${index % 2 === 0 ? 'bg-background' : 'bg-muted/10'}`}>
+                      <td className="px-1.5 py-0.5 text-[10px] font-medium text-foreground">
+                        <div className="flex items-center gap-1">
+                          <button className="text-[10px] text-foreground hover:underline">E</button>
+                          <button className="text-[10px] text-foreground hover:underline">F</button>
+                          <span>{row.num}</span>
+                        </div>
+                      </td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.manufacturer}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.type}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.model}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.testedTo}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.lgth}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.sect}</td>
+                      <td className="px-1.5 py-0.5 text-[10px] bg-muted/40">{row.wiSz}</td>
+                      <td className="px-1.5 py-0.5 text-[10px] bg-muted/40">{row.wiLgth}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.color}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.new}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.rfid}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.eslId}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.custId}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.tag}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.systemTag}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.stage}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.cleanVi}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.testStamp}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.stampInsp}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.boxOrder}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.acc}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.cancel}</td>
+                      <td className="px-1.5 py-0.5 text-center"><Checkbox className="h-3 w-3" /></td>
+                      <td className="px-1.5 py-0.5 text-[10px]">
+                        <Button
+                          variant="link"
+                          size="sm"
+                          className="h-5 px-1 text-[10px] text-foreground hover:text-foreground/80"
+                          onClick={() => handleOpenTestingEdit(row as any)}
+                        >
+                          Edit
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             ) : (
             <table className="w-full text-[10px]">
               <thead>
