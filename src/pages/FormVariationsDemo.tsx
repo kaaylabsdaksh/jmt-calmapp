@@ -3909,6 +3909,7 @@ const FormVariationsDemo = () => {
 
 
       {/* Items Data Table */}
+      {formData.type !== 'esl-coverups' && (
       <div className="border rounded-lg overflow-hidden">
         <div className="bg-muted/50 px-3 py-1.5 border-b">
           <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wide">Items</span>
@@ -4176,6 +4177,7 @@ const FormVariationsDemo = () => {
           </div>
         )}
       </div>
+      )}
 
       {/* Spacer for fixed footer */}
       <div className="h-14" />
