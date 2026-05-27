@@ -4365,7 +4365,7 @@ const FormVariationsDemo = () => {
                 </Select>
               </div>
 
-              {formData.type !== 'esl-footwear' && formData.type !== 'esl-coverups' && formData.type !== 'esl-grounds' && (
+              {formData.type !== 'esl-footwear' && formData.type !== 'esl-coverups' && formData.type !== 'esl-grounds' && formData.type !== 'esl-hotsticks' && (
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button variant="outline" size="icon" className="h-9 w-9">
@@ -4395,6 +4395,18 @@ const FormVariationsDemo = () => {
                     Assign by Ground Type
                   </Button>
                 </>
+              ) : formData.type === 'esl-hotsticks' ? (
+                <>
+                  <Button variant="outline" size="sm" className="h-9 text-sm px-3">
+                    Assign by Manufacturer
+                  </Button>
+                  <Button variant="outline" size="sm" className="h-9 text-sm px-3">
+                    Assign by Hotstick Type
+                  </Button>
+                  <Button variant="outline" size="sm" className="h-9 text-sm px-3">
+                    Create Partial
+                  </Button>
+                </>
               ) : (
                 <>
                   <Button variant="outline" size="sm" className="h-9 text-sm px-3">
@@ -4417,7 +4429,7 @@ const FormVariationsDemo = () => {
 
             {/* Right side - Save/Cancel or Add Item/Cancel */}
             <div className="flex items-center gap-3">
-              {formData.type === 'esl-footwear' || formData.type === 'esl-coverups' || formData.type === 'esl-grounds' ? (
+              {formData.type === 'esl-footwear' || formData.type === 'esl-coverups' || formData.type === 'esl-grounds' || formData.type === 'esl-hotsticks' ? (
                 <>
                   <Button variant="outline" size="default" className="h-9 text-sm px-4" onClick={handleCancel}>
                     <X className="h-4 w-4 mr-1" />
