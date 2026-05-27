@@ -3718,6 +3718,23 @@ const FormVariationsDemo = () => {
         </div>
       </div>
 
+      {/* Add Item / Cancel actions */}
+      <div className="flex items-center justify-center gap-3 pt-4 mt-2 border-t">
+        <Button
+          className="bg-green-600 hover:bg-green-700 text-white h-9 px-6"
+          onClick={() => toast({ title: "Item added", description: "Details saved to the work order." })}
+        >
+          <Plus className="h-4 w-4 mr-1" />
+          Add Item
+        </Button>
+        <Button
+          variant="outline"
+          className="h-9 px-6"
+          onClick={() => navigate(-1)}
+        >
+          Cancel
+        </Button>
+      </div>
 
       {/* ESL Quick Edit Bar — stacked groups: top control row + field grid */}
       {expandedEslRow && (
