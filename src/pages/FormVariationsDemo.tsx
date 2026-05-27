@@ -4922,6 +4922,9 @@ const FormVariationsDemo = () => {
               <table className="w-full text-[10px]">
                 <thead>
                   <tr className="bg-muted/50 border-b border-border">
+                    <th className="px-1.5 py-1 text-center font-medium text-muted-foreground w-8">
+                      <Checkbox className="h-3 w-3" />
+                    </th>
                     <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-8">#</th>
                     <th className="px-1.5 py-1 text-left font-medium text-muted-foreground">Manufacturer</th>
                     <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-16">Type</th>
@@ -4955,6 +4958,7 @@ const FormVariationsDemo = () => {
                     { num: 2, manufacturer: 'HASTINGS', type: 'Telescopic', model: 'ST-240', testedTo: '75kV/ft', lgth: "40'", sect: '9', wiSz: '', wiLgth: '', color: 'Yellow', new: 'No', rfid: '', eslId: '2770473', custId: 'N/A', tag: '', systemTag: 'Repair/Repl Pending', stage: 'C Dunaway', cleanVi: 'N Lang', testStamp: 'N Lang', stampInsp: '', boxOrder: 'N Lang', acc: 'Y', cancel: '' },
                   ].map((row, index) => (
                     <tr key={row.num} className={`border-b border-border hover:bg-muted/30 h-6 ${index % 2 === 0 ? 'bg-background' : 'bg-muted/10'}`}>
+                      <td className="px-1.5 py-0.5 text-center"><Checkbox className="h-3 w-3" /></td>
                       <td className="px-1.5 py-0.5 text-[10px] font-medium text-foreground">
                         <div className="flex items-center gap-1">
                           <button className="text-[10px] text-foreground hover:underline">E</button>
