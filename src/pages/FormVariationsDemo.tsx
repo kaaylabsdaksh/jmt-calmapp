@@ -4355,7 +4355,7 @@ const FormVariationsDemo = () => {
                 </Select>
               </div>
 
-              {formData.type !== 'esl-footwear' && formData.type !== 'esl-coverups' && (
+              {formData.type !== 'esl-footwear' && formData.type !== 'esl-coverups' && formData.type !== 'esl-grounds' && (
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button variant="outline" size="icon" className="h-9 w-9">
@@ -4376,6 +4376,15 @@ const FormVariationsDemo = () => {
                 <Button variant="outline" size="sm" className="h-9 text-sm px-3">
                   Assign by Class
                 </Button>
+              ) : formData.type === 'esl-grounds' ? (
+                <>
+                  <Button variant="outline" size="sm" className="h-9 text-sm px-3">
+                    Assign by Wire Size
+                  </Button>
+                  <Button variant="outline" size="sm" className="h-9 text-sm px-3">
+                    Assign by Ground Type
+                  </Button>
+                </>
               ) : (
                 <>
                   <Button variant="outline" size="sm" className="h-9 text-sm px-3">
@@ -4398,7 +4407,7 @@ const FormVariationsDemo = () => {
 
             {/* Right side - Save/Cancel or Add Item/Cancel */}
             <div className="flex items-center gap-3">
-              {formData.type === 'esl-footwear' || formData.type === 'esl-coverups' ? (
+              {formData.type === 'esl-footwear' || formData.type === 'esl-coverups' || formData.type === 'esl-grounds' ? (
                 <>
                   <Button variant="outline" size="default" className="h-9 text-sm px-4" onClick={handleCancel}>
                     <X className="h-4 w-4 mr-1" />
