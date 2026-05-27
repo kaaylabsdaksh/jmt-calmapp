@@ -4367,6 +4367,7 @@ const FormVariationsDemo = () => {
               {formData.type === 'esl-footwear' || formData.type === 'esl-coverups' ? (
                 <>
                   <Button variant="outline" size="default" className="h-9 text-sm px-4" onClick={handleCancel}>
+                    <X className="h-4 w-4 mr-1" />
                     Cancel
                   </Button>
                   <Button
