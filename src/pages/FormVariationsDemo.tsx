@@ -4429,7 +4429,7 @@ const FormVariationsDemo = () => {
 
             {/* Right side - Save/Cancel or Add Item/Cancel */}
             <div className="flex items-center gap-3">
-              {formData.type === 'esl-footwear' || formData.type === 'esl-coverups' || formData.type === 'esl-grounds' ? (
+              {formData.type === 'esl-footwear' || formData.type === 'esl-coverups' || formData.type === 'esl-grounds' || formData.type === 'esl-hotsticks' ? (
                 <>
                   <Button variant="outline" size="default" className="h-9 text-sm px-4" onClick={handleCancel}>
                     <X className="h-4 w-4 mr-1" />
