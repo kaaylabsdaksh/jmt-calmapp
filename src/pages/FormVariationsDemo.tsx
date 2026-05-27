@@ -4771,6 +4771,68 @@ const FormVariationsDemo = () => {
                   ))}
                 </tbody>
               </table>
+            ) : formData.type === 'esl-footwear' ? (
+              <table className="w-full text-[10px]">
+                <thead>
+                  <tr className="bg-muted/50 border-b border-border">
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-12">ID</th>
+                    <th className="px-1.5 py-1 text-center font-medium text-muted-foreground w-8">
+                      <Checkbox className="h-3 w-3" />
+                    </th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-8">Sort</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground">Manufacturer</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-16">Model</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-10">Class</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-10">Size</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-16">Color</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-8">Odd</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-8">New</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-14">Cust ID</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-14">ESL ID</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground">Tag</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-12">Result</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-10">Procs</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-10">Stds</th>
+                    <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-10"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    { id: '1915', sort: 1, manufacturer: 'SALISBURY', model: '21405 WT', class: '2', size: '9', color: 'Brown/Tan', odd: 'N', new: 'No', custId: 'N/A', eslId: '', tag: '', result: '', procs: '', stds: '' },
+                    { id: '1916', sort: 2, manufacturer: 'SALISBURY', model: '21405 WT', class: '2', size: '10', color: 'Brown/Tan', odd: 'N', new: 'No', custId: 'N/A', eslId: '', tag: '', result: '', procs: '', stds: '' },
+                    { id: '1917', sort: 3, manufacturer: 'SALISBURY', model: '21405 WT', class: '2', size: '11', color: 'Brown/Tan', odd: 'N', new: 'No', custId: 'N/A', eslId: '', tag: '', result: '', procs: '', stds: '' },
+                  ].map((row, index) => (
+                    <tr key={row.id} className={`border-b border-border hover:bg-muted/30 h-6 ${index % 2 === 0 ? 'bg-background' : 'bg-muted/10'}`}>
+                      <td className="px-1.5 py-0.5 text-[10px] font-medium text-foreground">{row.id}</td>
+                      <td className="px-1.5 py-0.5 text-center"><Checkbox className="h-3 w-3" /></td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.sort}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.manufacturer}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.model}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.class}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.size}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.color}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.odd}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.new}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.custId}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.eslId}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.tag}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.result}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.procs}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">{row.stds}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">
+                        <Button
+                          variant="link"
+                          size="sm"
+                          className="h-5 px-1 text-[10px] text-foreground hover:text-foreground/80"
+                          onClick={() => handleOpenTestingEdit(row as any)}
+                        >
+                          Edit
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             ) : (
             <table className="w-full text-[10px]">
               <thead>
