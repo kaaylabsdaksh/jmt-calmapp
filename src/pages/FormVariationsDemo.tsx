@@ -3631,12 +3631,18 @@ const FormVariationsDemo = () => {
                       { id: "stateEyelets", key: "eyelets", label: "Eyelets" },
                       { id: "stateZip", key: "zip", label: "Zip" },
                     ]
+                  : formData.type === 'esl-coverups'
+                  ? [
+                      { id: "stateNew", key: "newEquip", label: "New" },
+                      { id: "stateSurplusReplacement", key: "surplusReplacement", label: "Surplus Replacement For" },
+                    ]
                   : [
                       { id: "stateOddLeft", key: "oddLeft", label: "Odd Left" },
                       { id: "stateOddRight", key: "oddRight", label: "Odd Right" },
                       { id: "stateNew", key: "newEquip", label: "New" },
                       { id: "stateMitten", key: "mitten", label: "Mitten" },
                     ]
+
                 ).map((opt) => (
                   <label key={opt.id} htmlFor={opt.id} className="flex items-center gap-1.5 cursor-pointer">
                     <Checkbox
