@@ -3528,7 +3528,16 @@ const FormVariationsDemo = () => {
       <div className="border border-primary/20 rounded-lg p-4 space-y-3">
         <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Quick Prefill</div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className={`grid grid-cols-1 ${formData.type === 'esl-grounds' ? 'md:grid-cols-3' : 'md:grid-cols-2'} gap-4`}>
+          {formData.type === 'esl-grounds' && (
+            <div className="flex items-end gap-2">
+              <div className="flex-1 space-y-1">
+                <Label htmlFor="prefillRfid" className="text-xs">Prefill w/RFID:</Label>
+                <Input id="prefillRfid" placeholder="Enter RFID" className="h-8 text-xs" />
+              </div>
+              <Button variant="default" size="sm" className="h-8 text-xs px-4">Prefill</Button>
+            </div>
+          )}
           <div className="flex items-end gap-2">
             <div className="flex-1 space-y-1">
               <Label htmlFor="prefillEslId" className="text-xs">Prefill w/ESL ID:</Label>
@@ -3546,6 +3555,7 @@ const FormVariationsDemo = () => {
           </div>
         </div>
       </div>
+
 
       {/* Identification + Product Specifications + Accessories - side by side */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
