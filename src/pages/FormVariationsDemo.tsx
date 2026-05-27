@@ -3565,7 +3565,7 @@ const FormVariationsDemo = () => {
             <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide">Identification</span>
           </div>
           <div className="p-3 grid grid-cols-3 gap-2 flex-1">
-            {formData.type === 'esl-grounds' && (
+            {(formData.type === 'esl-grounds' || formData.type === 'esl-hotsticks') && (
               <div className="space-y-0.5">
                 <Label htmlFor="rfidDetail" className="text-[11px]">RFID</Label>
                 <Input id="rfidDetail" placeholder="RFID" className="h-7 text-xs" />
