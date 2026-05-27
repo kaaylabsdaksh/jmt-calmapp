@@ -3593,6 +3593,13 @@ const FormVariationsDemo = () => {
                     { id: "detailsModelNumber", label: "Model #", key: "model", options: [["m-100","M-100"],["m-200","M-200"],["m-300","M-300"]] },
                     { id: "detailsColor", label: "Color", key: "colorIn", options: [["black","Black"],["yellow","Yellow"],["orange","Orange"],["red","Red"],["green","Green"]] },
                   ]
+                : formData.type === 'esl-footwear'
+                ? [
+                    { id: "detailsManufacturer", label: "Manufacturer", key: "manufacturer", options: [["3m","3M"],["salisbury","Salisbury"],["chance","Chance"],["cementex","Cementex"],["novax","Novax"]] },
+                    { id: "detailsModelNumber", label: "Model", key: "model", options: [["m-100","M-100"],["m-200","M-200"],["m-300","M-300"]] },
+                    { id: "detailsSize", label: "Size", key: "size", options: [["7","7"],["8","8"],["9","9"],["10","10"],["11","11"],["12","12"],["13","13"]] },
+                    { id: "detailsColor", label: "Color", key: "colorIn", options: [["black","Black"],["brown","Brown"],["tan","Tan"]] },
+                  ]
                 : [
                     { id: "detailsManufacturer", label: "Manufacturer", key: "manufacturer", options: [["3m","3M"],["salisbury","Salisbury"],["chance","Chance"],["cementex","Cementex"],["novax","Novax"]] },
                     { id: "detailsClass", label: "Class", key: "itemClass", options: [["class-0","Class 0"],["class-1","Class 1"],["class-2","Class 2"],["class-3","Class 3"],["class-4","Class 4"]] },
@@ -3633,6 +3640,13 @@ const FormVariationsDemo = () => {
                     ]
                   : formData.type === 'esl-coverups'
                   ? [
+                      { id: "stateNew", key: "newEquip", label: "New" },
+                      { id: "stateSurplusReplacement", key: "surplusReplacement", label: "Surplus Replacement For" },
+                    ]
+                  : formData.type === 'esl-footwear'
+                  ? [
+                      { id: "stateOddLeft", key: "oddLeft", label: "Odd Left" },
+                      { id: "stateOddRight", key: "oddRight", label: "Odd Right" },
                       { id: "stateNew", key: "newEquip", label: "New" },
                       { id: "stateSurplusReplacement", key: "surplusReplacement", label: "Surplus Replacement For" },
                     ]
