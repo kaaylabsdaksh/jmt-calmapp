@@ -4611,41 +4611,87 @@ const FormVariationsDemo = () => {
               <div className="w-1 h-3.5 bg-primary rounded-full" />
               <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Batch Update Actions</span>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-[1.2fr_1fr_1.2fr_auto] gap-3 items-end">
-              <div className="space-y-1">
-                <Label htmlFor="proceduresUsed" className="text-[10px] text-muted-foreground">Procedures Used</Label>
-                <Select>
-                  <SelectTrigger className="h-9 text-xs">
-                    <SelectValue placeholder="Select procedure" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-background border-border">
-                    <SelectItem value="proc1" className="text-xs">Standard Testing</SelectItem>
-                    <SelectItem value="proc2" className="text-xs">Extended Testing</SelectItem>
-                    <SelectItem value="proc3" className="text-xs">Quick Check</SelectItem>
-                  </SelectContent>
-                </Select>
+            {formData.type === 'esl-hotsticks' ? (
+              <div className="grid grid-cols-1 sm:grid-cols-[1fr_1fr_1fr_1fr_1fr_auto] gap-3 items-end">
+                <div className="space-y-1">
+                  <Label htmlFor="proceduresUsedHs" className="text-[10px] text-muted-foreground">Procedures Used</Label>
+                  <Select>
+                    <SelectTrigger className="h-9 text-xs">
+                      <SelectValue placeholder="Select" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-background border-border">
+                      <SelectItem value="f711" className="text-xs">F711</SelectItem>
+                      <SelectItem value="f479" className="text-xs">F479</SelectItem>
+                      <SelectItem value="f496" className="text-xs">F496</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-1">
+                  <Label htmlFor="standardsUsedHs" className="text-[10px] text-muted-foreground">Standards Used</Label>
+                  <Input id="standardsUsedHs" placeholder="Enter standards" className="h-9 text-xs" />
+                </div>
+                <div className="space-y-1">
+                  <Label htmlFor="resistanceMohm" className="text-[10px] text-muted-foreground">Resistance mΩ</Label>
+                  <Input id="resistanceMohm" placeholder="Enter mΩ" className="h-9 text-xs" />
+                </div>
+                <div className="space-y-1">
+                  <Label htmlFor="resistanceMa" className="text-[10px] text-muted-foreground">Resistance mA</Label>
+                  <Input id="resistanceMa" placeholder="Enter mA" className="h-9 text-xs" />
+                </div>
+                <div className="space-y-1">
+                  <Label htmlFor="testResultHs" className="text-[10px] text-muted-foreground">Test Result</Label>
+                  <Select>
+                    <SelectTrigger className="h-9 text-xs">
+                      <SelectValue placeholder="Select" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-background border-border">
+                      <SelectItem value="passed" className="text-xs">Passed</SelectItem>
+                      <SelectItem value="failed" className="text-xs">Failed</SelectItem>
+                      <SelectItem value="inconclusive" className="text-xs">Inconclusive</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <Button size="sm" className="h-9 text-xs px-5 bg-primary text-primary-foreground hover:bg-primary/90">
+                  Update
+                </Button>
               </div>
-              <div className="space-y-1">
-                <Label htmlFor="testResult" className="text-[10px] text-muted-foreground">Test Result</Label>
-                <Select>
-                  <SelectTrigger className="h-9 text-xs">
-                    <SelectValue placeholder="Select" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-background border-border">
-                    <SelectItem value="passed" className="text-xs">Passed</SelectItem>
-                    <SelectItem value="failed" className="text-xs">Failed</SelectItem>
-                    <SelectItem value="inconclusive" className="text-xs">Inconclusive</SelectItem>
-                  </SelectContent>
-                </Select>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-[1.2fr_1fr_1.2fr_auto] gap-3 items-end">
+                <div className="space-y-1">
+                  <Label htmlFor="proceduresUsed" className="text-[10px] text-muted-foreground">Procedures Used</Label>
+                  <Select>
+                    <SelectTrigger className="h-9 text-xs">
+                      <SelectValue placeholder="Select procedure" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-background border-border">
+                      <SelectItem value="proc1" className="text-xs">Standard Testing</SelectItem>
+                      <SelectItem value="proc2" className="text-xs">Extended Testing</SelectItem>
+                      <SelectItem value="proc3" className="text-xs">Quick Check</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-1">
+                  <Label htmlFor="testResult" className="text-[10px] text-muted-foreground">Test Result</Label>
+                  <Select>
+                    <SelectTrigger className="h-9 text-xs">
+                      <SelectValue placeholder="Select" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-background border-border">
+                      <SelectItem value="passed" className="text-xs">Passed</SelectItem>
+                      <SelectItem value="failed" className="text-xs">Failed</SelectItem>
+                      <SelectItem value="inconclusive" className="text-xs">Inconclusive</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-1">
+                  <Label htmlFor="standardsUsed" className="text-[10px] text-muted-foreground">Standards Used</Label>
+                  <Input id="standardsUsed" placeholder="Enter standards" className="h-9 text-xs" />
+                </div>
+                <Button size="sm" className="h-9 text-xs px-5 bg-primary text-primary-foreground hover:bg-primary/90">
+                  Update
+                </Button>
               </div>
-              <div className="space-y-1">
-                <Label htmlFor="standardsUsed" className="text-[10px] text-muted-foreground">Standards Used</Label>
-                <Input id="standardsUsed" placeholder="Enter standards" className="h-9 text-xs" />
-              </div>
-              <Button size="sm" className="h-9 text-xs px-5 bg-primary text-primary-foreground hover:bg-primary/90">
-                Update
-              </Button>
-            </div>
+            )}
           </div>
         </div>
 
