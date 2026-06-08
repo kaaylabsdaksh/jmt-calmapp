@@ -3665,7 +3665,24 @@ const FormVariationsDemo = () => {
                   </Select>
                 </div>
               ))}
+              {(formData.type === 'esl-blankets' || formData.type === 'esl-coverups' || formData.type === 'esl-footwear' || formData.type === 'esl-grounds' || formData.type === 'esl-hotsticks') && (
+                <div className="space-y-0.5">
+                  <Label htmlFor="detailsQuantity" className="text-[11px] font-semibold">Quantity</Label>
+                  <Input
+                    id="detailsQuantity"
+                    type="number"
+                    inputMode="numeric"
+                    min={0}
+                    step={1}
+                    value={(formData as any).quantity || ""}
+                    onChange={(e) => handleInputChange("quantity", e.target.value.replace(/[^0-9]/g, ""))}
+                    placeholder="0"
+                    className="h-6 text-[11px] px-2"
+                  />
+                </div>
+              )}
             </div>
+
 
             {formData.type === 'esl-footwear' && (
               <div className="mt-2 pt-2 border-t grid grid-cols-2 gap-x-2 gap-y-1">
