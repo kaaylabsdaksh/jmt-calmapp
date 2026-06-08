@@ -94,7 +94,7 @@ const FormVariationsDemo = () => {
   const [expandedEslRow, setExpandedEslRow] = useState<string | null>(null);
   const [itemsCurrentPage, setItemsCurrentPage] = useState<number>(1);
   const [itemsPageSize, setItemsPageSize] = useState<number>(10);
-  const itemsTotalCount = 262;
+  const [itemsTotalCount, setItemsTotalCount] = useState<number>(262);
   const [eslFieldValues, setEslFieldValues] = useState<Record<string, string>>({
     clean: '', test: '', vi: '', stamp: '', boxOrder: '',
   });
@@ -3753,7 +3753,13 @@ const FormVariationsDemo = () => {
             <div className="mt-3 pt-2 border-t flex justify-end">
               <Button
                 className="bg-green-600 hover:bg-green-700 text-white h-8 px-6 text-[11px] shadow-sm"
-                onClick={() => toast({ title: "Item added", description: "Details saved to the work order." })}
+                onClick={() => {
+                  const newTotal = itemsTotalCount + 1;
+                  setItemsTotalCount(newTotal);
+                  const lastPage = Math.max(1, Math.ceil(newTotal / itemsPageSize));
+                  setItemsCurrentPage(lastPage);
+                  toast({ title: "Item added", description: "Details saved to the work order." });
+                }}
               >
                 <Plus className="h-3.5 w-3.5 mr-1" />
                 Add Item
