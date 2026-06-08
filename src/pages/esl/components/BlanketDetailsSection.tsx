@@ -83,11 +83,13 @@ export const BlanketDetailsSection = () => {
     class: "",
     color: "",
     size: "",
+    quantity: "",
     zip: false,
     eyelets: false,
     commentOption: "",
     comments: "",
   });
+
 
   const [proc, setProc] = useState({
     procedure: "F479",
@@ -230,6 +232,19 @@ export const BlanketDetailsSection = () => {
                   </SelectContent>
                 </Select>
               </Field>
+              <Field label="Quantity">
+                <Input
+                  type="number"
+                  inputMode="numeric"
+                  min={0}
+                  step={1}
+                  value={spec.quantity}
+                  onChange={(e) => setSpec({ ...spec, quantity: e.target.value.replace(/[^0-9]/g, "") })}
+                  placeholder="0"
+                  className="h-9"
+                />
+              </Field>
+
               <div className="flex items-end gap-4">
                 <CheckboxField
                   id="zip"
