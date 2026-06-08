@@ -3818,16 +3818,8 @@ const FormVariationsDemo = () => {
         </div>
       </div>
 
-      {/* Cancel action — appears above items table */}
-      <div className="mt-2 px-3 py-2 bg-muted/40 border rounded-md flex items-center justify-end">
-        <Button
-          variant="ghost"
-          className="h-9 px-6 text-muted-foreground hover:text-foreground"
-          onClick={() => navigate(-1)}
-        >
-          Cancel
-        </Button>
-      </div>
+
+
 
 
       {/* CoverUps Quick Edit Bar (above table) */}
