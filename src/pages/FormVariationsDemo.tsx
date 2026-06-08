@@ -3962,33 +3962,43 @@ const FormVariationsDemo = () => {
             </table>
           </div>
           {/* Pagination Footer */}
-          <div className="bg-muted/50 px-4 py-2 border-t flex items-center justify-between gap-2 flex-wrap">
-            <div className="flex items-center gap-2 text-xs text-muted-foreground">
-              <span>Page 1 of 27 (262 items)</span>
-              <Button variant="ghost" size="sm" className="h-6 w-6 p-0"><ChevronLeft className="h-3.5 w-3.5" /></Button>
-              {[1,2,3,4,5,6,7].map(n => (
-                <button key={n} type="button" className={`h-6 w-6 rounded text-xs ${n === 1 ? 'bg-foreground text-background font-semibold' : 'hover:bg-muted'}`}>{n}</button>
-              ))}
-              <span>…</span>
-              {[25,26,27].map(n => (
-                <button key={n} type="button" className="h-6 w-6 rounded text-xs hover:bg-muted">{n}</button>
-              ))}
-              <Button variant="ghost" size="sm" className="h-6 w-6 p-0"><ChevronRight className="h-3.5 w-3.5" /></Button>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-muted-foreground">Page size:</span>
-              <Select defaultValue="10">
-                <SelectTrigger className="h-7 w-16 text-xs border-border"><SelectValue /></SelectTrigger>
-                <SelectContent className="bg-background border-border">
-                  <SelectItem value="10" className="text-xs">10</SelectItem>
-                  <SelectItem value="25" className="text-xs">25</SelectItem>
-                  <SelectItem value="50" className="text-xs">50</SelectItem>
-                  <SelectItem value="100" className="text-xs">100</SelectItem>
-                  <SelectItem value="250" className="text-xs">250</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
+          {(() => {
+            const totalPages = Math.max(1, Math.ceil(itemsTotalCount / itemsPageSize));
+            const current = Math.min(itemsCurrentPage, totalPages);
+            const pages: number[] = [];
+            for (let i = 1; i <= Math.min(7, totalPages); i++) pages.push(i);
+            const tail: number[] = [];
+            for (let i = Math.max(8, totalPages - 2); i <= totalPages; i++) if (i > 7) tail.push(i);
+            return (
+              <div className="bg-muted/50 px-4 py-2 border-t flex items-center justify-between gap-2 flex-wrap">
+                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <span>Page {current} of {totalPages} ({itemsTotalCount} items)</span>
+                  <Button variant="ghost" size="sm" className="h-6 w-6 p-0" disabled={current <= 1} onClick={() => setItemsCurrentPage(p => Math.max(1, p - 1))}><ChevronLeft className="h-3.5 w-3.5" /></Button>
+                  {pages.map(n => (
+                    <button key={n} type="button" onClick={() => setItemsCurrentPage(n)} className={`h-6 w-6 rounded text-xs ${n === current ? 'bg-foreground text-background font-semibold' : 'hover:bg-muted'}`}>{n}</button>
+                  ))}
+                  {tail.length > 0 && <span>…</span>}
+                  {tail.map(n => (
+                    <button key={n} type="button" onClick={() => setItemsCurrentPage(n)} className={`h-6 w-6 rounded text-xs ${n === current ? 'bg-foreground text-background font-semibold' : 'hover:bg-muted'}`}>{n}</button>
+                  ))}
+                  <Button variant="ghost" size="sm" className="h-6 w-6 p-0" disabled={current >= totalPages} onClick={() => setItemsCurrentPage(p => Math.min(totalPages, p + 1))}><ChevronRight className="h-3.5 w-3.5" /></Button>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-muted-foreground">Page size:</span>
+                  <Select value={String(itemsPageSize)} onValueChange={(v) => { setItemsPageSize(Number(v)); setItemsCurrentPage(1); }}>
+                    <SelectTrigger className="h-7 w-16 text-xs border-border"><SelectValue /></SelectTrigger>
+                    <SelectContent className="bg-background border-border">
+                      <SelectItem value="10" className="text-xs">10</SelectItem>
+                      <SelectItem value="25" className="text-xs">25</SelectItem>
+                      <SelectItem value="50" className="text-xs">50</SelectItem>
+                      <SelectItem value="100" className="text-xs">100</SelectItem>
+                      <SelectItem value="250" className="text-xs">250</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            );
+          })()}
         </div>
       )}
 
