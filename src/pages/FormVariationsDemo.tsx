@@ -3818,21 +3818,14 @@ const FormVariationsDemo = () => {
         </div>
       </div>
 
-      {/* Add Item / Cancel actions — appears above items table */}
-      <div className="mt-2 px-3 py-2 bg-muted/40 border rounded-md flex items-center justify-end gap-3">
+      {/* Cancel action — appears above items table */}
+      <div className="mt-2 px-3 py-2 bg-muted/40 border rounded-md flex items-center justify-end">
         <Button
           variant="ghost"
           className="h-9 px-6 text-muted-foreground hover:text-foreground"
           onClick={() => navigate(-1)}
         >
           Cancel
-        </Button>
-        <Button
-          className="bg-green-600 hover:bg-green-700 text-white h-9 px-8 shadow-sm"
-          onClick={() => toast({ title: "Item added", description: "Details saved to the work order." })}
-        >
-          <Plus className="h-4 w-4 mr-1" />
-          Add Item
         </Button>
       </div>
 
