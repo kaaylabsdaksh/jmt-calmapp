@@ -4297,7 +4297,6 @@ const FormVariationsDemo = () => {
           </Table>
         </div>
         {/* Pagination Footer */}
-        <div className="bg-muted/50 px-4 py-2 border-t flex items-center justify-between gap-2 flex-wrap">
         {(() => {
           const totalPages = Math.max(1, Math.ceil(itemsTotalCount / itemsPageSize));
           const current = Math.min(itemsCurrentPage, totalPages);
