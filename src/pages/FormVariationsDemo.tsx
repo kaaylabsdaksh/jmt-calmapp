@@ -3745,6 +3745,17 @@ const FormVariationsDemo = () => {
                 ))}
               </div>
             </div>
+
+            {/* Add Item button inside Product Specifications */}
+            <div className="mt-3 pt-2 border-t flex justify-end">
+              <Button
+                className="bg-green-600 hover:bg-green-700 text-white h-8 px-6 text-[11px] shadow-sm"
+                onClick={() => toast({ title: "Item added", description: "Details saved to the work order." })}
+              >
+                <Plus className="h-3.5 w-3.5 mr-1" />
+                Add Item
+              </Button>
+            </div>
           </div>
         </div>
 
