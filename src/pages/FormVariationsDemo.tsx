@@ -4163,146 +4163,55 @@ const FormVariationsDemo = () => {
                 <TableCell className="px-1 py-0.5"><Input className="h-5 text-[10px] w-12" /></TableCell>
               </TableRow>
               {/* Data Rows */}
-              <TableRow className={`h-6 ${expandedEslRow ? (expandedEslRow === "1" ? "bg-primary/20 hover:bg-primary/25 border-l-2 border-l-primary text-muted-foreground opacity-70" : "text-muted-foreground opacity-50") : "hover:bg-muted/30"}`}>
-                <TableCell className="text-center px-1 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" onClick={() => setExpandedEslRow(expandedEslRow === "1" ? null : "1")} className="text-foreground underline-offset-2 hover:underline">E</button></TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" className="text-foreground underline-offset-2 hover:underline">F</button></TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">1</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">MSA Safety</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">I</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">M</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">Black</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">A2</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">6</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">Yes</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">No</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">ESL-001234</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">C-789456</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">T-001</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">SYS-4521</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">Clean</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">Done</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">Pass</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">OK</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">Applied</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">Verified</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">B-101</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">3</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">A-12</TableCell>
-                <TableCell className="text-[10px] text-green-600 font-medium px-1.5 py-0.5">Complete</TableCell>
-              </TableRow>
-              <TableRow className={`h-6 ${expandedEslRow ? (expandedEslRow === "2" ? "bg-primary/20 hover:bg-primary/25 border-l-2 border-l-primary text-muted-foreground opacity-70" : "text-muted-foreground opacity-50") : "hover:bg-muted/30"}`}>
-                <TableCell className="text-center px-1 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" onClick={() => setExpandedEslRow(expandedEslRow === "2" ? null : "2")} className="text-foreground underline-offset-2 hover:underline">E</button></TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" className="text-foreground underline-offset-2 hover:underline">F</button></TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">2</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">3M Scott</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">II</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">L</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">Yellow</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">B1</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">8</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">Yes</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">Yes</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">ESL-001235</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">C-789457</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">T-002</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">SYS-4522</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">Test</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">Pending</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">-</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">-</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">-</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">-</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">B-102</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">2</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">A-15</TableCell>
-                <TableCell className="text-[10px] text-yellow-600 font-medium px-1.5 py-0.5">In Progress</TableCell>
-              </TableRow>
-              <TableRow className={`h-6 ${expandedEslRow ? (expandedEslRow === "3" ? "bg-primary/20 hover:bg-primary/25 border-l-2 border-l-primary text-muted-foreground opacity-70" : "text-muted-foreground opacity-50") : "hover:bg-muted/30"}`}>
-                <TableCell className="text-center px-1 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" onClick={() => setExpandedEslRow(expandedEslRow === "3" ? null : "3")} className="text-foreground underline-offset-2 hover:underline">E</button></TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" className="text-foreground underline-offset-2 hover:underline">F</button></TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">3</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">Honeywell</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">I</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">S</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">Red</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">C3</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">4</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">No</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">No</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">ESL-001236</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">C-789458</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">T-003</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">SYS-4523</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">Inspect</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">Done</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">Pass</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">OK</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">Applied</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">Verified</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">B-103</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">1</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">B-22</TableCell>
-                <TableCell className="text-[10px] text-green-600 font-medium px-1.5 py-0.5">Complete</TableCell>
-              </TableRow>
-              <TableRow className={`h-6 ${expandedEslRow ? (expandedEslRow === "4" ? "bg-primary/20 hover:bg-primary/25 border-l-2 border-l-primary text-muted-foreground opacity-70" : "text-muted-foreground opacity-50") : "hover:bg-muted/30"}`}>
-                <TableCell className="text-center px-1 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" onClick={() => setExpandedEslRow(expandedEslRow === "4" ? null : "4")} className="text-foreground underline-offset-2 hover:underline">E</button></TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" className="text-foreground underline-offset-2 hover:underline">F</button></TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">4</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">Draeger</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">III</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">XL</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">Blue</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">A1</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">6</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">Yes</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">No</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">ESL-001237</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">C-789459</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">T-004</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">SYS-4524</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">Receive</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">-</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">-</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">-</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">-</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">-</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">B-104</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">5</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">C-08</TableCell>
-                <TableCell className="text-[10px] text-blue-600 font-medium px-1.5 py-0.5">New</TableCell>
-              </TableRow>
-              <TableRow className={`h-6 ${expandedEslRow ? (expandedEslRow === "5" ? "bg-primary/20 hover:bg-primary/25 border-l-2 border-l-primary text-muted-foreground opacity-70" : "text-muted-foreground opacity-50") : "hover:bg-muted/30"}`}>
-                <TableCell className="text-center px-1 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" onClick={() => setExpandedEslRow(expandedEslRow === "5" ? null : "5")} className="text-foreground underline-offset-2 hover:underline">E</button></TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" className="text-foreground underline-offset-2 hover:underline">F</button></TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">5</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">MSA Safety</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">II</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">M</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">Black</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">D2</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">6</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">Yes</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">No</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">ESL-001238</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">C-789460</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">T-005</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">SYS-4525</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">Ship</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">Done</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">Pass</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">OK</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">Applied</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">Verified</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">B-105</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">4</TableCell>
-                <TableCell className="text-[10px] px-1.5 py-0.5">A-30</TableCell>
-                <TableCell className="text-[10px] text-green-600 font-medium px-1.5 py-0.5">Complete</TableCell>
-              </TableRow>
+              {(() => {
+                const baseRows = [
+                  { vendor: "MSA Safety", cls: "I", size: "M", color: "Black", style: "A2", glove: "6", sleeve: "Yes", protector: "No", testStatus: "Clean", workStatus: "Done", testResult: "Pass", finalStatus: "OK", esl: "Applied", cert: "Verified", box: "B-101", order: "3", acc: "A-12", bin: "Complete", binColor: "text-green-600" },
+                  { vendor: "3M Scott", cls: "II", size: "L", color: "Yellow", style: "B1", glove: "8", sleeve: "Yes", protector: "Yes", testStatus: "Test", workStatus: "Pending", testResult: "-", finalStatus: "-", esl: "-", cert: "-", box: "B-102", order: "2", acc: "A-15", bin: "In Progress", binColor: "text-yellow-600" },
+                  { vendor: "Honeywell", cls: "I", size: "S", color: "Red", style: "C3", glove: "4", sleeve: "No", protector: "No", testStatus: "Inspect", workStatus: "Done", testResult: "Pass", finalStatus: "OK", esl: "Applied", cert: "Verified", box: "B-103", order: "1", acc: "B-22", bin: "Complete", binColor: "text-green-600" },
+                  { vendor: "Draeger", cls: "III", size: "XL", color: "Blue", style: "A1", glove: "6", sleeve: "Yes", protector: "No", testStatus: "Receive", workStatus: "-", testResult: "-", finalStatus: "-", esl: "-", cert: "-", box: "B-104", order: "5", acc: "C-08", bin: "New", binColor: "text-blue-600" },
+                  { vendor: "MSA Safety", cls: "II", size: "M", color: "Black", style: "D2", glove: "6", sleeve: "Yes", protector: "No", testStatus: "Ship", workStatus: "Done", testResult: "Pass", finalStatus: "OK", esl: "Applied", cert: "Verified", box: "B-105", order: "4", acc: "A-30", bin: "Complete", binColor: "text-green-600" },
+                ];
+                const startIdx = (itemsCurrentPage - 1) * itemsPageSize;
+                const endIdx = Math.min(startIdx + itemsPageSize, itemsTotalCount);
+                const rows = [];
+                for (let i = startIdx; i < endIdx; i++) {
+                  const r = baseRows[i % baseRows.length];
+                  const n = i + 1;
+                  const id = String(n);
+                  rows.push(
+                    <TableRow key={i} className={`h-6 ${expandedEslRow ? (expandedEslRow === id ? "bg-primary/20 hover:bg-primary/25 border-l-2 border-l-primary text-muted-foreground opacity-70" : "text-muted-foreground opacity-50") : "hover:bg-muted/30"}`}>
+                      <TableCell className="text-center px-1 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
+                      <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" onClick={() => setExpandedEslRow(expandedEslRow === id ? null : id)} className="text-foreground underline-offset-2 hover:underline">E</button></TableCell>
+                      <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" className="text-foreground underline-offset-2 hover:underline">F</button></TableCell>
+                      <TableCell className="text-[10px] px-1.5 py-0.5">{n}</TableCell>
+                      <TableCell className="text-[10px] px-1.5 py-0.5">{r.vendor}</TableCell>
+                      <TableCell className="text-[10px] px-1.5 py-0.5">{r.cls}</TableCell>
+                      <TableCell className="text-[10px] px-1.5 py-0.5">{r.size}</TableCell>
+                      <TableCell className="text-[10px] px-1.5 py-0.5">{r.color}</TableCell>
+                      <TableCell className="text-[10px] px-1.5 py-0.5">{r.style}</TableCell>
+                      <TableCell className="text-[10px] px-1.5 py-0.5">{r.glove}</TableCell>
+                      <TableCell className="text-[10px] px-1.5 py-0.5">{r.sleeve}</TableCell>
+                      <TableCell className="text-[10px] px-1.5 py-0.5">{r.protector}</TableCell>
+                      <TableCell className="text-[10px] px-1.5 py-0.5">ESL-{String(1233 + n).padStart(6, "0")}</TableCell>
+                      <TableCell className="text-[10px] px-1.5 py-0.5">C-{789455 + n}</TableCell>
+                      <TableCell className="text-[10px] px-1.5 py-0.5">T-{String(n).padStart(3, "0")}</TableCell>
+                      <TableCell className="text-[10px] px-1.5 py-0.5">SYS-{4520 + n}</TableCell>
+                      <TableCell className="text-[10px] px-1.5 py-0.5">{r.testStatus}</TableCell>
+                      <TableCell className="text-[10px] px-1.5 py-0.5">{r.workStatus}</TableCell>
+                      <TableCell className="text-[10px] px-1.5 py-0.5">{r.testResult}</TableCell>
+                      <TableCell className="text-[10px] px-1.5 py-0.5">{r.finalStatus}</TableCell>
+                      <TableCell className="text-[10px] px-1.5 py-0.5">{r.esl}</TableCell>
+                      <TableCell className="text-[10px] px-1.5 py-0.5">{r.cert}</TableCell>
+                      <TableCell className="text-[10px] px-1.5 py-0.5">B-{100 + n}</TableCell>
+                      <TableCell className="text-[10px] px-1.5 py-0.5">{r.order}</TableCell>
+                      <TableCell className="text-[10px] px-1.5 py-0.5">{r.acc}</TableCell>
+                      <TableCell className={`text-[10px] ${r.binColor} font-medium px-1.5 py-0.5`}>{r.bin}</TableCell>
+                    </TableRow>
+                  );
+                }
+                return rows;
+              })()}
+
             </TableBody>
           </Table>
         </div>
