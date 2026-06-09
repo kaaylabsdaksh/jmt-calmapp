@@ -4444,6 +4444,34 @@ const FormVariationsDemo = () => {
                   <Button variant="outline" size="sm" className="h-9 text-sm px-3" onClick={() => setAssignBySizeOpen(true)}>
                     Assign by Size
                   </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-9 text-sm px-3"
+                    onClick={() => {
+                      const inv = inventoryPool.find(i => !replacements.some(r => r.inventoryId === i.id));
+                      if (!inv) {
+                        toast({ title: "No matching inventory", description: "Inventory pool exhausted for auto-allocation." });
+                        return;
+                      }
+                      allocateReplacement(1, inv, true);
+                    }}
+                  >
+                    Auto Allocate
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-9 text-sm px-3"
+                    onClick={() => {
+                      setReplaceFailTargetSort(1);
+                      setReplaceFailSelectedId(null);
+                      setReplaceFailSearch("");
+                      setReplaceFailDialogOpen(true);
+                    }}
+                  >
+                    Replace Fail Items
+                  </Button>
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <Button variant="outline" size="icon" className="h-9 w-9">
