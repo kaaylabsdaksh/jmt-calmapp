@@ -19,7 +19,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from "@/components/ui/sheet";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
@@ -283,6 +283,51 @@ const FormVariationsDemo = () => {
   const [labelType, setLabelType] = useState("default");
   const [batchSheetQuantity, setBatchSheetQuantity] = useState("1");
   const [batchSheetType, setBatchSheetType] = useState("default");
+
+  // Replace Fail Items workflow state
+  const [replaceFailDialogOpen, setReplaceFailDialogOpen] = useState(false);
+  const [replaceFailTargetSort, setReplaceFailTargetSort] = useState<number>(1);
+  const [replaceFailSelectedId, setReplaceFailSelectedId] = useState<string | null>(null);
+  const [replaceFailSearch, setReplaceFailSearch] = useState("");
+  const [replacements, setReplacements] = useState<Array<{
+    failedSort: number;
+    replacementSort: number;
+    inventoryId: string;
+    eslId: string;
+    custId: string;
+    manufacturer: string;
+    cls: string;
+    size: string;
+    color: string;
+    auto: boolean;
+  }>>([]);
+  const inventoryPool = [
+    { id: 'INV-1001', eslId: 'ESL-009812', custId: 'C-789501', manufacturer: 'MSA Safety', cls: 'I', size: 'M', color: 'Black', location: 'Bin A-12' },
+    { id: 'INV-1002', eslId: 'ESL-009813', custId: 'C-789502', manufacturer: 'MSA Safety', cls: 'I', size: 'M', color: 'Black', location: 'Bin A-12' },
+    { id: 'INV-1003', eslId: 'ESL-009814', custId: 'C-789503', manufacturer: '3M Scott',  cls: 'II', size: 'L', color: 'Yellow', location: 'Bin B-04' },
+    { id: 'INV-1004', eslId: 'ESL-009815', custId: 'C-789504', manufacturer: 'Honeywell', cls: 'I', size: 'S', color: 'Red', location: 'Bin C-22' },
+    { id: 'INV-1005', eslId: 'ESL-009816', custId: 'C-789505', manufacturer: 'MSA Safety', cls: 'I', size: 'M', color: 'Black', location: 'Bin A-13' },
+  ];
+  const allocateReplacement = (failedSort: number, inv: typeof inventoryPool[number], auto: boolean) => {
+    const replacementSort = itemsTotalCount + 1;
+    setReplacements(prev => [...prev, {
+      failedSort,
+      replacementSort,
+      inventoryId: inv.id,
+      eslId: inv.eslId,
+      custId: inv.custId,
+      manufacturer: inv.manufacturer,
+      cls: inv.cls,
+      size: inv.size,
+      color: inv.color,
+      auto,
+    }]);
+    setItemsTotalCount(c => c + 1);
+    toast({
+      title: auto ? "Auto-allocated replacement" : "Replacement allocated",
+      description: `${inv.id} (${inv.manufacturer} • ${inv.cls} • ${inv.size}) → replaces Sort #${failedSort}`,
+    });
+  };
   
   // Testing edit dialog state
   const [testingEditDialogOpen, setTestingEditDialogOpen] = useState(false);
@@ -4195,15 +4240,58 @@ const FormVariationsDemo = () => {
                   { vendor: "Draeger", cls: "III", size: "XL", color: "Blue", style: "A1", glove: "6", sleeve: "Yes", protector: "No", testStatus: "Receive", workStatus: "-", testResult: "-", finalStatus: "-", esl: "-", cert: "-", box: "B-104", order: "5", acc: "C-08", bin: "New", binColor: "text-blue-600" },
                   { vendor: "MSA Safety", cls: "II", size: "M", color: "Black", style: "D2", glove: "6", sleeve: "Yes", protector: "No", testStatus: "Ship", workStatus: "Done", testResult: "Pass", finalStatus: "OK", esl: "Applied", cert: "Verified", box: "B-105", order: "4", acc: "A-30", bin: "Complete", binColor: "text-green-600" },
                 ];
+                const replacementBySort = new Map(replacements.map(r => [r.failedSort, r]));
+                const baseCount = Math.max(0, itemsTotalCount - replacements.length);
                 const startIdx = (itemsCurrentPage - 1) * itemsPageSize;
                 const endIdx = Math.min(startIdx + itemsPageSize, itemsTotalCount);
                 const rows = [];
                 for (let i = startIdx; i < endIdx; i++) {
-                  const r = baseRows[i % baseRows.length];
                   const n = i + 1;
                   const id = String(n);
+                  // Replacement row (synthetic)
+                  const replacement = replacements[i - baseCount];
+                  if (i >= baseCount && replacement) {
+                    rows.push(
+                      <TableRow key={`rep-${n}`} className="h-6 bg-emerald-50/40 hover:bg-emerald-50/60">
+                        <TableCell className="text-center px-1 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" className="text-foreground underline-offset-2 hover:underline">E</button></TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" className="text-foreground underline-offset-2 hover:underline">F</button></TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5 font-medium">{n}</TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5">{replacement.manufacturer}</TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5">{replacement.cls}</TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5">{replacement.size}</TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5">{replacement.color}</TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5">-</TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5">-</TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5">-</TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5">No</TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5">{replacement.eslId}</TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5">{replacement.custId}</TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5">{replacement.inventoryId}</TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5">
+                          <span className="inline-flex items-center rounded bg-emerald-100 text-emerald-800 px-1.5 py-0.5 text-[9px] font-medium">
+                            Replacement for #{replacement.failedSort}{replacement.auto ? ' • Auto' : ''}
+                          </span>
+                        </TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5">Allocated</TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5">N</TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5">-</TableCell>
+                        <TableCell className="text-[10px] text-emerald-700 font-medium px-1.5 py-0.5">New</TableCell>
+                      </TableRow>
+                    );
+                    continue;
+                  }
+                  const r = baseRows[i % baseRows.length];
+                  const isFailed = n === 1;
+                  const rep = replacementBySort.get(n);
                   rows.push(
-                    <TableRow key={i} className={`h-6 ${expandedEslRow ? (expandedEslRow === id ? "bg-primary/20 hover:bg-primary/25 border-l-2 border-l-primary text-muted-foreground opacity-70" : "text-muted-foreground opacity-50") : "hover:bg-muted/30"}`}>
+                    <TableRow key={i} className={`h-6 ${isFailed ? 'bg-red-50/50 hover:bg-red-50/70' : ''} ${expandedEslRow ? (expandedEslRow === id ? "bg-primary/20 hover:bg-primary/25 border-l-2 border-l-primary text-muted-foreground opacity-70" : "text-muted-foreground opacity-50") : "hover:bg-muted/30"}`}>
                       <TableCell className="text-center px-1 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
                       <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" onClick={() => setExpandedEslRow(expandedEslRow === id ? null : id)} className="text-foreground underline-offset-2 hover:underline">E</button></TableCell>
                       <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" className="text-foreground underline-offset-2 hover:underline">F</button></TableCell>
@@ -4219,17 +4307,25 @@ const FormVariationsDemo = () => {
                       <TableCell className="text-[10px] px-1.5 py-0.5">ESL-{String(1233 + n).padStart(6, "0")}</TableCell>
                       <TableCell className="text-[10px] px-1.5 py-0.5">C-{789455 + n}</TableCell>
                       <TableCell className="text-[10px] px-1.5 py-0.5">T-{String(n).padStart(3, "0")}</TableCell>
-                      <TableCell className="text-[10px] px-1.5 py-0.5">SYS-{4520 + n}</TableCell>
-                      <TableCell className="text-[10px] px-1.5 py-0.5">{r.testStatus}</TableCell>
+                      <TableCell className="text-[10px] px-1.5 py-0.5">
+                        {rep ? (
+                          <span className="inline-flex items-center rounded bg-amber-100 text-amber-800 px-1.5 py-0.5 text-[9px] font-medium">
+                            Replaced by #{rep.replacementSort}
+                          </span>
+                        ) : (
+                          `SYS-${4520 + n}`
+                        )}
+                      </TableCell>
+                      <TableCell className="text-[10px] px-1.5 py-0.5">{isFailed ? 'Failed' : r.testStatus}</TableCell>
                       <TableCell className="text-[10px] px-1.5 py-0.5">{r.workStatus}</TableCell>
-                      <TableCell className="text-[10px] px-1.5 py-0.5">{r.testResult}</TableCell>
+                      <TableCell className="text-[10px] px-1.5 py-0.5">{isFailed ? <span className="text-red-600 font-medium">Fail</span> : r.testResult}</TableCell>
                       <TableCell className="text-[10px] px-1.5 py-0.5">{r.finalStatus}</TableCell>
                       <TableCell className="text-[10px] px-1.5 py-0.5">{r.esl}</TableCell>
                       <TableCell className="text-[10px] px-1.5 py-0.5">{r.cert}</TableCell>
                       <TableCell className="text-[10px] px-1.5 py-0.5">B-{100 + n}</TableCell>
                       <TableCell className="text-[10px] px-1.5 py-0.5">{r.order}</TableCell>
                       <TableCell className="text-[10px] px-1.5 py-0.5">{r.acc}</TableCell>
-                      <TableCell className={`text-[10px] ${r.binColor} font-medium px-1.5 py-0.5`}>{r.bin}</TableCell>
+                      <TableCell className={`text-[10px] ${isFailed ? 'text-red-600' : r.binColor} font-medium px-1.5 py-0.5`}>{isFailed ? 'Failed' : r.bin}</TableCell>
                     </TableRow>
                   );
                 }
@@ -4399,6 +4495,34 @@ const FormVariationsDemo = () => {
                   <Button variant="outline" size="sm" className="h-9 text-sm px-3" onClick={() => setAssignBySizeOpen(true)}>
                     Assign by Size
                   </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-9 text-sm px-3"
+                    onClick={() => {
+                      const inv = inventoryPool.find(i => !replacements.some(r => r.inventoryId === i.id));
+                      if (!inv) {
+                        toast({ title: "No matching inventory", description: "Inventory pool exhausted for auto-allocation." });
+                        return;
+                      }
+                      allocateReplacement(1, inv, true);
+                    }}
+                  >
+                    Auto Allocate
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-9 text-sm px-3"
+                    onClick={() => {
+                      setReplaceFailTargetSort(1);
+                      setReplaceFailSelectedId(null);
+                      setReplaceFailSearch("");
+                      setReplaceFailDialogOpen(true);
+                    }}
+                  >
+                    Replace Fail Items
+                  </Button>
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <Button variant="outline" size="icon" className="h-9 w-9">
@@ -4527,8 +4651,115 @@ const FormVariationsDemo = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Replace Fail Items Dialog */}
+      <Dialog open={replaceFailDialogOpen} onOpenChange={setReplaceFailDialogOpen}>
+        <DialogContent className="sm:max-w-3xl">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Package className="h-5 w-5" />
+              Replace Failed Item
+            </DialogTitle>
+            <DialogDescription>
+              Select a matching item from customer inventory to allocate as a replacement for{" "}
+              <span className="font-semibold text-foreground">Sort #{replaceFailTargetSort}</span>.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-3">
+            <div className="flex items-center gap-2">
+              <Input
+                placeholder="Search by ID, manufacturer, class, size…"
+                value={replaceFailSearch}
+                onChange={(e) => setReplaceFailSearch(e.target.value)}
+                className="h-9 text-xs"
+              />
+            </div>
+
+            <div className="border rounded-md max-h-[360px] overflow-auto">
+              <table className="w-full text-xs">
+                <thead className="bg-muted/50 sticky top-0">
+                  <tr>
+                    <th className="px-2 py-1.5 text-left w-8"></th>
+                    <th className="px-2 py-1.5 text-left">Inventory ID</th>
+                    <th className="px-2 py-1.5 text-left">ESL ID</th>
+                    <th className="px-2 py-1.5 text-left">Cust ID</th>
+                    <th className="px-2 py-1.5 text-left">Manufacturer</th>
+                    <th className="px-2 py-1.5 text-left">Class</th>
+                    <th className="px-2 py-1.5 text-left">Size</th>
+                    <th className="px-2 py-1.5 text-left">Color</th>
+                    <th className="px-2 py-1.5 text-left">Location</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {inventoryPool
+                    .filter(inv => !replacements.some(r => r.inventoryId === inv.id))
+                    .filter(inv => {
+                      const q = replaceFailSearch.toLowerCase().trim();
+                      if (!q) return true;
+                      return [inv.id, inv.eslId, inv.custId, inv.manufacturer, inv.cls, inv.size, inv.color]
+                        .some(v => v.toLowerCase().includes(q));
+                    })
+                    .map(inv => {
+                      const selected = replaceFailSelectedId === inv.id;
+                      return (
+                        <tr
+                          key={inv.id}
+                          className={`border-t cursor-pointer ${selected ? 'bg-primary/10' : 'hover:bg-muted/40'}`}
+                          onClick={() => setReplaceFailSelectedId(inv.id)}
+                        >
+                          <td className="px-2 py-1.5">
+                            <input
+                              type="radio"
+                              checked={selected}
+                              onChange={() => setReplaceFailSelectedId(inv.id)}
+                            />
+                          </td>
+                          <td className="px-2 py-1.5 font-medium">{inv.id}</td>
+                          <td className="px-2 py-1.5">{inv.eslId}</td>
+                          <td className="px-2 py-1.5">{inv.custId}</td>
+                          <td className="px-2 py-1.5">{inv.manufacturer}</td>
+                          <td className="px-2 py-1.5">{inv.cls}</td>
+                          <td className="px-2 py-1.5">{inv.size}</td>
+                          <td className="px-2 py-1.5">{inv.color}</td>
+                          <td className="px-2 py-1.5 text-muted-foreground">{inv.location}</td>
+                        </tr>
+                      );
+                    })}
+                  {inventoryPool.filter(inv => !replacements.some(r => r.inventoryId === inv.id)).length === 0 && (
+                    <tr>
+                      <td colSpan={9} className="px-2 py-6 text-center text-muted-foreground">
+                        No inventory available for allocation.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setReplaceFailDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button
+              disabled={!replaceFailSelectedId}
+              className="bg-emerald-500 hover:bg-emerald-600 text-white"
+              onClick={() => {
+                const inv = inventoryPool.find(i => i.id === replaceFailSelectedId);
+                if (!inv) return;
+                allocateReplacement(replaceFailTargetSort, inv, false);
+                setReplaceFailDialogOpen(false);
+              }}
+            >
+              Allocate
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
+
 
   const renderTestingSection = () => {
     return (
