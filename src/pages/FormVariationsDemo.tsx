@@ -12866,6 +12866,189 @@ const FormVariationsDemo = () => {
         </DialogContent>
       </Dialog>
 
+      {/* Assign by Size Dialog */}
+      <Dialog open={assignBySizeOpen} onOpenChange={setAssignBySizeOpen}>
+        <DialogContent className="max-w-5xl">
+          <DialogHeader>
+            <DialogTitle>Assign by Size</DialogTitle>
+            <p className="text-sm text-muted-foreground">
+              Assign technicians to each step per size. Use <span className="font-medium">Apply →</span> to copy the Clean assignee across all steps in a row, or use the <span className="font-medium">All Sizes</span> row to bulk-assign every size at once.
+            </p>
+          </DialogHeader>
+
+          {(() => {
+            const STEPS = [
+              { key: 'clean', label: 'Clean' },
+              { key: 'test', label: 'Test' },
+              { key: 'vi', label: 'Visual Insp' },
+              { key: 'stamp', label: 'Stamp' },
+              { key: 'boxOrder', label: 'Box Order' },
+            ] as const;
+            const TECHS = [
+              { value: 'unassigned', label: '(unassigned)' },
+              { value: 'brian', label: 'Brian E. Broome' },
+              { value: 'john', label: 'John Smith' },
+              { value: 'sarah', label: 'Sarah Johnson' },
+              { value: 'mike', label: 'Mike Davis' },
+              { value: 'emily', label: 'Emily Brown' },
+            ];
+            const shouldSkip = (current: string) => assignBySizeUnassignedOnly && current && current !== 'unassigned';
+
+            const renderTechSelect = (
+              value: string,
+              onChange: (v: string) => void,
+              placeholder = '(unassigned)',
+            ) => (
+              <Select value={value || undefined} onValueChange={onChange}>
+                <SelectTrigger className="h-9 w-full bg-background">
+                  <SelectValue placeholder={placeholder} />
+                </SelectTrigger>
+                <SelectContent className="z-50 bg-popover">
+                  {TECHS.map((t) => (
+                    <SelectItem key={t.value} value={t.value}>{t.label}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            );
+
+            return (
+              <div className="rounded-lg border bg-card overflow-hidden">
+                {/* Header */}
+                <div className="grid grid-cols-[110px_1fr_56px_1fr_1fr_1fr_1fr] gap-2 px-4 py-2.5 bg-muted/50 border-b text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                  <div>Size</div>
+                  <div className="text-center">Clean</div>
+                  <div className="text-center">Apply</div>
+                  <div className="text-center">Test</div>
+                  <div className="text-center">Visual Insp</div>
+                  <div className="text-center">Stamp</div>
+                  <div className="text-center">Box Order</div>
+                </div>
+
+                {/* Bulk "All Sizes" row */}
+                <div className="grid grid-cols-[110px_1fr_56px_1fr_1fr_1fr_1fr] gap-2 px-4 py-3 items-center bg-muted/20 border-b-2 border-dashed">
+                  <div className="text-sm font-semibold">All Sizes</div>
+                  {renderTechSelect(assignBySizeBulk.clean, (v) => setAssignBySizeBulk((b) => ({ ...b, clean: v })))}
+                  <div className="flex justify-center">
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="outline"
+                      className="h-9 w-12 p-0"
+                      title="Apply the Clean assignee to every step in the All Sizes row"
+                      onClick={() => {
+                        const src = assignBySizeBulk.clean;
+                        if (!src) {
+                          toast({ title: "Select a Clean assignee first", description: "Choose a tech in the Clean column of the All Sizes row." });
+                          return;
+                        }
+                        setAssignBySizeBulk((b) => ({
+                          ...b,
+                          test: shouldSkip(b.test) ? b.test : src,
+                          vi: shouldSkip(b.vi) ? b.vi : src,
+                          stamp: shouldSkip(b.stamp) ? b.stamp : src,
+                          boxOrder: shouldSkip(b.boxOrder) ? b.boxOrder : src,
+                        }));
+                      }}
+                    >
+                      <ChevronRight className="h-4 w-4" />
+                    </Button>
+                  </div>
+                  {(['test', 'vi', 'stamp', 'boxOrder'] as const).map((step) => (
+                    <div key={step} className="flex gap-1">
+                      {renderTechSelect(assignBySizeBulk[step], (v) => setAssignBySizeBulk((b) => ({ ...b, [step]: v })))}
+                    </div>
+                  ))}
+                </div>
+
+                {/* Size rows */}
+                <div className="divide-y">
+                  {assignBySizeRows.map((row, idx) => (
+                    <div key={idx} className="grid grid-cols-[110px_1fr_56px_1fr_1fr_1fr_1fr] gap-2 px-4 py-2.5 items-center hover:bg-muted/20 transition-colors">
+                      <div className="text-sm font-semibold">{row.size}</div>
+                      {renderTechSelect(row.clean, (v) =>
+                        setAssignBySizeRows((prev) => prev.map((r, i) => i === idx ? { ...r, clean: v } : r))
+                      )}
+                      <div className="flex justify-center">
+                        <Button
+                          type="button"
+                          size="sm"
+                          variant="outline"
+                          className="h-9 w-12 p-0"
+                          title="Copy Clean assignee to Test, VI, Stamp and Box Order"
+                          onClick={() => {
+                            setAssignBySizeRows((prev) => prev.map((r, i) => {
+                              if (i !== idx) return r;
+                              const src = r.clean;
+                              if (!src) return r;
+                              return {
+                                ...r,
+                                test: shouldSkip(r.test) ? r.test : src,
+                                vi: shouldSkip(r.vi) ? r.vi : src,
+                                stamp: shouldSkip(r.stamp) ? r.stamp : src,
+                                boxOrder: shouldSkip(r.boxOrder) ? r.boxOrder : src,
+                              };
+                            }));
+                          }}
+                        >
+                          <ChevronRight className="h-4 w-4" />
+                        </Button>
+                      </div>
+                      {(['test', 'vi', 'stamp', 'boxOrder'] as const).map((step) => (
+                        <div key={step}>
+                          {renderTechSelect(row[step], (v) =>
+                            setAssignBySizeRows((prev) => prev.map((r, i) => i === idx ? { ...r, [step]: v } : r))
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            );
+          })()}
+
+          <div className="flex items-center gap-2 pt-1">
+            <Checkbox
+              id="unassignedOnlySize"
+              checked={assignBySizeUnassignedOnly}
+              onCheckedChange={(c) => setAssignBySizeUnassignedOnly(!!c)}
+            />
+            <label htmlFor="unassignedOnlySize" className="text-sm cursor-pointer">
+              <span className="font-medium">Unassigned Only</span>
+              <span className="text-muted-foreground"> — skip cells that already have an assignment when applying</span>
+            </label>
+          </div>
+
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setAssignBySizeOpen(false)}>
+              <X className="h-4 w-4 mr-1" /> Cancel
+            </Button>
+            <Button
+              className="bg-emerald-500 hover:bg-emerald-600 text-white"
+              onClick={() => {
+                const bulk = assignBySizeBulk;
+                const skip = (current: string) => assignBySizeUnassignedOnly && current && current !== 'unassigned';
+                if (Object.values(bulk).some(Boolean)) {
+                  setAssignBySizeRows((prev) => prev.map((r) => ({
+                    ...r,
+                    clean: bulk.clean && !skip(r.clean) ? bulk.clean : r.clean,
+                    test: bulk.test && !skip(r.test) ? bulk.test : r.test,
+                    vi: bulk.vi && !skip(r.vi) ? bulk.vi : r.vi,
+                    stamp: bulk.stamp && !skip(r.stamp) ? bulk.stamp : r.stamp,
+                    boxOrder: bulk.boxOrder && !skip(r.boxOrder) ? bulk.boxOrder : r.boxOrder,
+                  })));
+                }
+                toast({ title: "Assignments saved", description: "Size assignments have been applied." });
+                setAssignBySizeOpen(false);
+              }}
+            >
+              <Save className="h-4 w-4 mr-1" /> Assign
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+
       <Toaster />
 
     </div>
