@@ -5095,12 +5095,14 @@ const FormVariationsDemo = () => {
                 </thead>
                 <tbody>
                   {(() => {
-                    const allBlanketRows = Array.from({ length: 28 }).map((_, i) => {
+                    const replacementBySort = new Map(replacements.map(r => [r.failedSort, r]));
+                    const baseRows = Array.from({ length: 28 }).map((_, i) => {
                       const sort = i + 1;
                       const isFail = sort === 2;
                       const cls = sort <= 2 ? 'CLASS 2' : 'CLASS 4';
                       const color = sort <= 2 ? 'Black' : 'Orange';
                       const custId = sort === 1 ? 'AC-1 / 171128' : sort === 2 ? 'AC-2 / 171129' : 'N/A';
+                      const rep = replacementBySort.get(sort);
                       return {
                         id: String(260671 + sort),
                         sort,
@@ -5114,18 +5116,42 @@ const FormVariationsDemo = () => {
                         new: 'No',
                         custId,
                         eslId: '',
-                        tag: isFail ? 'Repl Pending' : '',
+                        tagKind: rep ? 'replaced' : (isFail ? 'pending' : 'none'),
+                        replacementSort: rep?.replacementSort,
                         result: isFail ? 'FAIL' : 'PASS',
                         procs: 'F479',
                         stds: '751, 4455',
+                        kind: 'base' as const,
                       };
                     });
-                    const totalRows = allBlanketRows.length;
-                    const totalPages = Math.max(1, Math.ceil(totalRows / testingPageSize));
+                    const replacementRows = replacements.map(rep => ({
+                      id: rep.inventoryId,
+                      sort: rep.replacementSort,
+                      manufacturer: rep.manufacturer,
+                      class: rep.cls,
+                      size: rep.size,
+                      color: rep.color,
+                      slot: 'No',
+                      eyelets: 'No',
+                      zip: 'No',
+                      new: 'Yes',
+                      custId: rep.custId,
+                      eslId: rep.eslId,
+                      tagKind: 'replacementFor' as const,
+                      replacementSort: undefined as number | undefined,
+                      failedSort: rep.failedSort,
+                      auto: rep.auto,
+                      result: 'PASS',
+                      procs: 'F479',
+                      stds: '751, 4455',
+                      kind: 'replacement' as const,
+                    }));
+                    const allBlanketRows = [...baseRows, ...replacementRows];
+                    const totalPages = Math.max(1, Math.ceil(allBlanketRows.length / testingPageSize));
                     const current = Math.min(testingCurrentPage, totalPages);
                     const start = (current - 1) * testingPageSize;
                     const pageRows = allBlanketRows.slice(start, start + testingPageSize);
-                    return pageRows.map((row, index) => (
+                    return pageRows.map((row: any, index) => (
                     <tr key={row.id} className={`border-b border-border hover:bg-muted/30 h-6 ${index % 2 === 0 ? 'bg-background' : 'bg-muted/10'}`}>
                       <td className="px-1.5 py-0.5 text-[10px] font-medium text-foreground">{row.id}</td>
                       <td className="px-1.5 py-0.5 text-center"><Checkbox className="h-3 w-3" /></td>
@@ -5140,7 +5166,23 @@ const FormVariationsDemo = () => {
                       <td className="px-1.5 py-0.5 text-[10px]">{row.new}</td>
                       <td className="px-1.5 py-0.5 text-[10px] truncate max-w-[150px]" title={row.custId}>{row.custId}</td>
                       <td className="px-1.5 py-0.5 text-[10px]">{row.eslId}</td>
-                      <td className="px-1.5 py-0.5 text-[10px]">{row.tag}</td>
+                      <td className="px-1.5 py-0.5 text-[10px]">
+                        {row.tagKind === 'replaced' && (
+                          <span className="inline-flex items-center rounded bg-amber-100 text-amber-800 px-1.5 py-0.5 text-[9px] font-medium">
+                            Replaced by #{row.replacementSort}
+                          </span>
+                        )}
+                        {row.tagKind === 'replacementFor' && (
+                          <span className="inline-flex items-center rounded bg-emerald-100 text-emerald-800 px-1.5 py-0.5 text-[9px] font-medium">
+                            Replacement for #{row.failedSort}{row.auto ? ' • Auto' : ''}
+                          </span>
+                        )}
+                        {row.tagKind === 'pending' && (
+                          <span className="inline-flex items-center rounded bg-red-100 text-red-700 px-1.5 py-0.5 text-[9px] font-medium">
+                            Repl Pending
+                          </span>
+                        )}
+                      </td>
                       <td className="px-1.5 py-0.5 text-[10px]">
                         {row.result === 'PASS' && <span className="text-green-600 font-medium">PASS</span>}
                         {row.result === 'FAIL' && <span className="text-red-600 font-medium">FAIL</span>}
@@ -5543,7 +5585,7 @@ const FormVariationsDemo = () => {
 
           {/* Pagination */}
           {(() => {
-            const totalItems = 28;
+            const totalItems = 28 + replacements.length;
             const totalPages = Math.max(1, Math.ceil(totalItems / testingPageSize));
             const current = Math.min(testingCurrentPage, totalPages);
             const pageNumbers: number[] = [];
