@@ -5585,7 +5585,7 @@ const FormVariationsDemo = () => {
 
           {/* Pagination */}
           {(() => {
-            const totalItems = 28;
+            const totalItems = 28 + replacements.length;
             const totalPages = Math.max(1, Math.ceil(totalItems / testingPageSize));
             const current = Math.min(testingCurrentPage, totalPages);
             const pageNumbers: number[] = [];
