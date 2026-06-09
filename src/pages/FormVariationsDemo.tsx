@@ -5170,7 +5170,8 @@ const FormVariationsDemo = () => {
                     const start = (current - 1) * testingPageSize;
                     const pageRows = allBlanketRows.slice(start, start + testingPageSize);
                     return pageRows.map((row: any, index) => (
-                    <tr key={row.id} className={`border-b border-border hover:bg-muted/30 h-6 ${index % 2 === 0 ? 'bg-background' : 'bg-muted/10'}`}>
+                    <tr key={row.id} className={`border-b border-border hover:bg-muted/30 h-6 ${row.kind === 'replacement' ? 'bg-emerald-50 hover:bg-emerald-100/70 border-l-2 border-l-emerald-400' : (index % 2 === 0 ? 'bg-background' : 'bg-muted/10')}`}>
+
                       <td className="px-1.5 py-0.5 text-[10px] font-medium text-foreground">{row.id}</td>
                       <td className="px-1.5 py-0.5 text-center"><Checkbox className="h-3 w-3" /></td>
                       <td className="px-1.5 py-0.5 text-[10px]">{row.sort}</td>
