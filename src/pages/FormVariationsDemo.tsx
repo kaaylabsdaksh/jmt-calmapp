@@ -336,6 +336,17 @@ const FormVariationsDemo = () => {
       description: `${inv.id} (${inv.manufacturer} • ${inv.cls} • ${inv.size}) → replaces Sort #${failedSort}`,
     });
   };
+  const undoReplacement = (failedSort: number) => {
+    const rep = replacements.find(r => r.failedSort === failedSort);
+    if (!rep) return;
+    if (!window.confirm(`Remove the replacement for Sort #${failedSort}? The replacement row (Sort #${rep.replacementSort}) will be deleted and this item will be marked "Not to be Replaced".`)) return;
+    setReplacements(prev => prev.filter(r => r.failedSort !== failedSort));
+    setItemsTotalCount(c => Math.max(0, c - 1));
+    toast({
+      title: "Replacement removed",
+      description: `Sort #${failedSort} reverted to Not to be Replaced. Row #${rep.replacementSort} (${rep.inventoryId}) was wiped.`,
+    });
+  };
   
   // Testing pagination state
   const [testingCurrentPage, setTestingCurrentPage] = useState(1);
