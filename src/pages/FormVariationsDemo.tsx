@@ -5830,7 +5830,23 @@ const FormVariationsDemo = () => {
                     <Button variant="outline" onClick={() => setTestingEditDialogOpen(false)}>
                       Cancel
                     </Button>
-                    <Button className="bg-primary text-primary-foreground hover:bg-primary/90 min-w-[100px]">
+                    <Button
+                      className="bg-primary text-primary-foreground hover:bg-primary/90 min-w-[100px]"
+                      onClick={() => {
+                        if (selectedTestingRow) {
+                          const rep = replacements.find(r => r.failedSort === selectedTestingRow.sort);
+                          if (rep) {
+                            if ((testingFormData.replacement === 'not-to-be-replaced' || testingFormData.replacement === 'none') && !rep.cancelled) {
+                              cancelReplacement(selectedTestingRow.sort);
+                            } else if (testingFormData.replacement === 'replace' && rep.cancelled) {
+                              restoreReplacement(selectedTestingRow.sort);
+                              toast({ title: "Replacement restored", description: `Sort #${selectedTestingRow.sort} is being replaced again by Row #${rep.replacementSort}.` });
+                            }
+                          }
+                        }
+                        setTestingEditDialogOpen(false);
+                      }}
+                    >
                       <Save className="h-4 w-4 mr-2" />
                       Save
                     </Button>
