@@ -300,6 +300,7 @@ const FormVariationsDemo = () => {
     size: string;
     color: string;
     auto: boolean;
+    cancelled?: boolean;
   }>>([]);
   const inventoryPool = Array.from({ length: 18 }).map((_, i) => ({
     id: `INV-${1001 + i}`,
