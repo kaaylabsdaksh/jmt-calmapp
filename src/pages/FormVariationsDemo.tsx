@@ -102,7 +102,7 @@ const FormVariationsDemo = () => {
     { className: "CLASS 0", clean: "", test: "", vi: "", stamp: "", boxOrder: "" },
     { className: "CLASS 1", clean: "", test: "", vi: "", stamp: "", boxOrder: "" },
     { className: "CLASS 2", clean: "", test: "", vi: "", stamp: "", boxOrder: "" },
-    { className: "CLASS 4", clean: "Brian E. Broome", test: "Brian E. Broome", vi: "Brian E. Broome", stamp: "Brian E. Broome", boxOrder: "Brian E. Broome" },
+    { className: "CLASS 4", clean: "brian", test: "brian", vi: "brian", stamp: "brian", boxOrder: "brian" },
   ]);
   const [assignByClassBulk, setAssignByClassBulk] = useState<{ clean: string; test: string; vi: string; stamp: string; boxOrder: string }>({ clean: "", test: "", vi: "", stamp: "", boxOrder: "" });
   const [eslFieldValues, setEslFieldValues] = useState<Record<string, string>>({
