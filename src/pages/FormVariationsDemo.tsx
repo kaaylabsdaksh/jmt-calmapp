@@ -301,13 +301,21 @@ const FormVariationsDemo = () => {
     color: string;
     auto: boolean;
   }>>([]);
-  const inventoryPool = [
-    { id: 'INV-1001', eslId: 'ESL-009812', custId: 'C-789501', manufacturer: 'MSA Safety', cls: 'I', size: 'M', color: 'Black', location: 'Bin A-12' },
-    { id: 'INV-1002', eslId: 'ESL-009813', custId: 'C-789502', manufacturer: 'MSA Safety', cls: 'I', size: 'M', color: 'Black', location: 'Bin A-12' },
-    { id: 'INV-1003', eslId: 'ESL-009814', custId: 'C-789503', manufacturer: '3M Scott',  cls: 'II', size: 'L', color: 'Yellow', location: 'Bin B-04' },
-    { id: 'INV-1004', eslId: 'ESL-009815', custId: 'C-789504', manufacturer: 'Honeywell', cls: 'I', size: 'S', color: 'Red', location: 'Bin C-22' },
-    { id: 'INV-1005', eslId: 'ESL-009816', custId: 'C-789505', manufacturer: 'MSA Safety', cls: 'I', size: 'M', color: 'Black', location: 'Bin A-13' },
-  ];
+  const inventoryPool = Array.from({ length: 18 }).map((_, i) => ({
+    id: `INV-${1001 + i}`,
+    acct: '11444.01',
+    eslId: i % 4 === 0 ? `933${350 + i}` : '',
+    custId: 'N/A',
+    manufacturer: 'SALISBURY',
+    cls: 'CLASS 4',
+    size: '36x36',
+    color: 'Orange',
+    slot: 'N',
+    eyelets: 'N',
+    zip: 'N',
+    cStock: 'N',
+    location: 'MT-A02-R01-S01-B01',
+  }));
   const allocateReplacement = (failedSort: number, inv: typeof inventoryPool[number], auto: boolean) => {
     const replacementSort = itemsTotalCount + 1;
     setReplacements(prev => [...prev, {
