@@ -4275,7 +4275,7 @@ const FormVariationsDemo = () => {
                   const replacement = replacements[i - baseCount];
                   if (i >= baseCount && replacement) {
                     rows.push(
-                      <TableRow key={`rep-${n}`} className="h-6 bg-emerald-50/40 hover:bg-emerald-50/60">
+                      <TableRow key={`rep-${n}`} className="h-6 bg-emerald-50 hover:bg-emerald-100/70 border-l-2 border-l-emerald-400">
                         <TableCell className="text-center px-1 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
                         <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" className="text-foreground underline-offset-2 hover:underline">E</button></TableCell>
                         <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" className="text-foreground underline-offset-2 hover:underline">F</button></TableCell>
