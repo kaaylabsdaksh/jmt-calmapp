@@ -4277,8 +4277,8 @@ const FormVariationsDemo = () => {
                   const replacement = replacements[i - baseCount];
                   if (i >= baseCount && replacement) {
                     rows.push(
-                      <TableRow key={`rep-${n}`} className="h-6 bg-emerald-50 hover:bg-emerald-100/70 border-l-2 border-l-emerald-400">
-                        <TableCell className="text-center px-1 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
+                      <TableRow key={`rep-${n}`} className={`h-6 ${replacement.cancelled ? 'bg-slate-100 hover:bg-slate-200/60 border-l-2 border-l-slate-400 line-through text-muted-foreground' : 'bg-emerald-50 hover:bg-emerald-100/70 border-l-2 border-l-emerald-400'}`}>
+                        <TableCell className="text-center px-1 py-0.5"><Checkbox className="h-3 w-3" disabled={replacement.cancelled} /></TableCell>
                         <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" className="text-foreground underline-offset-2 hover:underline">E</button></TableCell>
                         <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" className="text-foreground underline-offset-2 hover:underline">F</button></TableCell>
                         <TableCell className="text-[10px] px-1.5 py-0.5 font-medium">{n}</TableCell>
@@ -4294,10 +4294,17 @@ const FormVariationsDemo = () => {
                         <TableCell className="text-[10px] px-1.5 py-0.5">{replacement.custId}</TableCell>
                         <TableCell className="text-[10px] px-1.5 py-0.5">{replacement.inventoryId}</TableCell>
                         <TableCell className="text-[10px] px-1.5 py-0.5">
-                          <span className="inline-flex items-center rounded bg-emerald-100 text-emerald-800 px-1.5 py-0.5 text-[9px] font-medium">
-                            Replacement for #{replacement.failedSort}{replacement.auto ? ' • Auto' : ''}
-                          </span>
+                          {replacement.cancelled ? (
+                            <span className="inline-flex items-center rounded bg-slate-200 text-slate-700 px-1.5 py-0.5 text-[9px] font-medium no-underline">
+                              Cancelled — Sort #{replacement.failedSort} not replaced
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center rounded bg-emerald-100 text-emerald-800 px-1.5 py-0.5 text-[9px] font-medium">
+                              Replacement for #{replacement.failedSort}{replacement.auto ? ' • Auto' : ''}
+                            </span>
+                          )}
                         </TableCell>
+
                         <TableCell className="text-[10px] px-1.5 py-0.5">Allocated</TableCell>
                         <TableCell className="text-[10px] px-1.5 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
                         <TableCell className="text-[10px] px-1.5 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
