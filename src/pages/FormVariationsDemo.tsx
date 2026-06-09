@@ -301,13 +301,21 @@ const FormVariationsDemo = () => {
     color: string;
     auto: boolean;
   }>>([]);
-  const inventoryPool = [
-    { id: 'INV-1001', eslId: 'ESL-009812', custId: 'C-789501', manufacturer: 'MSA Safety', cls: 'I', size: 'M', color: 'Black', location: 'Bin A-12' },
-    { id: 'INV-1002', eslId: 'ESL-009813', custId: 'C-789502', manufacturer: 'MSA Safety', cls: 'I', size: 'M', color: 'Black', location: 'Bin A-12' },
-    { id: 'INV-1003', eslId: 'ESL-009814', custId: 'C-789503', manufacturer: '3M Scott',  cls: 'II', size: 'L', color: 'Yellow', location: 'Bin B-04' },
-    { id: 'INV-1004', eslId: 'ESL-009815', custId: 'C-789504', manufacturer: 'Honeywell', cls: 'I', size: 'S', color: 'Red', location: 'Bin C-22' },
-    { id: 'INV-1005', eslId: 'ESL-009816', custId: 'C-789505', manufacturer: 'MSA Safety', cls: 'I', size: 'M', color: 'Black', location: 'Bin A-13' },
-  ];
+  const inventoryPool = Array.from({ length: 18 }).map((_, i) => ({
+    id: `INV-${1001 + i}`,
+    acct: '11444.01',
+    eslId: i % 4 === 0 ? `933${350 + i}` : '',
+    custId: 'N/A',
+    manufacturer: 'SALISBURY',
+    cls: 'CLASS 4',
+    size: '36x36',
+    color: 'Orange',
+    slot: 'N',
+    eyelets: 'N',
+    zip: 'N',
+    cStock: 'N',
+    location: 'MT-A02-R01-S01-B01',
+  }));
   const allocateReplacement = (failedSort: number, inv: typeof inventoryPool[number], auto: boolean) => {
     const replacementSort = itemsTotalCount + 1;
     setReplacements(prev => [...prev, {
@@ -4652,43 +4660,99 @@ const FormVariationsDemo = () => {
         </DialogContent>
       </Dialog>
 
-      {/* Replace Fail Items Dialog */}
+      {/* Replace Fail Items Dialog — modern redesign */}
       <Dialog open={replaceFailDialogOpen} onOpenChange={setReplaceFailDialogOpen}>
-        <DialogContent className="sm:max-w-3xl">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <Package className="h-5 w-5" />
-              Replace Failed Item
+        <DialogContent className="max-w-[1200px] w-[96vw] p-0 gap-0 overflow-hidden">
+          <DialogHeader className="px-5 py-3 border-b bg-muted/30">
+            <DialogTitle className="flex items-center gap-2 text-base">
+              <Package className="h-4 w-4" />
+              Pull From Customer Inventory
+              <Badge variant="outline" className="ml-2 text-[10px] font-normal">
+                Replacing Sort #{replaceFailTargetSort}
+              </Badge>
             </DialogTitle>
-            <DialogDescription>
-              Select a matching item from customer inventory to allocate as a replacement for{" "}
-              <span className="font-semibold text-foreground">Sort #{replaceFailTargetSort}</span>.
+            <DialogDescription className="text-xs">
+              Filter inventory, then select an item to allocate as the replacement.
             </DialogDescription>
           </DialogHeader>
 
-          <div className="space-y-3">
-            <div className="flex items-center gap-2">
-              <Input
-                placeholder="Search by ID, manufacturer, class, size…"
-                value={replaceFailSearch}
-                onChange={(e) => setReplaceFailSearch(e.target.value)}
-                className="h-9 text-xs"
-              />
+          {/* Top meta strip */}
+          <div className="px-5 py-3 border-b bg-background flex flex-wrap items-end gap-4">
+            <div className="flex flex-col gap-1">
+              <Label className="text-[11px] text-muted-foreground">ESL ID</Label>
+              <Input defaultValue="933353" className="h-8 w-32 text-xs" />
             </div>
+            <div className="flex flex-col gap-1">
+              <Label className="text-[11px] text-muted-foreground">Cust ID</Label>
+              <Input defaultValue="N/A" className="h-8 w-32 text-xs" />
+            </div>
+            <div className="flex flex-col gap-1">
+              <Label className="text-[11px] text-muted-foreground">Tag #</Label>
+              <Input className="h-8 w-32 text-xs" />
+            </div>
+            <div className="flex flex-col gap-1">
+              <Label className="text-[11px] text-muted-foreground">Qty</Label>
+              <Input type="number" defaultValue={1} className="h-8 w-20 text-xs" />
+            </div>
+            <div className="flex items-center gap-2 ml-auto">
+              <label className="flex items-center gap-1.5 text-xs">
+                <Checkbox /> Include JM Surplus
+              </label>
+              <span className="text-xs text-muted-foreground">
+                Remaining: <span className="font-semibold text-foreground">1</span>
+              </span>
+            </div>
+          </div>
 
-            <div className="border rounded-md max-h-[360px] overflow-auto">
+          {/* Body: filters | table | accessories */}
+          <div className="grid grid-cols-12 gap-0 max-h-[60vh]">
+            {/* Filters */}
+            <aside className="col-span-3 border-r p-4 space-y-3 bg-muted/10 overflow-auto">
+              <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1">
+                Filters
+              </div>
+              {[
+                { label: "Manufacturer", value: "SALISBURY" },
+                { label: "Class", value: "CLASS 4" },
+                { label: "Size", value: "36x36" },
+                { label: "Color", value: "Orange" },
+              ].map(f => (
+                <div key={f.label} className="flex flex-col gap-1">
+                  <Label className="text-[11px] text-muted-foreground">{f.label}</Label>
+                  <Select defaultValue={f.value}>
+                    <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
+                    <SelectContent className="z-50">
+                      <SelectItem value={f.value}>{f.value}</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              ))}
+              <div className="pt-2 space-y-2">
+                {["Slot", "Eyelets", "Zip"].map(opt => (
+                  <label key={opt} className="flex items-center gap-2 text-xs">
+                    <Checkbox /> {opt}
+                  </label>
+                ))}
+              </div>
+            </aside>
+
+            {/* Inventory table */}
+            <section className="col-span-7 border-r overflow-auto">
               <table className="w-full text-xs">
-                <thead className="bg-muted/50 sticky top-0">
-                  <tr>
-                    <th className="px-2 py-1.5 text-left w-8"></th>
-                    <th className="px-2 py-1.5 text-left">Inventory ID</th>
-                    <th className="px-2 py-1.5 text-left">ESL ID</th>
-                    <th className="px-2 py-1.5 text-left">Cust ID</th>
-                    <th className="px-2 py-1.5 text-left">Manufacturer</th>
-                    <th className="px-2 py-1.5 text-left">Class</th>
-                    <th className="px-2 py-1.5 text-left">Size</th>
-                    <th className="px-2 py-1.5 text-left">Color</th>
-                    <th className="px-2 py-1.5 text-left">Location</th>
+                <thead className="bg-muted/50 sticky top-0 z-10">
+                  <tr className="border-b">
+                    <th className="px-2 py-2 text-left w-8"></th>
+                    <th className="px-2 py-2 text-left">Acct #</th>
+                    <th className="px-2 py-2 text-left">Bin Location</th>
+                    <th className="px-2 py-2 text-left">ESL ID</th>
+                    <th className="px-2 py-2 text-left">Manufacturer</th>
+                    <th className="px-2 py-2 text-left">Class</th>
+                    <th className="px-2 py-2 text-left">Size</th>
+                    <th className="px-2 py-2 text-left">Color</th>
+                    <th className="px-2 py-2 text-center">Slot</th>
+                    <th className="px-2 py-2 text-center">Eyelets</th>
+                    <th className="px-2 py-2 text-center">Zip</th>
+                    <th className="px-2 py-2 text-center">C-Stock</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -4705,58 +4769,87 @@ const FormVariationsDemo = () => {
                       return (
                         <tr
                           key={inv.id}
-                          className={`border-t cursor-pointer ${selected ? 'bg-primary/10' : 'hover:bg-muted/40'}`}
+                          className={`border-b cursor-pointer ${selected ? 'bg-primary/10' : 'hover:bg-muted/40'}`}
                           onClick={() => setReplaceFailSelectedId(inv.id)}
                         >
                           <td className="px-2 py-1.5">
-                            <input
-                              type="radio"
+                            <Checkbox
                               checked={selected}
-                              onChange={() => setReplaceFailSelectedId(inv.id)}
+                              onCheckedChange={() => setReplaceFailSelectedId(inv.id)}
                             />
                           </td>
-                          <td className="px-2 py-1.5 font-medium">{inv.id}</td>
+                          <td className="px-2 py-1.5 font-medium">{inv.acct}</td>
+                          <td className="px-2 py-1.5 font-mono text-[11px]">{inv.location}</td>
                           <td className="px-2 py-1.5">{inv.eslId}</td>
-                          <td className="px-2 py-1.5">{inv.custId}</td>
                           <td className="px-2 py-1.5">{inv.manufacturer}</td>
                           <td className="px-2 py-1.5">{inv.cls}</td>
                           <td className="px-2 py-1.5">{inv.size}</td>
                           <td className="px-2 py-1.5">{inv.color}</td>
-                          <td className="px-2 py-1.5 text-muted-foreground">{inv.location}</td>
+                          <td className="px-2 py-1.5 text-center text-muted-foreground">{inv.slot}</td>
+                          <td className="px-2 py-1.5 text-center text-muted-foreground">{inv.eyelets}</td>
+                          <td className="px-2 py-1.5 text-center text-muted-foreground">{inv.zip}</td>
+                          <td className="px-2 py-1.5 text-center text-muted-foreground">{inv.cStock}</td>
                         </tr>
                       );
                     })}
-                  {inventoryPool.filter(inv => !replacements.some(r => r.inventoryId === inv.id)).length === 0 && (
-                    <tr>
-                      <td colSpan={9} className="px-2 py-6 text-center text-muted-foreground">
-                        No inventory available for allocation.
-                      </td>
-                    </tr>
-                  )}
                 </tbody>
               </table>
-            </div>
+            </section>
+
+            {/* Accessories */}
+            <aside className="col-span-2 p-4 space-y-2 overflow-auto bg-muted/10">
+              <div className="flex items-center justify-between mb-1">
+                <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                  Accessories
+                </div>
+                <div className="text-[10px] text-muted-foreground">Qty</div>
+              </div>
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div key={i} className="flex items-center gap-1.5">
+                  <Select>
+                    <SelectTrigger className="h-7 text-xs flex-1"><SelectValue placeholder="—" /></SelectTrigger>
+                    <SelectContent className="z-50">
+                      <SelectItem value="hooks">Hooks</SelectItem>
+                      <SelectItem value="straps">Straps</SelectItem>
+                      <SelectItem value="clips">Clips</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Input type="number" className="h-7 w-12 text-xs px-1" />
+                </div>
+              ))}
+            </aside>
           </div>
 
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setReplaceFailDialogOpen(false)}>
-              Cancel
-            </Button>
-            <Button
-              disabled={!replaceFailSelectedId}
-              className="bg-emerald-500 hover:bg-emerald-600 text-white"
-              onClick={() => {
-                const inv = inventoryPool.find(i => i.id === replaceFailSelectedId);
-                if (!inv) return;
-                allocateReplacement(replaceFailTargetSort, inv, false);
-                setReplaceFailDialogOpen(false);
-              }}
-            >
-              Allocate
-            </Button>
+          {/* Footer with primary + 4 extra CTAs */}
+          <DialogFooter className="px-5 py-3 border-t bg-muted/20 sm:justify-between gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
+              <Button variant="outline" size="sm">Print Label</Button>
+              <Button variant="outline" size="sm">Reserve Item</Button>
+              <Button variant="outline" size="sm">Request Transfer</Button>
+              <Button variant="outline" size="sm">View History</Button>
+            </div>
+            <div className="flex items-center gap-2">
+              <Button variant="outline" size="sm" onClick={() => setReplaceFailDialogOpen(false)}>
+                Cancel
+              </Button>
+              <Button
+                size="sm"
+                disabled={!replaceFailSelectedId}
+                className="bg-emerald-500 hover:bg-emerald-600 text-white"
+                onClick={() => {
+                  const inv = inventoryPool.find(i => i.id === replaceFailSelectedId);
+                  if (!inv) return;
+                  allocateReplacement(replaceFailTargetSort, inv, false);
+                  setReplaceFailDialogOpen(false);
+                }}
+              >
+                Pull From Customer Inventory
+              </Button>
+            </div>
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
     </div>
   );
 
