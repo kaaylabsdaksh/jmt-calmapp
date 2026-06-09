@@ -12732,6 +12732,42 @@ const FormVariationsDemo = () => {
                   <div className="text-center">Box Order</div>
                 </div>
 
+                {/* Bulk "All Classes" row */}
+                <div className="grid grid-cols-[110px_1fr_56px_1fr_1fr_1fr_1fr] gap-2 px-4 py-3 items-center bg-primary/5 border-b-2 border-dashed">
+                  <div className="text-sm font-semibold text-primary">All Classes</div>
+                  {renderTechSelect(assignByClassBulk.clean, (v) => setAssignByClassBulk((b) => ({ ...b, clean: v })))}
+                  <div className="flex justify-center">
+                    <Button
+                      type="button"
+                      size="sm"
+                      className="h-9 w-12 p-0 bg-primary text-primary-foreground hover:bg-primary/90"
+                      title="Apply the Clean assignee to every step in every class"
+                      onClick={() => {
+                        const src = assignByClassBulk.clean;
+                        if (!src) {
+                          toast({ title: "Select a Clean assignee first", description: "Choose a tech in the Clean column of the All Classes row." });
+                          return;
+                        }
+                        setAssignByClassRows((prev) => prev.map((r) => ({
+                          ...r,
+                          clean: shouldSkip(r.clean) ? r.clean : src,
+                          test: shouldSkip(r.test) ? r.test : src,
+                          vi: shouldSkip(r.vi) ? r.vi : src,
+                          stamp: shouldSkip(r.stamp) ? r.stamp : src,
+                          boxOrder: shouldSkip(r.boxOrder) ? r.boxOrder : src,
+                        })));
+                      }}
+                    >
+                      <ChevronRight className="h-4 w-4" />
+                    </Button>
+                  </div>
+                  {(['test', 'vi', 'stamp', 'boxOrder'] as const).map((step) => (
+                    <div key={step} className="flex gap-1">
+                      {renderTechSelect(assignByClassBulk[step], (v) => setAssignByClassBulk((b) => ({ ...b, [step]: v })))}
+                    </div>
+                  ))}
+                </div>
+
                 {/* Class rows */}
                 <div className="divide-y">
                   {assignByClassRows.map((row, idx) => (
@@ -12772,42 +12808,6 @@ const FormVariationsDemo = () => {
                           )}
                         </div>
                       ))}
-                    </div>
-                  ))}
-                </div>
-
-                {/* Bulk "All Classes" row */}
-                <div className="grid grid-cols-[110px_1fr_56px_1fr_1fr_1fr_1fr] gap-2 px-4 py-3 items-center bg-primary/5 border-t-2 border-dashed">
-                  <div className="text-sm font-semibold text-primary">All Classes</div>
-                  {renderTechSelect(assignByClassBulk.clean, (v) => setAssignByClassBulk((b) => ({ ...b, clean: v })))}
-                  <div className="flex justify-center">
-                    <Button
-                      type="button"
-                      size="sm"
-                      className="h-9 w-12 p-0 bg-primary text-primary-foreground hover:bg-primary/90"
-                      title="Apply the Clean assignee to every step in every class"
-                      onClick={() => {
-                        const src = assignByClassBulk.clean;
-                        if (!src) {
-                          toast({ title: "Select a Clean assignee first", description: "Choose a tech in the Clean column of the All Classes row." });
-                          return;
-                        }
-                        setAssignByClassRows((prev) => prev.map((r) => ({
-                          ...r,
-                          clean: shouldSkip(r.clean) ? r.clean : src,
-                          test: shouldSkip(r.test) ? r.test : src,
-                          vi: shouldSkip(r.vi) ? r.vi : src,
-                          stamp: shouldSkip(r.stamp) ? r.stamp : src,
-                          boxOrder: shouldSkip(r.boxOrder) ? r.boxOrder : src,
-                        })));
-                      }}
-                    >
-                      <ChevronRight className="h-4 w-4" />
-                    </Button>
-                  </div>
-                  {(['test', 'vi', 'stamp', 'boxOrder'] as const).map((step) => (
-                    <div key={step} className="flex gap-1">
-                      {renderTechSelect(assignByClassBulk[step], (v) => setAssignByClassBulk((b) => ({ ...b, [step]: v })))}
                     </div>
                   ))}
                 </div>
