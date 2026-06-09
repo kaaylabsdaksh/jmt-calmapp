@@ -12733,14 +12733,15 @@ const FormVariationsDemo = () => {
                 </div>
 
                 {/* Bulk "All Classes" row */}
-                <div className="grid grid-cols-[110px_1fr_56px_1fr_1fr_1fr_1fr] gap-2 px-4 py-3 items-center bg-primary/5 border-b-2 border-dashed">
-                  <div className="text-sm font-semibold text-primary">All Classes</div>
+                <div className="grid grid-cols-[110px_1fr_56px_1fr_1fr_1fr_1fr] gap-2 px-4 py-3 items-center bg-muted/20 border-b-2 border-dashed">
+                  <div className="text-sm font-semibold">All Classes</div>
                   {renderTechSelect(assignByClassBulk.clean, (v) => setAssignByClassBulk((b) => ({ ...b, clean: v })))}
                   <div className="flex justify-center">
                     <Button
                       type="button"
                       size="sm"
-                      className="h-9 w-12 p-0 bg-primary text-primary-foreground hover:bg-primary/90"
+                      variant="outline"
+                      className="h-9 w-12 p-0"
                       title="Apply the Clean assignee to every step in every class"
                       onClick={() => {
                         const src = assignByClassBulk.clean;
