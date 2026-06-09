@@ -95,6 +95,11 @@ const FormVariationsDemo = () => {
   const [itemsCurrentPage, setItemsCurrentPage] = useState<number>(1);
   const [itemsPageSize, setItemsPageSize] = useState<number>(10);
   const [itemsTotalCount, setItemsTotalCount] = useState<number>(262);
+  const [assignByClassOpen, setAssignByClassOpen] = useState(false);
+  const [assignByClassUnassignedOnly, setAssignByClassUnassignedOnly] = useState(false);
+  const [assignByClassRows, setAssignByClassRows] = useState<Array<{ className: string; clean: string; test: string; vi: string; stamp: string; boxOrder: string }>>([
+    { className: "CLASS 4", clean: "", test: "", vi: "", stamp: "", boxOrder: "" },
+  ]);
   const [eslFieldValues, setEslFieldValues] = useState<Record<string, string>>({
     clean: '', test: '', vi: '', stamp: '', boxOrder: '',
   });
@@ -4349,7 +4354,7 @@ const FormVariationsDemo = () => {
                   Assign by Manufacturer
                 </Button>
               ) : formData.type === 'esl-coverups' ? (
-                <Button variant="outline" size="sm" className="h-9 text-sm px-3">
+                <Button variant="outline" size="sm" className="h-9 text-sm px-3" onClick={() => setAssignByClassOpen(true)}>
                   Assign by Class
                 </Button>
               ) : formData.type === 'esl-grounds' ? (
@@ -4375,7 +4380,7 @@ const FormVariationsDemo = () => {
                 </>
               ) : (
                 <>
-                  <Button variant="outline" size="sm" className="h-9 text-sm px-3">
+                  <Button variant="outline" size="sm" className="h-9 text-sm px-3" onClick={() => setAssignByClassOpen(true)}>
                     Assign by Class
                   </Button>
                   <Button variant="outline" size="sm" className="h-9 text-sm px-3">
@@ -12663,7 +12668,90 @@ const FormVariationsDemo = () => {
         </div>
       )}
       {/* ESL Item E (Edit) Dialog — dropdowns with inline "add option" */}
+
+      {/* Assign by Class Dialog */}
+      <Dialog open={assignByClassOpen} onOpenChange={setAssignByClassOpen}>
+        <DialogContent className="max-w-5xl">
+          <DialogHeader>
+            <DialogTitle>Assign by Class</DialogTitle>
+            <p className="text-sm text-muted-foreground">
+              Assign technicians to Clean / Test / VI / Stamp / Box Order steps for each class on this work order's blankets.
+            </p>
+          </DialogHeader>
+
+          <div className="border rounded-md overflow-hidden">
+            <table className="w-full text-sm">
+              <thead className="bg-muted/40">
+                <tr className="text-left">
+                  <th className="px-4 py-2 font-medium w-32">Class</th>
+                  <th className="px-4 py-2 font-medium">Clean</th>
+                  <th className="px-4 py-2 font-medium">Test</th>
+                  <th className="px-4 py-2 font-medium">VI</th>
+                  <th className="px-4 py-2 font-medium">Stamp</th>
+                  <th className="px-4 py-2 font-medium">Box Order</th>
+                </tr>
+              </thead>
+              <tbody>
+                {assignByClassRows.map((row, idx) => (
+                  <tr key={idx} className="border-t">
+                    <td className="px-4 py-3 font-medium">{row.className}</td>
+                    {(['clean', 'test', 'vi', 'stamp', 'boxOrder'] as const).map((step) => (
+                      <td key={step} className="px-2 py-2">
+                        <Select
+                          value={row[step] || undefined}
+                          onValueChange={(v) => {
+                            setAssignByClassRows((prev) => prev.map((r, i) => i === idx ? { ...r, [step]: v } : r));
+                          }}
+                        >
+                          <SelectTrigger className="h-9 w-full">
+                            <SelectValue placeholder="(unassigned)" />
+                          </SelectTrigger>
+                          <SelectContent className="z-50 bg-popover">
+                            <SelectItem value="unassigned">(unassigned)</SelectItem>
+                            <SelectItem value="john">John Smith</SelectItem>
+                            <SelectItem value="sarah">Sarah Johnson</SelectItem>
+                            <SelectItem value="mike">Mike Davis</SelectItem>
+                            <SelectItem value="emily">Emily Brown</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="flex items-center gap-2 pt-2">
+            <Checkbox
+              id="unassignedOnly"
+              checked={assignByClassUnassignedOnly}
+              onCheckedChange={(c) => setAssignByClassUnassignedOnly(!!c)}
+            />
+            <label htmlFor="unassignedOnly" className="text-sm font-medium cursor-pointer">
+              Unassigned Only (skip rows that already have an assignment for the same step)
+            </label>
+          </div>
+
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setAssignByClassOpen(false)}>
+              <X className="h-4 w-4 mr-1" /> Cancel
+            </Button>
+            <Button
+              className="bg-emerald-500 hover:bg-emerald-600 text-white"
+              onClick={() => {
+                toast({ title: "Assignments saved", description: "Class assignments have been applied." });
+                setAssignByClassOpen(false);
+              }}
+            >
+              <Save className="h-4 w-4 mr-1" /> Save Assignments
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       <Toaster />
+
     </div>
   );
 };
