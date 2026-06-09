@@ -12749,14 +12749,13 @@ const FormVariationsDemo = () => {
                           toast({ title: "Select a Clean assignee first", description: "Choose a tech in the Clean column of the All Classes row." });
                           return;
                         }
-                        setAssignByClassRows((prev) => prev.map((r) => ({
-                          ...r,
-                          clean: shouldSkip(r.clean) ? r.clean : src,
-                          test: shouldSkip(r.test) ? r.test : src,
-                          vi: shouldSkip(r.vi) ? r.vi : src,
-                          stamp: shouldSkip(r.stamp) ? r.stamp : src,
-                          boxOrder: shouldSkip(r.boxOrder) ? r.boxOrder : src,
-                        })));
+                        setAssignByClassBulk((b) => ({
+                          ...b,
+                          test: shouldSkip(b.test) ? b.test : src,
+                          vi: shouldSkip(b.vi) ? b.vi : src,
+                          stamp: shouldSkip(b.stamp) ? b.stamp : src,
+                          boxOrder: shouldSkip(b.boxOrder) ? b.boxOrder : src,
+                        }));
                       }}
                     >
                       <ChevronRight className="h-4 w-4" />
