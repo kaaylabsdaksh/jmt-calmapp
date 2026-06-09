@@ -4332,13 +4332,20 @@ const FormVariationsDemo = () => {
                       <TableCell className="text-[10px] px-1.5 py-0.5">T-{String(n).padStart(3, "0")}</TableCell>
                       <TableCell className="text-[10px] px-1.5 py-0.5">
                         {rep ? (
-                          <span className="inline-flex items-center rounded bg-amber-100 text-amber-800 px-1.5 py-0.5 text-[9px] font-medium">
+                          <button
+                            type="button"
+                            onClick={() => undoReplacement(n)}
+                            title="Click to undo replacement (Not to be Replaced)"
+                            className="inline-flex items-center gap-1 rounded bg-amber-100 text-amber-800 hover:bg-amber-200 px-1.5 py-0.5 text-[9px] font-medium"
+                          >
                             Replaced by #{rep.replacementSort}
-                          </span>
+                            <X className="h-2.5 w-2.5" />
+                          </button>
                         ) : (
                           `SYS-${4520 + n}`
                         )}
                       </TableCell>
+
                       <TableCell className="text-[10px] px-1.5 py-0.5">{isFailed ? 'Failed' : r.testStatus}</TableCell>
                       <TableCell className="text-[10px] px-1.5 py-0.5">{r.workStatus}</TableCell>
                       <TableCell className="text-[10px] px-1.5 py-0.5">{isFailed ? <span className="text-red-600 font-medium">Fail</span> : r.testResult}</TableCell>
