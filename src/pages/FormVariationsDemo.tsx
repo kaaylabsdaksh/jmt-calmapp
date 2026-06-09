@@ -4651,8 +4651,115 @@ const FormVariationsDemo = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Replace Fail Items Dialog */}
+      <Dialog open={replaceFailDialogOpen} onOpenChange={setReplaceFailDialogOpen}>
+        <DialogContent className="sm:max-w-3xl">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Package className="h-5 w-5" />
+              Replace Failed Item
+            </DialogTitle>
+            <DialogDescription>
+              Select a matching item from customer inventory to allocate as a replacement for{" "}
+              <span className="font-semibold text-foreground">Sort #{replaceFailTargetSort}</span>.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-3">
+            <div className="flex items-center gap-2">
+              <Input
+                placeholder="Search by ID, manufacturer, class, size…"
+                value={replaceFailSearch}
+                onChange={(e) => setReplaceFailSearch(e.target.value)}
+                className="h-9 text-xs"
+              />
+            </div>
+
+            <div className="border rounded-md max-h-[360px] overflow-auto">
+              <table className="w-full text-xs">
+                <thead className="bg-muted/50 sticky top-0">
+                  <tr>
+                    <th className="px-2 py-1.5 text-left w-8"></th>
+                    <th className="px-2 py-1.5 text-left">Inventory ID</th>
+                    <th className="px-2 py-1.5 text-left">ESL ID</th>
+                    <th className="px-2 py-1.5 text-left">Cust ID</th>
+                    <th className="px-2 py-1.5 text-left">Manufacturer</th>
+                    <th className="px-2 py-1.5 text-left">Class</th>
+                    <th className="px-2 py-1.5 text-left">Size</th>
+                    <th className="px-2 py-1.5 text-left">Color</th>
+                    <th className="px-2 py-1.5 text-left">Location</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {inventoryPool
+                    .filter(inv => !replacements.some(r => r.inventoryId === inv.id))
+                    .filter(inv => {
+                      const q = replaceFailSearch.toLowerCase().trim();
+                      if (!q) return true;
+                      return [inv.id, inv.eslId, inv.custId, inv.manufacturer, inv.cls, inv.size, inv.color]
+                        .some(v => v.toLowerCase().includes(q));
+                    })
+                    .map(inv => {
+                      const selected = replaceFailSelectedId === inv.id;
+                      return (
+                        <tr
+                          key={inv.id}
+                          className={`border-t cursor-pointer ${selected ? 'bg-primary/10' : 'hover:bg-muted/40'}`}
+                          onClick={() => setReplaceFailSelectedId(inv.id)}
+                        >
+                          <td className="px-2 py-1.5">
+                            <input
+                              type="radio"
+                              checked={selected}
+                              onChange={() => setReplaceFailSelectedId(inv.id)}
+                            />
+                          </td>
+                          <td className="px-2 py-1.5 font-medium">{inv.id}</td>
+                          <td className="px-2 py-1.5">{inv.eslId}</td>
+                          <td className="px-2 py-1.5">{inv.custId}</td>
+                          <td className="px-2 py-1.5">{inv.manufacturer}</td>
+                          <td className="px-2 py-1.5">{inv.cls}</td>
+                          <td className="px-2 py-1.5">{inv.size}</td>
+                          <td className="px-2 py-1.5">{inv.color}</td>
+                          <td className="px-2 py-1.5 text-muted-foreground">{inv.location}</td>
+                        </tr>
+                      );
+                    })}
+                  {inventoryPool.filter(inv => !replacements.some(r => r.inventoryId === inv.id)).length === 0 && (
+                    <tr>
+                      <td colSpan={9} className="px-2 py-6 text-center text-muted-foreground">
+                        No inventory available for allocation.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setReplaceFailDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button
+              disabled={!replaceFailSelectedId}
+              className="bg-emerald-500 hover:bg-emerald-600 text-white"
+              onClick={() => {
+                const inv = inventoryPool.find(i => i.id === replaceFailSelectedId);
+                if (!inv) return;
+                allocateReplacement(replaceFailTargetSort, inv, false);
+                setReplaceFailDialogOpen(false);
+              }}
+            >
+              Allocate
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
+
 
   const renderTestingSection = () => {
     return (
