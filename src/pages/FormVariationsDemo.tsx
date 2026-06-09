@@ -5777,8 +5777,14 @@ const FormVariationsDemo = () => {
                             <SelectItem value="none">No Replacement Needed</SelectItem>
                             <SelectItem value="replace">Replace</SelectItem>
                             <SelectItem value="repair">Repair</SelectItem>
+                            <SelectItem value="not-to-be-replaced">Not to be Replaced</SelectItem>
                           </SelectContent>
                         </Select>
+                        {selectedTestingRow && replacements.some(r => r.failedSort === selectedTestingRow.sort) && (
+                          <p className="text-[11px] text-muted-foreground">
+                            Sort #{selectedTestingRow.sort} already has a replacement (Row #{replacements.find(r => r.failedSort === selectedTestingRow.sort)?.replacementSort}). Selecting "Not to be Replaced" will strike it through without deleting it.
+                          </p>
+                        )}
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="proceduresUsedDlg" className="text-sm font-medium">Procedures Used</Label>
