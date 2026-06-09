@@ -98,8 +98,13 @@ const FormVariationsDemo = () => {
   const [assignByClassOpen, setAssignByClassOpen] = useState(false);
   const [assignByClassUnassignedOnly, setAssignByClassUnassignedOnly] = useState(false);
   const [assignByClassRows, setAssignByClassRows] = useState<Array<{ className: string; clean: string; test: string; vi: string; stamp: string; boxOrder: string }>>([
-    { className: "CLASS 4", clean: "", test: "", vi: "", stamp: "", boxOrder: "" },
+    { className: "CLASS 00", clean: "", test: "", vi: "", stamp: "", boxOrder: "" },
+    { className: "CLASS 0", clean: "", test: "", vi: "", stamp: "", boxOrder: "" },
+    { className: "CLASS 1", clean: "", test: "", vi: "", stamp: "", boxOrder: "" },
+    { className: "CLASS 2", clean: "", test: "", vi: "", stamp: "", boxOrder: "" },
+    { className: "CLASS 4", clean: "Brian E. Broome", test: "Brian E. Broome", vi: "Brian E. Broome", stamp: "Brian E. Broome", boxOrder: "Brian E. Broome" },
   ]);
+  const [assignByClassBulk, setAssignByClassBulk] = useState<{ clean: string; test: string; vi: string; stamp: string; boxOrder: string }>({ clean: "", test: "", vi: "", stamp: "", boxOrder: "" });
   const [eslFieldValues, setEslFieldValues] = useState<Record<string, string>>({
     clean: '', test: '', vi: '', stamp: '', boxOrder: '',
   });
