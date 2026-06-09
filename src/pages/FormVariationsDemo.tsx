@@ -283,6 +283,51 @@ const FormVariationsDemo = () => {
   const [labelType, setLabelType] = useState("default");
   const [batchSheetQuantity, setBatchSheetQuantity] = useState("1");
   const [batchSheetType, setBatchSheetType] = useState("default");
+
+  // Replace Fail Items workflow state
+  const [replaceFailDialogOpen, setReplaceFailDialogOpen] = useState(false);
+  const [replaceFailTargetSort, setReplaceFailTargetSort] = useState<number>(1);
+  const [replaceFailSelectedId, setReplaceFailSelectedId] = useState<string | null>(null);
+  const [replaceFailSearch, setReplaceFailSearch] = useState("");
+  const [replacements, setReplacements] = useState<Array<{
+    failedSort: number;
+    replacementSort: number;
+    inventoryId: string;
+    eslId: string;
+    custId: string;
+    manufacturer: string;
+    cls: string;
+    size: string;
+    color: string;
+    auto: boolean;
+  }>>([]);
+  const inventoryPool = [
+    { id: 'INV-1001', eslId: 'ESL-009812', custId: 'C-789501', manufacturer: 'MSA Safety', cls: 'I', size: 'M', color: 'Black', location: 'Bin A-12' },
+    { id: 'INV-1002', eslId: 'ESL-009813', custId: 'C-789502', manufacturer: 'MSA Safety', cls: 'I', size: 'M', color: 'Black', location: 'Bin A-12' },
+    { id: 'INV-1003', eslId: 'ESL-009814', custId: 'C-789503', manufacturer: '3M Scott',  cls: 'II', size: 'L', color: 'Yellow', location: 'Bin B-04' },
+    { id: 'INV-1004', eslId: 'ESL-009815', custId: 'C-789504', manufacturer: 'Honeywell', cls: 'I', size: 'S', color: 'Red', location: 'Bin C-22' },
+    { id: 'INV-1005', eslId: 'ESL-009816', custId: 'C-789505', manufacturer: 'MSA Safety', cls: 'I', size: 'M', color: 'Black', location: 'Bin A-13' },
+  ];
+  const allocateReplacement = (failedSort: number, inv: typeof inventoryPool[number], auto: boolean) => {
+    const replacementSort = itemsTotalCount + 1;
+    setReplacements(prev => [...prev, {
+      failedSort,
+      replacementSort,
+      inventoryId: inv.id,
+      eslId: inv.eslId,
+      custId: inv.custId,
+      manufacturer: inv.manufacturer,
+      cls: inv.cls,
+      size: inv.size,
+      color: inv.color,
+      auto,
+    }]);
+    setItemsTotalCount(c => c + 1);
+    toast({
+      title: auto ? "Auto-allocated replacement" : "Replacement allocated",
+      description: `${inv.id} (${inv.manufacturer} • ${inv.cls} • ${inv.size}) → replaces Sort #${failedSort}`,
+    });
+  };
   
   // Testing edit dialog state
   const [testingEditDialogOpen, setTestingEditDialogOpen] = useState(false);
