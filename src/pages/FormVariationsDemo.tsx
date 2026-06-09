@@ -12680,61 +12680,150 @@ const FormVariationsDemo = () => {
           <DialogHeader>
             <DialogTitle>Assign by Class</DialogTitle>
             <p className="text-sm text-muted-foreground">
-              Assign technicians to Clean / Test / VI / Stamp / Box Order steps for each class on this work order's blankets.
+              Assign technicians to each step per class. Use <span className="font-medium">Apply →</span> to copy the Clean assignee across all steps in a row, or use the <span className="font-medium">All Classes</span> row to bulk-assign every class at once.
             </p>
           </DialogHeader>
 
-          <div className="border rounded-md overflow-hidden">
-            <table className="w-full text-sm">
-              <thead className="bg-muted/40">
-                <tr className="text-left">
-                  <th className="px-4 py-2 font-medium w-32">Class</th>
-                  <th className="px-4 py-2 font-medium">Clean</th>
-                  <th className="px-4 py-2 font-medium">Test</th>
-                  <th className="px-4 py-2 font-medium">VI</th>
-                  <th className="px-4 py-2 font-medium">Stamp</th>
-                  <th className="px-4 py-2 font-medium">Box Order</th>
-                </tr>
-              </thead>
-              <tbody>
-                {assignByClassRows.map((row, idx) => (
-                  <tr key={idx} className="border-t">
-                    <td className="px-4 py-3 font-medium">{row.className}</td>
-                    {(['clean', 'test', 'vi', 'stamp', 'boxOrder'] as const).map((step) => (
-                      <td key={step} className="px-2 py-2">
-                        <Select
-                          value={row[step] || undefined}
-                          onValueChange={(v) => {
-                            setAssignByClassRows((prev) => prev.map((r, i) => i === idx ? { ...r, [step]: v } : r));
+          {(() => {
+            const STEPS = [
+              { key: 'clean', label: 'Clean' },
+              { key: 'test', label: 'Test' },
+              { key: 'vi', label: 'Visual Insp' },
+              { key: 'stamp', label: 'Stamp' },
+              { key: 'boxOrder', label: 'Box Order' },
+            ] as const;
+            const TECHS = [
+              { value: 'unassigned', label: '(unassigned)' },
+              { value: 'brian', label: 'Brian E. Broome' },
+              { value: 'john', label: 'John Smith' },
+              { value: 'sarah', label: 'Sarah Johnson' },
+              { value: 'mike', label: 'Mike Davis' },
+              { value: 'emily', label: 'Emily Brown' },
+            ];
+            const shouldSkip = (current: string) => assignByClassUnassignedOnly && current && current !== 'unassigned';
+
+            const renderTechSelect = (
+              value: string,
+              onChange: (v: string) => void,
+              placeholder = '(unassigned)',
+            ) => (
+              <Select value={value || undefined} onValueChange={onChange}>
+                <SelectTrigger className="h-9 w-full bg-background">
+                  <SelectValue placeholder={placeholder} />
+                </SelectTrigger>
+                <SelectContent className="z-50 bg-popover">
+                  {TECHS.map((t) => (
+                    <SelectItem key={t.value} value={t.value}>{t.label}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            );
+
+            return (
+              <div className="rounded-lg border bg-card overflow-hidden">
+                {/* Header */}
+                <div className="grid grid-cols-[110px_1fr_56px_1fr_1fr_1fr_1fr] gap-2 px-4 py-2.5 bg-muted/50 border-b text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                  <div>Class</div>
+                  <div className="text-center">Clean</div>
+                  <div className="text-center">Apply</div>
+                  <div className="text-center">Test</div>
+                  <div className="text-center">Visual Insp</div>
+                  <div className="text-center">Stamp</div>
+                  <div className="text-center">Box Order</div>
+                </div>
+
+                {/* Class rows */}
+                <div className="divide-y">
+                  {assignByClassRows.map((row, idx) => (
+                    <div key={idx} className="grid grid-cols-[110px_1fr_56px_1fr_1fr_1fr_1fr] gap-2 px-4 py-2.5 items-center hover:bg-muted/20 transition-colors">
+                      <div className="text-sm font-semibold">{row.className}</div>
+                      {renderTechSelect(row.clean, (v) =>
+                        setAssignByClassRows((prev) => prev.map((r, i) => i === idx ? { ...r, clean: v } : r))
+                      )}
+                      <div className="flex justify-center">
+                        <Button
+                          type="button"
+                          size="sm"
+                          variant="outline"
+                          className="h-9 w-12 p-0"
+                          title="Copy Clean assignee to Test, VI, Stamp and Box Order"
+                          onClick={() => {
+                            setAssignByClassRows((prev) => prev.map((r, i) => {
+                              if (i !== idx) return r;
+                              const src = r.clean;
+                              if (!src) return r;
+                              return {
+                                ...r,
+                                test: shouldSkip(r.test) ? r.test : src,
+                                vi: shouldSkip(r.vi) ? r.vi : src,
+                                stamp: shouldSkip(r.stamp) ? r.stamp : src,
+                                boxOrder: shouldSkip(r.boxOrder) ? r.boxOrder : src,
+                              };
+                            }));
                           }}
                         >
-                          <SelectTrigger className="h-9 w-full">
-                            <SelectValue placeholder="(unassigned)" />
-                          </SelectTrigger>
-                          <SelectContent className="z-50 bg-popover">
-                            <SelectItem value="unassigned">(unassigned)</SelectItem>
-                            <SelectItem value="john">John Smith</SelectItem>
-                            <SelectItem value="sarah">Sarah Johnson</SelectItem>
-                            <SelectItem value="mike">Mike Davis</SelectItem>
-                            <SelectItem value="emily">Emily Brown</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                          <ChevronsRight className="h-4 w-4" />
+                        </Button>
+                      </div>
+                      {(['test', 'vi', 'stamp', 'boxOrder'] as const).map((step) => (
+                        <div key={step}>
+                          {renderTechSelect(row[step], (v) =>
+                            setAssignByClassRows((prev) => prev.map((r, i) => i === idx ? { ...r, [step]: v } : r))
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  ))}
+                </div>
 
-          <div className="flex items-center gap-2 pt-2">
+                {/* Bulk "All Classes" row */}
+                <div className="grid grid-cols-[110px_1fr_56px_1fr_1fr_1fr_1fr] gap-2 px-4 py-3 items-center bg-primary/5 border-t-2 border-dashed">
+                  <div className="text-sm font-semibold text-primary">All Classes</div>
+                  {renderTechSelect(assignByClassBulk.clean, (v) => setAssignByClassBulk((b) => ({ ...b, clean: v })))}
+                  <div className="flex justify-center">
+                    <Button
+                      type="button"
+                      size="sm"
+                      className="h-9 w-12 p-0 bg-primary text-primary-foreground hover:bg-primary/90"
+                      title="Apply the Clean assignee to every step in every class"
+                      onClick={() => {
+                        const src = assignByClassBulk.clean;
+                        if (!src) {
+                          toast({ title: "Select a Clean assignee first", description: "Choose a tech in the Clean column of the All Classes row." });
+                          return;
+                        }
+                        setAssignByClassRows((prev) => prev.map((r) => ({
+                          ...r,
+                          clean: shouldSkip(r.clean) ? r.clean : src,
+                          test: shouldSkip(r.test) ? r.test : src,
+                          vi: shouldSkip(r.vi) ? r.vi : src,
+                          stamp: shouldSkip(r.stamp) ? r.stamp : src,
+                          boxOrder: shouldSkip(r.boxOrder) ? r.boxOrder : src,
+                        })));
+                      }}
+                    >
+                      <ChevronsRight className="h-4 w-4" />
+                    </Button>
+                  </div>
+                  {(['test', 'vi', 'stamp', 'boxOrder'] as const).map((step) => (
+                    <div key={step} className="flex gap-1">
+                      {renderTechSelect(assignByClassBulk[step], (v) => setAssignByClassBulk((b) => ({ ...b, [step]: v })))}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            );
+          })()}
+
+          <div className="flex items-center gap-2 pt-1">
             <Checkbox
               id="unassignedOnly"
               checked={assignByClassUnassignedOnly}
               onCheckedChange={(c) => setAssignByClassUnassignedOnly(!!c)}
             />
-            <label htmlFor="unassignedOnly" className="text-sm font-medium cursor-pointer">
-              Unassigned Only (skip rows that already have an assignment for the same step)
+            <label htmlFor="unassignedOnly" className="text-sm cursor-pointer">
+              <span className="font-medium">Unassigned Only</span>
+              <span className="text-muted-foreground"> — skip cells that already have an assignment when applying</span>
             </label>
           </div>
 
@@ -12745,11 +12834,23 @@ const FormVariationsDemo = () => {
             <Button
               className="bg-emerald-500 hover:bg-emerald-600 text-white"
               onClick={() => {
+                // Apply any pending bulk row values that aren't yet copied to class rows
+                const bulk = assignByClassBulk;
+                if (Object.values(bulk).some(Boolean)) {
+                  setAssignByClassRows((prev) => prev.map((r) => ({
+                    ...r,
+                    clean: bulk.clean && !shouldSkip(r.clean) ? bulk.clean : r.clean,
+                    test: bulk.test && !shouldSkip(r.test) ? bulk.test : r.test,
+                    vi: bulk.vi && !shouldSkip(r.vi) ? bulk.vi : r.vi,
+                    stamp: bulk.stamp && !shouldSkip(r.stamp) ? bulk.stamp : r.stamp,
+                    boxOrder: bulk.boxOrder && !shouldSkip(r.boxOrder) ? bulk.boxOrder : r.boxOrder,
+                  })));
+                }
                 toast({ title: "Assignments saved", description: "Class assignments have been applied." });
                 setAssignByClassOpen(false);
               }}
             >
-              <Save className="h-4 w-4 mr-1" /> Save Assignments
+              <Save className="h-4 w-4 mr-1" /> Assign
             </Button>
           </DialogFooter>
         </DialogContent>
