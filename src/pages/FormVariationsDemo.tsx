@@ -4821,31 +4821,36 @@ const FormVariationsDemo = () => {
           </div>
 
           {/* Footer with primary + 4 extra CTAs */}
-          <DialogFooter className="px-5 py-3 border-t bg-muted/20 sm:justify-between gap-2">
-            <div className="flex items-center gap-2 flex-wrap">
-              <Button variant="outline" size="sm">Print Label</Button>
-              <Button variant="outline" size="sm">Reserve Item</Button>
-              <Button variant="outline" size="sm">Request Transfer</Button>
-              <Button variant="outline" size="sm">View History</Button>
-            </div>
-            <div className="flex items-center gap-2">
-              <Button variant="outline" size="sm" onClick={() => setReplaceFailDialogOpen(false)}>
-                Cancel
-              </Button>
-              <Button
-                size="sm"
-                disabled={!replaceFailSelectedId}
-                className="bg-emerald-500 hover:bg-emerald-600 text-white"
-                onClick={() => {
-                  const inv = inventoryPool.find(i => i.id === replaceFailSelectedId);
-                  if (!inv) return;
-                  allocateReplacement(replaceFailTargetSort, inv, false);
-                  setReplaceFailDialogOpen(false);
-                }}
-              >
-                Pull From Customer Inventory
-              </Button>
-            </div>
+          <DialogFooter className="px-5 py-3 border-t bg-muted/20 sm:justify-end gap-2">
+            <Button variant="outline" size="sm" onClick={() => setReplaceFailDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                setReplaceFailSelectedId(null);
+                setReplaceFailSearch("");
+              }}
+            >
+              Clear
+            </Button>
+            <Button variant="outline" size="sm" onClick={() => toast({ title: "Inventory refreshed" })}>
+              Refresh
+            </Button>
+            <Button
+              size="sm"
+              disabled={!replaceFailSelectedId}
+              className="bg-emerald-500 hover:bg-emerald-600 text-white"
+              onClick={() => {
+                const inv = inventoryPool.find(i => i.id === replaceFailSelectedId);
+                if (!inv) return;
+                allocateReplacement(replaceFailTargetSort, inv, false);
+                setReplaceFailDialogOpen(false);
+              }}
+            >
+              Allocate
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
