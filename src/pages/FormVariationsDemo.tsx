@@ -4240,15 +4240,58 @@ const FormVariationsDemo = () => {
                   { vendor: "Draeger", cls: "III", size: "XL", color: "Blue", style: "A1", glove: "6", sleeve: "Yes", protector: "No", testStatus: "Receive", workStatus: "-", testResult: "-", finalStatus: "-", esl: "-", cert: "-", box: "B-104", order: "5", acc: "C-08", bin: "New", binColor: "text-blue-600" },
                   { vendor: "MSA Safety", cls: "II", size: "M", color: "Black", style: "D2", glove: "6", sleeve: "Yes", protector: "No", testStatus: "Ship", workStatus: "Done", testResult: "Pass", finalStatus: "OK", esl: "Applied", cert: "Verified", box: "B-105", order: "4", acc: "A-30", bin: "Complete", binColor: "text-green-600" },
                 ];
+                const replacementBySort = new Map(replacements.map(r => [r.failedSort, r]));
+                const baseCount = Math.max(0, itemsTotalCount - replacements.length);
                 const startIdx = (itemsCurrentPage - 1) * itemsPageSize;
                 const endIdx = Math.min(startIdx + itemsPageSize, itemsTotalCount);
                 const rows = [];
                 for (let i = startIdx; i < endIdx; i++) {
-                  const r = baseRows[i % baseRows.length];
                   const n = i + 1;
                   const id = String(n);
+                  // Replacement row (synthetic)
+                  const replacement = replacements[i - baseCount];
+                  if (i >= baseCount && replacement) {
+                    rows.push(
+                      <TableRow key={`rep-${n}`} className="h-6 bg-emerald-50/40 hover:bg-emerald-50/60">
+                        <TableCell className="text-center px-1 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" className="text-foreground underline-offset-2 hover:underline">E</button></TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" className="text-foreground underline-offset-2 hover:underline">F</button></TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5 font-medium">{n}</TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5">{replacement.manufacturer}</TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5">{replacement.cls}</TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5">{replacement.size}</TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5">{replacement.color}</TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5">-</TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5">-</TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5">-</TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5">No</TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5">{replacement.eslId}</TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5">{replacement.custId}</TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5">{replacement.inventoryId}</TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5">
+                          <span className="inline-flex items-center rounded bg-emerald-100 text-emerald-800 px-1.5 py-0.5 text-[9px] font-medium">
+                            Replacement for #{replacement.failedSort}{replacement.auto ? ' • Auto' : ''}
+                          </span>
+                        </TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5">Allocated</TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5">N</TableCell>
+                        <TableCell className="text-[10px] px-1.5 py-0.5">-</TableCell>
+                        <TableCell className="text-[10px] text-emerald-700 font-medium px-1.5 py-0.5">New</TableCell>
+                      </TableRow>
+                    );
+                    continue;
+                  }
+                  const r = baseRows[i % baseRows.length];
+                  const isFailed = n === 1;
+                  const rep = replacementBySort.get(n);
                   rows.push(
-                    <TableRow key={i} className={`h-6 ${expandedEslRow ? (expandedEslRow === id ? "bg-primary/20 hover:bg-primary/25 border-l-2 border-l-primary text-muted-foreground opacity-70" : "text-muted-foreground opacity-50") : "hover:bg-muted/30"}`}>
+                    <TableRow key={i} className={`h-6 ${isFailed ? 'bg-red-50/50 hover:bg-red-50/70' : ''} ${expandedEslRow ? (expandedEslRow === id ? "bg-primary/20 hover:bg-primary/25 border-l-2 border-l-primary text-muted-foreground opacity-70" : "text-muted-foreground opacity-50") : "hover:bg-muted/30"}`}>
                       <TableCell className="text-center px-1 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
                       <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" onClick={() => setExpandedEslRow(expandedEslRow === id ? null : id)} className="text-foreground underline-offset-2 hover:underline">E</button></TableCell>
                       <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" className="text-foreground underline-offset-2 hover:underline">F</button></TableCell>
@@ -4264,17 +4307,25 @@ const FormVariationsDemo = () => {
                       <TableCell className="text-[10px] px-1.5 py-0.5">ESL-{String(1233 + n).padStart(6, "0")}</TableCell>
                       <TableCell className="text-[10px] px-1.5 py-0.5">C-{789455 + n}</TableCell>
                       <TableCell className="text-[10px] px-1.5 py-0.5">T-{String(n).padStart(3, "0")}</TableCell>
-                      <TableCell className="text-[10px] px-1.5 py-0.5">SYS-{4520 + n}</TableCell>
-                      <TableCell className="text-[10px] px-1.5 py-0.5">{r.testStatus}</TableCell>
+                      <TableCell className="text-[10px] px-1.5 py-0.5">
+                        {rep ? (
+                          <span className="inline-flex items-center rounded bg-amber-100 text-amber-800 px-1.5 py-0.5 text-[9px] font-medium">
+                            Replaced by #{rep.replacementSort}
+                          </span>
+                        ) : (
+                          `SYS-${4520 + n}`
+                        )}
+                      </TableCell>
+                      <TableCell className="text-[10px] px-1.5 py-0.5">{isFailed ? 'Failed' : r.testStatus}</TableCell>
                       <TableCell className="text-[10px] px-1.5 py-0.5">{r.workStatus}</TableCell>
-                      <TableCell className="text-[10px] px-1.5 py-0.5">{r.testResult}</TableCell>
+                      <TableCell className="text-[10px] px-1.5 py-0.5">{isFailed ? <span className="text-red-600 font-medium">Fail</span> : r.testResult}</TableCell>
                       <TableCell className="text-[10px] px-1.5 py-0.5">{r.finalStatus}</TableCell>
                       <TableCell className="text-[10px] px-1.5 py-0.5">{r.esl}</TableCell>
                       <TableCell className="text-[10px] px-1.5 py-0.5">{r.cert}</TableCell>
                       <TableCell className="text-[10px] px-1.5 py-0.5">B-{100 + n}</TableCell>
                       <TableCell className="text-[10px] px-1.5 py-0.5">{r.order}</TableCell>
                       <TableCell className="text-[10px] px-1.5 py-0.5">{r.acc}</TableCell>
-                      <TableCell className={`text-[10px] ${r.binColor} font-medium px-1.5 py-0.5`}>{r.bin}</TableCell>
+                      <TableCell className={`text-[10px] ${isFailed ? 'text-red-600' : r.binColor} font-medium px-1.5 py-0.5`}>{isFailed ? 'Failed' : r.bin}</TableCell>
                     </TableRow>
                   );
                 }
