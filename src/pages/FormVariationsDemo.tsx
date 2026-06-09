@@ -4380,7 +4380,7 @@ const FormVariationsDemo = () => {
                 </>
               ) : (
                 <>
-                  <Button variant="outline" size="sm" className="h-9 text-sm px-3">
+                  <Button variant="outline" size="sm" className="h-9 text-sm px-3" onClick={() => setAssignByClassOpen(true)}>
                     Assign by Class
                   </Button>
                   <Button variant="outline" size="sm" className="h-9 text-sm px-3">
