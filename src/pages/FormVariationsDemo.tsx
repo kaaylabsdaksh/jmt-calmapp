@@ -95,6 +95,11 @@ const FormVariationsDemo = () => {
   const [itemsCurrentPage, setItemsCurrentPage] = useState<number>(1);
   const [itemsPageSize, setItemsPageSize] = useState<number>(10);
   const [itemsTotalCount, setItemsTotalCount] = useState<number>(262);
+  const [assignByClassOpen, setAssignByClassOpen] = useState(false);
+  const [assignByClassUnassignedOnly, setAssignByClassUnassignedOnly] = useState(false);
+  const [assignByClassRows, setAssignByClassRows] = useState<Array<{ className: string; clean: string; test: string; vi: string; stamp: string; boxOrder: string }>>([
+    { className: "CLASS 4", clean: "", test: "", vi: "", stamp: "", boxOrder: "" },
+  ]);
   const [eslFieldValues, setEslFieldValues] = useState<Record<string, string>>({
     clean: '', test: '', vi: '', stamp: '', boxOrder: '',
   });
