@@ -5174,6 +5174,7 @@ const FormVariationsDemo = () => {
                       procs: 'F479',
                       stds: '751, 4455',
                       kind: 'replacement' as const,
+                      cancelled: !!rep.cancelled,
                     }));
                     const allBlanketRows = [...baseRows, ...replacementRows];
                     const totalPages = Math.max(1, Math.ceil(allBlanketRows.length / testingPageSize));
