@@ -5187,10 +5187,17 @@ const FormVariationsDemo = () => {
                       <td className="px-1.5 py-0.5 text-[10px]">{row.eslId}</td>
                       <td className="px-1.5 py-0.5 text-[10px]">
                         {row.tagKind === 'replaced' && (
-                          <span className="inline-flex items-center rounded bg-amber-100 text-amber-800 px-1.5 py-0.5 text-[9px] font-medium">
+                          <button
+                            type="button"
+                            onClick={() => undoReplacement(row.sort)}
+                            title="Click to undo replacement (Not to be Replaced)"
+                            className="inline-flex items-center gap-1 rounded bg-amber-100 text-amber-800 hover:bg-amber-200 px-1.5 py-0.5 text-[9px] font-medium"
+                          >
                             Replaced by #{row.replacementSort}
-                          </span>
+                            <X className="h-2.5 w-2.5" />
+                          </button>
                         )}
+
                         {row.tagKind === 'replacementFor' && (
                           <span className="inline-flex items-center rounded bg-emerald-100 text-emerald-800 px-1.5 py-0.5 text-[9px] font-medium">
                             Replacement for #{row.failedSort}{row.auto ? ' • Auto' : ''}
