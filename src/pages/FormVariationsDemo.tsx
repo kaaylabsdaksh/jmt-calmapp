@@ -4676,148 +4676,160 @@ const FormVariationsDemo = () => {
             </DialogDescription>
           </DialogHeader>
 
-          {/* Top meta strip */}
-          <div className="px-5 py-3 border-b bg-background flex flex-wrap items-end gap-4">
-            <div className="flex flex-col gap-1">
-              <Label className="text-[11px] text-muted-foreground">ESL ID</Label>
-              <Input defaultValue="933353" className="h-8 w-32 text-xs" />
-            </div>
-            <div className="flex flex-col gap-1">
-              <Label className="text-[11px] text-muted-foreground">Cust ID</Label>
-              <Input defaultValue="N/A" className="h-8 w-32 text-xs" />
-            </div>
-            <div className="flex flex-col gap-1">
-              <Label className="text-[11px] text-muted-foreground">Tag #</Label>
-              <Input className="h-8 w-32 text-xs" />
-            </div>
-            <div className="flex flex-col gap-1">
-              <Label className="text-[11px] text-muted-foreground">Qty</Label>
-              <Input type="number" defaultValue={1} className="h-8 w-20 text-xs" />
-            </div>
-            <div className="flex items-center gap-2 ml-auto">
-              <label className="flex items-center gap-1.5 text-xs">
-                <Checkbox /> Include JM Surplus
-              </label>
-              <span className="text-xs text-muted-foreground">
-                Remaining: <span className="font-semibold text-foreground">1</span>
-              </span>
-            </div>
-          </div>
-
-          {/* Body: filters | table | accessories */}
-          <div className="grid grid-cols-12 gap-0 max-h-[60vh]">
-            {/* Filters */}
-            <aside className="col-span-3 border-r p-4 space-y-3 bg-muted/10 overflow-auto">
-              <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1">
-                Filters
+          {/* Unified top control panel: Identifiers | Filters | Accessories */}
+          <div className="px-5 py-4 border-b bg-muted/20 grid grid-cols-12 gap-6">
+            {/* Identifiers */}
+            <div className="col-span-3 space-y-3">
+              <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
+                Identifiers
               </div>
-              {[
-                { label: "Manufacturer", value: "SALISBURY" },
-                { label: "Class", value: "CLASS 4" },
-                { label: "Size", value: "36x36" },
-                { label: "Color", value: "Orange" },
-              ].map(f => (
-                <div key={f.label} className="flex flex-col gap-1">
-                  <Label className="text-[11px] text-muted-foreground">{f.label}</Label>
-                  <Select defaultValue={f.value}>
-                    <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
-                    <SelectContent className="z-50">
-                      <SelectItem value={f.value}>{f.value}</SelectItem>
-                    </SelectContent>
-                  </Select>
+              <div className="grid grid-cols-2 gap-2">
+                <div className="flex flex-col gap-1">
+                  <Label className="text-[10px] font-semibold text-muted-foreground uppercase">ESL ID</Label>
+                  <Input defaultValue="933353" readOnly className="h-8 text-xs bg-background" />
                 </div>
-              ))}
-              <div className="pt-2 space-y-2">
+                <div className="flex flex-col gap-1">
+                  <Label className="text-[10px] font-semibold text-muted-foreground uppercase">Cust ID</Label>
+                  <Input defaultValue="N/A" readOnly className="h-8 text-xs bg-background" />
+                </div>
+                <div className="flex flex-col gap-1">
+                  <Label className="text-[10px] font-semibold text-muted-foreground uppercase">Tag #</Label>
+                  <Input className="h-8 text-xs bg-background" />
+                </div>
+                <div className="flex flex-col gap-1">
+                  <Label className="text-[10px] font-semibold text-muted-foreground uppercase">Qty</Label>
+                  <Input type="number" defaultValue={1} className="h-8 text-xs bg-background text-center font-semibold" />
+                </div>
+              </div>
+              <div className="flex items-center justify-between pt-1">
+                <label className="flex items-center gap-1.5 text-xs">
+                  <Checkbox /> Include JM Surplus
+                </label>
+                <div className="flex items-center gap-1.5 bg-background px-2 py-0.5 rounded border">
+                  <span className="text-[10px] font-semibold text-muted-foreground">Rem:</span>
+                  <span className="text-xs font-bold">1</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Filters */}
+            <div className="col-span-4 space-y-3 border-l pl-6">
+              <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
+                Inventory Filters
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                {[
+                  { label: "Manufacturer", value: "SALISBURY" },
+                  { label: "Class", value: "CLASS 4" },
+                  { label: "Size", value: "36x36" },
+                  { label: "Color", value: "Orange" },
+                ].map(f => (
+                  <div key={f.label} className="flex flex-col gap-1">
+                    <Label className="text-[10px] font-semibold text-muted-foreground uppercase">{f.label}</Label>
+                    <Select defaultValue={f.value}>
+                      <SelectTrigger className="h-8 text-xs bg-background"><SelectValue /></SelectTrigger>
+                      <SelectContent className="z-50">
+                        <SelectItem value={f.value}>{f.value}</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                ))}
+              </div>
+              <div className="flex gap-5 pt-1">
                 {["Slot", "Eyelets", "Zip"].map(opt => (
-                  <label key={opt} className="flex items-center gap-2 text-xs">
+                  <label key={opt} className="flex items-center gap-1.5 text-xs">
                     <Checkbox /> {opt}
                   </label>
                 ))}
               </div>
-            </aside>
-
-            {/* Inventory table */}
-            <section className="col-span-7 border-r overflow-auto">
-              <table className="w-full text-xs">
-                <thead className="bg-muted/50 sticky top-0 z-10">
-                  <tr className="border-b">
-                    <th className="px-2 py-2 text-left w-8"></th>
-                    <th className="px-2 py-2 text-left">Acct #</th>
-                    <th className="px-2 py-2 text-left">Bin Location</th>
-                    <th className="px-2 py-2 text-left">ESL ID</th>
-                    <th className="px-2 py-2 text-left">Manufacturer</th>
-                    <th className="px-2 py-2 text-left">Class</th>
-                    <th className="px-2 py-2 text-left">Size</th>
-                    <th className="px-2 py-2 text-left">Color</th>
-                    <th className="px-2 py-2 text-center">Slot</th>
-                    <th className="px-2 py-2 text-center">Eyelets</th>
-                    <th className="px-2 py-2 text-center">Zip</th>
-                    <th className="px-2 py-2 text-center">C-Stock</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {inventoryPool
-                    .filter(inv => !replacements.some(r => r.inventoryId === inv.id))
-                    .filter(inv => {
-                      const q = replaceFailSearch.toLowerCase().trim();
-                      if (!q) return true;
-                      return [inv.id, inv.eslId, inv.custId, inv.manufacturer, inv.cls, inv.size, inv.color]
-                        .some(v => v.toLowerCase().includes(q));
-                    })
-                    .map(inv => {
-                      const selected = replaceFailSelectedId === inv.id;
-                      return (
-                        <tr
-                          key={inv.id}
-                          className={`border-b cursor-pointer ${selected ? 'bg-primary/10' : 'hover:bg-muted/40'}`}
-                          onClick={() => setReplaceFailSelectedId(inv.id)}
-                        >
-                          <td className="px-2 py-1.5">
-                            <Checkbox
-                              checked={selected}
-                              onCheckedChange={() => setReplaceFailSelectedId(inv.id)}
-                            />
-                          </td>
-                          <td className="px-2 py-1.5 font-medium">{inv.acct}</td>
-                          <td className="px-2 py-1.5 font-mono text-[11px]">{inv.location}</td>
-                          <td className="px-2 py-1.5">{inv.eslId}</td>
-                          <td className="px-2 py-1.5">{inv.manufacturer}</td>
-                          <td className="px-2 py-1.5">{inv.cls}</td>
-                          <td className="px-2 py-1.5">{inv.size}</td>
-                          <td className="px-2 py-1.5">{inv.color}</td>
-                          <td className="px-2 py-1.5 text-center text-muted-foreground">{inv.slot}</td>
-                          <td className="px-2 py-1.5 text-center text-muted-foreground">{inv.eyelets}</td>
-                          <td className="px-2 py-1.5 text-center text-muted-foreground">{inv.zip}</td>
-                          <td className="px-2 py-1.5 text-center text-muted-foreground">{inv.cStock}</td>
-                        </tr>
-                      );
-                    })}
-                </tbody>
-              </table>
-            </section>
+            </div>
 
             {/* Accessories */}
-            <aside className="col-span-2 p-4 space-y-2 overflow-auto bg-muted/10">
-              <div className="flex items-center justify-between mb-1">
-                <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+            <div className="col-span-5 space-y-3 border-l pl-6">
+              <div className="flex items-center justify-between">
+                <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
                   Accessories
                 </div>
-                <div className="text-[10px] text-muted-foreground">Qty</div>
-              </div>
-              {Array.from({ length: 6 }).map((_, i) => (
-                <div key={i} className="flex items-center gap-1.5">
-                  <Select>
-                    <SelectTrigger className="h-7 text-xs flex-1"><SelectValue placeholder="—" /></SelectTrigger>
-                    <SelectContent className="z-50">
-                      <SelectItem value="hooks">Hooks</SelectItem>
-                      <SelectItem value="straps">Straps</SelectItem>
-                      <SelectItem value="clips">Clips</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <Input type="number" className="h-7 w-12 text-xs px-1" />
+                <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest pr-2">
+                  Qty
                 </div>
-              ))}
-            </aside>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <div key={i} className="flex items-center border rounded bg-background overflow-hidden">
+                    <Select>
+                      <SelectTrigger className="h-8 text-xs flex-1 border-0 rounded-none focus:ring-0"><SelectValue placeholder="— Select —" /></SelectTrigger>
+                      <SelectContent className="z-50">
+                        <SelectItem value="hooks">Hooks</SelectItem>
+                        <SelectItem value="straps">Straps</SelectItem>
+                        <SelectItem value="clips">Clips</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <Input type="number" placeholder="0" className="h-8 w-12 text-xs px-1 border-0 border-l rounded-none text-center focus-visible:ring-0" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Full-width inventory table */}
+          <div className="overflow-auto max-h-[50vh] bg-background">
+            <table className="w-full text-xs">
+              <thead className="bg-muted/40 sticky top-0 z-10">
+                <tr className="border-b">
+                  <th className="px-3 py-2.5 text-left w-10"></th>
+                  <th className="px-3 py-2.5 text-left text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Acct #</th>
+                  <th className="px-3 py-2.5 text-left text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Bin Location</th>
+                  <th className="px-3 py-2.5 text-left text-[10px] font-bold text-muted-foreground uppercase tracking-wider">ESL ID</th>
+                  <th className="px-3 py-2.5 text-left text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Manufacturer</th>
+                  <th className="px-3 py-2.5 text-left text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Class</th>
+                  <th className="px-3 py-2.5 text-left text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Size</th>
+                  <th className="px-3 py-2.5 text-left text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Color</th>
+                  <th className="px-3 py-2.5 text-center text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Slot</th>
+                  <th className="px-3 py-2.5 text-center text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Eyelets</th>
+                  <th className="px-3 py-2.5 text-center text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Zip</th>
+                  <th className="px-3 py-2.5 text-center text-[10px] font-bold text-muted-foreground uppercase tracking-wider">C-Stock</th>
+                </tr>
+              </thead>
+              <tbody>
+                {inventoryPool
+                  .filter(inv => !replacements.some(r => r.inventoryId === inv.id))
+                  .filter(inv => {
+                    const q = replaceFailSearch.toLowerCase().trim();
+                    if (!q) return true;
+                    return [inv.id, inv.eslId, inv.custId, inv.manufacturer, inv.cls, inv.size, inv.color]
+                      .some(v => v.toLowerCase().includes(q));
+                  })
+                  .map(inv => {
+                    const selected = replaceFailSelectedId === inv.id;
+                    return (
+                      <tr
+                        key={inv.id}
+                        className={`border-b cursor-pointer ${selected ? 'bg-primary/10' : 'hover:bg-muted/40'}`}
+                        onClick={() => setReplaceFailSelectedId(inv.id)}
+                      >
+                        <td className="px-3 py-2">
+                          <Checkbox
+                            checked={selected}
+                            onCheckedChange={() => setReplaceFailSelectedId(inv.id)}
+                          />
+                        </td>
+                        <td className="px-3 py-2 font-medium">{inv.acct}</td>
+                        <td className="px-3 py-2 font-mono text-[11px] whitespace-nowrap">{inv.location}</td>
+                        <td className="px-3 py-2 font-mono">{inv.eslId || <span className="text-muted-foreground">—</span>}</td>
+                        <td className="px-3 py-2">{inv.manufacturer}</td>
+                        <td className="px-3 py-2">{inv.cls}</td>
+                        <td className="px-3 py-2">{inv.size}</td>
+                        <td className="px-3 py-2">{inv.color}</td>
+                        <td className="px-3 py-2 text-center text-muted-foreground">{inv.slot}</td>
+                        <td className="px-3 py-2 text-center text-muted-foreground">{inv.eyelets}</td>
+                        <td className="px-3 py-2 text-center text-muted-foreground">{inv.zip}</td>
+                        <td className="px-3 py-2 text-center text-muted-foreground">{inv.cStock}</td>
+                      </tr>
+                    );
+                  })}
+              </tbody>
+            </table>
           </div>
 
           {/* Footer with primary + 4 extra CTAs */}
