@@ -12834,16 +12834,16 @@ const FormVariationsDemo = () => {
             <Button
               className="bg-emerald-500 hover:bg-emerald-600 text-white"
               onClick={() => {
-                // Apply any pending bulk row values that aren't yet copied to class rows
                 const bulk = assignByClassBulk;
+                const skip = (current: string) => assignByClassUnassignedOnly && current && current !== 'unassigned';
                 if (Object.values(bulk).some(Boolean)) {
                   setAssignByClassRows((prev) => prev.map((r) => ({
                     ...r,
-                    clean: bulk.clean && !shouldSkip(r.clean) ? bulk.clean : r.clean,
-                    test: bulk.test && !shouldSkip(r.test) ? bulk.test : r.test,
-                    vi: bulk.vi && !shouldSkip(r.vi) ? bulk.vi : r.vi,
-                    stamp: bulk.stamp && !shouldSkip(r.stamp) ? bulk.stamp : r.stamp,
-                    boxOrder: bulk.boxOrder && !shouldSkip(r.boxOrder) ? bulk.boxOrder : r.boxOrder,
+                    clean: bulk.clean && !skip(r.clean) ? bulk.clean : r.clean,
+                    test: bulk.test && !skip(r.test) ? bulk.test : r.test,
+                    vi: bulk.vi && !skip(r.vi) ? bulk.vi : r.vi,
+                    stamp: bulk.stamp && !skip(r.stamp) ? bulk.stamp : r.stamp,
+                    boxOrder: bulk.boxOrder && !skip(r.boxOrder) ? bulk.boxOrder : r.boxOrder,
                   })));
                 }
                 toast({ title: "Assignments saved", description: "Class assignments have been applied." });
