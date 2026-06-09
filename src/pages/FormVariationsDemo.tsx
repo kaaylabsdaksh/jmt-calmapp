@@ -300,6 +300,7 @@ const FormVariationsDemo = () => {
     size: string;
     color: string;
     auto: boolean;
+    cancelled?: boolean;
   }>>([]);
   const inventoryPool = Array.from({ length: 18 }).map((_, i) => ({
     id: `INV-${1001 + i}`,
@@ -336,16 +337,17 @@ const FormVariationsDemo = () => {
       description: `${inv.id} (${inv.manufacturer} • ${inv.cls} • ${inv.size}) → replaces Sort #${failedSort}`,
     });
   };
-  const undoReplacement = (failedSort: number) => {
+  const cancelReplacement = (failedSort: number) => {
     const rep = replacements.find(r => r.failedSort === failedSort);
-    if (!rep) return;
-    if (!window.confirm(`Remove the replacement for Sort #${failedSort}? The replacement row (Sort #${rep.replacementSort}) will be deleted and this item will be marked "Not to be Replaced".`)) return;
-    setReplacements(prev => prev.filter(r => r.failedSort !== failedSort));
-    setItemsTotalCount(c => Math.max(0, c - 1));
+    if (!rep || rep.cancelled) return;
+    setReplacements(prev => prev.map(r => r.failedSort === failedSort ? { ...r, cancelled: true } : r));
     toast({
-      title: "Replacement removed",
-      description: `Sort #${failedSort} reverted to Not to be Replaced. Row #${rep.replacementSort} (${rep.inventoryId}) was wiped.`,
+      title: "Marked as Not to be Replaced",
+      description: `Sort #${failedSort} will not be replaced. Row #${rep.replacementSort} (${rep.inventoryId}) is struck through.`,
     });
+  };
+  const restoreReplacement = (failedSort: number) => {
+    setReplacements(prev => prev.map(r => r.failedSort === failedSort ? { ...r, cancelled: false } : r));
   };
   
   // Testing pagination state
@@ -394,6 +396,13 @@ const FormVariationsDemo = () => {
 
   const handleOpenTestingEdit = (row: typeof selectedTestingRow) => {
     setSelectedTestingRow(row);
+    if (row) {
+      const rep = replacements.find(r => r.failedSort === row.sort);
+      setTestingFormData(prev => ({
+        ...prev,
+        replacement: rep ? (rep.cancelled ? 'not-to-be-replaced' : 'replace') : '',
+      }));
+    }
     setTestingEditDialogOpen(true);
   };
 
@@ -4275,8 +4284,8 @@ const FormVariationsDemo = () => {
                   const replacement = replacements[i - baseCount];
                   if (i >= baseCount && replacement) {
                     rows.push(
-                      <TableRow key={`rep-${n}`} className="h-6 bg-emerald-50 hover:bg-emerald-100/70 border-l-2 border-l-emerald-400">
-                        <TableCell className="text-center px-1 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
+                      <TableRow key={`rep-${n}`} className={`h-6 ${replacement.cancelled ? 'bg-slate-100 hover:bg-slate-200/60 border-l-2 border-l-slate-400 line-through text-muted-foreground' : 'bg-emerald-50 hover:bg-emerald-100/70 border-l-2 border-l-emerald-400'}`}>
+                        <TableCell className="text-center px-1 py-0.5"><Checkbox className="h-3 w-3" disabled={replacement.cancelled} /></TableCell>
                         <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" className="text-foreground underline-offset-2 hover:underline">E</button></TableCell>
                         <TableCell className="text-[10px] px-1.5 py-0.5"><button type="button" className="text-foreground underline-offset-2 hover:underline">F</button></TableCell>
                         <TableCell className="text-[10px] px-1.5 py-0.5 font-medium">{n}</TableCell>
@@ -4292,10 +4301,17 @@ const FormVariationsDemo = () => {
                         <TableCell className="text-[10px] px-1.5 py-0.5">{replacement.custId}</TableCell>
                         <TableCell className="text-[10px] px-1.5 py-0.5">{replacement.inventoryId}</TableCell>
                         <TableCell className="text-[10px] px-1.5 py-0.5">
-                          <span className="inline-flex items-center rounded bg-emerald-100 text-emerald-800 px-1.5 py-0.5 text-[9px] font-medium">
-                            Replacement for #{replacement.failedSort}{replacement.auto ? ' • Auto' : ''}
-                          </span>
+                          {replacement.cancelled ? (
+                            <span className="inline-flex items-center rounded bg-slate-200 text-slate-700 px-1.5 py-0.5 text-[9px] font-medium no-underline">
+                              Cancelled — Sort #{replacement.failedSort} not replaced
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center rounded bg-emerald-100 text-emerald-800 px-1.5 py-0.5 text-[9px] font-medium">
+                              Replacement for #{replacement.failedSort}{replacement.auto ? ' • Auto' : ''}
+                            </span>
+                          )}
                         </TableCell>
+
                         <TableCell className="text-[10px] px-1.5 py-0.5">Allocated</TableCell>
                         <TableCell className="text-[10px] px-1.5 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
                         <TableCell className="text-[10px] px-1.5 py-0.5"><Checkbox className="h-3 w-3" /></TableCell>
@@ -4332,19 +4348,20 @@ const FormVariationsDemo = () => {
                       <TableCell className="text-[10px] px-1.5 py-0.5">T-{String(n).padStart(3, "0")}</TableCell>
                       <TableCell className="text-[10px] px-1.5 py-0.5">
                         {rep ? (
-                          <button
-                            type="button"
-                            onClick={() => undoReplacement(n)}
-                            title="Click to undo replacement (Not to be Replaced)"
-                            className="inline-flex items-center gap-1 rounded bg-amber-100 text-amber-800 hover:bg-amber-200 px-1.5 py-0.5 text-[9px] font-medium"
-                          >
-                            Replaced by #{rep.replacementSort}
-                            <X className="h-2.5 w-2.5" />
-                          </button>
+                          rep.cancelled ? (
+                            <span className="inline-flex items-center rounded bg-slate-200 text-slate-700 px-1.5 py-0.5 text-[9px] font-medium">
+                              Not to be Replaced
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center rounded bg-amber-100 text-amber-800 px-1.5 py-0.5 text-[9px] font-medium">
+                              Replaced by #{rep.replacementSort}
+                            </span>
+                          )
                         ) : (
                           `SYS-${4520 + n}`
                         )}
                       </TableCell>
+
 
                       <TableCell className="text-[10px] px-1.5 py-0.5">{isFailed ? 'Failed' : r.testStatus}</TableCell>
                       <TableCell className="text-[10px] px-1.5 py-0.5">{r.workStatus}</TableCell>
@@ -5134,12 +5151,13 @@ const FormVariationsDemo = () => {
                         new: 'No',
                         custId,
                         eslId: '',
-                        tagKind: rep ? 'replaced' : (isFail ? 'pending' : 'none'),
+                        tagKind: rep ? (rep.cancelled ? 'notReplaced' : 'replaced') : (isFail ? 'pending' : 'none'),
                         replacementSort: rep?.replacementSort,
                         result: isFail ? 'FAIL' : 'PASS',
                         procs: 'F479',
                         stds: '751, 4455',
                         kind: 'base' as const,
+                        cancelled: false,
                       };
                     });
                     const replacementRows = replacements.map(rep => ({
@@ -5163,6 +5181,7 @@ const FormVariationsDemo = () => {
                       procs: 'F479',
                       stds: '751, 4455',
                       kind: 'replacement' as const,
+                      cancelled: !!rep.cancelled,
                     }));
                     const allBlanketRows = [...baseRows, ...replacementRows];
                     const totalPages = Math.max(1, Math.ceil(allBlanketRows.length / testingPageSize));
@@ -5170,10 +5189,10 @@ const FormVariationsDemo = () => {
                     const start = (current - 1) * testingPageSize;
                     const pageRows = allBlanketRows.slice(start, start + testingPageSize);
                     return pageRows.map((row: any, index) => (
-                    <tr key={row.id} className={`border-b border-border hover:bg-muted/30 h-6 ${row.kind === 'replacement' ? 'bg-emerald-50 hover:bg-emerald-100/70 border-l-2 border-l-emerald-400' : (index % 2 === 0 ? 'bg-background' : 'bg-muted/10')}`}>
+                    <tr key={row.id} className={`border-b border-border hover:bg-muted/30 h-6 ${row.kind === 'replacement' ? (row.cancelled ? 'bg-slate-100 hover:bg-slate-200/60 border-l-2 border-l-slate-400 line-through text-muted-foreground' : 'bg-emerald-50 hover:bg-emerald-100/70 border-l-2 border-l-emerald-400') : (index % 2 === 0 ? 'bg-background' : 'bg-muted/10')}`}>
 
                       <td className="px-1.5 py-0.5 text-[10px] font-medium text-foreground">{row.id}</td>
-                      <td className="px-1.5 py-0.5 text-center"><Checkbox className="h-3 w-3" /></td>
+                      <td className="px-1.5 py-0.5 text-center"><Checkbox className="h-3 w-3" disabled={row.cancelled} /></td>
                       <td className="px-1.5 py-0.5 text-[10px]">{row.sort}</td>
                       <td className="px-1.5 py-0.5 text-[10px]">{row.manufacturer}</td>
                       <td className="px-1.5 py-0.5 text-[10px]">{row.class}</td>
@@ -5187,22 +5206,22 @@ const FormVariationsDemo = () => {
                       <td className="px-1.5 py-0.5 text-[10px]">{row.eslId}</td>
                       <td className="px-1.5 py-0.5 text-[10px]">
                         {row.tagKind === 'replaced' && (
-                          <button
-                            type="button"
-                            onClick={() => undoReplacement(row.sort)}
-                            title="Click to undo replacement (Not to be Replaced)"
-                            className="inline-flex items-center gap-1 rounded bg-amber-100 text-amber-800 hover:bg-amber-200 px-1.5 py-0.5 text-[9px] font-medium"
-                          >
+                          <span className="inline-flex items-center rounded bg-amber-100 text-amber-800 px-1.5 py-0.5 text-[9px] font-medium">
                             Replaced by #{row.replacementSort}
-                            <X className="h-2.5 w-2.5" />
-                          </button>
+                          </span>
+                        )}
+                        {row.tagKind === 'notReplaced' && (
+                          <span className="inline-flex items-center rounded bg-slate-200 text-slate-700 px-1.5 py-0.5 text-[9px] font-medium">
+                            Not to be Replaced
+                          </span>
                         )}
 
                         {row.tagKind === 'replacementFor' && (
-                          <span className="inline-flex items-center rounded bg-emerald-100 text-emerald-800 px-1.5 py-0.5 text-[9px] font-medium">
-                            Replacement for #{row.failedSort}{row.auto ? ' • Auto' : ''}
+                          <span className={`inline-flex items-center rounded px-1.5 py-0.5 text-[9px] font-medium no-underline ${row.cancelled ? 'bg-slate-200 text-slate-700' : 'bg-emerald-100 text-emerald-800'}`}>
+                            {row.cancelled ? `Cancelled — Sort #${row.failedSort} not replaced` : `Replacement for #${row.failedSort}${row.auto ? ' • Auto' : ''}`}
                           </span>
                         )}
+
                         {row.tagKind === 'pending' && (
                           <span className="inline-flex items-center rounded bg-red-100 text-red-700 px-1.5 py-0.5 text-[9px] font-medium">
                             Repl Pending
@@ -5765,8 +5784,14 @@ const FormVariationsDemo = () => {
                             <SelectItem value="none">No Replacement Needed</SelectItem>
                             <SelectItem value="replace">Replace</SelectItem>
                             <SelectItem value="repair">Repair</SelectItem>
+                            <SelectItem value="not-to-be-replaced">Not to be Replaced</SelectItem>
                           </SelectContent>
                         </Select>
+                        {selectedTestingRow && replacements.some(r => r.failedSort === selectedTestingRow.sort) && (
+                          <p className="text-[11px] text-muted-foreground">
+                            Sort #{selectedTestingRow.sort} already has a replacement (Row #{replacements.find(r => r.failedSort === selectedTestingRow.sort)?.replacementSort}). Selecting "Not to be Replaced" will strike it through without deleting it.
+                          </p>
+                        )}
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="proceduresUsedDlg" className="text-sm font-medium">Procedures Used</Label>
@@ -5805,7 +5830,23 @@ const FormVariationsDemo = () => {
                     <Button variant="outline" onClick={() => setTestingEditDialogOpen(false)}>
                       Cancel
                     </Button>
-                    <Button className="bg-primary text-primary-foreground hover:bg-primary/90 min-w-[100px]">
+                    <Button
+                      className="bg-primary text-primary-foreground hover:bg-primary/90 min-w-[100px]"
+                      onClick={() => {
+                        if (selectedTestingRow) {
+                          const rep = replacements.find(r => r.failedSort === selectedTestingRow.sort);
+                          if (rep) {
+                            if ((testingFormData.replacement === 'not-to-be-replaced' || testingFormData.replacement === 'none') && !rep.cancelled) {
+                              cancelReplacement(selectedTestingRow.sort);
+                            } else if (testingFormData.replacement === 'replace' && rep.cancelled) {
+                              restoreReplacement(selectedTestingRow.sort);
+                              toast({ title: "Replacement restored", description: `Sort #${selectedTestingRow.sort} is being replaced again by Row #${rep.replacementSort}.` });
+                            }
+                          }
+                        }
+                        setTestingEditDialogOpen(false);
+                      }}
+                    >
                       <Save className="h-4 w-4 mr-2" />
                       Save
                     </Button>
