@@ -337,6 +337,10 @@ const FormVariationsDemo = () => {
     });
   };
   
+  // Testing pagination state
+  const [testingCurrentPage, setTestingCurrentPage] = useState(1);
+  const [testingPageSize, setTestingPageSize] = useState(10);
+
   // Testing edit dialog state
   const [testingEditDialogOpen, setTestingEditDialogOpen] = useState(false);
   const [selectedTestingRow, setSelectedTestingRow] = useState<{
