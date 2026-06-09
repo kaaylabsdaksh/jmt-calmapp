@@ -5094,14 +5094,38 @@ const FormVariationsDemo = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {[
-                    { id: '260672', sort: 1, manufacturer: 'SALISBURY', class: 'CLASS 2', size: '36x36', color: 'Black', slot: 'No', eyelets: 'No', zip: 'No', new: 'No', custId: 'AC-1 / 171128', eslId: '', tag: '', result: 'PASS', procs: 'F479', stds: '751, 4455' },
-                    { id: '260673', sort: 2, manufacturer: 'SALISBURY', class: 'CLASS 2', size: '36x36', color: 'Black', slot: 'No', eyelets: 'No', zip: 'No', new: 'No', custId: 'AC-2 / 171129', eslId: '', tag: 'Repl Pending', result: 'FAIL', procs: 'F479', stds: '751, 4455' },
-                    { id: '260674', sort: 3, manufacturer: 'SALISBURY', class: 'CLASS 4', size: '36x36', color: 'Orange', slot: 'No', eyelets: 'No', zip: 'No', new: 'No', custId: 'N/A', eslId: '', tag: '', result: 'PASS', procs: 'F479', stds: '751, 4455' },
-                    { id: '260675', sort: 4, manufacturer: 'SALISBURY', class: 'CLASS 4', size: '36x36', color: 'Orange', slot: 'No', eyelets: 'No', zip: 'No', new: 'No', custId: 'N/A', eslId: '', tag: '', result: 'PASS', procs: 'F479', stds: '751, 4455' },
-                    { id: '260676', sort: 5, manufacturer: 'SALISBURY', class: 'CLASS 4', size: '36x36', color: 'Orange', slot: 'No', eyelets: 'No', zip: 'No', new: 'No', custId: 'N/A', eslId: '', tag: '', result: 'PASS', procs: 'F479', stds: '751, 4455' },
-                    { id: '260677', sort: 6, manufacturer: 'SALISBURY', class: 'CLASS 4', size: '36x36', color: 'Orange', slot: 'No', eyelets: 'No', zip: 'No', new: 'No', custId: 'N/A', eslId: '', tag: '', result: 'PASS', procs: 'F479', stds: '751, 4455' },
-                  ].map((row, index) => (
+                  {(() => {
+                    const allBlanketRows = Array.from({ length: 28 }).map((_, i) => {
+                      const sort = i + 1;
+                      const isFail = sort === 2;
+                      const cls = sort <= 2 ? 'CLASS 2' : 'CLASS 4';
+                      const color = sort <= 2 ? 'Black' : 'Orange';
+                      const custId = sort === 1 ? 'AC-1 / 171128' : sort === 2 ? 'AC-2 / 171129' : 'N/A';
+                      return {
+                        id: String(260671 + sort),
+                        sort,
+                        manufacturer: 'SALISBURY',
+                        class: cls,
+                        size: '36x36',
+                        color,
+                        slot: 'No',
+                        eyelets: 'No',
+                        zip: 'No',
+                        new: 'No',
+                        custId,
+                        eslId: '',
+                        tag: isFail ? 'Repl Pending' : '',
+                        result: isFail ? 'FAIL' : 'PASS',
+                        procs: 'F479',
+                        stds: '751, 4455',
+                      };
+                    });
+                    const totalRows = allBlanketRows.length;
+                    const totalPages = Math.max(1, Math.ceil(totalRows / testingPageSize));
+                    const current = Math.min(testingCurrentPage, totalPages);
+                    const start = (current - 1) * testingPageSize;
+                    const pageRows = allBlanketRows.slice(start, start + testingPageSize);
+                    return pageRows.map((row, index) => (
                     <tr key={row.id} className={`border-b border-border hover:bg-muted/30 h-6 ${index % 2 === 0 ? 'bg-background' : 'bg-muted/10'}`}>
                       <td className="px-1.5 py-0.5 text-[10px] font-medium text-foreground">{row.id}</td>
                       <td className="px-1.5 py-0.5 text-center"><Checkbox className="h-3 w-3" /></td>
@@ -5134,7 +5158,8 @@ const FormVariationsDemo = () => {
                         </Button>
                       </td>
                     </tr>
-                  ))}
+                    ));
+                  })()}
                 </tbody>
               </table>
             ) : formData.type === 'esl-grounds' ? (
