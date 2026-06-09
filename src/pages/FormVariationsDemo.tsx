@@ -108,11 +108,9 @@ const FormVariationsDemo = () => {
   const [assignBySizeOpen, setAssignBySizeOpen] = useState(false);
   const [assignBySizeUnassignedOnly, setAssignBySizeUnassignedOnly] = useState(false);
   const [assignBySizeRows, setAssignBySizeRows] = useState<Array<{ size: string; clean: string; test: string; vi: string; stamp: string; boxOrder: string }>>([
-    { size: "Small", clean: "", test: "", vi: "", stamp: "", boxOrder: "" },
-    { size: "Medium", clean: "", test: "", vi: "", stamp: "", boxOrder: "" },
-    { size: "Large", clean: "", test: "", vi: "", stamp: "", boxOrder: "" },
-    { size: "X-Large", clean: "", test: "", vi: "", stamp: "", boxOrder: "" },
-    { size: "XX-Large", clean: "brian", test: "brian", vi: "brian", stamp: "brian", boxOrder: "brian" },
+    { size: "18x18", clean: "", test: "", vi: "", stamp: "", boxOrder: "" },
+    { size: "22x22", clean: "", test: "", vi: "", stamp: "", boxOrder: "" },
+    { size: "36x36", clean: "brian", test: "brian", vi: "brian", stamp: "brian", boxOrder: "brian" },
   ]);
   const [assignBySizeBulk, setAssignBySizeBulk] = useState<{ clean: string; test: string; vi: string; stamp: string; boxOrder: string }>({ clean: "", test: "", vi: "", stamp: "", boxOrder: "" });
   const [eslFieldValues, setEslFieldValues] = useState<Record<string, string>>({
