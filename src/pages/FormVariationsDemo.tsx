@@ -5144,12 +5144,13 @@ const FormVariationsDemo = () => {
                         new: 'No',
                         custId,
                         eslId: '',
-                        tagKind: rep ? 'replaced' : (isFail ? 'pending' : 'none'),
+                        tagKind: rep ? (rep.cancelled ? 'notReplaced' : 'replaced') : (isFail ? 'pending' : 'none'),
                         replacementSort: rep?.replacementSort,
                         result: isFail ? 'FAIL' : 'PASS',
                         procs: 'F479',
                         stds: '751, 4455',
                         kind: 'base' as const,
+                        cancelled: false,
                       };
                     });
                     const replacementRows = replacements.map(rep => ({
