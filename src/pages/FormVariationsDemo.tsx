@@ -5182,10 +5182,10 @@ const FormVariationsDemo = () => {
                     const start = (current - 1) * testingPageSize;
                     const pageRows = allBlanketRows.slice(start, start + testingPageSize);
                     return pageRows.map((row: any, index) => (
-                    <tr key={row.id} className={`border-b border-border hover:bg-muted/30 h-6 ${row.kind === 'replacement' ? 'bg-emerald-50 hover:bg-emerald-100/70 border-l-2 border-l-emerald-400' : (index % 2 === 0 ? 'bg-background' : 'bg-muted/10')}`}>
+                    <tr key={row.id} className={`border-b border-border hover:bg-muted/30 h-6 ${row.kind === 'replacement' ? (row.cancelled ? 'bg-slate-100 hover:bg-slate-200/60 border-l-2 border-l-slate-400 line-through text-muted-foreground' : 'bg-emerald-50 hover:bg-emerald-100/70 border-l-2 border-l-emerald-400') : (index % 2 === 0 ? 'bg-background' : 'bg-muted/10')}`}>
 
                       <td className="px-1.5 py-0.5 text-[10px] font-medium text-foreground">{row.id}</td>
-                      <td className="px-1.5 py-0.5 text-center"><Checkbox className="h-3 w-3" /></td>
+                      <td className="px-1.5 py-0.5 text-center"><Checkbox className="h-3 w-3" disabled={row.cancelled} /></td>
                       <td className="px-1.5 py-0.5 text-[10px]">{row.sort}</td>
                       <td className="px-1.5 py-0.5 text-[10px]">{row.manufacturer}</td>
                       <td className="px-1.5 py-0.5 text-[10px]">{row.class}</td>
@@ -5199,22 +5199,22 @@ const FormVariationsDemo = () => {
                       <td className="px-1.5 py-0.5 text-[10px]">{row.eslId}</td>
                       <td className="px-1.5 py-0.5 text-[10px]">
                         {row.tagKind === 'replaced' && (
-                          <button
-                            type="button"
-                            onClick={() => undoReplacement(row.sort)}
-                            title="Click to undo replacement (Not to be Replaced)"
-                            className="inline-flex items-center gap-1 rounded bg-amber-100 text-amber-800 hover:bg-amber-200 px-1.5 py-0.5 text-[9px] font-medium"
-                          >
+                          <span className="inline-flex items-center rounded bg-amber-100 text-amber-800 px-1.5 py-0.5 text-[9px] font-medium">
                             Replaced by #{row.replacementSort}
-                            <X className="h-2.5 w-2.5" />
-                          </button>
+                          </span>
+                        )}
+                        {row.tagKind === 'notReplaced' && (
+                          <span className="inline-flex items-center rounded bg-slate-200 text-slate-700 px-1.5 py-0.5 text-[9px] font-medium">
+                            Not to be Replaced
+                          </span>
                         )}
 
                         {row.tagKind === 'replacementFor' && (
-                          <span className="inline-flex items-center rounded bg-emerald-100 text-emerald-800 px-1.5 py-0.5 text-[9px] font-medium">
-                            Replacement for #{row.failedSort}{row.auto ? ' • Auto' : ''}
+                          <span className={`inline-flex items-center rounded px-1.5 py-0.5 text-[9px] font-medium no-underline ${row.cancelled ? 'bg-slate-200 text-slate-700' : 'bg-emerald-100 text-emerald-800'}`}>
+                            {row.cancelled ? `Cancelled — Sort #${row.failedSort} not replaced` : `Replacement for #${row.failedSort}${row.auto ? ' • Auto' : ''}`}
                           </span>
                         )}
+
                         {row.tagKind === 'pending' && (
                           <span className="inline-flex items-center rounded bg-red-100 text-red-700 px-1.5 py-0.5 text-[9px] font-medium">
                             Repl Pending
