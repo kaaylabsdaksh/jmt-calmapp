@@ -5542,49 +5542,57 @@ const FormVariationsDemo = () => {
           </div>
 
           {/* Pagination */}
-          <div className="flex items-center justify-between px-3 py-2 border-t border-border bg-muted/20 text-[11px]">
-            <div className="flex items-center gap-2">
-              <span className="text-muted-foreground">Page 1 of 27 (262 items)</span>
-              <Button variant="ghost" size="sm" className="h-6 w-6 p-0" disabled>
-                <ChevronLeft className="h-3.5 w-3.5" />
-              </Button>
-              <div className="flex items-center gap-0.5">
-                {[1, 2, 3, 4, 5, 6, 7].map((p) => (
-                  <Button
-                    key={p}
-                    variant={p === 1 ? "default" : "ghost"}
-                    size="sm"
-                    className={`h-6 w-6 p-0 text-[11px] ${p === 1 ? 'bg-foreground text-background hover:bg-foreground/90' : ''}`}
-                  >
-                    {p}
+          {(() => {
+            const totalItems = 28;
+            const totalPages = Math.max(1, Math.ceil(totalItems / testingPageSize));
+            const current = Math.min(testingCurrentPage, totalPages);
+            const pageNumbers: number[] = [];
+            if (totalPages <= 9) {
+              for (let i = 1; i <= totalPages; i++) pageNumbers.push(i);
+            } else {
+              for (let i = 1; i <= Math.min(7, totalPages); i++) pageNumbers.push(i);
+            }
+            return (
+              <div className="flex items-center justify-between px-3 py-2 border-t border-border bg-muted/20 text-[11px]">
+                <div className="flex items-center gap-2">
+                  <span className="text-muted-foreground">Page {current} of {totalPages} ({totalItems} items)</span>
+                  <Button variant="ghost" size="sm" className="h-6 w-6 p-0" disabled={current <= 1} onClick={() => setTestingCurrentPage(p => Math.max(1, p - 1))}>
+                    <ChevronLeft className="h-3.5 w-3.5" />
                   </Button>
-                ))}
-                <span className="px-1 text-muted-foreground">...</span>
-                {[25, 26, 27].map((p) => (
-                  <Button key={p} variant="ghost" size="sm" className="h-6 w-6 p-0 text-[11px]">
-                    {p}
+                  <div className="flex items-center gap-0.5">
+                    {pageNumbers.map((p) => (
+                      <Button
+                        key={p}
+                        variant={p === current ? "default" : "ghost"}
+                        size="sm"
+                        className={`h-6 w-6 p-0 text-[11px] ${p === current ? 'bg-foreground text-background hover:bg-foreground/90' : ''}`}
+                        onClick={() => setTestingCurrentPage(p)}
+                      >
+                        {p}
+                      </Button>
+                    ))}
+                  </div>
+                  <Button variant="ghost" size="sm" className="h-6 w-6 p-0" disabled={current >= totalPages} onClick={() => setTestingCurrentPage(p => Math.min(totalPages, p + 1))}>
+                    <ChevronRight className="h-3.5 w-3.5" />
                   </Button>
-                ))}
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-muted-foreground">Page size:</span>
+                  <Select value={String(testingPageSize)} onValueChange={(v) => { setTestingPageSize(Number(v)); setTestingCurrentPage(1); }}>
+                    <SelectTrigger className="h-6 w-[60px] text-[11px]">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="10">10</SelectItem>
+                      <SelectItem value="25">25</SelectItem>
+                      <SelectItem value="50">50</SelectItem>
+                      <SelectItem value="100">100</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
-              <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
-                <ChevronRight className="h-3.5 w-3.5" />
-              </Button>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="text-muted-foreground">Page size:</span>
-              <Select defaultValue="10">
-                <SelectTrigger className="h-6 w-[60px] text-[11px]">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="10">10</SelectItem>
-                  <SelectItem value="25">25</SelectItem>
-                  <SelectItem value="50">50</SelectItem>
-                  <SelectItem value="100">100</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
+            );
+          })()}
         </div>
 
 
