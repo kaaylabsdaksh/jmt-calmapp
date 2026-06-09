@@ -12762,7 +12762,7 @@ const FormVariationsDemo = () => {
                             }));
                           }}
                         >
-                          <ChevronsRight className="h-4 w-4" />
+                          <ChevronRight className="h-4 w-4" />
                         </Button>
                       </div>
                       {(['test', 'vi', 'stamp', 'boxOrder'] as const).map((step) => (
@@ -12802,7 +12802,7 @@ const FormVariationsDemo = () => {
                         })));
                       }}
                     >
-                      <ChevronsRight className="h-4 w-4" />
+                      <ChevronRight className="h-4 w-4" />
                     </Button>
                   </div>
                   {(['test', 'vi', 'stamp', 'boxOrder'] as const).map((step) => (
