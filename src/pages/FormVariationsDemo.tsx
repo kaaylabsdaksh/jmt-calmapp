@@ -337,6 +337,10 @@ const FormVariationsDemo = () => {
     });
   };
   
+  // Testing pagination state
+  const [testingCurrentPage, setTestingCurrentPage] = useState(1);
+  const [testingPageSize, setTestingPageSize] = useState(10);
+
   // Testing edit dialog state
   const [testingEditDialogOpen, setTestingEditDialogOpen] = useState(false);
   const [selectedTestingRow, setSelectedTestingRow] = useState<{
@@ -5090,14 +5094,38 @@ const FormVariationsDemo = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {[
-                    { id: '260672', sort: 1, manufacturer: 'SALISBURY', class: 'CLASS 2', size: '36x36', color: 'Black', slot: 'No', eyelets: 'No', zip: 'No', new: 'No', custId: 'AC-1 / 171128', eslId: '', tag: '', result: 'PASS', procs: 'F479', stds: '751, 4455' },
-                    { id: '260673', sort: 2, manufacturer: 'SALISBURY', class: 'CLASS 2', size: '36x36', color: 'Black', slot: 'No', eyelets: 'No', zip: 'No', new: 'No', custId: 'AC-2 / 171129', eslId: '', tag: 'Repl Pending', result: 'FAIL', procs: 'F479', stds: '751, 4455' },
-                    { id: '260674', sort: 3, manufacturer: 'SALISBURY', class: 'CLASS 4', size: '36x36', color: 'Orange', slot: 'No', eyelets: 'No', zip: 'No', new: 'No', custId: 'N/A', eslId: '', tag: '', result: 'PASS', procs: 'F479', stds: '751, 4455' },
-                    { id: '260675', sort: 4, manufacturer: 'SALISBURY', class: 'CLASS 4', size: '36x36', color: 'Orange', slot: 'No', eyelets: 'No', zip: 'No', new: 'No', custId: 'N/A', eslId: '', tag: '', result: 'PASS', procs: 'F479', stds: '751, 4455' },
-                    { id: '260676', sort: 5, manufacturer: 'SALISBURY', class: 'CLASS 4', size: '36x36', color: 'Orange', slot: 'No', eyelets: 'No', zip: 'No', new: 'No', custId: 'N/A', eslId: '', tag: '', result: 'PASS', procs: 'F479', stds: '751, 4455' },
-                    { id: '260677', sort: 6, manufacturer: 'SALISBURY', class: 'CLASS 4', size: '36x36', color: 'Orange', slot: 'No', eyelets: 'No', zip: 'No', new: 'No', custId: 'N/A', eslId: '', tag: '', result: 'PASS', procs: 'F479', stds: '751, 4455' },
-                  ].map((row, index) => (
+                  {(() => {
+                    const allBlanketRows = Array.from({ length: 28 }).map((_, i) => {
+                      const sort = i + 1;
+                      const isFail = sort === 2;
+                      const cls = sort <= 2 ? 'CLASS 2' : 'CLASS 4';
+                      const color = sort <= 2 ? 'Black' : 'Orange';
+                      const custId = sort === 1 ? 'AC-1 / 171128' : sort === 2 ? 'AC-2 / 171129' : 'N/A';
+                      return {
+                        id: String(260671 + sort),
+                        sort,
+                        manufacturer: 'SALISBURY',
+                        class: cls,
+                        size: '36x36',
+                        color,
+                        slot: 'No',
+                        eyelets: 'No',
+                        zip: 'No',
+                        new: 'No',
+                        custId,
+                        eslId: '',
+                        tag: isFail ? 'Repl Pending' : '',
+                        result: isFail ? 'FAIL' : 'PASS',
+                        procs: 'F479',
+                        stds: '751, 4455',
+                      };
+                    });
+                    const totalRows = allBlanketRows.length;
+                    const totalPages = Math.max(1, Math.ceil(totalRows / testingPageSize));
+                    const current = Math.min(testingCurrentPage, totalPages);
+                    const start = (current - 1) * testingPageSize;
+                    const pageRows = allBlanketRows.slice(start, start + testingPageSize);
+                    return pageRows.map((row, index) => (
                     <tr key={row.id} className={`border-b border-border hover:bg-muted/30 h-6 ${index % 2 === 0 ? 'bg-background' : 'bg-muted/10'}`}>
                       <td className="px-1.5 py-0.5 text-[10px] font-medium text-foreground">{row.id}</td>
                       <td className="px-1.5 py-0.5 text-center"><Checkbox className="h-3 w-3" /></td>
@@ -5130,7 +5158,8 @@ const FormVariationsDemo = () => {
                         </Button>
                       </td>
                     </tr>
-                  ))}
+                    ));
+                  })()}
                 </tbody>
               </table>
             ) : formData.type === 'esl-grounds' ? (
@@ -5513,49 +5542,57 @@ const FormVariationsDemo = () => {
           </div>
 
           {/* Pagination */}
-          <div className="flex items-center justify-between px-3 py-2 border-t border-border bg-muted/20 text-[11px]">
-            <div className="flex items-center gap-2">
-              <span className="text-muted-foreground">Page 1 of 27 (262 items)</span>
-              <Button variant="ghost" size="sm" className="h-6 w-6 p-0" disabled>
-                <ChevronLeft className="h-3.5 w-3.5" />
-              </Button>
-              <div className="flex items-center gap-0.5">
-                {[1, 2, 3, 4, 5, 6, 7].map((p) => (
-                  <Button
-                    key={p}
-                    variant={p === 1 ? "default" : "ghost"}
-                    size="sm"
-                    className={`h-6 w-6 p-0 text-[11px] ${p === 1 ? 'bg-foreground text-background hover:bg-foreground/90' : ''}`}
-                  >
-                    {p}
+          {(() => {
+            const totalItems = 28;
+            const totalPages = Math.max(1, Math.ceil(totalItems / testingPageSize));
+            const current = Math.min(testingCurrentPage, totalPages);
+            const pageNumbers: number[] = [];
+            if (totalPages <= 9) {
+              for (let i = 1; i <= totalPages; i++) pageNumbers.push(i);
+            } else {
+              for (let i = 1; i <= Math.min(7, totalPages); i++) pageNumbers.push(i);
+            }
+            return (
+              <div className="flex items-center justify-between px-3 py-2 border-t border-border bg-muted/20 text-[11px]">
+                <div className="flex items-center gap-2">
+                  <span className="text-muted-foreground">Page {current} of {totalPages} ({totalItems} items)</span>
+                  <Button variant="ghost" size="sm" className="h-6 w-6 p-0" disabled={current <= 1} onClick={() => setTestingCurrentPage(p => Math.max(1, p - 1))}>
+                    <ChevronLeft className="h-3.5 w-3.5" />
                   </Button>
-                ))}
-                <span className="px-1 text-muted-foreground">...</span>
-                {[25, 26, 27].map((p) => (
-                  <Button key={p} variant="ghost" size="sm" className="h-6 w-6 p-0 text-[11px]">
-                    {p}
+                  <div className="flex items-center gap-0.5">
+                    {pageNumbers.map((p) => (
+                      <Button
+                        key={p}
+                        variant={p === current ? "default" : "ghost"}
+                        size="sm"
+                        className={`h-6 w-6 p-0 text-[11px] ${p === current ? 'bg-foreground text-background hover:bg-foreground/90' : ''}`}
+                        onClick={() => setTestingCurrentPage(p)}
+                      >
+                        {p}
+                      </Button>
+                    ))}
+                  </div>
+                  <Button variant="ghost" size="sm" className="h-6 w-6 p-0" disabled={current >= totalPages} onClick={() => setTestingCurrentPage(p => Math.min(totalPages, p + 1))}>
+                    <ChevronRight className="h-3.5 w-3.5" />
                   </Button>
-                ))}
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-muted-foreground">Page size:</span>
+                  <Select value={String(testingPageSize)} onValueChange={(v) => { setTestingPageSize(Number(v)); setTestingCurrentPage(1); }}>
+                    <SelectTrigger className="h-6 w-[60px] text-[11px]">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="10">10</SelectItem>
+                      <SelectItem value="25">25</SelectItem>
+                      <SelectItem value="50">50</SelectItem>
+                      <SelectItem value="100">100</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
-              <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
-                <ChevronRight className="h-3.5 w-3.5" />
-              </Button>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="text-muted-foreground">Page size:</span>
-              <Select defaultValue="10">
-                <SelectTrigger className="h-6 w-[60px] text-[11px]">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="10">10</SelectItem>
-                  <SelectItem value="25">25</SelectItem>
-                  <SelectItem value="50">50</SelectItem>
-                  <SelectItem value="100">100</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
+            );
+          })()}
         </div>
 
 
