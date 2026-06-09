@@ -396,6 +396,13 @@ const FormVariationsDemo = () => {
 
   const handleOpenTestingEdit = (row: typeof selectedTestingRow) => {
     setSelectedTestingRow(row);
+    if (row) {
+      const rep = replacements.find(r => r.failedSort === row.sort);
+      setTestingFormData(prev => ({
+        ...prev,
+        replacement: rep ? (rep.cancelled ? 'not-to-be-replaced' : 'replace') : '',
+      }));
+    }
     setTestingEditDialogOpen(true);
   };
 
