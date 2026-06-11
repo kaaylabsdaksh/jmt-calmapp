@@ -394,7 +394,24 @@ const FormVariationsDemo = () => {
     replacement: '',
   });
 
+  // Bulk edit state for Testing tab
+  const [selectedTestingSorts, setSelectedTestingSorts] = useState<number[]>([]);
+  const [isBulkTestingEdit, setIsBulkTestingEdit] = useState(false);
+  const [bulkApplyFlags, setBulkApplyFlags] = useState({
+    failFlags: false,
+    vi: false,
+    replacement: false,
+    procedures: false,
+    standards: false,
+  });
+
+  const toggleTestingSort = (sort: number, checked: boolean) => {
+    setSelectedTestingSorts(prev => checked ? Array.from(new Set([...prev, sort])) : prev.filter(s => s !== sort));
+  };
+  const clearTestingSelection = () => setSelectedTestingSorts([]);
+
   const handleOpenTestingEdit = (row: typeof selectedTestingRow) => {
+    setIsBulkTestingEdit(false);
     setSelectedTestingRow(row);
     if (row) {
       const rep = replacements.find(r => r.failedSort === row.sort);
@@ -403,6 +420,15 @@ const FormVariationsDemo = () => {
         replacement: rep ? (rep.cancelled ? 'not-to-be-replaced' : 'replace') : '',
       }));
     }
+    setTestingEditDialogOpen(true);
+  };
+
+  const handleOpenBulkTestingEdit = () => {
+    if (selectedTestingSorts.length === 0) return;
+    setIsBulkTestingEdit(true);
+    setSelectedTestingRow(null);
+    setBulkApplyFlags({ failFlags: false, vi: false, replacement: false, procedures: false, standards: false });
+    setTestingFormData(prev => ({ ...prev, replacement: '' }));
     setTestingEditDialogOpen(true);
   };
 
