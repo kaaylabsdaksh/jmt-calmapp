@@ -5978,14 +5978,24 @@ const FormVariationsDemo = () => {
                 {/* Footer */}
                 <div className="px-6 py-4 bg-muted/20 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4">
                   <div className="flex items-center gap-2">
-                    <Button variant="ghost" size="sm" disabled className="text-muted-foreground">
-                      <ChevronLeft className="h-4 w-4 mr-1" />
-                      Prev Fail
-                    </Button>
-                    <Button variant="ghost" size="sm" disabled className="text-muted-foreground">
-                      Next Fail
-                      <ChevronRight className="h-4 w-4 ml-1" />
-                    </Button>
+                    {isBulkTestingEdit ? (
+                      <span className="text-xs text-muted-foreground">
+                        {Object.values(bulkApplyFlags).filter(Boolean).length === 0
+                          ? 'No sections selected — nothing will change.'
+                          : `Applying ${Object.values(bulkApplyFlags).filter(Boolean).length} section(s) to ${selectedTestingSorts.length} sort(s).`}
+                      </span>
+                    ) : (
+                      <>
+                        <Button variant="ghost" size="sm" disabled className="text-muted-foreground">
+                          <ChevronLeft className="h-4 w-4 mr-1" />
+                          Prev Fail
+                        </Button>
+                        <Button variant="ghost" size="sm" disabled className="text-muted-foreground">
+                          Next Fail
+                          <ChevronRight className="h-4 w-4 ml-1" />
+                        </Button>
+                      </>
+                    )}
                   </div>
                   <div className="flex items-center gap-3">
                     <Button variant="outline" onClick={() => setTestingEditDialogOpen(false)}>
@@ -5993,8 +6003,29 @@ const FormVariationsDemo = () => {
                     </Button>
                     <Button
                       className="bg-primary text-primary-foreground hover:bg-primary/90 min-w-[100px]"
+                      disabled={isBulkTestingEdit && Object.values(bulkApplyFlags).filter(Boolean).length === 0}
                       onClick={() => {
-                        if (selectedTestingRow) {
+                        if (isBulkTestingEdit) {
+                          const applied = Object.entries(bulkApplyFlags).filter(([, v]) => v).map(([k]) => k);
+                          // Apply replacement field to each selected sort
+                          if (bulkApplyFlags.replacement) {
+                            selectedTestingSorts.forEach(sort => {
+                              const rep = replacements.find(r => r.failedSort === sort);
+                              if (rep) {
+                                if ((testingFormData.replacement === 'not-to-be-replaced' || testingFormData.replacement === 'none') && !rep.cancelled) {
+                                  cancelReplacement(sort);
+                                } else if (testingFormData.replacement === 'replace' && rep.cancelled) {
+                                  restoreReplacement(sort);
+                                }
+                              }
+                            });
+                          }
+                          toast({
+                            title: 'Bulk update applied',
+                            description: `${applied.length} section(s) applied to ${selectedTestingSorts.length} sort(s): ${applied.join(', ')}.`,
+                          });
+                          clearTestingSelection();
+                        } else if (selectedTestingRow) {
                           const rep = replacements.find(r => r.failedSort === selectedTestingRow.sort);
                           if (rep) {
                             if ((testingFormData.replacement === 'not-to-be-replaced' || testingFormData.replacement === 'none') && !rep.cancelled) {
@@ -6009,7 +6040,7 @@ const FormVariationsDemo = () => {
                       }}
                     >
                       <Save className="h-4 w-4 mr-2" />
-                      Save
+                      {isBulkTestingEdit ? `Apply to ${selectedTestingSorts.length}` : 'Save'}
                     </Button>
                   </div>
                 </div>
