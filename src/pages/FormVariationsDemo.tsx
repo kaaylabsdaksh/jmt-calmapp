@@ -5125,6 +5125,41 @@ const FormVariationsDemo = () => {
 
 
 
+        {/* Bulk selection bar */}
+        {formData.type === 'esl-blankets' && selectedTestingSorts.length > 0 && (
+          <div className="flex items-center justify-between gap-3 bg-primary/5 border border-primary/30 rounded-lg px-3 py-2 sticky top-0 z-10 shadow-sm">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="text-xs font-semibold text-foreground">
+                {selectedTestingSorts.length} sort{selectedTestingSorts.length === 1 ? '' : 's'} selected
+              </span>
+              <div className="flex items-center gap-1 flex-wrap max-w-[60vw]">
+                {selectedTestingSorts.slice().sort((a, b) => a - b).map(s => (
+                  <span key={s} className="inline-flex items-center gap-1 rounded-full bg-background border border-border px-2 py-0.5 text-[10px] text-foreground">
+                    #{s}
+                    <button
+                      type="button"
+                      onClick={() => toggleTestingSort(s, false)}
+                      className="text-muted-foreground hover:text-foreground"
+                      aria-label={`Remove sort ${s}`}
+                    >
+                      <X className="h-3 w-3" />
+                    </button>
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
+              <Button variant="outline" size="sm" className="h-7 text-xs" onClick={clearTestingSelection}>
+                Clear
+              </Button>
+              <Button size="sm" className="h-7 text-xs bg-primary text-primary-foreground hover:bg-primary/90" onClick={handleOpenBulkTestingEdit}>
+                <Edit className="h-3.5 w-3.5 mr-1" />
+                Bulk Edit ({selectedTestingSorts.length})
+              </Button>
+            </div>
+          </div>
+        )}
+
         {/* Testing Results Table */}
         <div className="border border-border rounded-lg overflow-hidden">
           <div className="overflow-x-auto">
