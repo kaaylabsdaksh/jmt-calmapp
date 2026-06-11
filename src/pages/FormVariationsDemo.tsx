@@ -5865,24 +5865,14 @@ const FormVariationsDemo = () => {
                   {/* Replacement / Procedures / Standards */}
                   <div className="bg-muted/30 rounded-xl p-5 space-y-4">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div className={`space-y-2 rounded-md ${isBulkTestingEdit ? 'p-2 border border-dashed border-border ' + (bulkApplyFlags.replacement ? '' : 'opacity-50') : ''}`}>
+                      <div className="space-y-2 rounded-md">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-2">
                             <RefreshCw className="h-4 w-4 text-muted-foreground" />
                             <Label htmlFor="replacementType" className="text-sm font-medium">Replacement Type</Label>
                           </div>
-                          {isBulkTestingEdit && (
-                            <label className="flex items-center gap-1.5 text-[11px] cursor-pointer">
-                              <Checkbox
-                                checked={bulkApplyFlags.replacement}
-                                onCheckedChange={(c) => setBulkApplyFlags(prev => ({ ...prev, replacement: !!c }))}
-                                className="h-3.5 w-3.5"
-                              />
-                              <span className="font-medium">Apply</span>
-                            </label>
-                          )}
                         </div>
-                        <Select value={testingFormData.replacement} onValueChange={(value) => setTestingFormData(prev => ({ ...prev, replacement: value }))} disabled={isBulkTestingEdit && !bulkApplyFlags.replacement}>
+                        <Select value={testingFormData.replacement} onValueChange={(value) => setTestingFormData(prev => ({ ...prev, replacement: value }))}>
                           <SelectTrigger id="replacementType" className="h-10 bg-background">
                             <SelectValue placeholder="Select replacement type..." />
                           </SelectTrigger>
@@ -5899,21 +5889,11 @@ const FormVariationsDemo = () => {
                           </p>
                         )}
                       </div>
-                      <div className={`space-y-2 rounded-md ${isBulkTestingEdit ? 'p-2 border border-dashed border-border ' + (bulkApplyFlags.procedures ? '' : 'opacity-50') : ''}`}>
+                      <div className="space-y-2 rounded-md">
                         <div className="flex items-center justify-between">
                           <Label htmlFor="proceduresUsedDlg" className="text-sm font-medium">Procedures Used</Label>
-                          {isBulkTestingEdit && (
-                            <label className="flex items-center gap-1.5 text-[11px] cursor-pointer">
-                              <Checkbox
-                                checked={bulkApplyFlags.procedures}
-                                onCheckedChange={(c) => setBulkApplyFlags(prev => ({ ...prev, procedures: !!c }))}
-                                className="h-3.5 w-3.5"
-                              />
-                              <span className="font-medium">Apply</span>
-                            </label>
-                          )}
                         </div>
-                        <Select disabled={isBulkTestingEdit && !bulkApplyFlags.procedures}>
+                        <Select>
                           <SelectTrigger id="proceduresUsedDlg" className="h-10 bg-background">
                             <SelectValue placeholder="Select procedure..." />
                           </SelectTrigger>
@@ -5925,21 +5905,11 @@ const FormVariationsDemo = () => {
                         </Select>
                       </div>
                     </div>
-                    <div className={`space-y-2 rounded-md ${isBulkTestingEdit ? 'p-2 border border-dashed border-border ' + (bulkApplyFlags.standards ? '' : 'opacity-50') : ''}`}>
+                    <div className="space-y-2 rounded-md">
                       <div className="flex items-center justify-between">
                         <Label htmlFor="standardsUsedDlg" className="text-sm font-medium">Standards Used</Label>
-                        {isBulkTestingEdit && (
-                          <label className="flex items-center gap-1.5 text-[11px] cursor-pointer">
-                            <Checkbox
-                              checked={bulkApplyFlags.standards}
-                              onCheckedChange={(c) => setBulkApplyFlags(prev => ({ ...prev, standards: !!c }))}
-                              className="h-3.5 w-3.5"
-                            />
-                            <span className="font-medium">Apply</span>
-                          </label>
-                        )}
                       </div>
-                      <Input id="standardsUsedDlg" placeholder="Enter standards" className="h-10 bg-background" disabled={isBulkTestingEdit && !bulkApplyFlags.standards} />
+                      <Input id="standardsUsedDlg" placeholder="Enter standards" className="h-10 bg-background" />
                     </div>
                   </div>
                 </div>
