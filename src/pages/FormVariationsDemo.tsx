@@ -397,6 +397,7 @@ const FormVariationsDemo = () => {
   // Bulk edit state for Testing tab
   const [selectedTestingSorts, setSelectedTestingSorts] = useState<number[]>([]);
   const [isBulkTestingEdit, setIsBulkTestingEdit] = useState(false);
+  const [bulkSortsExpanded, setBulkSortsExpanded] = useState(false);
   const [bulkApplyFlags, setBulkApplyFlags] = useState({
     failFlags: false,
     vi: false,
