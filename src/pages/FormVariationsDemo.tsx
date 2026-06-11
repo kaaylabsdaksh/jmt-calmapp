@@ -5763,27 +5763,11 @@ const FormVariationsDemo = () => {
               <div className="flex flex-col">
                 {/* Header */}
                 <div className="bg-primary/10 px-6 py-4 border-b border-border">
-                  <h2 className="text-lg font-semibold text-foreground mb-2">
+                  <h2 className="text-lg font-semibold text-foreground">
                     {isBulkTestingEdit ? `Bulk Edit Testing Records (${selectedTestingSorts.length})` : 'Edit Testing Record'}
                   </h2>
-                  {isBulkTestingEdit ? (
-                    <div className="flex items-center gap-1 flex-wrap">
-                      {selectedTestingSorts.slice().sort((a, b) => a - b).map(s => (
-                        <span key={s} className="inline-flex items-center gap-1 rounded-full bg-background border border-border px-2 py-0.5 text-[11px] text-foreground">
-                          Sort #{s}
-                          <button
-                            type="button"
-                            onClick={() => toggleTestingSort(s, false)}
-                            className="text-muted-foreground hover:text-foreground"
-                            aria-label={`Remove sort ${s}`}
-                          >
-                            <X className="h-3 w-3" />
-                          </button>
-                        </span>
-                      ))}
-                    </div>
-                  ) : selectedTestingRow ? (
-                    <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-muted-foreground">
+                  {!isBulkTestingEdit && selectedTestingRow && (
+                    <div className="mt-2 flex flex-wrap gap-x-6 gap-y-1 text-sm text-muted-foreground">
                       <span><strong className="text-foreground">Sort:</strong> {selectedTestingRow.sort}</span>
                       <span><strong className="text-foreground">Manu:</strong> {selectedTestingRow.manufacturer}</span>
                       <span><strong className="text-foreground">Class:</strong> {selectedTestingRow.class}</span>
@@ -5792,8 +5776,45 @@ const FormVariationsDemo = () => {
                       <span><strong className="text-foreground">Cust ID:</strong> {selectedTestingRow.custId}</span>
                       <span><strong className="text-foreground">Tag:</strong> {selectedTestingRow.tag || 'N/A'}</span>
                     </div>
-                  ) : null}
+                  )}
                 </div>
+                {isBulkTestingEdit && (
+                  <div className="border-b border-border bg-muted/40">
+                    <button
+                      type="button"
+                      onClick={() => setBulkSortsExpanded(v => !v)}
+                      className="w-full px-6 py-2.5 flex items-center justify-between hover:bg-muted/70 transition-colors group text-left"
+                      aria-expanded={bulkSortsExpanded}
+                    >
+                      <div className="flex items-center gap-2 min-w-0">
+                        <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider shrink-0">Sorts:</span>
+                        <span className="text-sm text-foreground truncate">
+                          {selectedTestingSorts.slice().sort((a, b) => a - b).map(s => `#${s}`).join(', ')}
+                        </span>
+                      </div>
+                      <ChevronDown className={`h-4 w-4 text-muted-foreground shrink-0 ml-2 transition-transform ${bulkSortsExpanded ? 'rotate-180' : ''}`} />
+                    </button>
+                    {bulkSortsExpanded && (
+                      <div className="px-6 pb-3 pt-1 max-h-40 overflow-y-auto">
+                        <div className="flex flex-wrap gap-1.5">
+                          {selectedTestingSorts.slice().sort((a, b) => a - b).map(s => (
+                            <span key={s} className="inline-flex items-center gap-1 rounded-md bg-background border border-border px-2 py-0.5 text-[11px] text-foreground">
+                              Sort #{s}
+                              <button
+                                type="button"
+                                onClick={() => toggleTestingSort(s, false)}
+                                className="text-muted-foreground hover:text-foreground"
+                                aria-label={`Remove sort ${s}`}
+                              >
+                                <X className="h-3 w-3" />
+                              </button>
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
 
                 {/* Main Content */}
                 <div className="p-6 space-y-6">
