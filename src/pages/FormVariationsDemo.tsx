@@ -5766,25 +5766,20 @@ const FormVariationsDemo = () => {
                     {isBulkTestingEdit ? `Bulk Edit Testing Records (${selectedTestingSorts.length})` : 'Edit Testing Record'}
                   </h2>
                   {isBulkTestingEdit ? (
-                    <div className="space-y-2">
-                      <p className="text-xs text-muted-foreground">
-                        Toggle <strong className="text-foreground">Apply</strong> next to a section to overwrite that field on every selected sort. Sections left off are preserved.
-                      </p>
-                      <div className="flex items-center gap-1 flex-wrap">
-                        {selectedTestingSorts.slice().sort((a, b) => a - b).map(s => (
-                          <span key={s} className="inline-flex items-center gap-1 rounded-full bg-background border border-border px-2 py-0.5 text-[11px] text-foreground">
-                            Sort #{s}
-                            <button
-                              type="button"
-                              onClick={() => toggleTestingSort(s, false)}
-                              className="text-muted-foreground hover:text-foreground"
-                              aria-label={`Remove sort ${s}`}
-                            >
-                              <X className="h-3 w-3" />
-                            </button>
-                          </span>
-                        ))}
-                      </div>
+                    <div className="flex items-center gap-1 flex-wrap">
+                      {selectedTestingSorts.slice().sort((a, b) => a - b).map(s => (
+                        <span key={s} className="inline-flex items-center gap-1 rounded-full bg-background border border-border px-2 py-0.5 text-[11px] text-foreground">
+                          Sort #{s}
+                          <button
+                            type="button"
+                            onClick={() => toggleTestingSort(s, false)}
+                            className="text-muted-foreground hover:text-foreground"
+                            aria-label={`Remove sort ${s}`}
+                          >
+                            <X className="h-3 w-3" />
+                          </button>
+                        </span>
+                      ))}
                     </div>
                   ) : selectedTestingRow ? (
                     <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-muted-foreground">
