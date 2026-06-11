@@ -5134,7 +5134,18 @@ const FormVariationsDemo = () => {
                   <tr className="bg-muted/50 border-b border-border">
                     <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-12">ID</th>
                     <th className="px-1.5 py-1 text-center font-medium text-muted-foreground w-8">
-                      <Checkbox className="h-3 w-3" />
+                      <Checkbox
+                        className="h-3 w-3"
+                        checked={selectedTestingSorts.length > 0}
+                        onCheckedChange={(checked) => {
+                          if (checked) {
+                            const allSorts = Array.from({ length: 28 }, (_, i) => i + 1);
+                            setSelectedTestingSorts(allSorts);
+                          } else {
+                            clearTestingSelection();
+                          }
+                        }}
+                      />
                     </th>
                     <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-8">Sort</th>
                     <th className="px-1.5 py-1 text-left font-medium text-muted-foreground">Manufacturer</th>
