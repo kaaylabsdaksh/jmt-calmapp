@@ -394,7 +394,24 @@ const FormVariationsDemo = () => {
     replacement: '',
   });
 
+  // Bulk edit state for Testing tab
+  const [selectedTestingSorts, setSelectedTestingSorts] = useState<number[]>([]);
+  const [isBulkTestingEdit, setIsBulkTestingEdit] = useState(false);
+  const [bulkApplyFlags, setBulkApplyFlags] = useState({
+    failFlags: false,
+    vi: false,
+    replacement: false,
+    procedures: false,
+    standards: false,
+  });
+
+  const toggleTestingSort = (sort: number, checked: boolean) => {
+    setSelectedTestingSorts(prev => checked ? Array.from(new Set([...prev, sort])) : prev.filter(s => s !== sort));
+  };
+  const clearTestingSelection = () => setSelectedTestingSorts([]);
+
   const handleOpenTestingEdit = (row: typeof selectedTestingRow) => {
+    setIsBulkTestingEdit(false);
     setSelectedTestingRow(row);
     if (row) {
       const rep = replacements.find(r => r.failedSort === row.sort);
@@ -403,6 +420,15 @@ const FormVariationsDemo = () => {
         replacement: rep ? (rep.cancelled ? 'not-to-be-replaced' : 'replace') : '',
       }));
     }
+    setTestingEditDialogOpen(true);
+  };
+
+  const handleOpenBulkTestingEdit = () => {
+    if (selectedTestingSorts.length === 0) return;
+    setIsBulkTestingEdit(true);
+    setSelectedTestingRow(null);
+    setBulkApplyFlags({ failFlags: false, vi: false, replacement: false, procedures: false, standards: false });
+    setTestingFormData(prev => ({ ...prev, replacement: '' }));
     setTestingEditDialogOpen(true);
   };
 
@@ -5099,6 +5125,41 @@ const FormVariationsDemo = () => {
 
 
 
+        {/* Bulk selection bar */}
+        {formData.type === 'esl-blankets' && selectedTestingSorts.length > 0 && (
+          <div className="flex items-center justify-between gap-3 bg-primary/5 border border-primary/30 rounded-lg px-3 py-2 sticky top-0 z-10 shadow-sm">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="text-xs font-semibold text-foreground">
+                {selectedTestingSorts.length} sort{selectedTestingSorts.length === 1 ? '' : 's'} selected
+              </span>
+              <div className="flex items-center gap-1 flex-wrap max-w-[60vw]">
+                {selectedTestingSorts.slice().sort((a, b) => a - b).map(s => (
+                  <span key={s} className="inline-flex items-center gap-1 rounded-full bg-background border border-border px-2 py-0.5 text-[10px] text-foreground">
+                    #{s}
+                    <button
+                      type="button"
+                      onClick={() => toggleTestingSort(s, false)}
+                      className="text-muted-foreground hover:text-foreground"
+                      aria-label={`Remove sort ${s}`}
+                    >
+                      <X className="h-3 w-3" />
+                    </button>
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
+              <Button variant="outline" size="sm" className="h-7 text-xs" onClick={clearTestingSelection}>
+                Clear
+              </Button>
+              <Button size="sm" className="h-7 text-xs bg-primary text-primary-foreground hover:bg-primary/90" onClick={handleOpenBulkTestingEdit}>
+                <Pencil className="h-3.5 w-3.5 mr-1" />
+                Bulk Edit ({selectedTestingSorts.length})
+              </Button>
+            </div>
+          </div>
+        )}
+
         {/* Testing Results Table */}
         <div className="border border-border rounded-lg overflow-hidden">
           <div className="overflow-x-auto">
@@ -5108,7 +5169,18 @@ const FormVariationsDemo = () => {
                   <tr className="bg-muted/50 border-b border-border">
                     <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-12">ID</th>
                     <th className="px-1.5 py-1 text-center font-medium text-muted-foreground w-8">
-                      <Checkbox className="h-3 w-3" />
+                      <Checkbox
+                        className="h-3 w-3"
+                        checked={selectedTestingSorts.length > 0}
+                        onCheckedChange={(checked) => {
+                          if (checked) {
+                            const allSorts = Array.from({ length: 28 }, (_, i) => i + 1);
+                            setSelectedTestingSorts(allSorts);
+                          } else {
+                            clearTestingSelection();
+                          }
+                        }}
+                      />
                     </th>
                     <th className="px-1.5 py-1 text-left font-medium text-muted-foreground w-8">Sort</th>
                     <th className="px-1.5 py-1 text-left font-medium text-muted-foreground">Manufacturer</th>
@@ -5192,7 +5264,7 @@ const FormVariationsDemo = () => {
                     <tr key={row.id} className={`border-b border-border hover:bg-muted/30 h-6 ${row.kind === 'replacement' ? (row.cancelled ? 'bg-slate-100 hover:bg-slate-200/60 border-l-2 border-l-slate-400 line-through text-muted-foreground' : 'bg-emerald-50 hover:bg-emerald-100/70 border-l-2 border-l-emerald-400') : (index % 2 === 0 ? 'bg-background' : 'bg-muted/10')}`}>
 
                       <td className="px-1.5 py-0.5 text-[10px] font-medium text-foreground">{row.id}</td>
-                      <td className="px-1.5 py-0.5 text-center"><Checkbox className="h-3 w-3" disabled={row.cancelled} /></td>
+                      <td className="px-1.5 py-0.5 text-center"><Checkbox className="h-3 w-3" disabled={row.cancelled} checked={selectedTestingSorts.includes(row.sort)} onCheckedChange={(c) => toggleTestingSort(row.sort, !!c)} /></td>
                       <td className="px-1.5 py-0.5 text-[10px]">{row.sort}</td>
                       <td className="px-1.5 py-0.5 text-[10px]">{row.manufacturer}</td>
                       <td className="px-1.5 py-0.5 text-[10px]">{row.class}</td>
@@ -5686,31 +5758,70 @@ const FormVariationsDemo = () => {
         {/* Testing Edit Dialog */}
         <Dialog open={testingEditDialogOpen} onOpenChange={setTestingEditDialogOpen}>
           <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto p-0">
-            {selectedTestingRow && (
+            {(selectedTestingRow || isBulkTestingEdit) && (
               <div className="flex flex-col">
                 {/* Header */}
                 <div className="bg-primary/10 px-6 py-4 border-b border-border">
-                  <h2 className="text-lg font-semibold text-foreground mb-2">Edit Testing Record</h2>
-                  <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-muted-foreground">
-                    <span><strong className="text-foreground">Sort:</strong> {selectedTestingRow.sort}</span>
-                    <span><strong className="text-foreground">Manu:</strong> {selectedTestingRow.manufacturer}</span>
-                    <span><strong className="text-foreground">Class:</strong> {selectedTestingRow.class}</span>
-                    <span><strong className="text-foreground">Size:</strong> {selectedTestingRow.size}</span>
-                    <span><strong className="text-foreground">ESL ID:</strong> {selectedTestingRow.eslId || 'N/A'}</span>
-                    <span><strong className="text-foreground">Cust ID:</strong> {selectedTestingRow.custId}</span>
-                    <span><strong className="text-foreground">Tag:</strong> {selectedTestingRow.tag || 'N/A'}</span>
-                  </div>
+                  <h2 className="text-lg font-semibold text-foreground mb-2">
+                    {isBulkTestingEdit ? `Bulk Edit Testing Records (${selectedTestingSorts.length})` : 'Edit Testing Record'}
+                  </h2>
+                  {isBulkTestingEdit ? (
+                    <div className="space-y-2">
+                      <p className="text-xs text-muted-foreground">
+                        Toggle <strong className="text-foreground">Apply</strong> next to a section to overwrite that field on every selected sort. Sections left off are preserved.
+                      </p>
+                      <div className="flex items-center gap-1 flex-wrap">
+                        {selectedTestingSorts.slice().sort((a, b) => a - b).map(s => (
+                          <span key={s} className="inline-flex items-center gap-1 rounded-full bg-background border border-border px-2 py-0.5 text-[11px] text-foreground">
+                            Sort #{s}
+                            <button
+                              type="button"
+                              onClick={() => toggleTestingSort(s, false)}
+                              className="text-muted-foreground hover:text-foreground"
+                              aria-label={`Remove sort ${s}`}
+                            >
+                              <X className="h-3 w-3" />
+                            </button>
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ) : selectedTestingRow ? (
+                    <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-muted-foreground">
+                      <span><strong className="text-foreground">Sort:</strong> {selectedTestingRow.sort}</span>
+                      <span><strong className="text-foreground">Manu:</strong> {selectedTestingRow.manufacturer}</span>
+                      <span><strong className="text-foreground">Class:</strong> {selectedTestingRow.class}</span>
+                      <span><strong className="text-foreground">Size:</strong> {selectedTestingRow.size}</span>
+                      <span><strong className="text-foreground">ESL ID:</strong> {selectedTestingRow.eslId || 'N/A'}</span>
+                      <span><strong className="text-foreground">Cust ID:</strong> {selectedTestingRow.custId}</span>
+                      <span><strong className="text-foreground">Tag:</strong> {selectedTestingRow.tag || 'N/A'}</span>
+                    </div>
+                  ) : null}
                 </div>
 
                 {/* Main Content */}
                 <div className="p-6 space-y-6">
-                  <div className="space-y-3">
+                  <div className={`space-y-3 rounded-lg ${isBulkTestingEdit ? 'p-3 border border-dashed border-border ' + (bulkApplyFlags.failFlags ? '' : 'opacity-50') : ''}`}>
+                    {isBulkTestingEdit && (
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Fail Flags</span>
+                        <label className="flex items-center gap-2 text-xs cursor-pointer">
+                          <Checkbox
+                            checked={bulkApplyFlags.failFlags}
+                            onCheckedChange={(c) => setBulkApplyFlags(prev => ({ ...prev, failFlags: !!c }))}
+                            className="h-4 w-4"
+                          />
+                          <span className="font-medium">Apply to {selectedTestingSorts.length} sorts</span>
+                        </label>
+                      </div>
+                    )}
                     <div className="flex items-center gap-3 p-3 bg-background rounded-lg border border-border hover:border-primary/50 transition-colors">
                       <Checkbox
                         id="leftFail"
                         checked={testingFormData.leftFail}
                         onCheckedChange={(checked) => setTestingFormData(prev => ({ ...prev, leftFail: !!checked }))}
                         className="h-5 w-5"
+                        disabled={isBulkTestingEdit && !bulkApplyFlags.failFlags}
                       />
                       <div>
                         <Label htmlFor="leftFail" className="text-sm font-medium cursor-pointer">Fail</Label>
@@ -5723,6 +5834,7 @@ const FormVariationsDemo = () => {
                         checked={testingFormData.leftElectricalBreakdown}
                         onCheckedChange={(checked) => setTestingFormData(prev => ({ ...prev, leftElectricalBreakdown: !!checked }))}
                         className="h-5 w-5"
+                        disabled={isBulkTestingEdit && !bulkApplyFlags.failFlags}
                       />
                       <div>
                         <Label htmlFor="leftEB" className="text-sm font-medium cursor-pointer">Electrical Breakdown</Label>
@@ -5732,10 +5844,22 @@ const FormVariationsDemo = () => {
                   </div>
 
                   {/* Visual Inspection */}
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-2">
-                      <Eye className="h-4 w-4 text-muted-foreground" />
-                      <span className="text-sm font-medium">Visual Inspection (VI)</span>
+                  <div className={`space-y-3 rounded-lg ${isBulkTestingEdit ? 'p-3 border border-dashed border-border ' + (bulkApplyFlags.vi ? '' : 'opacity-50') : ''}`}>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <Eye className="h-4 w-4 text-muted-foreground" />
+                        <span className="text-sm font-medium">Visual Inspection (VI)</span>
+                      </div>
+                      {isBulkTestingEdit && (
+                        <label className="flex items-center gap-2 text-xs cursor-pointer">
+                          <Checkbox
+                            checked={bulkApplyFlags.vi}
+                            onCheckedChange={(c) => setBulkApplyFlags(prev => ({ ...prev, vi: !!c }))}
+                            className="h-4 w-4"
+                          />
+                          <span className="font-medium">Apply to {selectedTestingSorts.length} sorts</span>
+                        </label>
+                      )}
                     </div>
                     <div className="bg-muted/30 rounded-lg border border-border p-4">
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -5757,6 +5881,7 @@ const FormVariationsDemo = () => {
                               checked={testingFormData[item.key as keyof typeof testingFormData] as boolean}
                               onCheckedChange={(checked) => setTestingFormData(prev => ({ ...prev, [item.key]: !!checked }))}
                               className="h-4 w-4"
+                              disabled={isBulkTestingEdit && !bulkApplyFlags.vi}
                             />
                             <Label htmlFor={item.key} className="text-xs cursor-pointer flex items-center gap-1.5">
                               <span className="text-muted-foreground font-mono">{item.code}</span>
@@ -5771,12 +5896,24 @@ const FormVariationsDemo = () => {
                   {/* Replacement / Procedures / Standards */}
                   <div className="bg-muted/30 rounded-xl p-5 space-y-4">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <div className="flex items-center gap-2">
-                          <RefreshCw className="h-4 w-4 text-muted-foreground" />
-                          <Label htmlFor="replacementType" className="text-sm font-medium">Replacement Type</Label>
+                      <div className={`space-y-2 rounded-md ${isBulkTestingEdit ? 'p-2 border border-dashed border-border ' + (bulkApplyFlags.replacement ? '' : 'opacity-50') : ''}`}>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <RefreshCw className="h-4 w-4 text-muted-foreground" />
+                            <Label htmlFor="replacementType" className="text-sm font-medium">Replacement Type</Label>
+                          </div>
+                          {isBulkTestingEdit && (
+                            <label className="flex items-center gap-1.5 text-[11px] cursor-pointer">
+                              <Checkbox
+                                checked={bulkApplyFlags.replacement}
+                                onCheckedChange={(c) => setBulkApplyFlags(prev => ({ ...prev, replacement: !!c }))}
+                                className="h-3.5 w-3.5"
+                              />
+                              <span className="font-medium">Apply</span>
+                            </label>
+                          )}
                         </div>
-                        <Select value={testingFormData.replacement} onValueChange={(value) => setTestingFormData(prev => ({ ...prev, replacement: value }))}>
+                        <Select value={testingFormData.replacement} onValueChange={(value) => setTestingFormData(prev => ({ ...prev, replacement: value }))} disabled={isBulkTestingEdit && !bulkApplyFlags.replacement}>
                           <SelectTrigger id="replacementType" className="h-10 bg-background">
                             <SelectValue placeholder="Select replacement type..." />
                           </SelectTrigger>
@@ -5793,9 +5930,21 @@ const FormVariationsDemo = () => {
                           </p>
                         )}
                       </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="proceduresUsedDlg" className="text-sm font-medium">Procedures Used</Label>
-                        <Select>
+                      <div className={`space-y-2 rounded-md ${isBulkTestingEdit ? 'p-2 border border-dashed border-border ' + (bulkApplyFlags.procedures ? '' : 'opacity-50') : ''}`}>
+                        <div className="flex items-center justify-between">
+                          <Label htmlFor="proceduresUsedDlg" className="text-sm font-medium">Procedures Used</Label>
+                          {isBulkTestingEdit && (
+                            <label className="flex items-center gap-1.5 text-[11px] cursor-pointer">
+                              <Checkbox
+                                checked={bulkApplyFlags.procedures}
+                                onCheckedChange={(c) => setBulkApplyFlags(prev => ({ ...prev, procedures: !!c }))}
+                                className="h-3.5 w-3.5"
+                              />
+                              <span className="font-medium">Apply</span>
+                            </label>
+                          )}
+                        </div>
+                        <Select disabled={isBulkTestingEdit && !bulkApplyFlags.procedures}>
                           <SelectTrigger id="proceduresUsedDlg" className="h-10 bg-background">
                             <SelectValue placeholder="Select procedure..." />
                           </SelectTrigger>
@@ -5807,9 +5956,21 @@ const FormVariationsDemo = () => {
                         </Select>
                       </div>
                     </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="standardsUsedDlg" className="text-sm font-medium">Standards Used</Label>
-                      <Input id="standardsUsedDlg" placeholder="Enter standards" className="h-10 bg-background" />
+                    <div className={`space-y-2 rounded-md ${isBulkTestingEdit ? 'p-2 border border-dashed border-border ' + (bulkApplyFlags.standards ? '' : 'opacity-50') : ''}`}>
+                      <div className="flex items-center justify-between">
+                        <Label htmlFor="standardsUsedDlg" className="text-sm font-medium">Standards Used</Label>
+                        {isBulkTestingEdit && (
+                          <label className="flex items-center gap-1.5 text-[11px] cursor-pointer">
+                            <Checkbox
+                              checked={bulkApplyFlags.standards}
+                              onCheckedChange={(c) => setBulkApplyFlags(prev => ({ ...prev, standards: !!c }))}
+                              className="h-3.5 w-3.5"
+                            />
+                            <span className="font-medium">Apply</span>
+                          </label>
+                        )}
+                      </div>
+                      <Input id="standardsUsedDlg" placeholder="Enter standards" className="h-10 bg-background" disabled={isBulkTestingEdit && !bulkApplyFlags.standards} />
                     </div>
                   </div>
                 </div>
@@ -5817,14 +5978,24 @@ const FormVariationsDemo = () => {
                 {/* Footer */}
                 <div className="px-6 py-4 bg-muted/20 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4">
                   <div className="flex items-center gap-2">
-                    <Button variant="ghost" size="sm" disabled className="text-muted-foreground">
-                      <ChevronLeft className="h-4 w-4 mr-1" />
-                      Prev Fail
-                    </Button>
-                    <Button variant="ghost" size="sm" disabled className="text-muted-foreground">
-                      Next Fail
-                      <ChevronRight className="h-4 w-4 ml-1" />
-                    </Button>
+                    {isBulkTestingEdit ? (
+                      <span className="text-xs text-muted-foreground">
+                        {Object.values(bulkApplyFlags).filter(Boolean).length === 0
+                          ? 'No sections selected — nothing will change.'
+                          : `Applying ${Object.values(bulkApplyFlags).filter(Boolean).length} section(s) to ${selectedTestingSorts.length} sort(s).`}
+                      </span>
+                    ) : (
+                      <>
+                        <Button variant="ghost" size="sm" disabled className="text-muted-foreground">
+                          <ChevronLeft className="h-4 w-4 mr-1" />
+                          Prev Fail
+                        </Button>
+                        <Button variant="ghost" size="sm" disabled className="text-muted-foreground">
+                          Next Fail
+                          <ChevronRight className="h-4 w-4 ml-1" />
+                        </Button>
+                      </>
+                    )}
                   </div>
                   <div className="flex items-center gap-3">
                     <Button variant="outline" onClick={() => setTestingEditDialogOpen(false)}>
@@ -5832,8 +6003,29 @@ const FormVariationsDemo = () => {
                     </Button>
                     <Button
                       className="bg-primary text-primary-foreground hover:bg-primary/90 min-w-[100px]"
+                      disabled={isBulkTestingEdit && Object.values(bulkApplyFlags).filter(Boolean).length === 0}
                       onClick={() => {
-                        if (selectedTestingRow) {
+                        if (isBulkTestingEdit) {
+                          const applied = Object.entries(bulkApplyFlags).filter(([, v]) => v).map(([k]) => k);
+                          // Apply replacement field to each selected sort
+                          if (bulkApplyFlags.replacement) {
+                            selectedTestingSorts.forEach(sort => {
+                              const rep = replacements.find(r => r.failedSort === sort);
+                              if (rep) {
+                                if ((testingFormData.replacement === 'not-to-be-replaced' || testingFormData.replacement === 'none') && !rep.cancelled) {
+                                  cancelReplacement(sort);
+                                } else if (testingFormData.replacement === 'replace' && rep.cancelled) {
+                                  restoreReplacement(sort);
+                                }
+                              }
+                            });
+                          }
+                          toast({
+                            title: 'Bulk update applied',
+                            description: `${applied.length} section(s) applied to ${selectedTestingSorts.length} sort(s): ${applied.join(', ')}.`,
+                          });
+                          clearTestingSelection();
+                        } else if (selectedTestingRow) {
                           const rep = replacements.find(r => r.failedSort === selectedTestingRow.sort);
                           if (rep) {
                             if ((testingFormData.replacement === 'not-to-be-replaced' || testingFormData.replacement === 'none') && !rep.cancelled) {
@@ -5848,7 +6040,7 @@ const FormVariationsDemo = () => {
                       }}
                     >
                       <Save className="h-4 w-4 mr-2" />
-                      Save
+                      {isBulkTestingEdit ? `Apply to ${selectedTestingSorts.length}` : 'Save'}
                     </Button>
                   </div>
                 </div>
