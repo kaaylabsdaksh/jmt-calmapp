@@ -5796,27 +5796,13 @@ const FormVariationsDemo = () => {
 
                 {/* Main Content */}
                 <div className="p-6 space-y-6">
-                  <div className={`space-y-3 rounded-lg ${isBulkTestingEdit ? 'p-3 border border-dashed border-border ' + (bulkApplyFlags.failFlags ? '' : 'opacity-50') : ''}`}>
-                    {isBulkTestingEdit && (
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Fail Flags</span>
-                        <label className="flex items-center gap-2 text-xs cursor-pointer">
-                          <Checkbox
-                            checked={bulkApplyFlags.failFlags}
-                            onCheckedChange={(c) => setBulkApplyFlags(prev => ({ ...prev, failFlags: !!c }))}
-                            className="h-4 w-4"
-                          />
-                          <span className="font-medium">Apply to {selectedTestingSorts.length} sorts</span>
-                        </label>
-                      </div>
-                    )}
+                  <div className="space-y-3 rounded-lg">
                     <div className="flex items-center gap-3 p-3 bg-background rounded-lg border border-border hover:border-primary/50 transition-colors">
                       <Checkbox
                         id="leftFail"
                         checked={testingFormData.leftFail}
                         onCheckedChange={(checked) => setTestingFormData(prev => ({ ...prev, leftFail: !!checked }))}
                         className="h-5 w-5"
-                        disabled={isBulkTestingEdit && !bulkApplyFlags.failFlags}
                       />
                       <div>
                         <Label htmlFor="leftFail" className="text-sm font-medium cursor-pointer">Fail</Label>
@@ -5829,7 +5815,6 @@ const FormVariationsDemo = () => {
                         checked={testingFormData.leftElectricalBreakdown}
                         onCheckedChange={(checked) => setTestingFormData(prev => ({ ...prev, leftElectricalBreakdown: !!checked }))}
                         className="h-5 w-5"
-                        disabled={isBulkTestingEdit && !bulkApplyFlags.failFlags}
                       />
                       <div>
                         <Label htmlFor="leftEB" className="text-sm font-medium cursor-pointer">Electrical Breakdown</Label>
