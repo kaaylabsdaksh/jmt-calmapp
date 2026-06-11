@@ -5229,7 +5229,7 @@ const FormVariationsDemo = () => {
                     <tr key={row.id} className={`border-b border-border hover:bg-muted/30 h-6 ${row.kind === 'replacement' ? (row.cancelled ? 'bg-slate-100 hover:bg-slate-200/60 border-l-2 border-l-slate-400 line-through text-muted-foreground' : 'bg-emerald-50 hover:bg-emerald-100/70 border-l-2 border-l-emerald-400') : (index % 2 === 0 ? 'bg-background' : 'bg-muted/10')}`}>
 
                       <td className="px-1.5 py-0.5 text-[10px] font-medium text-foreground">{row.id}</td>
-                      <td className="px-1.5 py-0.5 text-center"><Checkbox className="h-3 w-3" disabled={row.cancelled} /></td>
+                      <td className="px-1.5 py-0.5 text-center"><Checkbox className="h-3 w-3" disabled={row.cancelled} checked={selectedTestingSorts.includes(row.sort)} onCheckedChange={(c) => toggleTestingSort(row.sort, !!c)} /></td>
                       <td className="px-1.5 py-0.5 text-[10px]">{row.sort}</td>
                       <td className="px-1.5 py-0.5 text-[10px]">{row.manufacturer}</td>
                       <td className="px-1.5 py-0.5 text-[10px]">{row.class}</td>
