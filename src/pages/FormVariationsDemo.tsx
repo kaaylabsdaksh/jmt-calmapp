@@ -5153,7 +5153,7 @@ const FormVariationsDemo = () => {
                 Clear
               </Button>
               <Button size="sm" className="h-7 text-xs bg-primary text-primary-foreground hover:bg-primary/90" onClick={handleOpenBulkTestingEdit}>
-                <Edit className="h-3.5 w-3.5 mr-1" />
+                <Pencil className="h-3.5 w-3.5 mr-1" />
                 Bulk Edit ({selectedTestingSorts.length})
               </Button>
             </div>
