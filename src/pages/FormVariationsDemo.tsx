@@ -5844,10 +5844,22 @@ const FormVariationsDemo = () => {
                   </div>
 
                   {/* Visual Inspection */}
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-2">
-                      <Eye className="h-4 w-4 text-muted-foreground" />
-                      <span className="text-sm font-medium">Visual Inspection (VI)</span>
+                  <div className={`space-y-3 rounded-lg ${isBulkTestingEdit ? 'p-3 border border-dashed border-border ' + (bulkApplyFlags.vi ? '' : 'opacity-50') : ''}`}>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <Eye className="h-4 w-4 text-muted-foreground" />
+                        <span className="text-sm font-medium">Visual Inspection (VI)</span>
+                      </div>
+                      {isBulkTestingEdit && (
+                        <label className="flex items-center gap-2 text-xs cursor-pointer">
+                          <Checkbox
+                            checked={bulkApplyFlags.vi}
+                            onCheckedChange={(c) => setBulkApplyFlags(prev => ({ ...prev, vi: !!c }))}
+                            className="h-4 w-4"
+                          />
+                          <span className="font-medium">Apply to {selectedTestingSorts.length} sorts</span>
+                        </label>
+                      )}
                     </div>
                     <div className="bg-muted/30 rounded-lg border border-border p-4">
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -5869,6 +5881,7 @@ const FormVariationsDemo = () => {
                               checked={testingFormData[item.key as keyof typeof testingFormData] as boolean}
                               onCheckedChange={(checked) => setTestingFormData(prev => ({ ...prev, [item.key]: !!checked }))}
                               className="h-4 w-4"
+                              disabled={isBulkTestingEdit && !bulkApplyFlags.vi}
                             />
                             <Label htmlFor={item.key} className="text-xs cursor-pointer flex items-center gap-1.5">
                               <span className="text-muted-foreground font-mono">{item.code}</span>
