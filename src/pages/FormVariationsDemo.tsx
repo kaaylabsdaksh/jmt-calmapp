@@ -5758,20 +5758,45 @@ const FormVariationsDemo = () => {
         {/* Testing Edit Dialog */}
         <Dialog open={testingEditDialogOpen} onOpenChange={setTestingEditDialogOpen}>
           <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto p-0">
-            {selectedTestingRow && (
+            {(selectedTestingRow || isBulkTestingEdit) && (
               <div className="flex flex-col">
                 {/* Header */}
                 <div className="bg-primary/10 px-6 py-4 border-b border-border">
-                  <h2 className="text-lg font-semibold text-foreground mb-2">Edit Testing Record</h2>
-                  <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-muted-foreground">
-                    <span><strong className="text-foreground">Sort:</strong> {selectedTestingRow.sort}</span>
-                    <span><strong className="text-foreground">Manu:</strong> {selectedTestingRow.manufacturer}</span>
-                    <span><strong className="text-foreground">Class:</strong> {selectedTestingRow.class}</span>
-                    <span><strong className="text-foreground">Size:</strong> {selectedTestingRow.size}</span>
-                    <span><strong className="text-foreground">ESL ID:</strong> {selectedTestingRow.eslId || 'N/A'}</span>
-                    <span><strong className="text-foreground">Cust ID:</strong> {selectedTestingRow.custId}</span>
-                    <span><strong className="text-foreground">Tag:</strong> {selectedTestingRow.tag || 'N/A'}</span>
-                  </div>
+                  <h2 className="text-lg font-semibold text-foreground mb-2">
+                    {isBulkTestingEdit ? `Bulk Edit Testing Records (${selectedTestingSorts.length})` : 'Edit Testing Record'}
+                  </h2>
+                  {isBulkTestingEdit ? (
+                    <div className="space-y-2">
+                      <p className="text-xs text-muted-foreground">
+                        Toggle <strong className="text-foreground">Apply</strong> next to a section to overwrite that field on every selected sort. Sections left off are preserved.
+                      </p>
+                      <div className="flex items-center gap-1 flex-wrap">
+                        {selectedTestingSorts.slice().sort((a, b) => a - b).map(s => (
+                          <span key={s} className="inline-flex items-center gap-1 rounded-full bg-background border border-border px-2 py-0.5 text-[11px] text-foreground">
+                            Sort #{s}
+                            <button
+                              type="button"
+                              onClick={() => toggleTestingSort(s, false)}
+                              className="text-muted-foreground hover:text-foreground"
+                              aria-label={`Remove sort ${s}`}
+                            >
+                              <X className="h-3 w-3" />
+                            </button>
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ) : selectedTestingRow ? (
+                    <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-muted-foreground">
+                      <span><strong className="text-foreground">Sort:</strong> {selectedTestingRow.sort}</span>
+                      <span><strong className="text-foreground">Manu:</strong> {selectedTestingRow.manufacturer}</span>
+                      <span><strong className="text-foreground">Class:</strong> {selectedTestingRow.class}</span>
+                      <span><strong className="text-foreground">Size:</strong> {selectedTestingRow.size}</span>
+                      <span><strong className="text-foreground">ESL ID:</strong> {selectedTestingRow.eslId || 'N/A'}</span>
+                      <span><strong className="text-foreground">Cust ID:</strong> {selectedTestingRow.custId}</span>
+                      <span><strong className="text-foreground">Tag:</strong> {selectedTestingRow.tag || 'N/A'}</span>
+                    </div>
+                  ) : null}
                 </div>
 
                 {/* Main Content */}
