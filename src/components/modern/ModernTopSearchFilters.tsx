@@ -1217,26 +1217,61 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
           </div>
         )}
 
-        {/* Search & Clear Buttons - Default view only */}
-        {viewMode === 'default' && (
-          <div className="flex justify-end items-center gap-2 pt-1.5">
-            <Button
-              variant="outline"
-              onClick={clearAllFilters}
-              className="rounded-lg h-8 px-4 text-xs font-medium border-destructive text-destructive hover:bg-destructive/10 hover:text-destructive"
-            >
-              <RotateCcw className="h-3.5 w-3.5 mr-1.5" />
-              Clear All
-            </Button>
-            <Button
-              onClick={handleSearch}
-              className="rounded-lg h-8 px-5 text-xs font-medium bg-blue-600 hover:bg-blue-700 text-white shadow-sm"
-            >
-              <Search className="h-3.5 w-3.5 mr-1.5" />
-              Search
-            </Button>
-          </div>
-        )}
+        {/* Broad-search warning - Default view only */}
+        {viewMode === 'default' && (() => {
+          const narrowingChipTypes = ['workOrderNumber','accountNumber','customerName','onsiteProjectNumber','poNumber','toFactoryPONumber','custID','mfgSerial','modelNumber','rfid','quoteNumber','vendorRMANumber'];
+          const hasNarrowingChip = searchChips.some(c => narrowingChipTypes.includes(c.type));
+          const hasDateRange = !!(dateFrom && dateTo);
+          const hasAnyBroadFilter =
+            !!searchValues.status || !!searchValues.workOrderItemStatus || !!searchValues.assignee ||
+            !!searchValues.woType || !!searchValues.workOrderItemType || !!searchValues.actionCode ||
+            !!searchValues.labCode || !!searchValues.division || !!searchValues.salesperson ||
+            !!searchValues.rotationManagement || !!searchValues.invoiceStatus || !!searchValues.departureType ||
+            (searchValues.priority?.length ?? 0) > 0 || selectedLocations.length > 0;
+          const isTooBroad = !hasNarrowingChip && !hasDateRange && hasAnyBroadFilter;
+
+          return (
+            <>
+              {isTooBroad && (
+                <div className="flex items-start gap-2 rounded-md border border-amber-300 bg-amber-50 px-3 py-2 mt-2">
+                  <AlertTriangle className="h-4 w-4 text-amber-600 mt-0.5 shrink-0" />
+                  <div className="text-xs text-amber-900 leading-relaxed">
+                    <span className="font-semibold">Your search may return 5,000+ work orders.</span>{' '}
+                    Please narrow it down by adding a WO #, Account, Customer, Serial, PO, or a date range before searching.
+                  </div>
+                </div>
+              )}
+              <div className="flex justify-end items-center gap-2 pt-1.5">
+                <Button
+                  variant="outline"
+                  onClick={clearAllFilters}
+                  className="rounded-lg h-8 px-4 text-xs font-medium border-destructive text-destructive hover:bg-destructive/10 hover:text-destructive"
+                >
+                  <RotateCcw className="h-3.5 w-3.5 mr-1.5" />
+                  Clear All
+                </Button>
+                <Button
+                  onClick={() => {
+                    if (isTooBroad) {
+                      toast({
+                        title: 'Search too broad',
+                        description: 'Your search may return 5,000+ work orders. Add a more specific filter (WO #, Account, Customer, Serial, PO, or date range) to continue.',
+                        variant: 'destructive',
+                      });
+                      return;
+                    }
+                    handleSearch();
+                  }}
+                  disabled={isTooBroad}
+                  className="rounded-lg h-8 px-5 text-xs font-medium bg-blue-600 hover:bg-blue-700 text-white shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <Search className="h-3.5 w-3.5 mr-1.5" />
+                  Search
+                </Button>
+              </div>
+            </>
+          );
+        })()}
       </div>
     </div>
   );
