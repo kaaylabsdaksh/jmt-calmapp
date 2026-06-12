@@ -1222,7 +1222,37 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
           const narrowingChipTypes = ['workOrderNumber','accountNumber','customerName','onsiteProjectNumber','poNumber','toFactoryPONumber','custID','mfgSerial','modelNumber','rfid','quoteNumber','vendorRMANumber'];
           const hasNarrowingChip = searchChips.some(c => narrowingChipTypes.includes(c.type));
           const hasDateRange = !!(dateFrom && dateTo);
-          const isTooBroad = !!searchValues.status && !hasNarrowingChip && !hasDateRange;
+          const hasOtherFilters = !!(
+            searchValues.woNumber ||
+            searchValues.customer ||
+            searchValues.manufacturer ||
+            searchValues.priority.length > 0 ||
+            searchValues.assignee ||
+            searchValues.division ||
+            searchValues.woType ||
+            searchValues.actionCode ||
+            searchValues.labCode ||
+            searchValues.rotationManagement ||
+            searchValues.invoiceStatus ||
+            searchValues.departureType ||
+            searchValues.salesperson ||
+            searchValues.workOrderItemStatus ||
+            searchValues.workOrderItemType ||
+            searchValues.location ||
+            searchValues.newEquip ||
+            searchValues.usedSurplus ||
+            searchValues.warranty ||
+            searchValues.toFactory ||
+            searchValues.proofOfDelivery ||
+            searchValues.only17025 ||
+            searchValues.onlyHotList ||
+            searchValues.onlyLostEquip ||
+            searchValues.nonJMAccts ||
+            searchValues.viewTemplate ||
+            selectedLocations.length > 0
+          );
+          const isTooBroad = !!searchValues.status && !hasNarrowingChip && !hasDateRange && !hasOtherFilters;
+
 
           return (
             <>
