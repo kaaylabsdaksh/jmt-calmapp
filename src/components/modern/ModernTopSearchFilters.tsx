@@ -1222,13 +1222,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
           const narrowingChipTypes = ['workOrderNumber','accountNumber','customerName','onsiteProjectNumber','poNumber','toFactoryPONumber','custID','mfgSerial','modelNumber','rfid','quoteNumber','vendorRMANumber'];
           const hasNarrowingChip = searchChips.some(c => narrowingChipTypes.includes(c.type));
           const hasDateRange = !!(dateFrom && dateTo);
-          const hasAnyBroadFilter =
-            !!searchValues.status || !!searchValues.workOrderItemStatus || !!searchValues.assignee ||
-            !!searchValues.woType || !!searchValues.workOrderItemType || !!searchValues.actionCode ||
-            !!searchValues.labCode || !!searchValues.division || !!searchValues.salesperson ||
-            !!searchValues.rotationManagement || !!searchValues.invoiceStatus || !!searchValues.departureType ||
-            (searchValues.priority?.length ?? 0) > 0 || selectedLocations.length > 0;
-          const isTooBroad = !hasNarrowingChip && !hasDateRange && hasAnyBroadFilter;
+          const isTooBroad = !!searchValues.status && !hasNarrowingChip && !hasDateRange;
 
           return (
             <>
