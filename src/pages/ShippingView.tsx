@@ -888,20 +888,32 @@ const ShippingView = () => {
             </div>
           )
         ) : (
-          printedGroups.length > 0 || finalizedGroups.length > 0 ? (
-            <>
-              {printedGroups.map(group => (
-                <ShippingGroupCard key={group.id} group={group} onFinalize={handleFinalize} isClaimed={claimedIds.has(group.id)} onClaim={handleClaim} onTrackingSave={handleTrackingSave} onTrackingDelete={handleTrackingDelete} isPrintReady onPrint={handlePrint} />
-              ))}
-              {finalizedGroups.map(group => (
-                <ShippingGroupCard key={group.id} group={group} isFinalized isClaimed={claimedIds.has(group.id)} isPrintReady finalizedAt={finalizedTimestamps.get(group.id)} />
-              ))}
-            </>
-          ) : (
-            <div className="text-center py-12 text-muted-foreground text-sm">
-              No printed shipments at this time.
-            </div>
-          )
+          (() => {
+            const allPrinted = [
+              ...printedGroups.map(g => ({ group: g, isFinalized: false as const, timestamp: printedTimestamps.get(g.id) })),
+              ...finalizedGroups.map(g => ({ group: g, isFinalized: true as const, timestamp: finalizedTimestamps.get(g.id) })),
+            ];
+            const sortedPrinted = [...allPrinted].sort((a, b) => {
+              const ta = a.timestamp?.getTime() || 0;
+              const tb = b.timestamp?.getTime() || 0;
+              return sortBy === "printed-latest" ? tb - ta : ta - tb;
+            });
+            return sortedPrinted.length > 0 ? (
+              <>
+                {sortedPrinted.map(({ group, isFinalized, timestamp }) => (
+                  isFinalized ? (
+                    <ShippingGroupCard key={group.id} group={group} isFinalized isClaimed={claimedIds.has(group.id)} isPrintReady finalizedAt={timestamp} />
+                  ) : (
+                    <ShippingGroupCard key={group.id} group={group} onFinalize={handleFinalize} isClaimed={claimedIds.has(group.id)} onClaim={handleClaim} onTrackingSave={handleTrackingSave} onTrackingDelete={handleTrackingDelete} isPrintReady onPrint={handlePrint} />
+                  )
+                ))}
+              </>
+            ) : (
+              <div className="text-center py-12 text-muted-foreground text-sm">
+                No printed shipments at this time.
+              </div>
+            );
+          })()
         )}
       </div>
     </div>
