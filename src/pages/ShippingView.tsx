@@ -815,7 +815,7 @@ const ShippingView = () => {
 
       {/* Tabs */}
       <div className="px-6 bg-card border-b">
-        <div className="flex items-center">
+        <div className="flex items-center justify-between">
           <div className="flex gap-0 flex-1">
             {([
               { key: "active" as const, label: "Active", count: activeGroups.length },
@@ -844,6 +844,34 @@ const ShippingView = () => {
               </button>
             ))}
           </div>
+
+          {activeTab === "printed" && (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium border border-border bg-card text-foreground hover:border-foreground/30 transition-all duration-200 mb-2">
+                  <span className="opacity-70">Sort by:</span>
+                  <span className="font-semibold">
+                    {sortBy === "printed-latest" ? "Printed latest" : "Printed oldest"}
+                  </span>
+                  <ChevronDown className="w-3 h-3 opacity-50" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-40">
+                <DropdownMenuItem
+                  className={`text-xs cursor-pointer ${sortBy === "printed-latest" ? "bg-primary/10 font-medium" : ""}`}
+                  onClick={() => setSortBy("printed-latest")}
+                >
+                  Printed latest
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className={`text-xs cursor-pointer ${sortBy === "printed-oldest" ? "bg-primary/10 font-medium" : ""}`}
+                  onClick={() => setSortBy("printed-oldest")}
+                >
+                  Printed oldest
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
         </div>
       </div>
 
