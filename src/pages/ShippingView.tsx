@@ -584,14 +584,17 @@ const ShippingView = () => {
   const [printedIds, setPrintedIds] = useState<Set<string>>(new Set());
   const [finalizedTimestamps, setFinalizedTimestamps] = useState<Map<string, Date>>(new Map());
 
+  const [sortBy, setSortBy] = useState<"printed-latest" | "printed-oldest">("printed-latest");
+
   const handlePrint = (id: string) => {
     setPrintedIds(prev => new Set(prev).add(id));
+    setPrintedTimestamps(prev => {
+      if (prev.has(id)) return prev;
+      return new Map(prev).set(id, new Date());
+    });
   };
 
-  const handleFinalize = (id: string) => {
-    setFinalizedIds(prev => new Set(prev).add(id));
-    setFinalizedTimestamps(prev => new Map(prev).set(id, new Date()));
-  };
+  const [printedTimestamps, setPrintedTimestamps] = useState<Map<string, Date>>(new Map());
 
   const handleClaim = (id: string) => {
     setClaimedIds(prev => {
