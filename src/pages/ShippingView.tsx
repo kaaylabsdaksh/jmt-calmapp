@@ -583,9 +583,15 @@ const ShippingView = () => {
   const [claimedIds, setClaimedIds] = useState<Set<string>>(new Set());
   const [printedIds, setPrintedIds] = useState<Set<string>>(new Set());
   const [finalizedTimestamps, setFinalizedTimestamps] = useState<Map<string, Date>>(new Map());
+  const [printedTimestamps, setPrintedTimestamps] = useState<Map<string, Date>>(new Map());
+  const [sortBy, setSortBy] = useState<"printed-latest" | "printed-oldest">("printed-latest");
 
   const handlePrint = (id: string) => {
     setPrintedIds(prev => new Set(prev).add(id));
+    setPrintedTimestamps(prev => {
+      if (prev.has(id)) return prev;
+      return new Map(prev).set(id, new Date());
+    });
   };
 
   const handleFinalize = (id: string) => {
@@ -809,7 +815,7 @@ const ShippingView = () => {
 
       {/* Tabs */}
       <div className="px-6 bg-card border-b">
-        <div className="flex items-center">
+        <div className="flex items-center justify-between">
           <div className="flex gap-0 flex-1">
             {([
               { key: "active" as const, label: "Active", count: activeGroups.length },
@@ -838,6 +844,34 @@ const ShippingView = () => {
               </button>
             ))}
           </div>
+
+          {activeTab === "printed" && (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium border border-border bg-card text-foreground hover:border-foreground/30 transition-all duration-200 mb-2">
+                  <span className="opacity-70">Sort by:</span>
+                  <span className="font-semibold">
+                    {sortBy === "printed-latest" ? "Printed latest" : "Printed oldest"}
+                  </span>
+                  <ChevronDown className="w-3 h-3 opacity-50" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-40">
+                <DropdownMenuItem
+                  className={`text-xs cursor-pointer ${sortBy === "printed-latest" ? "bg-primary/10 font-medium" : ""}`}
+                  onClick={() => setSortBy("printed-latest")}
+                >
+                  Printed latest
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className={`text-xs cursor-pointer ${sortBy === "printed-oldest" ? "bg-primary/10 font-medium" : ""}`}
+                  onClick={() => setSortBy("printed-oldest")}
+                >
+                  Printed oldest
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
         </div>
       </div>
 
@@ -854,20 +888,32 @@ const ShippingView = () => {
             </div>
           )
         ) : (
-          printedGroups.length > 0 || finalizedGroups.length > 0 ? (
-            <>
-              {printedGroups.map(group => (
-                <ShippingGroupCard key={group.id} group={group} onFinalize={handleFinalize} isClaimed={claimedIds.has(group.id)} onClaim={handleClaim} onTrackingSave={handleTrackingSave} onTrackingDelete={handleTrackingDelete} isPrintReady onPrint={handlePrint} />
-              ))}
-              {finalizedGroups.map(group => (
-                <ShippingGroupCard key={group.id} group={group} isFinalized isClaimed={claimedIds.has(group.id)} isPrintReady finalizedAt={finalizedTimestamps.get(group.id)} />
-              ))}
-            </>
-          ) : (
-            <div className="text-center py-12 text-muted-foreground text-sm">
-              No printed shipments at this time.
-            </div>
-          )
+          (() => {
+            const allPrinted = [
+              ...printedGroups.map(g => ({ group: g, isFinalized: false as const, timestamp: printedTimestamps.get(g.id) })),
+              ...finalizedGroups.map(g => ({ group: g, isFinalized: true as const, timestamp: finalizedTimestamps.get(g.id) })),
+            ];
+            const sortedPrinted = [...allPrinted].sort((a, b) => {
+              const ta = a.timestamp?.getTime() || 0;
+              const tb = b.timestamp?.getTime() || 0;
+              return sortBy === "printed-latest" ? tb - ta : ta - tb;
+            });
+            return sortedPrinted.length > 0 ? (
+              <>
+                {sortedPrinted.map(({ group, isFinalized, timestamp }) => (
+                  isFinalized ? (
+                    <ShippingGroupCard key={group.id} group={group} isFinalized isClaimed={claimedIds.has(group.id)} isPrintReady finalizedAt={timestamp} />
+                  ) : (
+                    <ShippingGroupCard key={group.id} group={group} onFinalize={handleFinalize} isClaimed={claimedIds.has(group.id)} onClaim={handleClaim} onTrackingSave={handleTrackingSave} onTrackingDelete={handleTrackingDelete} isPrintReady onPrint={handlePrint} />
+                  )
+                ))}
+              </>
+            ) : (
+              <div className="text-center py-12 text-muted-foreground text-sm">
+                No printed shipments at this time.
+              </div>
+            );
+          })()
         )}
       </div>
     </div>
