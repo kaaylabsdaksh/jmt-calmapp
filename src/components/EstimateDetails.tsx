@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { CalendarIcon, User, Shield } from "lucide-react";
+import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 
@@ -42,7 +42,7 @@ export const EstimateDetails = ({ userRole = 'technician', onUserRoleChange }: E
       {/* Main Form Card */}
       <Card className="border-border/60 shadow-sm overflow-hidden">
         <CardHeader className="px-3 py-1 border-b bg-muted/30 flex flex-row items-center justify-between space-y-0">
-          <CardTitle className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider leading-none">
+          <CardTitle className="text-[8px] font-bold text-muted-foreground uppercase tracking-wider leading-none">
             Estimate Information
           </CardTitle>
           <div className="flex items-center gap-0.5 p-0.5 bg-muted rounded-md">
@@ -50,19 +50,17 @@ export const EstimateDetails = ({ userRole = 'technician', onUserRoleChange }: E
               variant={userRole === 'technician' ? 'default' : 'ghost'}
               size="sm"
               onClick={() => onUserRoleChange?.('technician')}
-              className="flex items-center gap-1 h-5 text-[9px] px-1.5"
+              className="h-5 text-[9px] px-1.5"
             >
-              <User className="h-2 w-2" />
-              <span>Technician</span>
+              Technician
             </Button>
             <Button
               variant={userRole === 'admin' ? 'default' : 'ghost'}
               size="sm"
               onClick={() => onUserRoleChange?.('admin')}
-              className="flex items-center gap-1 h-5 text-[9px] px-1.5"
+              className="h-5 text-[9px] px-1.5"
             >
-              <Shield className="h-2 w-2" />
-              <span>Admin</span>
+              Admin
             </Button>
           </div>
         </CardHeader>
