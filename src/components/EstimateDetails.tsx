@@ -69,7 +69,7 @@ export const EstimateDetails = ({ userRole = 'technician', onUserRoleChange }: E
 
         <CardContent className="p-3 space-y-2">
           {/* Row 1: Primary Metadata */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
             <div>
               <Label className={labelCls}>Estimate Date</Label>
               <Popover>
@@ -77,12 +77,12 @@ export const EstimateDetails = ({ userRole = 'technician', onUserRoleChange }: E
                   <Button
                     variant="outline"
                     className={cn(
-                      "w-full justify-between text-left font-normal h-8 text-sm px-3",
+                      "w-full justify-between text-left font-normal h-7 text-xs px-2.5",
                       !estimateDate && "text-muted-foreground"
                     )}
                   >
                     <span>{estimateDate ? format(estimateDate, "MM/dd/yyyy") : "Select date"}</span>
-                    <CalendarIcon className="h-3.5 w-3.5 text-muted-foreground" />
+                    <CalendarIcon className="h-3 w-3 text-muted-foreground" />
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0" align="start">
@@ -102,7 +102,7 @@ export const EstimateDetails = ({ userRole = 'technician', onUserRoleChange }: E
               <Input
                 value={estimateData.estimateStatus}
                 readOnly
-                className="h-8 text-sm bg-muted/50 cursor-default"
+                className="h-7 text-xs bg-muted/50 cursor-default"
               />
             </div>
 
@@ -111,20 +111,20 @@ export const EstimateDetails = ({ userRole = 'technician', onUserRoleChange }: E
               <Input
                 value={estimateData.itemNumber}
                 readOnly
-                className="h-8 text-sm bg-muted/50 cursor-default"
+                className="h-7 text-xs bg-muted/50 cursor-default"
               />
             </div>
           </div>
 
           {/* Row 2: Item Specifics */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             <div>
               <Label className={labelCls}>Line Item</Label>
               <Input
                 value={estimateData.lineItem}
                 onChange={(e) => handleInputChange('lineItem', e.target.value)}
                 placeholder="Line item description"
-                className="h-8 text-sm"
+                className="h-7 text-xs"
               />
             </div>
             <div>
@@ -133,7 +133,7 @@ export const EstimateDetails = ({ userRole = 'technician', onUserRoleChange }: E
                 value={estimateData.itemSentInFor}
                 onValueChange={(value) => handleInputChange('itemSentInFor', value)}
               >
-                <SelectTrigger className="h-8 text-sm">
+                <SelectTrigger className="h-7 text-xs">
                   <SelectValue placeholder="Select option" />
                 </SelectTrigger>
                 <SelectContent>
