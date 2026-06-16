@@ -47,7 +47,7 @@ const App = () => {
           <Route path="/esl/gloves" element={<EslGloves />} />
           <Route path="/esl/grounds" element={<EslGrounds />} />
           <Route path="/edit-order" element={<EditOrder />} />
-          <Route path="/estimate" element={<EstimatePage />} />
+          <Route path="/form-variations/estimate" element={<EstimatePage />} />
           <Route path="/work-orders-v2" element={<WorkOrderSearchV2 />} />
           <Route path="/work-order/:id" element={<WorkOrderDetail />} />
           <Route path="/item/:id" element={<ItemDetail />} />
