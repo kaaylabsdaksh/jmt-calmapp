@@ -3564,15 +3564,10 @@ const EditOrder = () => {
 
   // Render Estimate section
   const renderEstimateSection = () => (
-    <div className="space-y-6">
-      <div className="flex items-center gap-3 pb-4 border-b border-border">
-        <div className="p-2 bg-primary/10 rounded-lg">
-          <Info className="h-5 w-5 text-primary" />
-        </div>
-        <div>
-          <h2 className="text-lg font-semibold text-foreground">Estimate</h2>
-          <p className="text-sm text-muted-foreground">Cost estimation and pricing details</p>
-        </div>
+    <div className="space-y-4">
+      <div className="pb-2 border-b border-border">
+        <h2 className="text-sm font-semibold text-foreground">Estimate</h2>
+        <p className="text-xs text-muted-foreground">Cost estimation and pricing details</p>
       </div>
       
       <EstimateDetails />
