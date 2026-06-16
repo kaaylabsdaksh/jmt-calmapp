@@ -169,14 +169,14 @@ export const EstimateDetails = ({ userRole = 'technician', onUserRoleChange }: E
           </div>
 
           {/* Row 4: Financial & Logistics */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-2">
             <div>
               <Label className={labelCls}>Freight Cost</Label>
               <Input
                 value={estimateData.costInfoFreight}
                 onChange={(e) => handleInputChange('costInfoFreight', e.target.value)}
                 placeholder="Freight"
-                className="h-8 text-sm"
+                className="h-7 text-xs"
               />
             </div>
             <div>
@@ -185,7 +185,7 @@ export const EstimateDetails = ({ userRole = 'technician', onUserRoleChange }: E
                 value={estimateData.tax}
                 onChange={(e) => handleInputChange('tax', e.target.value)}
                 placeholder="Tax amount"
-                className="h-8 text-sm"
+                className="h-7 text-xs"
               />
             </div>
             <div>
@@ -194,7 +194,7 @@ export const EstimateDetails = ({ userRole = 'technician', onUserRoleChange }: E
                 value={estimateData.estTurnaroundTime}
                 onChange={(e) => handleInputChange('estTurnaroundTime', e.target.value)}
                 placeholder="Est. time"
-                className="h-8 text-sm"
+                className="h-7 text-xs"
               />
             </div>
             <div>
@@ -203,7 +203,7 @@ export const EstimateDetails = ({ userRole = 'technician', onUserRoleChange }: E
                 value={estimateData.replacementCostInfo}
                 onChange={(e) => handleInputChange('replacementCostInfo', e.target.value)}
                 placeholder="Cost details"
-                className="h-8 text-sm"
+                className="h-7 text-xs"
               />
             </div>
           </div>
