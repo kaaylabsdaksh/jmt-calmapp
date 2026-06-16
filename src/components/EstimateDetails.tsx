@@ -212,8 +212,8 @@ export const EstimateDetails = ({ userRole = 'technician', onUserRoleChange }: E
 
       {/* Estimate History Card */}
       <Card className="border-border/60 shadow-sm overflow-hidden">
-        <CardHeader className="px-4 py-2 border-b bg-muted/30">
-          <CardTitle className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
+        <CardHeader className="px-3 py-1.5 border-b bg-muted/30">
+          <CardTitle className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
             Estimate History
           </CardTitle>
         </CardHeader>
