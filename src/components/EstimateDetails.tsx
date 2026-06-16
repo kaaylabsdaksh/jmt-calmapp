@@ -99,20 +99,11 @@ export const EstimateDetails = ({ userRole = 'technician', onUserRoleChange }: E
 
             <div>
               <Label className={labelCls}>Estimate Status</Label>
-              <Select
+              <Input
                 value={estimateData.estimateStatus}
-                onValueChange={(value) => handleInputChange('estimateStatus', value)}
-              >
-                <SelectTrigger className="h-8 text-sm">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="In Progress">In Progress</SelectItem>
-                  <SelectItem value="Completed">Completed</SelectItem>
-                  <SelectItem value="Pending">Pending</SelectItem>
-                  <SelectItem value="On Hold">On Hold</SelectItem>
-                </SelectContent>
-              </Select>
+                readOnly
+                className="h-8 text-sm bg-muted/50 cursor-default"
+              />
             </div>
 
             <div>
