@@ -50,10 +50,9 @@ export const EstimateDetails = ({ userRole = 'technician', onUserRoleChange }: E
               variant={userRole === 'technician' ? 'default' : 'ghost'}
               size="sm"
               onClick={() => onUserRoleChange?.('technician')}
-              className="flex items-center gap-1 h-5 text-[9px] px-1.5"
+              className="h-5 text-[9px] px-1.5"
             >
-              <User className="h-2 w-2" />
-              <span>Technician</span>
+              Technician
             </Button>
             <Button
               variant={userRole === 'admin' ? 'default' : 'ghost'}
