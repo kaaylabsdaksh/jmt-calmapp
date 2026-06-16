@@ -35,7 +35,7 @@ export const EstimateDetails = ({ userRole = 'technician', onUserRoleChange }: E
     setEstimateData(prev => ({ ...prev, [field]: value }));
   };
 
-  const labelCls = "block text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1";
+  const labelCls = "block text-[9px] font-bold text-muted-foreground uppercase tracking-wider mb-0.5";
 
   return (
     <div className="space-y-3">
