@@ -110,9 +110,8 @@ export const EstimateDetails = ({ userRole = 'technician', onUserRoleChange }: E
               <Label className={labelCls}>Item #</Label>
               <Input
                 value={estimateData.itemNumber}
-                onChange={(e) => handleInputChange('itemNumber', e.target.value)}
-                placeholder="Item number"
-                className="h-8 text-sm"
+                readOnly
+                className="h-8 text-sm bg-muted/50 cursor-default"
               />
             </div>
           </div>
