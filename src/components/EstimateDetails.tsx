@@ -147,14 +147,14 @@ export const EstimateDetails = ({ userRole = 'technician', onUserRoleChange }: E
           </div>
 
           {/* Row 3: Technical Details */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             <div>
               <Label className={labelCls}>Problem</Label>
               <Textarea
                 value={estimateData.problem}
                 onChange={(e) => handleInputChange('problem', e.target.value)}
                 placeholder="Describe the problem..."
-                className="min-h-[80px] text-sm resize-none"
+                className="min-h-[56px] text-xs resize-none"
               />
             </div>
             <div>
@@ -163,7 +163,7 @@ export const EstimateDetails = ({ userRole = 'technician', onUserRoleChange }: E
                 value={estimateData.recommendation}
                 onChange={(e) => handleInputChange('recommendation', e.target.value)}
                 placeholder="Enter recommendation..."
-                className="min-h-[80px] text-sm resize-none"
+                className="min-h-[56px] text-xs resize-none"
               />
             </div>
           </div>
