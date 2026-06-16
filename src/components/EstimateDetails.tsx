@@ -58,10 +58,9 @@ export const EstimateDetails = ({ userRole = 'technician', onUserRoleChange }: E
               variant={userRole === 'admin' ? 'default' : 'ghost'}
               size="sm"
               onClick={() => onUserRoleChange?.('admin')}
-              className="flex items-center gap-1 h-5 text-[9px] px-1.5"
+              className="h-5 text-[9px] px-1.5"
             >
-              <Shield className="h-2 w-2" />
-              <span>Admin</span>
+              Admin
             </Button>
           </div>
         </CardHeader>
