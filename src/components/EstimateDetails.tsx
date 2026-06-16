@@ -41,8 +41,8 @@ export const EstimateDetails = ({ userRole = 'technician', onUserRoleChange }: E
     <div className="space-y-3">
       {/* Main Form Card */}
       <Card className="border-border/60 shadow-sm overflow-hidden">
-        <CardHeader className="px-4 py-2 border-b bg-muted/30 flex flex-row items-center justify-between space-y-0">
-          <CardTitle className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
+        <CardHeader className="px-3 py-1.5 border-b bg-muted/30 flex flex-row items-center justify-between space-y-0">
+          <CardTitle className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
             Estimate Information
           </CardTitle>
           <div className="flex items-center gap-0.5 p-0.5 bg-muted rounded-md">
@@ -50,24 +50,24 @@ export const EstimateDetails = ({ userRole = 'technician', onUserRoleChange }: E
               variant={userRole === 'technician' ? 'default' : 'ghost'}
               size="sm"
               onClick={() => onUserRoleChange?.('technician')}
-              className="flex items-center gap-1 h-6 text-[10px] px-2"
+              className="flex items-center gap-1 h-5 text-[9px] px-1.5"
             >
-              <User className="h-2.5 w-2.5" />
+              <User className="h-2 w-2" />
               <span>Technician</span>
             </Button>
             <Button
               variant={userRole === 'admin' ? 'default' : 'ghost'}
               size="sm"
               onClick={() => onUserRoleChange?.('admin')}
-              className="flex items-center gap-1 h-6 text-[10px] px-2"
+              className="flex items-center gap-1 h-5 text-[9px] px-1.5"
             >
-              <Shield className="h-2.5 w-2.5" />
+              <Shield className="h-2 w-2" />
               <span>Admin</span>
             </Button>
           </div>
         </CardHeader>
 
-        <CardContent className="p-4 space-y-4">
+        <CardContent className="p-3 space-y-2">
           {/* Row 1: Primary Metadata */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             <div>
