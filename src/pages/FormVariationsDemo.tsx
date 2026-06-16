@@ -11251,7 +11251,7 @@ const FormVariationsDemo = () => {
             {!isESLType && (
               <>
                 <button
-                  onClick={() => navigate('/form-variations/estimate')}
+                  onClick={() => setActiveSection('estimate')}
                   className={`flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md transition-all whitespace-nowrap ${
                     activeSection === 'estimate'
                       ? 'bg-primary text-primary-foreground'
@@ -11329,7 +11329,7 @@ const FormVariationsDemo = () => {
                 <>
                   <Button
                     variant="ghost"
-                    onClick={() => navigate('/form-variations/estimate')}
+                    onClick={() => setActiveSection('estimate')}
                     className={`flex items-center gap-2 h-7 px-2.5 py-1 rounded-md text-xs font-medium transition-all border ${
                       activeSection === 'estimate'
                         ? 'bg-primary text-primary-foreground shadow-sm border-primary'
