@@ -42,7 +42,7 @@ export const EstimateDetails = ({ userRole = 'technician', onUserRoleChange }: E
       {/* Main Form Card */}
       <Card className="border-border/60 shadow-sm overflow-hidden">
         <CardHeader className="px-3 py-1 border-b bg-muted/30 flex flex-row items-center justify-between space-y-0">
-          <CardTitle className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider leading-none">
+          <CardTitle className="text-[8px] font-bold text-muted-foreground uppercase tracking-wider leading-none">
             Estimate Information
           </CardTitle>
           <div className="flex items-center gap-0.5 p-0.5 bg-muted rounded-md">
