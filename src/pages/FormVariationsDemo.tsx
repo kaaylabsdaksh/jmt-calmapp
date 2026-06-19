@@ -914,6 +914,7 @@ const FormVariationsDemo = () => {
     reportNumber: "",
     itemStatus: "in-lab",
     rotationSubStatus: "",
+    estimateSubStatus: "",
     tfStatus: "",
     tfClerk: "",
     tfFollowup: "",
@@ -2606,6 +2607,25 @@ const FormVariationsDemo = () => {
                 <SelectItem value="rotation-in-progress">Rotation In Progress</SelectItem>
                 <SelectItem value="rotation-complete">Rotation Complete</SelectItem>
                 <SelectItem value="rotation-on-hold">Rotation On Hold</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        )}
+
+        {/* Conditional Estimate Sub Status field when status is "Estimate" */}
+        {formData.itemStatus === "estimate" && (
+          <div className={isAccordion ? "space-y-1" : "space-y-2"}>
+            <Label htmlFor="estimateSubStatus" className={`${isAccordion ? "text-xs" : "text-sm"} font-medium`}>Estimate Status</Label>
+            <Select value={formData.estimateSubStatus} onValueChange={(value) => handleInputChange("estimateSubStatus", value)}>
+              <SelectTrigger className={isAccordion ? "h-7 text-xs" : "h-11"}>
+                <SelectValue placeholder="Select estimate status" />
+              </SelectTrigger>
+              <SelectContent className="bg-popover border z-50 max-h-48 overflow-y-auto">
+                <SelectItem value="awaiting-estimate">Awaiting Estimate</SelectItem>
+                <SelectItem value="sent-to-customer">Sent to Customer</SelectItem>
+                <SelectItem value="sent-to-ar">Sent to AR</SelectItem>
+                <SelectItem value="approved">Approved</SelectItem>
+                <SelectItem value="declined">Declined</SelectItem>
               </SelectContent>
             </Select>
           </div>
