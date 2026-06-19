@@ -173,6 +173,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
     actionCode: '',
     labCode: '',
     rotationManagement: '',
+    estimateStatus: '',
     invoiceStatus: '',
     departureType: '',
     salesperson: '',
