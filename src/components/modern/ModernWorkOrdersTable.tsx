@@ -4313,6 +4313,7 @@ const ITEM_COLUMN_DEFS: { key: string; label: string; type?: 'text' | 'date'; al
   { key: 'workOrderNumber', label: 'Work Order #', alwaysVisible: true },
   { key: 'itemNumber', label: 'Item', alwaysVisible: true },
   { key: 'itemStatus', label: 'Item Status' },
+  { key: 'estimateStatus', label: 'Estimate Status' },
   { key: 'priority', label: 'Priority' },
   { key: 'manufacturer', label: 'Manufacturer' },
   { key: 'model', label: 'Model' },
