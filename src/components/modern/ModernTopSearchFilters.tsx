@@ -59,6 +59,7 @@ interface SearchFilters {
   actionCode: string;
   labCode: string;
   rotationManagement: string;
+  estimateStatus: string;
   invoiceStatus: string;
   departureType: string;
   salesperson: string;
