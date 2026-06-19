@@ -388,7 +388,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
     setResultCount(null);
     setSearchValues({
       woNumber: '', customer: '', status: '', manufacturer: '', priority: [], assignee: '',
-      division: '', woType: '', actionCode: '', labCode: '', rotationManagement: '',
+      division: '', woType: '', actionCode: '', labCode: '', rotationManagement: '', estimateStatus: '',
       invoiceStatus: '', departureType: '', salesperson: '', workOrderItemStatus: '',
       workOrderItemType: '', location: '', newEquip: false, usedSurplus: false,
       warranty: false, toFactory: false, proofOfDelivery: false, only17025: false,
