@@ -2976,6 +2976,7 @@ interface WorkOrderItem {
   followUpDate?: string;
   labCode?: string;
   template?: string;
+  estimateStatus?: string;
   location?: string;
   operationType?: string;
   estimatedCost?: string;
@@ -4312,6 +4313,7 @@ const ITEM_COLUMN_DEFS: { key: string; label: string; type?: 'text' | 'date'; al
   { key: 'workOrderNumber', label: 'Work Order #', alwaysVisible: true },
   { key: 'itemNumber', label: 'Item', alwaysVisible: true },
   { key: 'itemStatus', label: 'Item Status' },
+  { key: 'estimateStatus', label: 'Estimate Status' },
   { key: 'priority', label: 'Priority' },
   { key: 'manufacturer', label: 'Manufacturer' },
   { key: 'model', label: 'Model' },
@@ -5759,6 +5761,17 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                         );
                       } else if (k === 'itemStatus') {
                         content = getItemStatusBadge(item.itemStatus);
+                      } else if (k === 'estimateStatus') {
+                        if (item.itemStatus === 'Estimate') {
+                          const label = item.estimateStatus || 'Awaiting Estimate';
+                          content = (
+                            <span className="inline-flex items-center rounded-md border border-purple-200 bg-purple-50 px-1.5 py-0.5 text-[10px] font-medium text-purple-700">
+                              {label}
+                            </span>
+                          );
+                        } else {
+                          content = <span className="text-muted-foreground">—</span>;
+                        }
                       } else if (k === 'priority') {
                         content = (
                           <span className={cn("px-1.5 py-0.5 rounded-md text-[10px] font-medium",
