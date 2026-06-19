@@ -271,7 +271,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
       manufacturer: searchValues.manufacturer, division: searchValues.division, woType: searchValues.woType,
       dateFrom, dateTo, dateType,
       actionCode: searchValues.actionCode, labCode: searchValues.labCode,
-      rotationManagement: searchValues.rotationManagement, invoiceStatus: searchValues.invoiceStatus,
+      rotationManagement: searchValues.rotationManagement, estimateStatus: searchValues.estimateStatus, invoiceStatus: searchValues.invoiceStatus,
       departureType: searchValues.departureType, salesperson: searchValues.salesperson,
       workOrderItemStatus: searchValues.workOrderItemStatus, workOrderItemType: searchValues.workOrderItemType,
       location: searchValues.location,
