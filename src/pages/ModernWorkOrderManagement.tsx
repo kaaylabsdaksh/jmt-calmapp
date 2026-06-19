@@ -91,6 +91,7 @@ const ModernWorkOrderManagement = () => {
     actionCode: '',
     labCode: '',
     rotationManagement: '',
+    estimateStatus: '',
     invoiceStatus: '',
     departureType: '',
     salesperson: '',
