@@ -59,6 +59,7 @@ interface SearchFilters {
   actionCode: string;
   labCode: string;
   rotationManagement: string;
+  estimateStatus: string;
   invoiceStatus: string;
   departureType: string;
   salesperson: string;
@@ -173,6 +174,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
     actionCode: '',
     labCode: '',
     rotationManagement: '',
+    estimateStatus: '',
     invoiceStatus: '',
     departureType: '',
     salesperson: '',
@@ -269,7 +271,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
       manufacturer: searchValues.manufacturer, division: searchValues.division, woType: searchValues.woType,
       dateFrom, dateTo, dateType,
       actionCode: searchValues.actionCode, labCode: searchValues.labCode,
-      rotationManagement: searchValues.rotationManagement, invoiceStatus: searchValues.invoiceStatus,
+      rotationManagement: searchValues.rotationManagement, estimateStatus: searchValues.estimateStatus, invoiceStatus: searchValues.invoiceStatus,
       departureType: searchValues.departureType, salesperson: searchValues.salesperson,
       workOrderItemStatus: searchValues.workOrderItemStatus, workOrderItemType: searchValues.workOrderItemType,
       location: searchValues.location,
@@ -292,7 +294,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
       manufacturer: searchValues.manufacturer, division: searchValues.division, woType: searchValues.woType,
       dateFrom, dateTo, dateType,
       actionCode: searchValues.actionCode, labCode: searchValues.labCode,
-      rotationManagement: searchValues.rotationManagement, invoiceStatus: searchValues.invoiceStatus,
+      rotationManagement: searchValues.rotationManagement, estimateStatus: searchValues.estimateStatus, invoiceStatus: searchValues.invoiceStatus,
       departureType: searchValues.departureType, salesperson: searchValues.salesperson,
       workOrderItemStatus: searchValues.workOrderItemStatus, workOrderItemType: searchValues.workOrderItemType,
       location: searchValues.location,
@@ -327,7 +329,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
       manufacturer: searchValues.manufacturer, division: searchValues.division, woType: searchValues.woType,
       dateFrom, dateTo, dateType,
       actionCode: searchValues.actionCode, labCode: searchValues.labCode,
-      rotationManagement: searchValues.rotationManagement, invoiceStatus: searchValues.invoiceStatus,
+      rotationManagement: searchValues.rotationManagement, estimateStatus: searchValues.estimateStatus, invoiceStatus: searchValues.invoiceStatus,
       departureType: searchValues.departureType, salesperson: searchValues.salesperson,
       workOrderItemStatus: searchValues.workOrderItemStatus, workOrderItemType: searchValues.workOrderItemType,
       location: searchValues.location,
@@ -387,7 +389,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
     setResultCount(null);
     setSearchValues({
       woNumber: '', customer: '', status: '', manufacturer: '', priority: [], assignee: '',
-      division: '', woType: '', actionCode: '', labCode: '', rotationManagement: '',
+      division: '', woType: '', actionCode: '', labCode: '', rotationManagement: '', estimateStatus: '',
       invoiceStatus: '', departureType: '', salesperson: '', workOrderItemStatus: '',
       workOrderItemType: '', location: '', newEquip: false, usedSurplus: false,
       warranty: false, toFactory: false, proofOfDelivery: false, only17025: false,
@@ -399,7 +401,7 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
     onSearch({
       globalSearch: '', searchTags: [], status: '', assignee: '', priority: [],
       manufacturer: '', division: '', woType: '', dateFrom: undefined, dateTo: undefined, dateType: '',
-      actionCode: '', labCode: '', rotationManagement: '', invoiceStatus: '',
+      actionCode: '', labCode: '', rotationManagement: '', estimateStatus: '', invoiceStatus: '',
       departureType: '', salesperson: '', workOrderItemStatus: '', workOrderItemType: '',
       location: '', newEquip: false, usedSurplus: false, warranty: false, toFactory: false,
       proofOfDelivery: false, only17025: false, onlyHotList: false, onlyLostEquip: false,
@@ -882,6 +884,22 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                     <SelectItem value="waiting-on-customer">Waiting on Customer</SelectItem>
                   </SelectContent>
                 </Select>
+
+                {searchValues.status === 'estimate' && (
+                  <Select value={searchValues.estimateStatus || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, estimateStatus: value === 'all' ? '' : value }))}>
+                    <SelectTrigger className={triggerCls(searchValues.estimateStatus)}>
+                      <SelectValue placeholder="All Estimate Status" />
+                    </SelectTrigger>
+                    <SelectContent className={selectContentClass}>
+                      <SelectItem value="all">All Estimate Status</SelectItem>
+                      <SelectItem value="awaiting-estimate">Awaiting Estimate</SelectItem>
+                      <SelectItem value="sent-to-customer">Sent to Customer</SelectItem>
+                      <SelectItem value="sent-to-ar">Sent to AR</SelectItem>
+                      <SelectItem value="approved">Approved</SelectItem>
+                      <SelectItem value="declined">Declined</SelectItem>
+                    </SelectContent>
+                  </Select>
+                )}
 
                 <Select value={searchValues.workOrderItemStatus || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, workOrderItemStatus: value === 'all' ? '' : value }))}>
                   <SelectTrigger className={triggerCls(searchValues.workOrderItemStatus)}>
