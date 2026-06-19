@@ -885,6 +885,22 @@ const ModernTopSearchFilters = ({ onSearch, onSearchViewModeChange }: ModernTopS
                   </SelectContent>
                 </Select>
 
+                {searchValues.status === 'estimate' && (
+                  <Select value={searchValues.estimateStatus || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, estimateStatus: value === 'all' ? '' : value }))}>
+                    <SelectTrigger className={triggerCls(searchValues.estimateStatus)}>
+                      <SelectValue placeholder="All Estimate Status" />
+                    </SelectTrigger>
+                    <SelectContent className={selectContentClass}>
+                      <SelectItem value="all">All Estimate Status</SelectItem>
+                      <SelectItem value="awaiting-estimate">Awaiting Estimate</SelectItem>
+                      <SelectItem value="sent-to-customer">Sent to Customer</SelectItem>
+                      <SelectItem value="sent-to-ar">Sent to AR</SelectItem>
+                      <SelectItem value="approved">Approved</SelectItem>
+                      <SelectItem value="declined">Declined</SelectItem>
+                    </SelectContent>
+                  </Select>
+                )}
+
                 <Select value={searchValues.workOrderItemStatus || 'all'} onValueChange={(value) => setSearchValues(prev => ({ ...prev, workOrderItemStatus: value === 'all' ? '' : value }))}>
                   <SelectTrigger className={triggerCls(searchValues.workOrderItemStatus)}>
                     <SelectValue placeholder="All WO Item Status" />
