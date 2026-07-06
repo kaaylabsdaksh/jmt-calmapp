@@ -398,13 +398,15 @@ export default function Invoicing() {
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
-      <StandardTopNav
-        title="Invoicing"
-        breadcrumbs={[
-          { label: "Home", href: "/" },
-          { label: "Invoicing" },
-        ]}
-      />
+      <div className="sticky top-0 z-40">
+        <StandardTopNav
+          title="Invoicing"
+          breadcrumbs={[
+            { label: "Home", href: "/" },
+            { label: "Invoicing" },
+          ]}
+        />
+      </div>
       <div className="flex flex-col gap-3 p-3 md:p-4">
 
       {/* Filter Card */}
