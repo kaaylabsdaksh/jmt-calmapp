@@ -748,23 +748,23 @@ export default function Invoicing() {
 
       {/* Invoice Reports */}
       <Card>
-        <CardHeader className="pb-3">
-          <CardTitle className="text-base">Invoice Reports</CardTitle>
+        <CardHeader className="pb-2 pt-3 px-3">
+          <CardTitle className="text-sm">Invoice Reports</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="px-3 pb-3">
           <Tabs defaultValue="invoices">
-            <div className="flex items-center justify-between gap-2 flex-wrap mb-3">
+            <div className="flex items-center justify-between gap-2 flex-wrap mb-2">
               <TabsList>
-                <TabsTrigger value="invoices">Process Invoice(s)</TabsTrigger>
-                <TabsTrigger value="onsite">Process Onsite Invoice(s)</TabsTrigger>
+                <TabsTrigger value="invoices" className="text-xs">Process Invoice(s)</TabsTrigger>
+                <TabsTrigger value="onsite" className="text-xs">Process Onsite Invoice(s)</TabsTrigger>
               </TabsList>
               <div className="flex items-center gap-2">
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                  <Input placeholder="Search reports..." className="pl-9 h-9 w-56" />
+                  <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
+                  <Input placeholder="Search reports..." className="pl-7 h-8 w-52 text-xs" />
                 </div>
-                <Button variant="outline" size="sm">
-                  <ArrowUpDown className="h-4 w-4 mr-2" />
+                <Button variant="outline" size="sm" className="text-xs h-8">
+                  <ArrowUpDown className="h-3.5 w-3.5 mr-1.5" />
                   Sort
                 </Button>
               </div>
