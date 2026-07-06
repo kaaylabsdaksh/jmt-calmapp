@@ -553,8 +553,7 @@ export default function Invoicing() {
                 { value: "manufacturing", label: "Manufacturing" },
               ]}
             />
-            <div className="space-y-1.5">
-              <Label className="text-xs text-muted-foreground">Search</Label>
+            <div className="space-y-1.5 flex flex-col justify-end">
               <Button className="w-full h-10">
                 <Search className="h-4 w-4 mr-2" />
                 Search
