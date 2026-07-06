@@ -5,8 +5,6 @@ import {
   Settings,
   Search,
   Filter,
-  ChevronDown,
-  X,
   FileText,
   Truck,
   UserCog,
@@ -44,11 +42,6 @@ import {
   DropdownMenuLabel,
   DropdownMenuCheckboxItem,
 } from "@/components/ui/dropdown-menu";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
 import {
   Sheet,
   SheetContent,
