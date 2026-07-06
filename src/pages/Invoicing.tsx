@@ -294,6 +294,33 @@ export default function Invoicing() {
   const [visibleCols, setVisibleCols] = useState<Set<ColumnKey>>(
     new Set(ALL_COLUMNS.map((c) => c.key))
   );
+  const [columnOrder, setColumnOrder] = useState<ColumnKey[]>(
+    ALL_COLUMNS.map((c) => c.key)
+  );
+  const [draggedColumnKey, setDraggedColumnKey] = useState<ColumnKey | null>(null);
+  const reorderColumn = (fromKey: ColumnKey, toKey: ColumnKey) => {
+    if (fromKey === toKey) return;
+    setColumnOrder((prev) => {
+      const next = [...prev];
+      const fromIdx = next.indexOf(fromKey);
+      const toIdx = next.indexOf(toKey);
+      if (fromIdx < 0 || toIdx < 0) return prev;
+      const [moved] = next.splice(fromIdx, 1);
+      next.splice(toIdx, 0, moved);
+      return next;
+    });
+  };
+  const resetColumns = () => {
+    setColumnOrder(ALL_COLUMNS.map((c) => c.key));
+    setVisibleCols(new Set(ALL_COLUMNS.map((c) => c.key)));
+  };
+  const orderedVisibleColumns = useMemo(
+    () =>
+      columnOrder
+        .map((k) => ALL_COLUMNS.find((c) => c.key === k)!)
+        .filter((c) => c && visibleCols.has(c.key)),
+    [columnOrder, visibleCols]
+  );
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [drawerRow, setDrawerRow] = useState<InvoiceRow | null>(null);
