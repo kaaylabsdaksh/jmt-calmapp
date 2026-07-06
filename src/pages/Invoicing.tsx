@@ -478,6 +478,190 @@ export default function Invoicing() {
         </div>
       </div>
 
+      {/* Filter Card */}
+      <Card>
+        <CardHeader className="pb-3">
+          <div className="flex items-center justify-between">
+            <CardTitle className="text-base flex items-center gap-2">
+              <Filter className="h-4 w-4 text-muted-foreground" />
+              Filters
+            </CardTitle>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3">
+            <FieldSelect
+              label="Item Status"
+              value={filters.itemStatus}
+              onChange={(v) => setFilters({ ...filters, itemStatus: v })}
+              options={[
+                { value: "all", label: "All" },
+                { value: "ar-invoicing", label: "A/R Invoicing" },
+                { value: "ready", label: "Ready to Invoice" },
+                { value: "completed", label: "Completed" },
+              ]}
+            />
+            <FieldSelect
+              label="Location"
+              value={filters.location}
+              onChange={(v) => setFilters({ ...filters, location: v })}
+              options={[
+                { value: "all", label: "All" },
+                { value: "baton-rouge", label: "Baton Rouge" },
+                { value: "houston", label: "Houston" },
+                { value: "norco", label: "Norco" },
+              ]}
+            />
+            <div className="space-y-1.5">
+              <Label className="text-xs text-muted-foreground">Created From</Label>
+              <Input
+                type="date"
+                value={filters.createdFrom}
+                onChange={(e) =>
+                  setFilters({ ...filters, createdFrom: e.target.value })
+                }
+              />
+            </div>
+            <div className="space-y-1.5">
+              <Label className="text-xs text-muted-foreground">Created To</Label>
+              <Input
+                type="date"
+                value={filters.createdTo}
+                onChange={(e) =>
+                  setFilters({ ...filters, createdTo: e.target.value })
+                }
+              />
+            </div>
+            <FieldSelect
+              label="Division"
+              value={filters.division}
+              onChange={(v) => setFilters({ ...filters, division: v })}
+              options={[
+                { value: "all", label: "All" },
+                { value: "lab", label: "Lab" },
+                { value: "field", label: "Field" },
+              ]}
+            />
+            <FieldSelect
+              label="Customer Group"
+              value={filters.customerGroup}
+              onChange={(v) => setFilters({ ...filters, customerGroup: v })}
+              options={[
+                { value: "all", label: "All" },
+                { value: "energy", label: "Energy" },
+                { value: "chemical", label: "Chemical" },
+                { value: "manufacturing", label: "Manufacturing" },
+              ]}
+            />
+          </div>
+
+          <div className="flex items-center justify-between gap-3">
+            <Collapsible open={showMoreFilters} onOpenChange={setShowMoreFilters}>
+              <CollapsibleTrigger asChild>
+                <Button variant="ghost" size="sm" className="text-muted-foreground">
+                  <ChevronDown
+                    className={cn(
+                      "h-4 w-4 mr-1 transition-transform",
+                      showMoreFilters && "rotate-180"
+                    )}
+                  />
+                  {showMoreFilters ? "Hide" : "More"} filters
+                </Button>
+              </CollapsibleTrigger>
+              <CollapsibleContent className="pt-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3">
+                  <FieldSelect
+                    label="WO Status"
+                    value={advFilters.woStatus}
+                    onChange={(v) => setAdvFilters({ ...advFilters, woStatus: v })}
+                    options={[
+                      { value: "all", label: "All" },
+                      { value: "Ready", label: "Ready" },
+                      { value: "In Process", label: "In Process" },
+                      { value: "On Hold", label: "On Hold" },
+                    ]}
+                  />
+                  <FieldSelect
+                    label="Invoice Status"
+                    value={advFilters.invoiceStatus}
+                    onChange={(v) =>
+                      setAdvFilters({ ...advFilters, invoiceStatus: v })
+                    }
+                    options={[
+                      { value: "all", label: "All" },
+                      { value: "Pending", label: "Pending" },
+                      { value: "Delivery Ticket", label: "Delivery Ticket" },
+                      { value: "Processed", label: "Processed" },
+                    ]}
+                  />
+                  <FieldSelect
+                    label="Departure Type"
+                    value={advFilters.departureType}
+                    onChange={(v) =>
+                      setAdvFilters({ ...advFilters, departureType: v })
+                    }
+                    options={[
+                      { value: "all", label: "All" },
+                      { value: "Customer Pickup", label: "Customer Pickup" },
+                      { value: "Driver Dropoff", label: "Driver Dropoff" },
+                      { value: "Shipped", label: "Shipped" },
+                    ]}
+                  />
+                  <FieldSelect
+                    label="Billing Specialist"
+                    value={advFilters.billingSpecialist}
+                    onChange={(v) =>
+                      setAdvFilters({ ...advFilters, billingSpecialist: v })
+                    }
+                    options={[
+                      { value: "all", label: "All" },
+                      { value: "unassigned", label: "Unassigned" },
+                      { value: "jsmith", label: "J. Smith" },
+                      { value: "adoe", label: "A. Doe" },
+                    ]}
+                  />
+                  <div className="space-y-1.5">
+                    <Label className="text-xs text-muted-foreground">
+                      Manufacturer
+                    </Label>
+                    <Input
+                      placeholder="e.g. FLUKE"
+                      value={advFilters.manufacturer}
+                      onChange={(e) =>
+                        setAdvFilters({
+                          ...advFilters,
+                          manufacturer: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label className="text-xs text-muted-foreground">Model</Label>
+                    <Input
+                      placeholder="e.g. 87V"
+                      value={advFilters.model}
+                      onChange={(e) =>
+                        setAdvFilters({ ...advFilters, model: e.target.value })
+                      }
+                    />
+                  </div>
+                </div>
+              </CollapsibleContent>
+            </Collapsible>
+            <div className="flex items-end gap-2">
+              <Button onClick={() => toast("Searching...")}>
+                <Search className="h-4 w-4 mr-2" />
+                Search
+              </Button>
+              <Button variant="outline" onClick={clearFilters}>
+                <X className="h-4 w-4 mr-2" />
+                Clear
+              </Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Quick Action Toolbar */}
       <Card>
         <CardContent className="py-3 flex flex-wrap items-center justify-between gap-3">
