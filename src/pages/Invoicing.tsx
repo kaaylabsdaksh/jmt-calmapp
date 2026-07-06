@@ -610,10 +610,10 @@ export default function Invoicing() {
       {/* Main Table */}
       <Card className="overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-sm border-collapse">
+          <table className="w-full text-xs border-collapse">
             <thead className="sticky top-0 z-10 bg-muted/60 backdrop-blur-sm">
               <tr className="border-b border-border">
-                <th className="w-10 px-3 py-2.5 text-left">
+                <th className="w-8 px-2 py-1.5 text-left">
                   <Checkbox
                     checked={allChecked}
                     onCheckedChange={toggleAll}
@@ -624,7 +624,7 @@ export default function Invoicing() {
                   <th
                     key={c.key}
                     style={{ minWidth: c.width }}
-                    className="px-3 py-2.5 text-left font-medium text-muted-foreground whitespace-nowrap"
+                    className="px-2 py-1.5 text-left font-medium text-muted-foreground whitespace-nowrap"
                   >
                     <button
                       className="inline-flex items-center gap-1 hover:text-foreground transition-colors"
@@ -635,7 +635,7 @@ export default function Invoicing() {
                     </button>
                   </th>
                 ))}
-                <th className="px-3 py-2.5 text-right font-medium text-muted-foreground">
+                <th className="px-2 py-1.5 text-right font-medium text-muted-foreground">
                   Actions
                 </th>
               </tr>
@@ -644,8 +644,8 @@ export default function Invoicing() {
               {loading ? (
                 Array.from({ length: 6 }).map((_, i) => (
                   <tr key={i} className="border-b border-border">
-                    <td colSpan={ALL_COLUMNS.length + 2} className="p-3">
-                      <div className="h-6 rounded-md bg-muted animate-pulse" />
+                    <td colSpan={ALL_COLUMNS.length + 2} className="p-2">
+                      <div className="h-5 rounded-md bg-muted animate-pulse" />
                     </td>
                   </tr>
                 ))
@@ -653,16 +653,16 @@ export default function Invoicing() {
                 <tr>
                   <td
                     colSpan={ALL_COLUMNS.length + 2}
-                    className="py-16 text-center"
+                    className="py-12 text-center"
                   >
-                    <div className="flex flex-col items-center gap-3 text-muted-foreground">
-                      <div className="h-16 w-16 rounded-full bg-muted flex items-center justify-center">
-                        <FileSearch className="h-8 w-8" />
+                    <div className="flex flex-col items-center gap-2 text-muted-foreground">
+                      <div className="h-12 w-12 rounded-full bg-muted flex items-center justify-center">
+                        <FileSearch className="h-6 w-6" />
                       </div>
-                      <div className="font-medium text-foreground">
+                      <div className="font-medium text-foreground text-sm">
                         No invoices found.
                       </div>
-                      <p className="text-sm">
+                      <p className="text-xs">
                         No data is currently available.
                       </p>
                     </div>
@@ -681,7 +681,7 @@ export default function Invoicing() {
                     onClick={() => setDrawerRow(row)}
                   >
                     <td
-                      className="px-3 py-2.5"
+                      className="px-2 py-1.5"
                       onClick={(e) => e.stopPropagation()}
                     >
                       <Checkbox
@@ -693,20 +693,20 @@ export default function Invoicing() {
                       (c) => (
                         <td
                           key={c.key}
-                          className="px-3 py-2.5 whitespace-nowrap"
+                          className="px-2 py-1.5 whitespace-nowrap"
                         >
                           {cellFor(row, c.key)}
                         </td>
                       )
                     )}
                     <td
-                      className="px-3 py-2.5 text-right"
+                      className="px-2 py-1.5 text-right"
                       onClick={(e) => e.stopPropagation()}
                     >
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" size="icon" className="h-8 w-8">
-                            <MoreHorizontal className="h-4 w-4" />
+                          <Button variant="ghost" size="icon" className="h-6 w-6">
+                            <MoreHorizontal className="h-3.5 w-3.5" />
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent
@@ -730,7 +730,7 @@ export default function Invoicing() {
         </div>
 
         {/* Pagination */}
-        <div className="sticky bottom-0 flex items-center justify-between gap-2 border-t border-border bg-background px-4 py-3">
+        <div className="sticky bottom-0 flex items-center justify-between gap-2 border-t border-border bg-background px-3 py-2">
           <p className="text-xs text-muted-foreground">
             Showing{" "}
             <span className="font-medium text-foreground">
