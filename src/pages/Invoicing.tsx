@@ -1,8 +1,6 @@
 import React, { useMemo, useState } from "react";
 import {
-  RefreshCw,
   Download,
-  Settings,
   Search,
   FileText,
   Truck,
@@ -52,6 +50,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import StandardTopNav from "@/components/shared/StandardTopNav";
 
 // ---------- Types ----------
 type WOStatus = "Ready" | "In Process" | "On Hold";
@@ -398,40 +397,15 @@ export default function Invoicing() {
   };
 
   return (
-    <div className="flex flex-col gap-3 p-3 md:p-4 bg-background min-h-screen">
-      {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3">
-        <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-foreground">
-            Invoicing
-          </h1>
-          <p className="text-sm text-muted-foreground mt-1">
-            Manage invoice processing, delivery tickets, billing workflows, and
-            invoice reports.
-          </p>
-        </div>
-        <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => toast("Refreshed")}
-          >
-            <RefreshCw className="h-4 w-4 mr-2" />
-            Refresh
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => toast.success("Export started")}
-          >
-            <Download className="h-4 w-4 mr-2" />
-            Export
-          </Button>
-          <Button variant="outline" size="icon" className="h-9 w-9">
-            <Settings className="h-4 w-4" />
-          </Button>
-        </div>
-      </div>
+    <div className="flex flex-col min-h-screen bg-background">
+      <StandardTopNav
+        title="Invoicing"
+        breadcrumbs={[
+          { label: "Home", href: "/" },
+          { label: "Invoicing" },
+        ]}
+      />
+      <div className="flex flex-col gap-3 p-3 md:p-4">
 
       {/* Filter Card */}
       <Card>
@@ -964,6 +938,7 @@ export default function Invoicing() {
           )}
         </SheetContent>
       </Sheet>
+      </div>
     </div>
   );
 }
