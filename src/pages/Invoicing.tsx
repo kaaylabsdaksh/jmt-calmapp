@@ -17,6 +17,7 @@ import {
   ArrowUpDown,
   GripVertical,
   Settings2,
+  X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -313,6 +314,7 @@ export default function Invoicing() {
   const resetColumns = () => {
     setColumnOrder(ALL_COLUMNS.map((c) => c.key));
     setVisibleCols(new Set(ALL_COLUMNS.map((c) => c.key)));
+    setColumnFilters({});
   };
   const orderedVisibleColumns = useMemo(
     () =>
@@ -326,6 +328,7 @@ export default function Invoicing() {
   const [drawerRow, setDrawerRow] = useState<InvoiceRow | null>(null);
   const [activeReportTab, setActiveReportTab] = useState("invoices");
   const [searchQuery, setSearchQuery] = useState("");
+  const [columnFilters, setColumnFilters] = useState<Partial<Record<ColumnKey, string>>>({});
 
   // Filtered rows
   const filteredRows = useMemo(() => {
@@ -348,6 +351,22 @@ export default function Invoicing() {
           .includes(q)
       );
     }
+    const activeFilters = Object.entries(columnFilters).filter(([, v]) => v?.trim());
+    if (activeFilters.length > 0) {
+      rows = rows.filter((r) =>
+        activeFilters.every(([key, val]) => {
+          const k = key as ColumnKey;
+          const term = val!.toLowerCase();
+          let value: string;
+          if (k === "samsaraSubmitted" || k === "proofOfDelivery") {
+            value = r[k] ? "yes" : "no";
+          } else {
+            value = String(r[k] ?? "").toLowerCase();
+          }
+          return value.includes(term);
+        })
+      );
+    }
     if (sort) {
       rows = [...rows].sort((a, b) => {
         const av = String(a[sort.key] ?? "");
@@ -356,7 +375,7 @@ export default function Invoicing() {
       });
     }
     return rows;
-  }, [sort, searchQuery]);
+  }, [sort, searchQuery, columnFilters]);
 
   const totalPages = Math.max(1, Math.ceil(filteredRows.length / pageSize));
   const pageRows = filteredRows.slice((page - 1) * pageSize, page * pageSize);
@@ -667,6 +686,41 @@ export default function Invoicing() {
                 <th className="px-2 py-1.5 text-right font-medium text-muted-foreground">
                   Actions
                 </th>
+              </tr>
+              <tr className="border-b border-border">
+                <th className="w-8 px-2 py-1"></th>
+                {orderedVisibleColumns.map((c) => (
+                  <th key={`${c.key}-filter`} className="px-2 py-1 text-left">
+                    <div className="relative">
+                      <Search className="absolute left-1.5 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground/50" />
+                      <Input
+                        placeholder=""
+                        value={columnFilters[c.key] || ""}
+                        onChange={(e) =>
+                          setColumnFilters((prev) => ({
+                            ...prev,
+                            [c.key]: e.target.value,
+                          }))
+                        }
+                        className="h-6 text-[10px] pl-5 pr-5 border-muted bg-muted/30 rounded-md placeholder:text-muted-foreground/40 focus:bg-background focus:border-primary/30 transition-colors"
+                      />
+                      {columnFilters[c.key] && (
+                        <button
+                          onClick={() =>
+                            setColumnFilters((prev) => ({
+                              ...prev,
+                              [c.key]: "",
+                            }))
+                          }
+                          className="absolute right-1 top-1/2 -translate-y-1/2 p-0.5 rounded-full hover:bg-muted transition-colors"
+                        >
+                          <X className="h-3 w-3 text-muted-foreground" />
+                        </button>
+                      )}
+                    </div>
+                  </th>
+                ))}
+                <th className="px-2 py-1"></th>
               </tr>
             </thead>
             <tbody>
