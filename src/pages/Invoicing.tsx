@@ -290,15 +290,6 @@ export default function Invoicing() {
     division: "all",
     customerGroup: "all",
   });
-  const [showMoreFilters, setShowMoreFilters] = useState(false);
-  const [advFilters, setAdvFilters] = useState({
-    woStatus: "all",
-    invoiceStatus: "all",
-    departureType: "all",
-    billingSpecialist: "all",
-    manufacturer: "",
-    model: "",
-  });
 
   // Table state
   const [selected, setSelected] = useState<Set<string>>(new Set());
@@ -315,15 +306,6 @@ export default function Invoicing() {
   // Filtered rows
   const filteredRows = useMemo(() => {
     let rows = mockRows;
-    if (advFilters.woStatus !== "all") {
-      rows = rows.filter((r) => r.woStatus === advFilters.woStatus);
-    }
-    if (advFilters.invoiceStatus !== "all") {
-      rows = rows.filter((r) => r.invoiceStatus === advFilters.invoiceStatus);
-    }
-    if (advFilters.departureType !== "all") {
-      rows = rows.filter((r) => r.departureType === advFilters.departureType);
-    }
     if (sort) {
       rows = [...rows].sort((a, b) => {
         const av = String(a[sort.key] ?? "");
@@ -332,7 +314,7 @@ export default function Invoicing() {
       });
     }
     return rows;
-  }, [advFilters, sort]);
+  }, [sort]);
 
   const totalPages = Math.max(1, Math.ceil(filteredRows.length / pageSize));
   const pageRows = filteredRows.slice((page - 1) * pageSize, page * pageSize);
@@ -354,24 +336,12 @@ export default function Invoicing() {
   const selectedCount = selected.size;
   const hasSelection = selectedCount > 0;
 
-  const clearFilters = () => {
-    setFilters({
-      itemStatus: "all",
-      location: "all",
-      createdFrom: "",
-      createdTo: "",
-      division: "all",
-      customerGroup: "all",
-    });
-    setAdvFilters({
-      woStatus: "all",
-      invoiceStatus: "all",
-      departureType: "all",
-      billingSpecialist: "all",
-      manufacturer: "",
-      model: "",
-    });
-    toast("Filters cleared");
+  const doSort = (key: ColumnKey) => {
+    setSort((s) =>
+      s?.key === key
+        ? { key, dir: s.dir === "asc" ? "desc" : "asc" }
+        : { key, dir: "asc" }
+    );
   };
 
   const doSort = (key: ColumnKey) => {
