@@ -576,7 +576,7 @@ export default function Invoicing() {
             {hasSelection && (
               <Badge
                 variant="outline"
-                className="bg-primary/10 text-primary border-primary/20 text-xs"
+                className="bg-primary/10 text-foreground border-primary/20 text-xs"
               >
                 {selectedCount} Item{selectedCount === 1 ? "" : "s"} Selected
               </Badge>
