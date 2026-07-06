@@ -292,7 +292,7 @@ export default function Invoicing() {
     new Set(ALL_COLUMNS.map((c) => c.key))
   );
   const [page, setPage] = useState(1);
-  const pageSize = 10;
+  const [pageSize, setPageSize] = useState(10);
   const [drawerRow, setDrawerRow] = useState<InvoiceRow | null>(null);
   const [activeReportTab, setActiveReportTab] = useState("invoices");
 
