@@ -345,7 +345,7 @@ export default function Invoicing() {
         );
       case "woStatus":
         return (
-          <Badge variant="outline" className={cn("font-medium", woStatusStyles[row.woStatus])}>
+          <Badge variant="outline" className={cn("font-medium text-[10px] h-5 px-1.5", woStatusStyles[row.woStatus])}>
             {row.woStatus}
           </Badge>
         );
@@ -353,7 +353,7 @@ export default function Invoicing() {
         return (
           <Badge
             variant="outline"
-            className={cn("font-medium", invoiceStatusStyles[row.invoiceStatus])}
+            className={cn("font-medium text-[10px] h-5 px-1.5", invoiceStatusStyles[row.invoiceStatus])}
           >
             {row.invoiceStatus}
           </Badge>
@@ -362,7 +362,7 @@ export default function Invoicing() {
         return (
           <Badge
             variant="outline"
-            className={cn("font-medium", itemStatusStyles[row.itemStatus])}
+            className={cn("font-medium text-[10px] h-5 px-1.5", itemStatusStyles[row.itemStatus])}
           >
             {row.itemStatus}
           </Badge>
@@ -371,23 +371,23 @@ export default function Invoicing() {
         return (
           <Badge
             variant="outline"
-            className="font-medium bg-background text-foreground border-border"
+            className="font-medium text-[10px] h-5 px-1.5 bg-background text-foreground border-border"
           >
             {row.departureType}
           </Badge>
         );
       case "samsaraSubmitted":
         return row.samsaraSubmitted ? (
-          <span className="inline-flex items-center gap-1 text-emerald-700">
-            <CheckCircle2 className="h-4 w-4" /> Yes
+          <span className="inline-flex items-center gap-1 text-emerald-700 text-[10px]">
+            <CheckCircle2 className="h-3 w-3" /> Yes
           </span>
         ) : (
           <span className="text-muted-foreground">—</span>
         );
       case "proofOfDelivery":
         return row.proofOfDelivery ? (
-          <span className="inline-flex items-center gap-1 text-emerald-700">
-            <CheckCircle2 className="h-4 w-4" /> Yes
+          <span className="inline-flex items-center gap-1 text-emerald-700 text-[10px]">
+            <CheckCircle2 className="h-3 w-3" /> Yes
           </span>
         ) : (
           <span className="text-muted-foreground">—</span>
