@@ -294,6 +294,7 @@ export default function Invoicing() {
   const [page, setPage] = useState(1);
   const pageSize = 10;
   const [drawerRow, setDrawerRow] = useState<InvoiceRow | null>(null);
+  const [activeReportTab, setActiveReportTab] = useState("invoices");
 
   // Filtered rows
   const filteredRows = useMemo(() => {
