@@ -1215,11 +1215,11 @@ function ReportsTable({ onsite = false }: { onsite?: boolean }) {
           </tr>
         </thead>
         <tbody>
-          {pageReports.map((r, i) => (
-            <tr
-              key={i}
-              className="border-b border-border last:border-b-0 hover:bg-accent/50"
-            >
+            {pageReports.map((r, i) => (
+              <tr
+                key={i}
+                className="border-b border-border last:border-b-0 hover:bg-muted/50"
+              >
               <td className="px-2 py-1.5 whitespace-nowrap">{r.date}</td>
               <td className="px-2 py-1.5">{r.name}</td>
               <td className="px-2 py-1.5">{r.generatedBy}</td>
