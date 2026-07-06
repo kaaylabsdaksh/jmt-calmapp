@@ -1097,7 +1097,7 @@ function ReportsTable({ onsite = false }: { onsite?: boolean }) {
           </tr>
         </thead>
         <tbody>
-          {reports.map((r, i) => (
+          {pageReports.map((r, i) => (
             <tr
               key={i}
               className="border-b border-border last:border-b-0 hover:bg-accent/50"
@@ -1132,18 +1132,69 @@ function ReportsTable({ onsite = false }: { onsite?: boolean }) {
           ))}
         </tbody>
       </table>
-      <div className="flex items-center justify-between border-t border-border px-3 py-2 text-xs text-muted-foreground">
-        <span>Showing {reports.length} reports</span>
+      <div className="flex items-center justify-between border-t border-border px-3 py-2">
+        <div className="flex items-center gap-4">
+          <span className="text-xs text-muted-foreground">
+            Showing{" "}
+            <span className="font-medium text-foreground">
+              {(page - 1) * pageSize + 1}
+            </span>
+            –
+            <span className="font-medium text-foreground">
+              {Math.min(page * pageSize, reports.length)}
+            </span>{" "}
+            of{" "}
+            <span className="font-medium text-foreground">
+              {reports.length}
+            </span>{" "}
+            items
+          </span>
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-muted-foreground">Show:</span>
+            <Select
+              value={pageSize.toString()}
+              onValueChange={(value) => {
+                setPageSize(Number(value));
+                setPage(1);
+              }}
+            >
+              <SelectTrigger className="w-[80px] h-7 text-xs">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="10">10</SelectItem>
+                <SelectItem value="20">20</SelectItem>
+                <SelectItem value="50">50</SelectItem>
+                <SelectItem value="100">100</SelectItem>
+                <SelectItem value="250">250</SelectItem>
+                <SelectItem value="999999">All</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
         <div className="flex items-center gap-1">
-          <Button variant="outline" size="sm" disabled>
+          <Button
+            variant="outline"
+            size="sm"
+            disabled={page === 1}
+            onClick={() => setPage((p) => Math.max(1, p - 1))}
+          >
             <ChevronLeft className="h-4 w-4" />
           </Button>
-          <span className="px-2">Page 1 of 1</span>
-          <Button variant="outline" size="sm" disabled>
+          <span className="text-xs text-muted-foreground px-2">
+            Page {page} of {totalPages}
+          </span>
+          <Button
+            variant="outline"
+            size="sm"
+            disabled={page === totalPages}
+            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+          >
             <ChevronRight className="h-4 w-4" />
           </Button>
         </div>
       </div>
+    </div>
     </div>
   );
 }
