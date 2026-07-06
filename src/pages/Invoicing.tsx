@@ -4,7 +4,6 @@ import {
   Download,
   Settings,
   Search,
-  Filter,
   FileText,
   Truck,
   UserCog,
