@@ -776,6 +776,18 @@ export default function Invoicing() {
               <ReportsTable onsite />
             </TabsContent>
           </Tabs>
+
+          {/* Sticky Footer Actions */}
+          <div className="sticky bottom-0 z-10 mt-2 -mx-3 -mb-3 px-3 py-2 bg-background border-t border-border flex items-center gap-2">
+            <Button size="sm" className="text-xs h-8">
+              <Receipt className="h-3.5 w-3.5 mr-1.5" />
+              Process Invoices
+            </Button>
+            <Button size="sm" className="text-xs h-8">
+              <FileText className="h-3.5 w-3.5 mr-1.5" />
+              Process Onsite Invoices
+            </Button>
+          </div>
         </CardContent>
       </Card>
 
