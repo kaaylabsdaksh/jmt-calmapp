@@ -1195,6 +1195,5 @@ function ReportsTable({ onsite = false }: { onsite?: boolean }) {
         </div>
       </div>
     </div>
-    </div>
   );
 }
