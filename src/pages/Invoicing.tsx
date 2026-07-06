@@ -634,6 +634,8 @@ export default function Invoicing() {
               </div>
             </PopoverContent>
           </Popover>
+          </div>
+
 
         </CardHeader>
         <div className="overflow-x-auto">
