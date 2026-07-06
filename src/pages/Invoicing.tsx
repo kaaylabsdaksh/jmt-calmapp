@@ -614,7 +614,7 @@ export default function Invoicing() {
                     aria-label="Select all"
                   />
                 </th>
-                {ALL_COLUMNS.filter((c) => visibleCols.has(c.key)).map((c) => (
+                {orderedVisibleColumns.map((c) => (
                   <th
                     key={c.key}
                     style={{ minWidth: c.width }}
