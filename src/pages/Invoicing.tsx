@@ -314,6 +314,7 @@ export default function Invoicing() {
   const resetColumns = () => {
     setColumnOrder(ALL_COLUMNS.map((c) => c.key));
     setVisibleCols(new Set(ALL_COLUMNS.map((c) => c.key)));
+    setColumnFilters({});
   };
   const orderedVisibleColumns = useMemo(
     () =>
