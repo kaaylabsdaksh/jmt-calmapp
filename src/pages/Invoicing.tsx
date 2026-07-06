@@ -541,16 +541,6 @@ export default function Invoicing() {
       {/* Main Table */}
       <Card className="overflow-hidden">
         <CardHeader className="px-3 py-2 border-b border-border flex flex-row items-center justify-between gap-2">
-          <div>
-            {hasSelection && (
-              <Badge
-                variant="outline"
-                className="bg-primary/10 text-primary border-primary/20 text-xs"
-              >
-                {selectedCount} Item{selectedCount === 1 ? "" : "s"} Selected
-              </Badge>
-            )}
-          </div>
           <div className="flex items-center gap-2">
             <div className="relative">
               <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
@@ -564,6 +554,16 @@ export default function Invoicing() {
                 className="pl-7 h-8 w-52 text-xs"
               />
             </div>
+            {hasSelection && (
+              <Badge
+                variant="outline"
+                className="bg-primary/10 text-primary border-primary/20 text-xs"
+              >
+                {selectedCount} Item{selectedCount === 1 ? "" : "s"} Selected
+              </Badge>
+            )}
+          </div>
+          <div>
             <Popover>
               <PopoverTrigger asChild>
                 <Button variant="outline" size="sm" className="text-xs h-8">
