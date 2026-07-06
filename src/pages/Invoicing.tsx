@@ -551,12 +551,26 @@ export default function Invoicing() {
               </Badge>
             )}
           </div>
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button variant="outline" size="sm" className="text-xs h-8">
-                <Settings2 className="h-3.5 w-3.5 mr-1.5" />
-                Columns
-              </Button>
+          <div className="flex items-center gap-2">
+            <div className="relative">
+              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
+              <Input
+                placeholder="Search invoices..."
+                value={searchQuery}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  setPage(1);
+                }}
+                className="pl-7 h-8 w-52 text-xs"
+              />
+            </div>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="outline" size="sm" className="text-xs h-8">
+                  <Settings2 className="h-3.5 w-3.5 mr-1.5" />
+                  Columns
+                </Button>
+
             </PopoverTrigger>
             <PopoverContent align="end" className="w-72 p-0 bg-popover">
               <div className="flex items-center justify-between px-3 py-2 border-b">
