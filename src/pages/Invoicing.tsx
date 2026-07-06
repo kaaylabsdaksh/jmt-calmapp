@@ -938,6 +938,30 @@ export default function Invoicing() {
         </SheetContent>
       </Sheet>
       </div>
+
+      {/* Sticky Footer */}
+      <footer className="sticky bottom-0 z-40 bg-background px-6 py-3 border-t border-border">
+        <div className="flex items-center gap-2">
+          <Button
+            size="sm"
+            variant={activeReportTab === "invoices" ? "default" : "outline"}
+            className="text-xs h-8"
+            onClick={() => setActiveReportTab("invoices")}
+          >
+            <Receipt className="h-3.5 w-3.5 mr-1.5" />
+            Process Invoices
+          </Button>
+          <Button
+            size="sm"
+            variant={activeReportTab === "onsite" ? "default" : "outline"}
+            className="text-xs h-8"
+            onClick={() => setActiveReportTab("onsite")}
+          >
+            <FileText className="h-3.5 w-3.5 mr-1.5" />
+            Process Onsite Invoices
+          </Button>
+        </div>
+      </footer>
     </div>
   );
 }
