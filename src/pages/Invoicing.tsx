@@ -649,10 +649,6 @@ export default function Invoicing() {
               </CollapsibleContent>
             </Collapsible>
             <div className="flex items-end gap-2">
-              <Button onClick={() => toast("Searching...")}>
-                <Search className="h-4 w-4 mr-2" />
-                Search
-              </Button>
               <Button variant="outline" onClick={clearFilters}>
                 <X className="h-4 w-4 mr-2" />
                 Clear
