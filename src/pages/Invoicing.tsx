@@ -292,7 +292,7 @@ export default function Invoicing() {
     new Set(ALL_COLUMNS.map((c) => c.key))
   );
   const [page, setPage] = useState(1);
-  const pageSize = 10;
+  const [pageSize, setPageSize] = useState(10);
   const [drawerRow, setDrawerRow] = useState<InvoiceRow | null>(null);
   const [activeReportTab, setActiveReportTab] = useState("invoices");
 
@@ -708,21 +708,45 @@ export default function Invoicing() {
 
         {/* Pagination */}
         <div className="sticky bottom-0 flex items-center justify-between gap-2 border-t border-border bg-background px-3 py-2">
-          <p className="text-xs text-muted-foreground">
-            Showing{" "}
-            <span className="font-medium text-foreground">
-              {(page - 1) * pageSize + 1}
-            </span>
-            –
-            <span className="font-medium text-foreground">
-              {Math.min(page * pageSize, filteredRows.length)}
-            </span>{" "}
-            of{" "}
-            <span className="font-medium text-foreground">
-              {filteredRows.length}
-            </span>{" "}
-            invoices
-          </p>
+          <div className="flex items-center gap-4">
+            <p className="text-xs text-muted-foreground">
+              Showing{" "}
+              <span className="font-medium text-foreground">
+                {(page - 1) * pageSize + 1}
+              </span>
+              –
+              <span className="font-medium text-foreground">
+                {Math.min(page * pageSize, filteredRows.length)}
+              </span>{" "}
+              of{" "}
+              <span className="font-medium text-foreground">
+                {filteredRows.length}
+              </span>{" "}
+              items
+            </p>
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-muted-foreground">Show:</span>
+              <Select
+                value={pageSize.toString()}
+                onValueChange={(value) => {
+                  setPageSize(Number(value));
+                  setPage(1);
+                }}
+              >
+                <SelectTrigger className="w-[80px] h-7 text-xs">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="10">10</SelectItem>
+                  <SelectItem value="20">20</SelectItem>
+                  <SelectItem value="50">50</SelectItem>
+                  <SelectItem value="100">100</SelectItem>
+                  <SelectItem value="250">250</SelectItem>
+                  <SelectItem value="999999">All</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
           <div className="flex items-center gap-1">
             <Button
               variant="outline"
