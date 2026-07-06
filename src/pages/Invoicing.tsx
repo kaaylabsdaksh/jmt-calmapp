@@ -1,8 +1,6 @@
 import React, { useMemo, useState } from "react";
 import {
-  RefreshCw,
   Download,
-  Settings,
   Search,
   FileText,
   Truck,
@@ -52,6 +50,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import StandardTopNav from "@/components/shared/StandardTopNav";
 
 // ---------- Types ----------
 type WOStatus = "Ready" | "In Process" | "On Hold";
