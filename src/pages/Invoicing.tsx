@@ -398,7 +398,7 @@ export default function Invoicing() {
   };
 
   return (
-    <div className="flex flex-col gap-4 p-4 md:p-6 bg-background min-h-screen">
+    <div className="flex flex-col gap-3 p-3 md:p-4 bg-background min-h-screen">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3">
         <div>
