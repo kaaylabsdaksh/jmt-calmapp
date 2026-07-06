@@ -24,6 +24,7 @@ import OnsiteProjectDetail from "./pages/OnsiteProjectDetail";
 import VehicleStandards from "./pages/VehicleStandards";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
+import Invoicing from "./pages/Invoicing";
 import { Layout } from "./components/Layout";
 import { Toaster } from "@/components/ui/toaster";
 
@@ -58,6 +59,7 @@ const App = () => {
           <Route path="/onsite-projects" element={<OnsiteProjects />} />
           <Route path="/onsite-projects/new" element={<OnsiteProjectDetail />} />
           <Route path="/onsite-projects/vehicle-standards" element={<VehicleStandards />} />
+          <Route path="/invoicing" element={<Invoicing />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
