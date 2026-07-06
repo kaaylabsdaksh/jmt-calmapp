@@ -344,14 +344,6 @@ export default function Invoicing() {
     );
   };
 
-  const doSort = (key: ColumnKey) => {
-    setSort((s) =>
-      s?.key === key
-        ? { key, dir: s.dir === "asc" ? "desc" : "asc" }
-        : { key, dir: "asc" }
-    );
-  };
-
   const cellFor = (row: InvoiceRow, key: ColumnKey) => {
     switch (key) {
       case "reportNumber":
