@@ -253,21 +253,21 @@ type ColumnKey =
   | "proofOfDelivery";
 
 const ALL_COLUMNS: { key: ColumnKey; label: string; width: number }[] = [
-  { key: "reportNumber", label: "Report Number", width: 180 },
-  { key: "accountNumber", label: "Account #", width: 110 },
-  { key: "customer", label: "Customer", width: 220 },
-  { key: "woStatus", label: "WO Status", width: 130 },
-  { key: "manufacturer", label: "Manufacturer", width: 130 },
-  { key: "model", label: "Model", width: 120 },
-  { key: "serial", label: "Serial #", width: 140 },
-  { key: "po", label: "PO #", width: 110 },
-  { key: "itemStatus", label: "Item Status", width: 150 },
-  { key: "invoiceStatus", label: "Invoice Status", width: 150 },
-  { key: "invoiceNumber", label: "Invoice #", width: 110 },
-  { key: "departureType", label: "Departure Type", width: 160 },
-  { key: "departureDate", label: "Departure Date", width: 140 },
-  { key: "samsaraSubmitted", label: "Samsara Submitted", width: 160 },
-  { key: "proofOfDelivery", label: "Proof of Delivery", width: 150 },
+  { key: "reportNumber", label: "Report Number", width: 150 },
+  { key: "accountNumber", label: "Account #", width: 95 },
+  { key: "customer", label: "Customer", width: 180 },
+  { key: "woStatus", label: "WO Status", width: 105 },
+  { key: "manufacturer", label: "Manufacturer", width: 105 },
+  { key: "model", label: "Model", width: 95 },
+  { key: "serial", label: "Serial #", width: 115 },
+  { key: "po", label: "PO #", width: 95 },
+  { key: "itemStatus", label: "Item Status", width: 120 },
+  { key: "invoiceStatus", label: "Invoice Status", width: 120 },
+  { key: "invoiceNumber", label: "Invoice #", width: 95 },
+  { key: "departureType", label: "Departure Type", width: 130 },
+  { key: "departureDate", label: "Departure Date", width: 115 },
+  { key: "samsaraSubmitted", label: "Samsara Submitted", width: 130 },
+  { key: "proofOfDelivery", label: "Proof of Delivery", width: 120 },
 ];
 
 // ---------- Page ----------
