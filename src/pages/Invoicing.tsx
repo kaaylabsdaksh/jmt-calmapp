@@ -515,7 +515,7 @@ export default function Invoicing() {
                   })
                 }
                 placeholder="MM/DD/YYYY"
-                size="sm"
+                size="lg"
               />
             </div>
             <div className="space-y-1.5">
@@ -529,7 +529,7 @@ export default function Invoicing() {
                   })
                 }
                 placeholder="MM/DD/YYYY"
-                size="sm"
+                size="lg"
               />
             </div>
             <FieldSelect
