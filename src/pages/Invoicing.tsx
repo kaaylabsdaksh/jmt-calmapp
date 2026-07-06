@@ -532,31 +532,76 @@ export default function Invoicing() {
               </Badge>
             )}
           </div>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
+          <Popover>
+            <PopoverTrigger asChild>
               <Button variant="outline" size="sm" className="text-xs h-8">
-                <Eye className="h-3.5 w-3.5 mr-1.5" />
+                <Settings2 className="h-3.5 w-3.5 mr-1.5" />
                 Columns
               </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56 bg-popover">
-              <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              {ALL_COLUMNS.map((c) => (
-                <DropdownMenuCheckboxItem
-                  key={c.key}
-                  checked={visibleCols.has(c.key)}
-                  onCheckedChange={(v) => {
-                    const next = new Set(visibleCols);
-                    v ? next.add(c.key) : next.delete(c.key);
-                    setVisibleCols(next);
-                  }}
-                >
-                  {c.label}
-                </DropdownMenuCheckboxItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
+            </PopoverTrigger>
+            <PopoverContent align="end" className="w-72 p-0 bg-popover">
+              <div className="flex items-center justify-between px-3 py-2 border-b">
+                <div>
+                  <div className="text-sm font-semibold text-foreground">Columns</div>
+                  <div className="text-[10px] text-muted-foreground">Drag to reorder</div>
+                </div>
+                <Button variant="ghost" size="sm" className="h-7 text-xs" onClick={resetColumns}>
+                  Reset
+                </Button>
+              </div>
+              <div className="max-h-80 overflow-auto py-1">
+                {columnOrder.map((key) => {
+                  const def = ALL_COLUMNS.find((c) => c.key === key);
+                  if (!def) return null;
+                  const visible = visibleCols.has(key);
+                  return (
+                    <div
+                      key={key}
+                      draggable
+                      onDragStart={(e) => {
+                        setDraggedColumnKey(key);
+                        e.dataTransfer.effectAllowed = "move";
+                      }}
+                      onDragOver={(e) => {
+                        e.preventDefault();
+                        e.dataTransfer.dropEffect = "move";
+                      }}
+                      onDrop={(e) => {
+                        e.preventDefault();
+                        if (draggedColumnKey) reorderColumn(draggedColumnKey, key);
+                        setDraggedColumnKey(null);
+                      }}
+                      onDragEnd={() => setDraggedColumnKey(null)}
+                      className={cn(
+                        "flex items-center gap-2 px-2 py-1.5 hover:bg-muted/40",
+                        draggedColumnKey === key && "opacity-50"
+                      )}
+                    >
+                      <GripVertical className="h-3.5 w-3.5 text-muted-foreground/60 cursor-grab active:cursor-grabbing" />
+                      <Checkbox
+                        checked={visible}
+                        onCheckedChange={(v) => {
+                          const next = new Set(visibleCols);
+                          v ? next.add(key) : next.delete(key);
+                          setVisibleCols(next);
+                        }}
+                        className="h-3.5 w-3.5"
+                      />
+                      <span
+                        className={cn(
+                          "flex-1 text-xs",
+                          !visible && "text-muted-foreground line-through"
+                        )}
+                      >
+                        {def.label}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            </PopoverContent>
+          </Popover>
+
         </CardHeader>
         <div className="overflow-x-auto">
           <table className="w-full text-xs border-collapse">
