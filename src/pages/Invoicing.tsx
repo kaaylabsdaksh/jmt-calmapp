@@ -572,11 +572,8 @@ export default function Invoicing() {
                         No invoices found.
                       </div>
                       <p className="text-sm">
-                        Try adjusting your filters or search criteria.
+                        No data is currently available.
                       </p>
-                      <Button variant="outline" size="sm" onClick={clearFilters}>
-                        Reset Filters
-                      </Button>
                     </div>
                   </td>
                 </tr>
