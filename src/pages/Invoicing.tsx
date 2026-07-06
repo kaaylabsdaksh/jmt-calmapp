@@ -24,6 +24,7 @@ import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
+import { ModernDatePicker } from "@/components/ui/modern-date-picker";
 import {
   Select,
   SelectContent,
