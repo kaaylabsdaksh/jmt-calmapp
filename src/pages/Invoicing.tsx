@@ -350,6 +350,22 @@ export default function Invoicing() {
           .includes(q)
       );
     }
+    const activeFilters = Object.entries(columnFilters).filter(([, v]) => v?.trim());
+    if (activeFilters.length > 0) {
+      rows = rows.filter((r) =>
+        activeFilters.every(([key, val]) => {
+          const k = key as ColumnKey;
+          const term = val!.toLowerCase();
+          let value: string;
+          if (k === "samsaraSubmitted" || k === "proofOfDelivery") {
+            value = r[k] ? "yes" : "no";
+          } else {
+            value = String(r[k] ?? "").toLowerCase();
+          }
+          return value.includes(term);
+        })
+      );
+    }
     if (sort) {
       rows = [...rows].sort((a, b) => {
         const av = String(a[sort.key] ?? "");
@@ -358,7 +374,7 @@ export default function Invoicing() {
       });
     }
     return rows;
-  }, [sort, searchQuery]);
+  }, [sort, searchQuery, columnFilters]);
 
   const totalPages = Math.max(1, Math.ceil(filteredRows.length / pageSize));
   const pageRows = filteredRows.slice((page - 1) * pageSize, page * pageSize);
