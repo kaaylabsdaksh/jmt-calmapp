@@ -481,7 +481,7 @@ export default function Invoicing() {
       {/* Filter Card */}
       <Card>
         <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-7 gap-3">
             <FieldSelect
               label="Item Status"
               value={filters.itemStatus}
@@ -553,6 +553,13 @@ export default function Invoicing() {
                 { value: "manufacturing", label: "Manufacturing" },
               ]}
             />
+            <div className="space-y-1.5">
+              <Label className="text-xs text-muted-foreground">Search</Label>
+              <Button className="w-full h-10">
+                <Search className="h-4 w-4 mr-2" />
+                Search
+              </Button>
+            </div>
           </div>
         </CardContent>
       </Card>
