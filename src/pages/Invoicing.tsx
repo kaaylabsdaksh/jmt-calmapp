@@ -461,22 +461,30 @@ export default function Invoicing() {
             />
             <div className="space-y-1.5">
               <Label className="text-xs text-muted-foreground">Created From</Label>
-              <Input
-                type="date"
+              <ModernDatePicker
                 value={filters.createdFrom}
-                onChange={(e) =>
-                  setFilters({ ...filters, createdFrom: e.target.value })
+                onChange={(date) =>
+                  setFilters({
+                    ...filters,
+                    createdFrom: date ? date.toISOString().split("T")[0] : "",
+                  })
                 }
+                placeholder="MM/DD/YYYY"
+                size="sm"
               />
             </div>
             <div className="space-y-1.5">
               <Label className="text-xs text-muted-foreground">Created To</Label>
-              <Input
-                type="date"
+              <ModernDatePicker
                 value={filters.createdTo}
-                onChange={(e) =>
-                  setFilters({ ...filters, createdTo: e.target.value })
+                onChange={(date) =>
+                  setFilters({
+                    ...filters,
+                    createdTo: date ? date.toISOString().split("T")[0] : "",
+                  })
                 }
+                placeholder="MM/DD/YYYY"
+                size="sm"
               />
             </div>
             <FieldSelect
