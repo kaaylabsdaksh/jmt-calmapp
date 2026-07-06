@@ -1047,6 +1047,9 @@ function DetailRow({ label, value }: { label: string; value: string }) {
 }
 
 function ReportsTable({ onsite = false }: { onsite?: boolean }) {
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+
   const reports = [
     {
       date: "2026-03-16",
@@ -1067,6 +1070,9 @@ function ReportsTable({ onsite = false }: { onsite?: boolean }) {
       status: "Processing",
     },
   ];
+
+  const totalPages = Math.max(1, Math.ceil(reports.length / pageSize));
+  const pageReports = reports.slice((page - 1) * pageSize, page * pageSize);
 
   return (
     <div className="overflow-x-auto rounded-md border border-border">
