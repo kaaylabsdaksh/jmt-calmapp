@@ -683,7 +683,7 @@ export default function Invoicing() {
                         onCheckedChange={() => toggleRow(row.id)}
                       />
                     </td>
-                    {ALL_COLUMNS.filter((c) => visibleCols.has(c.key)).map(
+                    {orderedVisibleColumns.map(
                       (c) => (
                         <td
                           key={c.key}
