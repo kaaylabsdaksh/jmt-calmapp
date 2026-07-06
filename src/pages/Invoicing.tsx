@@ -325,10 +325,29 @@ export default function Invoicing() {
   const [pageSize, setPageSize] = useState(10);
   const [drawerRow, setDrawerRow] = useState<InvoiceRow | null>(null);
   const [activeReportTab, setActiveReportTab] = useState("invoices");
+  const [searchQuery, setSearchQuery] = useState("");
 
   // Filtered rows
   const filteredRows = useMemo(() => {
     let rows = mockRows;
+    const q = searchQuery.trim().toLowerCase();
+    if (q) {
+      rows = rows.filter((r) =>
+        [
+          r.reportNumber,
+          r.accountNumber,
+          r.customer,
+          r.manufacturer,
+          r.model,
+          r.serial,
+          r.po,
+          r.invoiceNumber,
+        ]
+          .join(" ")
+          .toLowerCase()
+          .includes(q)
+      );
+    }
     if (sort) {
       rows = [...rows].sort((a, b) => {
         const av = String(a[sort.key] ?? "");
@@ -337,7 +356,7 @@ export default function Invoicing() {
       });
     }
     return rows;
-  }, [sort]);
+  }, [sort, searchQuery]);
 
   const totalPages = Math.max(1, Math.ceil(filteredRows.length / pageSize));
   const pageRows = filteredRows.slice((page - 1) * pageSize, page * pageSize);
