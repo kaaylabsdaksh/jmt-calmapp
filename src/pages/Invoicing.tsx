@@ -938,6 +938,7 @@ export default function Invoicing() {
           )}
         </SheetContent>
       </Sheet>
+      </div>
     </div>
   );
 }
