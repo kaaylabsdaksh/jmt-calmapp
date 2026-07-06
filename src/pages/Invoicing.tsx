@@ -753,12 +753,8 @@ export default function Invoicing() {
           <CardTitle className="text-sm">Invoice Reports</CardTitle>
         </CardHeader>
         <CardContent className="px-3 pb-3">
-          <Tabs defaultValue="invoices">
-            <div className="flex items-center justify-between gap-2 flex-wrap mb-2">
-              <TabsList>
-                <TabsTrigger value="invoices" className="text-xs">Process Invoice(s)</TabsTrigger>
-                <TabsTrigger value="onsite" className="text-xs">Process Onsite Invoice(s)</TabsTrigger>
-              </TabsList>
+          <Tabs value={activeReportTab} onValueChange={setActiveReportTab}>
+            <div className="flex items-center justify-end gap-2 flex-wrap mb-2">
               <div className="flex items-center gap-2">
                 <div className="relative">
                   <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
@@ -780,11 +776,21 @@ export default function Invoicing() {
 
           {/* Sticky Footer Actions */}
           <div className="sticky bottom-0 z-10 mt-2 -mx-3 -mb-3 px-3 py-2 bg-background border-t border-border flex items-center gap-2">
-            <Button size="sm" className="text-xs h-8">
+            <Button
+              size="sm"
+              variant={activeReportTab === "invoices" ? "default" : "outline"}
+              className="text-xs h-8"
+              onClick={() => setActiveReportTab("invoices")}
+            >
               <Receipt className="h-3.5 w-3.5 mr-1.5" />
               Process Invoices
             </Button>
-            <Button size="sm" className="text-xs h-8">
+            <Button
+              size="sm"
+              variant={activeReportTab === "onsite" ? "default" : "outline"}
+              className="text-xs h-8"
+              onClick={() => setActiveReportTab("onsite")}
+            >
               <FileText className="h-3.5 w-3.5 mr-1.5" />
               Process Onsite Invoices
             </Button>
