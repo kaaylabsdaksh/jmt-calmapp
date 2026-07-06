@@ -325,10 +325,29 @@ export default function Invoicing() {
   const [pageSize, setPageSize] = useState(10);
   const [drawerRow, setDrawerRow] = useState<InvoiceRow | null>(null);
   const [activeReportTab, setActiveReportTab] = useState("invoices");
+  const [searchQuery, setSearchQuery] = useState("");
 
   // Filtered rows
   const filteredRows = useMemo(() => {
     let rows = mockRows;
+    const q = searchQuery.trim().toLowerCase();
+    if (q) {
+      rows = rows.filter((r) =>
+        [
+          r.reportNumber,
+          r.accountNumber,
+          r.customer,
+          r.manufacturer,
+          r.model,
+          r.serial,
+          r.po,
+          r.invoiceNumber,
+        ]
+          .join(" ")
+          .toLowerCase()
+          .includes(q)
+      );
+    }
     if (sort) {
       rows = [...rows].sort((a, b) => {
         const av = String(a[sort.key] ?? "");
@@ -337,7 +356,7 @@ export default function Invoicing() {
       });
     }
     return rows;
-  }, [sort]);
+  }, [sort, searchQuery]);
 
   const totalPages = Math.max(1, Math.ceil(filteredRows.length / pageSize));
   const pageRows = filteredRows.slice((page - 1) * pageSize, page * pageSize);
@@ -532,12 +551,26 @@ export default function Invoicing() {
               </Badge>
             )}
           </div>
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button variant="outline" size="sm" className="text-xs h-8">
-                <Settings2 className="h-3.5 w-3.5 mr-1.5" />
-                Columns
-              </Button>
+          <div className="flex items-center gap-2">
+            <div className="relative">
+              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
+              <Input
+                placeholder="Search invoices..."
+                value={searchQuery}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  setPage(1);
+                }}
+                className="pl-7 h-8 w-52 text-xs"
+              />
+            </div>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="outline" size="sm" className="text-xs h-8">
+                  <Settings2 className="h-3.5 w-3.5 mr-1.5" />
+                  Columns
+                </Button>
+
             </PopoverTrigger>
             <PopoverContent align="end" className="w-72 p-0 bg-popover">
               <div className="flex items-center justify-between px-3 py-2 border-b">
@@ -601,6 +634,8 @@ export default function Invoicing() {
               </div>
             </PopoverContent>
           </Popover>
+          </div>
+
 
         </CardHeader>
         <div className="overflow-x-auto">
