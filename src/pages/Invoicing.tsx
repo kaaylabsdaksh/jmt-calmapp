@@ -5,8 +5,6 @@ import {
   Settings,
   Search,
   Filter,
-  ChevronDown,
-  X,
   FileText,
   Truck,
   UserCog,
@@ -44,11 +42,6 @@ import {
   DropdownMenuLabel,
   DropdownMenuCheckboxItem,
 } from "@/components/ui/dropdown-menu";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
 import {
   Sheet,
   SheetContent,
@@ -290,15 +283,6 @@ export default function Invoicing() {
     division: "all",
     customerGroup: "all",
   });
-  const [showMoreFilters, setShowMoreFilters] = useState(false);
-  const [advFilters, setAdvFilters] = useState({
-    woStatus: "all",
-    invoiceStatus: "all",
-    departureType: "all",
-    billingSpecialist: "all",
-    manufacturer: "",
-    model: "",
-  });
 
   // Table state
   const [selected, setSelected] = useState<Set<string>>(new Set());
@@ -315,15 +299,6 @@ export default function Invoicing() {
   // Filtered rows
   const filteredRows = useMemo(() => {
     let rows = mockRows;
-    if (advFilters.woStatus !== "all") {
-      rows = rows.filter((r) => r.woStatus === advFilters.woStatus);
-    }
-    if (advFilters.invoiceStatus !== "all") {
-      rows = rows.filter((r) => r.invoiceStatus === advFilters.invoiceStatus);
-    }
-    if (advFilters.departureType !== "all") {
-      rows = rows.filter((r) => r.departureType === advFilters.departureType);
-    }
     if (sort) {
       rows = [...rows].sort((a, b) => {
         const av = String(a[sort.key] ?? "");
@@ -332,7 +307,7 @@ export default function Invoicing() {
       });
     }
     return rows;
-  }, [advFilters, sort]);
+  }, [sort]);
 
   const totalPages = Math.max(1, Math.ceil(filteredRows.length / pageSize));
   const pageRows = filteredRows.slice((page - 1) * pageSize, page * pageSize);
@@ -353,26 +328,6 @@ export default function Invoicing() {
 
   const selectedCount = selected.size;
   const hasSelection = selectedCount > 0;
-
-  const clearFilters = () => {
-    setFilters({
-      itemStatus: "all",
-      location: "all",
-      createdFrom: "",
-      createdTo: "",
-      division: "all",
-      customerGroup: "all",
-    });
-    setAdvFilters({
-      woStatus: "all",
-      invoiceStatus: "all",
-      departureType: "all",
-      billingSpecialist: "all",
-      manufacturer: "",
-      model: "",
-    });
-    toast("Filters cleared");
-  };
 
   const doSort = (key: ColumnKey) => {
     setSort((s) =>
@@ -553,107 +508,6 @@ export default function Invoicing() {
                 { value: "manufacturing", label: "Manufacturing" },
               ]}
             />
-          </div>
-
-          <div className="flex items-center justify-between gap-3">
-            <Collapsible open={showMoreFilters} onOpenChange={setShowMoreFilters}>
-              <CollapsibleTrigger asChild>
-                <Button variant="ghost" size="sm" className="text-muted-foreground">
-                  <ChevronDown
-                    className={cn(
-                      "h-4 w-4 mr-1 transition-transform",
-                      showMoreFilters && "rotate-180"
-                    )}
-                  />
-                  {showMoreFilters ? "Hide" : "More"} filters
-                </Button>
-              </CollapsibleTrigger>
-              <CollapsibleContent className="pt-3">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3">
-                  <FieldSelect
-                    label="WO Status"
-                    value={advFilters.woStatus}
-                    onChange={(v) => setAdvFilters({ ...advFilters, woStatus: v })}
-                    options={[
-                      { value: "all", label: "All" },
-                      { value: "Ready", label: "Ready" },
-                      { value: "In Process", label: "In Process" },
-                      { value: "On Hold", label: "On Hold" },
-                    ]}
-                  />
-                  <FieldSelect
-                    label="Invoice Status"
-                    value={advFilters.invoiceStatus}
-                    onChange={(v) =>
-                      setAdvFilters({ ...advFilters, invoiceStatus: v })
-                    }
-                    options={[
-                      { value: "all", label: "All" },
-                      { value: "Pending", label: "Pending" },
-                      { value: "Delivery Ticket", label: "Delivery Ticket" },
-                      { value: "Processed", label: "Processed" },
-                    ]}
-                  />
-                  <FieldSelect
-                    label="Departure Type"
-                    value={advFilters.departureType}
-                    onChange={(v) =>
-                      setAdvFilters({ ...advFilters, departureType: v })
-                    }
-                    options={[
-                      { value: "all", label: "All" },
-                      { value: "Customer Pickup", label: "Customer Pickup" },
-                      { value: "Driver Dropoff", label: "Driver Dropoff" },
-                      { value: "Shipped", label: "Shipped" },
-                    ]}
-                  />
-                  <FieldSelect
-                    label="Billing Specialist"
-                    value={advFilters.billingSpecialist}
-                    onChange={(v) =>
-                      setAdvFilters({ ...advFilters, billingSpecialist: v })
-                    }
-                    options={[
-                      { value: "all", label: "All" },
-                      { value: "unassigned", label: "Unassigned" },
-                      { value: "jsmith", label: "J. Smith" },
-                      { value: "adoe", label: "A. Doe" },
-                    ]}
-                  />
-                  <div className="space-y-1.5">
-                    <Label className="text-xs text-muted-foreground">
-                      Manufacturer
-                    </Label>
-                    <Input
-                      placeholder="e.g. FLUKE"
-                      value={advFilters.manufacturer}
-                      onChange={(e) =>
-                        setAdvFilters({
-                          ...advFilters,
-                          manufacturer: e.target.value,
-                        })
-                      }
-                    />
-                  </div>
-                  <div className="space-y-1.5">
-                    <Label className="text-xs text-muted-foreground">Model</Label>
-                    <Input
-                      placeholder="e.g. 87V"
-                      value={advFilters.model}
-                      onChange={(e) =>
-                        setAdvFilters({ ...advFilters, model: e.target.value })
-                      }
-                    />
-                  </div>
-                </div>
-              </CollapsibleContent>
-            </Collapsible>
-            <div className="flex items-end gap-2">
-              <Button variant="outline" onClick={clearFilters}>
-                <X className="h-4 w-4 mr-2" />
-                Clear
-              </Button>
-            </div>
           </div>
         </CardContent>
       </Card>
