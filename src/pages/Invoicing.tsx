@@ -272,27 +272,6 @@ const ALL_COLUMNS: { key: ColumnKey; label: string; width: number }[] = [
 export default function Invoicing() {
   const [loading] = useState(false);
 
-  // Filter state
-  const [filters, setFilters] = useState({
-    itemStatus: "all",
-    location: "all",
-    createdFrom: "",
-    createdTo: "",
-    division: "all",
-    customerGroup: "all",
-    searchBy: "reportNumber",
-    searchTerm: "",
-  });
-  const [showMoreFilters, setShowMoreFilters] = useState(false);
-  const [advFilters, setAdvFilters] = useState({
-    woStatus: "all",
-    invoiceStatus: "all",
-    departureType: "all",
-    billingSpecialist: "all",
-    manufacturer: "",
-    model: "",
-  });
-
   // Table state
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [sort, setSort] = useState<{ key: ColumnKey; dir: "asc" | "desc" } | null>(
@@ -308,32 +287,6 @@ export default function Invoicing() {
   // Filtered rows
   const filteredRows = useMemo(() => {
     let rows = mockRows;
-    if (filters.searchTerm.trim()) {
-      const t = filters.searchTerm.toLowerCase();
-      rows = rows.filter((r) =>
-        [
-          r.reportNumber,
-          r.invoiceNumber,
-          r.accountNumber,
-          r.customer,
-          r.manufacturer,
-          r.serial,
-          r.po,
-        ]
-          .join(" ")
-          .toLowerCase()
-          .includes(t)
-      );
-    }
-    if (advFilters.woStatus !== "all") {
-      rows = rows.filter((r) => r.woStatus === advFilters.woStatus);
-    }
-    if (advFilters.invoiceStatus !== "all") {
-      rows = rows.filter((r) => r.invoiceStatus === advFilters.invoiceStatus);
-    }
-    if (advFilters.departureType !== "all") {
-      rows = rows.filter((r) => r.departureType === advFilters.departureType);
-    }
     if (sort) {
       rows = [...rows].sort((a, b) => {
         const av = String(a[sort.key] ?? "");
@@ -342,7 +295,7 @@ export default function Invoicing() {
       });
     }
     return rows;
-  }, [filters, advFilters, sort]);
+  }, [sort]);
 
   const totalPages = Math.max(1, Math.ceil(filteredRows.length / pageSize));
   const pageRows = filteredRows.slice((page - 1) * pageSize, page * pageSize);
@@ -363,28 +316,6 @@ export default function Invoicing() {
 
   const selectedCount = selected.size;
   const hasSelection = selectedCount > 0;
-
-  const clearFilters = () => {
-    setFilters({
-      itemStatus: "all",
-      location: "all",
-      createdFrom: "",
-      createdTo: "",
-      division: "all",
-      customerGroup: "all",
-      searchBy: "reportNumber",
-      searchTerm: "",
-    });
-    setAdvFilters({
-      woStatus: "all",
-      invoiceStatus: "all",
-      departureType: "all",
-      billingSpecialist: "all",
-      manufacturer: "",
-      model: "",
-    });
-    toast("Filters cleared");
-  };
 
   const doSort = (key: ColumnKey) => {
     setSort((s) =>
