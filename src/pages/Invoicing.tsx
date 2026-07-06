@@ -489,103 +489,45 @@ export default function Invoicing() {
         </CardContent>
       </Card>
 
-      {/* Quick Action Toolbar */}
-      <Card>
-        <CardContent className="py-3 flex flex-wrap items-center justify-between gap-3">
-          <div className="flex flex-wrap items-center gap-2">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm">
-                  <MoreHorizontal className="h-4 w-4 mr-2" />
-                  Menu
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-56 bg-popover">
-                <DropdownMenuLabel>Quick Actions</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>Refresh data</DropdownMenuItem>
-                <DropdownMenuItem>Save current view</DropdownMenuItem>
-                <DropdownMenuItem>Manage saved views</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-            <Button
-              variant="outline"
-              size="sm"
-              disabled={!hasSelection}
-              onClick={() => toast("Billing specialist assigned")}
-            >
-              <UserCog className="h-4 w-4 mr-2" />
-              Billing Specialist
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              disabled={!hasSelection}
-              onClick={() => toast.success("Delivery Ticket Created")}
-            >
-              <Truck className="h-4 w-4 mr-2" />
-              Delivery Tickets
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              disabled={!hasSelection}
-              onClick={() => toast.success("Invoice Generated")}
-            >
-              <Receipt className="h-4 w-4 mr-2" />
-              Process Invoice(s)
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              disabled={!hasSelection}
-              onClick={() => toast.success("Onsite invoice processed")}
-            >
-              <FileText className="h-4 w-4 mr-2" />
-              Process Onsite Invoice(s)
-            </Button>
-          </div>
-
-          <div className="flex items-center gap-2">
+      {/* Main Table */}
+      <Card className="overflow-hidden">
+        <CardHeader className="px-3 py-2 border-b border-border flex flex-row items-center justify-between gap-2">
+          <div>
             {hasSelection && (
               <Badge
                 variant="outline"
-                className="bg-primary/10 text-primary border-primary/20"
+                className="bg-primary/10 text-primary border-primary/20 text-xs"
               >
                 {selectedCount} Item{selectedCount === 1 ? "" : "s"} Selected
               </Badge>
             )}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm">
-                  <Eye className="h-4 w-4 mr-2" />
-                  Columns
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56 bg-popover">
-                <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                {ALL_COLUMNS.map((c) => (
-                  <DropdownMenuCheckboxItem
-                    key={c.key}
-                    checked={visibleCols.has(c.key)}
-                    onCheckedChange={(v) => {
-                      const next = new Set(visibleCols);
-                      v ? next.add(c.key) : next.delete(c.key);
-                      setVisibleCols(next);
-                    }}
-                  >
-                    {c.label}
-                  </DropdownMenuCheckboxItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
           </div>
-        </CardContent>
-      </Card>
-
-      {/* Main Table */}
-      <Card className="overflow-hidden">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="sm" className="text-xs h-8">
+                <Eye className="h-3.5 w-3.5 mr-1.5" />
+                Columns
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56 bg-popover">
+              <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              {ALL_COLUMNS.map((c) => (
+                <DropdownMenuCheckboxItem
+                  key={c.key}
+                  checked={visibleCols.has(c.key)}
+                  onCheckedChange={(v) => {
+                    const next = new Set(visibleCols);
+                    v ? next.add(c.key) : next.delete(c.key);
+                    setVisibleCols(next);
+                  }}
+                >
+                  {c.label}
+                </DropdownMenuCheckboxItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </CardHeader>
         <div className="overflow-x-auto">
           <table className="w-full text-xs border-collapse">
             <thead className="sticky top-0 z-10 bg-muted/60 backdrop-blur-sm">
