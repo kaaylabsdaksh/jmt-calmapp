@@ -910,8 +910,11 @@ export default function Invoicing() {
         <div className="flex items-center gap-2">
           <Button
             size="sm"
-            variant={activeReportTab === "invoices" ? "default" : "outline"}
-            className="text-xs h-8"
+            variant="outline"
+            className={cn(
+              "text-xs h-8",
+              activeReportTab === "invoices" && "ring-2 ring-primary"
+            )}
             onClick={() => setActiveReportTab("invoices")}
           >
             <Receipt className="h-3.5 w-3.5 mr-1.5" />
@@ -919,8 +922,11 @@ export default function Invoicing() {
           </Button>
           <Button
             size="sm"
-            variant={activeReportTab === "onsite" ? "default" : "outline"}
-            className="text-xs h-8"
+            variant="outline"
+            className={cn(
+              "text-xs h-8",
+              activeReportTab === "onsite" && "ring-2 ring-primary"
+            )}
             onClick={() => setActiveReportTab("onsite")}
           >
             <FileText className="h-3.5 w-3.5 mr-1.5" />
