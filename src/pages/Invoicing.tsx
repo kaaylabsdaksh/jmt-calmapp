@@ -758,7 +758,7 @@ export default function Invoicing() {
                     className={cn(
                       "border-b border-border cursor-pointer transition-colors",
                       idx % 2 === 1 ? "bg-muted/20" : "bg-background",
-                      "hover:bg-accent/50",
+                      "hover:bg-muted/50",
                       selected.has(row.id) && "bg-primary/5"
                     )}
                     onClick={() => setDrawerRow(row)}
