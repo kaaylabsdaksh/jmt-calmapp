@@ -327,6 +327,7 @@ export default function Invoicing() {
   const [drawerRow, setDrawerRow] = useState<InvoiceRow | null>(null);
   const [activeReportTab, setActiveReportTab] = useState("invoices");
   const [searchQuery, setSearchQuery] = useState("");
+  const [columnFilters, setColumnFilters] = useState<Record<ColumnKey, string>>({});
 
   // Filtered rows
   const filteredRows = useMemo(() => {
