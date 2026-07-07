@@ -598,7 +598,14 @@ const ManageCustomers = () => {
                               onCheckedChange={(v) => toggleOne(row.id, !!v)}
                             />
                           </TableCell>
-                          <TableCell className="py-2 font-medium">{row.accountNumber}</TableCell>
+                          <TableCell className="py-2 font-medium" onClick={(e) => e.stopPropagation()}>
+                            <Link
+                              to={`/manage-customers/${encodeURIComponent(row.accountNumber)}`}
+                              className="text-blue-600 hover:text-blue-700 hover:underline"
+                            >
+                              {row.accountNumber}
+                            </Link>
+                          </TableCell>
                           <TableCell className="py-2">{row.name}</TableCell>
                           <TableCell className="py-2 text-muted-foreground">{row.address}</TableCell>
                           <TableCell className="py-2">{row.city}</TableCell>
