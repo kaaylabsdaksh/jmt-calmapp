@@ -1163,6 +1163,9 @@ export default function Invoicing() {
           <BillingSpecialistView />
         )}
       </div>
+    </div>
+  );
+}
 
 // ---------- Sub components ----------
 function FieldSelect({
