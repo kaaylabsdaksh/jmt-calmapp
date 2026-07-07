@@ -259,14 +259,6 @@ export function BillingSpecialistView() {
             <Receipt className="h-3.5 w-3.5 mr-1.5" />
             Process Invoice(s)
           </Button>
-          <div className="flex items-center gap-4 text-xs text-muted-foreground">
-            <button className="hover:text-foreground underline-offset-2 hover:underline">
-              Set Default View
-            </button>
-            <button className="hover:text-foreground underline-offset-2 hover:underline">
-              Set Search Field Defaults
-            </button>
-          </div>
         </div>
       </footer>
     </div>
