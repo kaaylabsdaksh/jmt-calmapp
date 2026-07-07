@@ -1,31 +1,41 @@
-## Mobile responsiveness — scope and plan
+Goal: Add a user toggle on `/invoicing` that switches between the existing **Invoices** view and a new **Billing Specialist** view matching the provided reference image.
 
-This is a large enterprise app (19 pages, several files >5k lines, many wide data tables and multi-column forms). True mobile parity requires layout work on every screen. Doing it all in one pass would produce thousands of risky line changes, so I'll do it in phases. After Phase 1 most screens will be usable on mobile; Phases 2–3 polish the heavy screens.
+Scope of work:
+1. **View-mode state**
+   - Add `viewMode` state with values `"invoices" | "billingSpecialist"`.
+   - Default to the current Invoices view so existing behavior is unchanged.
 
-### Phase 1 — Global foundations (this pass)
-The shadcn `Sidebar` already supports a mobile Sheet drawer, but `SidebarLayout` never renders the trigger and pages use desktop-only padding. I will:
+2. **User toggle**
+   - Add a visible toggle control (segmented button or tab-like switch) labeled **Invoices** / **Billing Specialist**.
+   - Place it in the page header area so it is obvious and persists across the page.
 
-1. **Sidebar as mobile drawer** — add a sticky top bar (visible only `<md`) with a `SidebarTrigger` hamburger + page title slot. Desktop layout unchanged.
-2. **Container padding** — switch hard-coded `px-6/px-8` page wrappers to `px-3 sm:px-4 lg:px-6` and remove fixed `min-w-[…]` values that cause horizontal overflow.
-3. **Tables** — wrap every data table in `overflow-x-auto` so wide tables scroll horizontally on phones instead of breaking layout.
-4. **Form grids** — change `grid-cols-2/3/4` and 2-column flex rows in forms to `grid-cols-1 sm:grid-cols-2 lg:grid-cols-N`. Header rows with many fields stack on mobile.
-5. **Dialogs / sheets** — cap dialog widths with `max-w-[95vw]` and make tab strips scroll horizontally.
-6. **Footers** — fixed action footers become `flex-col sm:flex-row` with full-width buttons on mobile.
+3. **Billing Specialist view** (rendered when `viewMode === "billingSpecialist"`)
+   - **Title**: Change top nav title to "Invoicing (Billing Specialist)".
+   - **Filters**: Replace the current filter row with the six fields from the image:
+     - Invoicing Type
+     - Work Order Type
+     - Location
+     - Division
+     - Invoice Status
+     - Customer Group
+   - **Action buttons**: Add a centered row with:
+     - Clear
+     - Menu
+     - Invoicing
+     - Delivery Tickets
+     - Process Invoice(s)
+   - **Table**: Replace the main invoice table with columns shown in the image:
+     - WO Batch, Acct #, SR#, Customer Name, RTB Count, Total Count, Last Comment Date, Last Comment, Min Need By Date, Min RTB Date, To Shipping, Sales Order
+     - Each column header includes a compact sub-filter input.
+     - Start with the "No data to display" empty state shown in the image.
+   - **Footer**: Add a centered footer with:
+     - Process Invoice(s) button
+     - Text links: "Set Default View" and "Set Search Field Defaults"
 
-### Phase 2 — Heavy list pages (next pass, on request)
-ESL Items, Work Order tables, Logistics, Shipping, Customer Pickup: convert column-dense tables to card layouts under `md`, collapse filter bars into a "Filters" sheet, simplify toolbars.
+4. **Invoices view** (existing behavior)
+   - Keep the current filters, table, reports section, sticky footer, and selection bulk-action bar exactly as they are now.
 
-### Phase 3 — Form-heavy pages (on request)
-FormVariationsDemo, AddNewWorkOrder, EditOrder, EditBatchWorkOrder: rework tab strips, batch grids, and inline edit bars (like the ESL inline editor we just built) for thumb-friendly use.
+5. **Data**
+   - Use local mock state for the Billing Specialist table (empty by default, matching the reference image).
 
-### What I won't change
-- Business logic, data, routing, or feature behavior.
-- Desktop appearance — all changes are guarded by Tailwind breakpoints.
-
-### Technical notes
-- New file: `src/components/MobileTopBar.tsx` (hamburger + brand, `md:hidden`).
-- Edit `SidebarLayout` to render it above `<main>`.
-- Sweep pages with ripgrep for `px-6|px-8|grid-cols-[234]|min-w-\[` and adjust.
-- No new dependencies.
-
-Confirm and I'll start with Phase 1.
+No backend changes are required; this is a frontend-only presentation feature.
