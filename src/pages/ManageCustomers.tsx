@@ -100,12 +100,12 @@ type SortKey = keyof CustomerRow | null;
 
 const StatusChip = ({ status }: { status: CustomerRow["status"] }) => {
   const map: Record<CustomerRow["status"], string> = {
-    Active: "bg-emerald-500 text-white",
-    Pending: "bg-amber-500 text-white",
-    Inactive: "bg-rose-500 text-white",
+    Active: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20",
+    Pending: "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20",
+    Inactive: "bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20",
   };
   return (
-    <Badge className={`${map[status]} h-5 px-2 text-[10px] font-medium hover:${map[status]}`}>
+    <Badge variant="outline" className={`${map[status]} h-5 px-2.5 text-[10px] font-semibold rounded-full hover:bg-transparent`}>
       {status}
     </Badge>
   );
