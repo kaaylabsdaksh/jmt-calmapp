@@ -479,8 +479,19 @@ const ManageCustomers = () => {
               >
                 <Plus className="h-3.5 w-3.5 mr-1.5" />Add New Customer
               </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                className="h-8 text-xs"
+                onClick={() => toast({ title: "Refreshed", description: "Customer data reloaded." })}
+              >
+                <RefreshCw className="h-3.5 w-3.5 mr-1.5" />Refresh
+              </Button>
               <Button variant="outline" size="sm" className="h-8 text-xs">
                 <Download className="h-3.5 w-3.5 mr-1.5" />Export
+              </Button>
+              <Button variant="outline" size="sm" className="h-8 text-xs">
+                <Settings2 className="h-3.5 w-3.5 mr-1.5" />Columns
               </Button>
               <Button variant="outline" size="sm" className="h-8 text-xs">
                 <Bell className="h-3.5 w-3.5 mr-1.5" />Retest Notices
