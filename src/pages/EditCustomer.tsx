@@ -1,7 +1,6 @@
 import { useMemo, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import {
-  ArrowLeft,
   Save,
   FilePlus2,
   MoreHorizontal,
@@ -248,15 +247,6 @@ export default function EditCustomer() {
       <div className="sticky top-0 z-30 bg-white border-b border-border">
         <div className="px-3 sm:px-4 lg:px-6 py-3 flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-start gap-3 min-w-0">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="h-8 text-xs -ml-2"
-              onClick={() => navigate("/manage-customers")}
-            >
-              <ArrowLeft className="h-3.5 w-3.5 mr-1.5" />
-              Back
-            </Button>
             <div className="min-w-0">
               <h1 className="text-base sm:text-lg font-semibold text-foreground leading-tight">
                 Customer Details
