@@ -1122,7 +1122,6 @@ export default function Invoicing() {
           )}
         </SheetContent>
       </Sheet>
-      </div>
 
       {/* Sticky Footer */}
       <footer className="sticky bottom-0 z-40 bg-background px-6 py-3 border-t border-border">
