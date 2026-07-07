@@ -397,7 +397,7 @@ export function BillingSpecialistView() {
       </Card>
 
       {/* Sticky Footer */}
-      <footer className="mt-auto sticky bottom-0 z-40 bg-background px-6 py-3 border-t border-border">
+      <footer className="mt-auto sticky bottom-0 z-40 bg-background px-3 py-2 border-t border-border">
         <div className="flex items-center justify-between gap-2">
           <Button variant="outline" size="sm" className="text-xs h-8">
             <Receipt className="h-3.5 w-3.5 mr-1.5" />
