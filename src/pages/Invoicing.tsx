@@ -1097,30 +1097,36 @@ export default function Invoicing() {
 
       {/* Sticky Footer */}
       <footer className="sticky bottom-0 z-40 bg-background px-6 py-3 border-t border-border">
-        <div className="flex items-center gap-2">
-          <Button
-            size="sm"
-            variant="outline"
-            className={cn(
-              "text-xs h-8",
-              activeReportTab === "invoices" && "ring-2 ring-primary"
-            )}
-            onClick={() => setActiveReportTab("invoices")}
-          >
-            <Receipt className="h-3.5 w-3.5 mr-1.5" />
-            Process Invoices
-          </Button>
-          <Button
-            size="sm"
-            variant="outline"
-            className={cn(
-              "text-xs h-8",
-              activeReportTab === "onsite" && "ring-2 ring-primary"
-            )}
-            onClick={() => setActiveReportTab("onsite")}
-          >
-            <FileText className="h-3.5 w-3.5 mr-1.5" />
-            Process Onsite Invoices
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <Button
+              size="sm"
+              variant="outline"
+              className={cn(
+                "text-xs h-8",
+                activeReportTab === "invoices" && "ring-2 ring-primary"
+              )}
+              onClick={() => setActiveReportTab("invoices")}
+            >
+              <Receipt className="h-3.5 w-3.5 mr-1.5" />
+              Process Invoices
+            </Button>
+            <Button
+              size="sm"
+              variant="outline"
+              className={cn(
+                "text-xs h-8",
+                activeReportTab === "onsite" && "ring-2 ring-primary"
+              )}
+              onClick={() => setActiveReportTab("onsite")}
+            >
+              <FileText className="h-3.5 w-3.5 mr-1.5" />
+              Process Onsite Invoices
+            </Button>
+          </div>
+          <Button size="sm" variant="outline" className="text-xs h-8">
+            <Truck className="h-3.5 w-3.5 mr-1.5" />
+            Delivery Tickets
           </Button>
         </div>
       </footer>
