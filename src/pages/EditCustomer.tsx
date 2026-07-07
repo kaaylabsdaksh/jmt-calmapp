@@ -1,7 +1,6 @@
 import { useMemo, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import {
-  ArrowLeft,
   Save,
   FilePlus2,
   MoreHorizontal,
