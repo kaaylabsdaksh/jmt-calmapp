@@ -19,6 +19,7 @@ import {
   Settings2,
   GripVertical,
   X,
+  Ticket,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
