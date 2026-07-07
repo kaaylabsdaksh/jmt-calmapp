@@ -482,9 +482,9 @@ export default function Invoicing() {
       <div className="flex flex-col gap-3 p-3 md:p-4 flex-1">
         {/* View Toggle */}
         <div className="flex justify-center">
-          <div className="inline-flex items-center bg-muted rounded-md p-1 border border-border">
+          <div className="inline-flex items-center bg-muted rounded-full p-1 border border-border">
             <button
-              className={`px-3 py-1 text-xs font-medium rounded-sm transition-colors ${
+              className={`px-4 py-1.5 text-xs font-medium rounded-full transition-colors ${
                 viewMode === "invoices"
                   ? "bg-background text-foreground shadow-sm"
                   : "text-muted-foreground hover:text-foreground"
@@ -494,7 +494,7 @@ export default function Invoicing() {
               Invoices
             </button>
             <button
-              className={`px-3 py-1 text-xs font-medium rounded-sm transition-colors ${
+              className={`px-4 py-1.5 text-xs font-medium rounded-full transition-colors ${
                 viewMode === "billingSpecialist"
                   ? "bg-background text-foreground shadow-sm"
                   : "text-muted-foreground hover:text-foreground"
