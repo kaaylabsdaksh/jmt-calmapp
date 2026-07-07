@@ -55,6 +55,7 @@ import { Separator } from "@/components/ui/separator";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { BillingSpecialistView } from "@/components/BillingSpecialistView";
 import StandardTopNav from "@/components/shared/StandardTopNav";
 
 // ---------- Types ----------
