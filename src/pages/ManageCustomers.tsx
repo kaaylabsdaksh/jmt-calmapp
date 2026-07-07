@@ -335,11 +335,16 @@ const ManageCustomers = () => {
           </div>
 
           {/* Filters */}
-          <Card>
-            <CardContent className="p-3 space-y-2">
-              <div className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
-                Search & Filters
+          <Card className="overflow-hidden">
+            <div className="flex items-center gap-2 px-3 py-2 border-b border-border bg-muted/40">
+              <div className="h-6 w-6 rounded-md bg-blue-500/10 text-blue-600 dark:text-blue-400 ring-1 ring-blue-500/20 flex items-center justify-center">
+                <Search className="h-3 w-3" />
               </div>
+              <div className="text-[11px] font-semibold text-foreground uppercase tracking-wide">
+                Search &amp; Filters
+              </div>
+            </div>
+            <CardContent className="p-3 space-y-2">
 
               {/* Universal search */}
               <div className="flex items-stretch gap-0 rounded-md border border-input bg-background overflow-hidden h-8">
