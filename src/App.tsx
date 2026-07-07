@@ -61,6 +61,7 @@ const App = () => {
           <Route path="/onsite-projects/new" element={<OnsiteProjectDetail />} />
           <Route path="/onsite-projects/vehicle-standards" element={<VehicleStandards />} />
           <Route path="/invoicing" element={<Invoicing />} />
+          <Route path="/manage-customers" element={<ManageCustomers />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
