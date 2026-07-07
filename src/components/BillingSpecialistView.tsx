@@ -183,6 +183,22 @@ export function BillingSpecialistView() {
                 </SelectContent>
               </Select>
             </div>
+            <div className="space-y-1.5 flex flex-col justify-end">
+              <div className="flex gap-2">
+                <Button className="flex-1 h-9">
+                  <Search className="h-4 w-4 mr-2" />
+                  Search
+                </Button>
+                <Button
+                  variant="outline"
+                  className="flex-1 h-9"
+                  onClick={clearFilters}
+                >
+                  <RotateCcw className="h-4 w-4 mr-2" />
+                  Clear
+                </Button>
+              </div>
+            </div>
           </div>
         </CardContent>
       </Card>
