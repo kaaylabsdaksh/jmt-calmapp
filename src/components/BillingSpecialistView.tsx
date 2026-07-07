@@ -82,14 +82,14 @@ export function BillingSpecialistView() {
       {/* Filters */}
       <Card>
         <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7 gap-3">
             <div className="space-y-1.5">
               <Label className="text-xs text-muted-foreground">Invoicing Type</Label>
               <Select
                 value={filters.invoicingType}
                 onValueChange={(v) => updateFilter("invoicingType", v)}
               >
-                <SelectTrigger>
+                <SelectTrigger className="h-9">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -105,7 +105,7 @@ export function BillingSpecialistView() {
                 value={filters.workOrderType}
                 onValueChange={(v) => updateFilter("workOrderType", v)}
               >
-                <SelectTrigger>
+                <SelectTrigger className="h-9">
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -122,7 +122,7 @@ export function BillingSpecialistView() {
                 value={filters.location}
                 onValueChange={(v) => updateFilter("location", v)}
               >
-                <SelectTrigger>
+                <SelectTrigger className="h-9">
                   <SelectValue placeholder="Select location" />
                 </SelectTrigger>
                 <SelectContent>
@@ -135,13 +135,13 @@ export function BillingSpecialistView() {
             </div>
             <div className="space-y-1.5 flex flex-col justify-end">
               <div className="flex gap-2">
-                <Button className="flex-1 h-10">
+                <Button className="flex-1 h-9">
                   <Search className="h-4 w-4 mr-2" />
                   Search
                 </Button>
                 <Button
                   variant="outline"
-                  className="flex-1 h-10"
+                  className="flex-1 h-9"
                   onClick={clearFilters}
                 >
                   <RotateCcw className="h-4 w-4 mr-2" />
@@ -155,7 +155,7 @@ export function BillingSpecialistView() {
                 value={filters.division}
                 onValueChange={(v) => updateFilter("division", v)}
               >
-                <SelectTrigger>
+                <SelectTrigger className="h-9">
                   <SelectValue placeholder="Select division" />
                 </SelectTrigger>
                 <SelectContent>
@@ -171,7 +171,7 @@ export function BillingSpecialistView() {
                 value={filters.invoiceStatus}
                 onValueChange={(v) => updateFilter("invoiceStatus", v)}
               >
-                <SelectTrigger>
+                <SelectTrigger className="h-9">
                   <SelectValue placeholder="Select status" />
                 </SelectTrigger>
                 <SelectContent>
@@ -188,7 +188,7 @@ export function BillingSpecialistView() {
                 value={filters.customerGroup}
                 onValueChange={(v) => updateFilter("customerGroup", v)}
               >
-                <SelectTrigger>
+                <SelectTrigger className="h-9">
                   <SelectValue placeholder="Select group" />
                 </SelectTrigger>
                 <SelectContent>
