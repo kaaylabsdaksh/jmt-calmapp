@@ -404,6 +404,10 @@ export function BillingSpecialistView() {
             <Receipt className="h-3.5 w-3.5 mr-1.5" />
             Process Invoice(s)
           </Button>
+          <Button variant="outline" size="sm" className="text-xs h-8">
+            <Ticket className="h-3.5 w-3.5 mr-1.5" />
+            Delivery Tickets
+          </Button>
         </div>
       </footer>
     </div>
