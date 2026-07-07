@@ -78,7 +78,7 @@ export function BillingSpecialistView() {
   };
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 flex-1">
       {/* Filters */}
       <Card>
         <CardContent className="space-y-4">
@@ -229,7 +229,7 @@ export function BillingSpecialistView() {
       </Card>
 
       {/* Sticky Footer */}
-      <footer className="sticky bottom-0 z-40 bg-background px-6 py-3 border-t border-border">
+      <footer className="mt-auto sticky bottom-0 z-40 bg-background px-6 py-3 border-t border-border">
         <div className="flex flex-col items-center gap-3">
           <Button size="sm" className="text-xs h-8">
             <Receipt className="h-3.5 w-3.5 mr-1.5" />
