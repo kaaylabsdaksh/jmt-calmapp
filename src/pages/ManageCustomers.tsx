@@ -273,19 +273,8 @@ const ManageCustomers = () => {
         <div className="w-full space-y-4">
           {/* Page Header */}
           <div className="relative overflow-hidden rounded-xl border border-border bg-gradient-to-br from-slate-50 via-white to-slate-50 dark:from-slate-900 dark:via-background dark:to-slate-900 px-4 py-3.5">
-            <div className="absolute inset-y-0 left-0 w-1 bg-gradient-to-b from-blue-500 via-indigo-500 to-blue-600" />
-            <div className="flex items-start justify-between gap-3 flex-wrap">
-              <div className="flex items-start gap-3">
-                <div className="hidden sm:flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 ring-1 ring-blue-500/20">
-                  <Users className="h-5 w-5" />
-                </div>
-                <div>
-                  <h1 className="text-xl font-semibold text-foreground tracking-tight">Manage Customers</h1>
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    Search, manage, and maintain customer accounts, contracts, pricing, and operational information.
-                  </p>
-                </div>
-              </div>
+            <div className="absolute inset-y-0 right-0 w-1 bg-gradient-to-b from-blue-500 via-indigo-500 to-blue-600" />
+            <div className="flex items-center justify-between gap-3 flex-wrap">
               <div className="flex items-center gap-2">
                 <Button
                   variant="outline"
@@ -306,6 +295,17 @@ const ManageCustomers = () => {
                 <Button variant="outline" size="sm" className="h-8 text-xs bg-background">
                   <Settings2 className="h-3.5 w-3.5 mr-1.5" />Columns
                 </Button>
+              </div>
+              <div className="flex items-start gap-3 text-right">
+                <div className="hidden sm:flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 ring-1 ring-blue-500/20">
+                  <Users className="h-5 w-5" />
+                </div>
+                <div>
+                  <h1 className="text-xl font-semibold text-foreground tracking-tight">Manage Customers</h1>
+                  <p className="text-xs text-muted-foreground mt-0.5">
+                    Search, manage, and maintain customer accounts, contracts, pricing, and operational information.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
