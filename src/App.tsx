@@ -63,6 +63,7 @@ const App = () => {
           <Route path="/onsite-projects/vehicle-standards" element={<VehicleStandards />} />
           <Route path="/invoicing" element={<Invoicing />} />
           <Route path="/manage-customers" element={<ManageCustomers />} />
+          <Route path="/manage-customers/:accountNumber" element={<EditCustomer />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
