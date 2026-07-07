@@ -10,7 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
-import { Receipt } from "lucide-react";
+import { Receipt, Search, RotateCcw } from "lucide-react";
 
 interface BillingSpecialistFilters {
   invoicingType: string;
@@ -82,7 +82,7 @@ export function BillingSpecialistView() {
       {/* Filters */}
       <Card>
         <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
             <div className="space-y-1.5">
               <Label className="text-xs text-muted-foreground">Invoicing Type</Label>
               <Select
@@ -132,6 +132,22 @@ export function BillingSpecialistView() {
                   <SelectItem value="norco">Norco</SelectItem>
                 </SelectContent>
               </Select>
+            </div>
+            <div className="space-y-1.5 flex flex-col justify-end">
+              <div className="flex gap-2">
+                <Button className="flex-1 h-10">
+                  <Search className="h-4 w-4 mr-2" />
+                  Search
+                </Button>
+                <Button
+                  variant="outline"
+                  className="flex-1 h-10"
+                  onClick={clearFilters}
+                >
+                  <RotateCcw className="h-4 w-4 mr-2" />
+                  Clear
+                </Button>
+              </div>
             </div>
             <div className="space-y-1.5">
               <Label className="text-xs text-muted-foreground">Division</Label>
