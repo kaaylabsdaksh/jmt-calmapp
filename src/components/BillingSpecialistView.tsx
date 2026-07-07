@@ -89,7 +89,7 @@ export function BillingSpecialistView() {
                 value={filters.invoicingType}
                 onValueChange={(v) => updateFilter("invoicingType", v)}
               >
-                <SelectTrigger>
+                <SelectTrigger className="h-9">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -105,7 +105,7 @@ export function BillingSpecialistView() {
                 value={filters.workOrderType}
                 onValueChange={(v) => updateFilter("workOrderType", v)}
               >
-                <SelectTrigger>
+                <SelectTrigger className="h-9">
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -122,7 +122,7 @@ export function BillingSpecialistView() {
                 value={filters.location}
                 onValueChange={(v) => updateFilter("location", v)}
               >
-                <SelectTrigger>
+                <SelectTrigger className="h-9">
                   <SelectValue placeholder="Select location" />
                 </SelectTrigger>
                 <SelectContent>
@@ -155,7 +155,7 @@ export function BillingSpecialistView() {
                 value={filters.division}
                 onValueChange={(v) => updateFilter("division", v)}
               >
-                <SelectTrigger>
+                <SelectTrigger className="h-9">
                   <SelectValue placeholder="Select division" />
                 </SelectTrigger>
                 <SelectContent>
@@ -171,7 +171,7 @@ export function BillingSpecialistView() {
                 value={filters.invoiceStatus}
                 onValueChange={(v) => updateFilter("invoiceStatus", v)}
               >
-                <SelectTrigger>
+                <SelectTrigger className="h-9">
                   <SelectValue placeholder="Select status" />
                 </SelectTrigger>
                 <SelectContent>
@@ -188,7 +188,7 @@ export function BillingSpecialistView() {
                 value={filters.customerGroup}
                 onValueChange={(v) => updateFilter("customerGroup", v)}
               >
-                <SelectTrigger>
+                <SelectTrigger className="h-9">
                   <SelectValue placeholder="Select group" />
                 </SelectTrigger>
                 <SelectContent>
