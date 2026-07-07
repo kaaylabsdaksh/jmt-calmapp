@@ -10,7 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
-import { Search, RotateCcw, Menu, Truck, Receipt } from "lucide-react";
+import { Receipt } from "lucide-react";
 
 interface BillingSpecialistFilters {
   invoicingType: string;
@@ -183,30 +183,6 @@ export function BillingSpecialistView() {
                 </SelectContent>
               </Select>
             </div>
-          </div>
-
-          {/* Action Buttons */}
-          <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
-            <Button variant="outline" size="sm" className="text-xs h-8" onClick={clearFilters}>
-              <RotateCcw className="h-3.5 w-3.5 mr-1.5" />
-              Clear
-            </Button>
-            <Button variant="outline" size="sm" className="text-xs h-8">
-              <Menu className="h-3.5 w-3.5 mr-1.5" />
-              Menu
-            </Button>
-            <Button variant="outline" size="sm" className="text-xs h-8">
-              <Receipt className="h-3.5 w-3.5 mr-1.5" />
-              Invoicing
-            </Button>
-            <Button variant="outline" size="sm" className="text-xs h-8">
-              <Truck className="h-3.5 w-3.5 mr-1.5" />
-              Delivery Tickets
-            </Button>
-            <Button size="sm" className="text-xs h-8">
-              <Receipt className="h-3.5 w-3.5 mr-1.5" />
-              Process Invoice(s)
-            </Button>
           </div>
         </CardContent>
       </Card>
