@@ -272,52 +272,63 @@ const ManageCustomers = () => {
       <main className="w-full max-w-none px-2 sm:px-4 lg:px-6 py-3 sm:py-6">
         <div className="w-full space-y-4">
           {/* Page Header */}
-          <div className="flex items-start justify-between gap-3 flex-wrap">
-            <div>
-              <h1 className="text-xl font-semibold text-foreground tracking-tight">Manage Customers</h1>
-              <p className="text-xs text-muted-foreground mt-0.5">
-                Search, manage, and maintain customer accounts, contracts, pricing, and operational information.
-              </p>
-            </div>
-            <div className="flex items-center gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                className="h-8 text-xs"
-                onClick={() => toast({ title: "Refreshed", description: "Customer data reloaded." })}
-              >
-                <RefreshCw className="h-3.5 w-3.5 mr-1.5" />Refresh
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                className="h-8 text-xs"
-                onClick={() => toast({ title: "Export started", description: "Your export will be ready shortly." })}
-              >
-                <Download className="h-3.5 w-3.5 mr-1.5" />Export
-              </Button>
-              <Button variant="outline" size="sm" className="h-8 text-xs">
-                <Settings2 className="h-3.5 w-3.5 mr-1.5" />Columns
-              </Button>
+          <div className="relative overflow-hidden rounded-xl border border-border bg-gradient-to-br from-slate-50 via-white to-slate-50 dark:from-slate-900 dark:via-background dark:to-slate-900 px-4 py-3.5">
+            <div className="absolute inset-y-0 left-0 w-1 bg-gradient-to-b from-blue-500 via-indigo-500 to-blue-600" />
+            <div className="flex items-start justify-between gap-3 flex-wrap">
+              <div className="flex items-start gap-3">
+                <div className="hidden sm:flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 ring-1 ring-blue-500/20">
+                  <Users className="h-5 w-5" />
+                </div>
+                <div>
+                  <h1 className="text-xl font-semibold text-foreground tracking-tight">Manage Customers</h1>
+                  <p className="text-xs text-muted-foreground mt-0.5">
+                    Search, manage, and maintain customer accounts, contracts, pricing, and operational information.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="h-8 text-xs bg-background"
+                  onClick={() => toast({ title: "Refreshed", description: "Customer data reloaded." })}
+                >
+                  <RefreshCw className="h-3.5 w-3.5 mr-1.5" />Refresh
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="h-8 text-xs bg-background"
+                  onClick={() => toast({ title: "Export started", description: "Your export will be ready shortly." })}
+                >
+                  <Download className="h-3.5 w-3.5 mr-1.5" />Export
+                </Button>
+                <Button variant="outline" size="sm" className="h-8 text-xs bg-background">
+                  <Settings2 className="h-3.5 w-3.5 mr-1.5" />Columns
+                </Button>
+              </div>
             </div>
           </div>
 
           {/* KPI Summary */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5">
             {[
-              { label: "Total Customers", value: kpis.total, icon: Users },
-              { label: "Active", value: kpis.active, icon: CheckCircle2 },
-              { label: "With Open Items", value: kpis.withOpen, icon: ClipboardList },
-              { label: "National Contracts", value: kpis.national, icon: FileText },
-              { label: "Pending Reviews", value: kpis.pending, icon: AlertCircle },
+              { label: "Total Customers", value: kpis.total, icon: Users, tone: "bg-blue-500/10 text-blue-600 dark:text-blue-400 ring-blue-500/20", bar: "from-blue-500 to-indigo-500" },
+              { label: "Active", value: kpis.active, icon: CheckCircle2, tone: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 ring-emerald-500/20", bar: "from-emerald-500 to-green-500" },
+              { label: "With Open Items", value: kpis.withOpen, icon: ClipboardList, tone: "bg-violet-500/10 text-violet-600 dark:text-violet-400 ring-violet-500/20", bar: "from-violet-500 to-purple-500" },
+              { label: "National Contracts", value: kpis.national, icon: FileText, tone: "bg-sky-500/10 text-sky-600 dark:text-sky-400 ring-sky-500/20", bar: "from-sky-500 to-cyan-500" },
+              { label: "Pending Reviews", value: kpis.pending, icon: AlertCircle, tone: "bg-amber-500/10 text-amber-600 dark:text-amber-400 ring-amber-500/20", bar: "from-amber-500 to-orange-500" },
             ].map((k) => (
-              <Card key={k.label}>
-                <CardContent className="p-3 flex items-center justify-between">
-                  <div>
-                    <div className="text-[10px] uppercase tracking-wide text-muted-foreground font-medium">{k.label}</div>
-                    <div className="text-lg font-semibold text-foreground mt-0.5">{k.value}</div>
+              <Card key={k.label} className="relative overflow-hidden group hover:shadow-md transition-shadow">
+                <div className={`absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r ${k.bar}`} />
+                <CardContent className="p-3 flex items-center justify-between gap-2">
+                  <div className="min-w-0">
+                    <div className="text-[10px] uppercase tracking-wide text-muted-foreground font-medium truncate">{k.label}</div>
+                    <div className="text-2xl font-bold text-foreground mt-0.5 leading-none">{k.value}</div>
                   </div>
-                  <k.icon className="h-4 w-4 text-muted-foreground" />
+                  <div className={`h-9 w-9 rounded-lg flex items-center justify-center ring-1 ${k.tone} shrink-0`}>
+                    <k.icon className="h-4 w-4" />
+                  </div>
                 </CardContent>
               </Card>
             ))}
