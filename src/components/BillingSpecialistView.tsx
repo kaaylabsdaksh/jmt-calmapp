@@ -78,7 +78,7 @@ export function BillingSpecialistView() {
   };
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 flex-1">
       {/* Filters */}
       <Card>
         <CardContent className="space-y-4">
