@@ -472,7 +472,7 @@ export default function Invoicing() {
     <div className="flex flex-col min-h-screen bg-background">
       <div className="sticky top-0 z-40">
         <StandardTopNav
-          title="Invoicing"
+          title={viewMode === "billingSpecialist" ? "Invoicing (Billing Specialist)" : "Invoicing"}
           breadcrumbs={[
             { label: "Home", href: "/" },
             { label: "Invoicing" },
@@ -480,9 +480,36 @@ export default function Invoicing() {
         />
       </div>
       <div className="flex flex-col gap-3 p-3 md:p-4">
+        {/* View Toggle */}
+        <div className="flex justify-center">
+          <div className="inline-flex items-center bg-muted rounded-md p-1 border border-border">
+            <button
+              className={`px-3 py-1 text-xs font-medium rounded-sm transition-colors ${
+                viewMode === "invoices"
+                  ? "bg-background text-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+              onClick={() => setViewMode("invoices")}
+            >
+              Invoices
+            </button>
+            <button
+              className={`px-3 py-1 text-xs font-medium rounded-sm transition-colors ${
+                viewMode === "billingSpecialist"
+                  ? "bg-background text-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+              onClick={() => setViewMode("billingSpecialist")}
+            >
+              Billing Specialist
+            </button>
+          </div>
+        </div>
 
-      {/* Filter Card */}
-      <Card>
+        {viewMode === "invoices" ? (
+          <>
+            {/* Filter Card */}
+            <Card>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-7 gap-3">
             <FieldSelect
