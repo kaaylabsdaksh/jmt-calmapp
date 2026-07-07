@@ -16,12 +16,16 @@ const routeMeta: Record<string, { title: string; crumbs: Crumb[] }> = {
   "/onsite-projects": { title: "Onsite Projects", crumbs: [{ label: "Home", to: "/" }, { label: "Onsite Projects" }] },
   "/onsite-projects/new": { title: "Onsite Project # XXX", crumbs: [{ label: "Onsite Projects", to: "/onsite-projects" }, { label: "New Project" }] },
   "/manage-customers": { title: "Manage Customers", crumbs: [{ label: "Home", to: "/" }, { label: "Product & Customer" }, { label: "Manage Customers" }] },
+  "/manage-customers/:accountNumber": { title: "Customer Details", crumbs: [{ label: "Home", to: "/" }, { label: "Product & Customer" }, { label: "Manage Customers", to: "/manage-customers" }, { label: "Customer Details" }] },
 };
 
 const ModernTopNav = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const meta = routeMeta[location.pathname] ?? routeMeta["/"];
+  const customerDetailMatch = /^\/manage-customers\/[^/]+$/.test(location.pathname);
+  const meta = customerDetailMatch
+    ? routeMeta["/manage-customers/:accountNumber"]
+    : routeMeta[location.pathname] ?? routeMeta["/"];
 
   return (
     <header className="bg-white px-2 sm:px-4 lg:px-6 py-3 border-b border-border">
@@ -64,7 +68,7 @@ const ModernTopNav = () => {
 
         {/* Action Buttons */}
         <div className="flex items-center gap-1 sm:gap-2 w-full sm:w-auto">
-          {location.pathname !== "/onsite-projects/new" && location.pathname !== "/onsite-projects/vehicle-standards" && (
+          {location.pathname !== "/onsite-projects/new" && location.pathname !== "/onsite-projects/vehicle-standards" && !customerDetailMatch && (
             <Button 
               variant="outline"
               className="rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border-border text-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary bg-transparent transform hover:scale-105 text-xs sm:text-sm font-medium px-3 sm:px-4"
