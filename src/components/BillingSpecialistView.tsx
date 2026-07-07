@@ -10,7 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
-import { Receipt } from "lucide-react";
+import { Receipt, Search, RotateCcw } from "lucide-react";
 
 interface BillingSpecialistFilters {
   invoicingType: string;
