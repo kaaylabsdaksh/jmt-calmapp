@@ -479,7 +479,7 @@ export default function Invoicing() {
           ]}
         />
       </div>
-      <div className="flex flex-col gap-3 p-3 md:p-4">
+      <div className="flex flex-col gap-3 p-3 md:p-4 flex-1">
         {/* View Toggle */}
         <div className="flex justify-center">
           <div className="inline-flex items-center bg-muted rounded-md p-1 border border-border">
