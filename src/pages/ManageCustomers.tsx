@@ -271,45 +271,6 @@ const ManageCustomers = () => {
       <ModernTopNav />
       <main className="w-full max-w-none px-2 sm:px-4 lg:px-6 py-3 sm:py-6">
         <div className="w-full space-y-4">
-          {/* Page Header */}
-          <div className="relative overflow-hidden rounded-xl border border-border bg-gradient-to-br from-slate-50 via-white to-slate-50 dark:from-slate-900 dark:via-background dark:to-slate-900 px-4 py-3.5">
-            <div className="absolute inset-y-0 right-0 w-1 bg-gradient-to-b from-blue-500 via-indigo-500 to-blue-600" />
-            <div className="flex items-center justify-between gap-3 flex-wrap">
-              <div className="flex items-center gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="h-8 text-xs bg-background"
-                  onClick={() => toast({ title: "Refreshed", description: "Customer data reloaded." })}
-                >
-                  <RefreshCw className="h-3.5 w-3.5 mr-1.5" />Refresh
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="h-8 text-xs bg-background"
-                  onClick={() => toast({ title: "Export started", description: "Your export will be ready shortly." })}
-                >
-                  <Download className="h-3.5 w-3.5 mr-1.5" />Export
-                </Button>
-                <Button variant="outline" size="sm" className="h-8 text-xs bg-background">
-                  <Settings2 className="h-3.5 w-3.5 mr-1.5" />Columns
-                </Button>
-              </div>
-              <div className="flex items-start gap-3 text-right">
-                <div className="hidden sm:flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 ring-1 ring-blue-500/20">
-                  <Users className="h-5 w-5" />
-                </div>
-                <div>
-                  <h1 className="text-xl font-semibold text-foreground tracking-tight">Manage Customers</h1>
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    Search, manage, and maintain customer accounts, contracts, pricing, and operational information.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
           {/* KPI Summary */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5">
             {[
@@ -518,8 +479,19 @@ const ManageCustomers = () => {
               >
                 <Plus className="h-3.5 w-3.5 mr-1.5" />Add New Customer
               </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                className="h-8 text-xs"
+                onClick={() => toast({ title: "Refreshed", description: "Customer data reloaded." })}
+              >
+                <RefreshCw className="h-3.5 w-3.5 mr-1.5" />Refresh
+              </Button>
               <Button variant="outline" size="sm" className="h-8 text-xs">
                 <Download className="h-3.5 w-3.5 mr-1.5" />Export
+              </Button>
+              <Button variant="outline" size="sm" className="h-8 text-xs">
+                <Settings2 className="h-3.5 w-3.5 mr-1.5" />Columns
               </Button>
               <Button variant="outline" size="sm" className="h-8 text-xs">
                 <Bell className="h-3.5 w-3.5 mr-1.5" />Retest Notices
