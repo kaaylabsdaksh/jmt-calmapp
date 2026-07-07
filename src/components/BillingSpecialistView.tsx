@@ -252,21 +252,23 @@ export function BillingSpecialistView() {
         </div>
       </Card>
 
-      {/* Footer */}
-      <div className="flex flex-col items-center gap-3 py-4">
-        <Button size="sm" className="text-xs h-8">
-          <Receipt className="h-3.5 w-3.5 mr-1.5" />
-          Process Invoice(s)
-        </Button>
-        <div className="flex items-center gap-4 text-xs text-muted-foreground">
-          <button className="hover:text-foreground underline-offset-2 hover:underline">
-            Set Default View
-          </button>
-          <button className="hover:text-foreground underline-offset-2 hover:underline">
-            Set Search Field Defaults
-          </button>
+      {/* Sticky Footer */}
+      <footer className="sticky bottom-0 z-40 bg-background px-6 py-3 border-t border-border">
+        <div className="flex flex-col items-center gap-3">
+          <Button size="sm" className="text-xs h-8">
+            <Receipt className="h-3.5 w-3.5 mr-1.5" />
+            Process Invoice(s)
+          </Button>
+          <div className="flex items-center gap-4 text-xs text-muted-foreground">
+            <button className="hover:text-foreground underline-offset-2 hover:underline">
+              Set Default View
+            </button>
+            <button className="hover:text-foreground underline-offset-2 hover:underline">
+              Set Search Field Defaults
+            </button>
+          </div>
         </div>
-      </div>
+      </footer>
     </div>
   );
 }
