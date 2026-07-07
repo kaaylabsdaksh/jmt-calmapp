@@ -18,6 +18,7 @@ import {
   GripVertical,
   Settings2,
   X,
+  RotateCcw,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -554,10 +555,29 @@ export default function Invoicing() {
               ]}
             />
             <div className="space-y-1.5 flex flex-col justify-end">
-              <Button className="w-full h-10">
-                <Search className="h-4 w-4 mr-2" />
-                Search
-              </Button>
+              <div className="flex gap-2">
+                <Button className="flex-1 h-10">
+                  <Search className="h-4 w-4 mr-2" />
+                  Search
+                </Button>
+                <Button
+                  variant="outline"
+                  className="flex-1 h-10"
+                  onClick={() =>
+                    setFilters({
+                      itemStatus: "all",
+                      location: "all",
+                      createdFrom: "",
+                      createdTo: "",
+                      division: "all",
+                      customerGroup: "all",
+                    })
+                  }
+                >
+                  <RotateCcw className="h-4 w-4 mr-2" />
+                  Clear
+                </Button>
+              </div>
             </div>
           </div>
         </CardContent>
