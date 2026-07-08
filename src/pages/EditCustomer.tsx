@@ -367,11 +367,10 @@ export default function EditCustomer() {
             </CardContent>
           </Card>
 
-          {/* Main: full-width tabs, sidebar cards below */}
-          <div className="space-y-4">
+          {/* Main grid: tabs + right sidebar */}
+          <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_320px] gap-4">
             <Tabs defaultValue="general" className="w-full">
-
-              <div className="sticky top-[73px] z-20 bg-muted/20 -mx-1 px-1 py-1 space-y-1">
+              <div className="sticky top-[73px] z-20 bg-muted/20 -mx-1 px-1 py-1">
                 <div className="overflow-x-auto">
                   <TabsList className="h-12 bg-white border border-border p-1 inline-flex">
                     {[
@@ -379,21 +378,6 @@ export default function EditCustomer() {
                       { v: "contacts", label: "Contacts", icon: Users },
                       { v: "work-orders", label: "Work Orders", icon: FileText },
                       { v: "retest", label: "Retest Notices", icon: Bell },
-                    ].map((t) => (
-                      <TabsTrigger
-                        key={t.v}
-                        value={t.v}
-                        className="h-10 px-4 text-sm data-[state=active]:bg-blue-600 data-[state=active]:text-white"
-                      >
-                        <t.icon className="h-4 w-4 mr-2" />
-                        {t.label}
-                      </TabsTrigger>
-                    ))}
-                  </TabsList>
-                </div>
-                <div className="overflow-x-auto">
-                  <TabsList className="h-12 bg-white border border-border p-1 inline-flex">
-                    {[
                       { v: "print-tags", label: "Print Tags", icon: Tag },
                       { v: "contract", label: "Contract Pricing", icon: DollarSign },
                       { v: "fees", label: "Fee Schedule", icon: Receipt },
@@ -414,6 +398,7 @@ export default function EditCustomer() {
                   </TabsList>
                 </div>
               </div>
+
 
 
               {/* GENERAL */}
