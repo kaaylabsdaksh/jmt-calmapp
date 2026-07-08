@@ -370,7 +370,7 @@ export default function EditCustomer() {
           {/* Full-width tabs + right sidebar */}
           <Tabs defaultValue="general" className="w-full">
             <div className="sticky top-[73px] z-20 bg-muted/20 -mx-1 px-1 py-1">
-              <TabsList className="h-12 bg-white border border-border p-1 flex w-full">
+              <TabsList className="h-9 bg-white border border-border p-1 flex w-full">
                 {[
                   { v: "general", label: "General", icon: Building2 },
                   { v: "contacts", label: "Contacts", icon: Users },
