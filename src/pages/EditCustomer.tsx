@@ -890,8 +890,9 @@ export default function EditCustomer() {
               ))}
             </Tabs>
 
-            {/* Right sidebar */}
-            <aside className="space-y-4">
+            {/* Right sidebar — aligned to start at first tab content card */}
+            <aside className="space-y-4 xl:mt-[64px]">
+
 
 
 
