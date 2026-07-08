@@ -890,8 +890,9 @@ export default function EditCustomer() {
               ))}
             </Tabs>
 
-            {/* Sidebar cards below tabs */}
-            <aside className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {/* Right sidebar */}
+            <aside className="space-y-4">
+
 
 
               <Card>
