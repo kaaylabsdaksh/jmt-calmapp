@@ -74,24 +74,21 @@ import ModernTopNav from "@/components/modern/ModernTopNav";
 
 const StatusChip = ({ status }: { status: "Active" | "Pending" | "Inactive" }) => {
   const map: Record<string, string> = {
-    Active: "bg-emerald-500/10 text-emerald-600 border-emerald-500/20",
-    Pending: "bg-amber-500/10 text-amber-600 border-amber-500/20",
-    Inactive: "bg-slate-500/10 text-slate-600 border-slate-500/20",
+    Active: "bg-emerald-50 text-emerald-700 border-emerald-100",
+    Pending: "bg-amber-50 text-amber-700 border-amber-100",
+    Inactive: "bg-slate-50 text-slate-700 border-slate-100",
+  };
+  const dotMap: Record<string, string> = {
+    Active: "bg-emerald-500",
+    Pending: "bg-amber-500",
+    Inactive: "bg-slate-400",
   };
   return (
     <Badge
       variant="outline"
       className={`h-6 px-2 text-[11px] font-medium hover:bg-transparent ${map[status]}`}
     >
-      <span
-        className={`inline-block w-1.5 h-1.5 rounded-full mr-1.5 ${
-          status === "Active"
-            ? "bg-emerald-500"
-            : status === "Pending"
-            ? "bg-amber-500"
-            : "bg-slate-500"
-        }`}
-      />
+      <span className={`inline-block w-1.5 h-1.5 rounded-full mr-1.5 ${dotMap[status]}`} />
       {status}
     </Badge>
   );
@@ -245,31 +242,34 @@ export default function EditCustomer() {
 
       {/* Sticky page action bar */}
       <div className="sticky top-0 z-30 bg-white border-b border-border">
-        <div className="px-3 sm:px-4 lg:px-6 py-3 flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-start gap-3 min-w-0">
-            <div className="min-w-0">
-              <h1 className="text-base sm:text-lg font-semibold text-foreground leading-tight">
-                Customer Details
-              </h1>
-              <p className="text-[11px] text-muted-foreground mt-0.5">
-                View and manage customer information, contacts, pricing, work orders, and settings.
-              </p>
-            </div>
+        <div className="px-3 sm:px-4 lg:px-6 py-3 flex items-center justify-between gap-4">
+          <div className="min-w-0">
+            <h1 className="text-base sm:text-lg font-semibold text-foreground leading-tight">
+              Customer Details
+            </h1>
+            <p className="text-[11px] text-muted-foreground mt-0.5">
+              View and manage customer information, contacts, pricing, work orders, and settings.
+            </p>
           </div>
 
-          <div className="flex items-center gap-3 flex-wrap">
-            <div className="flex items-center gap-2 pr-3 border-r border-border">
+          <div className="flex items-center gap-4 sm:gap-6">
+            <div className="flex items-center gap-3">
               <div className="text-right">
-                <div className="text-xs font-semibold leading-tight">{customer.name}</div>
+                <div className="flex items-center justify-end gap-2">
+                  <span className="text-xs font-semibold leading-tight">{customer.name}</span>
+                  <StatusChip status={customer.status} />
+                </div>
                 <div className="text-[11px] text-muted-foreground">Account # {customer.accountNumber}</div>
               </div>
-              <StatusChip status={customer.status} />
             </div>
+
+            <div className="hidden sm:block h-10 w-px bg-border" />
+
             <div className="flex items-center gap-2">
               <Button
                 variant="outline"
                 size="sm"
-                className="h-8 text-xs"
+                className="h-9 px-3.5 text-xs"
                 onClick={() => toast({ title: "Create Quote", description: "Opening quote form…" })}
               >
                 <FilePlus2 className="h-3.5 w-3.5 mr-1.5" />
@@ -277,7 +277,7 @@ export default function EditCustomer() {
               </Button>
               <Button
                 size="sm"
-                className="h-8 text-xs bg-blue-600 hover:bg-blue-700 text-white"
+                className="h-9 px-4 text-xs bg-blue-600 hover:bg-blue-700 text-white"
                 onClick={handleSave}
               >
                 <Save className="h-3.5 w-3.5 mr-1.5" />
@@ -285,7 +285,7 @@ export default function EditCustomer() {
               </Button>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="sm" className="h-8 w-8 p-0">
+                  <Button variant="outline" size="sm" className="h-9 w-9 p-0">
                     <MoreHorizontal className="h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
