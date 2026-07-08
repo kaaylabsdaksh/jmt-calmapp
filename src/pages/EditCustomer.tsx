@@ -367,35 +367,38 @@ export default function EditCustomer() {
             </CardContent>
           </Card>
 
-          {/* Main grid: tabs + right sidebar */}
-          <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_320px] gap-4">
-            <Tabs defaultValue="general" className="w-full">
-              <div className="sticky top-[73px] z-20 bg-muted/20 -mx-1 px-1 py-1">
-                <TabsList className="h-12 bg-white border border-border p-1 flex w-full">
-                  {[
-                    { v: "general", label: "General", icon: Building2 },
-                    { v: "contacts", label: "Contacts", icon: Users },
-                    { v: "work-orders", label: "Work Orders", icon: FileText },
-                    { v: "retest", label: "Retest Notices", icon: Bell },
-                    { v: "print-tags", label: "Print Tags", icon: Tag },
-                    { v: "contract", label: "Contract Pricing", icon: DollarSign },
-                    { v: "fees", label: "Fee Schedule", icon: Receipt },
-                    { v: "custom", label: "Custom Fields", icon: Settings2 },
-                    { v: "po", label: "Purchase Orders", icon: Package },
-                    { v: "quotes", label: "Quotes", icon: FilePlus2 },
-                    { v: "files", label: "WO External Files", icon: FolderOpen },
-                  ].map((t) => (
-                    <TabsTrigger
-                      key={t.v}
-                      value={t.v}
-                      className="h-10 px-1 text-xs flex-1 min-w-0 whitespace-nowrap data-[state=active]:bg-blue-600 data-[state=active]:text-white"
-                    >
-                      <t.icon className="h-3.5 w-3.5 mr-1 shrink-0" />
-                      <span className="truncate">{t.label}</span>
-                    </TabsTrigger>
-                  ))}
-                </TabsList>
-              </div>
+          {/* Full-width tabs + right sidebar */}
+          <Tabs defaultValue="general" className="w-full">
+            <div className="sticky top-[73px] z-20 bg-muted/20 -mx-1 px-1 py-1">
+              <TabsList className="h-12 bg-white border border-border p-1 flex w-full">
+                {[
+                  { v: "general", label: "General", icon: Building2 },
+                  { v: "contacts", label: "Contacts", icon: Users },
+                  { v: "work-orders", label: "Work Orders", icon: FileText },
+                  { v: "retest", label: "Retest Notices", icon: Bell },
+                  { v: "print-tags", label: "Print Tags", icon: Tag },
+                  { v: "contract", label: "Contract Pricing", icon: DollarSign },
+                  { v: "fees", label: "Fee Schedule", icon: Receipt },
+                  { v: "custom", label: "Custom Fields", icon: Settings2 },
+                  { v: "po", label: "Purchase Orders", icon: Package },
+                  { v: "quotes", label: "Quotes", icon: FilePlus2 },
+                  { v: "files", label: "WO External Files", icon: FolderOpen },
+                ].map((t) => (
+                  <TabsTrigger
+                    key={t.v}
+                    value={t.v}
+                    className="h-10 px-1 text-xs flex-1 min-w-0 whitespace-nowrap data-[state=active]:bg-blue-600 data-[state=active]:text-white"
+                  >
+                    <t.icon className="h-3.5 w-3.5 mr-1 shrink-0" />
+                    <span className="truncate">{t.label}</span>
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+            </div>
+
+            <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_320px] gap-4 mt-4">
+              <div className="min-w-0">
+
 
 
 
@@ -887,10 +890,11 @@ export default function EditCustomer() {
                   </Card>
                 </TabsContent>
               ))}
-            </Tabs>
+            </div>
 
-            {/* Right sidebar — aligned to start at first tab content card */}
-            <aside className="space-y-4 xl:mt-[64px]">
+            {/* Right sidebar */}
+            <aside className="space-y-4">
+
 
 
 
@@ -961,6 +965,8 @@ export default function EditCustomer() {
               </Card>
             </aside>
           </div>
+          </Tabs>
+
         </div>
       </main>
     </div>
