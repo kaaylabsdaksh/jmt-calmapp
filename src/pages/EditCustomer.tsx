@@ -391,11 +391,12 @@ export default function EditCustomer() {
                       <TabsTrigger
                         key={t.v}
                         value={t.v}
-                        className="h-10 px-4 text-sm data-[state=active]:bg-blue-600 data-[state=active]:text-white"
+                        className="h-10 px-4 text-sm flex-1 data-[state=active]:bg-blue-600 data-[state=active]:text-white"
                       >
                         <t.icon className="h-4 w-4 mr-2" />
                         {t.label}
                       </TabsTrigger>
+
                     ))}
                   </TabsList>
 
