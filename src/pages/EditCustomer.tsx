@@ -373,7 +373,8 @@ export default function EditCustomer() {
 
               <div className="sticky top-[73px] z-20 bg-muted/20 -mx-1 px-1 py-1">
                 <div className="overflow-x-auto">
-                  <TabsList className="h-12 bg-white border border-border p-1 inline-flex">
+                  <TabsList className="h-12 bg-white border border-border p-1 flex w-full">
+
                     {[
                       { v: "general", label: "General", icon: Building2 },
                       { v: "contacts", label: "Contacts", icon: Users },
