@@ -481,12 +481,10 @@ export default function EditCustomer() {
                         <Field label="Email" full>
                           <Input className="h-8 text-xs" defaultValue={customer.email} />
                         </Field>
-                        <Field label="Salesperson" required>
-                          <Input className="h-8 text-xs" defaultValue={customer.salesperson} />
-                        </Field>
                         <Field label="Biller Code">
                           <Input className="h-8 text-xs" defaultValue="BC-102" />
                         </Field>
+
                       </FieldRow>
                     </CardContent>
                   </Card>
@@ -500,6 +498,9 @@ export default function EditCustomer() {
                     />
                     <CardContent className="p-4 pt-0 space-y-3">
                       <FieldRow>
+                        <Field label="Salesperson" required>
+                          <Input className="h-8 text-xs" defaultValue={customer.salesperson} />
+                        </Field>
                         <Field label="Industry Code">
                           <Select defaultValue="utilities">
                             <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
@@ -511,6 +512,7 @@ export default function EditCustomer() {
                             </SelectContent>
                           </Select>
                         </Field>
+
                         <Field label="OSR Number">
                           <Input className="h-8 text-xs" defaultValue="OSR-2456" />
                         </Field>
