@@ -367,9 +367,10 @@ export default function EditCustomer() {
             </CardContent>
           </Card>
 
-          {/* Main grid: tabs + right sidebar */}
-          <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_320px] gap-4">
+          {/* Main: full-width tabs, sidebar cards below */}
+          <div className="space-y-4">
             <Tabs defaultValue="general" className="w-full">
+
               <div className="sticky top-[73px] z-20 bg-muted/20 -mx-1 px-1 py-1">
                 <div className="overflow-x-auto">
                   <TabsList className="h-12 bg-white border border-border p-1 inline-flex">
