@@ -321,7 +321,7 @@ export default function EditCustomer() {
           {/* Summary card */}
           <Card>
             <CardContent className="p-4">
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
                 <div>
                   <div className="text-[11px] text-muted-foreground uppercase tracking-wide">Customer</div>
                   <div className="text-sm font-semibold mt-0.5 truncate">{customer.name}</div>
@@ -352,7 +352,18 @@ export default function EditCustomer() {
                     </Badge>
                   </div>
                 </div>
+                <div>
+                  <div className="text-[11px] text-muted-foreground uppercase tracking-wide">Created By</div>
+                  <div className="text-xs font-medium mt-1 truncate">{customer.createdBy}</div>
+                  <div className="text-[11px] text-muted-foreground tabular-nums">{customer.createdDate}</div>
+                </div>
+                <div>
+                  <div className="text-[11px] text-muted-foreground uppercase tracking-wide">Modified By</div>
+                  <div className="text-xs font-medium mt-1 truncate">{customer.modifiedBy}</div>
+                  <div className="text-[11px] text-muted-foreground tabular-nums">{customer.modifiedDate}</div>
+                </div>
               </div>
+
             </CardContent>
           </Card>
 
