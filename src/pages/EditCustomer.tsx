@@ -74,24 +74,21 @@ import ModernTopNav from "@/components/modern/ModernTopNav";
 
 const StatusChip = ({ status }: { status: "Active" | "Pending" | "Inactive" }) => {
   const map: Record<string, string> = {
-    Active: "bg-emerald-500/10 text-emerald-600 border-emerald-500/20",
-    Pending: "bg-amber-500/10 text-amber-600 border-amber-500/20",
-    Inactive: "bg-slate-500/10 text-slate-600 border-slate-500/20",
+    Active: "bg-emerald-50 text-emerald-700 border-emerald-100",
+    Pending: "bg-amber-50 text-amber-700 border-amber-100",
+    Inactive: "bg-slate-50 text-slate-700 border-slate-100",
+  };
+  const dotMap: Record<string, string> = {
+    Active: "bg-emerald-500",
+    Pending: "bg-amber-500",
+    Inactive: "bg-slate-400",
   };
   return (
     <Badge
       variant="outline"
       className={`h-6 px-2 text-[11px] font-medium hover:bg-transparent ${map[status]}`}
     >
-      <span
-        className={`inline-block w-1.5 h-1.5 rounded-full mr-1.5 ${
-          status === "Active"
-            ? "bg-emerald-500"
-            : status === "Pending"
-            ? "bg-amber-500"
-            : "bg-slate-500"
-        }`}
-      />
+      <span className={`inline-block w-1.5 h-1.5 rounded-full mr-1.5 ${dotMap[status]}`} />
       {status}
     </Badge>
   );
