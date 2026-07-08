@@ -891,20 +891,6 @@ export default function EditCustomer() {
 
             {/* Right sidebar */}
             <aside className="space-y-4">
-              <Card>
-                <CardHeader className="p-4 pb-2">
-                  <CardTitle className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                    Metadata
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="p-4 pt-0">
-                  <MetaItem label="Created By" value={customer.createdBy} />
-                  <MetaItem label="Created Date" value={customer.createdDate} mono />
-                  <Separator className="my-1" />
-                  <MetaItem label="Modified By" value={customer.modifiedBy} />
-                  <MetaItem label="Modified Date" value={customer.modifiedDate} mono />
-                </CardContent>
-              </Card>
 
               <Card>
                 <CardHeader className="p-4 pb-2 flex flex-row items-center justify-between">
