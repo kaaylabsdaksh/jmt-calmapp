@@ -370,7 +370,7 @@ export default function EditCustomer() {
           {/* Full-width tabs + right sidebar */}
           <Tabs defaultValue="general" className="w-full">
             <div className="sticky top-[73px] z-20 bg-muted/20 -mx-1 px-1 py-1">
-              <TabsList className="h-12 bg-white border border-border p-1 flex w-full">
+              <TabsList className="h-9 bg-white border border-border p-1 flex w-full">
                 {[
                   { v: "general", label: "General", icon: Building2 },
                   { v: "contacts", label: "Contacts", icon: Users },
@@ -387,10 +387,11 @@ export default function EditCustomer() {
                   <TabsTrigger
                     key={t.v}
                     value={t.v}
-                    className="h-10 px-1 text-xs flex-1 min-w-0 whitespace-nowrap data-[state=active]:bg-blue-600 data-[state=active]:text-white"
+                    className="h-7 px-1 text-[11px] flex-1 min-w-0 whitespace-nowrap data-[state=active]:bg-blue-600 data-[state=active]:text-white"
                   >
-                    <t.icon className="h-3.5 w-3.5 mr-1 shrink-0" />
+                    <t.icon className="h-3 w-3 mr-1 shrink-0" />
                     <span className="truncate">{t.label}</span>
+
                   </TabsTrigger>
                 ))}
               </TabsList>
