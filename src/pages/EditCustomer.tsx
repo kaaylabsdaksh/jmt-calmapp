@@ -372,7 +372,7 @@ export default function EditCustomer() {
             <Tabs defaultValue="general" className="w-full">
               <div className="sticky top-[73px] z-20 bg-muted/20 -mx-1 px-1 py-1">
                 <div className="overflow-x-auto">
-                  <TabsList className="h-9 bg-white border border-border p-1 inline-flex">
+                  <TabsList className="h-12 bg-white border border-border p-1 inline-flex">
                     {[
                       { v: "general", label: "General", icon: Building2 },
                       { v: "contacts", label: "Contacts", icon: Users },
@@ -389,13 +389,14 @@ export default function EditCustomer() {
                       <TabsTrigger
                         key={t.v}
                         value={t.v}
-                        className="h-7 px-3 text-xs data-[state=active]:bg-blue-600 data-[state=active]:text-white"
+                        className="h-10 px-4 text-sm data-[state=active]:bg-blue-600 data-[state=active]:text-white"
                       >
-                        <t.icon className="h-3.5 w-3.5 mr-1.5" />
+                        <t.icon className="h-4 w-4 mr-2" />
                         {t.label}
                       </TabsTrigger>
                     ))}
                   </TabsList>
+
                 </div>
               </div>
 
