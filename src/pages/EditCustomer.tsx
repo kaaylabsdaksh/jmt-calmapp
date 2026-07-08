@@ -242,31 +242,34 @@ export default function EditCustomer() {
 
       {/* Sticky page action bar */}
       <div className="sticky top-0 z-30 bg-white border-b border-border">
-        <div className="px-3 sm:px-4 lg:px-6 py-3 flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-start gap-3 min-w-0">
-            <div className="min-w-0">
-              <h1 className="text-base sm:text-lg font-semibold text-foreground leading-tight">
-                Customer Details
-              </h1>
-              <p className="text-[11px] text-muted-foreground mt-0.5">
-                View and manage customer information, contacts, pricing, work orders, and settings.
-              </p>
-            </div>
+        <div className="px-3 sm:px-4 lg:px-6 py-3 flex items-center justify-between gap-4">
+          <div className="min-w-0">
+            <h1 className="text-base sm:text-lg font-semibold text-foreground leading-tight">
+              Customer Details
+            </h1>
+            <p className="text-[11px] text-muted-foreground mt-0.5">
+              View and manage customer information, contacts, pricing, work orders, and settings.
+            </p>
           </div>
 
-          <div className="flex items-center gap-3 flex-wrap">
-            <div className="flex items-center gap-2 pr-3 border-r border-border">
+          <div className="flex items-center gap-4 sm:gap-6">
+            <div className="flex items-center gap-3">
               <div className="text-right">
-                <div className="text-xs font-semibold leading-tight">{customer.name}</div>
+                <div className="flex items-center justify-end gap-2">
+                  <span className="text-xs font-semibold leading-tight">{customer.name}</span>
+                  <StatusChip status={customer.status} />
+                </div>
                 <div className="text-[11px] text-muted-foreground">Account # {customer.accountNumber}</div>
               </div>
-              <StatusChip status={customer.status} />
             </div>
+
+            <div className="hidden sm:block h-10 w-px bg-border" />
+
             <div className="flex items-center gap-2">
               <Button
                 variant="outline"
                 size="sm"
-                className="h-8 text-xs"
+                className="h-9 px-3.5 text-xs"
                 onClick={() => toast({ title: "Create Quote", description: "Opening quote form…" })}
               >
                 <FilePlus2 className="h-3.5 w-3.5 mr-1.5" />
@@ -274,7 +277,7 @@ export default function EditCustomer() {
               </Button>
               <Button
                 size="sm"
-                className="h-8 text-xs bg-blue-600 hover:bg-blue-700 text-white"
+                className="h-9 px-4 text-xs bg-blue-600 hover:bg-blue-700 text-white"
                 onClick={handleSave}
               >
                 <Save className="h-3.5 w-3.5 mr-1.5" />
@@ -282,7 +285,7 @@ export default function EditCustomer() {
               </Button>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="sm" className="h-8 w-8 p-0">
+                  <Button variant="outline" size="sm" className="h-9 w-9 p-0">
                     <MoreHorizontal className="h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
