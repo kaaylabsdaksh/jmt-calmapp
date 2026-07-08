@@ -320,52 +320,52 @@ export default function EditCustomer() {
         <div className="max-w-[1600px] mx-auto space-y-4">
           {/* Summary card */}
           <Card>
-            <CardContent className="p-4">
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-                <div>
-                  <div className="text-[11px] text-muted-foreground uppercase tracking-wide">Customer</div>
-                  <div className="text-sm font-semibold mt-0.5 truncate">{customer.name}</div>
-                  <div className="text-[11px] text-muted-foreground tabular-nums">#{customer.accountNumber}</div>
+            <CardContent className="p-2.5">
+              <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-x-3 gap-y-1.5">
+                <div className="min-w-0">
+                  <div className="text-[9px] text-muted-foreground uppercase tracking-wide">Customer</div>
+                  <div className="text-xs font-semibold truncate leading-tight">{customer.name}</div>
+                  <div className="text-[10px] text-muted-foreground tabular-nums leading-tight">#{customer.accountNumber}</div>
                 </div>
-                <div>
-                  <div className="text-[11px] text-muted-foreground uppercase tracking-wide">Status</div>
-                  <div className="mt-1"><StatusChip status={customer.status} /></div>
+                <div className="min-w-0">
+                  <div className="text-[9px] text-muted-foreground uppercase tracking-wide">Status</div>
+                  <div className="mt-0.5"><StatusChip status={customer.status} /></div>
                 </div>
-                <div>
-                  <div className="text-[11px] text-muted-foreground uppercase tracking-wide">Primary Contact</div>
-                  <div className="text-xs font-medium mt-1 truncate">{customer.primaryContact}</div>
-                  <div className="text-[11px] text-muted-foreground truncate">{customer.phone}</div>
+                <div className="min-w-0">
+                  <div className="text-[9px] text-muted-foreground uppercase tracking-wide">Primary Contact</div>
+                  <div className="text-xs font-medium truncate leading-tight">{customer.primaryContact}</div>
+                  <div className="text-[10px] text-muted-foreground truncate leading-tight">{customer.phone}</div>
                 </div>
-                <div>
-                  <div className="text-[11px] text-muted-foreground uppercase tracking-wide">Salesperson</div>
-                  <div className="text-xs font-medium mt-1 truncate">{customer.salesperson}</div>
+                <div className="min-w-0">
+                  <div className="text-[9px] text-muted-foreground uppercase tracking-wide">Salesperson</div>
+                  <div className="text-xs font-medium truncate leading-tight">{customer.salesperson}</div>
                 </div>
-                <div>
-                  <div className="text-[11px] text-muted-foreground uppercase tracking-wide">Industry</div>
-                  <div className="text-xs font-medium mt-1">{customer.industry}</div>
+                <div className="min-w-0">
+                  <div className="text-[9px] text-muted-foreground uppercase tracking-wide">Industry</div>
+                  <div className="text-xs font-medium truncate leading-tight">{customer.industry}</div>
                 </div>
-                <div>
-                  <div className="text-[11px] text-muted-foreground uppercase tracking-wide">Contract Pricing</div>
-                  <div className="text-xs font-medium mt-1">
-                    <Badge variant="outline" className="h-5 px-2 text-[11px] bg-emerald-500/10 text-emerald-600 border-emerald-500/20 hover:bg-transparent">
+                <div className="min-w-0">
+                  <div className="text-[9px] text-muted-foreground uppercase tracking-wide">Contract Pricing</div>
+                  <div className="mt-0.5">
+                    <Badge variant="outline" className="h-4 px-1.5 text-[10px] bg-emerald-500/10 text-emerald-600 border-emerald-500/20 hover:bg-transparent">
                       {customer.contractPricing}
                     </Badge>
                   </div>
                 </div>
-                <div>
-                  <div className="text-[11px] text-muted-foreground uppercase tracking-wide">Created By</div>
-                  <div className="text-xs font-medium mt-1 truncate">{customer.createdBy}</div>
-                  <div className="text-[11px] text-muted-foreground tabular-nums">{customer.createdDate}</div>
+                <div className="min-w-0">
+                  <div className="text-[9px] text-muted-foreground uppercase tracking-wide">Created By</div>
+                  <div className="text-xs font-medium truncate leading-tight">{customer.createdBy}</div>
+                  <div className="text-[10px] text-muted-foreground tabular-nums leading-tight">{customer.createdDate}</div>
                 </div>
-                <div>
-                  <div className="text-[11px] text-muted-foreground uppercase tracking-wide">Modified By</div>
-                  <div className="text-xs font-medium mt-1 truncate">{customer.modifiedBy}</div>
-                  <div className="text-[11px] text-muted-foreground tabular-nums">{customer.modifiedDate}</div>
+                <div className="min-w-0">
+                  <div className="text-[9px] text-muted-foreground uppercase tracking-wide">Modified By</div>
+                  <div className="text-xs font-medium truncate leading-tight">{customer.modifiedBy}</div>
+                  <div className="text-[10px] text-muted-foreground tabular-nums leading-tight">{customer.modifiedDate}</div>
                 </div>
               </div>
-
             </CardContent>
           </Card>
+
 
           {/* Full-width tabs + right sidebar */}
           <Tabs defaultValue="general" className="w-full">
