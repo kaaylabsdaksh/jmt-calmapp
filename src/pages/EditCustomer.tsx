@@ -367,12 +367,14 @@ export default function EditCustomer() {
             </CardContent>
           </Card>
 
-          {/* Main grid: tabs + right sidebar */}
-          <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_320px] gap-4">
+          {/* Main: full-width tabs, sidebar cards below */}
+          <div className="space-y-4">
             <Tabs defaultValue="general" className="w-full">
+
               <div className="sticky top-[73px] z-20 bg-muted/20 -mx-1 px-1 py-1">
                 <div className="overflow-x-auto">
-                  <TabsList className="h-12 bg-white border border-border p-1 inline-flex">
+                  <TabsList className="h-12 bg-white border border-border p-1 flex w-full">
+
                     {[
                       { v: "general", label: "General", icon: Building2 },
                       { v: "contacts", label: "Contacts", icon: Users },
@@ -389,11 +391,12 @@ export default function EditCustomer() {
                       <TabsTrigger
                         key={t.v}
                         value={t.v}
-                        className="h-10 px-4 text-sm data-[state=active]:bg-blue-600 data-[state=active]:text-white"
+                        className="h-10 px-4 text-sm flex-1 data-[state=active]:bg-blue-600 data-[state=active]:text-white"
                       >
                         <t.icon className="h-4 w-4 mr-2" />
                         {t.label}
                       </TabsTrigger>
+
                     ))}
                   </TabsList>
 
@@ -889,8 +892,9 @@ export default function EditCustomer() {
               ))}
             </Tabs>
 
-            {/* Right sidebar */}
-            <aside className="space-y-4">
+            {/* Sidebar cards below tabs */}
+            <aside className="grid grid-cols-1 md:grid-cols-3 gap-4">
+
 
               <Card>
                 <CardHeader className="p-4 pb-2 flex flex-row items-center justify-between">
