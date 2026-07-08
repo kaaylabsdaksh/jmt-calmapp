@@ -481,12 +481,10 @@ export default function EditCustomer() {
                         <Field label="Email" full>
                           <Input className="h-8 text-xs" defaultValue={customer.email} />
                         </Field>
-                        <Field label="Salesperson" required>
-                          <Input className="h-8 text-xs" defaultValue={customer.salesperson} />
-                        </Field>
                         <Field label="Biller Code">
                           <Input className="h-8 text-xs" defaultValue="BC-102" />
                         </Field>
+
                       </FieldRow>
                     </CardContent>
                   </Card>
