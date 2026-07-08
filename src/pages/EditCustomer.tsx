@@ -321,7 +321,7 @@ export default function EditCustomer() {
           {/* Summary card */}
           <Card>
             <CardContent className="p-4">
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
                 <div>
                   <div className="text-[11px] text-muted-foreground uppercase tracking-wide">Customer</div>
                   <div className="text-sm font-semibold mt-0.5 truncate">{customer.name}</div>
@@ -352,7 +352,18 @@ export default function EditCustomer() {
                     </Badge>
                   </div>
                 </div>
+                <div>
+                  <div className="text-[11px] text-muted-foreground uppercase tracking-wide">Created By</div>
+                  <div className="text-xs font-medium mt-1 truncate">{customer.createdBy}</div>
+                  <div className="text-[11px] text-muted-foreground tabular-nums">{customer.createdDate}</div>
+                </div>
+                <div>
+                  <div className="text-[11px] text-muted-foreground uppercase tracking-wide">Modified By</div>
+                  <div className="text-xs font-medium mt-1 truncate">{customer.modifiedBy}</div>
+                  <div className="text-[11px] text-muted-foreground tabular-nums">{customer.modifiedDate}</div>
+                </div>
               </div>
+
             </CardContent>
           </Card>
 
@@ -361,7 +372,7 @@ export default function EditCustomer() {
             <Tabs defaultValue="general" className="w-full">
               <div className="sticky top-[73px] z-20 bg-muted/20 -mx-1 px-1 py-1">
                 <div className="overflow-x-auto">
-                  <TabsList className="h-9 bg-white border border-border p-1 inline-flex">
+                  <TabsList className="h-12 bg-white border border-border p-1 inline-flex">
                     {[
                       { v: "general", label: "General", icon: Building2 },
                       { v: "contacts", label: "Contacts", icon: Users },
@@ -378,13 +389,14 @@ export default function EditCustomer() {
                       <TabsTrigger
                         key={t.v}
                         value={t.v}
-                        className="h-7 px-3 text-xs data-[state=active]:bg-blue-600 data-[state=active]:text-white"
+                        className="h-10 px-4 text-sm data-[state=active]:bg-blue-600 data-[state=active]:text-white"
                       >
-                        <t.icon className="h-3.5 w-3.5 mr-1.5" />
+                        <t.icon className="h-4 w-4 mr-2" />
                         {t.label}
                       </TabsTrigger>
                     ))}
                   </TabsList>
+
                 </div>
               </div>
 
@@ -879,20 +891,6 @@ export default function EditCustomer() {
 
             {/* Right sidebar */}
             <aside className="space-y-4">
-              <Card>
-                <CardHeader className="p-4 pb-2">
-                  <CardTitle className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                    Metadata
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="p-4 pt-0">
-                  <MetaItem label="Created By" value={customer.createdBy} />
-                  <MetaItem label="Created Date" value={customer.createdDate} mono />
-                  <Separator className="my-1" />
-                  <MetaItem label="Modified By" value={customer.modifiedBy} />
-                  <MetaItem label="Modified Date" value={customer.modifiedDate} mono />
-                </CardContent>
-              </Card>
 
               <Card>
                 <CardHeader className="p-4 pb-2 flex flex-row items-center justify-between">
