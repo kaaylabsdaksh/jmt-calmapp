@@ -638,58 +638,58 @@ export default function EditCustomer() {
               </TabsContent>
 
               {/* CONTACTS */}
-              <TabsContent value="contacts" className="mt-4">
+              <TabsContent value="contacts" className="mt-2">
                 <Card>
-                  <CardHeader className="p-4 pb-3 flex flex-row items-center justify-between">
+                  <CardHeader className="p-2.5 pb-2 flex flex-row items-center justify-between">
                     <div>
-                      <CardTitle className="text-sm font-semibold">Contacts</CardTitle>
-                      <CardDescription className="text-[11px]">People associated with this customer.</CardDescription>
+                      <CardTitle className="text-xs font-semibold">Contacts</CardTitle>
+                      <CardDescription className="text-[10px]">People associated with this customer.</CardDescription>
                     </div>
-                    <Button size="sm" className="h-8 text-xs bg-blue-600 hover:bg-blue-700 text-white">
-                      <Plus className="h-3.5 w-3.5 mr-1.5" />Add Contact
+                    <Button size="sm" className="h-7 text-[11px] bg-blue-600 hover:bg-blue-700 text-white">
+                      <Plus className="h-3 w-3 mr-1" />Add Contact
                     </Button>
                   </CardHeader>
-                  <CardContent className="p-4 pt-0">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                  <CardContent className="p-2.5 pt-0">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
                       {[
                         { name: customer.primaryContact, role: "Primary Contact", email: customer.email, phone: customer.phone, primary: true },
                         { name: "Alicia Turner", role: "Accounts Payable", email: "ap@test-industries.com", phone: "(555) 010-4477" },
                         { name: "Marcus Lin", role: "Operations Lead", email: "m.lin@test-industries.com", phone: "(555) 010-8899" },
                       ].map((c, i) => (
                         <Card key={i} className="border">
-                          <CardContent className="p-3 space-y-2">
+                          <CardContent className="p-2 space-y-1.5">
                             <div className="flex items-start justify-between">
                               <div>
-                                <div className="text-xs font-semibold flex items-center gap-1.5">
+                                <div className="text-[11px] font-semibold flex items-center gap-1">
                                   {c.name}
                                   {c.primary && (
-                                    <Badge variant="outline" className="h-4 px-1.5 text-[10px] bg-amber-500/10 text-amber-600 border-amber-500/20 hover:bg-transparent">
-                                      <Star className="h-2.5 w-2.5 mr-0.5" />Primary
+                                    <Badge variant="outline" className="h-3.5 px-1 text-[9px] bg-amber-500/10 text-amber-600 border-amber-500/20 hover:bg-transparent">
+                                      <Star className="h-2 w-2 mr-0.5" />Primary
                                     </Badge>
                                   )}
                                 </div>
-                                <div className="text-[11px] text-muted-foreground">{c.role}</div>
+                                <div className="text-[10px] text-muted-foreground">{c.role}</div>
                               </div>
                               <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
-                                  <Button variant="ghost" size="icon" className="h-6 w-6">
-                                    <MoreHorizontal className="h-3.5 w-3.5" />
+                                  <Button variant="ghost" size="icon" className="h-5 w-5">
+                                    <MoreHorizontal className="h-3 w-3" />
                                   </Button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end">
-                                  <DropdownMenuItem><Pencil className="h-3.5 w-3.5 mr-2" />Edit</DropdownMenuItem>
-                                  <DropdownMenuItem><Star className="h-3.5 w-3.5 mr-2" />Set Primary</DropdownMenuItem>
+                                  <DropdownMenuItem><Pencil className="h-3 w-3 mr-2" />Edit</DropdownMenuItem>
+                                  <DropdownMenuItem><Star className="h-3 w-3 mr-2" />Set Primary</DropdownMenuItem>
                                   <DropdownMenuSeparator />
                                   <DropdownMenuItem className="text-destructive focus:text-destructive">
-                                    <Trash2 className="h-3.5 w-3.5 mr-2" />Remove
+                                    <Trash2 className="h-3 w-3 mr-2" />Remove
                                   </DropdownMenuItem>
                                 </DropdownMenuContent>
                               </DropdownMenu>
                             </div>
                             <Separator />
-                            <div className="space-y-1 text-[11px] text-muted-foreground">
-                              <div className="flex items-center gap-1.5"><Mail className="h-3 w-3" />{c.email}</div>
-                              <div className="flex items-center gap-1.5"><Phone className="h-3 w-3" />{c.phone}</div>
+                            <div className="space-y-0.5 text-[10px] text-muted-foreground">
+                              <div className="flex items-center gap-1"><Mail className="h-2.5 w-2.5" />{c.email}</div>
+                              <div className="flex items-center gap-1"><Phone className="h-2.5 w-2.5" />{c.phone}</div>
                             </div>
                           </CardContent>
                         </Card>
