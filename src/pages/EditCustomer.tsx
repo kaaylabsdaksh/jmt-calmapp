@@ -414,7 +414,8 @@ export default function EditCustomer() {
                 <div className="grid grid-cols-1 xl:grid-cols-2 gap-3">
                   <Accordion
                     type="multiple"
-                    defaultValue={["customer-info", "retest", "primary-contact", "notes"]}
+                    value={generalLeftOpen}
+                    onValueChange={() => {}}
                     className="space-y-1.5"
                   >
                     {/* Customer Information */}
