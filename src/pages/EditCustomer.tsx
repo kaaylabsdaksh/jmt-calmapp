@@ -135,8 +135,8 @@ const Field = ({
   children: React.ReactNode;
   full?: boolean;
 }) => (
-  <div className={`space-y-1 ${full ? "md:col-span-2" : ""}`}>
-    <Label className="text-[10px] font-medium text-foreground">
+  <div className={`space-y-0.5 ${full ? "md:col-span-2" : ""}`}>
+    <Label className="text-[9px] font-medium text-foreground">
       {label}
       {required && <span className="text-destructive ml-0.5">*</span>}
     </Label>
@@ -155,11 +155,11 @@ const ToggleRow = ({
 }) => {
   const [checked, setChecked] = useState(!!defaultChecked);
   return (
-    <div className="flex items-start justify-between gap-3 py-1.5 border-b border-border last:border-0">
+    <div className="flex items-start justify-between gap-3 py-1 border-b border-border last:border-0">
       <div className="min-w-0">
-        <div className="text-[11px] font-medium text-foreground">{label}</div>
+        <div className="text-[10px] font-medium text-foreground">{label}</div>
         {description && (
-          <div className="text-[10px] text-muted-foreground mt-0.5">{description}</div>
+          <div className="text-[9px] text-muted-foreground mt-0.5">{description}</div>
         )}
       </div>
       <Switch checked={checked} onCheckedChange={setChecked} className="scale-90" />
