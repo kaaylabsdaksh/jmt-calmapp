@@ -774,25 +774,25 @@ export default function EditCustomer() {
               </TabsContent>
 
               {/* QUOTES */}
-              <TabsContent value="quotes" className="mt-4">
+              <TabsContent value="quotes" className="mt-2">
                 <Card>
-                  <CardHeader className="p-4 pb-3 flex flex-row items-center justify-between">
+                  <CardHeader className="p-2.5 pb-2 flex flex-row items-center justify-between">
                     <div>
-                      <CardTitle className="text-sm font-semibold">Quotes</CardTitle>
-                      <CardDescription className="text-[11px]">Recent quotes for this customer.</CardDescription>
+                      <CardTitle className="text-xs font-semibold">Quotes</CardTitle>
+                      <CardDescription className="text-[10px]">Recent quotes for this customer.</CardDescription>
                     </div>
-                    <Button size="sm" className="h-8 text-xs bg-blue-600 hover:bg-blue-700 text-white">
-                      <Plus className="h-3.5 w-3.5 mr-1.5" />Create Quote
+                    <Button size="sm" className="h-7 text-[11px] bg-blue-600 hover:bg-blue-700 text-white">
+                      <Plus className="h-3 w-3 mr-1" />Create Quote
                     </Button>
                   </CardHeader>
                   <CardContent className="p-0">
                     <Table>
                       <TableHeader>
                         <TableRow>
-                          <TableHead className="text-[11px] uppercase">Quote #</TableHead>
-                          <TableHead className="text-[11px] uppercase">Status</TableHead>
-                          <TableHead className="text-[11px] uppercase">Date</TableHead>
-                          <TableHead className="text-[11px] uppercase text-right">Amount</TableHead>
+                          <TableHead className="text-[10px] uppercase">Quote #</TableHead>
+                          <TableHead className="text-[10px] uppercase">Status</TableHead>
+                          <TableHead className="text-[10px] uppercase">Date</TableHead>
+                          <TableHead className="text-[10px] uppercase text-right">Amount</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -800,9 +800,9 @@ export default function EditCustomer() {
                           { q: "Q-4478", status: "Sent", date: "Jul 01, 2026", amount: "$2,180.00" },
                           { q: "Q-4451", status: "Accepted", date: "Jun 20, 2026", amount: "$6,940.00" },
                         ].map((r) => (
-                          <TableRow key={r.q} className="text-xs">
+                          <TableRow key={r.q} className="text-[11px]">
                             <TableCell className="font-medium">{r.q}</TableCell>
-                            <TableCell><Badge variant="secondary" className="h-5 text-[11px]">{r.status}</Badge></TableCell>
+                            <TableCell><Badge variant="secondary" className="h-4 text-[10px]">{r.status}</Badge></TableCell>
                             <TableCell>{r.date}</TableCell>
                             <TableCell className="text-right tabular-nums">{r.amount}</TableCell>
                           </TableRow>
