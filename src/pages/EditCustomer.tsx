@@ -560,7 +560,7 @@ export default function EditCustomer() {
                       title="Pricing & Inventory"
                       description="Contract pricing and surplus access."
                     />
-                    <CardContent className="p-4 pt-0">
+                    <CardContent className="p-2.5 pt-0">
                       <ToggleRow
                         label="Contract Pricing"
                         description="Apply negotiated contract rates to this customer."
