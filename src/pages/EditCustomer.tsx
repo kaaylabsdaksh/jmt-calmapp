@@ -709,13 +709,13 @@ export default function EditCustomer() {
                   <CardContent className="p-0">
                     <Table>
                       <TableHeader>
-                        <TableRow>
-                          <TableHead className="text-[10px] uppercase">Work Order</TableHead>
-                          <TableHead className="text-[10px] uppercase">Status</TableHead>
-                          <TableHead className="text-[10px] uppercase">Asset</TableHead>
-                          <TableHead className="text-[10px] uppercase">Technician</TableHead>
-                          <TableHead className="text-[10px] uppercase">Due Date</TableHead>
-                          <TableHead className="text-[10px] uppercase">Invoice</TableHead>
+                        <TableRow className="h-7">
+                          <TableHead className="text-[10px] uppercase py-1.5 px-2">Work Order</TableHead>
+                          <TableHead className="text-[10px] uppercase py-1.5 px-2">Status</TableHead>
+                          <TableHead className="text-[10px] uppercase py-1.5 px-2">Asset</TableHead>
+                          <TableHead className="text-[10px] uppercase py-1.5 px-2">Technician</TableHead>
+                          <TableHead className="text-[10px] uppercase py-1.5 px-2">Due Date</TableHead>
+                          <TableHead className="text-[10px] uppercase py-1.5 px-2">Invoice</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -725,12 +725,12 @@ export default function EditCustomer() {
                           { wo: "5389", status: "On Hold", asset: "Grounds Set G-11", tech: "K. Nguyen", due: "Jun 22, 2026", inv: "—" },
                         ].map((r) => (
                           <TableRow key={r.wo} className="text-[11px]">
-                            <TableCell className="font-medium tabular-nums">{r.wo}</TableCell>
-                            <TableCell><Badge variant="secondary" className="h-4 text-[10px]">{r.status}</Badge></TableCell>
-                            <TableCell>{r.asset}</TableCell>
-                            <TableCell>{r.tech}</TableCell>
-                            <TableCell className="tabular-nums">{r.due}</TableCell>
-                            <TableCell>{r.inv}</TableCell>
+                            <TableCell className="font-medium tabular-nums py-1.5 px-2">{r.wo}</TableCell>
+                            <TableCell className="py-1.5 px-2"><Badge variant="secondary" className="h-4 text-[10px]">{r.status}</Badge></TableCell>
+                            <TableCell className="py-1.5 px-2">{r.asset}</TableCell>
+                            <TableCell className="py-1.5 px-2">{r.tech}</TableCell>
+                            <TableCell className="tabular-nums py-1.5 px-2">{r.due}</TableCell>
+                            <TableCell className="py-1.5 px-2">{r.inv}</TableCell>
                           </TableRow>
                         ))}
                       </TableBody>
