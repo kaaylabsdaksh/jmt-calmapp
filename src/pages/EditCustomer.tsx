@@ -336,7 +336,7 @@ function ContactsSection({ onCreateQuote }: { onCreateQuote: () => void }) {
               <ListIcon className="h-3.5 w-3.5" />
             </button>
           </div>
-          <Button size="sm" className="h-7 text-[11px] bg-blue-600 hover:bg-blue-700 text-white">
+          <Button size="sm" className="h-7 text-[11px] bg-blue-600 hover:bg-blue-700 text-white" onClick={openAdd}>
             <Plus className="h-3 w-3 mr-1" />Add Contact
           </Button>
         </div>
