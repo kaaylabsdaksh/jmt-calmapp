@@ -237,6 +237,10 @@ export default function EditCustomer() {
   const handleSave = () =>
     toast({ title: "Changes saved", description: `Customer ${customer.accountNumber} updated.` });
 
+  const [generalLeftOpen] = useState(["customer-info", "retest", "primary-contact", "notes"]);
+  const [generalRightOpen] = useState(["business", "pricing", "operational"]);
+
+
   return (
     <div className="min-h-screen bg-muted/20">
       <ModernTopNav />
