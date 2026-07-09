@@ -25,6 +25,7 @@ import VehicleStandards from "./pages/VehicleStandards";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Invoicing from "./pages/Invoicing";
+import InvoicingUnified from "./pages/InvoicingUnified";
 import ManageCustomers from "./pages/ManageCustomers";
 import EditCustomer from "./pages/EditCustomer";
 import { Layout } from "./components/Layout";
