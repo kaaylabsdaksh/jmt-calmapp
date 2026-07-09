@@ -267,10 +267,6 @@ function ContactsSection({ onCreateQuote }: { onCreateQuote: () => void }) {
   return (
     <Card>
       <CardHeader className="p-2.5 pb-2 flex flex-row items-center justify-between gap-2">
-        <div className="min-w-0">
-          <CardTitle className="text-xs font-semibold">Contacts</CardTitle>
-          <CardDescription className="text-[10px]">People associated with this customer.</CardDescription>
-        </div>
         <div className="flex items-center gap-2">
           <Input
             placeholder="Search contacts…"
@@ -278,6 +274,12 @@ function ContactsSection({ onCreateQuote }: { onCreateQuote: () => void }) {
             onChange={(e) => setQuery(e.target.value)}
             className="h-7 w-48 text-[11px]"
           />
+          <div className="min-w-0">
+            <CardTitle className="text-xs font-semibold">Contacts</CardTitle>
+            <CardDescription className="text-[10px]">People associated with this customer.</CardDescription>
+          </div>
+        </div>
+        <div className="flex items-center gap-2">
           <div className="inline-flex rounded-md border border-border overflow-hidden">
             <button
               type="button"
