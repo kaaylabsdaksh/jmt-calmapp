@@ -237,6 +237,10 @@ export default function EditCustomer() {
   const handleSave = () =>
     toast({ title: "Changes saved", description: `Customer ${customer.accountNumber} updated.` });
 
+  const [generalLeftOpen] = useState(["customer-info", "retest", "primary-contact", "notes"]);
+  const [generalRightOpen] = useState(["business", "pricing", "operational"]);
+
+
   return (
     <div className="min-h-screen bg-muted/20">
       <ModernTopNav />
@@ -410,7 +414,8 @@ export default function EditCustomer() {
                 <div className="grid grid-cols-1 xl:grid-cols-2 gap-3">
                   <Accordion
                     type="multiple"
-                    defaultValue={["customer-info", "retest", "primary-contact", "notes"]}
+                    value={generalLeftOpen}
+                    onValueChange={() => {}}
                     className="space-y-1.5"
                   >
                     {/* Customer Information */}
@@ -564,7 +569,8 @@ export default function EditCustomer() {
 
                   <Accordion
                     type="multiple"
-                    defaultValue={["business", "pricing", "operational"]}
+                    value={generalRightOpen}
+                    onValueChange={() => {}}
                     className="space-y-1.5"
                   >
                     {/* Business Information */}
