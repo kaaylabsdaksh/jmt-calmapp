@@ -489,16 +489,16 @@ export default function EditCustomer() {
                     <CardContent className="p-2.5 pt-0 space-y-2">
                       <FieldRow>
                         <Field label="Main Contact" required>
-                          <Input className="h-8 text-xs" defaultValue={customer.primaryContact} />
+                          <Input className="h-7 text-[11px]" defaultValue={customer.primaryContact} />
                         </Field>
                         <Field label="Phone Number">
-                          <Input className="h-8 text-xs" defaultValue={customer.phone} />
+                          <Input className="h-7 text-[11px]" defaultValue={customer.phone} />
                         </Field>
                         <Field label="Email" full>
-                          <Input className="h-8 text-xs" defaultValue={customer.email} />
+                          <Input className="h-7 text-[11px]" defaultValue={customer.email} />
                         </Field>
                         <Field label="Biller Code">
-                          <Input className="h-8 text-xs" defaultValue="BC-102" />
+                          <Input className="h-7 text-[11px]" defaultValue="BC-102" />
                         </Field>
 
                       </FieldRow>
