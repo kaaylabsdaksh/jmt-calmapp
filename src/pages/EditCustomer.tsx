@@ -458,7 +458,7 @@ export default function EditCustomer() {
                       title="Retest Address"
                       description="Where recall / retest notices are mailed."
                     />
-                    <CardContent className="p-4 pt-0 space-y-3">
+                    <CardContent className="p-2.5 pt-0 space-y-2">
                       <FieldRow>
                         <Field label="Retest Mail To" full>
                           <Input className="h-8 text-xs" defaultValue={customer.name} />
