@@ -282,16 +282,18 @@ function ContactsSection({ onCreateQuote }: { onCreateQuote: () => void }) {
             <button
               type="button"
               onClick={() => setView("cards")}
-              className={`h-7 px-2 text-[11px] ${view === "cards" ? "bg-blue-600 text-white" : "bg-white text-foreground hover:bg-muted"}`}
+              aria-label="Card view"
+              className={`h-7 w-7 flex items-center justify-center ${view === "cards" ? "bg-blue-600 text-white" : "bg-white text-foreground hover:bg-muted"}`}
             >
-              Cards
+              <LayoutGrid className="h-3.5 w-3.5" />
             </button>
             <button
               type="button"
               onClick={() => setView("list")}
-              className={`h-7 px-2 text-[11px] border-l border-border ${view === "list" ? "bg-blue-600 text-white" : "bg-white text-foreground hover:bg-muted"}`}
+              aria-label="List view"
+              className={`h-7 w-7 flex items-center justify-center border-l border-border ${view === "list" ? "bg-blue-600 text-white" : "bg-white text-foreground hover:bg-muted"}`}
             >
-              List
+              <ListIcon className="h-3.5 w-3.5" />
             </button>
           </div>
           <Button size="sm" className="h-7 text-[11px] bg-blue-600 hover:bg-blue-700 text-white">
