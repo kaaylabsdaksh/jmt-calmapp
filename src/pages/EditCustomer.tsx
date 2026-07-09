@@ -392,7 +392,8 @@ function ContactsSection({ onCreateQuote }: { onCreateQuote: () => void }) {
                     </Button>
                     <div className="flex items-center gap-0.5">
                       <Button variant="ghost" size="icon" className="h-5 w-5" onClick={() => openEdit(i)}><Pencil className="h-3 w-3" /></Button>
-                      <Button variant="ghost" size="icon" className="h-5 w-5" onClick={() => deleteContact(i)}><Trash2 className="h-3 w-3" /></Button>
+                      <Button variant="ghost" size="icon" className="h-5 w-5" onClick={() => confirmDelete(i)}><Trash2 className="h-3 w-3" /></Button>
+
                     </div>
                   </div>
                 </CardContent>
