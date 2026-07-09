@@ -926,20 +926,20 @@ export default function EditCustomer() {
               </Card>
 
               <Card>
-                <CardHeader className="p-4 pb-2">
-                  <CardTitle className="text-xs font-semibold uppercase tracking-wide text-muted-foreground flex items-center gap-1.5">
-                    <CalendarClock className="h-3.5 w-3.5" /> Recent Quotes
+                <CardHeader className="p-2.5 pb-1.5">
+                  <CardTitle className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground flex items-center gap-1">
+                    <CalendarClock className="h-3 w-3" /> Recent Quotes
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="p-4 pt-0 space-y-2">
+                <CardContent className="p-2.5 pt-0 space-y-1.5">
                   {[
                     { q: "Q-4478", amount: "$2,180.00", date: "Jul 01" },
                     { q: "Q-4451", amount: "$6,940.00", date: "Jun 20" },
                   ].map((r) => (
-                    <div key={r.q} className="flex items-center justify-between text-xs">
+                    <div key={r.q} className="flex items-center justify-between text-[11px]">
                       <div className="font-medium">{r.q}</div>
                       <div className="text-muted-foreground tabular-nums">{r.amount}</div>
-                      <div className="text-[11px] text-muted-foreground">{r.date}</div>
+                      <div className="text-[10px] text-muted-foreground">{r.date}</div>
                     </div>
                   ))}
                 </CardContent>
