@@ -207,7 +207,210 @@ const mockLookup: Record<string, Partial<CustomerData>> = {
   "10323.00": { name: "Sabal Trail Transmission LLC", salesperson: "Jerome J. Davis", phone: "(561) 555-0187", email: "ops@sabaltrail.com", primaryContact: "Priya Menon" },
 };
 
-/* ------------------------------ Page ------------------------------ */
+/* --------------------------- Contacts Section --------------------------- */
+
+type ContactRow = {
+  firstName: string;
+  lastName: string;
+  title: string;
+  phone: string;
+  fax: string;
+  cell: string;
+  email: string;
+  website: string;
+  comments: string;
+  active: boolean;
+  dne: boolean;
+  nrn: boolean;
+};
+
+const mockContacts: ContactRow[] = [
+  { firstName: "Blair", lastName: "Brewer", title: "", phone: "234-234-2344", fax: "", cell: "", email: "blairb007@gmail.com", website: "", comments: "Testing", active: false, dne: true, nrn: true },
+  { firstName: "Loretta", lastName: "Rinaldi", title: "Sales Manager", phone: "111-111-1111", fax: "", cell: "", email: "lorettakrinaldi@jmtest.com", website: "http://www.jmtest.com", comments: "", active: true, dne: false, nrn: false },
+  { firstName: "Alicia", lastName: "Brewer", title: "", phone: "", fax: "", cell: "", email: "", website: "", comments: "N/A", active: false, dne: false, nrn: false },
+  { firstName: "Sonny", lastName: "Test", title: "", phone: "999-999-9999", fax: "", cell: "", email: "", website: "", comments: "", active: false, dne: false, nrn: false },
+  { firstName: "Janette", lastName: "Test", title: "", phone: "(225) 925-2029", fax: "", cell: "", email: "janettecoon@jmtest.com", website: "", comments: "", active: false, dne: false, nrn: false },
+  { firstName: "Rhonda", lastName: "Gilbert", title: "Ops Lead", phone: "225-123-4567", fax: "", cell: "225-999-1122", email: "rhondagilbert@jmtest.com", website: "", comments: "", active: false, dne: false, nrn: false },
+  { firstName: "Tim", lastName: "Oldendorf", title: "Buyer", phone: "123-456-789", fax: "", cell: "", email: "timoldendorf@jmtest.com", website: "", comments: "", active: true, dne: false, nrn: false },
+  { firstName: "Tabatha", lastName: "Gates", title: "Coordinator", phone: "225-325-6999", fax: "", cell: "", email: "tabathagates@jmtest.com", website: "", comments: "", active: true, dne: false, nrn: false },
+  { firstName: "Viet", lastName: "Le", title: "Engineer", phone: "444-444-4444", fax: "", cell: "", email: "", website: "", comments: "", active: true, dne: false, nrn: false },
+  { firstName: "Lukas", lastName: "Frick", title: "", phone: "777-777-7777", fax: "", cell: "", email: "", website: "", comments: "", active: true, dne: false, nrn: false },
+];
+
+const YNBadge = ({ value, tone = "emerald" }: { value: boolean; tone?: "emerald" | "amber" | "slate" }) => {
+  const toneMap = {
+    emerald: value ? "bg-emerald-50 text-emerald-700 border-emerald-100" : "bg-slate-50 text-slate-500 border-slate-100",
+    amber: value ? "bg-amber-50 text-amber-700 border-amber-100" : "bg-slate-50 text-slate-500 border-slate-100",
+    slate: value ? "bg-slate-100 text-slate-700 border-slate-200" : "bg-slate-50 text-slate-500 border-slate-100",
+  } as const;
+  return (
+    <Badge variant="outline" className={`h-4 px-1 text-[9px] hover:bg-transparent ${toneMap[tone]}`}>
+      {value ? "Y" : "N"}
+    </Badge>
+  );
+};
+
+function ContactsSection({ onCreateQuote }: { onCreateQuote: () => void }) {
+  const [view, setView] = useState<"cards" | "list">("cards");
+  const [query, setQuery] = useState("");
+
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return mockContacts;
+    return mockContacts.filter((c) =>
+      [c.firstName, c.lastName, c.title, c.email, c.phone, c.cell].some((v) => v.toLowerCase().includes(q))
+    );
+  }, [query]);
+
+  return (
+    <Card>
+      <CardHeader className="p-2.5 pb-2 flex flex-row items-center justify-between gap-2">
+        <div className="min-w-0">
+          <CardTitle className="text-xs font-semibold">Contacts</CardTitle>
+          <CardDescription className="text-[10px]">People associated with this customer.</CardDescription>
+        </div>
+        <div className="flex items-center gap-2">
+          <Input
+            placeholder="Search contacts…"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="h-7 w-48 text-[11px]"
+          />
+          <div className="inline-flex rounded-md border border-border overflow-hidden">
+            <button
+              type="button"
+              onClick={() => setView("cards")}
+              className={`h-7 px-2 text-[11px] ${view === "cards" ? "bg-blue-600 text-white" : "bg-white text-foreground hover:bg-muted"}`}
+            >
+              Cards
+            </button>
+            <button
+              type="button"
+              onClick={() => setView("list")}
+              className={`h-7 px-2 text-[11px] border-l border-border ${view === "list" ? "bg-blue-600 text-white" : "bg-white text-foreground hover:bg-muted"}`}
+            >
+              List
+            </button>
+          </div>
+          <Button size="sm" className="h-7 text-[11px] bg-blue-600 hover:bg-blue-700 text-white">
+            <Plus className="h-3 w-3 mr-1" />Add Contact
+          </Button>
+        </div>
+      </CardHeader>
+
+      <CardContent className={view === "cards" ? "p-2.5 pt-0" : "p-0"}>
+        {view === "cards" ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+            {filtered.map((c, i) => (
+              <Card key={i} className="border">
+                <CardContent className="p-2 space-y-1.5">
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="min-w-0">
+                      <div className="text-[11px] font-semibold truncate">
+                        {c.firstName} {c.lastName}
+                      </div>
+                      {c.title && <div className="text-[10px] text-muted-foreground truncate">{c.title}</div>}
+                    </div>
+                    <div className="flex items-center gap-1 shrink-0">
+                      <YNBadge value={c.active} tone="emerald" />
+                      <Badge variant="outline" className="h-4 px-1 text-[9px] hover:bg-transparent bg-slate-50 text-slate-600 border-slate-100">
+                        DNE:{c.dne ? "Y" : "N"}
+                      </Badge>
+                      <Badge variant="outline" className="h-4 px-1 text-[9px] hover:bg-transparent bg-slate-50 text-slate-600 border-slate-100">
+                        NRN:{c.nrn ? "Y" : "N"}
+                      </Badge>
+                    </div>
+                  </div>
+                  <Separator />
+                  <div className="space-y-0.5 text-[10px] text-muted-foreground">
+                    {c.phone && <div className="flex items-center gap-1 truncate"><Phone className="h-2.5 w-2.5 shrink-0" />{c.phone}</div>}
+                    {c.cell && <div className="flex items-center gap-1 truncate"><Phone className="h-2.5 w-2.5 shrink-0" />Cell: {c.cell}</div>}
+                    {c.fax && <div className="flex items-center gap-1 truncate">Fax: {c.fax}</div>}
+                    {c.email && <div className="flex items-center gap-1 truncate"><Mail className="h-2.5 w-2.5 shrink-0" />{c.email}</div>}
+                    {c.website && <div className="truncate">🌐 {c.website}</div>}
+                    {c.comments && <div className="italic truncate">“{c.comments}”</div>}
+                  </div>
+                  <div className="flex items-center justify-between pt-1">
+                    <Button
+                      variant="link"
+                      size="sm"
+                      className="h-5 px-0 text-[10px] text-blue-600"
+                      onClick={onCreateQuote}
+                    >
+                      Create Quote
+                    </Button>
+                    <div className="flex items-center gap-0.5">
+                      <Button variant="ghost" size="icon" className="h-5 w-5"><Pencil className="h-3 w-3" /></Button>
+                      <Button variant="ghost" size="icon" className="h-5 w-5"><Trash2 className="h-3 w-3" /></Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow className="h-7">
+                  <TableHead className="text-[10px] uppercase py-1.5 px-2">First Name</TableHead>
+                  <TableHead className="text-[10px] uppercase py-1.5 px-2">Last Name</TableHead>
+                  <TableHead className="text-[10px] uppercase py-1.5 px-2">Title</TableHead>
+                  <TableHead className="text-[10px] uppercase py-1.5 px-2">Phone #</TableHead>
+                  <TableHead className="text-[10px] uppercase py-1.5 px-2">Fax #</TableHead>
+                  <TableHead className="text-[10px] uppercase py-1.5 px-2">Cell #</TableHead>
+                  <TableHead className="text-[10px] uppercase py-1.5 px-2">Email Address</TableHead>
+                  <TableHead className="text-[10px] uppercase py-1.5 px-2">Website</TableHead>
+                  <TableHead className="text-[10px] uppercase py-1.5 px-2">Comments</TableHead>
+                  <TableHead className="text-[10px] uppercase py-1.5 px-2 text-center">Active</TableHead>
+                  <TableHead className="text-[10px] uppercase py-1.5 px-2 text-center">DNE</TableHead>
+                  <TableHead className="text-[10px] uppercase py-1.5 px-2 text-center">NRN</TableHead>
+                  <TableHead className="text-[10px] uppercase py-1.5 px-2"></TableHead>
+                  <TableHead className="text-[10px] uppercase py-1.5 px-2 text-right">Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {filtered.map((c, i) => (
+                  <TableRow key={i} className="text-[11px]">
+                    <TableCell className="py-1.5 px-2 font-medium">{c.firstName}</TableCell>
+                    <TableCell className="py-1.5 px-2 font-medium">{c.lastName}</TableCell>
+                    <TableCell className="py-1.5 px-2 text-muted-foreground">{c.title || "—"}</TableCell>
+                    <TableCell className="py-1.5 px-2 tabular-nums">{c.phone || "—"}</TableCell>
+                    <TableCell className="py-1.5 px-2 tabular-nums">{c.fax || "—"}</TableCell>
+                    <TableCell className="py-1.5 px-2 tabular-nums">{c.cell || "—"}</TableCell>
+                    <TableCell className="py-1.5 px-2">
+                      {c.email ? <a className="text-blue-600 hover:underline" href={`mailto:${c.email}`}>{c.email}</a> : "—"}
+                    </TableCell>
+                    <TableCell className="py-1.5 px-2">
+                      {c.website ? <a className="text-blue-600 hover:underline" href={c.website} target="_blank" rel="noreferrer">{c.website}</a> : "—"}
+                    </TableCell>
+                    <TableCell className="py-1.5 px-2 text-muted-foreground max-w-[160px] truncate">{c.comments || "—"}</TableCell>
+                    <TableCell className="py-1.5 px-2 text-center"><YNBadge value={c.active} /></TableCell>
+                    <TableCell className="py-1.5 px-2 text-center"><YNBadge value={c.dne} tone="amber" /></TableCell>
+                    <TableCell className="py-1.5 px-2 text-center"><YNBadge value={c.nrn} tone="slate" /></TableCell>
+                    <TableCell className="py-1.5 px-2">
+                      <Button variant="link" size="sm" className="h-5 px-0 text-[10px] text-blue-600" onClick={onCreateQuote}>
+                        Create Quote
+                      </Button>
+                    </TableCell>
+                    <TableCell className="py-1.5 px-2 text-right">
+                      <div className="inline-flex items-center gap-0.5">
+                        <Button variant="ghost" size="icon" className="h-5 w-5"><Pencil className="h-3 w-3" /></Button>
+                        <Button variant="ghost" size="icon" className="h-5 w-5"><Trash2 className="h-3 w-3" /></Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+
+
 
 export default function EditCustomer() {
   const { accountNumber } = useParams<{ accountNumber: string }>();
@@ -677,64 +880,7 @@ export default function EditCustomer() {
 
               {/* CONTACTS */}
               <TabsContent value="contacts" className="mt-2">
-                <Card>
-                  <CardHeader className="p-2.5 pb-2 flex flex-row items-center justify-between">
-                    <div>
-                      <CardTitle className="text-xs font-semibold">Contacts</CardTitle>
-                      <CardDescription className="text-[10px]">People associated with this customer.</CardDescription>
-                    </div>
-                    <Button size="sm" className="h-7 text-[11px] bg-blue-600 hover:bg-blue-700 text-white">
-                      <Plus className="h-3 w-3 mr-1" />Add Contact
-                    </Button>
-                  </CardHeader>
-                  <CardContent className="p-2.5 pt-0">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-                      {[
-                        { name: customer.primaryContact, role: "Primary Contact", email: customer.email, phone: customer.phone, primary: true },
-                        { name: "Alicia Turner", role: "Accounts Payable", email: "ap@test-industries.com", phone: "(555) 010-4477" },
-                        { name: "Marcus Lin", role: "Operations Lead", email: "m.lin@test-industries.com", phone: "(555) 010-8899" },
-                      ].map((c, i) => (
-                        <Card key={i} className="border">
-                          <CardContent className="p-2 space-y-1.5">
-                            <div className="flex items-start justify-between">
-                              <div>
-                                <div className="text-[11px] font-semibold flex items-center gap-1">
-                                  {c.name}
-                                  {c.primary && (
-                                    <Badge variant="outline" className="h-3.5 px-1 text-[9px] bg-amber-500/10 text-amber-600 border-amber-500/20 hover:bg-transparent">
-                                      <Star className="h-2 w-2 mr-0.5" />Primary
-                                    </Badge>
-                                  )}
-                                </div>
-                                <div className="text-[10px] text-muted-foreground">{c.role}</div>
-                              </div>
-                              <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                  <Button variant="ghost" size="icon" className="h-5 w-5">
-                                    <MoreHorizontal className="h-3 w-3" />
-                                  </Button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent align="end">
-                                  <DropdownMenuItem><Pencil className="h-3 w-3 mr-2" />Edit</DropdownMenuItem>
-                                  <DropdownMenuItem><Star className="h-3 w-3 mr-2" />Set Primary</DropdownMenuItem>
-                                  <DropdownMenuSeparator />
-                                  <DropdownMenuItem className="text-destructive focus:text-destructive">
-                                    <Trash2 className="h-3 w-3 mr-2" />Remove
-                                  </DropdownMenuItem>
-                                </DropdownMenuContent>
-                              </DropdownMenu>
-                            </div>
-                            <Separator />
-                            <div className="space-y-0.5 text-[10px] text-muted-foreground">
-                              <div className="flex items-center gap-1"><Mail className="h-2.5 w-2.5" />{c.email}</div>
-                              <div className="flex items-center gap-1"><Phone className="h-2.5 w-2.5" />{c.phone}</div>
-                            </div>
-                          </CardContent>
-                        </Card>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
+                <ContactsSection onCreateQuote={() => toast({ title: "Create Quote", description: "Opening quote form…" })} />
               </TabsContent>
 
               {/* WORK ORDERS */}
