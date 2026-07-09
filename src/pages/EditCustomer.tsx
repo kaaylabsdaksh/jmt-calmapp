@@ -461,19 +461,19 @@ export default function EditCustomer() {
                     <CardContent className="p-2.5 pt-0 space-y-2">
                       <FieldRow>
                         <Field label="Retest Mail To" full>
-                          <Input className="h-8 text-xs" defaultValue={customer.name} />
+                          <Input className="h-7 text-[11px]" defaultValue={customer.name} />
                         </Field>
                         <Field label="Address" full>
-                          <Input className="h-8 text-xs" defaultValue="Same as shipping" />
+                          <Input className="h-7 text-[11px]" defaultValue="Same as shipping" />
                         </Field>
                         <Field label="City">
-                          <Input className="h-8 text-xs" defaultValue="Baton Rouge" />
+                          <Input className="h-7 text-[11px]" defaultValue="Baton Rouge" />
                         </Field>
                         <Field label="State">
-                          <Input className="h-8 text-xs" defaultValue="LA" />
+                          <Input className="h-7 text-[11px]" defaultValue="LA" />
                         </Field>
                         <Field label="Zip Code">
-                          <Input className="h-8 text-xs" defaultValue="70801" />
+                          <Input className="h-7 text-[11px]" defaultValue="70801" />
                         </Field>
                       </FieldRow>
                     </CardContent>
