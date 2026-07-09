@@ -894,31 +894,31 @@ export default function EditCustomer() {
             </div>
 
             {/* Right sidebar */}
-            <aside className="space-y-4">
+            <aside className="space-y-3">
 
 
 
 
 
               <Card>
-                <CardHeader className="p-4 pb-2 flex flex-row items-center justify-between">
-                  <CardTitle className="text-xs font-semibold uppercase tracking-wide text-muted-foreground flex items-center gap-1.5">
-                    <History className="h-3.5 w-3.5" /> Recent Activity
+                <CardHeader className="p-2.5 pb-1.5 flex flex-row items-center justify-between">
+                  <CardTitle className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground flex items-center gap-1">
+                    <History className="h-3 w-3" /> Recent Activity
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="p-4 pt-0 space-y-3">
+                <CardContent className="p-2.5 pt-0 space-y-2">
                   {[
                     { icon: FilePlus2, text: "Quote Q-4478 created", when: "2h ago" },
                     { icon: FileText, text: "WO 5432 updated", when: "Yesterday" },
                     { icon: DollarSign, text: "Contract pricing refreshed", when: "3d ago" },
                   ].map((a, i) => (
-                    <div key={i} className="flex items-start gap-2">
-                      <div className="w-6 h-6 rounded bg-muted flex items-center justify-center shrink-0">
-                        <a.icon className="h-3 w-3 text-muted-foreground" />
+                    <div key={i} className="flex items-start gap-1.5">
+                      <div className="w-5 h-5 rounded bg-muted flex items-center justify-center shrink-0">
+                        <a.icon className="h-2.5 w-2.5 text-muted-foreground" />
                       </div>
                       <div className="min-w-0">
-                        <div className="text-xs">{a.text}</div>
-                        <div className="text-[11px] text-muted-foreground">{a.when}</div>
+                        <div className="text-[11px]">{a.text}</div>
+                        <div className="text-[10px] text-muted-foreground">{a.when}</div>
                       </div>
                     </div>
                   ))}
