@@ -405,8 +405,8 @@ export default function EditCustomer() {
 
 
               {/* GENERAL */}
-              <TabsContent value="general" className="space-y-3 mt-2">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+              <TabsContent value="general" className="space-y-2 mt-2">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
                   {/* Customer Information */}
                   <Card>
                     <SectionHeader
@@ -414,11 +414,11 @@ export default function EditCustomer() {
                       title="Customer Information"
                       description="Primary account and shipping address."
                     />
-                    <CardContent className="p-2.5 pt-0 space-y-2">
+                    <CardContent className="p-2 pt-0 space-y-1.5">
                       <FieldRow>
                         <Field label="Customer Status" required>
                           <Select defaultValue="active">
-                            <SelectTrigger className="h-7 text-[11px]"><SelectValue /></SelectTrigger>
+                            <SelectTrigger className="h-6 text-[10px]"><SelectValue /></SelectTrigger>
                             <SelectContent>
                               <SelectItem value="active">Active</SelectItem>
                               <SelectItem value="pending">Pending</SelectItem>
@@ -427,25 +427,25 @@ export default function EditCustomer() {
                           </Select>
                         </Field>
                         <Field label="Account Number" required>
-                          <Input className="h-7 text-[11px] tabular-nums" defaultValue={customer.accountNumber} readOnly />
+                          <Input className="h-6 text-[10px] tabular-nums" defaultValue={customer.accountNumber} readOnly />
                         </Field>
                         <Field label="Customer Name" required full>
-                          <Input className="h-7 text-[11px]" defaultValue={customer.name} />
+                          <Input className="h-6 text-[10px]" defaultValue={customer.name} />
                         </Field>
                         <Field label="Ship To" full>
-                          <Input className="h-7 text-[11px]" defaultValue={customer.name} />
+                          <Input className="h-6 text-[10px]" defaultValue={customer.name} />
                         </Field>
                         <Field label="Address" full>
-                          <Input className="h-7 text-[11px]" defaultValue="123 Industrial Way" />
+                          <Input className="h-6 text-[10px]" defaultValue="123 Industrial Way" />
                         </Field>
                         <Field label="City">
-                          <Input className="h-7 text-[11px]" defaultValue="Baton Rouge" />
+                          <Input className="h-6 text-[10px]" defaultValue="Baton Rouge" />
                         </Field>
                         <Field label="State">
-                          <Input className="h-7 text-[11px]" defaultValue="LA" />
+                          <Input className="h-6 text-[10px]" defaultValue="LA" />
                         </Field>
                         <Field label="Zip Code">
-                          <Input className="h-7 text-[11px]" defaultValue="70801" />
+                          <Input className="h-6 text-[10px]" defaultValue="70801" />
                         </Field>
                       </FieldRow>
                     </CardContent>
@@ -458,22 +458,22 @@ export default function EditCustomer() {
                       title="Retest Address"
                       description="Where recall / retest notices are mailed."
                     />
-                    <CardContent className="p-2.5 pt-0 space-y-2">
+                    <CardContent className="p-2 pt-0 space-y-1.5">
                       <FieldRow>
                         <Field label="Retest Mail To" full>
-                          <Input className="h-7 text-[11px]" defaultValue={customer.name} />
+                          <Input className="h-6 text-[10px]" defaultValue={customer.name} />
                         </Field>
                         <Field label="Address" full>
-                          <Input className="h-7 text-[11px]" defaultValue="Same as shipping" />
+                          <Input className="h-6 text-[10px]" defaultValue="Same as shipping" />
                         </Field>
                         <Field label="City">
-                          <Input className="h-7 text-[11px]" defaultValue="Baton Rouge" />
+                          <Input className="h-6 text-[10px]" defaultValue="Baton Rouge" />
                         </Field>
                         <Field label="State">
-                          <Input className="h-7 text-[11px]" defaultValue="LA" />
+                          <Input className="h-6 text-[10px]" defaultValue="LA" />
                         </Field>
                         <Field label="Zip Code">
-                          <Input className="h-7 text-[11px]" defaultValue="70801" />
+                          <Input className="h-6 text-[10px]" defaultValue="70801" />
                         </Field>
                       </FieldRow>
                     </CardContent>
@@ -486,19 +486,19 @@ export default function EditCustomer() {
                       title="Primary Contact"
                       description="Main person for account communications."
                     />
-                    <CardContent className="p-2.5 pt-0 space-y-2">
+                    <CardContent className="p-2 pt-0 space-y-1.5">
                       <FieldRow>
                         <Field label="Main Contact" required>
-                          <Input className="h-7 text-[11px]" defaultValue={customer.primaryContact} />
+                          <Input className="h-6 text-[10px]" defaultValue={customer.primaryContact} />
                         </Field>
                         <Field label="Phone Number">
-                          <Input className="h-7 text-[11px]" defaultValue={customer.phone} />
+                          <Input className="h-6 text-[10px]" defaultValue={customer.phone} />
                         </Field>
                         <Field label="Email" full>
-                          <Input className="h-7 text-[11px]" defaultValue={customer.email} />
+                          <Input className="h-6 text-[10px]" defaultValue={customer.email} />
                         </Field>
                         <Field label="Biller Code">
-                          <Input className="h-7 text-[11px]" defaultValue="BC-102" />
+                          <Input className="h-6 text-[10px]" defaultValue="BC-102" />
                         </Field>
 
                       </FieldRow>
@@ -512,14 +512,14 @@ export default function EditCustomer() {
                       title="Business Information"
                       description="Industry, documentation and payment terms."
                     />
-                    <CardContent className="p-2.5 pt-0 space-y-2">
+                    <CardContent className="p-2 pt-0 space-y-1.5">
                       <FieldRow>
                         <Field label="Salesperson" required>
-                          <Input className="h-7 text-[11px]" defaultValue={customer.salesperson} />
+                          <Input className="h-6 text-[10px]" defaultValue={customer.salesperson} />
                         </Field>
                         <Field label="Industry Code">
                           <Select defaultValue="utilities">
-                            <SelectTrigger className="h-7 text-[11px]"><SelectValue /></SelectTrigger>
+                            <SelectTrigger className="h-6 text-[10px]"><SelectValue /></SelectTrigger>
                             <SelectContent>
                               <SelectItem value="utilities">Utilities</SelectItem>
                               <SelectItem value="manufacturing">Manufacturing</SelectItem>
@@ -530,17 +530,17 @@ export default function EditCustomer() {
                         </Field>
 
                         <Field label="OSR Number">
-                          <Input className="h-7 text-[11px]" defaultValue="OSR-2456" />
+                          <Input className="h-6 text-[10px]" defaultValue="OSR-2456" />
                         </Field>
                         <Field label="OSR Document">
-                          <Input className="h-7 text-[11px]" defaultValue="osr-2024.pdf" />
+                          <Input className="h-6 text-[10px]" defaultValue="osr-2024.pdf" />
                         </Field>
                         <Field label="SR Document">
-                          <Input className="h-7 text-[11px]" defaultValue="sr-2024.pdf" />
+                          <Input className="h-6 text-[10px]" defaultValue="sr-2024.pdf" />
                         </Field>
                         <Field label="Payment Terms" full>
                           <Select defaultValue="net30">
-                            <SelectTrigger className="h-7 text-[11px]"><SelectValue /></SelectTrigger>
+                            <SelectTrigger className="h-6 text-[10px]"><SelectValue /></SelectTrigger>
                             <SelectContent>
                               <SelectItem value="net15">Net 15</SelectItem>
                               <SelectItem value="net30">Net 30</SelectItem>
@@ -560,7 +560,7 @@ export default function EditCustomer() {
                       title="Pricing & Inventory"
                       description="Contract pricing and surplus access."
                     />
-                    <CardContent className="p-2.5 pt-0">
+                    <CardContent className="p-2 pt-0">
                       <ToggleRow
                         label="Contract Pricing"
                         description="Apply negotiated contract rates to this customer."
@@ -585,7 +585,7 @@ export default function EditCustomer() {
                       title="Operational Settings"
                       description="Workflow and recall behaviour."
                     />
-                    <CardContent className="p-2.5 pt-0">
+                    <CardContent className="p-2 pt-0">
                       <ToggleRow label="No Expedite Fees" description="Waive expedite fees for this account." />
                       <ToggleRow
                         label="Enabled Calibration Frequency"
@@ -615,18 +615,18 @@ export default function EditCustomer() {
                       title="Notes"
                       description="Customer-facing remarks and internal comments."
                     />
-                    <CardContent className="p-2.5 pt-0 space-y-2">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <CardContent className="p-2 pt-0 space-y-1.5">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                         <Field label="Remarks" full>
                           <Textarea
-                            className="text-[11px] min-h-[70px]"
+                            className="text-[10px] min-h-[52px]"
                             placeholder="Visible on quotes and work orders…"
                             defaultValue="Prefers Wednesday deliveries. Requires PO on all shipments."
                           />
                         </Field>
                         <Field label="Internal Comments" full>
                           <Textarea
-                            className="text-[11px] min-h-[70px]"
+                            className="text-[10px] min-h-[52px]"
                             placeholder="Internal only — not shared with the customer."
                             defaultValue="Key account. Route escalations to Jerome directly."
                           />
