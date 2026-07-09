@@ -269,6 +269,7 @@ function ContactsSection({ onCreateQuote }: { onCreateQuote: () => void }) {
   const [query, setQuery] = useState("");
   const [contacts, setContacts] = useState<ContactRow[]>(mockContacts);
   const [editIndex, setEditIndex] = useState<number | null>(null);
+  const [deleteIndex, setDeleteIndex] = useState<number | null>(null);
   const [draft, setDraft] = useState<ContactRow>(emptyContact);
 
   const filtered = useMemo(() => {
@@ -299,11 +300,17 @@ function ContactsSection({ onCreateQuote }: { onCreateQuote: () => void }) {
     });
     setEditIndex(null);
   };
-  const deleteContact = (index: number) => {
-    setContacts((prev) => prev.filter((_, i) => i !== index));
+  const confirmDelete = (index: number) => setDeleteIndex(index);
+  const closeDeleteDialog = () => setDeleteIndex(null);
+  const executeDelete = () => {
+    if (deleteIndex === null) return;
+    setContacts((prev) => prev.filter((_, i) => i !== deleteIndex));
+    setDeleteIndex(null);
   };
   const setField = <K extends keyof ContactRow>(key: K, value: ContactRow[K]) =>
     setDraft((d) => ({ ...d, [key]: value }));
+
+
 
 
   return (
