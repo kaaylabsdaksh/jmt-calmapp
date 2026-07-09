@@ -1015,43 +1015,9 @@ export default function EditCustomer() {
 
               {/* WORK ORDERS */}
               <TabsContent value="work-orders" className="mt-2">
-                <Card>
-                  <CardHeader className="p-2.5 pb-2">
-                    <CardTitle className="text-xs font-semibold">Work Orders</CardTitle>
-                    <CardDescription className="text-[10px]">Recent work orders for this customer.</CardDescription>
-                  </CardHeader>
-                  <CardContent className="p-0">
-                    <Table>
-                      <TableHeader>
-                        <TableRow className="h-7">
-                          <TableHead className="text-[10px] uppercase py-1.5 px-2">Work Order</TableHead>
-                          <TableHead className="text-[10px] uppercase py-1.5 px-2">Status</TableHead>
-                          <TableHead className="text-[10px] uppercase py-1.5 px-2">Asset</TableHead>
-                          <TableHead className="text-[10px] uppercase py-1.5 px-2">Technician</TableHead>
-                          <TableHead className="text-[10px] uppercase py-1.5 px-2">Due Date</TableHead>
-                          <TableHead className="text-[10px] uppercase py-1.5 px-2">Invoice</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {[
-                          { wo: "5432", status: "In Progress", asset: "Blanket Kit A-102", tech: "M. Alvarez", due: "Jul 15, 2026", inv: "Pending" },
-                          { wo: "5401", status: "Completed", asset: "Gloves Class 2", tech: "R. Patel", due: "Jun 28, 2026", inv: "Invoiced" },
-                          { wo: "5389", status: "On Hold", asset: "Grounds Set G-11", tech: "K. Nguyen", due: "Jun 22, 2026", inv: "—" },
-                        ].map((r) => (
-                          <TableRow key={r.wo} className="text-[11px]">
-                            <TableCell className="font-medium tabular-nums py-1.5 px-2">{r.wo}</TableCell>
-                            <TableCell className="py-1.5 px-2"><Badge variant="secondary" className="h-4 text-[10px]">{r.status}</Badge></TableCell>
-                            <TableCell className="py-1.5 px-2">{r.asset}</TableCell>
-                            <TableCell className="py-1.5 px-2">{r.tech}</TableCell>
-                            <TableCell className="tabular-nums py-1.5 px-2">{r.due}</TableCell>
-                            <TableCell className="py-1.5 px-2">{r.inv}</TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </CardContent>
-                </Card>
+                <WorkOrdersSection />
               </TabsContent>
+
 
               {/* PURCHASE ORDERS */}
               <TabsContent value="po" className="mt-2">
