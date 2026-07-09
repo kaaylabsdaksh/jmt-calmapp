@@ -624,55 +624,54 @@ function WorkOrdersSection() {
       </CardHeader>
       <CardContent className="p-0">
         <div className="overflow-x-auto">
-          <div className="min-w-[900px]">
-            <Table>
-              <TableHeader>
-                <TableRow className="h-7 bg-muted/50">
-                  <TableHead className="text-[10px] uppercase py-1.5 px-2 w-10"></TableHead>
-                  <TableHead className="text-[10px] uppercase py-1.5 px-2">WO #</TableHead>
-                  <TableHead className="text-[10px] uppercase py-1.5 px-2">Status</TableHead>
-                  <TableHead className="text-[10px] uppercase py-1.5 px-2">Type</TableHead>
-                  <TableHead className="text-[10px] uppercase py-1.5 px-2">Created Date</TableHead>
-                  <TableHead className="text-[10px] uppercase py-1.5 px-2">Need By</TableHead>
-                  <TableHead className="text-[10px] uppercase py-1.5 px-2">Departure Date</TableHead>
-                  <TableHead className="text-[10px] uppercase py-1.5 px-2">Shipped</TableHead>
-                  <TableHead className="text-[10px] uppercase py-1.5 px-2">PONumber</TableHead>
-                  <TableHead className="text-[10px] uppercase py-1.5 px-2 text-right"># Items</TableHead>
+          <Table>
+            <TableHeader>
+              <TableRow className="h-7 bg-muted/50">
+                <TableHead className="text-[10px] uppercase py-1 px-1.5 w-10"></TableHead>
+                <TableHead className="text-[10px] uppercase py-1 px-1.5">WO #</TableHead>
+                <TableHead className="text-[10px] uppercase py-1 px-1.5">Status</TableHead>
+                <TableHead className="text-[10px] uppercase py-1 px-1.5">Type</TableHead>
+                <TableHead className="text-[10px] uppercase py-1 px-1.5">Created Date</TableHead>
+                <TableHead className="text-[10px] uppercase py-1 px-1.5">Need By</TableHead>
+                <TableHead className="text-[10px] uppercase py-1 px-1.5">Departure Date</TableHead>
+                <TableHead className="text-[10px] uppercase py-1 px-1.5">Shipped</TableHead>
+                <TableHead className="text-[10px] uppercase py-1 px-1.5">PONumber</TableHead>
+                <TableHead className="text-[10px] uppercase py-1 px-1.5 text-right"># Items</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {filtered.map((r) => (
+                <TableRow key={`${r.wo}-${r.poNumber}-${r.items}`} className="text-[10px]">
+                  <TableCell className="py-1 px-1.5">
+                    <Button
+                      variant="link"
+                      size="sm"
+                      className="h-5 px-0 text-[10px] text-blue-600"
+                      onClick={() =>
+                        toast({ title: "Edit Work Order", description: `Opening work order ${r.wo}…` })
+                      }
+                    >
+                      Edit
+                    </Button>
+                  </TableCell>
+                  <TableCell className="font-medium tabular-nums py-1 px-1.5">{r.wo}</TableCell>
+                  <TableCell className="py-1 px-1.5 whitespace-nowrap">
+                    <Badge variant="secondary" className="h-4 text-[9px]">{r.status}</Badge>
+                  </TableCell>
+                  <TableCell className="py-1 px-1.5 whitespace-nowrap">{r.type}</TableCell>
+                  <TableCell className="tabular-nums py-1 px-1.5">{r.created}</TableCell>
+                  <TableCell className="tabular-nums py-1 px-1.5">{r.needBy}</TableCell>
+                  <TableCell className="tabular-nums py-1 px-1.5">{r.departure}</TableCell>
+                  <TableCell className="tabular-nums py-1 px-1.5">{r.shipped || "—"}</TableCell>
+                  <TableCell className="py-1 px-1.5">{r.poNumber}</TableCell>
+                  <TableCell className="tabular-nums py-1 px-1.5 text-right">{r.items}</TableCell>
                 </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filtered.map((r) => (
-                  <TableRow key={`${r.wo}-${r.poNumber}-${r.items}`} className="text-[11px]">
-                    <TableCell className="py-1.5 px-2">
-                      <Button
-                        variant="link"
-                        size="sm"
-                        className="h-5 px-0 text-[10px] text-blue-600"
-                        onClick={() =>
-                          toast({ title: "Edit Work Order", description: `Opening work order ${r.wo}…` })
-                        }
-                      >
-                        Edit
-                      </Button>
-                    </TableCell>
-                    <TableCell className="font-medium tabular-nums py-1.5 px-2">{r.wo}</TableCell>
-                    <TableCell className="py-1.5 px-2 whitespace-nowrap">
-                      <Badge variant="secondary" className="h-4 text-[10px]">{r.status}</Badge>
-                    </TableCell>
-                    <TableCell className="py-1.5 px-2 whitespace-nowrap">{r.type}</TableCell>
-                    <TableCell className="tabular-nums py-1.5 px-2">{r.created}</TableCell>
-                    <TableCell className="tabular-nums py-1.5 px-2">{r.needBy}</TableCell>
-                    <TableCell className="tabular-nums py-1.5 px-2">{r.departure}</TableCell>
-                    <TableCell className="tabular-nums py-1.5 px-2">{r.shipped || "—"}</TableCell>
-                    <TableCell className="py-1.5 px-2">{r.poNumber}</TableCell>
-                    <TableCell className="tabular-nums py-1.5 px-2 text-right">{r.items}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
+              ))}
+            </TableBody>
+          </Table>
         </div>
         <div className="flex items-center justify-center gap-1 py-2 border-t border-border">
+
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
             <button
               key={n}
