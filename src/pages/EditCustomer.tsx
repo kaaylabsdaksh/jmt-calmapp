@@ -345,7 +345,7 @@ function ContactsSection({ onCreateQuote }: { onCreateQuote: () => void }) {
       <CardContent className={view === "cards" ? "p-2.5 pt-0" : "p-0"}>
         {view === "cards" ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-            {filtered.map((c, i) => (
+            {filtered.map(({ c, i }) => (
               <Card key={i} className="border">
                 <CardContent className="p-2 space-y-1.5">
                   <div className="flex items-start justify-between gap-2">
@@ -384,8 +384,8 @@ function ContactsSection({ onCreateQuote }: { onCreateQuote: () => void }) {
                       Create Quote
                     </Button>
                     <div className="flex items-center gap-0.5">
-                      <Button variant="ghost" size="icon" className="h-5 w-5"><Pencil className="h-3 w-3" /></Button>
-                      <Button variant="ghost" size="icon" className="h-5 w-5"><Trash2 className="h-3 w-3" /></Button>
+                      <Button variant="ghost" size="icon" className="h-5 w-5" onClick={() => openEdit(i)}><Pencil className="h-3 w-3" /></Button>
+                      <Button variant="ghost" size="icon" className="h-5 w-5" onClick={() => deleteContact(i)}><Trash2 className="h-3 w-3" /></Button>
                     </div>
                   </div>
                 </CardContent>
