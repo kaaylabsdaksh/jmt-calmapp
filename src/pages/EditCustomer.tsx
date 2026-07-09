@@ -414,7 +414,7 @@ function ContactsSection({ onCreateQuote }: { onCreateQuote: () => void }) {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filtered.map((c, i) => (
+                {filtered.map(({ c, i }) => (
                   <TableRow key={i} className="text-[11px]">
                     <TableCell className="py-1.5 px-2 font-medium">{c.firstName}</TableCell>
                     <TableCell className="py-1.5 px-2 font-medium">{c.lastName}</TableCell>
@@ -439,8 +439,8 @@ function ContactsSection({ onCreateQuote }: { onCreateQuote: () => void }) {
                     </TableCell>
                     <TableCell className="py-1.5 px-2 text-right">
                       <div className="inline-flex items-center gap-0.5">
-                        <Button variant="ghost" size="icon" className="h-5 w-5"><Pencil className="h-3 w-3" /></Button>
-                        <Button variant="ghost" size="icon" className="h-5 w-5"><Trash2 className="h-3 w-3" /></Button>
+                        <Button variant="ghost" size="icon" className="h-5 w-5" onClick={() => openEdit(i)}><Pencil className="h-3 w-3" /></Button>
+                        <Button variant="ghost" size="icon" className="h-5 w-5" onClick={() => deleteContact(i)}><Trash2 className="h-3 w-3" /></Button>
                       </div>
                     </TableCell>
                   </TableRow>
