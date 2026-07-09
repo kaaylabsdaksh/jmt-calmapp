@@ -615,8 +615,8 @@ export default function EditCustomer() {
                       title="Notes"
                       description="Customer-facing remarks and internal comments."
                     />
-                    <CardContent className="p-4 pt-0 space-y-3">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <CardContent className="p-2.5 pt-0 space-y-2">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         <Field label="Remarks" full>
                           <Textarea
                             className="text-xs min-h-[110px]"
