@@ -407,266 +407,266 @@ export default function EditCustomer() {
 
               {/* GENERAL */}
               <TabsContent value="general" className="space-y-2 mt-2">
-                <Accordion
-                  type="multiple"
-                  defaultValue={[
-                    "customer-info",
-                    "retest",
-                    "primary-contact",
-                    "business",
-                    "pricing",
-                    "operational",
-                    "notes",
-                  ]}
-                  className="space-y-1.5"
-                >
-                  {/* Customer Information */}
-                  <AccordionItem value="customer-info" className="border rounded-md bg-card">
-                    <AccordionTrigger className="px-2 py-1.5 hover:no-underline">
-                      <div className="flex items-center gap-2">
-                        <div className="w-5 h-5 rounded-md bg-blue-500/10 text-blue-600 flex items-center justify-center shrink-0">
-                          <Building2 className="h-3 w-3" />
+                <div className="grid grid-cols-1 xl:grid-cols-2 gap-3">
+                  <Accordion
+                    type="multiple"
+                    defaultValue={["customer-info", "retest", "primary-contact", "notes"]}
+                    className="space-y-1.5"
+                  >
+                    {/* Customer Information */}
+                    <AccordionItem value="customer-info" className="border rounded-md bg-card">
+                      <AccordionTrigger className="px-2 py-1.5 hover:no-underline">
+                        <div className="flex items-center gap-2">
+                          <div className="w-5 h-5 rounded-md bg-blue-500/10 text-blue-600 flex items-center justify-center shrink-0">
+                            <Building2 className="h-3 w-3" />
+                          </div>
+                          <div className="text-left">
+                            <div className="text-[11px] font-semibold">Customer Information</div>
+                            <div className="text-[9px] text-muted-foreground">Primary account and shipping address.</div>
+                          </div>
                         </div>
-                        <div className="text-left">
-                          <div className="text-[11px] font-semibold">Customer Information</div>
-                          <div className="text-[9px] text-muted-foreground">Primary account and shipping address.</div>
-                        </div>
-                      </div>
-                    </AccordionTrigger>
-                    <AccordionContent className="px-2 pb-2 pt-0">
-                      <FieldRow>
-                        <Field label="Customer Status" required>
-                          <Select defaultValue="active">
-                            <SelectTrigger className="h-6 text-[10px] md:text-[10px] px-2 py-0"><SelectValue /></SelectTrigger>
-                            <SelectContent>
-                              <SelectItem className="text-[10px]" value="active">Active</SelectItem>
-                              <SelectItem className="text-[10px]" value="pending">Pending</SelectItem>
-                              <SelectItem className="text-[10px]" value="inactive">Inactive</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </Field>
-                        <Field label="Account Number" required>
-                          <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0 tabular-nums" defaultValue={customer.accountNumber} readOnly />
-                        </Field>
-                        <Field label="Customer Name" required>
-                          <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue={customer.name} />
-                        </Field>
-                        <Field label="Ship To">
-                          <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue={customer.name} />
-                        </Field>
-                        <Field label="Address">
-                          <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue="123 Industrial Way" />
-                        </Field>
-                        <Field label="City">
-                          <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue="Baton Rouge" />
-                        </Field>
-                        <Field label="State">
-                          <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue="LA" />
-                        </Field>
-                        <Field label="Zip Code">
-                          <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue="70801" />
-                        </Field>
-                      </FieldRow>
-                    </AccordionContent>
-                  </AccordionItem>
+                      </AccordionTrigger>
+                      <AccordionContent className="px-2 pb-2 pt-0">
+                        <FieldRow>
+                          <Field label="Customer Status" required>
+                            <Select defaultValue="active">
+                              <SelectTrigger className="h-6 text-[10px] md:text-[10px] px-2 py-0"><SelectValue /></SelectTrigger>
+                              <SelectContent>
+                                <SelectItem className="text-[10px]" value="active">Active</SelectItem>
+                                <SelectItem className="text-[10px]" value="pending">Pending</SelectItem>
+                                <SelectItem className="text-[10px]" value="inactive">Inactive</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </Field>
+                          <Field label="Account Number" required>
+                            <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0 tabular-nums" defaultValue={customer.accountNumber} readOnly />
+                          </Field>
+                          <Field label="Customer Name" required>
+                            <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue={customer.name} />
+                          </Field>
+                          <Field label="Ship To">
+                            <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue={customer.name} />
+                          </Field>
+                          <Field label="Address">
+                            <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue="123 Industrial Way" />
+                          </Field>
+                          <Field label="City">
+                            <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue="Baton Rouge" />
+                          </Field>
+                          <Field label="State">
+                            <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue="LA" />
+                          </Field>
+                          <Field label="Zip Code">
+                            <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue="70801" />
+                          </Field>
+                        </FieldRow>
+                      </AccordionContent>
+                    </AccordionItem>
 
-                  {/* Retest Address */}
-                  <AccordionItem value="retest" className="border rounded-md bg-card">
-                    <AccordionTrigger className="px-2 py-1.5 hover:no-underline">
-                      <div className="flex items-center gap-2">
-                        <div className="w-5 h-5 rounded-md bg-blue-500/10 text-blue-600 flex items-center justify-center shrink-0">
-                          <MapPin className="h-3 w-3" />
+                    {/* Retest Address */}
+                    <AccordionItem value="retest" className="border rounded-md bg-card">
+                      <AccordionTrigger className="px-2 py-1.5 hover:no-underline">
+                        <div className="flex items-center gap-2">
+                          <div className="w-5 h-5 rounded-md bg-blue-500/10 text-blue-600 flex items-center justify-center shrink-0">
+                            <MapPin className="h-3 w-3" />
+                          </div>
+                          <div className="text-left">
+                            <div className="text-[11px] font-semibold">Retest Address</div>
+                            <div className="text-[9px] text-muted-foreground">Where recall / retest notices are mailed.</div>
+                          </div>
                         </div>
-                        <div className="text-left">
-                          <div className="text-[11px] font-semibold">Retest Address</div>
-                          <div className="text-[9px] text-muted-foreground">Where recall / retest notices are mailed.</div>
-                        </div>
-                      </div>
-                    </AccordionTrigger>
-                    <AccordionContent className="px-2 pb-2 pt-0">
-                      <FieldRow>
-                        <Field label="Retest Mail To">
-                          <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue={customer.name} />
-                        </Field>
-                        <Field label="Address">
-                          <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue="Same as shipping" />
-                        </Field>
-                        <Field label="City">
-                          <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue="Baton Rouge" />
-                        </Field>
-                        <Field label="State">
-                          <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue="LA" />
-                        </Field>
-                        <Field label="Zip Code">
-                          <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue="70801" />
-                        </Field>
-                      </FieldRow>
-                    </AccordionContent>
-                  </AccordionItem>
+                      </AccordionTrigger>
+                      <AccordionContent className="px-2 pb-2 pt-0">
+                        <FieldRow>
+                          <Field label="Retest Mail To">
+                            <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue={customer.name} />
+                          </Field>
+                          <Field label="Address">
+                            <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue="Same as shipping" />
+                          </Field>
+                          <Field label="City">
+                            <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue="Baton Rouge" />
+                          </Field>
+                          <Field label="State">
+                            <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue="LA" />
+                          </Field>
+                          <Field label="Zip Code">
+                            <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue="70801" />
+                          </Field>
+                        </FieldRow>
+                      </AccordionContent>
+                    </AccordionItem>
 
-                  {/* Primary Contact */}
-                  <AccordionItem value="primary-contact" className="border rounded-md bg-card">
-                    <AccordionTrigger className="px-2 py-1.5 hover:no-underline">
-                      <div className="flex items-center gap-2">
-                        <div className="w-5 h-5 rounded-md bg-blue-500/10 text-blue-600 flex items-center justify-center shrink-0">
-                          <User className="h-3 w-3" />
+                    {/* Primary Contact */}
+                    <AccordionItem value="primary-contact" className="border rounded-md bg-card">
+                      <AccordionTrigger className="px-2 py-1.5 hover:no-underline">
+                        <div className="flex items-center gap-2">
+                          <div className="w-5 h-5 rounded-md bg-blue-500/10 text-blue-600 flex items-center justify-center shrink-0">
+                            <User className="h-3 w-3" />
+                          </div>
+                          <div className="text-left">
+                            <div className="text-[11px] font-semibold">Primary Contact</div>
+                            <div className="text-[9px] text-muted-foreground">Main person for account communications.</div>
+                          </div>
                         </div>
-                        <div className="text-left">
-                          <div className="text-[11px] font-semibold">Primary Contact</div>
-                          <div className="text-[9px] text-muted-foreground">Main person for account communications.</div>
-                        </div>
-                      </div>
-                    </AccordionTrigger>
-                    <AccordionContent className="px-2 pb-2 pt-0">
-                      <FieldRow>
-                        <Field label="Main Contact" required>
-                          <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue={customer.primaryContact} />
-                        </Field>
-                        <Field label="Phone Number">
-                          <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue={customer.phone} />
-                        </Field>
-                        <Field label="Email">
-                          <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue={customer.email} />
-                        </Field>
-                        <Field label="Biller Code">
-                          <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue="BC-102" />
-                        </Field>
-                      </FieldRow>
-                    </AccordionContent>
-                  </AccordionItem>
+                      </AccordionTrigger>
+                      <AccordionContent className="px-2 pb-2 pt-0">
+                        <FieldRow>
+                          <Field label="Main Contact" required>
+                            <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue={customer.primaryContact} />
+                          </Field>
+                          <Field label="Phone Number">
+                            <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue={customer.phone} />
+                          </Field>
+                          <Field label="Email">
+                            <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue={customer.email} />
+                          </Field>
+                          <Field label="Biller Code">
+                            <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue="BC-102" />
+                          </Field>
+                        </FieldRow>
+                      </AccordionContent>
+                    </AccordionItem>
 
-                  {/* Business Information */}
-                  <AccordionItem value="business" className="border rounded-md bg-card">
-                    <AccordionTrigger className="px-2 py-1.5 hover:no-underline">
-                      <div className="flex items-center gap-2">
-                        <div className="w-5 h-5 rounded-md bg-blue-500/10 text-blue-600 flex items-center justify-center shrink-0">
-                          <Briefcase className="h-3 w-3" />
+                    {/* Notes */}
+                    <AccordionItem value="notes" className="border rounded-md bg-card">
+                      <AccordionTrigger className="px-2 py-1.5 hover:no-underline">
+                        <div className="flex items-center gap-2">
+                          <div className="w-5 h-5 rounded-md bg-blue-500/10 text-blue-600 flex items-center justify-center shrink-0">
+                            <StickyNote className="h-3 w-3" />
+                          </div>
+                          <div className="text-left">
+                            <div className="text-[11px] font-semibold">Notes</div>
+                            <div className="text-[9px] text-muted-foreground">Customer-facing remarks and internal comments.</div>
+                          </div>
                         </div>
-                        <div className="text-left">
-                          <div className="text-[11px] font-semibold">Business Information</div>
-                          <div className="text-[9px] text-muted-foreground">Industry, documentation and payment terms.</div>
+                      </AccordionTrigger>
+                      <AccordionContent className="px-2 pb-2 pt-0">
+                        <div className="grid grid-cols-1 gap-2">
+                          <Field label="Remarks" full>
+                            <Textarea
+                              className="text-[10px] md:text-[10px] px-2 py-1 min-h-[52px]"
+                              placeholder="Visible on quotes and work orders…"
+                              defaultValue="Prefers Wednesday deliveries. Requires PO on all shipments."
+                            />
+                          </Field>
+                          <Field label="Internal Comments" full>
+                            <Textarea
+                              className="text-[10px] md:text-[10px] px-2 py-1 min-h-[52px]"
+                              placeholder="Internal only — not shared with the customer."
+                              defaultValue="Key account. Route escalations to Jerome directly."
+                            />
+                          </Field>
                         </div>
-                      </div>
-                    </AccordionTrigger>
-                    <AccordionContent className="px-2 pb-2 pt-0">
-                      <FieldRow>
-                        <Field label="Salesperson" required>
-                          <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue={customer.salesperson} />
-                        </Field>
-                        <Field label="Industry Code">
-                          <Select defaultValue="utilities">
-                            <SelectTrigger className="h-6 text-[10px] md:text-[10px] px-2 py-0"><SelectValue /></SelectTrigger>
-                            <SelectContent>
-                              <SelectItem className="text-[10px]" value="utilities">Utilities</SelectItem>
-                              <SelectItem className="text-[10px]" value="manufacturing">Manufacturing</SelectItem>
-                              <SelectItem className="text-[10px]" value="oilgas">Oil &amp; Gas</SelectItem>
-                              <SelectItem className="text-[10px]" value="construction">Construction</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </Field>
-                        <Field label="OSR Number">
-                          <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue="OSR-2456" />
-                        </Field>
-                        <Field label="OSR Document">
-                          <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue="osr-2024.pdf" />
-                        </Field>
-                        <Field label="SR Document">
-                          <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue="sr-2024.pdf" />
-                        </Field>
-                        <Field label="Payment Terms">
-                          <Select defaultValue="net30">
-                            <SelectTrigger className="h-6 text-[10px] md:text-[10px] px-2 py-0"><SelectValue /></SelectTrigger>
-                            <SelectContent>
-                              <SelectItem className="text-[10px]" value="net15">Net 15</SelectItem>
-                              <SelectItem className="text-[10px]" value="net30">Net 30</SelectItem>
-                              <SelectItem className="text-[10px]" value="net60">Net 60</SelectItem>
-                              <SelectItem className="text-[10px]" value="cod">COD</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </Field>
-                      </FieldRow>
-                    </AccordionContent>
-                  </AccordionItem>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
 
-                  {/* Pricing & Inventory */}
-                  <AccordionItem value="pricing" className="border rounded-md bg-card">
-                    <AccordionTrigger className="px-2 py-1.5 hover:no-underline">
-                      <div className="flex items-center gap-2">
-                        <div className="w-5 h-5 rounded-md bg-blue-500/10 text-blue-600 flex items-center justify-center shrink-0">
-                          <DollarSign className="h-3 w-3" />
+                  <Accordion
+                    type="multiple"
+                    defaultValue={["business", "pricing", "operational"]}
+                    className="space-y-1.5"
+                  >
+                    {/* Business Information */}
+                    <AccordionItem value="business" className="border rounded-md bg-card">
+                      <AccordionTrigger className="px-2 py-1.5 hover:no-underline">
+                        <div className="flex items-center gap-2">
+                          <div className="w-5 h-5 rounded-md bg-blue-500/10 text-blue-600 flex items-center justify-center shrink-0">
+                            <Briefcase className="h-3 w-3" />
+                          </div>
+                          <div className="text-left">
+                            <div className="text-[11px] font-semibold">Business Information</div>
+                            <div className="text-[9px] text-muted-foreground">Industry, documentation and payment terms.</div>
+                          </div>
                         </div>
-                        <div className="text-left">
-                          <div className="text-[11px] font-semibold">Pricing & Inventory</div>
-                          <div className="text-[9px] text-muted-foreground">Contract pricing and surplus access.</div>
-                        </div>
-                      </div>
-                    </AccordionTrigger>
-                    <AccordionContent className="px-2 pb-2 pt-0">
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-x-4">
-                        <ToggleRow label="Contract Pricing" description="Apply negotiated contract rates to this customer." defaultChecked />
-                        <ToggleRow label="ESL Surplus Inventory" description="Allow use of ESL surplus stock for fulfilment." defaultChecked />
-                        <ToggleRow label="Global Surplus Access" description="Access surplus inventory across all warehouses." />
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
+                      </AccordionTrigger>
+                      <AccordionContent className="px-2 pb-2 pt-0">
+                        <FieldRow>
+                          <Field label="Salesperson" required>
+                            <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue={customer.salesperson} />
+                          </Field>
+                          <Field label="Industry Code">
+                            <Select defaultValue="utilities">
+                              <SelectTrigger className="h-6 text-[10px] md:text-[10px] px-2 py-0"><SelectValue /></SelectTrigger>
+                              <SelectContent>
+                                <SelectItem className="text-[10px]" value="utilities">Utilities</SelectItem>
+                                <SelectItem className="text-[10px]" value="manufacturing">Manufacturing</SelectItem>
+                                <SelectItem className="text-[10px]" value="oilgas">Oil &amp; Gas</SelectItem>
+                                <SelectItem className="text-[10px]" value="construction">Construction</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </Field>
+                          <Field label="OSR Number">
+                            <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue="OSR-2456" />
+                          </Field>
+                          <Field label="OSR Document">
+                            <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue="osr-2024.pdf" />
+                          </Field>
+                          <Field label="SR Document">
+                            <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue="sr-2024.pdf" />
+                          </Field>
+                          <Field label="Payment Terms">
+                            <Select defaultValue="net30">
+                              <SelectTrigger className="h-6 text-[10px] md:text-[10px] px-2 py-0"><SelectValue /></SelectTrigger>
+                              <SelectContent>
+                                <SelectItem className="text-[10px]" value="net15">Net 15</SelectItem>
+                                <SelectItem className="text-[10px]" value="net30">Net 30</SelectItem>
+                                <SelectItem className="text-[10px]" value="net60">Net 60</SelectItem>
+                                <SelectItem className="text-[10px]" value="cod">COD</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </Field>
+                        </FieldRow>
+                      </AccordionContent>
+                    </AccordionItem>
 
-                  {/* Operational Settings */}
-                  <AccordionItem value="operational" className="border rounded-md bg-card">
-                    <AccordionTrigger className="px-2 py-1.5 hover:no-underline">
-                      <div className="flex items-center gap-2">
-                        <div className="w-5 h-5 rounded-md bg-blue-500/10 text-blue-600 flex items-center justify-center shrink-0">
-                          <Settings2 className="h-3 w-3" />
+                    {/* Pricing & Inventory */}
+                    <AccordionItem value="pricing" className="border rounded-md bg-card">
+                      <AccordionTrigger className="px-2 py-1.5 hover:no-underline">
+                        <div className="flex items-center gap-2">
+                          <div className="w-5 h-5 rounded-md bg-blue-500/10 text-blue-600 flex items-center justify-center shrink-0">
+                            <DollarSign className="h-3 w-3" />
+                          </div>
+                          <div className="text-left">
+                            <div className="text-[11px] font-semibold">Pricing & Inventory</div>
+                            <div className="text-[9px] text-muted-foreground">Contract pricing and surplus access.</div>
+                          </div>
                         </div>
-                        <div className="text-left">
-                          <div className="text-[11px] font-semibold">Operational Settings</div>
-                          <div className="text-[9px] text-muted-foreground">Workflow and recall behaviour.</div>
+                      </AccordionTrigger>
+                      <AccordionContent className="px-2 pb-2 pt-0">
+                        <div className="grid grid-cols-1 gap-y-1">
+                          <ToggleRow label="Contract Pricing" description="Apply negotiated contract rates to this customer." defaultChecked />
+                          <ToggleRow label="ESL Surplus Inventory" description="Allow use of ESL surplus stock for fulfilment." defaultChecked />
+                          <ToggleRow label="Global Surplus Access" description="Access surplus inventory across all warehouses." />
                         </div>
-                      </div>
-                    </AccordionTrigger>
-                    <AccordionContent className="px-2 pb-2 pt-0">
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4">
-                        <ToggleRow label="No Expedite Fees" description="Waive expedite fees for this account." />
-                        <ToggleRow label="Enabled Calibration Frequency" description="Track calibration intervals automatically." defaultChecked />
-                        <ToggleRow label="End of Month Recall" description="Include in end-of-month recall notifications." />
-                        <ToggleRow label="Add to Service Date List" description="Include on scheduled service reminder lists." defaultChecked />
-                        <ToggleRow label="Add to No Recall List" description="Exclude customer from recall notice runs." />
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
+                      </AccordionContent>
+                    </AccordionItem>
 
-                  {/* Notes */}
-                  <AccordionItem value="notes" className="border rounded-md bg-card">
-                    <AccordionTrigger className="px-2 py-1.5 hover:no-underline">
-                      <div className="flex items-center gap-2">
-                        <div className="w-5 h-5 rounded-md bg-blue-500/10 text-blue-600 flex items-center justify-center shrink-0">
-                          <StickyNote className="h-3 w-3" />
+                    {/* Operational Settings */}
+                    <AccordionItem value="operational" className="border rounded-md bg-card">
+                      <AccordionTrigger className="px-2 py-1.5 hover:no-underline">
+                        <div className="flex items-center gap-2">
+                          <div className="w-5 h-5 rounded-md bg-blue-500/10 text-blue-600 flex items-center justify-center shrink-0">
+                            <Settings2 className="h-3 w-3" />
+                          </div>
+                          <div className="text-left">
+                            <div className="text-[11px] font-semibold">Operational Settings</div>
+                            <div className="text-[9px] text-muted-foreground">Workflow and recall behaviour.</div>
+                          </div>
                         </div>
-                        <div className="text-left">
-                          <div className="text-[11px] font-semibold">Notes</div>
-                          <div className="text-[9px] text-muted-foreground">Customer-facing remarks and internal comments.</div>
+                      </AccordionTrigger>
+                      <AccordionContent className="px-2 pb-2 pt-0">
+                        <div className="grid grid-cols-1 gap-y-1">
+                          <ToggleRow label="No Expedite Fees" description="Waive expedite fees for this account." />
+                          <ToggleRow label="Enabled Calibration Frequency" description="Track calibration intervals automatically." defaultChecked />
+                          <ToggleRow label="End of Month Recall" description="Include in end-of-month recall notifications." />
+                          <ToggleRow label="Add to Service Date List" description="Include on scheduled service reminder lists." defaultChecked />
+                          <ToggleRow label="Add to No Recall List" description="Exclude customer from recall notice runs." />
                         </div>
-                      </div>
-                    </AccordionTrigger>
-                    <AccordionContent className="px-2 pb-2 pt-0">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                        <Field label="Remarks" full>
-                          <Textarea
-                            className="text-[10px] md:text-[10px] px-2 py-1 min-h-[52px]"
-                            placeholder="Visible on quotes and work orders…"
-                            defaultValue="Prefers Wednesday deliveries. Requires PO on all shipments."
-                          />
-                        </Field>
-                        <Field label="Internal Comments" full>
-                          <Textarea
-                            className="text-[10px] md:text-[10px] px-2 py-1 min-h-[52px]"
-                            placeholder="Internal only — not shared with the customer."
-                            defaultValue="Key account. Route escalations to Jerome directly."
-                          />
-                        </Field>
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+                </div>
               </TabsContent>
 
               {/* CONTACTS */}
