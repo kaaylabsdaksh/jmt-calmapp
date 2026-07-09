@@ -512,7 +512,7 @@ export default function EditCustomer() {
                       title="Business Information"
                       description="Industry, documentation and payment terms."
                     />
-                    <CardContent className="p-4 pt-0 space-y-3">
+                    <CardContent className="p-2.5 pt-0 space-y-2">
                       <FieldRow>
                         <Field label="Salesperson" required>
                           <Input className="h-8 text-xs" defaultValue={customer.salesperson} />
