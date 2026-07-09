@@ -842,37 +842,37 @@ export default function EditCustomer() {
               </TabsContent>
 
               {/* FILES */}
-              <TabsContent value="files" className="mt-4">
+              <TabsContent value="files" className="mt-2">
                 <Card>
-                  <CardHeader className="p-4 pb-3">
-                    <CardTitle className="text-sm font-semibold">Work Order External Files</CardTitle>
-                    <CardDescription className="text-[11px]">Attachments uploaded by customers or staff.</CardDescription>
+                  <CardHeader className="p-2.5 pb-2">
+                    <CardTitle className="text-xs font-semibold">Work Order External Files</CardTitle>
+                    <CardDescription className="text-[10px]">Attachments uploaded by customers or staff.</CardDescription>
                   </CardHeader>
-                  <CardContent className="p-4 pt-0 space-y-3">
-                    <div className="border-2 border-dashed border-border rounded-lg p-6 text-center bg-muted/20">
-                      <Upload className="h-6 w-6 mx-auto text-muted-foreground mb-1.5" />
-                      <div className="text-xs font-medium">Drag & drop files here</div>
-                      <div className="text-[11px] text-muted-foreground">or click to browse (PDF, DOCX, XLSX, PNG, JPG)</div>
+                  <CardContent className="p-2.5 pt-0 space-y-2">
+                    <div className="border-2 border-dashed border-border rounded-lg p-4 text-center bg-muted/20">
+                      <Upload className="h-5 w-5 mx-auto text-muted-foreground mb-1" />
+                      <div className="text-[11px] font-medium">Drag & drop files here</div>
+                      <div className="text-[10px] text-muted-foreground">or click to browse (PDF, DOCX, XLSX, PNG, JPG)</div>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                       {[
                         { name: "MSA-2024.pdf", by: "Jerome D.", date: "Jan 12, 2024" },
                         { name: "Cert-Report-5432.pdf", by: "M. Alvarez", date: "Jun 28, 2026" },
                       ].map((f, i) => (
-                        <div key={i} className="flex items-center justify-between border border-border rounded-md p-2.5 bg-background">
-                          <div className="flex items-center gap-2 min-w-0">
-                            <div className="w-8 h-8 rounded bg-blue-500/10 text-blue-600 flex items-center justify-center shrink-0">
-                              <Paperclip className="h-4 w-4" />
+                        <div key={i} className="flex items-center justify-between border border-border rounded-md p-2 bg-background">
+                          <div className="flex items-center gap-1.5 min-w-0">
+                            <div className="w-6 h-6 rounded bg-blue-500/10 text-blue-600 flex items-center justify-center shrink-0">
+                              <Paperclip className="h-3.5 w-3.5" />
                             </div>
                             <div className="min-w-0">
-                              <div className="text-xs font-medium truncate">{f.name}</div>
-                              <div className="text-[11px] text-muted-foreground">{f.by} · {f.date}</div>
+                              <div className="text-[11px] font-medium truncate">{f.name}</div>
+                              <div className="text-[10px] text-muted-foreground">{f.by} · {f.date}</div>
                             </div>
                           </div>
                           <div className="flex items-center gap-1">
-                            <Button variant="ghost" size="icon" className="h-7 w-7"><Eye className="h-3.5 w-3.5" /></Button>
-                            <Button variant="ghost" size="icon" className="h-7 w-7"><Download className="h-3.5 w-3.5" /></Button>
-                            <Button variant="ghost" size="icon" className="h-7 w-7 text-destructive"><Trash2 className="h-3.5 w-3.5" /></Button>
+                            <Button variant="ghost" size="icon" className="h-6 w-6"><Eye className="h-3 w-3" /></Button>
+                            <Button variant="ghost" size="icon" className="h-6 w-6"><Download className="h-3 w-3" /></Button>
+                            <Button variant="ghost" size="icon" className="h-6 w-6 text-destructive"><Trash2 className="h-3 w-3" /></Button>
                           </div>
                         </div>
                       ))}
