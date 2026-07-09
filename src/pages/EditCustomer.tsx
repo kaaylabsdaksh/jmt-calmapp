@@ -406,7 +406,7 @@ export default function EditCustomer() {
 
               {/* GENERAL */}
               <TabsContent value="general" className="space-y-3 mt-2">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
                   {/* Customer Information */}
                   <Card>
                     <SectionHeader
@@ -414,7 +414,7 @@ export default function EditCustomer() {
                       title="Customer Information"
                       description="Primary account and shipping address."
                     />
-                    <CardContent className="p-4 pt-0 space-y-3">
+                    <CardContent className="p-2.5 pt-0 space-y-2">
                       <FieldRow>
                         <Field label="Customer Status" required>
                           <Select defaultValue="active">
