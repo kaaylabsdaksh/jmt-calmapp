@@ -103,16 +103,16 @@ const SectionHeader = ({
   title: string;
   description?: string;
 }) => (
-  <CardHeader className="p-4 pb-3">
-    <div className="flex items-start justify-between gap-3">
-      <div className="flex items-start gap-3">
-        <div className="mt-0.5 w-8 h-8 rounded-md bg-blue-500/10 text-blue-600 flex items-center justify-center shrink-0">
-          <Icon className="h-4 w-4" />
+  <CardHeader className="p-2.5 pb-2">
+    <div className="flex items-start justify-between gap-2">
+      <div className="flex items-start gap-2">
+        <div className="mt-0.5 w-6 h-6 rounded-md bg-blue-500/10 text-blue-600 flex items-center justify-center shrink-0">
+          <Icon className="h-3.5 w-3.5" />
         </div>
         <div>
-          <CardTitle className="text-sm font-semibold">{title}</CardTitle>
+          <CardTitle className="text-xs font-semibold">{title}</CardTitle>
           {description && (
-            <CardDescription className="text-[11px] mt-0.5">{description}</CardDescription>
+            <CardDescription className="text-[10px] mt-0.5">{description}</CardDescription>
           )}
         </div>
       </div>
