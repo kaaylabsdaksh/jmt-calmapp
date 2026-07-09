@@ -12,10 +12,8 @@ import {
   ArrowUpDown,
   RotateCcw,
   ClipboardCheck,
-  ClipboardList,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -45,11 +43,15 @@ type DepartureType = "Customer Pickup" | "Driver Dropoff" | "Shipped";
 type BatchStatus = "Waiting" | "Assigned" | "Completed";
 type ShippingStatus = "Ready" | "Pending" | "Shipped";
 
-interface InvoiceRow {
+// Unified row: invoice-level fields + batch-level fields joined via batchId.
+// Shared fields (accountNumber, customer) appear only once.
+interface UnifiedRow {
   id: string;
-  reportNumber: string;
+  // Shared
   accountNumber: string;
   customer: string;
+  // Invoice-specific
+  reportNumber: string;
   woStatus: WOStatus;
   manufacturer: string;
   model: string;
@@ -61,15 +63,9 @@ interface InvoiceRow {
   departureType: DepartureType;
   departureDate: string;
   samsaraSubmitted: boolean;
-  batchId?: string; // link to billing queue
-}
-
-interface BatchRow {
-  id: string;
+  // Billing-specific
   woBatch: string;
-  accountNumber: string;
   srNum: string;
-  customer: string;
   rtbCount: number;
   totalCount: number;
   lastComment: string;
@@ -77,16 +73,16 @@ interface BatchRow {
   minNeedByDate: string;
   minRtbDate: string;
   shippingStatus: ShippingStatus;
-  salesOrder: string;
   batchStatus: BatchStatus;
+  salesOrder: string;
 }
 
-const mockInvoices: InvoiceRow[] = [
+const mockRows: UnifiedRow[] = [
   {
     id: "1",
-    reportNumber: "20450-573100-001",
     accountNumber: "20450",
     customer: "Shell Norco Refinery",
+    reportNumber: "20450-573100-001",
     woStatus: "Ready",
     manufacturer: "FLUKE",
     model: "87V",
@@ -98,13 +94,23 @@ const mockInvoices: InvoiceRow[] = [
     departureType: "Shipped",
     departureDate: "2026-03-16",
     samsaraSubmitted: true,
-    batchId: "b1",
+    woBatch: "B-5432",
+    srNum: "SR-1001",
+    rtbCount: 2,
+    totalCount: 8,
+    lastComment: "Ready for pickup",
+    lastCommentDate: "2026-03-14",
+    minNeedByDate: "2026-03-20",
+    minRtbDate: "2026-03-18",
+    shippingStatus: "Ready",
+    batchStatus: "Waiting",
+    salesOrder: "SO-77812",
   },
   {
     id: "2",
-    reportNumber: "18120-573110-001",
     accountNumber: "18120",
     customer: "Performance Contractors",
+    reportNumber: "18120-573110-001",
     woStatus: "On Hold",
     manufacturer: "PROTO",
     model: "6062C",
@@ -116,13 +122,23 @@ const mockInvoices: InvoiceRow[] = [
     departureType: "Driver Dropoff",
     departureDate: "2026-03-19",
     samsaraSubmitted: false,
-    batchId: "b2",
+    woBatch: "B-5433",
+    srNum: "SR-1002",
+    rtbCount: 0,
+    totalCount: 3,
+    lastComment: "Awaiting parts",
+    lastCommentDate: "2026-03-11",
+    minNeedByDate: "2026-03-25",
+    minRtbDate: "—",
+    shippingStatus: "Pending",
+    batchStatus: "Assigned",
+    salesOrder: "SO-77813",
   },
   {
     id: "3",
-    reportNumber: "22110-573120-001",
     accountNumber: "22110",
     customer: "Marathon Petroleum",
+    reportNumber: "22110-573120-001",
     woStatus: "Ready",
     manufacturer: "AMETEK",
     model: "RTC-159",
@@ -134,49 +150,8 @@ const mockInvoices: InvoiceRow[] = [
     departureType: "Shipped",
     departureDate: "2026-03-11",
     samsaraSubmitted: true,
-    batchId: "b3",
-  },
-];
-
-const mockBatches: BatchRow[] = [
-  {
-    id: "b1",
-    woBatch: "B-5432",
-    accountNumber: "20450",
-    srNum: "SR-1001",
-    customer: "Shell Norco Refinery",
-    rtbCount: 2,
-    totalCount: 8,
-    lastComment: "Ready for pickup",
-    lastCommentDate: "2026-03-14",
-    minNeedByDate: "2026-03-20",
-    minRtbDate: "2026-03-18",
-    shippingStatus: "Ready",
-    salesOrder: "SO-77812",
-    batchStatus: "Waiting",
-  },
-  {
-    id: "b2",
-    woBatch: "B-5433",
-    accountNumber: "18120",
-    srNum: "SR-1002",
-    customer: "Performance Contractors",
-    rtbCount: 0,
-    totalCount: 3,
-    lastComment: "Awaiting parts",
-    lastCommentDate: "2026-03-11",
-    minNeedByDate: "2026-03-25",
-    minRtbDate: "—",
-    shippingStatus: "Pending",
-    salesOrder: "SO-77813",
-    batchStatus: "Assigned",
-  },
-  {
-    id: "b3",
     woBatch: "B-5440",
-    accountNumber: "22110",
     srNum: "SR-1003",
-    customer: "Marathon Petroleum",
     rtbCount: 5,
     totalCount: 12,
     lastComment: "Completed and shipped",
@@ -184,8 +159,8 @@ const mockBatches: BatchRow[] = [
     minNeedByDate: "2026-03-15",
     minRtbDate: "2026-03-12",
     shippingStatus: "Shipped",
-    salesOrder: "SO-77820",
     batchStatus: "Completed",
+    salesOrder: "SO-77820",
   },
 ];
 
@@ -217,7 +192,6 @@ const shippingStatusStyles: Record<ShippingStatus, string> = {
 };
 
 export default function InvoicingUnified() {
-  // Shared filters
   const [filters, setFilters] = useState({
     location: "all",
     division: "all",
@@ -229,10 +203,8 @@ export default function InvoicingUnified() {
     workOrderType: "all",
     invoiceStatus: "all",
   });
-
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedInvoices, setSelectedInvoices] = useState<Set<string>>(new Set());
-  const [selectedBatches, setSelectedBatches] = useState<Set<string>>(new Set());
+  const [selected, setSelected] = useState<Set<string>>(new Set());
 
   const clearFilters = () => {
     setFilters({
@@ -249,14 +221,15 @@ export default function InvoicingUnified() {
     setSearchQuery("");
   };
 
-  // Shared filtering logic
   const q = searchQuery.trim().toLowerCase();
-  const filteredInvoices = useMemo(() => {
-    let rows = mockInvoices;
+  const filteredRows = useMemo(() => {
+    let rows = mockRows;
     if (q) {
       rows = rows.filter((r) =>
-        [r.reportNumber, r.accountNumber, r.customer, r.manufacturer, r.model, r.serial, r.po, r.invoiceNumber]
-          .join(" ").toLowerCase().includes(q)
+        [
+          r.reportNumber, r.accountNumber, r.customer, r.manufacturer, r.model,
+          r.serial, r.po, r.invoiceNumber, r.woBatch, r.srNum, r.salesOrder,
+        ].join(" ").toLowerCase().includes(q)
       );
     }
     if (filters.itemStatus !== "all") {
@@ -278,62 +251,19 @@ export default function InvoicingUnified() {
     return rows;
   }, [q, filters.itemStatus, filters.invoiceStatus]);
 
-  const filteredBatches = useMemo(() => {
-    let rows = mockBatches;
-    if (q) {
-      rows = rows.filter((r) =>
-        [r.woBatch, r.accountNumber, r.srNum, r.customer, r.salesOrder]
-          .join(" ").toLowerCase().includes(q)
-      );
-    }
-    return rows;
-  }, [q]);
-
-  // Cross-highlighting
-  const highlightedBatchIds = useMemo(() => {
-    const ids = new Set<string>();
-    selectedInvoices.forEach((invId) => {
-      const inv = mockInvoices.find((i) => i.id === invId);
-      if (inv?.batchId) ids.add(inv.batchId);
-    });
-    return ids;
-  }, [selectedInvoices]);
-
-  const highlightedInvoiceIds = useMemo(() => {
-    const ids = new Set<string>();
-    selectedBatches.forEach((bId) => {
-      mockInvoices.filter((i) => i.batchId === bId).forEach((i) => ids.add(i.id));
-    });
-    return ids;
-  }, [selectedBatches]);
-
-  const toggleInvoice = (id: string) => {
-    const next = new Set(selectedInvoices);
+  const toggleRow = (id: string) => {
+    const next = new Set(selected);
     next.has(id) ? next.delete(id) : next.add(id);
-    setSelectedInvoices(next);
+    setSelected(next);
   };
-  const toggleBatch = (id: string) => {
-    const next = new Set(selectedBatches);
-    next.has(id) ? next.delete(id) : next.add(id);
-    setSelectedBatches(next);
-  };
-  const toggleAllInvoices = () => {
-    if (filteredInvoices.every((r) => selectedInvoices.has(r.id))) {
-      setSelectedInvoices(new Set());
+  const toggleAll = () => {
+    if (filteredRows.every((r) => selected.has(r.id))) {
+      setSelected(new Set());
     } else {
-      setSelectedInvoices(new Set(filteredInvoices.map((r) => r.id)));
+      setSelected(new Set(filteredRows.map((r) => r.id)));
     }
   };
-  const toggleAllBatches = () => {
-    if (filteredBatches.every((r) => selectedBatches.has(r.id))) {
-      setSelectedBatches(new Set());
-    } else {
-      setSelectedBatches(new Set(filteredBatches.map((r) => r.id)));
-    }
-  };
-
-  const hasInvoiceSelection = selectedInvoices.size > 0;
-  const hasBatchSelection = selectedBatches.size > 0;
+  const hasSelection = selected.size > 0;
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
@@ -349,60 +279,40 @@ export default function InvoicingUnified() {
         <Card>
           <CardContent className="space-y-2">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2">
-              <FieldSelect
-                label="Location"
-                value={filters.location}
-                onChange={(v) => setFilters({ ...filters, location: v })}
+              <FieldSelect label="Location" value={filters.location} onChange={(v) => setFilters({ ...filters, location: v })}
                 options={[
                   { value: "all", label: "All" },
                   { value: "baton-rouge", label: "Baton Rouge" },
                   { value: "houston", label: "Houston" },
                   { value: "norco", label: "Norco" },
-                ]}
-              />
-              <FieldSelect
-                label="Division"
-                value={filters.division}
-                onChange={(v) => setFilters({ ...filters, division: v })}
+                ]} />
+              <FieldSelect label="Division" value={filters.division} onChange={(v) => setFilters({ ...filters, division: v })}
                 options={[
                   { value: "all", label: "All" },
                   { value: "lab", label: "Lab" },
                   { value: "field", label: "Field" },
-                ]}
-              />
-              <FieldSelect
-                label="Customer Group"
-                value={filters.customerGroup}
-                onChange={(v) => setFilters({ ...filters, customerGroup: v })}
+                ]} />
+              <FieldSelect label="Customer Group" value={filters.customerGroup} onChange={(v) => setFilters({ ...filters, customerGroup: v })}
                 options={[
                   { value: "all", label: "All" },
                   { value: "energy", label: "Energy" },
                   { value: "chemical", label: "Chemical" },
                   { value: "manufacturing", label: "Manufacturing" },
-                ]}
-              />
-              <FieldSelect
-                label="Item Status"
-                value={filters.itemStatus}
-                onChange={(v) => setFilters({ ...filters, itemStatus: v })}
+                ]} />
+              <FieldSelect label="Item Status" value={filters.itemStatus} onChange={(v) => setFilters({ ...filters, itemStatus: v })}
                 options={[
                   { value: "all", label: "All" },
                   { value: "ar-invoicing", label: "A/R Invoicing" },
                   { value: "ready", label: "Ready to Invoice" },
                   { value: "completed", label: "Completed" },
-                ]}
-              />
-              <FieldSelect
-                label="Invoice Status"
-                value={filters.invoiceStatus}
-                onChange={(v) => setFilters({ ...filters, invoiceStatus: v })}
+                ]} />
+              <FieldSelect label="Invoice Status" value={filters.invoiceStatus} onChange={(v) => setFilters({ ...filters, invoiceStatus: v })}
                 options={[
                   { value: "all", label: "All" },
                   { value: "pending", label: "Pending" },
                   { value: "delivery-ticket", label: "Delivery Ticket" },
                   { value: "processed", label: "Processed" },
-                ]}
-              />
+                ]} />
               <div className="space-y-1">
                 <Label className="text-xs text-muted-foreground">Created From</Label>
                 <ModernDatePicker
@@ -425,27 +335,19 @@ export default function InvoicingUnified() {
                   size="sm"
                 />
               </div>
-              <FieldSelect
-                label="Invoicing Type"
-                value={filters.invoicingType}
-                onChange={(v) => setFilters({ ...filters, invoicingType: v })}
+              <FieldSelect label="Invoicing Type" value={filters.invoicingType} onChange={(v) => setFilters({ ...filters, invoicingType: v })}
                 options={[
                   { value: "all", label: "All" },
                   { value: "regular", label: "Regular" },
                   { value: "onsite", label: "Onsite" },
-                ]}
-              />
-              <FieldSelect
-                label="Work Order Type"
-                value={filters.workOrderType}
-                onChange={(v) => setFilters({ ...filters, workOrderType: v })}
+                ]} />
+              <FieldSelect label="Work Order Type" value={filters.workOrderType} onChange={(v) => setFilters({ ...filters, workOrderType: v })}
                 options={[
                   { value: "all", label: "All" },
                   { value: "calibration", label: "Calibration" },
                   { value: "repair", label: "Repair" },
                   { value: "certification", label: "Certification" },
-                ]}
-              />
+                ]} />
               <div className="space-y-1 flex flex-col justify-end">
                 <div className="flex gap-2">
                   <Button className="flex-1 h-8">
@@ -462,18 +364,18 @@ export default function InvoicingUnified() {
           </CardContent>
         </Card>
 
-        {/* Invoice Work Orders */}
+        {/* Unified Work Order + Billing Table */}
         <Card className="overflow-hidden">
           <CardHeader className="px-3 py-2 border-b border-border flex flex-row items-center justify-between gap-2">
             <div className="flex items-center gap-2">
               <Receipt className="h-4 w-4 text-muted-foreground" />
-              <CardTitle className="text-sm">Invoice Work Orders</CardTitle>
+              <CardTitle className="text-sm">Invoicing & Billing Queue</CardTitle>
               <Badge variant="outline" className="text-[10px] h-5">
-                {filteredInvoices.length}
+                {filteredRows.length}
               </Badge>
-              {hasInvoiceSelection && (
+              {hasSelection && (
                 <Badge variant="outline" className="bg-primary/10 text-foreground border-primary/20 text-xs">
-                  {selectedInvoices.size} selected
+                  {selected.size} selected
                 </Badge>
               )}
             </div>
@@ -484,14 +386,19 @@ export default function InvoicingUnified() {
                 <tr className="border-b border-border">
                   <th className="w-8 px-2 py-1 text-left">
                     <Checkbox
-                      checked={filteredInvoices.length > 0 && filteredInvoices.every((r) => selectedInvoices.has(r.id))}
-                      onCheckedChange={toggleAllInvoices}
+                      checked={filteredRows.length > 0 && filteredRows.every((r) => selected.has(r.id))}
+                      onCheckedChange={toggleAll}
                     />
                   </th>
                   {[
-                    "Report #", "Account #", "Customer", "WO Status", "Manufacturer", "Model",
-                    "Serial #", "PO #", "Item Status", "Invoice Status", "Invoice #",
-                    "Departure Type", "Departure Date", "Samsara",
+                    // Shared
+                    "Account #", "Customer",
+                    // Invoice-specific
+                    "Report #", "WO Status", "Manufacturer", "Model", "Serial #", "PO #",
+                    "Item Status", "Invoice Status", "Invoice #", "Departure Type", "Departure Date", "Samsara",
+                    // Billing-specific
+                    "WO Batch", "SR #", "RTB / Total", "Last Comment", "Last Comment Date",
+                    "Min Need By", "Min RTB", "Shipping Status", "Batch Status", "Sales Order",
                   ].map((h) => (
                     <th key={h} className="px-2 py-1 text-left font-medium text-muted-foreground whitespace-nowrap">
                       <button className="inline-flex items-center gap-1 hover:text-foreground">
@@ -504,30 +411,31 @@ export default function InvoicingUnified() {
                 </tr>
               </thead>
               <tbody>
-                {filteredInvoices.length === 0 ? (
+                {filteredRows.length === 0 ? (
                   <tr>
-                    <td colSpan={16} className="py-8 text-center text-sm text-muted-foreground">
-                      No invoices found.
+                    <td colSpan={26} className="py-8 text-center text-sm text-muted-foreground">
+                      No records found.
                     </td>
                   </tr>
                 ) : (
-                  filteredInvoices.map((row, idx) => (
+                  filteredRows.map((row, idx) => (
                     <tr
                       key={row.id}
                       className={cn(
                         "border-b border-border transition-colors",
                         idx % 2 === 1 ? "bg-muted/20" : "bg-background",
                         "hover:bg-muted/50",
-                        selectedInvoices.has(row.id) && "bg-primary/5",
-                        highlightedInvoiceIds.has(row.id) && !selectedInvoices.has(row.id) && "bg-amber-50/60 dark:bg-amber-950/20"
+                        selected.has(row.id) && "bg-primary/5"
                       )}
                     >
                       <td className="px-2 py-1">
-                        <Checkbox checked={selectedInvoices.has(row.id)} onCheckedChange={() => toggleInvoice(row.id)} />
+                        <Checkbox checked={selected.has(row.id)} onCheckedChange={() => toggleRow(row.id)} />
                       </td>
-                      <td className="px-2 py-1 whitespace-nowrap font-medium text-foreground">{row.reportNumber}</td>
+                      {/* Shared */}
                       <td className="px-2 py-1 whitespace-nowrap">{row.accountNumber}</td>
                       <td className="px-2 py-1 whitespace-nowrap">{row.customer}</td>
+                      {/* Invoice-specific */}
+                      <td className="px-2 py-1 whitespace-nowrap font-medium text-foreground">{row.reportNumber}</td>
                       <td className="px-2 py-1">
                         <Badge variant="outline" className={cn("text-[10px] h-5 px-1.5", woStatusStyles[row.woStatus])}>
                           {row.woStatus}
@@ -563,100 +471,10 @@ export default function InvoicingUnified() {
                           <span className="text-muted-foreground">—</span>
                         )}
                       </td>
-                      <td className="px-2 py-1 text-right">
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon" className="h-6 w-6">
-                              <MoreHorizontal className="h-3.5 w-3.5" />
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end" className="bg-popover">
-                            <DropdownMenuItem>View details</DropdownMenuItem>
-                            <DropdownMenuItem>Generate delivery ticket</DropdownMenuItem>
-                            <DropdownMenuItem>Process invoice</DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
-          </div>
-        </Card>
-
-        {/* Billing Specialist Queue */}
-        <Card className="overflow-hidden">
-          <CardHeader className="px-3 py-2 border-b border-border flex flex-row items-center justify-between gap-2">
-            <div className="flex items-center gap-2">
-              <ClipboardList className="h-4 w-4 text-muted-foreground" />
-              <CardTitle className="text-sm">Billing Specialist Queue</CardTitle>
-              <Badge variant="outline" className="text-[10px] h-5">
-                {filteredBatches.length}
-              </Badge>
-              {hasBatchSelection && (
-                <Badge variant="outline" className="bg-primary/10 text-foreground border-primary/20 text-xs">
-                  {selectedBatches.size} selected
-                </Badge>
-              )}
-            </div>
-            <div className="text-[11px] text-muted-foreground">
-              Batches waiting for billing review
-            </div>
-          </CardHeader>
-          <div className="overflow-x-auto">
-            <table className="w-full text-xs border-collapse">
-              <thead className="bg-muted/60">
-                <tr className="border-b border-border">
-                  <th className="w-8 px-2 py-1 text-left">
-                    <Checkbox
-                      checked={filteredBatches.length > 0 && filteredBatches.every((r) => selectedBatches.has(r.id))}
-                      onCheckedChange={toggleAllBatches}
-                    />
-                  </th>
-                  {[
-                    "WO Batch", "Account #", "SR #", "Customer Name", "RTB Count", "Total Count",
-                    "Last Comment", "Last Comment Date", "Min Need By Date", "Min RTB Date",
-                    "Shipping Status", "Batch Status", "Sales Order",
-                  ].map((h) => (
-                    <th key={h} className="px-2 py-1 text-left font-medium text-muted-foreground whitespace-nowrap">
-                      <button className="inline-flex items-center gap-1 hover:text-foreground">
-                        {h}
-                        <ArrowUpDown className="h-3 w-3 opacity-60" />
-                      </button>
-                    </th>
-                  ))}
-                  <th className="px-2 py-1 text-right font-medium text-muted-foreground">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredBatches.length === 0 ? (
-                  <tr>
-                    <td colSpan={15} className="py-8 text-center text-sm text-muted-foreground">
-                      No billing specialist items.
-                    </td>
-                  </tr>
-                ) : (
-                  filteredBatches.map((row, idx) => (
-                    <tr
-                      key={row.id}
-                      className={cn(
-                        "border-b border-border transition-colors",
-                        idx % 2 === 1 ? "bg-muted/20" : "bg-background",
-                        "hover:bg-muted/50",
-                        selectedBatches.has(row.id) && "bg-primary/5",
-                        highlightedBatchIds.has(row.id) && !selectedBatches.has(row.id) && "bg-amber-50/60 dark:bg-amber-950/20"
-                      )}
-                    >
-                      <td className="px-2 py-1">
-                        <Checkbox checked={selectedBatches.has(row.id)} onCheckedChange={() => toggleBatch(row.id)} />
-                      </td>
+                      {/* Billing-specific */}
                       <td className="px-2 py-1 whitespace-nowrap font-medium text-foreground">{row.woBatch}</td>
-                      <td className="px-2 py-1 whitespace-nowrap">{row.accountNumber}</td>
                       <td className="px-2 py-1 whitespace-nowrap">{row.srNum}</td>
-                      <td className="px-2 py-1 whitespace-nowrap">{row.customer}</td>
-                      <td className="px-2 py-1">{row.rtbCount}</td>
-                      <td className="px-2 py-1">{row.totalCount}</td>
+                      <td className="px-2 py-1 whitespace-nowrap">{row.rtbCount} / {row.totalCount}</td>
                       <td className="px-2 py-1 whitespace-nowrap">{row.lastComment}</td>
                       <td className="px-2 py-1 whitespace-nowrap">{row.lastCommentDate}</td>
                       <td className="px-2 py-1 whitespace-nowrap">{row.minNeedByDate}</td>
@@ -680,9 +498,11 @@ export default function InvoicingUnified() {
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end" className="bg-popover">
+                            <DropdownMenuItem>View details</DropdownMenuItem>
+                            <DropdownMenuItem>Generate delivery ticket</DropdownMenuItem>
+                            <DropdownMenuItem>Process invoice</DropdownMenuItem>
                             <DropdownMenuItem>Review batch</DropdownMenuItem>
                             <DropdownMenuItem>Assign specialist</DropdownMenuItem>
-                            <DropdownMenuItem>Complete review</DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>
                       </td>
@@ -710,29 +530,29 @@ export default function InvoicingUnified() {
       <footer className="sticky bottom-0 z-40 bg-background px-3 py-2 border-t border-border">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="flex flex-wrap items-center gap-2">
-            <Button size="sm" className="text-xs h-8" disabled={!hasInvoiceSelection}>
+            <Button size="sm" className="text-xs h-8" disabled={!hasSelection}>
               <Receipt className="h-3.5 w-3.5 mr-1.5" />
               Process Invoice(s)
             </Button>
-            <Button size="sm" variant="outline" className="text-xs h-8" disabled={!hasInvoiceSelection}>
+            <Button size="sm" variant="outline" className="text-xs h-8" disabled={!hasSelection}>
               <FileText className="h-3.5 w-3.5 mr-1.5" />
               Process Onsite Invoice(s)
             </Button>
-            <Button size="sm" variant="outline" className="text-xs h-8" disabled={!hasInvoiceSelection}>
+            <Button size="sm" variant="outline" className="text-xs h-8" disabled={!hasSelection}>
               <Truck className="h-3.5 w-3.5 mr-1.5" />
               Delivery Tickets
             </Button>
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            <Button size="sm" variant="outline" className="text-xs h-8" disabled={!hasBatchSelection}>
+            <Button size="sm" variant="outline" className="text-xs h-8" disabled={!hasSelection}>
               <UserCog className="h-3.5 w-3.5 mr-1.5" />
               Assign Billing Specialist
             </Button>
-            <Button size="sm" variant="outline" className="text-xs h-8" disabled={!hasBatchSelection}>
+            <Button size="sm" variant="outline" className="text-xs h-8" disabled={!hasSelection}>
               <Eye className="h-3.5 w-3.5 mr-1.5" />
               Review Batch
             </Button>
-            <Button size="sm" variant="outline" className="text-xs h-8" disabled={!hasBatchSelection}>
+            <Button size="sm" variant="outline" className="text-xs h-8" disabled={!hasSelection}>
               <ClipboardCheck className="h-3.5 w-3.5 mr-1.5" />
               Complete Billing Review
             </Button>
