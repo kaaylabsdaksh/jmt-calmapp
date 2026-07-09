@@ -700,22 +700,22 @@ export default function EditCustomer() {
               </TabsContent>
 
               {/* WORK ORDERS */}
-              <TabsContent value="work-orders" className="mt-4">
+              <TabsContent value="work-orders" className="mt-2">
                 <Card>
-                  <CardHeader className="p-4 pb-3">
-                    <CardTitle className="text-sm font-semibold">Work Orders</CardTitle>
-                    <CardDescription className="text-[11px]">Recent work orders for this customer.</CardDescription>
+                  <CardHeader className="p-2.5 pb-2">
+                    <CardTitle className="text-xs font-semibold">Work Orders</CardTitle>
+                    <CardDescription className="text-[10px]">Recent work orders for this customer.</CardDescription>
                   </CardHeader>
                   <CardContent className="p-0">
                     <Table>
                       <TableHeader>
                         <TableRow>
-                          <TableHead className="text-[11px] uppercase">Work Order</TableHead>
-                          <TableHead className="text-[11px] uppercase">Status</TableHead>
-                          <TableHead className="text-[11px] uppercase">Asset</TableHead>
-                          <TableHead className="text-[11px] uppercase">Technician</TableHead>
-                          <TableHead className="text-[11px] uppercase">Due Date</TableHead>
-                          <TableHead className="text-[11px] uppercase">Invoice</TableHead>
+                          <TableHead className="text-[10px] uppercase">Work Order</TableHead>
+                          <TableHead className="text-[10px] uppercase">Status</TableHead>
+                          <TableHead className="text-[10px] uppercase">Asset</TableHead>
+                          <TableHead className="text-[10px] uppercase">Technician</TableHead>
+                          <TableHead className="text-[10px] uppercase">Due Date</TableHead>
+                          <TableHead className="text-[10px] uppercase">Invoice</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -724,9 +724,9 @@ export default function EditCustomer() {
                           { wo: "5401", status: "Completed", asset: "Gloves Class 2", tech: "R. Patel", due: "Jun 28, 2026", inv: "Invoiced" },
                           { wo: "5389", status: "On Hold", asset: "Grounds Set G-11", tech: "K. Nguyen", due: "Jun 22, 2026", inv: "—" },
                         ].map((r) => (
-                          <TableRow key={r.wo} className="text-xs">
+                          <TableRow key={r.wo} className="text-[11px]">
                             <TableCell className="font-medium tabular-nums">{r.wo}</TableCell>
-                            <TableCell><Badge variant="secondary" className="h-5 text-[11px]">{r.status}</Badge></TableCell>
+                            <TableCell><Badge variant="secondary" className="h-4 text-[10px]">{r.status}</Badge></TableCell>
                             <TableCell>{r.asset}</TableCell>
                             <TableCell>{r.tech}</TableCell>
                             <TableCell className="tabular-nums">{r.due}</TableCell>
