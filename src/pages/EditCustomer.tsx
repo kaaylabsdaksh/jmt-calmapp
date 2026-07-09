@@ -274,10 +274,6 @@ function ContactsSection({ onCreateQuote }: { onCreateQuote: () => void }) {
             onChange={(e) => setQuery(e.target.value)}
             className="h-7 w-48 text-[11px]"
           />
-          <div className="min-w-0">
-            <CardTitle className="text-xs font-semibold">Contacts</CardTitle>
-            <CardDescription className="text-[10px]">People associated with this customer.</CardDescription>
-          </div>
         </div>
         <div className="flex items-center gap-2">
           <div className="inline-flex rounded-md border border-border overflow-hidden">
