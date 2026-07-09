@@ -68,6 +68,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useToast } from "@/components/ui/use-toast";
@@ -252,17 +259,52 @@ const YNBadge = ({ value, tone = "emerald" }: { value: boolean; tone?: "emerald"
   );
 };
 
+const emptyContact: ContactRow = {
+  firstName: "", lastName: "", title: "", phone: "", fax: "", cell: "",
+  email: "", website: "", comments: "", active: true, dne: false, nrn: false,
+};
+
 function ContactsSection({ onCreateQuote }: { onCreateQuote: () => void }) {
   const [view, setView] = useState<"cards" | "list">("cards");
   const [query, setQuery] = useState("");
+  const [contacts, setContacts] = useState<ContactRow[]>(mockContacts);
+  const [editIndex, setEditIndex] = useState<number | null>(null);
+  const [draft, setDraft] = useState<ContactRow>(emptyContact);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return mockContacts;
-    return mockContacts.filter((c) =>
+    const list = contacts.map((c, i) => ({ c, i }));
+    if (!q) return list;
+    return list.filter(({ c }) =>
       [c.firstName, c.lastName, c.title, c.email, c.phone, c.cell].some((v) => v.toLowerCase().includes(q))
     );
-  }, [query]);
+  }, [query, contacts]);
+
+  const openEdit = (index: number) => {
+    setEditIndex(index);
+    setDraft({ ...contacts[index] });
+  };
+  const openAdd = () => {
+    setEditIndex(-1);
+    setDraft({ ...emptyContact });
+  };
+  const closeDialog = () => setEditIndex(null);
+  const saveDraft = () => {
+    if (editIndex === null) return;
+    setContacts((prev) => {
+      if (editIndex === -1) return [...prev, draft];
+      const next = [...prev];
+      next[editIndex] = draft;
+      return next;
+    });
+    setEditIndex(null);
+  };
+  const deleteContact = (index: number) => {
+    setContacts((prev) => prev.filter((_, i) => i !== index));
+  };
+  const setField = <K extends keyof ContactRow>(key: K, value: ContactRow[K]) =>
+    setDraft((d) => ({ ...d, [key]: value }));
+
 
   return (
     <Card>
@@ -294,7 +336,7 @@ function ContactsSection({ onCreateQuote }: { onCreateQuote: () => void }) {
               <ListIcon className="h-3.5 w-3.5" />
             </button>
           </div>
-          <Button size="sm" className="h-7 text-[11px] bg-blue-600 hover:bg-blue-700 text-white">
+          <Button size="sm" className="h-7 text-[11px] bg-blue-600 hover:bg-blue-700 text-white" onClick={openAdd}>
             <Plus className="h-3 w-3 mr-1" />Add Contact
           </Button>
         </div>
@@ -303,7 +345,7 @@ function ContactsSection({ onCreateQuote }: { onCreateQuote: () => void }) {
       <CardContent className={view === "cards" ? "p-2.5 pt-0" : "p-0"}>
         {view === "cards" ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-            {filtered.map((c, i) => (
+            {filtered.map(({ c, i }) => (
               <Card key={i} className="border">
                 <CardContent className="p-2 space-y-1.5">
                   <div className="flex items-start justify-between gap-2">
@@ -342,8 +384,8 @@ function ContactsSection({ onCreateQuote }: { onCreateQuote: () => void }) {
                       Create Quote
                     </Button>
                     <div className="flex items-center gap-0.5">
-                      <Button variant="ghost" size="icon" className="h-5 w-5"><Pencil className="h-3 w-3" /></Button>
-                      <Button variant="ghost" size="icon" className="h-5 w-5"><Trash2 className="h-3 w-3" /></Button>
+                      <Button variant="ghost" size="icon" className="h-5 w-5" onClick={() => openEdit(i)}><Pencil className="h-3 w-3" /></Button>
+                      <Button variant="ghost" size="icon" className="h-5 w-5" onClick={() => deleteContact(i)}><Trash2 className="h-3 w-3" /></Button>
                     </div>
                   </div>
                 </CardContent>
@@ -372,7 +414,7 @@ function ContactsSection({ onCreateQuote }: { onCreateQuote: () => void }) {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filtered.map((c, i) => (
+                {filtered.map(({ c, i }) => (
                   <TableRow key={i} className="text-[11px]">
                     <TableCell className="py-1.5 px-2 font-medium">{c.firstName}</TableCell>
                     <TableCell className="py-1.5 px-2 font-medium">{c.lastName}</TableCell>
@@ -397,8 +439,8 @@ function ContactsSection({ onCreateQuote }: { onCreateQuote: () => void }) {
                     </TableCell>
                     <TableCell className="py-1.5 px-2 text-right">
                       <div className="inline-flex items-center gap-0.5">
-                        <Button variant="ghost" size="icon" className="h-5 w-5"><Pencil className="h-3 w-3" /></Button>
-                        <Button variant="ghost" size="icon" className="h-5 w-5"><Trash2 className="h-3 w-3" /></Button>
+                        <Button variant="ghost" size="icon" className="h-5 w-5" onClick={() => openEdit(i)}><Pencil className="h-3 w-3" /></Button>
+                        <Button variant="ghost" size="icon" className="h-5 w-5" onClick={() => deleteContact(i)}><Trash2 className="h-3 w-3" /></Button>
                       </div>
                     </TableCell>
                   </TableRow>
@@ -408,6 +450,67 @@ function ContactsSection({ onCreateQuote }: { onCreateQuote: () => void }) {
           </div>
         )}
       </CardContent>
+
+      <Dialog open={editIndex !== null} onOpenChange={(o) => !o && closeDialog()}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle className="text-sm">{editIndex === -1 ? "Add Contact" : "Edit Contact"}</DialogTitle>
+          </DialogHeader>
+          <div className="grid grid-cols-2 gap-3">
+            <div className="space-y-1">
+              <Label className="text-[11px]">First Name</Label>
+              <Input className="h-8 text-[12px]" value={draft.firstName} onChange={(e) => setField("firstName", e.target.value)} />
+            </div>
+            <div className="space-y-1">
+              <Label className="text-[11px]">Last Name</Label>
+              <Input className="h-8 text-[12px]" value={draft.lastName} onChange={(e) => setField("lastName", e.target.value)} />
+            </div>
+            <div className="space-y-1 col-span-2">
+              <Label className="text-[11px]">Title</Label>
+              <Input className="h-8 text-[12px]" value={draft.title} onChange={(e) => setField("title", e.target.value)} />
+            </div>
+            <div className="space-y-1">
+              <Label className="text-[11px]">Phone #</Label>
+              <Input className="h-8 text-[12px]" value={draft.phone} onChange={(e) => setField("phone", e.target.value)} />
+            </div>
+            <div className="space-y-1">
+              <Label className="text-[11px]">Cell #</Label>
+              <Input className="h-8 text-[12px]" value={draft.cell} onChange={(e) => setField("cell", e.target.value)} />
+            </div>
+            <div className="space-y-1">
+              <Label className="text-[11px]">Fax #</Label>
+              <Input className="h-8 text-[12px]" value={draft.fax} onChange={(e) => setField("fax", e.target.value)} />
+            </div>
+            <div className="space-y-1">
+              <Label className="text-[11px]">Email</Label>
+              <Input className="h-8 text-[12px]" value={draft.email} onChange={(e) => setField("email", e.target.value)} />
+            </div>
+            <div className="space-y-1 col-span-2">
+              <Label className="text-[11px]">Website</Label>
+              <Input className="h-8 text-[12px]" value={draft.website} onChange={(e) => setField("website", e.target.value)} />
+            </div>
+            <div className="space-y-1 col-span-2">
+              <Label className="text-[11px]">Comments</Label>
+              <Textarea className="text-[12px] min-h-[60px]" value={draft.comments} onChange={(e) => setField("comments", e.target.value)} />
+            </div>
+            <div className="flex items-center gap-4 col-span-2">
+              <label className="flex items-center gap-2 text-[11px]">
+                <Switch checked={draft.active} onCheckedChange={(v) => setField("active", v)} /> Active
+              </label>
+              <label className="flex items-center gap-2 text-[11px]">
+                <Switch checked={draft.dne} onCheckedChange={(v) => setField("dne", v)} /> DNE
+              </label>
+              <label className="flex items-center gap-2 text-[11px]">
+                <Switch checked={draft.nrn} onCheckedChange={(v) => setField("nrn", v)} /> NRN
+              </label>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" size="sm" onClick={closeDialog}>Cancel</Button>
+            <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white" onClick={saveDraft}>Save</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </Card>
   );
 }
