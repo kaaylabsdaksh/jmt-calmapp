@@ -344,11 +344,11 @@ export default function InvoicingUnified() {
         />
       </div>
 
-      <div className="flex flex-col gap-3 p-3 md:p-4 flex-1 pb-24">
+      <div className="flex flex-col gap-2 p-2 md:p-3 flex-1 pb-20">
         {/* Unified Filter Card */}
         <Card>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3">
+          <CardContent className="space-y-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2">
               <FieldSelect
                 label="Location"
                 value={filters.location}
@@ -403,7 +403,7 @@ export default function InvoicingUnified() {
                   { value: "processed", label: "Processed" },
                 ]}
               />
-              <div className="space-y-1.5">
+              <div className="space-y-1">
                 <Label className="text-xs text-muted-foreground">Created From</Label>
                 <ModernDatePicker
                   value={filters.createdFrom}
@@ -411,10 +411,10 @@ export default function InvoicingUnified() {
                     setFilters({ ...filters, createdFrom: date ? date.toISOString().split("T")[0] : "" })
                   }
                   placeholder="MM/DD/YYYY"
-                  size="lg"
+                  size="sm"
                 />
               </div>
-              <div className="space-y-1.5">
+              <div className="space-y-1">
                 <Label className="text-xs text-muted-foreground">Created To</Label>
                 <ModernDatePicker
                   value={filters.createdTo}
@@ -422,7 +422,7 @@ export default function InvoicingUnified() {
                     setFilters({ ...filters, createdTo: date ? date.toISOString().split("T")[0] : "" })
                   }
                   placeholder="MM/DD/YYYY"
-                  size="lg"
+                  size="sm"
                 />
               </div>
               <FieldSelect
@@ -446,13 +446,13 @@ export default function InvoicingUnified() {
                   { value: "certification", label: "Certification" },
                 ]}
               />
-              <div className="space-y-1.5 flex flex-col justify-end">
+              <div className="space-y-1 flex flex-col justify-end">
                 <div className="flex gap-2">
-                  <Button className="flex-1 h-10">
+                  <Button className="flex-1 h-8">
                     <Search className="h-4 w-4 mr-2" />
                     Search
                   </Button>
-                  <Button variant="outline" className="flex-1 h-10" onClick={clearFilters}>
+                  <Button variant="outline" className="flex-1 h-8" onClick={clearFilters}>
                     <RotateCcw className="h-4 w-4 mr-2" />
                     Clear
                   </Button>
@@ -464,7 +464,7 @@ export default function InvoicingUnified() {
 
         {/* Invoice Work Orders */}
         <Card className="overflow-hidden">
-          <CardHeader className="px-4 py-3 border-b border-border flex flex-row items-center justify-between gap-2">
+          <CardHeader className="px-3 py-2 border-b border-border flex flex-row items-center justify-between gap-2">
             <div className="flex items-center gap-2">
               <Receipt className="h-4 w-4 text-muted-foreground" />
               <CardTitle className="text-sm">Invoice Work Orders</CardTitle>
@@ -482,7 +482,7 @@ export default function InvoicingUnified() {
             <table className="w-full text-xs border-collapse">
               <thead className="bg-muted/60">
                 <tr className="border-b border-border">
-                  <th className="w-8 px-2 py-1.5 text-left">
+                  <th className="w-8 px-2 py-1 text-left">
                     <Checkbox
                       checked={filteredInvoices.length > 0 && filteredInvoices.every((r) => selectedInvoices.has(r.id))}
                       onCheckedChange={toggleAllInvoices}
@@ -493,20 +493,20 @@ export default function InvoicingUnified() {
                     "Serial #", "PO #", "Item Status", "Invoice Status", "Invoice #",
                     "Departure Type", "Departure Date", "Samsara",
                   ].map((h) => (
-                    <th key={h} className="px-2 py-1.5 text-left font-medium text-muted-foreground whitespace-nowrap">
+                    <th key={h} className="px-2 py-1 text-left font-medium text-muted-foreground whitespace-nowrap">
                       <button className="inline-flex items-center gap-1 hover:text-foreground">
                         {h}
                         <ArrowUpDown className="h-3 w-3 opacity-60" />
                       </button>
                     </th>
                   ))}
-                  <th className="px-2 py-1.5 text-right font-medium text-muted-foreground">Actions</th>
+                  <th className="px-2 py-1 text-right font-medium text-muted-foreground">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredInvoices.length === 0 ? (
                   <tr>
-                    <td colSpan={16} className="py-12 text-center text-sm text-muted-foreground">
+                    <td colSpan={16} className="py-8 text-center text-sm text-muted-foreground">
                       No invoices found.
                     </td>
                   </tr>
@@ -522,39 +522,39 @@ export default function InvoicingUnified() {
                         highlightedInvoiceIds.has(row.id) && !selectedInvoices.has(row.id) && "bg-amber-50/60 dark:bg-amber-950/20"
                       )}
                     >
-                      <td className="px-2 py-1.5">
+                      <td className="px-2 py-1">
                         <Checkbox checked={selectedInvoices.has(row.id)} onCheckedChange={() => toggleInvoice(row.id)} />
                       </td>
-                      <td className="px-2 py-1.5 whitespace-nowrap font-medium text-foreground">{row.reportNumber}</td>
-                      <td className="px-2 py-1.5 whitespace-nowrap">{row.accountNumber}</td>
-                      <td className="px-2 py-1.5 whitespace-nowrap">{row.customer}</td>
-                      <td className="px-2 py-1.5">
+                      <td className="px-2 py-1 whitespace-nowrap font-medium text-foreground">{row.reportNumber}</td>
+                      <td className="px-2 py-1 whitespace-nowrap">{row.accountNumber}</td>
+                      <td className="px-2 py-1 whitespace-nowrap">{row.customer}</td>
+                      <td className="px-2 py-1">
                         <Badge variant="outline" className={cn("text-[10px] h-5 px-1.5", woStatusStyles[row.woStatus])}>
                           {row.woStatus}
                         </Badge>
                       </td>
-                      <td className="px-2 py-1.5 whitespace-nowrap">{row.manufacturer}</td>
-                      <td className="px-2 py-1.5 whitespace-nowrap">{row.model}</td>
-                      <td className="px-2 py-1.5 whitespace-nowrap">{row.serial}</td>
-                      <td className="px-2 py-1.5 whitespace-nowrap">{row.po}</td>
-                      <td className="px-2 py-1.5">
+                      <td className="px-2 py-1 whitespace-nowrap">{row.manufacturer}</td>
+                      <td className="px-2 py-1 whitespace-nowrap">{row.model}</td>
+                      <td className="px-2 py-1 whitespace-nowrap">{row.serial}</td>
+                      <td className="px-2 py-1 whitespace-nowrap">{row.po}</td>
+                      <td className="px-2 py-1">
                         <Badge variant="outline" className={cn("text-[10px] h-5 px-1.5", itemStatusStyles[row.itemStatus])}>
                           {row.itemStatus}
                         </Badge>
                       </td>
-                      <td className="px-2 py-1.5">
+                      <td className="px-2 py-1">
                         <Badge variant="outline" className={cn("text-[10px] h-5 px-1.5", invoiceStatusStyles[row.invoiceStatus])}>
                           {row.invoiceStatus}
                         </Badge>
                       </td>
-                      <td className="px-2 py-1.5 whitespace-nowrap">{row.invoiceNumber}</td>
-                      <td className="px-2 py-1.5 whitespace-nowrap">
+                      <td className="px-2 py-1 whitespace-nowrap">{row.invoiceNumber}</td>
+                      <td className="px-2 py-1 whitespace-nowrap">
                         <Badge variant="outline" className="text-[10px] h-5 px-1.5 bg-background border-border">
                           {row.departureType}
                         </Badge>
                       </td>
-                      <td className="px-2 py-1.5 whitespace-nowrap">{row.departureDate}</td>
-                      <td className="px-2 py-1.5">
+                      <td className="px-2 py-1 whitespace-nowrap">{row.departureDate}</td>
+                      <td className="px-2 py-1">
                         {row.samsaraSubmitted ? (
                           <span className="inline-flex items-center gap-1 text-emerald-700 text-[10px]">
                             <CheckCircle2 className="h-3 w-3" /> Yes
@@ -563,7 +563,7 @@ export default function InvoicingUnified() {
                           <span className="text-muted-foreground">—</span>
                         )}
                       </td>
-                      <td className="px-2 py-1.5 text-right">
+                      <td className="px-2 py-1 text-right">
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
                             <Button variant="ghost" size="icon" className="h-6 w-6">
@@ -587,7 +587,7 @@ export default function InvoicingUnified() {
 
         {/* Billing Specialist Queue */}
         <Card className="overflow-hidden">
-          <CardHeader className="px-4 py-3 border-b border-border flex flex-row items-center justify-between gap-2">
+          <CardHeader className="px-3 py-2 border-b border-border flex flex-row items-center justify-between gap-2">
             <div className="flex items-center gap-2">
               <ClipboardList className="h-4 w-4 text-muted-foreground" />
               <CardTitle className="text-sm">Billing Specialist Queue</CardTitle>
@@ -608,7 +608,7 @@ export default function InvoicingUnified() {
             <table className="w-full text-xs border-collapse">
               <thead className="bg-muted/60">
                 <tr className="border-b border-border">
-                  <th className="w-8 px-2 py-1.5 text-left">
+                  <th className="w-8 px-2 py-1 text-left">
                     <Checkbox
                       checked={filteredBatches.length > 0 && filteredBatches.every((r) => selectedBatches.has(r.id))}
                       onCheckedChange={toggleAllBatches}
@@ -619,20 +619,20 @@ export default function InvoicingUnified() {
                     "Last Comment", "Last Comment Date", "Min Need By Date", "Min RTB Date",
                     "Shipping Status", "Batch Status", "Sales Order",
                   ].map((h) => (
-                    <th key={h} className="px-2 py-1.5 text-left font-medium text-muted-foreground whitespace-nowrap">
+                    <th key={h} className="px-2 py-1 text-left font-medium text-muted-foreground whitespace-nowrap">
                       <button className="inline-flex items-center gap-1 hover:text-foreground">
                         {h}
                         <ArrowUpDown className="h-3 w-3 opacity-60" />
                       </button>
                     </th>
                   ))}
-                  <th className="px-2 py-1.5 text-right font-medium text-muted-foreground">Actions</th>
+                  <th className="px-2 py-1 text-right font-medium text-muted-foreground">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredBatches.length === 0 ? (
                   <tr>
-                    <td colSpan={15} className="py-12 text-center text-sm text-muted-foreground">
+                    <td colSpan={15} className="py-8 text-center text-sm text-muted-foreground">
                       No billing specialist items.
                     </td>
                   </tr>
@@ -648,31 +648,31 @@ export default function InvoicingUnified() {
                         highlightedBatchIds.has(row.id) && !selectedBatches.has(row.id) && "bg-amber-50/60 dark:bg-amber-950/20"
                       )}
                     >
-                      <td className="px-2 py-1.5">
+                      <td className="px-2 py-1">
                         <Checkbox checked={selectedBatches.has(row.id)} onCheckedChange={() => toggleBatch(row.id)} />
                       </td>
-                      <td className="px-2 py-1.5 whitespace-nowrap font-medium text-foreground">{row.woBatch}</td>
-                      <td className="px-2 py-1.5 whitespace-nowrap">{row.accountNumber}</td>
-                      <td className="px-2 py-1.5 whitespace-nowrap">{row.srNum}</td>
-                      <td className="px-2 py-1.5 whitespace-nowrap">{row.customer}</td>
-                      <td className="px-2 py-1.5">{row.rtbCount}</td>
-                      <td className="px-2 py-1.5">{row.totalCount}</td>
-                      <td className="px-2 py-1.5 whitespace-nowrap">{row.lastComment}</td>
-                      <td className="px-2 py-1.5 whitespace-nowrap">{row.lastCommentDate}</td>
-                      <td className="px-2 py-1.5 whitespace-nowrap">{row.minNeedByDate}</td>
-                      <td className="px-2 py-1.5 whitespace-nowrap">{row.minRtbDate}</td>
-                      <td className="px-2 py-1.5">
+                      <td className="px-2 py-1 whitespace-nowrap font-medium text-foreground">{row.woBatch}</td>
+                      <td className="px-2 py-1 whitespace-nowrap">{row.accountNumber}</td>
+                      <td className="px-2 py-1 whitespace-nowrap">{row.srNum}</td>
+                      <td className="px-2 py-1 whitespace-nowrap">{row.customer}</td>
+                      <td className="px-2 py-1">{row.rtbCount}</td>
+                      <td className="px-2 py-1">{row.totalCount}</td>
+                      <td className="px-2 py-1 whitespace-nowrap">{row.lastComment}</td>
+                      <td className="px-2 py-1 whitespace-nowrap">{row.lastCommentDate}</td>
+                      <td className="px-2 py-1 whitespace-nowrap">{row.minNeedByDate}</td>
+                      <td className="px-2 py-1 whitespace-nowrap">{row.minRtbDate}</td>
+                      <td className="px-2 py-1">
                         <Badge variant="outline" className={cn("text-[10px] h-5 px-1.5", shippingStatusStyles[row.shippingStatus])}>
                           {row.shippingStatus}
                         </Badge>
                       </td>
-                      <td className="px-2 py-1.5">
+                      <td className="px-2 py-1">
                         <Badge variant="outline" className={cn("text-[10px] h-5 px-1.5", batchStatusStyles[row.batchStatus])}>
                           {row.batchStatus}
                         </Badge>
                       </td>
-                      <td className="px-2 py-1.5 whitespace-nowrap">{row.salesOrder}</td>
-                      <td className="px-2 py-1.5 text-right">
+                      <td className="px-2 py-1 whitespace-nowrap">{row.salesOrder}</td>
+                      <td className="px-2 py-1 text-right">
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
                             <Button variant="ghost" size="icon" className="h-6 w-6">
@@ -696,7 +696,7 @@ export default function InvoicingUnified() {
 
         {/* Invoice Reports */}
         <Card>
-          <CardHeader className="px-4 py-3 border-b border-border flex flex-row items-center gap-2">
+          <CardHeader className="px-3 py-2 border-b border-border flex flex-row items-center gap-2">
             <FileText className="h-4 w-4 text-muted-foreground" />
             <CardTitle className="text-sm">Invoice Reports</CardTitle>
           </CardHeader>
@@ -707,7 +707,7 @@ export default function InvoicingUnified() {
       </div>
 
       {/* Sticky Action Bar */}
-      <footer className="sticky bottom-0 z-40 bg-background px-4 py-3 border-t border-border">
+      <footer className="sticky bottom-0 z-40 bg-background px-3 py-2 border-t border-border">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="flex flex-wrap items-center gap-2">
             <Button size="sm" className="text-xs h-8" disabled={!hasInvoiceSelection}>
@@ -747,10 +747,10 @@ function FieldSelect({
   label, value, onChange, options,
 }: { label: string; value: string; onChange: (v: string) => void; options: { value: string; label: string }[] }) {
   return (
-    <div className="space-y-1.5">
+    <div className="space-y-1">
       <Label className="text-xs text-muted-foreground">{label}</Label>
       <Select value={value} onValueChange={onChange}>
-        <SelectTrigger className="h-9"><SelectValue /></SelectTrigger>
+        <SelectTrigger className="h-8"><SelectValue /></SelectTrigger>
         <SelectContent>
           {options.map((o) => (
             <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>
@@ -768,33 +768,33 @@ function ReportsTable() {
     { date: "2026-03-12", name: "Invoice Batch 03-12", generatedBy: "J. Smith", status: "Processing" },
   ];
   if (reports.length === 0) {
-    return <div className="py-12 text-center text-sm text-muted-foreground">No reports generated.</div>;
+    return <div className="py-8 text-center text-sm text-muted-foreground">No reports generated.</div>;
   }
   return (
     <div className="overflow-x-auto">
       <table className="w-full text-xs">
         <thead className="bg-muted/60">
           <tr className="border-b border-border">
-            <th className="px-3 py-2 text-left font-medium text-muted-foreground">Invoice Date</th>
-            <th className="px-3 py-2 text-left font-medium text-muted-foreground">Report Name</th>
-            <th className="px-3 py-2 text-left font-medium text-muted-foreground">Generated By</th>
-            <th className="px-3 py-2 text-left font-medium text-muted-foreground">Status</th>
-            <th className="px-3 py-2 text-right font-medium text-muted-foreground">Actions</th>
+            <th className="px-3 py-1.5 text-left font-medium text-muted-foreground">Invoice Date</th>
+            <th className="px-3 py-1.5 text-left font-medium text-muted-foreground">Report Name</th>
+            <th className="px-3 py-1.5 text-left font-medium text-muted-foreground">Generated By</th>
+            <th className="px-3 py-1.5 text-left font-medium text-muted-foreground">Status</th>
+            <th className="px-3 py-1.5 text-right font-medium text-muted-foreground">Actions</th>
           </tr>
         </thead>
         <tbody>
           {reports.map((r, i) => (
             <tr key={i} className="border-b border-border last:border-b-0 hover:bg-muted/50">
-              <td className="px-3 py-2 whitespace-nowrap">{r.date}</td>
-              <td className="px-3 py-2">{r.name}</td>
-              <td className="px-3 py-2">{r.generatedBy}</td>
-              <td className="px-3 py-2">
+              <td className="px-3 py-1.5 whitespace-nowrap">{r.date}</td>
+              <td className="px-3 py-1.5">{r.name}</td>
+              <td className="px-3 py-1.5">{r.generatedBy}</td>
+              <td className="px-3 py-1.5">
                 <Badge variant="outline" className={cn(
                   "font-medium text-[10px] h-5 px-1.5",
                   r.status === "Completed" ? "bg-emerald-100 text-emerald-800 border-emerald-200" : "bg-amber-100 text-amber-800 border-amber-200"
                 )}>{r.status}</Badge>
               </td>
-              <td className="px-3 py-2 text-right">
+              <td className="px-3 py-1.5 text-right">
                 <div className="inline-flex items-center gap-1">
                   <Button variant="ghost" size="icon" className="h-6 w-6"><Eye className="h-3.5 w-3.5" /></Button>
                   <Button variant="ghost" size="icon" className="h-6 w-6"><Download className="h-3.5 w-3.5" /></Button>
