@@ -569,7 +569,8 @@ export default function EditCustomer() {
 
                   <Accordion
                     type="multiple"
-                    defaultValue={["business", "pricing", "operational"]}
+                    value={generalRightOpen}
+                    onValueChange={() => {}}
                     className="space-y-1.5"
                   >
                     {/* Business Information */}
