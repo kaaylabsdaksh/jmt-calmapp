@@ -555,19 +555,20 @@ type WorkOrderRow = {
 };
 
 const mockWorkOrders: WorkOrderRow[] = [
-  { wo: "433219", status: "In Process", type: "Onsite Work Order", created: "01/14/2023", needBy: "02/14/2023", departure: "02/14/2023", shipped: "", poNumber: "TESTTESTTEST", items: 1 },
-  { wo: "446628", status: "Checked Out", type: "Onsite Work Order", created: "04/29/2023", needBy: "06/29/2023", departure: "06/29/2023", shipped: "", poNumber: "ISLANDER-2", items: 1 },
-  { wo: "446628", status: "Checked Out", type: "Onsite Work Order", created: "04/29/2023", needBy: "06/29/2023", departure: "06/29/2023", shipped: "", poNumber: "ISLANDER-2", items: 7 },
-  { wo: "447071", status: "In Process", type: "Onsite Work Order", created: "05/03/2023", needBy: "07/03/2023", departure: "07/03/2023", shipped: "", poNumber: "ISLANDER-2", items: 2 },
-  { wo: "447480", status: "In Process", type: "Onsite Work Order", created: "05/05/2023", needBy: "05/05/2023", departure: "05/05/2023", shipped: "", poNumber: "123", items: 1 },
-  { wo: "448566", status: "In Process", type: "Onsite Work Order", created: "05/15/2023", needBy: "05/16/2023", departure: "05/16/2023", shipped: "", poNumber: "WOPO", items: 7 },
-  { wo: "449311", status: "In Process", type: "Onsite Work Order", created: "05/22/2023", needBy: "05/22/2023", departure: "05/22/2023", shipped: "", poNumber: "WOPO", items: 6 },
-  { wo: "449311", status: "In Process", type: "Onsite Work Order", created: "05/22/2023", needBy: "05/22/2023", departure: "05/22/2023", shipped: "", poNumber: "WOPO", items: 1 },
-  { wo: "450226", status: "In Process", type: "Onsite Work Order", created: "05/30/2023", needBy: "06/05/2023", departure: "06/05/2023", shipped: "", poNumber: "W/PO", items: 7 },
-  { wo: "455068", status: "In Process", type: "Onsite Work Order", created: "08/10/2023", needBy: "10/10/2023", departure: "10/10/2023", shipped: "", poNumber: "ISLANDER-2", items: 2 },
-  { wo: "455100", status: "Completed", type: "Onsite Work Order", created: "09/12/2023", needBy: "10/12/2023", departure: "10/12/2023", shipped: "10/12/2023", poNumber: "CLOSED-1", items: 3 },
-  { wo: "455200", status: "Closed", type: "Onsite Work Order", created: "09/15/2023", needBy: "09/20/2023", departure: "09/20/2023", shipped: "09/20/2023", poNumber: "CLOSED-2", items: 1 },
+  { wo: "3219", status: "In Process", type: "Onsite Work Order", created: "01/14/2023", needBy: "02/14/2023", departure: "02/14/2023", shipped: "", poNumber: "TESTTESTTEST", items: 1 },
+  { wo: "4668", status: "Checked Out", type: "Onsite Work Order", created: "04/29/2023", needBy: "06/29/2023", departure: "06/29/2023", shipped: "", poNumber: "ISLANDER-2", items: 1 },
+  { wo: "4668", status: "Checked Out", type: "Onsite Work Order", created: "04/29/2023", needBy: "06/29/2023", departure: "06/29/2023", shipped: "", poNumber: "ISLANDER-2", items: 7 },
+  { wo: "4707", status: "In Process", type: "Onsite Work Order", created: "05/03/2023", needBy: "07/03/2023", departure: "07/03/2023", shipped: "", poNumber: "ISLANDER-2", items: 2 },
+  { wo: "4748", status: "In Process", type: "Onsite Work Order", created: "05/05/2023", needBy: "05/05/2023", departure: "05/05/2023", shipped: "", poNumber: "123", items: 1 },
+  { wo: "4856", status: "In Process", type: "Onsite Work Order", created: "05/15/2023", needBy: "05/16/2023", departure: "05/16/2023", shipped: "", poNumber: "WOPO", items: 7 },
+  { wo: "4931", status: "In Process", type: "Onsite Work Order", created: "05/22/2023", needBy: "05/22/2023", departure: "05/22/2023", shipped: "", poNumber: "WOPO", items: 6 },
+  { wo: "4931", status: "In Process", type: "Onsite Work Order", created: "05/22/2023", needBy: "05/22/2023", departure: "05/22/2023", shipped: "", poNumber: "WOPO", items: 1 },
+  { wo: "5022", status: "In Process", type: "Onsite Work Order", created: "05/30/2023", needBy: "06/05/2023", departure: "06/05/2023", shipped: "", poNumber: "W/PO", items: 7 },
+  { wo: "5506", status: "In Process", type: "Onsite Work Order", created: "08/10/2023", needBy: "10/10/2023", departure: "10/10/2023", shipped: "", poNumber: "ISLANDER-2", items: 2 },
+  { wo: "5510", status: "Completed", type: "Onsite Work Order", created: "09/12/2023", needBy: "10/12/2023", departure: "10/12/2023", shipped: "10/12/2023", poNumber: "CLOSED-1", items: 3 },
+  { wo: "5520", status: "Closed", type: "Onsite Work Order", created: "09/15/2023", needBy: "09/20/2023", departure: "09/20/2023", shipped: "09/20/2023", poNumber: "CLOSED-2", items: 1 },
 ];
+
 
 const isOpenStatus = (status: WorkOrderRow["status"]) =>
   status === "In Process" || status === "Checked Out" || status === "On Hold";
