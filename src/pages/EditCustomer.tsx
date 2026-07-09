@@ -946,20 +946,20 @@ export default function EditCustomer() {
               </Card>
 
               <Card>
-                <CardHeader className="p-4 pb-2">
-                  <CardTitle className="text-xs font-semibold uppercase tracking-wide text-muted-foreground flex items-center gap-1.5">
-                    <FileText className="h-3.5 w-3.5" /> Recent Work Orders
+                <CardHeader className="p-2.5 pb-1.5">
+                  <CardTitle className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground flex items-center gap-1">
+                    <FileText className="h-3 w-3" /> Recent Work Orders
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="p-4 pt-0 space-y-2">
+                <CardContent className="p-2.5 pt-0 space-y-1.5">
                   {[
                     { wo: "5432", status: "In Progress" },
                     { wo: "5401", status: "Completed" },
                     { wo: "5389", status: "On Hold" },
                   ].map((r) => (
-                    <div key={r.wo} className="flex items-center justify-between text-xs">
+                    <div key={r.wo} className="flex items-center justify-between text-[11px]">
                       <div className="font-medium tabular-nums">#{r.wo}</div>
-                      <Badge variant="secondary" className="h-5 text-[11px]">{r.status}</Badge>
+                      <Badge variant="secondary" className="h-4 text-[10px]">{r.status}</Badge>
                     </div>
                   ))}
                 </CardContent>
