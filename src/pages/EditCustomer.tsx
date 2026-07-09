@@ -814,23 +814,23 @@ export default function EditCustomer() {
               </TabsContent>
 
               {/* CONTRACT PRICING */}
-              <TabsContent value="contract" className="mt-4">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <TabsContent value="contract" className="mt-2">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                   {[
                     { title: "Pricing Rules", desc: "12 active rules across 4 categories.", icon: DollarSign },
                     { title: "Discounts", desc: "3 volume discounts configured.", icon: Tag },
                     { title: "Contract Documents", desc: "MSA-2024.pdf · Signed Jan 12, 2024", icon: FileText },
                   ].map((c, i) => (
                     <Card key={i}>
-                      <CardContent className="p-4">
-                        <div className="flex items-start gap-3">
-                          <div className="w-9 h-9 rounded-md bg-blue-500/10 text-blue-600 flex items-center justify-center">
-                            <c.icon className="h-4 w-4" />
+                      <CardContent className="p-2.5">
+                        <div className="flex items-start gap-2">
+                          <div className="w-7 h-7 rounded-md bg-blue-500/10 text-blue-600 flex items-center justify-center">
+                            <c.icon className="h-3.5 w-3.5" />
                           </div>
                           <div className="min-w-0">
-                            <div className="text-sm font-semibold">{c.title}</div>
-                            <div className="text-[11px] text-muted-foreground mt-0.5">{c.desc}</div>
-                            <Button variant="link" size="sm" className="h-6 px-0 text-xs mt-1">
+                            <div className="text-xs font-semibold">{c.title}</div>
+                            <div className="text-[10px] text-muted-foreground mt-0.5">{c.desc}</div>
+                            <Button variant="link" size="sm" className="h-5 px-0 text-[10px] mt-0.5">
                               Manage <ChevronRight className="h-3 w-3 ml-0.5" />
                             </Button>
                           </div>
