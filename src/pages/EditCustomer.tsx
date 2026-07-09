@@ -740,19 +740,19 @@ export default function EditCustomer() {
               </TabsContent>
 
               {/* PURCHASE ORDERS */}
-              <TabsContent value="po" className="mt-4">
+              <TabsContent value="po" className="mt-2">
                 <Card>
-                  <CardHeader className="p-4 pb-3">
-                    <CardTitle className="text-sm font-semibold">Purchase Orders</CardTitle>
+                  <CardHeader className="p-2.5 pb-2">
+                    <CardTitle className="text-xs font-semibold">Purchase Orders</CardTitle>
                   </CardHeader>
                   <CardContent className="p-0">
                     <Table>
                       <TableHeader>
                         <TableRow>
-                          <TableHead className="text-[11px] uppercase">PO Number</TableHead>
-                          <TableHead className="text-[11px] uppercase">Status</TableHead>
-                          <TableHead className="text-[11px] uppercase">Created</TableHead>
-                          <TableHead className="text-[11px] uppercase text-right">Amount</TableHead>
+                          <TableHead className="text-[10px] uppercase">PO Number</TableHead>
+                          <TableHead className="text-[10px] uppercase">Status</TableHead>
+                          <TableHead className="text-[10px] uppercase">Created</TableHead>
+                          <TableHead className="text-[10px] uppercase text-right">Amount</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -760,9 +760,9 @@ export default function EditCustomer() {
                           { po: "PO-88210", status: "Open", created: "Jun 30, 2026", amount: "$12,480.00" },
                           { po: "PO-88145", status: "Closed", created: "May 18, 2026", amount: "$4,220.00" },
                         ].map((r) => (
-                          <TableRow key={r.po} className="text-xs">
+                          <TableRow key={r.po} className="text-[11px]">
                             <TableCell className="font-medium">{r.po}</TableCell>
-                            <TableCell><Badge variant="secondary" className="h-5 text-[11px]">{r.status}</Badge></TableCell>
+                            <TableCell><Badge variant="secondary" className="h-4 text-[10px]">{r.status}</Badge></TableCell>
                             <TableCell>{r.created}</TableCell>
                             <TableCell className="text-right tabular-nums">{r.amount}</TableCell>
                           </TableRow>
