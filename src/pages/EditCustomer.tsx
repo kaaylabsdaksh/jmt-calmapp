@@ -515,11 +515,11 @@ export default function EditCustomer() {
                     <CardContent className="p-2.5 pt-0 space-y-2">
                       <FieldRow>
                         <Field label="Salesperson" required>
-                          <Input className="h-8 text-xs" defaultValue={customer.salesperson} />
+                          <Input className="h-7 text-[11px]" defaultValue={customer.salesperson} />
                         </Field>
                         <Field label="Industry Code">
                           <Select defaultValue="utilities">
-                            <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
+                            <SelectTrigger className="h-7 text-[11px]"><SelectValue /></SelectTrigger>
                             <SelectContent>
                               <SelectItem value="utilities">Utilities</SelectItem>
                               <SelectItem value="manufacturing">Manufacturing</SelectItem>
@@ -530,17 +530,17 @@ export default function EditCustomer() {
                         </Field>
 
                         <Field label="OSR Number">
-                          <Input className="h-8 text-xs" defaultValue="OSR-2456" />
+                          <Input className="h-7 text-[11px]" defaultValue="OSR-2456" />
                         </Field>
                         <Field label="OSR Document">
-                          <Input className="h-8 text-xs" defaultValue="osr-2024.pdf" />
+                          <Input className="h-7 text-[11px]" defaultValue="osr-2024.pdf" />
                         </Field>
                         <Field label="SR Document">
-                          <Input className="h-8 text-xs" defaultValue="sr-2024.pdf" />
+                          <Input className="h-7 text-[11px]" defaultValue="sr-2024.pdf" />
                         </Field>
                         <Field label="Payment Terms" full>
                           <Select defaultValue="net30">
-                            <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
+                            <SelectTrigger className="h-7 text-[11px]"><SelectValue /></SelectTrigger>
                             <SelectContent>
                               <SelectItem value="net15">Net 15</SelectItem>
                               <SelectItem value="net30">Net 30</SelectItem>
