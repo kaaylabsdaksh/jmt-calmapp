@@ -748,11 +748,11 @@ export default function EditCustomer() {
                   <CardContent className="p-0">
                     <Table>
                       <TableHeader>
-                        <TableRow>
-                          <TableHead className="text-[10px] uppercase">PO Number</TableHead>
-                          <TableHead className="text-[10px] uppercase">Status</TableHead>
-                          <TableHead className="text-[10px] uppercase">Created</TableHead>
-                          <TableHead className="text-[10px] uppercase text-right">Amount</TableHead>
+                        <TableRow className="h-7">
+                          <TableHead className="text-[10px] uppercase py-1.5 px-2">PO Number</TableHead>
+                          <TableHead className="text-[10px] uppercase py-1.5 px-2">Status</TableHead>
+                          <TableHead className="text-[10px] uppercase py-1.5 px-2">Created</TableHead>
+                          <TableHead className="text-[10px] uppercase text-right py-1.5 px-2">Amount</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -761,10 +761,10 @@ export default function EditCustomer() {
                           { po: "PO-88145", status: "Closed", created: "May 18, 2026", amount: "$4,220.00" },
                         ].map((r) => (
                           <TableRow key={r.po} className="text-[11px]">
-                            <TableCell className="font-medium">{r.po}</TableCell>
-                            <TableCell><Badge variant="secondary" className="h-4 text-[10px]">{r.status}</Badge></TableCell>
-                            <TableCell>{r.created}</TableCell>
-                            <TableCell className="text-right tabular-nums">{r.amount}</TableCell>
+                            <TableCell className="font-medium py-1.5 px-2">{r.po}</TableCell>
+                            <TableCell className="py-1.5 px-2"><Badge variant="secondary" className="h-4 text-[10px]">{r.status}</Badge></TableCell>
+                            <TableCell className="py-1.5 px-2">{r.created}</TableCell>
+                            <TableCell className="text-right tabular-nums py-1.5 px-2">{r.amount}</TableCell>
                           </TableRow>
                         ))}
                       </TableBody>
