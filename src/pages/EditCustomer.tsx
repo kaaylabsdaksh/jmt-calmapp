@@ -585,7 +585,7 @@ export default function EditCustomer() {
                       title="Operational Settings"
                       description="Workflow and recall behaviour."
                     />
-                    <CardContent className="p-4 pt-0">
+                    <CardContent className="p-2.5 pt-0">
                       <ToggleRow label="No Expedite Fees" description="Waive expedite fees for this account." />
                       <ToggleRow
                         label="Enabled Calibration Frequency"
