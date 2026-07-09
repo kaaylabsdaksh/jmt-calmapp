@@ -103,16 +103,16 @@ const SectionHeader = ({
   title: string;
   description?: string;
 }) => (
-  <CardHeader className="p-2.5 pb-2">
+  <CardHeader className="p-2 pb-1.5">
     <div className="flex items-start justify-between gap-2">
       <div className="flex items-start gap-2">
-        <div className="mt-0.5 w-6 h-6 rounded-md bg-blue-500/10 text-blue-600 flex items-center justify-center shrink-0">
-          <Icon className="h-3.5 w-3.5" />
+        <div className="mt-0.5 w-5 h-5 rounded-md bg-blue-500/10 text-blue-600 flex items-center justify-center shrink-0">
+          <Icon className="h-3 w-3" />
         </div>
         <div>
-          <CardTitle className="text-xs font-semibold">{title}</CardTitle>
+          <CardTitle className="text-[11px] font-semibold">{title}</CardTitle>
           {description && (
-            <CardDescription className="text-[10px] mt-0.5">{description}</CardDescription>
+            <CardDescription className="text-[9px] mt-0.5">{description}</CardDescription>
           )}
         </div>
       </div>
@@ -121,7 +121,7 @@ const SectionHeader = ({
 );
 
 const FieldRow = ({ children }: { children: React.ReactNode }) => (
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-3 gap-y-2">{children}</div>
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-2 gap-y-1.5">{children}</div>
 );
 
 const Field = ({
