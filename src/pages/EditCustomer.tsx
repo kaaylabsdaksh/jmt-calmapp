@@ -437,34 +437,34 @@ export default function EditCustomer() {
                       <FieldRow>
                         <Field label="Customer Status" required>
                           <Select defaultValue="active">
-                            <SelectTrigger className="h-6 text-[10px]"><SelectValue /></SelectTrigger>
+                            <SelectTrigger className="h-6 text-[10px] md:text-[10px] px-2 py-0"><SelectValue /></SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="active">Active</SelectItem>
-                              <SelectItem value="pending">Pending</SelectItem>
-                              <SelectItem value="inactive">Inactive</SelectItem>
+                              <SelectItem className="text-[10px]" value="active">Active</SelectItem>
+                              <SelectItem className="text-[10px]" value="pending">Pending</SelectItem>
+                              <SelectItem className="text-[10px]" value="inactive">Inactive</SelectItem>
                             </SelectContent>
                           </Select>
                         </Field>
                         <Field label="Account Number" required>
-                          <Input className="h-6 text-[10px] tabular-nums" defaultValue={customer.accountNumber} readOnly />
+                          <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0 tabular-nums" defaultValue={customer.accountNumber} readOnly />
                         </Field>
                         <Field label="Customer Name" required>
-                          <Input className="h-6 text-[10px]" defaultValue={customer.name} />
+                          <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue={customer.name} />
                         </Field>
                         <Field label="Ship To">
-                          <Input className="h-6 text-[10px]" defaultValue={customer.name} />
+                          <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue={customer.name} />
                         </Field>
                         <Field label="Address" full>
-                          <Input className="h-6 text-[10px]" defaultValue="123 Industrial Way" />
+                          <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue="123 Industrial Way" />
                         </Field>
                         <Field label="City">
-                          <Input className="h-6 text-[10px]" defaultValue="Baton Rouge" />
+                          <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue="Baton Rouge" />
                         </Field>
                         <Field label="State">
-                          <Input className="h-6 text-[10px]" defaultValue="LA" />
+                          <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue="LA" />
                         </Field>
                         <Field label="Zip Code">
-                          <Input className="h-6 text-[10px]" defaultValue="70801" />
+                          <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue="70801" />
                         </Field>
                       </FieldRow>
                     </AccordionContent>
@@ -486,19 +486,19 @@ export default function EditCustomer() {
                     <AccordionContent className="px-2 pb-2 pt-0">
                       <FieldRow>
                         <Field label="Retest Mail To">
-                          <Input className="h-6 text-[10px]" defaultValue={customer.name} />
+                          <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue={customer.name} />
                         </Field>
                         <Field label="Address">
-                          <Input className="h-6 text-[10px]" defaultValue="Same as shipping" />
+                          <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue="Same as shipping" />
                         </Field>
                         <Field label="City">
-                          <Input className="h-6 text-[10px]" defaultValue="Baton Rouge" />
+                          <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue="Baton Rouge" />
                         </Field>
                         <Field label="State">
-                          <Input className="h-6 text-[10px]" defaultValue="LA" />
+                          <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue="LA" />
                         </Field>
                         <Field label="Zip Code">
-                          <Input className="h-6 text-[10px]" defaultValue="70801" />
+                          <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue="70801" />
                         </Field>
                       </FieldRow>
                     </AccordionContent>
@@ -520,16 +520,16 @@ export default function EditCustomer() {
                     <AccordionContent className="px-2 pb-2 pt-0">
                       <FieldRow>
                         <Field label="Main Contact" required>
-                          <Input className="h-6 text-[10px]" defaultValue={customer.primaryContact} />
+                          <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue={customer.primaryContact} />
                         </Field>
                         <Field label="Phone Number">
-                          <Input className="h-6 text-[10px]" defaultValue={customer.phone} />
+                          <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue={customer.phone} />
                         </Field>
                         <Field label="Email">
-                          <Input className="h-6 text-[10px]" defaultValue={customer.email} />
+                          <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue={customer.email} />
                         </Field>
                         <Field label="Biller Code">
-                          <Input className="h-6 text-[10px]" defaultValue="BC-102" />
+                          <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue="BC-102" />
                         </Field>
                       </FieldRow>
                     </AccordionContent>
@@ -551,36 +551,36 @@ export default function EditCustomer() {
                     <AccordionContent className="px-2 pb-2 pt-0">
                       <FieldRow>
                         <Field label="Salesperson" required>
-                          <Input className="h-6 text-[10px]" defaultValue={customer.salesperson} />
+                          <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue={customer.salesperson} />
                         </Field>
                         <Field label="Industry Code">
                           <Select defaultValue="utilities">
-                            <SelectTrigger className="h-6 text-[10px]"><SelectValue /></SelectTrigger>
+                            <SelectTrigger className="h-6 text-[10px] md:text-[10px] px-2 py-0"><SelectValue /></SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="utilities">Utilities</SelectItem>
-                              <SelectItem value="manufacturing">Manufacturing</SelectItem>
-                              <SelectItem value="oilgas">Oil &amp; Gas</SelectItem>
-                              <SelectItem value="construction">Construction</SelectItem>
+                              <SelectItem className="text-[10px]" value="utilities">Utilities</SelectItem>
+                              <SelectItem className="text-[10px]" value="manufacturing">Manufacturing</SelectItem>
+                              <SelectItem className="text-[10px]" value="oilgas">Oil &amp; Gas</SelectItem>
+                              <SelectItem className="text-[10px]" value="construction">Construction</SelectItem>
                             </SelectContent>
                           </Select>
                         </Field>
                         <Field label="OSR Number">
-                          <Input className="h-6 text-[10px]" defaultValue="OSR-2456" />
+                          <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue="OSR-2456" />
                         </Field>
                         <Field label="OSR Document">
-                          <Input className="h-6 text-[10px]" defaultValue="osr-2024.pdf" />
+                          <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue="osr-2024.pdf" />
                         </Field>
                         <Field label="SR Document">
-                          <Input className="h-6 text-[10px]" defaultValue="sr-2024.pdf" />
+                          <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue="sr-2024.pdf" />
                         </Field>
                         <Field label="Payment Terms">
                           <Select defaultValue="net30">
-                            <SelectTrigger className="h-6 text-[10px]"><SelectValue /></SelectTrigger>
+                            <SelectTrigger className="h-6 text-[10px] md:text-[10px] px-2 py-0"><SelectValue /></SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="net15">Net 15</SelectItem>
-                              <SelectItem value="net30">Net 30</SelectItem>
-                              <SelectItem value="net60">Net 60</SelectItem>
-                              <SelectItem value="cod">COD</SelectItem>
+                              <SelectItem className="text-[10px]" value="net15">Net 15</SelectItem>
+                              <SelectItem className="text-[10px]" value="net30">Net 30</SelectItem>
+                              <SelectItem className="text-[10px]" value="net60">Net 60</SelectItem>
+                              <SelectItem className="text-[10px]" value="cod">COD</SelectItem>
                             </SelectContent>
                           </Select>
                         </Field>
@@ -651,14 +651,14 @@ export default function EditCustomer() {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                         <Field label="Remarks" full>
                           <Textarea
-                            className="text-[10px] min-h-[52px]"
+                            className="text-[10px] md:text-[10px] px-2 py-1 min-h-[52px]"
                             placeholder="Visible on quotes and work orders…"
                             defaultValue="Prefers Wednesday deliveries. Requires PO on all shipments."
                           />
                         </Field>
                         <Field label="Internal Comments" full>
                           <Textarea
-                            className="text-[10px] min-h-[52px]"
+                            className="text-[10px] md:text-[10px] px-2 py-1 min-h-[52px]"
                             placeholder="Internal only — not shared with the customer."
                             defaultValue="Key account. Route escalations to Jerome directly."
                           />
