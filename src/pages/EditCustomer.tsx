@@ -269,6 +269,7 @@ function ContactsSection({ onCreateQuote }: { onCreateQuote: () => void }) {
   const [query, setQuery] = useState("");
   const [contacts, setContacts] = useState<ContactRow[]>(mockContacts);
   const [editIndex, setEditIndex] = useState<number | null>(null);
+  const [deleteIndex, setDeleteIndex] = useState<number | null>(null);
   const [draft, setDraft] = useState<ContactRow>(emptyContact);
 
   const filtered = useMemo(() => {
@@ -299,11 +300,17 @@ function ContactsSection({ onCreateQuote }: { onCreateQuote: () => void }) {
     });
     setEditIndex(null);
   };
-  const deleteContact = (index: number) => {
-    setContacts((prev) => prev.filter((_, i) => i !== index));
+  const confirmDelete = (index: number) => setDeleteIndex(index);
+  const closeDeleteDialog = () => setDeleteIndex(null);
+  const executeDelete = () => {
+    if (deleteIndex === null) return;
+    setContacts((prev) => prev.filter((_, i) => i !== deleteIndex));
+    setDeleteIndex(null);
   };
   const setField = <K extends keyof ContactRow>(key: K, value: ContactRow[K]) =>
     setDraft((d) => ({ ...d, [key]: value }));
+
+
 
 
   return (
@@ -385,7 +392,8 @@ function ContactsSection({ onCreateQuote }: { onCreateQuote: () => void }) {
                     </Button>
                     <div className="flex items-center gap-0.5">
                       <Button variant="ghost" size="icon" className="h-5 w-5" onClick={() => openEdit(i)}><Pencil className="h-3 w-3" /></Button>
-                      <Button variant="ghost" size="icon" className="h-5 w-5" onClick={() => deleteContact(i)}><Trash2 className="h-3 w-3" /></Button>
+                      <Button variant="ghost" size="icon" className="h-5 w-5" onClick={() => confirmDelete(i)}><Trash2 className="h-3 w-3" /></Button>
+
                     </div>
                   </div>
                 </CardContent>
@@ -440,7 +448,8 @@ function ContactsSection({ onCreateQuote }: { onCreateQuote: () => void }) {
                     <TableCell className="py-1.5 px-2 text-right">
                       <div className="inline-flex items-center gap-0.5">
                         <Button variant="ghost" size="icon" className="h-5 w-5" onClick={() => openEdit(i)}><Pencil className="h-3 w-3" /></Button>
-                        <Button variant="ghost" size="icon" className="h-5 w-5" onClick={() => deleteContact(i)}><Trash2 className="h-3 w-3" /></Button>
+                        <Button variant="ghost" size="icon" className="h-5 w-5" onClick={() => confirmDelete(i)}><Trash2 className="h-3 w-3" /></Button>
+
                       </div>
                     </TableCell>
                   </TableRow>
@@ -511,7 +520,23 @@ function ContactsSection({ onCreateQuote }: { onCreateQuote: () => void }) {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      <Dialog open={deleteIndex !== null} onOpenChange={(o) => !o && closeDeleteDialog()}>
+        <DialogContent className="max-w-sm">
+          <DialogHeader>
+            <DialogTitle className="text-sm">Delete contact?</DialogTitle>
+          </DialogHeader>
+          <p className="text-[12px] text-muted-foreground">
+            Are you sure you want to remove <span className="font-medium text-foreground">{contacts[deleteIndex ?? 0]?.firstName} {contacts[deleteIndex ?? 0]?.lastName}</span>? This action cannot be undone.
+          </p>
+          <DialogFooter>
+            <Button variant="outline" size="sm" onClick={closeDeleteDialog}>Cancel</Button>
+            <Button variant="destructive" size="sm" onClick={executeDelete}>Delete</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </Card>
+
   );
 }
 
