@@ -454,7 +454,7 @@ export default function EditCustomer() {
                         <Field label="Ship To">
                           <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue={customer.name} />
                         </Field>
-                        <Field label="Address" full>
+                        <Field label="Address">
                           <Input className="h-6 text-[10px] md:text-[10px] px-2 py-0" defaultValue="123 Industrial Way" />
                         </Field>
                         <Field label="City">
