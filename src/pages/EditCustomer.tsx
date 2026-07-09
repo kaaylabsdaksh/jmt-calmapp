@@ -883,9 +883,9 @@ export default function EditCustomer() {
 
               {/* Fallback simple tabs */}
               {["retest", "print-tags", "fees", "custom"].map((v) => (
-                <TabsContent key={v} value={v} className="mt-4">
+                <TabsContent key={v} value={v} className="mt-2">
                   <Card>
-                    <CardContent className="p-8 text-center text-xs text-muted-foreground">
+                    <CardContent className="p-6 text-center text-[11px] text-muted-foreground">
                       This section preserves legacy functionality. Content will render here.
                     </CardContent>
                   </Card>
