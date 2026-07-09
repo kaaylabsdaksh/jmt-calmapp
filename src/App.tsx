@@ -25,6 +25,7 @@ import VehicleStandards from "./pages/VehicleStandards";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Invoicing from "./pages/Invoicing";
+import InvoicingUnified from "./pages/InvoicingUnified";
 import ManageCustomers from "./pages/ManageCustomers";
 import EditCustomer from "./pages/EditCustomer";
 import { Layout } from "./components/Layout";
@@ -62,6 +63,7 @@ const App = () => {
           <Route path="/onsite-projects/new" element={<OnsiteProjectDetail />} />
           <Route path="/onsite-projects/vehicle-standards" element={<VehicleStandards />} />
           <Route path="/invoicing" element={<Invoicing />} />
+          <Route path="/invoicing-unified" element={<InvoicingUnified />} />
           <Route path="/manage-customers" element={<ManageCustomers />} />
           <Route path="/manage-customers/:accountNumber" element={<EditCustomer />} />
           <Route path="*" element={<NotFound />} />
