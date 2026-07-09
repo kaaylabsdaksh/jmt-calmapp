@@ -450,6 +450,67 @@ function ContactsSection({ onCreateQuote }: { onCreateQuote: () => void }) {
           </div>
         )}
       </CardContent>
+
+      <Dialog open={editIndex !== null} onOpenChange={(o) => !o && closeDialog()}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle className="text-sm">{editIndex === -1 ? "Add Contact" : "Edit Contact"}</DialogTitle>
+          </DialogHeader>
+          <div className="grid grid-cols-2 gap-3">
+            <div className="space-y-1">
+              <Label className="text-[11px]">First Name</Label>
+              <Input className="h-8 text-[12px]" value={draft.firstName} onChange={(e) => setField("firstName", e.target.value)} />
+            </div>
+            <div className="space-y-1">
+              <Label className="text-[11px]">Last Name</Label>
+              <Input className="h-8 text-[12px]" value={draft.lastName} onChange={(e) => setField("lastName", e.target.value)} />
+            </div>
+            <div className="space-y-1 col-span-2">
+              <Label className="text-[11px]">Title</Label>
+              <Input className="h-8 text-[12px]" value={draft.title} onChange={(e) => setField("title", e.target.value)} />
+            </div>
+            <div className="space-y-1">
+              <Label className="text-[11px]">Phone #</Label>
+              <Input className="h-8 text-[12px]" value={draft.phone} onChange={(e) => setField("phone", e.target.value)} />
+            </div>
+            <div className="space-y-1">
+              <Label className="text-[11px]">Cell #</Label>
+              <Input className="h-8 text-[12px]" value={draft.cell} onChange={(e) => setField("cell", e.target.value)} />
+            </div>
+            <div className="space-y-1">
+              <Label className="text-[11px]">Fax #</Label>
+              <Input className="h-8 text-[12px]" value={draft.fax} onChange={(e) => setField("fax", e.target.value)} />
+            </div>
+            <div className="space-y-1">
+              <Label className="text-[11px]">Email</Label>
+              <Input className="h-8 text-[12px]" value={draft.email} onChange={(e) => setField("email", e.target.value)} />
+            </div>
+            <div className="space-y-1 col-span-2">
+              <Label className="text-[11px]">Website</Label>
+              <Input className="h-8 text-[12px]" value={draft.website} onChange={(e) => setField("website", e.target.value)} />
+            </div>
+            <div className="space-y-1 col-span-2">
+              <Label className="text-[11px]">Comments</Label>
+              <Textarea className="text-[12px] min-h-[60px]" value={draft.comments} onChange={(e) => setField("comments", e.target.value)} />
+            </div>
+            <div className="flex items-center gap-4 col-span-2">
+              <label className="flex items-center gap-2 text-[11px]">
+                <Switch checked={draft.active} onCheckedChange={(v) => setField("active", v)} /> Active
+              </label>
+              <label className="flex items-center gap-2 text-[11px]">
+                <Switch checked={draft.dne} onCheckedChange={(v) => setField("dne", v)} /> DNE
+              </label>
+              <label className="flex items-center gap-2 text-[11px]">
+                <Switch checked={draft.nrn} onCheckedChange={(v) => setField("nrn", v)} /> NRN
+              </label>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" size="sm" onClick={closeDialog}>Cancel</Button>
+            <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white" onClick={saveDraft}>Save</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </Card>
   );
 }
