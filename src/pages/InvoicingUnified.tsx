@@ -347,148 +347,117 @@ export default function InvoicingUnified() {
       <div className="flex flex-col gap-3 p-3 md:p-4 flex-1 pb-24">
         {/* Unified Filter Card */}
         <Card>
-          <CardHeader className="pb-2 pt-3 px-4">
-            <CardTitle className="text-sm">Search & Filters</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4 px-4 pb-4">
-            {/* Shared search */}
-            <div className="relative max-w-xl">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search customer, work order, batch, account #, invoice #, or serial…"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-9 h-9"
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3">
+              <FieldSelect
+                label="Location"
+                value={filters.location}
+                onChange={(v) => setFilters({ ...filters, location: v })}
+                options={[
+                  { value: "all", label: "All" },
+                  { value: "baton-rouge", label: "Baton Rouge" },
+                  { value: "houston", label: "Houston" },
+                  { value: "norco", label: "Norco" },
+                ]}
               />
-            </div>
-
-            {/* Common filters */}
-            <div>
-              <div className="text-[10px] uppercase tracking-wide text-muted-foreground mb-2 font-medium">Common</div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                <FieldSelect
-                  label="Location"
-                  value={filters.location}
-                  onChange={(v) => setFilters({ ...filters, location: v })}
-                  options={[
-                    { value: "all", label: "All" },
-                    { value: "baton-rouge", label: "Baton Rouge" },
-                    { value: "houston", label: "Houston" },
-                    { value: "norco", label: "Norco" },
-                  ]}
-                />
-                <FieldSelect
-                  label="Division"
-                  value={filters.division}
-                  onChange={(v) => setFilters({ ...filters, division: v })}
-                  options={[
-                    { value: "all", label: "All" },
-                    { value: "lab", label: "Lab" },
-                    { value: "field", label: "Field" },
-                  ]}
-                />
-                <FieldSelect
-                  label="Customer Group"
-                  value={filters.customerGroup}
-                  onChange={(v) => setFilters({ ...filters, customerGroup: v })}
-                  options={[
-                    { value: "all", label: "All" },
-                    { value: "energy", label: "Energy" },
-                    { value: "chemical", label: "Chemical" },
-                    { value: "manufacturing", label: "Manufacturing" },
-                  ]}
+              <FieldSelect
+                label="Division"
+                value={filters.division}
+                onChange={(v) => setFilters({ ...filters, division: v })}
+                options={[
+                  { value: "all", label: "All" },
+                  { value: "lab", label: "Lab" },
+                  { value: "field", label: "Field" },
+                ]}
+              />
+              <FieldSelect
+                label="Customer Group"
+                value={filters.customerGroup}
+                onChange={(v) => setFilters({ ...filters, customerGroup: v })}
+                options={[
+                  { value: "all", label: "All" },
+                  { value: "energy", label: "Energy" },
+                  { value: "chemical", label: "Chemical" },
+                  { value: "manufacturing", label: "Manufacturing" },
+                ]}
+              />
+              <FieldSelect
+                label="Item Status"
+                value={filters.itemStatus}
+                onChange={(v) => setFilters({ ...filters, itemStatus: v })}
+                options={[
+                  { value: "all", label: "All" },
+                  { value: "ar-invoicing", label: "A/R Invoicing" },
+                  { value: "ready", label: "Ready to Invoice" },
+                  { value: "completed", label: "Completed" },
+                ]}
+              />
+              <FieldSelect
+                label="Invoice Status"
+                value={filters.invoiceStatus}
+                onChange={(v) => setFilters({ ...filters, invoiceStatus: v })}
+                options={[
+                  { value: "all", label: "All" },
+                  { value: "pending", label: "Pending" },
+                  { value: "delivery-ticket", label: "Delivery Ticket" },
+                  { value: "processed", label: "Processed" },
+                ]}
+              />
+              <div className="space-y-1.5">
+                <Label className="text-xs text-muted-foreground">Created From</Label>
+                <ModernDatePicker
+                  value={filters.createdFrom}
+                  onChange={(date) =>
+                    setFilters({ ...filters, createdFrom: date ? date.toISOString().split("T")[0] : "" })
+                  }
+                  placeholder="MM/DD/YYYY"
+                  size="lg"
                 />
               </div>
-            </div>
-
-            {/* Invoice filters */}
-            <div>
-              <div className="text-[10px] uppercase tracking-wide text-muted-foreground mb-2 font-medium">Invoice</div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                <FieldSelect
-                  label="Item Status"
-                  value={filters.itemStatus}
-                  onChange={(v) => setFilters({ ...filters, itemStatus: v })}
-                  options={[
-                    { value: "all", label: "All" },
-                    { value: "ar-invoicing", label: "A/R Invoicing" },
-                    { value: "ready", label: "Ready to Invoice" },
-                    { value: "completed", label: "Completed" },
-                  ]}
+              <div className="space-y-1.5">
+                <Label className="text-xs text-muted-foreground">Created To</Label>
+                <ModernDatePicker
+                  value={filters.createdTo}
+                  onChange={(date) =>
+                    setFilters({ ...filters, createdTo: date ? date.toISOString().split("T")[0] : "" })
+                  }
+                  placeholder="MM/DD/YYYY"
+                  size="lg"
                 />
-                <div className="space-y-1.5">
-                  <Label className="text-xs text-muted-foreground">Created From</Label>
-                  <ModernDatePicker
-                    value={filters.createdFrom}
-                    onChange={(date) =>
-                      setFilters({ ...filters, createdFrom: date ? date.toISOString().split("T")[0] : "" })
-                    }
-                    placeholder="MM/DD/YYYY"
-                    size="lg"
-                  />
+              </div>
+              <FieldSelect
+                label="Invoicing Type"
+                value={filters.invoicingType}
+                onChange={(v) => setFilters({ ...filters, invoicingType: v })}
+                options={[
+                  { value: "all", label: "All" },
+                  { value: "regular", label: "Regular" },
+                  { value: "onsite", label: "Onsite" },
+                ]}
+              />
+              <FieldSelect
+                label="Work Order Type"
+                value={filters.workOrderType}
+                onChange={(v) => setFilters({ ...filters, workOrderType: v })}
+                options={[
+                  { value: "all", label: "All" },
+                  { value: "calibration", label: "Calibration" },
+                  { value: "repair", label: "Repair" },
+                  { value: "certification", label: "Certification" },
+                ]}
+              />
+              <div className="space-y-1.5 flex flex-col justify-end">
+                <div className="flex gap-2">
+                  <Button className="flex-1 h-10">
+                    <Search className="h-4 w-4 mr-2" />
+                    Search
+                  </Button>
+                  <Button variant="outline" className="flex-1 h-10" onClick={clearFilters}>
+                    <RotateCcw className="h-4 w-4 mr-2" />
+                    Clear
+                  </Button>
                 </div>
-                <div className="space-y-1.5">
-                  <Label className="text-xs text-muted-foreground">Created To</Label>
-                  <ModernDatePicker
-                    value={filters.createdTo}
-                    onChange={(date) =>
-                      setFilters({ ...filters, createdTo: date ? date.toISOString().split("T")[0] : "" })
-                    }
-                    placeholder="MM/DD/YYYY"
-                    size="lg"
-                  />
-                </div>
               </div>
-            </div>
-
-            {/* Billing Specialist filters */}
-            <div>
-              <div className="text-[10px] uppercase tracking-wide text-muted-foreground mb-2 font-medium">Billing Specialist</div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                <FieldSelect
-                  label="Invoicing Type"
-                  value={filters.invoicingType}
-                  onChange={(v) => setFilters({ ...filters, invoicingType: v })}
-                  options={[
-                    { value: "all", label: "All" },
-                    { value: "regular", label: "Regular" },
-                    { value: "onsite", label: "Onsite" },
-                  ]}
-                />
-                <FieldSelect
-                  label="Work Order Type"
-                  value={filters.workOrderType}
-                  onChange={(v) => setFilters({ ...filters, workOrderType: v })}
-                  options={[
-                    { value: "all", label: "All" },
-                    { value: "calibration", label: "Calibration" },
-                    { value: "repair", label: "Repair" },
-                    { value: "certification", label: "Certification" },
-                  ]}
-                />
-                <FieldSelect
-                  label="Invoice Status"
-                  value={filters.invoiceStatus}
-                  onChange={(v) => setFilters({ ...filters, invoiceStatus: v })}
-                  options={[
-                    { value: "all", label: "All" },
-                    { value: "pending", label: "Pending" },
-                    { value: "delivery-ticket", label: "Delivery Ticket" },
-                    { value: "processed", label: "Processed" },
-                  ]}
-                />
-              </div>
-            </div>
-
-            <div className="flex justify-end gap-2 pt-1">
-              <Button variant="outline" className="h-9" onClick={clearFilters}>
-                <RotateCcw className="h-4 w-4 mr-2" />
-                Clear
-              </Button>
-              <Button className="h-9">
-                <Search className="h-4 w-4 mr-2" />
-                Search
-              </Button>
             </div>
           </CardContent>
         </Card>
