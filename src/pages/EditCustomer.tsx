@@ -540,9 +540,158 @@ function ContactsSection({ onCreateQuote }: { onCreateQuote: () => void }) {
   );
 }
 
+/* --------------------------- Work Orders Section --------------------------- */
+
+type WorkOrderRow = {
+  wo: string;
+  status: "In Process" | "Checked Out" | "Completed" | "Closed" | "On Hold";
+  type: string;
+  created: string;
+  needBy: string;
+  departure: string;
+  shipped: string;
+  poNumber: string;
+  items: number;
+};
+
+const mockWorkOrders: WorkOrderRow[] = [
+  { wo: "433219", status: "In Process", type: "Onsite Work Order", created: "01/14/2023", needBy: "02/14/2023", departure: "02/14/2023", shipped: "", poNumber: "TESTTESTTEST", items: 1 },
+  { wo: "446628", status: "Checked Out", type: "Onsite Work Order", created: "04/29/2023", needBy: "06/29/2023", departure: "06/29/2023", shipped: "", poNumber: "ISLANDER-2", items: 1 },
+  { wo: "446628", status: "Checked Out", type: "Onsite Work Order", created: "04/29/2023", needBy: "06/29/2023", departure: "06/29/2023", shipped: "", poNumber: "ISLANDER-2", items: 7 },
+  { wo: "447071", status: "In Process", type: "Onsite Work Order", created: "05/03/2023", needBy: "07/03/2023", departure: "07/03/2023", shipped: "", poNumber: "ISLANDER-2", items: 2 },
+  { wo: "447480", status: "In Process", type: "Onsite Work Order", created: "05/05/2023", needBy: "05/05/2023", departure: "05/05/2023", shipped: "", poNumber: "123", items: 1 },
+  { wo: "448566", status: "In Process", type: "Onsite Work Order", created: "05/15/2023", needBy: "05/16/2023", departure: "05/16/2023", shipped: "", poNumber: "WOPO", items: 7 },
+  { wo: "449311", status: "In Process", type: "Onsite Work Order", created: "05/22/2023", needBy: "05/22/2023", departure: "05/22/2023", shipped: "", poNumber: "WOPO", items: 6 },
+  { wo: "449311", status: "In Process", type: "Onsite Work Order", created: "05/22/2023", needBy: "05/22/2023", departure: "05/22/2023", shipped: "", poNumber: "WOPO", items: 1 },
+  { wo: "450226", status: "In Process", type: "Onsite Work Order", created: "05/30/2023", needBy: "06/05/2023", departure: "06/05/2023", shipped: "", poNumber: "W/PO", items: 7 },
+  { wo: "455068", status: "In Process", type: "Onsite Work Order", created: "08/10/2023", needBy: "10/10/2023", departure: "10/10/2023", shipped: "", poNumber: "ISLANDER-2", items: 2 },
+  { wo: "455100", status: "Completed", type: "Onsite Work Order", created: "09/12/2023", needBy: "10/12/2023", departure: "10/12/2023", shipped: "10/12/2023", poNumber: "CLOSED-1", items: 3 },
+  { wo: "455200", status: "Closed", type: "Onsite Work Order", created: "09/15/2023", needBy: "09/20/2023", departure: "09/20/2023", shipped: "09/20/2023", poNumber: "CLOSED-2", items: 1 },
+];
+
+const isOpenStatus = (status: WorkOrderRow["status"]) =>
+  status === "In Process" || status === "Checked Out" || status === "On Hold";
+
+function WorkOrdersSection() {
+  const { toast } = useToast();
+  const [filter, setFilter] = useState<"open" | "closed" | "all">("open");
+
+  const filtered = useMemo(() => {
+    if (filter === "all") return mockWorkOrders;
+    return mockWorkOrders.filter((r) =>
+      filter === "open" ? isOpenStatus(r.status) : !isOpenStatus(r.status)
+    );
+  }, [filter]);
+
+  const FilterButton = ({
+    value,
+    label,
+  }: {
+    value: "open" | "closed" | "all";
+    label: string;
+  }) => (
+    <button
+      type="button"
+      onClick={() => setFilter(value)}
+      className={`flex items-center gap-1.5 text-[11px] px-2 py-1 rounded-full border ${
+        filter === value
+          ? "bg-blue-600 text-white border-blue-600"
+          : "bg-white text-foreground border-border hover:bg-muted"
+      }`}
+    >
+      <span
+        className={`w-2 h-2 rounded-full ${
+          filter === value ? "bg-white" : "bg-muted-foreground"
+        }`}
+      />
+      {label}
+    </button>
+  );
+
+  return (
+    <Card>
+      <CardHeader className="p-2.5 pb-2 flex flex-row items-center justify-between gap-2">
+        <div>
+          <CardTitle className="text-xs font-semibold">Work Orders</CardTitle>
+          <CardDescription className="text-[10px]">Recent work orders for this customer.</CardDescription>
+        </div>
+        <div className="flex items-center gap-2">
+          <FilterButton value="open" label="Open Work Orders" />
+          <FilterButton value="closed" label="Closed Work Orders" />
+          <FilterButton value="all" label="All Work Orders" />
+        </div>
+      </CardHeader>
+      <CardContent className="p-0">
+        <div className="overflow-x-auto">
+          <Table>
+            <TableHeader>
+              <TableRow className="h-7 bg-muted/50">
+                <TableHead className="text-[10px] uppercase py-1.5 px-2"></TableHead>
+                <TableHead className="text-[10px] uppercase py-1.5 px-2">WO #</TableHead>
+                <TableHead className="text-[10px] uppercase py-1.5 px-2">Status</TableHead>
+                <TableHead className="text-[10px] uppercase py-1.5 px-2">Type</TableHead>
+                <TableHead className="text-[10px] uppercase py-1.5 px-2">Created Date</TableHead>
+                <TableHead className="text-[10px] uppercase py-1.5 px-2">Need By</TableHead>
+                <TableHead className="text-[10px] uppercase py-1.5 px-2">Departure Date</TableHead>
+                <TableHead className="text-[10px] uppercase py-1.5 px-2">Shipped</TableHead>
+                <TableHead className="text-[10px] uppercase py-1.5 px-2">PONumber</TableHead>
+                <TableHead className="text-[10px] uppercase py-1.5 px-2 text-right"># Items</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {filtered.map((r) => (
+                <TableRow key={`${r.wo}-${r.poNumber}-${r.items}`} className="text-[11px]">
+                  <TableCell className="py-1.5 px-2">
+                    <Button
+                      variant="link"
+                      size="sm"
+                      className="h-5 px-0 text-[10px] text-blue-600"
+                      onClick={() =>
+                        toast({ title: "Edit Work Order", description: `Opening work order ${r.wo}…` })
+                      }
+                    >
+                      Edit
+                    </Button>
+                  </TableCell>
+                  <TableCell className="font-medium tabular-nums py-1.5 px-2">{r.wo}</TableCell>
+                  <TableCell className="py-1.5 px-2">
+                    <Badge variant="secondary" className="h-4 text-[10px]">{r.status}</Badge>
+                  </TableCell>
+                  <TableCell className="py-1.5 px-2">{r.type}</TableCell>
+                  <TableCell className="tabular-nums py-1.5 px-2">{r.created}</TableCell>
+                  <TableCell className="tabular-nums py-1.5 px-2">{r.needBy}</TableCell>
+                  <TableCell className="tabular-nums py-1.5 px-2">{r.departure}</TableCell>
+                  <TableCell className="tabular-nums py-1.5 px-2">{r.shipped || "—"}</TableCell>
+                  <TableCell className="py-1.5 px-2">{r.poNumber}</TableCell>
+                  <TableCell className="tabular-nums py-1.5 px-2 text-right">{r.items}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+        <div className="flex items-center justify-center gap-1 py-2 border-t border-border">
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
+            <button
+              key={n}
+              type="button"
+              className={`text-[11px] px-1.5 py-0.5 rounded ${
+                n === 1 ? "text-blue-600 font-semibold" : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {n}
+            </button>
+          ))}
+          <span className="text-[11px] text-muted-foreground">…</span>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
 
 
 export default function EditCustomer() {
+
   const { accountNumber } = useParams<{ accountNumber: string }>();
   const navigate = useNavigate();
   const { toast } = useToast();
