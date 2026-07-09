@@ -619,14 +619,14 @@ export default function EditCustomer() {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         <Field label="Remarks" full>
                           <Textarea
-                            className="text-xs min-h-[110px]"
+                            className="text-[11px] min-h-[70px]"
                             placeholder="Visible on quotes and work orders…"
                             defaultValue="Prefers Wednesday deliveries. Requires PO on all shipments."
                           />
                         </Field>
                         <Field label="Internal Comments" full>
                           <Textarea
-                            className="text-xs min-h-[110px]"
+                            className="text-[11px] min-h-[70px]"
                             placeholder="Internal only — not shared with the customer."
                             defaultValue="Key account. Route escalations to Jerome directly."
                           />
