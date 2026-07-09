@@ -788,11 +788,11 @@ export default function EditCustomer() {
                   <CardContent className="p-0">
                     <Table>
                       <TableHeader>
-                        <TableRow>
-                          <TableHead className="text-[10px] uppercase">Quote #</TableHead>
-                          <TableHead className="text-[10px] uppercase">Status</TableHead>
-                          <TableHead className="text-[10px] uppercase">Date</TableHead>
-                          <TableHead className="text-[10px] uppercase text-right">Amount</TableHead>
+                        <TableRow className="h-7">
+                          <TableHead className="text-[10px] uppercase py-1.5 px-2">Quote #</TableHead>
+                          <TableHead className="text-[10px] uppercase py-1.5 px-2">Status</TableHead>
+                          <TableHead className="text-[10px] uppercase py-1.5 px-2">Date</TableHead>
+                          <TableHead className="text-[10px] uppercase text-right py-1.5 px-2">Amount</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -801,10 +801,10 @@ export default function EditCustomer() {
                           { q: "Q-4451", status: "Accepted", date: "Jun 20, 2026", amount: "$6,940.00" },
                         ].map((r) => (
                           <TableRow key={r.q} className="text-[11px]">
-                            <TableCell className="font-medium">{r.q}</TableCell>
-                            <TableCell><Badge variant="secondary" className="h-4 text-[10px]">{r.status}</Badge></TableCell>
-                            <TableCell>{r.date}</TableCell>
-                            <TableCell className="text-right tabular-nums">{r.amount}</TableCell>
+                            <TableCell className="font-medium py-1.5 px-2">{r.q}</TableCell>
+                            <TableCell className="py-1.5 px-2"><Badge variant="secondary" className="h-4 text-[10px]">{r.status}</Badge></TableCell>
+                            <TableCell className="py-1.5 px-2">{r.date}</TableCell>
+                            <TableCell className="text-right tabular-nums py-1.5 px-2">{r.amount}</TableCell>
                           </TableRow>
                         ))}
                       </TableBody>
