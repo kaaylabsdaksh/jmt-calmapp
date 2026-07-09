@@ -67,6 +67,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useToast } from "@/components/ui/use-toast";
 import ModernTopNav from "@/components/modern/ModernTopNav";
 
@@ -406,15 +407,33 @@ export default function EditCustomer() {
 
               {/* GENERAL */}
               <TabsContent value="general" className="space-y-2 mt-2">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
+                <Accordion
+                  type="multiple"
+                  defaultValue={[
+                    "customer-info",
+                    "retest",
+                    "primary-contact",
+                    "business",
+                    "pricing",
+                    "operational",
+                    "notes",
+                  ]}
+                  className="space-y-1.5"
+                >
                   {/* Customer Information */}
-                  <Card>
-                    <SectionHeader
-                      icon={Building2}
-                      title="Customer Information"
-                      description="Primary account and shipping address."
-                    />
-                    <CardContent className="p-2 pt-0 space-y-1.5">
+                  <AccordionItem value="customer-info" className="border rounded-md bg-card">
+                    <AccordionTrigger className="px-2 py-1.5 hover:no-underline">
+                      <div className="flex items-center gap-2">
+                        <div className="w-5 h-5 rounded-md bg-blue-500/10 text-blue-600 flex items-center justify-center shrink-0">
+                          <Building2 className="h-3 w-3" />
+                        </div>
+                        <div className="text-left">
+                          <div className="text-[11px] font-semibold">Customer Information</div>
+                          <div className="text-[9px] text-muted-foreground">Primary account and shipping address.</div>
+                        </div>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="px-2 pb-2 pt-0">
                       <FieldRow>
                         <Field label="Customer Status" required>
                           <Select defaultValue="active">
@@ -429,10 +448,10 @@ export default function EditCustomer() {
                         <Field label="Account Number" required>
                           <Input className="h-6 text-[10px] tabular-nums" defaultValue={customer.accountNumber} readOnly />
                         </Field>
-                        <Field label="Customer Name" required full>
+                        <Field label="Customer Name" required>
                           <Input className="h-6 text-[10px]" defaultValue={customer.name} />
                         </Field>
-                        <Field label="Ship To" full>
+                        <Field label="Ship To">
                           <Input className="h-6 text-[10px]" defaultValue={customer.name} />
                         </Field>
                         <Field label="Address" full>
@@ -448,22 +467,28 @@ export default function EditCustomer() {
                           <Input className="h-6 text-[10px]" defaultValue="70801" />
                         </Field>
                       </FieldRow>
-                    </CardContent>
-                  </Card>
+                    </AccordionContent>
+                  </AccordionItem>
 
                   {/* Retest Address */}
-                  <Card>
-                    <SectionHeader
-                      icon={MapPin}
-                      title="Retest Address"
-                      description="Where recall / retest notices are mailed."
-                    />
-                    <CardContent className="p-2 pt-0 space-y-1.5">
+                  <AccordionItem value="retest" className="border rounded-md bg-card">
+                    <AccordionTrigger className="px-2 py-1.5 hover:no-underline">
+                      <div className="flex items-center gap-2">
+                        <div className="w-5 h-5 rounded-md bg-blue-500/10 text-blue-600 flex items-center justify-center shrink-0">
+                          <MapPin className="h-3 w-3" />
+                        </div>
+                        <div className="text-left">
+                          <div className="text-[11px] font-semibold">Retest Address</div>
+                          <div className="text-[9px] text-muted-foreground">Where recall / retest notices are mailed.</div>
+                        </div>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="px-2 pb-2 pt-0">
                       <FieldRow>
-                        <Field label="Retest Mail To" full>
+                        <Field label="Retest Mail To">
                           <Input className="h-6 text-[10px]" defaultValue={customer.name} />
                         </Field>
-                        <Field label="Address" full>
+                        <Field label="Address">
                           <Input className="h-6 text-[10px]" defaultValue="Same as shipping" />
                         </Field>
                         <Field label="City">
@@ -476,17 +501,23 @@ export default function EditCustomer() {
                           <Input className="h-6 text-[10px]" defaultValue="70801" />
                         </Field>
                       </FieldRow>
-                    </CardContent>
-                  </Card>
+                    </AccordionContent>
+                  </AccordionItem>
 
                   {/* Primary Contact */}
-                  <Card>
-                    <SectionHeader
-                      icon={User}
-                      title="Primary Contact"
-                      description="Main person for account communications."
-                    />
-                    <CardContent className="p-2 pt-0 space-y-1.5">
+                  <AccordionItem value="primary-contact" className="border rounded-md bg-card">
+                    <AccordionTrigger className="px-2 py-1.5 hover:no-underline">
+                      <div className="flex items-center gap-2">
+                        <div className="w-5 h-5 rounded-md bg-blue-500/10 text-blue-600 flex items-center justify-center shrink-0">
+                          <User className="h-3 w-3" />
+                        </div>
+                        <div className="text-left">
+                          <div className="text-[11px] font-semibold">Primary Contact</div>
+                          <div className="text-[9px] text-muted-foreground">Main person for account communications.</div>
+                        </div>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="px-2 pb-2 pt-0">
                       <FieldRow>
                         <Field label="Main Contact" required>
                           <Input className="h-6 text-[10px]" defaultValue={customer.primaryContact} />
@@ -494,25 +525,30 @@ export default function EditCustomer() {
                         <Field label="Phone Number">
                           <Input className="h-6 text-[10px]" defaultValue={customer.phone} />
                         </Field>
-                        <Field label="Email" full>
+                        <Field label="Email">
                           <Input className="h-6 text-[10px]" defaultValue={customer.email} />
                         </Field>
                         <Field label="Biller Code">
                           <Input className="h-6 text-[10px]" defaultValue="BC-102" />
                         </Field>
-
                       </FieldRow>
-                    </CardContent>
-                  </Card>
+                    </AccordionContent>
+                  </AccordionItem>
 
                   {/* Business Information */}
-                  <Card>
-                    <SectionHeader
-                      icon={Briefcase}
-                      title="Business Information"
-                      description="Industry, documentation and payment terms."
-                    />
-                    <CardContent className="p-2 pt-0 space-y-1.5">
+                  <AccordionItem value="business" className="border rounded-md bg-card">
+                    <AccordionTrigger className="px-2 py-1.5 hover:no-underline">
+                      <div className="flex items-center gap-2">
+                        <div className="w-5 h-5 rounded-md bg-blue-500/10 text-blue-600 flex items-center justify-center shrink-0">
+                          <Briefcase className="h-3 w-3" />
+                        </div>
+                        <div className="text-left">
+                          <div className="text-[11px] font-semibold">Business Information</div>
+                          <div className="text-[9px] text-muted-foreground">Industry, documentation and payment terms.</div>
+                        </div>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="px-2 pb-2 pt-0">
                       <FieldRow>
                         <Field label="Salesperson" required>
                           <Input className="h-6 text-[10px]" defaultValue={customer.salesperson} />
@@ -528,7 +564,6 @@ export default function EditCustomer() {
                             </SelectContent>
                           </Select>
                         </Field>
-
                         <Field label="OSR Number">
                           <Input className="h-6 text-[10px]" defaultValue="OSR-2456" />
                         </Field>
@@ -538,7 +573,7 @@ export default function EditCustomer() {
                         <Field label="SR Document">
                           <Input className="h-6 text-[10px]" defaultValue="sr-2024.pdf" />
                         </Field>
-                        <Field label="Payment Terms" full>
+                        <Field label="Payment Terms">
                           <Select defaultValue="net30">
                             <SelectTrigger className="h-6 text-[10px]"><SelectValue /></SelectTrigger>
                             <SelectContent>
@@ -550,72 +585,69 @@ export default function EditCustomer() {
                           </Select>
                         </Field>
                       </FieldRow>
-                    </CardContent>
-                  </Card>
+                    </AccordionContent>
+                  </AccordionItem>
 
                   {/* Pricing & Inventory */}
-                  <Card>
-                    <SectionHeader
-                      icon={DollarSign}
-                      title="Pricing & Inventory"
-                      description="Contract pricing and surplus access."
-                    />
-                    <CardContent className="p-2 pt-0">
-                      <ToggleRow
-                        label="Contract Pricing"
-                        description="Apply negotiated contract rates to this customer."
-                        defaultChecked
-                      />
-                      <ToggleRow
-                        label="ESL Surplus Inventory"
-                        description="Allow use of ESL surplus stock for fulfilment."
-                        defaultChecked
-                      />
-                      <ToggleRow
-                        label="Global Surplus Access"
-                        description="Access surplus inventory across all warehouses."
-                      />
-                    </CardContent>
-                  </Card>
+                  <AccordionItem value="pricing" className="border rounded-md bg-card">
+                    <AccordionTrigger className="px-2 py-1.5 hover:no-underline">
+                      <div className="flex items-center gap-2">
+                        <div className="w-5 h-5 rounded-md bg-blue-500/10 text-blue-600 flex items-center justify-center shrink-0">
+                          <DollarSign className="h-3 w-3" />
+                        </div>
+                        <div className="text-left">
+                          <div className="text-[11px] font-semibold">Pricing & Inventory</div>
+                          <div className="text-[9px] text-muted-foreground">Contract pricing and surplus access.</div>
+                        </div>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="px-2 pb-2 pt-0">
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-x-4">
+                        <ToggleRow label="Contract Pricing" description="Apply negotiated contract rates to this customer." defaultChecked />
+                        <ToggleRow label="ESL Surplus Inventory" description="Allow use of ESL surplus stock for fulfilment." defaultChecked />
+                        <ToggleRow label="Global Surplus Access" description="Access surplus inventory across all warehouses." />
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
 
                   {/* Operational Settings */}
-                  <Card>
-                    <SectionHeader
-                      icon={Settings2}
-                      title="Operational Settings"
-                      description="Workflow and recall behaviour."
-                    />
-                    <CardContent className="p-2 pt-0">
-                      <ToggleRow label="No Expedite Fees" description="Waive expedite fees for this account." />
-                      <ToggleRow
-                        label="Enabled Calibration Frequency"
-                        description="Track calibration intervals automatically."
-                        defaultChecked
-                      />
-                      <ToggleRow
-                        label="End of Month Recall"
-                        description="Include in end-of-month recall notifications."
-                      />
-                      <ToggleRow
-                        label="Add to Service Date List"
-                        description="Include on scheduled service reminder lists."
-                        defaultChecked
-                      />
-                      <ToggleRow
-                        label="Add to No Recall List"
-                        description="Exclude customer from recall notice runs."
-                      />
-                    </CardContent>
-                  </Card>
+                  <AccordionItem value="operational" className="border rounded-md bg-card">
+                    <AccordionTrigger className="px-2 py-1.5 hover:no-underline">
+                      <div className="flex items-center gap-2">
+                        <div className="w-5 h-5 rounded-md bg-blue-500/10 text-blue-600 flex items-center justify-center shrink-0">
+                          <Settings2 className="h-3 w-3" />
+                        </div>
+                        <div className="text-left">
+                          <div className="text-[11px] font-semibold">Operational Settings</div>
+                          <div className="text-[9px] text-muted-foreground">Workflow and recall behaviour.</div>
+                        </div>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="px-2 pb-2 pt-0">
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4">
+                        <ToggleRow label="No Expedite Fees" description="Waive expedite fees for this account." />
+                        <ToggleRow label="Enabled Calibration Frequency" description="Track calibration intervals automatically." defaultChecked />
+                        <ToggleRow label="End of Month Recall" description="Include in end-of-month recall notifications." />
+                        <ToggleRow label="Add to Service Date List" description="Include on scheduled service reminder lists." defaultChecked />
+                        <ToggleRow label="Add to No Recall List" description="Exclude customer from recall notice runs." />
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
 
                   {/* Notes */}
-                  <Card className="lg:col-span-2">
-                    <SectionHeader
-                      icon={StickyNote}
-                      title="Notes"
-                      description="Customer-facing remarks and internal comments."
-                    />
-                    <CardContent className="p-2 pt-0 space-y-1.5">
+                  <AccordionItem value="notes" className="border rounded-md bg-card">
+                    <AccordionTrigger className="px-2 py-1.5 hover:no-underline">
+                      <div className="flex items-center gap-2">
+                        <div className="w-5 h-5 rounded-md bg-blue-500/10 text-blue-600 flex items-center justify-center shrink-0">
+                          <StickyNote className="h-3 w-3" />
+                        </div>
+                        <div className="text-left">
+                          <div className="text-[11px] font-semibold">Notes</div>
+                          <div className="text-[9px] text-muted-foreground">Customer-facing remarks and internal comments.</div>
+                        </div>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="px-2 pb-2 pt-0">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                         <Field label="Remarks" full>
                           <Textarea
@@ -632,9 +664,9 @@ export default function EditCustomer() {
                           />
                         </Field>
                       </div>
-                    </CardContent>
-                  </Card>
-                </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
               </TabsContent>
 
               {/* CONTACTS */}
