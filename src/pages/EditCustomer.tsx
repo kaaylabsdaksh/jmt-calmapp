@@ -418,7 +418,7 @@ export default function EditCustomer() {
                       <FieldRow>
                         <Field label="Customer Status" required>
                           <Select defaultValue="active">
-                            <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
+                            <SelectTrigger className="h-7 text-[11px]"><SelectValue /></SelectTrigger>
                             <SelectContent>
                               <SelectItem value="active">Active</SelectItem>
                               <SelectItem value="pending">Pending</SelectItem>
@@ -427,25 +427,25 @@ export default function EditCustomer() {
                           </Select>
                         </Field>
                         <Field label="Account Number" required>
-                          <Input className="h-8 text-xs tabular-nums" defaultValue={customer.accountNumber} readOnly />
+                          <Input className="h-7 text-[11px] tabular-nums" defaultValue={customer.accountNumber} readOnly />
                         </Field>
                         <Field label="Customer Name" required full>
-                          <Input className="h-8 text-xs" defaultValue={customer.name} />
+                          <Input className="h-7 text-[11px]" defaultValue={customer.name} />
                         </Field>
                         <Field label="Ship To" full>
-                          <Input className="h-8 text-xs" defaultValue={customer.name} />
+                          <Input className="h-7 text-[11px]" defaultValue={customer.name} />
                         </Field>
                         <Field label="Address" full>
-                          <Input className="h-8 text-xs" defaultValue="123 Industrial Way" />
+                          <Input className="h-7 text-[11px]" defaultValue="123 Industrial Way" />
                         </Field>
                         <Field label="City">
-                          <Input className="h-8 text-xs" defaultValue="Baton Rouge" />
+                          <Input className="h-7 text-[11px]" defaultValue="Baton Rouge" />
                         </Field>
                         <Field label="State">
-                          <Input className="h-8 text-xs" defaultValue="LA" />
+                          <Input className="h-7 text-[11px]" defaultValue="LA" />
                         </Field>
                         <Field label="Zip Code">
-                          <Input className="h-8 text-xs" defaultValue="70801" />
+                          <Input className="h-7 text-[11px]" defaultValue="70801" />
                         </Field>
                       </FieldRow>
                     </CardContent>
