@@ -486,7 +486,7 @@ export default function EditCustomer() {
                       title="Primary Contact"
                       description="Main person for account communications."
                     />
-                    <CardContent className="p-4 pt-0 space-y-3">
+                    <CardContent className="p-2.5 pt-0 space-y-2">
                       <FieldRow>
                         <Field label="Main Contact" required>
                           <Input className="h-8 text-xs" defaultValue={customer.primaryContact} />
