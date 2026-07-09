@@ -121,7 +121,7 @@ const SectionHeader = ({
 );
 
 const FieldRow = ({ children }: { children: React.ReactNode }) => (
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-3">{children}</div>
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-3 gap-y-2">{children}</div>
 );
 
 const Field = ({
@@ -135,8 +135,8 @@ const Field = ({
   children: React.ReactNode;
   full?: boolean;
 }) => (
-  <div className={`space-y-1.5 ${full ? "md:col-span-2" : ""}`}>
-    <Label className="text-xs font-medium text-foreground">
+  <div className={`space-y-1 ${full ? "md:col-span-2" : ""}`}>
+    <Label className="text-[10px] font-medium text-foreground">
       {label}
       {required && <span className="text-destructive ml-0.5">*</span>}
     </Label>
