@@ -259,17 +259,52 @@ const YNBadge = ({ value, tone = "emerald" }: { value: boolean; tone?: "emerald"
   );
 };
 
+const emptyContact: ContactRow = {
+  firstName: "", lastName: "", title: "", phone: "", fax: "", cell: "",
+  email: "", website: "", comments: "", active: true, dne: false, nrn: false,
+};
+
 function ContactsSection({ onCreateQuote }: { onCreateQuote: () => void }) {
   const [view, setView] = useState<"cards" | "list">("cards");
   const [query, setQuery] = useState("");
+  const [contacts, setContacts] = useState<ContactRow[]>(mockContacts);
+  const [editIndex, setEditIndex] = useState<number | null>(null);
+  const [draft, setDraft] = useState<ContactRow>(emptyContact);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return mockContacts;
-    return mockContacts.filter((c) =>
+    const list = contacts.map((c, i) => ({ c, i }));
+    if (!q) return list;
+    return list.filter(({ c }) =>
       [c.firstName, c.lastName, c.title, c.email, c.phone, c.cell].some((v) => v.toLowerCase().includes(q))
     );
-  }, [query]);
+  }, [query, contacts]);
+
+  const openEdit = (index: number) => {
+    setEditIndex(index);
+    setDraft({ ...contacts[index] });
+  };
+  const openAdd = () => {
+    setEditIndex(-1);
+    setDraft({ ...emptyContact });
+  };
+  const closeDialog = () => setEditIndex(null);
+  const saveDraft = () => {
+    if (editIndex === null) return;
+    setContacts((prev) => {
+      if (editIndex === -1) return [...prev, draft];
+      const next = [...prev];
+      next[editIndex] = draft;
+      return next;
+    });
+    setEditIndex(null);
+  };
+  const deleteContact = (index: number) => {
+    setContacts((prev) => prev.filter((_, i) => i !== index));
+  };
+  const setField = <K extends keyof ContactRow>(key: K, value: ContactRow[K]) =>
+    setDraft((d) => ({ ...d, [key]: value }));
+
 
   return (
     <Card>
