@@ -520,7 +520,23 @@ function ContactsSection({ onCreateQuote }: { onCreateQuote: () => void }) {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      <Dialog open={deleteIndex !== null} onOpenChange={(o) => !o && closeDeleteDialog()}>
+        <DialogContent className="max-w-sm">
+          <DialogHeader>
+            <DialogTitle className="text-sm">Delete contact?</DialogTitle>
+          </DialogHeader>
+          <p className="text-[12px] text-muted-foreground">
+            Are you sure you want to remove <span className="font-medium text-foreground">{contacts[deleteIndex ?? 0]?.firstName} {contacts[deleteIndex ?? 0]?.lastName}</span>? This action cannot be undone.
+          </p>
+          <DialogFooter>
+            <Button variant="outline" size="sm" onClick={closeDeleteDialog}>Cancel</Button>
+            <Button variant="destructive" size="sm" onClick={executeDelete}>Delete</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </Card>
+
   );
 }
 
