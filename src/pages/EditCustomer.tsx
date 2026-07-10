@@ -2332,7 +2332,7 @@ function PurchaseOrdersSection() {
                 {LINKED_WOS.map((w) => (
                   <tr key={w.id} className="border-t border-border/60 even:bg-muted/20 hover:bg-muted/40 [&>td]:px-2 [&>td]:py-1.5">
                     <td>
-                      <Link to="/edit-order" className="text-primary hover:underline font-medium tabular-nums">
+                      <Link to="/edit-order" className="text-foreground hover:text-foreground/80 hover:underline font-medium tabular-nums">
                         {w.id}
                       </Link>
                     </td>
