@@ -2025,3 +2025,363 @@ function CustomFieldsSection() {
     </Card>
   );
 }
+
+// ============ Purchase Orders Section ============
+type PORow = {
+  id: string;
+  po: string;
+  status: "Active" | "Inactive";
+  user: string;
+  date: string;
+  file: string;
+};
+
+type LinkedWO = {
+  id: string;
+  customer: string;
+  first: string;
+  last: string;
+  createdDate: string;
+  createdBy: string;
+  status: "Awaiting Approval" | "Approved" | "Created" | "Rejected";
+  followup: string;
+};
+
+const PO_ROWS: PORow[] = [
+  { id: "1", po: "123", status: "Inactive", user: "Bryan J Waites", date: "01/09/2025", file: "POD for Tic Magnolia.pdf" },
+  { id: "2", po: "123", status: "Inactive", user: "Timothy J Oldendorf", date: "03/18/2024", file: "ACK Receipt of Company Property - John Hetherwick.pdf" },
+  { id: "3", po: "1234", status: "Inactive", user: "Bryan J Waites", date: "01/09/2025", file: "POD for Tic Magnolia.pdf" },
+  { id: "4", po: "1234", status: "Inactive", user: "Bryan J Waites", date: "06/18/2024", file: "S853827.pdf" },
+  { id: "5", po: "123456", status: "Inactive", user: "Timothy J Oldendorf", date: "06/26/2024", file: "ExchangeOnline_Placemat_final.pdf" },
+  { id: "6", po: "88210", status: "Active", user: "Dawn J Stewart", date: "07/01/2026", file: "PO-88210-signed.pdf" },
+  { id: "7", po: "88145", status: "Active", user: "Kalyn M Green", date: "05/18/2026", file: "PO-88145.pdf" },
+];
+
+const LINKED_WOS: LinkedWO[] = [
+  { id: "378", customer: "Newtron LLC", first: "Kevin", last: "Wood", createdDate: "03/04/2022", createdBy: "Dawn J Stewart", status: "Awaiting Approval", followup: "03/07/2022" },
+  { id: "4364", customer: "Newtron LLC", first: "Nigel", last: "Thomas", createdDate: "10/28/2022", createdBy: "Kalyn M Green", status: "Approved", followup: "11/01/2022" },
+  { id: "9530", customer: "Newtron LLC", first: "Alton", last: "Lindsey", createdDate: "11/10/2023", createdBy: "Bryan J Waites", status: "Approved", followup: "11/13/2023" },
+  { id: "9538", customer: "Newtron LLC", first: "Jonathan", last: "Atkinson", createdDate: "04/26/2024", createdBy: "Bryan J Waites", status: "Approved", followup: "04/29/2024" },
+  { id: "9542", customer: "Newtron LLC", first: "Evan", last: "Wheeler", createdDate: "12/12/2024", createdBy: "Kim-Viet Le", status: "Created", followup: "12/16/2024" },
+];
+
+const PO_STATUS_STYLES: Record<PORow["status"], string> = {
+  Active: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400",
+  Inactive: "bg-muted text-muted-foreground",
+};
+
+const WO_STATUS_STYLES: Record<LinkedWO["status"], string> = {
+  "Awaiting Approval": "bg-amber-500/10 text-amber-700 dark:text-amber-400",
+  Approved: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400",
+  Created: "bg-sky-500/10 text-sky-700 dark:text-sky-400",
+  Rejected: "bg-rose-500/10 text-rose-700 dark:text-rose-400",
+};
+
+function StatusPill({ label, className }: { label: string; className: string }) {
+  return (
+    <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium ${className}`}>
+      <span className="h-1.5 w-1.5 rounded-full bg-current opacity-70" />
+      {label}
+    </span>
+  );
+}
+
+function PurchaseOrdersSection() {
+  const { toast } = useToast();
+  const [statusFilter, setStatusFilter] = useState<"Active" | "Inactive" | "All">("Active");
+  const [poNumber, setPoNumber] = useState("");
+  const [uploadFile, setUploadFile] = useState<File | null>(null);
+
+  // Table filters
+  const [fPo, setFPo] = useState("");
+  const [fStatus, setFStatus] = useState<string>("all");
+  const [fUser, setFUser] = useState("");
+  const [fDate, setFDate] = useState("");
+  const [fFile, setFFile] = useState("");
+  const [page, setPage] = useState(1);
+  const pageSize = 5;
+
+  const filteredPOs = useMemo(
+    () =>
+      PO_ROWS.filter((r) => {
+        if (statusFilter !== "All" && r.status !== statusFilter) return false;
+        if (poNumber && !r.po.includes(poNumber)) return false;
+        if (fPo && !r.po.toLowerCase().includes(fPo.toLowerCase())) return false;
+        if (fStatus !== "all" && r.status !== fStatus) return false;
+        if (fUser && !r.user.toLowerCase().includes(fUser.toLowerCase())) return false;
+        if (fDate && !r.date.includes(fDate)) return false;
+        if (fFile && !r.file.toLowerCase().includes(fFile.toLowerCase())) return false;
+        return true;
+      }),
+    [statusFilter, poNumber, fPo, fStatus, fUser, fDate, fFile],
+  );
+
+  const totalPages = Math.max(1, Math.ceil(filteredPOs.length / pageSize));
+  const pagedPOs = filteredPOs.slice((page - 1) * pageSize, page * pageSize);
+  const [selectedPO, setSelectedPO] = useState<string | null>(null);
+
+  const handleSave = () => {
+    if (!poNumber.trim()) {
+      toast({ title: "PO # required", description: "Enter a PO number before saving.", variant: "destructive" });
+      return;
+    }
+    toast({ title: "Purchase order saved", description: `PO ${poNumber} added${uploadFile ? ` with ${uploadFile.name}` : ""}.` });
+    setPoNumber("");
+    setUploadFile(null);
+  };
+
+  const handleCancel = () => {
+    setPoNumber("");
+    setUploadFile(null);
+    setStatusFilter("Active");
+  };
+
+  return (
+    <div className="space-y-3">
+      {/* Add / filter bar */}
+      <Card>
+        <CardHeader className="p-3 pb-2">
+          <CardTitle className="text-[13px] font-semibold flex items-center gap-1.5">
+            <Package className="h-3.5 w-3.5" /> Purchase Orders
+          </CardTitle>
+          <CardDescription className="text-[11px]">
+            Add, filter, and attach purchase orders for this customer.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="p-3 pt-0">
+          <div className="grid grid-cols-1 md:grid-cols-[160px_180px_1fr_auto] gap-3 items-end">
+            <div className="space-y-1">
+              <Label className="text-[11px] font-semibold">Status</Label>
+              <Select value={statusFilter} onValueChange={(v) => setStatusFilter(v as typeof statusFilter)}>
+                <SelectTrigger className="h-8 text-[11px]"><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Active">Active</SelectItem>
+                  <SelectItem value="Inactive">Inactive</SelectItem>
+                  <SelectItem value="All">All</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-1">
+              <Label className="text-[11px] font-semibold">PO #</Label>
+              <Input
+                value={poNumber}
+                onChange={(e) => setPoNumber(e.target.value.slice(0, 50))}
+                maxLength={50}
+                placeholder="Enter PO number"
+                className="h-8 text-[11px]"
+              />
+            </div>
+            <div className="space-y-1">
+              <Label className="text-[11px] font-semibold">Upload File</Label>
+              <div className="flex items-center gap-2">
+                <label className="flex-1 flex items-center gap-2 h-8 px-2 rounded-md border border-dashed border-border bg-muted/30 text-[11px] text-muted-foreground cursor-pointer hover:border-primary/40 transition-colors">
+                  <Paperclip className="h-3 w-3 shrink-0" />
+                  <span className="truncate">{uploadFile ? uploadFile.name : "Choose a file to attach"}</span>
+                  <input
+                    type="file"
+                    className="hidden"
+                    onChange={(e) => setUploadFile(e.target.files?.[0] ?? null)}
+                  />
+                </label>
+                {uploadFile && (
+                  <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => setUploadFile(null)}>
+                    <X className="h-3 w-3" />
+                  </Button>
+                )}
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <Button variant="outline" size="sm" className="h-8 px-3 text-[11px]" onClick={handleCancel}>
+                Cancel
+              </Button>
+              <Button
+                size="sm"
+                className="h-8 px-3 text-[11px] bg-foreground text-background hover:bg-foreground/90"
+                onClick={handleSave}
+              >
+                <Save className="h-3 w-3 mr-1" /> Save
+              </Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* PO table */}
+      <Card>
+        <CardContent className="p-0">
+          <div className="overflow-x-auto">
+            <table className="w-full text-[11px]">
+              <thead className="bg-muted/50 text-muted-foreground">
+                <tr className="[&>th]:px-2 [&>th]:py-1.5 [&>th]:font-medium [&>th]:text-left">
+                  <th className="w-[16%]">PO #</th>
+                  <th className="w-[12%]">Status</th>
+                  <th className="w-[20%]">User</th>
+                  <th className="w-[14%]">Date</th>
+                  <th>PO File</th>
+                </tr>
+                <tr className="[&>th]:px-2 [&>th]:pb-1.5 border-b border-border">
+                  <th>
+                    <div className="relative">
+                      <Search className="absolute left-1.5 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground" />
+                      <Input value={fPo} onChange={(e) => setFPo(e.target.value)} className="h-6 pl-5 text-[11px]" placeholder="Filter" />
+                    </div>
+                  </th>
+                  <th>
+                    <Select value={fStatus} onValueChange={setFStatus}>
+                      <SelectTrigger className="h-6 text-[11px]"><SelectValue placeholder="All" /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All</SelectItem>
+                        <SelectItem value="Active">Active</SelectItem>
+                        <SelectItem value="Inactive">Inactive</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </th>
+                  <th>
+                    <Input value={fUser} onChange={(e) => setFUser(e.target.value)} className="h-6 text-[11px]" placeholder="Filter" />
+                  </th>
+                  <th>
+                    <Input value={fDate} onChange={(e) => setFDate(e.target.value)} className="h-6 text-[11px]" placeholder="MM/DD/YYYY" />
+                  </th>
+                  <th>
+                    <Input value={fFile} onChange={(e) => setFFile(e.target.value)} className="h-6 text-[11px]" placeholder="Filter" />
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {pagedPOs.length === 0 && (
+                  <tr>
+                    <td colSpan={5} className="py-6 text-center text-[11px] text-muted-foreground">
+                      No purchase orders match the current filters.
+                    </td>
+                  </tr>
+                )}
+                {pagedPOs.map((r) => {
+                  const active = selectedPO === r.id;
+                  return (
+                    <tr
+                      key={r.id}
+                      onClick={() => setSelectedPO(r.id)}
+                      className={`border-t border-border/60 cursor-pointer transition-colors [&>td]:px-2 [&>td]:py-1.5 ${
+                        active ? "bg-primary/5" : "even:bg-muted/20 hover:bg-muted/40"
+                      }`}
+                    >
+                      <td className="font-medium tabular-nums">{r.po}</td>
+                      <td><StatusPill label={r.status} className={PO_STATUS_STYLES[r.status]} /></td>
+                      <td>{r.user}</td>
+                      <td className="tabular-nums">{r.date}</td>
+                      <td>
+                        <a
+                          href="#"
+                          onClick={(e) => e.preventDefault()}
+                          className="inline-flex items-center gap-1 text-primary hover:underline"
+                        >
+                          <FileText className="h-3 w-3" />
+                          <span className="truncate max-w-[280px]">{r.file}</span>
+                        </a>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+
+          {/* pagination */}
+          <div className="flex items-center justify-between px-3 py-2 border-t border-border text-[11px]">
+            <div className="text-muted-foreground">
+              Page {page} of {totalPages} ({filteredPOs.length} items)
+            </div>
+            <div className="flex items-center gap-1">
+              <Button
+                variant="outline"
+                size="icon"
+                className="h-6 w-6"
+                disabled={page === 1}
+                onClick={() => setPage((p) => Math.max(1, p - 1))}
+              >
+                <ChevronLeft className="h-3 w-3" />
+              </Button>
+              {Array.from({ length: totalPages }).map((_, i) => (
+                <Button
+                  key={i}
+                  variant={page === i + 1 ? "default" : "outline"}
+                  size="sm"
+                  className={`h-6 w-6 p-0 text-[11px] ${page === i + 1 ? "bg-foreground text-background hover:bg-foreground/90" : ""}`}
+                  onClick={() => setPage(i + 1)}
+                >
+                  {i + 1}
+                </Button>
+              ))}
+              <Button
+                variant="outline"
+                size="icon"
+                className="h-6 w-6"
+                disabled={page === totalPages}
+                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+              >
+                <ChevronRight className="h-3 w-3" />
+              </Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Linked work orders */}
+      <Card>
+        <CardHeader className="p-3 pb-2">
+          <CardTitle className="text-[12px] font-semibold flex items-center gap-1.5">
+            <FileText className="h-3.5 w-3.5" /> Linked Work Orders
+            {selectedPO && (
+              <span className="ml-1 text-[10px] font-normal text-muted-foreground">
+                for PO {PO_ROWS.find((p) => p.id === selectedPO)?.po}
+              </span>
+            )}
+          </CardTitle>
+          <CardDescription className="text-[11px]">
+            Work orders associated with the selected purchase order.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="p-0">
+          <div className="overflow-x-auto">
+            <table className="w-full text-[11px]">
+              <thead className="bg-muted/50 text-muted-foreground">
+                <tr className="[&>th]:px-2 [&>th]:py-1.5 [&>th]:font-medium [&>th]:text-left">
+                  <th className="w-[8%]">ID</th>
+                  <th className="w-[16%]">Customer</th>
+                  <th className="w-[14%]">Contact First</th>
+                  <th className="w-[14%]">Contact Last</th>
+                  <th className="w-[12%]">Created Date</th>
+                  <th className="w-[16%]">Created By</th>
+                  <th className="w-[12%]">PO/CO Status</th>
+                  <th className="w-[10%]">Followup</th>
+                </tr>
+              </thead>
+              <tbody>
+                {LINKED_WOS.map((w) => (
+                  <tr key={w.id} className="border-t border-border/60 even:bg-muted/20 hover:bg-muted/40 [&>td]:px-2 [&>td]:py-1.5">
+                    <td>
+                      <Link to="/edit-order" className="text-primary hover:underline font-medium tabular-nums">
+                        {w.id}
+                      </Link>
+                    </td>
+                    <td>{w.customer}</td>
+                    <td>{w.first}</td>
+                    <td>{w.last}</td>
+                    <td className="tabular-nums">{w.createdDate}</td>
+                    <td>{w.createdBy}</td>
+                    <td><StatusPill label={w.status} className={WO_STATUS_STYLES[w.status]} /></td>
+                    <td className="tabular-nums">{w.followup}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div className="flex items-center justify-between px-3 py-2 border-t border-border text-[11px] text-muted-foreground">
+            <div>Page 1 of 1 ({LINKED_WOS.length} items)</div>
+            <div>Page size: 5</div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
