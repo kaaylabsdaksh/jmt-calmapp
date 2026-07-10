@@ -1508,7 +1508,7 @@ export default function EditCustomer() {
                             <TableRow className="bg-muted/50">
                               <TableHead className="text-[11px] h-9">Entered</TableHead>
                               <TableHead className="text-[11px] h-9">User</TableHead>
-                              <TableHead className="text-[11px] h-9">Comment</TableHead>
+                              <TableHead className="text-[11px] h-9 min-w-[320px]">Comment</TableHead>
                               <TableHead className="text-[11px] h-9 w-16"></TableHead>
                             </TableRow>
                           </TableHeader>
