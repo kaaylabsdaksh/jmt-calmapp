@@ -1532,11 +1532,6 @@ export default function EditCustomer() {
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-center gap-2 text-[12px]">
-                      <Button size="sm" variant="outline" className="h-8 text-[12px]" disabled>Prev</Button>
-                      <span className="font-medium">1 of 21857 Records</span>
-                      <Button size="sm" variant="outline" className="h-8 text-[12px]">Next</Button>
-                    </div>
                   </CardContent>
                 </Card>
               </TabsContent>
