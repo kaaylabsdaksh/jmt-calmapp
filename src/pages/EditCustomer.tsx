@@ -1412,11 +1412,11 @@ export default function EditCustomer() {
                           <Label className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">Rate Type</Label>
                           <RadioGroup defaultValue="pct" className="flex items-center gap-5">
                             <label htmlFor="def-hourly" className="flex items-center gap-2 cursor-pointer text-sm font-medium">
-                              <RadioGroupItem value="hourly" id="def-hourly" className="h-4 w-4" />
+                              <RadioGroupItem value="hourly" id="def-hourly" className="h-4 w-4 border-muted-foreground/50 text-foreground data-[state=checked]:border-foreground data-[state=checked]:text-foreground" />
                               Hourly
                             </label>
                             <label htmlFor="def-pct" className="flex items-center gap-2 cursor-pointer text-sm font-medium">
-                              <RadioGroupItem value="pct" id="def-pct" className="h-4 w-4" />
+                              <RadioGroupItem value="pct" id="def-pct" className="h-4 w-4 border-muted-foreground/50 text-foreground data-[state=checked]:border-foreground data-[state=checked]:text-foreground" />
                               Pct
                             </label>
                           </RadioGroup>
