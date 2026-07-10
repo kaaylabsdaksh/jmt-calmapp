@@ -882,6 +882,7 @@ export default function EditCustomer() {
 
   const [generalLeftOpen] = useState(["customer-info", "retest", "primary-contact", "notes"]);
   const [generalRightOpen] = useState(["business", "pricing", "operational"]);
+  const [activeTab, setActiveTab] = useState("general");
 
 
   return (
