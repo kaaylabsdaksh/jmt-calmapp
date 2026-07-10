@@ -1646,8 +1646,12 @@ export default function EditCustomer() {
               </TabsContent>
 
 
+              <TabsContent value="fees" className="mt-2">
+                <FeeScheduleSection />
+              </TabsContent>
+
               {/* Fallback simple tabs */}
-              {["fees", "custom"].map((v) => (
+              {["custom"].map((v) => (
                 <TabsContent key={v} value={v} className="mt-2">
                   <Card>
                     <CardContent className="p-6 text-center text-[11px] text-muted-foreground">
