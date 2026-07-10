@@ -1682,6 +1682,7 @@ export default function EditCustomer() {
                 </CardContent>
               </Card>
             </aside>
+            )}
           </div>
           </Tabs>
 
