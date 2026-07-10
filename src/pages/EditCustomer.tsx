@@ -2245,7 +2245,7 @@ function PurchaseOrdersSection() {
                         <a
                           href="#"
                           onClick={(e) => e.preventDefault()}
-                          className="inline-flex items-center gap-1 text-primary hover:underline"
+                          className="inline-flex items-center gap-1 text-foreground hover:text-foreground/80 hover:underline"
                         >
                           <FileText className="h-3 w-3" />
                           <span className="truncate max-w-[280px]">{r.file}</span>
