@@ -1650,16 +1650,9 @@ export default function EditCustomer() {
                 <FeeScheduleSection />
               </TabsContent>
 
-              {/* Fallback simple tabs */}
-              {["custom"].map((v) => (
-                <TabsContent key={v} value={v} className="mt-2">
-                  <Card>
-                    <CardContent className="p-6 text-center text-[11px] text-muted-foreground">
-                      This section preserves legacy functionality. Content will render here.
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-              ))}
+              <TabsContent value="custom" className="mt-2">
+                <CustomFieldsSection />
+              </TabsContent>
             </div>
 
             {/* Right sidebar */}
