@@ -1610,6 +1610,7 @@ export default function EditCustomer() {
             </div>
 
             {/* Right sidebar */}
+            {activeTab === "general" && (
             <aside className="space-y-3">
 
 
