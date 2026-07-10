@@ -1311,36 +1311,7 @@ export default function EditCustomer() {
 
               {/* PURCHASE ORDERS */}
               <TabsContent value="po" className="mt-2">
-                <Card>
-                  <CardHeader className="p-2.5 pb-2">
-                    <CardTitle className="text-xs font-semibold">Purchase Orders</CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-0">
-                    <Table>
-                      <TableHeader>
-                        <TableRow className="h-7">
-                          <TableHead className="text-[10px] uppercase py-1.5 px-2">PO Number</TableHead>
-                          <TableHead className="text-[10px] uppercase py-1.5 px-2">Status</TableHead>
-                          <TableHead className="text-[10px] uppercase py-1.5 px-2">Created</TableHead>
-                          <TableHead className="text-[10px] uppercase text-right py-1.5 px-2">Amount</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {[
-                          { po: "PO-88210", status: "Open", created: "Jun 30, 2026", amount: "$12,480.00" },
-                          { po: "PO-88145", status: "Closed", created: "May 18, 2026", amount: "$4,220.00" },
-                        ].map((r) => (
-                          <TableRow key={r.po} className="text-[11px]">
-                            <TableCell className="font-medium py-1.5 px-2">{r.po}</TableCell>
-                            <TableCell className="py-1.5 px-2"><Badge variant="secondary" className="h-4 text-[10px]">{r.status}</Badge></TableCell>
-                            <TableCell className="py-1.5 px-2">{r.created}</TableCell>
-                            <TableCell className="text-right tabular-nums py-1.5 px-2">{r.amount}</TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </CardContent>
-                </Card>
+                <PurchaseOrdersSection />
               </TabsContent>
 
               {/* QUOTES */}
