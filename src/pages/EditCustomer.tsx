@@ -779,7 +779,7 @@ function PrintTagsPanel() {
 
               </Field>
               <Field label="Need By">
-                <Input type="date" className="h-7 text-[11px] px-2.5 py-1" />
+                <ModernDatePicker size="sm" inputClassName="text-[11px] px-2.5" />
               </Field>
               <Field label="Priority" required>
                 <Select>
