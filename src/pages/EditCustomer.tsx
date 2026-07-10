@@ -1400,15 +1400,23 @@ export default function EditCustomer() {
                       {/* Default */}
                       <div className="border rounded-md p-3 bg-card space-y-2">
                         <div className="text-[11px] font-semibold text-center">Default</div>
-                        <RadioGroup defaultValue="pct" className="space-y-1.5">
+                        <RadioGroup defaultValue="pct" className="space-y-2">
                           <div className="flex items-center gap-2">
-                            <RadioGroupItem value="hourly" id="def-hourly" />
-                            <Label htmlFor="def-hourly" className="text-[11px] w-16">Hourly</Label>
+                            <RadioGroupItem
+                              value="hourly"
+                              id="def-hourly"
+                              className="h-4 w-4 border-slate-400 text-foreground data-[state=checked]:border-foreground data-[state=checked]:ring-1 data-[state=checked]:ring-foreground/20 transition-colors"
+                            />
+                            <Label htmlFor="def-hourly" className="text-[12px] w-16">Hourly</Label>
                             <Input className="h-7 text-[11px] px-2.5 py-1 flex-1" />
                           </div>
                           <div className="flex items-center gap-2">
-                            <RadioGroupItem value="pct" id="def-pct" />
-                            <Label htmlFor="def-pct" className="text-[11px] w-16">Pct</Label>
+                            <RadioGroupItem
+                              value="pct"
+                              id="def-pct"
+                              className="h-4 w-4 border-slate-400 text-foreground data-[state=checked]:border-foreground data-[state=checked]:ring-1 data-[state=checked]:ring-foreground/20 transition-colors"
+                            />
+                            <Label htmlFor="def-pct" className="text-[12px] w-16">Pct</Label>
                             <Input className="h-7 text-[11px] px-2.5 py-1 flex-1" defaultValue="20.00" />
                           </div>
                         </RadioGroup>
@@ -1436,14 +1444,22 @@ export default function EditCustomer() {
                       {/* ESL */}
                       <div className="border rounded-md p-3 bg-card space-y-2">
                         <div className="text-[11px] font-semibold text-center">ESL</div>
-                        <RadioGroup defaultValue="yes" className="space-y-1.5">
+                        <RadioGroup defaultValue="yes" className="space-y-2">
                           <div className="flex items-center gap-2">
-                            <RadioGroupItem value="yes" id="esl-yes" />
-                            <Label htmlFor="esl-yes" className="text-[11px]">Yes</Label>
+                            <RadioGroupItem
+                              value="yes"
+                              id="esl-yes"
+                              className="h-4 w-4 border-slate-400 text-foreground data-[state=checked]:border-foreground data-[state=checked]:ring-1 data-[state=checked]:ring-foreground/20 transition-colors"
+                            />
+                            <Label htmlFor="esl-yes" className="text-[12px]">Yes</Label>
                           </div>
                           <div className="flex items-center gap-2">
-                            <RadioGroupItem value="no" id="esl-no" />
-                            <Label htmlFor="esl-no" className="text-[11px]">No</Label>
+                            <RadioGroupItem
+                              value="no"
+                              id="esl-no"
+                              className="h-4 w-4 border-slate-400 text-foreground data-[state=checked]:border-foreground data-[state=checked]:ring-1 data-[state=checked]:ring-foreground/20 transition-colors"
+                            />
+                            <Label htmlFor="esl-no" className="text-[12px]">No</Label>
                           </div>
                         </RadioGroup>
                         <Field label="Exp. Date">
