@@ -1997,7 +1997,7 @@ function CustomFieldsSection() {
           <Label className="text-[11px] font-semibold text-muted-foreground">Value</Label>
 
           {textRows.map((r) => (
-            <React.Fragment key={r.key}>
+            <Fragment key={r.key}>
               <div className="text-[11px]">
                 <div className="font-medium">{r.name}</div>
                 <div className="text-[10px] text-muted-foreground">{r.hint}</div>
@@ -2016,7 +2016,7 @@ function CustomFieldsSection() {
                 placeholder="Value"
                 className="h-8 text-[11px]"
               />
-            </React.Fragment>
+            </Fragment>
           ))}
 
           <div className="text-[11px]">
