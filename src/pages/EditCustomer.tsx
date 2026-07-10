@@ -1765,3 +1765,203 @@ export default function EditCustomer() {
     </div>
   );
 }
+
+// ============ Fee Schedule Section ============
+type FeeRow = {
+  groupable: string;
+  type?: string;
+  lab: string;
+  onsite: string;
+  mgmtNew: string;
+  mgmtExisting: string;
+  rotMgmt: boolean;
+};
+
+const INITIAL_FEE_ROWS: FeeRow[] = [
+  { groupable: "Blankets", lab: "23.75", onsite: "10.00", mgmtNew: "0.00", mgmtExisting: "0.00", rotMgmt: true },
+  { groupable: "CoverUps", lab: "22.50", onsite: "11.00", mgmtNew: "0.00", mgmtExisting: "0.00", rotMgmt: false },
+  { groupable: "Footwear", lab: "22.00", onsite: "12.00", mgmtNew: "0.00", mgmtExisting: "0.00", rotMgmt: false },
+  { groupable: "Gloves", lab: "17.25", onsite: "13.00", mgmtNew: "0.00", mgmtExisting: "0.00", rotMgmt: true },
+  { groupable: "Grounds", type: "Single", lab: "27.25", onsite: "14.00", mgmtNew: "0.00", mgmtExisting: "0.00", rotMgmt: false },
+  { groupable: "Grounds", type: "Cluster", lab: "54.25", onsite: "15.00", mgmtNew: "0.00", mgmtExisting: "0.00", rotMgmt: false },
+  { groupable: "Hotsticks", type: "Telescopic", lab: "16.75", onsite: "16.00", mgmtNew: "0.00", mgmtExisting: "0.00", rotMgmt: false },
+  { groupable: "Hotsticks", type: "Shotgun", lab: "62.50", onsite: "17.00", mgmtNew: "0.00", mgmtExisting: "0.00", rotMgmt: false },
+  { groupable: "Hotsticks", type: "Straight", lab: "52.00", onsite: "18.00", mgmtNew: "0.00", mgmtExisting: "0.00", rotMgmt: false },
+  { groupable: "Hotsticks", type: "Static Discharge", lab: "62.50", onsite: "19.00", mgmtNew: "0.00", mgmtExisting: "0.00", rotMgmt: false },
+  { groupable: "Insulated Tools", lab: "10.25", onsite: "20.00", mgmtNew: "0.00", mgmtExisting: "0.00", rotMgmt: false },
+  { groupable: "Jumpers", lab: "27.25", onsite: "21.00", mgmtNew: "0.00", mgmtExisting: "0.00", rotMgmt: false },
+  { groupable: "Line Hoses", lab: "22.50", onsite: "22.00", mgmtNew: "0.00", mgmtExisting: "0.00", rotMgmt: false },
+  { groupable: "Matting", lab: "9.75", onsite: "23.00", mgmtNew: "0.00", mgmtExisting: "0.00", rotMgmt: false },
+  { groupable: "Roll Blankets", lab: "9.75", onsite: "24.00", mgmtNew: "0.00", mgmtExisting: "0.00", rotMgmt: false },
+  { groupable: "Sleeves", lab: "23.75", onsite: "25.00", mgmtNew: "0.00", mgmtExisting: "0.00", rotMgmt: true },
+  { groupable: "Arc Flash", lab: "0.00", onsite: "26.00", mgmtNew: "0.00", mgmtExisting: "0.00", rotMgmt: false },
+  { groupable: "Bucket Truck", lab: "0.00", onsite: "27.00", mgmtNew: "0.00", mgmtExisting: "0.00", rotMgmt: false },
+];
+
+// Tier presets for ESL Lab column
+const TIER_PRESETS: Record<string, Record<string, string>> = {
+  "Tier 1": { Blankets: "20.00", CoverUps: "19.00", Footwear: "18.50", Gloves: "14.50", Grounds: "22.00", Hotsticks: "14.00", "Insulated Tools": "8.50", Jumpers: "23.00", "Line Hoses": "19.00", Matting: "8.25", "Roll Blankets": "8.25", Sleeves: "20.00", "Arc Flash": "0.00", "Bucket Truck": "0.00" },
+  "Tier 2": { Blankets: "23.75", CoverUps: "22.50", Footwear: "22.00", Gloves: "17.25", Grounds: "27.25", Hotsticks: "16.75", "Insulated Tools": "10.25", Jumpers: "27.25", "Line Hoses": "22.50", Matting: "9.75", "Roll Blankets": "9.75", Sleeves: "23.75", "Arc Flash": "0.00", "Bucket Truck": "0.00" },
+  "Tier 3": { Blankets: "27.50", CoverUps: "26.00", Footwear: "25.50", Gloves: "20.00", Grounds: "31.50", Hotsticks: "19.50", "Insulated Tools": "12.00", Jumpers: "31.50", "Line Hoses": "26.00", Matting: "11.25", "Roll Blankets": "11.25", Sleeves: "27.50", "Arc Flash": "0.00", "Bucket Truck": "0.00" },
+  "Tier 4": { Blankets: "31.00", CoverUps: "29.50", Footwear: "29.00", Gloves: "22.75", Grounds: "35.75", Hotsticks: "22.00", "Insulated Tools": "13.75", Jumpers: "35.75", "Line Hoses": "29.50", Matting: "12.75", "Roll Blankets": "12.75", Sleeves: "31.00", "Arc Flash": "0.00", "Bucket Truck": "0.00" },
+};
+
+function FeeScheduleSection() {
+  const { toast } = useToast();
+  const [rows, setRows] = useState<FeeRow[]>(INITIAL_FEE_ROWS);
+  const [currentEffective] = useState("07/07/2026");
+  const [newEffective, setNewEffective] = useState("07/10/2026");
+  const [pendingTier, setPendingTier] = useState<string | null>(null);
+
+  const update = (i: number, patch: Partial<FeeRow>) =>
+    setRows((r) => r.map((row, idx) => (idx === i ? { ...row, ...patch } : row)));
+
+  const applyTier = (tier: string) => {
+    const preset = TIER_PRESETS[tier];
+    setRows((r) => r.map((row) => (preset[row.groupable] != null ? { ...row, lab: preset[row.groupable] } : row)));
+    toast({ title: `${tier} applied`, description: "ESL Lab prices updated." });
+    setPendingTier(null);
+  };
+
+  return (
+    <Card>
+      <CardHeader className="p-3 pb-2">
+        <CardTitle className="text-[13px] font-semibold">Fee Schedule</CardTitle>
+        <CardDescription className="text-[11px]">
+          Set ESL Lab, ESL Onsite, and Management fees per groupable. Rotational Management toggles per item.
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="p-3 pt-0">
+        <div className="overflow-x-auto rounded-md border border-border">
+          <table className="w-full text-[11px]">
+            <thead className="bg-muted/50 text-muted-foreground">
+              <tr className="[&>th]:px-2 [&>th]:py-1.5 [&>th]:font-medium [&>th]:text-left">
+                <th className="w-[16%]">Groupable</th>
+                <th className="w-[18%]">Type</th>
+                <th className="w-[13%] text-right">ESL Lab</th>
+                <th className="w-[13%] text-right">ESL Onsite</th>
+                <th className="w-[13%] text-right">Mgmt Fee New</th>
+                <th className="w-[13%] text-right">Mgmt Fee Existing</th>
+                <th className="w-[10%] text-center">Rot Mgmt</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((row, i) => {
+                const mgmtEnabled = row.rotMgmt;
+                return (
+                  <tr key={i} className="border-t border-border/60 even:bg-muted/20 [&>td]:px-2 [&>td]:py-1">
+                    <td className="font-medium">{row.groupable}</td>
+                    <td className="text-muted-foreground">{row.type ?? ""}</td>
+                    <td>
+                      <Input
+                        value={row.lab}
+                        onChange={(e) => update(i, { lab: e.target.value })}
+                        className="h-7 text-[11px] text-right tabular-nums"
+                      />
+                    </td>
+                    <td>
+                      <Input
+                        value={row.onsite}
+                        onChange={(e) => update(i, { onsite: e.target.value })}
+                        className="h-7 text-[11px] text-right tabular-nums"
+                      />
+                    </td>
+                    <td>
+                      <Input
+                        value={row.mgmtNew}
+                        onChange={(e) => update(i, { mgmtNew: e.target.value })}
+                        disabled={!mgmtEnabled}
+                        className="h-7 text-[11px] text-right tabular-nums disabled:opacity-50"
+                      />
+                    </td>
+                    <td>
+                      <Input
+                        value={row.mgmtExisting}
+                        onChange={(e) => update(i, { mgmtExisting: e.target.value })}
+                        disabled={!mgmtEnabled}
+                        className="h-7 text-[11px] text-right tabular-nums disabled:opacity-50"
+                      />
+                    </td>
+                    <td className="text-center">
+                      <Checkbox
+                        checked={row.rotMgmt}
+                        onCheckedChange={(v) => update(i, { rotMgmt: !!v })}
+                      />
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Effective dates */}
+        <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-md">
+          <div className="space-y-1">
+            <Label className="text-[11px] font-semibold">Current Effective Date</Label>
+            <Input value={currentEffective} disabled className="h-8 text-[11px]" />
+          </div>
+          <div className="space-y-1">
+            <Label className="text-[11px] font-semibold">New Effective Date</Label>
+            <Input
+              type="date"
+              value={newEffective.split("/").reverse().join("-").replace(/^(\d{4})-(\d{2})-(\d{2})$/, "$1-$2-$3")}
+              onChange={(e) => {
+                const [y, m, d] = e.target.value.split("-");
+                if (y && m && d) setNewEffective(`${m}/${d}/${y}`);
+              }}
+              className="h-8 text-[11px]"
+            />
+          </div>
+        </div>
+
+        {/* Tier + actions */}
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-border pt-3">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-[11px] font-semibold">Set ESL Lab Tier</span>
+            {["Tier 1", "Tier 2", "Tier 3", "Tier 4"].map((t) => (
+              <Button
+                key={t}
+                variant="outline"
+                size="sm"
+                className="h-7 px-3 text-[11px]"
+                onClick={() => setPendingTier(t)}
+              >
+                {t}
+              </Button>
+            ))}
+          </div>
+          <div className="flex items-center gap-2">
+            <Button variant="outline" size="sm" className="h-8 px-3 text-[11px]">
+              Copy fees to other accounts
+            </Button>
+            <Button
+              size="sm"
+              className="h-8 px-3 text-[11px] bg-foreground text-background hover:bg-foreground/90"
+              onClick={() => toast({ title: "Fees saved", description: `Effective ${newEffective}` })}
+            >
+              Save Fees
+            </Button>
+          </div>
+        </div>
+
+        <AlertDialog open={!!pendingTier} onOpenChange={(o) => !o && setPendingTier(null)}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Apply {pendingTier}?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This will set all ESL Lab prices to {pendingTier}, are you sure you want to continue?
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction onClick={() => pendingTier && applyTier(pendingTier)}>
+                Continue
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      </CardContent>
+    </Card>
+  );
+}
