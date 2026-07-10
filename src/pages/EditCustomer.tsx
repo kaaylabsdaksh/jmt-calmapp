@@ -898,23 +898,6 @@ export default function EditCustomer() {
             <div className="hidden sm:block h-10 w-px bg-border" />
 
             <div className="flex items-center gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                className="h-9 px-3.5 text-xs"
-                onClick={() => toast({ title: "Create Quote", description: "Opening quote form…" })}
-              >
-                <FilePlus2 className="h-3.5 w-3.5 mr-1.5" />
-                Create Quote
-              </Button>
-              <Button
-                size="sm"
-                className="h-9 px-4 text-xs bg-blue-600 hover:bg-blue-700 text-white"
-                onClick={handleSave}
-              >
-                <Save className="h-3.5 w-3.5 mr-1.5" />
-                Save Changes
-              </Button>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" size="sm" className="h-9 w-9 p-0">
