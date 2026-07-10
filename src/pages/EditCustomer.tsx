@@ -1010,6 +1010,7 @@ export default function EditCustomer() {
                   { v: "custom", label: "Custom Fields", icon: Settings2 },
                   { v: "po", label: "Purchase Orders", icon: Package },
                   { v: "quotes", label: "Quotes", icon: FilePlus2 },
+                  { v: "esl-inv", label: "ESL Surplus/Inventory", icon: Archive },
                   { v: "files", label: "WO External Files", icon: FolderOpen },
                 ].map((t) => (
                   <TabsTrigger
