@@ -715,7 +715,7 @@ function PrintTagsPanel() {
         </RadioGroup>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 max-w-3xl">
-          <Field label="Contact">
+          <Field label="Contact" required>
             <Select>
               <SelectTrigger className="h-7 text-[11px] px-2.5"><SelectValue placeholder="Select contact" /></SelectTrigger>
               <SelectContent>
@@ -728,7 +728,7 @@ function PrintTagsPanel() {
 
           {mode === "regular" ? (
             <>
-              <Field label="Action">
+              <Field label="Action" required>
                 <Select>
                   <SelectTrigger className="h-7 text-[11px] px-2.5"><SelectValue placeholder="Select action" /></SelectTrigger>
                   <SelectContent>
@@ -739,7 +739,7 @@ function PrintTagsPanel() {
                   </SelectContent>
                 </Select>
               </Field>
-              <Field label="Arrival Type">
+              <Field label="Arrival Type" required>
                 <Select>
                   <SelectTrigger className="h-7 text-[11px] px-2.5"><SelectValue placeholder="Select arrival type" /></SelectTrigger>
                   <SelectContent>
@@ -758,7 +758,7 @@ function PrintTagsPanel() {
               <Field label="Need By">
                 <Input type="date" className="h-7 text-[11px] px-2.5 py-1" />
               </Field>
-              <Field label="Priority">
+              <Field label="Priority" required>
                 <Select>
                   <SelectTrigger className="h-7 text-[11px] px-2.5"><SelectValue placeholder="Select priority" /></SelectTrigger>
                   <SelectContent>
@@ -812,7 +812,7 @@ function PrintTagsPanel() {
             </>
           )}
 
-          <Field label="How Many">
+          <Field label="How Many" required>
             <Input type="number" min={1} defaultValue={1} className="h-7 text-[11px] px-2.5 py-1 w-24" />
           </Field>
         </div>
