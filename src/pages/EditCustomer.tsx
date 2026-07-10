@@ -1839,14 +1839,17 @@ function FeeScheduleSection() {
           </div>
           <div className="space-y-1">
             <Label className="text-[11px] font-semibold">New Effective Date</Label>
-            <Input
-              type="date"
-              value={newEffective.split("/").reverse().join("-").replace(/^(\d{4})-(\d{2})-(\d{2})$/, "$1-$2-$3")}
-              onChange={(e) => {
-                const [y, m, d] = e.target.value.split("-");
-                if (y && m && d) setNewEffective(`${m}/${d}/${y}`);
+            <ModernDatePicker
+              size="md"
+              value={newEffective}
+              onChange={(d) => {
+                if (d) {
+                  const mm = String(d.getMonth() + 1).padStart(2, "0");
+                  const dd = String(d.getDate()).padStart(2, "0");
+                  setNewEffective(`${mm}/${dd}/${d.getFullYear()}`);
+                }
               }}
-              className="h-8 text-[11px]"
+              inputClassName="text-[11px]"
             />
           </div>
         </div>
