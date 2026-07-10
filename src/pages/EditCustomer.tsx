@@ -1372,115 +1372,114 @@ export default function EditCustomer() {
               {/* CONTRACT PRICING */}
               <TabsContent value="contract" className="mt-2">
                 <Card>
-                  <CardHeader className="px-6 py-4 border-b border-border bg-muted/30 flex flex-row items-center justify-between">
-                    <CardTitle className="text-base font-semibold flex items-center gap-1.5">
-                      <DollarSign className="h-4 w-4" /> Contract Pricing
+                  <CardHeader className="px-4 py-2.5 border-b border-border bg-muted/30 flex flex-row items-center justify-between">
+                    <CardTitle className="text-sm font-semibold flex items-center gap-1.5">
+                      <DollarSign className="h-3.5 w-3.5" /> Contract Pricing
                     </CardTitle>
-                    <span className="px-3 py-1 bg-primary/15 text-primary-foreground text-xs font-medium rounded-full border border-primary/20">
+                    <span className="px-2 py-0.5 bg-primary/15 text-primary-foreground text-[10px] font-medium rounded-full border border-primary/20">
                       Active Contract
                     </span>
                   </CardHeader>
-                  <CardContent className="p-6 space-y-6">
+                  <CardContent className="p-4 space-y-3">
                     {/* Top Panels Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {/* Default Pricing Panel */}
-                      <div className="space-y-5">
-                        <div className="flex items-center gap-2 mb-2">
-                          <div className="w-1 h-5 bg-primary rounded-full" />
-                          <h3 className="text-sm font-medium text-foreground">Default Pricing</h3>
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-2 mb-1">
+                          <div className="w-1 h-4 bg-primary rounded-full" />
+                          <h3 className="text-xs font-medium text-foreground">Default Pricing</h3>
                         </div>
 
-                        <div className="space-y-3">
-                          <Label className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">Rate Type</Label>
-                          <RadioGroup defaultValue="pct" className="flex items-center gap-5">
-                            <label htmlFor="def-hourly" className="flex items-center gap-2 cursor-pointer text-sm font-medium">
-                              <RadioGroupItem value="hourly" id="def-hourly" className="h-4 w-4 border-muted-foreground/50 text-foreground data-[state=checked]:border-foreground data-[state=checked]:text-foreground" />
+                        <div className="space-y-2">
+                          <Label className="text-[9px] font-semibold text-muted-foreground uppercase tracking-wider">Rate Type</Label>
+                          <RadioGroup defaultValue="pct" className="flex items-center gap-4">
+                            <label htmlFor="def-hourly" className="flex items-center gap-1.5 cursor-pointer text-xs font-medium">
+                              <RadioGroupItem value="hourly" id="def-hourly" className="h-3.5 w-3.5 border-muted-foreground/50 text-foreground data-[state=checked]:border-foreground data-[state=checked]:text-foreground" />
                               Hourly
                             </label>
-                            <label htmlFor="def-pct" className="flex items-center gap-2 cursor-pointer text-sm font-medium">
-                              <RadioGroupItem value="pct" id="def-pct" className="h-4 w-4 border-muted-foreground/50 text-foreground data-[state=checked]:border-foreground data-[state=checked]:text-foreground" />
+                            <label htmlFor="def-pct" className="flex items-center gap-1.5 cursor-pointer text-xs font-medium">
+                              <RadioGroupItem value="pct" id="def-pct" className="h-3.5 w-3.5 border-muted-foreground/50 text-foreground data-[state=checked]:border-foreground data-[state=checked]:text-foreground" />
                               Percentage
                             </label>
                           </RadioGroup>
                           <div className="relative">
-                            <Input className="h-9 text-[12px] pl-3 pr-8" defaultValue="20.00" />
-                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[11px] font-medium text-muted-foreground">%</span>
+                            <Input className="h-7 text-[11px] pl-2 pr-7" defaultValue="20.00" />
+                            <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] font-medium text-muted-foreground">%</span>
                           </div>
                         </div>
 
-                        <div className="grid grid-cols-2 gap-3">
-                          <div className="space-y-1">
-                            <Label className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">Exp. Date</Label>
-                            <ModernDatePicker size="md" value="2023-08-31" inputClassName="text-[12px] px-3" />
+                        <div className="grid grid-cols-2 gap-2">
+                          <div className="space-y-0.5">
+                            <Label className="text-[9px] font-medium text-muted-foreground uppercase tracking-wider">Exp. Date</Label>
+                            <ModernDatePicker size="sm" value="2023-08-31" inputClassName="text-[11px] px-2" />
                           </div>
-                          <div className="space-y-1">
-                            <Label className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">Review Date</Label>
-                            <ModernDatePicker size="md" value="2023-07-31" inputClassName="text-[12px] px-3" />
+                          <div className="space-y-0.5">
+                            <Label className="text-[9px] font-medium text-muted-foreground uppercase tracking-wider">Review Date</Label>
+                            <ModernDatePicker size="sm" value="2023-07-31" inputClassName="text-[11px] px-2" />
                           </div>
-                          <div className="space-y-1 col-span-2">
-                            <Label className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">Labor Rate</Label>
-                            <Input className="h-8 text-[12px] px-3 py-1" defaultValue="50.00" />
+                          <div className="space-y-0.5 col-span-2">
+                            <Label className="text-[9px] font-medium text-muted-foreground uppercase tracking-wider">Labor Rate</Label>
+                            <Input className="h-7 text-[11px] px-2 py-1" defaultValue="50.00" />
                           </div>
                         </div>
 
-                        <div className="space-y-1.5">
-                          <div className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">File</div>
-                          <div className="flex items-center justify-between rounded-lg border border-border bg-muted/30 px-3 py-2">
-                            <span className="text-[12px] font-medium text-foreground truncate">Pricing_Sheet_v2.pdf</span>
-                            <Button variant="link" size="sm" className="h-6 px-0 text-[11px] text-foreground hover:text-foreground/80">View/Open</Button>
+                        <div className="space-y-1">
+                          <div className="text-[9px] font-medium text-muted-foreground uppercase tracking-wider">File</div>
+                          <div className="flex items-center justify-between rounded-md border border-border bg-muted/30 px-2 py-1.5">
+                            <span className="text-[11px] font-medium text-foreground truncate">Pricing_Sheet_v2.pdf</span>
+                            <Button variant="link" size="sm" className="h-5 px-0 text-[10px] text-foreground hover:text-foreground/80">View/Open</Button>
                           </div>
-                          <div className="border-2 border-dashed border-border rounded-lg p-4 flex flex-col items-center justify-center gap-1 hover:border-primary/40 transition-colors cursor-pointer">
+                          <div className="border-2 border-dashed border-border rounded-md p-2 flex flex-col items-center justify-center gap-1 hover:border-primary/40 transition-colors cursor-pointer">
                             <div className="flex items-center gap-1.5 w-full">
-                              <Input type="file" className="h-8 text-[11px] px-2 py-1 flex-1" />
-                              <Button size="sm" variant="outline" className="h-8 text-[11px]">Upload</Button>
+                              <Input type="file" className="h-7 text-[10px] px-2 py-1 flex-1" />
+                              <Button size="sm" variant="outline" className="h-7 text-[10px]">Upload</Button>
                             </div>
                           </div>
                         </div>
                       </div>
 
                       {/* ESL Panel */}
-                      <div className="space-y-5">
-                        <div className="flex items-center gap-2 mb-2">
-                          <div className="w-1 h-5 bg-muted-foreground/40 rounded-full" />
-                          <h3 className="text-sm font-medium text-foreground">ESL Configuration</h3>
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-2 mb-1">
+                          <div className="w-1 h-4 bg-muted-foreground/40 rounded-full" />
+                          <h3 className="text-xs font-medium text-foreground">ESL Configuration</h3>
                         </div>
 
-                        <div className="space-y-3">
-                          <Label className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">ESL Enabled</Label>
-                          <RadioGroup defaultValue="yes" className="flex items-center gap-5">
-                            <label htmlFor="esl-yes" className="flex items-center gap-2 cursor-pointer text-sm font-medium">
-                              <RadioGroupItem value="yes" id="esl-yes" className="h-4 w-4 border-muted-foreground/50 text-foreground data-[state=checked]:border-foreground data-[state=checked]:text-foreground" />
+                        <div className="space-y-2">
+                          <Label className="text-[9px] font-semibold text-muted-foreground uppercase tracking-wider">ESL Enabled</Label>
+                          <RadioGroup defaultValue="yes" className="flex items-center gap-4">
+                            <label htmlFor="esl-yes" className="flex items-center gap-1.5 cursor-pointer text-xs font-medium">
+                              <RadioGroupItem value="yes" id="esl-yes" className="h-3.5 w-3.5 border-muted-foreground/50 text-foreground data-[state=checked]:border-foreground data-[state=checked]:text-foreground" />
                               Yes
                             </label>
-                            <label htmlFor="esl-no" className="flex items-center gap-2 cursor-pointer text-sm font-medium">
-                              <RadioGroupItem value="no" id="esl-no" className="h-4 w-4 border-muted-foreground/50 text-foreground data-[state=checked]:border-foreground data-[state=checked]:text-foreground" />
+                            <label htmlFor="esl-no" className="flex items-center gap-1.5 cursor-pointer text-xs font-medium">
+                              <RadioGroupItem value="no" id="esl-no" className="h-3.5 w-3.5 border-muted-foreground/50 text-foreground data-[state=checked]:border-foreground data-[state=checked]:text-foreground" />
                               No
                             </label>
                           </RadioGroup>
                         </div>
 
-                        <div className="grid grid-cols-2 gap-3">
-                          <div className="space-y-1">
-                            <Label className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">Exp. Date</Label>
-                            <ModernDatePicker size="md" inputClassName="text-[12px] px-3" />
-
+                        <div className="grid grid-cols-2 gap-2">
+                          <div className="space-y-0.5">
+                            <Label className="text-[9px] font-medium text-muted-foreground uppercase tracking-wider">Exp. Date</Label>
+                            <ModernDatePicker size="sm" inputClassName="text-[11px] px-2" />
                           </div>
-                          <div className="space-y-1">
-                            <Label className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">Review Date</Label>
-                            <ModernDatePicker size="md" inputClassName="text-[12px] px-3" />
+                          <div className="space-y-0.5">
+                            <Label className="text-[9px] font-medium text-muted-foreground uppercase tracking-wider">Review Date</Label>
+                            <ModernDatePicker size="sm" inputClassName="text-[11px] px-2" />
                           </div>
                         </div>
 
-                        <div className="space-y-1.5">
-                          <div className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">File</div>
-                          <div className="flex items-center justify-between rounded-lg border border-border bg-muted/30 px-3 py-2">
-                            <span className="text-[12px] font-medium text-foreground truncate">ESL_Contract_2023.pdf</span>
-                            <Button variant="link" size="sm" className="h-6 px-0 text-[11px] text-foreground hover:text-foreground/80">View/Open</Button>
+                        <div className="space-y-1">
+                          <div className="text-[9px] font-medium text-muted-foreground uppercase tracking-wider">File</div>
+                          <div className="flex items-center justify-between rounded-md border border-border bg-muted/30 px-2 py-1.5">
+                            <span className="text-[11px] font-medium text-foreground truncate">ESL_Contract_2023.pdf</span>
+                            <Button variant="link" size="sm" className="h-5 px-0 text-[10px] text-foreground hover:text-foreground/80">View/Open</Button>
                           </div>
-                          <div className="border-2 border-dashed border-border rounded-lg p-4 flex flex-col items-center justify-center gap-1 hover:border-primary/40 transition-colors cursor-pointer min-h-[80px]">
+                          <div className="border-2 border-dashed border-border rounded-md p-2 flex flex-col items-center justify-center gap-1 hover:border-primary/40 transition-colors cursor-pointer min-h-[60px]">
                             <div className="flex items-center gap-1.5 w-full">
-                              <Input type="file" className="h-8 text-[11px] px-2 py-1 flex-1" />
-                              <Button size="sm" variant="outline" className="h-8 text-[11px]">Upload</Button>
+                              <Input type="file" className="h-7 text-[10px] px-2 py-1 flex-1" />
+                              <Button size="sm" variant="outline" className="h-7 text-[10px]">Upload</Button>
                             </div>
                           </div>
                         </div>
@@ -1488,65 +1487,64 @@ export default function EditCustomer() {
                     </div>
 
                     {/* Comments & Options */}
-                    <div className="space-y-4 pt-4 border-t border-border">
-                      <div className="space-y-1.5">
-                        <Label className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">Comment</Label>
-                        <Textarea className="text-[12px] px-3 py-2 min-h-[80px] resize-none" placeholder="Add notes about this contract pricing agreement…" />
+                    <div className="space-y-3 pt-3 border-t border-border">
+                      <div className="space-y-1">
+                        <Label className="text-[9px] font-medium text-muted-foreground uppercase tracking-wider">Comment</Label>
+                        <Textarea className="text-[11px] px-2 py-1.5 min-h-[56px] resize-none" placeholder="Add notes about this contract pricing agreement…" />
                       </div>
-                      <div className="flex flex-wrap gap-6">
-                        <label className="flex items-center gap-2 text-[12px] font-medium cursor-pointer">
+                      <div className="flex flex-wrap gap-4">
+                        <label className="flex items-center gap-1.5 text-[11px] font-medium cursor-pointer">
                           <Checkbox id="cp-national" /> National Contract
                         </label>
-                        <label className="flex items-center gap-2 text-[12px] font-medium cursor-pointer">
+                        <label className="flex items-center gap-1.5 text-[11px] font-medium cursor-pointer">
                           <Checkbox id="cp-noauto" /> Do Not Auto Price
                         </label>
                       </div>
                     </div>
 
-                    <div className="text-[12px] text-destructive text-center">
+                    <div className="text-[11px] text-destructive text-center">
                       Reminder: You must use 'Set Contract Pricing' to save any of the data above. Save at bottom of page DOES NOT save this data.
                     </div>
 
                     {/* Action Buttons */}
-                    <div className="flex justify-end gap-3 pt-2">
-                      <Button size="sm" variant="outline" className="h-9 text-[12px]">Cancel</Button>
-                      <Button size="sm" variant="outline" className="h-9 text-[12px]">Add Comment Only</Button>
-                      <Button size="sm" className="h-9 text-[12px] bg-foreground text-background hover:bg-foreground/90">Set Contract Pricing</Button>
+                    <div className="flex justify-end gap-2 pt-1">
+                      <Button size="sm" variant="outline" className="h-7 text-[11px]">Cancel</Button>
+                      <Button size="sm" variant="outline" className="h-7 text-[11px]">Add Comment Only</Button>
+                      <Button size="sm" className="h-7 text-[11px] bg-foreground text-background hover:bg-foreground/90">Set Contract Pricing</Button>
                     </div>
 
                     {/* History Table */}
-                    <div className="space-y-3">
-                      <h3 className="text-sm font-semibold text-foreground">Revision History</h3>
-                      <div className="border rounded-lg overflow-hidden">
+                    <div className="space-y-2">
+                      <h3 className="text-xs font-semibold text-foreground">Revision History</h3>
+                      <div className="border rounded-md overflow-hidden">
                         <Table>
                           <TableHeader>
-                            <TableRow className="bg-muted/50">
-                              <TableHead className="text-[11px] h-9">Entered</TableHead>
-                              <TableHead className="text-[11px] h-9">User</TableHead>
-                              <TableHead className="text-[11px] h-9 min-w-[320px]">Comment</TableHead>
-                              <TableHead className="text-[11px] h-9 w-16"></TableHead>
+                            <TableRow className="bg-muted/50 h-7">
+                              <TableHead className="text-[10px] h-7 py-1 px-2">Entered</TableHead>
+                              <TableHead className="text-[10px] h-7 py-1 px-2">User</TableHead>
+                              <TableHead className="text-[10px] h-7 py-1 px-2 min-w-[260px]">Comment</TableHead>
+                              <TableHead className="text-[10px] h-7 py-1 px-2 w-12"></TableHead>
                             </TableRow>
                           </TableHeader>
                           <TableBody>
                             <TableRow>
-                              <TableCell className="text-[11px] align-top whitespace-nowrap">08/03/2023 12:10 PM</TableCell>
-                              <TableCell className="text-[11px] align-top whitespace-nowrap">Timothy J Oldendorf</TableCell>
-                              <TableCell className="text-[11px] align-top">
+                              <TableCell className="text-[10px] align-top whitespace-nowrap py-1.5 px-2">08/03/2023 12:10 PM</TableCell>
+                              <TableCell className="text-[10px] align-top whitespace-nowrap py-1.5 px-2">Timothy J Oldendorf</TableCell>
+                              <TableCell className="text-[10px] align-top py-1.5 px-2">
                                 <div>Contract Pricing set to Pct: 20.00</div>
                                 <div>Exp Date set to 8/31/2023</div>
                                 <div>Rev Date set to 7/31/2023</div>
                                 <div>Labor Rate set to 50.00</div>
                                 <div>HELLO</div>
                               </TableCell>
-                              <TableCell className="text-[11px] align-top">
-                                <Button variant="link" size="sm" className="h-5 px-0 text-[11px] text-destructive">Delete</Button>
+                              <TableCell className="text-[10px] align-top py-1.5 px-2">
+                                <Button variant="link" size="sm" className="h-5 px-0 text-[10px] text-destructive">Delete</Button>
                               </TableCell>
                             </TableRow>
                           </TableBody>
                         </Table>
                       </div>
                     </div>
-
                   </CardContent>
                 </Card>
               </TabsContent>
