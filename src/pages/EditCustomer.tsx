@@ -777,10 +777,10 @@ function PrintTagsPanel() {
             </>
           ) : (
             <>
-              <Field label="Phone">
+              <Field label="Phone" required>
                 <Input className="h-7 text-[11px] px-2.5 py-1" />
               </Field>
-              <Field label="Delivery Type">
+              <Field label="Delivery Type" required>
                 <Select>
                   <SelectTrigger className="h-7 text-[11px] px-2.5"><SelectValue placeholder="Select delivery type" /></SelectTrigger>
                   <SelectContent>
@@ -790,7 +790,7 @@ function PrintTagsPanel() {
                   </SelectContent>
                 </Select>
               </Field>
-              <Field label="JM Facility Location">
+              <Field label="JM Facility Location" required>
                 <Select>
                   <SelectTrigger className="h-7 text-[11px] px-2.5"><SelectValue placeholder="Select facility" /></SelectTrigger>
                   <SelectContent>
@@ -800,13 +800,13 @@ function PrintTagsPanel() {
                   </SelectContent>
                 </Select>
               </Field>
-              <Field label="Location">
+              <Field label="Location" required>
                 <Input className="h-7 text-[11px] px-2.5 py-1" />
               </Field>
               <Field label="Date">
                 <Input type="date" className="h-7 text-[11px] px-2.5 py-1" defaultValue="2026-07-10" />
               </Field>
-              <Field label="Quote #">
+              <Field label="Quote #" required>
                 <Input className="h-7 text-[11px] px-2.5 py-1" />
               </Field>
             </>
