@@ -42,6 +42,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
@@ -1313,8 +1314,41 @@ export default function EditCustomer() {
                 </Card>
               </TabsContent>
 
+              {/* Retest Notices */}
+              <TabsContent value="retest" className="mt-2">
+                <Card>
+                  <CardHeader className="p-3 pb-2">
+                    <CardTitle className="text-[12px] font-semibold flex items-center gap-1.5">
+                      <Bell className="h-3.5 w-3.5" /> Retest Notices
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="p-3 pt-0 space-y-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-w-xl">
+                      {[
+                        { id: "no-retest", label: "No Retest Notice" },
+                        { id: "email-to", label: "Email To" },
+                        { id: "email-contact-wo", label: "Email Contact on WO", defaultChecked: true },
+                        { id: "mail", label: "Mail" },
+                      ].map((o) => (
+                        <label key={o.id} htmlFor={o.id} className="flex items-center gap-2 rounded-md border bg-card px-2.5 py-1.5 cursor-pointer hover:bg-muted/40">
+                          <Checkbox id={o.id} defaultChecked={o.defaultChecked} />
+                          <span className="text-[11px] font-medium">{o.label}</span>
+                        </label>
+                      ))}
+                    </div>
+                    <Field label="Comments" full>
+                      <Textarea
+                        className="text-[11px] px-2.5 py-1.5 min-h-[80px]"
+                        placeholder="Notes for retest notification handling…"
+                        defaultValue="ppe rotation management program / do not contact for gloves kng 1/5/24"
+                      />
+                    </Field>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
               {/* Fallback simple tabs */}
-              {["retest", "print-tags", "fees", "custom"].map((v) => (
+              {["print-tags", "fees", "custom"].map((v) => (
                 <TabsContent key={v} value={v} className="mt-2">
                   <Card>
                     <CardContent className="p-6 text-center text-[11px] text-muted-foreground">
