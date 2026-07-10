@@ -1548,42 +1548,7 @@ export default function EditCustomer() {
 
               {/* FILES */}
               <TabsContent value="files" className="mt-2">
-                <Card>
-                  <CardHeader className="p-2.5 pb-2">
-                    <CardTitle className="text-xs font-semibold">Work Order External Files</CardTitle>
-                    <CardDescription className="text-[10px]">Attachments uploaded by customers or staff.</CardDescription>
-                  </CardHeader>
-                  <CardContent className="p-2.5 pt-0 space-y-2">
-                    <div className="border-2 border-dashed border-border rounded-lg p-4 text-center bg-muted/20">
-                      <Upload className="h-5 w-5 mx-auto text-muted-foreground mb-1" />
-                      <div className="text-[11px] font-medium">Drag & drop files here</div>
-                      <div className="text-[10px] text-muted-foreground">or click to browse (PDF, DOCX, XLSX, PNG, JPG)</div>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                      {[
-                        { name: "MSA-2024.pdf", by: "Jerome D.", date: "Jan 12, 2024" },
-                        { name: "Cert-Report-5432.pdf", by: "M. Alvarez", date: "Jun 28, 2026" },
-                      ].map((f, i) => (
-                        <div key={i} className="flex items-center justify-between border border-border rounded-md p-2 bg-background">
-                          <div className="flex items-center gap-1.5 min-w-0">
-                            <div className="w-6 h-6 rounded bg-blue-500/10 text-blue-600 flex items-center justify-center shrink-0">
-                              <Paperclip className="h-3.5 w-3.5" />
-                            </div>
-                            <div className="min-w-0">
-                              <div className="text-[11px] font-medium truncate">{f.name}</div>
-                              <div className="text-[10px] text-muted-foreground">{f.by} · {f.date}</div>
-                            </div>
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <Button variant="ghost" size="icon" className="h-6 w-6"><Eye className="h-3 w-3" /></Button>
-                            <Button variant="ghost" size="icon" className="h-6 w-6"><Download className="h-3 w-3" /></Button>
-                            <Button variant="ghost" size="icon" className="h-6 w-6 text-destructive"><Trash2 className="h-3 w-3" /></Button>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
+                <WoExtFilesSection />
               </TabsContent>
 
               {/* Retest Notices */}
@@ -2600,6 +2565,338 @@ function EslSurplusInventorySection() {
                 </div>
               </div>
             ))}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+// ============ WO External Files Section ============
+type WoFile = {
+  item: string;
+  file: string;
+  type: string;
+  tags: string[];
+  items: string;
+  by: string;
+  date: string;
+};
+
+const DOC_TYPES = [
+  "METCAL",
+  "Metrology.net",
+  "External File (xlsx)",
+  "External File (pdf)",
+  "External Test Report",
+  "External Datasheet (xlsx)",
+  "Other",
+];
+
+const DOC_TAGS = [
+  "Customer Approval",
+  "Customer ID List",
+  "Customer Notes",
+  "Emails",
+  "Equipment Submission Form",
+  "Internal Notes",
+  "Photos",
+  "Shipping",
+];
+
+const WO_FILES: WoFile[] = [
+  { item: "211673-020", file: "Project-Management-Sample-Data.xlsx", type: "External Datasheet (xlsx)", tags: [], items: "", by: "Admin User", date: "04/10/2026" },
+  { item: "360073-003", file: "JM Data Sheet 2018.pdf", type: "METCAL", tags: [], items: "", by: "Larry D. Achee", date: "02/01/2021" },
+  { item: "360073-004", file: "JM Data Sheet 2018.pdf", type: "METCAL", tags: [], items: "", by: "Larry D. Achee", date: "02/01/2021" },
+  { item: "361723-003", file: "JM Data Sheet 2018.pdf", type: "METCAL", tags: [], items: "", by: "Larry D. Achee", date: "02/23/2021" },
+  { item: "361763-001", file: "JM Data Sheet 2018.pdf", type: "METCAL", tags: [], items: "", by: "Larry D. Achee", date: "02/19/2021" },
+  { item: "363720-001", file: "JM Data Sheet 2018.pdf", type: "METCAL", tags: [], items: "", by: "Mark S. Vetter", date: "03/09/2021" },
+  { item: "381916-001", file: "JM Data Sheet 2018.pdf", type: "METCAL", tags: [], items: "", by: "Larry D. Achee", date: "09/08/2021" },
+  { item: "381916-002", file: "JM Data Sheet 2018.pdf", type: "METCAL", tags: [], items: "", by: "Mark S. Vetter", date: "09/08/2021" },
+  { item: "381916-003", file: "JM Data Sheet 2018.pdf", type: "METCAL", tags: [], items: "", by: "Mark S. Vetter", date: "09/08/2021" },
+  { item: "381916-004", file: "JM Data Sheet 2018.pdf", type: "METCAL", tags: [], items: "", by: "Larry D. Achee", date: "09/08/2021" },
+  { item: "381916-005", file: "JM Data Sheet 2018.pdf", type: "METCAL", tags: [], items: "", by: "Larry D. Achee", date: "09/08/2021" },
+  { item: "393606-003", file: "JM Data Sheet 2018.pdf", type: "METCAL", tags: [], items: "", by: "Larry D. Achee", date: "01/13/2022" },
+  { item: "393606-004", file: "JM Data Sheet 2018.pdf", type: "METCAL", tags: [], items: "", by: "Larry D. Achee", date: "01/13/2022" },
+  { item: "393606-008", file: "JM Data Sheet 2018.pdf", type: "METCAL", tags: [], items: "", by: "Larry D. Achee", date: "01/13/2022" },
+  { item: "393606-009", file: "JM Data Sheet 2018.pdf", type: "METCAL", tags: [], items: "", by: "Larry D. Achee", date: "01/13/2022" },
+  { item: "393606-010", file: "JM Data Sheet 2018.pdf", type: "METCAL", tags: [], items: "", by: "Larry D. Achee", date: "01/13/2022" },
+  { item: "401030-001", file: "Non-accredited Calibration.pdf", type: "METCAL", tags: [], items: "", by: "Mark S. Vetter", date: "03/21/2022" },
+  { item: "401030-002", file: "Non-accredited Calibration.pdf", type: "METCAL", tags: [], items: "", by: "Mark S. Vetter", date: "03/21/2022" },
+  { item: "415788-001", file: "JM Data Sheet 2018.pdf", type: "METCAL", tags: [], items: "", by: "Larry D. Achee", date: "08/02/2022" },
+  { item: "415788-002", file: "JM Data Sheet 2018.pdf", type: "METCAL", tags: [], items: "", by: "Larry D. Achee", date: "08/02/2022" },
+];
+
+function WoExtFilesSection() {
+  const { toast } = useToast();
+  const [docType, setDocType] = useState<string>("");
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [staged, setStaged] = useState<File[]>([]);
+  const [dragOver, setDragOver] = useState(false);
+
+  // filters
+  const [fItem, setFItem] = useState("");
+  const [fFile, setFFile] = useState("");
+  const [fType, setFType] = useState("all");
+  const [fTag, setFTag] = useState("");
+  const [fItems, setFItems] = useState("");
+  const [fBy, setFBy] = useState("");
+  const [fDate, setFDate] = useState("");
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(20);
+
+  const toggleTag = (t: string) =>
+    setSelectedTags((s) => (s.includes(t) ? s.filter((x) => x !== t) : [...s, t]));
+
+  const onDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setDragOver(false);
+    const files = Array.from(e.dataTransfer.files);
+    if (files.length) setStaged((s) => [...s, ...files]);
+  };
+
+  const removeStaged = (idx: number) => setStaged((s) => s.filter((_, i) => i !== idx));
+
+  const handleUpload = () => {
+    if (!staged.length) {
+      toast({ title: "No files selected", variant: "destructive" });
+      return;
+    }
+    if (!docType) {
+      toast({ title: "Select a Doc Type", variant: "destructive" });
+      return;
+    }
+    toast({ title: `${staged.length} file(s) uploaded`, description: `Type: ${docType}` });
+    setStaged([]);
+    setSelectedTags([]);
+    setDocType("");
+  };
+
+  const rows = useMemo(
+    () =>
+      WO_FILES.filter((r) => {
+        if (fItem && !r.item.toLowerCase().includes(fItem.toLowerCase())) return false;
+        if (fFile && !r.file.toLowerCase().includes(fFile.toLowerCase())) return false;
+        if (fType !== "all" && r.type !== fType) return false;
+        if (fTag && !r.tags.some((t) => t.toLowerCase().includes(fTag.toLowerCase()))) return false;
+        if (fItems && !r.items.toLowerCase().includes(fItems.toLowerCase())) return false;
+        if (fBy && !r.by.toLowerCase().includes(fBy.toLowerCase())) return false;
+        if (fDate && !r.date.includes(fDate)) return false;
+        return true;
+      }),
+    [fItem, fFile, fType, fTag, fItems, fBy, fDate],
+  );
+
+  const totalPages = Math.max(1, Math.ceil(rows.length / pageSize));
+  const paged = rows.slice((page - 1) * pageSize, page * pageSize);
+
+  return (
+    <div className="space-y-3">
+      {/* Upload panel */}
+      <Card>
+        <CardHeader className="p-3 pb-2">
+          <CardTitle className="text-[13px] font-semibold flex items-center gap-1.5">
+            <FolderOpen className="h-3.5 w-3.5" /> Work Order External Files
+          </CardTitle>
+          <CardDescription className="text-[11px]">
+            METCAL, Metrology.net, External File (xlsx) and External File (pdf) are used to create a Datasheet.
+            External Test Report is used by Customer Portal.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="p-3 pt-0">
+          <div className="grid grid-cols-1 lg:grid-cols-[220px_1fr_320px] gap-3">
+            {/* Doc Type */}
+            <div className="space-y-1">
+              <Label className="text-[11px] font-semibold">Doc Type</Label>
+              <Select value={docType} onValueChange={setDocType}>
+                <SelectTrigger className="h-8 text-[11px]"><SelectValue placeholder="Select type" /></SelectTrigger>
+                <SelectContent>
+                  {DOC_TYPES.map((t) => (
+                    <SelectItem key={t} value={t}>{t}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Doc Tags */}
+            <div className="space-y-1">
+              <Label className="text-[11px] font-semibold">Doc Tag(s)</Label>
+              <div className="rounded-md border border-border bg-muted/20 p-2 max-h-[120px] overflow-y-auto grid grid-cols-2 gap-x-3 gap-y-1">
+                {DOC_TAGS.map((t) => (
+                  <label key={t} className="flex items-center gap-1.5 text-[11px] cursor-pointer">
+                    <Checkbox
+                      checked={selectedTags.includes(t)}
+                      onCheckedChange={() => toggleTag(t)}
+                    />
+                    <span className="truncate">{t}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            {/* Dropzone */}
+            <div className="space-y-1">
+              <Label className="text-[11px] font-semibold">Select file(s)</Label>
+              <label
+                onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+                onDragLeave={() => setDragOver(false)}
+                onDrop={onDrop}
+                className={`flex flex-col items-center justify-center h-[92px] rounded-md border-2 border-dashed cursor-pointer transition-colors ${
+                  dragOver ? "border-primary bg-primary/5" : "border-border bg-muted/30 hover:border-primary/40"
+                }`}
+              >
+                <Upload className="h-4 w-4 text-muted-foreground mb-1" />
+                <div className="text-[11px] font-medium">Drag file(s) here</div>
+                <div className="text-[10px] text-muted-foreground">or click to browse</div>
+                <input
+                  type="file"
+                  multiple
+                  className="hidden"
+                  onChange={(e) => e.target.files && setStaged((s) => [...s, ...Array.from(e.target.files!)])}
+                />
+              </label>
+            </div>
+          </div>
+
+          {/* Staged files */}
+          {staged.length > 0 && (
+            <div className="mt-3 space-y-1.5">
+              <div className="text-[11px] font-semibold text-muted-foreground">Ready to upload ({staged.length})</div>
+              <div className="flex flex-wrap gap-1.5">
+                {staged.map((f, i) => (
+                  <div key={i} className="inline-flex items-center gap-1.5 rounded-md border border-border bg-muted/40 pl-2 pr-1 py-1 text-[11px]">
+                    <Paperclip className="h-3 w-3 text-muted-foreground" />
+                    <span className="max-w-[220px] truncate">{f.name}</span>
+                    <Button variant="ghost" size="icon" className="h-5 w-5" onClick={() => removeStaged(i)}>
+                      <X className="h-3 w-3" />
+                    </Button>
+                  </div>
+                ))}
+              </div>
+              <div className="flex justify-end">
+                <Button
+                  size="sm"
+                  className="h-8 px-3 text-[11px] bg-foreground text-background hover:bg-foreground/90"
+                  onClick={handleUpload}
+                >
+                  <Upload className="h-3 w-3 mr-1" /> Upload
+                </Button>
+              </div>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* Files table */}
+      <Card>
+        <CardContent className="p-0">
+          <div className="overflow-x-auto">
+            <table className="w-full text-[11px]">
+              <thead className="bg-muted/50 text-muted-foreground">
+                <tr className="[&>th]:px-2 [&>th]:py-1.5 [&>th]:font-medium [&>th]:text-left">
+                  <th className="w-[12%]">Item</th>
+                  <th className="w-[22%]">External File</th>
+                  <th className="w-[14%]">Type</th>
+                  <th className="w-[14%]">Tag(s)</th>
+                  <th className="w-[12%]">Item(s)</th>
+                  <th className="w-[14%]">Uploaded By</th>
+                  <th className="w-[12%]">Uploaded Date</th>
+                </tr>
+                <tr className="[&>th]:px-2 [&>th]:pb-1.5 border-b border-border">
+                  <th><Input value={fItem} onChange={(e) => setFItem(e.target.value)} className="h-6 text-[11px]" placeholder="Filter" /></th>
+                  <th><Input value={fFile} onChange={(e) => setFFile(e.target.value)} className="h-6 text-[11px]" placeholder="Filter" /></th>
+                  <th>
+                    <Select value={fType} onValueChange={setFType}>
+                      <SelectTrigger className="h-6 text-[11px]"><SelectValue placeholder="All" /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All</SelectItem>
+                        {DOC_TYPES.map((t) => (
+                          <SelectItem key={t} value={t}>{t}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </th>
+                  <th><Input value={fTag} onChange={(e) => setFTag(e.target.value)} className="h-6 text-[11px]" placeholder="Filter" /></th>
+                  <th><Input value={fItems} onChange={(e) => setFItems(e.target.value)} className="h-6 text-[11px]" placeholder="Filter" /></th>
+                  <th><Input value={fBy} onChange={(e) => setFBy(e.target.value)} className="h-6 text-[11px]" placeholder="Filter" /></th>
+                  <th><Input value={fDate} onChange={(e) => setFDate(e.target.value)} className="h-6 text-[11px]" placeholder="MM/DD/YYYY" /></th>
+                </tr>
+              </thead>
+              <tbody>
+                {paged.length === 0 && (
+                  <tr>
+                    <td colSpan={7} className="py-6 text-center text-[11px] text-muted-foreground">
+                      No files match the current filters.
+                    </td>
+                  </tr>
+                )}
+                {paged.map((r, i) => (
+                  <tr key={`${r.item}-${i}`} className="border-t border-border/60 even:bg-muted/20 hover:bg-muted/40 [&>td]:px-2 [&>td]:py-1.5">
+                    <td className="tabular-nums font-medium">{r.item}</td>
+                    <td>
+                      <a href="#" onClick={(e) => e.preventDefault()} className="inline-flex items-center gap-1 text-primary hover:underline">
+                        <FileText className="h-3 w-3" />
+                        <span className="truncate">{r.file}</span>
+                      </a>
+                    </td>
+                    <td>{r.type}</td>
+                    <td>
+                      {r.tags.length ? (
+                        <div className="flex flex-wrap gap-1">
+                          {r.tags.map((t) => (
+                            <span key={t} className="inline-flex items-center rounded-full bg-muted px-1.5 py-0.5 text-[10px]">{t}</span>
+                          ))}
+                        </div>
+                      ) : (
+                        <span className="text-muted-foreground">—</span>
+                      )}
+                    </td>
+                    <td className="text-muted-foreground">{r.items || "—"}</td>
+                    <td>{r.by}</td>
+                    <td className="tabular-nums">{r.date}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* pagination */}
+          <div className="flex items-center justify-between px-3 py-2 border-t border-border text-[11px]">
+            <div className="text-muted-foreground">
+              Page {page} of {totalPages} ({rows.length} items)
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1">
+                <Button variant="outline" size="icon" className="h-6 w-6" disabled={page === 1} onClick={() => setPage((p) => Math.max(1, p - 1))}>
+                  <ChevronLeft className="h-3 w-3" />
+                </Button>
+                {Array.from({ length: totalPages }).slice(0, 7).map((_, i) => (
+                  <Button
+                    key={i}
+                    variant={page === i + 1 ? "default" : "outline"}
+                    size="sm"
+                    className={`h-6 w-6 p-0 text-[11px] ${page === i + 1 ? "bg-foreground text-background hover:bg-foreground/90" : ""}`}
+                    onClick={() => setPage(i + 1)}
+                  >
+                    {i + 1}
+                  </Button>
+                ))}
+                <Button variant="outline" size="icon" className="h-6 w-6" disabled={page === totalPages} onClick={() => setPage((p) => Math.min(totalPages, p + 1))}>
+                  <ChevronRight className="h-3 w-3" />
+                </Button>
+              </div>
+              <div className="flex items-center gap-1">
+                <span className="text-muted-foreground">Page size:</span>
+                <Select value={String(pageSize)} onValueChange={(v) => { setPageSize(Number(v)); setPage(1); }}>
+                  <SelectTrigger className="h-6 w-[60px] text-[11px]"><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    {[10, 20, 50, 100].map((n) => (
+                      <SelectItem key={n} value={String(n)}>{n}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
           </div>
         </CardContent>
       </Card>
