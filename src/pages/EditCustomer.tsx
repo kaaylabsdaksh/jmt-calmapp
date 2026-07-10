@@ -1017,20 +1017,23 @@ export default function EditCustomer() {
                     { v: "esl-inv", label: "ESL Surplus/Inventory", icon: Archive },
                     { v: "files", label: "WO External Files", icon: FolderOpen },
                   ].map((t) => (
-                    <Tooltip key={t.v}>
-                      <TooltipTrigger asChild>
-                        <TabsTrigger
-                          value={t.v}
-                          className="h-7 px-1 text-[11px] flex-1 min-w-0 whitespace-nowrap data-[state=active]:bg-blue-600 data-[state=active]:text-white"
-                        >
-                          <t.icon className="h-3 w-3 mr-1 shrink-0" />
-                          <span className="truncate">{t.label}</span>
-                        </TabsTrigger>
-                      </TooltipTrigger>
-                      <TooltipContent side="bottom" className="text-[11px] px-2 py-1">
-                        <p>{t.label}</p>
-                      </TooltipContent>
-                    </Tooltip>
+                    <TabsTrigger
+                      key={t.v}
+                      value={t.v}
+                      className="h-7 px-1 text-[11px] flex-1 min-w-0 whitespace-nowrap data-[state=active]:bg-blue-600 data-[state=active]:text-white"
+                    >
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <span className="flex items-center min-w-0">
+                            <t.icon className="h-3 w-3 mr-1 shrink-0" />
+                            <span className="truncate">{t.label}</span>
+                          </span>
+                        </TooltipTrigger>
+                        <TooltipContent side="bottom" className="text-[11px] px-2 py-1">
+                          <p>{t.label}</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TabsTrigger>
                   ))}
                 </TabsList>
               </TooltipProvider>
