@@ -1490,7 +1490,11 @@ export default function EditCustomer() {
 
                         <div className="space-y-1.5">
                           <div className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">File</div>
-                          <div className="border-2 border-dashed border-border rounded-lg p-4 flex flex-col items-center justify-center gap-1 hover:border-primary/40 transition-colors cursor-pointer min-h-[116px]">
+                          <div className="flex items-center justify-between rounded-lg border border-border bg-muted/30 px-3 py-2">
+                            <span className="text-[12px] font-medium text-foreground truncate">ESL_Contract_2023.pdf</span>
+                            <Button variant="link" size="sm" className="h-6 px-0 text-[11px] text-foreground hover:text-foreground/80">View/Open</Button>
+                          </div>
+                          <div className="border-2 border-dashed border-border rounded-lg p-4 flex flex-col items-center justify-center gap-1 hover:border-primary/40 transition-colors cursor-pointer min-h-[80px]">
                             <div className="flex items-center gap-1.5 w-full">
                               <Input type="file" className="h-8 text-[11px] px-2 py-1 flex-1" />
                               <Button size="sm" variant="outline" className="h-8 text-[11px]">Upload</Button>
