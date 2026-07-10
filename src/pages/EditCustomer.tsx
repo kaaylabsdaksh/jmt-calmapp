@@ -1010,6 +1010,7 @@ export default function EditCustomer() {
                   { v: "custom", label: "Custom Fields", icon: Settings2 },
                   { v: "po", label: "Purchase Orders", icon: Package },
                   { v: "quotes", label: "Quotes", icon: FilePlus2 },
+                  { v: "esl-inv", label: "ESL Surplus/Inventory", icon: Archive },
                   { v: "files", label: "WO External Files", icon: FolderOpen },
                 ].map((t) => (
                   <TabsTrigger
@@ -1540,6 +1541,10 @@ export default function EditCustomer() {
                 </Card>
               </TabsContent>
 
+              {/* ESL SURPLUS / INVENTORY */}
+              <TabsContent value="esl-inv" className="mt-2">
+                <EslSurplusInventorySection />
+              </TabsContent>
 
               {/* FILES */}
               <TabsContent value="files" className="mt-2">
@@ -2379,6 +2384,222 @@ function PurchaseOrdersSection() {
           <div className="flex items-center justify-between px-3 py-2 border-t border-border text-[11px] text-muted-foreground">
             <div>Page 1 of 1 ({LINKED_WOS.length} items)</div>
             <div>Page size: 5</div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+// ============ ESL Surplus / Inventory Section ============
+type EslComment = { id: string; text: string; author: string; when: string };
+
+function EslSurplusInventorySection() {
+  const { toast } = useToast();
+  const [allowAny, setAllowAny] = useState(false);
+  const [surplus, setSurplus] = useState(false);
+  const [inventory, setInventory] = useState(false);
+  const [dateAuthorized, setDateAuthorized] = useState("");
+  const [whoAuthorized, setWhoAuthorized] = useState("");
+  const [authorizedFile, setAuthorizedFile] = useState<{ name: string } | null>({
+    name: "Authorization_Letter_2025.pdf",
+  });
+  const [uploadFile, setUploadFile] = useState<File | null>(null);
+  const [comment, setComment] = useState("");
+  const [comments, setComments] = useState<EslComment[]>([
+    { id: "c1", text: "Approved for ESL Lab surplus swap on tier 2 items.", author: "Dawn J Stewart", when: "Jul 02, 2026" },
+  ]);
+
+  const handleSave = () => {
+    if ((surplus || inventory || allowAny) && !whoAuthorized.trim()) {
+      toast({ title: "Missing authorizer", description: "Enter who authorized this change.", variant: "destructive" });
+      return;
+    }
+    if (uploadFile) setAuthorizedFile({ name: uploadFile.name });
+    toast({ title: "Authorization saved" });
+    setUploadFile(null);
+  };
+
+  const handleCancel = () => {
+    setAllowAny(false);
+    setSurplus(false);
+    setInventory(false);
+    setDateAuthorized("");
+    setWhoAuthorized("");
+    setUploadFile(null);
+  };
+
+  const addComment = () => {
+    if (!comment.trim()) return;
+    setComments((c) => [
+      { id: `c${Date.now()}`, text: comment.trim(), author: "You", when: new Date().toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" }) },
+      ...c,
+    ]);
+    setComment("");
+  };
+
+  return (
+    <div className="space-y-3">
+      <Card>
+        <CardHeader className="p-3 pb-2">
+          <CardTitle className="text-[13px] font-semibold flex items-center gap-1.5">
+            <Archive className="h-3.5 w-3.5" /> ESL Surplus / Inventory Authorization
+          </CardTitle>
+          <CardDescription className="text-[11px]">
+            Configure surplus and inventory access permissions and attach the authorization document.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="p-3 pt-0 space-y-4">
+          {/* Permission toggles */}
+          <div className="rounded-md border border-border bg-muted/20 p-3 space-y-2">
+            <label className="flex items-center gap-2 text-[11px] cursor-pointer">
+              <Checkbox checked={allowAny} onCheckedChange={(v) => setAllowAny(!!v)} />
+              <span className="font-medium">Allow any replacement</span>
+              <span className="text-muted-foreground">— permit substitution with any equivalent item.</span>
+            </label>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <label className="flex items-center gap-2 text-[11px] cursor-pointer">
+                <Checkbox checked={surplus} onCheckedChange={(v) => setSurplus(!!v)} />
+                <span className="font-medium">Surplus</span>
+              </label>
+              <label className="flex items-center gap-2 text-[11px] cursor-pointer">
+                <Checkbox checked={inventory} onCheckedChange={(v) => setInventory(!!v)} />
+                <span className="font-medium">Inventory</span>
+              </label>
+            </div>
+          </div>
+
+          {/* Authorization details */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-2xl">
+            <div className="space-y-1">
+              <Label className="text-[11px] font-semibold">Date Authorized</Label>
+              <Input
+                type="date"
+                value={dateAuthorized}
+                onChange={(e) => setDateAuthorized(e.target.value)}
+                className="h-8 text-[11px]"
+              />
+            </div>
+            <div className="space-y-1">
+              <Label className="text-[11px] font-semibold">Who Authorized</Label>
+              <Input
+                value={whoAuthorized}
+                onChange={(e) => setWhoAuthorized(e.target.value.slice(0, 100))}
+                maxLength={100}
+                placeholder="Name of authorizer"
+                className="h-8 text-[11px]"
+              />
+            </div>
+          </div>
+
+          {/* Authorized file (already uploaded) */}
+          <div className="space-y-1">
+            <Label className="text-[11px] font-semibold">Authorized File</Label>
+            {authorizedFile ? (
+              <div className="flex items-center justify-between rounded-md border border-border bg-muted/30 px-3 py-2">
+                <div className="flex items-center gap-2 text-[11px] min-w-0">
+                  <FileText className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
+                  <span className="font-medium truncate">{authorizedFile.name}</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <Button variant="ghost" size="sm" className="h-6 px-2 text-[11px] text-primary">
+                    <Eye className="h-3 w-3 mr-1" /> View
+                  </Button>
+                  <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => setAuthorizedFile(null)}>
+                    <X className="h-3 w-3" />
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <div className="text-[11px] text-muted-foreground italic">No authorization file on record.</div>
+            )}
+          </div>
+
+          {/* Upload file */}
+          <div className="space-y-1">
+            <Label className="text-[11px] font-semibold">Upload File</Label>
+            <div className="flex items-center gap-2">
+              <label className="flex-1 flex items-center gap-2 h-8 px-2 rounded-md border border-dashed border-border bg-muted/30 text-[11px] text-muted-foreground cursor-pointer hover:border-primary/40 transition-colors">
+                <Paperclip className="h-3 w-3 shrink-0" />
+                <span className="truncate">{uploadFile ? uploadFile.name : "Choose a file to attach"}</span>
+                <input
+                  type="file"
+                  className="hidden"
+                  onChange={(e) => setUploadFile(e.target.files?.[0] ?? null)}
+                />
+              </label>
+              {uploadFile && (
+                <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => setUploadFile(null)}>
+                  <X className="h-3 w-3" />
+                </Button>
+              )}
+            </div>
+          </div>
+
+          {/* Actions */}
+          <div className="flex justify-end gap-2 border-t border-border pt-3">
+            <Button variant="outline" size="sm" className="h-8 px-3 text-[11px]" onClick={handleCancel}>
+              Cancel
+            </Button>
+            <Button
+              size="sm"
+              className="h-8 px-3 text-[11px] bg-foreground text-background hover:bg-foreground/90"
+              onClick={handleSave}
+            >
+              <Save className="h-3 w-3 mr-1" /> Save
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Comments */}
+      <Card>
+        <CardHeader className="p-3 pb-2">
+          <CardTitle className="text-[12px] font-semibold flex items-center gap-1.5">
+            <StickyNote className="h-3.5 w-3.5" /> Comments
+          </CardTitle>
+          <CardDescription className="text-[11px]">
+            Notes and history related to this authorization.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="p-3 pt-0 space-y-3">
+          <div className="flex items-center gap-2">
+            <Input
+              value={comment}
+              onChange={(e) => setComment(e.target.value.slice(0, 500))}
+              maxLength={500}
+              placeholder="Add a comment…"
+              className="h-8 text-[11px]"
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  addComment();
+                }
+              }}
+            />
+            <Button
+              size="sm"
+              className="h-8 px-3 text-[11px] bg-foreground text-background hover:bg-foreground/90"
+              onClick={addComment}
+            >
+              <Plus className="h-3 w-3 mr-1" /> Add Comment
+            </Button>
+          </div>
+
+          <div className="space-y-2">
+            {comments.length === 0 && (
+              <div className="text-[11px] text-muted-foreground italic">No comments yet.</div>
+            )}
+            {comments.map((c) => (
+              <div key={c.id} className="rounded-md border border-border bg-muted/20 p-2.5">
+                <div className="text-[11px]">{c.text}</div>
+                <div className="mt-1 flex items-center gap-2 text-[10px] text-muted-foreground">
+                  <span className="font-medium">{c.author}</span>
+                  <span>•</span>
+                  <span>{c.when}</span>
+                </div>
+              </div>
+            ))}
           </div>
         </CardContent>
       </Card>
