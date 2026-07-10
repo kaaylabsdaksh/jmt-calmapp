@@ -1417,7 +1417,7 @@ export default function EditCustomer() {
                             </label>
                             <label htmlFor="def-pct" className="flex items-center gap-2 cursor-pointer text-sm font-medium">
                               <RadioGroupItem value="pct" id="def-pct" className="h-4 w-4 border-muted-foreground/50 text-foreground data-[state=checked]:border-foreground data-[state=checked]:text-foreground" />
-                              Pct
+                              Percentage
                             </label>
                           </RadioGroup>
                           <div className="relative">
