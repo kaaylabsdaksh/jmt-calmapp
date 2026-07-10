@@ -2469,7 +2469,7 @@ function EslSurplusInventorySection() {
                   <span className="font-medium truncate">{authorizedFile.name}</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <Button variant="ghost" size="sm" className="h-6 px-2 text-[11px] text-primary">
+                  <Button variant="ghost" size="sm" className="h-6 px-2 text-[11px] text-foreground hover:text-foreground/80">
                     <Eye className="h-3 w-3 mr-1" /> View
                   </Button>
                   <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => setAuthorizedFile(null)}>
