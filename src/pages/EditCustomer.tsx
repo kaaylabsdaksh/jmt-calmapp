@@ -1541,6 +1541,10 @@ export default function EditCustomer() {
                 </Card>
               </TabsContent>
 
+              {/* ESL SURPLUS / INVENTORY */}
+              <TabsContent value="esl-inv" className="mt-2">
+                <EslSurplusInventorySection />
+              </TabsContent>
 
               {/* FILES */}
               <TabsContent value="files" className="mt-2">
