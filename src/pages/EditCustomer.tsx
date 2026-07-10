@@ -1408,26 +1408,37 @@ export default function EditCustomer() {
                           <h3 className="text-sm font-medium text-foreground">Default Pricing</h3>
                         </div>
 
-                        <RadioGroup defaultValue="pct" className="space-y-2">
-                          <div className="flex items-center gap-2">
-                            <RadioGroupItem
-                              value="hourly"
-                              id="def-hourly"
-                              className="h-4 w-4 border-slate-400 text-foreground data-[state=checked]:border-foreground data-[state=checked]:ring-1 data-[state=checked]:ring-foreground/20 transition-colors"
-                            />
-                            <Label htmlFor="def-hourly" className="text-[12px] w-16">Hourly</Label>
-                            <Input className="h-8 text-[12px] px-3 py-1 flex-1" />
+                        <div className="space-y-2">
+                          <Label className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">Rate Type</Label>
+                          <RadioGroup defaultValue="pct" className="grid grid-cols-2 gap-2">
+                            <label
+                              htmlFor="def-hourly"
+                              className="group relative flex items-center gap-2 rounded-md border border-border bg-background px-3 py-2 cursor-pointer transition-colors hover:border-foreground/40 has-[:checked]:border-foreground has-[:checked]:bg-muted/40 has-[:checked]:shadow-[inset_3px_0_0_0_hsl(var(--foreground))]"
+                            >
+                              <RadioGroupItem
+                                value="hourly"
+                                id="def-hourly"
+                                className="h-3.5 w-3.5 border-slate-400 text-foreground data-[state=checked]:border-foreground"
+                              />
+                              <span className="text-[12px] font-medium">Hourly</span>
+                            </label>
+                            <label
+                              htmlFor="def-pct"
+                              className="group relative flex items-center gap-2 rounded-md border border-border bg-background px-3 py-2 cursor-pointer transition-colors hover:border-foreground/40 has-[:checked]:border-foreground has-[:checked]:bg-muted/40 has-[:checked]:shadow-[inset_3px_0_0_0_hsl(var(--foreground))]"
+                            >
+                              <RadioGroupItem
+                                value="pct"
+                                id="def-pct"
+                                className="h-3.5 w-3.5 border-slate-400 text-foreground data-[state=checked]:border-foreground"
+                              />
+                              <span className="text-[12px] font-medium">Pct</span>
+                            </label>
+                          </RadioGroup>
+                          <div className="relative">
+                            <Input className="h-9 text-[12px] pl-3 pr-8" defaultValue="20.00" />
+                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[11px] font-medium text-muted-foreground">%</span>
                           </div>
-                          <div className="flex items-center gap-2">
-                            <RadioGroupItem
-                              value="pct"
-                              id="def-pct"
-                              className="h-4 w-4 border-slate-400 text-foreground data-[state=checked]:border-foreground data-[state=checked]:ring-1 data-[state=checked]:ring-foreground/20 transition-colors"
-                            />
-                            <Label htmlFor="def-pct" className="text-[12px] w-16">Pct</Label>
-                            <Input className="h-8 text-[12px] px-3 py-1 flex-1" defaultValue="20.00" />
-                          </div>
-                        </RadioGroup>
+                        </div>
 
                         <div className="grid grid-cols-2 gap-3">
                           <div className="space-y-1">
@@ -1465,24 +1476,33 @@ export default function EditCustomer() {
                           <h3 className="text-sm font-medium text-foreground">ESL Configuration</h3>
                         </div>
 
-                        <RadioGroup defaultValue="yes" className="space-y-2">
-                          <div className="flex items-center gap-2">
-                            <RadioGroupItem
-                              value="yes"
-                              id="esl-yes"
-                              className="h-4 w-4 border-slate-400 text-foreground data-[state=checked]:border-foreground data-[state=checked]:ring-1 data-[state=checked]:ring-foreground/20 transition-colors"
-                            />
-                            <Label htmlFor="esl-yes" className="text-[12px]">Yes</Label>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <RadioGroupItem
-                              value="no"
-                              id="esl-no"
-                              className="h-4 w-4 border-slate-400 text-foreground data-[state=checked]:border-foreground data-[state=checked]:ring-1 data-[state=checked]:ring-foreground/20 transition-colors"
-                            />
-                            <Label htmlFor="esl-no" className="text-[12px]">No</Label>
-                          </div>
-                        </RadioGroup>
+                        <div className="space-y-2">
+                          <Label className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">ESL Enabled</Label>
+                          <RadioGroup defaultValue="yes" className="grid grid-cols-2 gap-2">
+                            <label
+                              htmlFor="esl-yes"
+                              className="group relative flex items-center gap-2 rounded-md border border-border bg-background px-3 py-2 cursor-pointer transition-colors hover:border-foreground/40 has-[:checked]:border-foreground has-[:checked]:bg-muted/40 has-[:checked]:shadow-[inset_3px_0_0_0_hsl(var(--foreground))]"
+                            >
+                              <RadioGroupItem
+                                value="yes"
+                                id="esl-yes"
+                                className="h-3.5 w-3.5 border-slate-400 text-foreground data-[state=checked]:border-foreground"
+                              />
+                              <span className="text-[12px] font-medium">Yes</span>
+                            </label>
+                            <label
+                              htmlFor="esl-no"
+                              className="group relative flex items-center gap-2 rounded-md border border-border bg-background px-3 py-2 cursor-pointer transition-colors hover:border-foreground/40 has-[:checked]:border-foreground has-[:checked]:bg-muted/40 has-[:checked]:shadow-[inset_3px_0_0_0_hsl(var(--foreground))]"
+                            >
+                              <RadioGroupItem
+                                value="no"
+                                id="esl-no"
+                                className="h-3.5 w-3.5 border-slate-400 text-foreground data-[state=checked]:border-foreground"
+                              />
+                              <span className="text-[12px] font-medium">No</span>
+                            </label>
+                          </RadioGroup>
+                        </div>
 
                         <div className="grid grid-cols-2 gap-3">
                           <div className="space-y-1">
