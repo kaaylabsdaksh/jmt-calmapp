@@ -1727,7 +1727,7 @@ export default function EditCustomer() {
       </main>
 
       {/* Sticky footer actions */}
-      <footer className="fixed bottom-0 left-0 right-0 z-30 bg-white border-t border-border px-3 sm:px-4 lg:px-6 py-3">
+      <footer className="bg-white border-t border-border px-3 sm:px-4 lg:px-6 py-3 shrink-0">
         <div className="max-w-[1600px] mx-auto flex items-center justify-end gap-3">
           <Button
             variant="outline"
