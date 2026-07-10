@@ -869,7 +869,7 @@ export default function EditCustomer() {
 
 
   return (
-    <div className="min-h-screen bg-muted/20">
+    <div className="flex flex-col min-h-screen bg-muted/20">
       <ModernTopNav />
 
       {/* Sticky page action bar */}
