@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import {
   Save,
@@ -1650,16 +1650,9 @@ export default function EditCustomer() {
                 <FeeScheduleSection />
               </TabsContent>
 
-              {/* Fallback simple tabs */}
-              {["custom"].map((v) => (
-                <TabsContent key={v} value={v} className="mt-2">
-                  <Card>
-                    <CardContent className="p-6 text-center text-[11px] text-muted-foreground">
-                      This section preserves legacy functionality. Content will render here.
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-              ))}
+              <TabsContent value="custom" className="mt-2">
+                <CustomFieldsSection />
+              </TabsContent>
             </div>
 
             {/* Right sidebar */}
@@ -1961,6 +1954,99 @@ function FeeScheduleSection() {
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
+      </CardContent>
+    </Card>
+  );
+}
+
+// ============ Custom Fields Section ============
+function CustomFieldsSection() {
+  const { toast } = useToast();
+  const [fields, setFields] = useState({
+    f1: { label: "", value: "" },
+    f2: { label: "", value: "" },
+    f3: { label: "", value: "" },
+    f4: { label: "", value: "" },
+    f5: { label: "", value: "" },
+    f6: { label: "", value: "" },
+  });
+
+  const textRows = [
+    { key: "f1" as const, name: "Field 1", hint: "alphanumeric, 100 characters" },
+    { key: "f2" as const, name: "Field 2", hint: "alphanumeric, 100 characters" },
+    { key: "f3" as const, name: "Field 3", hint: "alphanumeric, 100 characters" },
+    { key: "f4" as const, name: "Field 4", hint: "alphanumeric, 100 characters" },
+    { key: "f5" as const, name: "Field 5", hint: "alphanumeric, 100 characters" },
+  ];
+
+  const update = (key: keyof typeof fields, patch: Partial<{ label: string; value: string }>) =>
+    setFields((f) => ({ ...f, [key]: { ...f[key], ...patch } }));
+
+  return (
+    <Card>
+      <CardHeader className="p-3 pb-2">
+        <CardTitle className="text-[13px] font-semibold">Custom Fields</CardTitle>
+        <CardDescription className="text-[11px]">
+          Define labels and values for account-specific custom fields.
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="p-3 pt-0">
+        <div className="grid grid-cols-[220px_1fr_1.5fr] gap-x-3 gap-y-2 items-center max-w-3xl">
+          <div />
+          <Label className="text-[11px] font-semibold text-muted-foreground">Label</Label>
+          <Label className="text-[11px] font-semibold text-muted-foreground">Value</Label>
+
+          {textRows.map((r) => (
+            <Fragment key={r.key}>
+              <div className="text-[11px]">
+                <div className="font-medium">{r.name}</div>
+                <div className="text-[10px] text-muted-foreground">{r.hint}</div>
+              </div>
+              <Input
+                value={fields[r.key].label}
+                onChange={(e) => update(r.key, { label: e.target.value.slice(0, 50) })}
+                maxLength={50}
+                placeholder="Label"
+                className="h-8 text-[11px]"
+              />
+              <Input
+                value={fields[r.key].value}
+                onChange={(e) => update(r.key, { value: e.target.value.slice(0, 100) })}
+                maxLength={100}
+                placeholder="Value"
+                className="h-8 text-[11px]"
+              />
+            </Fragment>
+          ))}
+
+          <div className="text-[11px]">
+            <div className="font-medium">Field 6</div>
+            <div className="text-[10px] text-muted-foreground">date/time</div>
+          </div>
+          <Input
+            value={fields.f6.label}
+            onChange={(e) => update("f6", { label: e.target.value.slice(0, 50) })}
+            maxLength={50}
+            placeholder="Label"
+            className="h-8 text-[11px]"
+          />
+          <Input
+            type="datetime-local"
+            value={fields.f6.value}
+            onChange={(e) => update("f6", { value: e.target.value })}
+            className="h-8 text-[11px]"
+          />
+        </div>
+
+        <div className="mt-4 flex justify-end border-t border-border pt-3">
+          <Button
+            size="sm"
+            className="h-8 px-3 text-[11px] bg-foreground text-background hover:bg-foreground/90"
+            onClick={() => toast({ title: "Custom fields saved" })}
+          >
+            Save Custom Fields
+          </Button>
+        </div>
       </CardContent>
     </Card>
   );
