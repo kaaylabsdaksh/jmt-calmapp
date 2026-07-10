@@ -1249,31 +1249,140 @@ export default function EditCustomer() {
 
               {/* CONTRACT PRICING */}
               <TabsContent value="contract" className="mt-2">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                  {[
-                    { title: "Pricing Rules", desc: "12 active rules across 4 categories.", icon: DollarSign },
-                    { title: "Discounts", desc: "3 volume discounts configured.", icon: Tag },
-                    { title: "Contract Documents", desc: "MSA-2024.pdf · Signed Jan 12, 2024", icon: FileText },
-                  ].map((c, i) => (
-                    <Card key={i}>
-                      <CardContent className="p-2.5">
-                        <div className="flex items-start gap-2">
-                          <div className="w-7 h-7 rounded-md bg-blue-500/10 text-blue-600 flex items-center justify-center">
-                            <c.icon className="h-3.5 w-3.5" />
+                <Card>
+                  <CardHeader className="p-3 pb-2">
+                    <CardTitle className="text-[12px] font-semibold flex items-center gap-1.5">
+                      <DollarSign className="h-3.5 w-3.5" /> Contract Pricing
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="p-3 pt-0 space-y-3">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      {/* Default */}
+                      <div className="border rounded-md p-3 bg-card space-y-2">
+                        <div className="text-[11px] font-semibold text-center">Default</div>
+                        <RadioGroup defaultValue="pct" className="space-y-1.5">
+                          <div className="flex items-center gap-2">
+                            <RadioGroupItem value="hourly" id="def-hourly" />
+                            <Label htmlFor="def-hourly" className="text-[11px] w-16">Hourly</Label>
+                            <Input className="h-7 text-[11px] px-2.5 py-1 flex-1" />
                           </div>
-                          <div className="min-w-0">
-                            <div className="text-xs font-semibold">{c.title}</div>
-                            <div className="text-[10px] text-muted-foreground mt-0.5">{c.desc}</div>
-                            <Button variant="link" size="sm" className="h-5 px-0 text-[10px] mt-0.5">
-                              Manage <ChevronRight className="h-3 w-3 ml-0.5" />
-                            </Button>
+                          <div className="flex items-center gap-2">
+                            <RadioGroupItem value="pct" id="def-pct" />
+                            <Label htmlFor="def-pct" className="text-[11px] w-16">Pct</Label>
+                            <Input className="h-7 text-[11px] px-2.5 py-1 flex-1" defaultValue="20.00" />
+                          </div>
+                        </RadioGroup>
+                        <Field label="Exp. Date">
+                          <Input type="date" className="h-7 text-[11px] px-2.5 py-1" defaultValue="2023-08-31" />
+                        </Field>
+                        <Field label="Review Date">
+                          <Input type="date" className="h-7 text-[11px] px-2.5 py-1" defaultValue="2023-07-31" />
+                        </Field>
+                        <Field label="Labor Rate">
+                          <Input className="h-7 text-[11px] px-2.5 py-1" defaultValue="50.00" />
+                        </Field>
+                        <div className="space-y-1">
+                          <div className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide">File</div>
+                          <div className="flex items-center gap-2">
+                            <Button variant="link" size="sm" className="h-6 px-0 text-[11px]">View/Open</Button>
+                          </div>
+                          <div className="flex items-center gap-1.5">
+                            <Input type="file" className="h-7 text-[11px] px-2 py-1 flex-1" />
+                            <Button size="sm" variant="outline" className="h-7 text-[11px]">Upload</Button>
                           </div>
                         </div>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
+                      </div>
+
+                      {/* ESL */}
+                      <div className="border rounded-md p-3 bg-card space-y-2">
+                        <div className="text-[11px] font-semibold text-center">ESL</div>
+                        <RadioGroup defaultValue="yes" className="space-y-1.5">
+                          <div className="flex items-center gap-2">
+                            <RadioGroupItem value="yes" id="esl-yes" />
+                            <Label htmlFor="esl-yes" className="text-[11px]">Yes</Label>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <RadioGroupItem value="no" id="esl-no" />
+                            <Label htmlFor="esl-no" className="text-[11px]">No</Label>
+                          </div>
+                        </RadioGroup>
+                        <Field label="Exp. Date">
+                          <Input type="date" className="h-7 text-[11px] px-2.5 py-1" />
+                        </Field>
+                        <Field label="Review Date">
+                          <Input type="date" className="h-7 text-[11px] px-2.5 py-1" />
+                        </Field>
+                        <div className="space-y-1">
+                          <div className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide">File</div>
+                          <div className="flex items-center gap-1.5">
+                            <Input type="file" className="h-7 text-[11px] px-2 py-1 flex-1" />
+                            <Button size="sm" variant="outline" className="h-7 text-[11px]">Upload</Button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <Field label="Comment" full>
+                      <Textarea className="text-[11px] px-2.5 py-1.5 min-h-[70px]" />
+                    </Field>
+
+                    <div className="flex items-center gap-4">
+                      <label className="flex items-center gap-2 text-[11px] font-medium cursor-pointer">
+                        <Checkbox id="cp-national" /> National Contract
+                      </label>
+                      <label className="flex items-center gap-2 text-[11px] font-medium cursor-pointer">
+                        <Checkbox id="cp-noauto" /> Do Not Auto Price
+                      </label>
+                    </div>
+
+                    <div className="text-[11px] text-destructive text-center">
+                      Reminder: You must use 'Set Contract Pricing' to save any of the data above. Save at bottom of page DOES NOT save this data.
+                    </div>
+
+                    <div className="flex items-center justify-center gap-2">
+                      <Button size="sm" className="h-8 text-[11px]">Set Contract Pricing</Button>
+                      <Button size="sm" variant="outline" className="h-8 text-[11px]">Add Comment Only</Button>
+                      <Button size="sm" variant="outline" className="h-8 text-[11px]">Cancel</Button>
+                    </div>
+
+                    <div className="border rounded-md overflow-hidden">
+                      <Table>
+                        <TableHeader>
+                          <TableRow>
+                            <TableHead className="text-[11px] h-8">Entered</TableHead>
+                            <TableHead className="text-[11px] h-8">User</TableHead>
+                            <TableHead className="text-[11px] h-8">Comment</TableHead>
+                            <TableHead className="text-[11px] h-8 w-16"></TableHead>
+                          </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                          <TableRow>
+                            <TableCell className="text-[11px] align-top whitespace-nowrap">08/03/2023 12:10 PM</TableCell>
+                            <TableCell className="text-[11px] align-top whitespace-nowrap">Timothy J Oldendorf</TableCell>
+                            <TableCell className="text-[11px] align-top">
+                              <div>Contract Pricing set to Pct: 20.00</div>
+                              <div>Exp Date set to 8/31/2023</div>
+                              <div>Rev Date set to 7/31/2023</div>
+                              <div>Labor Rate set to 50.00</div>
+                              <div>HELLO</div>
+                            </TableCell>
+                            <TableCell className="text-[11px] align-top">
+                              <Button variant="link" size="sm" className="h-5 px-0 text-[11px] text-destructive">Delete</Button>
+                            </TableCell>
+                          </TableRow>
+                        </TableBody>
+                      </Table>
+                    </div>
+
+                    <div className="flex items-center justify-center gap-2 text-[11px]">
+                      <Button size="sm" variant="outline" className="h-7 text-[11px]" disabled>Prev</Button>
+                      <span className="font-medium">1 of 21857 Records</span>
+                      <Button size="sm" variant="outline" className="h-7 text-[11px]">Next</Button>
+                    </div>
+                  </CardContent>
+                </Card>
               </TabsContent>
+
 
               {/* FILES */}
               <TabsContent value="files" className="mt-2">
