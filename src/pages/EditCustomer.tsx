@@ -2440,11 +2440,11 @@ function EslSurplusInventorySection() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-2xl">
             <div className="space-y-1">
               <Label className="text-[11px] font-semibold">Date Authorized</Label>
-              <Input
-                type="date"
+              <ModernDatePicker
+                size="md"
                 value={dateAuthorized}
-                onChange={(e) => setDateAuthorized(e.target.value)}
-                className="h-8 text-[11px]"
+                onChange={(d) => setDateAuthorized(d ? d.toISOString().slice(0, 10) : "")}
+                inputClassName="text-[11px]"
               />
             </div>
             <div className="space-y-1">
