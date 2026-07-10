@@ -1459,92 +1459,9 @@ export default function EditCustomer() {
 
               {/* Print Tags */}
               <TabsContent value="print-tags" className="mt-2">
-                <Card>
-                  <CardHeader className="p-3 pb-2">
-                    <CardTitle className="text-[12px] font-semibold flex items-center gap-1.5">
-                      <Tag className="h-3.5 w-3.5" /> Print Tags
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-3 pt-0 space-y-3">
-                    <RadioGroup defaultValue="regular" className="flex items-center gap-4">
-                      <label className="flex items-center gap-1.5 text-[11px] font-medium cursor-pointer">
-                        <RadioGroupItem value="regular" id="pt-regular" /> Regular
-                      </label>
-                      <label className="flex items-center gap-1.5 text-[11px] font-medium cursor-pointer">
-                        <RadioGroupItem value="rental" id="pt-rental" /> Rental
-                      </label>
-                    </RadioGroup>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 max-w-3xl">
-                      <Field label="Contact">
-                        <Select>
-                          <SelectTrigger className="h-7 text-[11px] px-2.5"><SelectValue placeholder="Select contact" /></SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="jerome">Jerome Rodriguez</SelectItem>
-                            <SelectItem value="sarah">Sarah Chen</SelectItem>
-                            <SelectItem value="mike">Mike Thompson</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </Field>
-                      <Field label="Action">
-                        <Select>
-                          <SelectTrigger className="h-7 text-[11px] px-2.5"><SelectValue placeholder="Select action" /></SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="test">Test</SelectItem>
-                            <SelectItem value="retest">Retest</SelectItem>
-                            <SelectItem value="repair">Repair</SelectItem>
-                            <SelectItem value="inspect">Inspect</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </Field>
-                      <Field label="Arrival Type">
-                        <Select>
-                          <SelectTrigger className="h-7 text-[11px] px-2.5"><SelectValue placeholder="Select arrival type" /></SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="pickup">Pick Up</SelectItem>
-                            <SelectItem value="dropoff">Drop Off</SelectItem>
-                            <SelectItem value="shipped">Shipped</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </Field>
-                      <Field label="Cal Freq">
-                        <Input className="h-7 text-[11px] px-2.5 py-1" placeholder="e.g. 6 months" />
-                      </Field>
-                      <Field label="Pick Up">
-                        <Input type="date" className="h-7 text-[11px] px-2.5 py-1" defaultValue="2026-07-10" />
-                      </Field>
-                      <Field label="Need By">
-                        <Input type="date" className="h-7 text-[11px] px-2.5 py-1" />
-                      </Field>
-                      <Field label="Priority">
-                        <Select>
-                          <SelectTrigger className="h-7 text-[11px] px-2.5"><SelectValue placeholder="Select priority" /></SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="normal">Normal</SelectItem>
-                            <SelectItem value="rush">Rush</SelectItem>
-                            <SelectItem value="expedite">Expedite</SelectItem>
-                            <SelectItem value="emergency">Emergency</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </Field>
-                      <Field label="How Many">
-                        <Input type="number" min={1} defaultValue={1} className="h-7 text-[11px] px-2.5 py-1 w-24" />
-                      </Field>
-                      <div className="md:col-span-2">
-                        <Field label="Comments" full>
-                          <Textarea className="text-[11px] px-2.5 py-1.5 min-h-[60px]" placeholder="Optional notes for the tag print job…" />
-                        </Field>
-                      </div>
-                    </div>
-
-                    <div className="flex justify-center pt-1">
-                      <Button size="sm" className="h-8 text-[11px] gap-1.5">
-                        <Tag className="h-3.5 w-3.5" /> Print Tags
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
+                <PrintTagsPanel />
               </TabsContent>
+
 
               {/* Fallback simple tabs */}
               {["fees", "custom"].map((v) => (
