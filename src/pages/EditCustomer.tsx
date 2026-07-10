@@ -35,6 +35,9 @@ import {
   Mail,
   Phone,
   ChevronRight,
+  ChevronLeft,
+  Search,
+  X,
   LayoutGrid,
   List as ListIcon,
 } from "lucide-react";
