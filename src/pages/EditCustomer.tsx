@@ -1725,6 +1725,29 @@ export default function EditCustomer() {
 
         </div>
       </main>
+
+      {/* Sticky footer actions */}
+      <footer className="sticky bottom-0 z-30 bg-white border-t border-border px-3 sm:px-4 lg:px-6 py-3">
+        <div className="max-w-[1600px] mx-auto flex items-center justify-end gap-3">
+          <Button
+            variant="outline"
+            size="sm"
+            className="h-9 px-3.5 text-xs"
+            onClick={() => toast({ title: "Create Quote", description: "Opening quote form…" })}
+          >
+            <FilePlus2 className="h-3.5 w-3.5 mr-1.5" />
+            Create Quote
+          </Button>
+          <Button
+            size="sm"
+            className="h-9 px-4 text-xs bg-blue-600 hover:bg-blue-700 text-white"
+            onClick={handleSave}
+          >
+            <Save className="h-3.5 w-3.5 mr-1.5" />
+            Save Changes
+          </Button>
+        </div>
+      </footer>
     </div>
   );
 }
