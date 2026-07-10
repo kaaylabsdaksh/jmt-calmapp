@@ -1700,7 +1700,7 @@ export default function EditCustomer() {
           </Button>
           <Button
             size="sm"
-            className="h-9 px-4 text-xs bg-primary text-primary-foreground hover:bg-primary/90"
+            className="h-9 px-4 text-xs bg-green-600 text-white hover:bg-green-700"
             onClick={handleSave}
           >
             <Save className="h-3.5 w-3.5 mr-1.5" />
