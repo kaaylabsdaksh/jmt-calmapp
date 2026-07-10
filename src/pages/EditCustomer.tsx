@@ -715,7 +715,7 @@ function PrintTagsPanel() {
         </RadioGroup>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 max-w-3xl">
-          <Field label="Contact">
+          <Field label="Contact" required>
             <Select>
               <SelectTrigger className="h-7 text-[11px] px-2.5"><SelectValue placeholder="Select contact" /></SelectTrigger>
               <SelectContent>
