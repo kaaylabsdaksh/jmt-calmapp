@@ -2836,7 +2836,7 @@ function WoExtFilesSection() {
                   <tr key={`${r.item}-${i}`} className="border-t border-border/60 even:bg-muted/20 hover:bg-muted/40 [&>td]:px-2 [&>td]:py-1.5">
                     <td className="tabular-nums font-medium">{r.item}</td>
                     <td>
-                      <a href="#" onClick={(e) => e.preventDefault()} className="inline-flex items-center gap-1 text-primary hover:underline">
+                      <a href="#" onClick={(e) => e.preventDefault()} className="inline-flex items-center gap-1 text-foreground hover:text-foreground/80 hover:underline">
                         <FileText className="h-3 w-3" />
                         <span className="truncate">{r.file}</span>
                       </a>
