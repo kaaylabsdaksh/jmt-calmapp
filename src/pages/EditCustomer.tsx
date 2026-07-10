@@ -1403,7 +1403,7 @@ export default function EditCustomer() {
                           </div>
                           <div className="space-y-1">
                             <Label className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">Review Date</Label>
-                            <Input type="date" className="h-8 text-[12px] px-3 py-1" defaultValue="2023-07-31" />
+                            <ModernDatePicker size="md" value="2023-07-31" inputClassName="text-[12px] px-3" />
                           </div>
                           <div className="space-y-1 col-span-2">
                             <Label className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">Labor Rate</Label>
