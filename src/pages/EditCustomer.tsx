@@ -931,7 +931,7 @@ export default function EditCustomer() {
         </div>
       </div>
 
-      <main className="px-3 sm:px-4 lg:px-6 py-4 pb-24">
+      <main className="flex-1 px-3 sm:px-4 lg:px-6 py-4">
         <div className="max-w-[1600px] mx-auto space-y-4">
           {/* Summary card */}
           <Card>
