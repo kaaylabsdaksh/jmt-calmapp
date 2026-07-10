@@ -95,6 +95,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useToast } from "@/components/ui/use-toast";
 import ModernTopNav from "@/components/modern/ModernTopNav";
 import { ModernDatePicker } from "@/components/ui/modern-date-picker";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 /* ------------------------------- Helpers ------------------------------- */
 
