@@ -775,7 +775,8 @@ function PrintTagsPanel() {
                 <Input className="h-7 text-[11px] px-2.5 py-1" placeholder="e.g. 6 months" />
               </Field>
               <Field label="Pick Up">
-                <Input type="date" className="h-7 text-[11px] px-2.5 py-1" defaultValue="2026-07-10" />
+                <ModernDatePicker size="sm" value="2026-07-10" inputClassName="text-[11px] px-2.5" />
+
               </Field>
               <Field label="Need By">
                 <Input type="date" className="h-7 text-[11px] px-2.5 py-1" />
