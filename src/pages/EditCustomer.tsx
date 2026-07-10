@@ -898,23 +898,6 @@ export default function EditCustomer() {
             <div className="hidden sm:block h-10 w-px bg-border" />
 
             <div className="flex items-center gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                className="h-9 px-3.5 text-xs"
-                onClick={() => toast({ title: "Create Quote", description: "Opening quote form…" })}
-              >
-                <FilePlus2 className="h-3.5 w-3.5 mr-1.5" />
-                Create Quote
-              </Button>
-              <Button
-                size="sm"
-                className="h-9 px-4 text-xs bg-blue-600 hover:bg-blue-700 text-white"
-                onClick={handleSave}
-              >
-                <Save className="h-3.5 w-3.5 mr-1.5" />
-                Save Changes
-              </Button>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" size="sm" className="h-9 w-9 p-0">
@@ -948,7 +931,7 @@ export default function EditCustomer() {
         </div>
       </div>
 
-      <main className="px-3 sm:px-4 lg:px-6 py-4">
+      <main className="px-3 sm:px-4 lg:px-6 py-4 pb-24">
         <div className="max-w-[1600px] mx-auto space-y-4">
           {/* Summary card */}
           <Card>
@@ -1742,6 +1725,29 @@ export default function EditCustomer() {
 
         </div>
       </main>
+
+      {/* Sticky footer actions */}
+      <footer className="fixed bottom-0 left-0 right-0 z-30 bg-white border-t border-border px-3 sm:px-4 lg:px-6 py-3">
+        <div className="max-w-[1600px] mx-auto flex items-center justify-end gap-3">
+          <Button
+            variant="outline"
+            size="sm"
+            className="h-9 px-3.5 text-xs"
+            onClick={() => toast({ title: "Create Quote", description: "Opening quote form…" })}
+          >
+            <FilePlus2 className="h-3.5 w-3.5 mr-1.5" />
+            Create Quote
+          </Button>
+          <Button
+            size="sm"
+            className="h-9 px-4 text-xs bg-foreground text-background hover:bg-foreground/90"
+            onClick={handleSave}
+          >
+            <Save className="h-3.5 w-3.5 mr-1.5" />
+            Save Changes
+          </Button>
+        </div>
+      </footer>
     </div>
   );
 }
