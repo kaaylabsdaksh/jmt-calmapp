@@ -705,12 +705,20 @@ function PrintTagsPanel() {
         </CardTitle>
       </CardHeader>
       <CardContent className="p-3 pt-0 space-y-3">
-        <RadioGroup value={mode} onValueChange={(v) => setMode(v as "regular" | "rental")} className="flex items-center gap-4">
-          <label className="flex items-center gap-1.5 text-[11px] font-medium cursor-pointer">
-            <RadioGroupItem value="regular" id="pt-regular" /> Regular
+        <RadioGroup value={mode} onValueChange={(v) => setMode(v as "regular" | "rental")} className="flex items-center gap-6">
+          <label className="flex items-center gap-2 text-[12px] font-medium text-foreground cursor-pointer group">
+            <RadioGroupItem
+              value="regular"
+              id="pt-regular"
+              className="h-4 w-4 border-slate-400 text-foreground data-[state=checked]:border-foreground data-[state=checked]:ring-1 data-[state=checked]:ring-foreground/20 transition-colors"
+            /> Regular
           </label>
-          <label className="flex items-center gap-1.5 text-[11px] font-medium cursor-pointer">
-            <RadioGroupItem value="rental" id="pt-rental" /> Rental
+          <label className="flex items-center gap-2 text-[12px] font-medium text-foreground cursor-pointer group">
+            <RadioGroupItem
+              value="rental"
+              id="pt-rental"
+              className="h-4 w-4 border-slate-400 text-foreground data-[state=checked]:border-foreground data-[state=checked]:ring-1 data-[state=checked]:ring-foreground/20 transition-colors"
+            /> Rental
           </label>
         </RadioGroup>
 
