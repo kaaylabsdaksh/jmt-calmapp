@@ -94,6 +94,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useToast } from "@/components/ui/use-toast";
 import ModernTopNav from "@/components/modern/ModernTopNav";
+import { ModernDatePicker } from "@/components/ui/modern-date-picker";
 
 /* ------------------------------- Helpers ------------------------------- */
 
@@ -774,10 +775,11 @@ function PrintTagsPanel() {
                 <Input className="h-7 text-[11px] px-2.5 py-1" placeholder="e.g. 6 months" />
               </Field>
               <Field label="Pick Up">
-                <Input type="date" className="h-7 text-[11px] px-2.5 py-1" defaultValue="2026-07-10" />
+                <ModernDatePicker size="sm" value="2026-07-10" inputClassName="text-[11px] px-2.5" />
+
               </Field>
               <Field label="Need By">
-                <Input type="date" className="h-7 text-[11px] px-2.5 py-1" />
+                <ModernDatePicker size="sm" inputClassName="text-[11px] px-2.5" />
               </Field>
               <Field label="Priority" required>
                 <Select>
@@ -825,7 +827,7 @@ function PrintTagsPanel() {
                 <Input className="h-7 text-[11px] px-2.5 py-1" />
               </Field>
               <Field label="Date">
-                <Input type="date" className="h-7 text-[11px] px-2.5 py-1" defaultValue="2026-07-10" />
+                <ModernDatePicker size="sm" value="2026-07-10" inputClassName="text-[11px] px-2.5" />
               </Field>
               <Field label="Quote #" required>
                 <Input className="h-7 text-[11px] px-2.5 py-1" />
@@ -1397,11 +1399,11 @@ export default function EditCustomer() {
                         <div className="grid grid-cols-2 gap-3">
                           <div className="space-y-1">
                             <Label className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">Exp. Date</Label>
-                            <Input type="date" className="h-8 text-[12px] px-3 py-1" defaultValue="2023-08-31" />
+                            <ModernDatePicker size="md" value="2023-08-31" inputClassName="text-[12px] px-3" />
                           </div>
                           <div className="space-y-1">
                             <Label className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">Review Date</Label>
-                            <Input type="date" className="h-8 text-[12px] px-3 py-1" defaultValue="2023-07-31" />
+                            <ModernDatePicker size="md" value="2023-07-31" inputClassName="text-[12px] px-3" />
                           </div>
                           <div className="space-y-1 col-span-2">
                             <Label className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">Labor Rate</Label>
@@ -1448,11 +1450,12 @@ export default function EditCustomer() {
                         <div className="grid grid-cols-2 gap-3">
                           <div className="space-y-1">
                             <Label className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">Exp. Date</Label>
-                            <Input type="date" className="h-8 text-[12px] px-3 py-1" />
+                            <ModernDatePicker size="md" inputClassName="text-[12px] px-3" />
+
                           </div>
                           <div className="space-y-1">
                             <Label className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">Review Date</Label>
-                            <Input type="date" className="h-8 text-[12px] px-3 py-1" />
+                            <ModernDatePicker size="md" inputClassName="text-[12px] px-3" />
                           </div>
                         </div>
 
@@ -1836,14 +1839,17 @@ function FeeScheduleSection() {
           </div>
           <div className="space-y-1">
             <Label className="text-[11px] font-semibold">New Effective Date</Label>
-            <Input
-              type="date"
-              value={newEffective.split("/").reverse().join("-").replace(/^(\d{4})-(\d{2})-(\d{2})$/, "$1-$2-$3")}
-              onChange={(e) => {
-                const [y, m, d] = e.target.value.split("-");
-                if (y && m && d) setNewEffective(`${m}/${d}/${y}`);
+            <ModernDatePicker
+              size="md"
+              value={newEffective}
+              onChange={(d) => {
+                if (d) {
+                  const mm = String(d.getMonth() + 1).padStart(2, "0");
+                  const dd = String(d.getDate()).padStart(2, "0");
+                  setNewEffective(`${mm}/${dd}/${d.getFullYear()}`);
+                }
               }}
-              className="h-8 text-[11px]"
+              inputClassName="text-[11px]"
             />
           </div>
         </div>
@@ -2434,11 +2440,11 @@ function EslSurplusInventorySection() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-2xl">
             <div className="space-y-1">
               <Label className="text-[11px] font-semibold">Date Authorized</Label>
-              <Input
-                type="date"
+              <ModernDatePicker
+                size="md"
                 value={dateAuthorized}
-                onChange={(e) => setDateAuthorized(e.target.value)}
-                className="h-8 text-[11px]"
+                onChange={(d) => setDateAuthorized(d ? d.toISOString().slice(0, 10) : "")}
+                inputClassName="text-[11px]"
               />
             </div>
             <div className="space-y-1">
