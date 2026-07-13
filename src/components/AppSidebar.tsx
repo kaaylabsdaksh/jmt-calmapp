@@ -385,6 +385,25 @@ export function AppSidebar() {
           <>
             <Button
               variant="ghost"
+              onClick={openDrawer}
+              className="w-full justify-start text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
+            >
+              <Sparkles className="h-4 w-4 mr-3" />
+              <span className="text-sm font-medium flex items-center gap-1.5">
+                What's New
+                <NewBadge featureKey={FEATURE_KEYS.whatsNew} />
+              </span>
+            </Button>
+            <Button
+              variant="ghost"
+              onClick={() => startTour()}
+              className="w-full justify-start text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
+            >
+              <HelpCircle className="h-4 w-4 mr-3" />
+              <span className="text-sm font-medium">Take Product Tour</span>
+            </Button>
+            <Button
+              variant="ghost"
               className="w-full justify-start text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
             >
               <span className="h-4 w-4 mr-3 text-xs font-bold flex items-center justify-center">JM</span>
