@@ -428,15 +428,6 @@ export function AppSidebar() {
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => startTour()}
-              className="w-full text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
-              title="Take Product Tour"
-            >
-              <HelpCircle className="h-4 w-4" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
               className="w-full text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
             >
               <span className="text-[10px] font-bold">JM</span>
