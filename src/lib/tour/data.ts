@@ -152,6 +152,7 @@ export const RELEASES: Release[] = [
     highlights: [
       "Unified Invoicing Workspace",
       "Customer Management Improvements",
+      "Saved Filters",
       "Faster column filters",
       "Invoice reports",
     ],
