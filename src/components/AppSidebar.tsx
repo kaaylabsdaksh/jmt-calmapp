@@ -292,11 +292,26 @@ export function AppSidebar() {
                               {(action as any).url ? (
                                 <Link
                                   to={(action as any).url}
+                                  data-tour={
+                                    action.title === "Invoicing"
+                                      ? "invoicing-nav"
+                                      : action.title === "Manage Customers"
+                                      ? "customers-nav"
+                                      : undefined
+                                  }
                                   className="flex items-center w-full h-10 px-3 rounded-lg text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200 ease-in-out group-hover:translate-x-1"
                                   style={{ animationDelay: `${(categoryIndex * 100) + (index * 50)}ms` }}
                                 >
                                   {React.createElement(action.icon, { className: "h-4 w-4 shrink-0 text-sidebar-foreground group-hover:scale-110 transition-transform duration-200" })}
-                                  <span className="ml-3 font-medium text-sm animate-fade-in">{action.title}</span>
+                                  <span className="ml-3 font-medium text-sm animate-fade-in flex items-center gap-1.5">
+                                    {action.title}
+                                    {action.title === "Invoicing" && (
+                                      <NewBadge featureKey={FEATURE_KEYS.invoicingUnified} />
+                                    )}
+                                    {action.title === "Manage Customers" && (
+                                      <NewBadge featureKey={FEATURE_KEYS.manageCustomers} />
+                                    )}
+                                  </span>
                                 </Link>
                               ) : (
                                 <Button
