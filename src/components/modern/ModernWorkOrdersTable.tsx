@@ -5599,12 +5599,11 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                             />
                           ) : (
                             <>
-                              <Search className="absolute left-1.5 top-1/2 -translate-y-1/2 h-2.5 w-2.5 text-muted-foreground/50" />
                               <Input
                                 placeholder=""
                                 value={columnFilters[col.key] || ''}
                                 onChange={(e) => setColumnFilters(prev => ({ ...prev, [col.key]: e.target.value }))}
-                                className="h-6 text-[10px] pl-5 pr-5 border-muted bg-muted/30 rounded-md placeholder:text-muted-foreground/40 focus:bg-background focus:border-primary/30 transition-colors"
+                                className="h-6 text-[11px] text-foreground pl-1.5 pr-5 border-muted bg-muted/30 rounded-md placeholder:text-muted-foreground/40 focus:bg-background focus:border-primary/30 transition-colors"
                               />
                               {columnFilters[col.key] && (
                                 <button
