@@ -28,8 +28,13 @@ import {
   Barcode,
   Eye,
   Package,
-  UserCheck
+  UserCheck,
+  Sparkles,
+  HelpCircle
 } from "lucide-react";
+import { useTour } from "@/context/TourContext";
+import { NewBadge } from "@/components/tour/NewBadge";
+import { FEATURE_KEYS } from "@/lib/tour/data";
 
 import {
   Sidebar,
@@ -102,6 +107,7 @@ const quickActionCategories = {
 export function AppSidebar() {
   const { open } = useSidebar();
   const location = useLocation();
+  const { startTour, openDrawer } = useTour();
   const [expandedGroups, setExpandedGroups] = useState<string[]>(["Core Operations"]);
   const [expandedWorkOrders, setExpandedWorkOrders] = useState(false);
   const [expandedViews, setExpandedViews] = useState(
@@ -112,6 +118,9 @@ export function AppSidebar() {
     // Navigate to login page
     window.location.href = "/login";
   };
+
+
+
 
   const toggleGroup = (groupName: string) => {
     setExpandedGroups(prev => 
@@ -283,11 +292,26 @@ export function AppSidebar() {
                               {(action as any).url ? (
                                 <Link
                                   to={(action as any).url}
+                                  data-tour={
+                                    action.title === "Invoicing"
+                                      ? "invoicing-nav"
+                                      : action.title === "Manage Customers"
+                                      ? "customers-nav"
+                                      : undefined
+                                  }
                                   className="flex items-center w-full h-10 px-3 rounded-lg text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200 ease-in-out group-hover:translate-x-1"
                                   style={{ animationDelay: `${(categoryIndex * 100) + (index * 50)}ms` }}
                                 >
                                   {React.createElement(action.icon, { className: "h-4 w-4 shrink-0 text-sidebar-foreground group-hover:scale-110 transition-transform duration-200" })}
-                                  <span className="ml-3 font-medium text-sm animate-fade-in">{action.title}</span>
+                                  <span className="ml-3 font-medium text-sm animate-fade-in flex items-center gap-1.5">
+                                    {action.title}
+                                    {action.title === "Invoicing" && (
+                                      <NewBadge featureKey={FEATURE_KEYS.invoicingUnified} />
+                                    )}
+                                    {action.title === "Manage Customers" && (
+                                      <NewBadge featureKey={FEATURE_KEYS.manageCustomers} />
+                                    )}
+                                  </span>
                                 </Link>
                               ) : (
                                 <Button
@@ -361,6 +385,25 @@ export function AppSidebar() {
           <>
             <Button
               variant="ghost"
+              onClick={openDrawer}
+              className="w-full justify-start text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
+            >
+              <Sparkles className="h-4 w-4 mr-3" />
+              <span className="text-sm font-medium flex items-center gap-1.5">
+                What's New
+                <NewBadge featureKey={FEATURE_KEYS.whatsNew} />
+              </span>
+            </Button>
+            <Button
+              variant="ghost"
+              onClick={() => startTour()}
+              className="w-full justify-start text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
+            >
+              <HelpCircle className="h-4 w-4 mr-3" />
+              <span className="text-sm font-medium">Take Product Tour</span>
+            </Button>
+            <Button
+              variant="ghost"
               className="w-full justify-start text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
             >
               <span className="h-4 w-4 mr-3 text-xs font-bold flex items-center justify-center">JM</span>
@@ -377,6 +420,28 @@ export function AppSidebar() {
           </>
         ) : (
           <>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={openDrawer}
+              className="w-full text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200 relative"
+              title="What's New"
+            >
+              <Sparkles className="h-4 w-4" />
+              <NewBadge
+                featureKey={FEATURE_KEYS.whatsNew}
+                className="absolute -top-0.5 -right-0.5 text-[8px] px-1 py-0"
+              />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => startTour()}
+              className="w-full text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
+              title="Take Product Tour"
+            >
+              <HelpCircle className="h-4 w-4" />
+            </Button>
             <Button
               variant="ghost"
               size="icon"

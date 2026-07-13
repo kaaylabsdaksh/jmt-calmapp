@@ -9,6 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { HelpMenu } from "@/components/tour/HelpMenu";
 
 type Crumb = { label: string; to?: string };
 const routeMeta: Record<string, { title: string; crumbs: Crumb[] }> = {
@@ -125,6 +126,7 @@ const ModernTopNav = () => {
               <Settings className="h-4 w-4" />
             </Button>
           )}
+          <HelpMenu />
         </div>
       </div>
     </header>
