@@ -126,6 +126,7 @@ const ModernTopNav = () => {
               <Settings className="h-4 w-4" />
             </Button>
           )}
+          <HelpMenu />
         </div>
       </div>
     </header>
