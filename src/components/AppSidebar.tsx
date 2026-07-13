@@ -396,14 +396,6 @@ export function AppSidebar() {
             </Button>
             <Button
               variant="ghost"
-              onClick={() => startTour()}
-              className="w-full justify-start text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
-            >
-              <HelpCircle className="h-4 w-4 mr-3" />
-              <span className="text-sm font-medium">Take Product Tour</span>
-            </Button>
-            <Button
-              variant="ghost"
               className="w-full justify-start text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
             >
               <span className="h-4 w-4 mr-3 text-xs font-bold flex items-center justify-center">JM</span>
@@ -432,15 +424,6 @@ export function AppSidebar() {
                 featureKey={FEATURE_KEYS.whatsNew}
                 className="absolute -top-0.5 -right-0.5 text-[8px] px-1 py-0"
               />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => startTour()}
-              className="w-full text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
-              title="Take Product Tour"
-            >
-              <HelpCircle className="h-4 w-4" />
             </Button>
             <Button
               variant="ghost"
