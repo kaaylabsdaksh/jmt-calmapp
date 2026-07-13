@@ -793,7 +793,7 @@ function PrintTagsPanel() {
                   </SelectContent>
                 </Select>
               </Field>
-              <div className="md:col-span-3">
+              <div className="md:col-span-4">
                 <Field label="Comments" full>
                   <Textarea className="text-[11px] px-2.5 py-1.5 min-h-[60px]" placeholder="Optional notes for the tag print job…" />
                 </Field>
