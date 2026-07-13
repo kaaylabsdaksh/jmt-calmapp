@@ -55,23 +55,6 @@ export const HelpMenu = () => {
           <NewBadge featureKey={FEATURE_KEYS.whatsNew} className="ml-auto" />
         </DropdownMenuItem>
 
-        <DropdownMenuSub>
-          <DropdownMenuSubTrigger className="text-xs">
-            <Compass className="h-3.5 w-3.5 mr-2" />
-            Mini Tours
-          </DropdownMenuSubTrigger>
-          <DropdownMenuSubContent>
-            {MINI_TOURS.map((m) => (
-              <DropdownMenuItem
-                key={m.id}
-                className="text-xs cursor-pointer"
-                onClick={() => startTour({ miniId: m.id })}
-              >
-                {m.label}
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuSubContent>
-        </DropdownMenuSub>
 
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild className="text-xs cursor-pointer">
