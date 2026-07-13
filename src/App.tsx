@@ -41,40 +41,46 @@ const App = () => {
   
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route element={<Layout><Outlet /></Layout>}>
-          <Route path="/" element={<ModernWorkOrderManagement />} />
-          <Route path="/add-new-work-order" element={<AddNewWorkOrder />} />
-          <Route path="/edit-batch-work-order" element={<EditBatchWorkOrder />} />
-          <Route path="/unused-items" element={<UnusedItemsManagement />} />
-          <Route path="/form-variations" element={<FormVariationsDemo />} />
-          <Route path="/esl-items" element={<ESLItemDemo />} />
-          <Route path="/esl/blankets" element={<EslBlankets />} />
-          <Route path="/esl/coverups" element={<EslCoverUps />} />
-          <Route path="/esl/footwear" element={<EslFootwear />} />
-          <Route path="/esl/gloves" element={<EslGloves />} />
-          <Route path="/esl/grounds" element={<EslGrounds />} />
-          <Route path="/edit-order" element={<EditOrder />} />
-          
-          <Route path="/work-orders-v2" element={<WorkOrderSearchV2 />} />
-          <Route path="/work-order/:id" element={<WorkOrderDetail />} />
-          <Route path="/item/:id" element={<ItemDetail />} />
-          <Route path="/logistics-view" element={<LogisticsView />} />
-          <Route path="/customer-pickup" element={<CustomerPickupView />} />
-          <Route path="/shipping-view" element={<ShippingView />} />
-          <Route path="/batch-details" element={<WorkOrderBatchDetailsDemo />} />
-          <Route path="/onsite-projects" element={<OnsiteProjects />} />
-          <Route path="/onsite-projects/new" element={<OnsiteProjectDetail />} />
-          <Route path="/onsite-projects/vehicle-standards" element={<VehicleStandards />} />
-          <Route path="/invoicing" element={<Invoicing />} />
-          <Route path="/invoicing-unified" element={<InvoicingUnified />} />
-          <Route path="/manage-customers" element={<ManageCustomers />} />
-          <Route path="/manage-customers/:accountNumber" element={<EditCustomer />} />
-          <Route path="*" element={<NotFound />} />
-        </Route>
-      </Routes>
-      <Toaster />
+      <TourProvider>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route element={<Layout><Outlet /></Layout>}>
+            <Route path="/" element={<ModernWorkOrderManagement />} />
+            <Route path="/add-new-work-order" element={<AddNewWorkOrder />} />
+            <Route path="/edit-batch-work-order" element={<EditBatchWorkOrder />} />
+            <Route path="/unused-items" element={<UnusedItemsManagement />} />
+            <Route path="/form-variations" element={<FormVariationsDemo />} />
+            <Route path="/esl-items" element={<ESLItemDemo />} />
+            <Route path="/esl/blankets" element={<EslBlankets />} />
+            <Route path="/esl/coverups" element={<EslCoverUps />} />
+            <Route path="/esl/footwear" element={<EslFootwear />} />
+            <Route path="/esl/gloves" element={<EslGloves />} />
+            <Route path="/esl/grounds" element={<EslGrounds />} />
+            <Route path="/edit-order" element={<EditOrder />} />
+
+            <Route path="/work-orders-v2" element={<WorkOrderSearchV2 />} />
+            <Route path="/work-order/:id" element={<WorkOrderDetail />} />
+            <Route path="/item/:id" element={<ItemDetail />} />
+            <Route path="/logistics-view" element={<LogisticsView />} />
+            <Route path="/customer-pickup" element={<CustomerPickupView />} />
+            <Route path="/shipping-view" element={<ShippingView />} />
+            <Route path="/batch-details" element={<WorkOrderBatchDetailsDemo />} />
+            <Route path="/onsite-projects" element={<OnsiteProjects />} />
+            <Route path="/onsite-projects/new" element={<OnsiteProjectDetail />} />
+            <Route path="/onsite-projects/vehicle-standards" element={<VehicleStandards />} />
+            <Route path="/invoicing" element={<Invoicing />} />
+            <Route path="/invoicing-unified" element={<InvoicingUnified />} />
+            <Route path="/manage-customers" element={<ManageCustomers />} />
+            <Route path="/manage-customers/:accountNumber" element={<EditCustomer />} />
+            <Route path="/whats-new" element={<WhatsNew />} />
+            <Route path="*" element={<NotFound />} />
+          </Route>
+        </Routes>
+        <WelcomeModal />
+        <WhatsNewDrawer />
+        <GuidedTour />
+        <Toaster />
+      </TourProvider>
     </BrowserRouter>
   );
 };
