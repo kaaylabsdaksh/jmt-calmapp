@@ -158,6 +158,7 @@ export const RELEASES: Release[] = [
     notes: [
       { category: "new", title: "Unified Invoicing Workspace", description: "Invoices + Billing Specialist in one place." },
       { category: "new", title: "Customer Summary Card", description: "Print tags, contacts and terms at a glance." },
+      { category: "new", title: "Saved Filters", description: "Save frequently-used column filter combinations and reapply them in one click." },
       { category: "improved", title: "Column quick search", description: "Compact date pickers, visible typed values, keyboard-friendly." },
       { category: "improved", title: "CSA view auto-load", description: "No search click required." },
       { category: "fixed", title: "Item # field hidden text while typing" },
