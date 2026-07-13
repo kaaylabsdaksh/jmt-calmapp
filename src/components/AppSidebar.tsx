@@ -107,11 +107,17 @@ const quickActionCategories = {
 export function AppSidebar() {
   const { open } = useSidebar();
   const location = useLocation();
+  const { startTour, openDrawer } = useTour();
   const [expandedGroups, setExpandedGroups] = useState<string[]>(["Core Operations"]);
   const [expandedWorkOrders, setExpandedWorkOrders] = useState(false);
   const [expandedViews, setExpandedViews] = useState(
     location.pathname === "/logistics-view" || location.pathname === "/customer-pickup"
   );
+
+  const handleLogout = () => {
+    // Navigate to login page
+    window.location.href = "/login";
+  };
 
   const handleLogout = () => {
     // Navigate to login page
