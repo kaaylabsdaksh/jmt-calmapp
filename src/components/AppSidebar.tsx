@@ -119,10 +119,8 @@ export function AppSidebar() {
     window.location.href = "/login";
   };
 
-  const handleLogout = () => {
-    // Navigate to login page
-    window.location.href = "/login";
-  };
+
+
 
   const toggleGroup = (groupName: string) => {
     setExpandedGroups(prev => 
