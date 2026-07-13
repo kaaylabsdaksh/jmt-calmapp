@@ -20,7 +20,7 @@ import { RELEASES } from "@/lib/tour/data";
 import { useTour } from "@/context/TourContext";
 
 const categoryMeta = {
-  new: { label: "New", icon: Sparkles, className: "text-primary bg-primary/10" },
+  new: { label: "New", icon: Sparkles, className: "text-black bg-yellow-400" },
   improved: { label: "Improved", icon: Wrench, className: "text-emerald-600 bg-emerald-500/10" },
   fixed: { label: "Fixed", icon: Bug, className: "text-orange-600 bg-orange-500/10" },
 } as const;
