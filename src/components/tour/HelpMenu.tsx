@@ -6,14 +6,10 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { HelpCircle, PlayCircle, Sparkles, Settings2, Compass } from "lucide-react";
+import { HelpCircle, PlayCircle, Sparkles, Settings2 } from "lucide-react";
 import { useTour } from "@/context/TourContext";
-import { MINI_TOURS } from "@/lib/tour/data";
 import { NewBadge } from "./NewBadge";
 import { clearBadge } from "@/lib/tour/storage";
 import { FEATURE_KEYS } from "@/lib/tour/data";
@@ -55,23 +51,6 @@ export const HelpMenu = () => {
           <NewBadge featureKey={FEATURE_KEYS.whatsNew} className="ml-auto" />
         </DropdownMenuItem>
 
-        <DropdownMenuSub>
-          <DropdownMenuSubTrigger className="text-xs">
-            <Compass className="h-3.5 w-3.5 mr-2" />
-            Mini Tours
-          </DropdownMenuSubTrigger>
-          <DropdownMenuSubContent>
-            {MINI_TOURS.map((m) => (
-              <DropdownMenuItem
-                key={m.id}
-                className="text-xs cursor-pointer"
-                onClick={() => startTour({ miniId: m.id })}
-              >
-                {m.label}
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuSubContent>
-        </DropdownMenuSub>
 
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild className="text-xs cursor-pointer">
