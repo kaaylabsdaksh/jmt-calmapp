@@ -50,7 +50,7 @@ export const NewBadge = ({ featureKey, className, label = "NEW", clearOnHostClic
       role="status"
       aria-label={`${label} feature`}
       className={cn(
-        "inline-flex items-center rounded-full bg-primary/15 text-primary text-[9px] font-bold px-1.5 py-0.5 uppercase tracking-wider leading-none",
+        "inline-flex items-center rounded-full bg-yellow-400 text-black text-[9px] font-bold px-1.5 py-0.5 uppercase tracking-wider leading-none",
         className
       )}
     >
