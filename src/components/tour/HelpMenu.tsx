@@ -6,14 +6,10 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { HelpCircle, PlayCircle, Sparkles, Settings2, Compass } from "lucide-react";
+import { HelpCircle, PlayCircle, Sparkles, Settings2 } from "lucide-react";
 import { useTour } from "@/context/TourContext";
-import { MINI_TOURS } from "@/lib/tour/data";
 import { NewBadge } from "./NewBadge";
 import { clearBadge } from "@/lib/tour/storage";
 import { FEATURE_KEYS } from "@/lib/tour/data";
