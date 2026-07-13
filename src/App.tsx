@@ -28,8 +28,13 @@ import Invoicing from "./pages/Invoicing";
 import InvoicingUnified from "./pages/InvoicingUnified";
 import ManageCustomers from "./pages/ManageCustomers";
 import EditCustomer from "./pages/EditCustomer";
+import WhatsNew from "./pages/WhatsNew";
 import { Layout } from "./components/Layout";
 import { Toaster } from "@/components/ui/toaster";
+import { TourProvider } from "@/context/TourContext";
+import { WelcomeModal } from "@/components/tour/WelcomeModal";
+import { GuidedTour } from "@/components/tour/GuidedTour";
+import { WhatsNewDrawer } from "@/components/tour/WhatsNewDrawer";
 
 const App = () => {
   console.log("App component rendering");
