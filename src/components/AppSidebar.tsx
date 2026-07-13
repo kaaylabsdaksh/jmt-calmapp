@@ -28,8 +28,13 @@ import {
   Barcode,
   Eye,
   Package,
-  UserCheck
+  UserCheck,
+  Sparkles,
+  HelpCircle
 } from "lucide-react";
+import { useTour } from "@/context/TourContext";
+import { NewBadge } from "@/components/tour/NewBadge";
+import { FEATURE_KEYS } from "@/lib/tour/data";
 
 import {
   Sidebar,
