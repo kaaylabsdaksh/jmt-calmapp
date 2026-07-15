@@ -129,6 +129,8 @@ export default function DeliveryTickets() {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [reportSearch, setReportSearch] = useState("");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
+  const [pageSize, setPageSize] = useState(10);
+  const [page, setPage] = useState(1);
 
   const updateFilter = <K extends keyof typeof filters>(k: K, v: (typeof filters)[K]) =>
     setFilters((p) => ({ ...p, [k]: v }));
@@ -189,6 +191,13 @@ export default function DeliveryTickets() {
     );
     return list;
   }, [reportSearch, sortDir]);
+
+  const totalPages = Math.max(1, Math.ceil(filteredReports.length / pageSize));
+  const currentPage = Math.min(page, totalPages);
+  const pagedReports = filteredReports.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize
+  );
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
@@ -497,6 +506,27 @@ export default function DeliveryTickets() {
                   <SelectItem value="asc">Invoice Date (Oldest first)</SelectItem>
                 </SelectContent>
               </Select>
+              <div className="ml-auto flex items-center gap-2">
+                <Label className="text-xs text-muted-foreground">Rows per page</Label>
+                <Select
+                  value={String(pageSize)}
+                  onValueChange={(v) => {
+                    setPageSize(Number(v));
+                    setPage(1);
+                  }}
+                >
+                  <SelectTrigger className="h-8 w-[80px] text-xs">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {[5, 10, 25, 50, 100].map((n) => (
+                      <SelectItem key={n} value={String(n)}>
+                        {n}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
             <div className="overflow-x-auto border border-border rounded-md">
               <table className="w-full text-xs border-collapse">
@@ -530,7 +560,7 @@ export default function DeliveryTickets() {
                       </td>
                     </tr>
                   ) : (
-                    filteredReports.map((r) => (
+                    pagedReports.map((r) => (
                       <tr
                         key={r.id}
                         className="border-b border-border hover:bg-muted/30"
@@ -579,6 +609,39 @@ export default function DeliveryTickets() {
                   )}
                 </tbody>
               </table>
+            </div>
+            <div className="flex items-center justify-between text-xs text-muted-foreground">
+              <div>
+                {filteredReports.length === 0
+                  ? "0 results"
+                  : `Showing ${(currentPage - 1) * pageSize + 1}–${Math.min(
+                      currentPage * pageSize,
+                      filteredReports.length
+                    )} of ${filteredReports.length}`}
+              </div>
+              <div className="flex items-center gap-1">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="text-xs h-7"
+                  disabled={currentPage <= 1}
+                  onClick={() => setPage((p) => Math.max(1, p - 1))}
+                >
+                  Previous
+                </Button>
+                <span className="px-2">
+                  Page {currentPage} of {totalPages}
+                </span>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="text-xs h-7"
+                  disabled={currentPage >= totalPages}
+                  onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                >
+                  Next
+                </Button>
+              </div>
             </div>
           </CardContent>
         </Card>
