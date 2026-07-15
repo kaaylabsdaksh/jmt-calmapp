@@ -488,16 +488,15 @@ export default function DeliveryTickets() {
                   className="pl-7 h-8 w-52 text-xs"
                 />
               </div>
-              <Button
-                size="sm"
-                variant="outline"
-                className="text-xs h-8"
-                onClick={() =>
-                  setSortDir((d) => (d === "asc" ? "desc" : "asc"))
-                }
-              >
-                Sort by Invoice Date ({sortDir === "asc" ? "Asc" : "Desc"})
-              </Button>
+              <Select value={sortDir} onValueChange={(v) => setSortDir(v as "asc" | "desc")}>
+                <SelectTrigger className="h-8 w-[200px] text-xs">
+                  <SelectValue placeholder="Sort by Invoice Date" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="desc">Invoice Date (Newest first)</SelectItem>
+                  <SelectItem value="asc">Invoice Date (Oldest first)</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
             <div className="overflow-x-auto border border-border rounded-md">
               <table className="w-full text-xs border-collapse">
