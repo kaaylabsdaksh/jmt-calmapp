@@ -610,6 +610,39 @@ export default function DeliveryTickets() {
                 </tbody>
               </table>
             </div>
+            <div className="flex items-center justify-between text-xs text-muted-foreground">
+              <div>
+                {filteredReports.length === 0
+                  ? "0 results"
+                  : `Showing ${(currentPage - 1) * pageSize + 1}–${Math.min(
+                      currentPage * pageSize,
+                      filteredReports.length
+                    )} of ${filteredReports.length}`}
+              </div>
+              <div className="flex items-center gap-1">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="text-xs h-7"
+                  disabled={currentPage <= 1}
+                  onClick={() => setPage((p) => Math.max(1, p - 1))}
+                >
+                  Previous
+                </Button>
+                <span className="px-2">
+                  Page {currentPage} of {totalPages}
+                </span>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="text-xs h-7"
+                  disabled={currentPage >= totalPages}
+                  onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                >
+                  Next
+                </Button>
+              </div>
+            </div>
           </CardContent>
         </Card>
       </div>
