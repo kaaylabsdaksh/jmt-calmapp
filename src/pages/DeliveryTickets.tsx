@@ -218,21 +218,21 @@ export default function DeliveryTickets() {
 
         {/* Search & Filter Card */}
         <Card>
-          <CardHeader className="pb-2 pt-3 px-3">
-            <CardTitle className="text-sm">Search Filters</CardTitle>
+          <CardHeader className="pb-1.5 pt-2 px-3">
+            <CardTitle className="text-xs">Search Filters</CardTitle>
           </CardHeader>
-          <CardContent className="px-3 pb-3 space-y-3">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3">
+          <CardContent className="px-3 pb-2 space-y-2">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-x-2 gap-y-1.5">
               <FilterField label="WO Number">
                 <Input
-                  className="h-9"
+                  className="h-7 text-xs"
                   value={filters.woNumber}
                   onChange={(e) => updateFilter("woNumber", e.target.value)}
                 />
               </FilterField>
               <FilterField label="Account Number">
                 <Input
-                  className="h-9"
+                  className="h-7 text-xs"
                   value={filters.accountNumber}
                   onChange={(e) =>
                     updateFilter("accountNumber", e.target.value)
@@ -244,7 +244,7 @@ export default function DeliveryTickets() {
                   value={filters.location}
                   onValueChange={(v) => updateFilter("location", v)}
                 >
-                  <SelectTrigger className="h-9">
+                  <SelectTrigger className="h-7 text-xs">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -257,7 +257,7 @@ export default function DeliveryTickets() {
               </FilterField>
               <FilterField label="Manufacturer">
                 <Input
-                  className="h-9"
+                  className="h-7 text-xs"
                   value={filters.manufacturer}
                   onChange={(e) => updateFilter("manufacturer", e.target.value)}
                 />
@@ -265,7 +265,7 @@ export default function DeliveryTickets() {
               <FilterField label="Created From">
                 <Input
                   type="date"
-                  className="h-9"
+                  className="h-7 text-xs"
                   value={filters.createdFrom}
                   onChange={(e) => updateFilter("createdFrom", e.target.value)}
                 />
@@ -276,7 +276,7 @@ export default function DeliveryTickets() {
                   value={filters.woStatus}
                   onValueChange={(v) => updateFilter("woStatus", v)}
                 >
-                  <SelectTrigger className="h-9">
+                  <SelectTrigger className="h-7 text-xs">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -289,7 +289,7 @@ export default function DeliveryTickets() {
               </FilterField>
               <FilterField label="Customer Name">
                 <Input
-                  className="h-9"
+                  className="h-7 text-xs"
                   value={filters.customerName}
                   onChange={(e) => updateFilter("customerName", e.target.value)}
                 />
@@ -299,7 +299,7 @@ export default function DeliveryTickets() {
                   value={filters.division}
                   onValueChange={(v) => updateFilter("division", v)}
                 >
-                  <SelectTrigger className="h-9">
+                  <SelectTrigger className="h-7 text-xs">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -311,7 +311,7 @@ export default function DeliveryTickets() {
               </FilterField>
               <FilterField label="Model Number">
                 <Input
-                  className="h-9"
+                  className="h-7 text-xs"
                   value={filters.modelNumber}
                   onChange={(e) => updateFilter("modelNumber", e.target.value)}
                 />
@@ -319,7 +319,7 @@ export default function DeliveryTickets() {
               <FilterField label="Created To">
                 <Input
                   type="date"
-                  className="h-9"
+                  className="h-7 text-xs"
                   value={filters.createdTo}
                   onChange={(e) => updateFilter("createdTo", e.target.value)}
                 />
@@ -330,7 +330,7 @@ export default function DeliveryTickets() {
                   value={filters.itemStatus}
                   onValueChange={(v) => updateFilter("itemStatus", v)}
                 >
-                  <SelectTrigger className="h-9">
+                  <SelectTrigger className="h-7 text-xs">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -346,7 +346,7 @@ export default function DeliveryTickets() {
                   value={filters.customerGroup}
                   onValueChange={(v) => updateFilter("customerGroup", v)}
                 >
-                  <SelectTrigger className="h-9">
+                  <SelectTrigger className="h-7 text-xs">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -359,7 +359,7 @@ export default function DeliveryTickets() {
               </FilterField>
               <FilterField label="Invoice Number">
                 <Input
-                  className="h-9"
+                  className="h-7 text-xs"
                   value={filters.invoiceNumber}
                   onChange={(e) =>
                     updateFilter("invoiceNumber", e.target.value)
@@ -368,13 +368,13 @@ export default function DeliveryTickets() {
               </FilterField>
               <FilterField label="PO Number">
                 <Input
-                  className="h-9"
+                  className="h-7 text-xs"
                   value={filters.poNumber}
                   onChange={(e) => updateFilter("poNumber", e.target.value)}
                 />
               </FilterField>
               <div className="flex items-end pb-1">
-                <label className="inline-flex items-center gap-2 text-xs text-foreground">
+                <label className="inline-flex items-center gap-1.5 text-xs text-foreground">
                   <Checkbox
                     checked={filters.allUsers}
                     onCheckedChange={(v) =>
@@ -386,23 +386,24 @@ export default function DeliveryTickets() {
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center gap-2 pt-1">
-              <Button size="sm" className="text-xs h-8">
-                <Search className="h-3.5 w-3.5 mr-1.5" />
+            <div className="flex flex-wrap items-center gap-2">
+              <Button size="sm" className="text-xs h-7">
+                <Search className="h-3 w-3 mr-1" />
                 Search
               </Button>
               <Button
                 size="sm"
                 variant="outline"
-                className="text-xs h-8"
+                className="text-xs h-7"
                 onClick={clearFilters}
               >
-                <RotateCcw className="h-3.5 w-3.5 mr-1.5" />
+                <RotateCcw className="h-3 w-3 mr-1" />
                 Clear
               </Button>
             </div>
           </CardContent>
         </Card>
+
 
         {/* Delivery Ticket Details Card */}
         <Card>
@@ -645,8 +646,9 @@ function FilterField({
   children: React.ReactNode;
 }) {
   return (
-    <div className="space-y-1.5">
-      <Label className="text-xs text-muted-foreground">
+    <div className="space-y-0.5">
+      <Label className="text-[11px] text-muted-foreground">
+
         {label}
         {required && <span className="text-destructive ml-0.5">*</span>}
       </Label>
