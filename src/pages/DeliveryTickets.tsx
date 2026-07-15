@@ -214,12 +214,6 @@ export default function DeliveryTickets() {
               reports.
             </p>
           </div>
-          <div className="flex items-center gap-2">
-            <Button size="sm" variant="outline" className="text-xs h-8">
-              <Settings2 className="h-3.5 w-3.5 mr-1.5" />
-              Settings
-            </Button>
-          </div>
         </div>
 
         {/* Search & Filter Card */}
