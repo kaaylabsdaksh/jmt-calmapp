@@ -414,26 +414,6 @@ export default function DeliveryTickets() {
                 <RotateCcw className="h-3.5 w-3.5 mr-1.5" />
                 Clear
               </Button>
-              <div className="ml-auto flex items-center gap-2">
-                <Button
-                  size="sm"
-                  variant="outline"
-                  className="text-xs h-8"
-                  onClick={() => navigate("/invoicing")}
-                >
-                  <Receipt className="h-3.5 w-3.5 mr-1.5" />
-                  Invoicing
-                </Button>
-                <Button
-                  size="sm"
-                  variant="outline"
-                  className="text-xs h-8"
-                  onClick={() => navigate("/invoicing")}
-                >
-                  <UserCog className="h-3.5 w-3.5 mr-1.5" />
-                  Billing Specialist
-                </Button>
-              </div>
             </div>
           </CardContent>
         </Card>
