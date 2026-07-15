@@ -508,27 +508,6 @@ export default function DeliveryTickets() {
                   <SelectItem value="asc">Invoice Date (Oldest first)</SelectItem>
                 </SelectContent>
               </Select>
-              <div className="ml-auto flex items-center gap-2">
-                <Label className="text-xs text-muted-foreground">Rows per page</Label>
-                <Select
-                  value={String(pageSize)}
-                  onValueChange={(v) => {
-                    setPageSize(Number(v));
-                    setPage(1);
-                  }}
-                >
-                  <SelectTrigger className="h-8 w-[80px] text-xs">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {[5, 10, 25, 50, 100].map((n) => (
-                      <SelectItem key={n} value={String(n)}>
-                        {n}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
             </div>
             <div className="overflow-x-auto border border-border rounded-md">
               <table className="w-full text-xs border-collapse">
@@ -612,14 +591,37 @@ export default function DeliveryTickets() {
                 </tbody>
               </table>
             </div>
-            <div className="flex items-center justify-between text-xs text-muted-foreground">
-              <div>
-                {filteredReports.length === 0
-                  ? "0 results"
-                  : `Showing ${(currentPage - 1) * pageSize + 1}–${Math.min(
-                      currentPage * pageSize,
-                      filteredReports.length
-                    )} of ${filteredReports.length}`}
+            <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-muted-foreground">
+              <div className="flex items-center gap-4">
+                <div>
+                  {filteredReports.length === 0
+                    ? "0 results"
+                    : `Showing ${(currentPage - 1) * pageSize + 1}–${Math.min(
+                        currentPage * pageSize,
+                        filteredReports.length
+                      )} of ${filteredReports.length}`}
+                </div>
+                <div className="flex items-center gap-2">
+                  <Label className="text-xs text-muted-foreground">Rows per page</Label>
+                  <Select
+                    value={String(pageSize)}
+                    onValueChange={(v) => {
+                      setPageSize(Number(v));
+                      setPage(1);
+                    }}
+                  >
+                    <SelectTrigger className="h-7 w-[70px] text-xs">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {[5, 10, 25, 50, 100].map((n) => (
+                        <SelectItem key={n} value={String(n)}>
+                          {n}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
               <div className="flex items-center gap-1">
                 <Button
