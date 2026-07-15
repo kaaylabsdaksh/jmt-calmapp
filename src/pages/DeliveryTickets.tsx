@@ -216,10 +216,6 @@ export default function DeliveryTickets() {
           </div>
           <div className="flex items-center gap-2">
             <Button size="sm" variant="outline" className="text-xs h-8">
-              <RefreshCw className="h-3.5 w-3.5 mr-1.5" />
-              Refresh
-            </Button>
-            <Button size="sm" variant="outline" className="text-xs h-8">
               <Download className="h-3.5 w-3.5 mr-1.5" />
               Export
             </Button>
