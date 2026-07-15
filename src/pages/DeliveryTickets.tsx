@@ -412,14 +412,14 @@ export default function DeliveryTickets() {
 
         {/* Delivery Ticket Details Card */}
         <Card>
-          <CardHeader className="pb-2 pt-3 px-3">
-            <CardTitle className="text-sm">Delivery Ticket Details</CardTitle>
+          <CardHeader className="pb-1.5 pt-2 px-3">
+            <CardTitle className="text-xs">Delivery Ticket Details</CardTitle>
           </CardHeader>
-          <CardContent className="px-3 pb-3 space-y-3">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <CardContent className="px-3 pb-2 space-y-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-2 gap-y-1.5">
               <FilterField label="Type">
                 <Select value={type} onValueChange={setType}>
-                  <SelectTrigger className="h-9">
+                  <SelectTrigger className="h-7 text-xs">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -432,7 +432,7 @@ export default function DeliveryTickets() {
               </FilterField>
               <FilterField label="Collection Account" required>
                 <Input
-                  className="h-9"
+                  className="h-7 text-xs"
                   value={collectionAccount}
                   onChange={(e) => setCollectionAccount(e.target.value)}
                   placeholder="Enter collection account"
@@ -440,29 +440,32 @@ export default function DeliveryTickets() {
               </FilterField>
               <FilterField label="Additional Ship To Info">
                 <Textarea
-                  rows={2}
+                  rows={1}
+                  className="text-xs min-h-[28px] py-1.5 resize-none"
                   value={additionalShipTo}
                   onChange={(e) => setAdditionalShipTo(e.target.value)}
-                  placeholder="Extra address details, contact, dock info..."
+                  placeholder="Extra address, contact, dock info..."
                 />
               </FilterField>
               <FilterField label="Notes / Comments">
                 <Textarea
-                  rows={2}
+                  rows={1}
+                  className="text-xs min-h-[28px] py-1.5 resize-none"
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
-                  placeholder="Internal notes for this delivery ticket batch"
+                  placeholder="Internal notes for this batch"
                 />
               </FilterField>
             </div>
             <div className="flex justify-end">
-              <Button size="sm" className="text-xs h-8" onClick={addToFile}>
-                <Plus className="h-3.5 w-3.5 mr-1.5" />
+              <Button size="sm" className="text-xs h-7" onClick={addToFile}>
+                <Plus className="h-3 w-3 mr-1" />
                 Add to File
               </Button>
             </div>
           </CardContent>
         </Card>
+
 
         {/* Recent Delivery Ticket Reports */}
         <Card>
