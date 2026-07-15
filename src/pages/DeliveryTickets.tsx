@@ -539,7 +539,7 @@ export default function DeliveryTickets() {
                       </td>
                     </tr>
                   ) : (
-                    filteredReports.map((r) => (
+                    pagedReports.map((r) => (
                       <tr
                         key={r.id}
                         className="border-b border-border hover:bg-muted/30"
