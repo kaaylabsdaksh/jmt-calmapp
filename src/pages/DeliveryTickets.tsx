@@ -486,24 +486,10 @@ export default function DeliveryTickets() {
                     : "bg-muted text-muted-foreground"
                 )}
               >
-                  records.length > 0
-                    ? "bg-primary/10 text-primary border-primary/20"
-                    : "bg-muted text-muted-foreground"
-                )}
-              >
                 {records.length} record{records.length === 1 ? "" : "s"}{" "}
                 {records.length > 0 ? "ready" : "to be processed"}
               </Badge>
             </div>
-            <Button
-              size="sm"
-              className="text-xs h-8"
-              disabled={records.length === 0}
-              onClick={() => setConfirmOpen(true)}
-            >
-              <Truck className="h-3.5 w-3.5 mr-1.5" />
-              Process Delivery Tickets
-            </Button>
           </CardHeader>
           <CardContent className="px-3 pb-3">
             {records.length === 0 ? (
