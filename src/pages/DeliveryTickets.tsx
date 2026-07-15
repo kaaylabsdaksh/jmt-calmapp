@@ -129,6 +129,8 @@ export default function DeliveryTickets() {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [reportSearch, setReportSearch] = useState("");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
+  const [pageSize, setPageSize] = useState(10);
+  const [page, setPage] = useState(1);
 
   const updateFilter = <K extends keyof typeof filters>(k: K, v: (typeof filters)[K]) =>
     setFilters((p) => ({ ...p, [k]: v }));
