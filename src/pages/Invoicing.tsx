@@ -1154,7 +1154,7 @@ export default function Invoicing() {
               Process Onsite Invoices
             </Button>
           </div>
-          <Button size="sm" variant="outline" className="text-xs h-8">
+          <Button size="sm" variant="outline" className="text-xs h-8" onClick={() => navigate("/delivery-tickets")}>
             <Truck className="h-3.5 w-3.5 mr-1.5" />
             Delivery Tickets
           </Button>
