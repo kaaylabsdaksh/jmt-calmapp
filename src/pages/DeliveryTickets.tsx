@@ -192,6 +192,13 @@ export default function DeliveryTickets() {
     return list;
   }, [reportSearch, sortDir]);
 
+  const totalPages = Math.max(1, Math.ceil(filteredReports.length / pageSize));
+  const currentPage = Math.min(page, totalPages);
+  const pagedReports = filteredReports.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize
+  );
+
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <div className="sticky top-0 z-40">
