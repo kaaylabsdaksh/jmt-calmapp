@@ -26,6 +26,7 @@ import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Invoicing from "./pages/Invoicing";
 import InvoicingUnified from "./pages/InvoicingUnified";
+import DeliveryTickets from "./pages/DeliveryTickets";
 import ManageCustomers from "./pages/ManageCustomers";
 import EditCustomer from "./pages/EditCustomer";
 import WhatsNew from "./pages/WhatsNew";
