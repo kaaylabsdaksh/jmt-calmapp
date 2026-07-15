@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Download,
   Search,
@@ -277,6 +278,7 @@ const ALL_COLUMNS: { key: ColumnKey; label: string; width: number }[] = [
 
 // ---------- Page ----------
 export default function Invoicing() {
+  const navigate = useNavigate();
   const [loading] = useState(false);
   const [viewMode, setViewMode] = useState<"invoices" | "billingSpecialist">("invoices");
 
@@ -1152,7 +1154,7 @@ export default function Invoicing() {
               Process Onsite Invoices
             </Button>
           </div>
-          <Button size="sm" variant="outline" className="text-xs h-8">
+          <Button size="sm" variant="outline" className="text-xs h-8" onClick={() => navigate("/delivery-tickets")}>
             <Truck className="h-3.5 w-3.5 mr-1.5" />
             Delivery Tickets
           </Button>

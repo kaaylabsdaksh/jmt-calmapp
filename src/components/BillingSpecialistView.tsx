@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -71,6 +72,7 @@ const ALL_COLUMNS: { key: ColumnKey; label: string; width: number }[] = [
 ];
 
 export function BillingSpecialistView() {
+  const navigate = useNavigate();
   const [filters, setFilters] = useState<BillingSpecialistFilters>(defaultFilters);
   const [columnFilters, setColumnFilters] = useState<Partial<Record<ColumnKey, string>>>({});
   const [searchQuery, setSearchQuery] = useState("");
@@ -404,7 +406,7 @@ export function BillingSpecialistView() {
             <Receipt className="h-3.5 w-3.5 mr-1.5" />
             Process Invoice(s)
           </Button>
-          <Button variant="outline" size="sm" className="text-xs h-8">
+          <Button variant="outline" size="sm" className="text-xs h-8" onClick={() => navigate("/delivery-tickets")}>
             <Ticket className="h-3.5 w-3.5 mr-1.5" />
             Delivery Tickets
           </Button>

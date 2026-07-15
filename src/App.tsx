@@ -26,6 +26,7 @@ import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Invoicing from "./pages/Invoicing";
 import InvoicingUnified from "./pages/InvoicingUnified";
+import DeliveryTickets from "./pages/DeliveryTickets";
 import ManageCustomers from "./pages/ManageCustomers";
 import EditCustomer from "./pages/EditCustomer";
 import WhatsNew from "./pages/WhatsNew";
@@ -70,6 +71,7 @@ const App = () => {
             <Route path="/onsite-projects/vehicle-standards" element={<VehicleStandards />} />
             <Route path="/invoicing" element={<Invoicing />} />
             <Route path="/invoicing-unified" element={<InvoicingUnified />} />
+            <Route path="/delivery-tickets" element={<DeliveryTickets />} />
             <Route path="/manage-customers" element={<ManageCustomers />} />
             <Route path="/manage-customers/:accountNumber" element={<EditCustomer />} />
             <Route path="/whats-new" element={<WhatsNew />} />

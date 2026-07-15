@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Download,
   Search,
@@ -192,6 +193,7 @@ const shippingStatusStyles: Record<ShippingStatus, string> = {
 };
 
 export default function InvoicingUnified() {
+  const navigate = useNavigate();
   const [filters, setFilters] = useState({
     location: "all",
     division: "all",
@@ -538,7 +540,7 @@ export default function InvoicingUnified() {
               <FileText className="h-3.5 w-3.5 mr-1.5" />
               Process Onsite Invoice(s)
             </Button>
-            <Button size="sm" variant="outline" className="text-xs h-8" disabled={!hasSelection}>
+            <Button size="sm" variant="outline" className="text-xs h-8" onClick={() => navigate("/delivery-tickets")}>
               <Truck className="h-3.5 w-3.5 mr-1.5" />
               Delivery Tickets
             </Button>
