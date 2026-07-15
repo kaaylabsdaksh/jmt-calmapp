@@ -324,13 +324,18 @@ export default function DeliveryTickets() {
                 />
               </FilterField>
               <FilterField label="Created To">
-                <Input
-                  type="date"
-                  className="h-7 text-xs"
+                <ModernDatePicker
+                  size="sm"
                   value={filters.createdTo}
-                  onChange={(e) => updateFilter("createdTo", e.target.value)}
+                  onChange={(d) =>
+                    updateFilter(
+                      "createdTo",
+                      d ? d.toISOString().slice(0, 10) : ""
+                    )
+                  }
                 />
               </FilterField>
+
 
               <FilterField label="Item Status">
                 <Select
