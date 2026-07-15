@@ -391,7 +391,7 @@ export default function DeliveryTickets() {
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="flex flex-wrap items-center justify-end gap-2">
               <Button size="sm" className="text-xs h-7">
                 <Search className="h-3 w-3 mr-1" />
                 Search
