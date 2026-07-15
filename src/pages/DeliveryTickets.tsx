@@ -508,27 +508,6 @@ export default function DeliveryTickets() {
                   <SelectItem value="asc">Invoice Date (Oldest first)</SelectItem>
                 </SelectContent>
               </Select>
-              <div className="ml-auto flex items-center gap-2">
-                <Label className="text-xs text-muted-foreground">Rows per page</Label>
-                <Select
-                  value={String(pageSize)}
-                  onValueChange={(v) => {
-                    setPageSize(Number(v));
-                    setPage(1);
-                  }}
-                >
-                  <SelectTrigger className="h-8 w-[80px] text-xs">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {[5, 10, 25, 50, 100].map((n) => (
-                      <SelectItem key={n} value={String(n)}>
-                        {n}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
             </div>
             <div className="overflow-x-auto border border-border rounded-md">
               <table className="w-full text-xs border-collapse">
