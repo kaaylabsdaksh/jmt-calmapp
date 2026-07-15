@@ -414,26 +414,6 @@ export default function DeliveryTickets() {
                 <RotateCcw className="h-3.5 w-3.5 mr-1.5" />
                 Clear
               </Button>
-              <div className="ml-auto flex items-center gap-2">
-                <Button
-                  size="sm"
-                  variant="outline"
-                  className="text-xs h-8"
-                  onClick={() => navigate("/invoicing")}
-                >
-                  <Receipt className="h-3.5 w-3.5 mr-1.5" />
-                  Invoicing
-                </Button>
-                <Button
-                  size="sm"
-                  variant="outline"
-                  className="text-xs h-8"
-                  onClick={() => navigate("/invoicing")}
-                >
-                  <UserCog className="h-3.5 w-3.5 mr-1.5" />
-                  Billing Specialist
-                </Button>
-              </div>
             </div>
           </CardContent>
         </Card>
@@ -510,15 +490,6 @@ export default function DeliveryTickets() {
                 {records.length > 0 ? "ready" : "to be processed"}
               </Badge>
             </div>
-            <Button
-              size="sm"
-              className="text-xs h-8"
-              disabled={records.length === 0}
-              onClick={() => setConfirmOpen(true)}
-            >
-              <Truck className="h-3.5 w-3.5 mr-1.5" />
-              Process Delivery Tickets
-            </Button>
           </CardHeader>
           <CardContent className="px-3 pb-3">
             {records.length === 0 ? (
@@ -718,6 +689,40 @@ export default function DeliveryTickets() {
           </CardContent>
         </Card>
       </div>
+
+      <footer className="sticky bottom-0 z-40 bg-background px-3 py-2 border-t border-border">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <Button
+            size="sm"
+            className="text-xs h-8"
+            disabled={records.length === 0}
+            onClick={() => setConfirmOpen(true)}
+          >
+            <Truck className="h-3.5 w-3.5 mr-1.5" />
+            Process Delivery Tickets
+          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              size="sm"
+              variant="outline"
+              className="text-xs h-8"
+              onClick={() => navigate("/invoicing")}
+            >
+              <Receipt className="h-3.5 w-3.5 mr-1.5" />
+              Invoicing
+            </Button>
+            <Button
+              size="sm"
+              variant="outline"
+              className="text-xs h-8"
+              onClick={() => navigate("/invoicing")}
+            >
+              <UserCog className="h-3.5 w-3.5 mr-1.5" />
+              Billing Specialist
+            </Button>
+          </div>
+        </div>
+      </footer>
 
       <Dialog open={confirmOpen} onOpenChange={setConfirmOpen}>
         <DialogContent>
