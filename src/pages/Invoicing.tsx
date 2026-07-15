@@ -278,6 +278,7 @@ const ALL_COLUMNS: { key: ColumnKey; label: string; width: number }[] = [
 
 // ---------- Page ----------
 export default function Invoicing() {
+  const navigate = useNavigate();
   const [loading] = useState(false);
   const [viewMode, setViewMode] = useState<"invoices" | "billingSpecialist">("invoices");
 
