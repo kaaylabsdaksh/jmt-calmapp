@@ -193,6 +193,7 @@ const shippingStatusStyles: Record<ShippingStatus, string> = {
 };
 
 export default function InvoicingUnified() {
+  const navigate = useNavigate();
   const [filters, setFilters] = useState({
     location: "all",
     division: "all",
