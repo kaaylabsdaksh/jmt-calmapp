@@ -265,13 +265,18 @@ export default function DeliveryTickets() {
                 />
               </FilterField>
               <FilterField label="Created From">
-                <Input
-                  type="date"
-                  className="h-7 text-xs"
+                <ModernDatePicker
+                  size="sm"
                   value={filters.createdFrom}
-                  onChange={(e) => updateFilter("createdFrom", e.target.value)}
+                  onChange={(d) =>
+                    updateFilter(
+                      "createdFrom",
+                      d ? d.toISOString().slice(0, 10) : ""
+                    )
+                  }
                 />
               </FilterField>
+
 
               <FilterField label="WO Status">
                 <Select
