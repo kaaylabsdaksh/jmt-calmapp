@@ -540,7 +540,7 @@ export default function InvoicingUnified() {
               <FileText className="h-3.5 w-3.5 mr-1.5" />
               Process Onsite Invoice(s)
             </Button>
-            <Button size="sm" variant="outline" className="text-xs h-8" disabled={!hasSelection} onClick={() => navigate("/delivery-tickets")}>
+            <Button size="sm" variant="outline" className="text-xs h-8" onClick={() => navigate("/delivery-tickets")}>
               <Truck className="h-3.5 w-3.5 mr-1.5" />
               Delivery Tickets
             </Button>
