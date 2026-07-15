@@ -71,6 +71,7 @@ const App = () => {
             <Route path="/onsite-projects/vehicle-standards" element={<VehicleStandards />} />
             <Route path="/invoicing" element={<Invoicing />} />
             <Route path="/invoicing-unified" element={<InvoicingUnified />} />
+            <Route path="/delivery-tickets" element={<DeliveryTickets />} />
             <Route path="/manage-customers" element={<ManageCustomers />} />
             <Route path="/manage-customers/:accountNumber" element={<EditCustomer />} />
             <Route path="/whats-new" element={<WhatsNew />} />
