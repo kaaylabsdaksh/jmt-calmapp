@@ -490,15 +490,6 @@ export default function DeliveryTickets() {
           </CardHeader>
           <CardContent className="px-3 pb-3 space-y-2">
             <div className="flex flex-wrap items-center gap-2">
-              <div className="relative">
-                <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
-                <Input
-                  placeholder="Search reports..."
-                  value={reportSearch}
-                  onChange={(e) => setReportSearch(e.target.value)}
-                  className="pl-7 h-8 w-52 text-xs"
-                />
-              </div>
               <Select value={sortDir} onValueChange={(v) => setSortDir(v as "asc" | "desc")}>
                 <SelectTrigger className="h-8 w-[200px] text-xs">
                   <SelectValue placeholder="Sort by Invoice Date" />
@@ -508,6 +499,15 @@ export default function DeliveryTickets() {
                   <SelectItem value="asc">Invoice Date (Oldest first)</SelectItem>
                 </SelectContent>
               </Select>
+              <div className="relative ml-auto">
+                <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
+                <Input
+                  placeholder="Search reports..."
+                  value={reportSearch}
+                  onChange={(e) => setReportSearch(e.target.value)}
+                  className="pl-7 h-8 w-52 text-xs"
+                />
+              </div>
             </div>
             <div className="overflow-x-auto border border-border rounded-md">
               <table className="w-full text-xs border-collapse">
