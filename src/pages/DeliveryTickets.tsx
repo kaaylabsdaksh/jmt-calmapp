@@ -326,18 +326,8 @@ export default function DeliveryTickets() {
                   onChange={(e) => updateFilter("modelNumber", e.target.value)}
                 />
               </FilterField>
-              <FilterField label="Created To">
-                <ModernDatePicker
-                  size="sm"
-                  value={filters.createdTo}
-                  onChange={(d) =>
-                    updateFilter(
-                      "createdTo",
-                      d ? d.toISOString().slice(0, 10) : ""
-                    )
-                  }
-                />
-              </FilterField>
+
+
 
 
               <FilterField label="Item Status">
