@@ -205,18 +205,8 @@ export default function DeliveryTickets() {
 
       <div className="flex flex-col gap-3 p-3 md:p-4 flex-1">
         {/* Header */}
-        <div className="flex flex-wrap items-start justify-between gap-2">
-          <div>
-            <h2 className="text-base font-semibold text-foreground">
-              Delivery Tickets
-            </h2>
-            <p className="text-xs text-muted-foreground max-w-2xl">
-              Search eligible work orders, prepare delivery ticket details,
-              process delivery tickets, and review generated delivery ticket
-              reports.
-            </p>
-          </div>
-        </div>
+
+
 
         {/* Search & Filter Card */}
         <Card>
