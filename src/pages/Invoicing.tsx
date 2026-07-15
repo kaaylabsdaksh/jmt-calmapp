@@ -1131,7 +1131,7 @@ export default function Invoicing() {
           <div className="flex items-center gap-2">
             <Button
               size="sm"
-              variant="outline"
+              variant="ghost"
               className={cn(
                 "text-xs h-8",
                 activeReportTab === "invoices" && "ring-2 ring-primary"
