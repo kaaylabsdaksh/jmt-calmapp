@@ -40,6 +40,8 @@ import {
   MoreHorizontal,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ModernDatePicker } from "@/components/ui/modern-date-picker";
+
 
 type SelectedRecord = {
   id: string;
@@ -263,13 +265,18 @@ export default function DeliveryTickets() {
                 />
               </FilterField>
               <FilterField label="Created From">
-                <Input
-                  type="date"
-                  className="h-7 text-xs"
+                <ModernDatePicker
+                  size="sm"
                   value={filters.createdFrom}
-                  onChange={(e) => updateFilter("createdFrom", e.target.value)}
+                  onChange={(d) =>
+                    updateFilter(
+                      "createdFrom",
+                      d ? d.toISOString().slice(0, 10) : ""
+                    )
+                  }
                 />
               </FilterField>
+
 
               <FilterField label="WO Status">
                 <Select
@@ -317,13 +324,18 @@ export default function DeliveryTickets() {
                 />
               </FilterField>
               <FilterField label="Created To">
-                <Input
-                  type="date"
-                  className="h-7 text-xs"
+                <ModernDatePicker
+                  size="sm"
                   value={filters.createdTo}
-                  onChange={(e) => updateFilter("createdTo", e.target.value)}
+                  onChange={(d) =>
+                    updateFilter(
+                      "createdTo",
+                      d ? d.toISOString().slice(0, 10) : ""
+                    )
+                  }
                 />
               </FilterField>
+
 
               <FilterField label="Item Status">
                 <Select
