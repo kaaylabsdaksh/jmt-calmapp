@@ -72,6 +72,7 @@ const ALL_COLUMNS: { key: ColumnKey; label: string; width: number }[] = [
 ];
 
 export function BillingSpecialistView() {
+  const navigate = useNavigate();
   const [filters, setFilters] = useState<BillingSpecialistFilters>(defaultFilters);
   const [columnFilters, setColumnFilters] = useState<Partial<Record<ColumnKey, string>>>({});
   const [searchQuery, setSearchQuery] = useState("");
