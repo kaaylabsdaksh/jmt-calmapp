@@ -690,6 +690,40 @@ export default function DeliveryTickets() {
         </Card>
       </div>
 
+      <footer className="sticky bottom-0 z-40 bg-background px-3 py-2 border-t border-border">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <Button
+            size="sm"
+            className="text-xs h-8"
+            disabled={records.length === 0}
+            onClick={() => setConfirmOpen(true)}
+          >
+            <Truck className="h-3.5 w-3.5 mr-1.5" />
+            Process Delivery Tickets
+          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              size="sm"
+              variant="outline"
+              className="text-xs h-8"
+              onClick={() => navigate("/invoicing")}
+            >
+              <Receipt className="h-3.5 w-3.5 mr-1.5" />
+              Invoicing
+            </Button>
+            <Button
+              size="sm"
+              variant="outline"
+              className="text-xs h-8"
+              onClick={() => navigate("/invoicing")}
+            >
+              <UserCog className="h-3.5 w-3.5 mr-1.5" />
+              Billing Specialist
+            </Button>
+          </div>
+        </div>
+      </footer>
+
       <Dialog open={confirmOpen} onOpenChange={setConfirmOpen}>
         <DialogContent>
           <DialogHeader>
