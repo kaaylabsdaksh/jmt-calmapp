@@ -40,6 +40,8 @@ import {
   MoreHorizontal,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ModernDatePicker } from "@/components/ui/modern-date-picker";
+
 
 type SelectedRecord = {
   id: string;
