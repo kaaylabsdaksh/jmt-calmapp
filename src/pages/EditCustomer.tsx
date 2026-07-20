@@ -856,9 +856,27 @@ export default function EditCustomer() {
   const { accountNumber } = useParams<{ accountNumber: string }>();
   const navigate = useNavigate();
   const { toast } = useToast();
-  const acct = accountNumber || "00000.00";
+  const isNew = !accountNumber || accountNumber === "new";
+  const acct = isNew ? "" : (accountNumber || "00000.00");
 
   const customer: CustomerData = useMemo(() => {
+    if (isNew) {
+      return {
+        accountNumber: "",
+        name: "",
+        status: "Active",
+        primaryContact: "",
+        phone: "",
+        email: "",
+        salesperson: "",
+        industry: "",
+        contractPricing: "",
+        createdBy: "",
+        createdDate: "",
+        modifiedBy: "",
+        modifiedDate: "",
+      };
+    }
     const found = mockLookup[acct] || {};
     return {
       accountNumber: acct,
@@ -875,10 +893,13 @@ export default function EditCustomer() {
       modifiedBy: "Jerome J. Davis",
       modifiedDate: "Jul 02, 2026",
     };
-  }, [acct]);
+  }, [acct, isNew]);
 
   const handleSave = () =>
-    toast({ title: "Changes saved", description: `Customer ${customer.accountNumber} updated.` });
+    toast({
+      title: isNew ? "Customer created" : "Changes saved",
+      description: isNew ? "New customer has been created." : `Customer ${customer.accountNumber} updated.`,
+    });
 
   const [generalLeftOpen] = useState(["customer-info", "retest", "primary-contact", "notes"]);
   const [generalRightOpen] = useState(["business", "pricing", "operational"]);
