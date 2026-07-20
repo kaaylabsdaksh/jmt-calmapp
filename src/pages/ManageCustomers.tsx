@@ -135,6 +135,7 @@ const YesNoChip = ({
 
 const ManageCustomers = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   // Basic filters
   const [statusFilter, setStatusFilter] = useState("");
