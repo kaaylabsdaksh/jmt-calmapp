@@ -915,10 +915,12 @@ export default function EditCustomer() {
         <div className="px-3 sm:px-4 lg:px-6 py-3 flex items-center justify-between gap-4">
           <div className="min-w-0">
             <h1 className="text-base sm:text-lg font-semibold text-foreground leading-tight">
-              Customer Details
+              {isNew ? "New Customer" : "Customer Details"}
             </h1>
             <p className="text-[11px] text-muted-foreground mt-0.5">
-              View and manage customer information, contacts, pricing, work orders, and settings.
+              {isNew
+                ? "Fill in the mandatory details to create a new customer."
+                : "View and manage customer information, contacts, pricing, work orders, and settings."}
             </p>
           </div>
 
@@ -926,10 +928,10 @@ export default function EditCustomer() {
             <div className="flex items-center gap-3">
               <div className="text-right">
                 <div className="flex items-center justify-end gap-2">
-                  <span className="text-xs font-semibold leading-tight">{customer.name}</span>
-                  <StatusChip status={customer.status} />
+                  <span className="text-xs font-semibold leading-tight">{customer.name || (isNew ? "Unsaved customer" : "")}</span>
+                  {!isNew && <StatusChip status={customer.status} />}
                 </div>
-                <div className="text-[11px] text-muted-foreground">Account # {customer.accountNumber}</div>
+                <div className="text-[11px] text-muted-foreground">Account # {customer.accountNumber || "—"}</div>
               </div>
             </div>
 
