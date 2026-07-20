@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Search,
   RotateCcw,
@@ -135,6 +135,7 @@ const YesNoChip = ({
 
 const ManageCustomers = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   // Basic filters
   const [statusFilter, setStatusFilter] = useState("");
@@ -476,7 +477,7 @@ const ManageCustomers = () => {
               <Button
                 size="sm"
                 className="h-8 text-xs bg-blue-600 hover:bg-blue-700 text-white"
-                onClick={() => toast({ title: "Add New Customer", description: "Opening customer form…" })}
+                onClick={() => navigate("/manage-customers/new")}
               >
                 <Plus className="h-3.5 w-3.5 mr-1.5" />Add New Customer
               </Button>

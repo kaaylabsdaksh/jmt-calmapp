@@ -856,9 +856,27 @@ export default function EditCustomer() {
   const { accountNumber } = useParams<{ accountNumber: string }>();
   const navigate = useNavigate();
   const { toast } = useToast();
-  const acct = accountNumber || "00000.00";
+  const isNew = !accountNumber || accountNumber === "new";
+  const acct = isNew ? "" : (accountNumber || "00000.00");
 
   const customer: CustomerData = useMemo(() => {
+    if (isNew) {
+      return {
+        accountNumber: "",
+        name: "",
+        status: "Active",
+        primaryContact: "",
+        phone: "",
+        email: "",
+        salesperson: "",
+        industry: "",
+        contractPricing: "",
+        createdBy: "",
+        createdDate: "",
+        modifiedBy: "",
+        modifiedDate: "",
+      };
+    }
     const found = mockLookup[acct] || {};
     return {
       accountNumber: acct,
@@ -875,10 +893,13 @@ export default function EditCustomer() {
       modifiedBy: "Jerome J. Davis",
       modifiedDate: "Jul 02, 2026",
     };
-  }, [acct]);
+  }, [acct, isNew]);
 
   const handleSave = () =>
-    toast({ title: "Changes saved", description: `Customer ${customer.accountNumber} updated.` });
+    toast({
+      title: isNew ? "Customer created" : "Changes saved",
+      description: isNew ? "New customer has been created." : `Customer ${customer.accountNumber} updated.`,
+    });
 
   const [generalLeftOpen] = useState(["customer-info", "retest", "primary-contact", "notes"]);
   const [generalRightOpen] = useState(["business", "pricing", "operational"]);
@@ -894,10 +915,12 @@ export default function EditCustomer() {
         <div className="px-3 sm:px-4 lg:px-6 py-3 flex items-center justify-between gap-4">
           <div className="min-w-0">
             <h1 className="text-base sm:text-lg font-semibold text-foreground leading-tight">
-              Customer Details
+              {isNew ? "New Customer" : "Customer Details"}
             </h1>
             <p className="text-[11px] text-muted-foreground mt-0.5">
-              View and manage customer information, contacts, pricing, work orders, and settings.
+              {isNew
+                ? "Fill in the mandatory details to create a new customer."
+                : "View and manage customer information, contacts, pricing, work orders, and settings."}
             </p>
           </div>
 
@@ -905,10 +928,10 @@ export default function EditCustomer() {
             <div className="flex items-center gap-3">
               <div className="text-right">
                 <div className="flex items-center justify-end gap-2">
-                  <span className="text-xs font-semibold leading-tight">{customer.name}</span>
-                  <StatusChip status={customer.status} />
+                  <span className="text-xs font-semibold leading-tight">{customer.name || (isNew ? "Unsaved customer" : "")}</span>
+                  {!isNew && <StatusChip status={customer.status} />}
                 </div>
-                <div className="text-[11px] text-muted-foreground">Account # {customer.accountNumber}</div>
+                <div className="text-[11px] text-muted-foreground">Account # {customer.accountNumber || "—"}</div>
               </div>
             </div>
 
