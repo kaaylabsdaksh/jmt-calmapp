@@ -340,7 +340,7 @@ const RetestNotices = () => {
                   </div>
                   <div className="text-xs font-semibold text-foreground shrink-0">{Math.min(progress, 100)}%</div>
                 </div>
-                <Progress value={Math.min(progress, 100)} className="h-2" />
+                <Progress value={Math.min(progress, 100)} className="h-2 bg-blue-500/15 [&>div]:bg-blue-600" />
                 <div className="flex flex-wrap items-center justify-between gap-2 text-[11px] text-muted-foreground">
                   <span>Current step: Generating Odessa Reports</span>
                   <span>Estimated time remaining: 1 min 12 sec</span>
