@@ -483,78 +483,8 @@ const RetestNotices = () => {
 
 
 
-          <div className="grid grid-cols-1 xl:grid-cols-3 gap-4">
-            {/* Email distribution */}
-            <Card className="overflow-hidden xl:col-span-2">
-              <SectionHeader icon={Mail} title="Email Distribution" tone="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 ring-emerald-500/20" />
-              <CardContent className="p-0">
-                <div className="overflow-x-auto">
-                  <Table>
-                    <TableHeader>
-                      <TableRow className="hover:bg-transparent">
-                        <TableHead className="text-[11px]">Recipient Type</TableHead>
-                        <TableHead className="text-[11px]">Report</TableHead>
-                        <TableHead className="text-[11px]">Recipients</TableHead>
-                        <TableHead className="text-[11px]">Status</TableHead>
-                        <TableHead className="text-[11px] text-right">Actions</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {EMAILS.map((e) => (
-                        <TableRow key={e.id}>
-                          <TableCell>
-                            <div className="flex items-center gap-2 text-xs font-medium text-foreground">
-                              <e.icon className="h-3.5 w-3.5 text-muted-foreground" />
-                              {e.type}
-                            </div>
-                          </TableCell>
-                          <TableCell className="text-xs font-mono text-foreground">{e.report}</TableCell>
-                          <TableCell className="text-xs text-muted-foreground">{e.recipients}</TableCell>
-                          <TableCell><StatusBadge status={e.status} /></TableCell>
-                          <TableCell className="text-right">
-                            <div className="flex items-center justify-end gap-1">
-                              <Button variant="ghost" size="sm" className="h-7 text-xs px-2" disabled={processing} onClick={() => notify("Preview", e.report)}>
-                                <Eye className="h-3.5 w-3.5 mr-1" />Preview
-                              </Button>
-                              <Button variant="ghost" size="sm" className="h-7 text-xs px-2" disabled={processing} onClick={() => notify("Emails Sent", `${e.recipients} ${e.type.toLowerCase()}s queued.`)}>
-                                <Mail className="h-3.5 w-3.5 mr-1" />Email
-                              </Button>
-                              <Button variant="ghost" size="sm" className="h-7 w-7 p-0" disabled={processing} onClick={() => notify("Download started", e.report)}>
-                                <Download className="h-3.5 w-3.5" />
-                              </Button>
-                            </div>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </div>
-              </CardContent>
-            </Card>
 
-            {/* Timeline */}
-            <Card className="overflow-hidden">
-              <SectionHeader icon={Clock} title="Processing Timeline" tone="bg-amber-500/10 text-amber-600 dark:text-amber-400 ring-amber-500/20" />
-              <CardContent className="p-4">
-                <ol className="relative space-y-4">
-                  {timeline.map((t, i) => (
-                    <li key={t.label} className="relative pl-6">
-                      {i !== timeline.length - 1 && (
-                        <span className={`absolute left-[7px] top-4 h-full w-px ${t.done ? "bg-emerald-500/40" : "bg-border"}`} />
-                      )}
-                      <span
-                        className={`absolute left-0 top-1 h-3.5 w-3.5 rounded-full ring-2 ring-background ${
-                          t.done ? "bg-emerald-500" : "bg-muted-foreground/30"
-                        }`}
-                      />
-                      <div className="text-xs font-medium text-foreground">{t.label}</div>
-                      <div className="text-[11px] text-muted-foreground">{t.time}</div>
-                    </li>
-                  ))}
-                </ol>
-              </CardContent>
-            </Card>
-          </div>
+
 
           {/* Processing history */}
           <Card className="overflow-hidden">
