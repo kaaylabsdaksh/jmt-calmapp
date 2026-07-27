@@ -371,43 +371,8 @@ const RetestNotices = () => {
             </Card>
           ) : null}
 
-          {/* Search & filters */}
-          <Card className="overflow-hidden">
-            <SectionHeader icon={Search} title="Search & Filters" tone="bg-violet-500/10 text-violet-600 dark:text-violet-400 ring-violet-500/20" />
-            <CardContent className="p-3">
-              <div className="grid grid-cols-1 lg:grid-cols-4 gap-2">
-                <div className="lg:col-span-2 flex items-stretch rounded-md border border-input bg-background overflow-hidden h-8">
-                  <div className="flex items-center px-2 text-muted-foreground"><Search className="h-3.5 w-3.5" /></div>
-                  <Input
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    placeholder="Search report name, location, customer, month…"
-                    className="h-8 text-xs border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
-                  />
-                  {search && (
-                    <Button variant="ghost" size="sm" className="h-8 px-2 rounded-none" onClick={() => setSearch("")}>
-                      <X className="h-3.5 w-3.5" />
-                    </Button>
-                  )}
-                </div>
-                <Select value={statusFilter || "all"} onValueChange={(v) => setStatusFilter(v === "all" ? "" : v)}>
-                  <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="Notice Count" /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">Any notice count</SelectItem>
-                    <SelectItem value="with">With notices</SelectItem>
-                    <SelectItem value="empty">Zero notices</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Select value={locationFilter || "all"} onValueChange={(v) => setLocationFilter(v === "all" ? "" : v)}>
-                  <SelectTrigger className="h-8 text-xs"><SelectValue placeholder="Location" /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All locations</SelectItem>
-                    {REPORTS.map((r) => <SelectItem key={r.id} value={r.location}>{r.location}</SelectItem>)}
-                  </SelectContent>
-                </Select>
-              </div>
-            </CardContent>
-          </Card>
+
+
 
           {/* Report sections */}
           {filtered.length === 0 ? (
