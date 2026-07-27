@@ -169,7 +169,7 @@ const RetestNotices = () => {
 
   const [month, setMonth] = useState("February");
   const [year, setYear] = useState("2026");
-  const [state, setState] = useState<ProcessState>("done");
+  const [state, setState] = useState<ProcessState>("idle");
   const [progress, setProgress] = useState(0);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
