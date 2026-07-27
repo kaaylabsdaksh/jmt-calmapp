@@ -24,10 +24,11 @@ const routeMeta: Record<string, { title: string; crumbs: Crumb[] }> = {
 const ModernTopNav = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const customerDetailMatch = /^\/manage-customers\/[^/]+$/.test(location.pathname);
+  const exactMeta = routeMeta[location.pathname];
+  const customerDetailMatch = !exactMeta && /^\/manage-customers\/[^/]+$/.test(location.pathname);
   const meta = customerDetailMatch
     ? routeMeta["/manage-customers/:accountNumber"]
-    : routeMeta[location.pathname] ?? routeMeta["/"];
+    : exactMeta ?? routeMeta["/"];
 
   return (
     <header className="bg-white px-2 sm:px-4 lg:px-6 py-3 border-b border-border">
