@@ -29,6 +29,7 @@ import InvoicingUnified from "./pages/InvoicingUnified";
 import DeliveryTickets from "./pages/DeliveryTickets";
 import ManageCustomers from "./pages/ManageCustomers";
 import EditCustomer from "./pages/EditCustomer";
+import RetestNotices from "./pages/RetestNotices";
 import WhatsNew from "./pages/WhatsNew";
 import { Layout } from "./components/Layout";
 import { Toaster } from "@/components/ui/toaster";
@@ -74,7 +75,9 @@ const App = () => {
             <Route path="/delivery-tickets" element={<DeliveryTickets />} />
             <Route path="/manage-customers" element={<ManageCustomers />} />
             <Route path="/manage-customers/new" element={<EditCustomer />} />
+            <Route path="/manage-customers/retest-notices" element={<RetestNotices />} />
             <Route path="/manage-customers/:accountNumber" element={<EditCustomer />} />
+
             <Route path="/whats-new" element={<WhatsNew />} />
             <Route path="*" element={<NotFound />} />
           </Route>

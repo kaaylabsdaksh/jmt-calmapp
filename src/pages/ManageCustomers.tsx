@@ -495,7 +495,12 @@ const ManageCustomers = () => {
               <Button variant="outline" size="sm" className="h-8 text-xs">
                 <Settings2 className="h-3.5 w-3.5 mr-1.5" />Columns
               </Button>
-              <Button variant="outline" size="sm" className="h-8 text-xs">
+              <Button
+                variant="outline"
+                size="sm"
+                className="h-8 text-xs"
+                onClick={() => navigate("/manage-customers/retest-notices")}
+              >
                 <Bell className="h-3.5 w-3.5 mr-1.5" />Retest Notices
               </Button>
               <Button variant="outline" size="sm" className="h-8 text-xs">

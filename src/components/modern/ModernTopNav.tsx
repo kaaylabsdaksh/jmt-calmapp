@@ -17,16 +17,18 @@ const routeMeta: Record<string, { title: string; crumbs: Crumb[] }> = {
   "/onsite-projects": { title: "Onsite Projects", crumbs: [{ label: "Home", to: "/" }, { label: "Onsite Projects" }] },
   "/onsite-projects/new": { title: "Onsite Project # XXX", crumbs: [{ label: "Onsite Projects", to: "/onsite-projects" }, { label: "New Project" }] },
   "/manage-customers": { title: "Manage Customers", crumbs: [{ label: "Home", to: "/" }, { label: "Product & Customer" }, { label: "Manage Customers" }] },
+  "/manage-customers/retest-notices": { title: "Retest Notice Management", crumbs: [{ label: "Home", to: "/" }, { label: "Product & Customer" }, { label: "Manage Customers", to: "/manage-customers" }, { label: "Retest Notices" }] },
   "/manage-customers/:accountNumber": { title: "Customer Details", crumbs: [{ label: "Home", to: "/" }, { label: "Product & Customer" }, { label: "Manage Customers", to: "/manage-customers" }, { label: "Customer Details" }] },
 };
 
 const ModernTopNav = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const customerDetailMatch = /^\/manage-customers\/[^/]+$/.test(location.pathname);
+  const exactMeta = routeMeta[location.pathname];
+  const customerDetailMatch = !exactMeta && /^\/manage-customers\/[^/]+$/.test(location.pathname);
   const meta = customerDetailMatch
     ? routeMeta["/manage-customers/:accountNumber"]
-    : routeMeta[location.pathname] ?? routeMeta["/"];
+    : exactMeta ?? routeMeta["/"];
 
   return (
     <header className="bg-white px-2 sm:px-4 lg:px-6 py-3 border-b border-border">
