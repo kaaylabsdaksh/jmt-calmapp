@@ -299,12 +299,6 @@ const RetestNotices = () => {
                     <Button size="sm" className="h-8 text-xs bg-blue-600 hover:bg-blue-700 text-white" disabled={processing} onClick={runGeneration}>
                       <Play className="h-3.5 w-3.5 mr-1.5" />Generate Retest Notices
                     </Button>
-                    <Button variant="outline" size="sm" className="h-8 text-xs" disabled={processing} onClick={() => notify("Preview ready", "Opening report preview.")}>
-                      <Eye className="h-3.5 w-3.5 mr-1.5" />Preview Reports
-                    </Button>
-                    <Button variant="ghost" size="sm" className="h-8 text-xs" onClick={() => notify("Previous runs", "Scroll to Processing History.")}>
-                      <History className="h-3.5 w-3.5 mr-1.5" />View Previous Runs
-                    </Button>
                   </div>
                 </div>
 
