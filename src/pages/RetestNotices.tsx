@@ -487,6 +487,9 @@ const RetestNotices = () => {
 
 
           {/* Processing history */}
+          {state !== "idle" && (
+          <>
+
           <Card className="overflow-hidden">
             <SectionHeader
               icon={History}
