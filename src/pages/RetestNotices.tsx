@@ -300,7 +300,17 @@ const RetestNotices = () => {
                     <Button size="sm" className="h-8 text-xs bg-blue-600 hover:bg-blue-700 text-white" disabled={processing} onClick={runGeneration}>
                       <Play className="h-3.5 w-3.5 mr-1.5" />Generate Retest Notices
                     </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="h-8 text-xs"
+                      disabled={processing || state === "idle"}
+                      onClick={() => notify("Emails Queued", `All ${month} ${year} retest notices have been emailed.`)}
+                    >
+                      <Mail className="h-3.5 w-3.5 mr-1.5" />Email All
+                    </Button>
                   </div>
+
                 </div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5 items-start content-start xl:justify-self-end xl:w-full">
