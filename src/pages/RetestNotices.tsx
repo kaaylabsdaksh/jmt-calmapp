@@ -437,7 +437,7 @@ const RetestNotices = () => {
                                   <TableCell className="text-[11px] font-medium text-foreground">{r.location}</TableCell>
                                   <TableCell className="text-[11px] font-mono text-foreground">{r.reportName}</TableCell>
                                   <TableCell><NoticeBadge count={r.notices} /></TableCell>
-                                  <TableCell className="text-[11px] text-muted-foreground">{r.lastGenerated}</TableCell>
+                                  
                                   <TableCell className="text-right">
                                     <div className="flex items-center justify-end">
                                       <Button variant="ghost" size="sm" className="h-6 text-[11px] px-1.5" onClick={() => notify("Emails Sent", r.reportName)}>
