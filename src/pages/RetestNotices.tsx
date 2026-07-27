@@ -274,17 +274,6 @@ const RetestNotices = () => {
                 Generate, review, and distribute monthly retest notices across customer locations and business groups.
               </p>
             </div>
-            <div className="flex items-center gap-2 shrink-0">
-              <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => notify("Refreshed", "Retest notice data reloaded.")}>
-                <RefreshCw className="h-3.5 w-3.5 mr-1.5" />Refresh
-              </Button>
-              <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => notify("Processing History", "Showing previous runs below.")}>
-                <History className="h-3.5 w-3.5 mr-1.5" />View History
-              </Button>
-              <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => notify("Export started", "Processing logs are being exported.")}>
-                <FileDown className="h-3.5 w-3.5 mr-1.5" />Export Logs
-              </Button>
-            </div>
           </div>
 
           {/* Processing controls */}
