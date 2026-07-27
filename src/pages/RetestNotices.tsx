@@ -266,15 +266,8 @@ const RetestNotices = () => {
       <ModernTopNav />
       <main className="w-full max-w-none px-2 sm:px-4 lg:px-6 py-3 sm:py-6">
         <div className="w-full space-y-4">
-          {/* Page header */}
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
-            <div className="min-w-0">
-              <h2 className="text-lg font-semibold text-foreground leading-tight">Retest Notice Management</h2>
-              <p className="text-xs text-muted-foreground mt-0.5">
-                Generate, review, and distribute monthly retest notices across customer locations and business groups.
-              </p>
-            </div>
-          </div>
+
+
 
           {/* Processing controls */}
           <Card className="overflow-hidden">
