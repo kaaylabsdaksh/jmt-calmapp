@@ -546,6 +546,9 @@ const RetestNotices = () => {
               </div>
             </CardContent>
           </Card>
+          </>
+          )}
+
         </div>
       </main>
 
