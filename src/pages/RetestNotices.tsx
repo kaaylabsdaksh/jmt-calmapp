@@ -556,7 +556,10 @@ const RetestNotices = () => {
                 </Table>
               </div>
             </CardContent>
+              </CollapsibleContent>
+            </Collapsible>
           </Card>
+
           </>
           )}
 
