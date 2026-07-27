@@ -375,7 +375,7 @@ const RetestNotices = () => {
 
 
           {/* Report sections */}
-          {filtered.length === 0 ? (
+          {state === "idle" ? null : filtered.length === 0 ? (
             <Card>
               <CardContent className="p-10 flex flex-col items-center justify-center text-center gap-3">
                 <div className="h-14 w-14 rounded-full bg-muted flex items-center justify-center">
