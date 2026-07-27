@@ -490,13 +490,25 @@ const RetestNotices = () => {
           <>
 
           <Card className="overflow-hidden">
-            <SectionHeader
-              icon={History}
-              title="Processing History"
-              tone="bg-slate-500/10 text-slate-600 dark:text-slate-400 ring-slate-500/20"
-              right={<Badge variant="secondary" className="h-5 text-[10px] font-medium">{HISTORY.length} runs</Badge>}
-            />
+            <Collapsible
+              open={openSections["History"]}
+              onOpenChange={(v) => setOpenSections((s) => ({ ...s, History: v }))}
+            >
+              <div className="flex items-center gap-2 px-3 py-2 border-b border-border bg-muted/40">
+                <div className="h-6 w-6 rounded-md bg-slate-500/10 text-slate-600 dark:text-slate-400 ring-1 ring-slate-500/20 flex items-center justify-center">
+                  <History className="h-3 w-3" />
+                </div>
+                <div className="text-[11px] font-semibold text-foreground uppercase tracking-wide">Processing History</div>
+                <Badge variant="secondary" className="h-5 text-[10px] font-medium">{HISTORY.length} runs</Badge>
+                <CollapsibleTrigger asChild>
+                  <Button variant="ghost" size="sm" className="h-7 w-7 p-0 ml-auto">
+                    {openSections["History"] ? <ChevronUp className="h-3.5 w-3.5" /> : <ChevronDown className="h-3.5 w-3.5" />}
+                  </Button>
+                </CollapsibleTrigger>
+              </div>
+              <CollapsibleContent>
             <CardContent className="p-0">
+
               <div className="overflow-x-auto">
                 <Table>
                   <TableHeader>
