@@ -443,12 +443,15 @@ const RetestNotices = () => {
                                   <TableCell><NoticeBadge count={r.notices} /></TableCell>
                                   
                                   <TableCell className="text-right">
-                                    <div className="flex items-center justify-end">
+                                    <div className="flex items-center justify-end gap-1.5">
                                       <Button variant="outline" size="sm" className="h-6 text-[11px] px-2" onClick={() => notify("Emails Sent", r.reportName)}>
                                         Email
-
+                                      </Button>
+                                      <Button variant="outline" size="sm" className="h-6 text-[11px] px-2" onClick={() => notify("Opening report", r.reportName)}>
+                                        View Report
                                       </Button>
                                     </div>
+
                                   </TableCell>
                                 </TableRow>
                               ))}
