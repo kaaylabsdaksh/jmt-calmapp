@@ -426,7 +426,7 @@ const RetestNotices = () => {
                                 <TableHead className="text-[10px]">Location</TableHead>
                                 <TableHead className="text-[10px]">Report Name</TableHead>
                                 <TableHead className="text-[10px]">Notice Count</TableHead>
-                                <TableHead className="text-[10px]">Last Generated</TableHead>
+                                
                                 <TableHead className="text-[10px] text-right">Actions</TableHead>
                               </TableRow>
                             </TableHeader>
