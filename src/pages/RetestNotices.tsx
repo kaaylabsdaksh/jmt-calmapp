@@ -437,7 +437,7 @@ const RetestNotices = () => {
                             <TableBody>
                               {rows.map((r) => (
                                 <TableRow key={r.id} className="[&>td]:py-1">
-                                  <TableCell className="text-[11px] text-muted-foreground">{r.category}</TableCell>
+                                  
                                   <TableCell className="text-[11px] font-medium text-foreground">{r.location}</TableCell>
                                   <TableCell className="text-[11px] font-mono text-foreground">{r.reportName}</TableCell>
                                   <TableCell><NoticeBadge count={r.notices} /></TableCell>
