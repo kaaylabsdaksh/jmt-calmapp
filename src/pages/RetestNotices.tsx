@@ -426,7 +426,7 @@ const RetestNotices = () => {
                           <Table>
                             <TableHeader>
                               <TableRow className="hover:bg-transparent [&>th]:h-7 [&>th]:py-0">
-                                <TableHead className="text-[10px]">Category</TableHead>
+                                
                                 <TableHead className="text-[10px]">Location</TableHead>
                                 <TableHead className="text-[10px]">Report Name</TableHead>
                                 <TableHead className="text-[10px]">Notice Count</TableHead>
