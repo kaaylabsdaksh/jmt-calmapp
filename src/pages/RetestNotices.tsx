@@ -214,7 +214,7 @@ const RetestNotices = () => {
   };
 
   const banner = () => {
-    if (processing) return null;
+    if (processing || state === "idle") return null;
     if (state === "failed")
       return {
         cls: "border-rose-500/30 bg-rose-500/5",
