@@ -480,23 +480,8 @@ const RetestNotices = () => {
             })
           )}
 
-          {/* Email summary */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5">
-            {summary.map((k) => (
-              <Card key={k.label} className="relative overflow-hidden hover:shadow-md transition-shadow">
-                <div className={`absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r ${k.bar}`} />
-                <CardContent className="p-3 flex items-center justify-between gap-2">
-                  <div className="min-w-0">
-                    <div className="text-[10px] uppercase tracking-wide text-muted-foreground font-medium truncate">{k.label}</div>
-                    <div className="text-2xl font-bold text-foreground mt-0.5 leading-none">{k.value}</div>
-                  </div>
-                  <div className={`h-9 w-9 rounded-lg flex items-center justify-center ring-1 ${k.tone} shrink-0`}>
-                    <k.icon className="h-4 w-4" />
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+
+
 
           <div className="grid grid-cols-1 xl:grid-cols-3 gap-4">
             {/* Email distribution */}
