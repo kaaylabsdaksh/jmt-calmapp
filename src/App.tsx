@@ -29,6 +29,7 @@ import InvoicingUnified from "./pages/InvoicingUnified";
 import DeliveryTickets from "./pages/DeliveryTickets";
 import ManageCustomers from "./pages/ManageCustomers";
 import EditCustomer from "./pages/EditCustomer";
+import RetestNotices from "./pages/RetestNotices";
 import WhatsNew from "./pages/WhatsNew";
 import { Layout } from "./components/Layout";
 import { Toaster } from "@/components/ui/toaster";
