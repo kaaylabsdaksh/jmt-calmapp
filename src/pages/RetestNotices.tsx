@@ -408,14 +408,14 @@ const RetestNotices = () => {
               return (
                 <Card key={group} className="overflow-hidden">
                   <Collapsible open={open} onOpenChange={(v) => setOpenSections((s) => ({ ...s, [group]: v }))}>
-                    <div className="flex items-center gap-2 px-3 py-2 border-b border-border bg-muted/40">
-                      <div className="h-6 w-6 rounded-md bg-sky-500/10 text-sky-600 dark:text-sky-400 ring-1 ring-sky-500/20 flex items-center justify-center">
+                    <div className="flex items-center gap-2 px-2.5 py-1.5 border-b border-border bg-muted/40">
+                      <div className="h-5 w-5 rounded bg-sky-500/10 text-sky-600 dark:text-sky-400 ring-1 ring-sky-500/20 flex items-center justify-center">
                         <FileText className="h-3 w-3" />
                       </div>
-                      <div className="text-[11px] font-semibold text-foreground uppercase tracking-wide">{group}</div>
-                      <Badge variant="secondary" className="h-5 text-[10px] font-medium">{rows.length} reports</Badge>
+                      <div className="text-[10px] font-semibold text-foreground uppercase tracking-wide">{group}</div>
+                      <Badge variant="secondary" className="h-4 px-1.5 text-[9px] font-medium">{rows.length} reports</Badge>
                       <CollapsibleTrigger asChild>
-                        <Button variant="ghost" size="sm" className="h-7 w-7 p-0 ml-auto">
+                        <Button variant="ghost" size="sm" className="h-6 w-6 p-0 ml-auto">
                           {open ? <ChevronUp className="h-3.5 w-3.5" /> : <ChevronDown className="h-3.5 w-3.5" />}
                         </Button>
                       </CollapsibleTrigger>
@@ -425,36 +425,36 @@ const RetestNotices = () => {
                         <div className="overflow-x-auto">
                           <Table>
                             <TableHeader>
-                              <TableRow className="hover:bg-transparent">
-                                <TableHead className="text-[11px]">Category</TableHead>
-                                <TableHead className="text-[11px]">Location</TableHead>
-                                <TableHead className="text-[11px]">Report Name</TableHead>
-                                <TableHead className="text-[11px]">Notice Count</TableHead>
-                                <TableHead className="text-[11px]">Last Generated</TableHead>
-                                <TableHead className="text-[11px] text-right">Actions</TableHead>
+                              <TableRow className="hover:bg-transparent [&>th]:h-7 [&>th]:py-0">
+                                <TableHead className="text-[10px]">Category</TableHead>
+                                <TableHead className="text-[10px]">Location</TableHead>
+                                <TableHead className="text-[10px]">Report Name</TableHead>
+                                <TableHead className="text-[10px]">Notice Count</TableHead>
+                                <TableHead className="text-[10px]">Last Generated</TableHead>
+                                <TableHead className="text-[10px] text-right">Actions</TableHead>
                               </TableRow>
                             </TableHeader>
                             <TableBody>
                               {rows.map((r) => (
-                                <TableRow key={r.id}>
-                                  <TableCell className="text-xs text-muted-foreground">{r.category}</TableCell>
-                                  <TableCell className="text-xs font-medium text-foreground">{r.location}</TableCell>
-                                  <TableCell className="text-xs font-mono text-foreground">{r.reportName}</TableCell>
+                                <TableRow key={r.id} className="[&>td]:py-1">
+                                  <TableCell className="text-[11px] text-muted-foreground">{r.category}</TableCell>
+                                  <TableCell className="text-[11px] font-medium text-foreground">{r.location}</TableCell>
+                                  <TableCell className="text-[11px] font-mono text-foreground">{r.reportName}</TableCell>
                                   <TableCell><NoticeBadge count={r.notices} /></TableCell>
-                                  <TableCell className="text-xs text-muted-foreground">{r.lastGenerated}</TableCell>
+                                  <TableCell className="text-[11px] text-muted-foreground">{r.lastGenerated}</TableCell>
                                   <TableCell className="text-right">
                                     <div className="flex items-center justify-end">
-                                      <Button variant="ghost" size="sm" className="h-7 text-xs px-2" onClick={() => notify("Emails Sent", r.reportName)}>
-                                        <Mail className="h-3.5 w-3.5 mr-1" />Email Rpt
+                                      <Button variant="ghost" size="sm" className="h-6 text-[11px] px-1.5" onClick={() => notify("Emails Sent", r.reportName)}>
+                                        <Mail className="h-3 w-3 mr-1" />Email Rpt
                                       </Button>
                                     </div>
-
                                   </TableCell>
                                 </TableRow>
                               ))}
                             </TableBody>
                           </Table>
                         </div>
+
                       </CardContent>
                     </CollapsibleContent>
                   </Collapsible>
