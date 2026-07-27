@@ -169,7 +169,7 @@ const RetestNotices = () => {
 
   const [month, setMonth] = useState("February");
   const [year, setYear] = useState("2026");
-  const [state, setState] = useState<ProcessState>("done");
+  const [state, setState] = useState<ProcessState>("idle");
   const [progress, setProgress] = useState(0);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
@@ -214,7 +214,7 @@ const RetestNotices = () => {
   };
 
   const banner = () => {
-    if (processing) return null;
+    if (processing || state === "idle") return null;
     if (state === "failed")
       return {
         cls: "border-rose-500/30 bg-rose-500/5",
@@ -375,7 +375,7 @@ const RetestNotices = () => {
 
 
           {/* Report sections */}
-          {filtered.length === 0 ? (
+          {state === "idle" ? null : filtered.length === 0 ? (
             <Card>
               <CardContent className="p-10 flex flex-col items-center justify-center text-center gap-3">
                 <div className="h-14 w-14 rounded-full bg-muted flex items-center justify-center">
@@ -487,6 +487,9 @@ const RetestNotices = () => {
 
 
           {/* Processing history */}
+          {state !== "idle" && (
+          <>
+
           <Card className="overflow-hidden">
             <SectionHeader
               icon={History}
@@ -543,6 +546,9 @@ const RetestNotices = () => {
               </div>
             </CardContent>
           </Card>
+          </>
+          )}
+
         </div>
       </main>
 
