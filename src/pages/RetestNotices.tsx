@@ -309,7 +309,7 @@ const RetestNotices = () => {
                   </div>
                 </div>
 
-                <div className="flex items-end gap-2 ml-auto">
+                <div className="flex items-end gap-2 ml-auto mt-[20px]">
                   <Button size="sm" className="h-8 text-xs bg-blue-600 hover:bg-blue-700 text-white" disabled={processing} onClick={runGeneration}>
                     <Play className="h-3.5 w-3.5 mr-1.5" />Generate Retest Notices
                   </Button>
