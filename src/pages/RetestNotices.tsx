@@ -546,23 +546,6 @@ const RetestNotices = () => {
         </div>
       </main>
 
-      {/* Sticky action bar */}
-      <div className="sticky bottom-0 z-20 border-t border-border bg-background/95 backdrop-blur px-2 sm:px-4 lg:px-6 py-2">
-        <div className="flex flex-wrap items-center justify-end gap-2">
-          <Button variant="ghost" size="sm" className="h-8 text-xs mr-auto" disabled={!processing} onClick={() => { setState("failed"); notify("Processing Cancelled"); }}>
-            <Ban className="h-3.5 w-3.5 mr-1.5" />Cancel Processing
-          </Button>
-          <Button variant="outline" size="sm" className="h-8 text-xs" disabled={processing} onClick={() => notify("Download started", "Retest notices ZIP")}>
-            <Download className="h-3.5 w-3.5 mr-1.5" />Download ZIP
-          </Button>
-          <Button variant="outline" size="sm" className="h-8 text-xs" disabled={processing} onClick={() => notify("Emails Sent", "All reports queued for delivery.")}>
-            <Mail className="h-3.5 w-3.5 mr-1.5" />Email All Reports
-          </Button>
-          <Button size="sm" className="h-8 text-xs bg-blue-600 hover:bg-blue-700 text-white" disabled={processing} onClick={runGeneration}>
-            <Play className="h-3.5 w-3.5 mr-1.5" />Generate Notices
-          </Button>
-        </div>
-      </div>
     </div>
   );
 };
