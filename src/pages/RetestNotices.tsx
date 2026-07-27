@@ -444,8 +444,9 @@ const RetestNotices = () => {
                                   
                                   <TableCell className="text-right">
                                     <div className="flex items-center justify-end">
-                                      <Button variant="ghost" size="sm" className="h-6 text-[11px] px-1.5" onClick={() => notify("Emails Sent", r.reportName)}>
-                                        <Mail className="h-3 w-3 mr-1" />Email Rpt
+                                      <Button variant="outline" size="sm" className="h-6 text-[11px] px-2" onClick={() => notify("Emails Sent", r.reportName)}>
+                                        Email
+
                                       </Button>
                                     </div>
                                   </TableCell>
