@@ -273,30 +273,30 @@ const RetestNotices = () => {
           {/* Processing controls */}
           <Card className="overflow-hidden">
             <SectionHeader icon={ListChecks} title="Processing Controls" tone="bg-blue-500/10 text-blue-600 dark:text-blue-400 ring-blue-500/20" />
-            <CardContent className="p-3">
+            <CardContent className="p-2">
               <div className="flex flex-wrap items-start justify-between gap-2">
                 <div>
                   <div className="flex flex-wrap items-end gap-2">
-                    <div className="space-y-1 w-36">
-                      <div className="text-[11px] font-medium text-muted-foreground">Month</div>
+                    <div className="space-y-0.5 w-32">
+                      <div className="text-[10px] font-medium text-muted-foreground">Month</div>
                       <Select value={month} onValueChange={setMonth} disabled={processing}>
-                        <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
+                        <SelectTrigger className="h-7 text-[11px]"><SelectValue /></SelectTrigger>
                         <SelectContent>
                           {MONTHS.map((m) => <SelectItem key={m} value={m}>{m}</SelectItem>)}
                         </SelectContent>
                       </Select>
                     </div>
-                    <div className="space-y-1 w-28">
-                      <div className="text-[11px] font-medium text-muted-foreground">Year</div>
+                    <div className="space-y-0.5 w-24">
+                      <div className="text-[10px] font-medium text-muted-foreground">Year</div>
                       <Select value={year} onValueChange={setYear} disabled={processing}>
-                        <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
+                        <SelectTrigger className="h-7 text-[11px]"><SelectValue /></SelectTrigger>
                         <SelectContent>
                           {YEARS.map((y) => <SelectItem key={y} value={y}>{y}</SelectItem>)}
                         </SelectContent>
                       </Select>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3 mt-1.5">
+                  <div className="flex items-center gap-3 mt-1">
                     {[
                       { label: "Total Notices", value: "348" },
                       { label: "Processing Time", value: "4m 22s" },
@@ -309,20 +309,21 @@ const RetestNotices = () => {
                   </div>
                 </div>
 
-                <div className="flex items-end gap-2 ml-auto mt-[20px]">
-                  <Button size="sm" className="h-8 text-xs bg-blue-600 hover:bg-blue-700 text-white" disabled={processing} onClick={runGeneration}>
-                    <Play className="h-3.5 w-3.5 mr-1.5" />Generate Retest Notices
+                <div className="flex items-end gap-1.5 ml-auto mt-[18px]">
+                  <Button size="sm" className="h-7 text-[11px] px-2.5 bg-blue-600 hover:bg-blue-700 text-white" disabled={processing} onClick={runGeneration}>
+                    <Play className="h-3 w-3 mr-1" />Generate Retest Notices
                   </Button>
                   <Button
                     size="sm"
                     variant="outline"
-                    className="h-8 text-xs"
+                    className="h-7 text-[11px] px-2.5"
                     disabled={processing || state === "idle"}
                     onClick={() => notify("Emails Queued", `All ${month} ${year} retest notices have been emailed.`)}
                   >
-                    <Mail className="h-3.5 w-3.5 mr-1.5" />Email All
+                    <Mail className="h-3 w-3 mr-1" />Email All
                   </Button>
                 </div>
+
               </div>
 
 
