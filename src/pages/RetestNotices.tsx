@@ -274,50 +274,57 @@ const RetestNotices = () => {
           <Card className="overflow-hidden">
             <SectionHeader icon={ListChecks} title="Processing Controls" tone="bg-blue-500/10 text-blue-600 dark:text-blue-400 ring-blue-500/20" />
             <CardContent className="p-3">
-              <div className="flex flex-wrap items-end gap-2">
-                <div className="space-y-1 w-36">
-                  <div className="text-[11px] font-medium text-muted-foreground">Month</div>
-                  <Select value={month} onValueChange={setMonth} disabled={processing}>
-                    <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
-                    <SelectContent>
-                      {MONTHS.map((m) => <SelectItem key={m} value={m}>{m}</SelectItem>)}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-1 w-28">
-                  <div className="text-[11px] font-medium text-muted-foreground">Year</div>
-                  <Select value={year} onValueChange={setYear} disabled={processing}>
-                    <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
-                    <SelectContent>
-                      {YEARS.map((y) => <SelectItem key={y} value={y}>{y}</SelectItem>)}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <Button size="sm" className="h-8 text-xs bg-blue-600 hover:bg-blue-700 text-white" disabled={processing} onClick={runGeneration}>
-                  <Play className="h-3.5 w-3.5 mr-1.5" />Generate Retest Notices
-                </Button>
-                <Button
-                  size="sm"
-                  variant="outline"
-                  className="h-8 text-xs"
-                  disabled={processing || state === "idle"}
-                  onClick={() => notify("Emails Queued", `All ${month} ${year} retest notices have been emailed.`)}
-                >
-                  <Mail className="h-3.5 w-3.5 mr-1.5" />Email All
-                </Button>
-
-                <div className="flex items-center gap-3 ml-auto h-8">
-                  {[
-                    { label: "Total Notices", value: "348" },
-                    { label: "Processing Time", value: "4m 22s" },
-                  ].map((s) => (
-                    <div key={s.label} className="flex items-baseline gap-1 whitespace-nowrap">
-                      <span className="text-[10px] text-muted-foreground">{s.label}:</span>
-                      <span className="text-[11px] font-semibold text-foreground">{s.value}</span>
+              <div className="flex flex-wrap items-start justify-between gap-2">
+                <div>
+                  <div className="flex flex-wrap items-end gap-2">
+                    <div className="space-y-1 w-36">
+                      <div className="text-[11px] font-medium text-muted-foreground">Month</div>
+                      <Select value={month} onValueChange={setMonth} disabled={processing}>
+                        <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                          {MONTHS.map((m) => <SelectItem key={m} value={m}>{m}</SelectItem>)}
+                        </SelectContent>
+                      </Select>
                     </div>
-                  ))}
+                    <div className="space-y-1 w-28">
+                      <div className="text-[11px] font-medium text-muted-foreground">Year</div>
+                      <Select value={year} onValueChange={setYear} disabled={processing}>
+                        <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                          {YEARS.map((y) => <SelectItem key={y} value={y}>{y}</SelectItem>)}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 mt-1.5">
+                    {[
+                      { label: "Total Notices", value: "348" },
+                      { label: "Processing Time", value: "4m 22s" },
+                    ].map((s) => (
+                      <div key={s.label} className="flex items-baseline gap-1 whitespace-nowrap">
+                        <span className="text-[10px] text-muted-foreground">{s.label}:</span>
+                        <span className="text-[10px] font-semibold text-foreground">{s.value}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex items-end gap-2 ml-auto">
+                  <Button size="sm" className="h-8 text-xs bg-blue-600 hover:bg-blue-700 text-white" disabled={processing} onClick={runGeneration}>
+                    <Play className="h-3.5 w-3.5 mr-1.5" />Generate Retest Notices
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="h-8 text-xs"
+                    disabled={processing || state === "idle"}
+                    onClick={() => notify("Emails Queued", `All ${month} ${year} retest notices have been emailed.`)}
+                  >
+                    <Mail className="h-3.5 w-3.5 mr-1.5" />Email All
+                  </Button>
                 </div>
               </div>
+
 
             </CardContent>
           </Card>
