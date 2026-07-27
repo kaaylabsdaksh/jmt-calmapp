@@ -177,6 +177,7 @@ const RetestNotices = () => {
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
     Singles: true,
     "ESL Groupables": true,
+    History: true,
   });
 
   const filtered = useMemo(() => {
