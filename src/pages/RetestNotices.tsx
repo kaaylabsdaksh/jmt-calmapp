@@ -433,39 +433,12 @@ const RetestNotices = () => {
                                   <TableCell><NoticeBadge count={r.notices} /></TableCell>
                                   <TableCell className="text-xs text-muted-foreground">{r.lastGenerated}</TableCell>
                                   <TableCell className="text-right">
-                                    <div className="flex items-center justify-end gap-1">
-                                      <Button variant="ghost" size="sm" className="h-7 w-7 p-0" onClick={() => notify("Opening PDF", r.reportName)}>
-                                        <Eye className="h-3.5 w-3.5" />
+                                    <div className="flex items-center justify-end">
+                                      <Button variant="ghost" size="sm" className="h-7 text-xs px-2" onClick={() => notify("Emails Sent", r.reportName)}>
+                                        <Mail className="h-3.5 w-3.5 mr-1" />Email Rpt
                                       </Button>
-                                      <Button variant="ghost" size="sm" className="h-7 text-xs px-2" onClick={() => notify("Download started", r.reportName)}>
-                                        <Download className="h-3.5 w-3.5 mr-1" />Download
-                                      </Button>
-                                      <DropdownMenu>
-                                        <DropdownMenuTrigger asChild>
-                                          <Button variant="ghost" size="sm" className="h-7 w-7 p-0">
-                                            <MoreVertical className="h-3.5 w-3.5" />
-                                          </Button>
-                                        </DropdownMenuTrigger>
-                                        <DropdownMenuContent align="end" className="w-44">
-                                          <DropdownMenuItem className="text-xs" onClick={() => notify("Opening PDF", r.reportName)}>
-                                            <Eye className="h-3.5 w-3.5 mr-2" />View PDF
-                                          </DropdownMenuItem>
-                                          <DropdownMenuItem className="text-xs" onClick={() => notify("Download started", r.reportName)}>
-                                            <Download className="h-3.5 w-3.5 mr-2" />Download
-                                          </DropdownMenuItem>
-                                          <DropdownMenuItem className="text-xs" onClick={() => notify("Emails Sent", r.reportName)}>
-                                            <Mail className="h-3.5 w-3.5 mr-2" />Email Report
-                                          </DropdownMenuItem>
-                                          <DropdownMenuSeparator />
-                                          <DropdownMenuItem className="text-xs" onClick={() => notify("Regenerating", r.reportName)}>
-                                            <RotateCcw className="h-3.5 w-3.5 mr-2" />Regenerate
-                                          </DropdownMenuItem>
-                                          <DropdownMenuItem className="text-xs" onClick={() => notify("History", r.reportName)}>
-                                            <History className="h-3.5 w-3.5 mr-2" />View History
-                                          </DropdownMenuItem>
-                                        </DropdownMenuContent>
-                                      </DropdownMenu>
                                     </div>
+
                                   </TableCell>
                                 </TableRow>
                               ))}
