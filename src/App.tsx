@@ -30,6 +30,7 @@ import DeliveryTickets from "./pages/DeliveryTickets";
 import ManageCustomers from "./pages/ManageCustomers";
 import EditCustomer from "./pages/EditCustomer";
 import RetestNotices from "./pages/RetestNotices";
+import RetestFollowUp from "./pages/RetestFollowUp";
 import WhatsNew from "./pages/WhatsNew";
 import { Layout } from "./components/Layout";
 import { Toaster } from "@/components/ui/toaster";
