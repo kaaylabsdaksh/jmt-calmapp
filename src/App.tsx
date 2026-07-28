@@ -77,7 +77,9 @@ const App = () => {
             <Route path="/manage-customers" element={<ManageCustomers />} />
             <Route path="/manage-customers/new" element={<EditCustomer />} />
             <Route path="/manage-customers/retest-notices" element={<RetestNotices />} />
+            <Route path="/manage-customers/retest-followup" element={<RetestFollowUp />} />
             <Route path="/manage-customers/:accountNumber" element={<EditCustomer />} />
+
 
             <Route path="/whats-new" element={<WhatsNew />} />
             <Route path="*" element={<NotFound />} />
