@@ -534,25 +534,6 @@ const RetestFollowUp = () => {
         </div>
       )}
 
-      {/* Sticky action bar */}
-      <div className="fixed bottom-0 left-0 right-0 z-30 border-t border-border bg-card px-3 sm:px-6 py-2">
-        <div className="flex items-center justify-between gap-2">
-          <span className="text-[11px] text-muted-foreground">
-            {rows.length} record{rows.length === 1 ? "" : "s"} · {month} {year}
-          </span>
-          <div className="flex items-center gap-2">
-            <Button variant="ghost" size="sm" className="h-7 text-xs" onClick={() => navigate("/manage-customers")}>
-              Back
-            </Button>
-            <Button variant="outline" size="sm" className="h-7 text-xs" onClick={() => notify("Refresh Complete", "Follow-up counts updated.")}>
-              <RefreshCw className="h-3.5 w-3.5 mr-1.5" />Refresh Counts
-            </Button>
-            <Button size="sm" className="h-7 text-xs" onClick={() => notify("Export Complete", "Summary report downloaded.")}>
-              <FileDown className="h-3.5 w-3.5 mr-1.5" />Export Summary
-            </Button>
-          </div>
-        </div>
-      </div>
 
       {/* Follow-up drawer */}
       <Sheet open={!!drawerRecord} onOpenChange={(o) => !o && setDrawerRecord(null)}>
