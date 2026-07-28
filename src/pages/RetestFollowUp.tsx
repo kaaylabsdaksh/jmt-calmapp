@@ -352,9 +352,6 @@ const RetestFollowUp = () => {
                 >
                   <X className="h-3.5 w-3.5 mr-1.5" />Clear
                 </Button>
-                <Button variant="ghost" size="sm" className="h-7 text-xs" onClick={() => navigate("/manage-customers")}>
-                  <ArrowLeft className="h-3.5 w-3.5 mr-1.5" />Back
-                </Button>
               </div>
             </div>
           </CardContent>
