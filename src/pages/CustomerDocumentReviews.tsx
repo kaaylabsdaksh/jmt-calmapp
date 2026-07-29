@@ -335,9 +335,6 @@ const CustomerDocumentReviews = () => {
             <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => notify("Export Completed", "Current results exported.")}>
               <FileDown className="h-3.5 w-3.5 mr-1.5" />Export
             </Button>
-            <Button variant="outline" size="sm" className="h-8 text-xs" onClick={runSearch}>
-              <RefreshCw className="h-3.5 w-3.5 mr-1.5" />Refresh
-            </Button>
           </div>
         </div>
 
