@@ -458,31 +458,6 @@ const CustomerDocumentReviews = () => {
                 <Button variant="outline" size="sm" className="h-7 text-xs" onClick={clearAll}>
                   <X className="h-3.5 w-3.5 mr-1.5" />Clear
                 </Button>
-                <Button variant="outline" size="sm" className="h-7 text-xs" onClick={() => notify("CDR Created Successfully", "New CDR request drafted.")}>
-                  <Plus className="h-3.5 w-3.5 mr-1.5" />Add New
-                </Button>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="sm" className="h-7 text-xs">
-                      <FileDown className="h-3.5 w-3.5 mr-1.5" />Export
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="text-xs">
-                    <DropdownMenuLabel className="text-[10px] uppercase tracking-wide">Current Results</DropdownMenuLabel>
-                    {["CSV", "Excel", "PDF"].map((f) => (
-                      <DropdownMenuItem key={`cur-${f}`} className="text-xs" onClick={() => notify("Export Completed", `Current results exported as ${f}.`)}>
-                        {f}
-                      </DropdownMenuItem>
-                    ))}
-                    <DropdownMenuSeparator />
-                    <DropdownMenuLabel className="text-[10px] uppercase tracking-wide">All Results</DropdownMenuLabel>
-                    {["CSV", "Excel", "PDF"].map((f) => (
-                      <DropdownMenuItem key={`all-${f}`} className="text-xs" onClick={() => notify("Export Completed", `All results exported as ${f}.`)}>
-                        {f}
-                      </DropdownMenuItem>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
               </div>
             </div>
           </CardContent>
