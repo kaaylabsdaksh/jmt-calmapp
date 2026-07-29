@@ -345,126 +345,130 @@ const CustomerDocumentReviews = () => {
 
         {/* Search & filters */}
         <Card className="shadow-sm">
-          <CardContent className="p-2.5 space-y-2">
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
-              <div className="space-y-1">
-                <label className={labelCls}>CDR Number</label>
-                <Input value={filters.cdr} onChange={(e) => setF("cdr", e.target.value)} placeholder="CDR-2026-%" className="h-7 text-xs" />
-              </div>
-              <div className="space-y-1">
-                <label className={labelCls}>Status</label>
-                <Select value={filters.status} onValueChange={(v) => setF("status", v)}>
-                  <SelectTrigger className="h-7 text-xs"><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all" className="text-xs">All</SelectItem>
-                    {STATUSES.map((s) => <SelectItem key={s} value={s} className="text-xs">{STATUS_META[s].label}</SelectItem>)}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-1">
-                <label className={labelCls}>CDR Type</label>
-                <Select value={filters.type} onValueChange={(v) => setF("type", v)}>
-                  <SelectTrigger className="h-7 text-xs"><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all" className="text-xs">All</SelectItem>
-                    {TYPES.map((t) => <SelectItem key={t} value={t} className="text-xs">{t}</SelectItem>)}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-1">
-                <label className={labelCls}>Priority</label>
-                <Select value={filters.priority} onValueChange={(v) => setF("priority", v)}>
-                  <SelectTrigger className="h-7 text-xs"><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all" className="text-xs">All</SelectItem>
-                    {PRIORITIES.map((p) => <SelectItem key={p} value={p} className="text-xs">{PRIORITY_META[p].label}</SelectItem>)}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-1">
-                <label className={labelCls}>Purchase Order #</label>
-                <Input value={filters.po} onChange={(e) => setF("po", e.target.value)} placeholder="PO-%" className="h-7 text-xs" />
-              </div>
-              <div className="space-y-1">
-                <label className={labelCls}>Location</label>
-                <Select value={filters.location} onValueChange={(v) => setF("location", v)}>
-                  <SelectTrigger className="h-7 text-xs"><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all" className="text-xs">All</SelectItem>
-                    {LOCATIONS.map((l) => <SelectItem key={l} value={l} className="text-xs">{l}</SelectItem>)}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-1">
-                <label className={labelCls}>Account Number</label>
-                <Input value={filters.account} onChange={(e) => setF("account", e.target.value)} placeholder="Account #" className="h-7 text-xs" />
-              </div>
-              <div className="space-y-1">
-                <label className={labelCls}>Customer Name</label>
-                <Input value={filters.customer} onChange={(e) => setF("customer", e.target.value)} placeholder="Customer" className="h-7 text-xs" />
-              </div>
-              <div className="space-y-1">
-                <label className={labelCls}>Routed To</label>
-                <Select value={filters.routedTo} onValueChange={(v) => setF("routedTo", v)}>
-                  <SelectTrigger className="h-7 text-xs"><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all" className="text-xs">All</SelectItem>
-                    {ROUTED.map((r) => <SelectItem key={r} value={r} className="text-xs">{r}</SelectItem>)}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-1">
-                <label className={labelCls}>Created From</label>
-                <Input type="date" value={filters.createdFrom} onChange={(e) => setF("createdFrom", e.target.value)} className="h-7 text-xs" />
-              </div>
-              <div className="space-y-1">
-                <label className={labelCls}>Created To</label>
-                <Input type="date" value={filters.createdTo} onChange={(e) => setF("createdTo", e.target.value)} className="h-7 text-xs" />
-              </div>
-              <div className="space-y-1">
-                <label className={labelCls}>Modified From</label>
-                <Input type="date" value={filters.modifiedFrom} onChange={(e) => setF("modifiedFrom", e.target.value)} className="h-7 text-xs" />
-              </div>
-              <div className="space-y-1">
-                <label className={labelCls}>Modified To</label>
-                <Input type="date" value={filters.modifiedTo} onChange={(e) => setF("modifiedTo", e.target.value)} className="h-7 text-xs" />
-              </div>
-              <div className="space-y-1">
-                <label className={labelCls}>Received From</label>
-                <Input type="date" value={filters.receivedFrom} onChange={(e) => setF("receivedFrom", e.target.value)} className="h-7 text-xs" />
-              </div>
-              <div className="space-y-1">
-                <label className={labelCls}>Received To</label>
-                <Input type="date" value={filters.receivedTo} onChange={(e) => setF("receivedTo", e.target.value)} className="h-7 text-xs" />
-              </div>
-              <div className="space-y-1">
-                <label className={labelCls}>Quick Search</label>
-                <div className="relative">
+          <CardContent className="p-2.5">
+            <Collapsible open={advancedOpen} onOpenChange={setAdvancedOpen} className="space-y-2">
+              {/* Primary compact bar */}
+              <div className="flex flex-wrap items-center gap-2">
+                <div className="relative min-w-[200px] flex-1">
                   <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
                   <Input
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
-                    placeholder="CDR, customer, PO, reviewer"
+                    placeholder="Search CDR, customer, PO, reviewer"
                     className="h-7 pl-7 text-xs"
                   />
                 </div>
-              </div>
-            </div>
-
-            <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
-              <p className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
-                <Info className="h-3.5 w-3.5" />
-                Use % before or after text to perform partial searches.
-              </p>
-              <div className="flex items-center gap-2">
+                <Select value={filters.status} onValueChange={(v) => setF("status", v)}>
+                  <SelectTrigger className="h-7 w-[140px] text-xs"><SelectValue placeholder="Status" /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all" className="text-xs">All Statuses</SelectItem>
+                    {STATUSES.map((s) => <SelectItem key={s} value={s} className="text-xs">{STATUS_META[s].label}</SelectItem>)}
+                  </SelectContent>
+                </Select>
+                <Select value={filters.type} onValueChange={(v) => setF("type", v)}>
+                  <SelectTrigger className="h-7 w-[140px] text-xs"><SelectValue placeholder="Type" /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all" className="text-xs">All Types</SelectItem>
+                    {TYPES.map((t) => <SelectItem key={t} value={t} className="text-xs">{t}</SelectItem>)}
+                  </SelectContent>
+                </Select>
+                <CollapsibleTrigger asChild>
+                  <Button variant="outline" size="sm" className="h-7 text-xs">
+                    <SlidersHorizontal className="h-3.5 w-3.5 mr-1.5" />
+                    Filters
+                    {advancedCount > 0 && (
+                      <span className="ml-1.5 rounded-full bg-muted px-1.5 text-[10px] font-medium">{advancedCount}</span>
+                    )}
+                    <ChevronDown className={`h-3.5 w-3.5 ml-1 transition-transform ${advancedOpen ? "rotate-180" : ""}`} />
+                  </Button>
+                </CollapsibleTrigger>
                 <Button size="sm" className="h-7 text-xs" onClick={runSearch}>
                   <Search className="h-3.5 w-3.5 mr-1.5" />Search
                 </Button>
-                <Button variant="outline" size="sm" className="h-7 text-xs" onClick={clearAll}>
+                <Button variant="ghost" size="sm" className="h-7 text-xs" onClick={clearAll}>
                   <X className="h-3.5 w-3.5 mr-1.5" />Clear
                 </Button>
               </div>
-            </div>
+
+              <CollapsibleContent className="space-y-2">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 pt-1">
+                  <div className="space-y-1">
+                    <label className={labelCls}>CDR Number</label>
+                    <Input value={filters.cdr} onChange={(e) => setF("cdr", e.target.value)} placeholder="CDR-2026-%" className="h-7 text-xs" />
+                  </div>
+                  <div className="space-y-1">
+                    <label className={labelCls}>Priority</label>
+                    <Select value={filters.priority} onValueChange={(v) => setF("priority", v)}>
+                      <SelectTrigger className="h-7 text-xs"><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all" className="text-xs">All</SelectItem>
+                        {PRIORITIES.map((p) => <SelectItem key={p} value={p} className="text-xs">{PRIORITY_META[p].label}</SelectItem>)}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-1">
+                    <label className={labelCls}>Purchase Order #</label>
+                    <Input value={filters.po} onChange={(e) => setF("po", e.target.value)} placeholder="PO-%" className="h-7 text-xs" />
+                  </div>
+                  <div className="space-y-1">
+                    <label className={labelCls}>Location</label>
+                    <Select value={filters.location} onValueChange={(v) => setF("location", v)}>
+                      <SelectTrigger className="h-7 text-xs"><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all" className="text-xs">All</SelectItem>
+                        {LOCATIONS.map((l) => <SelectItem key={l} value={l} className="text-xs">{l}</SelectItem>)}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-1">
+                    <label className={labelCls}>Account Number</label>
+                    <Input value={filters.account} onChange={(e) => setF("account", e.target.value)} placeholder="Account #" className="h-7 text-xs" />
+                  </div>
+                  <div className="space-y-1">
+                    <label className={labelCls}>Customer Name</label>
+                    <Input value={filters.customer} onChange={(e) => setF("customer", e.target.value)} placeholder="Customer" className="h-7 text-xs" />
+                  </div>
+                  <div className="space-y-1">
+                    <label className={labelCls}>Routed To</label>
+                    <Select value={filters.routedTo} onValueChange={(v) => setF("routedTo", v)}>
+                      <SelectTrigger className="h-7 text-xs"><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all" className="text-xs">All</SelectItem>
+                        {ROUTED.map((r) => <SelectItem key={r} value={r} className="text-xs">{r}</SelectItem>)}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-1">
+                    <label className={labelCls}>Created From</label>
+                    <Input type="date" value={filters.createdFrom} onChange={(e) => setF("createdFrom", e.target.value)} className="h-7 text-xs" />
+                  </div>
+                  <div className="space-y-1">
+                    <label className={labelCls}>Created To</label>
+                    <Input type="date" value={filters.createdTo} onChange={(e) => setF("createdTo", e.target.value)} className="h-7 text-xs" />
+                  </div>
+                  <div className="space-y-1">
+                    <label className={labelCls}>Modified From</label>
+                    <Input type="date" value={filters.modifiedFrom} onChange={(e) => setF("modifiedFrom", e.target.value)} className="h-7 text-xs" />
+                  </div>
+                  <div className="space-y-1">
+                    <label className={labelCls}>Modified To</label>
+                    <Input type="date" value={filters.modifiedTo} onChange={(e) => setF("modifiedTo", e.target.value)} className="h-7 text-xs" />
+                  </div>
+                  <div className="space-y-1">
+                    <label className={labelCls}>Received From</label>
+                    <Input type="date" value={filters.receivedFrom} onChange={(e) => setF("receivedFrom", e.target.value)} className="h-7 text-xs" />
+                  </div>
+                  <div className="space-y-1">
+                    <label className={labelCls}>Received To</label>
+                    <Input type="date" value={filters.receivedTo} onChange={(e) => setF("receivedTo", e.target.value)} className="h-7 text-xs" />
+                  </div>
+                </div>
+                <p className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
+                  <Info className="h-3.5 w-3.5" />
+                  Use % before or after text to perform partial searches.
+                </p>
+              </CollapsibleContent>
+            </Collapsible>
           </CardContent>
         </Card>
 
