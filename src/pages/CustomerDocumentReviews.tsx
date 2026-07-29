@@ -227,6 +227,9 @@ const CustomerDocumentReviews = () => {
   const [filters, setFilters] = useState(emptyFilters);
   const [query, setQuery] = useState("");
   const [advancedOpen, setAdvancedOpen] = useState(false);
+  const advancedCount = Object.entries(filters).filter(
+    ([k, v]) => k !== "status" && k !== "type" && v !== "" && v !== "all"
+  ).length;
   const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState<string[]>([]);
   const [drawer, setDrawer] = useState<CdrRecord | null>(null);
