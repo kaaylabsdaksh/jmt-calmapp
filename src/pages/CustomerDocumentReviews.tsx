@@ -584,7 +584,6 @@ const CustomerDocumentReviews = () => {
                       {isVisible("modifiedDate") && <TableHead>Modified Date</TableHead>}
                       {isVisible("modifiedBy") && <TableHead>Modified By</TableHead>}
                       {isVisible("routedTo") && <TableHead>Routed To</TableHead>}
-                      <TableHead className="text-right">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -619,39 +618,6 @@ const CustomerDocumentReviews = () => {
                         {isVisible("modifiedDate") && <TableCell>{r.modifiedDate}</TableCell>}
                         {isVisible("modifiedBy") && <TableCell>{r.modifiedBy}</TableCell>}
                         {isVisible("routedTo") && <TableCell>{r.routedTo}</TableCell>}
-                        <TableCell className="text-right">
-                          <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                              <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
-                                <MoreHorizontal className="h-3.5 w-3.5" />
-                              </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end" className="text-xs">
-                              <DropdownMenuItem className="text-xs" onClick={() => setDrawer(r)}>
-                                <Eye className="h-3.5 w-3.5 mr-2" />Open CDR
-                              </DropdownMenuItem>
-                              <DropdownMenuItem className="text-xs" onClick={() => notify("Edit CDR", `${r.cdr} opened for editing.`)}>
-                                <Pencil className="h-3.5 w-3.5 mr-2" />Edit
-                              </DropdownMenuItem>
-                              <DropdownMenuItem className="text-xs" onClick={() => notify("Reviewer Assigned", `${r.cdr} assigned.`)}>
-                                <UserPlus className="h-3.5 w-3.5 mr-2" />Assign Reviewer
-                              </DropdownMenuItem>
-                              <DropdownMenuItem className="text-xs" onClick={() => notify("Status Updated", `${r.cdr} status changed.`)}>
-                                <RefreshCcwDot className="h-3.5 w-3.5 mr-2" />Change Status
-                              </DropdownMenuItem>
-                              <DropdownMenuSeparator />
-                              <DropdownMenuItem className="text-xs" onClick={() => setDrawer(r)}>
-                                <History className="h-3.5 w-3.5 mr-2" />View Timeline
-                              </DropdownMenuItem>
-                              <DropdownMenuItem className="text-xs" onClick={() => notify("Download Started", `${r.documents.length} document(s).`)}>
-                                <Download className="h-3.5 w-3.5 mr-2" />Download Documents
-                              </DropdownMenuItem>
-                              <DropdownMenuItem className="text-xs" onClick={() => notify("Export Completed", `${r.cdr} exported.`)}>
-                                <FileText className="h-3.5 w-3.5 mr-2" />Export Record
-                              </DropdownMenuItem>
-                            </DropdownMenuContent>
-                          </DropdownMenu>
-                        </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
