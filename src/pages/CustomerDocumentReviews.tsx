@@ -600,12 +600,13 @@ const CustomerDocumentReviews = () => {
                         </TableCell>
                         <TableCell>
                           <button
-                            className="font-medium text-foreground underline-offset-2 hover:underline"
+                            className="font-medium text-foreground underline underline-offset-2 hover:no-underline"
                             onClick={() => setDrawer(r)}
                           >
-                            {r.cdr}
+                            {r.cdr.split("-").pop()}
                           </button>
                         </TableCell>
+
                         <TableCell>{statusChip(r.status)}</TableCell>
                         {isVisible("type") && <TableCell>{r.type}</TableCell>}
                         {isVisible("account") && <TableCell>{r.account}</TableCell>}
