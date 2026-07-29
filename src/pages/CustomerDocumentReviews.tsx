@@ -185,7 +185,6 @@ const priorityChip = (p: Priority) => {
 
 const ALL_COLUMNS = [
   { key: "type", label: "Type" },
-  { key: "priority", label: "Priority" },
   { key: "account", label: "Account #" },
   { key: "customer", label: "Customer" },
   { key: "po", label: "PO #" },
@@ -571,7 +570,6 @@ const CustomerDocumentReviews = () => {
                       <TableHead className="cursor-pointer" onClick={() => toggleSort("cdr")}>CDR #</TableHead>
                       <TableHead>Status</TableHead>
                       {isVisible("type") && <TableHead>Type</TableHead>}
-                      {isVisible("priority") && <TableHead>Priority</TableHead>}
                       {isVisible("account") && <TableHead>Account #</TableHead>}
                       {isVisible("customer") && (
                         <TableHead className="cursor-pointer" onClick={() => toggleSort("customer")}>Customer</TableHead>
@@ -611,7 +609,6 @@ const CustomerDocumentReviews = () => {
                         </TableCell>
                         <TableCell>{statusChip(r.status)}</TableCell>
                         {isVisible("type") && <TableCell>{r.type}</TableCell>}
-                        {isVisible("priority") && <TableCell>{priorityChip(r.priority)}</TableCell>}
                         {isVisible("account") && <TableCell>{r.account}</TableCell>}
                         {isVisible("customer") && <TableCell className="max-w-[200px] truncate">{r.customer}</TableCell>}
                         {isVisible("po") && <TableCell>{r.po}</TableCell>}
