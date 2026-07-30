@@ -4,7 +4,6 @@ import {
   X,
   FileDown,
   Plus,
-  RefreshCw,
   MoreHorizontal,
   Eye,
   Pencil,
@@ -341,9 +340,6 @@ const ContractReviews = () => {
                 ))}
               </DropdownMenuContent>
             </DropdownMenu>
-            <Button variant="ghost" size="sm" className="h-8 text-xs" onClick={runSearch}>
-              <RefreshCw className="h-3.5 w-3.5 mr-1.5" />Refresh
-            </Button>
           </div>
         </div>
 
