@@ -519,15 +519,9 @@ const ManageCustomers = () => {
               >
                 <FileText className="h-3.5 w-3.5 mr-1.5" />Manage CDR
               </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                className="h-8 text-xs"
-                onClick={() => navigate("/manage-customers/contract-reviews")}
-              >
+              <Button variant="outline" size="sm" className="h-8 text-xs">
                 <FileText className="h-3.5 w-3.5 mr-1.5" />Contract Reviews
               </Button>
-
               <Button variant="outline" size="sm" className="h-8 text-xs">
                 <FolderOpen className="h-3.5 w-3.5 mr-1.5" />SR Documents
               </Button>
