@@ -32,6 +32,7 @@ import EditCustomer from "./pages/EditCustomer";
 import RetestNotices from "./pages/RetestNotices";
 import RetestFollowUp from "./pages/RetestFollowUp";
 import CustomerDocumentReviews from "./pages/CustomerDocumentReviews";
+import ContractReviews from "./pages/ContractReviews";
 import WhatsNew from "./pages/WhatsNew";
 import { Layout } from "./components/Layout";
 import { Toaster } from "@/components/ui/toaster";
