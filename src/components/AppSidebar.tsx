@@ -71,6 +71,7 @@ const viewsSubItems = [
   { title: "Logistics View", icon: TruckIcon, url: "/logistics-view" },
   { title: "Customer Pickup View", icon: UserCheck, url: "/customer-pickup" },
   { title: "Shipping View", icon: Package, url: "/shipping-view" },
+  { title: "Account Admin", icon: ClipboardList, url: "/account-admin" },
 ];
 const quickActionCategories = {
   "Core Operations": [
