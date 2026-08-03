@@ -845,9 +845,6 @@ const AccountAdminView = () => {
 
         <main className="space-y-4 px-2 py-4 sm:px-4 lg:px-6">
           <Tabs defaultValue="admin-triage" className="space-y-4">
-            <TabsList>
-              <TabsTrigger value="admin-triage" className="text-xs">Admin Triage</TabsTrigger>
-            </TabsList>
 
             <TabsContent value="admin-triage" className="space-y-4">
               {/* Filter card */}
