@@ -916,13 +916,14 @@ const AccountAdminView = () => {
                 {loading
                   ? kpis.map((k) => <Skeleton key={k.label} className="h-[70px] w-full" />)
                   : kpis.map((k) => (
-                      <Card key={k.label}>
-                        <CardContent className="flex items-center justify-between p-3">
+                      <Card key={k.label} className="relative overflow-hidden">
+                        <span className={`absolute inset-y-0 left-0 w-1 ${k.accent}`} />
+                        <CardContent className="flex items-center justify-between p-3 pl-4">
                           <div>
                             <p className="text-[10px] uppercase tracking-wide text-muted-foreground">{k.label}</p>
-                            <p className="text-lg font-semibold text-foreground">{k.value}</p>
+                            <p className={`text-lg font-semibold ${k.tone}`}>{k.value}</p>
                           </div>
-                          <k.icon className="h-4 w-4 text-muted-foreground" />
+                          <k.icon className={`h-4 w-4 ${k.iconTone}`} />
                         </CardContent>
                       </Card>
                     ))}
