@@ -70,6 +70,8 @@ const App = () => {
             <Route path="/logistics-view" element={<LogisticsView />} />
             <Route path="/customer-pickup" element={<CustomerPickupView />} />
             <Route path="/shipping-view" element={<ShippingView />} />
+            <Route path="/account-admin" element={<AccountAdminView />} />
+
             <Route path="/batch-details" element={<WorkOrderBatchDetailsDemo />} />
             <Route path="/onsite-projects" element={<OnsiteProjects />} />
             <Route path="/onsite-projects/new" element={<OnsiteProjectDetail />} />
