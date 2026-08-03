@@ -706,15 +706,16 @@ const AccountAdminView = () => {
     const openItems = filtered.reduce((sum, b) => sum + b.items.filter((i) => !i.closed).length, 0);
     const byPriority = (p: Priority) => filtered.filter((b) => batchPriority(b) === p).length;
     return [
-      { label: "Total Batches", value: filtered.length, icon: Package },
-      { label: "Needs Follow-Up", value: needsFollowUp.length, icon: Clock },
-      { label: "Ready to Bill", value: filtered.filter((b) => b.status === "Ready to Bill").length, icon: FileText },
-      { label: "Emergency", value: byPriority("EMERGENCY"), icon: AlertTriangle },
-      { label: "Expedite", value: byPriority("EXPEDITE"), icon: Zap },
-      { label: "Rush", value: byPriority("RUSH"), icon: Zap },
-      { label: "Open Items", value: openItems, icon: Inbox },
+      { label: "Total Batches", value: filtered.length, icon: Package, accent: "bg-slate-400", tone: "text-foreground", iconTone: "text-slate-500" },
+      { label: "Needs Follow-Up", value: needsFollowUp.length, icon: Clock, accent: "bg-amber-500", tone: "text-amber-600", iconTone: "text-amber-500" },
+      { label: "Ready to Bill", value: filtered.filter((b) => b.status === "Ready to Bill").length, icon: FileText, accent: "bg-success", tone: "text-success", iconTone: "text-success" },
+      { label: "Emergency", value: byPriority("EMERGENCY"), icon: AlertTriangle, accent: "bg-destructive", tone: "text-destructive", iconTone: "text-destructive" },
+      { label: "Expedite", value: byPriority("EXPEDITE"), icon: Zap, accent: "bg-orange-500", tone: "text-orange-600", iconTone: "text-orange-500" },
+      { label: "Rush", value: byPriority("RUSH"), icon: Zap, accent: "bg-yellow-400", tone: "text-yellow-600", iconTone: "text-yellow-500" },
+      { label: "Open Items", value: openItems, icon: Inbox, accent: "bg-info", tone: "text-info", iconTone: "text-info" },
     ];
   }, [filtered, needsFollowUp.length]);
+
 
   const columns = ALL_COLUMNS.filter((c) => visibleColumns.includes(c.key)).map((c) => c.key);
 
