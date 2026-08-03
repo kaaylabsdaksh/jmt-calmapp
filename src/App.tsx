@@ -19,6 +19,7 @@ import ItemDetail from "./pages/ItemDetail";
 import LogisticsView from "./pages/LogisticsView";
 import CustomerPickupView from "./pages/CustomerPickupView";
 import ShippingView from "./pages/ShippingView";
+import AccountAdminView from "./pages/AccountAdminView";
 import OnsiteProjects from "./pages/OnsiteProjects";
 import OnsiteProjectDetail from "./pages/OnsiteProjectDetail";
 import VehicleStandards from "./pages/VehicleStandards";
