@@ -271,17 +271,19 @@ export const OnsiteDefaultsTab = ({
           Set Onsite Defaults
         </Button>
 
-        <div className="flex flex-wrap justify-center gap-x-6 gap-y-1 text-[11px] text-muted-foreground">
-          <span>
-            Created By <span className="text-foreground">{metadata?.createdBy || "—"}</span>
-          </span>
-          <span>
-            Modified By <span className="text-foreground">{metadata?.modifiedBy || "—"}</span>
-          </span>
-          <span>
-            Last Updated <span className="text-foreground">{metadata?.lastUpdated || "—"}</span>
-          </span>
-        </div>
+        {false && (
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-1 text-[11px] text-muted-foreground">
+            <span>
+              Created By <span className="text-foreground">{metadata?.createdBy || "—"}</span>
+            </span>
+            <span>
+              Modified By <span className="text-foreground">{metadata?.modifiedBy || "—"}</span>
+            </span>
+            <span>
+              Last Updated <span className="text-foreground">{metadata?.lastUpdated || "—"}</span>
+            </span>
+          </div>
+        )}
       </div>
     </div>
   );
