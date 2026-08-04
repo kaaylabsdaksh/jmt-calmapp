@@ -92,7 +92,7 @@ export const OnsiteDefaultsTab = ({
     errors[key] ? <p className="text-[10px] text-destructive mt-0.5">{errors[key]}</p> : null;
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-2">
       {!configured && (
         <div className="flex items-start gap-2 rounded-md border border-border bg-muted/50 px-3 py-2">
           <Info className="w-3.5 h-3.5 mt-0.5 text-muted-foreground shrink-0" />
@@ -103,21 +103,21 @@ export const OnsiteDefaultsTab = ({
         </div>
       )}
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
         {/* Default Settings */}
         <Card>
-          <CardHeader className="px-3 py-2 pb-1">
+          <CardHeader className="px-2.5 py-1.5 pb-1">
             <h4 className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
               Default Settings
             </h4>
           </CardHeader>
-          <CardContent className="px-3 py-2 pt-0 space-y-2">
+          <CardContent className="px-2.5 py-1.5 pt-0 space-y-1.5">
             <div className="space-y-0.5">
-              <Label htmlFor="od-location" className="text-[11px] font-medium">
+              <Label htmlFor="od-location" className="text-[10px] font-medium">
                 Location <span className="text-destructive">*</span>
               </Label>
               <Select value={value.location} onValueChange={(v) => set({ location: v })}>
-                <SelectTrigger id="od-location" className="h-8 text-xs">
+                <SelectTrigger id="od-location" className="h-7 text-[11px]">
                   <SelectValue placeholder="Select location..." />
                 </SelectTrigger>
                 <SelectContent className="bg-popover border shadow-lg z-50">
@@ -130,11 +130,11 @@ export const OnsiteDefaultsTab = ({
             </div>
 
             <div className="space-y-0.5">
-              <Label htmlFor="od-division" className="text-[11px] font-medium">
+              <Label htmlFor="od-division" className="text-[10px] font-medium">
                 Division <span className="text-destructive">*</span>
               </Label>
               <Select value={value.division} onValueChange={(v) => set({ division: v })}>
-                <SelectTrigger id="od-division" className="h-8 text-xs">
+                <SelectTrigger id="od-division" className="h-7 text-[11px]">
                   <SelectValue placeholder="Select division..." />
                 </SelectTrigger>
                 <SelectContent className="bg-popover border shadow-lg z-50">
@@ -147,11 +147,11 @@ export const OnsiteDefaultsTab = ({
             </div>
 
             <div className="space-y-0.5">
-              <Label htmlFor="od-priority" className="text-[11px] font-medium">
+              <Label htmlFor="od-priority" className="text-[10px] font-medium">
                 Priority <span className="text-destructive">*</span>
               </Label>
               <Select value={value.priority} onValueChange={(v) => set({ priority: v })}>
-                <SelectTrigger id="od-priority" className="h-8 text-xs">
+                <SelectTrigger id="od-priority" className="h-7 text-[11px]">
                   <SelectValue placeholder="Select priority..." />
                 </SelectTrigger>
                 <SelectContent className="bg-popover border shadow-lg z-50">
@@ -164,20 +164,20 @@ export const OnsiteDefaultsTab = ({
             </div>
 
             <div className="space-y-0.5">
-              <Label htmlFor="od-start" className="text-[11px] font-medium">Start Date</Label>
+              <Label htmlFor="od-start" className="text-[10px] font-medium">Start Date</Label>
               <ModernDatePicker
                 id="od-start"
-                size="md"
+                size="sm"
                 value={value.startDate}
                 onChange={(d) => set({ startDate: d ? format(d, "yyyy-MM-dd") : "" })}
               />
             </div>
 
             <div className="space-y-0.5">
-              <Label htmlFor="od-end" className="text-[11px] font-medium">End / Need By Date</Label>
+              <Label htmlFor="od-end" className="text-[10px] font-medium">End / Need By Date</Label>
               <ModernDatePicker
                 id="od-end"
-                size="md"
+                size="sm"
                 value={value.endDate}
                 onChange={(d) => set({ endDate: d ? format(d, "yyyy-MM-dd") : "" })}
               />
@@ -188,17 +188,17 @@ export const OnsiteDefaultsTab = ({
 
         {/* Additional Defaults */}
         <Card>
-          <CardHeader className="px-3 py-2 pb-1">
+          <CardHeader className="px-2.5 py-1.5 pb-1">
             <h4 className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
               Additional Defaults
             </h4>
           </CardHeader>
-          <CardContent className="px-3 py-2 pt-0 space-y-2">
+          <CardContent className="px-2.5 py-1.5 pt-0 space-y-1.5">
             <div className="space-y-0.5">
-              <Label htmlFor="od-po" className="text-[11px] font-medium">PO Number</Label>
+              <Label htmlFor="od-po" className="text-[10px] font-medium">PO Number</Label>
               <Input
                 id="od-po"
-                className="h-8 text-xs"
+                className="h-7 text-[11px]"
                 value={value.poNumber}
                 maxLength={50}
                 onChange={(e) => set({ poNumber: e.target.value })}
@@ -207,7 +207,7 @@ export const OnsiteDefaultsTab = ({
             </div>
 
             <div className="space-y-0.5">
-              <Label htmlFor="od-calfreq" className="text-[11px] font-medium">
+              <Label htmlFor="od-calfreq" className="text-[10px] font-medium">
                 Calibration Frequency (months)
               </Label>
               <Input
@@ -215,7 +215,7 @@ export const OnsiteDefaultsTab = ({
                 type="number"
                 min={0}
                 max={120}
-                className="h-8 text-xs"
+                className="h-7 text-[11px]"
                 value={value.calFreq}
                 onChange={(e) => set({ calFreq: e.target.value })}
                 placeholder="e.g. 12"
@@ -223,9 +223,9 @@ export const OnsiteDefaultsTab = ({
             </div>
 
             <div className="space-y-0.5">
-              <Label htmlFor="od-action" className="text-[11px] font-medium">Action Code</Label>
+              <Label htmlFor="od-action" className="text-[10px] font-medium">Action Code</Label>
               <Select value={value.actionCode} onValueChange={(v) => set({ actionCode: v })}>
-                <SelectTrigger id="od-action" className="h-8 text-xs">
+                <SelectTrigger id="od-action" className="h-7 text-[11px]">
                   <SelectValue placeholder="Select action code..." />
                 </SelectTrigger>
                 <SelectContent className="bg-popover border shadow-lg z-50">
@@ -237,9 +237,9 @@ export const OnsiteDefaultsTab = ({
             </div>
 
             <div className="space-y-0.5">
-              <Label htmlFor="od-arrival" className="text-[11px] font-medium">Arrival Type</Label>
+              <Label htmlFor="od-arrival" className="text-[10px] font-medium">Arrival Type</Label>
               <Select value={value.arrivalType} onValueChange={(v) => set({ arrivalType: v })}>
-                <SelectTrigger id="od-arrival" className="h-8 text-xs">
+                <SelectTrigger id="od-arrival" className="h-7 text-[11px]">
                   <SelectValue placeholder="Select arrival type..." />
                 </SelectTrigger>
                 <SelectContent className="bg-popover border shadow-lg z-50">
@@ -251,10 +251,10 @@ export const OnsiteDefaultsTab = ({
             </div>
 
             <div className="space-y-0.5">
-              <Label htmlFor="od-project" className="text-[11px] font-medium">OS Project Number</Label>
+              <Label htmlFor="od-project" className="text-[10px] font-medium">OS Project Number</Label>
               <Input
                 id="od-project"
-                className="h-8 text-xs"
+                className="h-7 text-[11px]"
                 value={value.osProjectNumber}
                 maxLength={50}
                 onChange={(e) => set({ osProjectNumber: e.target.value })}
@@ -266,8 +266,8 @@ export const OnsiteDefaultsTab = ({
       </div>
 
       <div className="flex flex-col items-center gap-2 pt-1">
-        <Button onClick={handleSave} className="gap-2">
-          <Settings className="w-4 h-4" />
+        <Button size="sm" onClick={handleSave} className="gap-1.5 h-8 text-xs">
+          <Settings className="w-3.5 h-3.5" />
           Set Onsite Defaults
         </Button>
 
