@@ -132,6 +132,9 @@ const AddNewWorkOrder = () => {
     estimate: false,
     usedSurplus: false
   });
+  const [onsiteDefaults, setOnsiteDefaults] = useState<OnsiteDefaultsValues>(emptyOnsiteDefaults);
+  const [onsiteDefaultsConfigured, setOnsiteDefaultsConfigured] = useState(false);
+  const [onsiteDefaultsMeta, setOnsiteDefaultsMeta] = useState<{ createdBy?: string; modifiedBy?: string; lastUpdated?: string }>({});
   const [numUnusedItems, setNumUnusedItems] = useState("");
   const [copyWorkOrder, setCopyWorkOrder] = useState("");
   const [copyItemFrom, setCopyItemFrom] = useState("");
