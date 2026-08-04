@@ -571,7 +571,7 @@ const AddNewWorkOrder = () => {
 
   // Configurable: show the Onsite Defaults tab when Division = OnSite or Arrival Type = OnSite.
   // Set ONSITE_DEFAULTS_ALWAYS_VISIBLE to true to always expose the tab.
-  const ONSITE_DEFAULTS_ALWAYS_VISIBLE = false;
+  const ONSITE_DEFAULTS_ALWAYS_VISIBLE = true;
   const showOnsiteDefaults =
     ONSITE_DEFAULTS_ALWAYS_VISIBLE ||
     quickAddData.division?.toLowerCase() === "onsite" ||
