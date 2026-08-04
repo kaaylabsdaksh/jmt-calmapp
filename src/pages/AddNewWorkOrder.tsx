@@ -3444,6 +3444,7 @@ const AddNewWorkOrder = () => {
                                     <SelectItem value="Lab">Lab</SelectItem>
                                     <SelectItem value="Field">Field</SelectItem>
                                     <SelectItem value="Engineering">Engineering</SelectItem>
+                                    <SelectItem value="OnSite">OnSite</SelectItem>
                                   </SelectContent>
                                 </Select>
                               </div>
