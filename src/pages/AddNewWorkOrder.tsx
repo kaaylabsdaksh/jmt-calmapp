@@ -15,6 +15,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { Checkbox } from "@/components/ui/checkbox";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { WorkOrderItemsTable } from "@/components/WorkOrderItemsTable";
+import { OnsiteDefaultsTab, OnsiteDefaultsValues, emptyOnsiteDefaults } from "@/components/OnsiteDefaultsTab";
 import { WorkOrderItemsCards } from "@/components/WorkOrderItemsCards";
 import { WorkOrderItemsReceiving } from "@/components/WorkOrderItemsReceiving";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -132,6 +133,9 @@ const AddNewWorkOrder = () => {
     estimate: false,
     usedSurplus: false
   });
+  const [onsiteDefaults, setOnsiteDefaults] = useState<OnsiteDefaultsValues>(emptyOnsiteDefaults);
+  const [onsiteDefaultsConfigured, setOnsiteDefaultsConfigured] = useState(false);
+  const [onsiteDefaultsMeta, setOnsiteDefaultsMeta] = useState<{ createdBy?: string; modifiedBy?: string; lastUpdated?: string }>({});
   const [numUnusedItems, setNumUnusedItems] = useState("");
   const [copyWorkOrder, setCopyWorkOrder] = useState("");
   const [copyItemFrom, setCopyItemFrom] = useState("");
@@ -565,11 +569,23 @@ const AddNewWorkOrder = () => {
     }
   ];
 
+  // Configurable: show the Onsite Defaults tab when Division = OnSite or Arrival Type = OnSite.
+  // Set ONSITE_DEFAULTS_ALWAYS_VISIBLE to true to always expose the tab.
+  const ONSITE_DEFAULTS_ALWAYS_VISIBLE = false;
+  const showOnsiteDefaults =
+    ONSITE_DEFAULTS_ALWAYS_VISIBLE ||
+    quickAddData.division?.toLowerCase() === "onsite" ||
+    quickAddData.arrivalType?.toLowerCase() === "onsite" ||
+    onsiteDefaults.division?.toLowerCase() === "onsite" && onsiteDefaultsConfigured;
+
   const tabs = [
     { value: "general", label: "General", icon: User, shortLabel: "Gen" },
     { value: "account-info", label: "Account Info", icon: CreditCard, shortLabel: "Account" },
     { value: "contacts", label: "Work Order Contacts", icon: Users, shortLabel: "Contacts" },
     { value: "items", label: "Work Order Items", icon: Package, shortLabel: "Items" },
+    ...(showOnsiteDefaults
+      ? [{ value: "onsite-defaults", label: "Onsite Defaults", icon: Settings, shortLabel: "Onsite" }]
+      : []),
     { value: "estimate", label: "Estimate", icon: Calculator, shortLabel: "Est" },
     { value: "fail-log", label: "Fail Log", icon: AlertCircle, shortLabel: "Fail" },
     { value: "external", label: "External Files", icon: ExternalLink, shortLabel: "Ext" },
@@ -579,6 +595,8 @@ const AddNewWorkOrder = () => {
   ];
 
   const currentTab = tabs.find(tab => tab.value === activeTab);
+
+
 
   const handleSave = () => {
     // TODO: Implement save functionality
@@ -3426,6 +3444,7 @@ const AddNewWorkOrder = () => {
                                     <SelectItem value="Lab">Lab</SelectItem>
                                     <SelectItem value="Field">Field</SelectItem>
                                     <SelectItem value="Engineering">Engineering</SelectItem>
+                                    <SelectItem value="OnSite">OnSite</SelectItem>
                                   </SelectContent>
                                 </Select>
                               </div>
@@ -3920,6 +3939,35 @@ const AddNewWorkOrder = () => {
               </Card>
             </TabsContent>
 
+
+            <TabsContent value="onsite-defaults">
+              <OnsiteDefaultsTab
+                value={onsiteDefaults}
+                onChange={setOnsiteDefaults}
+                configured={onsiteDefaultsConfigured}
+                metadata={onsiteDefaultsMeta}
+                onSave={(defaults) => {
+                  setOnsiteDefaultsConfigured(true);
+                  setOnsiteDefaultsMeta({
+                    createdBy: onsiteDefaultsMeta.createdBy || "John Smith",
+                    modifiedBy: "John Smith",
+                    lastUpdated: format(new Date(), "MMMM d, yyyy"),
+                  });
+                  // Pre-populate newly added onsite items with these defaults
+                  setQuickAddData(prev => ({
+                    ...prev,
+                    location: defaults.location || prev.location,
+                    division: defaults.division || prev.division,
+                    priority: defaults.priority || prev.priority,
+                    needByDate: defaults.endDate || prev.needByDate,
+                    poNumber: defaults.poNumber || prev.poNumber,
+                    arrivalType: defaults.arrivalType || prev.arrivalType,
+                    actionCode: defaults.actionCode || prev.actionCode,
+                    calFreq: defaults.calFreq || prev.calFreq,
+                  }));
+                }}
+              />
+            </TabsContent>
 
             <TabsContent value="estimate">
               <EstimateDetails />
