@@ -3939,6 +3939,35 @@ const AddNewWorkOrder = () => {
             </TabsContent>
 
 
+            <TabsContent value="onsite-defaults">
+              <OnsiteDefaultsTab
+                value={onsiteDefaults}
+                onChange={setOnsiteDefaults}
+                configured={onsiteDefaultsConfigured}
+                metadata={onsiteDefaultsMeta}
+                onSave={(defaults) => {
+                  setOnsiteDefaultsConfigured(true);
+                  setOnsiteDefaultsMeta({
+                    createdBy: onsiteDefaultsMeta.createdBy || "John Smith",
+                    modifiedBy: "John Smith",
+                    lastUpdated: format(new Date(), "MMMM d, yyyy"),
+                  });
+                  // Pre-populate newly added onsite items with these defaults
+                  setQuickAddData(prev => ({
+                    ...prev,
+                    location: defaults.location || prev.location,
+                    division: defaults.division || prev.division,
+                    priority: defaults.priority || prev.priority,
+                    needByDate: defaults.endDate || prev.needByDate,
+                    poNumber: defaults.poNumber || prev.poNumber,
+                    arrivalType: defaults.arrivalType || prev.arrivalType,
+                    actionCode: defaults.actionCode || prev.actionCode,
+                    calFreq: defaults.calFreq || prev.calFreq,
+                  }));
+                }}
+              />
+            </TabsContent>
+
             <TabsContent value="estimate">
               <EstimateDetails />
             </TabsContent>
