@@ -565,11 +565,23 @@ const AddNewWorkOrder = () => {
     }
   ];
 
+  // Configurable: show the Onsite Defaults tab when Division = OnSite or Arrival Type = OnSite.
+  // Set ONSITE_DEFAULTS_ALWAYS_VISIBLE to true to always expose the tab.
+  const ONSITE_DEFAULTS_ALWAYS_VISIBLE = false;
+  const showOnsiteDefaults =
+    ONSITE_DEFAULTS_ALWAYS_VISIBLE ||
+    quickAddData.division?.toLowerCase() === "onsite" ||
+    quickAddData.arrivalType?.toLowerCase() === "onsite" ||
+    onsiteDefaults.division?.toLowerCase() === "onsite" && onsiteDefaultsConfigured;
+
   const tabs = [
     { value: "general", label: "General", icon: User, shortLabel: "Gen" },
     { value: "account-info", label: "Account Info", icon: CreditCard, shortLabel: "Account" },
     { value: "contacts", label: "Work Order Contacts", icon: Users, shortLabel: "Contacts" },
     { value: "items", label: "Work Order Items", icon: Package, shortLabel: "Items" },
+    ...(showOnsiteDefaults
+      ? [{ value: "onsite-defaults", label: "Onsite Defaults", icon: Settings, shortLabel: "Onsite" }]
+      : []),
     { value: "estimate", label: "Estimate", icon: Calculator, shortLabel: "Est" },
     { value: "fail-log", label: "Fail Log", icon: AlertCircle, shortLabel: "Fail" },
     { value: "external", label: "External Files", icon: ExternalLink, shortLabel: "Ext" },
@@ -579,6 +591,8 @@ const AddNewWorkOrder = () => {
   ];
 
   const currentTab = tabs.find(tab => tab.value === activeTab);
+
+
 
   const handleSave = () => {
     // TODO: Implement save functionality
