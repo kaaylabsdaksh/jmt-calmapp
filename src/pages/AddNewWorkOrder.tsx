@@ -15,6 +15,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { Checkbox } from "@/components/ui/checkbox";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { WorkOrderItemsTable } from "@/components/WorkOrderItemsTable";
+import { OnsiteDefaultsTab, OnsiteDefaultsValues, emptyOnsiteDefaults } from "@/components/OnsiteDefaultsTab";
 import { WorkOrderItemsCards } from "@/components/WorkOrderItemsCards";
 import { WorkOrderItemsReceiving } from "@/components/WorkOrderItemsReceiving";
 import { useIsMobile } from "@/hooks/use-mobile";
