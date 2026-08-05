@@ -66,6 +66,8 @@ const ROUTE_OPTIONS = [
   "Other",
 ];
 
+const JM_LOCATIONS = ["Baton Rouge", "Houston", "Round Rock", "Lafayette", "Beaumont"];
+const DIVISIONS = ["ESL", "MFG", "ITL", "Lab", "OnSite", "Field Service"];
 const PRIORITIES = ["Low", "Normal", "High", "Critical"];
 const CDR_TYPES = ["Contract Review", "Pricing Agreement", "Safety Document", "Quality Spec", "Purchase Terms"];
 const HOW_RECEIVED = ["Email", "Fax", "Mail", "Customer Portal", "In Person"];
@@ -108,7 +110,12 @@ export default function EditCdr() {
   const [status, setStatus] = useState("In Process");
   const [submitted, setSubmitted] = useState(false);
 
+  // CDR details
+  const [jmLocation, setJmLocation] = useState("Baton Rouge");
+  const [divisions, setDivisions] = useState<string[]>(["ESL", "MFG", "ITL", "Lab"]);
+
   // Customer
+  const [existingCustomer, setExistingCustomer] = useState("Yes");
   const [customer, setCustomer] = useState("Lone Star Electric Co-op");
   const [account, setAccount] = useState("ACCT-10428");
   const [shipTo, setShipTo] = useState("Main Warehouse - Dock 4");
@@ -117,6 +124,10 @@ export default function EditCdr() {
   const [contact, setContact] = useState("Dana Whitfield");
   const [phone, setPhone] = useState("(713) 555-0142");
   const [email, setEmail] = useState("dwhitfield@lonestarcoop.com");
+  const [accounts, setAccounts] = useState([
+    { id: "a1", acct: "3872.00", customer: "Ultra Electronics NSPI", shipTo: "707 Jeffrey Way", city: "Round Rock", state: "TX", srDoc: "SR-88213" },
+    { id: "a2", acct: "10428.00", customer: "Lone Star Electric Co-op", shipTo: "Main Warehouse - Dock 4", city: "Houston", state: "TX", srDoc: "" },
+  ]);
 
   // Routing
   const [routes, setRoutes] = useState<string[]>(["Quality", "Safety"]);
@@ -249,15 +260,88 @@ export default function EditCdr() {
         </div>
 
         <div className="space-y-6">
+          {/* CDR Details */}
+          <Card>
+            <CardHeader className="pb-3">{sectionTitle(Info, "CDR Details")}</CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                <div className="space-y-1.5">
+                  <Label className="text-xs">Status</Label>
+                  <Select value={status} onValueChange={setStatus}>
+                    <SelectTrigger className="h-8 text-sm">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {Object.keys(STATUS_STYLES).map((s) => (
+                        <SelectItem key={s} value={s}>{s}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-1.5">
+                  <Label className="text-xs">JM Location</Label>
+                  <Select value={jmLocation} onValueChange={setJmLocation}>
+                    <SelectTrigger className="h-8 text-sm">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {JM_LOCATIONS.map((l) => (
+                        <SelectItem key={l} value={l}>{l}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-1.5">
+                  <Label className="text-xs">Division(s)</Label>
+                  <div className="flex flex-wrap gap-1.5 rounded-md border bg-background p-1.5">
+                    {DIVISIONS.map((d) => {
+                      const active = divisions.includes(d);
+                      return (
+                        <button
+                          key={d}
+                          type="button"
+                          aria-pressed={active}
+                          onClick={() =>
+                            setDivisions((prev) => (prev.includes(d) ? prev.filter((x) => x !== d) : [...prev, d]))
+                          }
+                          className={cn(
+                            "rounded-full border px-2.5 py-0.5 text-[11px] transition-colors",
+                            active
+                              ? "border-primary bg-primary text-primary-foreground"
+                              : "border-border bg-background text-foreground hover:bg-accent"
+                          )}
+                        >
+                          {d}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
           {/* Row 1 */}
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
             <Card>
               <CardHeader className="pb-3">{sectionTitle(Users, "Customer Information")}</CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                  <div className="space-y-1.5 sm:col-span-2">
+                  <div className="space-y-1.5">
+                    <Label className="text-xs">Existing Customer</Label>
+                    <Select value={existingCustomer} onValueChange={setExistingCustomer}>
+                      <SelectTrigger className="h-8 text-sm">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Yes">Yes</SelectItem>
+                        <SelectItem value="No">No</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-1.5">
                     <Label className="text-xs">
-                      Existing Customer <span className="text-destructive">*</span>
+                      Customer <span className="text-destructive">*</span>
                     </Label>
                     <Input
                       value={customer}
@@ -287,6 +371,74 @@ export default function EditCdr() {
 
                 <Separator />
 
+                {/* Linked accounts */}
+                <div>
+                  <div className="mb-2 flex items-center justify-between">
+                    <p className="text-xs font-semibold text-muted-foreground">Linked Account(s)</p>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-7 text-[11px]"
+                      onClick={() =>
+                        setAccounts((prev) => [
+                          ...prev,
+                          { id: `${Date.now()}`, acct: "", customer: "", shipTo: "", city: "", state: "", srDoc: "" },
+                        ])
+                      }
+                    >
+                      <Users className="mr-1.5 h-3.5 w-3.5" />
+                      Add/Remove Accounts
+                    </Button>
+                  </div>
+                  <div className="overflow-x-auto rounded-md border">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead className="h-8 text-[11px]">Acct</TableHead>
+                          <TableHead className="h-8 text-[11px]">Customer</TableHead>
+                          <TableHead className="h-8 text-[11px]">Ship To</TableHead>
+                          <TableHead className="h-8 text-[11px]">City</TableHead>
+                          <TableHead className="h-8 text-[11px]">State</TableHead>
+                          <TableHead className="h-8 text-[11px]">SR Document</TableHead>
+                          <TableHead className="h-8 w-8" />
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {accounts.length === 0 ? (
+                          <TableRow>
+                            <TableCell colSpan={7} className="py-6 text-center text-xs text-muted-foreground">
+                              No accounts linked
+                            </TableCell>
+                          </TableRow>
+                        ) : (
+                          accounts.map((a) => (
+                            <TableRow key={a.id}>
+                              <TableCell className="py-1.5 text-xs font-medium text-primary">{a.acct || "—"}</TableCell>
+                              <TableCell className="py-1.5 text-xs">{a.customer || "—"}</TableCell>
+                              <TableCell className="py-1.5 text-xs">{a.shipTo || "—"}</TableCell>
+                              <TableCell className="py-1.5 text-xs">{a.city || "—"}</TableCell>
+                              <TableCell className="py-1.5 text-xs">{a.state || "—"}</TableCell>
+                              <TableCell className="py-1.5 text-xs">{a.srDoc || "—"}</TableCell>
+                              <TableCell className="py-1.5">
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  className="h-6 w-6"
+                                  onClick={() => setAccounts((prev) => prev.filter((x) => x.id !== a.id))}
+                                >
+                                  <Trash2 className="h-3.5 w-3.5 text-destructive" />
+                                </Button>
+                              </TableCell>
+                            </TableRow>
+                          ))
+                        )}
+                      </TableBody>
+                    </Table>
+                  </div>
+                </div>
+
+                <Separator />
+
                 <div>
                   <p className="mb-2 text-xs font-semibold text-muted-foreground">Contact Information</p>
                   <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
@@ -305,10 +457,6 @@ export default function EditCdr() {
                   </div>
                 </div>
 
-                <Button variant="outline" size="sm" className="h-8 text-xs">
-                  <Users className="mr-1.5 h-3.5 w-3.5" />
-                  Manage Accounts
-                </Button>
               </CardContent>
             </Card>
 
@@ -323,23 +471,37 @@ export default function EditCdr() {
                     {ROUTE_OPTIONS.map((r) => {
                       const active = routes.includes(r);
                       return (
-                        <button
+                        <span
                           key={r}
-                          type="button"
-                          aria-pressed={active}
-                          onClick={() => toggleRoute(r)}
                           className={cn(
-                            "rounded-full border px-3 py-1 text-xs transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-                            active
-                              ? "border-primary bg-primary text-primary-foreground"
-                              : "border-border bg-background text-foreground hover:bg-accent"
+                            "inline-flex items-center overflow-hidden rounded-full border text-xs transition-colors",
+                            active ? "border-primary bg-primary text-primary-foreground" : "border-border bg-background text-foreground"
                           )}
                         >
-                          {r}
-                        </button>
+                          <button
+                            type="button"
+                            aria-pressed={active}
+                            onClick={() => toggleRoute(r)}
+                            className={cn("px-3 py-1", !active && "hover:bg-accent")}
+                          >
+                            {r}
+                          </button>
+                          {active && (
+                            <button
+                              type="button"
+                              title={`Send to ${r}`}
+                              onClick={() => toast({ title: `Notification sent to ${r}` })}
+                              className="flex items-center gap-1 border-l border-primary-foreground/30 px-2 py-1 text-[10px] font-medium hover:bg-primary-foreground/15"
+                            >
+                              <Send className="h-3 w-3" />
+                              Send
+                            </button>
+                          )}
+                        </span>
                       );
                     })}
                   </div>
+
                   {showErr("routes") && errText("Select at least one department")}
                   {routes.includes("Other") && (
                     <Input
@@ -679,8 +841,16 @@ export default function EditCdr() {
             <Button variant="outline" size="sm" className="h-8 text-xs">
               <Mail className="mr-1.5 h-3.5 w-3.5" /> Email Customer
             </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-8 text-xs"
+              onClick={() => toast({ title: "PO added to account(s)", description: po || "No PO number entered" })}
+            >
+              <FileText className="mr-1.5 h-3.5 w-3.5" /> Add PO to Acct(s)
+            </Button>
             <Button variant="outline" size="sm" className="h-8 text-xs">
-              <Send className="mr-1.5 h-3.5 w-3.5" /> Send Notification
+              <Send className="mr-1.5 h-3.5 w-3.5" /> Send Notifications
             </Button>
             <Button
               variant="outline"
