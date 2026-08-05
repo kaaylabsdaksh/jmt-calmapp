@@ -514,40 +514,87 @@ export default function EditCdr() {
               <CardHeader className="pb-3">{sectionTitle(RouteIcon, "Routing & Review")}</CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
-                  <Label className="text-xs">
-                    Route To <span className="text-destructive">*</span>
-                  </Label>
-                  <div className="flex flex-wrap gap-1.5">
+                  <div className="flex items-center justify-between">
+                    <Label className="text-xs">
+                      Route To <span className="text-destructive">*</span>
+                      {routes.length > 0 && (
+                        <span className="ml-2 rounded-full bg-muted px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground">
+                          {routes.length} selected
+                        </span>
+                      )}
+                    </Label>
+                    <div className="flex items-center gap-1">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-6 px-2 text-[11px]"
+                        onClick={() => setRoutes(ROUTE_OPTIONS)}
+                      >
+                        Select all
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-6 px-2 text-[11px]"
+                        onClick={() => setRoutes([])}
+                      >
+                        Clear
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-6 px-2 text-[11px]"
+                        disabled={routes.length === 0}
+                        onClick={() => {
+                          setSentRoutes(routes);
+                          toast({ title: `Notifications sent to ${routes.length} department(s)` });
+                        }}
+                      >
+                        <Send className="mr-1 h-3 w-3" /> Send all
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3">
                     {ROUTE_OPTIONS.map((r) => {
                       const active = routes.includes(r);
+                      const sent = sentRoutes.includes(r);
                       return (
-                        <span
+                        <div
                           key={r}
                           className={cn(
-                            "inline-flex items-center overflow-hidden rounded-full border text-xs transition-colors",
-                            active ? "border-primary bg-primary text-primary-foreground" : "border-border bg-background text-foreground"
+                            "group flex items-center justify-between gap-1 rounded-md border px-2 py-1.5 transition-colors",
+                            active ? "border-primary/50 bg-primary/5" : "border-border bg-background hover:bg-accent/50"
                           )}
                         >
                           <button
                             type="button"
                             aria-pressed={active}
                             onClick={() => toggleRoute(r)}
-                            className={cn("px-3 py-1", !active && "hover:bg-accent")}
+                            className="flex min-w-0 flex-1 items-center gap-1.5 text-left"
                           >
-                            {r}
+                            <Checkbox checked={active} className="pointer-events-none h-3.5 w-3.5" />
+                            <span className={cn("truncate text-xs", active && "font-medium")}>{r}</span>
                           </button>
-                          {active && (
-                            <button
-                              type="button"
-                              title={`Send to ${r}`}
-                              onClick={() => toast({ title: `Notification sent to ${r}` })}
-                              className="flex items-center gap-1 border-l border-primary-foreground/30 px-2 py-1 text-[10px] font-medium hover:bg-primary-foreground/15"
-                            >
-                              <Send className="h-3 w-3" />
-                              Send
-                            </button>
-                          )}
-                        </span>
+                          {active &&
+                            (sent ? (
+                              <span className="flex shrink-0 items-center gap-0.5 text-[10px] font-medium text-emerald-600">
+                                <CheckCircle2 className="h-3 w-3" /> Sent
+                              </span>
+                            ) : (
+                              <button
+                                type="button"
+                                title={`Send to ${r}`}
+                                onClick={() => {
+                                  setSentRoutes((p) => [...p, r]);
+                                  toast({ title: `Notification sent to ${r}` });
+                                }}
+                                className="flex shrink-0 items-center gap-0.5 rounded px-1 py-0.5 text-[10px] font-medium text-muted-foreground hover:bg-accent hover:text-foreground"
+                              >
+                                <Send className="h-3 w-3" /> Send
+                              </button>
+                            ))}
+                        </div>
                       );
                     })}
                   </div>
