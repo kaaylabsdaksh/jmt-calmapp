@@ -573,7 +573,10 @@ export default function EditCdr() {
                             onClick={() => toggleRoute(r)}
                             className="flex min-w-0 flex-1 items-center gap-1.5 text-left"
                           >
-                            <Checkbox checked={active} className="pointer-events-none h-3.5 w-3.5" />
+                            <Checkbox
+                              checked={active}
+                              className="pointer-events-none h-3.5 w-3.5 data-[state=checked]:border-slate-900 data-[state=checked]:bg-slate-900 data-[state=checked]:text-white"
+                            />
                             <span className={cn("truncate text-xs", active && "font-medium")}>{r}</span>
                           </button>
                           {active &&
