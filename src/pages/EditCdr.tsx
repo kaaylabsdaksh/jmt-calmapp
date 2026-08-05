@@ -648,8 +648,6 @@ export default function EditCdr() {
 
           {/* Row 2 */}
           <div className="grid grid-cols-1 gap-6">
-            <Card className="[&_.grid]:sm:grid-cols-4">
-
             <Card>
               <CardHeader className="pb-3">{sectionTitle(FileText, "Document Information")}</CardHeader>
               <CardContent>
