@@ -841,8 +841,16 @@ export default function EditCdr() {
             <Button variant="outline" size="sm" className="h-8 text-xs">
               <Mail className="mr-1.5 h-3.5 w-3.5" /> Email Customer
             </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-8 text-xs"
+              onClick={() => toast({ title: "PO added to account(s)", description: po || "No PO number entered" })}
+            >
+              <FileText className="mr-1.5 h-3.5 w-3.5" /> Add PO to Acct(s)
+            </Button>
             <Button variant="outline" size="sm" className="h-8 text-xs">
-              <Send className="mr-1.5 h-3.5 w-3.5" /> Send Notification
+              <Send className="mr-1.5 h-3.5 w-3.5" /> Send Notifications
             </Button>
             <Button
               variant="outline"
