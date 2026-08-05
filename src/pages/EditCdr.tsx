@@ -992,7 +992,7 @@ export default function EditCdr() {
         onOpenChange={(o) => !o && setEmailTarget(null)}
         title={emailTarget === "customer" ? "Email Customer" : "Email Creator"}
         description={`CDR #${cdrId} · ${customer}`}
-        attachments={docs.slice(0, 2).map((d: any) => d.name ?? d.fileName ?? "Document")}
+        attachments={docs.slice(0, 2).map((d) => d.name)}
         defaults={{
           from: "vimalandhanbal@jmtest.com",
           to: emailTarget === "customer" ? email : "aleatabrown@jmtest.com",
