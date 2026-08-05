@@ -365,6 +365,20 @@ export default function EditCdr() {
                 </div>
 
               </div>
+
+              {/* Workflow information (compact) */}
+              <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 border-t pt-2 text-[10px] leading-tight text-muted-foreground">
+                {[
+                  ["Created By", "M. Alvarez"],
+                  ["Created", "07/28/2026 8:12 AM"],
+                  ["Modified By", "K. Nguyen"],
+                  ["Modified", "08/02/2026 10:14 AM"],
+                ].map(([label, value]) => (
+                  <span key={label} className="whitespace-nowrap">
+                    {label}: <span className="font-medium text-foreground">{value}</span>
+                  </span>
+                ))}
+              </div>
             </CardContent>
           </Card>
 
