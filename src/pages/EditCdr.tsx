@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   ChevronRight,
+  ChevronDown,
   Users,
   Route as RouteIcon,
   FileText,
@@ -28,6 +29,8 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
@@ -67,7 +70,19 @@ const ROUTE_OPTIONS = [
 ];
 
 const JM_LOCATIONS = ["Baton Rouge", "Houston", "Round Rock", "Lafayette", "Beaumont"];
-const DIVISIONS = ["ESL", "MFG", "ITL", "Lab", "OnSite", "Field Service"];
+const DIVISIONS = [
+  "ESL",
+  "OnSite",
+  "MFG",
+  "ITL",
+  "Rental",
+  "Lab",
+  "Surplus",
+  "ESL Onsite",
+  "ITL Onsite",
+  "GMFG",
+  "Field Service",
+];
 const PRIORITIES = ["Low", "Normal", "High", "Critical"];
 const CDR_TYPES = ["Contract Review", "Pricing Agreement", "Safety Document", "Quality Spec", "Purchase Terms"];
 const HOW_RECEIVED = ["Email", "Fax", "Mail", "Customer Portal", "In Person"];
@@ -113,6 +128,7 @@ export default function EditCdr() {
   // CDR details
   const [jmLocation, setJmLocation] = useState("Baton Rouge");
   const [divisions, setDivisions] = useState<string[]>(["ESL", "MFG", "ITL", "Lab"]);
+  const [divisionsOpen, setDivisionsOpen] = useState(false);
 
   // Customer
   const [existingCustomer, setExistingCustomer] = useState("Yes");
@@ -287,30 +303,62 @@ export default function EditCdr() {
                 </div>
                 <div className="space-y-1.5">
                   <Label className="text-xs">Division(s)</Label>
-                  <div className="flex flex-wrap gap-1.5 rounded-md border bg-background p-1.5">
-                    {DIVISIONS.map((d) => {
-                      const active = divisions.includes(d);
-                      return (
-                        <button
-                          key={d}
-                          type="button"
-                          aria-pressed={active}
-                          onClick={() =>
-                            setDivisions((prev) => (prev.includes(d) ? prev.filter((x) => x !== d) : [...prev, d]))
-                          }
-                          className={cn(
-                            "rounded-full border px-2.5 py-0.5 text-[11px] transition-colors",
-                            active
-                              ? "border-primary bg-primary text-primary-foreground"
-                              : "border-border bg-background text-foreground hover:bg-accent"
-                          )}
-                        >
-                          {d}
-                        </button>
-                      );
-                    })}
-                  </div>
+                  <Popover open={divisionsOpen} onOpenChange={setDivisionsOpen}>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        role="combobox"
+                        className="h-9 w-full justify-between font-normal"
+                      >
+                        <span className="truncate text-xs">
+                          {divisions.length ? divisions.join(", ") : "Select division(s)"}
+                        </span>
+                        <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-[--radix-popover-trigger-width] p-0" align="start">
+                      <div className="max-h-56 overflow-y-auto p-1">
+                        {DIVISIONS.map((d) => {
+                          const active = divisions.includes(d);
+                          return (
+                            <label
+                              key={d}
+                              className={cn(
+                                "flex cursor-pointer items-center gap-2 rounded-sm px-2 py-1.5 text-xs hover:bg-accent",
+                                active && "bg-accent/60"
+                              )}
+                            >
+                              <Checkbox
+                                checked={active}
+                                onCheckedChange={() =>
+                                  setDivisions((prev) =>
+                                    prev.includes(d) ? prev.filter((x) => x !== d) : [...prev, d]
+                                  )
+                                }
+                              />
+                              <span>{d}</span>
+                            </label>
+                          );
+                        })}
+                      </div>
+                      <Separator />
+                      <div className="flex items-center justify-between gap-2 p-2">
+                        <div className="flex gap-2">
+                          <Button size="sm" variant="outline" className="h-7 text-[11px]" onClick={() => setDivisions([...DIVISIONS])}>
+                            Select All
+                          </Button>
+                          <Button size="sm" variant="outline" className="h-7 text-[11px]" onClick={() => setDivisions([])}>
+                            Unselect All
+                          </Button>
+                        </div>
+                        <Button size="sm" variant="ghost" className="h-7 text-[11px]" onClick={() => setDivisionsOpen(false)}>
+                          Close
+                        </Button>
+                      </div>
+                    </PopoverContent>
+                  </Popover>
                 </div>
+
               </div>
             </CardContent>
           </Card>
