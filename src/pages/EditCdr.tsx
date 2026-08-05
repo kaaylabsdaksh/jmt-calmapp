@@ -289,7 +289,9 @@ export default function EditCdr() {
 
                 </div>
                 <div className="space-y-1.5">
-                  <Label className="text-xs">JM Location</Label>
+                  <Label className="text-xs">
+                    JM Location <span className="text-destructive">*</span>
+                  </Label>
                   <Select value={jmLocation} onValueChange={setJmLocation}>
                     <SelectTrigger className="h-8 text-sm">
                       <SelectValue />
@@ -302,7 +304,9 @@ export default function EditCdr() {
                   </Select>
                 </div>
                 <div className="space-y-1.5">
-                  <Label className="text-xs">Division(s)</Label>
+                  <Label className="text-xs">
+                    Division(s) <span className="text-destructive">*</span>
+                  </Label>
                   <Popover open={divisionsOpen} onOpenChange={setDivisionsOpen}>
                     <PopoverTrigger asChild>
                       <Button
