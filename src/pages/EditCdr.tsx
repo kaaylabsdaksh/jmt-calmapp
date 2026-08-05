@@ -108,7 +108,12 @@ export default function EditCdr() {
   const [status, setStatus] = useState("In Process");
   const [submitted, setSubmitted] = useState(false);
 
+  // CDR details
+  const [jmLocation, setJmLocation] = useState("Baton Rouge");
+  const [divisions, setDivisions] = useState<string[]>(["ESL", "MFG", "ITL", "Lab"]);
+
   // Customer
+  const [existingCustomer, setExistingCustomer] = useState("Yes");
   const [customer, setCustomer] = useState("Lone Star Electric Co-op");
   const [account, setAccount] = useState("ACCT-10428");
   const [shipTo, setShipTo] = useState("Main Warehouse - Dock 4");
@@ -117,6 +122,10 @@ export default function EditCdr() {
   const [contact, setContact] = useState("Dana Whitfield");
   const [phone, setPhone] = useState("(713) 555-0142");
   const [email, setEmail] = useState("dwhitfield@lonestarcoop.com");
+  const [accounts, setAccounts] = useState([
+    { id: "a1", acct: "3872.00", customer: "Ultra Electronics NSPI", shipTo: "707 Jeffrey Way", city: "Round Rock", state: "TX", srDoc: "SR-88213" },
+    { id: "a2", acct: "10428.00", customer: "Lone Star Electric Co-op", shipTo: "Main Warehouse - Dock 4", city: "Houston", state: "TX", srDoc: "" },
+  ]);
 
   // Routing
   const [routes, setRoutes] = useState<string[]>(["Quality", "Safety"]);
