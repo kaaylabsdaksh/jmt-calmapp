@@ -28,6 +28,8 @@ type Props = {
   description?: string;
   defaults: EmailComposeValues;
   attachments?: string[];
+  bodyLabel?: string;
+  bodyMinHeight?: string;
   onSend: (values: EmailComposeValues) => void;
 };
 
@@ -38,6 +40,8 @@ export default function EmailComposeDialog({
   description,
   defaults,
   attachments = [],
+  bodyLabel = "Comments",
+  bodyMinHeight = "min-h-[104px]",
   onSend,
 }: Props) {
   const [values, setValues] = useState<EmailComposeValues>(defaults);
