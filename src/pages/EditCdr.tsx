@@ -327,9 +327,21 @@ export default function EditCdr() {
               <CardHeader className="pb-3">{sectionTitle(Users, "Customer Information")}</CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                  <div className="space-y-1.5 sm:col-span-2">
+                  <div className="space-y-1.5">
+                    <Label className="text-xs">Existing Customer</Label>
+                    <Select value={existingCustomer} onValueChange={setExistingCustomer}>
+                      <SelectTrigger className="h-8 text-sm">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Yes">Yes</SelectItem>
+                        <SelectItem value="No">No</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-1.5">
                     <Label className="text-xs">
-                      Existing Customer <span className="text-destructive">*</span>
+                      Customer <span className="text-destructive">*</span>
                     </Label>
                     <Input
                       value={customer}
@@ -359,6 +371,74 @@ export default function EditCdr() {
 
                 <Separator />
 
+                {/* Linked accounts */}
+                <div>
+                  <div className="mb-2 flex items-center justify-between">
+                    <p className="text-xs font-semibold text-muted-foreground">Linked Account(s)</p>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-7 text-[11px]"
+                      onClick={() =>
+                        setAccounts((prev) => [
+                          ...prev,
+                          { id: `${Date.now()}`, acct: "", customer: "", shipTo: "", city: "", state: "", srDoc: "" },
+                        ])
+                      }
+                    >
+                      <Users className="mr-1.5 h-3.5 w-3.5" />
+                      Add/Remove Accounts
+                    </Button>
+                  </div>
+                  <div className="overflow-x-auto rounded-md border">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead className="h-8 text-[11px]">Acct</TableHead>
+                          <TableHead className="h-8 text-[11px]">Customer</TableHead>
+                          <TableHead className="h-8 text-[11px]">Ship To</TableHead>
+                          <TableHead className="h-8 text-[11px]">City</TableHead>
+                          <TableHead className="h-8 text-[11px]">State</TableHead>
+                          <TableHead className="h-8 text-[11px]">SR Document</TableHead>
+                          <TableHead className="h-8 w-8" />
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {accounts.length === 0 ? (
+                          <TableRow>
+                            <TableCell colSpan={7} className="py-6 text-center text-xs text-muted-foreground">
+                              No accounts linked
+                            </TableCell>
+                          </TableRow>
+                        ) : (
+                          accounts.map((a) => (
+                            <TableRow key={a.id}>
+                              <TableCell className="py-1.5 text-xs font-medium text-primary">{a.acct || "—"}</TableCell>
+                              <TableCell className="py-1.5 text-xs">{a.customer || "—"}</TableCell>
+                              <TableCell className="py-1.5 text-xs">{a.shipTo || "—"}</TableCell>
+                              <TableCell className="py-1.5 text-xs">{a.city || "—"}</TableCell>
+                              <TableCell className="py-1.5 text-xs">{a.state || "—"}</TableCell>
+                              <TableCell className="py-1.5 text-xs">{a.srDoc || "—"}</TableCell>
+                              <TableCell className="py-1.5">
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  className="h-6 w-6"
+                                  onClick={() => setAccounts((prev) => prev.filter((x) => x.id !== a.id))}
+                                >
+                                  <Trash2 className="h-3.5 w-3.5 text-destructive" />
+                                </Button>
+                              </TableCell>
+                            </TableRow>
+                          ))
+                        )}
+                      </TableBody>
+                    </Table>
+                  </div>
+                </div>
+
+                <Separator />
+
                 <div>
                   <p className="mb-2 text-xs font-semibold text-muted-foreground">Contact Information</p>
                   <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
@@ -377,10 +457,6 @@ export default function EditCdr() {
                   </div>
                 </div>
 
-                <Button variant="outline" size="sm" className="h-8 text-xs">
-                  <Users className="mr-1.5 h-3.5 w-3.5" />
-                  Manage Accounts
-                </Button>
               </CardContent>
             </Card>
 
