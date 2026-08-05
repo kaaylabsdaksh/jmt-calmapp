@@ -305,7 +305,11 @@ export function AppSidebar() {
                                       ? "customers-nav"
                                       : undefined
                                   }
-                                  className="flex items-center w-full h-10 px-3 rounded-lg text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200 ease-in-out group-hover:translate-x-1"
+                                  className={`flex items-center w-full h-10 px-3 rounded-lg hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200 ease-in-out group-hover:translate-x-1 ${
+                                    location.pathname === (action as any).url
+                                      ? "bg-sidebar-accent text-sidebar-accent-foreground font-semibold"
+                                      : "text-sidebar-foreground"
+                                  }`}
                                   style={{ animationDelay: `${(categoryIndex * 100) + (index * 50)}ms` }}
                                 >
                                   {React.createElement(action.icon, { className: "h-4 w-4 shrink-0 text-sidebar-foreground group-hover:scale-110 transition-transform duration-200" })}
