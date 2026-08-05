@@ -51,6 +51,7 @@ import {
 import { ModernDatePicker } from "@/components/ui/modern-date-picker";
 import { useToast } from "@/components/ui/use-toast";
 import ModernTopNav from "@/components/modern/ModernTopNav";
+import EmailComposeDialog from "@/components/cdr/EmailComposeDialog";
 import { cn } from "@/lib/utils";
 
 const ROUTE_OPTIONS = [
@@ -175,6 +176,9 @@ export default function EditCdr() {
   const [comments, setComments] = useState(initialComments);
   const [commentType, setCommentType] = useState("General");
   const [commentText, setCommentText] = useState("");
+
+  // Email dialogs
+  const [emailTarget, setEmailTarget] = useState<null | "creator" | "customer">(null);
 
   const errors = useMemo(
     () => ({
@@ -925,10 +929,10 @@ export default function EditCdr() {
       <div className="sticky bottom-0 z-20 border-t bg-background/95 backdrop-blur">
         <div className="mx-auto flex max-w-[1400px] flex-wrap items-center gap-2 px-4 py-3 md:px-6">
           <div className="ml-auto flex flex-wrap items-center gap-2">
-            <Button variant="outline" size="sm" className="h-8 text-xs">
+            <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => setEmailTarget("creator")}>
               <Mail className="mr-1.5 h-3.5 w-3.5" /> Email Creator
             </Button>
-            <Button variant="outline" size="sm" className="h-8 text-xs">
+            <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => setEmailTarget("customer")}>
               <Mail className="mr-1.5 h-3.5 w-3.5" /> Email Customer
             </Button>
             <Button
@@ -982,6 +986,24 @@ export default function EditCdr() {
           </div>
         </div>
       </div>
+
+      <EmailComposeDialog
+        open={emailTarget !== null}
+        onOpenChange={(o) => !o && setEmailTarget(null)}
+        title={emailTarget === "customer" ? "Email Customer" : "Email Creator"}
+        description={`CDR #${cdrId} · ${customer}`}
+        attachments={docs.slice(0, 2).map((d) => d.name)}
+        defaults={{
+          from: "vimalandhanbal@jmtest.com",
+          to: emailTarget === "customer" ? email : "aleatabrown@jmtest.com",
+          subject:
+            emailTarget === "customer"
+              ? `JM Test CDR #${cdrId} for ${customer}`
+              : `JM Test CDR #${cdrId} you Created`,
+          comments: "",
+        }}
+        onSend={(v) => toast({ title: "Email sent", description: `To ${v.to}` })}
+      />
     </div>
   );
 }
