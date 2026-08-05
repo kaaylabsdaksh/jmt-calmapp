@@ -564,7 +564,7 @@ export default function EditCdr() {
                           key={r}
                           className={cn(
                             "group flex items-center justify-between gap-1 rounded-md border px-2 py-1.5 transition-colors",
-                            active ? "border-primary/50 bg-primary/5" : "border-border bg-background hover:bg-accent/50"
+                            active ? "border-slate-300 bg-slate-100" : "border-border bg-background hover:bg-accent/50"
                           )}
                         >
                           <button
