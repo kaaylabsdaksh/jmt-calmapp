@@ -778,6 +778,52 @@ export default function EditCdr() {
             </CardContent>
           </Card>
 
+          {/* Acknowledgements */}
+          <Card>
+            <CardHeader className="px-4 pb-2 pt-3">{sectionTitle(CheckCircle2, "Acknowledgements")}</CardHeader>
+            <CardContent className="px-4 pb-4">
+              <div className="overflow-x-auto rounded-md border">
+                <Table>
+                  <TableHeader>
+                    <TableRow className="[&>th]:h-8 [&>th]:text-xs">
+                      <TableHead>Dept/Area</TableHead>
+                      <TableHead>Date Sent</TableHead>
+                      <TableHead className="text-center">Ack</TableHead>
+                      <TableHead>Ack Date</TableHead>
+                      <TableHead>Ack User</TableHead>
+                      <TableHead className="text-center">Completed</TableHead>
+                      <TableHead>Completed Date</TableHead>
+                      <TableHead>Completed User</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {ackRows.map((r) => (
+                      <TableRow key={r.dept} className="[&>td]:py-1.5 [&>td]:text-xs">
+                        <TableCell className="font-medium">{r.dept}</TableCell>
+                        <TableCell className="text-muted-foreground">{r.sent}</TableCell>
+                        <TableCell className="text-center">
+                          <Checkbox checked={r.ack} onCheckedChange={() => toggleAck(r.dept, "ack")} />
+                        </TableCell>
+                        <TableCell className="text-muted-foreground">{r.ackDate || "—"}</TableCell>
+                        <TableCell className="text-muted-foreground">{r.ackUser || "—"}</TableCell>
+                        <TableCell className="text-center">
+                          <Checkbox
+                            checked={r.completed}
+                            disabled={!r.ack}
+                            onCheckedChange={() => toggleAck(r.dept, "completed")}
+                          />
+                        </TableCell>
+                        <TableCell className="text-muted-foreground">{r.completedDate || "—"}</TableCell>
+                        <TableCell className="text-muted-foreground">{r.completedUser || "—"}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+            </CardContent>
+          </Card>
+
+
           {/* Documents */}
           <Card>
             <CardHeader className="px-4 pb-2 pt-3">{sectionTitle(Upload, "Documents")}</CardHeader>
