@@ -28,6 +28,8 @@ type Props = {
   description?: string;
   defaults: EmailComposeValues;
   attachments?: string[];
+  bodyLabel?: string;
+  bodyMinHeight?: string;
   onSend: (values: EmailComposeValues) => void;
 };
 
@@ -38,6 +40,8 @@ export default function EmailComposeDialog({
   description,
   defaults,
   attachments = [],
+  bodyLabel = "Comments",
+  bodyMinHeight = "min-h-[104px]",
   onSend,
 }: Props) {
   const [values, setValues] = useState<EmailComposeValues>(defaults);
@@ -98,7 +102,7 @@ export default function EmailComposeDialog({
 
           <div className="space-y-1">
             <div className="flex items-center justify-between">
-              <Label className="text-[11px] font-medium text-muted-foreground">Comments</Label>
+              <Label className="text-[11px] font-medium text-muted-foreground">{bodyLabel}</Label>
               <span className="text-[10px] text-muted-foreground">
                 {values.comments.length}/1000
               </span>
@@ -108,7 +112,7 @@ export default function EmailComposeDialog({
               maxLength={1000}
               onChange={(e) => set("comments", e.target.value)}
               placeholder="Add a short message…"
-              className="min-h-[104px] resize-none text-xs"
+              className={`${bodyMinHeight} resize-none text-xs leading-relaxed`}
             />
           </div>
 

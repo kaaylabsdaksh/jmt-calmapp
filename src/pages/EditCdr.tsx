@@ -993,14 +993,19 @@ export default function EditCdr() {
         title={emailTarget === "customer" ? "Email Customer" : "Email Creator"}
         description={`CDR #${cdrId} · ${customer}`}
         attachments={docs.slice(0, 2).map((d) => d.name)}
+        bodyLabel={emailTarget === "customer" ? "Body" : "Comments"}
+        bodyMinHeight={emailTarget === "customer" ? "min-h-[200px]" : "min-h-[104px]"}
         defaults={{
           from: "vimalandhanbal@jmtest.com",
           to: emailTarget === "customer" ? email : "aleatabrown@jmtest.com",
           subject:
             emailTarget === "customer"
-              ? `JM Test CDR #${cdrId} for ${customer}`
+              ? `JM Test CDR #${cdrId} - Review of Purchase Order You Submitted`
               : `JM Test CDR #${cdrId} you Created`,
-          comments: "",
+          comments:
+            emailTarget === "customer"
+              ? "Please accept this email as 'receipt' of Purchase order. A final acknowledgement will be sent once Purchase order is reviewed and approved to process.\n\nThank You.\nAdmin User\n318-443-5589"
+              : "",
         }}
         onSend={(v) => toast({ title: "Email sent", description: `To ${v.to}` })}
       />
