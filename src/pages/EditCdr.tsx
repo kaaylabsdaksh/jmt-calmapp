@@ -177,6 +177,9 @@ export default function EditCdr() {
   const [commentType, setCommentType] = useState("General");
   const [commentText, setCommentText] = useState("");
 
+  // Email dialogs
+  const [emailTarget, setEmailTarget] = useState<null | "creator" | "customer">(null);
+
   const errors = useMemo(
     () => ({
       customer: !customer.trim(),
