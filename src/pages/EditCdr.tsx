@@ -986,6 +986,24 @@ export default function EditCdr() {
           </div>
         </div>
       </div>
+
+      <EmailComposeDialog
+        open={emailTarget !== null}
+        onOpenChange={(o) => !o && setEmailTarget(null)}
+        title={emailTarget === "customer" ? "Email Customer" : "Email Creator"}
+        description={`CDR #${cdrId} · ${customer}`}
+        attachments={docs.slice(0, 2).map((d: any) => d.name ?? d.fileName ?? "Document")}
+        defaults={{
+          from: "vimalandhanbal@jmtest.com",
+          to: emailTarget === "customer" ? email : "aleatabrown@jmtest.com",
+          subject:
+            emailTarget === "customer"
+              ? `JM Test CDR #${cdrId} for ${customer}`
+              : `JM Test CDR #${cdrId} you Created`,
+          comments: "",
+        }}
+        onSend={(v) => toast({ title: "Email sent", description: `To ${v.to}` })}
+      />
     </div>
   );
 }
