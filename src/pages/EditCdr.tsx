@@ -316,7 +316,7 @@ export default function EditCdr() {
           </div>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-3">
           {/* CDR Details */}
           <Card>
             <CardHeader className="px-3 pb-1 pt-2">{sectionTitle(Info, "CDR Details")}</CardHeader>
@@ -423,7 +423,7 @@ export default function EditCdr() {
           </Card>
 
           {/* Row 1 */}
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+          <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
             <Card>
               <CardHeader className="px-3 pb-1 pt-2">{sectionTitle(Users, "Customer Information")}</CardHeader>
               <CardContent className="space-y-2 px-3 pb-2.5">
@@ -687,7 +687,7 @@ export default function EditCdr() {
           </div>
 
           {/* Row 2 */}
-          <div className="grid grid-cols-1 gap-4">
+          <div className="grid grid-cols-1 gap-3">
             <Card>
               <CardHeader className="px-3 pb-1 pt-2">{sectionTitle(FileText, "Document Information")}</CardHeader>
               <CardContent className="px-3 pb-2.5">
