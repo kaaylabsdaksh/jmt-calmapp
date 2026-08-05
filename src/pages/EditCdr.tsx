@@ -176,6 +176,16 @@ export default function EditCdr() {
   const [comments, setComments] = useState(initialComments);
   const [commentType, setCommentType] = useState("General");
   const [commentText, setCommentText] = useState("");
+  const [activityOpen, setActivityOpen] = useState(true);
+  const [actType, setActType] = useState("all");
+  const [actUser, setActUser] = useState("all");
+  const [actDate, setActDate] = useState("all");
+  const filteredComments = comments.filter(
+    (c) =>
+      (actType === "all" || c.type === actType) &&
+      (actUser === "all" || c.user === actUser) &&
+      (actDate === "all" || c.ts.startsWith(actDate))
+  );
 
   // Email dialogs
   const [emailTarget, setEmailTarget] = useState<null | "creator" | "customer">(null);
