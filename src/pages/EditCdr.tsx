@@ -456,7 +456,7 @@ export default function EditCdr() {
                         ) : (
                           accounts.map((a) => (
                             <TableRow key={a.id}>
-                              <TableCell className="py-1.5 text-xs font-medium text-primary">{a.acct || "—"}</TableCell>
+                              <TableCell className="py-1.5 text-xs font-medium text-slate-900">{a.acct || "—"}</TableCell>
                               <TableCell className="py-1.5 text-xs">{a.customer || "—"}</TableCell>
                               <TableCell className="py-1.5 text-xs">{a.shipTo || "—"}</TableCell>
                               <TableCell className="py-1.5 text-xs">{a.city || "—"}</TableCell>
