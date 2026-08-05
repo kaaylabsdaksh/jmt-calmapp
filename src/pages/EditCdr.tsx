@@ -924,9 +924,6 @@ export default function EditCdr() {
       {/* Sticky action bar */}
       <div className="sticky bottom-0 z-20 border-t bg-background/95 backdrop-blur">
         <div className="mx-auto flex max-w-[1400px] flex-wrap items-center gap-2 px-4 py-3 md:px-6">
-          <Button variant="ghost" size="sm" className="h-8 text-xs" onClick={() => navigate("/manage-customers/cdr")}>
-            Back
-          </Button>
           <div className="ml-auto flex flex-wrap items-center gap-2">
             <Button variant="outline" size="sm" className="h-8 text-xs">
               <Mail className="mr-1.5 h-3.5 w-3.5" /> Email Creator
