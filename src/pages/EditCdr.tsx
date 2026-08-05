@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   ChevronRight,
+  ChevronDown,
   Users,
   Route as RouteIcon,
   FileText,
@@ -28,6 +29,8 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
@@ -125,6 +128,7 @@ export default function EditCdr() {
   // CDR details
   const [jmLocation, setJmLocation] = useState("Baton Rouge");
   const [divisions, setDivisions] = useState<string[]>(["ESL", "MFG", "ITL", "Lab"]);
+  const [divisionsOpen, setDivisionsOpen] = useState(false);
 
   // Customer
   const [existingCustomer, setExistingCustomer] = useState("Yes");
