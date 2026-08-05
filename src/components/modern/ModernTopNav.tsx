@@ -43,7 +43,7 @@ const ModernTopNav = () => {
           <SidebarTrigger className="text-foreground hover:bg-muted hover:text-foreground transition-all duration-300 transform hover:scale-105" />
           <div>
             <h1 className="text-base sm:text-lg font-semibold text-foreground leading-tight">{meta.title}</h1>
-            {location.pathname === "/onsite-projects" ? null : (
+            {location.pathname === "/onsite-projects" || meta.crumbs.length === 0 ? null : (
               <Breadcrumb className="mt-1 hidden sm:block">
                 <BreadcrumbList>
                   {meta.crumbs.map((c, i) => {
