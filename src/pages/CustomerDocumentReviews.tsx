@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Search,
   RefreshCw,
@@ -230,6 +231,7 @@ const CustomerDocumentReviews = () => {
   const advancedCount = Object.entries(filters).filter(
     ([k, v]) => k !== "status" && k !== "type" && v !== "" && v !== "all"
   ).length;
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState<string[]>([]);
   const [drawer, setDrawer] = useState<CdrRecord | null>(null);
@@ -585,7 +587,7 @@ const CustomerDocumentReviews = () => {
                         <TableCell>
                           <button
                             className="font-medium text-foreground underline underline-offset-2 hover:no-underline"
-                            onClick={() => setDrawer(r)}
+                            onClick={() => navigate(`/manage-customers/cdr/${r.cdr.split("-").pop()}`)}
                           >
                             {r.cdr.split("-").pop()}
                           </button>
