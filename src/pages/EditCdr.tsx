@@ -471,23 +471,37 @@ export default function EditCdr() {
                     {ROUTE_OPTIONS.map((r) => {
                       const active = routes.includes(r);
                       return (
-                        <button
+                        <span
                           key={r}
-                          type="button"
-                          aria-pressed={active}
-                          onClick={() => toggleRoute(r)}
                           className={cn(
-                            "rounded-full border px-3 py-1 text-xs transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-                            active
-                              ? "border-primary bg-primary text-primary-foreground"
-                              : "border-border bg-background text-foreground hover:bg-accent"
+                            "inline-flex items-center overflow-hidden rounded-full border text-xs transition-colors",
+                            active ? "border-primary bg-primary text-primary-foreground" : "border-border bg-background text-foreground"
                           )}
                         >
-                          {r}
-                        </button>
+                          <button
+                            type="button"
+                            aria-pressed={active}
+                            onClick={() => toggleRoute(r)}
+                            className={cn("px-3 py-1", !active && "hover:bg-accent")}
+                          >
+                            {r}
+                          </button>
+                          {active && (
+                            <button
+                              type="button"
+                              title={`Send to ${r}`}
+                              onClick={() => toast({ title: `Notification sent to ${r}` })}
+                              className="flex items-center gap-1 border-l border-primary-foreground/30 px-2 py-1 text-[10px] font-medium hover:bg-primary-foreground/15"
+                            >
+                              <Send className="h-3 w-3" />
+                              Send
+                            </button>
+                          )}
+                        </span>
                       );
                     })}
                   </div>
+
                   {showErr("routes") && errText("Select at least one department")}
                   {routes.includes("Other") && (
                     <Input
