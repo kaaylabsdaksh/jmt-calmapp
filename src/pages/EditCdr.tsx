@@ -258,6 +258,67 @@ export default function EditCdr() {
         </div>
 
         <div className="space-y-6">
+          {/* CDR Details */}
+          <Card>
+            <CardHeader className="pb-3">{sectionTitle(Info, "CDR Details")}</CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                <div className="space-y-1.5">
+                  <Label className="text-xs">Status</Label>
+                  <Select value={status} onValueChange={setStatus}>
+                    <SelectTrigger className="h-8 text-sm">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {Object.keys(STATUS_STYLES).map((s) => (
+                        <SelectItem key={s} value={s}>{s}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-1.5">
+                  <Label className="text-xs">JM Location</Label>
+                  <Select value={jmLocation} onValueChange={setJmLocation}>
+                    <SelectTrigger className="h-8 text-sm">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {JM_LOCATIONS.map((l) => (
+                        <SelectItem key={l} value={l}>{l}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-1.5">
+                  <Label className="text-xs">Division(s)</Label>
+                  <div className="flex flex-wrap gap-1.5 rounded-md border bg-background p-1.5">
+                    {DIVISIONS.map((d) => {
+                      const active = divisions.includes(d);
+                      return (
+                        <button
+                          key={d}
+                          type="button"
+                          aria-pressed={active}
+                          onClick={() =>
+                            setDivisions((prev) => (prev.includes(d) ? prev.filter((x) => x !== d) : [...prev, d]))
+                          }
+                          className={cn(
+                            "rounded-full border px-2.5 py-0.5 text-[11px] transition-colors",
+                            active
+                              ? "border-primary bg-primary text-primary-foreground"
+                              : "border-border bg-background text-foreground hover:bg-accent"
+                          )}
+                        >
+                          {d}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
           {/* Row 1 */}
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
             <Card>
