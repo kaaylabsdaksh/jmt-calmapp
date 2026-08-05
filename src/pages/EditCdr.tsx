@@ -157,6 +157,35 @@ export default function EditCdr() {
   const [equipmentHere, setEquipmentHere] = useState(true);
   const [srUpdates, setSrUpdates] = useState(false);
 
+  // Acknowledgements
+  type AckRow = {
+    dept: string;
+    sent: string;
+    ack: boolean;
+    ackDate: string;
+    ackUser: string;
+    completed: boolean;
+    completedDate: string;
+    completedUser: string;
+  };
+  const [ackRows, setAckRows] = useState<AckRow[]>([
+    { dept: "Receiving", sent: "08/05/2026 03:45 AM", ack: false, ackDate: "", ackUser: "", completed: false, completedDate: "", completedUser: "" },
+    { dept: "Safety", sent: "08/05/2026 03:45 AM", ack: true, ackDate: "08/05/2026 09:12 AM", ackUser: "K. Nguyen", completed: false, completedDate: "", completedUser: "" },
+    { dept: "Technical", sent: "08/05/2026 03:45 AM", ack: false, ackDate: "", ackUser: "", completed: false, completedDate: "", completedUser: "" },
+  ]);
+  const stamp = () =>
+    new Date().toLocaleString("en-US", { month: "2-digit", day: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
+  const toggleAck = (dept: string, field: "ack" | "completed") =>
+    setAckRows((rows) =>
+      rows.map((r) => {
+        if (r.dept !== dept) return r;
+        const on = !r[field];
+        if (field === "ack")
+          return { ...r, ack: on, ackDate: on ? stamp() : "", ackUser: on ? "K. Nguyen" : "" };
+        return { ...r, completed: on, completedDate: on ? stamp() : "", completedUser: on ? "K. Nguyen" : "" };
+      })
+    );
+
   // Document info
   const [priority, setPriority] = useState("Normal");
   const [po, setPo] = useState("PO-99231");
