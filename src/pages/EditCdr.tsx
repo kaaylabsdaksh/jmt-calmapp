@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
   ChevronRight,
   ChevronDown,
+  Plus,
   Users,
   Route as RouteIcon,
   FileText,
@@ -176,6 +177,16 @@ export default function EditCdr() {
   const [comments, setComments] = useState(initialComments);
   const [commentType, setCommentType] = useState("General");
   const [commentText, setCommentText] = useState("");
+  const [activityOpen, setActivityOpen] = useState(true);
+  const [actType, setActType] = useState("all");
+  const [actUser, setActUser] = useState("all");
+  const [actDate, setActDate] = useState("all");
+  const filteredComments = comments.filter(
+    (c) =>
+      (actType === "all" || c.type === actType) &&
+      (actUser === "all" || c.user === actUser) &&
+      (actDate === "all" || c.ts.startsWith(actDate))
+  );
 
   // Email dialogs
   const [emailTarget, setEmailTarget] = useState<null | "creator" | "customer">(null);
@@ -852,17 +863,37 @@ export default function EditCdr() {
             </CardContent>
           </Card>
 
-          {/* Comments */}
-          <Card>
-            <CardHeader className="pb-3">{sectionTitle(MessageSquare, "Comments & Activity")}</CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <div className="grid grid-cols-1 gap-3 md:grid-cols-4">
+          {/* Activity Log */}
+          <Card className="overflow-hidden">
+            <div className="flex items-center justify-between gap-3 border-b bg-muted/30 px-4 py-3">
+              <div className="flex items-center gap-3">
+                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/20">
+                  <MessageSquare className="h-4 w-4 text-foreground" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-semibold text-foreground">Activity Log</h3>
+                  <p className="text-xs text-muted-foreground">Track all changes and updates</p>
+                </div>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-8 text-xs"
+                onClick={() => setActivityOpen((v) => !v)}
+              >
+                <ChevronDown className={cn("mr-1.5 h-4 w-4 transition-transform", activityOpen && "rotate-180")} />
+                {activityOpen ? "Hide" : "Show"}
+              </Button>
+            </div>
+
+            {activityOpen && (
+              <CardContent className="space-y-4 pt-4">
+                <div className="flex flex-wrap items-end gap-3 rounded-lg border bg-muted/20 p-3">
                   <div className="space-y-1.5">
-                    <Label className="text-xs">Comment Type</Label>
+                    <Label className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">Type</Label>
                     <Select value={commentType} onValueChange={setCommentType}>
-                      <SelectTrigger className="h-8 text-sm">
-                        <SelectValue />
+                      <SelectTrigger className="h-9 w-[180px] text-sm">
+                        <SelectValue placeholder="Select type" />
                       </SelectTrigger>
                       <SelectContent>
                         {COMMENT_TYPES.map((t) => (
@@ -871,51 +902,93 @@ export default function EditCdr() {
                       </SelectContent>
                     </Select>
                   </div>
-                  <div className="space-y-1.5 md:col-span-3">
-                    <Label className="text-xs">Comment</Label>
-                    <Textarea
+                  <div className="min-w-[240px] flex-1 space-y-1.5">
+                    <Label className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">Comment</Label>
+                    <Input
                       value={commentText}
                       onChange={(e) => setCommentText(e.target.value)}
-                      rows={2}
-                      className="text-sm"
-                      placeholder="Add a comment..."
+                      placeholder="Enter your comment..."
+                      className="h-9 text-sm"
                     />
                   </div>
-                </div>
-                <div className="flex justify-end">
-                  <Button size="sm" className="h-8 text-xs" onClick={addComment}>
-                    Add Comment
+                  <Button size="sm" className="h-9 text-xs" onClick={addComment}>
+                    <Plus className="mr-1.5 h-4 w-4" /> Add
                   </Button>
                 </div>
-              </div>
 
-              <Separator />
+                <div className="flex items-center gap-2">
+                  <h4 className="text-sm font-semibold">Activity History</h4>
+                  <span className="rounded-full bg-muted px-2 py-0.5 text-[11px] font-medium text-muted-foreground">
+                    {filteredComments.length}
+                  </span>
+                </div>
 
-              <div className="space-y-3">
-                {comments.map((c) => (
-                  <div key={c.id} className="flex gap-3">
-                    <Avatar className="h-8 w-8">
-                      <AvatarFallback className="text-[11px]">{initials(c.user)}</AvatarFallback>
-                    </Avatar>
-                    <div className="flex-1 rounded-md border bg-card p-3">
-                      <div className="mb-1 flex flex-wrap items-center gap-2">
-                        <span className="text-xs font-semibold">{c.user}</span>
-                        <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] font-medium text-muted-foreground">
-                          {c.type}
-                        </span>
-                        {c.notify && (
-                          <span className="flex items-center gap-1 rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-medium text-amber-800">
-                            <Bell className="h-3 w-3" /> Notified
-                          </span>
-                        )}
-                        <span className="ml-auto text-[11px] text-muted-foreground">{c.ts}</span>
-                      </div>
-                      <p className="text-xs text-foreground">{c.text}</p>
-                    </div>
+                <div className="overflow-hidden rounded-lg border">
+                  <div className="flex flex-wrap items-center gap-2 border-b bg-muted/30 px-3 py-2">
+                    <span className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
+                      Quick search:
+                    </span>
+                    <Select value={actType} onValueChange={setActType}>
+                      <SelectTrigger className="h-8 w-[150px] text-xs"><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All Types</SelectItem>
+                        {COMMENT_TYPES.map((t) => (<SelectItem key={t} value={t}>{t}</SelectItem>))}
+                      </SelectContent>
+                    </Select>
+                    <Select value={actUser} onValueChange={setActUser}>
+                      <SelectTrigger className="h-8 w-[150px] text-xs"><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All Users</SelectItem>
+                        {Array.from(new Set(comments.map((c) => c.user))).map((u) => (
+                          <SelectItem key={u} value={u}>{u}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <Select value={actDate} onValueChange={setActDate}>
+                      <SelectTrigger className="h-8 w-[150px] text-xs"><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All Dates</SelectItem>
+                        {Array.from(new Set(comments.map((c) => c.ts.split(" ")[0]))).map((d) => (
+                          <SelectItem key={d} value={d}>{d}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
-                ))}
-              </div>
-            </CardContent>
+
+                  <table className="w-full text-left">
+                    <thead>
+                      <tr className="border-b bg-background text-[10px] uppercase tracking-wide text-muted-foreground">
+                        <th className="px-3 py-2 font-semibold">Type</th>
+                        <th className="px-3 py-2 font-semibold">User</th>
+                        <th className="px-3 py-2 font-semibold">Date</th>
+                        <th className="px-3 py-2 font-semibold">Details</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredComments.map((c) => (
+                        <tr key={c.id} className="border-b last:border-0 align-top">
+                          <td className="px-3 py-2.5">
+                            <span className="inline-flex items-center rounded-full bg-muted px-2 py-0.5 text-[10px] font-medium text-foreground">
+                              {c.type}
+                            </span>
+                          </td>
+                          <td className="whitespace-nowrap px-3 py-2.5 text-xs font-medium">{c.user}</td>
+                          <td className="whitespace-nowrap px-3 py-2.5 font-mono text-[11px] text-muted-foreground">{c.ts}</td>
+                          <td className="px-3 py-2.5 text-xs text-foreground">{c.text}</td>
+                        </tr>
+                      ))}
+                      {filteredComments.length === 0 && (
+                        <tr>
+                          <td colSpan={4} className="px-3 py-6 text-center text-xs text-muted-foreground">
+                            No activity matches the current filters.
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </CardContent>
+            )}
           </Card>
         </div>
       </div>
