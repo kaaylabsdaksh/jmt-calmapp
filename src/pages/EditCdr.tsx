@@ -316,11 +316,11 @@ export default function EditCdr() {
           </div>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-3">
           {/* CDR Details */}
           <Card>
-            <CardHeader className="px-4 pb-2 pt-3">{sectionTitle(Info, "CDR Details")}</CardHeader>
-            <CardContent className="px-4 pb-4">
+            <CardHeader className="px-3 pb-1 pt-2">{sectionTitle(Info, "CDR Details")}</CardHeader>
+            <CardContent className="px-3 pb-2.5">
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
                 <div className="space-y-1">
                   <Label className="text-xs">Status</Label>
@@ -423,10 +423,10 @@ export default function EditCdr() {
           </Card>
 
           {/* Row 1 */}
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+          <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
             <Card>
-              <CardHeader className="px-4 pb-2 pt-3">{sectionTitle(Users, "Customer Information")}</CardHeader>
-              <CardContent className="space-y-3 px-4 pb-4">
+              <CardHeader className="px-3 pb-1 pt-2">{sectionTitle(Users, "Customer Information")}</CardHeader>
+              <CardContent className="space-y-2 px-3 pb-2.5">
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                   <div className="space-y-1">
                     <Label className="text-xs">Existing Customer</Label>
@@ -562,8 +562,8 @@ export default function EditCdr() {
             </Card>
 
             <Card>
-              <CardHeader className="px-4 pb-2 pt-3">{sectionTitle(RouteIcon, "Routing & Review")}</CardHeader>
-              <CardContent className="space-y-3 px-4 pb-4">
+              <CardHeader className="px-3 pb-1 pt-2">{sectionTitle(RouteIcon, "Routing & Review")}</CardHeader>
+              <CardContent className="space-y-2 px-3 pb-2.5">
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <Label className="text-xs">
@@ -687,10 +687,10 @@ export default function EditCdr() {
           </div>
 
           {/* Row 2 */}
-          <div className="grid grid-cols-1 gap-4">
+          <div className="grid grid-cols-1 gap-3">
             <Card>
-              <CardHeader className="px-4 pb-2 pt-3">{sectionTitle(FileText, "Document Information")}</CardHeader>
-              <CardContent className="px-4 pb-4">
+              <CardHeader className="px-3 pb-1 pt-2">{sectionTitle(FileText, "Document Information")}</CardHeader>
+              <CardContent className="px-3 pb-2.5">
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                   <div className="space-y-1">
                     <Label className="text-xs">
@@ -766,7 +766,7 @@ export default function EditCdr() {
 
           {/* Acknowledgement */}
           <Card className="border-blue-200 bg-blue-50/60">
-            <CardContent className="flex gap-3 p-3">
+            <CardContent className="flex gap-2.5 p-2.5">
               <Info className="mt-0.5 h-4 w-4 shrink-0 text-blue-600" />
               <div>
                 <p className="text-sm font-semibold text-blue-900">Acknowledgement</p>
@@ -780,8 +780,8 @@ export default function EditCdr() {
 
           {/* Acknowledgements */}
           <Card>
-            <CardHeader className="px-4 pb-2 pt-3">{sectionTitle(CheckCircle2, "Acknowledgements")}</CardHeader>
-            <CardContent className="px-4 pb-4">
+            <CardHeader className="px-3 pb-1 pt-2">{sectionTitle(CheckCircle2, "Acknowledgements")}</CardHeader>
+            <CardContent className="px-3 pb-2.5">
               <div className="overflow-x-auto rounded-md border">
                 <Table>
                   <TableHeader>
@@ -826,8 +826,8 @@ export default function EditCdr() {
 
           {/* Documents */}
           <Card>
-            <CardHeader className="px-4 pb-2 pt-3">{sectionTitle(Upload, "Documents")}</CardHeader>
-            <CardContent className="space-y-3 px-4 pb-4">
+            <CardHeader className="px-3 pb-1 pt-2">{sectionTitle(Upload, "Documents")}</CardHeader>
+            <CardContent className="space-y-2 px-3 pb-2.5">
               <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
                 <div className="space-y-1">
                   <Label className="text-xs">Type</Label>
@@ -962,7 +962,7 @@ export default function EditCdr() {
             </div>
 
             {activityOpen && (
-              <CardContent className="space-y-3 px-4 pb-4 pt-3">
+              <CardContent className="space-y-2 px-3 pb-2.5 pt-2">
                 <div className="flex flex-wrap items-end gap-3 rounded-lg border bg-muted/20 p-3">
                   <div className="space-y-1">
                     <Label className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">Type</Label>
