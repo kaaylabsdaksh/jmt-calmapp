@@ -157,6 +157,35 @@ export default function EditCdr() {
   const [equipmentHere, setEquipmentHere] = useState(true);
   const [srUpdates, setSrUpdates] = useState(false);
 
+  // Acknowledgements
+  type AckRow = {
+    dept: string;
+    sent: string;
+    ack: boolean;
+    ackDate: string;
+    ackUser: string;
+    completed: boolean;
+    completedDate: string;
+    completedUser: string;
+  };
+  const [ackRows, setAckRows] = useState<AckRow[]>([
+    { dept: "Receiving", sent: "08/05/2026 03:45 AM", ack: false, ackDate: "", ackUser: "", completed: false, completedDate: "", completedUser: "" },
+    { dept: "Safety", sent: "08/05/2026 03:45 AM", ack: true, ackDate: "08/05/2026 09:12 AM", ackUser: "K. Nguyen", completed: false, completedDate: "", completedUser: "" },
+    { dept: "Technical", sent: "08/05/2026 03:45 AM", ack: false, ackDate: "", ackUser: "", completed: false, completedDate: "", completedUser: "" },
+  ]);
+  const stamp = () =>
+    new Date().toLocaleString("en-US", { month: "2-digit", day: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
+  const toggleAck = (dept: string, field: "ack" | "completed") =>
+    setAckRows((rows) =>
+      rows.map((r) => {
+        if (r.dept !== dept) return r;
+        const on = !r[field];
+        if (field === "ack")
+          return { ...r, ack: on, ackDate: on ? stamp() : "", ackUser: on ? "K. Nguyen" : "" };
+        return { ...r, completed: on, completedDate: on ? stamp() : "", completedUser: on ? "K. Nguyen" : "" };
+      })
+    );
+
   // Document info
   const [priority, setPriority] = useState("Normal");
   const [po, setPo] = useState("PO-99231");
@@ -748,6 +777,52 @@ export default function EditCdr() {
               </div>
             </CardContent>
           </Card>
+
+          {/* Acknowledgements */}
+          <Card>
+            <CardHeader className="px-4 pb-2 pt-3">{sectionTitle(CheckCircle2, "Acknowledgements")}</CardHeader>
+            <CardContent className="px-4 pb-4">
+              <div className="overflow-x-auto rounded-md border">
+                <Table>
+                  <TableHeader>
+                    <TableRow className="[&>th]:h-8 [&>th]:text-xs">
+                      <TableHead>Dept/Area</TableHead>
+                      <TableHead>Date Sent</TableHead>
+                      <TableHead className="text-center">Ack</TableHead>
+                      <TableHead>Ack Date</TableHead>
+                      <TableHead>Ack User</TableHead>
+                      <TableHead className="text-center">Completed</TableHead>
+                      <TableHead>Completed Date</TableHead>
+                      <TableHead>Completed User</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {ackRows.map((r) => (
+                      <TableRow key={r.dept} className="[&>td]:py-1.5 [&>td]:text-xs">
+                        <TableCell className="font-medium">{r.dept}</TableCell>
+                        <TableCell className="text-muted-foreground">{r.sent}</TableCell>
+                        <TableCell className="text-center">
+                          <Checkbox checked={r.ack} onCheckedChange={() => toggleAck(r.dept, "ack")} />
+                        </TableCell>
+                        <TableCell className="text-muted-foreground">{r.ackDate || "—"}</TableCell>
+                        <TableCell className="text-muted-foreground">{r.ackUser || "—"}</TableCell>
+                        <TableCell className="text-center">
+                          <Checkbox
+                            checked={r.completed}
+                            disabled={!r.ack}
+                            onCheckedChange={() => toggleAck(r.dept, "completed")}
+                          />
+                        </TableCell>
+                        <TableCell className="text-muted-foreground">{r.completedDate || "—"}</TableCell>
+                        <TableCell className="text-muted-foreground">{r.completedUser || "—"}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+            </CardContent>
+          </Card>
+
 
           {/* Documents */}
           <Card>
