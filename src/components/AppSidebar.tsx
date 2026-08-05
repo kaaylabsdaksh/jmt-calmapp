@@ -353,15 +353,19 @@ export function AppSidebar() {
                         tooltip={action.title}
                         className="group"
                       >
-                        {action.title === "Work Orders" ? (
+                        {action.title === "Work Orders" || (action as any).url ? (
                           <Link
-                            to="/"
-                            className="flex items-center justify-center w-full h-10 px-0 rounded-lg text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent hover:shadow-sm transition-all duration-200 ease-in-out"
+                            to={action.title === "Work Orders" ? "/" : (action as any).url}
+                            className={`flex items-center justify-center w-full h-10 px-0 rounded-lg hover:text-sidebar-accent-foreground hover:bg-sidebar-accent hover:shadow-sm transition-all duration-200 ease-in-out ${
+                              location.pathname === ((action as any).url ?? "/")
+                                ? "bg-sidebar-accent text-sidebar-accent-foreground"
+                                : "text-sidebar-foreground"
+                            }`}
                             style={{
                               animationDelay: `${(categoryIndex * 100) + (index * 50)}ms`
                             }}
                           >
-                            {React.createElement(action.icon, { className: "h-4 w-4 shrink-0 text-sidebar-foreground group-hover:scale-110 transition-transform duration-200" })}
+                            {React.createElement(action.icon, { className: "h-4 w-4 shrink-0 group-hover:scale-110 transition-transform duration-200" })}
                           </Link>
                         ) : (
                           <Button
