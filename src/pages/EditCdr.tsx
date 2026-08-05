@@ -261,11 +261,19 @@ export default function EditCdr() {
         <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
           <div>
             <nav className="flex items-center gap-1 text-xs text-muted-foreground">
-              <button className="hover:text-foreground" onClick={() => navigate("/manage-customers/cdr")}>
-                Customer Document Reviews
+              <button className="hover:text-foreground" onClick={() => navigate("/")}>
+                Home
               </button>
               <ChevronRight className="h-3 w-3" />
-              <span className="text-foreground">CDR #{cdrId ?? "35"}</span>
+              <button className="hover:text-foreground" onClick={() => navigate("/manage-customers")}>
+                Manage Customers
+              </button>
+              <ChevronRight className="h-3 w-3" />
+              <button className="hover:text-foreground" onClick={() => navigate("/manage-customers/cdr")}>
+                Manage CDR
+              </button>
+              <ChevronRight className="h-3 w-3" />
+              <span className="text-foreground">Edit CDR</span>
             </nav>
             <h1 className="mt-1 text-xl font-semibold tracking-tight">CDR #{cdrId ?? "35"}</h1>
           </div>
