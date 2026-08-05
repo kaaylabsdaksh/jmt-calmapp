@@ -77,8 +77,9 @@ const quickActionCategories = {
   "Core Operations": [
     { title: "Work Orders", icon: ClipboardList, hasSubItems: true },
     { title: "Views", icon: Eye, hasSubItems: true },
-    { title: "Standards", icon: CheckCircle },
+    { title: "Standards", icon: CheckCircle, url: "/onsite-projects/vehicle-standards" },
     { title: "Invoicing", icon: CreditCard, url: "/invoicing" },
+    { title: "Delivery Tickets", icon: Truck, url: "/delivery-tickets" },
     { title: "Quotes", icon: FileText },
     { title: "Reports", icon: BarChart3 },
   ],
@@ -90,6 +91,10 @@ const quickActionCategories = {
     { title: "Manage Manufacturers", icon: Settings },
     { title: "Manage Products", icon: Tags },
     { title: "Manage Customers", icon: Users, url: "/manage-customers" },
+    { title: "Retest Notices", icon: RefreshCw, url: "/manage-customers/retest-notices" },
+    { title: "Retest Follow-up", icon: Clock, url: "/manage-customers/retest-followup" },
+    { title: "Customer Doc Reviews", icon: FileCheck, url: "/manage-customers/cdr" },
+    { title: "Contract Reviews", icon: FileText, url: "/manage-customers/contract-reviews" },
     { title: "Search Multiple ID's", icon: FileText },
   ],
   "Inventory & Templates": [
