@@ -67,7 +67,19 @@ const ROUTE_OPTIONS = [
 ];
 
 const JM_LOCATIONS = ["Baton Rouge", "Houston", "Round Rock", "Lafayette", "Beaumont"];
-const DIVISIONS = ["ESL", "MFG", "ITL", "Lab", "OnSite", "Field Service"];
+const DIVISIONS = [
+  "ESL",
+  "OnSite",
+  "MFG",
+  "ITL",
+  "Rental",
+  "Lab",
+  "Surplus",
+  "ESL Onsite",
+  "ITL Onsite",
+  "GMFG",
+  "Field Service",
+];
 const PRIORITIES = ["Low", "Normal", "High", "Critical"];
 const CDR_TYPES = ["Contract Review", "Pricing Agreement", "Safety Document", "Quality Spec", "Purchase Terms"];
 const HOW_RECEIVED = ["Email", "Fax", "Mail", "Customer Portal", "In Person"];
