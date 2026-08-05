@@ -278,7 +278,11 @@ export function AppSidebar() {
                                         <Button
                                           variant="ghost"
                                           size="sm"
-                                          className="w-full justify-start h-9 px-2 rounded-md text-sidebar-foreground/80 hover:text-sidebar-accent-foreground hover:bg-sidebar-accent/50 transition-all"
+                                          className={`w-full justify-start h-9 px-2 rounded-md hover:text-sidebar-accent-foreground hover:bg-sidebar-accent/50 transition-all ${
+                                            location.pathname === subAction.url
+                                              ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium"
+                                              : "text-sidebar-foreground/80"
+                                          }`}
                                         >
                                           {React.createElement(subAction.icon, { className: "h-3.5 w-3.5 shrink-0 mr-2" })}
                                           <span className="text-xs">{subAction.title}</span>
