@@ -77,8 +77,9 @@ const quickActionCategories = {
   "Core Operations": [
     { title: "Work Orders", icon: ClipboardList, hasSubItems: true },
     { title: "Views", icon: Eye, hasSubItems: true },
-    { title: "Standards", icon: CheckCircle },
+    { title: "Standards", icon: CheckCircle, url: "/onsite-projects/vehicle-standards" },
     { title: "Invoicing", icon: CreditCard, url: "/invoicing" },
+    { title: "Delivery Tickets", icon: Truck, url: "/delivery-tickets" },
     { title: "Quotes", icon: FileText },
     { title: "Reports", icon: BarChart3 },
   ],
@@ -90,6 +91,10 @@ const quickActionCategories = {
     { title: "Manage Manufacturers", icon: Settings },
     { title: "Manage Products", icon: Tags },
     { title: "Manage Customers", icon: Users, url: "/manage-customers" },
+    { title: "Retest Notices", icon: RefreshCw, url: "/manage-customers/retest-notices" },
+    { title: "Retest Follow-up", icon: Clock, url: "/manage-customers/retest-followup" },
+    { title: "Customer Doc Reviews", icon: FileCheck, url: "/manage-customers/cdr" },
+    { title: "Contract Reviews", icon: FileText, url: "/manage-customers/contract-reviews" },
     { title: "Search Multiple ID's", icon: FileText },
   ],
   "Inventory & Templates": [
@@ -273,7 +278,11 @@ export function AppSidebar() {
                                         <Button
                                           variant="ghost"
                                           size="sm"
-                                          className="w-full justify-start h-9 px-2 rounded-md text-sidebar-foreground/80 hover:text-sidebar-accent-foreground hover:bg-sidebar-accent/50 transition-all"
+                                          className={`w-full justify-start h-9 px-2 rounded-md hover:text-sidebar-accent-foreground hover:bg-sidebar-accent/50 transition-all ${
+                                            location.pathname === subAction.url
+                                              ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium"
+                                              : "text-sidebar-foreground/80"
+                                          }`}
                                         >
                                           {React.createElement(subAction.icon, { className: "h-3.5 w-3.5 shrink-0 mr-2" })}
                                           <span className="text-xs">{subAction.title}</span>
@@ -300,7 +309,11 @@ export function AppSidebar() {
                                       ? "customers-nav"
                                       : undefined
                                   }
-                                  className="flex items-center w-full h-10 px-3 rounded-lg text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200 ease-in-out group-hover:translate-x-1"
+                                  className={`flex items-center w-full h-10 px-3 rounded-lg hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200 ease-in-out group-hover:translate-x-1 ${
+                                    location.pathname === (action as any).url
+                                      ? "bg-sidebar-accent text-sidebar-accent-foreground font-semibold"
+                                      : "text-sidebar-foreground"
+                                  }`}
                                   style={{ animationDelay: `${(categoryIndex * 100) + (index * 50)}ms` }}
                                 >
                                   {React.createElement(action.icon, { className: "h-4 w-4 shrink-0 text-sidebar-foreground group-hover:scale-110 transition-transform duration-200" })}
@@ -348,15 +361,19 @@ export function AppSidebar() {
                         tooltip={action.title}
                         className="group"
                       >
-                        {action.title === "Work Orders" ? (
+                        {action.title === "Work Orders" || (action as any).url ? (
                           <Link
-                            to="/"
-                            className="flex items-center justify-center w-full h-10 px-0 rounded-lg text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent hover:shadow-sm transition-all duration-200 ease-in-out"
+                            to={action.title === "Work Orders" ? "/" : (action as any).url}
+                            className={`flex items-center justify-center w-full h-10 px-0 rounded-lg hover:text-sidebar-accent-foreground hover:bg-sidebar-accent hover:shadow-sm transition-all duration-200 ease-in-out ${
+                              location.pathname === ((action as any).url ?? "/")
+                                ? "bg-sidebar-accent text-sidebar-accent-foreground"
+                                : "text-sidebar-foreground"
+                            }`}
                             style={{
                               animationDelay: `${(categoryIndex * 100) + (index * 50)}ms`
                             }}
                           >
-                            {React.createElement(action.icon, { className: "h-4 w-4 shrink-0 text-sidebar-foreground group-hover:scale-110 transition-transform duration-200" })}
+                            {React.createElement(action.icon, { className: "h-4 w-4 shrink-0 group-hover:scale-110 transition-transform duration-200" })}
                           </Link>
                         ) : (
                           <Button
