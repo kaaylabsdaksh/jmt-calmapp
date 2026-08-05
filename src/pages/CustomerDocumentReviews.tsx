@@ -230,6 +230,7 @@ const CustomerDocumentReviews = () => {
   const advancedCount = Object.entries(filters).filter(
     ([k, v]) => k !== "status" && k !== "type" && v !== "" && v !== "all"
   ).length;
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState<string[]>([]);
   const [drawer, setDrawer] = useState<CdrRecord | null>(null);
