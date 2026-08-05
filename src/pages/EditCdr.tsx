@@ -929,10 +929,10 @@ export default function EditCdr() {
       <div className="sticky bottom-0 z-20 border-t bg-background/95 backdrop-blur">
         <div className="mx-auto flex max-w-[1400px] flex-wrap items-center gap-2 px-4 py-3 md:px-6">
           <div className="ml-auto flex flex-wrap items-center gap-2">
-            <Button variant="outline" size="sm" className="h-8 text-xs">
+            <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => setEmailTarget("creator")}>
               <Mail className="mr-1.5 h-3.5 w-3.5" /> Email Creator
             </Button>
-            <Button variant="outline" size="sm" className="h-8 text-xs">
+            <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => setEmailTarget("customer")}>
               <Mail className="mr-1.5 h-3.5 w-3.5" /> Email Customer
             </Button>
             <Button
