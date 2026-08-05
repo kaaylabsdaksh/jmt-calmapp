@@ -19,7 +19,7 @@ const routeMeta: Record<string, { title: string; crumbs: Crumb[] }> = {
   "/manage-customers": { title: "Manage Customers", crumbs: [{ label: "Home", to: "/" }, { label: "Product & Customer" }, { label: "Manage Customers" }] },
   "/manage-customers/retest-notices": { title: "Retest Notice Management", crumbs: [{ label: "Home", to: "/" }, { label: "Product & Customer" }, { label: "Manage Customers", to: "/manage-customers" }, { label: "Retest Notices" }] },
   "/manage-customers/cdr": { title: "Customer Document Reviews", crumbs: [{ label: "Home", to: "/" }, { label: "Manage Customers", to: "/manage-customers" }, { label: "Manage CDR" }] },
-  "/manage-customers/cdr/:cdrId": { title: "Edit CDR", crumbs: [{ label: "Home", to: "/" }, { label: "Manage Customers", to: "/manage-customers" }, { label: "Manage CDR", to: "/manage-customers/cdr" }, { label: "Edit CDR" }] },
+  "/manage-customers/cdr/:cdrId": { title: "Edit CDR", crumbs: [] },
   "/manage-customers/:accountNumber": { title: "Customer Details", crumbs: [{ label: "Home", to: "/" }, { label: "Product & Customer" }, { label: "Manage Customers", to: "/manage-customers" }, { label: "Customer Details" }] },
 };
 
