@@ -299,30 +299,62 @@ export default function EditCdr() {
                 </div>
                 <div className="space-y-1.5">
                   <Label className="text-xs">Division(s)</Label>
-                  <div className="flex flex-wrap gap-1.5 rounded-md border bg-background p-1.5">
-                    {DIVISIONS.map((d) => {
-                      const active = divisions.includes(d);
-                      return (
-                        <button
-                          key={d}
-                          type="button"
-                          aria-pressed={active}
-                          onClick={() =>
-                            setDivisions((prev) => (prev.includes(d) ? prev.filter((x) => x !== d) : [...prev, d]))
-                          }
-                          className={cn(
-                            "rounded-full border px-2.5 py-0.5 text-[11px] transition-colors",
-                            active
-                              ? "border-primary bg-primary text-primary-foreground"
-                              : "border-border bg-background text-foreground hover:bg-accent"
-                          )}
-                        >
-                          {d}
-                        </button>
-                      );
-                    })}
-                  </div>
+                  <Popover open={divisionsOpen} onOpenChange={setDivisionsOpen}>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        role="combobox"
+                        className="h-9 w-full justify-between font-normal"
+                      >
+                        <span className="truncate text-xs">
+                          {divisions.length ? divisions.join(", ") : "Select division(s)"}
+                        </span>
+                        <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-[--radix-popover-trigger-width] p-0" align="start">
+                      <div className="max-h-56 overflow-y-auto p-1">
+                        {DIVISIONS.map((d) => {
+                          const active = divisions.includes(d);
+                          return (
+                            <label
+                              key={d}
+                              className={cn(
+                                "flex cursor-pointer items-center gap-2 rounded-sm px-2 py-1.5 text-xs hover:bg-accent",
+                                active && "bg-accent/60"
+                              )}
+                            >
+                              <Checkbox
+                                checked={active}
+                                onCheckedChange={() =>
+                                  setDivisions((prev) =>
+                                    prev.includes(d) ? prev.filter((x) => x !== d) : [...prev, d]
+                                  )
+                                }
+                              />
+                              <span>{d}</span>
+                            </label>
+                          );
+                        })}
+                      </div>
+                      <Separator />
+                      <div className="flex items-center justify-between gap-2 p-2">
+                        <div className="flex gap-2">
+                          <Button size="sm" variant="outline" className="h-7 text-[11px]" onClick={() => setDivisions([...DIVISIONS])}>
+                            Select All
+                          </Button>
+                          <Button size="sm" variant="outline" className="h-7 text-[11px]" onClick={() => setDivisions([])}>
+                            Unselect All
+                          </Button>
+                        </div>
+                        <Button size="sm" variant="ghost" className="h-7 text-[11px]" onClick={() => setDivisionsOpen(false)}>
+                          Close
+                        </Button>
+                      </div>
+                    </PopoverContent>
+                  </Popover>
                 </div>
+
               </div>
             </CardContent>
           </Card>
