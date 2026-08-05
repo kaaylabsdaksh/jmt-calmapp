@@ -51,6 +51,7 @@ import {
 import { ModernDatePicker } from "@/components/ui/modern-date-picker";
 import { useToast } from "@/components/ui/use-toast";
 import ModernTopNav from "@/components/modern/ModernTopNav";
+import EmailComposeDialog from "@/components/cdr/EmailComposeDialog";
 import { cn } from "@/lib/utils";
 
 const ROUTE_OPTIONS = [
