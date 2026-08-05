@@ -57,14 +57,17 @@ const ROUTE_OPTIONS = [
   "Quality",
   "Technical",
   "Safety",
-  "Receiving",
-  "Manufacturing",
-  "Training",
-  "Contracts",
-  "Sales",
-  "Service",
-  "Field Service",
   "Onsite",
+  "Receiving",
+  "Service",
+  "Sales",
+  "Rental",
+  "Training",
+  "Manufacturing",
+  "Contracts",
+  "Field Service",
+  "Surplus",
+  "To Factory",
   "AR",
   "Other",
 ];
@@ -147,6 +150,7 @@ export default function EditCdr() {
 
   // Routing
   const [routes, setRoutes] = useState<string[]>(["Quality", "Safety"]);
+  const [sentRoutes, setSentRoutes] = useState<string[]>([]);
   const [otherRoute, setOtherRoute] = useState("");
   const [equipmentHere, setEquipmentHere] = useState(true);
   const [srUpdates, setSrUpdates] = useState(false);
