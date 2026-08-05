@@ -722,25 +722,6 @@ export default function EditCdr() {
                 </div>
               </CardContent>
             </Card>
-
-            <Card>
-              <CardHeader className="pb-3">{sectionTitle(Info, "Workflow Information")}</CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-2 gap-3">
-                  {[
-                    ["Created By", "M. Alvarez"],
-                    ["Created Date", "07/28/2026 8:12 AM"],
-                    ["Modified By", "K. Nguyen"],
-                    ["Modified Date", "08/02/2026 10:14 AM"],
-                  ].map(([label, value]) => (
-                    <div key={label} className="rounded-md border bg-muted/40 p-2.5">
-                      <p className="text-[11px] text-muted-foreground">{label}</p>
-                      <p className="text-sm font-medium">{value}</p>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
           </div>
 
           {/* Acknowledgement */}
