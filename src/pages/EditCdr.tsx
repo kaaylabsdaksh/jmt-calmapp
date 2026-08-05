@@ -287,20 +287,20 @@ export default function EditCdr() {
           </div>
         </div>
 
-        <div className="space-y-6">
+        <div className="space-y-4">
           {/* CDR Details */}
           <Card>
-            <CardHeader className="pb-3">{sectionTitle(Info, "CDR Details")}</CardHeader>
-            <CardContent>
+            <CardHeader className="px-4 pb-2 pt-3">{sectionTitle(Info, "CDR Details")}</CardHeader>
+            <CardContent className="px-4 pb-4">
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-                <div className="space-y-1.5">
+                <div className="space-y-1">
                   <Label className="text-xs">Status</Label>
                   <div className="flex h-8 items-center rounded-md border border-input bg-muted px-3 text-sm text-muted-foreground">
                     {status}
                   </div>
 
                 </div>
-                <div className="space-y-1.5">
+                <div className="space-y-1">
                   <Label className="text-xs">
                     JM Location <span className="text-destructive">*</span>
                   </Label>
@@ -315,7 +315,7 @@ export default function EditCdr() {
                     </SelectContent>
                   </Select>
                 </div>
-                <div className="space-y-1.5">
+                <div className="space-y-1">
                   <Label className="text-xs">
                     Division(s) <span className="text-destructive">*</span>
                   </Label>
@@ -324,7 +324,7 @@ export default function EditCdr() {
                       <Button
                         variant="outline"
                         role="combobox"
-                        className="h-9 w-full justify-between font-normal"
+                        className="h-8 w-full justify-between text-sm font-normal"
                       >
                         <span className="truncate text-xs">
                           {divisions.length ? divisions.join(", ") : "Select division(s)"}
@@ -394,12 +394,12 @@ export default function EditCdr() {
           </Card>
 
           {/* Row 1 */}
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
             <Card>
-              <CardHeader className="pb-3">{sectionTitle(Users, "Customer Information")}</CardHeader>
-              <CardContent className="space-y-4">
+              <CardHeader className="px-4 pb-2 pt-3">{sectionTitle(Users, "Customer Information")}</CardHeader>
+              <CardContent className="space-y-3 px-4 pb-4">
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                  <div className="space-y-1.5">
+                  <div className="space-y-1">
                     <Label className="text-xs">Existing Customer</Label>
                     <Select value={existingCustomer} onValueChange={setExistingCustomer}>
                       <SelectTrigger className="h-8 text-sm">
@@ -411,7 +411,7 @@ export default function EditCdr() {
                       </SelectContent>
                     </Select>
                   </div>
-                  <div className="space-y-1.5">
+                  <div className="space-y-1">
                     <Label className="text-xs">
                       Customer <span className="text-destructive">*</span>
                     </Label>
@@ -423,19 +423,19 @@ export default function EditCdr() {
                     />
                     {showErr("customer") && errText("Customer is required")}
                   </div>
-                  <div className="space-y-1.5">
+                  <div className="space-y-1">
                     <Label className="text-xs">Account Number</Label>
                     <Input value={account} onChange={(e) => setAccount(e.target.value)} className="h-8 text-sm" />
                   </div>
-                  <div className="space-y-1.5">
+                  <div className="space-y-1">
                     <Label className="text-xs">Ship To</Label>
                     <Input value={shipTo} onChange={(e) => setShipTo(e.target.value)} className="h-8 text-sm" />
                   </div>
-                  <div className="space-y-1.5">
+                  <div className="space-y-1">
                     <Label className="text-xs">City</Label>
                     <Input value={city} onChange={(e) => setCity(e.target.value)} className="h-8 text-sm" />
                   </div>
-                  <div className="space-y-1.5">
+                  <div className="space-y-1">
                     <Label className="text-xs">State</Label>
                     <Input value={state} onChange={(e) => setState(e.target.value)} className="h-8 text-sm" />
                   </div>
@@ -514,15 +514,15 @@ export default function EditCdr() {
                 <div>
                   <p className="mb-2 text-xs font-semibold text-muted-foreground">Contact Information</p>
                   <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-                    <div className="space-y-1.5">
+                    <div className="space-y-1">
                       <Label className="text-xs">Contact</Label>
                       <Input value={contact} onChange={(e) => setContact(e.target.value)} className="h-8 text-sm" />
                     </div>
-                    <div className="space-y-1.5">
+                    <div className="space-y-1">
                       <Label className="text-xs">Phone</Label>
                       <Input value={phone} onChange={(e) => setPhone(e.target.value)} className="h-8 text-sm" />
                     </div>
-                    <div className="space-y-1.5">
+                    <div className="space-y-1">
                       <Label className="text-xs">Email</Label>
                       <Input value={email} onChange={(e) => setEmail(e.target.value)} className="h-8 text-sm" />
                     </div>
@@ -533,8 +533,8 @@ export default function EditCdr() {
             </Card>
 
             <Card>
-              <CardHeader className="pb-3">{sectionTitle(RouteIcon, "Routing & Review")}</CardHeader>
-              <CardContent className="space-y-4">
+              <CardHeader className="px-4 pb-2 pt-3">{sectionTitle(RouteIcon, "Routing & Review")}</CardHeader>
+              <CardContent className="space-y-3 px-4 pb-4">
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <Label className="text-xs">
@@ -658,12 +658,12 @@ export default function EditCdr() {
           </div>
 
           {/* Row 2 */}
-          <div className="grid grid-cols-1 gap-6">
+          <div className="grid grid-cols-1 gap-4">
             <Card>
-              <CardHeader className="pb-3">{sectionTitle(FileText, "Document Information")}</CardHeader>
-              <CardContent>
+              <CardHeader className="px-4 pb-2 pt-3">{sectionTitle(FileText, "Document Information")}</CardHeader>
+              <CardContent className="px-4 pb-4">
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                  <div className="space-y-1.5">
+                  <div className="space-y-1">
                     <Label className="text-xs">
                       Priority <span className="text-destructive">*</span>
                     </Label>
@@ -678,11 +678,11 @@ export default function EditCdr() {
                       </SelectContent>
                     </Select>
                   </div>
-                  <div className="space-y-1.5">
+                  <div className="space-y-1">
                     <Label className="text-xs">PO Number</Label>
                     <Input value={po} onChange={(e) => setPo(e.target.value)} className="h-8 text-sm" />
                   </div>
-                  <div className="space-y-1.5">
+                  <div className="space-y-1">
                     <Label className="text-xs">
                       CDR Type <span className="text-destructive">*</span>
                     </Label>
@@ -697,7 +697,7 @@ export default function EditCdr() {
                       </SelectContent>
                     </Select>
                   </div>
-                  <div className="space-y-1.5">
+                  <div className="space-y-1">
                     <Label className="text-xs">
                       Date Received <span className="text-destructive">*</span>
                     </Label>
@@ -709,11 +709,11 @@ export default function EditCdr() {
                     />
                     {showErr("dateReceived") && errText("Date Received is required")}
                   </div>
-                  <div className="space-y-1.5">
+                  <div className="space-y-1">
                     <Label className="text-xs">Work Order</Label>
                     <Input value={workOrder} onChange={(e) => setWorkOrder(e.target.value)} className="h-8 text-sm" />
                   </div>
-                  <div className="space-y-1.5">
+                  <div className="space-y-1">
                     <Label className="text-xs">How Received</Label>
                     <Select value={howReceived} onValueChange={setHowReceived}>
                       <SelectTrigger className="h-8 text-sm">
@@ -726,7 +726,7 @@ export default function EditCdr() {
                       </SelectContent>
                     </Select>
                   </div>
-                  <div className="space-y-1.5">
+                  <div className="space-y-1">
                     <Label className="text-xs">PR Number</Label>
                     <Input value={prNumber} onChange={(e) => setPrNumber(e.target.value)} className="h-8 text-sm" />
                   </div>
@@ -737,7 +737,7 @@ export default function EditCdr() {
 
           {/* Acknowledgement */}
           <Card className="border-blue-200 bg-blue-50/60">
-            <CardContent className="flex gap-3 p-4">
+            <CardContent className="flex gap-3 p-3">
               <Info className="mt-0.5 h-4 w-4 shrink-0 text-blue-600" />
               <div>
                 <p className="text-sm font-semibold text-blue-900">Acknowledgement</p>
@@ -751,10 +751,10 @@ export default function EditCdr() {
 
           {/* Documents */}
           <Card>
-            <CardHeader className="pb-3">{sectionTitle(Upload, "Documents")}</CardHeader>
-            <CardContent className="space-y-4">
+            <CardHeader className="px-4 pb-2 pt-3">{sectionTitle(Upload, "Documents")}</CardHeader>
+            <CardContent className="space-y-3 px-4 pb-4">
               <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
-                <div className="space-y-1.5">
+                <div className="space-y-1">
                   <Label className="text-xs">Type</Label>
                   <Select value={docType} onValueChange={setDocType}>
                     <SelectTrigger className="h-8 text-sm">
@@ -767,7 +767,7 @@ export default function EditCdr() {
                     </SelectContent>
                   </Select>
                 </div>
-                <div className="space-y-1.5 md:col-span-2">
+                <div className="space-y-1 md:col-span-2">
                   <Label className="text-xs">Description</Label>
                   <Input value={docDesc} onChange={(e) => setDocDesc(e.target.value)} className="h-8 text-sm" placeholder="Short description" />
                 </div>
@@ -778,7 +778,7 @@ export default function EditCdr() {
                 onDragLeave={() => setDragging(false)}
                 onDrop={(e) => { e.preventDefault(); setDragging(false); handleFiles(e.dataTransfer.files); }}
                 className={cn(
-                  "flex flex-col items-center justify-center gap-2 rounded-md border-2 border-dashed p-6 transition-colors",
+                  "flex flex-col items-center justify-center gap-2 rounded-md border-2 border-dashed p-4 transition-colors",
                   dragging ? "border-primary bg-primary/5" : "border-muted-foreground/25"
                 )}
               >
@@ -887,12 +887,12 @@ export default function EditCdr() {
             </div>
 
             {activityOpen && (
-              <CardContent className="space-y-4 pt-4">
+              <CardContent className="space-y-3 px-4 pb-4 pt-3">
                 <div className="flex flex-wrap items-end gap-3 rounded-lg border bg-muted/20 p-3">
-                  <div className="space-y-1.5">
+                  <div className="space-y-1">
                     <Label className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">Type</Label>
                     <Select value={commentType} onValueChange={setCommentType}>
-                      <SelectTrigger className="h-9 w-[180px] text-sm">
+                      <SelectTrigger className="h-8 w-[180px] text-xs">
                         <SelectValue placeholder="Select type" />
                       </SelectTrigger>
                       <SelectContent>
@@ -902,16 +902,16 @@ export default function EditCdr() {
                       </SelectContent>
                     </Select>
                   </div>
-                  <div className="min-w-[240px] flex-1 space-y-1.5">
+                  <div className="min-w-[240px] flex-1 space-y-1">
                     <Label className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">Comment</Label>
                     <Input
                       value={commentText}
                       onChange={(e) => setCommentText(e.target.value)}
                       placeholder="Enter your comment..."
-                      className="h-9 text-sm"
+                      className="h-8 text-xs"
                     />
                   </div>
-                  <Button size="sm" className="h-9 text-xs" onClick={addComment}>
+                  <Button size="sm" className="h-8 text-xs" onClick={addComment}>
                     <Plus className="mr-1.5 h-4 w-4" /> Add
                   </Button>
                 </div>
