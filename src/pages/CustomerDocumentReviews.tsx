@@ -585,7 +585,7 @@ const CustomerDocumentReviews = () => {
                         <TableCell>
                           <button
                             className="font-medium text-foreground underline underline-offset-2 hover:no-underline"
-                            onClick={() => setDrawer(r)}
+                            onClick={() => navigate(`/manage-customers/cdr/${r.cdr.split("-").pop()}`)}
                           >
                             {r.cdr.split("-").pop()}
                           </button>
