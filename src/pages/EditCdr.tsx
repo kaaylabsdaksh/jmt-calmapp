@@ -267,16 +267,10 @@ export default function EditCdr() {
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
                 <div className="space-y-1.5">
                   <Label className="text-xs">Status</Label>
-                  <Select value={status} onValueChange={setStatus}>
-                    <SelectTrigger className="h-8 text-sm">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {Object.keys(STATUS_STYLES).map((s) => (
-                        <SelectItem key={s} value={s}>{s}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <div className="flex h-8 items-center rounded-md border border-input bg-muted px-3 text-sm text-muted-foreground">
+                    {status}
+                  </div>
+
                 </div>
                 <div className="space-y-1.5">
                   <Label className="text-xs">JM Location</Label>
