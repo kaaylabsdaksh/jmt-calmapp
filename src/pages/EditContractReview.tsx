@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { CheckCircle2, FileText, Mail, MessageSquare, Plus, Save, Trash2, Upload, Users } from "lucide-react";
 import ModernTopNav from "@/components/modern/ModernTopNav";
 import { Button } from "@/components/ui/button";
@@ -29,7 +29,6 @@ const initialActivity: Activity[] = [
 
 export default function EditContractReview() {
   const { reviewId } = useParams();
-  const navigate = useNavigate();
   const { toast } = useToast();
   const [status, setStatus] = useState("In Process");
   const [docType, setDocType] = useState("Other");
