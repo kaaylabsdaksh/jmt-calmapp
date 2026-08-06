@@ -106,7 +106,7 @@ export default function EditContractReview() {
           <span className="inline-flex items-center gap-1.5 rounded-full bg-info/10 px-2.5 py-1 text-xs font-medium text-info"><span className="h-1.5 w-1.5 rounded-full bg-info" />{status}</span>
         </div>
 
-        <div className="grid gap-3 xl:grid-cols-[430px_1fr]">
+        <div className="grid gap-3">
           <div className="space-y-3">
             <Card>
               <CardHeader className="px-3 pb-1 pt-2">{sectionTitle(FileText, "Review Submission")}</CardHeader>
