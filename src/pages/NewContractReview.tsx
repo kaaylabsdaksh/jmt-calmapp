@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Check, CheckCircle2, ChevronDown, FileText, Mail, Plus, Save, Trash2, Upload, Users } from "lucide-react";
+import { Check, CheckCircle2, ChevronDown, FileText, Mail, MessageSquare, Plus, Save, Trash2, Upload, Users } from "lucide-react";
 import ModernTopNav from "@/components/modern/ModernTopNav";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
@@ -20,6 +20,7 @@ const YES_NO = ["Yes", "No"];
 const CONTRACT_PURPOSES = ["ESL", "Lab", "Onsite", "Lab / Onsite", "Other"];
 type Account = { id: string; account: string; customer: string; sr: string };
 type DocumentRow = { id: string; name: string; type: string; description: string };
+type CommentRow = { id: string; type: string; comment: string; createdBy: string; createdAt: string };
 
 export default function NewContractReview() {
   const navigate = useNavigate();
@@ -58,6 +59,9 @@ export default function NewContractReview() {
   const [uploadType, setUploadType] = useState("");
   const [uploadDescription, setUploadDescription] = useState("");
   const [documents, setDocuments] = useState<DocumentRow[]>([]);
+  const [commentType, setCommentType] = useState("Other");
+  const [comment, setComment] = useState("");
+  const [comments, setComments] = useState<CommentRow[]>([]);
   const [submitted, setSubmitted] = useState(false);
   const [confirmationOpen, setConfirmationOpen] = useState(false);
   const [createAction, setCreateAction] = useState<"create" | "complete" | "contracts">("create");
@@ -73,6 +77,15 @@ export default function NewContractReview() {
     }
     setDocuments((current) => [...current, ...Array.from(files).map((file, index) => ({ id: `${Date.now()}-${index}`, name: file.name, type: uploadType, description: uploadDescription }))]);
     setUploadDescription("");
+  };
+  const addComment = () => {
+    const cleanComment = comment.trim();
+    if (!cleanComment) {
+      toast({ title: "Enter a comment", variant: "destructive" });
+      return;
+    }
+    setComments((current) => [{ id: `${Date.now()}`, type: commentType, comment: cleanComment, createdBy: "Current User", createdAt: new Date().toLocaleString("en-US") }, ...current]);
+    setComment("");
   };
   const requestCreate = (action: "create" | "complete" | "contracts" = "create") => {
     setSubmitted(true);
@@ -143,6 +156,14 @@ export default function NewContractReview() {
         </Card>
 
         <Card><CardHeader className="px-3 pb-1 pt-2">{sectionTitle(Upload, "Documents")}</CardHeader><CardContent className="space-y-2 px-3 pb-3"><div className="grid gap-2 lg:grid-cols-[220px_1fr_280px]"><Select value={uploadType} onValueChange={setUploadType}><SelectTrigger className={field}><SelectValue placeholder="Document type" /></SelectTrigger><SelectContent>{DOCUMENT_TYPES.map((item) => <SelectItem key={item} value={item}>{item}</SelectItem>)}</SelectContent></Select><Input value={uploadDescription} onChange={(e) => setUploadDescription(e.target.value)} placeholder="Description" className={field} /><label className="flex h-8 cursor-pointer items-center justify-center gap-2 rounded-md border border-dashed text-xs hover:bg-muted"><Upload className="h-3.5 w-3.5" />Select files<input type="file" multiple className="hidden" onChange={(e) => addFiles(e.target.files)} /></label></div><div className="overflow-hidden rounded-md border"><Table><TableHeader><TableRow className="bg-muted/60"><TableHead>Document</TableHead><TableHead>Type</TableHead><TableHead>Description</TableHead><TableHead className="w-10" /></TableRow></TableHeader><TableBody>{documents.length ? documents.map((doc) => <TableRow key={doc.id}><TableCell className="py-1.5 text-xs font-medium">{doc.name}</TableCell><TableCell className="py-1.5 text-xs">{doc.type}</TableCell><TableCell className="py-1.5 text-xs">{doc.description || "—"}</TableCell><TableCell><Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => setDocuments((current) => current.filter((item) => item.id !== doc.id))}><Trash2 className="h-3.5 w-3.5" /></Button></TableCell></TableRow>) : <TableRow><TableCell colSpan={4} className="h-14 text-center text-xs text-muted-foreground">No documents added</TableCell></TableRow>}</TableBody></Table></div></CardContent></Card>
+
+        <Card>
+          <CardHeader className="px-3 pb-1 pt-2">{sectionTitle(MessageSquare, "Comments")}</CardHeader>
+          <CardContent className="space-y-2 px-3 pb-3">
+            <div className="grid items-end gap-2 lg:grid-cols-[180px_1fr_auto]"><div><Label className={label}>Comment Type</Label><Select value={commentType} onValueChange={setCommentType}><SelectTrigger className={field}><SelectValue /></SelectTrigger><SelectContent>{["Other", "Internal", "Customer", "Legal", "Finance"].map((item) => <SelectItem key={item} value={item}>{item}</SelectItem>)}</SelectContent></Select></div><div><Label className={label}>Comment</Label><Input value={comment} onChange={(event) => setComment(event.target.value)} onKeyDown={(event) => { if (event.key === "Enter") addComment(); }} maxLength={1000} placeholder="Add a comment" className={field} /></div><Button size="sm" className="h-8 text-xs" onClick={addComment}><Plus className="mr-1.5 h-3.5 w-3.5" />Add Comment</Button></div>
+            <div className="overflow-hidden rounded-md border"><Table><TableHeader><TableRow className="bg-muted/60"><TableHead className="w-32">Type</TableHead><TableHead>Comment</TableHead><TableHead className="w-40">Created By</TableHead><TableHead className="w-48">Date</TableHead><TableHead className="w-10" /></TableRow></TableHeader><TableBody>{comments.length ? comments.map((item) => <TableRow key={item.id}><TableCell className="py-1.5 text-xs">{item.type}</TableCell><TableCell className="py-1.5 text-xs">{item.comment}</TableCell><TableCell className="py-1.5 text-xs">{item.createdBy}</TableCell><TableCell className="py-1.5 text-xs text-muted-foreground">{item.createdAt}</TableCell><TableCell><Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => setComments((current) => current.filter((row) => row.id !== item.id))} aria-label="Delete comment"><Trash2 className="h-3.5 w-3.5" /></Button></TableCell></TableRow>) : <TableRow><TableCell colSpan={5} className="h-14 text-center text-xs text-muted-foreground">No comments added</TableCell></TableRow>}</TableBody></Table></div>
+          </CardContent>
+        </Card>
       </main>
 
       <footer className="sticky bottom-0 z-30 border-t bg-background/95 px-4 py-3 backdrop-blur"><div className="mx-auto flex max-w-[1450px] flex-wrap items-center justify-between gap-2"><div className="flex flex-wrap gap-2"><Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => navigate("/manage-customers/contract-reviews")}>Cancel CR</Button><Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => requestCreate("complete")}><Check className="mr-1.5 h-3.5 w-3.5" />Complete CR</Button><Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => requestCreate("contracts")}><Plus className="mr-1.5 h-3.5 w-3.5" />Add to Contracts</Button></div><Button size="sm" className="h-8 bg-success text-xs text-success-foreground hover:bg-success/90" onClick={() => requestCreate("create")}><Save className="mr-1.5 h-3.5 w-3.5" />Create Contract Review</Button></div></footer>
