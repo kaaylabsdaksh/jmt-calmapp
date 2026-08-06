@@ -110,10 +110,10 @@ export default function EditContractReview() {
           <div className="space-y-3">
             <Card>
               <CardHeader className="px-3 pb-1 pt-2">{sectionTitle(FileText, "Review Submission")}</CardHeader>
-              <CardContent className="grid grid-cols-2 gap-2 px-3 pb-3">
+              <CardContent className="grid gap-2 px-3 pb-3 sm:grid-cols-2 lg:grid-cols-3">
                 <div className="space-y-1"><Label className={label}>Status</Label><Select value={status} onValueChange={setStatus}><SelectTrigger className={field}><SelectValue /></SelectTrigger><SelectContent>{["Created", "In Process", "Completed", "Cancelled"].map((v) => <SelectItem key={v} value={v}>{v}</SelectItem>)}</SelectContent></Select></div>
                 <div className="space-y-1"><Label className={label}>Document Type</Label><Select value={docType} onValueChange={setDocType}><SelectTrigger className={field}><SelectValue /></SelectTrigger><SelectContent>{documentTypes.map((v) => <SelectItem key={v} value={v}>{v}</SelectItem>)}</SelectContent></Select></div>
-                <div className="col-span-2 space-y-1"><Label className={label}>Other Document Type</Label><Input value={otherDocType} onChange={(e) => setOtherDocType(e.target.value)} className={field} /></div>
+                <div className="space-y-1"><Label className={label}>Other Document Type</Label><Input value={otherDocType} onChange={(e) => setOtherDocType(e.target.value)} className={field} /></div>
                 <div className="space-y-1"><Label className={label}>Submitted By</Label><Input value={submittedBy} onChange={(e) => setSubmittedBy(e.target.value)} className={field} /></div>
                 <div className="space-y-1"><Label className={label}>How Received</Label><Select value={howReceived} onValueChange={setHowReceived}><SelectTrigger className={field}><SelectValue /></SelectTrigger><SelectContent>{["Email", "Mail", "Fax", "Portal", "In Person"].map((v) => <SelectItem key={v} value={v}>{v}</SelectItem>)}</SelectContent></Select></div>
                 <div className="space-y-1"><Label className={label}>Contract Received</Label><ModernDatePicker value={received} onChange={setReceived} size="sm" /></div>
