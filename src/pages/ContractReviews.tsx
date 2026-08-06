@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Search,
   X,
@@ -206,6 +207,7 @@ const emptyFilters = {
 
 const ContractReviews = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const [filters, setFilters] = useState(emptyFilters);
   const [query, setQuery] = useState("");
@@ -564,12 +566,13 @@ const ContractReviews = () => {
                           />
                         </TableCell>
                         <TableCell>
-                          <button
-                            className="font-medium text-foreground underline underline-offset-2 hover:no-underline"
-                            onClick={() => setDrawer(r)}
+                          <Button
+                            variant="link"
+                            className="h-auto p-0 font-medium text-foreground underline underline-offset-2 hover:no-underline"
+                            onClick={() => navigate(`/manage-customers/contract-reviews/${r.cr.split("-").pop()}`)}
                           >
                             {r.cr.split("-").pop()}
-                          </button>
+                          </Button>
                         </TableCell>
                         <TableCell>{statusChip(r.status)}</TableCell>
                         {isVisible("docType") && <TableCell>{typeBadge(r.docType)}</TableCell>}
@@ -595,10 +598,10 @@ const ContractReviews = () => {
                               </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
-                              <DropdownMenuItem className="text-xs" onClick={() => setDrawer(r)}>
+                              <DropdownMenuItem className="text-xs" onClick={() => navigate(`/manage-customers/contract-reviews/${r.cr.split("-").pop()}`)}>
                                 <Eye className="h-3.5 w-3.5 mr-2" />Open Contract Review
                               </DropdownMenuItem>
-                              <DropdownMenuItem className="text-xs" onClick={() => notify("Edit Contract Review", r.cr)}>
+                              <DropdownMenuItem className="text-xs" onClick={() => navigate(`/manage-customers/contract-reviews/${r.cr.split("-").pop()}`)}>
                                 <Pencil className="h-3.5 w-3.5 mr-2" />Edit
                               </DropdownMenuItem>
                               <DropdownMenuItem className="text-xs" onClick={() => notify("Reviewer Assigned", r.cr)}>

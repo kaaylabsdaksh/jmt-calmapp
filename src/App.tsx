@@ -36,6 +36,7 @@ import CustomerDocumentReviews from "./pages/CustomerDocumentReviews";
 import EditCdr from "./pages/EditCdr";
 import NewCdr from "./pages/NewCdr";
 import ContractReviews from "./pages/ContractReviews";
+import EditContractReview from "./pages/EditContractReview";
 import WhatsNew from "./pages/WhatsNew";
 import { Layout } from "./components/Layout";
 import { Toaster } from "@/components/ui/toaster";
@@ -90,6 +91,7 @@ const App = () => {
             <Route path="/manage-customers/cdr/:cdrId" element={<EditCdr />} />
 
             <Route path="/manage-customers/contract-reviews" element={<ContractReviews />} />
+            <Route path="/manage-customers/contract-reviews/:reviewId" element={<EditContractReview />} />
             <Route path="/manage-customers/:accountNumber" element={<EditCustomer />} />
 
 

@@ -21,6 +21,8 @@ const routeMeta: Record<string, { title: string; crumbs: Crumb[] }> = {
   "/manage-customers/cdr": { title: "Customer Document Reviews", crumbs: [{ label: "Home", to: "/" }, { label: "Manage Customers", to: "/manage-customers" }, { label: "Manage CDR" }] },
   "/manage-customers/cdr/new": { title: "Add New CDR", crumbs: [{ label: "Home", to: "/" }, { label: "Manage Customers", to: "/manage-customers" }, { label: "Manage CDR", to: "/manage-customers/cdr" }, { label: "Add New CDR" }] },
   "/manage-customers/cdr/:cdrId": { title: "Edit CDR", crumbs: [{ label: "Home", to: "/" }, { label: "Manage Customers", to: "/manage-customers" }, { label: "Manage CDR", to: "/manage-customers/cdr" }, { label: "Edit CDR" }] },
+  "/manage-customers/contract-reviews": { title: "Contract Reviews", crumbs: [{ label: "Home", to: "/" }, { label: "Manage Customers", to: "/manage-customers" }, { label: "Contract Reviews" }] },
+  "/manage-customers/contract-reviews/:reviewId": { title: "Edit Contract Review", crumbs: [{ label: "Home", to: "/" }, { label: "Manage Customers", to: "/manage-customers" }, { label: "Contract Reviews", to: "/manage-customers/contract-reviews" }, { label: "Edit Contract Review" }] },
   "/manage-customers/:accountNumber": { title: "Customer Details", crumbs: [{ label: "Home", to: "/" }, { label: "Product & Customer" }, { label: "Manage Customers", to: "/manage-customers" }, { label: "Customer Details" }] },
 };
 
@@ -29,8 +31,11 @@ const ModernTopNav = () => {
   const location = useLocation();
   const exactMeta = routeMeta[location.pathname];
   const cdrDetailMatch = !exactMeta && /^\/manage-customers\/cdr\/[^/]+$/.test(location.pathname);
-  const customerDetailMatch = !exactMeta && !cdrDetailMatch && /^\/manage-customers\/[^/]+$/.test(location.pathname);
-  const meta = cdrDetailMatch
+  const contractReviewDetailMatch = !exactMeta && /^\/manage-customers\/contract-reviews\/[^/]+$/.test(location.pathname);
+  const customerDetailMatch = !exactMeta && !cdrDetailMatch && !contractReviewDetailMatch && /^\/manage-customers\/[^/]+$/.test(location.pathname);
+  const meta = contractReviewDetailMatch
+    ? routeMeta["/manage-customers/contract-reviews/:reviewId"]
+    : cdrDetailMatch
     ? routeMeta["/manage-customers/cdr/:cdrId"]
     : customerDetailMatch
     ? routeMeta["/manage-customers/:accountNumber"]
