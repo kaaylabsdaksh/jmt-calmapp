@@ -28,6 +28,16 @@ import {
 
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -228,6 +238,7 @@ const CustomerDocumentReviews = () => {
   const [filters, setFilters] = useState(emptyFilters);
   const [query, setQuery] = useState("");
   const [advancedOpen, setAdvancedOpen] = useState(false);
+  const [newCdrConfirmationOpen, setNewCdrConfirmationOpen] = useState(false);
   const advancedCount = Object.entries(filters).filter(
     ([k, v]) => k !== "status" && k !== "type" && v !== "" && v !== "all"
   ).length;
@@ -339,7 +350,7 @@ const CustomerDocumentReviews = () => {
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <Button size="sm" className="h-8 text-xs" onClick={() => navigate("/manage-customers/cdr/new")}>
+            <Button size="sm" className="h-8 text-xs" onClick={() => setNewCdrConfirmationOpen(true)}>
               <Plus className="h-3.5 w-3.5 mr-1.5" />Add New CDR
             </Button>
             <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => notify("Export Completed", "Current results exported.")}>
@@ -728,6 +739,28 @@ const CustomerDocumentReviews = () => {
           )}
         </SheetContent>
       </Sheet>
+
+      <AlertDialog open={newCdrConfirmationOpen} onOpenChange={setNewCdrConfirmationOpen}>
+        <AlertDialogContent className="max-w-md gap-0 p-0">
+          <AlertDialogHeader className="border-b px-5 py-4">
+            <AlertDialogTitle className="flex items-center gap-2 text-base">
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-muted text-foreground">
+                <FileText className="h-4 w-4" />
+              </span>
+              Start a new CDR?
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-xs">
+              You’ll be taken to the Add New CDR form to enter customer, review, routing, and document details.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter className="border-t bg-muted/30 px-5 py-3">
+            <AlertDialogCancel className="h-8 text-xs">Cancel</AlertDialogCancel>
+            <AlertDialogAction className="h-8 text-xs" onClick={() => navigate("/manage-customers/cdr/new")}>
+              <Plus className="mr-1.5 h-3.5 w-3.5" />Continue
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };
