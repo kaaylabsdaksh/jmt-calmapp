@@ -317,7 +317,7 @@ const ContractReviews = () => {
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <Button size="sm" className="h-8 text-xs" onClick={() => notify("Contract Review Created", "A new contract review was started.")}>
+            <Button size="sm" className="h-8 text-xs" onClick={() => navigate("/manage-customers/contract-reviews/new")}>
               <Plus className="h-3.5 w-3.5 mr-1.5" />Add New Contract Review
             </Button>
             <DropdownMenu>
