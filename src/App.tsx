@@ -34,6 +34,7 @@ import RetestNotices from "./pages/RetestNotices";
 import RetestFollowUp from "./pages/RetestFollowUp";
 import CustomerDocumentReviews from "./pages/CustomerDocumentReviews";
 import EditCdr from "./pages/EditCdr";
+import NewCdr from "./pages/NewCdr";
 import ContractReviews from "./pages/ContractReviews";
 import WhatsNew from "./pages/WhatsNew";
 import { Layout } from "./components/Layout";
@@ -85,6 +86,7 @@ const App = () => {
             <Route path="/manage-customers/retest-notices" element={<RetestNotices />} />
             <Route path="/manage-customers/retest-followup" element={<RetestFollowUp />} />
             <Route path="/manage-customers/cdr" element={<CustomerDocumentReviews />} />
+            <Route path="/manage-customers/cdr/new" element={<NewCdr />} />
             <Route path="/manage-customers/cdr/:cdrId" element={<EditCdr />} />
 
             <Route path="/manage-customers/contract-reviews" element={<ContractReviews />} />
