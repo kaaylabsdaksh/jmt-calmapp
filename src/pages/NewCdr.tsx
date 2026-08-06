@@ -113,8 +113,9 @@ export default function NewCdr() {
       toast({ title: "Complete required CDR details", description: "Priority, type, received details and at least one route are required.", variant: "destructive" });
       return;
     }
-    toast({ title: "CDR created", description: "The customer document review has been saved." });
-    navigate("/manage-customers/cdr");
+    const createdCdrId = "1030";
+    toast({ title: "CDR created", description: `CDR #${createdCdrId} has been saved and opened for editing.` });
+    navigate(`/manage-customers/cdr/${createdCdrId}`);
   };
 
   return (
