@@ -52,6 +52,7 @@ export default function NewContractReview() {
   const [documents, setDocuments] = useState<DocumentRow[]>([]);
   const [submitted, setSubmitted] = useState(false);
   const [confirmationOpen, setConfirmationOpen] = useState(false);
+  const [createAction, setCreateAction] = useState<"create" | "complete" | "contracts">("create");
 
   const field = "h-8 text-xs";
   const label = "text-[11px] font-medium text-foreground";
@@ -65,20 +66,23 @@ export default function NewContractReview() {
     setDocuments((current) => [...current, ...Array.from(files).map((file, index) => ({ id: `${Date.now()}-${index}`, name: file.name, type: uploadType, description: uploadDescription }))]);
     setUploadDescription("");
   };
-  const requestCreate = () => {
+  const requestCreate = (action: "create" | "complete" | "contracts" = "create") => {
     setSubmitted(true);
     if (invalid) {
       toast({ title: "Complete required review details", description: "Document type, submitted by, received method and contract received date are required.", variant: "destructive" });
       return;
     }
+    setCreateAction(action);
     setConfirmationOpen(true);
   };
   const confirmCreate = () => {
     const reviewId = "315";
     setConfirmationOpen(false);
-    toast({ title: "Contract review created", description: `Contract Review #${reviewId} is ready for editing.` });
+    const title = createAction === "complete" ? "Contract review completed" : createAction === "contracts" ? "Contract review added to contracts" : "Contract review created";
+    toast({ title, description: `Contract Review #${reviewId} is ready for editing.` });
     navigate(`/manage-customers/contract-reviews/${reviewId}`);
   };
+  const actionLabel = createAction === "complete" ? "Complete CR" : createAction === "contracts" ? "Add to Contracts" : "Create Contract Review";
   const sectionTitle = (Icon: typeof FileText, title: string) => <CardTitle className="flex items-center gap-2 text-sm"><Icon className="h-4 w-4 text-muted-foreground" />{title}</CardTitle>;
 
   return (
@@ -124,9 +128,9 @@ export default function NewContractReview() {
         <Card><CardHeader className="px-3 pb-1 pt-2">{sectionTitle(Upload, "Documents")}</CardHeader><CardContent className="space-y-2 px-3 pb-3"><div className="grid gap-2 lg:grid-cols-[220px_1fr_280px]"><Select value={uploadType} onValueChange={setUploadType}><SelectTrigger className={field}><SelectValue placeholder="Document type" /></SelectTrigger><SelectContent>{DOCUMENT_TYPES.map((item) => <SelectItem key={item} value={item}>{item}</SelectItem>)}</SelectContent></Select><Input value={uploadDescription} onChange={(e) => setUploadDescription(e.target.value)} placeholder="Description" className={field} /><label className="flex h-8 cursor-pointer items-center justify-center gap-2 rounded-md border border-dashed text-xs hover:bg-muted"><Upload className="h-3.5 w-3.5" />Select files<input type="file" multiple className="hidden" onChange={(e) => addFiles(e.target.files)} /></label></div><div className="overflow-hidden rounded-md border"><Table><TableHeader><TableRow className="bg-muted/60"><TableHead>Document</TableHead><TableHead>Type</TableHead><TableHead>Description</TableHead><TableHead className="w-10" /></TableRow></TableHeader><TableBody>{documents.length ? documents.map((doc) => <TableRow key={doc.id}><TableCell className="py-1.5 text-xs font-medium">{doc.name}</TableCell><TableCell className="py-1.5 text-xs">{doc.type}</TableCell><TableCell className="py-1.5 text-xs">{doc.description || "—"}</TableCell><TableCell><Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => setDocuments((current) => current.filter((item) => item.id !== doc.id))}><Trash2 className="h-3.5 w-3.5" /></Button></TableCell></TableRow>) : <TableRow><TableCell colSpan={4} className="h-14 text-center text-xs text-muted-foreground">No documents added</TableCell></TableRow>}</TableBody></Table></div></CardContent></Card>
       </main>
 
-      <footer className="sticky bottom-0 z-30 border-t bg-background/95 px-4 py-3 backdrop-blur"><div className="mx-auto flex max-w-[1450px] justify-end gap-2"><Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => navigate("/manage-customers/contract-reviews")}>Cancel</Button><Button size="sm" className="h-8 bg-success text-xs text-success-foreground hover:bg-success/90" onClick={requestCreate}><Save className="mr-1.5 h-3.5 w-3.5" />Create Contract Review</Button></div></footer>
+      <footer className="sticky bottom-0 z-30 border-t bg-background/95 px-4 py-3 backdrop-blur"><div className="mx-auto flex max-w-[1450px] flex-wrap items-center justify-between gap-2"><div className="flex flex-wrap gap-2"><Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => navigate("/manage-customers/contract-reviews")}>Cancel CR</Button><Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => requestCreate("complete")}><Check className="mr-1.5 h-3.5 w-3.5" />Complete CR</Button><Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => requestCreate("contracts")}><Plus className="mr-1.5 h-3.5 w-3.5" />Add to Contracts</Button></div><Button size="sm" className="h-8 bg-success text-xs text-success-foreground hover:bg-success/90" onClick={() => requestCreate("create")}><Save className="mr-1.5 h-3.5 w-3.5" />Create Contract Review</Button></div></footer>
 
-      <AlertDialog open={confirmationOpen} onOpenChange={setConfirmationOpen}><AlertDialogContent className="max-w-md gap-0 p-0"><AlertDialogHeader className="border-b px-5 py-4"><AlertDialogTitle className="flex items-center gap-2 text-base"><span className="flex h-8 w-8 items-center justify-center rounded-full bg-success/15 text-success"><FileText className="h-4 w-4" /></span>Create this contract review?</AlertDialogTitle><AlertDialogDescription className="text-xs">Confirm the submission details before creating the review.</AlertDialogDescription></AlertDialogHeader><div className="grid grid-cols-2 gap-3 px-5 py-4 text-xs"><div><p className="text-muted-foreground">Document Type</p><p className="mt-0.5 font-medium text-foreground">{documentType}</p></div><div><p className="text-muted-foreground">Submitted By</p><p className="mt-0.5 font-medium text-foreground">{submittedBy}</p></div><div><p className="text-muted-foreground">How Received</p><p className="mt-0.5 font-medium text-foreground">{howReceived}</p></div><div><p className="text-muted-foreground">Accounts</p><p className="mt-0.5 font-medium text-foreground">{accounts.length || "None"}</p></div></div><AlertDialogFooter className="border-t bg-muted/30 px-5 py-3"><AlertDialogCancel className="h-8 text-xs">Cancel</AlertDialogCancel><AlertDialogAction className="h-8 bg-success text-xs text-success-foreground hover:bg-success/90" onClick={confirmCreate}><Check className="mr-1.5 h-3.5 w-3.5" />Create Contract Review</AlertDialogAction></AlertDialogFooter></AlertDialogContent></AlertDialog>
+      <AlertDialog open={confirmationOpen} onOpenChange={setConfirmationOpen}><AlertDialogContent className="max-w-md gap-0 p-0"><AlertDialogHeader className="border-b px-5 py-4"><AlertDialogTitle className="flex items-center gap-2 text-base"><span className="flex h-8 w-8 items-center justify-center rounded-full bg-success/15 text-success"><FileText className="h-4 w-4" /></span>{actionLabel}?</AlertDialogTitle><AlertDialogDescription className="text-xs">Confirm the submission details before continuing.</AlertDialogDescription></AlertDialogHeader><div className="grid grid-cols-2 gap-3 px-5 py-4 text-xs"><div><p className="text-muted-foreground">Document Type</p><p className="mt-0.5 font-medium text-foreground">{documentType}</p></div><div><p className="text-muted-foreground">Submitted By</p><p className="mt-0.5 font-medium text-foreground">{submittedBy}</p></div><div><p className="text-muted-foreground">How Received</p><p className="mt-0.5 font-medium text-foreground">{howReceived}</p></div><div><p className="text-muted-foreground">Accounts</p><p className="mt-0.5 font-medium text-foreground">{accounts.length || "None"}</p></div></div><AlertDialogFooter className="border-t bg-muted/30 px-5 py-3"><AlertDialogCancel className="h-8 text-xs">Cancel</AlertDialogCancel><AlertDialogAction className="h-8 bg-success text-xs text-success-foreground hover:bg-success/90" onClick={confirmCreate}><Check className="mr-1.5 h-3.5 w-3.5" />{actionLabel}</AlertDialogAction></AlertDialogFooter></AlertDialogContent></AlertDialog>
     </div>
   );
 }
