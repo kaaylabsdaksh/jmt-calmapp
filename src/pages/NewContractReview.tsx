@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Check, FileText, Plus, Save, Trash2, Upload, Users } from "lucide-react";
+import { Check, ChevronDown, FileText, Plus, Save, Trash2, Upload, Users } from "lucide-react";
 import ModernTopNav from "@/components/modern/ModernTopNav";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ModernDatePicker } from "@/components/ui/modern-date-picker";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Textarea } from "@/components/ui/textarea";
@@ -37,7 +38,7 @@ export default function NewContractReview() {
   const [odessa, setOdessa] = useState(false);
   const [effectiveDate, setEffectiveDate] = useState<Date>();
   const [termDate, setTermDate] = useState<Date>();
-  const [purposes, setPurposes] = useState("");
+  const [purposes, setPurposes] = useState<string[]>([]);
   const [contractNumber, setContractNumber] = useState("");
   const [importantNotes, setImportantNotes] = useState("");
   const [insurance, setInsurance] = useState("");
@@ -120,7 +121,7 @@ export default function NewContractReview() {
         <Card>
           <CardHeader className="px-3 pb-1 pt-2"><CardTitle className="text-sm">Contract Terms & Requirements</CardTitle></CardHeader>
           <CardContent className="space-y-2 px-3 pb-3">
-            <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4"><div><Label className={label}>Effective Date</Label><ModernDatePicker value={effectiveDate} onChange={setEffectiveDate} size="sm" /></div><div><Label className={label}>Term Date</Label><ModernDatePicker value={termDate} onChange={setTermDate} size="sm" /></div><div><Label className={label}>Purpose(s)</Label><Select value={purposes} onValueChange={setPurposes}><SelectTrigger className={field}><SelectValue placeholder="Select purpose" /></SelectTrigger><SelectContent>{CONTRACT_PURPOSES.map((item) => <SelectItem key={item} value={item}>{item}</SelectItem>)}</SelectContent></Select></div><div><Label className={label}>Contract Number</Label><Input value={contractNumber} onChange={(e) => setContractNumber(e.target.value)} className={field} /></div></div>
+            <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4"><div><Label className={label}>Effective Date</Label><ModernDatePicker value={effectiveDate} onChange={setEffectiveDate} size="sm" /></div><div><Label className={label}>Term Date</Label><ModernDatePicker value={termDate} onChange={setTermDate} size="sm" /></div><div><Label className={label}>Purpose(s)</Label><Popover><PopoverTrigger asChild><Button variant="outline" className={`${field} w-full justify-between px-3 font-normal`}><span className="truncate">{purposes.length ? purposes.join(", ") : "Select purposes"}</span><ChevronDown className="ml-2 h-3.5 w-3.5 shrink-0 text-muted-foreground" /></Button></PopoverTrigger><PopoverContent className="w-[var(--radix-popover-trigger-width)] p-1" align="start"><div className="flex items-center justify-between border-b px-2 py-1.5"><span className="text-[11px] font-medium">Purpose(s)</span><div className="flex gap-2"><button type="button" className="text-[10px] text-foreground underline" onClick={() => setPurposes(CONTRACT_PURPOSES)}>Select all</button><button type="button" className="text-[10px] text-muted-foreground underline" onClick={() => setPurposes([])}>Clear</button></div></div>{CONTRACT_PURPOSES.map((item) => <label key={item} className="flex cursor-pointer items-center gap-2 rounded-sm px-2 py-1.5 text-xs hover:bg-muted"><Checkbox checked={purposes.includes(item)} onCheckedChange={(checked) => setPurposes((current) => checked === true ? [...current, item] : current.filter((value) => value !== item))} />{item}</label>)}</PopoverContent></Popover></div><div><Label className={label}>Contract Number</Label><Input value={contractNumber} onChange={(e) => setContractNumber(e.target.value)} className={field} /></div></div>
             <div className="grid gap-2 lg:grid-cols-3"><div><Label className={label}>Important Notes</Label><Textarea value={importantNotes} onChange={(e) => setImportantNotes(e.target.value)} rows={3} className="text-xs" /></div><div><Label className={label}>Insurance Requirements</Label><Textarea value={insurance} onChange={(e) => setInsurance(e.target.value)} rows={3} className="text-xs" /></div><div><Label className={label}>Safety Requirements</Label><Textarea value={safety} onChange={(e) => setSafety(e.target.value)} rows={3} className="text-xs" /></div></div>
             <div className="grid gap-2 border-t pt-2 sm:grid-cols-2 lg:grid-cols-4"><div><Label className={label}>Confidentiality Agreement</Label><Select value={confidentiality} onValueChange={setConfidentiality}><SelectTrigger className={field}><SelectValue placeholder="Select" /></SelectTrigger><SelectContent>{YES_NO.map((item) => <SelectItem key={item} value={item}>{item}</SelectItem>)}</SelectContent></Select></div><div><Label className={label}>Record Retention</Label><Select value={recordRetention} onValueChange={setRecordRetention}><SelectTrigger className={field}><SelectValue placeholder="Select" /></SelectTrigger><SelectContent>{YES_NO.map((item) => <SelectItem key={item} value={item}>{item}</SelectItem>)}</SelectContent></Select></div><div><Label className={label}>JM Executive</Label><Input value={executive} onChange={(e) => setExecutive(e.target.value)} className={field} /></div><div><Label className={label}>Executive Copy Received</Label><ModernDatePicker value={executiveDate} onChange={setExecutiveDate} size="sm" /></div><div><Label className={label}>Customer Copy Received</Label><ModernDatePicker value={customerDate} onChange={setCustomerDate} size="sm" /></div><label className="flex items-end gap-2 pb-1.5 text-xs"><Checkbox checked={requiresCdr} onCheckedChange={(v) => setRequiresCdr(v === true)} />Requires Customer Document Review</label></div>
           </CardContent>
