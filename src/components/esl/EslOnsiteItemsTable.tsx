@@ -122,6 +122,8 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
         </label>
       </div>
 
+      {(() => null)()}
+
       <div className="overflow-x-auto">
         <Table className="text-[11px]">
           <TableHeader>
