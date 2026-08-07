@@ -102,11 +102,11 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
             className="flex items-center gap-3"
           >
             <label htmlFor="viewBasic" className="flex items-center gap-1.5 cursor-pointer">
-              <RadioGroupItem value="basic" id="viewBasic" className="h-3.5 w-3.5" />
+              <RadioGroupItem value="basic" id="viewBasic" className="h-3.5 w-3.5 border-slate-900 text-slate-900" />
               <span className="text-[11px]">Basic View</span>
             </label>
             <label htmlFor="viewExtended" className="flex items-center gap-1.5 cursor-pointer">
-              <RadioGroupItem value="extended" id="viewExtended" className="h-3.5 w-3.5" />
+              <RadioGroupItem value="extended" id="viewExtended" className="h-3.5 w-3.5 border-slate-900 text-slate-900" />
               <span className="text-[11px]">Extended View</span>
             </label>
           </RadioGroup>
