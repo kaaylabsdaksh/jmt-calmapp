@@ -978,6 +978,9 @@ const FormVariationsDemo = () => {
     toShipping: false,
     multiParts: false,
     lostEquipment: false,
+    toCustomerPickup: false,
+    toLogistics: false,
+
     redTag: false,
     
     // Factory Information  
@@ -2227,6 +2230,15 @@ const FormVariationsDemo = () => {
                       <Checkbox id="lostEquipment" checked={formData.lostEquipment as boolean} onCheckedChange={(checked) => handleInputChange("lostEquipment", checked)} className="h-4 w-4" />
                       <Label htmlFor="lostEquipment" className="text-xs cursor-pointer">Lost Equipment</Label>
                     </div>
+                    <div className="flex items-center gap-2">
+                      <Checkbox id="toCustomerPickup" checked={formData.toCustomerPickup as boolean} onCheckedChange={(checked) => handleInputChange("toCustomerPickup", checked)} className="h-4 w-4" />
+                      <Label htmlFor="toCustomerPickup" className="text-xs cursor-pointer">To Customer Pickup</Label>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Checkbox id="toLogistics" checked={formData.toLogistics as boolean} onCheckedChange={(checked) => handleInputChange("toLogistics", checked)} className="h-4 w-4" />
+                      <Label htmlFor="toLogistics" className="text-xs cursor-pointer">To Logistics</Label>
+                    </div>
+
                   </div>
                 </div>
               </AccordionContent>
