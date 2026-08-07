@@ -3653,8 +3653,9 @@ const FormVariationsDemo = () => {
 
 
       {/* Identification + Product Specifications + Accessories - side by side */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+      <div className={`grid grid-cols-1 gap-3 ${isOnsite && dt === 'esl-blankets' ? 'lg:grid-cols-2' : 'lg:grid-cols-3'}`}>
         {/* Identification */}
+        {!(isOnsite && dt === 'esl-blankets') && (
         <div className="border border-border rounded-lg overflow-hidden bg-card flex flex-col">
           <div className="bg-muted/50 px-3 py-1.5 border-b">
             <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide">Identification</span>
@@ -3687,6 +3688,7 @@ const FormVariationsDemo = () => {
           </div>
 
         </div>
+        )}
 
         {/* Product Specifications */}
         <div className="border border-border rounded-lg overflow-hidden bg-card flex flex-col">
