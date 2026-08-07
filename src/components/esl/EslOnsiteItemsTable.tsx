@@ -126,6 +126,15 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
         <Table className="text-[11px]">
           <TableHeader>
             <TableRow className="bg-muted/30 h-7">
+              <TableHead className="w-8 px-1.5 py-1 h-7 text-center">
+                <Checkbox
+                  className="h-3 w-3"
+                  checked={allSelected}
+                  onCheckedChange={(c) =>
+                    setSelected(c ? Array.from(new Set([...selected, ...pageRows.map((r) => r.id)])) : [])
+                  }
+                />
+              </TableHead>
               <TableHead className="w-10 text-[10px] font-medium px-1.5 py-1 h-7" />
               <TableHead className="w-8 text-[10px] font-medium px-1.5 py-1 h-7">#</TableHead>
               {columns.map((c) => (
@@ -154,6 +163,7 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
             <TableRow className="bg-background h-6 hover:bg-background">
               <TableCell className="px-1 py-0.5" />
               <TableCell className="px-1 py-0.5" />
+              <TableCell className="px-1 py-0.5" />
               {columns.map((c) => (
                 <TableCell key={c} className="px-1 py-0.5">
                   {c === "zip" || c === "isNew" ? null : (
@@ -175,6 +185,9 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
                 key={r.id}
                 className={`h-6 ${r.cancelled ? "bg-slate-100 line-through text-muted-foreground" : ""}`}
               >
+                <TableCell className="px-1.5 py-0.5 text-center">
+                  <Checkbox className="h-3 w-3" checked={selected.includes(r.id)} onCheckedChange={() => toggleRow(r.id)} />
+                </TableCell>
                 <TableCell className="px-1.5 py-0.5">
                   <Button variant="link" size="sm" className="h-auto p-0 text-[11px] text-slate-900 underline gap-1">
                     <Pencil className="h-3 w-3" />Edit
@@ -210,7 +223,7 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
 
             {pageRows.length === 0 && (
               <TableRow>
-                <TableCell colSpan={columns.length + 5} className="text-center text-[11px] text-muted-foreground py-6">
+                <TableCell colSpan={columns.length + 6} className="text-center text-[11px] text-muted-foreground py-6">
                   No items match the current filters.
                 </TableCell>
               </TableRow>
