@@ -6,7 +6,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ChevronLeft, ChevronRight, Printer, Pencil, FileText, Filter, Ban } from "lucide-react";
+import { ChevronLeft, ChevronRight, Printer, Pencil, FileText, Filter, Ban, X } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -80,15 +80,25 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
     [view]
   );
 
+  const activeFilters = useMemo(
+    () =>
+      Object.entries(filters).filter(
+        ([k, v]) => v && (columns as readonly string[]).includes(k)
+      ),
+    [filters, columns]
+  );
+
   const filtered = useMemo(() => {
     return rows.filter((r) => {
       if (!showCancelled && r.cancelled) return false;
-      return Object.entries(filters).every(([k, v]) => {
-        if (!v) return true;
-        return String((r as any)[k] ?? "").toLowerCase().includes(v.toLowerCase());
+      return activeFilters.every(([k, v]) => {
+        const raw = (r as any)[k];
+        if (typeof raw === "boolean") return v === "yes" ? raw : !raw;
+        return String(raw ?? "").toLowerCase().includes(v.toLowerCase().trim());
       });
     });
-  }, [rows, filters, showCancelled]);
+  }, [rows, activeFilters, showCancelled]);
+
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
   const current = Math.min(page, totalPages);
@@ -155,11 +165,14 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
               <TableHead className={`w-14 text-[10px] font-medium px-1.5 py-1 h-7 ${stickyB} ${view === "extended" ? "bg-muted" : ""}`} />
               <TableHead className={`w-8 text-[10px] font-medium px-1.5 py-1 h-7 text-center ${stickyC} ${view === "extended" ? "bg-muted" : ""}`}>CI</TableHead>
               <TableHead className="w-8 text-[10px] font-medium px-1.5 py-1 h-7">#</TableHead>
+              
               {columns.map((c) => (
                 <TableHead key={c} className="text-[10px] font-medium px-1.5 py-1 h-7 whitespace-nowrap">
                   <span className="inline-flex items-center gap-1">
                     {LABELS[c]}
-                    <Filter className="h-2.5 w-2.5 text-muted-foreground/60" />
+                    <Filter
+                      className={`h-2.5 w-2.5 ${filters[c] ? "text-slate-900 fill-slate-900" : "text-muted-foreground/60"}`}
+                    />
                   </span>
                 </TableHead>
               ))}
@@ -175,16 +188,41 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
               <TableCell className="px-1 py-0.5" />
               {columns.map((c) => (
                 <TableCell key={c} className="px-1 py-0.5">
-                  {c === "zip" || c === "isNew" ? null : (
-                    <Input
+                  {c === "zip" || c === "isNew" ? (
+                    <select
                       value={filters[c] || ""}
                       onChange={(e) => { setFilters((f) => ({ ...f, [c]: e.target.value })); setPage(1); }}
-                      className="h-5 text-[10px] px-1.5 min-w-[52px]"
-                    />
+                      className="h-5 w-full min-w-[48px] rounded-md border border-input bg-background px-1 text-[10px]"
+                      aria-label={`Filter ${LABELS[c]}`}
+                    >
+                      <option value="">All</option>
+                      <option value="yes">Yes</option>
+                      <option value="no">No</option>
+                    </select>
+                  ) : (
+                    <div className="relative">
+                      <Input
+                        value={filters[c] || ""}
+                        onChange={(e) => { setFilters((f) => ({ ...f, [c]: e.target.value })); setPage(1); }}
+                        aria-label={`Filter ${LABELS[c]}`}
+                        className={`h-5 text-[10px] px-1.5 pr-4 min-w-[52px] ${filters[c] ? "border-slate-900" : ""}`}
+                      />
+                      {filters[c] && (
+                        <button
+                          type="button"
+                          aria-label={`Clear ${LABELS[c]} filter`}
+                          onClick={() => { setFilters((f) => ({ ...f, [c]: "" })); setPage(1); }}
+                          className="absolute right-0.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                        >
+                          <X className="h-2.5 w-2.5" />
+                        </button>
+                      )}
+                    </div>
                   )}
                 </TableCell>
               ))}
             </TableRow>
+
 
             {pageRows.map((r, idx) => {
               const rowBg = r.cancelled ? "bg-slate-100" : "bg-card";
