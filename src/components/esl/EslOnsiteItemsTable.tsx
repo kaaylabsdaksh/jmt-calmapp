@@ -6,7 +6,17 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ChevronLeft, ChevronRight, Printer, Pencil, FileText, Filter } from "lucide-react";
+import { ChevronLeft, ChevronRight, Printer, Pencil, FileText, Filter, Ban } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 export interface EslOnsiteItem {
   id: number;
@@ -92,6 +102,7 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
 
   const stickyA = view === "extended" ? "sticky left-0 z-20" : "";
   const stickyB = view === "extended" ? "sticky left-8 z-20" : "";
+  const stickyC = view === "extended" ? "sticky left-[88px] z-20" : "";
 
   return (
     <div className="border rounded-lg overflow-hidden bg-card">
