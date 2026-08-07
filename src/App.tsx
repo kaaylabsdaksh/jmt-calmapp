@@ -11,6 +11,7 @@ import EslCoverUps from "./pages/esl/EslCoverUps";
 import EslFootwear from "./pages/esl/EslFootwear";
 import EslGloves from "./pages/esl/EslGloves";
 import EslGrounds from "./pages/esl/EslGrounds";
+import EslOnsiteBlankets from "./pages/esl/onsite/EslOnsiteBlankets";
 import EslOnsiteBucketTrucks from "./pages/esl/onsite/EslOnsiteBucketTrucks";
 import EslOnsiteCoverUps from "./pages/esl/onsite/EslOnsiteCoverUps";
 import EslOnsiteGrounds from "./pages/esl/onsite/EslOnsiteGrounds";
@@ -72,6 +73,7 @@ const App = () => {
             <Route path="/esl/footwear" element={<EslFootwear />} />
             <Route path="/esl/gloves" element={<EslGloves />} />
             <Route path="/esl/grounds" element={<EslGrounds />} />
+            <Route path="/esl/onsite/blankets" element={<EslOnsiteBlankets />} />
             <Route path="/esl/onsite/bucket-trucks" element={<EslOnsiteBucketTrucks />} />
             <Route path="/esl/onsite/coverups" element={<EslOnsiteCoverUps />} />
             <Route path="/esl/onsite/grounds" element={<EslOnsiteGrounds />} />

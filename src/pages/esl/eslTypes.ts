@@ -5,6 +5,7 @@ export type EslTypeSlug =
   | "footwear"
   | "gloves"
   | "grounds"
+  | "onsite-blankets"
   | "onsite-bucket-trucks"
   | "onsite-coverups"
   | "onsite-grounds"
@@ -56,6 +57,13 @@ export const ESL_TYPES: EslTypeConfig[] = [
     dropdownValue: "esl-grounds",
     route: "/esl/grounds",
     description: "Grounds resistance testing workflow",
+  },
+  {
+    slug: "onsite-blankets",
+    label: "ESL OnSite - Blankets",
+    dropdownValue: "esl-onsite-blankets",
+    route: "/esl/onsite/blankets",
+    description: "Onsite blanket inspection workflow",
   },
   {
     slug: "onsite-bucket-trucks",
