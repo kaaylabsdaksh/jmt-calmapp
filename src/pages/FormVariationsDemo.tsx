@@ -2476,77 +2476,7 @@ const FormVariationsDemo = () => {
                 Comments
               </AccordionTrigger>
               <AccordionContent className="pb-3">
-              <Card className="border-0 shadow-sm">
-                <CardContent className="p-3 space-y-2">
-                  <div className="space-y-2">
-                    <div className="space-y-1">
-                      <Label className="text-xs font-medium">Type</Label>
-                      <Select>
-                        <SelectTrigger className="h-7 text-xs">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent className="bg-popover border z-50">
-                          <SelectItem value="general">General</SelectItem>
-                          <SelectItem value="technical">Technical</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    <Textarea
-                      placeholder="Enter comment..."
-                      className="min-h-[50px] text-xs"
-                    />
-
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-1.5">
-                        <Checkbox id="includeInCreateNewGroupComments" className="h-3 w-3" />
-                        <Label htmlFor="includeInCreateNewGroupComments" className="text-xs cursor-pointer">Include in Create New Group</Label>
-                      </div>
-                      <Button className="bg-primary hover:bg-primary/90 text-primary-foreground h-7 text-xs px-3">Add</Button>
-                    </div>
-                  </div>
-
-                  {/* Comments Table */}
-                  <div className="border rounded-lg overflow-hidden">
-                    <div className="bg-muted/50 grid grid-cols-4 p-1.5 text-xs font-medium">
-                      <div>Type</div>
-                      <div>User</div>
-                      <div>Date Entered</div>
-                      <div>Comment</div>
-                    </div>
-                    <div className="divide-y">
-                      <div className="grid grid-cols-4 p-1.5 text-xs">
-                        <div>Other</div>
-                        <div>Admin User</div>
-                        <div>11/20/2025 05:35 AM</div>
-                        <div>Status set to ASSIGNED TO TECH</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between text-xs text-muted-foreground">
-                    <div className="flex items-center gap-1.5">
-                      <span>Page 1 of 1 (1 items)</span>
-                      <Button variant="outline" size="sm" disabled className="h-6 text-xs">&lt;</Button>
-                      <span className="px-1.5 py-0.5 bg-muted rounded text-xs">[1]</span>
-                      <Button variant="outline" size="sm" disabled className="h-6 text-xs">&gt;</Button>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <span>Page size:</span>
-                      <Select defaultValue="10">
-                        <SelectTrigger className="h-6 w-14 text-xs">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent className="bg-popover border z-50">
-                          <SelectItem value="10">10</SelectItem>
-                          <SelectItem value="25">25</SelectItem>
-                          <SelectItem value="50">50</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+                <WorkOrderItemComments />
               </AccordionContent>
             </AccordionItem>),
             };
