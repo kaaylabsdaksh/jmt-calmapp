@@ -927,6 +927,12 @@ const FormVariationsDemo = () => {
     tfClerk: "",
     tfFollowup: "",
     assignedTo: "",
+    scheduledDate: "",
+    otherStatusNote: "",
+    specialPricingCost: "0.00",
+    ndtCost: "0.00",
+    hydoCost: "0.00",
+    specialPricingComments: "",
     priority: "normal",
     location: "baton-rouge",
     division: "lab",
@@ -1159,6 +1165,8 @@ const FormVariationsDemo = () => {
   const isESLType = formData.type && (formData.type.startsWith('esl-') || formData.type.startsWith('itl-'));
   // ESL OnSite items only have General + Details tabs
   const isEslOnsiteType = !!formData.type && (formData.type.startsWith('esl-onsite-') || formData.type.startsWith('itl-onsite-'));
+  // Bucket Trucks follows the legacy field set exactly
+  const isBucketTrucks = formData.type === 'esl-onsite-bucket-trucks';
 
   // ESL tabs always enabled (validation gate removed)
   const isEslGeneralComplete = true;
@@ -1761,7 +1769,7 @@ const FormVariationsDemo = () => {
           </div>
           {/* Sub-accordions for ESL General Section */}
           <Accordion type="multiple" value={eslGeneralOpen} onValueChange={setEslGeneralOpen} className="space-y-0">
-          {eslGeneralOrder.filter(id => !eslGeneralHidden.includes(id)).map((sectionId) => {
+          {eslGeneralOrder.filter(id => !eslGeneralHidden.includes(id)).filter(id => !(isBucketTrucks && ['misc-info', 'accessories', 'transit'].includes(id))).map((sectionId) => {
             const items: Record<string, React.ReactNode> = {
             'general-info': (<AccordionItem value="general-info" className="border-b border-border">
               <AccordionTrigger className="hover:no-underline py-2 text-xs font-semibold">
@@ -1830,6 +1838,59 @@ const FormVariationsDemo = () => {
                       />
                     </div>
                   </div>
+
+                  {isBucketTrucks && (
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-1.5">
+                      <div className="space-y-0.5">
+                        <Label htmlFor="btRotationSubStatus" className="text-[11px] font-medium">Rotation Sub Status</Label>
+                        <Select value={formData.rotationSubStatus} onValueChange={(value) => handleInputChange("rotationSubStatus", value)}>
+                          <SelectTrigger id="btRotationSubStatus" className="h-6 text-[11px]">
+                            <SelectValue placeholder="Select" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-popover border z-50 max-h-48 overflow-y-auto">
+                            <SelectItem value="awaiting-rotation">Awaiting Rotation</SelectItem>
+                            <SelectItem value="rotation-in-progress">Rotation In Progress</SelectItem>
+                            <SelectItem value="rotation-complete">Rotation Complete</SelectItem>
+                            <SelectItem value="rotation-on-hold">Rotation On Hold</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      <div className="space-y-0.5">
+                        <Label className="text-[11px] font-medium">Scheduled Date</Label>
+                        <ModernDatePicker
+                          size="xs"
+                          value={formData.scheduledDate || undefined}
+                          onChange={(date) => handleInputChange("scheduledDate", date ? date.toISOString().split('T')[0] : "")}
+                        />
+                      </div>
+
+                      <div className="space-y-0.5">
+                        <Label htmlFor="btOther" className="text-[11px] font-medium">Other</Label>
+                        <Input
+                          id="btOther"
+                          value={formData.otherStatusNote || ""}
+                          onChange={(e) => handleInputChange("otherStatusNote", e.target.value)}
+                          className="h-6 text-[11px]"
+                        />
+                      </div>
+
+                      <div className="space-y-0.5">
+                        <Label htmlFor="btAssignedTo" className="text-[11px] font-medium">Assigned To</Label>
+                        <Select value={formData.assignedTo} onValueChange={(value) => handleInputChange("assignedTo", value)}>
+                          <SelectTrigger id="btAssignedTo" className="h-6 text-[11px]">
+                            <SelectValue placeholder="Select assignee" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-popover border z-50 max-h-48 overflow-y-auto">
+                            {['John Doe', 'Jane Smith', 'Bob Johnson', 'Alice Williams', 'Charlie Brown', 'Diana Prince'].map((n) => (
+                              <SelectItem key={n} value={n}>{n}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+                  )}
+
 
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-1.5">
 
@@ -2061,14 +2122,25 @@ const FormVariationsDemo = () => {
                       </div>
 
                       <div className="pt-2 border-t border-dashed border-border space-y-2">
-                        <div className="space-y-0.5">
-                          <Label className="text-[11px] font-medium">Inv #</Label>
-                          <Input
-                            value={formData.invNumber || ""}
-                            readOnly
-                            className="h-6 text-[11px] bg-muted/50 font-mono"
-                          />
+                        <div className="grid grid-cols-2 gap-2">
+                          <div className="space-y-0.5">
+                            <Label className="text-[11px] font-medium">Inv #</Label>
+                            <Input
+                              value={formData.invNumber || ""}
+                              readOnly
+                              className="h-6 text-[11px] bg-muted/50 font-mono"
+                            />
+                          </div>
+                          <div className="space-y-0.5">
+                            <Label className="text-[11px] font-medium">DT #</Label>
+                            <Input
+                              value={formData.dtNumber || ""}
+                              readOnly
+                              className="h-6 text-[11px] bg-muted/50 font-mono"
+                            />
+                          </div>
                         </div>
+
 
                         {formData.departureType === "shipped" && (
                           <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
@@ -2282,8 +2354,16 @@ const FormVariationsDemo = () => {
                       { key: 'testing', label: 'Testing', qty: 0, costField: 'eslTestCost', editable: false },
                       { key: 'expedite', label: 'Expedite', qty: 0, costField: 'expediteCost', editable: false, hideQty: true },
                       { key: 'emergency', label: 'Emergency', qty: 0, costField: 'emergencyCost', editable: false, hideQty: true },
-                      { key: 'replacement', label: 'Replacement', qty: 0, costField: 'repairCostTotal', editable: true },
-                      { key: 'newSales', label: 'New Sales', qty: 0, costField: 'partsCostTotal', editable: true, defaultCost: '100.00' },
+                      ...(isBucketTrucks
+                        ? [
+                            { key: 'ndt', label: 'NDT', qty: 0, costField: 'ndtCost', editable: false },
+                            { key: 'hydo', label: 'HydO', qty: 0, costField: 'hydoCost', editable: false },
+                            { key: 'specialPricing', label: 'Special Pricing', qty: 0, costField: 'specialPricingCost', editable: true },
+                          ]
+                        : [
+                            { key: 'replacement', label: 'Replacement', qty: 0, costField: 'repairCostTotal', editable: true },
+                            { key: 'newSales', label: 'New Sales', qty: 0, costField: 'partsCostTotal', editable: true, defaultCost: '100.00' },
+                          ]),
                     ];
                     const parse = (v: string) => parseFloat(v || '0') || 0;
                     const totalQty = rows.reduce((s, r) => s + (r.hideQty ? 0 : r.qty), 0);
@@ -2330,10 +2410,36 @@ const FormVariationsDemo = () => {
                               ${totalCost.toFixed(2)}
                             </div>
                           </div>
+                          {isBucketTrucks && (
+                            <>
+                              <div className="grid grid-cols-[1fr_70px_110px] items-center bg-muted/40 px-3 py-1 text-[10px] font-medium text-muted-foreground">
+                                <div></div>
+                                <div className="text-center">Hrs</div>
+                                <div className="text-right">Cost</div>
+                              </div>
+                              <div className="grid grid-cols-[1fr_70px_110px] items-center px-3 py-1">
+                                <Label className="text-[11px] font-medium text-foreground">Repairs</Label>
+                                <div className="text-center text-[11px] text-muted-foreground tabular-nums">0.00</div>
+                                <div className="text-right text-[11px] text-muted-foreground tabular-nums pr-1.5">$0.00</div>
+                              </div>
+                            </>
+                          )}
                         </div>
                       </div>
                     );
                   })()}
+                  {isBucketTrucks && (
+                    <div className="mt-2 max-w-md space-y-0.5">
+                      <Label htmlFor="specialPricingComments" className="text-[11px] font-medium">Special Pricing Comments</Label>
+                      <Textarea
+                        id="specialPricingComments"
+                        value={formData.specialPricingComments}
+                        onChange={(e) => handleInputChange("specialPricingComments", e.target.value)}
+                        className="min-h-[60px] text-[11px]"
+                      />
+                    </div>
+                  )}
+
                 </CardContent>
               </Card>
               </AccordionContent>
