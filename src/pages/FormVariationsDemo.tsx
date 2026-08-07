@@ -1763,7 +1763,7 @@ const FormVariationsDemo = () => {
           </div>
           {/* Sub-accordions for ESL General Section */}
           <Accordion type="multiple" value={eslGeneralOpen} onValueChange={setEslGeneralOpen} className="space-y-0">
-          {eslGeneralOrder.filter(id => !eslGeneralHidden.includes(id)).map((sectionId) => {
+          {eslGeneralOrder.filter(id => !eslGeneralHidden.includes(id)).filter(id => !(isBucketTrucks && ['misc-info', 'accessories', 'transit'].includes(id))).map((sectionId) => {
             const items: Record<string, React.ReactNode> = {
             'general-info': (<AccordionItem value="general-info" className="border-b border-border">
               <AccordionTrigger className="hover:no-underline py-2 text-xs font-semibold">
