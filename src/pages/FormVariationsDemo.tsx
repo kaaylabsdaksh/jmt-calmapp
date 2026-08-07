@@ -9665,7 +9665,7 @@ const FormVariationsDemo = () => {
                 <Label htmlFor="type" className="text-[10px] font-medium">Type *</Label>
                 <Select value={formData.type} onValueChange={(value) => {
                   handleInputChange("type", value);
-                  const m: Record<string, string> = { "esl-blankets":"/esl/blankets","esl-coverups":"/esl/coverups","esl-footwear":"/esl/footwear","esl-gloves":"/esl/gloves","esl-grounds":"/esl/grounds" };
+                  const m: Record<string, string> = { "esl-blankets":"/esl/blankets","esl-coverups":"/esl/coverups","esl-footwear":"/esl/footwear","esl-gloves":"/esl/gloves","esl-grounds":"/esl/grounds","esl-onsite-bucket-trucks":"/esl/onsite/bucket-trucks","esl-onsite-coverups":"/esl/onsite/coverups","esl-onsite-grounds":"/esl/onsite/grounds","esl-onsite-hotsticks":"/esl/onsite/hotsticks","esl-onsite-jumpers":"/esl/onsite/jumpers","esl-onsite-line-hoses":"/esl/onsite/line-hoses" };
                   if (m[value]) navigate(m[value]);
                 }}>
                   <SelectTrigger className="h-6 text-[11px] px-2">
@@ -10026,7 +10026,7 @@ const FormVariationsDemo = () => {
             <Label htmlFor="bento-type" className="text-sm font-medium">Type *</Label>
             <Select value={formData.type} onValueChange={(value) => {
               handleInputChange("type", value);
-              const m: Record<string, string> = { "esl-blankets":"/esl/blankets","esl-coverups":"/esl/coverups","esl-footwear":"/esl/footwear","esl-gloves":"/esl/gloves","esl-grounds":"/esl/grounds" };
+              const m: Record<string, string> = { "esl-blankets":"/esl/blankets","esl-coverups":"/esl/coverups","esl-footwear":"/esl/footwear","esl-gloves":"/esl/gloves","esl-grounds":"/esl/grounds","esl-onsite-bucket-trucks":"/esl/onsite/bucket-trucks","esl-onsite-coverups":"/esl/onsite/coverups","esl-onsite-grounds":"/esl/onsite/grounds","esl-onsite-hotsticks":"/esl/onsite/hotsticks","esl-onsite-jumpers":"/esl/onsite/jumpers","esl-onsite-line-hoses":"/esl/onsite/line-hoses" };
               if (m[value]) navigate(m[value]);
             }}>
               <SelectTrigger className="h-10">
