@@ -1153,6 +1153,8 @@ const FormVariationsDemo = () => {
 
   // Dynamic tabs based on type selection
   const isESLType = formData.type && (formData.type.startsWith('esl-') || formData.type.startsWith('itl-'));
+  // ESL OnSite items only have General + Details tabs
+  const isEslOnsiteType = !!formData.type && (formData.type.startsWith('esl-onsite-') || formData.type.startsWith('itl-onsite-'));
 
   // ESL tabs always enabled (validation gate removed)
   const isEslGeneralComplete = true;
