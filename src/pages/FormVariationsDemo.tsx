@@ -9665,7 +9665,7 @@ const FormVariationsDemo = () => {
                 <Label htmlFor="type" className="text-[10px] font-medium">Type *</Label>
                 <Select value={formData.type} onValueChange={(value) => {
                   handleInputChange("type", value);
-                  const m: Record<string, string> = { "esl-blankets":"/esl/blankets","esl-coverups":"/esl/coverups","esl-footwear":"/esl/footwear","esl-gloves":"/esl/gloves","esl-grounds":"/esl/grounds" };
+                  const m: Record<string, string> = { "esl-blankets":"/esl/blankets","esl-coverups":"/esl/coverups","esl-footwear":"/esl/footwear","esl-gloves":"/esl/gloves","esl-grounds":"/esl/grounds","esl-onsite-bucket-trucks":"/esl/onsite/bucket-trucks","esl-onsite-coverups":"/esl/onsite/coverups","esl-onsite-grounds":"/esl/onsite/grounds","esl-onsite-hotsticks":"/esl/onsite/hotsticks","esl-onsite-jumpers":"/esl/onsite/jumpers","esl-onsite-line-hoses":"/esl/onsite/line-hoses" };
                   if (m[value]) navigate(m[value]);
                 }}>
                   <SelectTrigger className="h-6 text-[11px] px-2">
@@ -9686,6 +9686,12 @@ const FormVariationsDemo = () => {
                     <SelectItem value="esl-roll-blankets">ESL - Roll Blankets</SelectItem>
                     <SelectItem value="esl-sleeves">ESL - Sleeves</SelectItem>
                     <SelectItem value="itl-gauges">ITL - Gauges</SelectItem>
+                    <SelectItem value="esl-onsite-bucket-trucks">ESL OnSite - Bucket Trucks</SelectItem>
+                    <SelectItem value="esl-onsite-coverups">ESL OnSite - CoverUps</SelectItem>
+                    <SelectItem value="esl-onsite-grounds">ESL OnSite - Grounds</SelectItem>
+                    <SelectItem value="esl-onsite-hotsticks">ESL OnSite - Hotsticks</SelectItem>
+                    <SelectItem value="esl-onsite-jumpers">ESL OnSite - Jumpers</SelectItem>
+                    <SelectItem value="esl-onsite-line-hoses">ESL OnSite - Line Hoses</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -10026,7 +10032,7 @@ const FormVariationsDemo = () => {
             <Label htmlFor="bento-type" className="text-sm font-medium">Type *</Label>
             <Select value={formData.type} onValueChange={(value) => {
               handleInputChange("type", value);
-              const m: Record<string, string> = { "esl-blankets":"/esl/blankets","esl-coverups":"/esl/coverups","esl-footwear":"/esl/footwear","esl-gloves":"/esl/gloves","esl-grounds":"/esl/grounds" };
+              const m: Record<string, string> = { "esl-blankets":"/esl/blankets","esl-coverups":"/esl/coverups","esl-footwear":"/esl/footwear","esl-gloves":"/esl/gloves","esl-grounds":"/esl/grounds","esl-onsite-bucket-trucks":"/esl/onsite/bucket-trucks","esl-onsite-coverups":"/esl/onsite/coverups","esl-onsite-grounds":"/esl/onsite/grounds","esl-onsite-hotsticks":"/esl/onsite/hotsticks","esl-onsite-jumpers":"/esl/onsite/jumpers","esl-onsite-line-hoses":"/esl/onsite/line-hoses" };
               if (m[value]) navigate(m[value]);
             }}>
               <SelectTrigger className="h-10">
@@ -10047,6 +10053,12 @@ const FormVariationsDemo = () => {
                 <SelectItem value="esl-roll-blankets">ESL - Roll Blankets</SelectItem>
                 <SelectItem value="esl-sleeves">ESL - Sleeves</SelectItem>
                 <SelectItem value="itl-gauges">ITL - Gauges</SelectItem>
+                <SelectItem value="esl-onsite-bucket-trucks">ESL OnSite - Bucket Trucks</SelectItem>
+                <SelectItem value="esl-onsite-coverups">ESL OnSite - CoverUps</SelectItem>
+                <SelectItem value="esl-onsite-grounds">ESL OnSite - Grounds</SelectItem>
+                <SelectItem value="esl-onsite-hotsticks">ESL OnSite - Hotsticks</SelectItem>
+                <SelectItem value="esl-onsite-jumpers">ESL OnSite - Jumpers</SelectItem>
+                <SelectItem value="esl-onsite-line-hoses">ESL OnSite - Line Hoses</SelectItem>
               </SelectContent>
             </Select>
           </div>
