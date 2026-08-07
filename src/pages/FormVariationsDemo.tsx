@@ -2122,14 +2122,25 @@ const FormVariationsDemo = () => {
                       </div>
 
                       <div className="pt-2 border-t border-dashed border-border space-y-2">
-                        <div className="space-y-0.5">
-                          <Label className="text-[11px] font-medium">Inv #</Label>
-                          <Input
-                            value={formData.invNumber || ""}
-                            readOnly
-                            className="h-6 text-[11px] bg-muted/50 font-mono"
-                          />
+                        <div className="grid grid-cols-2 gap-2">
+                          <div className="space-y-0.5">
+                            <Label className="text-[11px] font-medium">Inv #</Label>
+                            <Input
+                              value={formData.invNumber || ""}
+                              readOnly
+                              className="h-6 text-[11px] bg-muted/50 font-mono"
+                            />
+                          </div>
+                          <div className="space-y-0.5">
+                            <Label className="text-[11px] font-medium">DT #</Label>
+                            <Input
+                              value={formData.dtNumber || ""}
+                              readOnly
+                              className="h-6 text-[11px] bg-muted/50 font-mono"
+                            />
+                          </div>
                         </div>
+
 
                         {formData.departureType === "shipped" && (
                           <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
