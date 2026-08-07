@@ -1153,6 +1153,8 @@ const FormVariationsDemo = () => {
 
   // Dynamic tabs based on type selection
   const isESLType = formData.type && (formData.type.startsWith('esl-') || formData.type.startsWith('itl-'));
+  // ESL OnSite items only have General + Details tabs
+  const isEslOnsiteType = !!formData.type && (formData.type.startsWith('esl-onsite-') || formData.type.startsWith('itl-onsite-'));
 
   // ESL tabs always enabled (validation gate removed)
   const isEslGeneralComplete = true;
@@ -1184,8 +1186,10 @@ const FormVariationsDemo = () => {
     ? [
         { value: 'general', label: 'General', icon: Info },
         { value: 'details', label: 'Details', icon: FileText },
-        { value: 'testing', label: 'Testing', icon: Settings },
-        { value: 'work-status', label: 'Work Status', icon: Clock }
+        ...(isEslOnsiteType ? [] : [
+          { value: 'testing', label: 'Testing', icon: Settings },
+          { value: 'work-status', label: 'Work Status', icon: Clock },
+        ]),
       ]
     : [
         { value: 'general', label: 'General', icon: Info },
@@ -1200,6 +1204,13 @@ const FormVariationsDemo = () => {
   const secondRowTabs: { value: string; label: string; icon: React.ComponentType<{ className?: string }> }[] = [];
   
   const [activeTab, setActiveTab] = useState('general');
+
+  // Onsite ESL has no Testing/Work Status tabs — fall back to General
+  useEffect(() => {
+    if (isEslOnsiteType && (activeEslTab === 'testing' || activeEslTab === 'work-status')) {
+      setActiveEslTab('general');
+    }
+  }, [isEslOnsiteType, activeEslTab]);
 
   // Keyboard navigation for tabs
   const handleTabKeyDown = (e: React.KeyboardEvent) => {
@@ -1301,7 +1312,7 @@ const FormVariationsDemo = () => {
 
     // Define explicit tab order for non-ESL types
     const tabOrder = isESLType 
-      ? ['general', 'details', 'testing', 'work-status']
+      ? (isEslOnsiteType ? ['general', 'details'] : ['general', 'details', 'testing', 'work-status'])
       : ['general', 'cost', 'factory-config', 'transit', 'parts', 'options', 'activity-log'];
 
     const tabLabels: Record<string, string> = isESLType
@@ -9743,14 +9754,18 @@ const FormVariationsDemo = () => {
                     <FileText className="h-4 w-4" />
                     Details
                   </TabsTrigger>
-                  <TabsTrigger value="testing" disabled={!isEslGeneralComplete} className="flex-1 gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
-                    <Settings className="h-4 w-4" />
-                    Testing
-                  </TabsTrigger>
-                  <TabsTrigger value="work-status" disabled={!isEslGeneralComplete} className="flex-1 gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
-                    <Clock className="h-4 w-4" />
-                    Work Status
-                  </TabsTrigger>
+                  {!isEslOnsiteType && (
+                    <>
+                      <TabsTrigger value="testing" disabled={!isEslGeneralComplete} className="flex-1 gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                        <Settings className="h-4 w-4" />
+                        Testing
+                      </TabsTrigger>
+                      <TabsTrigger value="work-status" disabled={!isEslGeneralComplete} className="flex-1 gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                        <Clock className="h-4 w-4" />
+                        Work Status
+                      </TabsTrigger>
+                    </>
+                  )}
                 </TabsList>
 
                 <TabsContent value="general" className="mt-0 space-y-6">
@@ -9761,13 +9776,17 @@ const FormVariationsDemo = () => {
                   {renderDetailsSection()}
                 </TabsContent>
 
-                <TabsContent value="testing" className="mt-0">
-                  {renderTestingSection()}
-                </TabsContent>
+                {!isEslOnsiteType && (
+                  <>
+                    <TabsContent value="testing" className="mt-0">
+                      {renderTestingSection()}
+                    </TabsContent>
 
-                <TabsContent value="work-status" className="mt-0">
-                  {renderWorkStatusSection()}
-                </TabsContent>
+                    <TabsContent value="work-status" className="mt-0">
+                      {renderWorkStatusSection()}
+                    </TabsContent>
+                  </>
+                )}
               </Tabs>
             ) : (
               // SINGLE Type Accordion (expanded sections)
