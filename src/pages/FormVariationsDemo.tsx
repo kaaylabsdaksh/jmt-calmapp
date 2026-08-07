@@ -1159,6 +1159,8 @@ const FormVariationsDemo = () => {
   const isESLType = formData.type && (formData.type.startsWith('esl-') || formData.type.startsWith('itl-'));
   // ESL OnSite items only have General + Details tabs
   const isEslOnsiteType = !!formData.type && (formData.type.startsWith('esl-onsite-') || formData.type.startsWith('itl-onsite-'));
+  // Bucket Trucks follows the legacy field set exactly
+  const isBucketTrucks = formData.type === 'esl-onsite-bucket-trucks';
 
   // ESL tabs always enabled (validation gate removed)
   const isEslGeneralComplete = true;
