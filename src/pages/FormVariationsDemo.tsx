@@ -13209,14 +13209,6 @@ const FormVariationsDemo = () => {
                 </div>
                 <Button
                   variant="outline"
-                  onClick={handleCancel}
-                  className="border-border bg-background text-foreground hover:bg-muted font-medium h-9 px-4"
-                >
-                  <X className="h-4 w-4 mr-2" />
-                  Cancel WO
-                </Button>
-                <Button
-                  variant="outline"
                   className="border-border bg-background text-foreground hover:bg-muted font-medium h-9 px-4"
                 >
                   <Printer className="h-4 w-4 mr-2" />
@@ -13228,6 +13220,14 @@ const FormVariationsDemo = () => {
                 >
                   <FileText className="h-4 w-4 mr-2" />
                   Sold Report
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={handleCancel}
+                  className="border-border bg-background text-foreground hover:bg-muted font-medium h-9 px-4"
+                >
+                  <X className="h-4 w-4 mr-2" />
+                  Cancel WO
                 </Button>
                 <Button
                   onClick={handleSave}
