@@ -4764,6 +4764,8 @@ const FormVariationsDemo = () => {
           </div>
         </div>
       </div>
+      )}
+
 
       {/* Print Label Dialog - Quantity only */}
       <Dialog open={printLabelDialogOpen} onOpenChange={setPrintLabelDialogOpen}>
