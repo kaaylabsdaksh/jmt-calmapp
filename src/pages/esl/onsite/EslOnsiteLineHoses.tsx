@@ -1,5 +1,3 @@
-import EslOnsiteItemForm from "./EslOnsiteItemForm";
-const EslOnsiteLineHoses = () => (
-  <EslOnsiteItemForm itemLabel="Line Hoses" dropdownValue="esl-onsite-line-hoses" />
-);
+import FormVariationsDemo from "../../FormVariationsDemo";
+const EslOnsiteLineHoses = () => <FormVariationsDemo />;
 export default EslOnsiteLineHoses;

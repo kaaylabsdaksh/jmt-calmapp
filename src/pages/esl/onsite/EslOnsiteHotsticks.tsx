@@ -1,5 +1,3 @@
-import EslOnsiteItemForm from "./EslOnsiteItemForm";
-const EslOnsiteHotsticks = () => (
-  <EslOnsiteItemForm itemLabel="Hotsticks" dropdownValue="esl-onsite-hotsticks" />
-);
+import FormVariationsDemo from "../../FormVariationsDemo";
+const EslOnsiteHotsticks = () => <FormVariationsDemo />;
 export default EslOnsiteHotsticks;

@@ -1,5 +1,3 @@
-import EslOnsiteItemForm from "./EslOnsiteItemForm";
-const EslOnsiteCoverUps = () => (
-  <EslOnsiteItemForm itemLabel="CoverUps" dropdownValue="esl-onsite-coverups" />
-);
+import FormVariationsDemo from "../../FormVariationsDemo";
+const EslOnsiteCoverUps = () => <FormVariationsDemo />;
 export default EslOnsiteCoverUps;
