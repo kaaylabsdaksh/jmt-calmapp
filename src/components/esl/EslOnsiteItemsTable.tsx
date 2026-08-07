@@ -5,8 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ChevronLeft, ChevronRight, Printer, Pencil, FileText, Filter, Ban, X } from "lucide-react";
+import { Printer, Pencil, FileText, Filter, Ban, X } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -71,8 +70,6 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
   const [filters, setFilters] = useState<Record<string, string>>({});
   const [selected, setSelected] = useState<number[]>([]);
   const [rows, setRows] = useState<EslOnsiteItem[]>(items);
-  const [pageSize, setPageSize] = useState(10);
-  const [page, setPage] = useState(1);
   const [cancelId, setCancelId] = useState<number | null>(null);
 
   const columns = useMemo(
@@ -100,10 +97,7 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
   }, [rows, activeFilters, showCancelled]);
 
 
-  const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
-  const current = Math.min(page, totalPages);
-  const pageRows = filtered.slice((current - 1) * pageSize, current * pageSize);
-  const allSelected = pageRows.length > 0 && pageRows.every((r) => selected.includes(r.id));
+  const allSelected = filtered.length > 0 && filtered.every((r) => selected.includes(r.id));
 
   const toggleRow = (id: number) =>
     setSelected((s) => (s.includes(id) ? s.filter((x) => x !== id) : [...s, id]));
@@ -158,7 +152,7 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
                   className="h-3 w-3"
                   checked={allSelected}
                   onCheckedChange={(c) =>
-                    setSelected(c ? Array.from(new Set([...selected, ...pageRows.map((r) => r.id)])) : [])
+                    setSelected(c ? Array.from(new Set([...selected, ...filtered.map((r) => r.id)])) : [])
                   }
                 />
               </TableHead>
@@ -191,7 +185,7 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
                   {c === "zip" || c === "isNew" ? (
                     <select
                       value={filters[c] || ""}
-                      onChange={(e) => { setFilters((f) => ({ ...f, [c]: e.target.value })); setPage(1); }}
+                       onChange={(e) => setFilters((f) => ({ ...f, [c]: e.target.value }))}
                       className="h-5 w-full min-w-[48px] rounded-md border border-input bg-background px-1 text-[10px]"
                       aria-label={`Filter ${LABELS[c]}`}
                     >
@@ -203,7 +197,7 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
                     <div className="relative">
                       <Input
                         value={filters[c] || ""}
-                        onChange={(e) => { setFilters((f) => ({ ...f, [c]: e.target.value })); setPage(1); }}
+                         onChange={(e) => setFilters((f) => ({ ...f, [c]: e.target.value }))}
                         aria-label={`Filter ${LABELS[c]}`}
                         className={`h-5 text-[10px] px-1.5 pr-4 min-w-[52px] ${filters[c] ? "border-slate-900" : ""}`}
                       />
@@ -211,7 +205,7 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
                         <button
                           type="button"
                           aria-label={`Clear ${LABELS[c]} filter`}
-                          onClick={() => { setFilters((f) => ({ ...f, [c]: "" })); setPage(1); }}
+                           onClick={() => setFilters((f) => ({ ...f, [c]: "" }))}
                           className="absolute right-0.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                         >
                           <X className="h-2.5 w-2.5" />
@@ -224,7 +218,7 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
             </TableRow>
 
 
-            {pageRows.map((r, idx) => {
+            {filtered.map((r, idx) => {
               const rowBg = r.cancelled ? "bg-slate-100" : "bg-card";
               return (
               <TableRow
@@ -253,7 +247,7 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
                   </Button>
                 </TableCell>
                 <TableCell className="px-1.5 py-0.5 text-muted-foreground">
-                  {(current - 1) * pageSize + idx + 1}
+                   {idx + 1}
                 </TableCell>
                 {columns.map((c) => (
                   <TableCell key={c} className="px-1.5 py-0.5 whitespace-nowrap">
@@ -271,7 +265,7 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
               </TableRow>
             );})}
 
-            {pageRows.length === 0 && (
+            {filtered.length === 0 && (
               <TableRow>
                 <TableCell colSpan={columns.length + 4} className="text-center text-[11px] text-muted-foreground py-6">
                   No items match the current filters.
@@ -282,47 +276,13 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
         </Table>
       </div>
 
-      {/* Pagination */}
-      <div className="bg-muted/50 px-3 py-1.5 border-t flex items-center justify-between gap-2 flex-wrap">
-        <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
-          <span>Page {current} of {totalPages} ({filtered.length} items)</span>
-          <Button variant="ghost" size="sm" className="h-6 w-6 p-0" disabled={current <= 1} onClick={() => setPage(current - 1)}>
-            <ChevronLeft className="h-3.5 w-3.5" />
-          </Button>
-          {Array.from({ length: totalPages }, (_, i) => i + 1).slice(0, 7).map((n) => (
-            <button
-              key={n}
-              type="button"
-              onClick={() => setPage(n)}
-              className={`h-6 w-6 rounded text-[11px] ${n === current ? "bg-foreground text-background font-semibold" : "hover:bg-muted"}`}
-            >
-              {n}
-            </button>
-          ))}
-          <Button variant="ghost" size="sm" className="h-6 w-6 p-0" disabled={current >= totalPages} onClick={() => setPage(current + 1)}>
-            <ChevronRight className="h-3.5 w-3.5" />
-          </Button>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="text-[11px] text-muted-foreground">Page size:</span>
-          <Select value={String(pageSize)} onValueChange={(v) => { setPageSize(Number(v)); setPage(1); }}>
-            <SelectTrigger className="h-7 w-16 text-[11px]"><SelectValue /></SelectTrigger>
-            <SelectContent className="bg-popover border z-50">
-              {[10, 25, 50, 100].map((n) => (
-                <SelectItem key={n} value={String(n)} className="text-[11px]">{n}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
-
       {/* Table actions */}
       <div className="px-3 py-2 border-t flex flex-wrap items-center justify-between gap-2">
         <span className="text-[11px] text-muted-foreground">
           {selected.length > 0 ? `${selected.length} selected` : "No items selected"}
         </span>
         <div className="flex flex-wrap items-center gap-2">
-          <Button variant="outline" size="sm" className="h-7 text-[11px]" onClick={() => { setFilters({}); setPage(1); }}>
+          <Button variant="outline" size="sm" className="h-7 text-[11px]" onClick={() => setFilters({})}>
             Clear Filters
           </Button>
           <Button variant="outline" size="sm" className="h-7 text-[11px] gap-1">
