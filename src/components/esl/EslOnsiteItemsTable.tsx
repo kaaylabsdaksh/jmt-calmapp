@@ -292,6 +292,7 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
             <FileText className="h-3 w-3" />Bulk Update
           </Button>
         </div>
+      </div>
 
       {/* Pagination */}
       <div className="px-3 py-2 border-t flex flex-wrap items-center justify-between gap-2">
