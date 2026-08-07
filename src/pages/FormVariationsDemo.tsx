@@ -3688,6 +3688,7 @@ const FormVariationsDemo = () => {
           </div>
 
         </div>
+        )}
 
         {/* Product Specifications */}
         <div className="border border-border rounded-lg overflow-hidden bg-card flex flex-col">
