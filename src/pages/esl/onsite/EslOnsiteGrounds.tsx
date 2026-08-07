@@ -1,5 +1,3 @@
-import EslOnsiteItemForm from "./EslOnsiteItemForm";
-const EslOnsiteGrounds = () => (
-  <EslOnsiteItemForm itemLabel="Grounds" dropdownValue="esl-onsite-grounds" />
-);
+import FormVariationsDemo from "../../FormVariationsDemo";
+const EslOnsiteGrounds = () => <FormVariationsDemo />;
 export default EslOnsiteGrounds;

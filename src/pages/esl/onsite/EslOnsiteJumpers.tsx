@@ -1,5 +1,3 @@
-import EslOnsiteItemForm from "./EslOnsiteItemForm";
-const EslOnsiteJumpers = () => (
-  <EslOnsiteItemForm itemLabel="Jumpers" dropdownValue="esl-onsite-jumpers" />
-);
+import FormVariationsDemo from "../../FormVariationsDemo";
+const EslOnsiteJumpers = () => <FormVariationsDemo />;
 export default EslOnsiteJumpers;
