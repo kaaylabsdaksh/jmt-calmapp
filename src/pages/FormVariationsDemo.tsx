@@ -1186,8 +1186,10 @@ const FormVariationsDemo = () => {
     ? [
         { value: 'general', label: 'General', icon: Info },
         { value: 'details', label: 'Details', icon: FileText },
-        { value: 'testing', label: 'Testing', icon: Settings },
-        { value: 'work-status', label: 'Work Status', icon: Clock }
+        ...(isEslOnsiteType ? [] : [
+          { value: 'testing', label: 'Testing', icon: Settings },
+          { value: 'work-status', label: 'Work Status', icon: Clock },
+        ]),
       ]
     : [
         { value: 'general', label: 'General', icon: Info },
