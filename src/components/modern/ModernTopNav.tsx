@@ -25,8 +25,20 @@ const routeMeta: Record<string, { title: string; crumbs: Crumb[] }> = {
   "/manage-customers/contract-reviews/new": { title: "Add New Contract Review", crumbs: [{ label: "Home", to: "/" }, { label: "Manage Customers", to: "/manage-customers" }, { label: "Contract Reviews", to: "/manage-customers/contract-reviews" }, { label: "Add New Contract Review" }] },
   "/manage-customers/contract-reviews/:reviewId": { title: "Edit Contract Review", crumbs: [{ label: "Home", to: "/" }, { label: "Manage Customers", to: "/manage-customers" }, { label: "Contract Reviews", to: "/manage-customers/contract-reviews" }, { label: "Edit Contract Review" }] },
   "/manage-customers/:accountNumber": { title: "Customer Details", crumbs: [{ label: "Home", to: "/" }, { label: "Product & Customer" }, { label: "Manage Customers", to: "/manage-customers" }, { label: "Customer Details" }] },
-  "/esl/onsite/blankets": { title: "Add New Work Order Item", crumbs: [{ label: "Home", to: "/" }, { label: "Add New Work Order", to: "/add-new-work-order" }, { label: "Add New Item" }] },
 };
+
+const eslOnsiteMeta = { title: "Add New Work Order Item", crumbs: [{ label: "Home", to: "/" }, { label: "Add New Work Order", to: "/add-new-work-order" }, { label: "Add New Item" }] };
+[
+  "blankets",
+  "bucket-trucks",
+  "coverups",
+  "grounds",
+  "hotsticks",
+  "jumpers",
+  "line-hoses",
+].forEach((slug) => {
+  routeMeta[`/esl/onsite/${slug}`] = eslOnsiteMeta;
+});
 
 const ModernTopNav = () => {
   const navigate = useNavigate();
