@@ -1449,7 +1449,14 @@ const FormVariationsDemo = () => {
     navigate("/add-new-work-order", { state: { from: 'work-order-items' } });
   };
 
+  const [cancelConfirmOpen, setCancelConfirmOpen] = useState(false);
+
   const handleCancel = () => {
+    setCancelConfirmOpen(true);
+  };
+
+  const confirmCancel = () => {
+    setCancelConfirmOpen(false);
     // Navigate back to main work order page
     navigate("/add-new-work-order", { state: { from: 'work-order-items' } });
   };
@@ -13752,6 +13759,23 @@ const FormVariationsDemo = () => {
         </DialogContent>
       </Dialog>
 
+
+      <AlertDialog open={cancelConfirmOpen} onOpenChange={setCancelConfirmOpen}>
+        <AlertDialogContent className="max-w-sm">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-base">Discard changes?</AlertDialogTitle>
+            <AlertDialogDescription className="text-xs">
+              Any unsaved changes on this item will be lost. Do you want to leave without saving?
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="h-9 text-xs">Keep editing</AlertDialogCancel>
+            <AlertDialogAction onClick={confirmCancel} className="h-9 text-xs bg-destructive text-destructive-foreground hover:bg-destructive/90">
+              Discard &amp; leave
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       <Toaster />
 
