@@ -292,7 +292,33 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
             <FileText className="h-3 w-3" />Bulk Update
           </Button>
         </div>
+
+      {/* Pagination */}
+      <div className="px-3 py-2 border-t flex flex-wrap items-center justify-between gap-2">
+        <span className="text-[11px] text-muted-foreground">
+          Showing {filtered.length === 0 ? 0 : 1}-{filtered.length} of {filtered.length} items
+        </span>
+        <div className="flex items-center gap-2">
+          <span className="text-[11px] text-muted-foreground">Rows per page</span>
+          <select
+            className="h-7 rounded-md border bg-background px-2 text-[11px]"
+            defaultValue="25"
+          >
+            {[10, 25, 50, 100].map((n) => (
+              <option key={n} value={n}>{n}</option>
+            ))}
+          </select>
+          <Button variant="outline" size="sm" className="h-7 text-[11px]" disabled>
+            Previous
+          </Button>
+          <span className="text-[11px]">Page 1 of 1</span>
+          <Button variant="outline" size="sm" className="h-7 text-[11px]" disabled>
+            Next
+          </Button>
+        </div>
       </div>
+
+
 
 
       <AlertDialog open={cancelId !== null} onOpenChange={(o) => !o && setCancelId(null)}>
