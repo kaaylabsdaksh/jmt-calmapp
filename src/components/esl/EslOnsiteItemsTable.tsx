@@ -6,7 +6,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ChevronLeft, ChevronRight, Pencil, Filter, Ban, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, Printer, Pencil, FileText, Filter, Ban, X } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -316,7 +316,23 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
         </div>
       </div>
 
-
+      {/* Table actions */}
+      <div className="px-3 py-2 border-t flex flex-wrap items-center justify-between gap-2">
+        <span className="text-[11px] text-muted-foreground">
+          {selected.length > 0 ? `${selected.length} selected` : "No items selected"}
+        </span>
+        <div className="flex flex-wrap items-center gap-2">
+          <Button variant="outline" size="sm" className="h-7 text-[11px]" onClick={() => { setFilters({}); setPage(1); }}>
+            Clear Filters
+          </Button>
+          <Button variant="outline" size="sm" className="h-7 text-[11px] gap-1">
+            <Printer className="h-3 w-3" />Print Test Report
+          </Button>
+          <Button variant="outline" size="sm" className="h-7 text-[11px] gap-1" disabled={selected.length === 0}>
+            <FileText className="h-3 w-3" />Bulk Update
+          </Button>
+        </div>
+      </div>
 
 
       <AlertDialog open={cancelId !== null} onOpenChange={(o) => !o && setCancelId(null)}>
