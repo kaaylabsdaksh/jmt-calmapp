@@ -9686,6 +9686,12 @@ const FormVariationsDemo = () => {
                     <SelectItem value="esl-roll-blankets">ESL - Roll Blankets</SelectItem>
                     <SelectItem value="esl-sleeves">ESL - Sleeves</SelectItem>
                     <SelectItem value="itl-gauges">ITL - Gauges</SelectItem>
+                    <SelectItem value="esl-onsite-bucket-trucks">ESL OnSite - Bucket Trucks</SelectItem>
+                    <SelectItem value="esl-onsite-coverups">ESL OnSite - CoverUps</SelectItem>
+                    <SelectItem value="esl-onsite-grounds">ESL OnSite - Grounds</SelectItem>
+                    <SelectItem value="esl-onsite-hotsticks">ESL OnSite - Hotsticks</SelectItem>
+                    <SelectItem value="esl-onsite-jumpers">ESL OnSite - Jumpers</SelectItem>
+                    <SelectItem value="esl-onsite-line-hoses">ESL OnSite - Line Hoses</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -10047,6 +10053,12 @@ const FormVariationsDemo = () => {
                 <SelectItem value="esl-roll-blankets">ESL - Roll Blankets</SelectItem>
                 <SelectItem value="esl-sleeves">ESL - Sleeves</SelectItem>
                 <SelectItem value="itl-gauges">ITL - Gauges</SelectItem>
+                <SelectItem value="esl-onsite-bucket-trucks">ESL OnSite - Bucket Trucks</SelectItem>
+                <SelectItem value="esl-onsite-coverups">ESL OnSite - CoverUps</SelectItem>
+                <SelectItem value="esl-onsite-grounds">ESL OnSite - Grounds</SelectItem>
+                <SelectItem value="esl-onsite-hotsticks">ESL OnSite - Hotsticks</SelectItem>
+                <SelectItem value="esl-onsite-jumpers">ESL OnSite - Jumpers</SelectItem>
+                <SelectItem value="esl-onsite-line-hoses">ESL OnSite - Line Hoses</SelectItem>
               </SelectContent>
             </Select>
           </div>
