@@ -29,7 +29,6 @@ const routeMeta: Record<string, { title: string; crumbs: Crumb[] }> = {
 
 const eslOnsiteMeta = { title: "Add New Work Order Item", crumbs: [{ label: "Home", to: "/" }, { label: "Add New Work Order", to: "/add-new-work-order" }, { label: "Add New Item" }] };
 [
-  "blankets",
   "bucket-trucks",
   "coverups",
   "grounds",

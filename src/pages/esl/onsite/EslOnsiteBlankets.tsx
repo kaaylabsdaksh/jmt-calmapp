@@ -1,5 +1,3 @@
-import EslOnsiteItemForm from "./EslOnsiteItemForm";
-const EslOnsiteBlankets = () => (
-  <EslOnsiteItemForm itemLabel="Blankets" dropdownValue="esl-onsite-blankets" />
-);
+import FormVariationsDemo from "../../FormVariationsDemo";
+const EslOnsiteBlankets = () => <FormVariationsDemo />;
 export default EslOnsiteBlankets;
