@@ -27,23 +27,32 @@ export interface EslOnsiteItem {
   custId: string;
   tag: string;
   result: string;
+  acc1: string;
+  qty1: string;
+  acc2: string;
+  qty2: string;
+  acc3: string;
+  qty3: string;
+  technician: string;
+  setComment: string;
   comments: string;
   cancelled?: boolean;
 }
 
 const DEFAULT_ITEMS: EslOnsiteItem[] = [
-  { id: 1, truck: "", mfr: "CHANCE", cls: "CLASS 2", size: "18x18", color: "Brown", type: "Solid", eye: "No", eyeQty: "", other: "", holeSize: "", zip: false, isNew: false, stds: "", eslId: "933672", custId: "", tag: "", result: "", comments: "" },
-  { id: 2, truck: "", mfr: "CHANCE", cls: "CLASS 2", size: "18x18", color: "Brown", type: "Solid", eye: "No", eyeQty: "", other: "", holeSize: "", zip: false, isNew: false, stds: "", eslId: "933673", custId: "", tag: "", result: "", comments: "" },
+  { id: 1, truck: "", mfr: "CHANCE", cls: "CLASS 2", size: "18x18", color: "Brown", type: "Solid", eye: "No", eyeQty: "", other: "", holeSize: "", zip: false, isNew: false, stds: "", eslId: "933672", custId: "", tag: "", result: "", acc1: "0", qty1: "0", acc2: "0", qty2: "0", acc3: "0", qty3: "0", technician: "Admin User", setComment: "", comments: "" },
+  { id: 2, truck: "", mfr: "CHANCE", cls: "CLASS 2", size: "18x18", color: "Brown", type: "Solid", eye: "No", eyeQty: "", other: "", holeSize: "", zip: false, isNew: false, stds: "", eslId: "933673", custId: "", tag: "", result: "", acc1: "0", qty1: "0", acc2: "0", qty2: "0", acc3: "0", qty3: "0", technician: "Admin User", setComment: "", comments: "" },
 ];
 
-const BASIC_COLUMNS = ["truck", "mfr", "cls", "size", "color", "type", "eye", "eyeQty", "other", "holeSize", "zip", "isNew", "stds", "eslId", "custId", "tag", "result", "comments"] as const;
-const EXTENDED_ONLY = ["stds", "result", "comments"] as const;
+const BASIC_COLUMNS = ["truck", "mfr", "cls", "size", "color", "type", "eye", "eyeQty", "other", "holeSize", "zip", "isNew", "stds", "eslId", "custId", "tag", "result", "acc1", "qty1", "acc2", "qty2", "acc3", "qty3", "technician", "setComment", "comments"] as const;
+const EXTENDED_ONLY = ["stds", "result", "acc1", "qty1", "acc2", "qty2", "acc3", "qty3", "technician", "setComment", "comments"] as const;
 
 const LABELS: Record<string, string> = {
   truck: "Truck", mfr: "Mfr", cls: "Class", size: "Size", color: "Color", type: "Type",
   eye: "Eye", eyeQty: "Eye Qty", other: "Other", holeSize: "Hole Size", zip: "Zip",
   isNew: "New", stds: "Stds", eslId: "ESL ID", custId: "Cust ID", tag: "Tag",
-  result: "Result", comments: "Comments",
+  result: "Result", acc1: "Acc 1", qty1: "Qty 1", acc2: "Acc 2", qty2: "Qty 2",
+  acc3: "Acc 3", qty3: "Qty 3", technician: "Technician", setComment: "Set Comment", comments: "Comments",
 };
 
 export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?: EslOnsiteItem[] }) {
@@ -137,6 +146,7 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
                   }
                 />
               </TableHead>
+              <TableHead className="w-10 px-1.5 py-1 h-7" />
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -155,6 +165,7 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
                   )}
                 </TableCell>
               ))}
+              <TableCell className="px-1 py-0.5" />
               <TableCell className="px-1 py-0.5" />
               <TableCell className="px-1 py-0.5" />
             </TableRow>
@@ -191,12 +202,15 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
                 <TableCell className="px-1.5 py-0.5 text-center">
                   <Checkbox className="h-3 w-3" checked={selected.includes(r.id)} onCheckedChange={() => toggleRow(r.id)} />
                 </TableCell>
+                <TableCell className="px-1.5 py-0.5 text-right">
+                  <Button variant="link" size="sm" className="h-auto p-0 text-[11px] text-slate-900 underline">Edit</Button>
+                </TableCell>
               </TableRow>
             ))}
 
             {pageRows.length === 0 && (
               <TableRow>
-                <TableCell colSpan={columns.length + 4} className="text-center text-[11px] text-muted-foreground py-6">
+                <TableCell colSpan={columns.length + 5} className="text-center text-[11px] text-muted-foreground py-6">
                   No items match the current filters.
                 </TableCell>
               </TableRow>
