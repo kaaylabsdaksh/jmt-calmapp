@@ -4578,9 +4578,10 @@ const FormVariationsDemo = () => {
       )}
 
       {/* Spacer for fixed footer */}
-      <div className="h-14" />
+      {!isEslOnsiteType && <div className="h-14" />}
 
       {/* Fixed Footer for Details Tab - respects sidebar */}
+      {!isEslOnsiteType && (
       <div className="fixed bottom-0 left-[var(--sidebar-width,16rem)] right-0 z-40 bg-background border-t shadow-sm">
         <div className="px-4 py-3">
           <div className="flex items-center justify-between gap-3">
@@ -4763,6 +4764,8 @@ const FormVariationsDemo = () => {
           </div>
         </div>
       </div>
+      )}
+
 
       {/* Print Label Dialog - Quantity only */}
       <Dialog open={printLabelDialogOpen} onOpenChange={setPrintLabelDialogOpen}>
