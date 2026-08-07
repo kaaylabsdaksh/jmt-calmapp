@@ -1833,6 +1833,59 @@ const FormVariationsDemo = () => {
                     </div>
                   </div>
 
+                  {isBucketTrucks && (
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-1.5">
+                      <div className="space-y-0.5">
+                        <Label htmlFor="btRotationSubStatus" className="text-[11px] font-medium">Rotation Sub Status</Label>
+                        <Select value={formData.rotationSubStatus} onValueChange={(value) => handleInputChange("rotationSubStatus", value)}>
+                          <SelectTrigger id="btRotationSubStatus" className="h-6 text-[11px]">
+                            <SelectValue placeholder="Select" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-popover border z-50 max-h-48 overflow-y-auto">
+                            <SelectItem value="awaiting-rotation">Awaiting Rotation</SelectItem>
+                            <SelectItem value="rotation-in-progress">Rotation In Progress</SelectItem>
+                            <SelectItem value="rotation-complete">Rotation Complete</SelectItem>
+                            <SelectItem value="rotation-on-hold">Rotation On Hold</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      <div className="space-y-0.5">
+                        <Label className="text-[11px] font-medium">Scheduled Date</Label>
+                        <ModernDatePicker
+                          size="xs"
+                          value={formData.scheduledDate || undefined}
+                          onChange={(date) => handleInputChange("scheduledDate", date ? date.toISOString().split('T')[0] : "")}
+                        />
+                      </div>
+
+                      <div className="space-y-0.5">
+                        <Label htmlFor="btOther" className="text-[11px] font-medium">Other</Label>
+                        <Input
+                          id="btOther"
+                          value={formData.otherStatusNote || ""}
+                          onChange={(e) => handleInputChange("otherStatusNote", e.target.value)}
+                          className="h-6 text-[11px]"
+                        />
+                      </div>
+
+                      <div className="space-y-0.5">
+                        <Label htmlFor="btAssignedTo" className="text-[11px] font-medium">Assigned To</Label>
+                        <Select value={formData.assignedTo} onValueChange={(value) => handleInputChange("assignedTo", value)}>
+                          <SelectTrigger id="btAssignedTo" className="h-6 text-[11px]">
+                            <SelectValue placeholder="Select assignee" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-popover border z-50 max-h-48 overflow-y-auto">
+                            {['John Doe', 'Jane Smith', 'Bob Johnson', 'Alice Williams', 'Charlie Brown', 'Diana Prince'].map((n) => (
+                              <SelectItem key={n} value={n}>{n}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+                  )}
+
+
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-1.5">
 
                     <div className="space-y-0.5">
