@@ -1449,7 +1449,14 @@ const FormVariationsDemo = () => {
     navigate("/add-new-work-order", { state: { from: 'work-order-items' } });
   };
 
+  const [cancelConfirmOpen, setCancelConfirmOpen] = useState(false);
+
   const handleCancel = () => {
+    setCancelConfirmOpen(true);
+  };
+
+  const confirmCancel = () => {
+    setCancelConfirmOpen(false);
     // Navigate back to main work order page
     navigate("/add-new-work-order", { state: { from: 'work-order-items' } });
   };
