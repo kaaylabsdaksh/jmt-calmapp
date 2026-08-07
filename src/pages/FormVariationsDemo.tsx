@@ -2410,10 +2410,36 @@ const FormVariationsDemo = () => {
                               ${totalCost.toFixed(2)}
                             </div>
                           </div>
+                          {isBucketTrucks && (
+                            <>
+                              <div className="grid grid-cols-[1fr_70px_110px] items-center bg-muted/40 px-3 py-1 text-[10px] font-medium text-muted-foreground">
+                                <div></div>
+                                <div className="text-center">Hrs</div>
+                                <div className="text-right">Cost</div>
+                              </div>
+                              <div className="grid grid-cols-[1fr_70px_110px] items-center px-3 py-1">
+                                <Label className="text-[11px] font-medium text-foreground">Repairs</Label>
+                                <div className="text-center text-[11px] text-muted-foreground tabular-nums">0.00</div>
+                                <div className="text-right text-[11px] text-muted-foreground tabular-nums pr-1.5">$0.00</div>
+                              </div>
+                            </>
+                          )}
                         </div>
                       </div>
                     );
                   })()}
+                  {isBucketTrucks && (
+                    <div className="mt-2 max-w-md space-y-0.5">
+                      <Label htmlFor="specialPricingComments" className="text-[11px] font-medium">Special Pricing Comments</Label>
+                      <Textarea
+                        id="specialPricingComments"
+                        value={formData.specialPricingComments}
+                        onChange={(e) => handleInputChange("specialPricingComments", e.target.value)}
+                        className="min-h-[60px] text-[11px]"
+                      />
+                    </div>
+                  )}
+
                 </CardContent>
               </Card>
               </AccordionContent>
